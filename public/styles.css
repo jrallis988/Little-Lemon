@@ -1,0 +1,38 @@
+/**
+ * Base Typography
+ */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+
+/**
+ * Color Variables
+ */
+:root {
+    --primary-color: #ff6347; /* Tomato */
+    --secondary-color: #4682b4; /* Steel Blue */
+    --background-color: #f4f4f4; /* Light Gray */
+    --text-color: #333; /* Dark Gray */
+}
+
+/**
+ * Spacing
+ */
+.container {
+    padding: 20px;
+    margin: 0 auto;
+}
+
+.row {
+    display: flex;
+    margin: 0 -10px;
+}
+
+.col {
+    padding: 0 10px;
+}
