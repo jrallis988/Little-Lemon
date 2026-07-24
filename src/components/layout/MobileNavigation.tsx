@@ -123,7 +123,7 @@ export function MobileNavigation({
 
   const profileHref = profile ? `/profile/${profile.username}` : "/login";
   const bottomLinks: MobileLink[] = [
-    { href: "/", label: "Home", icon: Home },
+    { href: "/home", label: "Home", icon: Home },
     { href: "/browse", label: "Browse", icon: Users },
     { href: "/search", label: "Search", icon: Search },
     {

@@ -104,7 +104,7 @@ export function AppHeader({
   }, []);
 
   const links: HeaderLink[] = [
-    { href: "/", label: "Home", icon: Home },
+    { href: "/home", label: "Home", icon: Home },
     { href: "/browse", label: "Browse", icon: Users },
     { href: "/search", label: "Search", icon: Search },
     {
