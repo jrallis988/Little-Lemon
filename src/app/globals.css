@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/**
+ * Publication palette — deep neutrals + technical amber.
+ * Surfaces use subtle depth, never drop-shadows.
+ */
+:root {
+  /* Channel triplets — enables Tailwind opacity modifiers */
+  --color-ink: 12 12 12;
+  --color-ink-soft: 26 26 26;
+  --color-ink-muted: 107 107 107;
+  --color-ink-faint: 154 154 154;
+
+  --color-paper: 245 244 241;
+  --color-paper-raised: 250 250 248;
+  --color-paper-line: 217 215 210;
+
+  --color-accent: 201 146 42;
+  --color-accent-soft: 232 200 122;
+  --color-accent-deep: 143 104 24;
+
+  --grid-gutter: clamp(1rem, 2.5vw, 2rem);
+  --section-space: clamp(4.5rem, 10vw, 8rem);
+  --nav-height: 3.5rem;
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    border-color: rgb(var(--color-paper-line));
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-paper text-ink font-sans text-body;
+    background-image:
+      radial-gradient(
+        ellipse 120% 80% at 100% -20%,
+        rgb(var(--color-accent) / 0.06),
+        transparent 55%
+      ),
+      radial-gradient(
+        ellipse 90% 60% at -10% 40%,
+        rgb(var(--color-ink) / 0.03),
+        transparent 50%
+      ),
+      linear-gradient(
+        180deg,
+        rgb(var(--color-paper-raised)) 0%,
+        rgb(var(--color-paper)) 40%,
+        rgb(var(--color-paper)) 100%
+      );
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+
+  ::selection {
+    background: rgb(var(--color-accent) / 0.35);
+    color: rgb(var(--color-ink));
+  }
+
+  a {
+    @apply transition-colors duration-snappy ease-snap;
+  }
+
+  :focus-visible {
+    outline: 1px solid rgb(var(--color-accent));
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  /* Strict 12-column gallery grid */
+  .grid-gallery {
+    @apply grid grid-cols-4 gap-gutter md:grid-cols-8 lg:grid-cols-12;
+  }
+
+  .rule {
+    @apply border-t border-ink/15;
+  }
+
+  .rule-accent {
+    @apply border-t border-accent;
+  }
+
+  .frame {
+    @apply border border-ink/80 bg-paper-raised;
+  }
+
+  .meta {
+    @apply font-mono text-meta uppercase text-ink-muted;
+  }
+
+  .index-label {
+    @apply font-mono text-index uppercase tracking-[0.14em] text-ink-faint;
+  }
+
+  .cta {
+    @apply inline-flex items-center justify-center gap-2 border border-ink
+      bg-ink px-5 py-2.5 font-mono text-meta uppercase tracking-[0.12em]
+      text-paper transition-colors duration-snappy ease-snap
+      hover:bg-transparent hover:text-ink;
+  }
+
+  .cta-ghost {
+    @apply inline-flex items-center justify-center gap-2 border border-ink/80
+      bg-transparent px-5 py-2.5 font-mono text-meta uppercase tracking-[0.12em]
+      text-ink transition-colors duration-snappy ease-snap
+      hover:border-ink hover:bg-ink hover:text-paper;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
