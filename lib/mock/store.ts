@@ -9,6 +9,7 @@ import type {
   Notification,
   Profile,
   ProfileComment,
+  Report,
   ProfileTheme,
   StatusUpdate,
   UserAccount,
@@ -20,6 +21,7 @@ import {
   mockBlogPosts,
   mockConversations,
   mockFeedItems,
+  mockFeaturedFriends,
   mockFriendships,
   mockMessages,
   mockNotifications,
@@ -45,6 +47,8 @@ export interface MockStoreState {
   sessionUserId: string | null;
   blockedIds: string[];
   mutedIds: string[];
+  featuredFriends: Record<string, string[]>;
+  reports: Report[];
 }
 
 function seed(): MockStoreState {
@@ -62,6 +66,8 @@ function seed(): MockStoreState {
     sessionUserId: null,
     blockedIds: [],
     mutedIds: [],
+    featuredFriends: structuredClone(mockFeaturedFriends),
+    reports: [],
   };
 }
 
@@ -283,6 +289,17 @@ export const mockApi = {
 
   updateTheme(userId: string, theme: ProfileTheme) {
     return this.updateProfile(userId, { theme });
+  },
+
+  updateFeaturedFriends(profileId: string, friendProfileIds: string[]) {
+    const state = getState();
+    setState({
+      ...state,
+      featuredFriends: {
+        ...state.featuredFriends,
+        [profileId]: Array.from(new Set(friendProfileIds)).slice(0, 16),
+      },
+    });
   },
 
   postStatus(userId: string, body: string) {
@@ -511,6 +528,16 @@ export const mockApi = {
     return message;
   },
 
+  deleteMessage(messageId: string, requesterUserId: string) {
+    const state = getState();
+    const message = state.messages.find((m) => m.id === messageId);
+    if (!message || message.senderId !== requesterUserId) return;
+    setState({
+      ...state,
+      messages: state.messages.filter((m) => m.id !== messageId),
+    });
+  },
+
   startConversation(userId: string, otherUserId: string) {
     const state = getState();
     const existing = state.conversations.find(
@@ -539,6 +566,46 @@ export const mockApi = {
       blockedIds: Array.from(new Set([...state.blockedIds, blockedId])),
     });
     this.removeFriend(blockerId, blockedId);
+  },
+
+  unblockUser(blockedId: string) {
+    const state = getState();
+    setState({
+      ...state,
+      blockedIds: state.blockedIds.filter((id) => id !== blockedId),
+    });
+  },
+
+  reportContent(input: {
+    reporterId: string;
+    targetType: Report["targetType"];
+    targetId: string;
+    reason: string;
+    details?: string;
+  }) {
+    const report: Report = {
+      id: `r${Date.now()}`,
+      reporterId: input.reporterId,
+      targetType: input.targetType,
+      targetId: input.targetId,
+      reason: input.reason,
+      details: input.details,
+      status: "open",
+      createdAt: new Date().toISOString(),
+    };
+    const state = getState();
+    setState({ ...state, reports: [report, ...state.reports] });
+    return report;
+  },
+
+  deleteNotification(notificationId: string, userId: string) {
+    const state = getState();
+    setState({
+      ...state,
+      notifications: state.notifications.filter(
+        (n) => n.id !== notificationId || n.userId !== userId
+      ),
+    });
   },
 
   muteUser(userId: string) {
