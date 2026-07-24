@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Soft slate · sage · warm cream · deep navy */
+  --cream: 40 33% 96%;
+  --cream-muted: 38 28% 92%;
+  --slate-soft: 215 18% 88%;
+  --slate: 215 16% 46%;
+  --slate-deep: 215 22% 28%;
+  --sage-soft: 152 22% 90%;
+  --sage: 152 24% 42%;
+  --sage-deep: 152 28% 28%;
+  --navy: 222 44% 20%;
+  --navy-deep: 222 48% 12%;
+  --navy-mist: 222 30% 94%;
+
+  --background: var(--cream);
+  --foreground: var(--navy);
+  --card: 0 0% 100%;
+  --card-foreground: var(--navy);
+  --primary: var(--navy);
+  --primary-foreground: var(--cream);
+  --secondary: var(--sage-soft);
+  --secondary-foreground: var(--sage-deep);
+  --muted: var(--cream-muted);
+  --muted-foreground: var(--slate);
+  --accent: var(--sage);
+  --accent-foreground: 0 0% 100%;
+  --destructive: 4 62% 48%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 215 18% 86%;
+  --input: 215 18% 86%;
+  --ring: var(--sage);
+  --radius: 1rem;
+
+  --app-bg:
+    radial-gradient(1200px 600px at 10% -10%, hsl(152 30% 88% / 0.55), transparent 55%),
+    radial-gradient(900px 500px at 90% 0%, hsl(222 40% 88% / 0.45), transparent 50%),
+    linear-gradient(180deg, hsl(var(--cream)) 0%, hsl(var(--cream-muted)) 100%);
+}
+
+.high-contrast {
+  --cream: 0 0% 100%;
+  --cream-muted: 0 0% 96%;
+  --slate-soft: 0 0% 85%;
+  --slate: 0 0% 20%;
+  --slate-deep: 0 0% 8%;
+  --sage-soft: 0 0% 90%;
+  --sage: 0 0% 10%;
+  --sage-deep: 0 0% 5%;
+  --navy: 0 0% 0%;
+  --navy-deep: 0 0% 0%;
+  --navy-mist: 0 0% 94%;
+  --background: 0 0% 100%;
+  --foreground: 0 0% 0%;
+  --border: 0 0% 0%;
+  --muted-foreground: 0 0% 20%;
+  --app-bg: #ffffff;
+}
+
+.large-text {
+  font-size: 112.5%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html,
+  body,
+  #root {
+    @apply min-h-full;
+  }
+
+  body {
+    @apply bg-background font-sans text-foreground antialiased;
+    background-image: var(--app-bg);
+    background-attachment: fixed;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: Sora, ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background: hsl(var(--sage) / 0.25);
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply border border-white/50 bg-white/70 shadow-glass backdrop-blur-xl;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}
