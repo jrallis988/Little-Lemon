@@ -90,6 +90,7 @@ export function SiteHeader() {
               variant="ghost"
               size="sm"
               className="hidden sm:inline-flex"
+              nativeButton={false}
               render={<Link href="/pharmacy" />}
             >
               <UserRound className="size-4" aria-hidden />
@@ -99,6 +100,7 @@ export function SiteHeader() {
               variant="ghost"
               size="icon"
               aria-label="Cart"
+              nativeButton={false}
               render={<Link href="/checkout" />}
             >
               <ShoppingBag className="size-5" />

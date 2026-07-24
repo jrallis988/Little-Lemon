@@ -39,12 +39,18 @@ export function HomeHero() {
             <Button
               size="lg"
               className="bg-brand text-brand-foreground hover:bg-brand/90"
+              nativeButton={false}
               render={<Link href="/pharmacy" />}
             >
               Refill prescriptions
               <ArrowRight className="size-4" aria-hidden />
             </Button>
-            <Button size="lg" variant="outline" render={<Link href="/shop" />}>
+            <Button
+              size="lg"
+              variant="outline"
+              nativeButton={false}
+              render={<Link href="/shop" />}
+            >
               Shop health & beauty
             </Button>
           </div>
@@ -82,7 +88,11 @@ export function HomePharmacyPreview() {
             you care for.
           </p>
         </div>
-        <Button variant="outline" render={<Link href="/pharmacy" />}>
+        <Button
+          variant="outline"
+          nativeButton={false}
+          render={<Link href="/pharmacy" />}
+        >
           Open pharmacy
         </Button>
       </div>
@@ -161,7 +171,11 @@ export function HomeShopPreview() {
             Discover health and beauty with points earned on every eligible item.
           </p>
         </div>
-        <Button variant="outline" render={<Link href="/shop" />}>
+        <Button
+          variant="outline"
+          nativeButton={false}
+          render={<Link href="/shop" />}
+        >
           Browse shop
         </Button>
       </div>
