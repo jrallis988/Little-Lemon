@@ -1,0 +1,4 @@
+[build]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[env]

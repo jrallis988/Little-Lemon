@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Soft sky workspace — teal primary, coral action, mint safety */
+    --background: 198 45% 96%;
+    --foreground: 204 35% 18%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 204 35% 18%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 204 35% 18%;
+
+    --primary: 188 49% 36%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 196 36% 90%;
+    --secondary-foreground: 204 35% 22%;
+
+    --muted: 196 30% 92%;
+    --muted-foreground: 204 16% 42%;
+
+    --accent: 168 42% 90%;
+    --accent-foreground: 168 45% 24%;
+
+    --destructive: 8 70% 52%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 198 24% 84%;
+    --input: 198 24% 84%;
+    --ring: 188 49% 36%;
+
+    --radius: 1.1rem;
+
+    --safe: 152 47% 36%;
+    --safe-foreground: 0 0% 100%;
+    --safe-soft: 152 45% 92%;
+
+    --nest-sky: 198 55% 94%;
+    --nest-mist: 186 40% 90%;
+    --nest-leaf: 152 47% 42%;
+    --nest-coral: 16 78% 62%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html,
+  body,
+  #root {
+    @apply h-full;
+  }
+
+  body {
+    @apply bg-background font-sans text-foreground antialiased;
+    margin: 0;
+  }
+
+  button,
+  input,
+  textarea {
+    font: inherit;
+  }
+}
