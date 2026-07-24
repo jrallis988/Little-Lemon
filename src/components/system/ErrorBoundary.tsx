@@ -12,7 +12,7 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
-    console.error("Atelier Rack UI error:", error, info)
+    console.error("Marshalls UI error:", error, info)
   }
 
   render() {

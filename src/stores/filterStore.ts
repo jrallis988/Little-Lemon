@@ -83,7 +83,7 @@ export const useFilterStore = create<FilterState & FilterActions>()(
       },
     }),
     {
-      name: "atelier-rack-filters",
+      name: "marshalls-filters",
       partialize: (state) => ({
         departments: state.departments,
         categories: state.categories,

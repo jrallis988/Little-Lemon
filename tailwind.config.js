@@ -12,7 +12,7 @@ export default {
         xl: "2.5rem",
       },
       screens: {
-        "2xl": "1440px",
+        "2xl": "1280px",
       },
     },
     extend: {
@@ -52,6 +52,10 @@ export default {
           foreground: "hsl(var(--deal-foreground))",
           soft: "hsl(var(--deal-soft))",
         },
+        brand: {
+          blue: "hsl(var(--brand-blue))",
+          "blue-foreground": "hsl(var(--brand-blue-foreground))",
+        },
         inventory: {
           low: "hsl(var(--inventory-low))",
           in: "hsl(var(--inventory-in))",
@@ -71,9 +75,9 @@ export default {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
       },
       fontSize: {
-        "2xs": ["0.6875rem", { lineHeight: "1rem", letterSpacing: "0.04em" }],
-        display: ["clamp(2rem, 4vw, 3.25rem)", { lineHeight: "1.05", letterSpacing: "-0.03em" }],
-        "display-sm": ["clamp(1.5rem, 2.5vw, 2rem)", { lineHeight: "1.1", letterSpacing: "-0.02em" }],
+        "2xs": ["0.6875rem", { lineHeight: "1rem", letterSpacing: "0.03em" }],
+        display: ["clamp(2rem, 4vw, 3.25rem)", { lineHeight: "1.05", letterSpacing: "-0.02em" }],
+        "display-sm": ["clamp(1.5rem, 2.5vw, 2rem)", { lineHeight: "1.1", letterSpacing: "-0.015em" }],
       },
       spacing: {
         18: "4.5rem",
@@ -86,14 +90,14 @@ export default {
       },
       borderRadius: {
         lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        md: "calc(var(--radius) - 1px)",
+        sm: "calc(var(--radius) - 2px)",
       },
       boxShadow: {
         soft: "0 1px 2px hsl(220 20% 10% / 0.04), 0 4px 12px hsl(220 20% 10% / 0.04)",
         lift: "0 2px 4px hsl(220 20% 10% / 0.04), 0 12px 28px hsl(220 20% 10% / 0.08)",
         drawer: "-8px 0 32px hsl(220 20% 10% / 0.12)",
-        header: "0 1px 0 hsl(var(--border)), 0 8px 24px hsl(220 20% 10% / 0.04)",
+        header: "0 1px 0 hsl(var(--border))",
       },
       transitionTimingFunction: {
         retail: "cubic-bezier(0.22, 1, 0.36, 1)",

@@ -15,8 +15,8 @@ import {
 import { useMemo, useState } from "react"
 
 const VALID_PROMOS: Record<string, { label: string; percentOff: number }> = {
-  RACK20: { label: "Extra 20% off", percentOff: 20 },
-  WELCOME10: { label: "Welcome 10% off", percentOff: 10 },
+  FIND20: { label: "Extra 20% off", percentOff: 20 },
+  HAPPY10: { label: "Welcome 10% off", percentOff: 10 },
 }
 
 export function BagDrawer() {
@@ -73,7 +73,7 @@ export function BagDrawer() {
               </div>
               <p className="font-display text-lg font-semibold">Your bag is empty</p>
               <p className="max-w-xs text-sm text-muted-foreground">
-                Browse the rack for designer finds — fresh drops land daily.
+                Browse Marshalls for brand-name finds — new surprises land daily.
               </p>
               <Button asChild onClick={closeBag}>
                 <Link to="/catalog">Continue shopping</Link>
@@ -167,7 +167,7 @@ export function BagDrawer() {
                             {formatCurrency(product.price * item.quantity)}
                           </p>
                           <p className="price-compare text-xs">
-                            {formatCurrency(product.compareAt * item.quantity)}
+                            Compare at {formatCurrency(product.compareAt * item.quantity)}
                           </p>
                         </div>
                       </div>
@@ -193,7 +193,7 @@ export function BagDrawer() {
                     setPromoInput(e.target.value.toUpperCase())
                     setPromoError(null)
                   }}
-                  placeholder="RACK20"
+                  placeholder="FIND20"
                   className="h-10 uppercase"
                 />
                 <Button
@@ -235,7 +235,7 @@ export function BagDrawer() {
                 <dd className="tabular">{formatCurrency(subtotal)}</dd>
               </div>
               <div className="flex justify-between text-deal">
-                <dt>Off-price savings</dt>
+                <dt>You save</dt>
                 <dd className="tabular">−{formatCurrency(merchandiseSavings)}</dd>
               </div>
               {promoDiscount > 0 && (

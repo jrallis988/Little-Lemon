@@ -16,8 +16,8 @@ export function EmptyCatalogState() {
         {query ? `No results for “${query}”` : "No products match these filters"}
       </h2>
       <p className="mt-2 max-w-md text-sm text-muted-foreground">
-        Try broadening your size, brand, or price range — inventory turns over
-        daily at Atelier Rack.
+        Try broadening your size, brand, or price range — new finds land daily
+        at Marshalls.
       </p>
       <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
         <Button

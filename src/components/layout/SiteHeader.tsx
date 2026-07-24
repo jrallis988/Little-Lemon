@@ -11,7 +11,8 @@ const NAV = [
   { to: "/catalog?department=Men", label: "Men" },
   { to: "/catalog?department=Kids", label: "Kids" },
   { to: "/catalog?department=Home", label: "Home" },
-  { to: "/catalog?sort=newest", label: "New Arrivals" },
+  { to: "/catalog?category=Shoes", label: "Shoes" },
+  { to: "/catalog?department=Beauty", label: "Beauty" },
   { to: "/catalog?sort=discount", label: "Clearance" },
 ]
 
@@ -23,42 +24,58 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40">
-      <div className="bg-foreground text-primary-foreground">
-        <div className="shelf-container flex h-[var(--promo-height)] items-center justify-center gap-3 text-2xs font-medium tracking-[0.08em] uppercase sm:text-xs">
-          <span className="hidden sm:inline">Free returns in store ·</span>
-          <span>Extra 20% off clearance with code RACK20</span>
-          <span className="hidden md:inline">· New designer drop daily at 10am ET</span>
+      <div className="bg-primary text-primary-foreground">
+        <div className="shelf-container flex h-[var(--promo-height)] items-center justify-center gap-2 text-center text-xs font-semibold tracking-wide sm:gap-3 sm:text-sm">
+          <span>Free shipping on orders $89+</span>
+          <span className="hidden opacity-70 sm:inline" aria-hidden>
+            |
+          </span>
+          <span className="hidden sm:inline">
+            Extra 20% off clearance with code <span className="underline">FIND20</span>
+          </span>
+          <span className="hidden opacity-70 md:inline" aria-hidden>
+            |
+          </span>
+          <span className="hidden md:inline">New finds drop daily</span>
         </div>
       </div>
 
-      <div className="border-b border-border/80 bg-surface/90 shadow-header backdrop-blur-md">
+      <div className="border-b border-border bg-surface shadow-header">
         <div className="shelf-container">
-          <div className="flex h-[var(--header-height)] items-center gap-4">
+          <div className="flex h-9 items-center justify-end gap-4 text-xs text-muted-foreground">
+            <button type="button" className="inline-flex items-center gap-1 hover:text-foreground">
+              <MapPin className="h-3.5 w-3.5" />
+              Find a store
+            </button>
+            <button type="button" className="hidden hover:text-foreground sm:inline">
+              Gift cards
+            </button>
+            <button type="button" className="hover:text-foreground">
+              Sign in
+            </button>
+          </div>
+
+          <div className="flex h-[var(--header-height)] items-center gap-3 border-t border-border/70 sm:gap-4">
             <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Open menu">
               <Menu className="h-5 w-5" />
             </Button>
 
-            <Link
-              to="/"
-              className="group flex shrink-0 items-baseline gap-1.5"
-              aria-label="Atelier Rack home"
-            >
-              <span className="font-display text-[1.35rem] font-extrabold tracking-[-0.04em] text-foreground sm:text-[1.55rem]">
-                ATELIER
-              </span>
-              <span className="font-display text-[1.35rem] font-semibold tracking-[-0.03em] text-deal sm:text-[1.55rem]">
-                RACK
-              </span>
+            <Link to="/" className="shrink-0" aria-label="Marshalls home">
+              <span className="marshalls-wordmark">Marshalls</span>
             </Link>
 
-            <nav className="ml-4 hidden items-center gap-1 lg:flex" aria-label="Primary">
+            <nav
+              className="ml-2 hidden items-center gap-0.5 lg:flex"
+              aria-label="Primary"
+            >
               {NAV.map((item) => (
                 <NavLink
                   key={item.label}
                   to={item.to}
                   className={({ isActive }) =>
                     cn(
-                      "rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground",
+                      "rounded-sm px-3 py-2 text-sm font-semibold text-foreground/80 transition-colors hover:bg-secondary hover:text-foreground",
+                      item.label === "Clearance" && "text-primary hover:text-primary",
                       isActive && "bg-secondary text-foreground",
                     )
                   }
@@ -78,16 +95,18 @@ export function SiteHeader() {
                 <Input
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search brands, categories, styles…"
-                  className="h-10 border-border/80 bg-surface-muted/60 pl-9 pr-3 shadow-none focus-visible:bg-surface"
+                  placeholder="Search Marshalls"
+                  className="h-10 border-border bg-surface-muted pl-9 pr-3 shadow-none focus-visible:bg-surface"
                   aria-label="Search catalog"
                 />
               </form>
 
-              <Button variant="ghost" size="icon" className="hidden sm:inline-flex" aria-label="Find a store">
-                <MapPin className="h-5 w-5" />
-              </Button>
-              <Button variant="ghost" size="icon" className="hidden sm:inline-flex" aria-label="Wishlist">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="hidden sm:inline-flex"
+                aria-label="Wishlist"
+              >
                 <Heart className="h-5 w-5" />
               </Button>
               <Button variant="ghost" size="icon" aria-label="Account">
@@ -102,7 +121,7 @@ export function SiteHeader() {
               >
                 <ShoppingBag className="h-5 w-5" />
                 {itemCount > 0 && (
-                  <span className="absolute -right-0.5 -top-0.5 flex h-4.5 min-w-4.5 items-center justify-center rounded-full bg-deal px-1 text-[10px] font-bold leading-none text-deal-foreground">
+                  <span className="absolute -right-0.5 -top-0.5 flex h-[1.125rem] min-w-[1.125rem] items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold leading-none text-primary-foreground">
                     {itemCount > 99 ? "99+" : itemCount}
                   </span>
                 )}
@@ -116,8 +135,8 @@ export function SiteHeader() {
               <Input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search the rack…"
-                className="h-10 bg-surface-muted/70 pl-9 shadow-none"
+                placeholder="Search Marshalls"
+                className="h-10 bg-surface-muted pl-9 shadow-none"
                 aria-label="Search catalog"
               />
             </form>

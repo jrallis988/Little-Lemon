@@ -67,7 +67,9 @@ export function QuickViewDialog({
 
           <div className="flex flex-wrap items-baseline gap-2">
             <span className="price-deal text-lg">{formatCurrency(product.price)}</span>
-            <span className="price-compare">{formatCurrency(product.compareAt)}</span>
+            <span className="price-compare">
+              Compare at {formatCurrency(product.compareAt)}
+            </span>
             {pct > 0 && (
               <Badge className="bg-deal-soft text-deal">{pct}% off</Badge>
             )}

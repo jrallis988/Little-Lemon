@@ -1,9 +1,9 @@
 {
-  "name": "Atelier Rack",
-  "short_name": "Atelier Rack",
-  "description": "Designer and contemporary brands at off-price.",
+  "name": "Marshalls",
+  "short_name": "Marshalls",
+  "description": "Brand names for less. Shop designer and brand-name finds at Marshalls.",
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#141414",
-  "background_color": "#F7F6F3"
+  "theme_color": "#D71920",
+  "background_color": "#FFFFFF"
 }

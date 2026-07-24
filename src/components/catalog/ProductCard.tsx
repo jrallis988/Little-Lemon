@@ -65,8 +65,8 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
               </Badge>
             )}
             {product.isNew && (
-              <Badge className="bg-foreground text-primary-foreground shadow-soft">
-                Just in
+              <Badge className="bg-brand-blue text-brand-blue-foreground shadow-soft">
+                New
               </Badge>
             )}
           </div>
@@ -136,9 +136,8 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
           <span className="price-deal text-[0.95rem]">
             {formatCurrency(product.price)}
           </span>
-          <span className="price-compare">{formatCurrency(product.compareAt)}</span>
-          <span className="text-2xs font-medium text-muted-foreground">
-            Save {formatCurrency(product.compareAt - product.price)}
+          <span className="price-compare text-xs">
+            Compare at {formatCurrency(product.compareAt)}
           </span>
         </div>
 

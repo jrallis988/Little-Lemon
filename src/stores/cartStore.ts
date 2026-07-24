@@ -98,7 +98,7 @@ export const useCartStore = create<CartState>()(
         }, 0),
     }),
     {
-      name: "atelier-rack-cart",
+      name: "marshalls-bag",
       partialize: (state) => ({
         items: state.items,
         promoCode: state.promoCode,

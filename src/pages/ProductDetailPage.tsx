@@ -77,7 +77,7 @@ export function ProductDetailPage() {
         </div>
 
         <div className="lg:col-span-5">
-          <div className="lg:sticky lg:top-[calc(var(--header-height)+var(--promo-height)+1.5rem)]">
+          <div className="lg:sticky lg:top-[calc(var(--chrome-offset)+1.5rem)]">
             <p className="text-2xs font-semibold uppercase tracking-[0.1em] text-muted-foreground">
               {product.brand} · {product.brandTier}
             </p>
@@ -87,11 +87,13 @@ export function ProductDetailPage() {
 
             <div className="mt-4 flex flex-wrap items-baseline gap-2">
               <span className="price-deal text-2xl">{formatCurrency(product.price)}</span>
-              <span className="price-compare text-base">{formatCurrency(product.compareAt)}</span>
+              <span className="price-compare text-base">
+                Compare at {formatCurrency(product.compareAt)}
+              </span>
               <Badge className="bg-deal text-deal-foreground">{pct}% off</Badge>
             </div>
             <p className="mt-1 text-sm text-muted-foreground">
-              You save {formatCurrency(product.compareAt - product.price)} vs. compare-at
+              You save {formatCurrency(product.compareAt - product.price)} vs. compare at
             </p>
 
             <Separator className="my-6" />

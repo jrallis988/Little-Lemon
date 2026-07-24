@@ -213,7 +213,7 @@ export function FilterPanel({
 export function FilterSidebar() {
   return (
     <aside className="w-full lg:w-[var(--layout-rail)] lg:shrink-0">
-      <div className="sticky top-[calc(var(--header-height)+var(--promo-height)+1rem)] max-h-[calc(100dvh-var(--header-height)-var(--promo-height)-2rem)] overflow-y-auto">
+      <div className="sticky top-[calc(var(--chrome-offset)+1rem)] max-h-[calc(100dvh-var(--chrome-offset)-2rem)] overflow-y-auto">
         <FilterPanel />
       </div>
     </aside>

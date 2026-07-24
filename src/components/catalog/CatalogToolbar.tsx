@@ -44,11 +44,11 @@ export function CatalogToolbar({ resultCount }: CatalogToolbarProps) {
           <span className="font-medium text-foreground">All products</span>
         </nav>
         <h1 className="font-display text-display-sm font-bold tracking-tight">
-          Shop the Rack
+          Shop Marshalls
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
           <span className="tabular font-medium text-foreground">{resultCount}</span>{" "}
-          {resultCount === 1 ? "style" : "styles"} · Designer & contemporary off-price
+          {resultCount === 1 ? "item" : "items"} · Brand names for less
         </p>
       </div>
 

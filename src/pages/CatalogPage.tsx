@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom"
 import { CatalogView } from "@/components/catalog/CatalogView"
 import { useFilterStore } from "@/stores/filterStore"
 import type { CatalogSort, Department } from "@/types"
-import { DEPARTMENTS } from "@/data/products"
+import { ALL_CATEGORIES, DEPARTMENTS } from "@/data/products"
 
 const SORTS: CatalogSort[] = [
   "featured",
@@ -16,18 +16,28 @@ const SORTS: CatalogSort[] = [
 export function CatalogPage() {
   const [params] = useSearchParams()
   const toggleDepartment = useFilterStore((s) => s.toggleDepartment)
+  const toggleCategory = useFilterStore((s) => s.toggleCategory)
   const departments = useFilterStore((s) => s.departments)
+  const categories = useFilterStore((s) => s.categories)
   const setSort = useFilterStore((s) => s.setSort)
   const clearFilters = useFilterStore((s) => s.clearFilters)
 
   useEffect(() => {
     const dept = params.get("department")
+    const category = params.get("category")
     const sort = params.get("sort")
 
     if (dept && DEPARTMENTS.includes(dept as (typeof DEPARTMENTS)[number])) {
       if (!departments.includes(dept as Department)) {
         clearFilters()
         toggleDepartment(dept as Department)
+      }
+    }
+
+    if (category && ALL_CATEGORIES.includes(category)) {
+      if (!categories.includes(category)) {
+        clearFilters()
+        toggleCategory(category)
       }
     }
 
