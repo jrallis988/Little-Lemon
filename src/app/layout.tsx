@@ -1,0 +1,78 @@
+import type { Metadata, Viewport } from "next";
+import { Fraunces, Source_Sans_3, Geist_Mono } from "next/font/google";
+import { SiteFooter } from "@/components/layout/site-footer";
+import { SiteHeader } from "@/components/layout/site-header";
+import { DisclaimerBanner } from "@/components/layout/disclaimer-banner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import "./globals.css";
+
+const display = Fraunces({
+  variable: "--font-display",
+  subsets: ["latin"],
+});
+
+const sans = Source_Sans_3({
+  variable: "--font-sans",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const mono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: {
+    default: "ClearDose — Transparent prescription prices & pharmacy coupons",
+    template: "%s · ClearDose",
+  },
+  description:
+    "Compare real local pharmacy prices, unlock digital coupons, and save on prescriptions. ClearDose is a discount provider — not insurance.",
+  keywords: [
+    "prescription coupons",
+    "drug prices",
+    "pharmacy discount",
+    "medication savings",
+    "generic vs brand",
+  ],
+  openGraph: {
+    title: "ClearDose — Know the price before you fill",
+    description:
+      "Search medications, compare nearby pharmacies, and show a digital coupon at the counter.",
+    type: "website",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0f6e6a",
+  width: "device-width",
+  initialScale: 1,
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <body
+        className={`${display.variable} ${sans.variable} ${mono.variable} min-h-dvh font-sans antialiased`}
+      >
+        <TooltipProvider>
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
+          >
+            Skip to main content
+          </a>
+          <DisclaimerBanner />
+          <SiteHeader />
+          <main id="main-content">{children}</main>
+          <SiteFooter />
+        </TooltipProvider>
+      </body>
+    </html>
+  );
+}
