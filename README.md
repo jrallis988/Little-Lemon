@@ -5,7 +5,8 @@ Independent write-in campaign site — **People Over Politics.**
 ## Stack
 
 - Next.js 14 (App Router) · Tailwind CSS · Lucide React
-- Merriweather + Source Sans 3
+- Archivo Black (display) + Inter (body) + Georgia (pull quotes)
+- Design system: navy/slate/charcoal neutrals, red/yellow accents (70/20/10)
 
 ## Primary pages
 
