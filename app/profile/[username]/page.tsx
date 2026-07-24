@@ -418,7 +418,7 @@ function ProfileModule({
           {profile.details.whoIdLikeToMeet ? (
             <div className="rounded-card border border-surface-border bg-surface-muted p-3">
               <h3 className="text-xs font-bold uppercase tracking-wide text-brand-dark">
-                Who I'd like to meet
+                Who I&apos;d like to meet
               </h3>
               <p className="mt-1 text-sm leading-6 text-navy-700">
                 {profile.details.whoIdLikeToMeet}

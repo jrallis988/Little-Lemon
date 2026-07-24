@@ -124,6 +124,8 @@ function HomeContent() {
           !hasRelationship(profile.userId, item.userId)
       )
       .slice(0, 3);
+    // Intentionally depend on friendships so suggestions refresh after requests.
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- hasRelationship reads live snapshot
   }, [profile, snap.profiles, snap.friendships]);
 
   const recentlyOnline = useMemo(() => {

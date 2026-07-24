@@ -64,7 +64,7 @@ export function ProfileCard({
         <div className="mt-3 space-y-2 text-sm text-navy-700">
           {profile.statusMessage ? (
             <p className="line-clamp-2 rounded-card border border-surface-border bg-surface-muted px-3 py-2 text-xs italic">
-              "{profile.statusMessage}"
+              &ldquo;{profile.statusMessage}&rdquo;
             </p>
           ) : null}
           <div className="flex flex-wrap items-center gap-2 text-xs">

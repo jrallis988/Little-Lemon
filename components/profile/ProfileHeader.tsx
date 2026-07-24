@@ -89,7 +89,7 @@ export function ProfileHeader({
         <div className="space-y-3">
           {profile.statusMessage ? (
             <p className="rounded-card border border-surface-border bg-surface-muted px-3 py-2 text-sm italic text-navy-800">
-              "{profile.statusMessage}"
+              &ldquo;{profile.statusMessage}&rdquo;
             </p>
           ) : null}
           <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-navy-600">
