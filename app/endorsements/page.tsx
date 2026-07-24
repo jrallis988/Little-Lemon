@@ -21,15 +21,15 @@ export default function EndorsementsPage() {
           {endorsements.map((item) => (
             <li
               key={item.id}
-              className="border border-dashed border-granite-300 bg-white p-6"
+              className="border border-dashed border-slate-line bg-white p-6"
             >
-              <p className="font-serif text-lg italic leading-relaxed text-granite-600">
+              <p className="font-display text-lg italic leading-relaxed text-slate-text">
                 “{item.quote}”
               </p>
-              <p className="mt-4 text-sm font-semibold text-granite-800">
+              <p className="mt-4 text-sm font-semibold text-ink">
                 {item.name}
               </p>
-              <p className="text-sm text-granite-500">{item.role}</p>
+              <p className="text-sm text-slate-muted">{item.role}</p>
             </li>
           ))}
         </ul>

@@ -13,7 +13,7 @@ export default function TermsPage() {
     <>
       <PageHero overline="Legal" title="Terms & Conditions" />
       <article className="mx-auto max-w-3xl section-pad">
-        <p className="text-sm text-granite-500">Last updated: July 24, 2026</p>
+        <p className="text-sm text-slate-muted">Last updated: July 24, 2026</p>
         <Prose>
           <p>
             By using this website, you agree to these terms. Content is provided
@@ -21,7 +21,7 @@ export default function TermsPage() {
             {candidate.fullName}&apos;s independent write-in candidacy for U.S.
             Senate.
           </p>
-          <h2 className="font-serif text-2xl font-bold text-granite-800">
+          <h2 className="font-display text-2xl font-bold text-ink">
             Use of the site
           </h2>
           <p>
@@ -29,23 +29,23 @@ export default function TermsPage() {
             for commercial reuse without permission. Volunteer and contact
             submissions must be accurate to the best of your knowledge.
           </p>
-          <h2 className="font-serif text-2xl font-bold text-granite-800">
+          <h2 className="font-display text-2xl font-bold text-ink">
             Political communications
           </h2>
           <p>
             Messages sent by the campaign may include event updates and volunteer
             requests. Text STOP to opt out of SMS. See our{" "}
-            <Link href="/privacy" className="font-semibold text-pine-700 underline-offset-2 hover:underline">
+            <Link href="/privacy" className="font-semibold text-red underline-offset-2 hover:underline">
               Privacy Policy
             </Link>
             .
           </p>
-          <h2 className="font-serif text-2xl font-bold text-granite-800">
+          <h2 className="font-display text-2xl font-bold text-ink">
             Contact
           </h2>
           <p>
             Questions:{" "}
-            <a href={`mailto:${candidate.email}`} className="font-semibold text-pine-700 underline-offset-2 hover:underline">
+            <a href={`mailto:${candidate.email}`} className="font-semibold text-red underline-offset-2 hover:underline">
               {candidate.email}
             </a>
             .

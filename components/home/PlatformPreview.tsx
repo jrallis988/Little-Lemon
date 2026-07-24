@@ -1,42 +1,35 @@
 import Link from "next/link";
 import { candidate } from "@/lib/candidate";
 import { secondAmendmentHome } from "@/lib/issues";
+import { SectionIntro } from "@/components/SectionIntro";
 
 export function PlatformPreview() {
   return (
-    <section
-      aria-labelledby="platform-heading"
-      className="bg-mist"
-    >
+    <section aria-labelledby="platform-heading" className="bg-charcoal">
       <div className="mx-auto max-w-content section-pad">
-        <p className="text-sm font-semibold uppercase tracking-[0.16em] text-pine-600">
-          Core Principles
-        </p>
-        <h2
-          id="platform-heading"
-          className="mt-2 font-serif text-3xl font-bold text-granite-800 sm:text-4xl"
-        >
-          The Platform.
-        </h2>
+        <SectionIntro
+          overline="Core Principles"
+          title="The Platform."
+          tone="dark"
+          titleId="platform-heading"
+        />
 
-        <article className="mt-10 border border-granite-200 bg-white p-6 sm:p-10">
-          <p className="text-xs font-bold uppercase tracking-[0.16em] text-amber-700">
+        <article className="mt-10 border border-white/10 bg-ink/40 p-7 sm:p-11">
+          <p className="font-display text-overline font-normal uppercase text-red">
             {secondAmendmentHome.overline}
           </p>
-          <h3 className="mt-3 font-serif text-2xl font-bold text-granite-800 sm:text-3xl">
+          <h3 className="mt-4 font-display text-card-display font-normal text-white">
             {secondAmendmentHome.heading}
           </h3>
-          <p className="mt-4 text-lg leading-relaxed text-granite-600">
+          <p className="mt-4 text-body-lg text-white/85">
             {secondAmendmentHome.body}
           </p>
-          <p className="mt-4 text-base leading-relaxed text-granite-500">
+          <p className="mt-4 text-body-sm text-white/65">
             {secondAmendmentHome.detail}
           </p>
-          <blockquote className="mt-8 border-l-4 border-granite-800 pl-5">
-            <p className="font-serif text-lg italic leading-relaxed text-granite-700">
-              “{candidate.secondAmendmentQuote}”
-            </p>
-            <footer className="mt-3 text-sm font-semibold text-granite-500">
+          <blockquote className="pull-quote-light mt-8">
+            “{candidate.secondAmendmentQuote}”
+            <footer className="mt-3 font-sans text-sm font-semibold not-italic text-white/55">
               — United States Constitution · Second Amendment · 1791
             </footer>
           </blockquote>

@@ -3,6 +3,7 @@
 import { FormEvent, useId, useState } from "react";
 import Link from "next/link";
 import { AlertCircle, CheckCircle2 } from "lucide-react";
+import { SectionIntro } from "@/components/SectionIntro";
 
 export function JoinForm() {
   const statusId = useId();
@@ -41,29 +42,27 @@ export function JoinForm() {
     <section
       id="join"
       aria-labelledby="join-heading"
-      className="scroll-mt-28 bg-granite-800"
+      className="scroll-mt-28 bg-navy"
     >
       <div className="mx-auto max-w-content section-pad">
         <div className="mx-auto max-w-2xl">
-          <h2
-            id="join-heading"
-            className="text-center font-serif text-3xl font-bold text-white sm:text-4xl"
-          >
-            Join Team Varga
-          </h2>
-          <p className="mt-3 text-center text-lg text-granite-300">
-            Sign up to support my campaign
-          </p>
+          <SectionIntro
+            overline="Get involved"
+            title="Join Team Varga"
+            lead="Sign up to support my campaign"
+            tone="dark"
+            titleId="join-heading"
+          />
 
           <form
             onSubmit={onSubmit}
             noValidate
-            className="mt-8 space-y-4 border border-granite-600 bg-granite-900/40 p-6 sm:p-8"
+            className="mt-8 space-y-4 border border-white/15 bg-ink/30 p-6 sm:p-8"
             aria-describedby={status !== "idle" ? statusId : undefined}
           >
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <label htmlFor="join-first" className="mb-1.5 block text-sm font-semibold text-granite-200">
+                <label htmlFor="join-first" className="mb-1.5 block text-sm font-semibold text-white/85">
                   First Name
                 </label>
                 <input
@@ -71,11 +70,11 @@ export function JoinForm() {
                   name="first_name"
                   type="text"
                   autoComplete="given-name"
-                  className="w-full rounded-sm border border-granite-500 bg-granite-800 px-4 py-3 text-white focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/30"
+                  className="w-full rounded-cta border border-white/20 bg-navy px-4 py-3 text-white placeholder:text-white/40 focus:border-red focus:outline-none focus:ring-2 focus:ring-red/30"
                 />
               </div>
               <div>
-                <label htmlFor="join-last" className="mb-1.5 block text-sm font-semibold text-granite-200">
+                <label htmlFor="join-last" className="mb-1.5 block text-sm font-semibold text-white/85">
                   Last Name
                 </label>
                 <input
@@ -83,13 +82,13 @@ export function JoinForm() {
                   name="last_name"
                   type="text"
                   autoComplete="family-name"
-                  className="w-full rounded-sm border border-granite-500 bg-granite-800 px-4 py-3 text-white focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/30"
+                  className="w-full rounded-cta border border-white/20 bg-navy px-4 py-3 text-white placeholder:text-white/40 focus:border-red focus:outline-none focus:ring-2 focus:ring-red/30"
                 />
               </div>
             </div>
             <div>
-              <label htmlFor="join-email" className="mb-1.5 block text-sm font-semibold text-granite-200">
-                Email <span className="text-amber-300">*</span>
+              <label htmlFor="join-email" className="mb-1.5 block text-sm font-semibold text-white/85">
+                Email <span className="text-red">*</span>
               </label>
               <input
                 id="join-email"
@@ -97,12 +96,12 @@ export function JoinForm() {
                 type="email"
                 autoComplete="email"
                 required
-                className="w-full rounded-sm border border-granite-500 bg-granite-800 px-4 py-3 text-white focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/30"
+                className="w-full rounded-cta border border-white/20 bg-navy px-4 py-3 text-white placeholder:text-white/40 focus:border-red focus:outline-none focus:ring-2 focus:ring-red/30"
               />
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <label htmlFor="join-phone" className="mb-1.5 block text-sm font-semibold text-granite-200">
+                <label htmlFor="join-phone" className="mb-1.5 block text-sm font-semibold text-white/85">
                   Cell Phone
                 </label>
                 <input
@@ -110,11 +109,11 @@ export function JoinForm() {
                   name="phone"
                   type="tel"
                   autoComplete="tel"
-                  className="w-full rounded-sm border border-granite-500 bg-granite-800 px-4 py-3 text-white focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/30"
+                  className="w-full rounded-cta border border-white/20 bg-navy px-4 py-3 text-white placeholder:text-white/40 focus:border-red focus:outline-none focus:ring-2 focus:ring-red/30"
                 />
               </div>
               <div>
-                <label htmlFor="join-zip" className="mb-1.5 block text-sm font-semibold text-granite-200">
+                <label htmlFor="join-zip" className="mb-1.5 block text-sm font-semibold text-white/85">
                   Zip Code
                 </label>
                 <input
@@ -123,14 +122,14 @@ export function JoinForm() {
                   type="text"
                   inputMode="numeric"
                   autoComplete="postal-code"
-                  className="w-full rounded-sm border border-granite-500 bg-granite-800 px-4 py-3 text-white focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/30"
+                  className="w-full rounded-cta border border-white/20 bg-navy px-4 py-3 text-white placeholder:text-white/40 focus:border-red focus:outline-none focus:ring-2 focus:ring-red/30"
                 />
               </div>
             </div>
-            <button type="submit" className="btn-accent w-full">
-              Join The Team
+            <button type="submit" className="btn-primary w-full">
+              Join The Team →
             </button>
-            <p className="text-xs leading-relaxed text-granite-400">
+            <p className="text-xs leading-relaxed text-white/50">
               By submitting your cell phone number you agree to receive periodic
               text messages from the Nick Varga Campaign. Message and data rates
               may apply. Text HELP for info. Text STOP to stop.{" "}
@@ -144,10 +143,10 @@ export function JoinForm() {
                 id={statusId}
                 role="status"
                 aria-live="polite"
-                className={`flex items-start gap-2 rounded-sm px-3 py-2.5 text-sm ${
+                className={`flex items-start gap-2 rounded-cta px-3 py-2.5 text-sm ${
                   status === "success"
-                    ? "bg-pine-900 text-pine-100"
-                    : "bg-amber-950 text-amber-100"
+                    ? "bg-white/10 text-white"
+                    : "bg-red/20 text-white"
                 }`}
               >
                 {status === "success" ? (

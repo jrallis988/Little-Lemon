@@ -18,30 +18,30 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-granite-900 text-granite-200">
-      <div className="relative h-40 overflow-hidden sm:h-52" aria-hidden>
+    <footer className="bg-footer-navy text-white/75">
+      <div className="relative h-44 overflow-hidden sm:h-56" aria-hidden>
         <Image
           src="/images/nh-landscape.svg"
           alt=""
           fill
-          className="object-cover object-bottom opacity-70"
+          className="object-cover object-bottom opacity-80"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-granite-900 via-granite-900/70 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-footer-navy via-footer-navy/70 to-transparent" />
       </div>
 
-      <div className="mx-auto max-w-content px-5 pb-12 pt-2 sm:px-8">
+      <div className="mx-auto max-w-content px-6 pb-12 pt-2 md:px-8">
         <div className="grid gap-10 md:grid-cols-[1.3fr_1fr]">
           <div>
-            <p className="font-serif text-2xl font-bold text-white">
+            <p className="font-display text-2xl font-normal text-white">
               {candidate.fullName}
             </p>
-            <p className="mt-1 text-sm font-semibold uppercase tracking-[0.14em] text-pine-300">
+            <p className="mt-1 text-xs font-semibold uppercase tracking-[0.14em] text-yellow">
               for {candidate.office} · Independent Write-In
             </p>
-            <p className="mt-3 text-sm font-semibold text-violet-300">
+            <p className="mt-3 text-sm font-semibold text-white">
               For New Hampshire
             </p>
-            <p className="mt-4 max-w-md text-sm leading-relaxed text-granite-300">
+            <p className="mt-4 max-w-md text-sm leading-relaxed text-white/70">
               {candidate.tagline} Built neighbor by neighbor. No corporate money.
               No party bosses.
             </p>
@@ -58,7 +58,7 @@ export function Footer() {
                     aria-label={label}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex rounded-sm p-2 text-granite-300 hover:bg-granite-700 hover:text-white"
+                    className="inline-flex rounded-cta p-2 text-white/70 hover:bg-white/10 hover:text-white"
                   >
                     <Icon className="h-4 w-4" aria-hidden />
                   </a>
@@ -68,7 +68,7 @@ export function Footer() {
           </div>
 
           <nav aria-label="Footer">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-granite-400">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/45">
               Quick links
             </p>
             <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2">
@@ -76,7 +76,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-granite-200 underline-offset-2 hover:text-white hover:underline"
+                    className="text-sm text-white/80 underline-offset-2 hover:text-white hover:underline"
                   >
                     {link.label}
                   </Link>
@@ -86,7 +86,7 @@ export function Footer() {
           </nav>
         </div>
 
-        <div className="mt-10 space-y-3 border-t border-granite-700 pt-8 text-xs leading-relaxed text-granite-400">
+        <div className="mt-10 space-y-3 border-t border-white/15 pt-8 text-xs leading-relaxed text-white/50">
           <p>Paid for by {candidate.committee}.</p>
           <p>
             © {year} {candidate.fullName} for {candidate.office}. All rights

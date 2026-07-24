@@ -19,7 +19,7 @@ export default function TransparencyPage() {
       />
       <article className="mx-auto max-w-3xl section-pad space-y-12">
         <section>
-          <h2 className="font-serif text-2xl font-bold text-granite-800">
+          <h2 className="font-display text-2xl font-bold text-ink">
             Our Commitment to Transparency
           </h2>
           <Prose>
@@ -32,7 +32,7 @@ export default function TransparencyPage() {
         </section>
 
         <section>
-          <h2 className="font-serif text-2xl font-bold text-granite-800">
+          <h2 className="font-display text-2xl font-bold text-ink">
             How This Campaign Is Funded
           </h2>
           <Prose>
@@ -47,7 +47,7 @@ export default function TransparencyPage() {
                 href="https://www.fec.gov"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-semibold text-pine-700 underline-offset-2 hover:underline"
+                className="font-semibold text-red underline-offset-2 hover:underline"
               >
                 fec.gov
               </a>
@@ -59,10 +59,10 @@ export default function TransparencyPage() {
         </section>
 
         <section>
-          <h2 className="font-serif text-2xl font-bold text-granite-800">
+          <h2 className="font-display text-2xl font-bold text-ink">
             What We Will Never Do
           </h2>
-          <ul className="mt-4 list-disc space-y-2 pl-5 text-lg text-granite-600">
+          <ul className="mt-4 list-disc space-y-2 pl-5 text-lg text-slate-text">
             <li>Accept corporate PAC money</li>
             <li>Hide behind dark-money groups</li>
             <li>Sell access to lobbyists</li>
@@ -71,7 +71,7 @@ export default function TransparencyPage() {
         </section>
 
         <section>
-          <h2 className="font-serif text-2xl font-bold text-granite-800">
+          <h2 className="font-display text-2xl font-bold text-ink">
             FEC Filings
           </h2>
           <Prose>
@@ -82,18 +82,18 @@ export default function TransparencyPage() {
                 href="https://www.fec.gov"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-semibold text-pine-700 underline-offset-2 hover:underline"
+                className="font-semibold text-red underline-offset-2 hover:underline"
               >
                 fec.gov
               </a>
               .
             </p>
           </Prose>
-          <p className="mt-6 text-sm text-granite-500">
+          <p className="mt-6 text-sm text-slate-muted">
             Paid for by {candidate.committee}.
           </p>
           <p className="mt-4">
-            <Link href="/contact" className="font-semibold text-pine-700 underline-offset-2 hover:underline">
+            <Link href="/contact" className="font-semibold text-red underline-offset-2 hover:underline">
               Questions about funding? Contact us →
             </Link>
           </p>

@@ -10,20 +10,20 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   return (
     <article className="mx-auto max-w-3xl section-pad">
-      <p className="text-sm font-semibold uppercase tracking-[0.14em] text-pine-600">
+      <p className="text-sm font-semibold uppercase tracking-[0.14em] text-red">
         Legal
       </p>
-      <h1 className="mt-2 font-serif text-4xl font-bold text-granite-800">
+      <h1 className="mt-2 font-display text-4xl font-bold text-ink">
         Privacy Policy
       </h1>
-      <p className="mt-4 text-granite-500">Last updated: July 24, 2026</p>
+      <p className="mt-4 text-slate-muted">Last updated: July 24, 2026</p>
 
-      <div className="mt-10 space-y-6 text-base leading-relaxed text-granite-600">
+      <div className="mt-10 space-y-6 text-base leading-relaxed text-slate-text">
         <p>
           {candidate.committee} (“we,” “us”) respects your privacy. This policy
           explains what information we collect on this website and how we use it.
         </p>
-        <h2 className="font-serif text-2xl font-bold text-granite-800">
+        <h2 className="font-display text-2xl font-bold text-ink">
           Information we collect
         </h2>
         <p>
@@ -32,7 +32,7 @@ export default function PrivacyPage() {
           email, phone, ZIP code, and message contents. We may also collect
           standard analytics data (pages visited, device type) in aggregate form.
         </p>
-        <h2 className="font-serif text-2xl font-bold text-granite-800">
+        <h2 className="font-display text-2xl font-bold text-ink">
           How we use information
         </h2>
         <ul className="list-disc space-y-2 pl-5">
@@ -41,7 +41,7 @@ export default function PrivacyPage() {
           <li>To comply with federal campaign finance reporting requirements</li>
           <li>To improve accessibility and performance of this site</li>
         </ul>
-        <h2 className="font-serif text-2xl font-bold text-granite-800">
+        <h2 className="font-display text-2xl font-bold text-ink">
           Text messages
         </h2>
         <p>
@@ -49,7 +49,7 @@ export default function PrivacyPage() {
           the campaign. Message and data rates may apply. Text HELP for info.
           Text STOP to opt out.
         </p>
-        <h2 className="font-serif text-2xl font-bold text-granite-800">
+        <h2 className="font-display text-2xl font-bold text-ink">
           Sharing
         </h2>
         <p>
@@ -57,14 +57,14 @@ export default function PrivacyPage() {
           vendors who help operate the campaign under confidentiality agreements,
           or when required by law.
         </p>
-        <h2 className="font-serif text-2xl font-bold text-granite-800">
+        <h2 className="font-display text-2xl font-bold text-ink">
           Contact
         </h2>
         <p>
           Questions? Email{" "}
           <a
             href={`mailto:${candidate.email}`}
-            className="font-semibold text-pine-700 underline-offset-2 hover:underline"
+            className="font-semibold text-red underline-offset-2 hover:underline"
           >
             {candidate.email}
           </a>
@@ -75,7 +75,7 @@ export default function PrivacyPage() {
       <p className="mt-12">
         <Link
           href="/"
-          className="font-semibold text-pine-700 underline-offset-2 hover:underline"
+          className="font-semibold text-red underline-offset-2 hover:underline"
         >
           ← Back to home
         </Link>

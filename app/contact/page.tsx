@@ -18,14 +18,14 @@ export default function ContactPage() {
       />
       <div className="mx-auto grid max-w-content gap-10 section-pad lg:grid-cols-2">
         <div>
-          <h2 className="font-serif text-2xl font-bold text-granite-800">
+          <h2 className="font-display text-2xl font-bold text-ink">
             Campaign contact
           </h2>
-          <ul className="mt-4 space-y-2 text-base text-granite-600">
+          <ul className="mt-4 space-y-2 text-base text-slate-text">
             <li>
               <a
                 href={`mailto:${candidate.email}`}
-                className="font-semibold text-pine-700 underline-offset-2 hover:underline"
+                className="font-semibold text-red underline-offset-2 hover:underline"
               >
                 {candidate.email}
               </a>

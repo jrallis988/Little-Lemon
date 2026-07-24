@@ -20,21 +20,21 @@ export default function IssuesPage() {
         title="The Platform"
         subtitle="Practical answers. Written in plain English. Start with the signature priority — then dig into every issue."
       />
-      <div className="mx-auto max-w-content section-pad">
+      <div className="mx-auto max-w-content section-pad bg-warm-white">
         <Link
           href={`/issues/${featured.slug}`}
-          className="block border border-amber-700/40 bg-amber-50 p-6 transition-colors hover:border-amber-700 sm:p-8"
+          className="block border border-red/35 bg-paper p-7 transition-colors hover:border-red sm:p-10"
         >
-          <p className="text-xs font-bold uppercase tracking-[0.16em] text-amber-800">
+          <p className="font-display text-overline font-normal uppercase text-red">
             Signature Priority
           </p>
-          <h2 className="mt-2 font-serif text-3xl font-bold text-granite-800">
+          <h2 className="mt-3 font-display text-section-display font-normal text-ink">
             {featured.title}
           </h2>
-          <p className="mt-3 max-w-3xl text-lg text-granite-600">
+          <p className="mt-3 max-w-3xl text-body-lg text-slate-text">
             {featured.oneLiner}
           </p>
-          <p className="mt-4 text-sm font-semibold text-amber-900">Read more →</p>
+          <p className="link-cta mt-5">Read more →</p>
         </Link>
 
         <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -42,15 +42,15 @@ export default function IssuesPage() {
             <li key={issue.slug}>
               <Link
                 href={`/issues/${issue.slug}`}
-                className="flex h-full flex-col border border-granite-200 bg-white p-6 transition-colors hover:border-pine-500"
+                className="flex h-full flex-col border border-slate-line bg-white p-7 transition-colors hover:border-red"
               >
-                <h2 className="font-serif text-xl font-bold text-granite-800">
+                <h2 className="font-display text-[1.05rem] font-normal tracking-[0.5px] text-ink">
                   {issue.title}
                 </h2>
-                <p className="mt-3 flex-1 text-base leading-relaxed text-granite-500">
+                <p className="mt-3 flex-1 text-body-sm text-slate-muted">
                   {issue.oneLiner}
                 </p>
-                <p className="mt-4 text-sm font-semibold text-pine-700">
+                <p className="mt-4 font-display text-cta font-normal uppercase text-red">
                   Read more →
                 </p>
               </Link>

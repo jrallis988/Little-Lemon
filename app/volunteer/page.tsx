@@ -22,26 +22,26 @@ export default function VolunteerPage() {
           {volunteerRoles.map((item) => (
             <li
               key={item.id}
-              className="flex flex-col border border-granite-200 bg-white p-6"
+              className="flex flex-col border border-slate-line bg-white p-6"
             >
-              <h2 className="font-serif text-xl font-bold text-granite-800">
+              <h2 className="font-display text-xl font-bold text-ink">
                 {item.title}
               </h2>
-              <p className="mt-1 text-sm font-semibold text-pine-700">
+              <p className="mt-1 text-sm font-semibold text-red">
                 {item.location}
               </p>
-              <p className="mt-3 flex-1 text-base text-granite-600">
+              <p className="mt-3 flex-1 text-base text-slate-text">
                 {item.summary}
               </p>
-              <dl className="mt-4 space-y-1 text-sm text-granite-500">
+              <dl className="mt-4 space-y-1 text-sm text-slate-muted">
                 <div>
-                  <dt className="inline font-semibold text-granite-700">
+                  <dt className="inline font-semibold text-slate-text">
                     Time:{" "}
                   </dt>
                   <dd className="inline">{item.timeCommitment}</dd>
                 </div>
                 <div>
-                  <dt className="inline font-semibold text-granite-700">
+                  <dt className="inline font-semibold text-slate-text">
                     Skills:{" "}
                   </dt>
                   <dd className="inline">{item.skills}</dd>

@@ -1,22 +1,21 @@
 import type { Metadata, Viewport } from "next";
-import { Merriweather, Source_Sans_3 } from "next/font/google";
+import { Archivo_Black, Inter } from "next/font/google";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { candidate } from "@/lib/candidate";
 import "./globals.css";
 
-const merriweather = Merriweather({
+const archivoBlack = Archivo_Black({
   subsets: ["latin"],
-  weight: ["400", "700", "900"],
-  style: ["normal", "italic"],
-  variable: "--font-merriweather",
+  weight: "400",
+  variable: "--font-archivo-black",
   display: "swap",
 });
 
-const sourceSans = Source_Sans_3({
+const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-source-sans",
+  variable: "--font-inter",
   display: "swap",
 });
 
@@ -38,7 +37,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#2D5A45",
+  themeColor: "#1a2a4e",
   width: "device-width",
   initialScale: 1,
 };
@@ -49,7 +48,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${merriweather.variable} ${sourceSans.variable}`}>
+    <html lang="en" className={`${archivoBlack.variable} ${inter.variable}`}>
       <body>
         <a href="#main-content" className="skip-link">
           Skip to main content

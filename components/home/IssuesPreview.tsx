@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { ArrowRight, Clock } from "lucide-react";
+import { Clock } from "lucide-react";
 import { issues } from "@/lib/issues";
+import { SectionIntro } from "@/components/SectionIntro";
 
 const supporting = issues.filter((i) =>
   ["economy-jobs", "healthcare", "veterans"].includes(i.slug)
@@ -9,44 +10,30 @@ const featured = issues.find((i) => i.slug === "term-limits")!;
 
 export function IssuesPreview() {
   return (
-    <section
-      aria-labelledby="stands-heading"
-      className="bg-snow"
-    >
+    <section aria-labelledby="stands-heading" className="bg-warm-white">
       <div className="mx-auto max-w-content section-pad">
-        <p className="text-sm font-semibold uppercase tracking-[0.16em] text-pine-600">
-          Where Nick Stands
-        </p>
-        <h2
-          id="stands-heading"
-          className="mt-2 font-serif text-3xl font-bold text-granite-800 sm:text-4xl"
-        >
-          Practical answers. Written in plain English.
-        </h2>
-        <p className="mt-4 max-w-3xl text-lg text-granite-600">
-          Nick isn’t running on slogans. Here’s exactly what he’ll fight for in
-          Washington — starting with the one that matters most to fixing the rest.
-        </p>
+        <SectionIntro
+          overline="Where Nick Stands"
+          title="Practical answers. Written in plain English."
+          lead="Nick isn’t running on slogans. Here’s exactly what he’ll fight for in Washington — starting with the one that matters most to fixing the rest."
+          titleId="stands-heading"
+        />
 
-        <article className="mt-10 border border-amber-700/40 bg-amber-50 p-6 sm:p-8">
-          <p className="text-xs font-bold uppercase tracking-[0.16em] text-amber-800">
+        <article className="mt-10 border border-slate-line bg-paper p-7 sm:p-10">
+          <p className="font-display text-overline font-normal uppercase text-red">
             Signature Priority
           </p>
-          <div className="mt-3 flex items-start gap-3">
-            <Clock className="mt-1 h-6 w-6 shrink-0 text-amber-800" aria-hidden />
+          <div className="mt-4 flex items-start gap-3">
+            <Clock className="mt-1 h-6 w-6 shrink-0 text-red" aria-hidden />
             <div>
-              <h3 className="font-serif text-2xl font-bold text-granite-800">
+              <h3 className="font-display text-card-display font-normal text-ink">
                 {featured.title}
               </h3>
-              <p className="mt-3 text-base leading-relaxed text-granite-600">
+              <p className="mt-3 text-body-lg text-slate-text">
                 {featured.oneLiner}
               </p>
-              <Link
-                href={`/issues/${featured.slug}`}
-                className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-amber-900 underline-offset-2 hover:underline"
-              >
-                Read More
-                <ArrowRight className="h-4 w-4" aria-hidden />
+              <Link href={`/issues/${featured.slug}`} className="link-cta mt-5">
+                Read More →
               </Link>
             </div>
           </div>
@@ -57,12 +44,12 @@ export function IssuesPreview() {
             <li key={issue.slug}>
               <Link
                 href={`/issues/${issue.slug}`}
-                className="block h-full border border-granite-200 bg-white p-6 transition-colors hover:border-pine-500"
+                className="block h-full border border-slate-line bg-white p-7 transition-colors hover:border-red"
               >
-                <h3 className="font-serif text-xl font-bold text-granite-800">
+                <h3 className="font-display text-[1.05rem] font-normal tracking-[0.5px] text-ink">
                   {issue.title}
                 </h3>
-                <p className="mt-3 text-base leading-relaxed text-granite-500">
+                <p className="mt-3 text-body-sm text-slate-muted">
                   {issue.oneLiner}
                 </p>
               </Link>

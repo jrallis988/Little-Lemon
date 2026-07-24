@@ -50,23 +50,22 @@ export default function IssueDetailPage({ params }: Props) {
 
   return (
     <>
-      <header className="border-b border-granite-200 bg-mist">
-        <div className="mx-auto max-w-content px-5 py-12 sm:px-8 md:py-16">
-          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-pine-600">
-            Issues
-          </p>
-          <div className="mt-4 flex items-start gap-4">
+      <header className="border-b border-slate-line bg-navy">
+        <div className="mx-auto max-w-content section-pad !py-14 md:!py-16">
+          <span className="accent-line" aria-hidden />
+          <p className="section-overline">Issues</p>
+          <div className="mt-6 flex items-start gap-4">
             <span
-              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-sm bg-pine-100 text-pine-700"
+              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-cta bg-white/10 text-red"
               aria-hidden
             >
               <Icon className="h-6 w-6" strokeWidth={1.75} />
             </span>
             <div>
-              <h1 className="font-serif text-4xl font-bold text-granite-800 sm:text-5xl">
+              <h1 className="font-display text-section-display font-normal text-white">
                 {issue.title}
               </h1>
-              <p className="mt-3 max-w-3xl text-lg text-granite-600">
+              <p className="mt-3 max-w-3xl text-body-lg text-white/75">
                 {issue.subtitle}
               </p>
             </div>
@@ -74,47 +73,42 @@ export default function IssueDetailPage({ params }: Props) {
         </div>
       </header>
 
-      <article className="mx-auto max-w-content section-pad">
-        <h2 className="font-serif text-2xl font-bold text-granite-800">
+      <article className="mx-auto max-w-content section-pad bg-warm-white">
+        <h2 className="font-display text-card-display font-normal text-ink">
           Key Priorities
         </h2>
         <ul className="mt-6 grid gap-4 sm:grid-cols-2">
           {issue.priorities.map((priority) => (
-            <li
-              key={priority.title}
-              className="border border-granite-200 bg-white p-5"
-            >
-              <h3 className="font-serif text-lg font-bold text-granite-800">
+            <li key={priority.title} className="border border-slate-line bg-white p-6">
+              <h3 className="font-display text-[1.05rem] font-normal text-ink">
                 {priority.title}
               </h3>
-              <p className="mt-2 text-base text-granite-600">{priority.body}</p>
+              <p className="mt-2 text-body-sm text-slate-text">{priority.body}</p>
             </li>
           ))}
         </ul>
 
-        <h2 className="mt-14 font-serif text-2xl font-bold text-granite-800">
+        <h2 className="mt-14 font-display text-card-display font-normal text-ink">
           {issue.sectionHeading}
         </h2>
-        <div className="mt-5 space-y-5 text-lg leading-relaxed text-granite-600">
+        <div className="mt-5 space-y-5 text-body-lg text-slate-text">
           {issue.body.map((p) => (
             <p key={p.slice(0, 48)}>{p}</p>
           ))}
         </div>
 
         {issue.pullQuote && (
-          <blockquote className="mt-10 border-l-4 border-pine-600 pl-5">
-            <p className="font-serif text-xl italic text-granite-700">
-              “{issue.pullQuote}”
-            </p>
+          <blockquote className="pull-quote mt-10">
+            “{issue.pullQuote}”
           </blockquote>
         )}
 
         <CtaRow
-          primary={{ href: "/volunteer", label: "Volunteer with Team Varga" }}
+          primary={{ href: "/volunteer", label: "Volunteer with Team Varga →" }}
           secondary={{ href: "/issues", label: "Back to all issues" }}
         />
         <p className="mt-6">
-          <Link href="/how-to-vote" className="font-semibold text-pine-700 underline-offset-2 hover:underline">
+          <Link href="/how-to-vote" className="link-cta">
             Learn how to write in Nick Varga →
           </Link>
         </p>

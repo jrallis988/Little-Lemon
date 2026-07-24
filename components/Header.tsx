@@ -20,9 +20,9 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50">
-      <div className="bg-granite-800 text-granite-200">
-        <div className="mx-auto flex max-w-content items-center justify-between gap-3 px-5 py-2 sm:px-8">
-          <p className="text-xs font-medium">
+      <div className="bg-navy text-white/80">
+        <div className="mx-auto flex max-w-content items-center justify-between gap-3 px-6 py-2 md:px-8">
+          <p className="text-xs font-medium tracking-wide">
             Independent write-in · {candidate.hometown}, NH · Nov 3, 2026
           </p>
           <ul className="flex items-center gap-1" aria-label="Social media">
@@ -35,7 +35,7 @@ export function Header() {
               <li key={label}>
                 <a
                   href={href}
-                  className="inline-flex rounded-sm p-1.5 hover:bg-granite-700 hover:text-white"
+                  className="inline-flex rounded-cta p-1.5 hover:bg-white/10 hover:text-white"
                   aria-label={label}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -48,8 +48,8 @@ export function Header() {
         </div>
       </div>
 
-      <div className="border-b border-granite-200/80 bg-snow/95 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-content items-center justify-between gap-4 px-5 py-3 sm:px-8">
+      <div className="border-b border-slate-line bg-warm-white/95 backdrop-blur-sm">
+        <div className="mx-auto flex max-w-content items-center justify-between gap-4 px-6 py-3 md:px-8">
           <Link
             href="/"
             className="relative block h-12 w-48 sm:h-14 sm:w-56"
@@ -69,26 +69,23 @@ export function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="rounded-sm px-2.5 py-2 text-sm font-semibold text-granite-600 transition-colors hover:bg-mist hover:text-pine-700"
+                className="rounded-cta px-2.5 py-2 text-sm font-semibold text-slate-text transition-colors hover:bg-granite/50 hover:text-navy"
               >
                 {link.label}
               </Link>
             ))}
-            <Link
-              href="/how-to-vote"
-              className="btn-accent ml-2 px-4 py-2.5 text-sm"
-            >
-              How to Vote Write-In
+            <Link href="/how-to-vote" className="btn-primary ml-2 !px-5 !py-3 text-[0.75rem]">
+              How to Vote Write-In →
             </Link>
           </nav>
 
           <div className="flex items-center gap-2 xl:hidden">
-            <Link href="/how-to-vote" className="btn-accent px-3 py-2 text-sm">
+            <Link href="/how-to-vote" className="btn-primary !px-3 !py-2.5 text-[0.7rem]">
               How to Vote
             </Link>
             <button
               type="button"
-              className="btn-ghost px-3 py-2"
+              className="btn-ghost !px-3 !py-2.5"
               aria-expanded={open}
               aria-controls="mobile-nav"
               aria-label={open ? "Close menu" : "Open menu"}
@@ -102,7 +99,7 @@ export function Header() {
         {open && (
           <nav
             id="mobile-nav"
-            className="border-t border-granite-200 bg-snow px-5 py-4 xl:hidden"
+            className="border-t border-slate-line bg-warm-white px-6 py-4 xl:hidden"
             aria-label="Mobile"
           >
             <ul className="flex flex-col gap-1">
@@ -110,7 +107,7 @@ export function Header() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="block rounded-sm px-3 py-3 text-base font-semibold text-granite-700 hover:bg-mist"
+                    className="block rounded-cta px-3 py-3 text-base font-semibold text-slate-text hover:bg-paper"
                     onClick={() => setOpen(false)}
                   >
                     {link.label}

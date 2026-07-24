@@ -18,20 +18,20 @@ export default function HowToVotePage() {
         subtitle="Nick is an independent write-in candidate. Your vote for him happens on the General Election — the final vote that decides who holds the seat."
       />
       <article className="mx-auto max-w-3xl section-pad">
-        <div className="border border-amber-700/40 bg-amber-50 p-6">
-          <p className="text-xs font-bold uppercase tracking-[0.16em] text-amber-800">
+        <div className="border border-red/40 bg-paper p-6">
+          <p className="text-xs font-bold uppercase tracking-[0.16em] text-red">
             Only date that matters
           </p>
-          <p className="mt-2 font-serif text-3xl font-bold text-granite-800">
+          <p className="mt-2 font-display text-3xl font-bold text-ink">
             {candidate.electionLabel}
           </p>
-          <p className="mt-2 text-base text-granite-600">
+          <p className="mt-2 text-base text-slate-text">
             Tuesday · Write in “{candidate.fullName}” on your General Election
             ballot.
           </p>
         </div>
 
-        <h2 className="mt-12 font-serif text-2xl font-bold text-granite-800">
+        <h2 className="mt-12 font-display text-2xl font-bold text-ink">
           Step by step
         </h2>
         <ol className="mt-6 space-y-5">
@@ -42,16 +42,16 @@ export default function HowToVotePage() {
             "Do not leave it blank if you intend to vote for Nick — a write-in is how independents win.",
           ].map((step, i) => (
             <li key={step} className="flex gap-4">
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-sm bg-pine-700 text-sm font-bold text-white">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-sm bg-navy text-sm font-bold text-white">
                 {i + 1}
               </span>
-              <p className="pt-1 text-lg text-granite-700">{step}</p>
+              <p className="pt-1 text-lg text-slate-text">{step}</p>
             </li>
           ))}
         </ol>
 
-        <div className="mt-12 border border-granite-200 bg-mist p-6">
-          <h2 className="font-serif text-xl font-bold text-granite-800">
+        <div className="mt-12 border border-slate-line bg-paper p-6">
+          <h2 className="font-display text-xl font-bold text-ink">
             About the September primary
           </h2>
           <Prose>
@@ -72,9 +72,9 @@ export default function HowToVotePage() {
           primary={{ href: "/#join", label: "Join Team Varga" }}
           secondary={{ href: "/volunteer", label: "Volunteer" }}
         />
-        <p className="mt-6 text-sm text-granite-500">
+        <p className="mt-6 text-sm text-slate-muted">
           Questions?{" "}
-          <Link href="/contact" className="font-semibold text-pine-700 underline-offset-2 hover:underline">
+          <Link href="/contact" className="font-semibold text-red underline-offset-2 hover:underline">
             Contact the campaign
           </Link>
           .

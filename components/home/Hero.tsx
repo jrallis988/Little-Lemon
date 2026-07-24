@@ -6,7 +6,7 @@ export function Hero() {
   return (
     <section
       aria-labelledby="hero-heading"
-      className="relative isolate overflow-hidden bg-granite-900"
+      className="relative isolate overflow-hidden bg-ink"
     >
       <div className="absolute inset-0 -z-10" aria-hidden="true">
         <Image
@@ -14,32 +14,29 @@ export function Hero() {
           alt=""
           fill
           priority
-          className="object-cover object-center opacity-60"
+          className="object-cover object-center opacity-50"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-granite-900 via-granite-900/90 to-granite-900/55" />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/90 to-navy/70" />
       </div>
 
-      <div className="mx-auto max-w-content px-5 py-20 sm:px-8 md:py-28">
-        <p className="animate-fade-up text-xs font-semibold uppercase tracking-[0.18em] text-amber-300 sm:text-sm">
+      <div className="mx-auto max-w-content px-6 py-20 md:px-8 md:py-28">
+        <p className="animate-fade-up font-display text-overline font-normal uppercase text-red">
           Independent Write-In Candidate · New Hampshire
         </p>
         <h1
           id="hero-heading"
-          className="animate-fade-up animate-delay-1 mt-5 max-w-3xl font-serif text-5xl font-black leading-[1.05] tracking-tight text-white sm:text-6xl md:text-7xl"
+          className="animate-fade-up animate-delay-1 mt-6 max-w-4xl font-display text-hero-display font-normal uppercase text-yellow"
         >
           {candidate.tagline}
         </h1>
-        <p className="animate-fade-up animate-delay-2 mt-6 max-w-2xl text-lg leading-relaxed text-granite-200 sm:text-xl">
+        <p className="animate-fade-up animate-delay-2 mt-6 max-w-2xl text-lg leading-[1.75] text-white/85 sm:text-xl">
           {candidate.positioningLong}
         </p>
         <div className="animate-fade-up animate-delay-2 mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-          <Link href="/how-to-vote" className="btn-accent">
-            How to Vote Write-In
+          <Link href="/how-to-vote" className="btn-primary">
+            How to Vote Write-In →
           </Link>
-          <Link
-            href="/meet-nick"
-            className="btn border-2 border-white/70 bg-transparent text-white hover:bg-white hover:text-granite-800"
-          >
+          <Link href="/meet-nick" className="btn-secondary-light">
             Meet Nick
           </Link>
         </div>

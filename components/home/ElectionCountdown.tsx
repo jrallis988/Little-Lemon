@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { candidate, election } from "@/lib/candidate";
+import { SectionIntro } from "@/components/SectionIntro";
 
 type Remaining = { days: number; hours: number };
 
@@ -31,62 +32,59 @@ export function ElectionCountdown() {
   return (
     <section
       aria-labelledby="election-heading"
-      className="border-b border-granite-200 bg-mist"
+      className="bg-navy"
     >
-      <div className="mx-auto max-w-content section-pad !py-12 md:!py-16">
-        <p className="text-sm font-semibold uppercase tracking-[0.16em] text-pine-600">
-          2026 New Hampshire U.S. Senate Election
-        </p>
-        <h2 id="election-heading" className="mt-2 font-serif text-2xl font-bold text-granite-800 sm:text-3xl">
-          Your vote for Nick happens on November 3.
-        </h2>
-        <p className="mt-3 max-w-3xl text-base leading-relaxed text-granite-600 sm:text-lg">
-          Nick is an independent write-in candidate. Your vote for him happens on
-          the General Election — the final vote that decides who holds the seat.
-        </p>
+      <div className="mx-auto max-w-content section-pad">
+        <SectionIntro
+          overline="2026 New Hampshire U.S. Senate Election"
+          title="Your vote for Nick happens on November 3."
+          lead="Nick is an independent write-in candidate. Your vote for him happens on the General Election — the final vote that decides who holds the seat."
+          tone="dark"
+          titleId="election-heading"
+        />
 
-        <div className="mt-8 grid gap-5 md:grid-cols-[1.2fr_0.8fr]">
+        <div className="mt-10 grid gap-5 md:grid-cols-[1.2fr_0.8fr]">
           <Link
             href="/how-to-vote"
-            className="group border border-granite-200 bg-white p-6 transition-colors hover:border-pine-500 sm:p-8"
+            className="group border border-white/15 bg-white/5 p-7 transition-colors hover:border-red sm:p-10"
           >
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-amber-700">
+            <p className="font-display text-overline font-normal uppercase text-red">
               {election.general.label}
             </p>
-            <p className="mt-3 font-serif text-3xl font-bold text-granite-800">
+            <p className="mt-4 font-display text-card-display font-normal text-white">
               {election.general.dateDisplay}
             </p>
-            <p className="mt-2 text-base text-granite-500">
+            <p className="mt-2 text-body-lg text-white/70">
               {election.general.weekday} · {election.general.subtext}
             </p>
-            <p className="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-pine-700 group-hover:underline">
+            <p className="mt-6 inline-flex items-center gap-1 font-display text-cta font-normal uppercase text-red">
               Learn how to vote
               <ArrowRight className="h-4 w-4" aria-hidden />
             </p>
           </Link>
 
           <div
-            className="flex flex-col justify-center border border-granite-800 bg-granite-800 p-6 text-white sm:p-8"
+            className="flex flex-col justify-center border border-white/10 bg-ink/40 p-7 text-white sm:p-10"
             aria-live="polite"
           >
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-amber-300">
+            <p className="font-display text-overline font-normal uppercase text-yellow">
               Countdown to Nov 3, 2026
             </p>
             <div className="mt-4 flex gap-8">
               <div>
-                <p className="font-serif text-4xl font-bold tabular-nums">
+                <p className="font-display text-4xl font-normal tabular-nums text-white">
                   {remaining.days}
                 </p>
-                <p className="text-sm text-granite-300">Days</p>
+                <p className="text-sm text-white/60">Days</p>
               </div>
               <div>
-                <p className="font-serif text-4xl font-bold tabular-nums">
+                <p className="font-display text-4xl font-normal tabular-nums text-white">
                   {remaining.hours}
                 </p>
-                <p className="text-sm text-granite-300">Hours</p>
+                <p className="text-sm text-white/60">Hours</p>
               </div>
             </div>
-            <p className="mt-4 text-sm text-granite-300">
+            <p className="mt-4 text-sm text-white/65">
               Write in “{candidate.fullName}” on the General Election ballot.
             </p>
           </div>

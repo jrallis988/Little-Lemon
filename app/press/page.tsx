@@ -23,17 +23,17 @@ export default function PressPage() {
             New Hampshire and founder of the Violet Party. Election Day is{" "}
             {candidate.electionLabel}.
           </p>
-          <h2 className="font-serif text-2xl font-bold text-granite-800">
+          <h2 className="font-display text-2xl font-bold text-ink">
             Press contact
           </h2>
           <p>
             Email{" "}
-            <a href={`mailto:${candidate.email}`} className="font-semibold text-pine-700 underline-offset-2 hover:underline">
+            <a href={`mailto:${candidate.email}`} className="font-semibold text-red underline-offset-2 hover:underline">
               {candidate.email}
             </a>{" "}
             with interview requests, fact checks, and photo needs.
           </p>
-          <h2 className="font-serif text-2xl font-bold text-granite-800">
+          <h2 className="font-display text-2xl font-bold text-ink">
             Quick facts
           </h2>
           <ul className="list-disc space-y-2 pl-5">
@@ -43,7 +43,7 @@ export default function PressPage() {
             <li>Movement: Violet Party — {`Not Red. Not Blue. Something New.`}</li>
             <li>No corporate PAC money</li>
           </ul>
-          <p className="text-sm text-granite-500">
+          <p className="text-sm text-slate-muted">
             High-resolution photos and a full bio PDF will be added as assets are
             finalized.
           </p>
@@ -53,7 +53,7 @@ export default function PressPage() {
           secondary={{ href: "/transparency", label: "Transparency" }}
         />
         <p className="mt-6">
-          <Link href="/contact" className="font-semibold text-pine-700 underline-offset-2 hover:underline">
+          <Link href="/contact" className="font-semibold text-red underline-offset-2 hover:underline">
             Contact the campaign →
           </Link>
         </p>

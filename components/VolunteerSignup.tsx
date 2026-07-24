@@ -35,10 +35,10 @@ export function VolunteerSignup() {
       id="volunteer-form"
       onSubmit={onSubmit}
       noValidate
-      className="mt-14 scroll-mt-28 space-y-4 border border-granite-200 bg-mist p-6 sm:p-8"
+      className="mt-14 scroll-mt-28 space-y-4 border border-slate-line bg-paper p-6 sm:p-8"
       aria-describedby={status !== "idle" ? statusId : undefined}
     >
-      <h2 className="font-serif text-2xl font-bold text-granite-800">
+      <h2 className="font-display text-2xl font-bold text-ink">
         Sign up to volunteer
       </h2>
       <div>
@@ -76,9 +76,9 @@ export function VolunteerSignup() {
       <button type="submit" className="btn-primary">
         Submit volunteer sign-up
       </button>
-      <p className="text-sm text-granite-500">
+      <p className="text-sm text-slate-muted">
         Prefer email first?{" "}
-        <Link href="/#join" className="font-semibold text-pine-700 underline-offset-2 hover:underline">
+        <Link href="/#join" className="font-semibold text-red underline-offset-2 hover:underline">
           Join Team Varga
         </Link>
         .
@@ -90,8 +90,8 @@ export function VolunteerSignup() {
           aria-live="polite"
           className={`flex items-start gap-2 rounded-sm px-3 py-2.5 text-sm ${
             status === "success"
-              ? "bg-pine-50 text-pine-800"
-              : "bg-amber-50 text-amber-900"
+              ? "bg-paper text-navy"
+              : "bg-paper text-red"
           }`}
         >
           {status === "success" ? (

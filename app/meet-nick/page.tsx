@@ -18,7 +18,7 @@ export default function MeetNickPage() {
         title="Nick Varga, New Hampshire."
         subtitle="Independent write-in candidate for U.S. Senate. Founder of the Violet Party. Neighbor first."
       />
-      <article className="mx-auto max-w-content section-pad">
+      <article className="mx-auto max-w-content section-pad bg-warm-white">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14">
           <Prose>
             <p>
@@ -28,13 +28,11 @@ export default function MeetNickPage() {
               the belief that elected officials must work for the people — not
               special interests, not corporations, not political insiders.
             </p>
-            <h2 className="font-serif text-2xl font-bold text-granite-800">
+            <h2 className="font-display text-2xl font-normal text-ink">
               A Commitment to Independence and Integrity
             </h2>
-            <blockquote className="border-l-4 border-pine-600 pl-5">
-              <p className="font-serif text-xl italic text-granite-700">
-                “{candidate.pullQuote}”
-              </p>
+            <blockquote className="pull-quote">
+              “{candidate.pullQuote}”
             </blockquote>
             <p>
               This is the foundation of Nick’s campaign: putting New Hampshire
@@ -42,7 +40,7 @@ export default function MeetNickPage() {
               healthcare, or supporting our veterans, Nick will never waver from
               his commitment to serve the people who elected him.
             </p>
-            <h2 className="font-serif text-2xl font-bold text-granite-800">
+            <h2 className="font-display text-2xl font-normal text-ink">
               Why he’s running
             </h2>
             <p>{candidate.coreStatement}</p>
@@ -54,7 +52,7 @@ export default function MeetNickPage() {
           </Prose>
 
           <div className="space-y-4">
-            <figure className="relative aspect-[4/5] overflow-hidden bg-mist">
+            <figure className="relative aspect-[4/5] overflow-hidden bg-paper">
               <Image
                 src="/images/candidate-portrait.svg"
                 alt="Nick Varga · Newmarket, NH"
@@ -62,11 +60,11 @@ export default function MeetNickPage() {
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 40vw"
               />
-              <figcaption className="absolute bottom-0 inset-x-0 bg-granite-900/75 px-3 py-2 text-sm text-white">
+              <figcaption className="absolute bottom-0 inset-x-0 bg-ink/80 px-3 py-2 text-sm text-white">
                 Nick Varga · Newmarket, NH
               </figcaption>
             </figure>
-            <figure className="relative aspect-video overflow-hidden bg-mist">
+            <figure className="relative aspect-video overflow-hidden bg-paper">
               <Image
                 src="/images/town-hall.svg"
                 alt="Nick on the campaign trail"
@@ -83,7 +81,7 @@ export default function MeetNickPage() {
           secondary={{ href: "/violet-party", label: "About the Violet Party" }}
         />
         <p className="mt-8">
-          <Link href="/volunteer" className="font-semibold text-pine-700 underline-offset-2 hover:underline">
+          <Link href="/volunteer" className="link-cta">
             Volunteer with Team Varga →
           </Link>
         </p>

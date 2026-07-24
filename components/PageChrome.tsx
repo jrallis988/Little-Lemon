@@ -11,21 +11,12 @@ export function PageHero({
   subtitle?: string;
 }) {
   return (
-    <header className="border-b border-granite-200 bg-mist">
-      <div className="mx-auto max-w-content px-5 py-12 sm:px-8 md:py-16">
-        {overline && (
-          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-pine-600">
-            {overline}
-          </p>
-        )}
-        <h1 className="mt-2 font-serif text-4xl font-bold text-granite-800 sm:text-5xl">
-          {title}
-        </h1>
-        {subtitle && (
-          <p className="mt-4 max-w-3xl text-lg leading-relaxed text-granite-600">
-            {subtitle}
-          </p>
-        )}
+    <header className="border-b border-slate-line bg-navy">
+      <div className="mx-auto max-w-content section-pad !py-14 md:!py-20">
+        <span className="accent-line" aria-hidden />
+        {overline && <p className="section-overline">{overline}</p>}
+        <h1 className="section-headline-light">{title}</h1>
+        {subtitle && <p className="section-lead-light">{subtitle}</p>}
       </div>
     </header>
   );
@@ -33,7 +24,7 @@ export function PageHero({
 
 export function Prose({ children }: { children: ReactNode }) {
   return (
-    <div className="space-y-5 text-lg leading-relaxed text-granite-600">
+    <div className="space-y-5 text-body-lg leading-[1.75] text-slate-text">
       {children}
     </div>
   );
@@ -52,7 +43,7 @@ export function CtaRow({
         {primary.label}
       </Link>
       {secondary && (
-        <Link href={secondary.href} className="btn-outline">
+        <Link href={secondary.href} className="btn-secondary">
           {secondary.label}
         </Link>
       )}
