@@ -136,9 +136,9 @@ export function buildIcsDataUri(event: CampaignEvent): string {
   const ics = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
-    "PRODID:-//Hale for Senate//EN",
+    "PRODID:-//Varga for Senate//EN",
     "BEGIN:VEVENT",
-    `UID:${event.id}@haleforsenate.nh`,
+    `UID:${event.id}@vargaforsenate.nh`,
     `DTSTART;TZID=America/New_York:${dtStart}`,
     `DTEND;TZID=America/New_York:${dtEnd}`,
     `SUMMARY:${event.title}`,

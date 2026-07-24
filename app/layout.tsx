@@ -26,8 +26,8 @@ export const metadata: Metadata = {
     template: `%s | ${candidate.fullName} for Senate`,
   },
   description:
-    "New Hampshire deserves a Senator grounded in the people, places, and values of this state — that's Morgan Hale. Lower costs, Main Street, public lands, and local schools.",
-  metadataBase: new URL("https://haleforsenate.nh"),
+    "New Hampshire deserves a Senator grounded in the people, places, and values of this state — that's Nick Varga. Lower costs, Main Street, public lands, and local schools.",
+  metadataBase: new URL("https://vargaforsenate.nh"),
   openGraph: {
     title: `${candidate.fullName} for ${candidate.office}`,
     description: candidate.tagline,

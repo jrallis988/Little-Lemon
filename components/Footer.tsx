@@ -3,7 +3,7 @@ import { Facebook, Instagram, Twitter, Youtube } from "lucide-react";
 import { candidate } from "@/lib/candidate";
 
 const quickLinks = [
-  { href: "/#meet", label: "Meet Morgan" },
+  { href: "/#meet", label: "Meet Nick" },
   { href: "/#issues", label: "Issues" },
   { href: "/#events", label: "Events" },
   { href: "/#press", label: "News" },

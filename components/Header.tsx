@@ -7,7 +7,7 @@ import { Facebook, Instagram, Menu, Twitter, X, Youtube } from "lucide-react";
 import { candidate } from "@/lib/candidate";
 
 const navLinks = [
-  { href: "/#meet", label: "Meet Morgan" },
+  { href: "/#meet", label: "Meet Nick" },
   { href: "/#issues", label: "Issues" },
   { href: "/#events", label: "Events" },
   { href: "/#press", label: "News" },

@@ -81,7 +81,7 @@ export function Hero() {
               href="/#meet"
               className="btn border-2 border-white/70 bg-transparent text-white hover:bg-white hover:text-granite-800"
             >
-              Meet Morgan
+              Meet Nick
             </Link>
           </div>
         </div>

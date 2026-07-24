@@ -12,7 +12,7 @@ export const pressItems: PressItem[] = [
     id: "concord-monitor",
     outlet: "Concord Monitor",
     date: "2026-07-08",
-    title: "Hale opens Concord HQ with focus on housing and heat bills",
+    title: "Varga opens Concord HQ with focus on housing and heat bills",
     excerpt:
       "The Concord native framed the race around affordability, promising town halls in all ten counties before Labor Day.",
     href: "#press",
@@ -21,18 +21,18 @@ export const pressItems: PressItem[] = [
     id: "union-leader",
     outlet: "New Hampshire Union Leader",
     date: "2026-06-22",
-    title: "Independent voters eye Hale’s Main Street pitch",
+    title: "Independent voters eye Varga’s Main Street pitch",
     excerpt:
-      "A hardware-store upbringing and operations background are central to Hale’s appeal with undecided Granite Staters.",
+      "A hardware-store upbringing and operations background are central to Varga’s appeal with undecided Granite Staters.",
     href: "#press",
   },
   {
     id: "nhpr",
     outlet: "NHPR",
     date: "2026-06-04",
-    title: "On the trail: Hale talks public lands and local schools in the North Country",
+    title: "On the trail: Varga talks public lands and local schools in the North Country",
     excerpt:
-      "From Berlin to Littleton, Hale tied conservation access to rural jobs and kept the focus on constituent service.",
+      "From Berlin to Littleton, Varga tied conservation access to rural jobs and kept the focus on constituent service.",
     href: "#press",
   },
 ];

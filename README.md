@@ -1,4 +1,4 @@
-# Morgan Hale for U.S. Senate
+# Nick Varga for U.S. Senate
 
 A modern, fast, accessible campaign website for a New Hampshire Senate candidate—built for independent and local voters.
 
