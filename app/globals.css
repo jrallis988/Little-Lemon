@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --mp-navy: #0c1624;
+  --mp-brand: #2b5a9e;
+  --mp-brand-light: #3d73c0;
+  --mp-surface: #ffffff;
+  --mp-muted: #f3f5f8;
+  --mp-border: #d8dee8;
+  --font-display: "Trebuchet MS", "Segoe UI", sans-serif;
+  --font-body: Verdana, Geneva, Tahoma, sans-serif;
+  --font-mono: "Courier New", Courier, monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    @apply bg-surface-muted text-navy-900 antialiased;
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+
+  a {
+    @apply text-brand underline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand;
+  }
+
+  :focus-visible {
+    outline: 2px solid #2b5a9e;
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: #cfe0f5;
+  }
+}
+
+@layer components {
+  .mp-card {
+    @apply rounded-card border border-surface-border bg-white shadow-soft;
+  }
+
+  .mp-section-title {
+    @apply border-b border-surface-border pb-1 text-sm font-bold uppercase tracking-wide text-navy-800;
+  }
+
+  .mp-profile-canvas {
+    background-color: var(--mp-bg, #dce6f2);
+    background-image: var(--mp-bg-image, none);
+    background-repeat: var(--mp-bg-repeat, no-repeat);
+    background-position: var(--mp-bg-position, center top);
+    color: var(--mp-text, #15253a);
+    font-family: var(--mp-body-font, Verdana, Geneva, sans-serif);
+  }
+
+  .mp-profile-canvas h1,
+  .mp-profile-canvas h2,
+  .mp-profile-canvas h3 {
+    font-family: var(--mp-heading-font, Georgia, serif);
+    color: var(--mp-primary, #1f4d8f);
+  }
+
+  .mp-profile-canvas a {
+    color: var(--mp-link, #1a4d9c);
+  }
+
+  .mp-profile-module {
+    border-style: var(--mp-border-style, solid);
+    border-width: 1px;
+    border-color: color-mix(in srgb, var(--mp-primary, #1f4d8f) 35%, transparent);
+    background: color-mix(
+      in srgb,
+      #ffffff calc(var(--mp-card-alpha, 0.96) * 100%),
+      transparent
+    );
+    @apply rounded-card p-3 shadow-soft;
+  }
+}

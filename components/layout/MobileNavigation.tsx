@@ -25,7 +25,7 @@ type MobileItem = {
 };
 
 const mobileItems: MobileItem[] = [
-  { href: "/", label: "Home", icon: Home },
+  { href: "/home", label: "Home", icon: Home },
   { href: "/browse", label: "Browse", icon: Users },
   { href: "/search", label: "Search", icon: Search },
   { href: "/messages", label: "Messages", icon: MessageSquare, badge: "messages" },
