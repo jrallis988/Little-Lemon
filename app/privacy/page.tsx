@@ -16,24 +16,21 @@ export default function PrivacyPage() {
       <h1 className="mt-2 font-serif text-4xl font-bold text-granite-800">
         Privacy Policy
       </h1>
-      <p className="mt-4 text-granite-500">
-        Last updated: July 24, 2026
-      </p>
+      <p className="mt-4 text-granite-500">Last updated: July 24, 2026</p>
 
-      <div className="prose-campaign mt-10 space-y-6 text-base leading-relaxed text-granite-600">
+      <div className="mt-10 space-y-6 text-base leading-relaxed text-granite-600">
         <p>
-          {candidate.committee} (&quot;we,&quot; &quot;us&quot;) respects your
-          privacy. This policy explains what information we collect on this
-          website and how we use it.
+          {candidate.committee} (“we,” “us”) respects your privacy. This policy
+          explains what information we collect on this website and how we use it.
         </p>
         <h2 className="font-serif text-2xl font-bold text-granite-800">
           Information we collect
         </h2>
         <p>
-          When you request a lawn sign, volunteer, subscribe, or contribute, we
-          collect the information you provide—such as name, email, phone,
-          address, and preferences. We may also collect standard analytics data
-          (pages visited, device type) in aggregate form.
+          When you join the email list, volunteer, request a town visit, or
+          contact us, we collect the information you provide — such as name,
+          email, phone, ZIP code, and message contents. We may also collect
+          standard analytics data (pages visited, device type) in aggregate form.
         </p>
         <h2 className="font-serif text-2xl font-bold text-granite-800">
           How we use information
@@ -42,16 +39,23 @@ export default function PrivacyPage() {
           <li>To respond to your requests and coordinate volunteer activities</li>
           <li>To send campaign updates you opted into</li>
           <li>To comply with federal campaign finance reporting requirements</li>
-          <li>To improve the accessibility and performance of this site</li>
+          <li>To improve accessibility and performance of this site</li>
         </ul>
+        <h2 className="font-serif text-2xl font-bold text-granite-800">
+          Text messages
+        </h2>
+        <p>
+          If you provide a cell phone number, you may receive periodic texts from
+          the campaign. Message and data rates may apply. Text HELP for info.
+          Text STOP to opt out.
+        </p>
         <h2 className="font-serif text-2xl font-bold text-granite-800">
           Sharing
         </h2>
         <p>
-          We do not sell your personal information. We may share data with
-          trusted vendors who help operate the campaign (email delivery, payment
-          processing, compliance) under confidentiality agreements, or when
-          required by law.
+          We do not sell your personal information. We may share data with trusted
+          vendors who help operate the campaign under confidentiality agreements,
+          or when required by law.
         </p>
         <h2 className="font-serif text-2xl font-bold text-granite-800">
           Contact

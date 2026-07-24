@@ -1,25 +1,25 @@
-import { Hero } from "@/components/Hero";
-import { MeetCandidate } from "@/components/MeetCandidate";
-import { WhyRunning } from "@/components/WhyRunning";
-import { Issues } from "@/components/Issues";
-import { TakeActionBand } from "@/components/TakeActionBand";
-import { Events } from "@/components/Events";
-import { Press } from "@/components/Press";
-import { ActionCenter } from "@/components/ActionCenter";
-import { Donate } from "@/components/Donate";
+import { Hero } from "@/components/home/Hero";
+import { ElectionCountdown } from "@/components/home/ElectionCountdown";
+import { AboutPreview } from "@/components/home/AboutPreview";
+import { PlatformPreview } from "@/components/home/PlatformPreview";
+import { WhyRunning } from "@/components/home/WhyRunning";
+import { IssuesPreview } from "@/components/home/IssuesPreview";
+import { TownEvents } from "@/components/home/TownEvents";
+import { Testimonials } from "@/components/home/Testimonials";
+import { JoinForm } from "@/components/home/JoinForm";
 
 export default function HomePage() {
   return (
     <>
       <Hero />
-      <MeetCandidate />
+      <ElectionCountdown />
+      <AboutPreview />
+      <PlatformPreview />
       <WhyRunning />
-      <Issues />
-      <TakeActionBand />
-      <Events />
-      <Press />
-      <ActionCenter />
-      <Donate />
+      <IssuesPreview />
+      <TownEvents />
+      <Testimonials />
+      <JoinForm />
     </>
   );
 }

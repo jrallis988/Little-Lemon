@@ -26,10 +26,10 @@ export const metadata: Metadata = {
     template: `%s | ${candidate.fullName} for Senate`,
   },
   description:
-    "New Hampshire deserves a Senator grounded in the people, places, and values of this state — that's Nick Varga. Lower costs, Main Street, public lands, and local schools.",
-  metadataBase: new URL("https://vargaforsenate.nh"),
+    "People Over Politics. Nick Varga is an independent write-in candidate for U.S. Senate from New Hampshire — putting families first, not party bosses or donors.",
+  metadataBase: new URL("https://nickvarga.com"),
   openGraph: {
-    title: `${candidate.fullName} for ${candidate.office}`,
+    title: `${candidate.fullName} for ${candidate.office} — Write-In`,
     description: candidate.tagline,
     locale: "en_US",
     type: "website",

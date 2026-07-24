@@ -1,55 +1,50 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Facebook, Instagram, Twitter, Youtube } from "lucide-react";
 import { candidate } from "@/lib/candidate";
 
 const quickLinks = [
-  { href: "/#meet", label: "Meet Nick" },
-  { href: "/#issues", label: "Issues" },
-  { href: "/#events", label: "Events" },
-  { href: "/#press", label: "News" },
-  { href: "/#action", label: "Take Action" },
-  { href: "/#donate", label: "Donate" },
-  { href: "/privacy", label: "Privacy Policy" },
-  { href: "/accessibility", label: "Accessibility" },
+  { href: "/meet-nick", label: "Meet Nick" },
+  { href: "/issues", label: "Issues" },
+  { href: "/how-to-vote", label: "How to Vote" },
+  { href: "/violet-party", label: "Violet Party" },
+  { href: "/contact", label: "Contact" },
+  { href: "/privacy", label: "Privacy" },
+  { href: "/terms", label: "Terms & Conditions" },
+  { href: "/transparency", label: "Transparency" },
 ];
 
 export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-granite-800 bg-granite-800 text-granite-200">
-      <div className="mx-auto max-w-content section-pad !py-12 sm:!py-16">
-        <div className="grid gap-10 md:grid-cols-[1.35fr_1fr]">
+    <footer className="bg-granite-900 text-granite-200">
+      <div className="relative h-40 overflow-hidden sm:h-52" aria-hidden>
+        <Image
+          src="/images/nh-landscape.svg"
+          alt=""
+          fill
+          className="object-cover object-bottom opacity-70"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-granite-900 via-granite-900/70 to-transparent" />
+      </div>
+
+      <div className="mx-auto max-w-content px-5 pb-12 pt-2 sm:px-8">
+        <div className="grid gap-10 md:grid-cols-[1.3fr_1fr]">
           <div>
             <p className="font-serif text-2xl font-bold text-white">
               {candidate.fullName}
             </p>
             <p className="mt-1 text-sm font-semibold uppercase tracking-[0.14em] text-pine-300">
-              for {candidate.office} · {candidate.state}
+              for {candidate.office} · Independent Write-In
+            </p>
+            <p className="mt-3 text-sm font-semibold text-violet-300">
+              For New Hampshire
             </p>
             <p className="mt-4 max-w-md text-sm leading-relaxed text-granite-300">
-              Grounded in the people, places, and values of New Hampshire—from{" "}
-              {candidate.familyBusiness} in {candidate.raisedIn} to the trail in
-              all ten counties.
+              {candidate.tagline} Built neighbor by neighbor. No corporate money.
+              No party bosses.
             </p>
-            <p className="mt-4 text-sm">
-              <a
-                href={`mailto:${candidate.email}`}
-                className="underline decoration-granite-500 underline-offset-2 hover:text-white"
-              >
-                {candidate.email}
-              </a>
-              <span className="mx-2 text-granite-500" aria-hidden>
-                ·
-              </span>
-              <a
-                href={`tel:+16035550142`}
-                className="underline decoration-granite-500 underline-offset-2 hover:text-white"
-              >
-                {candidate.phone}
-              </a>
-            </p>
-            <p className="mt-2 text-sm text-granite-400">{candidate.mailAddress}</p>
             <ul className="mt-5 flex items-center gap-2" aria-label="Social media">
               {[
                 { href: candidate.social.facebook, label: "Facebook", Icon: Facebook },
@@ -91,20 +86,18 @@ export function Footer() {
           </nav>
         </div>
 
-        <div className="mt-10 space-y-3 border-t border-granite-600 pt-8 text-xs leading-relaxed text-granite-400">
+        <div className="mt-10 space-y-3 border-t border-granite-700 pt-8 text-xs leading-relaxed text-granite-400">
+          <p>Paid for by {candidate.committee}.</p>
           <p>
-            Paid for by {candidate.committee}. Not authorized by any candidate
-            or candidate&apos;s committee for federal office other than{" "}
-            {candidate.fullName}.
-          </p>
-          <p>
-            Contributions are not tax-deductible for federal income tax
-            purposes. Federal law requires us to use our best efforts to collect
-            and report the name, address, occupation, and employer of
-            individuals whose contributions exceed $200 in an election cycle.
-          </p>
-          <p className="text-granite-500">
-            © {year} {candidate.committee}. All rights reserved.
+            © {year} {candidate.fullName} for {candidate.office}. All rights
+            reserved.{" "}
+            <Link href="/privacy" className="underline underline-offset-2 hover:text-white">
+              Privacy Policy
+            </Link>
+            {" · "}
+            <Link href="/terms" className="underline underline-offset-2 hover:text-white">
+              Terms &amp; Conditions
+            </Link>
           </p>
         </div>
       </div>
