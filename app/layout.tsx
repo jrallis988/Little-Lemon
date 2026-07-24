@@ -1,24 +1,10 @@
 import type { Metadata } from "next";
-import { DM_Sans, Fraunces, Source_Serif_4 } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
-const fraunces = Fraunces({
-  subsets: ["latin"],
-  variable: "--font-display",
-  display: "swap",
-  axes: ["opsz"],
-});
-
-const sourceSerif = Source_Serif_4({
-  subsets: ["latin"],
-  variable: "--font-body",
-  display: "swap",
-  axes: ["opsz"],
-});
-
-const dmSans = DM_Sans({
+const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
@@ -26,11 +12,11 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "Morgan Bright — Learning, tailored",
-    template: "%s · Morgan Bright",
+    default: "Morgan Bright | Personalized Learning Paths",
+    template: "%s | Morgan Bright",
   },
   description:
-    "Morgan Bright helps learners clear individual hurdles and build instruction that fits how they learn best.",
+    "Navigate your educational journey with Morgan Bright. We help instructors and learners clear individual hurdles and tailor instruction to diverse learning styles.",
   keywords: [
     "Morgan Bright",
     "learning styles",
@@ -46,13 +32,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${fraunces.variable} ${sourceSerif.variable} ${dmSans.variable}`}
-    >
-      <body className="min-h-screen font-body text-ink">
+    <html lang="en" className={plusJakarta.variable}>
+      <body className="min-h-screen font-sans text-ink">
         <Navbar />
-        <main>{children}</main>
+        <main id="main-content">{children}</main>
         <Footer />
       </body>
     </html>
