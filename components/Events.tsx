@@ -41,7 +41,7 @@ export function Events() {
     <section
       id="events"
       aria-labelledby="events-heading"
-      className="scroll-mt-20 bg-snow"
+      className="scroll-mt-28 bg-snow"
     >
       <div className="mx-auto max-w-content section-pad">
         <h2 id="events-heading" className="section-title">

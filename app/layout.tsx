@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     template: `%s | ${candidate.fullName} for Senate`,
   },
   description:
-    "A grounded New Hampshire Senate campaign focused on lowering living costs, supporting Main Street, protecting public lands, and local education. Built for independent and local voters.",
+    "New Hampshire deserves a Senator grounded in the people, places, and values of this state — that's Morgan Hale. Lower costs, Main Street, public lands, and local schools.",
   metadataBase: new URL("https://haleforsenate.nh"),
   openGraph: {
     title: `${candidate.fullName} for ${candidate.office}`,

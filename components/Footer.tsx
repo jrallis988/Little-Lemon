@@ -1,11 +1,13 @@
 import Link from "next/link";
+import { Facebook, Instagram, Twitter, Youtube } from "lucide-react";
 import { candidate } from "@/lib/candidate";
 
 const quickLinks = [
-  { href: "/#issues", label: "The Issues" },
+  { href: "/#meet", label: "Meet Morgan" },
+  { href: "/#issues", label: "Issues" },
   { href: "/#events", label: "Events" },
-  { href: "/#meet", label: "Meet the Candidate" },
-  { href: "/#action", label: "Action Center" },
+  { href: "/#press", label: "News" },
+  { href: "/#action", label: "Take Action" },
   { href: "/#donate", label: "Donate" },
   { href: "/privacy", label: "Privacy Policy" },
   { href: "/accessibility", label: "Accessibility" },
@@ -17,7 +19,7 @@ export function Footer() {
   return (
     <footer className="border-t border-granite-800 bg-granite-800 text-granite-200">
       <div className="mx-auto max-w-content section-pad !py-12 sm:!py-16">
-        <div className="grid gap-10 md:grid-cols-[1.4fr_1fr]">
+        <div className="grid gap-10 md:grid-cols-[1.35fr_1fr]">
           <div>
             <p className="font-serif text-2xl font-bold text-white">
               {candidate.fullName}
@@ -26,8 +28,9 @@ export function Footer() {
               for {candidate.office} · {candidate.state}
             </p>
             <p className="mt-4 max-w-md text-sm leading-relaxed text-granite-300">
-              Grounded in New Hampshire. Focused on cost of living, Main Street,
-              public lands, and local schools—not party theater.
+              Grounded in the people, places, and values of New Hampshire—from{" "}
+              {candidate.familyBusiness} in {candidate.raisedIn} to the trail in
+              all ten counties.
             </p>
             <p className="mt-4 text-sm">
               <a
@@ -46,6 +49,27 @@ export function Footer() {
                 {candidate.phone}
               </a>
             </p>
+            <p className="mt-2 text-sm text-granite-400">{candidate.mailAddress}</p>
+            <ul className="mt-5 flex items-center gap-2" aria-label="Social media">
+              {[
+                { href: candidate.social.facebook, label: "Facebook", Icon: Facebook },
+                { href: candidate.social.x, label: "X", Icon: Twitter },
+                { href: candidate.social.instagram, label: "Instagram", Icon: Instagram },
+                { href: candidate.social.youtube, label: "YouTube", Icon: Youtube },
+              ].map(({ href, label, Icon }) => (
+                <li key={label}>
+                  <a
+                    href={href}
+                    aria-label={label}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex rounded-sm p-2 text-granite-300 hover:bg-granite-700 hover:text-white"
+                  >
+                    <Icon className="h-4 w-4" aria-hidden />
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <nav aria-label="Footer">

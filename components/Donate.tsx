@@ -40,26 +40,46 @@ export function Donate() {
     <section
       id="donate"
       aria-labelledby="donate-heading"
-      className="scroll-mt-20 bg-granite-800"
+      className="relative scroll-mt-28 overflow-hidden bg-granite-800"
     >
-      <div className="mx-auto max-w-content section-pad">
+      <div
+        className="absolute inset-0 opacity-25"
+        aria-hidden
+        style={{
+          backgroundImage: "url('/images/nh-landscape.svg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      />
+      <div className="absolute inset-0 bg-granite-900/75" aria-hidden />
+      <div className="relative mx-auto max-w-content section-pad">
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
           <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-amber-300">
+              Contribute
+            </p>
             <h2
               id="donate-heading"
-              className="font-serif text-3xl font-bold text-white sm:text-4xl"
+              className="mt-3 font-serif text-3xl font-bold text-white sm:text-4xl"
             >
-              Chip in to keep this campaign local
+              Donate Today
             </h2>
-            <p className="mt-4 text-lg leading-relaxed text-granite-300">
-              Grassroots support funds town halls, lawn signs, and the unglamorous
-              work of listening across all ten counties—not TV ad machines.
+            <p className="mt-4 text-lg leading-relaxed text-granite-200">
+              Chip in to keep this campaign local—town halls, lawn signs, and
+              listening across all ten counties, not TV ad machines.
             </p>
             <p className="mt-4 text-sm leading-relaxed text-granite-400">
               Paid for by {candidate.committee}. Contributions are not
               tax-deductible. By contributing, you confirm you are a U.S. citizen
               or lawfully admitted permanent resident, and that this contribution
               is made from your own funds.
+            </p>
+            <p className="mt-6 text-sm text-granite-300">
+              <span className="font-semibold text-white">Donate by mail:</span>
+              <br />
+              {candidate.committee}
+              <br />
+              {candidate.mailAddress}
             </p>
           </div>
 

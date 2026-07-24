@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="Morgan Hale speaking with voters outside a New Hampshire town hall">
+  <defs>
+    <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8FA9B8"/>
+      <stop offset="100%" stop-color="#D5D0BC"/>
+    </linearGradient>
+    <linearGradient id="brick" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8B5E45"/>
+      <stop offset="100%" stop-color="#6B4330"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#sky2)"/>
+  <!-- town hall -->
+  <rect x="620" y="220" width="420" height="360" fill="url(#brick)"/>
+  <polygon points="600,220 830,120 1040,220" fill="#2C333A"/>
+  <rect x="780" y="420" width="70" height="160" fill="#C9B896"/>
+  <rect x="700" y="280" width="60" height="80" fill="#C9D6DE"/>
+  <rect x="900" y="280" width="60" height="80" fill="#C9D6DE"/>
+  <rect x="0" y="580" width="1200" height="220" fill="#3A4F3C"/>
+  <!-- trees -->
+  <g fill="#1C3A2C">
+    <path d="M80 580 L130 420 L180 580 Z"/>
+    <path d="M160 590 L210 450 L260 590 Z"/>
+    <path d="M1080 560 L1130 400 L1180 560 Z"/>
+  </g>
+  <!-- people silhouettes -->
+  <g>
+    <ellipse cx="320" cy="470" rx="48" ry="56" fill="#E6C3A5"/>
+    <rect x="270" y="520" width="100" height="140" rx="12" fill="#2D5A45"/>
+    <ellipse cx="460" cy="490" rx="36" ry="42" fill="#E0B89A"/>
+    <rect x="425" y="530" width="70" height="120" rx="10" fill="#3A4149"/>
+    <ellipse cx="560" cy="500" rx="34" ry="40" fill="#D7AE8C"/>
+    <rect x="528" y="538" width="64" height="110" rx="10" fill="#B86A1E"/>
+  </g>
+  <text x="40" y="760" fill="#FBFBFA" font-family="Georgia, serif" font-size="28" opacity="0.7">Town hall  listening first</text>
+</svg>

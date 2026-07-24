@@ -441,7 +441,7 @@ export function ActionCenter() {
     <section
       id="action"
       aria-labelledby="action-heading"
-      className="scroll-mt-20 bg-mist"
+      className="scroll-mt-28 bg-mist"
     >
       <div className="mx-auto max-w-content section-pad">
         <h2 id="action-heading" className="section-title">

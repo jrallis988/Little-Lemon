@@ -78,15 +78,18 @@ export function Issues() {
     <section
       id="issues"
       aria-labelledby="issues-heading"
-      className="scroll-mt-20 bg-mist"
+      className="scroll-mt-28 bg-mist"
     >
       <div className="mx-auto max-w-content section-pad">
-        <h2 id="issues-heading" className="section-title">
+        <p className="text-sm font-semibold uppercase tracking-[0.16em] text-pine-600">
+          Priorities
+        </p>
+        <h2 id="issues-heading" className="mt-2 section-title">
           The Issues
         </h2>
         <p className="section-lead">
-          Four pillars. Clear priorities. Expand each to see the practical
-          steps—not slogans.
+          Clear fights for Granite Staters—expand each priority for the practical
+          steps, not slogans.
         </p>
 
         <div className="mt-10 grid gap-0 md:grid-cols-2 md:gap-5">
