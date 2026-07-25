@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 
 import { ThumbnailCard } from '@/components/editorial/ThumbnailCard';
-import { colors, spacing, typography } from '@/constants/theme';
+import { colors, portalBox, spacing } from '@/constants/theme';
 import type { Track } from '@/types/models';
 
 type SidebarSection = {
@@ -14,8 +14,7 @@ type EditorialSidebarProps = {
 };
 
 /**
- * Secondary column: Editor's Picks / Trending / Recently Featured.
- * Stacks under the main feed on narrow viewports.
+ * Tight PureVolume sidebar modules — bordered boxes, table-density lists.
  */
 export function EditorialSidebar({ sections }: EditorialSidebarProps) {
   return (
@@ -25,14 +24,16 @@ export function EditorialSidebar({ sections }: EditorialSidebarProps) {
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>{section.title}</Text>
           </View>
-          {section.tracks.map((track, index) => (
-            <ThumbnailCard
-              key={`${section.title}-${track.id}`}
-              track={track}
-              rank={index + 1}
-              compact
-            />
-          ))}
+          <View style={styles.table}>
+            {section.tracks.map((track, index) => (
+              <ThumbnailCard
+                key={`${section.title}-${track.id}`}
+                track={track}
+                rank={index + 1}
+                compact
+              />
+            ))}
+          </View>
         </View>
       ))}
     </View>
@@ -41,24 +42,28 @@ export function EditorialSidebar({ sections }: EditorialSidebarProps) {
 
 const styles = StyleSheet.create({
   root: {
-    gap: spacing.lg,
+    gap: spacing.sm,
   },
   section: {
-    backgroundColor: colors.backgroundElevated,
-    borderWidth: 1,
-    borderColor: colors.borderSubtle,
-    paddingHorizontal: spacing.md,
-    paddingBottom: spacing.sm,
+    ...portalBox,
+    borderColor: colors.border,
+    overflow: 'hidden',
   },
   sectionHeader: {
+    backgroundColor: colors.toolbar,
     borderBottomWidth: 1,
-    borderBottomColor: colors.phosphorDim,
-    paddingVertical: spacing.sm,
-    marginBottom: spacing.xs,
+    borderBottomColor: colors.accentLine,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: 6,
   },
   sectionTitle: {
-    ...typography.monoTiny,
-    color: colors.phosphor,
-    letterSpacing: 1.5,
+    fontFamily: 'SpaceMono',
+    fontSize: 9,
+    letterSpacing: 0.8,
+    color: colors.accentLine,
+    textTransform: 'uppercase',
+  },
+  table: {
+    backgroundColor: colors.backgroundElevated,
   },
 });

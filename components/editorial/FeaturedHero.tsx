@@ -9,7 +9,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-import { colors, spacing, typography } from '@/constants/theme';
+import { colors, portalBox, spacing, typography } from '@/constants/theme';
 import type { FeaturedSpotlight } from '@/lib/demoData';
 import type { Track } from '@/types/models';
 
@@ -19,8 +19,8 @@ type FeaturedHeroProps = {
 };
 
 /**
- * Large-format PureVolume-style cover banner — high contrast art plane,
- * bold artist name, editorial status blurb. Full-bleed within the feed.
+ * Large-format PureVolume-style cover banner — bordered portal box,
+ * bold uppercase type, flat sharp-corner CTAs.
  */
 export function FeaturedHero({ spotlight, track }: FeaturedHeroProps) {
   const grain = useSharedValue(0.04);
@@ -39,36 +39,38 @@ export function FeaturedHero({ spotlight, track }: FeaturedHeroProps) {
 
   return (
     <View style={styles.root}>
-      <View style={styles.artPlane}>
-        <View style={styles.artWash} />
-        <View style={styles.scanStrip} />
-        <Animated.View pointerEvents="none" style={[styles.grain, grainStyle]} />
-        <View style={styles.copy}>
-          <Text style={styles.badge}>{spotlight.badge}</Text>
-          <Text style={styles.headline}>{spotlight.headline}</Text>
-          <Text style={styles.trackMeta}>
-            “{track.title}” · {track.scene} · {track.geography}
-          </Text>
-          <Text style={styles.blurb}>{spotlight.statusBlurb}</Text>
-          <View style={styles.statsRow}>
-            <Text style={styles.stat}>
-              {track.downloadCount.toLocaleString()} DOWNLOADS
+      <View style={styles.box}>
+        <View style={styles.artPlane}>
+          <View style={styles.artWash} />
+          <View style={styles.scanStrip} />
+          <Animated.View pointerEvents="none" style={[styles.grain, grainStyle]} />
+          <View style={styles.copy}>
+            <Text style={styles.badge}>{spotlight.badge}</Text>
+            <Text style={styles.headline}>{spotlight.headline}</Text>
+            <Text style={styles.trackMeta}>
+              “{track.title}” · {track.scene} · {track.geography}
             </Text>
-            <Text style={styles.statMuted}>
-              {track.repostCount.toLocaleString()} REPOSTS
-            </Text>
-          </View>
-          <View style={styles.ctaRow}>
-            <Link href={`/track/${track.id}`} asChild>
-              <Pressable style={styles.ctaPrimary}>
-                <Text style={styles.ctaPrimaryText}>LISTEN NOW</Text>
-              </Pressable>
-            </Link>
-            <Link href={`/artist/${track.artistId}`} asChild>
-              <Pressable style={styles.ctaGhost}>
-                <Text style={styles.ctaGhostText}>ARTIST PAGE</Text>
-              </Pressable>
-            </Link>
+            <Text style={styles.blurb}>{spotlight.statusBlurb}</Text>
+            <View style={styles.statsRow}>
+              <Text style={styles.stat}>
+                {track.downloadCount.toLocaleString()} DOWNLOADS
+              </Text>
+              <Text style={styles.statMuted}>
+                {track.repostCount.toLocaleString()} REPOSTS
+              </Text>
+            </View>
+            <View style={styles.ctaRow}>
+              <Link href={`/track/${track.id}`} asChild>
+                <Pressable style={styles.ctaPrimary}>
+                  <Text style={styles.ctaPrimaryText}>LISTEN NOW</Text>
+                </Pressable>
+              </Link>
+              <Link href={`/artist/${track.artistId}`} asChild>
+                <Pressable style={styles.ctaGhost}>
+                  <Text style={styles.ctaGhostText}>ARTIST PAGE</Text>
+                </Pressable>
+              </Link>
+            </View>
           </View>
         </View>
       </View>
@@ -78,105 +80,119 @@ export function FeaturedHero({ spotlight, track }: FeaturedHeroProps) {
 
 const styles = StyleSheet.create({
   root: {
-    marginBottom: 0,
+    paddingHorizontal: spacing.md,
+    paddingTop: spacing.md,
+    backgroundColor: colors.background,
+  },
+  box: {
+    ...portalBox,
+    borderColor: colors.accentLine,
+    borderWidth: 1,
   },
   artPlane: {
-    minHeight: 280,
+    minHeight: 260,
     backgroundColor: colors.surface,
-    borderBottomWidth: 2,
-    borderBottomColor: colors.phosphorDim,
     overflow: 'hidden',
     justifyContent: 'flex-end',
   },
   artWash: {
     ...StyleSheet.absoluteFill,
     backgroundColor: colors.backgroundElevated,
-    // High-contrast diagonal wash — CRT phosphor heat
-    borderLeftWidth: 0,
-    opacity: 1,
   },
   scanStrip: {
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
-    height: 8,
-    backgroundColor: colors.phosphor,
-    opacity: 0.55,
+    height: 4,
+    backgroundColor: colors.accentLine,
   },
   grain: {
     ...StyleSheet.absoluteFill,
     backgroundColor: colors.snow,
   },
   copy: {
-    paddingHorizontal: spacing.lg,
-    paddingTop: spacing.xxl,
-    paddingBottom: spacing.lg,
-    gap: spacing.sm,
-    backgroundColor: 'rgba(22, 19, 17, 0.72)',
+    paddingHorizontal: spacing.md,
+    paddingTop: spacing.xl,
+    paddingBottom: spacing.md,
+    gap: 6,
+    backgroundColor: 'rgba(22, 19, 17, 0.82)',
     borderTopWidth: 1,
     borderTopColor: colors.border,
   },
   badge: {
     ...typography.monoTiny,
-    color: colors.phosphor,
-    letterSpacing: 2,
+    color: colors.accentLine,
+    letterSpacing: 1.2,
   },
   headline: {
     fontFamily: 'SpaceMono',
-    fontSize: 32,
-    letterSpacing: 3,
+    fontSize: 28,
+    letterSpacing: 1,
     color: colors.text,
     textTransform: 'uppercase',
   },
   trackMeta: {
-    ...typography.caption,
+    ...typography.monoTiny,
     color: colors.copper,
-    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   blurb: {
     ...typography.body,
     color: colors.textMuted,
-    marginTop: spacing.xs,
+    textTransform: 'none',
+    letterSpacing: 0.1,
+    marginTop: 2,
   },
   statsRow: {
     flexDirection: 'row',
     gap: spacing.md,
-    marginTop: spacing.xs,
+    marginTop: 2,
   },
   stat: {
     ...typography.monoTiny,
     color: colors.copper,
+    letterSpacing: 0.8,
   },
   statMuted: {
     ...typography.monoTiny,
     color: colors.textDim,
+    letterSpacing: 0.8,
   },
   ctaRow: {
     flexDirection: 'row',
-    gap: spacing.sm,
+    gap: 0,
     marginTop: spacing.sm,
   },
   ctaPrimary: {
-    backgroundColor: colors.phosphor,
+    backgroundColor: colors.accentLine,
     paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm + 2,
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderColor: colors.accentLine,
+    borderRadius: 0,
+    marginRight: spacing.sm,
   },
   ctaPrimaryText: {
-    ...typography.monoTiny,
+    fontFamily: 'SpaceMono',
+    fontSize: 10,
+    letterSpacing: 1,
     color: colors.background,
-    letterSpacing: 1.5,
+    textTransform: 'uppercase',
   },
   ctaGhost: {
     borderWidth: 1,
     borderColor: colors.border,
     paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm + 2,
+    paddingVertical: 10,
     backgroundColor: colors.surface,
+    borderRadius: 0,
   },
   ctaGhostText: {
-    ...typography.monoTiny,
+    fontFamily: 'SpaceMono',
+    fontSize: 10,
+    letterSpacing: 1,
     color: colors.phosphor,
-    letterSpacing: 1.5,
+    textTransform: 'uppercase',
   },
 });

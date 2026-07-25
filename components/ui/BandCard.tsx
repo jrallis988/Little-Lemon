@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Link } from 'expo-router';
 
-import { colors, radii, spacing, typography } from '@/constants/theme';
+import { colors } from '@/constants/theme';
 
 export type BandCardProps = {
   id: string;
@@ -13,8 +13,7 @@ export type BandCardProps = {
 };
 
 /**
- * Artist showcase tile — framed like physical media, not a glass card.
- * Used in editorial / explore lists as a navigation affordance.
+ * Artist directory row — sharp bordered media frame, portal table density.
  */
 export function BandCard({
   id,
@@ -27,27 +26,23 @@ export function BandCard({
 
   return (
     <Link href={`/artist/${id}`} asChild>
-      <Pressable style={({ pressed }) => [styles.pressable, pressed && styles.pressed]}>
-        <View style={styles.sleeve}>
-          <View style={styles.artwork}>
-            <View style={styles.artworkInner}>
-              <Text style={styles.artworkMark}>SV</Text>
-            </View>
-            <View style={styles.sleeveEdge} />
-          </View>
-          <View style={styles.meta}>
-            <Text style={styles.name} numberOfLines={1}>
-              {name}
+      <Pressable style={({ pressed }) => [styles.row, pressed && styles.pressed]}>
+        <View style={styles.artwork}>
+          <Text style={styles.artworkMark}>SV</Text>
+        </View>
+        <View style={styles.meta}>
+          <Text style={styles.name} numberOfLines={1}>
+            {name}
+          </Text>
+          {meta.length > 0 ? (
+            <Text style={styles.scene} numberOfLines={1}>
+              {meta}
             </Text>
-            {meta.length > 0 ? (
-              <Text style={styles.scene} numberOfLines={1}>
-                {meta}
-              </Text>
-            ) : null}
-            <Text style={styles.downloads}>
-              {downloadCount.toLocaleString()} downloads
-            </Text>
-          </View>
+          ) : null}
+        </View>
+        <View style={styles.metric}>
+          <Text style={styles.metricValue}>{downloadCount.toLocaleString()}</Text>
+          <Text style={styles.metricLabel}>DL</Text>
         </View>
       </Pressable>
     </Link>
@@ -55,64 +50,69 @@ export function BandCard({
 }
 
 const styles = StyleSheet.create({
-  pressable: {
-    marginBottom: spacing.md,
-  },
-  pressed: {
-    opacity: 0.85,
-  },
-  sleeve: {
+  row: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: spacing.md,
-    paddingVertical: spacing.sm,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: colors.borderSubtle,
+    gap: 8,
+    paddingVertical: 6,
+    paddingHorizontal: 4,
+    borderWidth: 1,
+    borderTopWidth: 0,
+    borderColor: colors.border,
+    backgroundColor: colors.backgroundElevated,
+  },
+  pressed: {
+    backgroundColor: colors.toolbarActive,
   },
   artwork: {
-    width: 72,
-    height: 72,
-    backgroundColor: colors.surface,
+    width: 36,
+    height: 36,
+    backgroundColor: colors.surfaceRaised,
     borderWidth: 1,
     borderColor: colors.border,
-    borderRadius: radii.media,
-    overflow: 'hidden',
-  },
-  artworkInner: {
-    flex: 1,
+    borderRadius: 0,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.surfaceRaised,
   },
   artworkMark: {
-    ...typography.monoTiny,
+    fontFamily: 'SpaceMono',
+    fontSize: 8,
     color: colors.phosphorDim,
-  },
-  sleeveEdge: {
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    bottom: 0,
-    width: 3,
-    backgroundColor: colors.phosphorDim,
-    opacity: 0.35,
+    letterSpacing: 0.4,
   },
   meta: {
     flex: 1,
-    gap: 4,
+    gap: 1,
+    minWidth: 0,
   },
   name: {
-    ...typography.title,
+    fontFamily: 'SpaceMono',
+    fontSize: 11,
+    letterSpacing: 0.3,
     color: colors.text,
+    textTransform: 'uppercase',
   },
   scene: {
-    ...typography.caption,
+    fontFamily: 'SpaceMono',
+    fontSize: 8,
+    letterSpacing: 0.3,
     color: colors.textMuted,
     textTransform: 'uppercase',
   },
-  downloads: {
-    ...typography.monoTiny,
+  metric: {
+    alignItems: 'flex-end',
+    gap: 1,
+  },
+  metricValue: {
+    fontFamily: 'SpaceMono',
+    fontSize: 11,
     color: colors.copper,
+  },
+  metricLabel: {
+    fontFamily: 'SpaceMono',
+    fontSize: 8,
+    letterSpacing: 0.4,
+    color: colors.textDim,
     textTransform: 'uppercase',
   },
 });

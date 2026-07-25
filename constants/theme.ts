@@ -1,22 +1,27 @@
 /**
  * StaticVolume visual system
  * Warm off-black, CRT phosphor accents, physical typography — never pure #000.
+ * Portal chrome borrows PureVolume's crisp bordered boxes & toolbar blocks.
  */
 export const colors = {
   background: '#161311',
   backgroundElevated: '#1E1A16',
   surface: '#241F1A',
   surfaceRaised: '#2E2822',
-  border: '#3A342C',
+  /** Classic portal hairline (~#333) */
+  border: '#333333',
   borderSubtle: '#2A2520',
+  /** High-contrast rule for boxed modules */
+  borderStrong: '#4A4036',
 
   text: '#EDE6DC',
   textMuted: '#A89F93',
   textDim: '#6E665C',
 
-  /** CRT amber phosphor — primary accent */
+  /** CRT amber / PureVolume-era accent orange */
   phosphor: '#E0A45A',
   phosphorDim: '#B07E3E',
+  accentLine: '#E08A3C',
   /** Warm copper for download / engagement signals */
   copper: '#C4784A',
   copperDim: '#8F5635',
@@ -25,6 +30,11 @@ export const colors = {
   scanline: 'rgba(0, 0, 0, 0.22)',
   aberrationRed: 'rgba(220, 80, 60, 0.08)',
   aberrationCyan: 'rgba(60, 180, 200, 0.06)',
+
+  /** Classic portal toolbar strip */
+  toolbar: '#1A1612',
+  toolbarActive: '#2A2218',
+  toolbarEdge: '#333333',
 
   danger: '#C45A4A',
   success: '#8A9A6A',
@@ -35,34 +45,38 @@ export const typography = {
   brand: {
     fontFamily: 'SpaceMono',
     fontSize: 28,
-    letterSpacing: 4,
+    letterSpacing: 2,
     textTransform: 'uppercase' as const,
   },
   headline: {
     fontFamily: 'SpaceMono',
-    fontSize: 20,
-    letterSpacing: 1.5,
+    fontSize: 18,
+    letterSpacing: 0.5,
+    textTransform: 'uppercase' as const,
   },
   title: {
     fontFamily: 'SpaceMono',
-    fontSize: 16,
-    letterSpacing: 1,
+    fontSize: 14,
+    letterSpacing: 0.4,
+    textTransform: 'uppercase' as const,
   },
   body: {
     fontFamily: 'SpaceMono',
-    fontSize: 13,
-    letterSpacing: 0.3,
-    lineHeight: 20,
+    fontSize: 12,
+    letterSpacing: 0.15,
+    lineHeight: 18,
   },
   caption: {
     fontFamily: 'SpaceMono',
     fontSize: 11,
-    letterSpacing: 0.8,
+    letterSpacing: 0.4,
+    textTransform: 'uppercase' as const,
   },
   monoTiny: {
     fontFamily: 'SpaceMono',
-    fontSize: 10,
-    letterSpacing: 1.2,
+    fontSize: 9,
+    letterSpacing: 0.6,
+    textTransform: 'uppercase' as const,
   },
 } as const;
 
@@ -79,11 +93,19 @@ export const spacing = {
 } as const;
 
 export const radii = {
+  /** PureVolume portal chrome — sharp corners only */
   none: 0,
-  sm: 2,
-  md: 4,
-  /** Physical media / sleeve framing — keep tight, not pill-like */
-  media: 3,
+  sm: 0,
+  md: 0,
+  media: 0,
+} as const;
+
+/** Shared 1px portal box chrome */
+export const portalBox = {
+  borderWidth: 1,
+  borderColor: colors.border,
+  backgroundColor: colors.backgroundElevated,
+  borderRadius: 0,
 } as const;
 
 export const theme = {

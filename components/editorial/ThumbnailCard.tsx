@@ -1,7 +1,7 @@
 import { Link } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { colors, radii, spacing, typography } from '@/constants/theme';
+import { colors, spacing } from '@/constants/theme';
 import type { Track } from '@/types/models';
 
 type ThumbnailCardProps = {
@@ -11,16 +11,17 @@ type ThumbnailCardProps = {
 };
 
 /**
- * Dense PureVolume-style chart / pick row — small media frame + meta.
- * Not a floating card; hairline dividers only.
+ * Compact PureVolume chart/list row — tiny square thumb + table metadata.
  */
 export function ThumbnailCard({ track, rank, compact = false }: ThumbnailCardProps) {
   return (
     <Link href={`/track/${track.id}`} asChild>
       <Pressable style={({ pressed }) => [styles.row, pressed && styles.pressed]}>
-        {rank != null ? <Text style={styles.rank}>{rank}</Text> : null}
+        {rank != null ? (
+          <Text style={styles.rank}>{String(rank).padStart(2, '0')}</Text>
+        ) : null}
         <View style={[styles.thumb, compact && styles.thumbCompact]}>
-          <Text style={styles.thumbMark}>SV</Text>
+          <Text style={styles.thumbMark}>■</Text>
         </View>
         <View style={styles.meta}>
           <Text style={styles.title} numberOfLines={1}>
@@ -29,8 +30,13 @@ export function ThumbnailCard({ track, rank, compact = false }: ThumbnailCardPro
           <Text style={styles.artist} numberOfLines={1}>
             {track.artistName}
           </Text>
-          <Text style={styles.stat}>
-            {track.downloadCount.toLocaleString()} dl · {track.repostCount.toLocaleString()} rp
+        </View>
+        <View style={styles.metrics}>
+          <Text style={styles.metricPrimary}>
+            {track.downloadCount.toLocaleString()} DL
+          </Text>
+          <Text style={styles.metricSecondary}>
+            {track.repostCount.toLocaleString()} RP
           </Text>
         </View>
       </Pressable>
@@ -42,54 +48,78 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: spacing.sm,
-    paddingVertical: spacing.sm,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: colors.borderSubtle,
+    gap: 6,
+    paddingVertical: 5,
+    paddingHorizontal: spacing.sm,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+    backgroundColor: colors.backgroundElevated,
   },
   pressed: {
-    opacity: 0.8,
+    backgroundColor: colors.toolbarActive,
   },
   rank: {
-    ...typography.monoTiny,
-    color: colors.phosphorDim,
-    width: 18,
+    fontFamily: 'SpaceMono',
+    fontSize: 9,
+    letterSpacing: 0.3,
+    color: colors.textDim,
+    width: 16,
     textAlign: 'right',
   },
   thumb: {
-    width: 44,
-    height: 44,
+    width: 28,
+    height: 28,
     backgroundColor: colors.surfaceRaised,
     borderWidth: 1,
     borderColor: colors.border,
-    borderRadius: radii.media,
+    borderRadius: 0,
     alignItems: 'center',
     justifyContent: 'center',
   },
   thumbCompact: {
-    width: 36,
-    height: 36,
+    width: 24,
+    height: 24,
   },
   thumbMark: {
-    ...typography.monoTiny,
-    color: colors.phosphorDim,
+    fontFamily: 'SpaceMono',
     fontSize: 8,
+    color: colors.phosphorDim,
   },
   meta: {
     flex: 1,
-    gap: 2,
+    gap: 1,
+    minWidth: 0,
   },
   title: {
-    ...typography.caption,
+    fontFamily: 'SpaceMono',
+    fontSize: 10,
+    letterSpacing: 0.2,
     color: colors.text,
+    textTransform: 'uppercase',
   },
   artist: {
-    ...typography.monoTiny,
+    fontFamily: 'SpaceMono',
+    fontSize: 8,
+    letterSpacing: 0.2,
     color: colors.textMuted,
+    textTransform: 'uppercase',
   },
-  stat: {
-    ...typography.monoTiny,
+  metrics: {
+    alignItems: 'flex-end',
+    gap: 1,
+  },
+  metricPrimary: {
+    fontFamily: 'SpaceMono',
+    fontSize: 8,
+    letterSpacing: 0.3,
     color: colors.copper,
-    fontSize: 9,
+    textTransform: 'uppercase',
+  },
+  metricSecondary: {
+    fontFamily: 'SpaceMono',
+    fontSize: 8,
+    letterSpacing: 0.3,
+    color: colors.textDim,
+    textTransform: 'uppercase',
   },
 });

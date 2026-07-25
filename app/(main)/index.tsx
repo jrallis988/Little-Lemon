@@ -17,7 +17,7 @@ import { FeaturedHero } from '@/components/editorial/FeaturedHero';
 import { TrackChartRow } from '@/components/editorial/TrackChartRow';
 import { BandCard } from '@/components/ui/BandCard';
 import { StaticBackground } from '@/components/ui/StaticBackground';
-import { colors, spacing, typography } from '@/constants/theme';
+import { colors, portalBox, spacing, typography } from '@/constants/theme';
 import { useAudioBarInset } from '@/hooks/useAudioBarInset';
 import {
   DEMO_ARTISTS,
@@ -36,7 +36,7 @@ const SPLIT_BREAKPOINT = 780;
 
 /**
  * PureVolume-inspired editorial homepage:
- * hero banner → sub-nav → split feed (player + sidebar charts).
+ * bordered hero → portal toolbar → split bordered feed + sidebar.
  */
 export default function EditorialScreen() {
   const [tab, setTab] = useState<EditorialTab>('Featured');
@@ -83,7 +83,6 @@ export default function EditorialScreen() {
         stickyHeaderIndices={[2]}
         contentContainerStyle={{ paddingBottom: bottomInset }}
       >
-        {/* 0 — Brand masthead */}
         <View style={styles.masthead}>
           <Text style={styles.brand}>STATICVOLUME</Text>
           <Text style={styles.tagline}>
@@ -91,99 +90,114 @@ export default function EditorialScreen() {
           </Text>
         </View>
 
-        {/* 1 — Large-format featured hero */}
         <FeaturedHero spotlight={FEATURED_SPOTLIGHT} track={spotlightTrack} />
 
-        {/* 2 — Sticky PureVolume sub-nav */}
         <EditorialSubNav active={tab} onChange={setTab} />
 
-        {/* 3 — Split feed */}
         <View style={[styles.split, isWide && styles.splitWide]}>
           <View style={[styles.mainCol, isWide && styles.mainColWide]}>
             {tab === 'Featured' ? (
               <View style={styles.panel}>
-                <Text style={styles.panelKicker}>NOW PLAYING ON THE WIRE</Text>
-                <Text style={styles.panelTitle}>FEATURED TRANSMISSION</Text>
-                <View style={styles.playerBlock}>
-                  <WaveformPlayer
-                    track={spotlightTrack}
-                    comments={spotlightComments}
-                  />
+                <View style={styles.panelHeader}>
+                  <Text style={styles.panelKicker}>NOW PLAYING ON THE WIRE</Text>
+                  <Text style={styles.panelTitle}>FEATURED TRANSMISSION</Text>
                 </View>
-                <Text style={styles.panelNote}>
-                  Primary engagement: downloads & reposts. Play counts remain
-                  private to the artist.
-                </Text>
-                <Text style={styles.moreLabel}>MORE ON THE HOMEPAGE</Text>
-                {DEMO_TRACKS.filter((t) => t.id !== spotlightTrack.id)
-                  .slice(0, 3)
-                  .map((track, index) => (
-                    <TrackChartRow
-                      key={track.id}
-                      track={track}
-                      rank={index + 2}
-                      metric="downloads"
+                <View style={styles.panelBody}>
+                  <View style={styles.playerBlock}>
+                    <WaveformPlayer
+                      track={spotlightTrack}
+                      comments={spotlightComments}
                     />
-                  ))}
+                  </View>
+                  <Text style={styles.panelNote}>
+                    Primary engagement: downloads & reposts. Play counts remain
+                    private to the artist.
+                  </Text>
+                  <View style={styles.subHeader}>
+                    <Text style={styles.moreLabel}>MORE ON THE HOMEPAGE</Text>
+                  </View>
+                  {DEMO_TRACKS.filter((t) => t.id !== spotlightTrack.id)
+                    .slice(0, 3)
+                    .map((track, index) => (
+                      <TrackChartRow
+                        key={track.id}
+                        track={track}
+                        rank={index + 2}
+                        metric="downloads"
+                      />
+                    ))}
+                </View>
               </View>
             ) : null}
 
             {tab === 'Top Songs' ? (
               <View style={styles.panel}>
-                <Text style={styles.panelKicker}>CHARTS</Text>
-                <Text style={styles.panelTitle}>TOP SONGS</Text>
-                <Text style={styles.panelNote}>
-                  Ranked by reposts — scene propagation, not private plays.
-                </Text>
-                {topSongs.map((track, index) => (
-                  <TrackChartRow
-                    key={track.id}
-                    track={track}
-                    rank={index + 1}
-                    metric="reposts"
-                  />
-                ))}
+                <View style={styles.panelHeader}>
+                  <Text style={styles.panelKicker}>CHARTS</Text>
+                  <Text style={styles.panelTitle}>TOP SONGS</Text>
+                </View>
+                <View style={styles.panelBody}>
+                  <Text style={styles.panelNote}>
+                    Ranked by reposts — scene propagation, not private plays.
+                  </Text>
+                  {topSongs.map((track, index) => (
+                    <TrackChartRow
+                      key={track.id}
+                      track={track}
+                      rank={index + 1}
+                      metric="reposts"
+                    />
+                  ))}
+                </View>
               </View>
             ) : null}
 
             {tab === 'Top Downloads' ? (
               <View style={styles.panel}>
-                <Text style={styles.panelKicker}>CHARTS</Text>
-                <Text style={styles.panelTitle}>TOP DOWNLOADS</Text>
-                <Text style={styles.panelNote}>
-                  Download count is the primary public engagement signal.
-                </Text>
-                {topDownloads.map((track, index) => (
-                  <TrackChartRow
-                    key={track.id}
-                    track={track}
-                    rank={index + 1}
-                    metric="downloads"
-                  />
-                ))}
+                <View style={styles.panelHeader}>
+                  <Text style={styles.panelKicker}>CHARTS</Text>
+                  <Text style={styles.panelTitle}>TOP DOWNLOADS</Text>
+                </View>
+                <View style={styles.panelBody}>
+                  <Text style={styles.panelNote}>
+                    Download count is the primary public engagement signal.
+                  </Text>
+                  {topDownloads.map((track, index) => (
+                    <TrackChartRow
+                      key={track.id}
+                      track={track}
+                      rank={index + 1}
+                      metric="downloads"
+                    />
+                  ))}
+                </View>
               </View>
             ) : null}
 
             {tab === 'Browse Artists' ? (
               <View style={styles.panel}>
-                <Text style={styles.panelKicker}>DIRECTORY</Text>
-                <Text style={styles.panelTitle}>BROWSE ARTISTS</Text>
-                <Text style={styles.panelNote}>
-                  Scene & geography live on each profile — no global rankings.
-                </Text>
-                {DEMO_ARTISTS.map((artist) => (
-                  <BandCard
-                    key={artist.id}
-                    id={artist.id}
-                    name={artist.displayName}
-                    scene={artist.scene}
-                    geography={artist.geography}
-                    downloadCount={
-                      DEMO_TRACKS.find((t) => t.artistId === artist.id)
-                        ?.downloadCount ?? 0
-                    }
-                  />
-                ))}
+                <View style={styles.panelHeader}>
+                  <Text style={styles.panelKicker}>DIRECTORY</Text>
+                  <Text style={styles.panelTitle}>BROWSE ARTISTS</Text>
+                </View>
+                <View style={styles.panelBody}>
+                  <Text style={styles.panelNote}>
+                    Scene & geography live on each profile — no global rankings.
+                  </Text>
+                  {DEMO_ARTISTS.map((artist) => (
+                    <BandCard
+                      key={artist.id}
+                      id={artist.id}
+                      name={artist.displayName}
+                      scene={artist.scene}
+                      geography={artist.geography}
+                      downloadCount={
+                        DEMO_TRACKS.find((t) => t.artistId === artist.id)
+                          ?.downloadCount ?? 0
+                      }
+                    />
+                  ))}
+                </View>
               </View>
             ) : null}
           </View>
@@ -199,29 +213,30 @@ export default function EditorialScreen() {
 
 const styles = StyleSheet.create({
   masthead: {
-    paddingHorizontal: spacing.lg,
+    paddingHorizontal: spacing.md,
     paddingTop: spacing.md,
     paddingBottom: spacing.sm,
     backgroundColor: colors.background,
     borderBottomWidth: 1,
-    borderBottomColor: colors.borderSubtle,
-    gap: 4,
+    borderBottomColor: colors.border,
+    gap: 2,
   },
   brand: {
     ...typography.brand,
-    fontSize: 22,
-    letterSpacing: 3,
-    color: colors.phosphor,
+    fontSize: 20,
+    letterSpacing: 2,
+    color: colors.accentLine,
   },
   tagline: {
     ...typography.monoTiny,
     color: colors.textDim,
+    letterSpacing: 0.6,
   },
   split: {
     flexDirection: 'column',
     paddingHorizontal: spacing.md,
-    paddingTop: spacing.lg,
-    gap: spacing.lg,
+    paddingTop: spacing.sm,
+    gap: spacing.sm,
   },
   splitWide: {
     flexDirection: 'row',
@@ -231,49 +246,78 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   mainColWide: {
-    flex: 1.65,
+    flex: 1.7,
   },
   sideCol: {
     flex: 1,
   },
   sideColWide: {
     flex: 1,
-    maxWidth: 320,
+    maxWidth: 280,
   },
   panel: {
-    backgroundColor: colors.backgroundElevated,
-    borderWidth: 1,
+    ...portalBox,
     borderColor: colors.border,
-    paddingHorizontal: spacing.md,
-    paddingTop: spacing.md,
-    paddingBottom: spacing.lg,
+    overflow: 'hidden',
+  },
+  panelHeader: {
+    backgroundColor: colors.toolbar,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.accentLine,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: 8,
+    gap: 2,
+  },
+  panelBody: {
+    paddingHorizontal: spacing.sm,
+    paddingTop: spacing.sm,
+    paddingBottom: spacing.md,
   },
   panelKicker: {
-    ...typography.monoTiny,
+    fontFamily: 'SpaceMono',
+    fontSize: 8,
+    letterSpacing: 0.8,
     color: colors.copper,
-    marginBottom: spacing.xs,
+    textTransform: 'uppercase',
   },
   panelTitle: {
-    ...typography.headline,
+    fontFamily: 'SpaceMono',
+    fontSize: 14,
+    letterSpacing: 0.5,
     color: colors.text,
-    marginBottom: spacing.sm,
+    textTransform: 'uppercase',
   },
   panelNote: {
-    ...typography.caption,
+    fontFamily: 'SpaceMono',
+    fontSize: 10,
+    letterSpacing: 0.1,
+    lineHeight: 15,
     color: colors.textMuted,
-    marginBottom: spacing.md,
+    marginBottom: spacing.sm,
+    textTransform: 'none',
   },
   playerBlock: {
-    marginBottom: spacing.md,
-    paddingBottom: spacing.md,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: colors.borderSubtle,
+    marginBottom: spacing.sm,
+    paddingBottom: spacing.sm,
+    borderWidth: 1,
+    borderColor: colors.border,
+    backgroundColor: colors.surface,
+    padding: spacing.sm,
+  },
+  subHeader: {
+    backgroundColor: colors.toolbar,
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderBottomWidth: 0,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: 5,
+    marginTop: spacing.xs,
   },
   moreLabel: {
-    ...typography.monoTiny,
-    color: colors.textDim,
-    letterSpacing: 1.5,
-    marginBottom: spacing.sm,
-    marginTop: spacing.sm,
+    fontFamily: 'SpaceMono',
+    fontSize: 8,
+    letterSpacing: 0.8,
+    color: colors.accentLine,
+    textTransform: 'uppercase',
   },
 });

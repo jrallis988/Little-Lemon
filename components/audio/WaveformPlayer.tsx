@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 
-import { colors, spacing, typography } from '@/constants/theme';
+import { colors, spacing } from '@/constants/theme';
 import { useAudioStore } from '@/store/useAudioStore';
 import type { Track, WaveformComment } from '@/types/models';
 
@@ -179,40 +179,54 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
   },
   playBtn: {
-    width: 36,
-    height: 36,
+    width: 32,
+    height: 32,
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
-    borderColor: colors.phosphorDim,
+    borderColor: colors.accentLine,
     backgroundColor: colors.surface,
+    borderRadius: 0,
   },
   playLabel: {
-    ...typography.caption,
-    color: colors.phosphor,
+    fontFamily: 'SpaceMono',
+    fontSize: 11,
+    letterSpacing: 0.4,
+    color: colors.accentLine,
+    textTransform: 'uppercase',
   },
   titles: {
     flex: 1,
     gap: 2,
   },
   title: {
-    ...typography.title,
+    fontFamily: 'SpaceMono',
+    fontSize: 12,
+    letterSpacing: 0.3,
     color: colors.text,
+    textTransform: 'uppercase',
   },
   artist: {
-    ...typography.caption,
+    fontFamily: 'SpaceMono',
+    fontSize: 9,
+    letterSpacing: 0.3,
     color: colors.textMuted,
+    textTransform: 'uppercase',
   },
   time: {
-    ...typography.monoTiny,
+    fontFamily: 'SpaceMono',
+    fontSize: 9,
+    letterSpacing: 0.3,
     color: colors.textDim,
+    textTransform: 'uppercase',
   },
   waveWrap: {
     height: 64,
     justifyContent: 'center',
     backgroundColor: colors.backgroundElevated,
     borderWidth: 1,
-    borderColor: colors.borderSubtle,
+    borderColor: colors.border,
+    borderRadius: 0,
     overflow: 'hidden',
   },
   playedMask: {
@@ -228,8 +242,8 @@ const styles = StyleSheet.create({
     bottom: 0,
     width: 2,
     marginLeft: -1,
-    backgroundColor: colors.phosphor,
-    opacity: 0.9,
+    backgroundColor: colors.accentLine,
+    opacity: 0.95,
   },
   commentMark: {
     position: 'absolute',
@@ -237,9 +251,9 @@ const styles = StyleSheet.create({
     marginLeft: -4,
   },
   commentDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 1,
+    width: 7,
+    height: 7,
+    borderRadius: 0,
     backgroundColor: colors.copper,
     borderWidth: 1,
     borderColor: colors.text,
@@ -249,12 +263,16 @@ const styles = StyleSheet.create({
     gap: spacing.md,
   },
   stat: {
-    ...typography.monoTiny,
+    fontFamily: 'SpaceMono',
+    fontSize: 9,
+    letterSpacing: 0.6,
     color: colors.copper,
     textTransform: 'uppercase',
   },
   statMuted: {
-    ...typography.monoTiny,
+    fontFamily: 'SpaceMono',
+    fontSize: 9,
+    letterSpacing: 0.6,
     color: colors.textDim,
     textTransform: 'uppercase',
   },

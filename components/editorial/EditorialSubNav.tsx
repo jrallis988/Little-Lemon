@@ -17,63 +17,85 @@ type EditorialSubNavProps = {
 };
 
 /**
- * Classic PureVolume secondary nav under the hero:
- * Featured · Top Songs · Top Downloads · Browse Artists
+ * Classic PureVolume portal toolbar — separated blocks with vertical rules,
+ * not floating underline pills.
  */
 export function EditorialSubNav({ active, onChange }: EditorialSubNavProps) {
   return (
-    <View style={styles.bar}>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.row}
-      >
-        {EDITORIAL_TABS.map((tab) => {
-          const isActive = tab === active;
-          return (
-            <Pressable
-              key={tab}
-              onPress={() => onChange(tab)}
-              style={[styles.tab, isActive && styles.tabActive]}
-            >
-              <Text style={[styles.tabText, isActive && styles.tabTextActive]}>
-                {tab.toUpperCase()}
-              </Text>
-            </Pressable>
-          );
-        })}
-      </ScrollView>
+    <View style={styles.wrap}>
+      <View style={styles.bar}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.row}
+        >
+          {EDITORIAL_TABS.map((tab, index) => {
+            const isActive = tab === active;
+            const isLast = index === EDITORIAL_TABS.length - 1;
+            return (
+              <View key={tab} style={styles.tabCell}>
+                <Pressable
+                  onPress={() => onChange(tab)}
+                  style={[styles.tab, isActive && styles.tabActive]}
+                >
+                  <Text style={[styles.tabText, isActive && styles.tabTextActive]}>
+                    {tab.toUpperCase()}
+                  </Text>
+                </Pressable>
+                {!isLast ? <View style={styles.divider} /> : null}
+              </View>
+            );
+          })}
+        </ScrollView>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  wrap: {
+    paddingHorizontal: spacing.md,
+    paddingTop: spacing.sm,
+    backgroundColor: colors.background,
+  },
   bar: {
-    backgroundColor: colors.backgroundElevated,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
-    borderTopWidth: 1,
-    borderTopColor: colors.borderSubtle,
+    backgroundColor: colors.toolbar,
+    borderWidth: 1,
+    borderColor: colors.toolbarEdge,
+    borderRadius: 0,
   },
   row: {
-    paddingHorizontal: spacing.sm,
-    gap: 0,
+    flexDirection: 'row',
+    alignItems: 'stretch',
+  },
+  tabCell: {
+    flexDirection: 'row',
+    alignItems: 'stretch',
   },
   tab: {
     paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm + 4,
-    borderBottomWidth: 2,
-    borderBottomColor: colors.transparent,
+    paddingVertical: 11,
+    backgroundColor: colors.toolbar,
+    borderRadius: 0,
+    justifyContent: 'center',
   },
   tabActive: {
-    borderBottomColor: colors.phosphor,
+    backgroundColor: colors.toolbarActive,
+    borderBottomWidth: 2,
+    borderBottomColor: colors.accentLine,
   },
   tabText: {
-    ...typography.monoTiny,
+    fontFamily: 'SpaceMono',
+    fontSize: 9,
+    letterSpacing: 0.8,
     color: colors.textDim,
-    letterSpacing: 1,
+    textTransform: 'uppercase',
   },
   tabTextActive: {
-    color: colors.phosphor,
+    color: colors.accentLine,
+  },
+  divider: {
+    width: 1,
+    backgroundColor: colors.toolbarEdge,
   },
 });

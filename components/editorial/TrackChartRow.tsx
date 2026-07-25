@@ -2,7 +2,7 @@ import { Link } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { useAudioStore } from '@/store/useAudioStore';
-import { colors, spacing, typography } from '@/constants/theme';
+import { colors, spacing } from '@/constants/theme';
 import type { Track } from '@/types/models';
 
 type TrackChartRowProps = {
@@ -11,12 +11,12 @@ type TrackChartRowProps = {
   metric: 'downloads' | 'reposts';
 };
 
-/** Ranked chart row for Top Songs / Top Downloads tabs */
+/** Ranked chart row — sharp portal table cells */
 export function TrackChartRow({ track, rank, metric }: TrackChartRowProps) {
   const setTrack = useAudioStore((s) => s.setTrack);
   const value =
     metric === 'downloads' ? track.downloadCount : track.repostCount;
-  const label = metric === 'downloads' ? 'DOWNLOADS' : 'REPOSTS';
+  const label = metric === 'downloads' ? 'DL' : 'RP';
 
   return (
     <View style={styles.row}>
@@ -46,52 +46,71 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: spacing.sm,
-    paddingVertical: spacing.sm + 2,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: colors.borderSubtle,
+    gap: 6,
+    paddingVertical: 6,
+    paddingHorizontal: 4,
+    borderWidth: 1,
+    borderTopWidth: 0,
+    borderColor: colors.border,
+    backgroundColor: colors.backgroundElevated,
   },
   rank: {
-    ...typography.caption,
+    fontFamily: 'SpaceMono',
+    fontSize: 10,
+    letterSpacing: 0.3,
     color: colors.phosphorDim,
-    width: 28,
+    width: 22,
   },
   play: {
-    width: 28,
-    height: 28,
+    width: 24,
+    height: 24,
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
     borderColor: colors.border,
     backgroundColor: colors.surface,
+    borderRadius: 0,
   },
   playLabel: {
-    ...typography.monoTiny,
-    color: colors.phosphor,
+    fontFamily: 'SpaceMono',
+    fontSize: 9,
+    color: colors.accentLine,
   },
   meta: {
     flex: 1,
-    gap: 2,
+    gap: 1,
+    minWidth: 0,
   },
   title: {
-    ...typography.caption,
+    fontFamily: 'SpaceMono',
+    fontSize: 11,
+    letterSpacing: 0.3,
     color: colors.text,
+    textTransform: 'uppercase',
   },
   artist: {
-    ...typography.monoTiny,
+    fontFamily: 'SpaceMono',
+    fontSize: 8,
+    letterSpacing: 0.2,
     color: colors.textMuted,
+    textTransform: 'uppercase',
   },
   metric: {
     alignItems: 'flex-end',
-    gap: 2,
+    gap: 1,
+    minWidth: 48,
   },
   metricValue: {
-    ...typography.caption,
+    fontFamily: 'SpaceMono',
+    fontSize: 11,
+    letterSpacing: 0.2,
     color: colors.copper,
   },
   metricLabel: {
-    ...typography.monoTiny,
-    color: colors.textDim,
+    fontFamily: 'SpaceMono',
     fontSize: 8,
+    letterSpacing: 0.4,
+    color: colors.textDim,
+    textTransform: 'uppercase',
   },
 });
