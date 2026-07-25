@@ -1,6 +1,6 @@
 import 'react-native-url-polyfill/auto';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { createClient } from '@supabase/supabase-js';
+import { createClient, type SupportedStorage } from '@supabase/supabase-js';
 import { Platform } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 
@@ -9,12 +9,31 @@ import type { AccountRole } from '@/types/models';
 const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL ?? '';
 const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY ?? '';
 
+const memoryStore = new Map<string, string>();
+
+const MemoryStorageAdapter: SupportedStorage = {
+  getItem: (key) => memoryStore.get(key) ?? null,
+  setItem: (key, value) => {
+    memoryStore.set(key, value);
+  },
+  removeItem: (key) => {
+    memoryStore.delete(key);
+  },
+};
+
+function isBrowserLike(): boolean {
+  return typeof window !== 'undefined';
+}
+
 /**
  * SecureStore has a 2048-byte value limit; large auth sessions fall back to AsyncStorage.
- * Web always uses AsyncStorage.
+ * Web uses AsyncStorage in the browser; SSR / Node falls back to in-memory storage.
  */
-const ExpoSecureStoreAdapter = {
-  getItem: async (key: string): Promise<string | null> => {
+const ExpoSecureStoreAdapter: SupportedStorage = {
+  getItem: async (key) => {
+    if (!isBrowserLike()) {
+      return MemoryStorageAdapter.getItem(key);
+    }
     if (Platform.OS === 'web') {
       return AsyncStorage.getItem(key);
     }
@@ -24,7 +43,11 @@ const ExpoSecureStoreAdapter = {
       return AsyncStorage.getItem(key);
     }
   },
-  setItem: async (key: string, value: string): Promise<void> => {
+  setItem: async (key, value) => {
+    if (!isBrowserLike()) {
+      MemoryStorageAdapter.setItem(key, value);
+      return;
+    }
     if (Platform.OS === 'web') {
       await AsyncStorage.setItem(key, value);
       return;
@@ -39,7 +62,11 @@ const ExpoSecureStoreAdapter = {
       await AsyncStorage.setItem(key, value);
     }
   },
-  removeItem: async (key: string): Promise<void> => {
+  removeItem: async (key) => {
+    if (!isBrowserLike()) {
+      MemoryStorageAdapter.removeItem(key);
+      return;
+    }
     if (Platform.OS === 'web') {
       await AsyncStorage.removeItem(key);
       return;

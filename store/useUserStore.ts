@@ -58,6 +58,12 @@ export const useUserStore = create<UserState>((set) => ({
       return;
     }
 
+    // Avoid touching auth storage during static SSR (no window).
+    if (typeof window === 'undefined') {
+      set({ isHydrated: true, session: null, profile: null });
+      return;
+    }
+
     const { data } = await supabase.auth.getSession();
     set({
       session: data.session,
