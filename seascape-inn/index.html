@@ -4,1346 +4,167 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Beachfront motel at Plaice Cove in Hampton, NH. Ocean views, free parking, walk to North Beach. Open year-round.">
-    <meta name="keywords" content="Hampton NH motel, beach motel, pet friendly Hampton, affordable beach lodging, North Beach Hampton, Plaice Cove">
     <link rel="canonical" href="https://www.seascapeinn.com/">
     <title>Seascape Inn at Plaice Cove | Beachfront Motel in Hampton, NH</title>
-
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="apple-touch-icon" href="images/favicon.svg">
+    <meta property="og:title" content="Seascape Inn at Plaice Cove | Beachfront Motel in Hampton, NH">
+    <meta property="og:description" content="Beachfront motel at Plaice Cove in Hampton, NH. Ocean views, free parking, walk to North Beach. Open year-round.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.seascapeinn.com/">
+    <meta name="theme-color" content="#08262e">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
 
-    <style>
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --atlantic: #0e3a45;
-            --atlantic-deep: #08262e;
-            --seafoam: #3d8f86;
-            --seafoam-bright: #4aa79d;
-            --mist: #e6eef1;
-            --foam: #f7fafb;
-            --sand-cool: #d5dde0;
-            --ink: #142226;
-            --ink-soft: #4a5c62;
-            --white: #ffffff;
-            --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Figtree', sans-serif;
-            color: var(--ink);
-            line-height: 1.65;
-            background: var(--foam);
-            overflow-x: hidden;
-        }
-
-        img {
-            max-width: 100%;
-            display: block;
-        }
-
-        a {
-            color: inherit;
-        }
-
-        h1, h2, h3 {
-            font-family: 'Fraunces', serif;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            line-height: 1.15;
-        }
-
-        .container {
-            width: min(1120px, calc(100% - 2.5rem));
-            margin-inline: auto;
-        }
-
-        /* ——— Header ——— */
-        .site-header {
-            position: fixed;
-            inset: 0 0 auto 0;
-            z-index: 100;
-            transition: background 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out), backdrop-filter 0.4s;
-        }
-
-        .site-header.is-scrolled {
-            background: rgba(8, 38, 46, 0.92);
-            backdrop-filter: blur(12px);
-            box-shadow: 0 8px 30px rgba(8, 38, 46, 0.25);
-        }
-
-        .header-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1.5rem;
-            padding: 1.1rem 0;
-        }
-
-        .brand {
-            font-family: 'Fraunces', serif;
-            font-size: clamp(1.35rem, 2vw, 1.65rem);
-            font-weight: 700;
-            color: var(--white);
-            text-decoration: none;
-            letter-spacing: -0.01em;
-        }
-
-        .brand span {
-            display: block;
-            font-family: 'Figtree', sans-serif;
-            font-size: 0.68rem;
-            font-weight: 500;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            opacity: 0.75;
-            margin-top: 0.15rem;
-        }
-
-        .nav-desktop {
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
-
-        .nav-desktop a {
-            color: rgba(255, 255, 255, 0.88);
-            text-decoration: none;
-            font-size: 0.92rem;
-            font-weight: 500;
-            padding: 0.55rem 0.85rem;
-            position: relative;
-            transition: color 0.25s;
-        }
-
-        .nav-desktop a:not(.btn-nav):hover {
-            color: var(--white);
-        }
-
-        .nav-desktop a:not(.btn-nav)::after {
-            content: '';
-            position: absolute;
-            left: 0.85rem;
-            right: 0.85rem;
-            bottom: 0.3rem;
-            height: 1px;
-            background: var(--seafoam-bright);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.35s var(--ease-out);
-        }
-
-        .nav-desktop a:not(.btn-nav):hover::after {
-            transform: scaleX(1);
-        }
-
-        .btn-nav {
-            margin-left: 0.5rem;
-            background: var(--seafoam);
-            color: var(--white) !important;
-            padding: 0.7rem 1.25rem !important;
-            border-radius: 2px;
-            font-weight: 600 !important;
-            transition: background 0.25s, transform 0.25s var(--ease-out) !important;
-        }
-
-        .btn-nav:hover {
-            background: var(--seafoam-bright);
-            transform: translateY(-1px);
-        }
-
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: 1px solid rgba(255, 255, 255, 0.35);
-            color: var(--white);
-            width: 44px;
-            height: 44px;
-            border-radius: 2px;
-            cursor: pointer;
-            font-size: 1.25rem;
-            line-height: 1;
-        }
-
-        .mobile-nav {
-            display: none;
-            background: var(--atlantic-deep);
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .mobile-nav.is-open {
-            display: block;
-        }
-
-        .mobile-nav a {
-            display: block;
-            padding: 1rem 1.25rem;
-            color: var(--white);
-            text-decoration: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            font-weight: 500;
-        }
-
-        /* ——— Hero ——— */
-        .hero {
-            position: relative;
-            min-height: 100vh;
-            min-height: 100dvh;
-            display: grid;
-            place-items: end start;
-            color: var(--white);
-            overflow: hidden;
-        }
-
-        .hero-media {
-            position: absolute;
-            inset: 0;
-            background:
-                linear-gradient(180deg, rgba(8, 38, 46, 0.35) 0%, rgba(8, 38, 46, 0.15) 35%, rgba(8, 38, 46, 0.72) 100%),
-                url('https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=2000&q=85') center/cover no-repeat;
-            transform: scale(1.04);
-            animation: hero-drift 18s ease-in-out infinite alternate;
-        }
-
-        @keyframes hero-drift {
-            from { transform: scale(1.04) translate3d(0, 0, 0); }
-            to { transform: scale(1.08) translate3d(-1.2%, -0.8%, 0); }
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            width: min(1120px, calc(100% - 2.5rem));
-            margin: 0 auto 12vh;
-            padding-top: 6rem;
-        }
-
-        .hero-brand {
-            font-family: 'Fraunces', serif;
-            font-size: clamp(3rem, 8vw, 5.75rem);
-            font-weight: 700;
-            line-height: 0.95;
-            margin-bottom: 1.25rem;
-            opacity: 0;
-            transform: translateY(28px);
-            animation: rise-in 1s var(--ease-out) 0.15s forwards;
-        }
-
-        .hero-brand em {
-            font-style: normal;
-            display: block;
-            font-weight: 500;
-            font-size: 0.42em;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            opacity: 0.85;
-            margin-top: 0.55rem;
-        }
-
-        .hero-lead {
-            max-width: 34rem;
-            font-size: clamp(1.05rem, 2vw, 1.25rem);
-            font-weight: 400;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 2rem;
-            opacity: 0;
-            transform: translateY(24px);
-            animation: rise-in 1s var(--ease-out) 0.35s forwards;
-        }
-
-        .hero-cta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.85rem;
-            opacity: 0;
-            transform: translateY(24px);
-            animation: rise-in 1s var(--ease-out) 0.55s forwards;
-        }
-
-        @keyframes rise-in {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.95rem 1.6rem;
-            text-decoration: none;
-            font-weight: 650;
-            font-size: 0.92rem;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            border-radius: 2px;
-            transition: transform 0.3s var(--ease-out), background 0.25s, color 0.25s, border-color 0.25s;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .btn-primary {
-            background: var(--seafoam);
-            color: var(--white);
-        }
-
-        .btn-primary:hover {
-            background: var(--seafoam-bright);
-        }
-
-        .btn-ghost {
-            background: transparent;
-            color: var(--white);
-            border: 1px solid rgba(255, 255, 255, 0.65);
-        }
-
-        .btn-ghost:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: var(--white);
-        }
-
-        .btn-dark {
-            background: var(--atlantic);
-            color: var(--white);
-        }
-
-        .btn-dark:hover {
-            background: var(--atlantic-deep);
-        }
-
-        /* ——— Sections ——— */
-        section {
-            padding: clamp(4rem, 8vw, 6.5rem) 0;
-        }
-
-        .section-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--seafoam);
-            margin-bottom: 0.85rem;
-        }
-
-        .section-title {
-            font-size: clamp(2rem, 4vw, 3rem);
-            margin-bottom: 1rem;
-            color: var(--atlantic-deep);
-        }
-
-        .section-lead {
-            max-width: 38rem;
-            color: var(--ink-soft);
-            font-size: 1.05rem;
-        }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(32px);
-            transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
-        }
-
-        .reveal.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* About — single purpose, no cards */
-        .about {
-            background:
-                linear-gradient(135deg, rgba(230, 238, 241, 0.95), rgba(247, 250, 251, 0.9)),
-                repeating-linear-gradient(
-                    -12deg,
-                    transparent,
-                    transparent 18px,
-                    rgba(14, 58, 69, 0.03) 18px,
-                    rgba(14, 58, 69, 0.03) 19px
-                );
-        }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            gap: clamp(2rem, 5vw, 4rem);
-            align-items: end;
-        }
-
-        .about-facts {
-            display: grid;
-            gap: 1.25rem;
-            border-left: 2px solid var(--seafoam);
-            padding-left: 1.5rem;
-        }
-
-        .about-facts dt {
-            font-family: 'Fraunces', serif;
-            font-size: 1.35rem;
-            color: var(--atlantic);
-        }
-
-        .about-facts dd {
-            color: var(--ink-soft);
-            font-size: 0.98rem;
-            margin-bottom: 0.35rem;
-        }
-
-        /* Rooms */
-        .rooms-header {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 1.5rem;
-            align-items: end;
-            margin-bottom: 2.75rem;
-        }
-
-        .room-list {
-            display: grid;
-            gap: 2.5rem;
-        }
-
-        .room {
-            display: grid;
-            grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-            gap: clamp(1.5rem, 4vw, 3rem);
-            align-items: center;
-        }
-
-        .room:nth-child(even) {
-            direction: rtl;
-        }
-
-        .room:nth-child(even) > * {
-            direction: ltr;
-        }
-
-        .room-visual {
-            position: relative;
-            overflow: hidden;
-            min-height: 280px;
-            background: var(--mist);
-        }
-
-        .room-visual img {
-            width: 100%;
-            height: 100%;
-            min-height: 280px;
-            object-fit: cover;
-            transition: transform 0.8s var(--ease-out);
-        }
-
-        .room:hover .room-visual img {
-            transform: scale(1.04);
-        }
-
-        .room-body h3 {
-            font-size: clamp(1.6rem, 3vw, 2.1rem);
-            color: var(--atlantic-deep);
-            margin-bottom: 0.5rem;
-        }
-
-        .room-meta {
-            color: var(--ink-soft);
-            font-size: 0.95rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .room-price {
-            font-family: 'Fraunces', serif;
-            font-size: 1.75rem;
-            color: var(--seafoam);
-            margin-bottom: 1rem;
-        }
-
-        .room-price span {
-            font-family: 'Figtree', sans-serif;
-            font-size: 0.95rem;
-            color: var(--ink-soft);
-            font-weight: 500;
-        }
-
-        .room-body p {
-            color: var(--ink-soft);
-            margin-bottom: 1.5rem;
-            max-width: 32rem;
-        }
-
-        .stay-note {
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--sand-cool);
-            color: var(--ink-soft);
-        }
-
-        .stay-note a {
-            color: var(--seafoam);
-            font-weight: 600;
-            text-decoration: none;
-        }
-
-        .stay-note a:hover {
-            text-decoration: underline;
-        }
-
-        /* Amenities — lists, not cards */
-        .amenities {
-            background: var(--atlantic-deep);
-            color: var(--white);
-        }
-
-        .amenities .section-title,
-        .amenities .section-lead {
-            color: var(--white);
-        }
-
-        .amenities .section-lead {
-            color: rgba(255, 255, 255, 0.78);
-        }
-
-        .amenity-columns {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            margin-top: 2.75rem;
-        }
-
-        .amenity-columns h3 {
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-            color: var(--seafoam-bright);
-        }
-
-        .amenity-columns ul {
-            list-style: none;
-        }
-
-        .amenity-columns li {
-            padding: 0.65rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.85);
-            font-size: 0.98rem;
-        }
-
-        .amenity-columns li:last-child {
-            border-bottom: none;
-        }
-
-        /* Gallery */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 0.75rem;
-            margin-top: 2.5rem;
-        }
-
-        .gallery-item {
-            position: relative;
-            overflow: hidden;
-            background: var(--mist);
-            grid-column: span 4;
-            min-height: 220px;
-        }
-
-        .gallery-item:nth-child(1),
-        .gallery-item:nth-child(6) {
-            grid-column: span 6;
-            min-height: 300px;
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.7s var(--ease-out);
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.05);
-        }
-
-        .gallery-item figcaption {
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            padding: 2.5rem 1rem 0.9rem;
-            background: linear-gradient(transparent, rgba(8, 38, 46, 0.75));
-            color: var(--white);
-            font-size: 0.88rem;
-            font-weight: 500;
-            letter-spacing: 0.02em;
-        }
-
-        /* Location */
-        .location {
-            background: var(--mist);
-        }
-
-        .location-layout {
-            display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            gap: clamp(2rem, 5vw, 3.5rem);
-            margin-top: 2.5rem;
-            align-items: start;
-        }
-
-        .map-frame {
-            overflow: hidden;
-            min-height: 420px;
-            background: var(--sand-cool);
-        }
-
-        .map-frame iframe {
-            width: 100%;
-            height: 100%;
-            min-height: 420px;
-            border: 0;
-            filter: grayscale(0.15) contrast(1.05);
-        }
-
-        .location-copy h3 {
-            font-size: 1.5rem;
-            color: var(--atlantic);
-            margin: 1.75rem 0 0.75rem;
-        }
-
-        .location-copy h3:first-child {
-            margin-top: 0;
-        }
-
-        .location-copy p,
-        .location-copy li {
-            color: var(--ink-soft);
-        }
-
-        .location-copy ul {
-            list-style: none;
-            margin-top: 0.5rem;
-        }
-
-        .location-copy li {
-            padding: 0.55rem 0;
-            border-bottom: 1px solid rgba(14, 58, 69, 0.12);
-        }
-
-        .address-block {
-            font-size: 1.15rem;
-            color: var(--ink) !important;
-            font-weight: 600;
-            line-height: 1.5;
-        }
-
-        /* Contact */
-        .contact-layout {
-            display: grid;
-            grid-template-columns: 0.9fr 1.1fr;
-            gap: clamp(2rem, 5vw, 4rem);
-            margin-top: 2.5rem;
-            align-items: start;
-        }
-
-        .contact-points {
-            display: grid;
-            gap: 1.75rem;
-        }
-
-        .contact-points strong {
-            display: block;
-            font-size: 0.75rem;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-            color: var(--seafoam);
-            margin-bottom: 0.4rem;
-        }
-
-        .contact-points a {
-            color: var(--atlantic);
-            font-weight: 600;
-            font-size: 1.2rem;
-            text-decoration: none;
-        }
-
-        .contact-points a:hover {
-            color: var(--seafoam);
-        }
-
-        .contact-form {
-            display: grid;
-            gap: 1rem;
-        }
-
-        .form-row {
-            display: grid;
-            gap: 0.4rem;
-        }
-
-        .form-row label {
-            font-size: 0.88rem;
-            font-weight: 600;
-            color: var(--atlantic);
-        }
-
-        .form-row input,
-        .form-row textarea {
-            width: 100%;
-            padding: 0.9rem 1rem;
-            border: 1px solid var(--sand-cool);
-            background: var(--white);
-            border-radius: 2px;
-            font: inherit;
-            color: var(--ink);
-            transition: border-color 0.25s, box-shadow 0.25s;
-        }
-
-        .form-row input:focus,
-        .form-row textarea:focus {
-            outline: none;
-            border-color: var(--seafoam);
-            box-shadow: 0 0 0 3px rgba(61, 143, 134, 0.15);
-        }
-
-        .form-row textarea {
-            min-height: 140px;
-            resize: vertical;
-        }
-
-        .form-status {
-            display: none;
-            padding: 0.85rem 1rem;
-            background: rgba(61, 143, 134, 0.12);
-            color: var(--atlantic);
-            font-size: 0.95rem;
-        }
-
-        .form-status.is-visible {
-            display: block;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--atlantic-deep);
-            color: rgba(255, 255, 255, 0.8);
-            padding: 3.5rem 0 2rem;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 1.3fr 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2.5rem;
-        }
-
-        .footer-grid h3 {
-            color: var(--white);
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-        }
-
-        .footer-grid a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-        }
-
-        .footer-grid a:hover {
-            color: var(--seafoam-bright);
-        }
-
-        .footer-links {
-            list-style: none;
-            display: grid;
-            gap: 0.55rem;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 1.5rem;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 1rem;
-            font-size: 0.88rem;
-            color: rgba(255, 255, 255, 0.55);
-        }
-
-        .footer-bottom a {
-            color: rgba(255, 255, 255, 0.55);
-            text-decoration: none;
-            margin-left: 1rem;
-        }
-
-        .mobile-book {
-            display: none;
-            position: fixed;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 90;
-            background: var(--seafoam);
-            text-align: center;
-        }
-
-        .mobile-book a {
-            display: block;
-            padding: 1rem;
-            color: var(--white);
-            text-decoration: none;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-        }
-
-        @media (max-width: 960px) {
-            .about-grid,
-            .location-layout,
-            .contact-layout,
-            .footer-grid,
-            .amenity-columns {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .amenity-columns {
-                gap: 1.5rem 2rem;
-            }
-
-            .room,
-            .room:nth-child(even) {
-                grid-template-columns: 1fr;
-                direction: ltr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nav-desktop {
-                display: none;
-            }
-
-            .menu-toggle {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            .hero-content {
-                margin-bottom: 18vh;
-            }
-
-            .about-grid,
-            .location-layout,
-            .contact-layout,
-            .footer-grid,
-            .amenity-columns {
-                grid-template-columns: 1fr;
-            }
-
-            .gallery-item,
-            .gallery-item:nth-child(1),
-            .gallery-item:nth-child(6) {
-                grid-column: span 12;
-                min-height: 220px;
-            }
-
-            .mobile-book {
-                display: block;
-            }
-
-            body {
-                padding-bottom: 64px;
-            }
-
-            .footer-bottom {
-                flex-direction: column;
-            }
-
-            .footer-bottom a {
-                margin-left: 0;
-                margin-right: 1rem;
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation: none !important;
-                transition: none !important;
-                scroll-behavior: auto !important;
-            }
-
-            .reveal,
-            .hero-brand,
-            .hero-lead,
-            .hero-cta {
-                opacity: 1;
-                transform: none;
-            }
-        }
-    </style>
 </head>
 <body>
-    <header class="site-header" id="siteHeader">
-        <div class="container header-bar">
-            <a href="#home" class="brand">
-                Seascape Inn
-                <span>Plaice Cove · Hampton, NH</span>
-            </a>
-
-            <nav class="nav-desktop" aria-label="Primary">
-                <a href="#rooms">Rooms</a>
-                <a href="#amenities">Amenities</a>
-                <a href="#gallery">Gallery</a>
-                <a href="#location">Location</a>
-                <a href="#contact">Contact</a>
-                <a href="tel:6039261750" class="btn-nav">Book Now</a>
-            </nav>
-
-            <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">☰</button>
-        </div>
-
-        <nav class="mobile-nav" id="mobileNav" aria-label="Mobile">
-            <a href="#rooms">Rooms</a>
-            <a href="#amenities">Amenities</a>
-            <a href="#gallery">Gallery</a>
-            <a href="#location">Location</a>
-            <a href="#contact">Contact</a>
-            <a href="tel:6039261750">Call to Book</a>
+<header class="site-header" id="siteHeader">
+    <div class="container header-bar">
+        <a href="index.html" class="brand">
+            Seascape Inn
+            <span>Plaice Cove · Hampton, NH</span>
+        </a>
+        <nav class="nav-desktop" aria-label="Primary">
+            <a href="rooms.html">Rooms</a><a href="amenities.html">Amenities</a><a href="gallery.html">Gallery</a><a href="location.html">Location</a><a href="contact.html">Contact</a><a href="book.html" class="btn-nav">Book Now</a>
         </nav>
-    </header>
-
-    <div class="mobile-book">
-        <a href="tel:6039261750">Book Your Stay</a>
+        <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">☰</button>
     </div>
-
-    <main>
-        <section id="home" class="hero">
-            <div class="hero-media" role="img" aria-label="Ocean shoreline near Hampton Beach"></div>
-            <div class="hero-content">
-                <h1 class="hero-brand">
-                    Seascape Inn
-                    <em>at Plaice Cove</em>
-                </h1>
-                <p class="hero-lead">A beachfront motel across from North Beach in Hampton, NH — open year-round for nightly and extended stays.</p>
-                <div class="hero-cta">
-                    <a href="#rooms" class="btn btn-primary">View Rooms &amp; Rates</a>
-                    <a href="tel:6039261750" class="btn btn-ghost">Call (603) 926-1750</a>
-                </div>
-            </div>
-        </section>
-
-        <section class="about" id="about">
-            <div class="container about-grid reveal">
-                <div>
-                    <p class="section-label">Why stay here</p>
-                    <h2 class="section-title">Beachfront lodging without the boardwalk rush</h2>
-                    <p class="section-lead">
-                        Family-owned motel on Ocean Boulevard, steps from North Beach. Over 20 clean, comfortable rooms with seasonal rates — call for current pricing and availability.
-                    </p>
-                </div>
-                <dl class="about-facts">
-                    <div>
-                        <dt>Walk to North Beach</dt>
-                        <dd>Across Ocean Boulevard — about a two-minute stroll</dd>
-                    </div>
-                    <div>
-                        <dt>Free parking &amp; WiFi</dt>
-                        <dd>One parking space per room included</dd>
-                    </div>
-                    <div>
-                        <dt>Pet-friendly rooms</dt>
-                        <dd>Dogs up to 40 lbs welcome</dd>
-                    </div>
-                    <div>
-                        <dt>Open year-round</dt>
-                        <dd>Nightly, weekly, and winter monthly stays</dd>
-                    </div>
-                </dl>
-            </div>
-        </section>
-
-        <section id="rooms">
-            <div class="container">
-                <div class="rooms-header reveal">
-                    <div>
-                        <p class="section-label">Stay</p>
-                        <h2 class="section-title">Our Rooms</h2>
-                        <p class="section-lead">Simple, comfortable rooms with the essentials for a beach trip. Rates shown are off-season starting points.</p>
-                    </div>
-                </div>
-
-                <div class="room-list">
-                    <article class="room reveal">
-                        <div class="room-visual">
-                            <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=900&q=80" alt="Standard guest room with bed and soft daylight" width="900" height="600" loading="lazy">
-                        </div>
-                        <div class="room-body">
-                            <h3>Standard Room</h3>
-                            <p class="room-meta">Sleeps 2–3</p>
-                            <p class="room-price">From $169 <span>/night (off-season)</span></p>
-                            <p>Queen or two double beds. Every room includes AC, WiFi, mini fridge, microwave, and cable TV.</p>
-                            <a href="tel:6039261750" class="btn btn-dark">Call to Book</a>
-                        </div>
-                    </article>
-
-                    <article class="room reveal">
-                        <div class="room-visual">
-                            <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=900&q=80" alt="Deluxe room with seating area" width="900" height="600" loading="lazy">
-                        </div>
-                        <div class="room-body">
-                            <h3>Deluxe Room</h3>
-                            <p class="room-meta">Sleeps 2–4</p>
-                            <p class="room-price">From $189 <span>/night (off-season)</span></p>
-                            <p>Larger layout with updated furnishings, flat-screen TV, and extra seating — plus all standard amenities.</p>
-                            <a href="tel:6039261750" class="btn btn-dark">Call to Book</a>
-                        </div>
-                    </article>
-
-                    <article class="room reveal">
-                        <div class="room-visual">
-                            <img src="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=900&q=80" alt="Bright guest room suitable for traveling with a dog" width="900" height="600" loading="lazy">
-                        </div>
-                        <div class="room-body">
-                            <h3>Pet-Friendly Room</h3>
-                            <p class="room-meta">Sleeps 2–3 + pets</p>
-                            <p class="room-price">From $179 <span>/night + $25/week pet fee</span></p>
-                            <p>Dogs up to 40 lbs welcome. Near the beach for walks, with access to the on-site pet park.</p>
-                            <a href="tel:6039261750" class="btn btn-dark">Call to Book</a>
-                        </div>
-                    </article>
-                </div>
-
-                <p class="stay-note reveal">
-                    <strong>Weekly &amp; monthly rentals:</strong> Off-season weekly and winter monthly stays available. Rates vary by season —
-                    call <a href="tel:6039261750">(603) 926-1750</a> for current pricing.
-                </p>
-            </div>
-        </section>
-
-        <section id="amenities" class="amenities">
-            <div class="container reveal">
-                <p class="section-label">On property</p>
-                <h2 class="section-title">Amenities</h2>
-                <p class="section-lead">What you get with every stay — from coffee in the morning to grills by the gazebo.</p>
-
-                <div class="amenity-columns">
-                    <div>
-                        <h3>Included</h3>
-                        <ul>
-                            <li>On-site parking</li>
-                            <li>WiFi throughout</li>
-                            <li>Continental breakfast</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3>In your room</h3>
-                        <ul>
-                            <li>Air conditioning</li>
-                            <li>Mini refrigerator</li>
-                            <li>Microwave</li>
-                            <li>Cable TV</li>
-                            <li>Coffee maker</li>
-                            <li>Private bathroom</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3>Outside</h3>
-                        <ul>
-                            <li>BBQ grills</li>
-                            <li>Picnic area &amp; gazebo</li>
-                            <li>Outdoor seating</li>
-                            <li>Pet park</li>
-                            <li>Beach across the street</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3>Policies</h3>
-                        <ul>
-                            <li>Check-in 3:00 PM</li>
-                            <li>Check-out 10:00 AM</li>
-                            <li>Pets: dogs up to 40 lbs</li>
-                            <li>Open year-round</li>
-                            <li>Seasonal peak rates apply</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="gallery">
-            <div class="container">
-                <div class="reveal">
-                    <p class="section-label">Look around</p>
-                    <h2 class="section-title">Gallery</h2>
-                    <p class="section-lead">A feel for the property, rooms, and shoreline just across Ocean Boulevard.</p>
-                </div>
-
-                <div class="gallery-grid reveal">
-                    <figure class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1493558103817-58b2924bce98?w=900&q=80" alt="Sandy beach shoreline at golden hour" width="900" height="600" loading="lazy">
-                        <figcaption>North Beach shoreline</figcaption>
-                    </figure>
-                    <figure class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80" alt="Guest room interior" width="800" height="600" loading="lazy">
-                        <figcaption>Guest room</figcaption>
-                    </figure>
-                    <figure class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80" alt="Deluxe room seating" width="800" height="600" loading="lazy">
-                        <figcaption>Deluxe room</figcaption>
-                    </figure>
-                    <figure class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80" alt="Ocean water and rocky coastline" width="800" height="600" loading="lazy">
-                        <figcaption>Beach access</figcaption>
-                    </figure>
-                    <figure class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80" alt="Outdoor dining and gathering area" width="800" height="600" loading="lazy">
-                        <figcaption>BBQ &amp; gazebo area</figcaption>
-                    </figure>
-                    <figure class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=900&q=80" alt="Ocean waves rolling toward shore" width="900" height="600" loading="lazy">
-                        <figcaption>Plaice Cove waters</figcaption>
-                    </figure>
-                </div>
-            </div>
-        </section>
-
-        <section id="location" class="location">
-            <div class="container">
-                <div class="reveal">
-                    <p class="section-label">Find us</p>
-                    <h2 class="section-title">Location</h2>
-                    <p class="section-lead">955 Ocean Boulevard, Hampton, NH — quieter Plaice Cove side of town, with easy drives to the boardwalk and Portsmouth.</p>
-                </div>
-
-                <div class="location-layout reveal">
-                    <div class="map-frame">
-                        <iframe
-                            title="Map showing Seascape Inn at 955 Ocean Boulevard, Hampton, NH"
-                            src="https://www.google.com/maps?q=955+Ocean+Blvd,+Hampton,+NH+03842&output=embed"
-                            loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"
-                            allowfullscreen></iframe>
-                    </div>
-                    <div class="location-copy">
-                        <h3>Address</h3>
-                        <p class="address-block">955 Ocean Boulevard<br>Hampton, NH 03842</p>
-
-                        <h3>Distances</h3>
-                        <ul>
-                            <li>North Beach: across the street (2-minute walk)</li>
-                            <li>Hampton Beach Boardwalk: 3 miles</li>
-                            <li>Portsmouth: 15 miles</li>
-                            <li>Boston: about 60 miles</li>
-                        </ul>
-
-                        <h3>Nearby</h3>
-                        <ul>
-                            <li>Coffee Break Cafe: 0.5 miles</li>
-                            <li>Hagan's Grill: 1.8 miles</li>
-                            <li>Ron's Landing: 2.5 miles</li>
-                            <li>Hampton Beach Casino: 3 miles</li>
-                        </ul>
-
-                        <h3>Parking</h3>
-                        <p>Free on-site parking. One space per room.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact">
-            <div class="container">
-                <div class="reveal">
-                    <p class="section-label">Plan your trip</p>
-                    <h2 class="section-title">Contact Us</h2>
-                    <p class="section-lead">Call for the fastest booking, or send a note and we’ll get back to you.</p>
-                </div>
-
-                <div class="contact-layout reveal">
-                    <div class="contact-points">
-                        <div>
-                            <strong>Phone</strong>
-                            <a href="tel:6039261750">(603) 926-1750</a>
-                        </div>
-                        <div>
-                            <strong>Email</strong>
-                            <a href="mailto:seascapeinnhampton@gmail.com">seascapeinnhampton@gmail.com</a>
-                        </div>
-                        <div>
-                            <strong>Address</strong>
-                            <p>955 Ocean Boulevard<br>Hampton, NH 03842</p>
-                        </div>
-                        <div>
-                            <strong>Hours</strong>
-                            <p>Check-in 3:00 PM<br>Check-out 10:00 AM</p>
-                        </div>
-                    </div>
-
-                    <form class="contact-form" id="contactForm" novalidate>
-                        <div class="form-row">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" autocomplete="name" required>
-                        </div>
-                        <div class="form-row">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" autocomplete="email" required>
-                        </div>
-                        <div class="form-row">
-                            <label for="phone">Phone</label>
-                            <input type="tel" id="phone" name="phone" autocomplete="tel">
-                        </div>
-                        <div class="form-row">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Send Message</button>
-                        <p class="form-status" id="formStatus" role="status"></p>
-                    </form>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div>
-                    <h3>Seascape Inn</h3>
-                    <p>Beachfront motel at Plaice Cove in Hampton, NH. Open year-round with seasonal rates.</p>
-                    <p style="margin-top: 1rem;">955 Ocean Boulevard<br>Hampton, NH 03842</p>
-                </div>
-                <div>
-                    <h3>Explore</h3>
-                    <ul class="footer-links">
-                        <li><a href="#rooms">Rooms</a></li>
-                        <li><a href="#amenities">Amenities</a></li>
-                        <li><a href="#gallery">Gallery</a></li>
-                        <li><a href="#location">Location</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3>Connect</h3>
-                    <ul class="footer-links">
-                        <li><a href="tel:6039261750">(603) 926-1750</a></li>
-                        <li><a href="mailto:seascapeinnhampton@gmail.com">Email us</a></li>
-                        <li><a href="https://www.facebook.com/SeascapeInnHampton/" target="_blank" rel="noopener noreferrer">Facebook</a></li>
-                        <li><a href="https://www.tripadvisor.com/Search?q=Seascape%20Inn%20at%20Plaice%20Cove%20Hampton%20NH" target="_blank" rel="noopener noreferrer">TripAdvisor</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 Seascape Inn at Plaice Cove. All rights reserved.</p>
-                <p>
-                    <a href="privacy.html">Privacy Policy</a>
-                    <a href="#contact">Contact</a>
-                </p>
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile">
+        <a href="rooms.html">Rooms</a><a href="amenities.html">Amenities</a><a href="gallery.html">Gallery</a><a href="location.html">Location</a><a href="contact.html">Contact</a><a href="book.html">Book Now</a><a href="tel:6039261750">Call (603) 926-1750</a>
+    </nav>
+</header>
+<div class="mobile-book">
+    <a href="book.html">Book Your Stay</a>
+</div>
+<main>
+    <section class="hero">
+        <div class="hero-media" role="img" aria-label="Ocean shoreline near Hampton Beach"></div>
+        <div class="hero-content">
+            <h1 class="hero-brand">
+                Seascape Inn
+                <em>at Plaice Cove</em>
+            </h1>
+            <p class="hero-lead">A beachfront motel across from North Beach in Hampton, NH — open year-round for nightly and extended stays.</p>
+            <div class="hero-cta">
+                <a href="rooms.html" class="btn btn-primary">View Rooms &amp; Rates</a>
+                <a href="tel:6039261750" class="btn btn-ghost">Call (603) 926-1750</a>
             </div>
         </div>
-    </footer>
+    </section>
 
-    <script>
-        (function () {
-            var header = document.getElementById('siteHeader');
-            var toggle = document.querySelector('.menu-toggle');
-            var mobileNav = document.getElementById('mobileNav');
+    <section class="about">
+        <div class="container about-grid reveal">
+            <div>
+                <p class="section-label">Why stay here</p>
+                <h2 class="section-title">Beachfront lodging without the boardwalk rush</h2>
+                <p class="section-lead">
+                    Family-owned motel on Ocean Boulevard, steps from North Beach. Over 20 clean, comfortable rooms with seasonal rates — call for current pricing and availability.
+                </p>
+            </div>
+            <dl class="about-facts">
+                <div>
+                    <dt>Walk to North Beach</dt>
+                    <dd>Across Ocean Boulevard — about a two-minute stroll</dd>
+                </div>
+                <div>
+                    <dt>Free parking &amp; WiFi</dt>
+                    <dd>One parking space per room included</dd>
+                </div>
+                <div>
+                    <dt>Pet-friendly rooms</dt>
+                    <dd>Dogs up to 40 lbs welcome</dd>
+                </div>
+                <div>
+                    <dt>Open year-round</dt>
+                    <dd>Nightly, weekly, and winter monthly stays</dd>
+                </div>
+            </dl>
+        </div>
+    </section>
 
-            function onScroll() {
-                if (!header) return;
-                header.classList.toggle('is-scrolled', window.scrollY > 24);
-            }
-
-            window.addEventListener('scroll', onScroll, { passive: true });
-            onScroll();
-
-            if (toggle && mobileNav) {
-                toggle.addEventListener('click', function () {
-                    var open = mobileNav.classList.toggle('is-open');
-                    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-                    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-                });
-
-                mobileNav.querySelectorAll('a').forEach(function (link) {
-                    link.addEventListener('click', function () {
-                        mobileNav.classList.remove('is-open');
-                        toggle.setAttribute('aria-expanded', 'false');
-                        toggle.setAttribute('aria-label', 'Open menu');
-                    });
-                });
-
-                document.addEventListener('keydown', function (e) {
-                    if (e.key === 'Escape' && mobileNav.classList.contains('is-open')) {
-                        mobileNav.classList.remove('is-open');
-                        toggle.setAttribute('aria-expanded', 'false');
-                        toggle.setAttribute('aria-label', 'Open menu');
-                    }
-                });
-            }
-
-            var revealEls = document.querySelectorAll('.reveal');
-            if ('IntersectionObserver' in window) {
-                var io = new IntersectionObserver(function (entries) {
-                    entries.forEach(function (entry) {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('is-visible');
-                            io.unobserve(entry.target);
-                        }
-                    });
-                }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-
-                revealEls.forEach(function (el) { io.observe(el); });
-            } else {
-                revealEls.forEach(function (el) { el.classList.add('is-visible'); });
-            }
-
-            var form = document.getElementById('contactForm');
-            var status = document.getElementById('formStatus');
-
-            if (form) {
-                form.addEventListener('submit', function (e) {
-                    e.preventDefault();
-
-                    var name = document.getElementById('name').value.trim();
-                    var email = document.getElementById('email').value.trim();
-                    var phone = document.getElementById('phone').value.trim();
-                    var message = document.getElementById('message').value.trim();
-
-                    if (!name || !email || !message) {
-                        if (status) {
-                            status.textContent = 'Please fill in your name, email, and message.';
-                            status.classList.add('is-visible');
-                        }
-                        return;
-                    }
-
-                    var subject = encodeURIComponent('Website Inquiry from ' + name);
-                    var body = encodeURIComponent(
-                        'Name: ' + name + '\n' +
-                        'Email: ' + email + '\n' +
-                        'Phone: ' + phone + '\n\n' +
-                        'Message:\n' + message
-                    );
-
-                    window.location.href = 'mailto:seascapeinnhampton@gmail.com?subject=' + subject + '&body=' + body;
-
-                    if (status) {
-                        status.textContent = 'Opening your email app with the message ready to send.';
-                        status.classList.add('is-visible');
-                    }
-
-                    form.reset();
-                });
-            }
-        })();
-    </script>
+    <section>
+        <div class="container">
+            <div class="reveal">
+                <p class="section-label">Explore</p>
+                <h2 class="section-title">Plan your stay</h2>
+                <p class="section-lead">Browse rooms, see what’s included, and get directions to Plaice Cove.</p>
+            </div>
+            <div class="teaser-grid reveal">
+                <a class="teaser" href="rooms.html">
+                    <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80" alt="Guest room" width="800" height="500" loading="lazy">
+                    <div class="teaser-body">
+                        <h3>Rooms &amp; Rates</h3>
+                        <p>Standard, deluxe, and pet-friendly options from $169 off-season.</p>
+                    </div>
+                </a>
+                <a class="teaser" href="amenities.html">
+                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80" alt="Outdoor gathering area" width="800" height="500" loading="lazy">
+                    <div class="teaser-body">
+                        <h3>Amenities</h3>
+                        <p>Breakfast, WiFi, parking, BBQ grills, gazebo, and a pet park.</p>
+                    </div>
+                </a>
+                <a class="teaser" href="location.html">
+                    <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80" alt="Coastline near Hampton" width="800" height="500" loading="lazy">
+                    <div class="teaser-body">
+                        <h3>Location</h3>
+                        <p>955 Ocean Boulevard — across from North Beach, minutes from town.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+<section class="cta-band">
+    <div class="container reveal">
+        <h2>Ready for the beach?</h2>
+        <p>Call for current rates and availability, or send a booking inquiry online.</p>
+        <div class="hero-cta">
+            <a href="tel:6039261750" class="btn btn-primary">Call (603) 926-1750</a>
+            <a href="book.html" class="btn btn-ghost">Request a Stay</a>
+        </div>
+    </div>
+</section>
+</main>
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <h3>Seascape Inn</h3>
+                <p>Beachfront motel at Plaice Cove in Hampton, NH. Open year-round with seasonal rates.</p>
+                <p style="margin-top: 1rem;">955 Ocean Boulevard<br>Hampton, NH 03842</p>
+            </div>
+            <div>
+                <h3>Explore</h3>
+                <ul class="footer-links">
+                    <li><a href="rooms.html">Rooms</a></li>
+                    <li><a href="amenities.html">Amenities</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="location.html">Location</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="book.html">Book</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Connect</h3>
+                <ul class="footer-links">
+                    <li><a href="tel:6039261750">(603) 926-1750</a></li>
+                    <li><a href="mailto:seascapeinnhampton@gmail.com">Email us</a></li>
+                    <li><a href="https://www.facebook.com/SeascapeInnHampton/" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+                    <li><a href="https://www.tripadvisor.com/Search?q=Seascape%20Inn%20at%20Plaice%20Cove%20Hampton%20NH" target="_blank" rel="noopener noreferrer">TripAdvisor</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Seascape Inn at Plaice Cove. All rights reserved.</p>
+            <p>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="contact.html">Contact</a>
+            </p>
+        </div>
+    </div>
+</footer>
+<script src="js/main.js"></script>
 </body>
 </html>
