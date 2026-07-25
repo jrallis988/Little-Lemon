@@ -104,14 +104,14 @@ function VibeNavLink({
     <Link
       href={item.href}
       className={cn(
-        "relative flex flex-col items-center gap-1 rounded-[16px] px-1 py-2 text-[10px] font-black uppercase tracking-wide text-zinc-400 transition hover:text-white hover:no-underline",
-        active && "bg-[#FF5C00]/15 text-[#FF8D4D]"
+        "relative flex flex-col items-center gap-1 rounded-[16px] px-1 py-2 text-[10px] font-black uppercase tracking-wide text-navy-400 transition hover:text-brand hover:no-underline",
+        active && "bg-brand-soft text-brand-dark"
       )}
     >
       <Icon className="h-5 w-5" aria-hidden />
       <span>{item.label}</span>
       {badgeCount > 0 ? (
-        <Badge className="absolute right-1 top-1 border-zinc-950 bg-[#FF5C00] px-1 text-[9px] text-white">
+        <Badge className="absolute right-1 top-1 border-white bg-brand px-1 text-[9px] text-white">
           {badgeCount > 99 ? "99+" : badgeCount}
         </Badge>
       ) : null}
