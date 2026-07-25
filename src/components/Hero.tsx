@@ -1,6 +1,3 @@
-const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1559526324-593bc073d938?auto=format&fit=crop&w=2400&q=80";
-
 export function Hero() {
   return (
     <section
@@ -10,8 +7,8 @@ export function Hero() {
     >
       <div className="absolute inset-0">
         <img
-          src={HERO_IMAGE}
-          alt="Craft beer taps pouring into glasses at a warmly lit brewery bar"
+          src="/images/hero-pour.jpg"
+          alt="Amber ale pouring from a tap into a glass at the brewery"
           className="h-full w-full object-cover animate-ken-burns"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-ink/88 via-ink/55 to-ink/25" />

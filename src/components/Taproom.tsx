@@ -1,8 +1,5 @@
 import { useInView } from "../hooks/useInView";
 
-const TAPROOM_IMAGE =
-  "https://images.unsplash.com/photo-1436076863939-06870fe779c2?auto=format&fit=crop&w=1800&q=80";
-
 export function Taproom() {
   const { ref, visible } = useInView<HTMLElement>();
 
@@ -11,8 +8,8 @@ export function Taproom() {
       <div className="grid min-h-[34rem] lg:grid-cols-2">
         <div className="relative min-h-[18rem] overflow-hidden lg:min-h-full">
           <img
-            src={TAPROOM_IMAGE}
-            alt="Copper brew kettles in the Millhouse production floor"
+            src="/images/taproom-glass.jpg"
+            alt="Freshly poured pint with a thick foam head at Millhouse"
             className={`h-full w-full object-cover transition-transform duration-[1.4s] ease-out ${
               visible ? "scale-100" : "scale-110"
             }`}
