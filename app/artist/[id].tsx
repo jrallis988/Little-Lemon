@@ -4,6 +4,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { WaveformPlayer } from '@/components/audio/WaveformPlayer';
 import { StaticBackground } from '@/components/ui/StaticBackground';
 import { colors, spacing, typography } from '@/constants/theme';
+import { useAudioBarInset } from '@/hooks/useAudioBarInset';
 import { DEMO_ARTISTS, DEMO_TRACKS } from '@/lib/demoData';
 
 /**
@@ -11,6 +12,7 @@ import { DEMO_ARTISTS, DEMO_TRACKS } from '@/lib/demoData';
  */
 export default function ArtistScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
+  const bottomInset = useAudioBarInset();
   const artist =
     DEMO_ARTISTS.find((a) => a.id === id) ??
     ({
@@ -26,7 +28,9 @@ export default function ArtistScreen() {
 
   return (
     <StaticBackground>
-      <ScrollView contentContainerStyle={styles.content}>
+      <ScrollView
+        contentContainerStyle={[styles.content, { paddingBottom: bottomInset }]}
+      >
         <View style={styles.sleeve}>
           <View style={styles.artwork}>
             <Text style={styles.artworkMark}>LP</Text>
@@ -71,7 +75,6 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: spacing.lg,
     paddingTop: spacing.lg,
-    paddingBottom: spacing.xxl,
   },
   sleeve: {
     flexDirection: 'row',

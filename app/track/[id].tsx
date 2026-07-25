@@ -4,6 +4,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { WaveformPlayer } from '@/components/audio/WaveformPlayer';
 import { StaticBackground } from '@/components/ui/StaticBackground';
 import { colors, spacing, typography } from '@/constants/theme';
+import { useAudioBarInset } from '@/hooks/useAudioBarInset';
 import { DEMO_COMMENTS, DEMO_TRACKS } from '@/lib/demoData';
 
 /**
@@ -12,12 +13,15 @@ import { DEMO_COMMENTS, DEMO_TRACKS } from '@/lib/demoData';
  */
 export default function TrackScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
+  const bottomInset = useAudioBarInset();
   const track = DEMO_TRACKS.find((t) => t.id === id) ?? DEMO_TRACKS[0];
   const comments = DEMO_COMMENTS.filter((c) => c.trackId === track.id);
 
   return (
     <StaticBackground>
-      <ScrollView contentContainerStyle={styles.content}>
+      <ScrollView
+        contentContainerStyle={[styles.content, { paddingBottom: bottomInset }]}
+      >
         <Text style={styles.kicker}>PHYSICAL MEDIA FRAME</Text>
         <View style={styles.heroArt}>
           <Text style={styles.heroMark}>STATICVOLUME</Text>
@@ -69,7 +73,6 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: spacing.lg,
     paddingTop: spacing.lg,
-    paddingBottom: spacing.xxl,
     gap: spacing.md,
   },
   kicker: {

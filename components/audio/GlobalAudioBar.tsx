@@ -12,7 +12,8 @@ import { colors, spacing, typography } from '@/constants/theme';
 import { useAudioStore } from '@/store/useAudioStore';
 
 /**
- * Bottom-docked persistent player. Sits above the tab bar when a track is loaded.
+ * Sticky bottom-docked player — mounted in the root layout so it persists
+ * across tabs and stack routes (artist/[id], track/[id]).
  */
 export function GlobalAudioBar() {
   const insets = useSafeAreaInsets();
@@ -23,7 +24,13 @@ export function GlobalAudioBar() {
   }
 
   return (
-    <View style={[styles.dock, { paddingBottom: Math.max(insets.bottom, spacing.sm) }]}>
+    <View
+      pointerEvents="box-none"
+      style={styles.host}
+    >
+      <View
+        style={[styles.dock, { paddingBottom: Math.max(insets.bottom, spacing.sm) }]}
+      >
       <View style={styles.progressTrack}>
         <View
           style={[
@@ -53,20 +60,22 @@ export function GlobalAudioBar() {
           <Text style={styles.controlLabel}>»»</Text>
         </Pressable>
       </View>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  host: {
+    ...StyleSheet.absoluteFill,
+    justifyContent: 'flex-end',
+    zIndex: 100,
+    elevation: 24,
+  },
   dock: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
     backgroundColor: colors.backgroundElevated,
     borderTopWidth: 1,
     borderTopColor: colors.border,
-    zIndex: 20,
   },
   progressTrack: {
     height: 2,

@@ -4,6 +4,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { BandCard } from '@/components/ui/BandCard';
 import { StaticBackground } from '@/components/ui/StaticBackground';
 import { colors, spacing, typography } from '@/constants/theme';
+import { useAudioBarInset } from '@/hooks/useAudioBarInset';
 import { DEMO_ARTISTS, DEMO_TRACKS, GEOGRAPHIES, SCENES } from '@/lib/demoData';
 
 /**
@@ -12,6 +13,7 @@ import { DEMO_ARTISTS, DEMO_TRACKS, GEOGRAPHIES, SCENES } from '@/lib/demoData';
 export default function ExploreScreen() {
   const [scene, setScene] = useState<string | null>(null);
   const [geo, setGeo] = useState<string | null>(null);
+  const bottomInset = useAudioBarInset(spacing.tabBar);
 
   const results = useMemo(() => {
     return DEMO_ARTISTS.filter((artist) => {
@@ -23,7 +25,7 @@ export default function ExploreScreen() {
 
   return (
     <StaticBackground>
-      <ScrollView contentContainerStyle={styles.content}>
+      <ScrollView contentContainerStyle={[styles.content, { paddingBottom: bottomInset }]}>
         <Text style={styles.headline}>FIND A SCENE</Text>
         <Text style={styles.lede}>
           Filter by genre and place. Chronological discovery — no global charts.
@@ -105,7 +107,6 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: spacing.lg,
     paddingTop: spacing.lg,
-    paddingBottom: spacing.xxl + spacing.audioBar,
   },
   headline: {
     ...typography.headline,

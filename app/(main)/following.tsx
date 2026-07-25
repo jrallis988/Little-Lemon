@@ -4,6 +4,7 @@ import { Link } from 'expo-router';
 import { WaveformPlayer } from '@/components/audio/WaveformPlayer';
 import { StaticBackground } from '@/components/ui/StaticBackground';
 import { colors, spacing, typography } from '@/constants/theme';
+import { useAudioBarInset } from '@/hooks/useAudioBarInset';
 import { DEMO_TRACKS } from '@/lib/demoData';
 
 /**
@@ -11,10 +12,11 @@ import { DEMO_TRACKS } from '@/lib/demoData';
  */
 export default function FollowingScreen() {
   const feed = [...DEMO_TRACKS].reverse();
+  const bottomInset = useAudioBarInset(spacing.tabBar);
 
   return (
     <StaticBackground>
-      <ScrollView contentContainerStyle={styles.content}>
+      <ScrollView contentContainerStyle={[styles.content, { paddingBottom: bottomInset }]}>
         <Text style={styles.headline}>FOLLOWING</Text>
         <Text style={styles.lede}>
           Strictly chronological. What your artists posted, in the order it hit the wire.
@@ -38,7 +40,6 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: spacing.lg,
     paddingTop: spacing.lg,
-    paddingBottom: spacing.xxl + spacing.audioBar,
   },
   headline: {
     ...typography.headline,

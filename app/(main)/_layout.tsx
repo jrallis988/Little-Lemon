@@ -48,6 +48,7 @@ export default function MainLayout() {
           name="index"
           options={{
             title: 'EDITORIAL',
+            headerShown: false,
             tabBarLabel: ({ focused }) => <TabLabel label="HOME" focused={focused} />,
             tabBarIcon: () => null,
           }}

@@ -42,6 +42,26 @@ export const DEMO_ARTISTS: UserProfile[] = [
     followerCount: 2103,
     bio: 'Glitch sugar and freeway neon.',
   },
+  {
+    id: 'artist-amber-circuit',
+    email: '',
+    displayName: 'Amber Circuit',
+    role: 'artist',
+    scene: 'Electronic',
+    geography: 'Chicago, IL',
+    followerCount: 734,
+    bio: 'Modular hiss and late-night bus routes.',
+  },
+  {
+    id: 'artist-lot-lights',
+    email: '',
+    displayName: 'Lot Lights',
+    role: 'artist',
+    scene: 'Indie',
+    geography: 'Austin, TX',
+    followerCount: 611,
+    bio: 'Parking-lot anthems with cracked amps.',
+  },
 ];
 
 export const DEMO_TRACKS: Track[] = [
@@ -93,7 +113,66 @@ export const DEMO_TRACKS: Track[] = [
     scene: 'Hyperpop',
     geography: 'Los Angeles, CA',
   },
+  {
+    id: 'track-bus-route-7',
+    title: 'Bus Route 7',
+    artistId: 'artist-amber-circuit',
+    artistName: 'Amber Circuit',
+    audioUrl: '',
+    durationMs: 188000,
+    downloadCount: 1204,
+    repostCount: 156,
+    scene: 'Electronic',
+    geography: 'Chicago, IL',
+  },
+  {
+    id: 'track-sodium-glow',
+    title: 'Sodium Glow',
+    artistId: 'artist-lot-lights',
+    artistName: 'Lot Lights',
+    audioUrl: '',
+    durationMs: 201000,
+    downloadCount: 802,
+    repostCount: 94,
+    scene: 'Indie',
+    geography: 'Austin, TX',
+  },
 ];
+
+export type FeaturedSpotlight = {
+  trackId: string;
+  headline: string;
+  statusBlurb: string;
+  badge: string;
+};
+
+/** PureVolume-style editorial hero rotation */
+export const FEATURED_SPOTLIGHT: FeaturedSpotlight = {
+  trackId: 'track-snow-on-the-tape',
+  headline: 'STATIC BLOOM',
+  statusBlurb:
+    'This week’s cover transmission — tape-saturated shoegaze from Portland. Download counts are the signal. Play counts stay with the artist.',
+  badge: 'FEATURED ARTIST',
+};
+
+export const EDITORS_PICKS = [
+  'track-pixel-bruise',
+  'track-shift-change',
+  'track-bus-route-7',
+] as const;
+
+export const TRENDING_TRACKS = [
+  'track-pixel-bruise',
+  'track-snow-on-the-tape',
+  'track-bus-route-7',
+  'track-sodium-glow',
+] as const;
+
+export const RECENTLY_FEATURED = [
+  'track-exit-ramp',
+  'track-sodium-glow',
+  'track-shift-change',
+] as const;
 
 export const DEMO_COMMENTS: WaveformComment[] = [
   {
@@ -136,3 +215,19 @@ export const GEOGRAPHIES = [
   'Austin, TX',
   'Chicago, IL',
 ] as const;
+
+export function getTrackById(id: string): Track | undefined {
+  return DEMO_TRACKS.find((t) => t.id === id);
+}
+
+export function getArtistById(id: string): UserProfile | undefined {
+  return DEMO_ARTISTS.find((a) => a.id === id);
+}
+
+export function tracksByDownloads(): Track[] {
+  return [...DEMO_TRACKS].sort((a, b) => b.downloadCount - a.downloadCount);
+}
+
+export function tracksByReposts(): Track[] {
+  return [...DEMO_TRACKS].sort((a, b) => b.repostCount - a.repostCount);
+}
