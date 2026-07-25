@@ -34,30 +34,35 @@ export const vibeSchools: School[] = [
   {
     id: "school-pine-ridge",
     name: "Pine Ridge Middle",
-    city: "Portland",
-    state: "OR",
+    city: "Pine Ridge",
+    state: "SD",
   },
 ];
 
 const enrichmentByProfileId: Record<string, Partial<Profile>> = {
   p1: {
-    schoolId: "school-northview",
-    grade: "10",
+    schoolId: "school-pine-ridge",
+    schoolName: "Pine Ridge Middle",
+    grade: "8",
     studentVerified: true,
     schoolOnlyBoundary: true,
-    mood: "outside after last bell",
-    hereFor: "skate clips, study saves, and real plans",
-    hometown: "Portland, OR",
-    zodiac: "Aries",
-    genderLabel: "nonbinary",
+    mood: "✨ creative",
+    hereFor: "photography, volleyball, nature chats, and movie-night plans",
+    hometown: "Pine Ridge, South Dakota",
+    zodiac: "Pisces",
+    genderLabel: "Female",
+    clubs: ["Yearbook Photo", "Nature Club"],
     interestMap: {
-      Move: ["skating", "basketball", "film walks"],
-      Create: ["35mm photos", "playlist covers"],
-      School: ["yearbook", "science lab"],
+      Photography: ["nature photos", "golden hour", "camera tips"],
+      Nature: ["forest trails", "sunsets", "animal tracks"],
+      Movies: ["movie nights", "cozy adventures"],
+      Drawing: ["sketchbook ideas", "photo studies"],
+      Animals: ["wildlife watching", "pet photos"],
+      Volleyball: ["open gym", "team cheers"],
     },
     nowPlaying: {
-      title: "Curb Check",
-      artist: "Jordan's Bus Mix",
+      title: "Golden Hour",
+      artist: "Coastal Demo",
       externalUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
     },
   },
@@ -67,7 +72,7 @@ const enrichmentByProfileId: Record<string, Partial<Profile>> = {
     studentVerified: true,
     mood: "drawing in the margins",
     hereFor: "art friends and cozy game squads",
-    hometown: "Austin, TX",
+    hometown: "Valdosta, GA",
     zodiac: "Virgo",
     genderLabel: "girl",
     interestMap: {
@@ -76,7 +81,7 @@ const enrichmentByProfileId: Record<string, Partial<Profile>> = {
     },
     nowPlaying: {
       title: "Frog Sticker Parade",
-      artist: "Mira Pixels",
+      artist: "Mikayla Mix",
       externalUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
     },
   },
@@ -86,7 +91,7 @@ const enrichmentByProfileId: Record<string, Partial<Profile>> = {
     studentVerified: true,
     mood: "soundcheck brain",
     hereFor: "band people and pickup soccer",
-    hometown: "Chicago, IL",
+    hometown: "Lakewood, CO",
     zodiac: "Gemini",
     genderLabel: "boy",
     interestMap: {
@@ -115,16 +120,16 @@ const enrichmentByProfileId: Record<string, Partial<Profile>> = {
     studentVerified: true,
     mood: "locked into a beat",
     hereFor: "music swaps and court runs",
-    hometown: "Brooklyn, NY",
+    hometown: "Pine Ridge, SD",
     zodiac: "Cancer",
-    genderLabel: "boy/nonbinary",
+    genderLabel: "boy",
     interestMap: {
       Music: ["production", "synths", "lo-fi drums"],
       Sports: ["basketball", "night runs"],
     },
     nowPlaying: {
       title: "Midnight Hall Pass",
-      artist: "Rio Static",
+      artist: "Colin Static",
       externalUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
     },
   },
@@ -134,7 +139,7 @@ const enrichmentByProfileId: Record<string, Partial<Profile>> = {
     studentVerified: true,
     mood: "chrome backpack energy",
     hereFor: "soccer, themes, and after-school snacks",
-    hometown: "Los Angeles, CA",
+    hometown: "Valdosta, GA",
     zodiac: "Sagittarius",
     genderLabel: "girl",
     interestMap: {
@@ -198,33 +203,33 @@ export const activityCatalog: Array<{
 
 export const vibeMoments: VibeMoment[] = [
   {
-    id: "vibe-skate-live",
+    id: "vibe-forest-photo-live",
     hostId: "u1",
-    title: "Skate park after last bell",
-    category: "skating",
+    title: "Pine Ridge forest photo walk",
+    category: "photography",
     status: "live",
-    coverUrl: photo("loop-skate-park-orange"),
-    locationName: "Maple Street Skate Spot",
+    coverUrl: photo("loop-pine-ridge-golden-hour"),
+    locationName: "Pine Ridge trail overlook",
     distanceLabel: "0.4 mi",
-    schoolId: "school-northview",
+    schoolId: "school-pine-ridge",
     startsAt: minsAgo(24),
     endsAt: minsFromNow(86),
-    attendeeIds: ["u1", "u3", "u5", "u6", "u4"],
-    hereNowIds: ["u1", "u5", "u6"],
+    attendeeIds: ["u1", "u2", "u5", "u6"],
+    hereNowIds: ["u1", "u2"],
     description:
-      "Low-pressure skate clips, curb practice, and a mini photo dump before dinner.",
+      "Golden-hour nature shots, camera tips, and a mini photo dump before dinner.",
     updates: [
       {
         id: "vu1",
         authorId: "u1",
-        body: "Flat rail is dry. Bring water if you are rolling over.",
+        body: "Light is perfect by the trees. Bring water and stay on the trail.",
         createdAt: minsAgo(16),
-        photoUrl: photo("skate-update-rail"),
+        photoUrl: photo("pine-ridge-photo-update"),
       },
       {
         id: "vu2",
         authorId: "u5",
-        body: "Rio is here with the tiny speaker. Clean playlist so far.",
+        body: "Colin is here with extra water and a clean sunset playlist.",
         createdAt: minsAgo(8),
       },
     ],
@@ -242,7 +247,7 @@ export const vibeMoments: VibeMoment[] = [
     schoolId: "school-northview",
     startsAt: minsFromNow(38),
     endsAt: minsFromNow(130),
-    attendeeIds: ["u5", "u1", "u3"],
+    attendeeIds: ["u5", "u3"],
     hereNowIds: [],
     description:
       "First to 11, rotate teams, no pressure if you are just shooting around.",
@@ -268,7 +273,7 @@ export const vibeMoments: VibeMoment[] = [
     schoolId: "school-northview",
     startsAt: minsAgo(12),
     endsAt: minsFromNow(55),
-    attendeeIds: ["u4", "u1", "u7"],
+    attendeeIds: ["u4", "u7"],
     hereNowIds: ["u4", "u7"],
     description:
       "Flash cards, quiet questions, and one shared doc for the diagrams.",
@@ -364,7 +369,7 @@ export const vibeMoments: VibeMoment[] = [
     schoolId: "school-northview",
     startsAt: minsAgo(180),
     endsAt: minsAgo(55),
-    attendeeIds: ["u4", "u1", "u2"],
+    attendeeIds: ["u4", "u2"],
     hereNowIds: [],
     description:
       "Ended with the sky doing exactly what the camera roll needed.",
@@ -398,11 +403,11 @@ export const circleGroups: CircleGroup[] = [
     id: "group-photography-club",
     name: "Photography Club",
     description:
-      "Film walks, yearbook outtakes, editing tips, and weekly photo prompts.",
+      "Nature walks, yearbook outtakes, editing tips, and weekly photo prompts.",
     coverUrl: photo("group-photography-club"),
-    schoolId: "school-northview",
+    schoolId: "school-pine-ridge",
     memberIds: ["u1", "u2", "u4", "u6"],
-    ownerId: "u4",
+    ownerId: "u1",
     visibility: "public",
     kind: "club",
   },
@@ -436,7 +441,7 @@ export const circleGroups: CircleGroup[] = [
       "Casual open gym reminders, rotation lists, and beginner-friendly drills.",
     coverUrl: photo("group-volleyball-open-gym"),
     schoolId: "school-pine-ridge",
-    memberIds: ["u2", "u5", "u6"],
+    memberIds: ["u1", "u2", "u5", "u6"],
     ownerId: "u6",
     visibility: "school",
     kind: "team",
@@ -445,13 +450,13 @@ export const circleGroups: CircleGroup[] = [
 
 export const photoSets: PhotoSet[] = [
   {
-    id: "set-skate-film",
+    id: "set-sarah-nature",
     profileId: "p1",
-    title: "Skate park proof",
-    mood: "sunny chaos",
+    title: "Pine Ridge forest light",
+    mood: "✨ creative",
     createdAt: minsAgo(260),
-    caption: "Real friends, real clips, one very patient filmer.",
-    photoUrls: [photo("set-skate-1"), photo("set-skate-2"), photo("set-skate-3")],
+    caption: "Golden-hour trees, trail details, and one patient camera roll.",
+    photoUrls: [photo("set-sarah-nature-1"), photo("set-sarah-nature-2"), photo("set-sarah-nature-3")],
     visibility: "public",
   },
   {
@@ -494,7 +499,7 @@ export const scheduledSchoolEvents = [
     locationName: "Main gym",
     schoolId: "school-northview",
     category: "school spirit",
-    attendeeIds: ["u1", "u3", "u5", "u7"],
+    attendeeIds: ["u3", "u5", "u7"],
   },
   {
     id: "event-art-night",
@@ -503,7 +508,7 @@ export const scheduledSchoolEvents = [
     locationName: "Media center",
     schoolId: "school-pine-ridge",
     category: "art",
-    attendeeIds: ["u2", "u6", "u4"],
+    attendeeIds: ["u1", "u2", "u6", "u4"],
   },
   {
     id: "event-library-finals",
@@ -512,23 +517,23 @@ export const scheduledSchoolEvents = [
     locationName: "Northview library",
     schoolId: "school-northview",
     category: "study",
-    attendeeIds: ["u1", "u4", "u7"],
+    attendeeIds: ["u4", "u7"],
   },
 ];
 
 export const fictionalTracks = [
   {
-    id: "track-curb-check",
-    title: "Curb Check",
-    artist: "Jordan's Bus Mix",
-    mood: "after school",
+    id: "track-golden-hour",
+    title: "Golden Hour",
+    artist: "Coastal Demo",
+    mood: "sunset",
     url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
     likes: 48,
   },
   {
     id: "track-frog-sticker",
     title: "Frog Sticker Parade",
-    artist: "Mira Pixels",
+    artist: "Mikayla Mix",
     mood: "bright",
     url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
     likes: 36,
@@ -536,7 +541,7 @@ export const fictionalTracks = [
   {
     id: "track-midnight-pass",
     title: "Midnight Hall Pass",
-    artist: "Rio Static",
+    artist: "Colin Static",
     mood: "late bus",
     url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
     likes: 61,
@@ -552,7 +557,7 @@ export const fictionalTracks = [
   {
     id: "track-cafeteria-feedback",
     title: "Cafeteria Feedback",
-    artist: "Devon Loops",
+    artist: "Jake Loops",
     mood: "garage",
     url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",
     likes: 44,
@@ -562,9 +567,9 @@ export const fictionalTracks = [
 export const vibePlaylists = [
   {
     id: "playlist-after-bell",
-    title: "After Bell Heat",
-    description: "Skate park, open gym, and walk-home tracks.",
-    trackIds: ["track-curb-check", "track-midnight-pass", "track-cafeteria-feedback"],
+    title: "Golden Hour After Bell",
+    description: "Photo walks, open gym, and walk-home tracks.",
+    trackIds: ["track-golden-hour", "track-midnight-pass", "track-cafeteria-feedback"],
   },
   {
     id: "playlist-study-window",
@@ -576,6 +581,6 @@ export const vibePlaylists = [
     id: "playlist-locker-mirror",
     title: "Locker Mirror Lights",
     description: "Bright fictional pop for outfit checks and poster making.",
-    trackIds: ["track-frog-sticker", "track-curb-check"],
+    trackIds: ["track-frog-sticker", "track-golden-hour"],
   },
 ];

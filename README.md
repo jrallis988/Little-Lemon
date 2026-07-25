@@ -42,7 +42,7 @@ npm run dev
 
 | Field | Value |
 |-------|--------|
-| Email | `jordan@example.com` |
+| Email | `sarah@example.com` |
 | Password | `demo1234` |
 
 Invite code during onboarding: `VIBE2026`

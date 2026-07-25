@@ -15,7 +15,7 @@ type MusicTab = "trending" | "playlists" | "liked";
 function MusicContent() {
   const [tab, setTab] = useState<MusicTab>("trending");
   const [likedIds, setLikedIds] = useState<string[]>([
-    "track-curb-check",
+    "track-golden-hour",
     "track-midnight-pass",
   ]);
   const [playingId, setPlayingId] = useState<string | null>(null);
