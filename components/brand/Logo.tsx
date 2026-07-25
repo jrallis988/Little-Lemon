@@ -20,7 +20,7 @@ export function Logo({ href = "/", className, markClassName }: LogoProps) {
         )}
         aria-hidden
       >
-        MP
+        V
       </span>
       <span className="font-display text-xl font-black tracking-tight text-white">
         {APP_NAME}

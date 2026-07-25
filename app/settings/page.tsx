@@ -62,7 +62,7 @@ function SettingsContent() {
 
   React.useEffect(() => {
     if (typeof localStorage === "undefined") return;
-    const raw = localStorage.getItem("myplace-notification-prefs");
+    const raw = localStorage.getItem("vibe-notification-prefs");
     if (raw) setPrefs({ ...defaultPrefs, ...JSON.parse(raw) });
   }, []);
 
@@ -76,7 +76,7 @@ function SettingsContent() {
     const next = { ...prefs, ...patch };
     setPrefs(next);
     if (typeof localStorage !== "undefined") {
-      localStorage.setItem("myplace-notification-prefs", JSON.stringify(next));
+      localStorage.setItem("vibe-notification-prefs", JSON.stringify(next));
     }
     setNotice("Notification preferences saved.");
   };
@@ -124,7 +124,7 @@ function SettingsContent() {
     const href = URL.createObjectURL(blob);
     const anchor = document.createElement("a");
     anchor.href = href;
-    anchor.download = `myplace-${liveProfile.username}-export.json`;
+    anchor.download = `vibe-${liveProfile.username}-export.json`;
     anchor.click();
     URL.revokeObjectURL(href);
     setNotice("Data export downloaded.");

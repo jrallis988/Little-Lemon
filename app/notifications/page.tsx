@@ -90,7 +90,7 @@ function NotificationsContent() {
             <EmptyState
               icon={Bell}
               title={showUnreadOnly ? "No unread notifications" : "No notifications"}
-              description="When something happens on MyPlace, it will appear here."
+              description="When something happens on Vibe, it will appear here."
             />
           )}
         </CardContent>

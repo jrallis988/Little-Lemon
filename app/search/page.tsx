@@ -89,7 +89,7 @@ function SearchContent() {
   return (
     <div className="space-y-5">
       <div>
-        <h1 className="text-2xl font-black text-navy-900">Search MyPlace</h1>
+        <h1 className="text-2xl font-black text-navy-900">Search Vibe</h1>
         <p className="text-sm text-navy-600">
           Find profiles and blog posts by keyword.
         </p>

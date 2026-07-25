@@ -23,8 +23,8 @@ const minsAgo = (m: number) => new Date(now - m * 60000).toISOString();
 
 /** Safe placeholder portraits (picsum / pravatar — not real people branding). */
 const avatar = (seed: number) => `https://i.pravatar.cc/200?img=${seed}`;
-const photo = (seed: number) => `https://picsum.photos/seed/myplace${seed}/640/480`;
-const cover = (seed: number) => `https://picsum.photos/seed/mpcover${seed}/1200/320`;
+const photo = (seed: number) => `https://picsum.photos/seed/vibe${seed}/640/480`;
+const cover = (seed: number) => `https://picsum.photos/seed/vibecover${seed}/1200/320`;
 
 export const DEMO_PASSWORD = "demo1234";
 
@@ -694,7 +694,7 @@ export const mockAnnouncements: Announcement[] = [
   },
   {
     id: "an2",
-    title: "Welcome to MyPlace",
+    title: "Welcome to Vibe",
     body: "Your profile should feel like your place — music, friends, and personality included.",
     createdAt: daysAgo(7),
   },

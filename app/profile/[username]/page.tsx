@@ -82,7 +82,7 @@ export default function ProfilePage({
 
   React.useEffect(() => {
     if (!profile || isOwner) return;
-    const key = `myplace-viewed-${profile.id}-${currentProfile?.userId ?? "anon"}`;
+    const key = `vibe-viewed-${profile.id}-${currentProfile?.userId ?? "anon"}`;
     if (typeof sessionStorage !== "undefined" && sessionStorage.getItem(key)) return;
     if (typeof sessionStorage !== "undefined") sessionStorage.setItem(key, "1");
     mockApi.updateProfile(profile.userId, {
@@ -92,7 +92,7 @@ export default function ProfilePage({
 
   React.useEffect(() => {
     if (!profile || typeof localStorage === "undefined") return;
-    setFollowing(localStorage.getItem(`myplace-following-${profile.id}`) === "1");
+    setFollowing(localStorage.getItem(`vibe-following-${profile.id}`) === "1");
   }, [profile]);
 
   if (auth.loading) {
@@ -109,7 +109,7 @@ export default function ProfilePage({
         <div className="mx-auto max-w-3xl p-4">
           <ErrorState
             title="Profile not found"
-            message={`No MyPlace member exists for @${username}.`}
+            message={`No Vibe member exists for @${username}.`}
           />
         </div>
       </PublicFrame>
@@ -197,7 +197,7 @@ export default function ProfilePage({
     const next = !following;
     setFollowing(next);
     if (typeof localStorage !== "undefined") {
-      localStorage.setItem(`myplace-following-${profile.id}`, next ? "1" : "0");
+      localStorage.setItem(`vibe-following-${profile.id}`, next ? "1" : "0");
     }
   };
 

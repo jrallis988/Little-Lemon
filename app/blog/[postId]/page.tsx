@@ -60,7 +60,7 @@ function BlogPostContent({ postId }: { postId: string }) {
         postId: post.id,
         authorId: commenter.userId,
         body: [
-          "This is exactly why I still read MyPlace blogs.",
+          "This is exactly why I still read Vibe blogs.",
           "Saving this line for later.",
           "The mood and music pairing is perfect.",
         ][index],

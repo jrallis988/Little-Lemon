@@ -1,8 +1,8 @@
-# MyPlace
+# Vibe
 
 A personality-driven social platform where every profile is a customizable place — themes, music, photos, blogs, featured friends, and status updates — inspired by the expressive spirit of early social networks, built as an original modern product.
 
-Temporary platform name: **MyPlace** (easy to rename later via `NEXT_PUBLIC_APP_NAME`).
+Platform name: **Vibe** (configurable via `NEXT_PUBLIC_APP_NAME`).
 
 ## Stack
 
@@ -41,7 +41,7 @@ Copy `.env.example` to `.env.local`:
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 NEXT_PUBLIC_USE_MOCK_DATA=true
-NEXT_PUBLIC_APP_NAME=MyPlace
+NEXT_PUBLIC_APP_NAME=Vibe
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
 

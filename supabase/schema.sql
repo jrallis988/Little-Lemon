@@ -1,4 +1,4 @@
--- MyPlace social schema draft for Supabase/Postgres.
+-- Vibe social schema draft for Supabase/Postgres.
 -- Enable in Supabase SQL editor before creating UUID defaults:
 -- create extension if not exists pgcrypto;
 

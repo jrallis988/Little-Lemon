@@ -21,7 +21,7 @@ export default function BlogPage() {
   const content = (
     <div className="mx-auto max-w-5xl space-y-5 px-3 py-5 sm:px-4">
       <div>
-        <h1 className="text-2xl font-black text-navy-900">MyPlace blogs</h1>
+        <h1 className="text-2xl font-black text-navy-900">Vibe blogs</h1>
         <p className="text-sm text-navy-600">
           Long-form posts, moods, and what members are listening to.
         </p>

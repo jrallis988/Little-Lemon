@@ -152,7 +152,7 @@ export default function LandingPage() {
         <header className="animate-fade-in flex items-center justify-between">
           <Link href="/" className="inline-flex items-center gap-3 text-white hover:no-underline">
             <span className="grid h-12 w-12 place-items-center rounded-card border border-white/30 bg-white text-base font-black text-brand shadow-lg">
-              MP
+              V
             </span>
             <span>
               <span className="block font-display text-3xl font-black leading-none tracking-tight">

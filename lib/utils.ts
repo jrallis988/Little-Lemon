@@ -91,4 +91,4 @@ export function initials(name: string): string {
     .toUpperCase();
 }
 
-export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME || "MyPlace";
+export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME || "Vibe";

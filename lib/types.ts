@@ -1,4 +1,4 @@
-/** Shared domain types for MyPlace (Supabase-ready). */
+/** Shared domain types for Vibe (Supabase-ready). */
 
 export type Visibility = "public" | "friends" | "private";
 export type FriendshipStatus = "pending" | "accepted" | "declined" | "blocked";

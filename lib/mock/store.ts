@@ -31,7 +31,7 @@ import {
   mockUsers,
 } from "./data";
 
-const STORAGE_KEY = "myplace-mock-store-v1";
+const STORAGE_KEY = "vibe-mock-store-v1";
 
 export interface MockStoreState {
   users: UserAccount[];

@@ -68,7 +68,7 @@ export function ReportDialog({
       open={open}
       onClose={onClose}
       title={`Report ${targetType.replace("_", " ")}`}
-      description="Reports help keep MyPlace safe. A moderator will review this item."
+      description="Reports help keep Vibe safe. A moderator will review this item."
       footer={
         <div className="flex justify-end gap-2">
           <Button variant="secondary" onClick={onClose}>
