@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const links = [
   { href: "#beers", label: "Beers" },
@@ -9,6 +9,8 @@ const links = [
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const hamburgerRef = useRef<HTMLButtonElement | null>(null);
+  const closeByEscapeRef = useRef(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -16,6 +18,33 @@ export function Header() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeByEscapeRef.current = true;
+        setOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (open) return;
+    if (!closeByEscapeRef.current) return;
+    closeByEscapeRef.current = false;
+    hamburgerRef.current?.focus();
+  }, [open]);
 
   return (
     <header
@@ -54,6 +83,7 @@ export function Header() {
           aria-expanded={open}
           aria-controls="mobile-nav"
           aria-label={open ? "Close menu" : "Open menu"}
+          ref={hamburgerRef}
           onClick={() => setOpen((value) => !value)}
         >
           <span className="sr-only">Menu</span>
@@ -80,6 +110,7 @@ export function Header() {
       <div
         id="mobile-nav"
         className={`border-t border-foam/10 md:hidden ${open ? "block" : "hidden"}`}
+        aria-hidden={!open}
       >
         <nav className="flex flex-col gap-1 px-5 py-4" aria-label="Mobile">
           {links.map((link) => (
