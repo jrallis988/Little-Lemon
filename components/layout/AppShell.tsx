@@ -5,7 +5,7 @@ import * as React from "react";
 import type { Profile } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { AppHeader } from "./AppHeader";
-import { MobileNavigation } from "./MobileNavigation";
+import { VibeBottomNav } from "./VibeBottomNav";
 
 export interface AppShellProps {
   currentUser: Profile;
@@ -50,7 +50,7 @@ export function AppShell({
         {children}
       </main>
       {showMobileNavigation ? (
-        <MobileNavigation
+        <VibeBottomNav
           currentUser={currentUser}
           unreadNotifications={unreadNotifications}
           unreadMessages={unreadMessages}

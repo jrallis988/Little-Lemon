@@ -1,419 +1,266 @@
 "use client";
 
-import { useMemo, useState, useSyncExternalStore } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
-import {
-  Bell,
-  Cake,
-  Mail,
-  Megaphone,
-  MessageSquare,
-  Pencil,
-  Plus,
-  Radio,
-  UserRound,
-  Users,
-} from "lucide-react";
+import { MapPin, Plus, School2, ShieldCheck, Sparkles } from "lucide-react";
 
-import { AuthenticatedShell } from "@/components/auth/AuthenticatedShell";
 import { RequireAuth } from "@/components/auth/RequireAuth";
-import { ActivityFeed } from "@/components/feed/ActivityFeed";
-import { StatusComposer } from "@/components/feed/StatusComposer";
-import { FriendRequestCard } from "@/components/friends/FriendRequestCard";
-import { Avatar } from "@/components/ui/Avatar";
+import { AuthenticatedShell } from "@/components/auth/AuthenticatedShell";
+import { LoopFilters } from "@/components/loop/LoopFilters";
+import { StartingSoonRow } from "@/components/loop/StartingSoonRow";
+import { VibeCard } from "@/components/loop/VibeCard";
 import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import type { LoopFilter, School, VibeMoment } from "@/lib/types";
 import {
-  mockAnnouncements,
-  mockFeaturedFriends,
-  upcomingBirthdays,
-} from "@/lib/mock/data";
-import {
-  getMockSnapshot,
-  mockApi,
-  subscribeMockStore,
-} from "@/lib/mock/store";
-import type { Profile } from "@/lib/types";
-import { cn, formatRelativeTime } from "@/lib/utils";
+  activityCatalog,
+  vibeMoments,
+  vibeProfiles,
+  vibeSchools,
+} from "@/lib/mock/vibe-social";
 import { useAuth } from "@/lib/auth/AuthProvider";
+import { cn } from "@/lib/utils";
 
-function findProfile(profiles: Profile[], id: string) {
-  return profiles.find((profile) => profile.id === id || profile.userId === id);
-}
-
-function profileMap(profiles: Profile[]) {
-  return profiles.reduce<Record<string, Profile>>((acc, profile) => {
-    acc[profile.id] = profile;
-    acc[profile.userId] = profile;
+function schoolById(schools: School[]) {
+  return schools.reduce<Record<string, School>>((acc, school) => {
+    acc[school.id] = school;
     return acc;
   }, {});
 }
 
-function hasRelationship(currentUserId: string, otherUserId: string) {
-  return getMockSnapshot().friendships.some(
-    (friendship) =>
-      (friendship.status === "accepted" || friendship.status === "pending") &&
-      ((friendship.requesterId === currentUserId &&
-        friendship.addresseeId === otherUserId) ||
-        (friendship.requesterId === otherUserId &&
-          friendship.addresseeId === currentUserId))
-  );
-}
-
-function SectionTitle({
-  icon: Icon,
-  children,
-}: {
-  icon: typeof Users;
-  children: React.ReactNode;
-}) {
-  return (
-    <CardHeader>
-      <CardTitle className="flex items-center gap-2">
-        <Icon className="h-4 w-4 text-brand" aria-hidden />
-        {children}
-      </CardTitle>
-    </CardHeader>
-  );
-}
-
-function HomeContent() {
+function LoopHomeContent() {
   const { profile } = useAuth();
-  const snap = useSyncExternalStore(
-    subscribeMockStore,
-    getMockSnapshot,
-    getMockSnapshot
-  );
+  const [activeFilter, setActiveFilter] = useState<LoopFilter>("now");
   const [notice, setNotice] = useState("");
+  const schools = useMemo(() => schoolById(vibeSchools), []);
+  const currentProfile =
+    vibeProfiles.find((item) => item.userId === profile?.userId) ?? profile;
+  const currentSchool = currentProfile?.schoolId
+    ? schools[currentProfile.schoolId]
+    : vibeSchools[0];
 
-  const profilesById = useMemo(() => profileMap(snap.profiles), [snap.profiles]);
-
-  const incomingRequests = useMemo(() => {
-    if (!profile) return [];
-    return snap.friendships
-      .filter(
-        (friendship) =>
-          friendship.addresseeId === profile.userId && friendship.status === "pending"
-      )
-      .map((friendship) => ({
-        friendship,
-        requester: findProfile(snap.profiles, friendship.requesterId),
-      }))
-      .filter((item): item is typeof item & { requester: Profile } =>
-        Boolean(item.requester)
-      );
-  }, [profile, snap.friendships, snap.profiles]);
-
-  const unreadMessages = useMemo(() => {
-    if (!profile) return 0;
-    return snap.notifications.filter(
-      (notification) =>
-        notification.userId === profile.userId &&
-        notification.type === "message" &&
-        !notification.read
-    ).length;
-  }, [profile, snap.notifications]);
-
-  const suggestedProfiles = useMemo(() => {
-    if (!profile) return [];
-    return snap.profiles
-      .filter(
-        (item) =>
-          item.userId !== profile.userId &&
-          !hasRelationship(profile.userId, item.userId)
-      )
-      .slice(0, 3);
-    // Intentionally depend on friendships so suggestions refresh after requests.
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- hasRelationship reads live snapshot
-  }, [profile, snap.profiles, snap.friendships]);
-
-  const recentlyOnline = useMemo(() => {
-    if (!profile) return [];
-    return [...snap.profiles]
-      .filter(
-        (item) =>
-          item.userId !== profile.userId &&
-          item.showOnlineStatus &&
-          item.onlineStatus !== "offline"
-      )
-      .sort(
-        (a, b) =>
-          new Date(b.lastActiveAt).getTime() - new Date(a.lastActiveAt).getTime()
-      )
-      .slice(0, 4);
-  }, [profile, snap.profiles]);
-
-  const birthdays = useMemo(() => {
-    return upcomingBirthdays
-      .map((birthday) => ({
-        ...birthday,
-        profile: findProfile(snap.profiles, birthday.profileId),
-      }))
-      .filter((item): item is typeof item & { profile: Profile } =>
-        Boolean(item.profile)
-      );
-  }, [snap.profiles]);
-
-  if (!profile) return null;
-
-  const featuredFriendCount = (mockFeaturedFriends[profile.id] || []).length;
-
-  const handleStatus = async (body: string) => {
-    mockApi.postStatus(profile.userId, body);
-    setNotice("Status posted to your friends' feed.");
-  };
-
-  const respondToRequest = (friendshipId: string, accept: boolean) => {
-    mockApi.respondFriendRequest(friendshipId, profile.userId, accept);
-    setNotice(accept ? "Friend request accepted." : "Friend request declined.");
-  };
-
-  const addFriend = (other: Profile) => {
-    try {
-      mockApi.sendFriendRequest(profile.userId, other.userId);
-      setNotice(`Friend request sent to ${other.displayName}.`);
-    } catch (err) {
-      setNotice(err instanceof Error ? err.message : "Unable to send friend request.");
+  const filteredVibes = useMemo(() => {
+    if (!currentProfile) return vibeMoments;
+    if (activeFilter === "now") {
+      return vibeMoments.filter((vibe) => vibe.status === "live");
     }
+    if (activeFilter === "school") {
+      return vibeMoments.filter((vibe) => vibe.schoolId === currentProfile.schoolId);
+    }
+    if (activeFilter === "nearby") {
+      return vibeMoments.filter((vibe) => Boolean(vibe.distanceLabel));
+    }
+    return vibeMoments.filter(
+      (vibe) =>
+        vibe.hostId === currentProfile.userId ||
+        vibe.attendeeIds.includes(currentProfile.userId)
+    );
+  }, [activeFilter, currentProfile]);
+
+  const liveVibes = filteredVibes.filter((vibe) => vibe.status === "live");
+  const startingSoon = vibeMoments
+    .filter((vibe) => vibe.status === "starting_soon")
+    .slice(0, 4);
+  const schoolVibes = vibeMoments.filter(
+    (vibe) => vibe.schoolId === currentProfile?.schoolId
+  );
+
+  const notify = (message: string) => {
+    setNotice(message);
+    window.setTimeout(() => setNotice(""), 3000);
+  };
+
+  const joinVibe = (vibe: VibeMoment) => {
+    notify(
+      vibe.status === "live"
+        ? `Joined ${vibe.title}. Your friends can see you are interested.`
+        : `Reminder set for ${vibe.title}.`
+    );
   };
 
   return (
-    <AuthenticatedShell mainClassName="max-w-7xl">
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <p className="text-xs font-bold uppercase tracking-[0.25em] text-brand">
-            Home base
-          </p>
-          <h1 className="font-display text-3xl font-black text-navy-900">
-            Welcome back, {profile.displayName.split(" ")[0]}.
-          </h1>
-        </div>
+    <AuthenticatedShell mainClassName="max-w-none bg-zinc-950 px-0 py-0 text-white md:pb-0">
+      <div className="mx-auto min-h-[calc(100vh-3.5rem)] max-w-7xl space-y-8 px-3 py-5 sm:px-4 lg:px-6">
+        <section className="overflow-hidden rounded-[28px] border border-white/10 bg-[radial-gradient(circle_at_top_right,rgba(255,92,0,0.28),transparent_34%),linear-gradient(135deg,#111111,#050505)] p-5 shadow-[0_24px_80px_rgba(0,0,0,0.35)] sm:p-7">
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-end">
+            <div>
+              <Badge className="border-[#FF6A1A]/40 bg-[#FF5C00]/15 text-[#FFB68A]">
+                <ShieldCheck className="h-3 w-3" aria-hidden />
+                Verified student loop
+              </Badge>
+              <h1 className="mt-4 max-w-3xl font-display text-4xl font-black leading-tight text-white sm:text-6xl">
+                Real Friends. Real Moments. Real You.
+              </h1>
+              <p className="mt-4 max-w-2xl text-base leading-7 text-zinc-300">
+                See what is live around school, start a low-pressure plan, and join
+                moments that feel more group chat than endless feed.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Link
+                  href="/vibe/new"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-[#FF6A1A] bg-[#FF5C00] px-5 py-3 text-sm font-black text-white shadow-[0_10px_30px_rgba(255,92,0,0.35)] hover:bg-[#FF6A1A] hover:no-underline"
+                >
+                  <Plus className="h-4 w-4" aria-hidden />
+                  Start a Vibe
+                </Link>
+                <button
+                  type="button"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-black text-white hover:border-[#FF6A1A]/60"
+                  onClick={() =>
+                    notify(`Showing school-only moments for ${currentSchool?.name}.`)
+                  }
+                >
+                  <School2 className="h-4 w-4" aria-hidden />
+                  {currentSchool?.name ?? "My school"}
+                </button>
+              </div>
+            </div>
+            <div className="rounded-[24px] border border-white/10 bg-white/[0.04] p-4">
+              <p className="text-xs font-black uppercase tracking-[0.24em] text-[#FFB68A]">
+                Popular right now
+              </p>
+              <div className="mt-3 grid grid-cols-2 gap-2">
+                {activityCatalog
+                  .filter((item) => item.popular)
+                  .slice(0, 6)
+                  .map((activity) => (
+                    <button
+                      key={activity.id}
+                      type="button"
+                      className="rounded-[18px] border border-white/10 bg-black/25 p-3 text-left transition hover:border-[#FF6A1A]/70"
+                      onClick={() => notify(`${activity.label} vibes moved up in your Loop.`)}
+                    >
+                      <span className="text-[10px] font-black text-[#FF8D4D]">
+                        {activity.emoji}
+                      </span>
+                      <span className="mt-1 block text-sm font-black text-white">
+                        {activity.label}
+                      </span>
+                    </button>
+                  ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
         {notice ? (
-          <div className="rounded-card border border-green-200 bg-green-50 px-3 py-2 text-sm font-bold text-green-800">
+          <div className="sticky top-16 z-30 rounded-[18px] border border-[#FF6A1A]/40 bg-[#FF5C00] px-4 py-3 text-sm font-black text-white shadow-[0_12px_40px_rgba(255,92,0,0.28)]">
             {notice}
           </div>
         ) : null}
-      </div>
 
-      <div className="grid gap-4 lg:grid-cols-[250px_minmax(0,1fr)_310px]">
-        <aside className="space-y-4">
-          <Card>
-            <CardContent className="space-y-4 text-center">
-              <Avatar
-                name={profile.displayName}
-                src={profile.avatarUrl}
-                size="xl"
-                online={profile.onlineStatus === "online"}
-                showOnlineIndicator={profile.showOnlineStatus}
-                className="mx-auto"
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-xs font-black uppercase tracking-[0.24em] text-[#FF8D4D]">
+              Loop feed
+            </p>
+            <h2 className="font-display text-3xl font-black text-white">
+              Happening Now
+            </h2>
+          </div>
+          <LoopFilters active={activeFilter} onChange={setActiveFilter} />
+        </div>
+
+        <section className="overflow-x-auto pb-2">
+          <div className="flex gap-4">
+            {(liveVibes.length > 0 ? liveVibes : filteredVibes).map((vibe) => (
+              <VibeCard
+                key={vibe.id}
+                vibe={vibe}
+                profiles={vibeProfiles}
+                school={vibe.schoolId ? schools[vibe.schoolId] : undefined}
+                onJoin={joinVibe}
               />
-              <div>
-                <h2 className="font-display text-xl font-black">{profile.displayName}</h2>
-                <p className="text-sm text-navy-500">@{profile.username}</p>
-              </div>
-              <div className="grid grid-cols-2 gap-2 text-xs">
-                <div className="rounded-card border border-surface-border bg-surface-muted p-2">
-                  <p className="font-black text-navy-900">{profile.friendCount}</p>
-                  <p className="uppercase tracking-wide text-navy-500">friends</p>
-                </div>
-                <div className="rounded-card border border-surface-border bg-surface-muted p-2">
-                  <p className="font-black text-navy-900">{unreadMessages}</p>
-                  <p className="uppercase tracking-wide text-navy-500">new mail</p>
-                </div>
-              </div>
-              <div className="flex flex-wrap justify-center gap-2">
-                <Badge variant={profile.onlineStatus === "online" ? "success" : "warning"}>
-                  <Radio className="h-3 w-3" aria-hidden />
-                  {profile.onlineStatus}
-                </Badge>
-                <Badge>{featuredFriendCount} featured</Badge>
-              </div>
-              <div className="grid gap-2">
-                <Link
-                  href={`/profile/${profile.username}`}
-                  className="inline-flex items-center justify-center gap-2 rounded-btn border border-brand bg-brand px-3 py-2 text-sm font-bold text-white shadow-soft hover:bg-brand-dark hover:no-underline"
-                >
-                  <UserRound className="h-4 w-4" aria-hidden />
-                  View My Profile
-                </Link>
-                <Link
-                  href="/onboarding"
-                  className="inline-flex items-center justify-center gap-2 rounded-btn border border-surface-border bg-white px-3 py-2 text-sm font-bold text-navy-800 shadow-soft hover:bg-brand-soft hover:no-underline"
-                >
-                  <Pencil className="h-4 w-4" aria-hidden />
-                  Edit Profile
-                </Link>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <SectionTitle icon={Bell}>Quick stats</SectionTitle>
-            <CardContent className="space-y-2 text-sm text-navy-700">
-              <div className="flex justify-between gap-3">
-                <span>Profile views</span>
-                <span className="font-bold">{profile.profileViews.toLocaleString()}</span>
-              </div>
-              <div className="flex justify-between gap-3">
-                <span>Member since</span>
-                <span className="font-bold">{new Date(profile.memberSince).getFullYear()}</span>
-              </div>
-              <div className="flex justify-between gap-3">
-                <span>Last active</span>
-                <span className="font-bold">{formatRelativeTime(profile.lastActiveAt)}</span>
-              </div>
-            </CardContent>
-          </Card>
-        </aside>
-
-        <section className="min-w-0 space-y-4">
-          <StatusComposer currentUser={profile} onSubmit={handleStatus} />
-          <ActivityFeed
-            items={snap.feedItems}
-            profiles={profilesById}
-            currentUser={profile}
-            onReact={(item) => {
-              mockApi.reactToFeedItem(item.id);
-              setNotice("Reaction added.");
-            }}
-          />
+            ))}
+          </div>
         </section>
 
-        <aside className="space-y-4">
-          <Card>
-            <SectionTitle icon={Users}>Friend requests</SectionTitle>
-            <CardContent className={cn("space-y-3", incomingRequests.length === 0 && "text-sm")}>
-              {incomingRequests.length > 0 ? (
-                incomingRequests.map(({ friendship, requester }) => (
-                  <FriendRequestCard
-                    key={friendship.id}
-                    requester={requester}
-                    createdAt={friendship.createdAt}
-                    mutualFriends={2}
-                    onAccept={() => respondToRequest(friendship.id, true)}
-                    onDecline={() => respondToRequest(friendship.id, false)}
-                  />
-                ))
-              ) : (
-                <p className="text-navy-500">No pending requests right now.</p>
-              )}
-            </CardContent>
-          </Card>
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_360px]">
+          <section className="rounded-[24px] border border-white/10 bg-white/[0.04] p-4 sm:p-5">
+            <div className="mb-4 flex items-center justify-between gap-3">
+              <div>
+                <p className="text-xs font-black uppercase tracking-[0.24em] text-[#FF8D4D]">
+                  Up next
+                </p>
+                <h2 className="font-display text-2xl font-black text-white">
+                  Starting Soon
+                </h2>
+              </div>
+              <Link
+                href="/events"
+                className="text-sm font-black text-[#FF8D4D] hover:text-[#FFB68A]"
+              >
+                See events
+              </Link>
+            </div>
+            <StartingSoonRow
+              vibes={startingSoon}
+              profiles={vibeProfiles}
+              onRemind={(vibe) => notify(`Reminder set for ${vibe.title}.`)}
+            />
+          </section>
 
-          <Card>
-            <SectionTitle icon={Cake}>Upcoming birthdays</SectionTitle>
-            <CardContent className="space-y-3">
-              {birthdays.map((birthday) => (
+          <section className="rounded-[24px] border border-white/10 bg-white/[0.04] p-4 sm:p-5">
+            <div className="mb-4">
+              <p className="text-xs font-black uppercase tracking-[0.24em] text-[#FF8D4D]">
+                Around your school
+              </p>
+              <h2 className="font-display text-2xl font-black text-white">
+                {currentSchool?.name ?? "School"} pulse
+              </h2>
+            </div>
+            <div className="space-y-3">
+              {schoolVibes.slice(0, 4).map((vibe) => (
                 <Link
-                  key={birthday.profileId}
-                  href={`/profile/${birthday.profile.username}`}
-                  className="flex items-center gap-3 rounded-card border border-surface-border bg-white p-2 hover:bg-brand-soft hover:no-underline"
+                  key={vibe.id}
+                  href={`/vibe/${vibe.id}`}
+                  className={cn(
+                    "block rounded-[18px] border border-white/10 bg-black/25 p-3 hover:border-[#FF6A1A]/60 hover:no-underline",
+                    vibe.status === "live" && "border-[#FF6A1A]/40"
+                  )}
                 >
-                  <Avatar
-                    name={birthday.profile.displayName}
-                    src={birthday.profile.avatarUrl}
-                    size="sm"
-                  />
-                  <span className="min-w-0 flex-1">
-                    <span className="block truncate text-sm font-bold text-navy-900">
-                      {birthday.profile.displayName}
-                    </span>
-                    <span className="text-xs text-navy-500">{birthday.dateLabel}</span>
-                  </span>
-                </Link>
-              ))}
-            </CardContent>
-          </Card>
-
-          <Card>
-            <SectionTitle icon={Plus}>Suggested profiles</SectionTitle>
-            <CardContent className="space-y-3">
-              {suggestedProfiles.map((suggested) => (
-                <div
-                  key={suggested.id}
-                  className="rounded-card border border-surface-border bg-surface-muted p-3"
-                >
-                  <div className="flex gap-3">
-                    <Avatar
-                      name={suggested.displayName}
-                      src={suggested.avatarUrl}
-                      size="sm"
-                    />
-                    <div className="min-w-0 flex-1">
-                      <Link
-                        href={`/profile/${suggested.username}`}
-                        className="block truncate text-sm font-bold text-navy-900"
-                      >
-                        {suggested.displayName}
-                      </Link>
-                      <p className="truncate text-xs text-navy-500">@{suggested.username}</p>
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-black text-white">{vibe.title}</p>
+                      <p className="mt-1 flex items-center gap-1 text-xs text-zinc-500">
+                        <MapPin className="h-3.5 w-3.5" aria-hidden />
+                        {vibe.locationName}
+                      </p>
                     </div>
+                    <Badge
+                      className={
+                        vibe.status === "live"
+                          ? "border-[#FF6A1A]/40 bg-[#FF5C00] text-white"
+                          : "border-white/10 bg-white/5 text-zinc-300"
+                      }
+                    >
+                      {vibe.status === "live" ? "LIVE" : "soon"}
+                    </Badge>
                   </div>
-                  <Button
-                    size="sm"
-                    variant="secondary"
-                    className="mt-3 w-full"
-                    onClick={() => addFriend(suggested)}
-                  >
-                    <Plus className="h-4 w-4" aria-hidden />
-                    Add Friend
-                  </Button>
-                </div>
-              ))}
-              {suggestedProfiles.length === 0 ? (
-                <p className="text-sm text-navy-500">You already know everyone in the demo.</p>
-              ) : null}
-            </CardContent>
-          </Card>
-
-          <Card>
-            <SectionTitle icon={MessageSquare}>Recently online</SectionTitle>
-            <CardContent className="space-y-2">
-              {recentlyOnline.map((onlineProfile) => (
-                <Link
-                  key={onlineProfile.id}
-                  href={`/profile/${onlineProfile.username}`}
-                  className="flex items-center gap-3 rounded-card p-1.5 hover:bg-brand-soft hover:no-underline"
-                >
-                  <Avatar
-                    name={onlineProfile.displayName}
-                    src={onlineProfile.avatarUrl}
-                    size="xs"
-                    online={onlineProfile.onlineStatus === "online"}
-                    showOnlineIndicator={onlineProfile.showOnlineStatus}
-                  />
-                  <span className="min-w-0 flex-1">
-                    <span className="block truncate text-sm font-bold text-navy-900">
-                      {onlineProfile.displayName}
-                    </span>
-                    <span className="text-xs text-navy-500">
-                      {formatRelativeTime(onlineProfile.lastActiveAt)}
-                    </span>
-                  </span>
                 </Link>
               ))}
-            </CardContent>
-          </Card>
+            </div>
+          </section>
+        </div>
 
-          <Card>
-            <SectionTitle icon={Megaphone}>Announcements</SectionTitle>
-            <CardContent className="space-y-3">
-              {mockAnnouncements.map((announcement) => (
-                <article
-                  key={announcement.id}
-                  className="rounded-card border border-surface-border bg-surface-muted p-3"
-                >
-                  <h3 className="text-sm font-black text-navy-900">{announcement.title}</h3>
-                  <p className="mt-1 text-xs leading-5 text-navy-600">{announcement.body}</p>
-                  <p className="mt-2 text-[11px] font-bold uppercase tracking-wide text-navy-400">
-                    {formatRelativeTime(announcement.createdAt)}
-                  </p>
-                </article>
-              ))}
-            </CardContent>
-          </Card>
-        </aside>
+        <section className="rounded-[24px] border border-white/10 bg-white/[0.04] p-5">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="flex items-center gap-2 text-xs font-black uppercase tracking-[0.24em] text-[#FF8D4D]">
+                <Sparkles className="h-4 w-4" aria-hidden />
+                Not a copy-paste feed
+              </p>
+              <h2 className="mt-2 font-display text-2xl font-black text-white">
+                Start something your real circle can actually join.
+              </h2>
+            </div>
+            <Link
+              href="/groups"
+              className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-black text-white hover:border-[#FF6A1A]/60 hover:no-underline"
+            >
+              Browse Groups & Circles
+            </Link>
+          </div>
+        </section>
       </div>
     </AuthenticatedShell>
   );
@@ -422,7 +269,7 @@ function HomeContent() {
 export default function HomePage() {
   return (
     <RequireAuth>
-      <HomeContent />
+      <LoopHomeContent />
     </RequireAuth>
   );
 }

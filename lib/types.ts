@@ -46,6 +46,7 @@ export type BorderStyle = "solid" | "dashed" | "double" | "none";
 export type LayoutMode = "classic" | "stacked" | "wide";
 export type DisplayMode = "retro" | "modern";
 export type MusicPlayerStyle = "compact" | "expanded" | "vinyl";
+export type StudentVerificationMethod = "school_email" | "code" | "demo";
 
 export interface UserAccount {
   id: string;
@@ -130,6 +131,21 @@ export interface Profile {
   whoCanViewPhotos: Visibility;
   showOnlineStatus: boolean;
   onboardingComplete: boolean;
+  schoolId?: string;
+  schoolName?: string;
+  grade?: string;
+  studentVerified?: boolean;
+  verificationMethod?: StudentVerificationMethod;
+  ghostMode?: boolean;
+  schoolOnlyBoundary?: boolean;
+  mood?: string;
+  hereFor?: string;
+  hometown?: string;
+  zodiac?: string;
+  genderLabel?: string;
+  clubs?: string[];
+  interestMap?: Record<string, string[]>;
+  nowPlaying?: { title: string; artist: string; externalUrl?: string };
 }
 
 export interface Friendship {
@@ -320,4 +336,90 @@ export interface Announcement {
 export interface AuthSession {
   user: UserAccount;
   profile: Profile;
+}
+
+export type LoopFilter = "now" | "school" | "nearby" | "following";
+export type VibeActivityCategory =
+  | "skating"
+  | "studying"
+  | "basketball"
+  | "gaming"
+  | "gym"
+  | "lunch"
+  | "chilling"
+  | "music"
+  | "working"
+  | "shopping"
+  | "driving"
+  | "other"
+  | "soccer"
+  | "photography";
+export type VibeStatus = "live" | "starting_soon" | "ended";
+
+export interface School {
+  id: string;
+  name: string;
+  city: string;
+  state: string;
+}
+
+export interface StudentVerification {
+  userId: string;
+  schoolId: string;
+  grade: string;
+  status: "pending" | "verified";
+  method: "school_email" | "code" | "demo";
+  verifiedAt?: string;
+}
+
+export interface VibeMoment {
+  id: string;
+  hostId: string;
+  title: string;
+  category: VibeActivityCategory;
+  status: VibeStatus;
+  coverUrl: string;
+  locationName: string;
+  distanceLabel?: string;
+  schoolId?: string;
+  startsAt: string;
+  endsAt?: string;
+  attendeeIds: string[];
+  hereNowIds: string[];
+  description?: string;
+  updates: Array<{
+    id: string;
+    authorId: string;
+    body: string;
+    createdAt: string;
+    photoUrl?: string;
+  }>;
+  visibility: "school" | "friends" | "public";
+}
+
+export interface CircleGroup {
+  id: string;
+  name: string;
+  description: string;
+  coverUrl: string;
+  schoolId?: string;
+  memberIds: string[];
+  ownerId: string;
+  visibility: "public" | "school" | "private";
+  kind: "club" | "team" | "hangout" | "interest";
+}
+
+export interface PhotoSet {
+  id: string;
+  profileId: string;
+  title: string;
+  mood?: string;
+  createdAt: string;
+  caption?: string;
+  photoUrls: string[];
+  visibility: Visibility;
+}
+
+export interface InterestMap {
+  [category: string]: string[];
 }

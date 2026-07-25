@@ -4,14 +4,15 @@ import * as React from "react";
 import Link from "next/link";
 import {
   Bell,
-  Home,
+  CalendarDays,
   LogOut,
   Menu,
   MessageSquare,
-  Newspaper,
+  Music2,
   Search,
+  Settings,
   UserCircle,
-  Users,
+  UsersRound,
   X,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -38,17 +39,18 @@ type NavItem = {
 };
 
 const navItems: NavItem[] = [
-  { href: "/home", label: "Home", icon: Home },
-  { href: "/browse", label: "Browse", icon: Users },
   { href: "/search", label: "Search", icon: Search },
+  { href: "/groups", label: "Friends/Groups", icon: UsersRound },
+  { href: "/events", label: "Events", icon: CalendarDays },
+  { href: "/music", label: "Music", icon: Music2 },
   { href: "/messages", label: "Messages", icon: MessageSquare, badge: "messages" },
-  { href: "/blog", label: "Blog", icon: Newspaper },
   {
     href: "/notifications",
     label: "Notifications",
     icon: Bell,
     badge: "notifications",
   },
+  { href: "/settings", label: "Settings", icon: Settings },
 ];
 
 export function AppHeader({
@@ -74,7 +76,7 @@ export function AppHeader({
   return (
     <header className="sticky top-0 z-40 border-b border-navy-950 bg-navy-900 text-white shadow-card">
       <div className="mx-auto flex min-h-14 max-w-6xl items-center justify-between gap-3 px-3 py-2 sm:px-4">
-        <Logo />
+        <Logo href="/home" />
 
         <nav className="hidden items-stretch self-stretch md:flex" aria-label="Main">
           {navItems.map((item) => {
