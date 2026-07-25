@@ -45,7 +45,7 @@ export function VibeBottomNav({
   return (
     <nav
       className={cn(
-        "fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-zinc-950/95 text-white shadow-[0_-14px_40px_rgba(0,0,0,0.28)] backdrop-blur md:hidden",
+        "fixed inset-x-0 bottom-0 z-40 border-t border-orange-200/70 bg-white/95 text-navy-800 shadow-[0_-10px_30px_rgba(255,122,51,0.18)] backdrop-blur md:hidden",
         className
       )}
       aria-label="Vibe mobile navigation"

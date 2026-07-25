@@ -27,7 +27,7 @@ export function AppShell({
   showMobileNavigation = true,
 }: AppShellProps) {
   return (
-    <div className="min-h-screen bg-surface-muted text-navy-900">
+    <div className="sunset-shell min-h-screen text-navy-900">
       <a
         href="#main-content"
         className="sr-only z-50 rounded-card bg-white px-3 py-2 text-sm font-bold text-brand focus:not-sr-only focus:fixed focus:left-3 focus:top-3"

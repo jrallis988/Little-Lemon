@@ -520,9 +520,9 @@ function ProfileModule({
         onDelete={onDeleteComment}
         onReport={(comment) => onReport("comment", comment.id)}
         title="Bulletin Board"
-        composerLabel="Write something nice"
+        composerLabel="Leave a Message"
         composerPlaceholder="Write something nice..."
-        submitLabel="Post to board"
+        submitLabel="Post Message"
         emptyTitle="No bulletin notes yet"
         emptyDescription="Be the first to pin a kind note on this profile."
         showHeader={false}
@@ -550,9 +550,12 @@ function CollapsibleModule({
   return (
     <details
       open={defaultOpen}
-      className="mp-profile-module overflow-hidden p-0 [&_summary::-webkit-details-marker]:hidden"
+      className={cn(
+        "vibe-card overflow-hidden p-0 [&_summary::-webkit-details-marker]:hidden",
+        title === "BULLETIN BOARD" && "border-[#c49a6c]"
+      )}
     >
-      <summary className="group flex cursor-pointer list-none items-center justify-between gap-3 rounded-t-card bg-[linear-gradient(135deg,var(--mp-primary,#1f4d8f),var(--mp-secondary,#67a6ff))] px-4 py-3 text-white">
+      <summary className="group flex cursor-pointer list-none items-center justify-between gap-3 rounded-t-[22px] bg-gradient-to-r from-[#ff8a3d] via-[#ff7a33] to-[#f08ad0] px-4 py-3 text-white">
         <span className="min-w-0">
           <span className="flex items-center gap-2 text-xs font-black uppercase tracking-[0.18em]">
             {icon}
@@ -572,7 +575,14 @@ function CollapsibleModule({
           />
         </span>
       </summary>
-      <div className="space-y-4 bg-[#fffaf0]/95 p-4">{children}</div>
+      <div
+        className={cn(
+          "space-y-4 bg-white/95 p-4",
+          title === "BULLETIN BOARD" && "bulletin-board rounded-none border-0"
+        )}
+      >
+        {children}
+      </div>
     </details>
   );
 }

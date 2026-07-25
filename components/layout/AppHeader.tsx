@@ -74,7 +74,7 @@ export function AppHeader({
   };
 
   return (
-    <header className="sticky top-0 z-40 border-b border-navy-950 bg-navy-900 text-white shadow-card">
+    <header className="sticky top-0 z-40 border-b border-orange-500/30 bg-gradient-to-r from-[#ff8a3d] via-[#ff7a33] to-[#f08ad0] text-white shadow-card">
       <div className="mx-auto flex min-h-14 max-w-6xl items-center justify-between gap-3 px-3 py-2 sm:px-4">
         <Logo href="/home" />
 
@@ -86,7 +86,7 @@ export function AppHeader({
               <Link
                 key={item.href}
                 href={item.href}
-                className="relative inline-flex items-center gap-1.5 border-x border-transparent px-3 text-xs font-bold uppercase tracking-wide text-navy-50 transition hover:border-navy-700 hover:bg-brand-dark"
+                className="relative inline-flex items-center gap-1.5 border-x border-transparent px-3 text-xs font-bold uppercase tracking-wide text-white/95 transition hover:border-white/20 hover:bg-white/15"
               >
                 <Icon className="h-4 w-4" aria-hidden />
                 {item.label}

@@ -5,7 +5,7 @@ import { Loader2 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
+export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger" | "friend";
 export type ButtonSize = "sm" | "md";
 
 export interface ButtonProps
@@ -21,9 +21,11 @@ const variantStyles: Record<ButtonVariant, string> = {
   secondary:
     "border-surface-border bg-white text-navy-800 shadow-soft hover:bg-brand-soft focus-visible:ring-brand/25",
   ghost:
-    "border-transparent bg-transparent text-navy-700 hover:bg-navy-50 focus-visible:ring-brand/20",
+    "border-transparent bg-transparent text-navy-700 hover:bg-white/50 focus-visible:ring-brand/20",
   danger:
     "border-red-700 bg-red-700 text-white shadow-soft hover:bg-red-800 focus-visible:ring-red-300",
+  friend:
+    "border-friend bg-friend text-white shadow-soft hover:bg-friend-dark focus-visible:ring-friend/30",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
