@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Figtree, Syne } from "next/font/google";
+import { Figtree, Pacifico, Syne } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/lib/auth/AuthProvider";
 import { APP_NAME } from "@/lib/utils";
@@ -16,13 +16,19 @@ const body = Figtree({
   weight: ["400", "500", "600", "700", "800"],
 });
 
+const script = Pacifico({
+  subsets: ["latin"],
+  variable: "--font-script",
+  weight: "400",
+});
+
 export const metadata: Metadata = {
   title: {
-    default: `${APP_NAME} — Your page. Your vibe. Ages 13–17.`,
+    default: `${APP_NAME} — Real Friends. Real Moments. Real You.`,
     template: `%s · ${APP_NAME}`,
   },
   description:
-    "Vibe is a social platform for teens 13–17. Build a customizable profile with your music, friends, photos, and personality — not a copy-paste feed.",
+    "Real Friends. Real Moments. Real You. Vibe is a verified student ecosystem for teens 13–17 with profiles, music, friends, photos, and personality.",
 };
 
 export default function RootLayout({
@@ -31,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable}`}>
+    <html lang="en" className={`${display.variable} ${body.variable} ${script.variable}`}>
       <body>
         <AuthProvider>{children}</AuthProvider>
       </body>

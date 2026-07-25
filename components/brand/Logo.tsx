@@ -15,7 +15,7 @@ export function Logo({ href = "/", className, markClassName }: LogoProps) {
     <span className={cn("inline-flex items-center gap-2", className)}>
       <span
         className={cn(
-          "grid h-8 w-8 place-items-center rounded-card border border-white/25 bg-white text-sm font-black text-brand shadow-soft",
+          "grid h-8 w-8 place-items-center rounded-full border border-white/30 bg-white text-lg text-brand shadow-soft [font-family:var(--font-script)]",
           markClassName
         )}
         aria-hidden
@@ -23,11 +23,11 @@ export function Logo({ href = "/", className, markClassName }: LogoProps) {
         V
       </span>
       <span className="leading-none">
-        <span className="block font-display text-xl font-black tracking-tight text-white">
+        <span className="block text-2xl leading-none text-white [font-family:var(--font-script)]">
           {APP_NAME}
         </span>
         <span className="mt-0.5 hidden text-[10px] font-bold uppercase tracking-[0.18em] text-navy-200 sm:block">
-          Ages 13–17
+          Student vibes
         </span>
       </span>
     </span>

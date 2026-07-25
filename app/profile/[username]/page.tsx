@@ -3,7 +3,16 @@
 import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Flag, Lock, Music2, UserPlus } from "lucide-react";
+import {
+  BookOpenText,
+  ChevronDown,
+  ExternalLink,
+  Flag,
+  ImagePlus,
+  Lock,
+  Music2,
+  School,
+} from "lucide-react";
 
 import { useAuth } from "@/lib/auth/AuthProvider";
 import { mockAlbums, mockPhotos, mockTracks } from "@/lib/mock/data";
@@ -17,6 +26,7 @@ import {
   useMockStore,
 } from "@/lib/mock/social";
 import { themeToCssVars } from "@/lib/themes";
+import { cn, formatDate } from "@/lib/utils";
 import type {
   Album,
   BlogPost,
@@ -28,17 +38,13 @@ import type {
   ReportTargetType,
 } from "@/lib/types";
 import { Logo } from "@/components/brand/Logo";
-import { BlogPreview } from "@/components/profile/BlogPreview";
-import { FeaturedFriends } from "@/components/profile/FeaturedFriends";
-import { PhotoGallery } from "@/components/profile/PhotoGallery";
 import { ProfileComments } from "@/components/profile/ProfileComments";
-import { ProfileDetails } from "@/components/profile/ProfileDetails";
 import { ProfileHeader } from "@/components/profile/ProfileHeader";
-import { ProfileMusicPlayer } from "@/components/profile/ProfileMusicPlayer";
 import { AuthenticatedShell } from "@/components/auth/AuthenticatedShell";
+import { Avatar } from "@/components/ui/Avatar";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { Card, CardContent } from "@/components/ui/Card";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { LoadingSkeleton } from "@/components/ui/LoadingSkeleton";
@@ -407,149 +413,495 @@ function ProfileModule({
 }) {
   if (moduleId === "about") {
     return (
-      <Card className="mp-profile-module">
-        <CardHeader>
-          <CardTitle>About {profile.displayName}</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
+      <>
+        <CollapsibleModule title="ABOUT ME" eyebrow={`@${profile.username}`}>
           <p className="whitespace-pre-wrap text-sm leading-6 text-navy-800">
             {profile.details.aboutMe || profile.bio || "No about-me note yet."}
           </p>
-          {profile.details.whoIdLikeToMeet ? (
-            <div className="rounded-card border border-surface-border bg-surface-muted p-3">
-              <h3 className="text-xs font-bold uppercase tracking-wide text-brand-dark">
-                Who I&apos;d like to meet
-              </h3>
-              <p className="mt-1 text-sm leading-6 text-navy-700">
-                {profile.details.whoIdLikeToMeet}
-              </p>
-            </div>
-          ) : null}
-        </CardContent>
-      </Card>
+        </CollapsibleModule>
+        <CollapsibleModule title="WHO I'D LIKE TO MEET" defaultOpen={false}>
+          <p className="whitespace-pre-wrap text-sm leading-6 text-navy-800">
+            {profile.details.whoIdLikeToMeet ||
+              "Friendly classmates, club people, and friends who leave kind comments."}
+          </p>
+        </CollapsibleModule>
+      </>
     );
   }
 
   if (moduleId === "details") {
     return (
-      <ProfileDetails
-        details={profile.details}
-        interests={[]}
-        favoriteMusic={[]}
-        className="mp-profile-module"
-      />
+      <CollapsibleModule title="DETAILS" icon={<School className="h-4 w-4" aria-hidden />}>
+        <TeenDetailsTable profile={profile} />
+      </CollapsibleModule>
     );
   }
 
   if (moduleId === "interests") {
     return (
-      <Card className="mp-profile-module">
-        <CardHeader>
-          <CardTitle>Interests</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <BadgeCloud title="Interests" items={profile.interests} />
-          <BadgeCloud
-            title="Favorite Music"
-            items={profile.favoriteMusic}
-            icon={<Music2 className="h-4 w-4" aria-hidden />}
-          />
-        </CardContent>
-      </Card>
+      <CollapsibleModule title="INTERESTS">
+        <InterestTable profile={profile} />
+      </CollapsibleModule>
     );
   }
 
   if (moduleId === "music") {
-    return <ProfileMusicPlayer tracks={tracks} className="mp-profile-module" />;
+    return (
+      <CollapsibleModule
+        title="NOW PLAYING"
+        icon={<Music2 className="h-4 w-4" aria-hidden />}
+      >
+        <NowPlaying profile={profile} tracks={tracks} />
+      </CollapsibleModule>
+    );
   }
 
   if (moduleId === "photos") {
     if (photosLocked) {
       return (
-        <Card className="mp-profile-module">
-          <CardContent>
+        <CollapsibleModule title="PHOTOS">
             <EmptyState
               icon={Lock}
               title="Photos are friends-only"
               description="Become friends to view this member's photo albums."
             />
-          </CardContent>
-        </Card>
+        </CollapsibleModule>
       );
     }
     return (
-      <PhotoGallery
-        albums={albums}
-        photos={photos}
-        onReportPhoto={(photo) => onReport("photo", photo.id)}
-        className="mp-profile-module"
-      />
+      <CollapsibleModule
+        title="PHOTOS"
+        action={
+          isOwner ? (
+            <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wide">
+              <ImagePlus className="h-3.5 w-3.5" aria-hidden />
+              Add set
+            </span>
+          ) : undefined
+        }
+      >
+        <PhotoSetsGrid albums={albums} photos={photos} />
+      </CollapsibleModule>
     );
   }
 
   if (moduleId === "blog") {
     return (
-      <BlogPreview
-        posts={posts}
-        author={profile}
-        limit={3}
-        className="mp-profile-module"
-      />
+      <CollapsibleModule
+        title="BLOG"
+        defaultOpen={posts.length > 0}
+        icon={<BookOpenText className="h-4 w-4" aria-hidden />}
+      >
+        <BlogList posts={posts} />
+      </CollapsibleModule>
     );
   }
 
   if (moduleId === "friends") {
     return (
-      <FeaturedFriends
-        friends={featuredFriends}
-        count={profile.featuredFriendCount}
-        className="mp-profile-module"
+      <CollapsibleModule title="FEATURED FRIENDS">
+        <FeaturedFriendGrid
+          friends={featuredFriends}
+          count={profile.featuredFriendCount}
+        />
+      </CollapsibleModule>
+    );
+  }
+
+  return (
+    <CollapsibleModule title="BULLETIN BOARD" defaultOpen>
+      <ProfileComments
+        comments={comments}
+        authors={authors}
+        currentUser={currentProfile}
+        isProfileOwner={isOwner}
+        canComment={canComment}
+        onSubmit={onSubmitComment}
+        onDelete={onDeleteComment}
+        onReport={(comment) => onReport("comment", comment.id)}
+        title="Bulletin Board"
+        composerLabel="Write something nice"
+        composerPlaceholder="Write something nice..."
+        submitLabel="Post to board"
+        emptyTitle="No bulletin notes yet"
+        emptyDescription="Be the first to pin a kind note on this profile."
+        showHeader={false}
+        className="border-0 bg-transparent shadow-none"
+      />
+    </CollapsibleModule>
+  );
+}
+
+function CollapsibleModule({
+  title,
+  eyebrow,
+  icon,
+  action,
+  defaultOpen = true,
+  children,
+}: {
+  title: string;
+  eyebrow?: string;
+  icon?: React.ReactNode;
+  action?: React.ReactNode;
+  defaultOpen?: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <details
+      open={defaultOpen}
+      className="mp-profile-module overflow-hidden p-0 [&_summary::-webkit-details-marker]:hidden"
+    >
+      <summary className="group flex cursor-pointer list-none items-center justify-between gap-3 rounded-t-card bg-[linear-gradient(135deg,var(--mp-primary,#1f4d8f),var(--mp-secondary,#67a6ff))] px-4 py-3 text-white">
+        <span className="min-w-0">
+          <span className="flex items-center gap-2 text-xs font-black uppercase tracking-[0.18em]">
+            {icon}
+            {title}
+          </span>
+          {eyebrow ? (
+            <span className="mt-0.5 block text-[11px] font-semibold text-white/80">
+              {eyebrow}
+            </span>
+          ) : null}
+        </span>
+        <span className="flex items-center gap-2 text-white/90">
+          {action}
+          <ChevronDown
+            className="h-4 w-4 transition group-open:rotate-180"
+            aria-hidden
+          />
+        </span>
+      </summary>
+      <div className="space-y-4 bg-[#fffaf0]/95 p-4">{children}</div>
+    </details>
+  );
+}
+
+function uniqueItems(items: Array<string | undefined>) {
+  return Array.from(
+    new Set(items.map((item) => item?.trim()).filter((item): item is string => Boolean(item)))
+  );
+}
+
+function TeenDetailsTable({ profile }: { profile: Profile }) {
+  const clubs = uniqueItems([
+    ...(profile.clubs || []),
+    profile.details.occupation,
+  ]);
+  const rows = [
+    ["Status", profile.statusMessage || "Keeping it kind."],
+    ["Here For", profile.hereFor || "Real friends, school groups, photo sets, and playlists."],
+    ["Hometown", profile.hometown || profile.location || "Not shared"],
+    ["Zodiac", profile.zodiac || "Not shared"],
+    [
+      "Education / Grade",
+      profile.grade
+        ? `Grade ${profile.grade}`
+        : profile.details.education?.split(" - ")[1] || "Not shared",
+    ],
+    ["School", profile.schoolName || profile.details.education?.split(" - ")[0] || "Not shared"],
+    ["Clubs & Activities", clubs.length ? clubs.join(", ") : "Not shared"],
+  ];
+
+  return (
+    <dl className="overflow-hidden rounded-card border border-brand/15 bg-white">
+      {rows.map(([label, value], index) => (
+        <div
+          key={label}
+          className={cn(
+            "grid gap-1 px-3 py-2 text-sm sm:grid-cols-[160px_1fr]",
+            index % 2 === 0 ? "bg-brand-soft/40" : "bg-white"
+          )}
+        >
+          <dt className="font-black uppercase tracking-wide text-brand-dark">{label}</dt>
+          <dd className="text-navy-800">{value}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
+function InterestTable({ profile }: { profile: Profile }) {
+  const map =
+    profile.interestMap && Object.keys(profile.interestMap).length
+      ? profile.interestMap
+      : {
+          General: profile.interests,
+          Music: profile.favoriteMusic,
+          "Clubs & Activities": profile.clubs || uniqueItems([profile.details.occupation]),
+          "Movies / Shows": uniqueItems([profile.details.movies, profile.details.television]),
+          Books: uniqueItems([profile.details.books]),
+        };
+  const entries = Object.entries(map).filter(([, items]) => items.length > 0);
+
+  if (!entries.length) {
+    return <p className="text-sm text-navy-500">No interests shared yet.</p>;
+  }
+
+  return (
+    <div className="overflow-hidden rounded-card border border-brand/15 bg-white">
+      {entries.map(([category, items], index) => (
+        <div
+          key={category}
+          className={cn(
+            "grid gap-2 px-3 py-3 sm:grid-cols-[140px_1fr]",
+            index % 2 === 0 ? "bg-white" : "bg-brand-soft/35"
+          )}
+        >
+          <h3 className="text-xs font-black uppercase tracking-wide text-brand-dark">
+            {category}
+          </h3>
+          <div className="flex flex-wrap gap-2">
+            {items.map((item) => (
+              <Badge key={`${category}-${item}`} variant="info">
+                {item}
+              </Badge>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function NowPlaying({
+  profile,
+  tracks,
+}: {
+  profile: Profile;
+  tracks: MusicTrack[];
+}) {
+  const featured =
+    tracks.find((track) => track.isFeatured) ||
+    tracks[0] ||
+    (profile.nowPlaying
+      ? {
+          id: "now-playing",
+          profileId: profile.id,
+          title: profile.nowPlaying.title,
+          artist: profile.nowPlaying.artist,
+          audioUrl: "",
+          isFeatured: true,
+          position: 0,
+        }
+      : undefined);
+
+  if (!featured) {
+    return (
+      <div className="rounded-card border border-dashed border-brand/30 bg-white p-4 text-sm text-navy-600">
+        Nothing on loop yet. Check back when this profile adds a song.
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-card border border-brand/15 bg-white p-3">
+      <div className="flex gap-3">
+        <div className="grid h-20 w-20 shrink-0 place-items-center overflow-hidden rounded-card border border-surface-border bg-brand-soft text-brand">
+          {"coverUrl" in featured && featured.coverUrl ? (
+            <img
+              src={featured.coverUrl}
+              alt=""
+              className="h-full w-full object-cover"
+              loading="lazy"
+            />
+          ) : (
+            <Music2 className="h-8 w-8" aria-hidden />
+          )}
+        </div>
+        <div className="min-w-0 flex-1">
+          <p className="text-xs font-black uppercase tracking-wide text-brand-dark">
+            Featured track
+          </p>
+          <h3 className="truncate text-lg font-black text-navy-900">{featured.title}</h3>
+          <p className="truncate text-sm text-navy-600">{featured.artist}</p>
+          <div className="mt-3 h-2 overflow-hidden rounded-full bg-navy-100">
+            <div className="h-full w-2/3 bg-[linear-gradient(90deg,#2b5a9e,#1bb6a8)]" />
+          </div>
+          {profile.nowPlaying?.externalUrl ? (
+            <a
+              href={profile.nowPlaying.externalUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-3 inline-flex items-center gap-1 text-xs font-bold"
+            >
+              Open playlist
+              <ExternalLink className="h-3.5 w-3.5" aria-hidden />
+            </a>
+          ) : null}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PhotoSetsGrid({
+  albums,
+  photos,
+}: {
+  albums: Album[];
+  photos: Photo[];
+}) {
+  if (!albums.length && !photos.length) {
+    return (
+      <EmptyState
+        icon={ImagePlus}
+        title="No photo sets yet"
+        description="Photo sets will show here once this profile shares them."
       />
     );
   }
 
   return (
-    <ProfileComments
-      comments={comments}
-      authors={authors}
-      currentUser={currentProfile}
-      isProfileOwner={isOwner}
-      canComment={canComment}
-      onSubmit={onSubmitComment}
-      onDelete={onDeleteComment}
-      onReport={(comment) => onReport("comment", comment.id)}
-      className="mp-profile-module"
-    />
+    <div className="space-y-4">
+      {albums.length ? (
+        <div className="grid gap-3 sm:grid-cols-2">
+          {albums.map((album) => {
+            const albumPhotos = photos.filter((photo) => photo.albumId === album.id);
+            const cover =
+              photos.find((photo) => photo.id === album.coverPhotoId) || albumPhotos[0];
+            return (
+              <article
+                key={album.id}
+                className="overflow-hidden rounded-card border border-brand/15 bg-white shadow-soft"
+              >
+                <div className="h-28 bg-brand-soft">
+                  {cover ? (
+                    <img
+                      src={cover.url}
+                      alt=""
+                      className="h-full w-full object-cover"
+                      loading="lazy"
+                    />
+                  ) : null}
+                </div>
+                <div className="p-3">
+                  <h3 className="font-black text-navy-900">{album.title}</h3>
+                  <p className="text-xs text-navy-500">
+                    {albumPhotos.length} photos - {formatDate(album.createdAt)}
+                  </p>
+                  {album.description ? (
+                    <p className="mt-2 text-sm leading-5 text-navy-700">
+                      {album.description}
+                    </p>
+                  ) : null}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      ) : null}
+      {photos.length ? (
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
+          {photos.slice(0, 8).map((photo) => (
+            <div
+              key={photo.id}
+              className="group overflow-hidden rounded-card border border-surface-border bg-white text-left shadow-soft transition hover:border-brand/50"
+            >
+              <img
+                src={photo.url}
+                alt={photo.caption ?? "Profile photo"}
+                className="aspect-square w-full object-cover"
+                loading="lazy"
+              />
+              <span className="block truncate px-2 py-1 text-xs text-navy-600 group-hover:text-brand">
+                {photo.caption ?? "Photo"}
+              </span>
+            </div>
+          ))}
+        </div>
+      ) : null}
+    </div>
   );
 }
 
-function BadgeCloud({
-  title,
-  items,
-  icon,
+function FeaturedFriendGrid({
+  friends,
+  count,
 }: {
-  title: string;
-  items: string[];
-  icon?: React.ReactNode;
+  friends: Profile[];
+  count: 4 | 8 | 12 | 16;
 }) {
+  const visibleFriends = friends.slice(0, count);
+  if (!visibleFriends.length) {
+    return (
+      <EmptyState
+        title="No featured friends yet"
+        description="When friends are featured, they will appear in this top-friends grid."
+      />
+    );
+  }
+
   return (
-    <section>
-      <h3 className="mb-2 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-navy-700">
-        {icon}
-        {title}
-      </h3>
-      {items.length ? (
-        <div className="flex flex-wrap gap-2">
-          {items.map((item) => (
-            <Badge key={item} variant="info">
-              {item.trim()}
-            </Badge>
-          ))}
-        </div>
-      ) : (
-        <p className="text-sm text-navy-500">Nothing shared yet.</p>
-      )}
-    </section>
+    <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      {visibleFriends.map((friend) => (
+        <Link
+          key={friend.id}
+          href={`/profile/${friend.username}`}
+          className="group rounded-card border border-brand/15 bg-white p-3 text-center shadow-soft transition hover:border-brand/50 hover:bg-brand-soft"
+        >
+          <Avatar
+            name={friend.displayName}
+            src={friend.avatarUrl}
+            size="lg"
+            online={!friend.ghostMode && friend.onlineStatus === "online"}
+            showOnlineIndicator={!friend.ghostMode && friend.showOnlineStatus}
+            className="mx-auto bg-white"
+          />
+          <span className="mt-2 block truncate text-sm font-black text-navy-900 group-hover:text-brand">
+            {friend.displayName}
+          </span>
+          <span className="block truncate text-xs text-navy-500">@{friend.username}</span>
+        </Link>
+      ))}
+    </div>
+  );
+}
+
+function BlogList({ posts }: { posts: BlogPost[] }) {
+  const visiblePosts = posts.slice(0, 3);
+  if (!visiblePosts.length) {
+    return (
+      <EmptyState
+        icon={BookOpenText}
+        title="No blog posts yet"
+        description="When this profile publishes a blog entry, it will be previewed here."
+      />
+    );
+  }
+
+  return (
+    <div className="space-y-3">
+      {visiblePosts.map((post) => (
+        <article
+          key={post.id}
+          className="rounded-card border border-brand/15 bg-white p-3 shadow-soft"
+        >
+          <div className="flex flex-wrap items-center gap-2">
+            <Link
+              href={`/blog/${post.id}`}
+              className="text-base font-black text-navy-900 hover:text-brand"
+            >
+              {post.title}
+            </Link>
+            {post.mood ? <Badge variant="info">{post.mood}</Badge> : null}
+          </div>
+          <p className="mt-1 text-xs text-navy-500">Posted {formatDate(post.createdAt)}</p>
+          <p className="mt-2 line-clamp-3 text-sm leading-6 text-navy-700">
+            {post.body}
+          </p>
+          <div className="mt-3 flex flex-wrap items-center gap-3 text-xs text-navy-500">
+            {post.currentlyListening ? (
+              <span className="inline-flex items-center gap-1">
+                <Music2 className="h-3.5 w-3.5 text-brand" aria-hidden />
+                {post.currentlyListening}
+              </span>
+            ) : null}
+            <span>{post.commentCount} comments</span>
+          </div>
+        </article>
+      ))}
+    </div>
   );
 }
 

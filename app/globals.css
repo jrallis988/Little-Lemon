@@ -12,6 +12,7 @@
   --mp-border: #d3dce8;
   --font-display: var(--font-display), "Trebuchet MS", sans-serif;
   --font-body: var(--font-body), "Segoe UI", sans-serif;
+  --font-script: var(--font-script), "Brush Script MT", cursive;
   --font-mono: ui-monospace, "Cascadia Code", monospace;
 }
 

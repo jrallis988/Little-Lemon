@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Download, KeyRound, LogOut, Shield, Trash2 } from "lucide-react";
+import { Download, EyeOff, KeyRound, LogOut, School, Shield, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { AuthenticatedShell } from "@/components/auth/AuthenticatedShell";
@@ -296,12 +296,33 @@ function SettingsContent() {
                     setPrivacy((current) => ({
                       ...current,
                       showOnlineStatus: event.target.checked,
+                      ghostMode: event.target.checked ? false : current.ghostMode,
                     }))
                   }
                   className="h-4 w-4 accent-brand"
                 />
                 Show online status
               </label>
+              <Toggle
+                label="Ghost Mode - hide online and presence"
+                checked={privacy.ghostMode}
+                onChange={(value) =>
+                  setPrivacy((current) => ({
+                    ...current,
+                    ghostMode: value,
+                    showOnlineStatus: value ? false : current.showOnlineStatus,
+                  }))
+                }
+                icon={<EyeOff className="h-4 w-4 text-brand" aria-hidden />}
+              />
+              <Toggle
+                label="School-only boundary for discovery"
+                checked={privacy.schoolOnlyBoundary}
+                onChange={(value) =>
+                  setPrivacy((current) => ({ ...current, schoolOnlyBoundary: value }))
+                }
+                icon={<School className="h-4 w-4 text-brand" aria-hidden />}
+              />
               <Button onClick={savePrivacy}>
                 <Shield className="h-4 w-4" aria-hidden />
                 Save privacy
@@ -444,6 +465,8 @@ function profileToPrivacy(profile?: Profile | null): {
   whoCanComment: Visibility;
   whoCanViewPhotos: Visibility;
   showOnlineStatus: boolean;
+  ghostMode: boolean;
+  schoolOnlyBoundary: boolean;
 } {
   return {
     visibility: profile?.visibility ?? "public",
@@ -452,6 +475,8 @@ function profileToPrivacy(profile?: Profile | null): {
     whoCanComment: profile?.whoCanComment ?? "friends",
     whoCanViewPhotos: profile?.whoCanViewPhotos ?? "public",
     showOnlineStatus: profile?.showOnlineStatus ?? true,
+    ghostMode: profile?.ghostMode ?? false,
+    schoolOnlyBoundary: profile?.schoolOnlyBoundary ?? false,
   };
 }
 
@@ -459,14 +484,19 @@ function Toggle({
   label,
   checked,
   onChange,
+  icon,
 }: {
   label: string;
   checked: boolean;
   onChange: (value: boolean) => void;
+  icon?: React.ReactNode;
 }) {
   return (
     <label className="flex items-center justify-between gap-3 rounded-card border border-surface-border bg-white p-3 text-sm font-semibold text-navy-800">
-      <span>{label}</span>
+      <span className="inline-flex items-center gap-2">
+        {icon}
+        {label}
+      </span>
       <input
         type="checkbox"
         checked={checked}

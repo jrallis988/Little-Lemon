@@ -5,7 +5,6 @@ import {
   BookOpenText,
   Brush,
   MessageSquare,
-  Music2,
   ShieldCheck,
   Users,
 } from "lucide-react";
@@ -24,29 +23,29 @@ const features: Array<{
   icon: LucideIcon;
 }> = [
   {
-    title: "Music on your page",
-    description: "Pin a song, show what you’re looping, and let friends press play.",
-    icon: Music2,
+    title: "Loop for real moments",
+    description: "Share what is happening now with classmates, friends, and groups.",
+    icon: MessageSquare,
   },
   {
-    title: "Themes that slap",
-    description: "Colors, fonts, stickers, layouts — make it look like you, not a template.",
-    icon: Brush,
+    title: "School verification",
+    description: "Verified student onboarding helps keep Vibe centered on teen peers.",
+    icon: ShieldCheck,
   },
   {
-    title: "Real posts",
-    description: "Blog when a caption isn’t enough. Mood + currently listening included.",
+    title: "Photo sets",
+    description: "Collect after-school photos into sets that feel like a real page.",
     icon: BookOpenText,
   },
   {
-    title: "Featured friends",
-    description: "Show the people who actually matter instead of a giant follower count.",
+    title: "Groups that fit school life",
+    description: "Clubs, teams, hangouts, and interests can stay close to your circle.",
     icon: Users,
   },
   {
-    title: "DMs with people you know",
-    description: "Message friends from their page. Built for your circle, not random spam.",
-    icon: MessageSquare,
+    title: "Profiles with personality",
+    description: "Music, blogs, interests, friends, themes, and the details that feel like you.",
+    icon: Brush,
   },
 ];
 
@@ -154,11 +153,11 @@ export default function LandingPage() {
       <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col px-4 py-5 sm:px-6 lg:px-8">
         <header className="animate-fade-in flex items-center justify-between gap-3">
           <Link href="/" className="inline-flex items-center gap-3 text-white hover:no-underline">
-            <span className="grid h-12 w-12 place-items-center rounded-card border border-white/30 bg-white text-lg font-black text-brand shadow-lg">
+              <span className="grid h-12 w-12 place-items-center rounded-full border border-white/30 bg-white text-2xl text-brand shadow-lg [font-family:var(--font-script)]">
               V
             </span>
             <span>
-              <span className="block font-display text-3xl font-black leading-none tracking-tight">
+              <span className="block text-4xl leading-none [font-family:var(--font-script)]">
                 {APP_NAME}
               </span>
               <span className="text-xs font-bold uppercase tracking-[0.22em] text-accent-soft">
@@ -204,12 +203,12 @@ export default function LandingPage() {
               </Badge>
             </div>
             <h1 className="mt-5 max-w-3xl font-display text-5xl font-black leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl">
-              Your profile should feel like your vibe.
+              Real Friends. Real Moments. Real You.
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-7 text-blue-50 sm:text-lg">
-              {APP_NAME} is where teens build a page that actually feels like them — music,
-              friends, photos, themes, and the weird little details that don’t fit in a
-              15-second clip.
+              {APP_NAME} is a verified student ecosystem for ages {TEEN_MIN_AGE}-
+              {TEEN_MAX_AGE}: Loop updates, school verification, photo sets, groups,
+              music, friends, and profile modules that feel like you.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Link
@@ -227,11 +226,11 @@ export default function LandingPage() {
             </div>
             <p className="mt-4 flex items-start gap-2 text-sm text-blue-100">
               <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden />
-              Built for teens. Private controls, block/report tools, and no adult profiles in
-              the mix.
+              Built for teens with school peer boundaries, private controls, block/report
+              tools, and no adult profiles in the mix.
             </p>
             <div className="mt-8 grid max-w-lg grid-cols-3 gap-2 text-xs text-blue-100">
-              {["Themes", "Friends", "Music"].map((label) => (
+              {["Loop", "Photo Sets", "Groups"].map((label) => (
                 <div
                   key={label}
                   className="animate-pulse-soft rounded-card border border-white/15 bg-white/10 px-3 py-2 text-center font-bold uppercase tracking-wide"
@@ -254,8 +253,8 @@ export default function LandingPage() {
               Custom pages. Modern teen energy.
             </h2>
             <p className="mt-2 max-w-2xl text-sm text-blue-100">
-              Same freedom as classic personal pages — updated so it feels natural for
-              middle school and high school life right now.
+              Classic personal-page modules with modern teen safety: verified school peers,
+              collapsible cards, profile comments, playlists, and school-life groups.
             </p>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">

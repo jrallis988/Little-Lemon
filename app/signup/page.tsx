@@ -117,8 +117,8 @@ export default function SignupPage() {
                 Create your vibe
               </CardTitle>
               <p className="mt-1 text-xs text-navy-100">
-                {APP_NAME} is for teens ages {TEEN_MIN_AGE}–{TEEN_MAX_AGE}. Start with the
-                basics, then customize everything.
+                {APP_NAME} is a verified student ecosystem for teens ages {TEEN_MIN_AGE}-
+                {TEEN_MAX_AGE}. Start your profile, then verify your school peers.
               </p>
             </CardHeader>
             <CardContent>
@@ -189,7 +189,7 @@ export default function SignupPage() {
                   />
                   <span>
                     I confirm I am between {TEEN_MIN_AGE} and {TEEN_MAX_AGE} years old and
-                    want a teen-only profile on {APP_NAME}.
+                    want a student-only profile with verified school peers on {APP_NAME}.
                   </span>
                 </label>
                 {error ? (
@@ -202,7 +202,8 @@ export default function SignupPage() {
                 </Button>
                 <p className="flex items-start gap-2 text-xs text-navy-600">
                   <ShieldCheck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-accent-dark" aria-hidden />
-                  Grown-ups can help you sign up, but profiles on {APP_NAME} are for teens.
+                  After signup, onboarding verifies your school loop before you enter the
+                  teen peer community.
                 </p>
               </form>
               <p className="mt-5 text-center text-sm text-navy-600">

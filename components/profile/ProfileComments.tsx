@@ -23,6 +23,13 @@ export interface ProfileCommentsProps {
   onDelete?: (comment: ProfileComment) => void;
   onReport?: (comment: ProfileComment) => void;
   onLoadMore?: () => void;
+  title?: string;
+  composerLabel?: string;
+  composerPlaceholder?: string;
+  submitLabel?: string;
+  emptyTitle?: string;
+  emptyDescription?: string;
+  showHeader?: boolean;
   className?: string;
 }
 
@@ -38,6 +45,13 @@ export function ProfileComments({
   onDelete,
   onReport,
   onLoadMore,
+  title = "Profile Comments",
+  composerLabel = "Leave a comment",
+  composerPlaceholder = "Say something neighborly...",
+  submitLabel = "Post Comment",
+  emptyTitle = "No comments yet",
+  emptyDescription = "Be the first to leave a profile comment.",
+  showHeader = true,
   className,
 }: ProfileCommentsProps) {
   const [body, setBody] = React.useState("");
@@ -58,9 +72,11 @@ export function ProfileComments({
 
   return (
     <Card className={className}>
-      <CardHeader>
-        <CardTitle>Profile Comments</CardTitle>
-      </CardHeader>
+      {showHeader ? (
+        <CardHeader>
+          <CardTitle>{title}</CardTitle>
+        </CardHeader>
+      ) : null}
       <CardContent className="space-y-4">
         {currentUser && canComment && onSubmit ? (
           <form onSubmit={submit} className="rounded-card border border-surface-border bg-surface-muted p-3">
@@ -72,17 +88,17 @@ export function ProfileComments({
               />
               <div className="flex-1 space-y-2">
                 <Textarea
-                  label="Leave a comment"
+                  label={composerLabel}
                   value={body}
                   onChange={(event) => setBody(event.target.value)}
                   maxLength={500}
                   rows={3}
-                  placeholder="Say something neighborly..."
+                  placeholder={composerPlaceholder}
                 />
                 <div className="flex items-center justify-between gap-3">
                   <span className="text-xs text-navy-500">{body.length}/500</span>
                   <Button type="submit" size="sm" isLoading={submitting}>
-                    Post Comment
+                    {submitLabel}
                   </Button>
                 </div>
               </div>
@@ -157,8 +173,8 @@ export function ProfileComments({
         ) : (
           <EmptyState
             icon={MessageSquare}
-            title="No comments yet"
-            description="Be the first to leave a profile comment."
+            title={emptyTitle}
+            description={emptyDescription}
           />
         )}
 

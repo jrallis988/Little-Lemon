@@ -41,6 +41,7 @@ const config: Config = {
       },
       fontFamily: {
         display: ["var(--font-display)", "Trebuchet MS", "sans-serif"],
+        script: ["var(--font-script)", "Pacifico", "cursive"],
         sans: ["var(--font-body)", "Segoe UI", "sans-serif"],
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
