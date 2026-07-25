@@ -73,7 +73,7 @@ export function AppHeader({
 
   return (
     <header className="sticky top-0 z-40 border-b border-navy-950 bg-navy-900 text-white shadow-card">
-      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-3 sm:px-4">
+      <div className="mx-auto flex min-h-14 max-w-6xl items-center justify-between gap-3 px-3 py-2 sm:px-4">
         <Logo />
 
         <nav className="hidden items-stretch self-stretch md:flex" aria-label="Main">

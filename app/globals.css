@@ -6,12 +6,13 @@
   --mp-navy: #0c1624;
   --mp-brand: #2b5a9e;
   --mp-brand-light: #3d73c0;
+  --mp-accent: #1bb6a8;
   --mp-surface: #ffffff;
-  --mp-muted: #f3f5f8;
-  --mp-border: #d8dee8;
-  --font-display: "Trebuchet MS", "Segoe UI", sans-serif;
-  --font-body: Verdana, Geneva, Tahoma, sans-serif;
-  --font-mono: "Courier New", Courier, monospace;
+  --mp-muted: #eef2f7;
+  --mp-border: #d3dce8;
+  --font-display: var(--font-display), "Trebuchet MS", sans-serif;
+  --font-body: var(--font-body), "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", monospace;
 }
 
 @layer base {
@@ -36,8 +37,8 @@
   body {
     @apply bg-surface-muted text-navy-900 antialiased;
     font-family: var(--font-body);
-    font-size: 14px;
-    line-height: 1.45;
+    font-size: 15px;
+    line-height: 1.5;
   }
 
   h1,
@@ -45,7 +46,7 @@
   h3,
   h4 {
     font-family: var(--font-display);
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
   }
 
   a {
@@ -58,7 +59,7 @@
   }
 
   ::selection {
-    background: #cfe0f5;
+    background: #b8e9e3;
   }
 }
 
@@ -77,13 +78,13 @@
     background-repeat: var(--mp-bg-repeat, no-repeat);
     background-position: var(--mp-bg-position, center top);
     color: var(--mp-text, #15253a);
-    font-family: var(--mp-body-font, Verdana, Geneva, sans-serif);
+    font-family: var(--mp-body-font, var(--font-body));
   }
 
   .mp-profile-canvas h1,
   .mp-profile-canvas h2,
   .mp-profile-canvas h3 {
-    font-family: var(--mp-heading-font, Georgia, serif);
+    font-family: var(--mp-heading-font, var(--font-display));
     color: var(--mp-primary, #1f4d8f);
   }
 
@@ -101,5 +102,9 @@
       transparent
     );
     @apply rounded-card p-3 shadow-soft;
+  }
+
+  .teen-chip {
+    @apply inline-flex items-center rounded-btn border border-brand/20 bg-brand-soft px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-brand-dark;
   }
 }

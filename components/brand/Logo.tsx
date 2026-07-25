@@ -22,8 +22,13 @@ export function Logo({ href = "/", className, markClassName }: LogoProps) {
       >
         V
       </span>
-      <span className="font-display text-xl font-black tracking-tight text-white">
-        {APP_NAME}
+      <span className="leading-none">
+        <span className="block font-display text-xl font-black tracking-tight text-white">
+          {APP_NAME}
+        </span>
+        <span className="mt-0.5 hidden text-[10px] font-bold uppercase tracking-[0.18em] text-navy-200 sm:block">
+          Ages 13–17
+        </span>
       </span>
     </span>
   );

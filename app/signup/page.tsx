@@ -3,14 +3,21 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Sparkles } from "lucide-react";
+import { ArrowLeft, ShieldCheck, Sparkles } from "lucide-react";
 
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import { mockApi } from "@/lib/mock/store";
-import { APP_NAME, isValidUsername, slugifyUsername } from "@/lib/utils";
+import {
+  APP_NAME,
+  TEEN_MAX_AGE,
+  TEEN_MIN_AGE,
+  isValidUsername,
+  slugifyUsername,
+  teenAgeError,
+} from "@/lib/utils";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -19,6 +26,8 @@ export default function SignupPage() {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [displayName, setDisplayName] = useState("");
+  const [birthdate, setBirthdate] = useState("");
+  const [ageConfirmed, setAgeConfirmed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -37,11 +46,21 @@ export default function SignupPage() {
     return "";
   }, [submitted, username]);
 
+  const birthdateError = useMemo(() => {
+    if (!submitted && !birthdate) return "";
+    return teenAgeError(birthdate);
+  }, [birthdate, submitted]);
+
   const validate = () => {
     const messages: string[] = [];
     if (!/^\S+@\S+\.\S+$/.test(email.trim())) messages.push("Enter a valid email.");
     if (password.length < 8) messages.push("Password must be at least 8 characters.");
     if (!displayName.trim()) messages.push("Display name is required.");
+    const ageMessage = teenAgeError(birthdate);
+    if (ageMessage) messages.push(ageMessage);
+    if (!ageConfirmed) {
+      messages.push(`Confirm you are between ${TEEN_MIN_AGE} and ${TEEN_MAX_AGE}.`);
+    }
     if (!username) {
       messages.push("Username is required.");
     } else if (!isValidUsername(username)) {
@@ -67,6 +86,10 @@ export default function SignupPage() {
         username,
         displayName: displayName.trim(),
       });
+      const userId = mockApi.getSessionUserId();
+      if (userId) {
+        mockApi.updateProfile(userId, { birthdate, showAge: true });
+      }
       router.push("/onboarding");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unable to create your profile.");
@@ -77,7 +100,7 @@ export default function SignupPage() {
 
   return (
     <main className="min-h-screen bg-surface-muted text-navy-900">
-      <div className="min-h-screen bg-[radial-gradient(circle_at_85%_8%,rgba(61,115,192,0.22),transparent_32%),linear-gradient(180deg,#f3f5f8_0%,#e9eef6_100%)] px-4 py-8">
+      <div className="min-h-screen bg-[radial-gradient(circle_at_85%_8%,rgba(27,182,168,0.18),transparent_32%),linear-gradient(180deg,#eef2f7_0%,#e4ebf5_100%)] px-4 py-8">
         <div className="mx-auto max-w-lg animate-slide-up">
           <Link
             href="/"
@@ -90,11 +113,12 @@ export default function SignupPage() {
           <Card className="overflow-hidden">
             <CardHeader className="bg-navy-900 text-white">
               <CardTitle className="flex items-center gap-2 text-white">
-                <Sparkles className="h-4 w-4" aria-hidden />
-                Create your profile
+                <Sparkles className="h-4 w-4 text-accent" aria-hidden />
+                Create your vibe
               </CardTitle>
               <p className="mt-1 text-xs text-navy-100">
-                Start with the basics. You can tune the whole page next.
+                {APP_NAME} is for teens ages {TEEN_MIN_AGE}–{TEEN_MAX_AGE}. Start with the
+                basics, then customize everything.
               </p>
             </CardHeader>
             <CardContent>
@@ -120,6 +144,15 @@ export default function SignupPage() {
                     required
                   />
                 </div>
+                <Input
+                  label="Birthday"
+                  type="date"
+                  value={birthdate}
+                  onChange={(event) => setBirthdate(event.target.value)}
+                  error={birthdateError}
+                  helperText={`You must be ${TEEN_MIN_AGE}–${TEEN_MAX_AGE} to join.`}
+                  required
+                />
                 <Input
                   label="Email"
                   type="email"
@@ -147,6 +180,18 @@ export default function SignupPage() {
                   helperText="Use at least 8 characters. Demo accounts use demo1234."
                   required
                 />
+                <label className="flex items-start gap-3 rounded-card border border-surface-border bg-surface-muted px-3 py-3 text-sm text-navy-800">
+                  <input
+                    type="checkbox"
+                    className="mt-1 h-4 w-4 accent-brand"
+                    checked={ageConfirmed}
+                    onChange={(event) => setAgeConfirmed(event.target.checked)}
+                  />
+                  <span>
+                    I confirm I am between {TEEN_MIN_AGE} and {TEEN_MAX_AGE} years old and
+                    want a teen-only profile on {APP_NAME}.
+                  </span>
+                </label>
                 {error ? (
                   <p className="rounded-card border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
                     {error}
@@ -155,6 +200,10 @@ export default function SignupPage() {
                 <Button type="submit" className="w-full" isLoading={submitting}>
                   Create Your Profile
                 </Button>
+                <p className="flex items-start gap-2 text-xs text-navy-600">
+                  <ShieldCheck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-accent-dark" aria-hidden />
+                  Grown-ups can help you sign up, but profiles on {APP_NAME} are for teens.
+                </p>
               </form>
               <p className="mt-5 text-center text-sm text-navy-600">
                 Already have a profile?{" "}

@@ -153,9 +153,24 @@ function SettingsContent() {
       <div>
         <h1 className="text-2xl font-black text-navy-900">Settings</h1>
         <p className="text-sm text-navy-600">
-          Manage your account, privacy, notifications, safety, and data.
+          Manage your teen account, privacy, notifications, safety, and data. Vibe is
+          for ages 13–17.
         </p>
       </div>
+
+      <Card className="border-accent/30 bg-accent-soft/40">
+        <CardContent className="flex gap-3 py-4">
+          <Shield className="mt-0.5 h-5 w-5 shrink-0 text-accent-dark" aria-hidden />
+          <div className="text-sm text-navy-800">
+            <p className="font-bold text-navy-900">Teen-only space</p>
+            <p className="mt-1 leading-6">
+              Keep location general, use friends-only messaging if you want, and report
+              anything that feels weird. Parents/guardians can help with account
+              decisions, but profiles here are for teens.
+            </p>
+          </div>
+        </CardContent>
+      </Card>
 
       {notice ? (
         <div className="rounded-card border border-brand/30 bg-brand-soft px-4 py-3 text-sm font-semibold text-brand-dark">

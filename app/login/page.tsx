@@ -83,7 +83,8 @@ export default function LoginPage() {
                 Sign in to {APP_NAME}
               </CardTitle>
               <p className="mt-1 text-xs text-navy-100">
-                Open your profile, messages, friends, and feed.
+                Welcome back. {APP_NAME} is for teens ages 13–17 — jump into your page,
+                friends, and feed.
               </p>
             </CardHeader>
             <CardContent>

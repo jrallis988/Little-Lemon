@@ -1,6 +1,6 @@
 # Vibe
 
-A personality-driven social platform where every profile is a customizable place — themes, music, photos, blogs, featured friends, and status updates — inspired by the expressive spirit of early social networks, built as an original modern product.
+A personality-driven social platform **for teens ages 13–17**, where every profile is a customizable page — themes, music, photos, blogs, featured friends, and status updates. Inspired by the expressive spirit of early personal pages, designed so teenagers today would actually want to use it.
 
 Platform name: **Vibe** (configurable via `NEXT_PUBLIC_APP_NAME`).
 

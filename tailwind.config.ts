@@ -28,20 +28,25 @@ const config: Config = {
           dark: "#1a3a6b",
           soft: "#e8f0fa",
         },
+        accent: {
+          DEFAULT: "#1bb6a8",
+          soft: "#d8f5f1",
+          dark: "#0f8a7f",
+        },
         surface: {
           DEFAULT: "#ffffff",
-          muted: "#f3f5f8",
-          border: "#d8dee8",
+          muted: "#eef2f7",
+          border: "#d3dce8",
         },
       },
       fontFamily: {
-        display: ["var(--font-display)", "Georgia", "serif"],
-        sans: ["var(--font-body)", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "Trebuchet MS", "sans-serif"],
+        sans: ["var(--font-body)", "Segoe UI", "sans-serif"],
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       borderRadius: {
-        card: "4px",
-        btn: "3px",
+        card: "8px",
+        btn: "6px",
       },
       boxShadow: {
         soft: "0 1px 2px rgba(15, 30, 55, 0.06)",

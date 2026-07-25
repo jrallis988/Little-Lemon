@@ -16,7 +16,7 @@ import { createThemeFromPreset, THEME_PRESETS } from "@/lib/themes";
 import type { ProfileThemePreset } from "@/lib/types";
 import { cn, isValidUsername, slugifyUsername } from "@/lib/utils";
 
-const steps = ["Identity", "Photo & place", "Interests", "Theme"];
+const steps = ["Identity", "Your page", "Interests", "Theme"];
 
 function splitList(value: string) {
   return value
@@ -128,9 +128,10 @@ function OnboardingContent() {
       <form onSubmit={finish} className="mx-auto max-w-3xl animate-slide-up">
         <Card className="overflow-hidden">
           <CardHeader className="bg-navy-900 text-white">
-            <CardTitle className="text-white">Set up your place</CardTitle>
+            <CardTitle className="text-white">Set up your vibe</CardTitle>
             <p className="mt-1 text-xs text-navy-100">
-              A few details turn an account into a page that feels like you.
+              A few details turn an account into a page that feels like you — school
+              life, playlists, and all.
             </p>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -194,10 +195,11 @@ function OnboardingContent() {
                     helperText="Paste an image URL, or keep the generated demo avatar."
                   />
                   <Input
-                    label="Location"
+                    label="City / area"
                     value={location}
                     onChange={(event) => setLocation(event.target.value)}
                     placeholder="City, State"
+                    helperText="Keep it general if you want — city is enough."
                   />
                   <Textarea
                     label="Bio"
@@ -205,7 +207,8 @@ function OnboardingContent() {
                     onChange={(event) => setBio(event.target.value)}
                     rows={4}
                     maxLength={180}
-                    helperText={`${bio.length}/180 characters`}
+                    helperText={`${bio.length}/180 — what should people know first?`}
+                    placeholder="Sophomore · skate clips · always redoing my theme"
                   />
                 </div>
               </section>
@@ -218,14 +221,14 @@ function OnboardingContent() {
                   value={interests}
                   onChange={(event) => setInterests(event.target.value)}
                   rows={3}
-                  helperText="Comma-separated: zines, film photography, coffee"
+                  helperText="Comma-separated: skating, robotics, soccer, fanfic, photography"
                 />
                 <Textarea
                   label="Favorite music"
                   value={favoriteMusic}
                   onChange={(event) => setFavoriteMusic(event.target.value)}
                   rows={3}
-                  helperText="Comma-separated: dream pop, local bands, lo-fi"
+                  helperText="Comma-separated genres or playlist vibes: hyperpop, bedroom pop, marching band"
                 />
               </section>
             ) : null}

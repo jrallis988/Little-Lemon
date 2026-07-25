@@ -39,11 +39,33 @@ export function formatDateTime(iso: string): string {
 export function getAge(birthdate?: string): number | null {
   if (!birthdate) return null;
   const birth = new Date(birthdate);
+  if (Number.isNaN(birth.getTime())) return null;
   const today = new Date();
   let age = today.getFullYear() - birth.getFullYear();
   const m = today.getMonth() - birth.getMonth();
   if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age -= 1;
   return age;
+}
+
+/** Vibe is for teens ages 13–17. */
+export const TEEN_MIN_AGE = 13;
+export const TEEN_MAX_AGE = 17;
+
+export function isTeenAge(age: number | null): boolean {
+  return age !== null && age >= TEEN_MIN_AGE && age <= TEEN_MAX_AGE;
+}
+
+export function teenAgeError(birthdate?: string): string {
+  const age = getAge(birthdate);
+  if (!birthdate) return "Birthday is required.";
+  if (age === null) return "Enter a valid birthday.";
+  if (age < TEEN_MIN_AGE) {
+    return `${APP_NAME} is for ages ${TEEN_MIN_AGE}–${TEEN_MAX_AGE}. You must be at least ${TEEN_MIN_AGE}.`;
+  }
+  if (age > TEEN_MAX_AGE) {
+    return `${APP_NAME} is built for teens ages ${TEEN_MIN_AGE}–${TEEN_MAX_AGE}.`;
+  }
+  return "";
 }
 
 export function isValidUsername(username: string): boolean {

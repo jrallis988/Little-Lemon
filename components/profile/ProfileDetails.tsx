@@ -24,12 +24,12 @@ const textFields: Array<{
   { key: "generalInterests", label: "General Interests", long: true },
   { key: "music", label: "Music" },
   { key: "movies", label: "Movies" },
-  { key: "television", label: "Television" },
+  { key: "television", label: "Shows" },
   { key: "books", label: "Books" },
-  { key: "heroes", label: "Heroes" },
-  { key: "occupation", label: "Occupation" },
-  { key: "education", label: "Education" },
-  { key: "relationshipStatus", label: "Relationship" },
+  { key: "heroes", label: "People I Look Up To" },
+  { key: "occupation", label: "Clubs & Activities" },
+  { key: "education", label: "School" },
+  { key: "relationshipStatus", label: "Status" },
 ];
 
 export function ProfileDetails({
