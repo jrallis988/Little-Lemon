@@ -10,7 +10,7 @@ export interface LogoProps {
   markClassName?: string;
 }
 
-export function Logo({ href = "/", className, markClassName }: LogoProps) {
+export function Logo({ href = "/home", className, markClassName }: LogoProps) {
   const content = (
     <span className={cn("inline-flex items-center gap-2", className)}>
       <span

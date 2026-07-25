@@ -326,6 +326,93 @@ create index if not exists blocks_blocker_idx on public.blocks (blocker_id);
 create index if not exists reports_target_idx on public.reports (target_type, target_id);
 create index if not exists reactions_target_idx on public.reactions (target_type, target_id);
 
+-- Schools, live vibes (Loop), and groups/circles
+create table if not exists public.schools (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  city text not null,
+  state text not null,
+  created_at timestamptz not null default now()
+);
+
+create table if not exists public.student_verifications (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null unique references public.users(id) on delete cascade,
+  school_id uuid not null references public.schools(id),
+  grade text not null,
+  status text not null default 'pending'
+    check (status in ('pending', 'verified')),
+  method text not null
+    check (method in ('school_email', 'code', 'demo')),
+  verified_at timestamptz,
+  created_at timestamptz not null default now()
+);
+
+create table if not exists public.vibe_moments (
+  id uuid primary key default gen_random_uuid(),
+  host_id uuid not null references public.users(id) on delete cascade,
+  title text not null,
+  category text not null,
+  status text not null default 'live'
+    check (status in ('live', 'starting_soon', 'ended')),
+  cover_url text,
+  location_name text not null,
+  distance_label text,
+  school_id uuid references public.schools(id),
+  starts_at timestamptz not null,
+  ends_at timestamptz,
+  description text,
+  visibility text not null default 'school'
+    check (visibility in ('school', 'friends', 'public')),
+  created_at timestamptz not null default now()
+);
+
+create table if not exists public.vibe_attendees (
+  vibe_id uuid not null references public.vibe_moments(id) on delete cascade,
+  user_id uuid not null references public.users(id) on delete cascade,
+  is_here_now boolean not null default false,
+  joined_at timestamptz not null default now(),
+  primary key (vibe_id, user_id)
+);
+
+create table if not exists public.circle_groups (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  description text not null default '',
+  cover_url text,
+  school_id uuid references public.schools(id),
+  owner_id uuid not null references public.users(id) on delete cascade,
+  visibility text not null default 'school'
+    check (visibility in ('public', 'school', 'private')),
+  kind text not null default 'hangout'
+    check (kind in ('club', 'team', 'hangout', 'interest')),
+  created_at timestamptz not null default now()
+);
+
+create table if not exists public.circle_group_members (
+  group_id uuid not null references public.circle_groups(id) on delete cascade,
+  user_id uuid not null references public.users(id) on delete cascade,
+  joined_at timestamptz not null default now(),
+  primary key (group_id, user_id)
+);
+
+create table if not exists public.photo_sets (
+  id uuid primary key default gen_random_uuid(),
+  profile_id uuid not null references public.profiles(id) on delete cascade,
+  title text not null,
+  mood text,
+  caption text,
+  photo_urls text[] not null default '{}',
+  visibility text not null default 'friends'
+    check (visibility in ('public', 'friends', 'private')),
+  created_at timestamptz not null default now()
+);
+
+create index if not exists vibe_moments_status_starts_idx on public.vibe_moments (status, starts_at desc);
+create index if not exists vibe_moments_school_idx on public.vibe_moments (school_id);
+create index if not exists circle_groups_school_idx on public.circle_groups (school_id);
+create index if not exists photo_sets_profile_idx on public.photo_sets (profile_id, created_at desc);
+
 -- RLS recommendations:
 -- alter table public.<table> enable row level security;
 -- users: users can select/update their own row; service role handles moderation.

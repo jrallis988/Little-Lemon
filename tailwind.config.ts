@@ -33,6 +33,12 @@ const config: Config = {
           soft: "#d8f5f1",
           dark: "#0f8a7f",
         },
+        flame: {
+          DEFAULT: "#FF5C00",
+          light: "#FF6A1A",
+          soft: "#FFE4D4",
+          dark: "#C24700",
+        },
         surface: {
           DEFAULT: "#ffffff",
           muted: "#eef2f7",
@@ -46,8 +52,8 @@ const config: Config = {
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       borderRadius: {
-        card: "8px",
-        btn: "6px",
+        card: "16px",
+        btn: "9999px",
       },
       boxShadow: {
         soft: "0 1px 2px rgba(15, 30, 55, 0.06)",

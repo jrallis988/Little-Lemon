@@ -1,16 +1,34 @@
 # Vibe
 
-A personality-driven social platform **for teens ages 13–17**, where every profile is a customizable page — themes, music, photos, blogs, featured friends, and status updates. Inspired by the expressive spirit of early personal pages, designed so teenagers today would actually want to use it.
+**Real Friends. Real Moments. Real You.**
 
-Platform name: **Vibe** (configurable via `NEXT_PUBLIC_APP_NAME`).
+Vibe is a social utility and time-capsule platform for **teenagers ages 13–17**. Inspired by personality-driven classic social pages, it focuses on authentic peer connection inside a verified student ecosystem — without algorithmic bloat or cross-demographic noise.
+
+## Core philosophy
+
+- School-connected moments over vanity metrics  
+- Verified teen peers (closed-loop)  
+- Customizable personal pages + real-time “vibes”  
+- Safety and privacy designed for student well-being  
+
+## Product architecture
+
+| Pillar | What it does |
+|--------|----------------|
+| **Verified Student Onboarding** | School picker, grade, school email / invite code / demo verify |
+| **The Loop** | Discovery feed filtered by **Now · School · Nearby · Following** |
+| **Start a Vibe** | Share what you’re up to (skating, studying, lunch, gaming…) |
+| **Live vibe rooms** | Who’s here, updates, I’m here / Invite |
+| **Photo sets & memory strips** | Multi-photo stories with captions/mood |
+| **Groups & Circles** | Clubs, teams, hangouts, interest hubs |
+| **Events & Music** | School-adjacent events + trending playlists |
+| **Personality profiles** | About me, bulletin board, featured friends, now playing, interests, themes |
+| **Safety** | Ghost Mode, school-only boundary, block/report, teen age gate (13–17) |
 
 ## Stack
 
-- Next.js (App Router)
-- React + TypeScript
-- Tailwind CSS
-- Lucide icons
-- Supabase-ready auth/storage/database (with local mock-data fallback)
+- Next.js App Router · React · TypeScript · Tailwind CSS  
+- Lucide icons · Supabase-ready schema + mock-data fallback  
 
 ## Quick start
 
@@ -20,98 +38,54 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+### Demo login
 
-### Demo login (mock mode)
+| Field | Value |
+|-------|--------|
+| Email | `jordan@example.com` |
+| Password | `demo1234` |
 
-Without Supabase credentials, the app runs entirely on local mock data:
+Invite code during onboarding: `VIBE2026`
 
-| Field    | Value               |
-|----------|---------------------|
-| Email    | `jordan@example.com` |
-| Password | `demo1234`          |
+## Key routes
 
-Any seeded demo user email works with password `demo1234`. New signups are stored in `localStorage`.
-
-## Environment
-
-Copy `.env.example` to `.env.local`:
-
-```env
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-NEXT_PUBLIC_USE_MOCK_DATA=true
-NEXT_PUBLIC_APP_NAME=Vibe
-NEXT_PUBLIC_APP_URL=http://localhost:3000
-```
-
-- Leave Supabase unset (or keep `NEXT_PUBLIC_USE_MOCK_DATA=true`) to use the mock store.
-- Set real Supabase values and `NEXT_PUBLIC_USE_MOCK_DATA=false` to connect a project.
-- Apply `supabase/schema.sql` in the Supabase SQL editor (includes RLS recommendations).
-
-## Scripts
-
-```bash
-npm run dev        # development server
-npm run build      # production build
-npm run start      # serve production build
-npm run lint       # ESLint
-npm run typecheck  # TypeScript
-```
-
-## Routes
-
-| Path | Description |
-|------|-------------|
+| Path | Purpose |
+|------|---------|
 | `/` | Public landing |
-| `/login`, `/signup`, `/login/reset` | Auth |
-| `/onboarding` | First-time profile setup |
-| `/home` | Activity dashboard |
-| `/profile/[username]` | Customizable profile page |
-| `/profile/edit` | Profile + theme editor |
-| `/friends` | Requests, list, featured friends |
-| `/messages`, `/messages/[id]` | Private messaging |
-| `/browse`, `/search` | Discovery |
-| `/notifications` | Alerts |
-| `/blog`, `/blog/[postId]` | Blog |
-| `/settings` | Account, privacy, safety |
+| `/signup`, `/login`, `/onboarding` | Auth + verified student setup |
+| `/home` | Loop feed |
+| `/vibe/new`, `/vibe/[id]` | Start / join a live vibe |
+| `/groups`, `/groups/[id]` | Circles & clubs |
+| `/events`, `/music` | Events & music discovery |
+| `/profile/[username]`, `/profile/edit` | Personal page + theme editor |
+| `/friends`, `/messages`, `/search`, `/notifications`, `/settings` | Social + safety |
 
 ## Folder structure
 
 ```
-app/                 # App Router pages + globals.css
+app/                 # Routes (Loop, vibes, groups, profile, …)
 components/
-  auth/              # RequireAuth, AuthenticatedShell
-  brand/             # Logo
-  feed/              # Status + activity feed
-  friends/
-  layout/            # AppHeader, AppShell, MobileNavigation
-  messaging/
-  notifications/
-  profile/           # Profile modules, music, photos, comments
-  safety/            # Report dialog
-  theme/             # ThemeEditor
-  ui/                # Buttons, dialogs, inputs, states
+  loop/              # Loop filters, vibe cards
+  groups/            # Group cards
+  layout/            # Header + VibeBottomNav (Home / Groups / + / Messages / Me)
+  profile/           # Profile modules, bulletin, music, photos
 lib/
-  auth/              # AuthProvider
-  mock/              # Seed data + client mock store
-  supabase/          # Browser/server clients
-  themes.ts          # Presets + sanitization
+  mock/              # Seed data + vibe-social (schools, moments, groups)
   types.ts           # Domain models
-  utils.ts
-supabase/schema.sql  # Tables, indexes, RLS notes
+supabase/schema.sql  # Postgres draft + RLS notes
 ```
 
-## Profile customization
+## Design notes
 
-Users customize colors, fonts, backgrounds, module order, music-player style, stickers, and more through a visual editor (no code required). Theme values are sanitized — no arbitrary JavaScript or unsafe CSS injection.
+- **Chrome:** navy/blue header, script “Vibe” wordmark  
+- **Loop energy:** dark surfaces + flame orange CTAs (`#FF5C00`)  
+- **Profiles:** light cards, collapsible modules, teen-safe fields only  
 
-Presets: Classic Blue, Midnight, Bubblegum, Grunge, Pop Star, Indie, Goth, Y2K, Minimal, Custom.
+## Scripts
 
-## Sample profiles
-
-Seven demo personalities ship with distinct themes, music, blogs, photos, and featured friends (`jordanspace`, `mirapixels`, `devonloops`, `skyenotes`, `riostatic`, `novawave`, `alexdrafts`).
-
-## Accessibility
-
-Semantic landmarks, skip link, labeled forms, keyboard-friendly dialogs/menus, focus styles, reduced-motion support, contrast warnings in the theme editor, and non-autoplaying audio until user interaction.
+```bash
+npm run dev
+npm run build
+npm run lint
+npm run typecheck
+```

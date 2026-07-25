@@ -238,7 +238,7 @@ function VibeDetailContent() {
             <section className="rounded-[24px] border border-white/10 bg-white/[0.04] p-5">
               <h2 className="flex items-center gap-2 font-display text-2xl font-black text-white">
                 <UsersRound className="h-5 w-5 text-[#FF6A1A]" aria-hidden />
-                Who's here
+                Who&apos;s here
               </h2>
               <div className="mt-4 space-y-3">
                 {(hereNowProfiles.length ? hereNowProfiles : attendeeProfiles).map(

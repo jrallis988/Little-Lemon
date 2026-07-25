@@ -23,6 +23,8 @@
 *.pem
 .env
 .env*.local
+.expo/
+index.js
 
 # debug
 npm-debug.log*
