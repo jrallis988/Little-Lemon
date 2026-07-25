@@ -109,7 +109,7 @@ export function ProfileDetails({
     },
     {
       key: "who_id_like_to_meet",
-      label: "Who I'd Like to Meet",
+      label: "Looking to vibe with",
       icon: UserRoundSearch,
       value: profile.who_id_like_to_meet,
       type: "paragraph",
@@ -165,14 +165,14 @@ export function ProfileDetails({
     },
     {
       key: "occupation",
-      label: "Occupation",
+      label: "School / activities",
       icon: BriefcaseBusiness,
       value: profile.occupation,
       group: "details",
     },
     {
       key: "education",
-      label: "Education",
+      label: "School",
       icon: GraduationCap,
       value: profile.education,
       group: "details",

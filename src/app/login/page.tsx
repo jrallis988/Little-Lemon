@@ -6,7 +6,7 @@ import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "@/lib/auth/context";
-import { DEMO_PASSWORD, PLATFORM_NAME } from "@/lib/constants";
+import { DEMO_PASSWORD, PLATFORM_AUDIENCE, PLATFORM_NAME } from "@/lib/constants";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -39,9 +39,12 @@ export default function LoginPage() {
         <Link href="/" className="text-sm font-bold no-underline">
           {PLATFORM_NAME}
         </Link>
-        <h1 className="mt-4 text-3xl font-black text-[#0f2744]">Log in</h1>
+        <p className="mt-3 text-xs font-bold uppercase tracking-wide text-[#3b6ea5]">
+          {PLATFORM_AUDIENCE}
+        </p>
+        <h1 className="mt-2 text-3xl font-black text-[#0f2744]">Log in</h1>
         <p className="mt-2 text-sm text-[#5b6b7c]">
-          Use the demo account or sign in with a mock profile.
+          Demo teen account: Nova (15) — or sign in with your own mock profile.
         </p>
 
         <form onSubmit={(event) => void submitLogin(event)} className="mt-6 space-y-4">

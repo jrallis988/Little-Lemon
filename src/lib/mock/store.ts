@@ -39,7 +39,7 @@ import { createThemeForProfile } from "@/lib/themes/presets";
 import { sanitizeTheme } from "@/lib/themes/sanitize";
 import { USERNAME_PATTERN } from "@/lib/constants";
 
-const STORAGE_KEY = "vibe-mock-store-v1";
+const STORAGE_KEY = "vibe-mock-store-v2";
 const SESSION_KEY = "vibe-session-user";
 
 export type MockStore = {
@@ -253,7 +253,8 @@ export function signupAccount(input: {
     website: null,
     avatar_url: `https://api.dicebear.com/7.x/lorelei/svg?seed=${input.username}`,
     header_image_url: null,
-    status_message: "Just joined Vibe!",
+    status_message: "just joined Vibe — theme incoming",
+
     about_me: null,
     who_id_like_to_meet: null,
     interests: [],

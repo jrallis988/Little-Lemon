@@ -6,7 +6,14 @@ import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "@/lib/auth/context";
-import { PLATFORM_NAME, USERNAME_MAX, USERNAME_MIN } from "@/lib/constants";
+import {
+  AGE_MAX,
+  AGE_MIN,
+  PLATFORM_AUDIENCE,
+  PLATFORM_NAME,
+  USERNAME_MAX,
+  USERNAME_MIN,
+} from "@/lib/constants";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -15,6 +22,8 @@ export default function SignupPage() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [age, setAge] = useState("");
+  const [teenConfirm, setTeenConfirm] = useState(false);
   const [error, setError] = useState("");
   const [status, setStatus] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -22,7 +31,16 @@ export default function SignupPage() {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
-    setStatus("Creating your place...");
+    const ageNum = Number(age);
+    if (!Number.isInteger(ageNum) || ageNum < AGE_MIN || ageNum > AGE_MAX) {
+      setError(`Vibe is only for teens ages ${AGE_MIN}–${AGE_MAX}.`);
+      return;
+    }
+    if (!teenConfirm) {
+      setError(`Please confirm you are between ${AGE_MIN} and ${AGE_MAX}.`);
+      return;
+    }
+    setStatus("Creating your profile...");
     setSubmitting(true);
     const result = await signup({
       email,
@@ -36,6 +54,8 @@ export default function SignupPage() {
       setError(result.error);
       return;
     }
+    // Persist age into the new profile via sessionStorage for onboarding
+    sessionStorage.setItem("vibe-signup-age", String(ageNum));
     setStatus("Account created. Time to personalize it.");
     router.push("/onboarding");
   }
@@ -46,9 +66,12 @@ export default function SignupPage() {
         <Link href="/" className="text-sm font-bold no-underline">
           {PLATFORM_NAME}
         </Link>
-        <h1 className="mt-4 text-3xl font-black text-[#0f2744]">Create your account</h1>
+        <p className="mt-3 text-xs font-bold uppercase tracking-wide text-[#3b6ea5]">
+          {PLATFORM_AUDIENCE}
+        </p>
+        <h1 className="mt-2 text-3xl font-black text-[#0f2744]">Create your account</h1>
         <p className="mt-2 text-sm text-[#5b6b7c]">
-          This prototype stores your mock account in localStorage.
+          Vibe is a teen-only space. You must be {AGE_MIN}–{AGE_MAX} to join.
         </p>
 
         <form onSubmit={handleSubmit} className="mt-6 grid gap-4">
@@ -71,6 +94,18 @@ export default function SignupPage() {
             required
           />
           <Input
+            id="signup-age"
+            label={`Age (${AGE_MIN}–${AGE_MAX})`}
+            type="number"
+            inputMode="numeric"
+            min={AGE_MIN}
+            max={AGE_MAX}
+            value={age}
+            onChange={(event) => setAge(event.target.value)}
+            hint="Parents and adults: this platform is not for you."
+            required
+          />
+          <Input
             id="signup-email"
             label="Email"
             type="email"
@@ -89,6 +124,19 @@ export default function SignupPage() {
             autoComplete="new-password"
             required
           />
+          <label className="flex items-start gap-2 text-sm text-[#1a2332]">
+            <input
+              type="checkbox"
+              className="mt-1"
+              checked={teenConfirm}
+              onChange={(event) => setTeenConfirm(event.target.checked)}
+              required
+            />
+            <span>
+              I confirm I am between {AGE_MIN} and {AGE_MAX} years old and want a
+              customizable teen profile on {PLATFORM_NAME}.
+            </span>
+          </label>
           {error ? (
             <p className="rounded-[4px] border border-[#b42318]/40 bg-[#b42318]/10 px-3 py-2 text-sm font-medium text-[#b42318]">
               {error}

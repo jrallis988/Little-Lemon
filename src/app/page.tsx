@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { LandingHero } from "@/components/landing/LandingHero";
 import { FeatureCards } from "@/components/landing/FeatureCards";
-import { PLATFORM_NAME } from "@/lib/constants";
+import { PLATFORM_AUDIENCE, PLATFORM_NAME } from "@/lib/constants";
 
 export default function LandingPage() {
   return (
@@ -15,6 +15,9 @@ export default function LandingPage() {
             {PLATFORM_NAME}
           </Link>
           <div className="flex items-center gap-2">
+            <span className="hidden text-xs font-bold uppercase tracking-wide text-[#d7e4f3] sm:inline">
+              {PLATFORM_AUDIENCE}
+            </span>
             <Link
               href="/login"
               className="rounded-[4px] px-3 py-1.5 text-sm font-bold text-white no-underline hover:bg-white/10"
@@ -35,8 +38,13 @@ export default function LandingPage() {
         <LandingHero />
         <section className="pb-6" aria-labelledby="features-heading">
           <h2 id="features-heading" className="mb-4 text-2xl font-black text-[#0f2744]">
-            Everything that makes a page feel personal
+            The customizable profile teens actually want
           </h2>
+          <p className="mb-4 max-w-2xl text-sm text-[#5b6b7c]">
+            Same freedom as the old personal-page energy — rebuilt for how teens hang out
+            online now: music, friends, photos, and a page that does not look like everyone
+            else&apos;s.
+          </p>
           <FeatureCards />
         </section>
 
@@ -44,11 +52,11 @@ export default function LandingPage() {
           <div className="mp-card grid items-center gap-6 p-6 md:grid-cols-[1fr_auto]">
             <div>
               <h2 className="text-2xl font-black text-[#0f2744]">
-                Ready to make your corner?
+                Ready to set your vibe?
               </h2>
               <p className="mt-2 text-[#5b6b7c]">
-                Start with the demo account ({`nova@example.com`} / demo1234) or create a
-                new profile and personalize it during onboarding.
+                Ages 13–17 only. Try the demo ({`nova@example.com`} / demo1234) or create
+                your own teen profile and theme it during onboarding.
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
@@ -62,7 +70,7 @@ export default function LandingPage() {
                 href="/signup"
                 className="rounded-[4px] bg-[#0f2744] px-4 py-2 text-sm font-bold text-white no-underline hover:bg-[#0a1b30]"
               >
-                Sign up
+                I&apos;m 13–17 — sign up
               </Link>
             </div>
           </div>

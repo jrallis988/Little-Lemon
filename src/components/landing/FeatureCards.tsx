@@ -15,28 +15,28 @@ const features: Array<{
   icon: LucideIcon;
 }> = [
   {
-    title: "Music",
-    description: "Feature the songs, playlists, and artists that set the tone.",
+    title: "Music on your page",
+    description: "Pin the song you’re looping and show friends what’s stuck in your head.",
     icon: Music,
   },
   {
-    title: "Profile themes",
-    description: "Pick a preset or tune the colors, fonts, borders, and modules.",
+    title: "Themes that slap",
+    description: "Pick a preset or remix colors, fonts, stickers, and module order.",
     icon: Palette,
   },
   {
-    title: "Blogging",
-    description: "Post longer updates with moods, dates, and personal context.",
+    title: "Mini blogs",
+    description: "Rant, journal, or spill — with mood tags and currently listening.",
     icon: BookOpen,
   },
   {
-    title: "Friends",
-    description: "Build a network that feels personal, visible, and easy to browse.",
+    title: "Featured Friends",
+    description: "Spotlight your people. Not a follower count — a real friend grid.",
     icon: Users,
   },
   {
-    title: "Messaging",
-    description: "Keep conversations close with unread states and friend-first threads.",
+    title: "DMs with friends",
+    description: "Private chats, unread badges, and conversations that stay between you.",
     icon: MessageSquare,
   },
 ];

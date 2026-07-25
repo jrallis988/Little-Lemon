@@ -208,13 +208,13 @@ function ProfileEditContent() {
           <div className="grid gap-4 md:grid-cols-2">
             <Input
               id="edit-occupation"
-              label="Occupation"
+              label="School / activities"
               value={draft.occupation}
               onChange={(event) => setField("occupation", event.target.value)}
             />
             <Input
               id="edit-education"
-              label="Education"
+              label="School / grade"
               value={draft.education}
               onChange={(event) => setField("education", event.target.value)}
             />
@@ -290,7 +290,7 @@ function ProfileEditContent() {
             />
             <Textarea
               id="edit-meet"
-              label="Who I'd like to meet"
+              label="Looking to vibe with"
               value={draft.who_id_like_to_meet}
               onChange={(event) => setField("who_id_like_to_meet", event.target.value)}
               rows={4}

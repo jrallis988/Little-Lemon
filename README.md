@@ -1,8 +1,8 @@
 # Vibe
 
-A personality-driven social platform where every user gets a highly customizable profile page — themes, music, photos, blogs, Featured Friends, and more.
+A personality-driven social platform **for teens ages 13–17**, where every user gets a highly customizable profile page — themes, music, photos, blogs, Featured Friends, and more.
 
-Temporary product name: **Vibe** (centralized in `src/lib/constants.ts` for easy renaming).
+Temporary product name: **Vibe** (centralized in `src/lib/constants.ts` for easy renaming). Audience range: `AGE_MIN` / `AGE_MAX` (13–17).
 
 ## Stack
 

@@ -25,7 +25,7 @@ create table public.profiles (
   pronouns text,
   bio text,
   location text,
-  age int check (age is null or (age >= 13 and age <= 120)),
+  age int check (age is null or (age >= 13 and age <= 17)),
   show_age boolean not null default false,
   occupation text,
   education text,

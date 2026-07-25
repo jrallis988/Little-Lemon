@@ -1,8 +1,11 @@
 /** Central place for the temporary platform name — swap later without hunting strings. */
 export const PLATFORM_NAME = "Vibe";
-export const PLATFORM_TAGLINE = "Your profile should feel like your place.";
+export const PLATFORM_TAGLINE = "Your profile. Your era. Your rules.";
 export const PLATFORM_DESCRIPTION =
-  "Build a page that sounds like you, looks like you, and brings together the people, music, photos, and interests that matter to you.";
+  "Vibe is a social space for teens 13–17. Build a page that actually feels like you — music, friends, photos, themes, and the little details feeds usually flatten.";
+export const PLATFORM_AUDIENCE = "For teens ages 13–17";
+export const AGE_MIN = 13;
+export const AGE_MAX = 17;
 
 export const USERNAME_MIN = 3;
 export const USERNAME_MAX = 24;
