@@ -1,4 +1,4 @@
--- MyPlace Supabase schema
+-- Vibe Supabase schema
 -- Run in the Supabase SQL editor after creating a project.
 -- Pair with rls-policies.sql for Row Level Security.
 

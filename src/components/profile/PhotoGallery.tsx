@@ -274,7 +274,7 @@ export function PhotoGallery({
                               className="h-8 w-8 rounded-full object-cover"
                             />
                             <div>
-                              <p className="font-bold">{author?.display_name ?? "MyPlace member"}</p>
+                              <p className="font-bold">{author?.display_name ?? "Vibe member"}</p>
                               <p className="text-xs opacity-60">{formatDateTime(comment.created_at)}</p>
                               <p className="mt-1 whitespace-pre-line">{comment.body}</p>
                             </div>

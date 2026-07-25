@@ -9,12 +9,12 @@ import { Input } from "@/components/ui/Input";
 import {
   Card,
   LoadingCard,
-  MyPlaceShell,
+  VibeShell,
   SectionTitle,
   blogPostAuthor,
   useMockStoreState,
   visibleBlogPosts,
-} from "@/app/_components/myplace-page-utils";
+} from "@/app/_components/vibe-page-utils";
 
 function SearchContent() {
   const router = useRouter();
@@ -70,7 +70,7 @@ function SearchContent() {
           <div className="flex-1">
             <Input
               id="global-search"
-              label="Search MyPlace"
+              label="Search Vibe"
               value={draft}
               onChange={(event) => setDraft(event.target.value)}
               placeholder="People, posts, interests..."
@@ -115,7 +115,7 @@ function SearchContent() {
                         {post.title}
                       </Link>
                       <p className="text-sm text-[#5b6b7c]">
-                        by {author?.display_name ?? "MyPlace member"}
+                        by {author?.display_name ?? "Vibe member"}
                       </p>
                       <p className="mt-2 line-clamp-2 text-sm">{post.body}</p>
                     </article>
@@ -155,10 +155,10 @@ function SearchContent() {
 
 export default function SearchPage() {
   return (
-    <MyPlaceShell>
+    <VibeShell>
       <Suspense fallback={<LoadingCard label="Loading search..." />}>
         <SearchContent />
       </Suspense>
-    </MyPlaceShell>
+    </VibeShell>
   );
 }

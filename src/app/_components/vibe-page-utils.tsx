@@ -68,7 +68,7 @@ export function FieldLabel({ children }: { children: ReactNode }) {
   );
 }
 
-export function MyPlaceShell({
+export function VibeShell({
   children,
   className,
 }: {
@@ -95,7 +95,7 @@ export function MyPlaceShell({
   );
 }
 
-export function LoadingCard({ label = "Loading MyPlace..." }: { label?: string }) {
+export function LoadingCard({ label = "Loading Vibe..." }: { label?: string }) {
   return <Card className="animate-pulse text-sm text-[#5b6b7c]">{label}</Card>;
 }
 

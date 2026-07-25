@@ -16,13 +16,13 @@ import type { PrivacySettings } from "@/lib/types/database";
 import {
   Card,
   LoadingCard,
-  MyPlaceShell,
+  VibeShell,
   ProfileListItem,
   SectionTitle,
   downloadJson,
   profileById,
   useMockStoreState,
-} from "@/app/_components/myplace-page-utils";
+} from "@/app/_components/vibe-page-utils";
 
 function selectClass() {
   return "mt-1.5 block min-h-9 w-full rounded-[4px] border border-[#c5d0dc] bg-white px-3 py-2 text-sm text-[#0f2744]";
@@ -368,7 +368,7 @@ function SettingsContent() {
                   )
                 ),
               };
-              downloadJson(`${profile.username}-myplace-export.json`, exportData);
+              downloadJson(`${profile.username}-vibe-export.json`, exportData);
               setStatus("Data export downloaded.");
             }}
           >
@@ -454,8 +454,8 @@ function SettingsContent() {
 
 export default function SettingsPage() {
   return (
-    <MyPlaceShell>
+    <VibeShell>
       <SettingsContent />
-    </MyPlaceShell>
+    </VibeShell>
   );
 }

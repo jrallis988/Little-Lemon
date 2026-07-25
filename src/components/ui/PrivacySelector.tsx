@@ -10,7 +10,7 @@ const privacyOptions: Array<{
   {
     value: "public",
     label: "Public",
-    description: "Visible to everyone on MyPlace.",
+    description: "Visible to everyone on Vibe.",
   },
   {
     value: "friends",

@@ -1,5 +1,5 @@
 /** Central place for the temporary platform name — swap later without hunting strings. */
-export const PLATFORM_NAME = "MyPlace";
+export const PLATFORM_NAME = "Vibe";
 export const PLATFORM_TAGLINE = "Your profile should feel like your place.";
 export const PLATFORM_DESCRIPTION =
   "Build a page that sounds like you, looks like you, and brings together the people, music, photos, and interests that matter to you.";
@@ -41,6 +41,6 @@ export const BODY_FONTS = [
 ] as const;
 
 export const PLACEHOLDER_AVATAR =
-  "https://api.dicebear.com/7.x/shapes/svg?seed=myplace";
+  "https://api.dicebear.com/7.x/shapes/svg?seed=vibe";
 
 export const DEMO_PASSWORD = "demo1234";

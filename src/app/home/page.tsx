@@ -19,7 +19,7 @@ import { formatRelative } from "@/lib/utils/format";
 import {
   Card,
   LoadingCard,
-  MyPlaceShell,
+  VibeShell,
   ProfileListItem,
   SectionTitle,
   conversationSummaries,
@@ -29,7 +29,7 @@ import {
   pendingRequestsForProfile,
   profileById,
   useMockStoreState,
-} from "@/app/_components/myplace-page-utils";
+} from "@/app/_components/vibe-page-utils";
 
 function StatusComposer({
   profileId,
@@ -111,7 +111,7 @@ function ActivityFeed({
                       href={`/profile/${actor?.username ?? ""}`}
                       className="font-bold text-[#0f2744] no-underline"
                     >
-                      {actor?.display_name ?? "MyPlace member"}
+                      {actor?.display_name ?? "Vibe member"}
                     </Link>
                     <span className="text-xs text-[#5b6b7c]">{formatRelative(item.created_at)}</span>
                   </div>
@@ -358,8 +358,8 @@ function HomeDashboard() {
 
 export default function HomePage() {
   return (
-    <MyPlaceShell>
+    <VibeShell>
       <HomeDashboard />
-    </MyPlaceShell>
+    </VibeShell>
   );
 }

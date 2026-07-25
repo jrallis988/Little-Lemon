@@ -8,12 +8,12 @@ import { formatDate } from "@/lib/utils/format";
 import {
   Card,
   LoadingCard,
-  MyPlaceShell,
+  VibeShell,
   SectionTitle,
   blogPostAuthor,
   friendsForProfile,
   useMockStoreState,
-} from "@/app/_components/myplace-page-utils";
+} from "@/app/_components/vibe-page-utils";
 
 function BlogContent() {
   const { profile } = useAuth();
@@ -80,7 +80,7 @@ function BlogContent() {
                         {author ? (
                           <Link href={`/profile/${author.username}`}>{author.display_name}</Link>
                         ) : (
-                          "MyPlace member"
+                          "Vibe member"
                         )}{" "}
                         on {formatDate(post.published_at)}
                       </p>
@@ -113,8 +113,8 @@ function BlogContent() {
 
 export default function BlogPage() {
   return (
-    <MyPlaceShell>
+    <VibeShell>
       <BlogContent />
-    </MyPlaceShell>
+    </VibeShell>
   );
 }

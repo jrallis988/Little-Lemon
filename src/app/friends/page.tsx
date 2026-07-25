@@ -15,7 +15,7 @@ import type { Profile } from "@/lib/types/database";
 import {
   Card,
   LoadingCard,
-  MyPlaceShell,
+  VibeShell,
   ProfileListItem,
   SectionTitle,
   coerceFeaturedCount,
@@ -23,7 +23,7 @@ import {
   pendingRequestsForProfile,
   profileById,
   useMockStoreState,
-} from "@/app/_components/myplace-page-utils";
+} from "@/app/_components/vibe-page-utils";
 
 function FriendsContent() {
   const { profile, refresh: refreshAuth } = useAuth();
@@ -278,8 +278,8 @@ function FriendsContent() {
 
 export default function FriendsPage() {
   return (
-    <MyPlaceShell>
+    <VibeShell>
       <FriendsContent />
-    </MyPlaceShell>
+    </VibeShell>
   );
 }

@@ -9,11 +9,11 @@ import {
   Card,
   EmptyNotice,
   LoadingCard,
-  MyPlaceShell,
+  VibeShell,
   SectionTitle,
   conversationSummaries,
   useMockStoreState,
-} from "@/app/_components/myplace-page-utils";
+} from "@/app/_components/vibe-page-utils";
 
 function MessagesContent() {
   const router = useRouter();
@@ -93,8 +93,8 @@ function MessagesContent() {
 
 export default function MessagesPage() {
   return (
-    <MyPlaceShell>
+    <VibeShell>
       <MessagesContent />
-    </MyPlaceShell>
+    </VibeShell>
   );
 }

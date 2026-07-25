@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  /* MyPlace default chrome — deep navy / medium blue / light gray */
+  /* Vibe default chrome — deep navy / medium blue / light gray */
   --mp-navy: #0f2744;
   --mp-navy-deep: #0a1b30;
   --mp-blue: #3b6ea5;

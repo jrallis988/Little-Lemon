@@ -18,7 +18,7 @@ import {
   Card,
   EmptyNotice,
   LoadingCard,
-  MyPlaceShell,
+  VibeShell,
   ensureTheme,
   featuredProfiles,
   friendshipBetween,
@@ -29,7 +29,7 @@ import {
   profileCommentAuthors,
   themeForProfile,
   useMockStoreState,
-} from "@/app/_components/myplace-page-utils";
+} from "@/app/_components/vibe-page-utils";
 
 type ReportTarget = {
   type: "profile" | "comment";
@@ -52,7 +52,7 @@ function ProfileRouteContent() {
   if (!target) {
     return (
       <EmptyNotice title="Profile not found" actionHref="/browse" actionLabel="Browse people">
-        That MyPlace profile may have moved, changed usernames, or never existed.
+        That Vibe profile may have moved, changed usernames, or never existed.
       </EmptyNotice>
     );
   }
@@ -172,8 +172,8 @@ function ProfileRouteContent() {
 
 export default function ProfilePage() {
   return (
-    <MyPlaceShell className="max-w-none px-0 py-0">
+    <VibeShell className="max-w-none px-0 py-0">
       <ProfileRouteContent />
-    </MyPlaceShell>
+    </VibeShell>
   );
 }

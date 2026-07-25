@@ -9,7 +9,7 @@ import { useAuth } from "@/lib/auth/context";
 import { updateTheme } from "@/lib/mock/store";
 import { THEME_PRESETS, type ThemePresetName } from "@/lib/themes/presets";
 import { PLATFORM_NAME } from "@/lib/constants";
-import { splitTags } from "@/app/_components/myplace-page-utils";
+import { splitTags } from "@/app/_components/vibe-page-utils";
 
 export default function OnboardingPage() {
   const router = useRouter();

@@ -1,4 +1,4 @@
-/** Supabase-ready database models for MyPlace */
+/** Supabase-ready database models for Vibe */
 
 export type Visibility = "public" | "friends" | "private";
 export type FriendshipStatus = "pending" | "accepted" | "declined" | "blocked";

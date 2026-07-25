@@ -102,7 +102,7 @@ export function ReportDialog({
     <Modal
       isOpen={isOpen}
       title={`Report ${readableTarget}`}
-      description="Tell the MyPlace moderation team what needs attention."
+      description="Tell the Vibe moderation team what needs attention."
       onClose={onClose}
       footer={
         <>

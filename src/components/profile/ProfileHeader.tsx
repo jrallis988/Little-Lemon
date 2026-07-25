@@ -177,7 +177,7 @@ export function ProfileHeader({
                 </button>
               </>
             ) : (
-              <a className={actionButtonClass("secondary")} href={`mailto:?subject=MyPlace profile`}>
+              <a className={actionButtonClass("secondary")} href={`mailto:?subject=Vibe profile`}>
                 <Mail className="h-4 w-4" aria-hidden="true" />
                 Share
               </a>

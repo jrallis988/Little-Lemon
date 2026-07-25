@@ -24,7 +24,7 @@ export function LandingHero({ animate = true, className }: LandingHeroProps) {
       <div>
         <p className="mb-3 inline-flex items-center gap-2 rounded-[4px] border border-[#c5d0dc] bg-white px-3 py-1 text-xs font-bold uppercase tracking-wide text-[#0f2744]">
           <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
-          MyPlace is open
+          Vibe is open
         </p>
         <h1 className="max-w-3xl text-4xl font-black tracking-tight text-[#0f2744] sm:text-5xl lg:text-6xl">
           Your profile should feel like your place.

@@ -12,12 +12,12 @@ import type { Profile, ProfileTheme } from "@/lib/types/database";
 import {
   Card,
   LoadingCard,
-  MyPlaceShell,
+  VibeShell,
   joinTags,
   splitTags,
   themeForProfile,
   useMockStoreState,
-} from "@/app/_components/myplace-page-utils";
+} from "@/app/_components/vibe-page-utils";
 
 type ProfileDraft = {
   display_name: string;
@@ -352,8 +352,8 @@ function ProfileEditContent() {
 
 export default function ProfileEditPage() {
   return (
-    <MyPlaceShell>
+    <VibeShell>
       <ProfileEditContent />
-    </MyPlaceShell>
+    </VibeShell>
   );
 }

@@ -8,11 +8,11 @@ import { formatRelative } from "@/lib/utils/format";
 import {
   Card,
   LoadingCard,
-  MyPlaceShell,
+  VibeShell,
   SectionTitle,
   profileById,
   useMockStoreState,
-} from "@/app/_components/myplace-page-utils";
+} from "@/app/_components/vibe-page-utils";
 import { useState } from "react";
 
 function NotificationsContent() {
@@ -111,8 +111,8 @@ function NotificationsContent() {
 
 export default function NotificationsPage() {
   return (
-    <MyPlaceShell>
+    <VibeShell>
       <NotificationsContent />
-    </MyPlaceShell>
+    </VibeShell>
   );
 }

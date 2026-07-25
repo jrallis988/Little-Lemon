@@ -51,7 +51,7 @@ export function Avatar({
 }: AvatarProps) {
   const imageSrc = src ?? profile?.avatar_url ?? null;
   const displayName =
-    name ?? profile?.display_name ?? profile?.username ?? "MyPlace member";
+    name ?? profile?.display_name ?? profile?.username ?? "Vibe member";
   const onlineStatus = status ?? profile?.online_status ?? "offline";
   const imageAlt = alt ?? `${displayName} profile photo`;
 

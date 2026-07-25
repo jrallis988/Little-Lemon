@@ -92,7 +92,7 @@ const samples: SampleDef[] = [
     location: "Portland, OR",
     age: 24,
     about_me:
-      "I collect stickers, write late-night blog posts, and rearrange my digital scrapbook weekly. MyPlace is where my chaos looks intentional.",
+      "I collect stickers, write late-night blog posts, and rearrange my digital scrapbook weekly. Vibe is where my chaos looks intentional.",
     who_id_like_to_meet:
       "People who send song recommendations at 2am and aren't weird about glitter fonts.",
     interests: ["zines", "roller skating", "thrift fashion", "polaroids", "cats"],

@@ -7,10 +7,10 @@ import { Input } from "@/components/ui/Input";
 import {
   Card,
   LoadingCard,
-  MyPlaceShell,
+  VibeShell,
   SectionTitle,
   useMockStoreState,
-} from "@/app/_components/myplace-page-utils";
+} from "@/app/_components/vibe-page-utils";
 
 function BrowseContent() {
   const { store } = useMockStoreState();
@@ -177,8 +177,8 @@ function BrowseContent() {
 
 export default function BrowsePage() {
   return (
-    <MyPlaceShell>
+    <VibeShell>
       <BrowseContent />
-    </MyPlaceShell>
+    </VibeShell>
   );
 }

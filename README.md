@@ -1,8 +1,8 @@
-# MyPlace
+# Vibe
 
 A personality-driven social platform where every user gets a highly customizable profile page — themes, music, photos, blogs, Featured Friends, and more.
 
-Temporary product name: **MyPlace** (centralized in `src/lib/constants.ts` for easy renaming).
+Temporary product name: **Vibe** (centralized in `src/lib/constants.ts` for easy renaming).
 
 ## Stack
 

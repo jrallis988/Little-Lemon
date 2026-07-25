@@ -12,11 +12,11 @@ import {
   Card,
   EmptyNotice,
   LoadingCard,
-  MyPlaceShell,
+  VibeShell,
   conversationSummaries,
   profileById,
   useMockStoreState,
-} from "@/app/_components/myplace-page-utils";
+} from "@/app/_components/vibe-page-utils";
 
 function MessageThreadContent() {
   const params = useParams<{ conversationId: string }>();
@@ -160,8 +160,8 @@ function MessageThreadContent() {
 
 export default function MessageThreadPage() {
   return (
-    <MyPlaceShell>
+    <VibeShell>
       <MessageThreadContent />
-    </MyPlaceShell>
+    </VibeShell>
   );
 }

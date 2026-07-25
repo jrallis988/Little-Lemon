@@ -13,12 +13,12 @@ import {
   Card,
   EmptyNotice,
   LoadingCard,
-  MyPlaceShell,
+  VibeShell,
   blogPostAuthor,
   friendsForProfile,
   profileById,
   useMockStoreState,
-} from "@/app/_components/myplace-page-utils";
+} from "@/app/_components/vibe-page-utils";
 
 function BlogPostContent() {
   const params = useParams<{ postId: string }>();
@@ -107,7 +107,7 @@ function BlogPostContent() {
           {author ? (
             <Link href={`/profile/${author.username}`}>{author.display_name}</Link>
           ) : (
-            "MyPlace member"
+            "Vibe member"
           )}{" "}
           on {formatDate(currentPost.published_at)}
         </p>
@@ -139,7 +139,7 @@ function BlogPostContent() {
                   <Avatar profile={commentAuthor} size="md" />
                   <div>
                     <p className="font-bold text-[#0f2744]">
-                      {commentAuthor?.display_name ?? "MyPlace member"}
+                      {commentAuthor?.display_name ?? "Vibe member"}
                     </p>
                     <time className="text-xs text-[#5b6b7c]" dateTime={item.created_at}>
                       {formatDateTime(item.created_at)}
@@ -172,8 +172,8 @@ function BlogPostContent() {
 
 export default function BlogPostPage() {
   return (
-    <MyPlaceShell>
+    <VibeShell>
       <BlogPostContent />
-    </MyPlaceShell>
+    </VibeShell>
   );
 }

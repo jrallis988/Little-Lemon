@@ -1,4 +1,4 @@
--- MyPlace Row Level Security policies
+-- Vibe Row Level Security policies
 -- Run after schema.sql. Users may only edit their own content and
 -- read content permitted by visibility / friendship / membership.
 
