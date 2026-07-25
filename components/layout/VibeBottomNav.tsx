@@ -62,7 +62,7 @@ export function VibeBottomNav({
 
         <Link
           href="/vibe/new"
-          className="relative mx-auto -mt-6 grid h-16 w-16 place-items-center rounded-full border-4 border-zinc-950 bg-[#FF5C00] text-white shadow-[0_10px_30px_rgba(255,92,0,0.45)] transition hover:bg-[#FF6A1A] hover:no-underline"
+          className="relative mx-auto -mt-6 grid h-16 w-16 place-items-center rounded-full border-4 border-white bg-brand text-white shadow-[0_10px_30px_rgba(255,122,51,0.4)] transition hover:bg-brand-dark hover:no-underline"
           aria-label="Start a vibe"
         >
           <Plus className="h-8 w-8" aria-hidden />
@@ -77,8 +77,8 @@ export function VibeBottomNav({
         <Link
           href={profileHref}
           className={cn(
-            "relative flex flex-col items-center gap-1 rounded-[16px] px-1 py-2 text-[10px] font-black uppercase tracking-wide text-zinc-400 transition hover:text-white hover:no-underline",
-            profileActive && "bg-[#FF5C00]/15 text-[#FF8D4D]"
+            "relative flex flex-col items-center gap-1 rounded-[16px] px-1 py-2 text-[10px] font-black uppercase tracking-wide text-navy-400 transition hover:text-brand hover:no-underline",
+            profileActive && "bg-brand-soft text-brand-dark"
           )}
         >
           <UserCircle className="h-5 w-5" aria-hidden />
