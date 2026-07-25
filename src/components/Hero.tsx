@@ -1,5 +1,5 @@
 const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1571613316887-6f8d5cbf7ef7?auto=format&fit=crop&w=2400&q=80";
+  "https://images.unsplash.com/photo-1559526324-593bc073d938?auto=format&fit=crop&w=2400&q=80";
 
 export function Hero() {
   return (
@@ -11,7 +11,7 @@ export function Hero() {
       <div className="absolute inset-0">
         <img
           src={HERO_IMAGE}
-          alt="Rows of craft beer taps in a warmly lit brewery bar"
+          alt="Craft beer taps pouring into glasses at a warmly lit brewery bar"
           className="h-full w-full object-cover animate-ken-burns"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-ink/88 via-ink/55 to-ink/25" />
@@ -23,7 +23,7 @@ export function Hero() {
           MILLHOUSE
         </p>
         <div
-          className="mt-4 h-0.5 w-24 origin-left bg-ember animate-draw-line"
+          className="mt-4 h-1 w-28 origin-left bg-ember animate-draw-line"
           style={{ animationDelay: "0.25s" }}
         />
         <h1
