@@ -3,34 +3,32 @@ import type { Track, UserProfile, WaveformComment } from '@/types/models';
 /** Placeholder editorial / discovery content for scaffolding UI */
 export const DEMO_ARTISTS: UserProfile[] = [
   {
-    id: 'artist-static-bloom',
+    id: 'artist-amber-circuit',
     email: '',
-    displayName: 'Static Bloom',
+    displayName: 'Amber Circuit',
     role: 'artist',
-    scene: 'Shoegaze',
-    geography: 'Portland, OR',
-    followerCount: 1284,
-    bio: 'Tape-saturated guitars and parking-lot reverb.',
+    scene: 'Electronic',
+    geography: 'Chicago, IL',
+    followerCount: 734,
+    bio: 'Modular hiss and late-night bus routes.',
+    activeYears: '2019–PRESENT',
+    status: 'INDEPENDENT',
+    genreTags: ['Electronic', 'Ambient'],
+    sceneDescription: 'Midwest modular / warehouse afterhours.',
   },
   {
-    id: 'artist-signal-decay',
+    id: 'artist-blackout-relay',
     email: '',
-    displayName: 'Signal Decay',
+    displayName: 'Blackout Relay',
     role: 'artist',
-    scene: 'Industrial',
-    geography: 'Detroit, MI',
-    followerCount: 892,
-    bio: 'Broken machines, late shifts, warehouse floors.',
-  },
-  {
-    id: 'artist-north-exit',
-    email: '',
-    displayName: 'North Exit',
-    role: 'artist',
-    scene: 'Punk',
-    geography: 'Manchester, NH',
-    followerCount: 456,
-    bio: 'Three chords, one van, zero patience.',
+    scene: 'Hardcore',
+    geography: 'Brooklyn, NY',
+    followerCount: 980,
+    bio: 'Basement PA, blown cones, no encore.',
+    activeYears: '2016–PRESENT',
+    status: 'UNSIGNED',
+    genreTags: ['Hardcore', 'Punk'],
+    sceneDescription: 'DIY hardcore circuit, Northeast corridor.',
   },
   {
     id: 'artist-chrome-petal',
@@ -41,16 +39,38 @@ export const DEMO_ARTISTS: UserProfile[] = [
     geography: 'Los Angeles, CA',
     followerCount: 2103,
     bio: 'Glitch sugar and freeway neon.',
+    activeYears: '2021–PRESENT',
+    status: 'INDEPENDENT',
+    genreTags: ['Hyperpop', 'Electronic'],
+    sceneDescription: 'LA bedroom hyperpop / net-label orbit.',
   },
   {
-    id: 'artist-amber-circuit',
+    id: 'artist-drift-kiln',
     email: '',
-    displayName: 'Amber Circuit',
+    displayName: 'Drift Kiln',
     role: 'artist',
-    scene: 'Electronic',
-    geography: 'Chicago, IL',
-    followerCount: 734,
-    bio: 'Modular hiss and late-night bus routes.',
+    scene: 'Folk',
+    geography: 'Asheville, NC',
+    followerCount: 312,
+    bio: 'Porch mics, tape hiss, mountain dusk.',
+    activeYears: '2014–2024',
+    status: 'INACTIVE',
+    genreTags: ['Folk', 'Indie'],
+    sceneDescription: 'Appalachian folk / living-room sessions.',
+  },
+  {
+    id: 'artist-fault-line-choir',
+    email: '',
+    displayName: 'Fault Line Choir',
+    role: 'artist',
+    scene: 'Indie',
+    geography: 'Oakland, CA',
+    followerCount: 540,
+    bio: 'Four voices, one cracked PA.',
+    activeYears: '2018–PRESENT',
+    status: 'UNSIGNED',
+    genreTags: ['Indie', 'Post-Punk'],
+    sceneDescription: 'Bay Area warehouse indie.',
   },
   {
     id: 'artist-lot-lights',
@@ -61,6 +81,108 @@ export const DEMO_ARTISTS: UserProfile[] = [
     geography: 'Austin, TX',
     followerCount: 611,
     bio: 'Parking-lot anthems with cracked amps.',
+    activeYears: '2017–PRESENT',
+    status: 'INDEPENDENT',
+    genreTags: ['Indie', 'Rock'],
+    sceneDescription: 'Texas parking-lot rock / SXSW periphery.',
+  },
+  {
+    id: 'artist-north-exit',
+    email: '',
+    displayName: 'North Exit',
+    role: 'artist',
+    scene: 'Punk',
+    geography: 'Manchester, NH',
+    followerCount: 456,
+    bio: 'Three chords, one van, zero patience.',
+    activeYears: '2015–PRESENT',
+    status: 'UNSIGNED',
+    genreTags: ['Punk', 'Hardcore'],
+    sceneDescription: 'New England basement punk.',
+  },
+  {
+    id: 'artist-oxide-room',
+    email: '',
+    displayName: 'Oxide Room',
+    role: 'artist',
+    scene: 'Industrial',
+    geography: 'Pittsburgh, PA',
+    followerCount: 401,
+    bio: 'Rust belt rhythms, factory reverb.',
+    activeYears: '2012–PRESENT',
+    status: 'INDEPENDENT',
+    genreTags: ['Industrial', 'Electronic'],
+    sceneDescription: 'Rust-belt industrial / club leftovers.',
+  },
+  {
+    id: 'artist-signal-decay',
+    email: '',
+    displayName: 'Signal Decay',
+    role: 'artist',
+    scene: 'Industrial',
+    geography: 'Detroit, MI',
+    followerCount: 892,
+    bio: 'Broken machines, late shifts, warehouse floors.',
+    activeYears: '2010–PRESENT',
+    status: 'INDEPENDENT',
+    genreTags: ['Industrial', 'Electronic'],
+    sceneDescription: 'Detroit warehouse industrial.',
+  },
+  {
+    id: 'artist-static-bloom',
+    email: '',
+    displayName: 'Static Bloom',
+    role: 'artist',
+    scene: 'Shoegaze',
+    geography: 'Portland, OR',
+    followerCount: 1284,
+    bio: 'Tape-saturated guitars and parking-lot reverb.',
+    activeYears: '2018–PRESENT',
+    status: 'INDEPENDENT',
+    genreTags: ['Shoegaze', 'Indie'],
+    sceneDescription: 'Pacific Northwest shoegaze / DIY tape scene.',
+  },
+  {
+    id: 'artist-volt-garden',
+    email: '',
+    displayName: 'Volt Garden',
+    role: 'artist',
+    scene: 'Electronic',
+    geography: 'Montreal, QC',
+    followerCount: 688,
+    bio: 'Greenhouse synths under sodium lamps.',
+    activeYears: '2020–PRESENT',
+    status: 'LABEL',
+    genreTags: ['Electronic', 'Synth'],
+    sceneDescription: 'Montreal synth / coldwave adjacent.',
+  },
+  {
+    id: 'artist-wire-hymnal',
+    email: '',
+    displayName: 'Wire Hymnal',
+    role: 'artist',
+    scene: 'Post-Punk',
+    geography: 'Philadelphia, PA',
+    followerCount: 523,
+    bio: 'Cathedral delay, alleyway drums.',
+    activeYears: '2013–PRESENT',
+    status: 'UNSIGNED',
+    genreTags: ['Post-Punk', 'Indie'],
+    sceneDescription: 'Philly post-punk / church-basement circuit.',
+  },
+  {
+    id: 'artist-zinc-parade',
+    email: '',
+    displayName: 'Zinc Parade',
+    role: 'artist',
+    scene: 'Punk',
+    geography: 'Columbus, OH',
+    followerCount: 290,
+    bio: 'Marching drums, zinc-plated riffs.',
+    activeYears: '2019–PRESENT',
+    status: 'UNSIGNED',
+    genreTags: ['Punk', 'Garage'],
+    sceneDescription: 'Midwest garage punk / house-show network.',
   },
 ];
 
@@ -137,6 +259,30 @@ export const DEMO_TRACKS: Track[] = [
     scene: 'Indie',
     geography: 'Austin, TX',
   },
+  {
+    id: 'track-blown-cone',
+    title: 'Blown Cone',
+    artistId: 'artist-blackout-relay',
+    artistName: 'Blackout Relay',
+    audioUrl: '',
+    durationMs: 142000,
+    downloadCount: 1102,
+    repostCount: 201,
+    scene: 'Hardcore',
+    geography: 'Brooklyn, NY',
+  },
+  {
+    id: 'track-porch-mic',
+    title: 'Porch Mic',
+    artistId: 'artist-drift-kiln',
+    artistName: 'Drift Kiln',
+    audioUrl: '',
+    durationMs: 226000,
+    downloadCount: 388,
+    repostCount: 41,
+    scene: 'Folk',
+    geography: 'Asheville, NC',
+  },
 ];
 
 export type FeaturedSpotlight = {
@@ -146,12 +292,11 @@ export type FeaturedSpotlight = {
   badge: string;
 };
 
-/** PureVolume-style editorial hero rotation */
 export const FEATURED_SPOTLIGHT: FeaturedSpotlight = {
   trackId: 'track-snow-on-the-tape',
   headline: 'STATIC BLOOM',
   statusBlurb:
-    'This week’s cover transmission — tape-saturated shoegaze from Portland. Download counts are the signal. Play counts stay with the artist.',
+    'ORIGIN: PORTLAND, OR // GENRE: SHOEGAZE // YEARS: 2018–PRESENT // STATUS: INDEPENDENT',
   badge: 'FEATURED ARTIST',
 };
 
@@ -204,6 +349,7 @@ export const SCENES = [
   'Hardcore',
   'Electronic',
   'Folk',
+  'Post-Punk',
 ] as const;
 
 export const GEOGRAPHIES = [
@@ -214,7 +360,15 @@ export const GEOGRAPHIES = [
   'Brooklyn, NY',
   'Austin, TX',
   'Chicago, IL',
+  'Asheville, NC',
+  'Oakland, CA',
+  'Pittsburgh, PA',
+  'Montreal, QC',
+  'Philadelphia, PA',
+  'Columbus, OH',
 ] as const;
+
+export const ALPHA_LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
 export function getTrackById(id: string): Track | undefined {
   return DEMO_TRACKS.find((t) => t.id === id);
@@ -230,4 +384,40 @@ export function tracksByDownloads(): Track[] {
 
 export function tracksByReposts(): Track[] {
   return [...DEMO_TRACKS].sort((a, b) => b.repostCount - a.repostCount);
+}
+
+export function totalDownloadsForArtist(artistId: string): number {
+  return DEMO_TRACKS.filter((t) => t.artistId === artistId).reduce(
+    (sum, t) => sum + t.downloadCount,
+    0,
+  );
+}
+
+export function artistInitial(name: string): string {
+  const ch = name.trim().charAt(0).toUpperCase();
+  return /[A-Z]/.test(ch) ? ch : '#';
+}
+
+export type AlphaGroup = {
+  letter: string;
+  artists: UserProfile[];
+};
+
+export function groupArtistsAlphabetically(
+  artists: UserProfile[] = DEMO_ARTISTS,
+): AlphaGroup[] {
+  const sorted = [...artists].sort((a, b) =>
+    a.displayName.localeCompare(b.displayName, undefined, { sensitivity: 'base' }),
+  );
+  const map = new Map<string, UserProfile[]>();
+  for (const artist of sorted) {
+    const letter = artistInitial(artist.displayName);
+    const bucket = map.get(letter) ?? [];
+    bucket.push(artist);
+    map.set(letter, bucket);
+  }
+  return Array.from(map.entries()).map(([letter, group]) => ({
+    letter,
+    artists: group,
+  }));
 }

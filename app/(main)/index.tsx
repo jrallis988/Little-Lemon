@@ -15,12 +15,10 @@ import {
 } from '@/components/editorial/EditorialSubNav';
 import { FeaturedHero } from '@/components/editorial/FeaturedHero';
 import { TrackChartRow } from '@/components/editorial/TrackChartRow';
-import { BandCard } from '@/components/ui/BandCard';
 import { StaticBackground } from '@/components/ui/StaticBackground';
 import { colors, portalBox, spacing, typography } from '@/constants/theme';
 import { useAudioBarInset } from '@/hooks/useAudioBarInset';
 import {
-  DEMO_ARTISTS,
   DEMO_COMMENTS,
   DEMO_TRACKS,
   EDITORS_PICKS,
@@ -174,32 +172,6 @@ export default function EditorialScreen() {
               </View>
             ) : null}
 
-            {tab === 'Browse Artists' ? (
-              <View style={styles.panel}>
-                <View style={styles.panelHeader}>
-                  <Text style={styles.panelKicker}>DIRECTORY</Text>
-                  <Text style={styles.panelTitle}>BROWSE ARTISTS</Text>
-                </View>
-                <View style={styles.panelBody}>
-                  <Text style={styles.panelNote}>
-                    Scene & geography live on each profile — no global rankings.
-                  </Text>
-                  {DEMO_ARTISTS.map((artist) => (
-                    <BandCard
-                      key={artist.id}
-                      id={artist.id}
-                      name={artist.displayName}
-                      scene={artist.scene}
-                      geography={artist.geography}
-                      downloadCount={
-                        DEMO_TRACKS.find((t) => t.artistId === artist.id)
-                          ?.downloadCount ?? 0
-                      }
-                    />
-                  ))}
-                </View>
-              </View>
-            ) : null}
           </View>
 
           <View style={[styles.sideCol, isWide && styles.sideColWide]}>

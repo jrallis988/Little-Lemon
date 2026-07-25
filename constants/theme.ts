@@ -1,39 +1,37 @@
 /**
- * StaticVolume visual system
- * Warm off-black, CRT phosphor accents, physical typography — never pure #000.
- * Portal chrome borrows PureVolume's crisp bordered boxes & toolbar blocks.
+ * StaticVolume — Analog Archive theme
+ * CRT warm off-blacks, muted amber phosphor, charcoal portal rules.
  */
 export const colors = {
-  background: '#161311',
-  backgroundElevated: '#1E1A16',
-  surface: '#241F1A',
-  surfaceRaised: '#2E2822',
-  /** Classic portal hairline (~#333) */
+  /** Deep CRT monitor backing */
+  background: '#121212',
+  backgroundElevated: '#181818',
+  surface: '#1C1C1C',
+  surfaceRaised: '#222222',
+
+  /** Dark charcoal box separation */
   border: '#333333',
-  borderSubtle: '#2A2520',
-  /** High-contrast rule for boxed modules */
-  borderStrong: '#4A4036',
+  borderSubtle: '#2A2A2A',
+  borderStrong: '#3D3D3D',
 
-  text: '#EDE6DC',
-  textMuted: '#A89F93',
-  textDim: '#6E665C',
+  text: '#E8E0D0',
+  textMuted: '#A09078',
+  textDim: '#6A6054',
 
-  /** CRT amber / PureVolume-era accent orange */
-  phosphor: '#E0A45A',
-  phosphorDim: '#B07E3E',
-  accentLine: '#E08A3C',
-  /** Warm copper for download / engagement signals */
-  copper: '#C4784A',
-  copperDim: '#8F5635',
-  /** Soft snow highlight for static overlays */
-  snow: 'rgba(237, 230, 220, 0.06)',
-  scanline: 'rgba(0, 0, 0, 0.22)',
-  aberrationRed: 'rgba(220, 80, 60, 0.08)',
-  aberrationCyan: 'rgba(60, 180, 200, 0.06)',
+  /** Muted amber / orange — active, highlights, callouts */
+  phosphor: '#FFB000',
+  phosphorDim: '#E58300',
+  accentLine: '#E58300',
+  copper: '#E58300',
+  copperDim: '#B06800',
 
-  /** Classic portal toolbar strip */
-  toolbar: '#1A1612',
-  toolbarActive: '#2A2218',
+  snow: 'rgba(255, 176, 0, 0.04)',
+  scanline: 'rgba(0, 0, 0, 0.28)',
+  aberrationRed: 'rgba(220, 80, 60, 0.07)',
+  aberrationCyan: 'rgba(60, 180, 200, 0.05)',
+
+  toolbar: '#181818',
+  toolbarActive: '#222222',
   toolbarEdge: '#333333',
 
   danger: '#C45A4A',
@@ -87,20 +85,17 @@ export const spacing = {
   lg: 24,
   xl: 32,
   xxl: 48,
-  /** Space reserved for the docked global audio bar + tab bar */
   audioBar: 64,
   tabBar: 56,
 } as const;
 
 export const radii = {
-  /** PureVolume portal chrome — sharp corners only */
   none: 0,
   sm: 0,
   md: 0,
   media: 0,
 } as const;
 
-/** Shared 1px portal box chrome */
 export const portalBox = {
   borderWidth: 1,
   borderColor: colors.border,

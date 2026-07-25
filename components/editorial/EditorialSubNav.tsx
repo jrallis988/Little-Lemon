@@ -1,6 +1,7 @@
+import { router } from 'expo-router';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import { colors, spacing, typography } from '@/constants/theme';
+import { colors, spacing } from '@/constants/theme';
 
 export const EDITORIAL_TABS = [
   'Featured',
@@ -17,8 +18,8 @@ type EditorialSubNavProps = {
 };
 
 /**
- * Classic PureVolume portal toolbar — separated blocks with vertical rules,
- * not floating underline pills.
+ * Classic PureVolume portal toolbar.
+ * "Browse Artists" routes to the dedicated alphabetical directory.
  */
 export function EditorialSubNav({ active, onChange }: EditorialSubNavProps) {
   return (
@@ -35,7 +36,13 @@ export function EditorialSubNav({ active, onChange }: EditorialSubNavProps) {
             return (
               <View key={tab} style={styles.tabCell}>
                 <Pressable
-                  onPress={() => onChange(tab)}
+                  onPress={() => {
+                    if (tab === 'Browse Artists') {
+                      router.push('/(main)/artists');
+                      return;
+                    }
+                    onChange(tab);
+                  }}
                   style={[styles.tab, isActive && styles.tabActive]}
                 >
                   <Text style={[styles.tabText, isActive && styles.tabTextActive]}>

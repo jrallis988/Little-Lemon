@@ -37,7 +37,6 @@ export default function MainLayout() {
             height: spacing.tabBar + 12,
             paddingBottom: 8,
             paddingTop: 6,
-            // Reserve space above the root-level GlobalAudioBar
             marginBottom: hasTrack ? spacing.audioBar : 0,
           },
           tabBarActiveTintColor: colors.phosphor,
@@ -54,10 +53,21 @@ export default function MainLayout() {
           }}
         />
         <Tabs.Screen
+          name="artists"
+          options={{
+            title: 'ARTISTS',
+            headerShown: false,
+            tabBarLabel: ({ focused }) => (
+              <TabLabel label="ARTISTS" focused={focused} />
+            ),
+            tabBarIcon: () => null,
+          }}
+        />
+        <Tabs.Screen
           name="explore"
           options={{
             title: 'SCENE',
-            tabBarLabel: ({ focused }) => <TabLabel label="EXPLORE" focused={focused} />,
+            tabBarLabel: ({ focused }) => <TabLabel label="SCENE" focused={focused} />,
             tabBarIcon: () => null,
           }}
         />

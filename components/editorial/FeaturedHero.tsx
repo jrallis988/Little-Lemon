@@ -50,7 +50,7 @@ export function FeaturedHero({ spotlight, track }: FeaturedHeroProps) {
             <Text style={styles.trackMeta}>
               “{track.title}” · {track.scene} · {track.geography}
             </Text>
-            <Text style={styles.blurb}>{spotlight.statusBlurb}</Text>
+            <Text style={styles.blurb}>{spotlight.statusBlurb.toUpperCase()}</Text>
             <View style={styles.statsRow}>
               <Text style={styles.stat}>
                 {track.downloadCount.toLocaleString()} DOWNLOADS
@@ -138,10 +138,12 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
   blurb: {
-    ...typography.body,
-    color: colors.textMuted,
-    textTransform: 'none',
-    letterSpacing: 0.1,
+    fontFamily: 'SpaceMono',
+    fontSize: 10,
+    letterSpacing: 0.3,
+    lineHeight: 15,
+    color: colors.phosphorDim,
+    textTransform: 'uppercase',
     marginTop: 2,
   },
   statsRow: {

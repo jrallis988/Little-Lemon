@@ -1,5 +1,7 @@
 export type AccountRole = 'listener' | 'artist';
 
+export type ArtistStatus = 'INDEPENDENT' | 'UNSIGNED' | 'LABEL' | 'INACTIVE';
+
 export type UserProfile = {
   id: string;
   email: string;
@@ -11,6 +13,11 @@ export type UserProfile = {
   geography?: string | null;
   followerCount?: number;
   createdAt?: string;
+  /** Terminal archive fields */
+  activeYears?: string | null;
+  status?: ArtistStatus | null;
+  genreTags?: string[] | null;
+  sceneDescription?: string | null;
 };
 
 export type Track = {
