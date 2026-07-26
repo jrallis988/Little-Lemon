@@ -1,21 +1,33 @@
 import { Link } from "react-router-dom";
 import { focusAreas, reasons, newsItems } from "../data/content";
 
-const heroImage =
-  "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=2000&q=80";
-const campusImage =
-  "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1600&q=80";
+const campusImage = "/media/campus-quad.jpg";
+const HERO_VIDEO = "/media/campus-hero-web.mp4";
+const HERO_POSTER = "/media/campus-hero-poster.jpg";
+
+const highlights = [
+  { value: "70+", label: "Degree and certificate programs" },
+  { value: "4,600+", label: "Students served annually" },
+  { value: "240", label: "Acre riverside campus" },
+];
 
 function Home() {
   return (
     <>
       <section className="hero">
-        <div
-          className="hero__media"
-          style={{ backgroundImage: `url(${heroImage})` }}
-          role="img"
-          aria-label="College campus buildings surrounded by trees"
-        />
+        <div className="hero__media">
+          <video
+            className="hero__video"
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster={HERO_POSTER}
+            aria-label="Aerial view of the NHTI campus in Concord, New Hampshire"
+          >
+            <source src={HERO_VIDEO} type="video/mp4" />
+          </video>
+        </div>
         <div className="hero__veil" aria-hidden="true" />
         <div className="hero__content">
           <p className="hero__brand reveal">NHTI</p>
@@ -23,8 +35,8 @@ function Home() {
             Learn where New Hampshire works.
           </h1>
           <p className="hero__support reveal reveal--delay-2">
-            Concord&apos;s Community College — 80+ career and transfer programs on
-            a full riverside campus.
+            Concord&apos;s Community College — career and transfer programs on a
+            full riverside campus.
           </p>
           <div className="hero__actions reveal reveal--delay-3">
             <Link to="/admissions" className="btn btn--solid">
@@ -35,6 +47,15 @@ function Home() {
             </Link>
           </div>
         </div>
+      </section>
+
+      <section className="stat-strip" aria-label="NHTI at a glance">
+        {highlights.map((item) => (
+          <div key={item.label} className="stat-strip__item">
+            <p className="stat-strip__value">{item.value}</p>
+            <p className="stat-strip__label">{item.label}</p>
+          </div>
+        ))}
       </section>
 
       <section className="section section--tight">
@@ -68,7 +89,7 @@ function Home() {
           className="split-band__media"
           style={{ backgroundImage: `url(${campusImage})` }}
           role="img"
-          aria-label="Students walking across a college campus"
+          aria-label="NHTI campus buildings and grounds in Concord"
         />
         <div className="split-band__copy">
           <h2>The only NH community college with residence halls</h2>

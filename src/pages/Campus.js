@@ -3,16 +3,16 @@ import { campusHighlights } from "../data/content";
 
 const gallery = [
   {
-    src: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1200&q=80",
-    alt: "Students celebrating together outdoors",
+    src: "/media/residence.jpg",
+    alt: "Langley Hall arcade on the NHTI campus",
   },
   {
-    src: "https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?auto=format&fit=crop&w=1200&q=80",
-    alt: "Library reading room with long tables",
+    src: "/media/lounge.jpg",
+    alt: "Residence hall lounge at NHTI",
   },
   {
-    src: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1200&q=80",
-    alt: "Students practicing on an outdoor athletic field",
+    src: "/media/athletics.jpg",
+    alt: "NHTI Lynx athletics",
   },
 ];
 
@@ -27,6 +27,18 @@ function Campus() {
           capital city — complete with residence halls, lynx athletics, and a
           lively student community.
         </p>
+      </section>
+
+      <section className="campus-feature" aria-label="NHTI campus film">
+        <video
+          className="campus-feature__video"
+          controls
+          playsInline
+          poster="/media/campus-hero-poster.jpg"
+          preload="metadata"
+        >
+          <source src="/media/campus-hero-web.mp4" type="video/mp4" />
+        </video>
       </section>
 
       <section className="gallery" aria-label="Campus moments">
