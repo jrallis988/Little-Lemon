@@ -18,8 +18,16 @@ export function Logo({ className = "", light = false }: LogoProps) {
       >
         W
         <span className="mx-1.5 inline-flex w-7 items-center sm:w-9" aria-hidden="true">
-          <span className="progress-track !h-1 w-full bg-cobalt-200/80">
-            <span className="progress-fill w-[68%] animate-fill-bar bg-cobalt-600 transition-all duration-500 group-hover:w-full" />
+          <span
+            className={`progress-track !h-1 w-full ${
+              light ? "bg-white/30" : "bg-cobalt-200/80"
+            }`}
+          >
+            <span
+              className={`progress-fill w-[68%] animate-fill-bar transition-all duration-500 group-hover:w-full ${
+                light ? "bg-tide" : "bg-cobalt-600"
+              }`}
+            />
           </span>
         </span>
         W

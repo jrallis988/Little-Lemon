@@ -41,11 +41,11 @@ export function Join() {
                 type="email"
                 required
                 placeholder="Email address"
-                className="h-12 flex-1 rounded-full border-0 px-5 font-sans text-sm text-ink outline-none ring-2 ring-transparent placeholder:text-ink/40 focus:ring-white/50"
+                className="h-12 flex-1 rounded-2xl border-0 px-5 font-sans text-sm text-ink outline-none ring-2 ring-transparent placeholder:text-ink/40 focus:ring-white/50"
               />
               <button
                 type="submit"
-                className="h-12 rounded-full bg-ink px-6 font-sans text-sm font-semibold text-white transition hover:bg-ink/90"
+                className="h-12 rounded-2xl bg-ink px-6 font-sans text-sm font-semibold text-white transition hover:bg-ink/90"
               >
                 Start free trial
               </button>

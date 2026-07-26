@@ -26,23 +26,29 @@ export function Header() {
     };
   }, [open]);
 
+  const overHero = !scrolled && !open;
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled
+        scrolled || open
           ? "border-b border-ink/5 bg-paper/90 backdrop-blur-md"
           : "bg-transparent"
       }`}
     >
       <div className="section-shell flex h-[4.25rem] items-center justify-between">
-        <Logo />
+        <Logo light={overHero} />
 
         <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
           {links.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="link-underline font-sans text-sm font-medium text-ink/70 hover:text-ink"
+              className={`link-underline font-sans text-sm font-medium transition ${
+                overHero
+                  ? "text-white/75 hover:text-white"
+                  : "text-ink/70 hover:text-ink"
+              }`}
             >
               {link.label}
             </a>
@@ -52,13 +58,19 @@ export function Header() {
         <div className="hidden items-center gap-3 md:flex">
           <a
             href="#join"
-            className="font-sans text-sm font-semibold text-ink/70 transition hover:text-ink"
+            className={`font-sans text-sm font-semibold transition ${
+              overHero ? "text-white/75 hover:text-white" : "text-ink/70 hover:text-ink"
+            }`}
           >
             Sign in
           </a>
           <a
             href="#join"
-            className="rounded-full bg-cobalt-600 px-5 py-2.5 font-sans text-sm font-semibold text-white transition hover:bg-cobalt-700"
+            className={`rounded-2xl px-5 py-2.5 font-sans text-sm font-semibold transition ${
+              overHero
+                ? "bg-white text-ink hover:bg-cloud"
+                : "bg-cobalt-600 text-white hover:bg-cobalt-700"
+            }`}
           >
             Start free
           </a>
@@ -66,7 +78,9 @@ export function Header() {
 
         <button
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-ink/10 md:hidden"
+          className={`inline-flex h-10 w-10 items-center justify-center rounded-2xl border md:hidden ${
+            overHero ? "border-white/25" : "border-ink/10"
+          }`}
           aria-expanded={open}
           aria-controls="mobile-nav"
           aria-label={open ? "Close menu" : "Open menu"}
@@ -75,11 +89,19 @@ export function Header() {
           <span className="sr-only">Menu</span>
           <span className="flex w-4 flex-col gap-1.5">
             <span
-              className={`h-0.5 w-full bg-ink transition ${open ? "translate-y-2 rotate-45" : ""}`}
+              className={`h-0.5 w-full transition ${overHero ? "bg-white" : "bg-ink"} ${
+                open ? "translate-y-2 rotate-45 !bg-ink" : ""
+              }`}
             />
-            <span className={`h-0.5 w-full bg-ink transition ${open ? "opacity-0" : ""}`} />
             <span
-              className={`h-0.5 w-full bg-ink transition ${open ? "-translate-y-2 -rotate-45" : ""}`}
+              className={`h-0.5 w-full transition ${overHero ? "bg-white" : "bg-ink"} ${
+                open ? "opacity-0" : ""
+              }`}
+            />
+            <span
+              className={`h-0.5 w-full transition ${overHero ? "bg-white" : "bg-ink"} ${
+                open ? "-translate-y-2 -rotate-45 !bg-ink" : ""
+              }`}
             />
           </span>
         </button>
@@ -102,7 +124,7 @@ export function Header() {
           ))}
           <a
             href="#join"
-            className="mt-2 rounded-full bg-cobalt-600 px-5 py-3 text-center font-sans text-sm font-semibold text-white"
+            className="mt-2 rounded-2xl bg-cobalt-600 px-5 py-3 text-center font-sans text-sm font-semibold text-white"
             onClick={() => setOpen(false)}
           >
             Start free

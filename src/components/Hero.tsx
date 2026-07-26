@@ -53,30 +53,17 @@ export function Hero() {
           >
             <a
               href="#join"
-              className="rounded-full bg-white px-6 py-3.5 font-sans text-sm font-semibold text-ink transition hover:bg-cloud"
+              className="rounded-2xl bg-white px-6 py-3.5 font-sans text-sm font-semibold text-ink transition hover:bg-cloud"
             >
               Start your free trial
             </a>
             <a
               href="#pathways"
-              className="rounded-full border border-white/35 bg-white/5 px-6 py-3.5 font-sans text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/15"
+              className="rounded-2xl border border-white/35 bg-white/5 px-6 py-3.5 font-sans text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/15"
             >
               Explore programs
             </a>
           </div>
-        </div>
-
-        <div
-          className="animate-rise mt-12 hidden max-w-md sm:block"
-          style={{ animationDelay: "580ms" }}
-          aria-hidden="true"
-        >
-          <div className="progress-track h-1.5 bg-white/20">
-            <div className="progress-fill w-[62%] animate-fill-bar bg-tide" />
-          </div>
-          <p className="mt-2 font-sans text-xs font-medium uppercase tracking-[0.18em] text-white/55">
-            Built for real weeks, not perfect ones
-          </p>
         </div>
       </div>
     </section>
