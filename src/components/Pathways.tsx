@@ -22,8 +22,8 @@ const pathways = [
     title: "Together",
     eyebrow: "Human support",
     copy: "Coach-led groups and a community that doubles results for members who show up for each other.",
-    image: "/images/community.jpg",
-    alt: "Friends laughing together outdoors",
+    image: "/images/together.jpg",
+    alt: "Friends standing together with arms around each other",
     cta: "Meet the community",
   },
 ];
@@ -61,8 +61,8 @@ export function Pathways() {
                   src={item.image}
                   alt={item.alt}
                   className={`h-64 w-full object-cover sm:h-80 ${
-                    item.id === "med" || item.id === "together" ? "grayscale" : ""
-                  }`}
+                    item.id === "med" ? "grayscale" : ""
+                  } ${item.id === "together" ? "object-[center_35%]" : ""}`}
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-ink/35 to-transparent" />
