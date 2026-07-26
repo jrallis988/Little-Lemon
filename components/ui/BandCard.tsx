@@ -26,7 +26,11 @@ export function BandCard({
 
   return (
     <Link href={`/artist/${id}`} asChild>
-      <Pressable style={({ pressed }) => [styles.row, pressed && styles.pressed]}>
+      <Pressable
+        style={({ pressed }) =>
+          StyleSheet.flatten([styles.row, pressed && styles.pressed])
+        }
+      >
         <View style={styles.artwork}>
           <Text style={styles.artworkMark}>SV</Text>
         </View>

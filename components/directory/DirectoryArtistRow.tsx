@@ -24,7 +24,11 @@ export function DirectoryArtistRow({
 
   return (
     <Link href={`/artist/${artist.id}`} asChild>
-      <Pressable style={({ pressed }) => [styles.row, pressed && styles.pressed]}>
+      <Pressable
+        style={({ pressed }) =>
+          StyleSheet.flatten([styles.row, pressed && styles.pressed])
+        }
+      >
         <View style={styles.thumb}>
           <Text style={styles.thumbMark}>
             {artist.displayName.charAt(0).toUpperCase()}

@@ -1,5 +1,5 @@
 import { Link } from 'expo-router';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 
 import { colors, portalBox, spacing } from '@/constants/theme';
 import { getArtistById } from '@/lib/demoData';
@@ -22,7 +22,11 @@ export function RecentlyFeaturedList({ tracks }: RecentlyFeaturedListProps) {
         const artist = getArtistById(track.artistId);
         return (
           <Link key={track.id} href={`/artist/${track.artistId}`} asChild>
-            <Pressable style={({ pressed }) => [styles.row, pressed && styles.pressed]}>
+            <Pressable
+              style={({ pressed }): StyleProp<ViewStyle> =>
+                StyleSheet.flatten([styles.row, pressed && styles.pressed])
+              }
+            >
               <View style={styles.thumb}>
                 <Text style={styles.thumbMark}>
                   {track.artistName.charAt(0)}

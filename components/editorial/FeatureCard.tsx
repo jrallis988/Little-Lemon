@@ -29,9 +29,11 @@ export function FeatureCard({ tile, style, minHeight = 140 }: FeatureCardProps) 
     tile.trackId ? `/track/${tile.trackId}` : `/artist/${tile.artistId}`
   ) as Href;
 
+  const cardStyle = StyleSheet.flatten([styles.card, { minHeight }, style]);
+
   return (
     <Link href={href} asChild>
-      <Pressable style={[styles.card, { minHeight }, style]}>
+      <Pressable style={cardStyle}>
         <LinearGradient colors={tones} style={StyleSheet.absoluteFill} />
         <View style={styles.scan} />
         <View style={styles.monogramWrap}>

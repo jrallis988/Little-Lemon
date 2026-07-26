@@ -50,7 +50,7 @@ export function PortalHeader() {
           </Pressable>
         </Link>
         <Link href="/(auth)/login" asChild>
-          <Pressable style={[styles.authBtn, styles.authBtnGhost]}>
+          <Pressable style={StyleSheet.flatten([styles.authBtn, styles.authBtnGhost])}>
             <Text style={styles.authTextGhost}>Log In</Text>
           </Pressable>
         </Link>

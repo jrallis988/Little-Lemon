@@ -1,5 +1,5 @@
 import { Link } from 'expo-router';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 
 import { colors, portalBox, spacing } from '@/constants/theme';
 import type { Track } from '@/types/models';
@@ -23,7 +23,11 @@ export function ListeningList({
       </View>
       {tracks.map((track) => (
         <Link key={track.id} href={`/track/${track.id}`} asChild>
-          <Pressable style={({ pressed }) => [styles.row, pressed && styles.pressed]}>
+          <Pressable
+            style={({ pressed }): StyleProp<ViewStyle> =>
+              StyleSheet.flatten([styles.row, pressed && styles.pressed])
+            }
+          >
             <View style={styles.avatar}>
               <Text style={styles.avatarMark}>
                 {track.artistName.charAt(0)}

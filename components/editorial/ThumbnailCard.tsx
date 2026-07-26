@@ -16,7 +16,11 @@ type ThumbnailCardProps = {
 export function ThumbnailCard({ track, rank, compact = false }: ThumbnailCardProps) {
   return (
     <Link href={`/track/${track.id}`} asChild>
-      <Pressable style={({ pressed }) => [styles.row, pressed && styles.pressed]}>
+      <Pressable
+        style={({ pressed }) =>
+          StyleSheet.flatten([styles.row, pressed && styles.pressed])
+        }
+      >
         {rank != null ? (
           <Text style={styles.rank}>{String(rank).padStart(2, '0')}</Text>
         ) : null}
