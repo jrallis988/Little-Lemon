@@ -1,0 +1,31 @@
+{
+  "store_number": "4821",
+  "store_name": "Downtown Retail #4821",
+  "timezone": "America/New_York",
+  "currency": "USD",
+  "register_count": 4,
+  "safe_float": 500.00,
+  "drawer_float": 200.00,
+  "deposit_tolerance": 0.05,
+  "staging_zones": ["A1", "A2", "B1", "B2", "DAMAGED", "HOLD"],
+  "sku_map": {
+    "SKU-1001": {"name": "Packing Tape 2in", "tier": "supply", "unit": "roll"},
+    "SKU-1002": {"name": "Security Tags (100ct)", "tier": "supply", "unit": "pack"},
+    "SKU-1003": {"name": "Markdown Labels (500ct)", "tier": "supply", "unit": "pack"},
+    "SKU-2001": {"name": "Cotton Tee - Black M", "tier": "apparel", "unit": "ea"},
+    "SKU-2002": {"name": "Cotton Tee - Black L", "tier": "apparel", "unit": "ea"},
+    "SKU-2003": {"name": "Denim Jean - 32/30", "tier": "apparel", "unit": "ea"},
+    "SKU-3001": {"name": "Ceramic Mug 12oz", "tier": "home", "unit": "ea"},
+    "SKU-3002": {"name": "Kitchen Towel Set", "tier": "home", "unit": "set"},
+    "SKU-4001": {"name": "AA Batteries 8pk", "tier": "hardlines", "unit": "pack"},
+    "SKU-4002": {"name": "USB-C Cable 6ft", "tier": "hardlines", "unit": "ea"}
+  },
+  "tier_defaults": {
+    "apparel": {"damage_threshold_pct": 2.0, "overage_alert": true},
+    "home": {"damage_threshold_pct": 3.0, "overage_alert": true},
+    "hardlines": {"damage_threshold_pct": 1.5, "overage_alert": true},
+    "supply": {"damage_threshold_pct": 5.0, "overage_alert": false}
+  },
+  "ledger_path": "data/ledger.enc",
+  "key_path": "data/.thomas.key"
+}

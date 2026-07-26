@@ -1,0 +1,8 @@
+sku,expected_qty,received_qty,damaged_qty,carton_id,pallet_tag,notes
+SKU-2001,24,24,0,C-100,P-77,
+SKU-2002,24,20,0,C-101,P-77,short carton
+SKU-2003,12,12,1,C-102,P-77,crushed corner
+SKU-3001,18,18,0,C-200,P-78,
+SKU-3002,6,8,0,C-201,P-78,extra cases
+SKU-4001,30,0,0,C-300,P-79,not on truck
+SKU-4002,15,15,0,C-301,P-79,
