@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { legalLinks } from "../data/siteContent";
 
 function Footer() {
   return (
@@ -23,10 +24,13 @@ function Footer() {
                 <Link to="/admissions">Admissions &amp; Aid</Link>
               </li>
               <li>
-                <Link to="/about">About GBCC</Link>
+                <Link to="/student-experience">Student Experience</Link>
               </li>
               <li>
-                <Link to="/contact">Visit Campus</Link>
+                <Link to="/workforce">Workforce Development</Link>
+              </li>
+              <li>
+                <Link to="/news">News</Link>
               </li>
             </ul>
           </div>
@@ -49,13 +53,24 @@ function Footer() {
               <li>Mon–Thu: 7:00am – 9:00pm</li>
               <li>Friday: 7:00am – 4:00pm</li>
               <li>Sat–Sun: Closed</li>
+              <li>
+                <Link to="/contact">Directions</Link>
+              </li>
             </ul>
           </div>
         </div>
       </div>
       <div className="footer-bottom">
         <p>© {new Date().getFullYear()} Great Bay Community College</p>
-        <p>A member of the Community College System of New Hampshire</p>
+        <ul className="legal-links">
+          {legalLinks.map((link) => (
+            <li key={link.label}>
+              <a href={link.href} target="_blank" rel="noreferrer">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
     </footer>
   );

@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import { useMemo, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
 import {
   focusAreas,
   locations,
@@ -15,7 +15,18 @@ const emptyFilters = {
 };
 
 function Academics() {
-  const [filters, setFilters] = useState(emptyFilters);
+  const [searchParams] = useSearchParams();
+  const [filters, setFilters] = useState(() => ({
+    ...emptyFilters,
+    focus: searchParams.get("focus") || "all",
+  }));
+
+  useEffect(() => {
+    const focus = searchParams.get("focus");
+    if (focus) {
+      setFilters((current) => ({ ...current, focus }));
+    }
+  }, [searchParams]);
 
   const focusLabels = useMemo(
     () =>
@@ -186,16 +197,12 @@ function Academics() {
                         .join(" · ")}
                     </p>
                     <p className="program-location">{program.location} Campus</p>
-                    {program.url ? (
-                      <a
-                        className="text-link"
-                        href={program.url}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        View on greatbay.edu
-                      </a>
-                    ) : null}
+                    <Link
+                      className="text-link"
+                      to={`/academics/programs/${program.id}`}
+                    >
+                      View program
+                    </Link>
                   </div>
                 </article>
               ))}

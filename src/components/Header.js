@@ -2,10 +2,41 @@ import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 
 const navItems = [
-  { to: "/academics", label: "Academics" },
-  { to: "/admissions", label: "Admissions" },
-  { to: "/about", label: "About" },
-  { to: "/contact", label: "Contact" },
+  {
+    label: "Academics",
+    to: "/academics",
+    children: [
+      { to: "/academics", label: "Our Programs" },
+      { to: "/admissions/how-to-apply", label: "Registration Path" },
+    ],
+  },
+  {
+    label: "Admissions & Aid",
+    to: "/admissions",
+    children: [
+      { to: "/admissions/how-to-apply", label: "How to Apply" },
+      { to: "/admissions/visit", label: "Visit Campus" },
+      { to: "/admissions/tuition", label: "Tuition" },
+      { to: "/admissions/financial-aid", label: "Financial Aid" },
+    ],
+  },
+  {
+    label: "Student Experience",
+    to: "/student-experience",
+  },
+  {
+    label: "Workforce",
+    to: "/workforce",
+  },
+  {
+    label: "About",
+    to: "/about",
+    children: [
+      { to: "/about", label: "Mission & Values" },
+      { to: "/news", label: "News" },
+      { to: "/contact", label: "Hours & Directions" },
+    ],
+  },
 ];
 
 function Header() {
@@ -28,6 +59,21 @@ function Header() {
 
   return (
     <header className={`site-header ${scrolled ? "is-scrolled" : ""}`}>
+      <div className="utility-bar">
+        <div className="utility-inner">
+          <a href="https://www.greatbay.edu/about/giving/" target="_blank" rel="noreferrer">
+            Donate
+          </a>
+          <Link to="/contact">Contact</Link>
+          <a href="https://www.greatbay.edu/current-students/" target="_blank" rel="noreferrer">
+            Current Students
+          </a>
+          <a href="https://mygbcc.greatbay.edu/" target="_blank" rel="noreferrer">
+            MyGBCC
+          </a>
+        </div>
+      </div>
+
       <div className="header-inner">
         <Link to="/" className="brand" onClick={() => setOpen(false)}>
           <span className="brand-mark" aria-hidden="true">
@@ -57,16 +103,34 @@ function Header() {
           className={`primary-nav ${open ? "is-open" : ""}`}
           aria-label="Primary"
         >
-          <ul>
+          <ul className="nav-list">
             {navItems.map((item) => (
-              <li key={item.to}>
+              <li
+                key={item.to}
+                className={item.children ? "has-children" : undefined}
+              >
                 <NavLink to={item.to} onClick={() => setOpen(false)}>
                   {item.label}
                 </NavLink>
+                {item.children ? (
+                  <ul className="nav-dropdown">
+                    {item.children.map((child) => (
+                      <li key={child.to + child.label}>
+                        <Link to={child.to} onClick={() => setOpen(false)}>
+                          {child.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
               </li>
             ))}
           </ul>
-          <Link className="btn btn-gold" to="/admissions" onClick={() => setOpen(false)}>
+          <Link
+            className="btn btn-gold"
+            to="/admissions/how-to-apply"
+            onClick={() => setOpen(false)}
+          >
             Apply Now
           </Link>
         </nav>

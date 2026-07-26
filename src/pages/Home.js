@@ -24,7 +24,7 @@ function Home() {
             Hampshire&apos;s Seacoast — with the support to finish strong.
           </p>
           <div className="hero-actions animate-rise delay-3">
-            <Link className="btn btn-gold" to="/admissions">
+            <Link className="btn btn-gold" to="/admissions/how-to-apply">
               Begin the Process
             </Link>
             <Link className="btn btn-ghost" to="/academics">
@@ -131,11 +131,11 @@ function Home() {
             </p>
           </div>
           <div className="cta-actions">
-            <Link className="btn btn-gold" to="/admissions">
+            <Link className="btn btn-gold" to="/admissions/how-to-apply">
               Apply Now
             </Link>
-            <Link className="btn btn-ghost-light" to="/contact">
-              Request Info
+            <Link className="btn btn-ghost-light" to="/admissions/visit">
+              Visit Campus
             </Link>
           </div>
         </div>
