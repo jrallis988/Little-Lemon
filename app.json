@@ -10,10 +10,7 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.staticvolume.app",
-      "infoPlist": {
-        "UIBackgroundModes": ["audio"]
-      }
+      "bundleIdentifier": "com.staticvolume.app"
     },
     "android": {
       "adaptiveIcon": {
@@ -41,7 +38,6 @@
         }
       ],
       "expo-secure-store",
-      "expo-av",
       "expo-font"
     ],
     "experiments": {

@@ -1,66 +1,10 @@
-import { useLocalSearchParams } from 'expo-router';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Link, useLocalSearchParams } from 'expo-router';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import { WaveformPlayer } from '@/components/audio/WaveformPlayer';
 import { StaticBackground } from '@/components/ui/StaticBackground';
-import { colors, spacing, typography, fonts } from '@/constants/theme';
-import { useAudioBarInset } from '@/hooks/useAudioBarInset';
+import { colors, fonts, portalBox, spacing } from '@/constants/theme';
+import { useBottomInset } from '@/hooks/useBottomInset';
 import { DEMO_COMMENTS, DEMO_TRACKS } from '@/lib/demoData';
-
-/**
- * Track detail with waveform-anchored public comments.
- * Play counts stay private to the artist — only downloads / reposts surface here.
- */
-export default function TrackScreen() {
-  const { id } = useLocalSearchParams<{ id: string }>();
-  const bottomInset = useAudioBarInset();
-  const track = DEMO_TRACKS.find((t) => t.id === id) ?? DEMO_TRACKS[0];
-  const comments = DEMO_COMMENTS.filter((c) => c.trackId === track.id);
-
-  return (
-    <StaticBackground>
-      <ScrollView
-        contentContainerStyle={[styles.content, { paddingBottom: bottomInset }]}
-      >
-        <Text style={styles.kicker}>PHYSICAL MEDIA FRAME</Text>
-        <View style={styles.heroArt}>
-          <Text style={styles.heroMark}>STATICVOLUME</Text>
-          <Text style={styles.heroTitle}>{track.title}</Text>
-        </View>
-
-        <WaveformPlayer track={track} comments={comments} />
-
-        <View style={styles.actions}>
-          <View style={styles.action}>
-            <Text style={styles.actionValue}>{track.downloadCount.toLocaleString()}</Text>
-            <Text style={styles.actionLabel}>DOWNLOADS</Text>
-          </View>
-          <View style={styles.action}>
-            <Text style={styles.actionValue}>{track.repostCount.toLocaleString()}</Text>
-            <Text style={styles.actionLabel}>REPOSTS</Text>
-          </View>
-        </View>
-        <Text style={styles.privateNote}>
-          Play counts remain private to the artist. No likes. No hearts.
-        </Text>
-
-        <Text style={styles.section}>WAVEFORM COMMENTS</Text>
-        {comments.length === 0 ? (
-          <Text style={styles.empty}>No comments pinned to this signal yet.</Text>
-        ) : (
-          comments.map((comment) => (
-            <View key={comment.id} style={styles.comment}>
-              <Text style={styles.commentMeta}>
-                {comment.displayName} · {formatStamp(comment.timestampMs)}
-              </Text>
-              <Text style={styles.commentBody}>{comment.body}</Text>
-            </View>
-          ))
-        )}
-      </ScrollView>
-    </StaticBackground>
-  );
-}
 
 function formatStamp(ms: number): string {
   const totalSec = Math.floor(ms / 1000);
@@ -69,79 +13,229 @@ function formatStamp(ms: number): string {
   return `${m}:${s.toString().padStart(2, '0')}`;
 }
 
+/**
+ * Track detail — download/repost focused discovery page (no player).
+ */
+export default function TrackScreen() {
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const bottomInset = useBottomInset();
+  const track = DEMO_TRACKS.find((t) => t.id === id) ?? DEMO_TRACKS[0];
+  const comments = DEMO_COMMENTS.filter((c) => c.trackId === track.id);
+
+  return (
+    <StaticBackground>
+      <ScrollView
+        contentContainerStyle={[styles.content, { paddingBottom: bottomInset }]}
+      >
+        <View style={styles.hero}>
+          <View style={styles.art}>
+            <Text style={styles.artMark}>{track.artistName.charAt(0)}</Text>
+          </View>
+          <View style={styles.heroMeta}>
+            <Text style={styles.title}>{track.title}</Text>
+            <Link href={`/artist/${track.artistId}`}>
+              <Text style={styles.artist}>{track.artistName}</Text>
+            </Link>
+            <Text style={styles.scene}>
+              {[track.scene, track.geography].filter(Boolean).join(' · ')}
+            </Text>
+          </View>
+        </View>
+
+        <View style={styles.statsBox}>
+          <View style={styles.stat}>
+            <Text style={styles.statValue}>
+              {track.downloadCount.toLocaleString()}
+            </Text>
+            <Text style={styles.statLabel}>Downloads</Text>
+          </View>
+          <View style={styles.stat}>
+            <Text style={styles.statValue}>
+              {track.repostCount.toLocaleString()}
+            </Text>
+            <Text style={styles.statLabel}>Reposts</Text>
+          </View>
+        </View>
+
+        <View style={styles.actions}>
+          <Pressable style={styles.ctaPrimary}>
+            <Text style={styles.ctaPrimaryText}>Download</Text>
+          </Pressable>
+          <Pressable style={styles.ctaSecondary}>
+            <Text style={styles.ctaSecondaryText}>Repost</Text>
+          </Pressable>
+        </View>
+
+        <Text style={styles.note}>
+          Play counts stay private to the artist. No likes. Downloads are the
+          public signal.
+        </Text>
+
+        <View style={styles.panel}>
+          <View style={styles.panelHeader}>
+            <Text style={styles.panelTitle}>Comments</Text>
+          </View>
+          {comments.length === 0 ? (
+            <Text style={styles.empty}>No comments yet.</Text>
+          ) : (
+            comments.map((comment) => (
+              <View key={comment.id} style={styles.comment}>
+                <Text style={styles.commentMeta}>
+                  {comment.displayName}
+                  {comment.timestampMs > 0
+                    ? ` · ${formatStamp(comment.timestampMs)}`
+                    : ''}
+                </Text>
+                <Text style={styles.commentBody}>{comment.body}</Text>
+              </View>
+            ))
+          )}
+        </View>
+      </ScrollView>
+    </StaticBackground>
+  );
+}
+
 const styles = StyleSheet.create({
   content: {
-    paddingHorizontal: spacing.lg,
-    paddingTop: spacing.lg,
+    paddingHorizontal: spacing.md,
+    paddingTop: spacing.md,
     gap: spacing.md,
   },
-  kicker: {
-    ...typography.monoTiny,
-    color: colors.copper,
+  hero: {
+    ...portalBox,
+    flexDirection: 'row',
+    gap: spacing.md,
+    padding: spacing.sm,
   },
-  heroArt: {
-    height: 200,
-    backgroundColor: colors.surface,
+  art: {
+    width: 112,
+    height: 112,
+    backgroundColor: colors.surfaceRaised,
     borderWidth: 1,
     borderColor: colors.border,
     alignItems: 'center',
     justifyContent: 'center',
-    gap: spacing.sm,
-    marginBottom: spacing.sm,
   },
-  heroMark: {
-    ...typography.monoTiny,
-    color: colors.phosphorDim,
-    letterSpacing: 3,
+  artMark: {
+    fontFamily: fonts.condensedBold,
+    fontSize: 36,
+    color: colors.textDim,
   },
-  heroTitle: {
-    ...typography.headline,
+  heroMeta: {
+    flex: 1,
+    justifyContent: 'center',
+    gap: 4,
+  },
+  title: {
+    fontFamily: fonts.sansBold,
+    fontSize: 22,
     color: colors.text,
-    textAlign: 'center',
-    paddingHorizontal: spacing.md,
+  },
+  artist: {
+    fontFamily: fonts.sansBold,
+    fontSize: 15,
+    color: colors.link,
+  },
+  scene: {
+    fontFamily: fonts.sans,
+    fontSize: 13,
+    color: colors.textMuted,
+  },
+  statsBox: {
+    ...portalBox,
+    flexDirection: 'row',
+    paddingVertical: spacing.md,
+  },
+  stat: {
+    flex: 1,
+    alignItems: 'center',
+    gap: 2,
+  },
+  statValue: {
+    fontFamily: fonts.sansBold,
+    fontSize: 22,
+    color: colors.text,
+  },
+  statLabel: {
+    fontFamily: fonts.sans,
+    fontSize: 12,
+    color: colors.textMuted,
   },
   actions: {
     flexDirection: 'row',
-    gap: spacing.xl,
-    marginTop: spacing.sm,
+    gap: spacing.sm,
   },
-  action: {
-    gap: 2,
+  ctaPrimary: {
+    flex: 1,
+    backgroundColor: colors.link,
+    paddingVertical: 12,
+    alignItems: 'center',
   },
-  actionValue: {
-    ...typography.headline,
-    color: colors.copper,
+  ctaPrimaryText: {
+    fontFamily: fonts.sansBold,
+    fontSize: 14,
+    color: '#FFFFFF',
   },
-  actionLabel: {
-    ...typography.monoTiny,
-    color: colors.textDim,
+  ctaSecondary: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: colors.border,
+    backgroundColor: colors.surface,
+    paddingVertical: 12,
+    alignItems: 'center',
   },
-  privateNote: {
-    ...typography.caption,
+  ctaSecondaryText: {
+    fontFamily: fonts.sansBold,
+    fontSize: 14,
+    color: colors.text,
+  },
+  note: {
+    fontFamily: fonts.sans,
+    fontSize: 13,
     color: colors.textMuted,
+    lineHeight: 18,
   },
-  section: {
-    ...typography.monoTiny,
-    color: colors.textDim,
-    letterSpacing: 2,
-    marginTop: spacing.lg,
+  panel: {
+    ...portalBox,
+    overflow: 'hidden',
+  },
+  panelHeader: {
+    backgroundColor: colors.surfaceRaised,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: 8,
+  },
+  panelTitle: {
+    fontFamily: fonts.sansBold,
+    fontSize: 12,
+    letterSpacing: 0.4,
+    color: colors.text,
+    textTransform: 'uppercase',
   },
   empty: {
-    ...typography.body,
+    fontFamily: fonts.sans,
+    fontSize: 13,
     color: colors.textDim,
+    padding: spacing.md,
   },
   comment: {
+    paddingHorizontal: spacing.sm,
     paddingVertical: spacing.sm,
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: 1,
     borderBottomColor: colors.borderSubtle,
     gap: 4,
   },
   commentMeta: {
-    ...typography.monoTiny,
-    color: colors.phosphorDim,
+    fontFamily: fonts.sansBold,
+    fontSize: 12,
+    color: colors.link,
   },
   commentBody: {
-    ...typography.body,
+    fontFamily: fonts.sans,
+    fontSize: 14,
     color: colors.text,
+    lineHeight: 20,
   },
 });

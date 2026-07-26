@@ -1,33 +1,37 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Link } from 'expo-router';
 
-import { WaveformPlayer } from '@/components/audio/WaveformPlayer';
+import { TrackListing } from '@/components/tracks/TrackListing';
 import { StaticBackground } from '@/components/ui/StaticBackground';
-import { colors, spacing, typography, fonts } from '@/constants/theme';
-import { useAudioBarInset } from '@/hooks/useAudioBarInset';
+import { colors, fonts, spacing } from '@/constants/theme';
+import { useBottomInset } from '@/hooks/useBottomInset';
 import { DEMO_TRACKS } from '@/lib/demoData';
 
 /**
- * Chronological following feed — newest first, no algorithmic reorder.
+ * Chronological following feed — newest first, discovery only.
  */
 export default function FollowingScreen() {
   const feed = [...DEMO_TRACKS].reverse();
-  const bottomInset = useAudioBarInset(spacing.tabBar);
+  const bottomInset = useBottomInset(spacing.tabBar);
 
   return (
     <StaticBackground>
-      <ScrollView contentContainerStyle={[styles.content, { paddingBottom: bottomInset }]}>
-        <Text style={styles.headline}>FOLLOWING</Text>
+      <ScrollView
+        contentContainerStyle={[styles.content, { paddingBottom: bottomInset }]}
+      >
+        <Text style={styles.headline}>Following</Text>
         <Text style={styles.lede}>
-          Strictly chronological. What your artists posted, in the order it hit the wire.
+          Chronological posts from artists you follow. No algorithmic reorder.
         </Text>
 
         {feed.map((track) => (
           <View key={track.id} style={styles.item}>
-            <Text style={styles.stamp}>NEW TRANSMISSION</Text>
-            <WaveformPlayer track={track} />
+            <Text style={styles.stamp}>New transmission</Text>
+            <TrackListing track={track} />
             <Link href={`/artist/${track.artistId}`}>
-              <Text style={styles.artistLink}>Open {track.artistName} →</Text>
+              <Text style={styles.artistLink}>
+                Open {track.artistName} →
+              </Text>
             </Link>
           </View>
         ))}
@@ -42,28 +46,31 @@ const styles = StyleSheet.create({
     paddingTop: spacing.lg,
   },
   headline: {
-    ...typography.headline,
+    fontFamily: fonts.sansBold,
+    fontSize: 22,
     color: colors.text,
     marginBottom: spacing.xs,
   },
   lede: {
-    ...typography.body,
+    fontFamily: fonts.sans,
+    fontSize: 14,
     color: colors.textMuted,
     marginBottom: spacing.lg,
+    lineHeight: 20,
   },
   item: {
-    marginBottom: spacing.xl,
-    paddingBottom: spacing.lg,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: colors.borderSubtle,
+    marginBottom: spacing.lg,
     gap: spacing.sm,
   },
   stamp: {
-    ...typography.monoTiny,
-    color: colors.copper,
+    fontFamily: fonts.sansBold,
+    fontSize: 11,
+    color: colors.textDim,
+    textTransform: 'uppercase',
   },
   artistLink: {
-    ...typography.caption,
-    color: colors.phosphorDim,
+    fontFamily: fonts.sans,
+    fontSize: 13,
+    color: colors.link,
   },
 });

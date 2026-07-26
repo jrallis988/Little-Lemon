@@ -25,7 +25,8 @@ export type Track = {
   title: string;
   artistId: string;
   artistName: string;
-  audioUrl: string;
+  /** Downloadable file URL (not for in-app streaming) */
+  downloadUrl: string;
   artworkUrl?: string | null;
   durationMs: number;
   downloadCount: number;
@@ -34,13 +35,13 @@ export type Track = {
   geography?: string | null;
 };
 
-export type WaveformComment = {
+export type TrackComment = {
   id: string;
   trackId: string;
   userId: string;
   displayName: string;
   body: string;
-  /** Milliseconds into the track */
+  /** Optional reference offset in the track (ms); not used for playback UI */
   timestampMs: number;
   createdAt: string;
 };

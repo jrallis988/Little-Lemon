@@ -4,7 +4,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { BandCard } from '@/components/ui/BandCard';
 import { StaticBackground } from '@/components/ui/StaticBackground';
 import { colors, spacing, typography, fonts } from '@/constants/theme';
-import { useAudioBarInset } from '@/hooks/useAudioBarInset';
+import { useBottomInset } from '@/hooks/useBottomInset';
 import { DEMO_ARTISTS, DEMO_TRACKS, GEOGRAPHIES, SCENES } from '@/lib/demoData';
 
 /**
@@ -13,7 +13,7 @@ import { DEMO_ARTISTS, DEMO_TRACKS, GEOGRAPHIES, SCENES } from '@/lib/demoData';
 export default function ExploreScreen() {
   const [scene, setScene] = useState<string | null>(null);
   const [geo, setGeo] = useState<string | null>(null);
-  const bottomInset = useAudioBarInset(spacing.tabBar);
+  const bottomInset = useBottomInset(spacing.tabBar);
 
   const results = useMemo(() => {
     return DEMO_ARTISTS.filter((artist) => {

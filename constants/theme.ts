@@ -96,7 +96,6 @@ export const spacing = {
   lg: 24,
   xl: 32,
   xxl: 48,
-  audioBar: 64,
   tabBar: 56,
 } as const;
 

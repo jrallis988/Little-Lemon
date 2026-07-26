@@ -2,7 +2,6 @@ import { Tabs } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { colors, fonts, spacing } from '@/constants/theme';
-import { useAudioStore } from '@/store/useAudioStore';
 
 function TabLabel({ label, focused }: { label: string; focused: boolean }) {
   return (
@@ -11,8 +10,6 @@ function TabLabel({ label, focused }: { label: string; focused: boolean }) {
 }
 
 export default function MainLayout() {
-  const hasTrack = useAudioStore((s) => s.currentTrack != null);
-
   return (
     <View style={styles.root}>
       <Tabs
@@ -33,7 +30,6 @@ export default function MainLayout() {
             height: spacing.tabBar + 12,
             paddingBottom: 8,
             paddingTop: 6,
-            marginBottom: hasTrack ? spacing.audioBar : 0,
           },
           tabBarActiveTintColor: colors.link,
           tabBarInactiveTintColor: colors.textDim,

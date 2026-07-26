@@ -4,6 +4,8 @@ Mobile-native artist discovery and direct-to-fan distribution — a genre-agnost
 
 Built with **Expo (SDK 57)**, **Expo Router**, **Supabase**, **Zustand**, and **TanStack Query**.
 
+StaticVolume is **not a music player**. Discovery, downloads, and reposts are the product surface — no sticky player, waveforms, or in-app streaming UI.
+
 ## Stack
 
 | Layer | Choice |
@@ -11,8 +13,6 @@ Built with **Expo (SDK 57)**, **Expo Router**, **Supabase**, **Zustand**, and **
 | Platform | iOS & Android via Expo |
 | Language | TypeScript (strict) |
 | Routing | Expo Router (file-based) |
-| Audio | Expo AV (background + lockscreen ready) |
-| Motion | React Native Reanimated |
 | Backend | Supabase (Auth, Postgres, Storage, Realtime, Edge Functions) |
 | Client state | Zustand |
 | Server state | TanStack Query |
@@ -22,21 +22,24 @@ Built with **Expo (SDK 57)**, **Expo Router**, **Supabase**, **Zustand**, and **
 ```
 app/
 ├── (auth)/          # login, signup (artist | listener)
-├── (main)/          # editorial, explore, following, profile + tab shell
-├── artist/[id].tsx  # EPK profile
-└── track/[id].tsx   # waveform + timestamped comments
+├── (main)/          # editorial home, artists, scene, following, profile
+├── artist/[id].tsx  # artist archive / EPK
+└── track/[id].tsx   # download + repost detail, comments
 components/
-├── audio/           # GlobalAudioBar, WaveformPlayer
+├── editorial/       # portal header, mosaic, charts
+├── directory/       # A–Z artist directory
+├── tracks/          # discovery track listings
 └── ui/              # StaticBackground, BandCard
-store/               # useAudioStore, useUserStore
+store/               # useUserStore
 lib/                 # supabase client, demo data
-constants/theme.ts   # warm off-black palette + SpaceMono type
+constants/theme.ts   # PureVolume light portal palette + Barlow
 ```
 
 ## Social model (MVP rules)
 
 - **No likes / hearts** — engagement is Downloads and Reposts; play counts stay private to artists.
-- **Comments**: public, waveform-timestamped, artist-moderated.
+- **No in-app music player** — tracks link to download/repost pages, not a streaming queue.
+- **Comments**: public, artist-moderated.
 - **DMs**: artist ↔ fan only, unlocked after download or repost.
 - **Feeds**: chronological following + human-curated editorial home (no algorithmic feed).
 - **Discovery**: scene + geography filters. No global rankings or verified badges.
@@ -56,4 +59,4 @@ Signup stores `display_name` and `role` (`artist` | `listener`) in Supabase Auth
 
 ## Visual identity
 
-Warm off-black canvases, CRT phosphor amber accents, Space Mono typography, grain/scanline overlays, and analog-style waveforms — never Spotify green or glassmorphism.
+Light PureVolume-style portal: white / `#F0F0F0` surfaces, black header, blue links, Barlow / Barlow Condensed — editorial discovery, not a streaming app chrome.

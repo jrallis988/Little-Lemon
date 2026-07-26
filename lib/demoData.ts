@@ -1,4 +1,4 @@
-import type { Track, UserProfile, WaveformComment } from '@/types/models';
+import type { Track, UserProfile, TrackComment } from '@/types/models';
 
 /** Placeholder editorial / discovery content for scaffolding UI */
 export const DEMO_ARTISTS: UserProfile[] = [
@@ -192,7 +192,7 @@ export const DEMO_TRACKS: Track[] = [
     title: 'Snow on the Tape',
     artistId: 'artist-static-bloom',
     artistName: 'Static Bloom',
-    audioUrl: '',
+    downloadUrl: '',
     durationMs: 214000,
     downloadCount: 1842,
     repostCount: 211,
@@ -204,7 +204,7 @@ export const DEMO_TRACKS: Track[] = [
     title: 'Shift Change',
     artistId: 'artist-signal-decay',
     artistName: 'Signal Decay',
-    audioUrl: '',
+    downloadUrl: '',
     durationMs: 198000,
     downloadCount: 967,
     repostCount: 88,
@@ -216,7 +216,7 @@ export const DEMO_TRACKS: Track[] = [
     title: 'Exit Ramp',
     artistId: 'artist-north-exit',
     artistName: 'North Exit',
-    audioUrl: '',
+    downloadUrl: '',
     durationMs: 156000,
     downloadCount: 540,
     repostCount: 73,
@@ -228,7 +228,7 @@ export const DEMO_TRACKS: Track[] = [
     title: 'Pixel Bruise',
     artistId: 'artist-chrome-petal',
     artistName: 'Chrome Petal',
-    audioUrl: '',
+    downloadUrl: '',
     durationMs: 172000,
     downloadCount: 3201,
     repostCount: 419,
@@ -240,7 +240,7 @@ export const DEMO_TRACKS: Track[] = [
     title: 'Bus Route 7',
     artistId: 'artist-amber-circuit',
     artistName: 'Amber Circuit',
-    audioUrl: '',
+    downloadUrl: '',
     durationMs: 188000,
     downloadCount: 1204,
     repostCount: 156,
@@ -252,7 +252,7 @@ export const DEMO_TRACKS: Track[] = [
     title: 'Sodium Glow',
     artistId: 'artist-lot-lights',
     artistName: 'Lot Lights',
-    audioUrl: '',
+    downloadUrl: '',
     durationMs: 201000,
     downloadCount: 802,
     repostCount: 94,
@@ -264,7 +264,7 @@ export const DEMO_TRACKS: Track[] = [
     title: 'Blown Cone',
     artistId: 'artist-blackout-relay',
     artistName: 'Blackout Relay',
-    audioUrl: '',
+    downloadUrl: '',
     durationMs: 142000,
     downloadCount: 1102,
     repostCount: 201,
@@ -276,7 +276,7 @@ export const DEMO_TRACKS: Track[] = [
     title: 'Porch Mic',
     artistId: 'artist-drift-kiln',
     artistName: 'Drift Kiln',
-    audioUrl: '',
+    downloadUrl: '',
     durationMs: 226000,
     downloadCount: 388,
     repostCount: 41,
@@ -396,7 +396,7 @@ export const RECENTLY_FEATURED = [
   'track-shift-change',
 ] as const;
 
-export const DEMO_COMMENTS: WaveformComment[] = [
+export const DEMO_COMMENTS: TrackComment[] = [
   {
     id: 'c1',
     trackId: 'track-snow-on-the-tape',

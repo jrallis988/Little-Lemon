@@ -2,18 +2,18 @@ import { useLocalSearchParams } from 'expo-router';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { ArtistArchiveMeta } from '@/components/artist/ArtistArchiveMeta';
-import { WaveformPlayer } from '@/components/audio/WaveformPlayer';
+import { TrackListing } from '@/components/tracks/TrackListing';
 import { StaticBackground } from '@/components/ui/StaticBackground';
-import { colors, portalBox, spacing, fonts } from '@/constants/theme';
-import { useAudioBarInset } from '@/hooks/useAudioBarInset';
+import { colors, fonts, portalBox, spacing } from '@/constants/theme';
+import { useBottomInset } from '@/hooks/useBottomInset';
 import { DEMO_ARTISTS, DEMO_TRACKS } from '@/lib/demoData';
 
 /**
- * Artist archive page — terminal dossier + indexed tracks.
+ * Artist archive page — dossier + track listings (no player).
  */
 export default function ArtistScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const bottomInset = useAudioBarInset();
+  const bottomInset = useBottomInset();
   const artist =
     DEMO_ARTISTS.find((a) => a.id === id) ??
     ({
@@ -45,13 +45,13 @@ export default function ArtistScreen() {
             </Text>
           </View>
           <View style={styles.headerMeta}>
-            <Text style={styles.kicker}>ARTIST RECORD</Text>
+            <Text style={styles.kicker}>Artist</Text>
             <Text style={styles.name}>{artist.displayName}</Text>
             <Text style={styles.rawStat}>
-              STATUS: {artist.status ?? 'INDEPENDENT'}
+              Status: {artist.status ?? 'INDEPENDENT'}
             </Text>
             <Text style={styles.rawStat}>
-              TOTAL DOWNLOADS: {totalDownloads.toLocaleString()}
+              Total downloads: {totalDownloads.toLocaleString()}
             </Text>
           </View>
         </View>
@@ -65,37 +65,33 @@ export default function ArtistScreen() {
 
         <View style={styles.sectionBox}>
           <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>TRACKS INDEXED</Text>
+            <Text style={styles.sectionTitle}>Tracks</Text>
             <Text style={styles.sectionCount}>{tracks.length}</Text>
           </View>
+          {tracks.length === 0 ? (
+            <Text style={styles.empty}>No tracks indexed.</Text>
+          ) : (
+            tracks.map((track) => (
+              <TrackListing key={track.id} track={track} />
+            ))
+          )}
+        </View>
+
+        <View style={styles.sectionBox}>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Shows</Text>
+          </View>
           <View style={styles.sectionBody}>
-            {tracks.length === 0 ? (
-              <Text style={styles.empty}>NO TRACKS IN ARCHIVE.</Text>
-            ) : (
-              tracks.map((track) => (
-                <View key={track.id} style={styles.trackBlock}>
-                  <WaveformPlayer track={track} />
-                </View>
-              ))
-            )}
+            <Text style={styles.empty}>No dates loaded.</Text>
           </View>
         </View>
 
         <View style={styles.sectionBox}>
           <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>SHOWS</Text>
+            <Text style={styles.sectionTitle}>Artist Wall</Text>
           </View>
           <View style={styles.sectionBody}>
-            <Text style={styles.empty}>NO DATES LOADED.</Text>
-          </View>
-        </View>
-
-        <View style={styles.sectionBox}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>ARTIST WALL</Text>
-          </View>
-          <View style={styles.sectionBody}>
-            <Text style={styles.empty}>WALL MODULE: READY / EMPTY.</Text>
+            <Text style={styles.empty}>Wall module ready / empty.</Text>
           </View>
         </View>
       </ScrollView>
@@ -114,7 +110,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: spacing.md,
     padding: spacing.sm,
-    borderColor: colors.accentLine,
   },
   artwork: {
     width: 88,
@@ -126,9 +121,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   artworkMark: {
-    fontFamily: fonts.sans,
+    fontFamily: fonts.condensedBold,
     fontSize: 28,
-    color: colors.phosphorDim,
+    color: colors.textDim,
   },
   headerMeta: {
     flex: 1,
@@ -137,24 +132,19 @@ const styles = StyleSheet.create({
   },
   kicker: {
     fontFamily: fonts.sans,
-    fontSize: 8,
-    letterSpacing: 0.8,
-    color: colors.phosphorDim,
+    fontSize: 11,
+    color: colors.textMuted,
     textTransform: 'uppercase',
   },
   name: {
-    fontFamily: fonts.sans,
-    fontSize: 18,
-    letterSpacing: 0.5,
+    fontFamily: fonts.sansBold,
+    fontSize: 22,
     color: colors.text,
-    textTransform: 'uppercase',
   },
   rawStat: {
     fontFamily: fonts.sans,
-    fontSize: 9,
-    letterSpacing: 0.4,
-    color: colors.phosphor,
-    textTransform: 'uppercase',
+    fontSize: 13,
+    color: colors.textMuted,
   },
   sectionBox: {
     ...portalBox,
@@ -163,39 +153,31 @@ const styles = StyleSheet.create({
   sectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: colors.toolbar,
+    backgroundColor: colors.surfaceRaised,
     borderBottomWidth: 1,
-    borderBottomColor: colors.accentLine,
+    borderBottomColor: colors.border,
     paddingHorizontal: spacing.sm,
-    paddingVertical: 6,
+    paddingVertical: 8,
   },
   sectionTitle: {
-    fontFamily: fonts.sans,
-    fontSize: 9,
-    letterSpacing: 0.8,
-    color: colors.phosphor,
+    fontFamily: fonts.sansBold,
+    fontSize: 12,
+    letterSpacing: 0.4,
+    color: colors.text,
     textTransform: 'uppercase',
   },
   sectionCount: {
     fontFamily: fonts.sans,
-    fontSize: 9,
+    fontSize: 12,
     color: colors.textDim,
   },
   sectionBody: {
     padding: spacing.sm,
   },
-  trackBlock: {
-    marginBottom: spacing.md,
-    borderWidth: 1,
-    borderColor: colors.borderSubtle,
-    padding: spacing.sm,
-    backgroundColor: colors.surface,
-  },
   empty: {
     fontFamily: fonts.sans,
-    fontSize: 10,
-    letterSpacing: 0.3,
+    fontSize: 13,
     color: colors.textDim,
-    textTransform: 'uppercase',
+    padding: spacing.sm,
   },
 });

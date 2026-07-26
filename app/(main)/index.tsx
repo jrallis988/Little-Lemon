@@ -7,7 +7,6 @@ import {
   View,
 } from 'react-native';
 
-import { WaveformPlayer } from '@/components/audio/WaveformPlayer';
 import {
   EditorialSubNav,
   type EditorialTab,
@@ -18,10 +17,9 @@ import { PortalHeader } from '@/components/editorial/PortalHeader';
 import { RecentlyFeaturedList } from '@/components/editorial/RecentlyFeaturedList';
 import { TrackChartRow } from '@/components/editorial/TrackChartRow';
 import { StaticBackground } from '@/components/ui/StaticBackground';
-import { colors, portalBox, spacing, fonts } from '@/constants/theme';
-import { useAudioBarInset } from '@/hooks/useAudioBarInset';
+import { colors, fonts, portalBox, spacing } from '@/constants/theme';
+import { useBottomInset } from '@/hooks/useBottomInset';
 import {
-  DEMO_COMMENTS,
   DEMO_TRACKS,
   EVERYBODY_LISTENING,
   FEATURED_SPOTLIGHT,
@@ -35,22 +33,17 @@ const WIDE = 900;
 const MID = 700;
 
 /**
- * PureVolume-structured editorial homepage:
- * dark portal header → segmented toolbar → featured mosaic →
- * Everybody's Listening | center feed | Recently Featured.
+ * PureVolume-structured editorial homepage — discovery only, no player.
  */
 export default function EditorialScreen() {
   const [tab, setTab] = useState<EditorialTab>('Featured');
   const { width } = useWindowDimensions();
-  const bottomInset = useAudioBarInset(spacing.tabBar);
+  const bottomInset = useBottomInset(spacing.tabBar);
   const isWide = width >= WIDE;
   const isMid = width >= MID;
 
   const spotlightTrack =
     getTrackById(FEATURED_SPOTLIGHT.trackId) ?? DEMO_TRACKS[0];
-  const spotlightComments = DEMO_COMMENTS.filter(
-    (c) => c.trackId === spotlightTrack.id,
-  );
 
   const listening = useMemo(
     () =>
@@ -106,18 +99,6 @@ export default function EditorialScreen() {
 
                 <View style={styles.panel}>
                   <View style={styles.panelHeader}>
-                    <Text style={styles.panelTitle}>NOW PLAYING</Text>
-                  </View>
-                  <View style={styles.panelBody}>
-                    <WaveformPlayer
-                      track={spotlightTrack}
-                      comments={spotlightComments}
-                    />
-                  </View>
-                </View>
-
-                <View style={styles.panel}>
-                  <View style={styles.panelHeader}>
                     <Text style={styles.panelTitle}>LATEST ON THE WIRE</Text>
                   </View>
                   {DEMO_TRACKS.slice(0, 5).map((track, index) => (
@@ -137,14 +118,21 @@ export default function EditorialScreen() {
                   <View style={{ height: spacing.sm }} />
                   <View style={styles.albumBox}>
                     <View style={styles.panelHeader}>
-                      <Text style={styles.panelTitle}>FEATURED ALBUM</Text>
+                      <Text style={styles.panelTitle}>FEATURED RELEASE</Text>
                     </View>
                     <View style={styles.albumArt}>
-                      <Text style={styles.albumMark}>SV</Text>
+                      <Text style={styles.albumMark}>
+                        {spotlightTrack.artistName.charAt(0)}
+                      </Text>
                     </View>
                     <View style={styles.albumMeta}>
-                      <Text style={styles.albumTitle}>Snow on the Tape</Text>
-                      <Text style={styles.albumArtist}>Static Bloom</Text>
+                      <Text style={styles.albumTitle}>{spotlightTrack.title}</Text>
+                      <Text style={styles.albumArtist}>
+                        {spotlightTrack.artistName}
+                      </Text>
+                      <Text style={styles.albumStats}>
+                        {spotlightTrack.downloadCount.toLocaleString()} downloads
+                      </Text>
                     </View>
                   </View>
                 </View>
@@ -252,9 +240,6 @@ const styles = StyleSheet.create({
     color: colors.text,
     textTransform: 'uppercase',
   },
-  panelBody: {
-    padding: spacing.sm,
-  },
   chartWrap: {
     paddingHorizontal: spacing.md,
     paddingTop: spacing.md,
@@ -292,5 +277,10 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: colors.textMuted,
   },
+  albumStats: {
+    fontFamily: fonts.sans,
+    fontSize: 12,
+    color: colors.textDim,
+    marginTop: 4,
+  },
 });
-

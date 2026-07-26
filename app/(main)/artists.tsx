@@ -13,7 +13,7 @@ import { AlphaScrubber } from '@/components/directory/AlphaScrubber';
 import { DirectoryArtistRow } from '@/components/directory/DirectoryArtistRow';
 import { StaticBackground } from '@/components/ui/StaticBackground';
 import { colors, portalBox, spacing, fonts } from '@/constants/theme';
-import { useAudioBarInset } from '@/hooks/useAudioBarInset';
+import { useBottomInset } from '@/hooks/useBottomInset';
 import {
   groupArtistsAlphabetically,
   totalDownloadsForArtist,
@@ -23,7 +23,7 @@ import {
  * Alphabetical artist directory — PureVolume-style A–Z archive browse.
  */
 export default function ArtistsDirectoryScreen() {
-  const bottomInset = useAudioBarInset(spacing.tabBar);
+  const bottomInset = useBottomInset(spacing.tabBar);
   const scrollRef = useRef<ScrollView>(null);
   const sectionOffsets = useRef<Record<string, number>>({});
   const [activeLetter, setActiveLetter] = useState<string | null>(null);

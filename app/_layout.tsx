@@ -13,10 +13,8 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Audio } from 'expo-av';
 import 'react-native-reanimated';
 
-import { GlobalAudioBar } from '@/components/audio/GlobalAudioBar';
 import { colors, fonts } from '@/constants/theme';
 import { useUserStore } from '@/store/useUserStore';
 
@@ -37,19 +35,6 @@ const queryClient = new QueryClient({
   },
 });
 
-async function configureAudioSession() {
-  try {
-    await Audio.setAudioModeAsync({
-      playsInSilentModeIOS: true,
-      staysActiveInBackground: true,
-      shouldDuckAndroid: true,
-      playThroughEarpieceAndroid: false,
-    });
-  } catch {
-    // Audio mode may be unavailable on web during scaffolding.
-  }
-}
-
 export default function RootLayout() {
   const hydrate = useUserStore((s) => s.hydrate);
   const [loaded, error] = useFonts({
@@ -65,7 +50,6 @@ export default function RootLayout() {
 
   useEffect(() => {
     void hydrate();
-    void configureAudioSession();
   }, [hydrate]);
 
   useEffect(() => {
@@ -105,7 +89,6 @@ export default function RootLayout() {
             options={{ title: 'Track', presentation: 'card' }}
           />
         </Stack>
-        <GlobalAudioBar />
       </View>
     </QueryClientProvider>
   );
