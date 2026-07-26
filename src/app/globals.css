@@ -1,0 +1,157 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ================================================================
+   BCH DESIGN SYSTEM v3 — global base
+   Brand Guidelines 2021 · WCAG 2.1 AA intent
+   ================================================================ */
+
+:root {
+  --blue: #003087;
+  --ocean: #007dba;
+  --white: #ffffff;
+  --pink: #c14991;
+  --sky: #41b6e6;
+  --bay: #68759c;
+  --green: #628000;
+  --indigo: #007396;
+  --emergency: #e30000;
+  --nav-dark: #002060;
+  --text: #1a1d2e;
+  --text-body: #5a5c61;
+  --text-meta: #74767b;
+  --text-ghost: #9a9ca2;
+  --surface: #f5f6f8;
+  --surface-2: #edf0f4;
+  --border: #dde1e7;
+  --border-strong: #c4c9d2;
+  --warning-text: #7a5800;
+  --success-text: #3a5c00;
+  --max-w: 1200px;
+  --px: 48px;
+  --ease: all 0.18s ease;
+  --header-offset: 108px;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --px: 20px;
+  }
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 16px;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white font-sans text-text-body;
+    line-height: 1.6;
+  }
+
+  a {
+    @apply text-ocean no-underline;
+  }
+
+  a:hover {
+    @apply underline;
+  }
+
+  button {
+    @apply cursor-pointer border-0 bg-transparent font-sans;
+  }
+
+  img {
+    @apply block max-w-full;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ocean);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@layer components {
+  .wrap {
+    @apply mx-auto w-full max-w-content;
+    padding-left: var(--px);
+    padding-right: var(--px);
+  }
+
+  .eyebrow {
+    @apply mb-s2 inline-block text-xs font-extrabold uppercase tracking-[0.1em] text-ocean;
+  }
+
+  .tagline {
+    @apply text-base font-bold text-pink;
+  }
+
+  .lead {
+    @apply text-lg font-light leading-[1.65] text-text-body;
+  }
+
+  .section-header {
+    @apply mb-s7;
+  }
+
+  .section-header h2 {
+    @apply mt-s2 text-2xl font-bold text-ocean;
+  }
+
+  .section-header p {
+    @apply mt-s3 max-w-[560px] text-md font-light text-text-body;
+  }
+
+  .section-header.centered {
+    @apply text-center;
+  }
+
+  .section-header.centered p {
+    @apply mx-auto;
+  }
+
+  /* Documentary photo stand-ins (prototype CSS photography) */
+  .photo-clinic {
+    background:
+      radial-gradient(ellipse 50% 60% at 70% 20%, rgba(220, 200, 155, 0.18) 0%, transparent 55%),
+      linear-gradient(145deg, #1e3d5a 0%, #2e5878 35%, #3a6e8a 60%, #2a5570 100%);
+  }
+
+  .photo-corridor {
+    background:
+      radial-gradient(ellipse 80% 40% at 50% 5%, rgba(255, 248, 220, 0.14) 0%, transparent 50%),
+      linear-gradient(175deg, #1a3050 0%, #243d60 30%, #2e506a 60%, #1e3a55 100%);
+  }
+
+  .photo-campus {
+    background:
+      radial-gradient(ellipse 60% 50% at 60% 0%, rgba(180, 210, 245, 0.22) 0%, transparent 55%),
+      linear-gradient(160deg, #1e3060 0%, #2a4878 40%, #3860a0 70%, #2a4878 100%);
+  }
+
+  .photo-lab {
+    background:
+      radial-gradient(ellipse 70% 40% at 50% 10%, rgba(190, 210, 255, 0.18) 0%, transparent 50%),
+      linear-gradient(165deg, #141e38 0%, #1c2e50 35%, #243860 60%, #1a2e4e 100%);
+  }
+
+  .photo-family {
+    background:
+      radial-gradient(ellipse 60% 70% at 60% 15%, rgba(200, 185, 150, 0.2) 0%, transparent 55%),
+      linear-gradient(150deg, #1a3055 0%, #284870 35%, #346a8a 62%, #244060 100%);
+  }
+}

@@ -1,0 +1,2930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boston Children's Hospital — Where the world comes for answers</title>
+<!-- CHANGE 4A: preconnect both origins + display=swap so text renders instantly in system font while Nunito Sans downloads -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,300;6..12,400;6..12,500;6..12,700;6..12,800;6..12,900&display=swap" rel="stylesheet">
+<style>
+/* ================================================================
+   BCH DESIGN SYSTEM v3
+   Brand Guidelines 2021 — Full compliance implementation
+   
+   WCAG 2.1 AA intent throughout
+   ================================================================ */
+
+/* ── TOKENS ─────────────────────────────────────────────────────── */
+:root {
+  /* Core brand palette — exact HEX per BCH guidelines */
+  --blue:          #003087;  /* Boston Blue: nav, primary CTAs, section heads */
+  --ocean:         #007DBA;  /* Boston Ocean: links, h2/h3, interactive */
+  --white:         #FFFFFF;
+  --pink:          #C14991;  /* Boston Pink: tagline ONLY */
+  --sky:           #41B6E6;  /* Boston Sky: decorative accent, never text on white */
+  --bay:           #68759C;  /* Boston Bay: secondary accent */
+  --green:         #628000;  /* Boston Green: success, status */
+  --indigo:        #007396;  /* Boston Indigo */
+  --emergency:     #E30000;  /* Red Alert: emergency/stop/blood ONLY */
+  --nav-dark:      #002060;  /* Utility bar */
+
+  /* Accessible text — adjusted from brand gray for WCAG AA */
+  --text:          #1a1d2e;  /* Headings when not Ocean/Blue */
+  --text-body:     #5a5c61;  /* Body copy — 5.2:1 on white, passes AA */
+  --text-meta:     #74767B;  /* Captions, timestamps, labels */
+  --text-ghost:    #9a9ca2;  /* Placeholder, disabled */
+
+  /* Surfaces */
+  --surface:       #F5F6F8;
+  --surface-2:     #EDF0F4;
+  --border:        #DDE1E7;
+  --border-strong: #c4c9d2;
+
+  /* Functional */
+  --warning-text:  #7a5800;  /* Accessible amber — never raw #F2A900 as text */
+  --success-text:  #3a5c00;  /* Accessible green text */
+
+  /* Typography — Museo Sans spirit via Nunito Sans */
+  --font: 'Nunito Sans', 'Museo Sans', system-ui, sans-serif;
+
+  /* Type scale */
+  --text-xs:   11px;
+  --text-sm:   13px;
+  --text-base: 15px;
+  --text-md:   17px;
+  --text-lg:   19px;
+  --text-xl:   24px;
+  --text-2xl:  30px;
+  --text-3xl:  38px;
+  --text-4xl:  50px;
+  --text-data: 58px;
+
+  /* Spacing — 8pt base */
+  --s1:  4px;
+  --s2:  8px;
+  --s3:  12px;
+  --s4:  16px;
+  --s5:  24px;
+  --s6:  32px;
+  --s7:  48px;
+  --s8:  64px;
+  --s9:  80px;
+  --s10: 100px;
+
+  /* Radius — institutional, not app-like */
+  --r-xs: 2px;
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 12px;
+
+  /* Shadow */
+  --shadow-sm: 0 1px 4px rgba(0,0,0,.07);
+  --shadow-md: 0 4px 16px rgba(0,0,0,.10);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,.12);
+
+  /* Layout */
+  --max-w: 1200px;
+  --px:    48px;
+  --ease:  all .18s ease;
+}
+
+/* ── RESET & BASE ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-size: 16px; scroll-behavior: smooth; }
+body { font-family: var(--font); color: var(--text-body); background: var(--white); line-height: 1.6; }
+a { color: var(--ocean); text-decoration: none; }
+a:hover { text-decoration: underline; }
+ul { list-style: none; }
+button { font-family: var(--font); cursor: pointer; border: none; background: none; }
+img { display: block; max-width: 100%; }
+input, select, textarea { font-family: var(--font); }
+
+/* WCAG 2.1 AA — single global focus rule */
+:focus-visible {
+  outline: 2px solid var(--ocean);
+  outline-offset: 3px;
+  border-radius: var(--r-xs);
+}
+
+/* Motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* Skip nav — first focusable element, visually hidden until focused */
+.skip-nav {
+  position: fixed; top: 0; left: 0; z-index: 9999;
+  background: var(--ocean); color: #fff;
+  padding: var(--s3) var(--s5); font-weight: 700; font-size: var(--text-base);
+  transform: translateY(-100%); transition: transform .15s;
+  border-radius: 0 0 var(--r-sm) 0;
+}
+.skip-nav:focus { transform: translateY(0); }
+
+/* ── LAYOUT ──────────────────────────────────────────────────── */
+.wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--px); }
+.section { padding: var(--s9) 0; }
+.section-sm { padding: var(--s7) 0; }
+.bg-surface { background: var(--surface); }
+.bg-blue { background: var(--blue); }
+.bg-dark { background: #1a1d2e; }
+
+/* Grid helpers */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s6); }
+.g3 { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--s5); }
+.g4 { display: grid; grid-template-columns: repeat(4,1fr); gap: var(--s5); }
+.g21 { display: grid; grid-template-columns: 2fr 1fr; gap: var(--s7); }
+.g31 { display: grid; grid-template-columns: 3fr 1fr; gap: var(--s7); align-items: start; }
+
+/* ── TYPOGRAPHY ──────────────────────────────────────────────── */
+h1 { font-size: var(--text-3xl); font-weight: 500; line-height: 1.15; color: var(--white); }
+h2 { font-size: var(--text-2xl); font-weight: 700; line-height: 1.2; color: var(--ocean); }
+h3 { font-size: var(--text-xl); font-weight: 700; line-height: 1.3; color: var(--ocean); }
+h4 { font-size: var(--text-lg); font-weight: 700; line-height: 1.35; color: var(--text); }
+h5 { font-size: var(--text-base); font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: var(--text-meta); }
+
+p { font-size: var(--text-md); color: var(--text-body); line-height: 1.75; font-weight: 300; }
+p + p { margin-top: var(--s4); }
+
+.lead { font-size: var(--text-lg); font-weight: 300; line-height: 1.65; color: var(--text-body); }
+.eyebrow { display: inline-block; font-size: var(--text-xs); font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--ocean); margin-bottom: var(--s2); }
+.tagline { color: var(--pink); font-weight: 700; font-size: var(--text-base); }
+
+/* Section headers */
+.sh { margin-bottom: var(--s7); }
+.sh h2 { margin-top: var(--s2); }
+.sh p { margin-top: var(--s3); max-width: 560px; }
+.sh.tc { text-align: center; }
+.sh.tc p { margin-left: auto; margin-right: auto; }
+
+/* ── BUTTONS ─────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; gap: var(--s2);
+  font-weight: 700; font-size: var(--text-base); font-family: var(--font);
+  padding: 11px 22px; border-radius: var(--r-sm);
+  border: 2px solid transparent; cursor: pointer;
+  transition: var(--ease); text-decoration: none; line-height: 1.3;
+  white-space: nowrap;
+}
+.btn:hover { text-decoration: none; }
+.btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+.btn-primary { background: var(--blue); color: #fff; border-color: var(--blue); }
+.btn-primary:hover { background: var(--nav-dark); border-color: var(--nav-dark); color: #fff; }
+
+.btn-ocean { background: var(--ocean); color: #fff; border-color: var(--ocean); }
+.btn-ocean:hover { background: #005f9e; border-color: #005f9e; color: #fff; }
+
+.btn-outline { background: transparent; color: var(--blue); border-color: var(--blue); }
+.btn-outline:hover { background: var(--blue); color: #fff; }
+
+.btn-outline-ocean { background: transparent; color: var(--ocean); border-color: var(--ocean); }
+.btn-outline-ocean:hover { background: var(--ocean); color: #fff; }
+
+.btn-ghost-white { background: transparent; color: rgba(255,255,255,.8); border-color: rgba(255,255,255,.35); }
+.btn-ghost-white:hover { background: rgba(255,255,255,.1); color: #fff; border-color: rgba(255,255,255,.6); }
+
+/* Emergency button — red is correct here, emergency context */
+.btn-emergency { background: var(--emergency); color: #fff; border-color: var(--emergency); }
+.btn-emergency:hover { background: #b80000; border-color: #b80000; color: #fff; }
+
+.btn-sm { padding: 7px 16px; font-size: var(--text-sm); }
+.btn-lg { padding: 14px 28px; font-size: var(--text-md); }
+.btn-full { width: 100%; justify-content: center; }
+
+/* ── CARDS ───────────────────────────────────────────────────── */
+.card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--r-md); overflow: hidden;
+}
+.card-p { padding: var(--s5); }
+.card-interactive {
+  transition: var(--ease); cursor: pointer;
+}
+.card-interactive:hover {
+  box-shadow: var(--shadow-md); border-color: var(--border-strong);
+  transform: translateY(-2px);
+}
+
+/* Card accent top-border for featured variant */
+.card-featured { border-top: 3px solid var(--ocean); }
+
+/* ── BADGES ──────────────────────────────────────────────────── */
+.badge {
+  display: inline-flex; align-items: center;
+  font-size: var(--text-xs); font-weight: 700;
+  padding: 3px 9px; border-radius: 999px; white-space: nowrap;
+}
+.badge-ocean { background: rgba(0,125,186,.1); color: var(--ocean); }
+.badge-blue { background: rgba(0,48,135,.1); color: var(--blue); }
+.badge-pink { background: rgba(193,73,145,.1); color: var(--pink); }
+.badge-green { background: rgba(98,128,0,.12); color: var(--success-text); }
+.badge-gray { background: var(--surface-2); color: var(--text-meta); }
+
+/* ── FORMS ───────────────────────────────────────────────────── */
+.label { display: block; font-size: var(--text-sm); font-weight: 700; color: var(--text); margin-bottom: 5px; }
+.input, .select, .textarea {
+  width: 100%; border: 1.5px solid var(--border); border-radius: var(--r-sm);
+  padding: 10px 13px; font-family: var(--font); font-size: var(--text-base);
+  color: var(--text); background: var(--white); outline: none;
+  transition: border-color .15s; font-weight: 300;
+}
+.input:focus, .select:focus, .textarea:focus { border-color: var(--ocean); }
+.input::placeholder { color: var(--text-ghost); }
+.form-group { margin-bottom: var(--s4); }
+
+/* ── CALLOUT BLOCKS ──────────────────────────────────────────── */
+.callout {
+  border-left: 3px solid var(--ocean); background: var(--surface);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0; padding: var(--s4) var(--s5);
+}
+.callout h5 { color: var(--blue); margin-bottom: var(--s2); font-size: var(--text-sm); }
+.callout p { font-size: var(--text-base); margin: 0; }
+
+/* Emergency callout — red border IS correct for emergency content */
+.callout-emergency {
+  border-left: 3px solid var(--emergency); background: #fff5f5;
+  border-radius: 0 var(--r-sm) var(--r-sm) 0; padding: var(--s4) var(--s5);
+  display: flex; gap: var(--s3); align-items: flex-start;
+}
+.callout-emergency svg { width: 18px; height: 18px; color: var(--emergency); flex-shrink: 0; margin-top: 2px; }
+.callout-emergency .ce-title { font-size: var(--text-base); font-weight: 700; color: var(--emergency); margin-bottom: 4px; }
+.callout-emergency p { font-size: var(--text-base); margin: 0; color: #6b0000; }
+
+/* Info notice */
+.notice {
+  background: rgba(0,125,186,.06); border: 1px solid rgba(0,125,186,.18);
+  border-radius: var(--r-sm); padding: var(--s4) var(--s5);
+  display: flex; gap: var(--s3); align-items: flex-start;
+}
+.notice svg { width: 16px; height: 16px; color: var(--ocean); flex-shrink: 0; margin-top: 2px; }
+.notice p { font-size: var(--text-base); color: var(--blue); margin: 0; }
+
+/* ── BREADCRUMB ──────────────────────────────────────────────── */
+.bc { padding: 10px 0; border-bottom: 1px solid var(--border); }
+.bc ol { display: flex; align-items: center; flex-wrap: wrap; gap: 0; }
+.bc li { display: flex; align-items: center; font-size: var(--text-xs); }
+.bc li a { color: var(--ocean); padding: 5px 0; }
+.bc .sep { color: var(--border-strong); padding: 0 8px; }
+.bc .cur { color: var(--text-body); font-weight: 600; }
+
+/* ── PAGE HERO (interior) ────────────────────────────────────── */
+.pg-hero { background: var(--blue); padding: var(--s8) 0; }
+.pg-hero-inner { max-width: 700px; }
+.pg-hero .eyebrow { color: rgba(255,255,255,.5); }
+.pg-hero h1 { margin: var(--s2) 0 var(--s4); }
+.pg-hero .lead { color: rgba(255,255,255,.72); }
+.pg-hero-actions { display: flex; gap: var(--s3); flex-wrap: wrap; margin-top: var(--s5); }
+
+/* ── PAGE PICKER — unobtrusive ────────────────────────────────── */
+#picker {
+  position: fixed; bottom: 80px; right: 14px; z-index: 9999;
+  background: rgba(10,15,35,.88); backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.1); border-radius: var(--r-md);
+  padding: 3px; box-shadow: var(--shadow-lg);
+}
+#picker-lbl { font-size: 9px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: rgba(255,255,255,.2); padding: 6px 10px 2px; }
+#picker button { display: block; width: 100%; text-align: left; font-size: 10px; font-weight: 600; color: rgba(255,255,255,.32); padding: 4px 10px; border-radius: 3px; transition: var(--ease); white-space: nowrap; }
+#picker button:hover { color: rgba(255,255,255,.8); }
+#picker button.on { background: var(--ocean); color: #fff; }
+.pg { display: none; } .pg.on { display: block; }
+
+/* ── ANIMATIONS ──────────────────────────────────────────────── */
+@keyframes fadeDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ================================================================
+   HEADER
+   ================================================================ */
+
+.site-header { position: sticky; top: 0; z-index: 500; }
+
+/* Utility bar */
+.util-bar { background: var(--nav-dark); border-bottom: 1px solid rgba(255,255,255,.07); }
+.util-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 40px; gap: var(--s2);
+}
+.util-left { display: flex; align-items: center; }
+.util-link {
+  font-size: var(--text-xs); font-weight: 600; color: rgba(255,255,255,.45);
+  padding: 0 14px; height: 40px; display: flex; align-items: center;
+  border-right: 1px solid rgba(255,255,255,.07);
+  transition: color .15s; text-decoration: none; white-space: nowrap;
+}
+.util-link:first-child { padding-left: 0; }
+.util-link:hover { color: rgba(255,255,255,.85); text-decoration: none; }
+
+.util-right { display: flex; align-items: center; }
+
+/* ED wait time in util bar */
+.util-ed {
+  display: flex; align-items: center; gap: 7px;
+  padding: 0 14px; height: 40px; border-right: 1px solid rgba(255,255,255,.07);
+}
+.util-ed-dot { width: 6px; height: 6px; border-radius: 50%; background: #4caf50; flex-shrink: 0; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
+.util-ed-text { font-size: var(--text-xs); color: rgba(255,255,255,.5); }
+.util-ed-time { font-size: var(--text-xs); font-weight: 700; color: #7dd87f; }
+.util-ed a { font-size: var(--text-xs); color: rgba(255,255,255,.4); text-decoration: none; margin-left: 5px; }
+.util-ed a:hover { color: rgba(255,255,255,.75); }
+
+/* Portal trigger */
+.portal-wrap { position: relative; }
+.portal-btn {
+  display: flex; align-items: center; gap: 9px;
+  padding: 0 0 0 14px; height: 40px; cursor: pointer;
+  border-left: 1px solid rgba(255,255,255,.07); text-decoration: none;
+}
+.portal-btn:hover { text-decoration: none; }
+.portal-icon {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: rgba(255,255,255,.1); display: flex; align-items: center;
+  justify-content: center; flex-shrink: 0; border: 1px solid rgba(255,255,255,.15);
+}
+.portal-icon svg { width: 11px; height: 11px; color: rgba(255,255,255,.75); }
+.portal-labels { line-height: 1.2; }
+.portal-name { font-size: var(--text-xs); font-weight: 700; color: #fff; display: block; }
+.portal-sub { font-size: 10px; color: rgba(255,255,255,.38); display: block; }
+
+/* Portal dropdown */
+.portal-drop {
+  display: none; position: absolute; top: calc(100% + 10px); right: 0;
+  width: 300px; background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--r-lg); box-shadow: var(--shadow-lg); z-index: 600;
+}
+.portal-drop::before {
+  content: ''; position: absolute; top: -5px; right: 20px;
+  width: 9px; height: 9px; background: var(--white);
+  border-top: 1px solid var(--border); border-left: 1px solid var(--border);
+  transform: rotate(45deg);
+}
+.portal-wrap:hover .portal-drop { display: block; animation: fadeDown .15s ease; }
+.pd-inner { padding: 20px; }
+.pd-head { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.pd-head svg { width: 14px; height: 14px; color: var(--blue); }
+.pd-head strong { font-size: var(--text-base); font-weight: 700; color: var(--blue); }
+.pd-sub { font-size: var(--text-sm); color: var(--text-body); line-height: 1.6; margin-bottom: 14px; font-weight: 300; }
+.pd-actions { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.pd-action {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 9px 12px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r-sm); text-decoration: none; transition: var(--ease);
+}
+.pd-action:hover { background: var(--surface-2); border-color: var(--border-strong); text-decoration: none; }
+.pd-action-label { font-size: var(--text-sm); font-weight: 700; color: var(--blue); }
+.pd-action-desc { font-size: 11px; color: var(--text-meta); margin-top: 1px; }
+.pd-action svg { width: 12px; height: 12px; color: var(--text-meta); flex-shrink: 0; }
+.pd-sign-in { display: block; text-align: center; background: var(--blue); color: #fff; font-size: var(--text-base); font-weight: 700; padding: 10px; border-radius: var(--r-sm); text-decoration: none; transition: background .15s; margin-bottom: 8px; }
+.pd-sign-in:hover { background: var(--ocean); color: #fff; text-decoration: none; }
+.pd-help { display: block; text-align: center; font-size: var(--text-sm); color: var(--ocean); margin-bottom: 12px; }
+.pd-security {
+  display: flex; align-items: flex-start; gap: 7px;
+  padding-top: 12px; border-top: 1px solid var(--border);
+}
+.pd-security svg { width: 12px; height: 12px; color: var(--success-text); flex-shrink: 0; margin-top: 2px; }
+.pd-security p { font-size: 11px; color: var(--text-meta); line-height: 1.55; margin: 0; font-weight: 300; }
+
+/* Main nav bar */
+.main-bar { background: var(--blue); }
+.main-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 68px; gap: var(--s4);
+}
+
+/* Logo */
+.logo { display: flex; align-items: center; gap: 12px; text-decoration: none; flex-shrink: 0; }
+.logo:hover { text-decoration: none; }
+.logo-seal {
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,.3); display: flex; align-items: center;
+  justify-content: center; flex-shrink: 0; background: rgba(255,255,255,.06);
+}
+.logo-seal svg { width: 26px; height: 26px; }
+.logo-text-wrap { display: flex; flex-direction: column; }
+.logo-name { font-size: 15px; font-weight: 700; color: #fff; line-height: 1.25; letter-spacing: -.01em; }
+.logo-tagline { font-size: 10px; color: var(--pink); font-weight: 700; letter-spacing: .01em; margin-top: 1px; }
+
+/* Nav links */
+.nav-links { display: flex; align-items: center; flex: 1; justify-content: center; }
+.nav-item { position: relative; }
+.nav-trigger {
+  display: flex; align-items: center; gap: 4px;
+  height: 68px; padding: 0 14px;
+  font-size: var(--text-sm); font-weight: 700; color: rgba(255,255,255,.65);
+  border-bottom: 3px solid transparent; transition: var(--ease);
+  cursor: pointer; white-space: nowrap; font-family: var(--font);
+}
+.nav-trigger svg { width: 10px; height: 10px; opacity: .5; transition: transform .2s; }
+.nav-item:hover .nav-trigger { color: #fff; border-bottom-color: var(--sky); }
+.nav-item:hover .nav-trigger svg { transform: rotate(180deg); opacity: .8; }
+/* Active section indicator */
+.nav-item.active .nav-trigger { color: #fff; border-bottom-color: var(--sky); }
+
+/* Mega menu */
+.mega {
+  display: none; position: absolute; top: 100%; left: 50%;
+  transform: translateX(-50%); background: var(--white);
+  border-top: 3px solid var(--ocean); border-radius: 0 0 var(--r-md) var(--r-md);
+  box-shadow: var(--shadow-lg); min-width: 680px; z-index: 400;
+}
+.nav-item:hover .mega { display: block; animation: fadeDown .15s ease; }
+.mega-body { display: grid; grid-template-columns: 1.2fr 1fr 1fr 200px; gap: 0; }
+.mega-zone { padding: var(--s6) var(--s5); }
+.mega-zone + .mega-zone { border-left: 1px solid var(--border); }
+.mega-zone-a { background: var(--surface); }
+.mega-zone h5 { font-size: 10px; color: var(--text-meta); margin-bottom: var(--s3); padding-bottom: var(--s2); border-bottom: 1px solid var(--border); }
+.mega-zone-a ul { display: flex; flex-direction: column; gap: 2px; }
+.mega-zone-a li a {
+  display: block; padding: 7px 10px; border-radius: var(--r-sm);
+  font-size: var(--text-base); font-weight: 700; color: var(--blue);
+  transition: var(--ease); text-decoration: none;
+}
+.mega-zone-a li a:hover { background: rgba(0,48,135,.07); text-decoration: none; }
+.mega-zone ul { display: flex; flex-direction: column; gap: 5px; }
+.mega-zone li a {
+  font-size: var(--text-sm); color: var(--text-body); font-weight: 300;
+  text-decoration: none; transition: color .12s; display: block; padding: 2px 0;
+}
+.mega-zone li a:hover { color: var(--ocean); text-decoration: none; }
+
+/* Mega contextual card */
+.mega-card {
+  padding: var(--s5); background: var(--blue); display: flex;
+  flex-direction: column; border-radius: 0 0 var(--r-md) 0;
+}
+.mega-card .eyebrow { color: rgba(255,255,255,.4); margin-bottom: var(--s2); }
+.mega-card h4 { color: #fff; font-size: var(--text-base); margin-bottom: var(--s2); }
+.mega-card p { font-size: var(--text-sm); color: rgba(255,255,255,.6); margin-bottom: var(--s4); flex: 1; }
+.mega-card .btn { width: 100%; justify-content: center; font-size: var(--text-sm); padding: 9px; }
+
+/* Nav right — CHANGE 1B: Find a Doctor + Book Appointment as always-visible CTAs */
+.nav-right { display: flex; align-items: center; gap: var(--s2); flex-shrink: 0; }
+.search-btn {
+  width: 36px; height: 36px; border-radius: var(--r-sm); color: rgba(255,255,255,.5);
+  display: flex; align-items: center; justify-content: center; transition: var(--ease);
+}
+.search-btn:hover { background: rgba(255,255,255,.1); color: #fff; }
+.search-btn svg { width: 17px; height: 17px; }
+/* Promoted nav CTAs */
+.nav-cta-find {
+  display: flex; align-items: center; height: 36px; padding: 0 14px;
+  border-radius: var(--r-sm); font-size: var(--text-sm); font-weight: 700;
+  color: rgba(255,255,255,.8); border: 1.5px solid rgba(255,255,255,.25);
+  transition: var(--ease); text-decoration: none; white-space: nowrap;
+}
+.nav-cta-find:hover { color: #fff; border-color: rgba(255,255,255,.6); background: rgba(255,255,255,.08); text-decoration: none; }
+.nav-cta-book {
+  display: flex; align-items: center; height: 36px; padding: 0 16px;
+  border-radius: var(--r-sm); background: var(--ocean); color: #fff;
+  font-size: var(--text-sm); font-weight: 700;
+  transition: var(--ease); text-decoration: none; white-space: nowrap;
+}
+.nav-cta-book:hover { background: #005f9e; color: #fff; text-decoration: none; }
+
+.mob-toggle {
+  display: none; width: 44px; height: 44px; border-radius: var(--r-sm);
+  color: rgba(255,255,255,.6); align-items: center; justify-content: center; transition: var(--ease);
+}
+.mob-toggle:hover { background: rgba(255,255,255,.1); color: #fff; }
+.mob-toggle svg { width: 21px; height: 21px; }
+
+/* Mobile nav */
+.mob-nav { display: none; background: var(--nav-dark); max-height: 82vh; overflow-y: auto; border-top: 1px solid rgba(255,255,255,.07); }
+.mob-nav.open { display: block; animation: fadeDown .18s ease; }
+
+/* Portal card — first in mobile, highest priority per spec */
+.mob-portal {
+  margin: 12px 12px 8px; background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.12); border-radius: var(--r-md); padding: 16px;
+}
+.mob-portal-head { display: flex; align-items: center; gap: 7px; margin-bottom: 4px; }
+.mob-portal-icon { width: 20px; height: 20px; border-radius: 50%; background: rgba(255,255,255,.15); display: flex; align-items: center; justify-content: center; }
+.mob-portal-icon svg { width: 10px; height: 10px; color: rgba(255,255,255,.8); }
+.mob-portal-name { font-size: var(--text-sm); font-weight: 700; color: #fff; }
+.mob-portal-desc { font-size: var(--text-xs); color: rgba(255,255,255,.4); line-height: 1.6; padding: 0 0 12px 27px; font-weight: 300; }
+.mob-portal-btn { display: block; text-align: center; background: #fff; color: var(--blue); font-weight: 700; font-size: var(--text-base); padding: 10px; border-radius: var(--r-sm); margin-bottom: 7px; text-decoration: none; }
+.mob-portal-btn:hover { background: #eef1ff; text-decoration: none; }
+.mob-portal-help { display: block; text-align: center; font-size: var(--text-xs); color: rgba(255,255,255,.3); }
+
+/* Mobile primary tasks */
+.mob-tasks { padding: 4px 12px 8px; }
+.mob-task {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 11px 4px; font-size: var(--text-base); font-weight: 700;
+  color: rgba(255,255,255,.7); border-bottom: 1px solid rgba(255,255,255,.06);
+  transition: color .15s; cursor: pointer; text-decoration: none;
+}
+.mob-task:hover { color: #fff; text-decoration: none; }
+.mob-task svg { width: 14px; height: 14px; opacity: .3; }
+
+/* Mobile accordion groups */
+.mob-groups { padding: 4px 12px 8px; }
+.mob-gb {
+  width: 100%; display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 4px; font-size: var(--text-base); font-weight: 600;
+  color: rgba(255,255,255,.4); border-bottom: 1px solid rgba(255,255,255,.05);
+  transition: color .15s; font-family: var(--font);
+}
+.mob-gb:hover { color: rgba(255,255,255,.7); }
+.mob-gb svg { width: 12px; height: 12px; opacity: .3; transition: transform .2s; }
+.mob-group.open .mob-gb svg { transform: rotate(180deg); }
+.mob-sub { display: none; padding: 6px 0 10px 14px; }
+.mob-group.open .mob-sub { display: block; }
+.mob-sub a { display: block; padding: 4px 0; font-size: var(--text-sm); color: rgba(255,255,255,.4); font-weight: 300; text-decoration: none; transition: color .12s; }
+.mob-sub a:hover { color: rgba(255,255,255,.8); }
+
+/* Mobile footer */
+.mob-foot { padding: 12px; border-top: 1px solid rgba(255,255,255,.07); display: flex; flex-direction: column; gap: 8px; }
+.mob-appt { display: block; text-align: center; background: var(--ocean); color: #fff; font-weight: 700; font-size: var(--text-base); padding: 12px; border-radius: var(--r-sm); text-decoration: none; }
+.mob-appt:hover { background: #005f9e; text-decoration: none; }
+.mob-ed-strip { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; }
+.mob-ed-left { display: flex; align-items: center; gap: 6px; }
+.mob-ed-left svg { width: 13px; height: 13px; color: var(--emergency); }
+.mob-ed-label { font-size: var(--text-xs); color: rgba(255,255,255,.4); }
+.mob-ed-link { font-size: var(--text-xs); color: #ff9999; font-weight: 700; }
+
+/* CHANGE 3A: Mobile sticky bottom action bar */
+.mob-sticky-bar {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 800;
+  background: var(--white); border-top: 1px solid var(--border);
+  padding: 10px 20px;
+  box-shadow: 0 -4px 20px rgba(0,0,0,.12);
+  gap: 8px;
+}
+.mob-sticky-bar a { flex: 1; justify-content: center; font-size: var(--text-sm); min-height: 44px; }
+
+/* CHANGE 3B: All buttons min 44px tall for touch targets */
+.btn { min-height: 44px; }
+.btn-sm { min-height: 36px; }
+
+/* CHANGE 3C: mob-task min 44px */
+.mob-task { min-height: 44px; }
+.mob-portal-btn { min-height: 44px; }
+.pd-action { min-height: 44px; }
+.pd-sign-in { min-height: 44px; display: flex; align-items: center; justify-content: center; }
+
+@media(max-width:960px) {
+  .nav-links { display: none; }
+  .nav-cta-find, .nav-cta-book { display: none; }
+  .mob-toggle { display: flex; }
+  .util-ed { display: none; }
+  .mob-sticky-bar { display: flex; }
+  body { padding-bottom: 68px; }
+  #picker { bottom: 80px; }
+}
+@media(max-width:768px) { :root { --px: 20px; } h1 { font-size: 28px; } h2 { font-size: 22px; } }
+</style>
+<style>
+/* ================================================================
+   HOMEPAGE SECTIONS
+   ================================================================ */
+
+/* ── HERO — full-bleed photo treatment ───────────────────────── */
+.hero {
+  position: relative; overflow: hidden; min-height: 560px;
+  display: flex; align-items: stretch;
+}
+/* Photo fill — in production this is a real <img>. Here it's a documentary-
+   style CSS gradient that approximates cool, slightly desaturated photography
+   per BCH brand guidelines. The gradient reads as a hospital room with natural
+   side-light rather than a corporate blue wash. */
+.hero-photo {
+  position: absolute; inset: 0;
+  background:
+    /* warm window light from upper right */
+    radial-gradient(ellipse 55% 70% at 75% 15%, rgba(200,190,160,.18) 0%, transparent 60%),
+    /* natural shadow on left side — depth */
+    linear-gradient(105deg, rgba(0,20,60,.92) 0%, rgba(0,36,100,.78) 38%, rgba(0,55,130,.55) 58%, rgba(10,50,90,.35) 100%),
+    /* base warm room tone */
+    linear-gradient(160deg, #1c3a5e 0%, #2a5080 40%, #3a6898 65%, #2d5a80 100%);
+  /* Subtle desaturation + cooler cast per BCH photo style */
+  filter: saturate(.88) brightness(.92);
+}
+/* Simulated room depth — soft vertical bands */
+.hero-photo::after {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    /* left shadow vignette */
+    linear-gradient(to right, rgba(0,15,50,.6) 0%, transparent 35%),
+    /* floor shadow */
+    linear-gradient(to top, rgba(0,10,35,.4) 0%, transparent 30%);
+}
+/* Person silhouettes — rendered as CSS shapes for maximum realism without images */
+.hero-figures {
+  position: absolute; bottom: 0; right: 0; width: 60%; height: 100%;
+  overflow: hidden;
+}
+/* Adult figure */
+.hero-figures::before {
+  content: '';
+  position: absolute;
+  right: 28%; bottom: 0;
+  width: 140px; height: 380px;
+  background: linear-gradient(to bottom, rgba(255,255,255,.12) 0%, rgba(255,255,255,.08) 50%, rgba(255,255,255,.04) 100%);
+  clip-path: polygon(30% 0%, 70% 0%, 85% 15%, 90% 40%, 88% 70%, 95% 85%, 100% 100%, 0 100%, 5% 85%, 12% 70%, 10% 40%, 15% 15%);
+  filter: blur(1px);
+}
+/* Child figure — smaller, forward */
+.hero-figures::after {
+  content: '';
+  position: absolute;
+  right: 18%; bottom: 0;
+  width: 90px; height: 260px;
+  background: linear-gradient(to bottom, rgba(255,255,255,.18) 0%, rgba(255,255,255,.1) 50%, rgba(255,255,255,.05) 100%);
+  clip-path: polygon(28% 0%, 72% 0%, 82% 12%, 88% 35%, 86% 65%, 92% 82%, 100% 100%, 0 100%, 8% 82%, 14% 65%, 12% 35%, 18% 12%);
+  filter: blur(.5px);
+}
+/* Atmospheric haze overlay */
+.hero-haze {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 65% 45%, rgba(60,110,180,.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-inner {
+  position: relative; z-index: 2;
+  display: flex; align-items: center;
+  min-height: 560px; padding: var(--s10) 0;
+  max-width: var(--max-w); margin: 0 auto; padding-left: var(--px); padding-right: var(--px);
+}
+.hero-content { max-width: 560px; }
+.hero-eyebrow { font-size: var(--text-xs); font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.45); margin-bottom: var(--s3); display: flex; align-items: center; gap: var(--s3); }
+.hero-eyebrow::before { content: ''; display: block; width: 20px; height: 2px; background: var(--sky); border-radius: 1px; }
+.hero h1 { color: #fff; font-size: clamp(30px, 4.5vw, 52px); font-weight: 500; line-height: 1.1; letter-spacing: -.025em; margin-bottom: var(--s4); }
+.hero h1 em { font-style: normal; color: var(--sky); }
+.hero-lead { font-size: clamp(15px, 1.6vw, 18px); color: rgba(255,255,255,.7); font-weight: 300; line-height: 1.75; max-width: 460px; margin-bottom: var(--s6); }
+.hero-actions { display: flex; gap: var(--s3); flex-wrap: wrap; }
+/* Photo credit strip */
+.hero-credit {
+  position: absolute; bottom: var(--s3); right: var(--px); z-index: 3;
+  font-size: 10px; color: rgba(255,255,255,.28); font-weight: 300;
+  letter-spacing: .02em;
+}
+
+@media(max-width:768px) {
+  .hero { min-height: 460px; }
+  .hero-inner { padding: var(--s8) var(--px); }
+  .hero-figures { display: none; }
+}
+
+/* CHANGE 1C: "Help me find..." quick-links horizontal task bar */
+.quicklinks { background: var(--white); border-bottom: 1px solid var(--border); }
+.ql-inner { display: flex; align-items: stretch; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.ql-inner::-webkit-scrollbar { display: none; }
+.ql-label { display: flex; align-items: center; padding: 0 var(--s4) 0 0; font-size: var(--text-xs); font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--text-meta); white-space: nowrap; flex-shrink: 0; border-right: 1px solid var(--border); }
+.ql-item { display: flex; align-items: center; gap: 6px; padding: 13px var(--s4); border-right: 1px solid var(--border); font-size: var(--text-sm); font-weight: 700; color: var(--blue); white-space: nowrap; flex-shrink: 0; text-decoration: none; transition: background .15s; min-height: 48px; }
+.ql-item:hover { background: var(--surface); text-decoration: none; }
+.ql-item svg { width: 14px; height: 14px; flex-shrink: 0; color: var(--ocean); }
+
+/* CHANGE 2B: Social proof section */
+.social-proof { padding: var(--s9) 0; background: var(--surface); }
+.sp-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: var(--s5); margin-top: var(--s6); align-items: start; }
+.sp-rankings { background: var(--blue); border-radius: var(--r-md); padding: var(--s6); }
+.sp-rankings .eyebrow { color: rgba(255,255,255,.4); }
+.sp-rank-list { margin-top: var(--s4); display: flex; flex-direction: column; gap: var(--s3); }
+.sp-rank-item { display: flex; align-items: center; gap: var(--s3); padding: var(--s3) var(--s4); background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: var(--r-sm); }
+.sp-rank-num { font-size: 22px; font-weight: 900; color: #fff; min-width: 32px; line-height: 1; }
+.sp-rank-label { font-size: var(--text-sm); color: rgba(255,255,255,.6); line-height: 1.45; font-weight: 300; }
+.sp-rank-label strong { display: block; color: rgba(255,255,255,.9); font-weight: 700; font-size: var(--text-base); }
+.sp-metrics { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-md); padding: var(--s5); }
+.sp-metrics .eyebrow { margin-bottom: var(--s3); }
+.sp-metric-list { display: flex; flex-direction: column; gap: var(--s4); }
+.sp-metric { border-bottom: 1px solid var(--border); padding-bottom: var(--s4); }
+.sp-metric:last-child { border-bottom: none; padding-bottom: 0; }
+.sp-metric-val { font-size: 26px; font-weight: 900; color: var(--ocean); line-height: 1; letter-spacing: -.03em; margin-bottom: 4px; }
+.sp-metric-label { font-size: var(--text-sm); color: var(--text-body); font-weight: 300; line-height: 1.5; }
+.sp-metric-source { font-size: 10px; color: var(--text-meta); margin-top: 3px; }
+.sp-story { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-md); padding: var(--s5); display: flex; flex-direction: column; }
+.sp-story .eyebrow { margin-bottom: var(--s3); }
+.sp-story-quote { font-size: var(--text-md); font-weight: 500; color: var(--ocean); line-height: 1.55; margin-bottom: var(--s4); flex: 1; }
+.sp-story-attr { font-size: var(--text-sm); color: var(--text-meta); font-weight: 300; padding-top: var(--s4); border-top: 1px solid var(--border); }
+.sp-story-attr strong { display: block; color: var(--text-body); font-weight: 700; margin-bottom: 3px; }
+@media(max-width:960px) { .sp-grid { grid-template-columns: 1fr 1fr; } }
+@media(max-width:600px) { .sp-grid { grid-template-columns: 1fr; } }
+
+/* CHANGE 5A: Amber "urgent" callout — informational severity, not life-threatening */
+.callout-urgent {
+  border-left: 3px solid #b85c00; background: #fff8f0;
+  border-radius: 0 var(--r-sm) var(--r-sm) 0; padding: var(--s4) var(--s5);
+  display: flex; gap: var(--s3); align-items: flex-start;
+}
+.callout-urgent svg { width: 18px; height: 18px; color: #b85c00; flex-shrink: 0; margin-top: 2px; }
+.callout-urgent .cu-title { font-size: var(--text-base); font-weight: 700; color: #7a3800; margin-bottom: 4px; }
+.callout-urgent p { font-size: var(--text-base); margin: 0; color: #5c2800; }
+
+/* ── TRUST PROOF STRIP ─────────────────────────────────────────── */
+.trust-strip { background: var(--blue); border-top: 1px solid rgba(255,255,255,.1); }
+.trust-inner { display: grid; grid-template-columns: repeat(3,1fr); }
+.trust-item {
+  padding: var(--s6) var(--s7); text-align: center;
+  border-right: 1px solid rgba(255,255,255,.1);
+}
+.trust-item:last-child { border-right: none; }
+.trust-num {
+  font-size: clamp(36px,5vw,var(--text-data)); font-weight: 900;
+  color: #fff; line-height: 1; letter-spacing: -.03em; display: block; margin-bottom: 8px;
+}
+.trust-label { font-size: var(--text-sm); color: rgba(255,255,255,.5); font-weight: 300; line-height: 1.5; }
+
+@media(max-width:600px) { .trust-inner { grid-template-columns: 1fr; } .trust-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,.1); } }
+
+/* ── AUDIENCE PATHFINDER ───────────────────────────────────────── */
+.pathfinder { padding: var(--s9) 0; background: var(--white); }
+.pf-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: var(--s4); margin-top: var(--s6); }
+.pf-card {
+  background: var(--white); border: 1.5px solid var(--border);
+  border-radius: var(--r-md); padding: var(--s5) var(--s5) var(--s4);
+  transition: var(--ease); cursor: pointer; text-decoration: none;
+  display: block;
+}
+.pf-card:hover {
+  border-color: var(--ocean); box-shadow: var(--shadow-md);
+  transform: translateY(-3px); text-decoration: none;
+}
+.pf-card:hover .pf-icon { background: var(--ocean); }
+.pf-card:hover .pf-icon svg { color: #fff; }
+.pf-icon {
+  width: 44px; height: 44px; border-radius: var(--r-sm);
+  background: rgba(0,125,186,.1); display: flex; align-items: center;
+  justify-content: center; margin-bottom: var(--s3); transition: var(--ease);
+}
+.pf-icon svg { width: 22px; height: 22px; color: var(--ocean); transition: var(--ease); }
+.pf-title { font-size: var(--text-base); font-weight: 700; color: var(--text); margin-bottom: var(--s1); }
+.pf-desc { font-size: var(--text-sm); color: var(--text-body); line-height: 1.6; margin-bottom: var(--s3); font-weight: 300; }
+.pf-link { font-size: var(--text-sm); font-weight: 700; color: var(--ocean); display: flex; align-items: center; gap: 5px; }
+.pf-link svg { width: 12px; height: 12px; }
+@media(max-width:900px) { .pf-grid { grid-template-columns: 1fr 1fr; } }
+@media(max-width:500px) { .pf-grid { grid-template-columns: 1fr; } }
+
+/* ── SPECIALTIES ───────────────────────────────────────────────── */
+.specialties { padding: var(--s9) 0; background: var(--surface); }
+.spec-grid {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 0; margin-top: var(--s6);
+  border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden;
+}
+.spec-item {
+  padding: var(--s4) var(--s5); border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  transition: var(--ease); cursor: pointer; text-decoration: none; display: block;
+  background: var(--white);
+}
+.spec-item:nth-child(4n) { border-right: none; }
+.spec-item:nth-last-child(-n+4) { border-bottom: none; }
+.spec-item:hover { background: var(--surface); text-decoration: none; }
+.spec-item:hover .spec-name { color: var(--ocean); }
+.spec-name { font-size: var(--text-base); font-weight: 700; color: var(--text); margin-bottom: 3px; display: block; }
+.spec-desc { font-size: var(--text-sm); color: var(--text-meta); font-weight: 300; }
+
+@media(max-width:768px) { .spec-grid { grid-template-columns: 1fr 1fr; } .spec-item:nth-child(2n) { border-right: none; } .spec-item:nth-child(4n) { border-right: inherit; } }
+@media(max-width:480px) { .spec-grid { grid-template-columns: 1fr; } .spec-item { border-right: none !important; } }
+
+/* ── TESTIMONIAL ───────────────────────────────────────────────── */
+.testimonial { padding: var(--s9) 0; background: var(--white); }
+.test-inner { max-width: 720px; margin: 0 auto; text-align: center; }
+.test-quote-mark { font-size: 80px; line-height: .7; color: rgba(0,125,186,.12); font-weight: 900; display: block; margin-bottom: var(--s3); letter-spacing: -.05em; }
+.test-quote { font-size: clamp(18px,2.5vw,26px); font-weight: 500; color: var(--ocean); line-height: 1.5; margin-bottom: var(--s4); }
+.test-attr { font-size: var(--text-sm); color: var(--text-meta); font-weight: 300; }
+.test-attr span { color: var(--text-body); font-weight: 600; }
+.test-divider { width: 40px; height: 3px; background: var(--ocean); border-radius: 2px; margin: var(--s5) auto; opacity: .35; }
+
+/* ── EMERGENCY STRIP ───────────────────────────────────────────── */
+.emergency-strip { padding: var(--s6) 0; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.ed-inner { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s7); align-items: center; }
+.ed-left { display: flex; flex-direction: column; gap: var(--s4); }
+.ed-header { display: flex; align-items: center; gap: var(--s2); margin-bottom: var(--s1); }
+.ed-header svg { width: 18px; height: 18px; color: var(--emergency); }
+.ed-header h3 { font-size: var(--text-lg); color: var(--text); }
+.ed-address { font-size: var(--text-base); color: var(--text-body); font-weight: 300; }
+.ed-wait {
+  display: inline-flex; align-items: center; gap: var(--s2); padding: 8px 14px;
+  background: var(--white); border: 1px solid var(--border); border-radius: var(--r-sm);
+  align-self: flex-start;
+}
+.ed-wait-dot { width: 8px; height: 8px; border-radius: 50%; background: #4caf50; animation: pulse 2s infinite; }
+.ed-wait-text { font-size: var(--text-sm); color: var(--text-body); font-weight: 300; }
+.ed-wait-time { font-size: var(--text-sm); font-weight: 800; color: var(--text); }
+.ed-wait-ts { font-size: var(--text-xs); color: var(--text-meta); margin-left: 4px; }
+.ed-actions { display: flex; gap: var(--s3); flex-wrap: wrap; }
+.ed-right { padding-left: var(--s5); border-left: 1px solid var(--border); }
+.ed-right h4 { font-size: var(--text-base); color: var(--text); margin-bottom: var(--s2); }
+.ed-right p { font-size: var(--text-base); color: var(--text-body); font-weight: 300; line-height: 1.7; }
+.ed-right .callout-emergency { margin-top: var(--s4); }
+
+@media(max-width:768px) { .ed-inner { grid-template-columns: 1fr; } .ed-right { padding-left: 0; border-left: none; border-top: 1px solid var(--border); padding-top: var(--s5); } }
+
+/* ── RESEARCH BRIEF ────────────────────────────────────────────── */
+.research-brief { padding: var(--s9) 0; background: var(--white); }
+.rb-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: var(--s5); margin-top: var(--s6); }
+.rb-main {
+  background: var(--blue); border-radius: var(--r-md);
+  padding: var(--s6); display: flex; flex-direction: column; justify-content: space-between;
+}
+.rb-main h3 { color: #fff; font-weight: 500; font-size: var(--text-xl); margin-bottom: var(--s3); }
+.rb-main p { color: rgba(255,255,255,.62); font-size: var(--text-base); line-height: 1.7; font-weight: 300; margin-bottom: var(--s5); flex: 1; }
+.rb-main .btn { align-self: flex-start; }
+.rb-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: var(--s5); display: flex; flex-direction: column; }
+.rb-card .eyebrow { margin-bottom: var(--s2); }
+.rb-card h4 { font-size: var(--text-base); color: var(--text); margin-bottom: var(--s2); }
+.rb-card p { font-size: var(--text-sm); color: var(--text-body); font-weight: 300; line-height: 1.65; flex: 1; margin-bottom: var(--s4); }
+.rb-card a { font-size: var(--text-sm); font-weight: 700; color: var(--ocean); display: flex; align-items: center; gap: 5px; margin-top: auto; }
+.rb-card a svg { width: 12px; height: 12px; }
+
+@media(max-width:900px) { .rb-grid { grid-template-columns: 1fr; } }
+
+/* ── PHOTO TILES — CSS documentary photography stand-ins ─────── */
+.photo-tile { position: relative; overflow: hidden; border-radius: var(--r-md); background: #2a4a6e; }
+.photo-tile::before { content: ''; display: block; }
+.photo-tile-inner { position: absolute; inset: 0; }
+.photo-clinic {
+  background:
+    radial-gradient(ellipse 50% 60% at 70% 20%, rgba(220,200,155,.18) 0%, transparent 55%),
+    linear-gradient(145deg, #1e3d5a 0%, #2e5878 35%, #3a6e8a 60%, #2a5570 100%);
+}
+.photo-corridor {
+  background:
+    radial-gradient(ellipse 80% 40% at 50% 5%, rgba(255,248,220,.14) 0%, transparent 50%),
+    linear-gradient(175deg, #1a3050 0%, #243d60 30%, #2e506a 60%, #1e3a55 100%);
+}
+.photo-campus {
+  background:
+    radial-gradient(ellipse 60% 50% at 60% 0%, rgba(180,210,245,.22) 0%, transparent 55%),
+    linear-gradient(160deg, #1e3060 0%, #2a4878 40%, #3860a0 70%, #2a4878 100%);
+}
+.photo-lab {
+  background:
+    radial-gradient(ellipse 70% 40% at 50% 10%, rgba(190,210,255,.18) 0%, transparent 50%),
+    linear-gradient(165deg, #141e38 0%, #1c2e50 35%, #243860 60%, #1a2e4e 100%);
+}
+.photo-family {
+  background:
+    radial-gradient(ellipse 60% 70% at 60% 15%, rgba(200,185,150,.2) 0%, transparent 55%),
+    linear-gradient(150deg, #1a3055 0%, #284870 35%, #346a8a 62%, #244060 100%);
+}
+.photo-tile-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,15,40,.55) 0%, transparent 55%); }
+.photo-tile-overlay-light { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,10,30,.35) 0%, transparent 45%); }
+.photo-tile-4-3::before { padding-top: 75%; }
+.photo-tile-3-2::before { padding-top: 66.6%; }
+.photo-tile-16-9::before { padding-top: 56.25%; }
+.photo-tile-square::before { padding-top: 100%; }
+.photo-tile-tall::before { padding-top: 118%; }
+/* Person silhouette layered on photo tiles */
+.photo-person {
+  position: absolute; bottom: 0;
+  background: rgba(255,255,255,.07);
+  filter: blur(.5px);
+  clip-path: polygon(28% 0%, 72% 0%, 82% 10%, 88% 30%, 86% 60%, 92% 80%, 100% 100%, 0 100%, 8% 80%, 14% 60%, 12% 30%, 18% 10%);
+}
+.photo-person-adult { right: 30%; width: 28%; height: 72%; }
+.photo-person-child { right: 18%; width: 18%; height: 52%; }
+.photo-person-care { right: 15%; width: 24%; height: 68%; background: rgba(255,255,255,.09); }
+
+/* ── NEWS SECTION ─────────────────────────────────────────────── */
+.news-section { padding: var(--s9) 0; background: var(--white); }
+.news-grid { display: grid; grid-template-columns: 1.55fr 1fr 1fr; gap: var(--s4); margin-top: var(--s6); }
+.news-featured { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; display: flex; flex-direction: column; text-decoration: none; transition: var(--ease); }
+.news-featured:hover { box-shadow: var(--shadow-md); border-color: var(--border-mid); text-decoration: none; transform: translateY(-2px); }
+.news-featured-img { height: 220px; position: relative; overflow: hidden; }
+.news-featured-body { padding: var(--s5); flex: 1; display: flex; flex-direction: column; }
+.news-featured-cat { font-size: var(--text-xs); font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--ocean); margin-bottom: var(--s2); }
+.news-featured-title { font-size: var(--text-lg); font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: var(--s3); flex: 1; }
+.news-featured-desc { font-size: var(--text-sm); color: var(--text-body); font-weight: 300; line-height: 1.65; margin-bottom: var(--s4); }
+.news-featured-meta { font-size: var(--text-xs); color: var(--text-meta); }
+.news-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; display: flex; flex-direction: column; text-decoration: none; transition: var(--ease); }
+.news-card:hover { box-shadow: var(--shadow-sm); border-color: var(--border-mid); text-decoration: none; }
+.news-card-img { height: 136px; position: relative; overflow: hidden; }
+.news-card-body { padding: var(--s4); flex: 1; display: flex; flex-direction: column; }
+.news-card-cat { font-size: var(--text-xs); font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: var(--ocean); margin-bottom: var(--s2); }
+.news-card-title { font-size: var(--text-base); font-weight: 700; color: var(--text); line-height: 1.4; flex: 1; }
+.news-card-meta { font-size: var(--text-xs); color: var(--text-meta); margin-top: var(--s3); }
+@media(max-width:900px) { .news-grid { grid-template-columns: 1fr 1fr; } }
+@media(max-width:580px) { .news-grid { grid-template-columns: 1fr; } }
+
+/* ── FEATURE STRIP — full-width alternating story panels ─────── */
+.feature-strip { padding: 0; }
+.feature-grid { display: grid; grid-template-columns: 1fr 1fr; min-height: 420px; }
+.feature-grid.flip .feature-text { order: 2; }
+.feature-grid.flip .feature-img { order: 1; }
+.feature-text { background: var(--blue); padding: var(--s10) var(--s8); display: flex; flex-direction: column; justify-content: center; }
+.feature-text .eyebrow { color: rgba(255,255,255,.38); margin-bottom: var(--s3); }
+.feature-text h2 { color: #fff; font-size: clamp(22px,2.8vw,30px); margin-bottom: var(--s4); font-weight: 500; }
+.feature-text p { color: rgba(255,255,255,.65); font-size: var(--text-md); font-weight: 300; line-height: 1.75; margin-bottom: var(--s5); }
+.feature-text .btn { align-self: flex-start; }
+.feature-img { position: relative; overflow: hidden; min-height: 380px; }
+.feature-img-inner { position: absolute; inset: 0; }
+@media(max-width:768px) { .feature-grid { grid-template-columns: 1fr; } .feature-text { padding: var(--s8) var(--px); } .feature-img { min-height: 240px; } .feature-grid.flip .feature-text,.feature-grid.flip .feature-img { order: 0; } }
+
+/* ── PROGRAM CARDS ────────────────────────────────────────────── */
+.programs-section { padding: var(--s9) 0; background: var(--surface); }
+.prog-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--s4); margin-top: var(--s6); }
+.prog-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; transition: var(--ease); text-decoration: none; display: block; }
+.prog-card:hover { box-shadow: var(--shadow-md); border-color: var(--border-mid); text-decoration: none; transform: translateY(-2px); }
+.prog-card-img { height: 155px; position: relative; overflow: hidden; }
+.prog-card-body { padding: var(--s4); }
+.prog-card-title { font-size: var(--text-base); font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.prog-card-desc { font-size: var(--text-sm); color: var(--text-body); font-weight: 300; line-height: 1.6; }
+.prog-card-link { font-size: var(--text-sm); font-weight: 700; color: var(--ocean); display: flex; align-items: center; gap: 5px; margin-top: var(--s3); }
+.prog-card-link svg { width: 12px; height: 12px; }
+@media(max-width:768px) { .prog-grid { grid-template-columns: 1fr 1fr; } }
+@media(max-width:480px) { .prog-grid { grid-template-columns: 1fr; } }
+
+/* ── FOOTER ────────────────────────────────────────────────────── */
+.site-footer { background: #12152a; color: rgba(255,255,255,.4); }
+.footer-main { padding: var(--s9) 0 var(--s7); }
+.footer-grid { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr 1fr; gap: var(--s7); }
+.footer-brand .logo { margin-bottom: var(--s4); }
+.footer-brand .logo-name { font-size: 14px; }
+.footer-brand p { font-size: var(--text-sm); color: rgba(255,255,255,.3); line-height: 1.7; font-weight: 300; margin-bottom: var(--s3); }
+.footer-accred { display: flex; flex-direction: column; gap: var(--s1); }
+.footer-accred span { font-size: 11px; color: rgba(255,255,255,.2); font-weight: 300; }
+.footer-col h5 { font-size: 10px; letter-spacing: .1em; color: rgba(255,255,255,.2); margin-bottom: var(--s3); }
+.footer-col ul { display: flex; flex-direction: column; gap: 6px; }
+.footer-col li a { font-size: var(--text-sm); color: rgba(255,255,255,.3); text-decoration: none; transition: color .15s; font-weight: 300; }
+.footer-col li a:hover { color: rgba(255,255,255,.75); }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,.07);
+  padding: var(--s5) 0;
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s4); flex-wrap: wrap;
+}
+.footer-copy { font-size: 11px; color: rgba(255,255,255,.18); font-weight: 300; }
+.footer-legal { display: flex; gap: var(--s5); flex-wrap: wrap; }
+.footer-legal a { font-size: 11px; color: rgba(255,255,255,.2); text-decoration: none; }
+.footer-legal a:hover { color: rgba(255,255,255,.6); }
+.footer-harvard {
+  display: flex; align-items: center; gap: var(--s2); padding: var(--s3) var(--s4);
+  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.07);
+  border-radius: var(--r-sm); align-self: flex-start; margin-bottom: var(--s4); max-width: 260px;
+}
+.footer-harvard p { font-size: 11px; color: rgba(255,255,255,.3); margin: 0; line-height: 1.55; font-weight: 300; }
+
+@media(max-width:1024px) { .footer-grid { grid-template-columns: 1fr 1fr 1fr; } }
+@media(max-width:640px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+
+/* ================================================================
+   INTERIOR PAGES
+   ================================================================ */
+
+/* ── PATTERN A — CLINICAL REFERENCE ───────────────────────────── */
+.clinical-layout { display: grid; grid-template-columns: 1fr 300px; gap: var(--s7); align-items: start; padding: var(--s7) 0 var(--s10); }
+.clinical-main { min-width: 0; }
+.clinical-sidebar { position: sticky; top: 108px; display: flex; flex-direction: column; gap: var(--s4); }
+
+/* Last reviewed */
+.last-reviewed { font-size: var(--text-xs); color: var(--text-meta); display: flex; align-items: center; gap: 5px; margin-bottom: var(--s5); }
+.last-reviewed svg { width: 12px; height: 12px; }
+
+/* Key Facts box */
+.key-facts {
+  background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: var(--r-md); padding: var(--s5); margin-bottom: var(--s7);
+}
+.key-facts-title { font-size: var(--text-base); font-weight: 700; color: var(--blue); margin-bottom: var(--s4); display: flex; align-items: center; gap: 7px; }
+.key-facts-title svg { width: 16px; height: 16px; }
+.key-facts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s3); }
+.kf-item { }
+.kf-label { font-size: var(--text-xs); font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: var(--ocean); margin-bottom: 4px; }
+.kf-val { font-size: var(--text-sm); color: var(--text-body); font-weight: 300; line-height: 1.6; }
+
+/* Clinical body content */
+.clinical-body h2 {
+  font-size: var(--text-xl); font-weight: 700; color: var(--ocean);
+  padding-left: var(--s4); border-left: 3px solid var(--ocean);
+  margin: var(--s7) 0 var(--s4);
+}
+.clinical-body h2:first-child { margin-top: 0; }
+.clinical-body h3 { font-size: var(--text-lg); color: var(--text); margin: var(--s5) 0 var(--s3); }
+.clinical-body p { font-size: var(--text-md); color: var(--text-body); font-weight: 300; line-height: 1.8; }
+.clinical-body p + p { margin-top: var(--s4); }
+.clinical-body ul { margin: var(--s3) 0 var(--s4) var(--s5); display: flex; flex-direction: column; gap: 6px; }
+.clinical-body li { font-size: var(--text-base); color: var(--text-body); font-weight: 300; position: relative; padding-left: var(--s3); }
+.clinical-body li::before { content: ''; position: absolute; left: 0; top: 10px; width: 5px; height: 1.5px; background: var(--ocean); }
+
+/* Sidebar cards */
+.sidebar-appt {
+  background: var(--blue); border-radius: var(--r-md); padding: var(--s5);
+}
+.sidebar-appt h4 { color: #fff; font-size: var(--text-base); margin-bottom: var(--s2); }
+.sidebar-appt p { font-size: var(--text-sm); color: rgba(255,255,255,.6); font-weight: 300; margin-bottom: var(--s4); }
+.sidebar-appt .btn { width: 100%; justify-content: center; }
+.sidebar-appt-phone { display: flex; align-items: center; gap: 6px; margin-top: var(--s3); }
+.sidebar-appt-phone svg { width: 13px; height: 13px; color: rgba(255,255,255,.5); }
+.sidebar-appt-phone a { font-size: var(--text-sm); color: rgba(255,255,255,.75); font-weight: 600; text-decoration: none; }
+.sidebar-appt-phone a:hover { color: #fff; }
+
+.sidebar-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--r-md); padding: var(--s4);
+}
+.sidebar-card h5 { color: var(--text-meta); margin-bottom: var(--s3); font-size: 10px; }
+.sidebar-card ul { display: flex; flex-direction: column; gap: 6px; }
+.sidebar-card li a {
+  display: flex; align-items: center; gap: 6px;
+  font-size: var(--text-sm); color: var(--ocean); text-decoration: none; font-weight: 600;
+  transition: color .12s;
+}
+.sidebar-card li a:hover { color: var(--blue); }
+.sidebar-card li a svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+.sidebar-doc {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r-md); padding: var(--s4);
+}
+.sidebar-doc .eyebrow { margin-bottom: var(--s3); }
+.sidebar-doc-info { display: flex; align-items: center; gap: var(--s3); margin-bottom: var(--s3); }
+.sidebar-doc-avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--ocean); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.sidebar-doc-avatar svg { width: 22px; height: 22px; color: rgba(255,255,255,.7); }
+.sidebar-doc-name { font-size: var(--text-sm); font-weight: 700; color: var(--text); display: block; }
+.sidebar-doc-title { font-size: var(--text-xs); color: var(--text-meta); display: block; font-weight: 300; }
+
+@media(max-width:900px) { .clinical-layout { grid-template-columns: 1fr; } .clinical-sidebar { position: static; } .key-facts-grid { grid-template-columns: 1fr; } }
+
+/* ── PATTERN B — DECISION SUPPORT (Find a Doctor) ─────────────── */
+.filter-bar {
+  background: var(--white); border-bottom: 1px solid var(--border);
+  padding: var(--s4) 0; position: sticky; top: 108px; z-index: 200;
+}
+.filter-inner { display: flex; align-items: center; gap: var(--s3); flex-wrap: wrap; }
+.filter-inner .select { flex: 1; min-width: 160px; max-width: 220px; }
+.filter-count { font-size: var(--text-sm); color: var(--text-meta); white-space: nowrap; font-weight: 300; margin-left: auto; }
+
+.doctor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s4); padding: var(--s6) 0 var(--s10); }
+
+.doc-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-md); padding: var(--s4); display: flex; flex-direction: column; gap: var(--s3); transition: var(--ease); }
+.doc-card:hover { border-color: var(--border-strong); box-shadow: var(--shadow-sm); }
+
+.doc-card-head { display: flex; align-items: flex-start; gap: var(--s3); }
+.doc-avatar { width: 60px; height: 60px; border-radius: 50%; background: var(--surface-2); flex-shrink: 0; overflow: hidden; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; }
+.doc-avatar svg { width: 28px; height: 28px; color: var(--text-meta); }
+.doc-name { font-size: var(--text-base); font-weight: 700; color: var(--text); display: block; margin-bottom: 2px; }
+.doc-title { font-size: var(--text-sm); color: var(--text-body); font-weight: 300; display: block; }
+.doc-specialty { display: flex; flex-wrap: wrap; gap: 4px; }
+.doc-status { display: flex; align-items: center; gap: 5px; }
+.doc-status-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.doc-status-dot.accepting { background: var(--green); }
+.doc-status-dot.closed { background: var(--text-meta); }
+.doc-status-text { font-size: var(--text-xs); font-weight: 600; }
+.doc-status-text.accepting { color: var(--success-text); }
+.doc-status-text.closed { color: var(--text-meta); }
+.doc-card .btn { width: 100%; justify-content: center; }
+.doc-profile { display: block; text-align: center; font-size: var(--text-sm); color: var(--ocean); font-weight: 600; }
+
+@media(max-width:700px) { .doctor-grid { grid-template-columns: 1fr; } }
+
+/* ── EMERGENCY PAGE ─────────────────────────────────────────────── */
+.ed-page-hero {
+  background: var(--blue); padding: var(--s7) 0; border-bottom: 4px solid var(--emergency);
+}
+.ed-page-hero h1 { font-size: clamp(24px,4vw,40px); font-weight: 500; margin-bottom: var(--s2); }
+.ed-page-hero .lead { color: rgba(255,255,255,.68); font-size: var(--text-md); margin-bottom: var(--s5); }
+.ed-critical-info {
+  background: var(--white); border-radius: var(--r-md); padding: var(--s5) var(--s6); margin-top: var(--s5);
+}
+.ed-crit-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: var(--s4); }
+.ed-crit-item {}
+.ed-crit-label { font-size: var(--text-xs); font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--text-meta); margin-bottom: 5px; }
+.ed-crit-value { font-size: var(--text-md); font-weight: 700; color: var(--text); }
+.ed-crit-value.wait { color: var(--success-text); }
+.ed-crit-sub { font-size: var(--text-xs); color: var(--text-meta); margin-top: 3px; font-weight: 300; }
+.ed-crit-phone a { font-size: var(--text-md); font-weight: 700; color: var(--blue); text-decoration: none; }
+.ed-crit-phone a:hover { color: var(--ocean); }
+.ed-crit-actions { display: flex; gap: var(--s2); align-items: center; }
+.ed-body { padding: var(--s7) 0 var(--s10); }
+.ed-body-grid { display: grid; grid-template-columns: 2fr 1fr; gap: var(--s7); align-items: start; }
+
+@media(max-width:768px) { .ed-crit-grid { grid-template-columns: 1fr 1fr; } .ed-body-grid { grid-template-columns: 1fr; } }
+
+/* ── ABOUT / NARRATIVE ─────────────────────────────────────────── */
+.narrative-section { padding: var(--s10) 0; }
+.narrative-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s7); align-items: center; }
+.narrative-grid.flip { }
+.narrative-grid.flip .narrative-text { order: 2; }
+.narrative-grid.flip .narrative-img { order: 1; }
+.narrative-text { }
+.narrative-text .eyebrow { margin-bottom: var(--s2); }
+.narrative-text h2 { margin-bottom: var(--s4); }
+.narrative-text p { margin-bottom: var(--s4); }
+.narrative-img {
+  border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 4/3;
+  background: var(--surface-2); display: flex; align-items: center; justify-content: center;
+}
+.narrative-img-inner {
+  width: 100%; height: 100%;
+  background: linear-gradient(145deg, #c8d8ec 0%, #a8c0de 100%);
+  display: flex; align-items: center; justify-content: center;
+}
+.pull-quote { font-size: clamp(20px,2.5vw,28px); font-weight: 500; color: var(--ocean); line-height: 1.45; padding: var(--s6) 0; margin: var(--s6) 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.stat-strip { background: var(--blue); padding: var(--s7) 0; margin: var(--s7) 0; border-radius: var(--r-md); }
+.stat-strip .trust-inner { }
+.stat-strip .trust-item { border-right-color: rgba(255,255,255,.1); }
+
+@media(max-width:768px) { .narrative-grid { grid-template-columns: 1fr; } .narrative-grid.flip .narrative-text { order: 0; } .narrative-grid.flip .narrative-img { order: 0; } }
+</style>
+</head>
+<body>
+
+<!-- Skip navigation — first focusable element, WCAG 2.1 -->
+<a href="#main" class="skip-nav">Skip to main content</a>
+
+<!-- ── PAGE PICKER (demo) ───────────────────────────── -->
+<!-- Minimal page switcher — portfolio review only -->
+<div id="picker">
+  <div id="picker-lbl">View page</div>
+  <button class="on" onclick="show('home',this)">Home</button>
+  <button onclick="show('condition',this)">Condition</button>
+  <button onclick="show('doctors',this)">Find a Doctor</button>
+  <button onclick="show('emergency',this)">Emergency</button>
+  <button onclick="show('about',this)">About</button>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     SHARED HEADER — appears on all pages
+════════════════════════════════════════════════════ -->
+<header class="site-header" role="banner">
+
+  <!-- Utility bar -->
+  <div class="util-bar">
+    <div class="wrap util-inner">
+      <div class="util-left">
+        <a href="#" class="util-link">Español</a>
+        <a href="#" class="util-link">For Clinicians</a>
+        <a href="#" class="util-link">Research</a>
+        <a href="#" class="util-link">Give to Boston Children's</a>
+      </div>
+      <div class="util-right">
+        <!-- CHANGE 4C: Live ED wait time with aria-live="polite" so screen readers broadcast updates automatically -->
+        <div class="util-ed">
+          <span class="util-ed-dot" aria-hidden="true"></span>
+          <span class="util-ed-text">ED wait:</span>
+          <span
+            class="util-ed-time"
+            id="ed-wait-util"
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+            aria-label="Current Emergency Department wait time: approximately 22 minutes">~22 min</span>
+          <a href="#" aria-label="View Emergency Department information">View ED</a>
+        </div>
+        <!-- Patient Portal trigger -->
+        <div class="portal-wrap">
+          <a href="#" class="portal-btn" aria-label="Patient Portal — your health record and messages" aria-haspopup="true">
+            <span class="portal-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            </span>
+            <span class="portal-labels">
+              <span class="portal-name">Patient Portal</span>
+              <span class="portal-sub">Your health record</span>
+            </span>
+          </a>
+          <!-- Portal dropdown -->
+          <div class="portal-drop" role="region" aria-label="Patient Portal options">
+            <div class="pd-inner">
+              <div class="pd-head">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                <strong>Your secure health record</strong>
+              </div>
+              <p class="pd-sub">Sign in to view test results, message your care team, and manage appointments.</p>
+              <div class="pd-actions" role="list">
+                <a href="#" class="pd-action" role="listitem">
+                  <div>
+                    <div class="pd-action-label">View test results</div>
+                    <div class="pd-action-desc">Lab results, imaging, and reports</div>
+                  </div>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                </a>
+                <a href="#" class="pd-action" role="listitem">
+                  <div>
+                    <div class="pd-action-label">Message your care team</div>
+                    <div class="pd-action-desc">Non-urgent questions and follow-up</div>
+                  </div>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                </a>
+                <a href="#" class="pd-action" role="listitem">
+                  <div>
+                    <div class="pd-action-label">Manage appointments</div>
+                    <div class="pd-action-desc">Upcoming visits, referrals, scheduling</div>
+                  </div>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                </a>
+              </div>
+              <a href="#" class="pd-sign-in">Sign in to Portal</a>
+              <a href="#" class="pd-help">New to the portal? Get help setting up</a>
+              <div class="pd-security">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <p>Secured with two-factor authentication. Your information is never shared without your permission.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main nav bar -->
+  <nav class="main-bar" aria-label="Main navigation">
+    <div class="wrap main-inner">
+
+      <!-- Logo -->
+      <a href="#" class="logo" aria-label="Boston Children's Hospital — home">
+        <span class="logo-seal" aria-hidden="true">
+          <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="30" cy="30" r="28" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+            <text x="30" y="20" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="8" font-family="sans-serif" font-weight="700">BOSTON</text>
+            <text x="30" y="30" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="6" font-family="sans-serif">CHILDREN'S</text>
+            <text x="30" y="40" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="6" font-family="sans-serif">HOSPITAL</text>
+          </svg>
+        </span>
+        <span class="logo-text-wrap">
+          <span class="logo-name">Boston Children's Hospital</span>
+          <span class="logo-tagline">Where the world comes for answers</span>
+        </span>
+      </a>
+
+      <!-- Desktop nav -->
+      <div class="nav-links" role="menubar">
+
+        <!-- Care -->
+        <div class="nav-item active" role="none">
+          <button class="nav-trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
+            Care
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="mega" role="menu" aria-label="Care submenu">
+            <div class="mega-body">
+              <div class="mega-zone mega-zone-a">
+                <h5>Primary actions</h5>
+                <ul>
+                  <li><a href="#">Find a Specialist</a></li>
+                  <li><a href="#">Book an Appointment</a></li>
+                  <li><a href="#">Conditions A–Z</a></li>
+                  <li><a href="#">Request a Referral</a></li>
+                </ul>
+              </div>
+              <div class="mega-zone">
+                <h5>Specialties</h5>
+                <ul>
+                  <li><a href="#">Cardiology</a></li>
+                  <li><a href="#">Neurology</a></li>
+                  <li><a href="#">Oncology</a></li>
+                  <li><a href="#">Orthopedics</a></li>
+                  <li><a href="#">Rare Diseases</a></li>
+                  <li><a href="#">All Specialties →</a></li>
+                </ul>
+              </div>
+              <div class="mega-zone">
+                <h5>Care settings</h5>
+                <ul>
+                  <li><a href="#">Emergency Department</a></li>
+                  <li><a href="#">Inpatient Care</a></li>
+                  <li><a href="#">Outpatient Clinics</a></li>
+                  <li><a href="#">Telehealth Visits</a></li>
+                  <li><a href="#">Second Opinion</a></li>
+                </ul>
+              </div>
+              <div class="mega-card">
+                <span class="eyebrow">Find your path</span>
+                <h4>Not sure where to start?</h4>
+                <p>Answer a few questions to find the right specialist for your child's needs.</p>
+                <a href="#" class="btn btn-ghost-white btn-sm">Find a specialist</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Patients & Families -->
+        <div class="nav-item" role="none">
+          <button class="nav-trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
+            Patients & Families
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="mega" role="menu" aria-label="Patients and Families submenu">
+            <div class="mega-body">
+              <div class="mega-zone mega-zone-a">
+                <h5>Primary actions</h5>
+                <ul>
+                  <li><a href="#">Patient Portal</a></li>
+                  <li><a href="#">Prepare for Your Visit</a></li>
+                  <li><a href="#">Billing & Insurance</a></li>
+                  <li><a href="#">Medical Records</a></li>
+                </ul>
+              </div>
+              <div class="mega-zone">
+                <h5>During your stay</h5>
+                <ul>
+                  <li><a href="#">What to Bring</a></li>
+                  <li><a href="#">Parking & Directions</a></li>
+                  <li><a href="#">Food & Lodging</a></li>
+                  <li><a href="#">Sibling Support</a></li>
+                </ul>
+              </div>
+              <div class="mega-zone">
+                <h5>Support & resources</h5>
+                <ul>
+                  <li><a href="#">Family Services</a></li>
+                  <li><a href="#">Health Library</a></li>
+                  <li><a href="#">Patient Rights</a></li>
+                  <li><a href="#">Interpreter Services</a></li>
+                </ul>
+              </div>
+              <div class="mega-card">
+                <span class="eyebrow">Before you arrive</span>
+                <h4>Pre-visit checklist</h4>
+                <p>Everything your family needs to know before coming to the hospital.</p>
+                <a href="#" class="btn btn-ghost-white btn-sm">View checklist</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Professionals -->
+        <div class="nav-item" role="none">
+          <button class="nav-trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
+            Professionals
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="mega" role="menu" aria-label="Professionals submenu">
+            <div class="mega-body">
+              <div class="mega-zone mega-zone-a">
+                <h5>Primary actions</h5>
+                <ul>
+                  <li><a href="#">Refer a Patient</a></li>
+                  <li><a href="#">Clinical Resources</a></li>
+                  <li><a href="#">CME Programs</a></li>
+                  <li><a href="#">Clinical Trials</a></li>
+                </ul>
+              </div>
+              <div class="mega-zone">
+                <h5>For physicians</h5>
+                <ul>
+                  <li><a href="#">Referral Guidelines</a></li>
+                  <li><a href="#">Consultation Services</a></li>
+                  <li><a href="#">Transfer Center</a></li>
+                  <li><a href="#">Secure Messaging</a></li>
+                </ul>
+              </div>
+              <div class="mega-zone">
+                <h5>Education & training</h5>
+                <ul>
+                  <li><a href="#">Fellowships</a></li>
+                  <li><a href="#">Residency Programs</a></li>
+                  <li><a href="#">Grand Rounds</a></li>
+                  <li><a href="#">Simulation Center</a></li>
+                </ul>
+              </div>
+              <div class="mega-card">
+                <span class="eyebrow">Fast referral</span>
+                <h4>Most patients seen within 72 hours</h4>
+                <p>Submit a referral online or call our Physician Access Line.</p>
+                <a href="#" class="btn btn-ghost-white btn-sm">Refer a patient</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Research -->
+        <div class="nav-item" role="none">
+          <button class="nav-trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
+            Research
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="mega" role="menu" aria-label="Research submenu">
+            <div class="mega-body">
+              <div class="mega-zone mega-zone-a">
+                <h5>Primary actions</h5>
+                <ul>
+                  <li><a href="#">Research Labs</a></li>
+                  <li><a href="#">Clinical Trials</a></li>
+                  <li><a href="#">Publications</a></li>
+                  <li><a href="#">Research News</a></li>
+                </ul>
+              </div>
+              <div class="mega-zone">
+                <h5>Research areas</h5>
+                <ul>
+                  <li><a href="#">Basic Science</a></li>
+                  <li><a href="#">Translational Research</a></li>
+                  <li><a href="#">Population Health</a></li>
+                  <li><a href="#">Gene Therapy</a></li>
+                </ul>
+              </div>
+              <div class="mega-zone">
+                <h5>Get involved</h5>
+                <ul>
+                  <li><a href="#">Participate in Research</a></li>
+                  <li><a href="#">Research Funding</a></li>
+                  <li><a href="#">Postdoctoral Fellows</a></li>
+                </ul>
+              </div>
+              <div class="mega-card">
+                <span class="eyebrow">Now enrolling</span>
+                <h4>Featured clinical trial</h4>
+                <p>Gene therapy study for children with rare metabolic disorders.</p>
+                <a href="#" class="btn btn-ghost-white btn-sm">Learn more</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- About -->
+        <div class="nav-item" role="none">
+          <button class="nav-trigger" role="menuitem" aria-haspopup="true" aria-expanded="false">
+            About
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="mega" role="menu" aria-label="About submenu">
+            <div class="mega-body">
+              <div class="mega-zone mega-zone-a">
+                <h5>Primary actions</h5>
+                <ul>
+                  <li><a href="#">Our Mission & Values</a></li>
+                  <li><a href="#">Leadership</a></li>
+                  <li><a href="#">Careers</a></li>
+                  <li><a href="#">Newsroom</a></li>
+                </ul>
+              </div>
+              <div class="mega-zone">
+                <h5>The hospital</h5>
+                <ul>
+                  <li><a href="#">History</a></li>
+                  <li><a href="#">Board of Trustees</a></li>
+                  <li><a href="#">Quality & Safety</a></li>
+                  <li><a href="#">Community Programs</a></li>
+                </ul>
+              </div>
+              <div class="mega-zone">
+                <h5>Support us</h5>
+                <ul>
+                  <li><a href="#">Give to Boston Children's</a></li>
+                  <li><a href="#">Volunteer</a></li>
+                  <li><a href="#">Corporate Partners</a></li>
+                </ul>
+              </div>
+              <div class="mega-card">
+                <span class="eyebrow">2024 Impact</span>
+                <h4>Our annual report is now available</h4>
+                <p>Read about the year's breakthroughs, stories, and outcomes.</p>
+                <a href="#" class="btn btn-ghost-white btn-sm">View report</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /nav-links -->
+
+      <div class="nav-right">
+        <button class="search-btn" aria-label="Search the site">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+        <!-- CHANGE 1B: Always-visible nav CTAs for Find a Doctor + Book Appointment -->
+        <a href="#" class="nav-cta-find">Find a Doctor</a>
+        <a href="#" class="nav-cta-book">Book Appointment</a>
+        <button class="mob-toggle" id="mob-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mob-nav">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- Mobile nav — portal card first per UX spec -->
+  <nav class="mob-nav" id="mob-nav" aria-label="Mobile navigation" aria-hidden="true">
+    <!-- 1. Patient Portal — highest priority on mobile -->
+    <div class="mob-portal">
+      <div class="mob-portal-head">
+        <span class="mob-portal-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        </span>
+        <span class="mob-portal-name">Patient Portal</span>
+      </div>
+      <div class="mob-portal-desc">Your health record, test results, and care team messages.</div>
+      <a href="#" class="mob-portal-btn">Sign in to Portal</a>
+      <a href="#" class="mob-portal-help">New user? Get started</a>
+    </div>
+
+    <!-- 2. Primary tasks — directly tappable -->
+    <div class="mob-tasks" role="list">
+      <a href="#" class="mob-task" role="listitem">
+        Find a Specialist
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <a href="#" class="mob-task" role="listitem">
+        Book an Appointment
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <a href="#" class="mob-task" role="listitem">
+        Conditions & Diagnoses
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+      <a href="#" class="mob-task" role="listitem">
+        Prepare for Your Visit
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+    </div>
+
+    <!-- 3. Accordion secondary groups -->
+    <div class="mob-groups">
+      <div class="mob-group" id="mg-care">
+        <button class="mob-gb" aria-expanded="false" aria-controls="ms-care" onclick="toggleMob('care')">
+          Care
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="mob-sub" id="ms-care" aria-hidden="true">
+          <a href="#">Specialties A–Z</a><a href="#">Emergency Department</a>
+          <a href="#">Inpatient Care</a><a href="#">Telehealth</a>
+          <a href="#">Second Opinion</a>
+        </div>
+      </div>
+      <div class="mob-group" id="mg-pf">
+        <button class="mob-gb" aria-expanded="false" aria-controls="ms-pf" onclick="toggleMob('pf')">
+          Patients & Families
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="mob-sub" id="ms-pf" aria-hidden="true">
+          <a href="#">Billing & Insurance</a><a href="#">Medical Records</a>
+          <a href="#">Family Support</a><a href="#">Parking & Directions</a>
+        </div>
+      </div>
+      <div class="mob-group" id="mg-res">
+        <button class="mob-gb" aria-expanded="false" aria-controls="ms-res" onclick="toggleMob('res')">
+          Research & Careers
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="mob-sub" id="ms-res" aria-hidden="true">
+          <a href="#">Research Labs</a><a href="#">Clinical Trials</a>
+          <a href="#">Careers</a><a href="#">Education</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Emergency and appointment footer -->
+    <div class="mob-foot">
+      <a href="#" class="mob-appt">Book an Appointment</a>
+      <div class="mob-ed-strip">
+        <div class="mob-ed-left">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span class="mob-ed-label">Emergency Dept. · ~22 min wait</span>
+        </div>
+        <a href="#" class="mob-ed-link" aria-label="Emergency Department information">Info →</a>
+      </div>
+    </div>
+  </nav>
+
+</header>
+
+<!-- CHANGE 3A: Sticky mobile bottom bar — Book + Contact always accessible, never scrolls away -->
+<div class="mob-sticky-bar" role="navigation" aria-label="Quick actions">
+  <a href="#" class="btn btn-primary">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    Book Appointment
+  </a>
+  <a href="#" class="btn btn-outline">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.5 11.47a19.79 19.79 0 01-3.07-8.67A2 2 0 013.41 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.91 9.91a16 16 0 006.18 6.18l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+    Contact Us
+  </a>
+</div>
+
+<main id="main">
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 1 — HOMEPAGE
+════════════════════════════════════════════════════ -->
+<div class="pg on" id="pg-home">
+
+  <!-- Full-bleed hero with CSS documentary photo treatment -->
+  <section class="hero" aria-labelledby="hero-heading">
+    <!-- Photo layer: simulates natural-light clinical photography per BCH brand guidelines -->
+    <div class="hero-photo" aria-hidden="true"></div>
+    <div class="hero-figures" aria-hidden="true"></div>
+    <div class="hero-haze" aria-hidden="true"></div>
+
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-eyebrow">Boston Children's Hospital</div>
+        <h1 id="hero-heading">Answers for the children<br>who need them <em>most</em>.</h1>
+        <p class="hero-lead">Many children come to us after other doctors haven't found the answer. We care for more than 365,000 patients a year — including some of the most complex cases in the world.</p>
+        <div class="hero-actions">
+          <a href="#" class="btn btn-ocean btn-lg">Find a Specialist</a>
+          <a href="#" class="btn btn-ghost-white btn-lg">Explore Conditions A–Z</a>
+        </div>
+      </div>
+    </div>
+    <div class="hero-credit" aria-hidden="true">Photo: Boston Children's Hospital</div>
+  </section>
+
+  <!-- CHANGE 1C: "Help me find..." quick-links task bar -->
+  <nav class="quicklinks" aria-label="Quick task navigation">
+    <div class="wrap">
+      <div class="ql-inner">
+        <span class="ql-label">Help me find</span>
+        <a href="#" class="ql-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>Billing & Insurance</a>
+        <a href="#" class="ql-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.5 11.47a19.79 19.79 0 01-3.07-8.67A2 2 0 013.41 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.91 9.91a16 16 0 006.18 6.18l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>Contact Us</a>
+        <a href="#" class="ql-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>Parking & Directions</a>
+        <a href="#" class="ql-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v11m0 0H5m4 0h4m6-7v7m0 0h-4m4 0h2a2 2 0 002-2V9"/></svg>Medical Records</a>
+        <a href="#" class="ql-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>Visitor Information</a>
+        <a href="#" class="ql-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.26a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/></svg>Telehealth Visits</a>
+        <a href="#" class="ql-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Second Opinion</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Trust Proof Strip -->
+  <section class="trust-strip" aria-label="Hospital facts">
+    <div class="wrap">
+      <div class="trust-inner">
+        <div class="trust-item">
+          <span class="trust-num" aria-label="365,000">365,000</span>
+          <span class="trust-label">Patient visits<br>each year</span>
+        </div>
+        <div class="trust-item">
+          <span class="trust-num" aria-label="more than 200">200+</span>
+          <span class="trust-label">Specialties<br>and programs</span>
+        </div>
+        <div class="trust-item">
+          <span class="trust-num" aria-label="number 1">#1</span>
+          <span class="trust-label">Ranked children's hospital<br>in the U.S. — U.S. News, 2024</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHANGE 2B: Social proof — rankings, quality metrics, patient story -->
+  <section class="social-proof" aria-labelledby="sp-heading">
+    <div class="wrap">
+      <div class="sh">
+        <span class="eyebrow">Why families choose Boston Children's</span>
+        <h2 id="sp-heading">Recognized quality. Proven outcomes.</h2>
+        <p>Our results are measured, published, and independently verified — so you can make an informed decision about your child's care.</p>
+      </div>
+      <div class="sp-grid">
+        <div class="sp-rankings">
+          <span class="eyebrow">National rankings</span>
+          <div class="sp-rank-list">
+            <div class="sp-rank-item"><span class="sp-rank-num">#1</span><span class="sp-rank-label"><strong>Best Children's Hospital in the U.S.</strong>U.S. News & World Report, 2024–25</span></div>
+            <div class="sp-rank-item"><span class="sp-rank-num">#1</span><span class="sp-rank-label"><strong>Cardiology & Heart Surgery</strong>12 consecutive years — U.S. News</span></div>
+            <div class="sp-rank-item"><span class="sp-rank-num">#1</span><span class="sp-rank-label"><strong>Neurology & Neurosurgery</strong>U.S. News, 2024–25</span></div>
+            <div class="sp-rank-item"><span class="sp-rank-num">#1</span><span class="sp-rank-label"><strong>Orthopedics</strong>U.S. News, 2024–25</span></div>
+          </div>
+        </div>
+        <div class="sp-metrics">
+          <span class="eyebrow">Clinical quality</span>
+          <div class="sp-metric-list">
+            <div class="sp-metric">
+              <div class="sp-metric-val">97%</div>
+              <div class="sp-metric-label">Of families say they would recommend Boston Children's to others</div>
+              <div class="sp-metric-source">Press Ganey Patient Experience Survey, 2024</div>
+            </div>
+            <div class="sp-metric">
+              <div class="sp-metric-val">400+</div>
+              <div class="sp-metric-label">Active clinical trials, including many conditions with no other available treatment</div>
+              <div class="sp-metric-source">ClinicalTrials.gov, 2024</div>
+            </div>
+            <div class="sp-metric">
+              <div class="sp-metric-val">$400M</div>
+              <div class="sp-metric-label">Invested in research each year — among the highest of any children's hospital in the world</div>
+              <div class="sp-metric-source">BCH Research Enterprise, FY2024</div>
+            </div>
+          </div>
+        </div>
+        <div class="sp-story">
+          <span class="eyebrow">From a family</span>
+          <p class="sp-story-quote">"Every doctor we'd seen before said they weren't sure. Boston Children's knew exactly what was wrong within the first appointment. We finally had a path forward."</p>
+          <div class="sp-story-attr">
+            <strong>Parent of a patient, Rare Disease Program</strong>
+            Family traveled from outside the U.S. for care
+            <div style="margin-top:var(--s3)"><span class="badge badge-ocean">Rare Diseases</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Audience Pathfinder -->
+  <section class="pathfinder" aria-labelledby="pf-heading">
+    <div class="wrap">
+      <div class="sh">
+        <span class="eyebrow">Who are you here for?</span>
+        <h2 id="pf-heading">Find your path</h2>
+        <p>Boston Children's serves families, clinicians, researchers, and patients from around the world. Tell us who you are, and we'll show you what you need.</p>
+      </div>
+      <div class="pf-grid">
+        <a href="#" class="pf-card">
+          <div class="pf-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
+            </svg>
+          </div>
+          <div class="pf-title">Parents & Families</div>
+          <div class="pf-desc">Find specialists, prepare for a visit, and access your child's health records.</div>
+          <span class="pf-link">
+            Start here
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+          </span>
+        </a>
+        <a href="#" class="pf-card">
+          <div class="pf-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </svg>
+          </div>
+          <div class="pf-title">Clinicians & Referrers</div>
+          <div class="pf-desc">Refer a patient, access clinical tools, and connect with our care teams.</div>
+          <span class="pf-link">
+            Refer a patient
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+          </span>
+        </a>
+        <a href="#" class="pf-card">
+          <div class="pf-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v11m0 0H5m4 0h4m6-7v7m0 0h-4m4 0h2a2 2 0 002-2V9m0 0h-2"/>
+            </svg>
+          </div>
+          <div class="pf-title">Researchers</div>
+          <div class="pf-desc">Explore our labs, clinical trials, publications, and research programs.</div>
+          <span class="pf-link">
+            Access research tools
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+          </span>
+        </a>
+        <a href="#" class="pf-card">
+          <div class="pf-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+            </svg>
+          </div>
+          <div class="pf-title">International Patients</div>
+          <div class="pf-desc">Plan your visit from abroad. We provide support for families traveling for care.</div>
+          <span class="pf-link">
+            Plan your visit
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Specialties Spotlight -->
+  <section class="specialties" aria-labelledby="spec-heading">
+    <div class="wrap">
+      <div class="sh">
+        <span class="eyebrow">Areas of care</span>
+        <h2 id="spec-heading">Is this the right hospital for your child?</h2>
+        <p>We care for children with some of the most complex and rare conditions in medicine. Here are the areas where we have the deepest expertise.</p>
+      </div>
+      <div class="spec-grid" role="list">
+        <a href="#" class="spec-item" role="listitem">
+          <span class="spec-name">Heart conditions</span>
+          <span class="spec-desc">Congenital and acquired heart disease</span>
+        </a>
+        <a href="#" class="spec-item" role="listitem">
+          <span class="spec-name">Cancer & blood disorders</span>
+          <span class="spec-desc">Pediatric oncology and hematology</span>
+        </a>
+        <a href="#" class="spec-item" role="listitem">
+          <span class="spec-name">Neurology & epilepsy</span>
+          <span class="spec-desc">Brain, spine, and nervous system conditions</span>
+        </a>
+        <a href="#" class="spec-item" role="listitem">
+          <span class="spec-name">Orthopedics & spine</span>
+          <span class="spec-desc">Bone, joint, and musculoskeletal disorders</span>
+        </a>
+        <a href="#" class="spec-item" role="listitem">
+          <span class="spec-name">Rare diseases</span>
+          <span class="spec-desc">Genetic and undiagnosed conditions</span>
+        </a>
+        <a href="#" class="spec-item" role="listitem">
+          <span class="spec-name">Kidney disease</span>
+          <span class="spec-desc">Nephrology and transplant care</span>
+        </a>
+        <a href="#" class="spec-item" role="listitem">
+          <span class="spec-name">Newborn & infant care</span>
+          <span class="spec-desc">Neonatal intensive care and fetal medicine</span>
+        </a>
+        <a href="#" class="spec-item" role="listitem">
+          <span class="spec-name">Mental health</span>
+          <span class="spec-desc">Psychiatry, psychology, and behavioral health</span>
+        </a>
+      </div>
+      <div style="margin-top:var(--s5);text-align:center">
+        <a href="#" class="btn btn-outline">View all conditions A–Z</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial — restraint-first, no manipulation -->
+  <section class="testimonial" aria-labelledby="test-heading">
+    <div class="wrap">
+      <div class="test-inner">
+        <span class="test-quote-mark" aria-hidden="true">"</span>
+        <blockquote>
+          <p class="test-quote" id="test-heading">"The team explained everything before they did it. We always knew what was happening and why."</p>
+          <footer>
+            <div class="test-divider" aria-hidden="true"></div>
+            <cite class="test-attr"><span>Parent of a cardiology patient</span> · Boston Children's Hospital</cite>
+          </footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- Emergency & Urgent Care Strip -->
+  <section class="emergency-strip" aria-labelledby="ed-heading">
+    <div class="wrap">
+      <div class="ed-inner">
+        <div class="ed-left">
+          <div>
+            <div class="ed-header">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <h3 id="ed-heading">Emergency Department</h3>
+            </div>
+            <p class="ed-address">300 Longwood Avenue, Boston, MA 02115 · Open 24 hours</p>
+          </div>
+          <div class="ed-wait">
+            <span class="ed-wait-dot" aria-hidden="true"></span>
+            <span class="ed-wait-text">Current wait:</span>
+            <span class="ed-wait-time" role="status" aria-live="polite" aria-atomic="true" aria-label="Current wait time: approximately 22 minutes">~22 min</span>
+            <span class="ed-wait-ts">Updated 3:47 PM</span>
+          </div>
+          <div class="ed-actions">
+            <a href="#" class="btn btn-outline btn-sm">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>
+              Get Directions
+            </a>
+            <a href="#" class="btn btn-outline-ocean btn-sm">ED Information</a>
+          </div>
+        </div>
+        <div class="ed-right">
+          <h4>When to come to the ED</h4>
+          <p>Our Emergency Department is a Level 1 pediatric trauma center. We see the most complex cases. For conditions that are not life-threatening, an urgent care visit may be faster for your child.</p>
+          <!-- CHANGE 5A: amber callout-urgent for informational guidance, red reserved for 911-level emergencies -->
+          <div class="callout-urgent" style="margin-top:var(--s4)" role="note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <div>
+              <div class="cu-title">If your child cannot wait — call 911</div>
+              <p>For breathing problems, a seizure lasting more than 5 minutes, loss of consciousness, or serious injury — call 911 or go to your nearest emergency room first.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature strip: full-width image + text panel — clinical care -->
+  <div class="feature-strip" aria-label="About our care">
+    <div class="feature-grid">
+      <div class="feature-img">
+        <div class="feature-img-inner photo-clinic">
+          <div class="photo-tile-overlay"></div>
+          <div class="photo-person photo-person-care"></div>
+          <div class="photo-person photo-person-child"></div>
+        </div>
+      </div>
+      <div class="feature-text">
+        <span class="eyebrow">Complex care</span>
+        <h2>We care for children that others can't.</h2>
+        <p>Many of the families who come to us have already seen other hospitals. They come to Boston Children's because their child's condition is rare, complex, or not responding to treatment elsewhere.</p>
+        <p>Our teams are built around specific conditions — so the expertise in each room runs deep.</p>
+        <a href="#" class="btn btn-ghost-white">Our specialties</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Programs section -->
+  <section class="programs-section" aria-labelledby="prog-heading">
+    <div class="wrap">
+      <div class="sh">
+        <span class="eyebrow">Clinical programs</span>
+        <h2 id="prog-heading">Specialized programs for complex conditions</h2>
+        <p>Each program brings together the right specialists, researchers, and support services under one roof.</p>
+      </div>
+      <div class="prog-grid">
+        <a href="#" class="prog-card">
+          <div class="prog-card-img photo-tile photo-clinic">
+            <div class="photo-tile-inner"></div>
+            <div class="photo-tile-overlay-light"></div>
+          </div>
+          <div class="prog-card-body">
+            <div class="prog-card-title">Heart Center</div>
+            <div class="prog-card-desc">Treating congenital and acquired heart disease from before birth through adulthood.</div>
+            <span class="prog-card-link">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></span>
+          </div>
+        </a>
+        <a href="#" class="prog-card">
+          <div class="prog-card-img photo-tile photo-lab">
+            <div class="photo-tile-inner"></div>
+            <div class="photo-tile-overlay-light"></div>
+          </div>
+          <div class="prog-card-body">
+            <div class="prog-card-title">Cancer & Blood Disorders Center</div>
+            <div class="prog-card-desc">Pediatric oncology, hematology, and bone marrow transplant — one of the largest programs in New England.</div>
+            <span class="prog-card-link">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></span>
+          </div>
+        </a>
+        <a href="#" class="prog-card">
+          <div class="prog-card-img photo-tile photo-corridor">
+            <div class="photo-tile-inner"></div>
+            <div class="photo-tile-overlay-light"></div>
+          </div>
+          <div class="prog-card-body">
+            <div class="prog-card-title">Epilepsy Program</div>
+            <div class="prog-card-desc">One of the busiest pediatric epilepsy centers in the U.S., treating every type and severity of seizure disorder.</div>
+            <span class="prog-card-link">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></span>
+          </div>
+        </a>
+      </div>
+      <div style="text-align:center;margin-top:var(--s6)">
+        <a href="#" class="btn btn-outline">View all programs & specialties</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- News section with photo cards -->
+  <section class="news-section" aria-labelledby="news-heading">
+    <div class="wrap">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:var(--s6)">
+        <div>
+          <span class="eyebrow">News & stories</span>
+          <h2 id="news-heading" style="margin-top:var(--s2)">From Boston Children's</h2>
+        </div>
+        <a href="#" class="btn btn-outline btn-sm">All news</a>
+      </div>
+      <div class="news-grid">
+        <!-- Featured story -->
+        <a href="#" class="news-featured" aria-label="Read featured story">
+          <div class="news-featured-img photo-tile photo-lab">
+            <div class="photo-tile-inner"></div>
+            <div class="photo-tile-overlay"></div>
+          </div>
+          <div class="news-featured-body">
+            <div class="news-featured-cat">Research</div>
+            <div class="news-featured-title">New gene therapy approach shows lasting seizure reduction in children with rare epilepsy</div>
+            <div class="news-featured-desc">A Boston Children's and Harvard team published findings from a Phase 2 trial in the New England Journal of Medicine, reporting seizure-free outcomes in more than half of participants at two years.</div>
+            <div class="news-featured-meta">June 18, 2025 · 4 min read</div>
+          </div>
+        </a>
+        <!-- Standard cards -->
+        <a href="#" class="news-card" aria-label="Read story about heart surgery">
+          <div class="news-card-img photo-tile photo-clinic">
+            <div class="photo-tile-inner"></div>
+            <div class="photo-tile-overlay"></div>
+          </div>
+          <div class="news-card-body">
+            <div class="news-card-cat">Cardiology</div>
+            <div class="news-card-title">Minimally invasive technique reduces recovery time for infants with congenital heart defects</div>
+            <div class="news-card-meta">June 12, 2025</div>
+          </div>
+        </a>
+        <a href="#" class="news-card" aria-label="Read story about rare disease program">
+          <div class="news-card-img photo-tile photo-corridor">
+            <div class="photo-tile-inner"></div>
+            <div class="photo-tile-overlay"></div>
+          </div>
+          <div class="news-card-body">
+            <div class="news-card-cat">Rare Diseases</div>
+            <div class="news-card-title">Undiagnosed Disease Program identifies rare genetic condition in 12-year-old after years of searching</div>
+            <div class="news-card-meta">June 3, 2025</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature strip: research — flipped layout -->
+  <div class="feature-strip" aria-label="Research at Boston Children's">
+    <div class="feature-grid flip">
+      <div class="feature-text">
+        <span class="eyebrow">Discovery & innovation</span>
+        <h2>We find treatments that don't exist yet.</h2>
+        <p>Boston Children's invests more than $400 million in research each year. Our scientists work alongside our clinical teams — so the distance between a lab discovery and a child's care is very short.</p>
+        <p>We have more than 400 active clinical trials, including many for conditions that have no other available treatment.</p>
+        <a href="#" class="btn btn-ghost-white">Explore research</a>
+      </div>
+      <div class="feature-img">
+        <div class="feature-img-inner photo-lab">
+          <div class="photo-tile-overlay"></div>
+          <div class="photo-person photo-person-care" style="right:25%;height:65%;width:22%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Emergency strip -->
+  <section class="emergency-strip" aria-labelledby="ed-heading">
+    <div class="wrap">
+      <div class="ed-inner">
+        <div class="ed-left">
+          <div>
+            <div class="ed-header">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <h3 id="ed-heading">Emergency Department</h3>
+            </div>
+            <p class="ed-address">300 Longwood Avenue, Boston, MA 02115 · Open 24 hours · Level 1 Pediatric Trauma Center</p>
+          </div>
+          <div class="ed-wait">
+            <span class="ed-wait-dot" aria-hidden="true"></span>
+            <span class="ed-wait-text">Current wait:</span>
+            <span class="ed-wait-time" role="status" aria-live="polite" aria-atomic="true" aria-label="Current wait time: approximately 22 minutes">~22 min</span>
+            <span class="ed-wait-ts">Updated 3:47 PM</span>
+          </div>
+          <div class="ed-actions">
+            <a href="#" class="btn btn-outline btn-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>Get Directions</a>
+            <a href="#" class="btn btn-outline-ocean btn-sm">ED Information</a>
+          </div>
+        </div>
+        <div class="ed-right">
+          <h4>When to come to the ED</h4>
+          <p>Our ED is a Level 1 pediatric trauma center and sees the most complex pediatric emergencies. For non-life-threatening conditions, our urgent care centers typically have shorter waits.</p>
+          <div class="callout-urgent" style="margin-top:var(--s4)" role="note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <div>
+              <div class="cu-title">If your child cannot wait — call 911</div>
+              <p>Breathing trouble, seizure over 5 minutes, loss of consciousness, or serious injury — call 911 or go to your nearest ER immediately.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /pg-home -->
+
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 2 — CONDITION (Pattern A: Clinical Reference)
+════════════════════════════════════════════════════ -->
+<div class="pg" id="pg-condition">
+
+  <!-- Breadcrumb -->
+  <nav class="bc" aria-label="Breadcrumb">
+    <div class="wrap">
+      <ol>
+        <li><a href="#">Home</a><span class="sep" aria-hidden="true">›</span></li>
+        <li><a href="#">Conditions A–Z</a><span class="sep" aria-hidden="true">›</span></li>
+        <li><a href="#">Neurology</a><span class="sep" aria-hidden="true">›</span></li>
+        <li class="cur" aria-current="page">Epilepsy in Children</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- Page hero -->
+  <div class="pg-hero" aria-labelledby="cond-heading">
+    <div class="wrap">
+      <div class="pg-hero-inner">
+        <span class="eyebrow">Neurology</span>
+        <h1 id="cond-heading">Epilepsy in Children</h1>
+        <p class="lead">Epilepsy is a brain disorder that causes recurring seizures. It affects about 1 in 26 people in the U.S. and is the most common serious neurological condition in children.</p>
+        <div class="pg-hero-actions">
+          <a href="#" class="btn btn-ocean">Find an Epilepsy Specialist</a>
+          <a href="#" class="btn btn-ghost-white">Request an Appointment</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Clinical layout -->
+  <div class="wrap">
+    <div class="clinical-layout">
+
+      <!-- Main content -->
+      <article class="clinical-main" aria-label="Condition information">
+
+        <!-- Last reviewed -->
+        <div class="last-reviewed">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>Reviewed by Boston Children's clinical team · Last updated March 2025</span>
+        </div>
+
+        <!-- Key Facts box — highest priority element on clinical pages -->
+        <div class="key-facts" role="region" aria-label="Key facts about epilepsy">
+          <div class="key-facts-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Key Facts
+          </div>
+          <div class="key-facts-grid">
+            <div class="kf-item">
+              <div class="kf-label">What it is</div>
+              <div class="kf-val">A brain condition that causes repeated seizures. Seizures happen when brain cells send abnormal electrical signals.</div>
+            </div>
+            <div class="kf-item">
+              <div class="kf-label">How common</div>
+              <div class="kf-val">About 1 in 26 people develop epilepsy. It can appear at any age, but it most often begins in childhood.</div>
+            </div>
+            <div class="kf-item">
+              <div class="kf-label">How we treat it</div>
+              <div class="kf-val">Most children respond well to medication. Surgery, diet therapy, and devices are options when medication doesn't work.</div>
+            </div>
+            <div class="kf-item">
+              <div class="kf-label">When to call us</div>
+              <div class="kf-val">If your child has had a first seizure, or if seizures are not well controlled, contact Boston Children's Neurology.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="clinical-body">
+          <h2>What is epilepsy?</h2>
+          <p>Epilepsy is a brain disorder. It causes repeated seizures — sudden changes in behavior, movement, or awareness caused by abnormal electrical activity in the brain. A single seizure does not mean a child has epilepsy. A diagnosis usually requires two or more seizures that don't have a clear cause, like a fever or a head injury.</p>
+          <p>There are many types of epilepsy. The type depends on where in the brain the seizures start, what causes them, and how they affect your child. Some children grow out of epilepsy. Others have it for life. Either way, most children with epilepsy can live full, active lives.</p>
+
+          <h2>What are the signs of a seizure?</h2>
+          <p>Seizures can look very different depending on the type. Some seizures are obvious — a child may shake, fall, or lose consciousness. Others are subtle and easy to miss. Signs to watch for include:</p>
+          <ul>
+            <li>Staring spells or brief moments of unresponsiveness</li>
+            <li>Sudden jerking of the arms or legs</li>
+            <li>Loss of muscle tone (falling or slumping suddenly)</li>
+            <li>Repetitive movements, like lip smacking or blinking</li>
+            <li>Confusion or a dazed feeling after the event</li>
+            <li>Sensations like unusual smells, feelings, or visual changes before a seizure</li>
+          </ul>
+          <p>If you're unsure whether what you saw was a seizure, a video recording during an episode is very helpful for your child's care team.</p>
+
+          <!-- When to go to the ED — distinct visual treatment, blue NOT red -->
+          <div class="callout" style="margin-top:var(--s5);margin-bottom:var(--s5)" role="note">
+            <h5>When to call 911 or go to the Emergency Department</h5>
+            <p>Call 911 if a seizure lasts longer than 5 minutes, if your child doesn't recover within a few minutes, has a second seizure shortly after, has trouble breathing, or is injured during the seizure.</p>
+          </div>
+
+          <h2>How is epilepsy diagnosed?</h2>
+          <p>Diagnosing epilepsy starts with a detailed description of what happened. Your child's doctor will ask about the seizure, your child's health history, and your family history. Common tests include:</p>
+          <ul>
+            <li>EEG (electroencephalogram) — a recording of electrical activity in the brain</li>
+            <li>MRI — an imaging scan to look for changes in brain structure</li>
+            <li>Blood tests to look for possible causes</li>
+          </ul>
+          <p>At Boston Children's, our Epilepsy program is one of the busiest in the country. We have specialists who focus entirely on diagnosing and treating childhood epilepsy, including some of the rarest forms.</p>
+
+          <h2>How is epilepsy treated?</h2>
+          <p>Treatment depends on the type of epilepsy and how often your child has seizures. The goal is to control seizures as fully as possible, with the fewest side effects.</p>
+          <ul>
+            <li><strong>Medication</strong> — Most children (about 7 in 10) become seizure-free with the right medication. Finding the right one sometimes takes time.</li>
+            <li><strong>Diet therapy</strong> — The ketogenic diet and related diets can reduce seizures in some children when medication hasn't worked.</li>
+            <li><strong>Surgery</strong> — When seizures come from one area of the brain, surgery can sometimes cure epilepsy or greatly reduce seizures.</li>
+            <li><strong>Device therapy</strong> — Devices like the vagus nerve stimulator (VNS) or responsive neurostimulation (RNS) can help when other options haven't worked.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Sidebar -->
+      <aside class="clinical-sidebar" aria-label="Related actions and resources">
+
+        <div class="sidebar-appt">
+          <h4>Make an appointment</h4>
+          <p>Our Epilepsy Program sees new patients, including complex cases referred from other hospitals.</p>
+          <a href="#" class="btn btn-ocean btn-full">Request an Appointment</a>
+          <div class="sidebar-appt-phone">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.5 11.47a19.79 19.79 0 01-3.07-8.67A2 2 0 013.41 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.91 9.91a16 16 0 006.18 6.18l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            <a href="tel:16173556905">(617) 355-6905</a>
+          </div>
+        </div>
+
+        <div class="sidebar-doc">
+          <span class="eyebrow">Your care team</span>
+          <div class="sidebar-doc-info">
+            <div class="sidebar-doc-avatar">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div>
+              <span class="sidebar-doc-name">Dr. Sarah Chen, MD</span>
+              <span class="sidebar-doc-title">Director, Epilepsy Program · Neurology</span>
+            </div>
+          </div>
+          <a href="#" class="btn btn-outline btn-sm btn-full">View full profile</a>
+        </div>
+
+        <div class="sidebar-card">
+          <h5>Patient resources</h5>
+          <ul>
+            <li>
+              <a href="#">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                Seizure first aid guide (PDF, 180 KB)
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                Medication tracking log (PDF, 95 KB)
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                What to expect at your first visit
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="sidebar-card">
+          <h5>Related clinical trials</h5>
+          <ul>
+            <li><a href="#">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v11m0 0H5m4 0h4m6-7v7m0 0h-4m4 0h2a2 2 0 002-2V9"/></svg>
+              Pediatric epilepsy genetics registry
+            </a></li>
+            <li><a href="#">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v11m0 0H5m4 0h4m6-7v7m0 0h-4m4 0h2a2 2 0 002-2V9"/></svg>
+              Novel anti-seizure medication (Phase 2)
+            </a></li>
+          </ul>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</div><!-- /pg-condition -->
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 3 — FIND A DOCTOR (Pattern B: Decision Support)
+════════════════════════════════════════════════════ -->
+<div class="pg" id="pg-doctors">
+
+  <div class="pg-hero" aria-labelledby="fad-heading">
+    <div class="wrap">
+      <div class="pg-hero-inner">
+        <span class="eyebrow">Find care</span>
+        <h1 id="fad-heading">Find a Doctor</h1>
+        <p class="lead">Search by specialty, name, or language. Every doctor listed here sees patients at Boston Children's Hospital.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="filter-bar" role="search" aria-label="Filter doctors">
+    <div class="wrap filter-inner">
+      <select class="select" aria-label="Filter by specialty" style="flex:1.5;max-width:280px">
+        <option>All specialties</option>
+        <option>Cardiology</option>
+        <option selected>Neurology</option>
+        <option>Oncology</option>
+        <option>Orthopedics</option>
+      </select>
+      <select class="select" aria-label="Filter by location">
+        <option>All locations</option>
+        <option>Main Campus — Longwood</option>
+        <option>Waltham</option>
+        <option>Peabody</option>
+      </select>
+      <select class="select" aria-label="Filter by language">
+        <option>Any language</option>
+        <option>Spanish</option>
+        <option>Mandarin</option>
+        <option>Portuguese</option>
+      </select>
+      <select class="select" aria-label="Filter by availability">
+        <option>Any availability</option>
+        <option>Accepting new patients</option>
+      </select>
+      <span class="filter-count" aria-live="polite" aria-atomic="true">48 doctors in Neurology</span>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="doctor-grid" role="list" aria-label="Doctor search results">
+
+      <!-- Doctor card — accepting new patients -->
+      <article class="doc-card card-featured" role="listitem" aria-label="Dr. Sarah Chen">
+        <div class="doc-card-head">
+          <div class="doc-avatar" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div>
+            <span class="doc-name">Sarah Chen, MD</span>
+            <span class="doc-title">Director, Epilepsy Program · Associate Professor of Neurology, Harvard Medical School</span>
+          </div>
+        </div>
+        <div class="doc-specialty">
+          <span class="badge badge-ocean">Epilepsy</span>
+          <span class="badge badge-ocean">EEG</span>
+          <span class="badge badge-gray">Neurology</span>
+        </div>
+        <div class="doc-status">
+          <span class="doc-status-dot accepting" aria-hidden="true"></span>
+          <span class="doc-status-text accepting">Accepting new patients</span>
+        </div>
+        <a href="#" class="btn btn-primary btn-full">Request an Appointment</a>
+        <a href="#" class="doc-profile" aria-label="View full profile for Dr. Sarah Chen">View full profile</a>
+      </article>
+
+      <!-- Doctor card — not accepting -->
+      <article class="doc-card" role="listitem" aria-label="Dr. Marcus Williams">
+        <div class="doc-card-head">
+          <div class="doc-avatar" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div>
+            <span class="doc-name">Marcus Williams, MD, PhD</span>
+            <span class="doc-title">Neurologist · Headache and Pain Program</span>
+          </div>
+        </div>
+        <div class="doc-specialty">
+          <span class="badge badge-ocean">Headache</span>
+          <span class="badge badge-ocean">Migraine</span>
+          <span class="badge badge-gray">Neurology</span>
+        </div>
+        <div class="doc-status">
+          <span class="doc-status-dot closed" aria-hidden="true"></span>
+          <span class="doc-status-text closed">Not currently accepting new patients</span>
+        </div>
+        <a href="#" class="btn btn-outline btn-full">Join Waitlist</a>
+        <a href="#" class="doc-profile" aria-label="View full profile for Dr. Marcus Williams">View full profile</a>
+      </article>
+
+      <article class="doc-card" role="listitem" aria-label="Dr. Priya Mehta">
+        <div class="doc-card-head">
+          <div class="doc-avatar" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div>
+            <span class="doc-name">Priya Mehta, MD</span>
+            <span class="doc-title">Neuro-oncologist · Brain Tumor Program</span>
+          </div>
+        </div>
+        <div class="doc-specialty">
+          <span class="badge badge-ocean">Brain Tumors</span>
+          <span class="badge badge-gray">Neuro-oncology</span>
+        </div>
+        <div class="doc-status">
+          <span class="doc-status-dot accepting" aria-hidden="true"></span>
+          <span class="doc-status-text accepting">Accepting new patients · Speaks Hindi, English</span>
+        </div>
+        <a href="#" class="btn btn-primary btn-full">Request an Appointment</a>
+        <a href="#" class="doc-profile" aria-label="View full profile for Dr. Priya Mehta">View full profile</a>
+      </article>
+
+      <article class="doc-card" role="listitem" aria-label="Dr. James Park">
+        <div class="doc-card-head">
+          <div class="doc-avatar" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <div>
+            <span class="doc-name">James Park, MD</span>
+            <span class="doc-title">Neurologist · Movement Disorders Program</span>
+          </div>
+        </div>
+        <div class="doc-specialty">
+          <span class="badge badge-ocean">Movement Disorders</span>
+          <span class="badge badge-ocean">Tourette Syndrome</span>
+        </div>
+        <div class="doc-status">
+          <span class="doc-status-dot accepting" aria-hidden="true"></span>
+          <span class="doc-status-text accepting">Accepting new patients · Speaks Korean, English</span>
+        </div>
+        <a href="#" class="btn btn-primary btn-full">Request an Appointment</a>
+        <a href="#" class="doc-profile" aria-label="View full profile for Dr. James Park">View full profile</a>
+      </article>
+
+    </div>
+  </div>
+</div><!-- /pg-doctors -->
+
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 4 — EMERGENCY DEPARTMENT
+════════════════════════════════════════════════════ -->
+<div class="pg" id="pg-emergency">
+
+  <!-- ED hero — critical info above the fold, no scroll required -->
+  <div class="ed-page-hero" aria-labelledby="ed-page-heading">
+    <div class="wrap">
+      <div class="pg-hero-inner">
+        <span class="eyebrow">Emergency Care</span>
+        <h1 id="ed-page-heading">Emergency Department</h1>
+        <p class="lead">Our ED is open 24 hours a day, 7 days a week. We are a Level 1 pediatric trauma center.</p>
+      </div>
+      <!-- Critical info block — the four things above the fold, per UX spec -->
+      <div class="ed-critical-info" role="region" aria-label="Critical emergency department information">
+        <div class="ed-crit-grid">
+          <div class="ed-crit-item">
+            <div class="ed-crit-label">Address</div>
+            <div class="ed-crit-value">300 Longwood Ave<br>Boston, MA 02115</div>
+            <div class="ed-crit-sub">Main campus entrance</div>
+          </div>
+          <div class="ed-crit-item">
+            <div class="ed-crit-label">Current wait time</div>
+            <div class="ed-crit-value wait" role="status" aria-live="polite">~22 minutes</div>
+            <div class="ed-crit-sub">Updated 3:47 PM · <a href="#">How waits are measured</a></div>
+          </div>
+          <div class="ed-crit-item">
+            <div class="ed-crit-label">Hours</div>
+            <div class="ed-crit-value">Open 24 hours</div>
+            <div class="ed-crit-sub ed-crit-phone"><a href="tel:16173556611">(617) 355-6611</a></div>
+          </div>
+          <div class="ed-crit-item">
+            <div class="ed-crit-label">If it can't wait</div>
+            <div class="ed-crit-value" style="font-size:var(--text-base)">Call 911 or go to your nearest ER</div>
+            <div class="ed-crit-sub">Do not wait for transport if a situation is life-threatening</div>
+          </div>
+        </div>
+        <div class="ed-crit-actions" style="margin-top:var(--s4);padding-top:var(--s4);border-top:1px solid var(--border)">
+          <a href="#" class="btn btn-primary btn-sm">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>
+            Get Directions
+          </a>
+          <a href="#" class="btn btn-outline-ocean btn-sm">Call the ED</a>
+          <a href="#" class="btn btn-outline btn-sm">Urgent Care — Shorter Waits</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="ed-body">
+      <div class="ed-body-grid">
+        <div>
+
+          <!-- When to come vs. when to call 911 — layout-based urgency, not color -->
+          <h2 style="margin-bottom:var(--s5)">Know before you come</h2>
+
+          <div class="callout-emergency" role="alert">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <div>
+              <div class="ce-title">Call 911 immediately for these situations</div>
+              <p>Difficulty breathing or turning blue · Unresponsiveness or unconsciousness · Seizure lasting more than 5 minutes · Severe allergic reaction · Major trauma, fall, or injury · Suspected poisoning</p>
+            </div>
+          </div>
+
+          <div style="margin-top:var(--s5)">
+            <h3 style="color:var(--text);margin-bottom:var(--s4)">Come to the ED for</h3>
+            <div class="clinical-body">
+              <ul>
+                <li>High fever in a child under 3 months, or any fever above 104°F (40°C)</li>
+                <li>Severe abdominal pain</li>
+                <li>Deep cuts that may need stitches</li>
+                <li>Possible broken bones</li>
+                <li>Severe vomiting or dehydration</li>
+                <li>Head injury with confusion, vomiting, or loss of consciousness</li>
+                <li>Worsening symptoms your doctor cannot see today</li>
+              </ul>
+            </div>
+          </div>
+
+          <div style="margin-top:var(--s5)">
+            <h3 style="color:var(--text);margin-bottom:var(--s4)">What to expect</h3>
+            <p>When you arrive, your child will be seen by a triage nurse who will check their condition and assign a priority. More urgent cases are seen first, regardless of when they arrived. Our team will keep you informed throughout your visit.</p>
+
+            <div class="callout" style="margin-top:var(--s4)" role="note">
+              <h5>What to bring</h5>
+              <p>Insurance card · List of current medications and dosages · Your child's primary care doctor's name and phone number · Any relevant medical records or imaging</p>
+            </div>
+          </div>
+
+          <div style="margin-top:var(--s7)">
+            <h3 style="color:var(--text);margin-bottom:var(--s4)">Consider urgent care for non-emergencies</h3>
+            <p>For conditions that are not life-threatening — like mild ear pain, a minor cut, or cold and flu symptoms — our urgent care centers often have shorter waits. You can check wait times at each location before you go.</p>
+            <div style="margin-top:var(--s4)">
+              <a href="#" class="btn btn-outline-ocean">View Urgent Care Locations</a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ED sidebar -->
+        <aside aria-label="Emergency Department information">
+          <div class="sidebar-appt" style="margin-bottom:var(--s4)">
+            <h4>Trauma & Critical Care</h4>
+            <p>For critical transfers and trauma consultations, contact our Transfer Center directly.</p>
+            <a href="#" class="btn btn-ocean btn-full">Physician Access Line</a>
+            <div class="sidebar-appt-phone">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.5 11.47a19.79 19.79 0 01-3.07-8.67A2 2 0 013.41 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.91 9.91a16 16 0 006.18 6.18l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+              <a href="tel:16173556000">(617) 355-6000</a>
+            </div>
+          </div>
+
+          <div class="sidebar-card">
+            <h5>ED locations</h5>
+            <ul>
+              <li><a href="#">Main ED · 300 Longwood Ave
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></a>
+              </li>
+              <li><a href="#">Urgent Care — Waltham
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></a>
+              </li>
+              <li><a href="#">Urgent Care — Peabody
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="notice" style="margin-top:var(--s4)" role="note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <p>Interpreter services are available 24 hours. Tell the triage team what language your family speaks.</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</div><!-- /pg-emergency -->
+
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 5 — ABOUT / NARRATIVE (Pattern C)
+════════════════════════════════════════════════════ -->
+<div class="pg" id="pg-about">
+
+  <div class="pg-hero" aria-labelledby="about-heading">
+    <div class="wrap">
+      <div class="pg-hero-inner">
+        <span class="eyebrow">About Boston Children's</span>
+        <h1 id="about-heading">Where the world comes for answers.</h1>
+        <p class="lead">Founded in 1869, Boston Children's Hospital has cared for children with complex conditions for more than 150 years. We are a teaching hospital of Harvard Medical School.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <!-- Alternating narrative sections -->
+    <section class="narrative-section" aria-labelledby="mission-heading">
+      <div class="narrative-grid">
+        <div class="narrative-text">
+          <span class="eyebrow">Our focus</span>
+          <h2 id="mission-heading">We care for the children that others can't.</h2>
+          <p>Many of the children who come to us have already seen other doctors and hospitals. They come to Boston Children's because their condition is rare, complex, or not responding to treatment.</p>
+          <p>Our teams are built around the specific needs of each specialty. We bring together clinicians, researchers, and specialists whose entire focus is one area of care — so the expertise in each room runs deep.</p>
+          <a href="#" class="btn btn-outline" style="margin-top:var(--s4)">Our specialties</a>
+        </div>
+        <div class="narrative-img" aria-hidden="true">
+          <div class="narrative-img-inner photo-family" style="border-radius:var(--r-lg);position:relative;overflow:hidden">
+            <div class="photo-tile-overlay-light"></div>
+            <div class="photo-person photo-person-care"></div>
+            <div class="photo-person photo-person-child"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pull quote -->
+    <div class="wrap">
+      <blockquote class="pull-quote" aria-label="Quote about care">
+        "When we couldn't find answers anywhere else, Boston Children's already knew what they were looking for."
+        <footer style="font-size:var(--text-sm);color:var(--text-meta);margin-top:var(--s3);font-weight:300">— Parent of a rare disease patient</footer>
+      </blockquote>
+    </div>
+
+    <!-- Stat strip -->
+    <div class="stat-strip" role="region" aria-label="Hospital statistics">
+      <div class="trust-inner">
+        <div class="trust-item">
+          <span class="trust-num">1869</span>
+          <span class="trust-label">Year founded<br>&nbsp;</span>
+        </div>
+        <div class="trust-item">
+          <span class="trust-num">1,100+</span>
+          <span class="trust-label">Physicians and<br>scientists</span>
+        </div>
+        <div class="trust-item">
+          <span class="trust-num">$400M+</span>
+          <span class="trust-label">Annual research<br>investment</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alternate narrative — image left, text right -->
+    <section class="narrative-section" aria-labelledby="research-heading">
+      <div class="narrative-grid flip">
+        <div class="narrative-img" aria-hidden="true">
+          <div class="narrative-img-inner photo-lab" style="border-radius:var(--r-lg);position:relative;overflow:hidden">
+            <div class="photo-tile-overlay-light"></div>
+            <div class="photo-person photo-person-care" style="right:20%;width:26%;height:70%"></div>
+          </div>
+        </div>
+        <div class="narrative-text">
+          <span class="eyebrow">Research & discovery</span>
+          <h2 id="research-heading">We find treatments that don't exist yet.</h2>
+          <p>Boston Children's is the world's leading pediatric research institution. Our scientists work alongside our clinical teams — which means the distance between a lab discovery and a child's care is very short.</p>
+          <p>We invest more than $400 million in research each year. Many of our studies focus on conditions with no current treatment. When we find something that works, we make it available to children everywhere.</p>
+          <a href="#" class="btn btn-outline" style="margin-top:var(--s4)">Explore research</a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div><!-- /pg-about -->
+
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 6 — DESIGN SYSTEM REFERENCE
+════════════════════════════════════════════════════ -->
+<div class="pg" id="pg-design">
+  <div class="pg-hero">
+    <div class="wrap">
+      <div class="pg-hero-inner">
+        <span class="eyebrow">Internal reference</span>
+        <h1>BCH Design System v3</h1>
+        <p class="lead">Brand-compliant tokens, components, and patterns for the Boston Children's Hospital redesign.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap section">
+
+    <!-- Color palette -->
+    <div class="sh"><span class="eyebrow">Tokens</span><h2>Color Palette</h2><p>Exact HEX values per BCH Brand Guidelines 2021. Note: Red is emergency/stop/blood ONLY.</p></div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:var(--s3);margin-bottom:var(--s8)">
+      <div class="card card-p">
+        <div style="height:64px;background:#003087;border-radius:var(--r-sm);margin-bottom:var(--s3)"></div>
+        <strong style="font-size:var(--text-sm)">Boston Blue</strong><br>
+        <code style="font-size:var(--text-xs);color:var(--text-meta)">#003087</code><br>
+        <span style="font-size:var(--text-xs);color:var(--text-meta)">Nav, primary CTAs, section heads</span>
+      </div>
+      <div class="card card-p">
+        <div style="height:64px;background:#007DBA;border-radius:var(--r-sm);margin-bottom:var(--s3)"></div>
+        <strong style="font-size:var(--text-sm)">Boston Ocean</strong><br>
+        <code style="font-size:var(--text-xs);color:var(--text-meta)">#007DBA</code><br>
+        <span style="font-size:var(--text-xs);color:var(--text-meta)">h2/h3, links, interactive elements</span>
+      </div>
+      <div class="card card-p">
+        <div style="height:64px;background:#C14991;border-radius:var(--r-sm);margin-bottom:var(--s3)"></div>
+        <strong style="font-size:var(--text-sm)">Boston Pink</strong><br>
+        <code style="font-size:var(--text-xs);color:var(--text-meta)">#C14991</code><br>
+        <span style="font-size:var(--text-xs);color:var(--text-meta)">Tagline ONLY — extreme restraint</span>
+      </div>
+      <div class="card card-p">
+        <div style="height:64px;background:#5a5c61;border-radius:var(--r-sm);margin-bottom:var(--s3)"></div>
+        <strong style="font-size:var(--text-sm)">Body Text</strong><br>
+        <code style="font-size:var(--text-xs);color:var(--text-meta)">#5a5c61</code><br>
+        <span style="font-size:var(--text-xs);color:var(--text-meta)">Adjusted from #74767B for WCAG AA</span>
+      </div>
+      <div class="card card-p">
+        <div style="height:64px;background:#41B6E6;border-radius:var(--r-sm);margin-bottom:var(--s3)"></div>
+        <strong style="font-size:var(--text-sm)">Boston Sky</strong><br>
+        <code style="font-size:var(--text-xs);color:var(--text-meta)">#41B6E6</code><br>
+        <span style="font-size:var(--text-xs);color:var(--text-meta)">Decorative only — fails WCAG as text</span>
+      </div>
+      <div class="card card-p">
+        <div style="height:64px;background:#E30000;border-radius:var(--r-sm);margin-bottom:var(--s3)"></div>
+        <strong style="font-size:var(--text-sm)">Red Alert</strong><br>
+        <code style="font-size:var(--text-xs);color:var(--text-meta)">#E30000</code><br>
+        <span style="font-size:var(--text-xs);color:var(--text-meta);color:#c00">EMERGENCY / STOP / BLOOD ONLY</span>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="sh"><h2>Buttons</h2><p>Primary CTAs use Boston Blue or Ocean. Red emergency button is for emergency context only.</p></div>
+    <div style="display:flex;gap:var(--s3);flex-wrap:wrap;align-items:center;margin-bottom:var(--s8)">
+      <a href="#" class="btn btn-primary">Primary (Blue)</a>
+      <a href="#" class="btn btn-ocean">Ocean CTA</a>
+      <a href="#" class="btn btn-outline">Outline Blue</a>
+      <a href="#" class="btn btn-outline-ocean">Outline Ocean</a>
+      <a href="#" class="btn btn-ghost-white" style="background:var(--blue);padding:11px 22px;border-radius:var(--r-sm)">Ghost White</a>
+      <a href="#" class="btn btn-emergency">Emergency Only</a>
+    </div>
+    <div style="display:flex;gap:var(--s3);flex-wrap:wrap;align-items:center;margin-bottom:var(--s8)">
+      <a href="#" class="btn btn-primary btn-sm">Small</a>
+      <a href="#" class="btn btn-primary">Regular</a>
+      <a href="#" class="btn btn-primary btn-lg">Large</a>
+    </div>
+
+    <!-- Typography -->
+    <div class="sh"><h2>Typography Scale</h2></div>
+    <div style="margin-bottom:var(--s8)">
+      <div style="font-size:50px;font-weight:500;line-height:1.15;color:var(--ocean);margin-bottom:var(--s4)">Hero Headline — Museo 500</div>
+      <div style="font-size:38px;font-weight:500;line-height:1.2;color:var(--ocean);margin-bottom:var(--s4)">Page Title (h1) — Museo 500</div>
+      <h2 style="margin-bottom:var(--s4)">Section Header (h2) — Museo 700</h2>
+      <h3 style="margin-bottom:var(--s4)">Subhead (h3) — Museo 700</h3>
+      <h4 style="margin-bottom:var(--s4)">Card Title (h4) — Museo 700</h4>
+      <p class="lead" style="margin-bottom:var(--s4)">Lead paragraph text at 19px — Museo 300. Used for introductions and hero descriptions that need slightly more visual weight than body copy.</p>
+      <p style="margin-bottom:var(--s4)">Body copy at 17px — Museo 300. Line-height 1.75. Color #5a5c61 (adjusted from Boston Gray for WCAG AA compliance at body text sizes). This is the primary reading experience for parents researching their child's condition at 11pm.</p>
+      <p class="tagline" style="margin-bottom:var(--s3)">Tagline — Boston Pink #C14991 — "Where the world comes for answers."</p>
+      <span class="eyebrow">Eyebrow label — 11px 800 weight all-caps</span>
+    </div>
+
+    <!-- Badges -->
+    <div class="sh"><h2>Badges & Status</h2></div>
+    <div style="display:flex;gap:var(--s2);flex-wrap:wrap;margin-bottom:var(--s8)">
+      <span class="badge badge-ocean">Ocean badge</span>
+      <span class="badge badge-blue">Blue badge</span>
+      <span class="badge badge-green">Status: active</span>
+      <span class="badge badge-pink">Pink accent</span>
+      <span class="badge badge-gray">Neutral label</span>
+    </div>
+
+    <!-- Callouts -->
+    <div class="sh"><h2>Callout Patterns</h2></div>
+    <div style="display:flex;flex-direction:column;gap:var(--s4);margin-bottom:var(--s8)">
+      <div class="callout" role="note">
+        <h5>When to call your doctor</h5>
+        <p>Used for informational guidance on condition pages. Boston Blue left border. Never red for non-emergency callouts.</p>
+      </div>
+      <div class="callout-emergency" role="alert">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <div>
+          <div class="ce-title">Call 911 — Emergency callout</div>
+          <p>Red border is correct here. This pattern is for life-threatening emergency guidance ONLY. Use sparingly.</p>
+        </div>
+      </div>
+      <div class="notice" role="note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <p>Info notice pattern — gentle informational message. Ocean background, contained, non-alarming.</p>
+      </div>
+    </div>
+
+  </div>
+</div><!-- /pg-design -->
+
+</main>
+
+<!-- ════════════════════════════════════════════════════
+     SHARED FOOTER
+════════════════════════════════════════════════════ -->
+<footer class="site-footer" role="contentinfo">
+  <div class="wrap footer-main">
+    <div class="footer-grid">
+
+      <div class="footer-brand">
+        <a href="#" class="logo" style="margin-bottom:var(--s4)" aria-label="Boston Children's Hospital — home">
+          <span class="logo-seal" aria-hidden="true">
+            <svg viewBox="0 0 60 60" fill="none" aria-hidden="true">
+              <circle cx="30" cy="30" r="28" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.2)" stroke-width="1.5"/>
+              <text x="30" y="22" text-anchor="middle" fill="rgba(255,255,255,.6)" font-size="7.5" font-family="sans-serif" font-weight="700">BOSTON</text>
+              <text x="30" y="31" text-anchor="middle" fill="rgba(255,255,255,.4)" font-size="5.5" font-family="sans-serif">CHILDREN'S</text>
+              <text x="30" y="39" text-anchor="middle" fill="rgba(255,255,255,.4)" font-size="5.5" font-family="sans-serif">HOSPITAL</text>
+            </svg>
+          </span>
+          <span class="logo-text-wrap">
+            <span class="logo-name" style="color:rgba(255,255,255,.6)">Boston Children's Hospital</span>
+            <span class="logo-tagline" style="font-size:9px">Where the world comes for answers</span>
+          </span>
+        </a>
+        <p>300 Longwood Avenue<br>Boston, Massachusetts 02115<br>(617) 355-6000</p>
+        <div class="footer-harvard" aria-label="Harvard Medical School affiliation">
+          <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="1.5" width="20" height="20" aria-hidden="true"><path d="M22 9V7h-2V5a2 2 0 00-2-2H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-2h2v-2h-2v-2h2v-2h-2V9h2z"/></svg>
+          <p>A teaching hospital of<br>Harvard Medical School</p>
+        </div>
+        <div class="footer-accred">
+          <span>Magnet® Recognized for Nursing Excellence</span>
+          <span>Joint Commission Accredited</span>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h5>Care</h5>
+        <ul>
+          <li><a href="#">Find a Doctor</a></li>
+          <li><a href="#">Conditions A–Z</a></li>
+          <li><a href="#">Specialties</a></li>
+          <li><a href="#">Book an Appointment</a></li>
+          <li><a href="#">Emergency Department</a></li>
+          <li><a href="#">Telehealth</a></li>
+          <li><a href="#">Second Opinion</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Patients & Families</h5>
+        <ul>
+          <li><a href="#">Patient Portal</a></li>
+          <li><a href="#">Prepare for Your Visit</a></li>
+          <li><a href="#">Billing & Insurance</a></li>
+          <li><a href="#">Medical Records</a></li>
+          <li><a href="#">Family Support Services</a></li>
+          <li><a href="#">Health Library</a></li>
+          <li><a href="#">Interpreter Services</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Research</h5>
+        <ul>
+          <li><a href="#">Research Labs</a></li>
+          <li><a href="#">Clinical Trials</a></li>
+          <li><a href="#">Publications</a></li>
+          <li><a href="#">Research News</a></li>
+          <li><a href="#">Participate in Research</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>About</h5>
+        <ul>
+          <li><a href="#">Mission & Values</a></li>
+          <li><a href="#">Leadership</a></li>
+          <li><a href="#">Newsroom</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Give to Boston Children's</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span class="footer-copy">© 2025 Boston Children's Hospital. All rights reserved.</span>
+    <div class="footer-legal" role="list">
+      <a href="#" role="listitem">Privacy Policy</a>
+      <a href="#" role="listitem">Terms of Use</a>
+      <a href="#" role="listitem">Accessibility</a>
+      <a href="#" role="listitem">Non-Discrimination Notice</a>
+      <a href="#" role="listitem">Site Map</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Page switcher
+function show(id, btn) {
+  document.querySelectorAll('.pg').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('#picker button').forEach(b => b.classList.remove('on'));
+  document.getElementById('pg-' + id).classList.add('on');
+  btn.classList.add('on');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Mobile nav toggle
+const mobToggle = document.getElementById('mob-toggle');
+const mobNav = document.getElementById('mob-nav');
+mobToggle.addEventListener('click', () => {
+  const isOpen = mobNav.classList.toggle('open');
+  mobToggle.setAttribute('aria-expanded', isOpen);
+  mobNav.setAttribute('aria-hidden', !isOpen);
+  mobToggle.innerHTML = isOpen
+    ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
+    : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+  mobToggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+});
+
+// Mobile accordion groups
+function toggleMob(id) {
+  const group = document.getElementById('mg-' + id);
+  const sub = document.getElementById('ms-' + id);
+  const btn = group.querySelector('.mob-gb');
+  const isOpen = group.classList.toggle('open');
+  btn.setAttribute('aria-expanded', isOpen);
+  sub.setAttribute('aria-hidden', !isOpen);
+}
+
+// Keyboard navigation for mega nav
+document.querySelectorAll('.nav-trigger').forEach(trigger => {
+  trigger.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      const item = trigger.closest('.nav-item');
+      const mega = item.querySelector('.mega');
+      if (mega) {
+        const isOpen = item.classList.toggle('kbd-open');
+        trigger.setAttribute('aria-expanded', isOpen);
+        if (isOpen) {
+          const firstLink = mega.querySelector('a');
+          if (firstLink) firstLink.focus();
+        }
+      }
+    }
+    if (e.key === 'Escape') {
+      trigger.closest('.nav-item').classList.remove('kbd-open');
+      trigger.setAttribute('aria-expanded', false);
+      trigger.focus();
+    }
+  });
+});
+
+// Close mega on outside click
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.nav-item')) {
+    document.querySelectorAll('.nav-item.kbd-open').forEach(item => {
+      item.classList.remove('kbd-open');
+      item.querySelector('.nav-trigger').setAttribute('aria-expanded', false);
+    });
+  }
+});
+
+// Scroll: add shadow to main bar
+const mainBar = document.querySelector('.main-bar');
+window.addEventListener('scroll', () => {
+  mainBar.style.boxShadow = window.scrollY > 80 ? '0 2px 16px rgba(0,0,0,.18)' : '';
+}, { passive: true });
+
+/*
+  CHANGE 4C — Live ED wait time: aria-live update function.
+  In production this polls an API endpoint on an interval.
+  All [role="status"][aria-live="polite"] elements update simultaneously.
+  Screen readers announce the new value without user interaction.
+*/
+function updateEdWaitTime(minutes) {
+  const label = `~${minutes} min`;
+  const ariaLabel = `Current Emergency Department wait time: approximately ${minutes} minutes`;
+  document.querySelectorAll('[role="status"][aria-live="polite"]').forEach(el => {
+    el.textContent = label;
+    el.setAttribute('aria-label', ariaLabel);
+  });
+  // Also update the ED page wait display if present
+  const edPage = document.querySelector('.ed-crit-value.wait');
+  if (edPage) {
+    edPage.textContent = `~${minutes} minutes`;
+    edPage.setAttribute('aria-label', ariaLabel);
+  }
+}
+// Simulate a wait time change after 4s to demonstrate aria-live region behaviour
+setTimeout(() => updateEdWaitTime(19), 4000);
+</script>
+
+</body>
+</html>
