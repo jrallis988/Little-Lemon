@@ -9,6 +9,7 @@ Static site: HTML, CSS, and vanilla JS. Custom typefaces (Arcanite Slab, Goudy H
 ## Pages
 
 - `index.html` — home (hero, designer, services, portfolio, blog, contact)
+- `services/` — detail pages for each service offering
 - `privacy.html` — privacy policy
 - `terms.html` — terms & conditions
 - `resume.pdf` — downloadable resume

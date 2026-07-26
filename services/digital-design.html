@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Digital design and UX for products and experiences — Artistic Fountain.">
+    <meta name="theme-color" content="#FF6B35">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <title>Digital Design & UX — Artistic Fountain</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <header class="header">
+        <div class="logo">
+            <a href="../index.html" class="logo-mark" aria-label="Artistic Fountain — home">
+                <span class="logo-line-1">Artistic</span>
+                <span class="logo-line-2">Fountain</span>
+            </a>
+        </div>
+        <nav aria-label="Primary">
+            <ul class="nav" id="main-nav">
+                <li><a href="../index.html#about">The Designer</a></li>
+                <li><a href="../index.html#services">Services</a></li>
+                <li><a href="../index.html#portfolio">Portfolio</a></li>
+                <li><a href="../index.html#blog">Blog</a></li>
+                <li><a href="../resume.pdf" download>Resume</a></li>
+            </ul>
+        </nav>
+        <div class="header-right">
+            <button class="nav-toggle" onclick="toggleNav()" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="main-nav">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main id="main" class="service-page">
+        <div class="service-page-inner">
+            <a href="../index.html#services" class="service-back">← All Services</a>
+            <p class="service-kicker">Service</p>
+            <h1>Digital Design & UX</h1>
+            <p class="service-lead">Interfaces and product experiences designed for clarity, conversion, and delight — including motion and interaction that make digital feel alive.</p>
+
+            <section class="service-block">
+                <h2>What’s included</h2>
+                <ul class="service-list">
+                    <li>UX strategy and user flows</li>
+                    <li>Interface (UI) design and design systems</li>
+                    <li>Interactive prototypes</li>
+                    <li>Motion graphics and micro-interactions</li>
+                    <li>E-commerce and conversion optimization</li>
+                    <li>Accessibility-minded patterns</li>
+                </ul>
+            </section>
+
+            <section class="service-block">
+                <h2>How it works</h2>
+                <p>Research and flows first, then high-fidelity design and prototypes. Motion and interaction are planned with the product — not bolted on at the end.</p>
+            </section>
+
+            <div class="service-page-cta">
+                <a href="../index.html#contact-form" class="cta-btn" id="services-btn">Discuss a Project</a>
+            </div>
+
+            <nav class="service-other" aria-label="Other services">
+                <h2>Other services</h2>
+                <div class="service-other-links">
+                <a href="brand-strategy.html">Brand Strategy & Identity</a>
+                <a href="web-design.html">Web Design</a>
+                <a href="package-design.html">Package Design</a>
+                <a href="social-media.html">Social Media Marketing</a>
+                </div>
+            </nav>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <nav class="footer-nav">
+                <a href="../index.html#about">About</a>
+                <a href="../index.html#services">Services</a>
+                <a href="../index.html#portfolio">Portfolio</a>
+                <a href="../index.html#blog">Blog</a>
+                <a href="../index.html#faq">FAQ</a>
+                <a href="../index.html#contact">Contact</a>
+            </nav>
+            <div class="footer-copyright">
+                © 2026 Artistic Fountain™ — All rights reserved. <a href="../privacy.html">Privacy Policy</a> · <a href="../terms.html">Terms &amp; Conditions</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleNav() {
+            const nav = document.querySelector('.nav');
+            const toggle = document.querySelector('.nav-toggle');
+            const isOpen = nav.classList.toggle('active');
+            toggle.classList.toggle('active', isOpen);
+            toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        }
+        document.querySelectorAll('.nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                const nav = document.querySelector('.nav');
+                const toggle = document.querySelector('.nav-toggle');
+                nav.classList.remove('active');
+                toggle.classList.remove('active');
+                toggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+    </script>
+</body>
+</html>
