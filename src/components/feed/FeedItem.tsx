@@ -29,12 +29,12 @@ const typeMeta: Record<
   status: {
     label: "Status",
     icon: MessageSquare,
-    className: "border-[#3b6ea5] bg-[#d7e4f3] text-[#0f2744]",
+    className: "border-[#7B61FF] bg-[#EEE9FF] text-[#222222]",
   },
   friendship: {
     label: "Friends",
     icon: UserPlus,
-    className: "border-[#1f7a4d] bg-emerald-50 text-[#1f7a4d]",
+    className: "border-[#1E824C] bg-emerald-50 text-[#1E824C]",
   },
   blog: {
     label: "Blog",
@@ -94,11 +94,11 @@ export function FeedItem({
             <div className="min-w-0">
               <Link
                 href={`/profile/${actor.username}`}
-                className="font-bold text-[#0f2744] hover:underline"
+                className="font-bold text-[#222222] hover:underline"
               >
                 {actor.display_name}
               </Link>
-              <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-[#5b6b7c]">
+              <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-[#6E6E6E]">
                 <Link href={`/profile/${actor.username}`} className="hover:underline">
                   @{actor.username}
                 </Link>
@@ -117,11 +117,11 @@ export function FeedItem({
             </span>
           </div>
 
-          <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-[#1a2332]">
+          <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-[#222222]">
             {item.body}
           </p>
 
-          <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-[#c5d0dc] pt-3">
+          <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-[#E5E5E5] pt-3">
             <Button
               variant={hasReacted ? "primary" : "secondary"}
               size="sm"

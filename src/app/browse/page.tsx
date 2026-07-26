@@ -86,8 +86,8 @@ function BrowseContent() {
   return (
     <div className="space-y-5">
       <Card>
-        <h1 className="text-3xl font-black text-[#0f2744]">Browse people</h1>
-        <p className="mt-2 text-sm text-[#5b6b7c]">
+        <h1 className="text-3xl font-black text-[#222222]">Browse people</h1>
+        <p className="mt-2 text-sm text-[#6E6E6E]">
           Discover profiles by name, location, interests, music, age, and activity.
         </p>
       </Card>
@@ -135,7 +135,7 @@ function BrowseContent() {
             value={maxAge}
             onChange={(event) => setMaxAge(event.target.value)}
           />
-          <label className="flex items-center gap-2 text-sm font-semibold text-[#0f2744]">
+          <label className="flex items-center gap-2 text-sm font-semibold text-[#222222]">
             <input
               type="checkbox"
               checked={recentlyActive}
@@ -143,7 +143,7 @@ function BrowseContent() {
             />
             Recently active
           </label>
-          <label className="flex items-center gap-2 text-sm font-semibold text-[#0f2744]">
+          <label className="flex items-center gap-2 text-sm font-semibold text-[#222222]">
             <input
               type="checkbox"
               checked={newMembers}
@@ -158,11 +158,11 @@ function BrowseContent() {
       </Card>
 
       <section>
-        <h2 className="mb-3 text-xl font-black text-[#0f2744]">
+        <h2 className="mb-3 text-xl font-black text-[#222222]">
           {results.length} profile{results.length === 1 ? "" : "s"} found
         </h2>
         {results.length === 0 ? (
-          <Card className="text-sm text-[#5b6b7c]">No profiles match those filters.</Card>
+          <Card className="text-sm text-[#6E6E6E]">No profiles match those filters.</Card>
         ) : (
           <div className="grid gap-4 md:grid-cols-2">
             {results.map((profile) => (

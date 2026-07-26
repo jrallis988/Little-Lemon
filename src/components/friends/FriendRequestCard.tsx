@@ -33,11 +33,11 @@ export function FriendRequestCard({
       <div className="min-w-0 flex-1">
         <Link
           href={`/profile/${profile.username}`}
-          className="block truncate font-bold text-[#0f2744] hover:underline"
+          className="block truncate font-bold text-[#222222] hover:underline"
         >
           {profile.display_name}
         </Link>
-        <p className="truncate text-sm text-[#5b6b7c]">@{profile.username}</p>
+        <p className="truncate text-sm text-[#6E6E6E]">@{profile.username}</p>
       </div>
 
       <div className="flex shrink-0 flex-wrap gap-2">

@@ -102,7 +102,7 @@ export function Modal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[#0f2744]/65 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#FF7A18]/65 p-4"
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) onClose();
       }}
@@ -116,17 +116,17 @@ export function Modal({
         tabIndex={-1}
         onKeyDown={handleDialogKeyDown}
         className={cn(
-          "max-h-[90vh] w-full max-w-lg overflow-hidden rounded-[4px] border border-[#c5d0dc] bg-white shadow-xl",
+          "max-h-[90vh] w-full max-w-lg overflow-hidden rounded-[4px] border border-[#E5E5E5] bg-white shadow-xl",
           className
         )}
       >
-        <div className="flex items-start justify-between gap-4 border-b border-[#c5d0dc] bg-[#f8fafc] px-4 py-3">
+        <div className="flex items-start justify-between gap-4 border-b border-[#E5E5E5] bg-[#f8fafc] px-4 py-3">
           <div>
-            <h2 id={titleId} className="text-base font-bold text-[#0f2744]">
+            <h2 id={titleId} className="text-base font-bold text-[#222222]">
               {title}
             </h2>
             {description ? (
-              <p id={descriptionId} className="mt-1 text-sm text-[#5b6b7c]">
+              <p id={descriptionId} className="mt-1 text-sm text-[#6E6E6E]">
                 {description}
               </p>
             ) : null}
@@ -143,7 +143,7 @@ export function Modal({
         </div>
         <div className="max-h-[65vh] overflow-y-auto px-4 py-4">{children}</div>
         {footer ? (
-          <div className="flex justify-end gap-2 border-t border-[#c5d0dc] bg-[#f8fafc] px-4 py-3">
+          <div className="flex justify-end gap-2 border-t border-[#E5E5E5] bg-[#f8fafc] px-4 py-3">
             {footer}
           </div>
         ) : null}

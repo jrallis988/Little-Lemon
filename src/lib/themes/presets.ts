@@ -2,7 +2,7 @@ import type { ProfileTheme } from "@/lib/types/database";
 import { DEFAULT_MODULE_ORDER } from "@/lib/constants";
 
 export type ThemePresetName =
-  | "Classic Blue"
+  | "Classic"
   | "Midnight"
   | "Bubblegum"
   | "Grunge"
@@ -19,15 +19,15 @@ type ThemeDraft = Omit<
 >;
 
 const base: ThemeDraft = {
-  preset_name: "Classic Blue",
-  background_color: "#e8eef5",
+  preset_name: "Classic",
+  background_color: "#F5F5F5",
   background_image_url: null,
   background_repeat: "no-repeat",
   background_position: "center top",
-  primary_color: "#1a365d",
-  secondary_color: "#3b6ea5",
-  text_color: "#1a2332",
-  link_color: "#1d4f91",
+  primary_color: "#FF7A18",
+  secondary_color: "#7B61FF",
+  text_color: "#222222",
+  link_color: "#7B61FF",
   heading_font: "Outfit",
   body_font: "Source Sans 3",
   border_style: "solid",
@@ -43,7 +43,7 @@ const base: ThemeDraft = {
 };
 
 export const THEME_PRESETS: Record<ThemePresetName, ThemeDraft> = {
-  "Classic Blue": { ...base },
+  "Classic": { ...base },
   Midnight: {
     ...base,
     preset_name: "Midnight",
@@ -155,7 +155,7 @@ export const THEME_PRESETS: Record<ThemePresetName, ThemeDraft> = {
 
 export function createThemeForProfile(
   profileId: string,
-  preset: ThemePresetName = "Classic Blue"
+  preset: ThemePresetName = "Classic"
 ): ProfileTheme {
   const now = new Date().toISOString();
   return {

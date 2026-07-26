@@ -61,16 +61,16 @@ export default function SignupPage() {
   }
 
   return (
-    <main id="main-content" className="flex min-h-screen items-center justify-center bg-[#e9eef4] px-4 py-12">
+    <main id="main-content" className="flex min-h-screen items-center justify-center bg-[#F5F5F5] px-4 py-12">
       <section className="mp-card w-full max-w-lg p-6">
         <Link href="/" className="text-sm font-bold no-underline">
           {PLATFORM_NAME}
         </Link>
-        <p className="mt-3 text-xs font-bold uppercase tracking-wide text-[#3b6ea5]">
+        <p className="mt-3 text-xs font-bold uppercase tracking-wide text-[#7B61FF]">
           {PLATFORM_AUDIENCE}
         </p>
-        <h1 className="mt-2 text-3xl font-black text-[#0f2744]">Create your account</h1>
-        <p className="mt-2 text-sm text-[#5b6b7c]">
+        <h1 className="mt-2 text-3xl font-black text-[#222222]">Create your account</h1>
+        <p className="mt-2 text-sm text-[#6E6E6E]">
           Vibe is a teen-only space. You must be {AGE_MIN}–{AGE_MAX} to join.
         </p>
 
@@ -124,7 +124,7 @@ export default function SignupPage() {
             autoComplete="new-password"
             required
           />
-          <label className="flex items-start gap-2 text-sm text-[#1a2332]">
+          <label className="flex items-start gap-2 text-sm text-[#222222]">
             <input
               type="checkbox"
               className="mt-1"
@@ -143,7 +143,7 @@ export default function SignupPage() {
             </p>
           ) : null}
           {status ? (
-            <p className="rounded-[4px] border border-[#3b6ea5]/30 bg-[#d7e4f3] px-3 py-2 text-sm font-medium text-[#0f2744]">
+            <p className="rounded-[4px] border border-[#7B61FF]/30 bg-[#EEE9FF] px-3 py-2 text-sm font-medium text-[#222222]">
               {status}
             </p>
           ) : null}
@@ -152,7 +152,7 @@ export default function SignupPage() {
           </Button>
         </form>
 
-        <p className="mt-5 text-sm text-[#5b6b7c]">
+        <p className="mt-5 text-sm text-[#6E6E6E]">
           Already have an account? <Link href="/login">Log in</Link>
         </p>
       </section>

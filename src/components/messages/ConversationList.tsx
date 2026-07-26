@@ -105,23 +105,23 @@ export function ConversationList({
                 href={`/messages/${conversation.id}`}
                 aria-current={activeId === conversation.id ? "page" : undefined}
                 className={cn(
-                  "mp-card flex gap-3 p-3 transition hover:border-[#3b6ea5] hover:bg-[#f8fbff]",
+                  "mp-card flex gap-3 p-3 transition hover:border-[#7B61FF] hover:bg-[#f8fbff]",
                   activeId === conversation.id &&
-                    "border-[#3b6ea5] bg-[#d7e4f3]/55"
+                    "border-[#7B61FF] bg-[#EEE9FF]/55"
                 )}
               >
                 <Avatar profile={participant} size="md" showOnline />
                 <span className="min-w-0 flex-1">
                   <span className="flex items-start justify-between gap-2">
                     <span className="min-w-0">
-                      <span className="block truncate font-bold text-[#0f2744]">
+                      <span className="block truncate font-bold text-[#222222]">
                         {participant.display_name}
                       </span>
-                      <span className="block truncate text-xs text-[#5b6b7c]">
+                      <span className="block truncate text-xs text-[#6E6E6E]">
                         @{participant.username}
                       </span>
                     </span>
-                    <span className="shrink-0 text-xs text-[#5b6b7c]">
+                    <span className="shrink-0 text-xs text-[#6E6E6E]">
                       {formatRelative(timestamp)}
                     </span>
                   </span>
@@ -130,8 +130,8 @@ export function ConversationList({
                       className={cn(
                         "truncate text-sm",
                         unreadCount > 0
-                          ? "font-bold text-[#0f2744]"
-                          : "text-[#5b6b7c]"
+                          ? "font-bold text-[#222222]"
+                          : "text-[#6E6E6E]"
                       )}
                     >
                       {messagePreview(conversation.lastMessage)}

@@ -53,8 +53,8 @@ function actionButtonClass(variant: "primary" | "secondary" = "secondary") {
   return cn(
     "inline-flex items-center justify-center gap-2 rounded border px-3 py-2 text-sm font-bold transition disabled:cursor-not-allowed disabled:opacity-60",
     variant === "primary"
-      ? "border-[color:var(--mp-primary,#1a365d)] bg-[color:var(--mp-primary,#1a365d)] text-white hover:brightness-110"
-      : "border-[color-mix(in_srgb,var(--mp-primary,#1a365d)_35%,transparent)] bg-white/80 text-[color:var(--mp-primary,#1a365d)] hover:bg-white"
+      ? "border-[color:var(--mp-primary,#FF7A18)] bg-[color:var(--mp-primary,#FF7A18)] text-white hover:brightness-110"
+      : "border-[color-mix(in_srgb,var(--mp-primary,#FF7A18)_35%,transparent)] bg-white/80 text-[color:var(--mp-primary,#FF7A18)] hover:bg-white"
   );
 }
 
@@ -75,7 +75,7 @@ export function ProfileHeader({
 
   return (
     <header className={cn("profile-module overflow-hidden p-0", className)}>
-      <div className="relative min-h-44 bg-[linear-gradient(135deg,var(--mp-primary,#1a365d),var(--mp-secondary,#3b6ea5))]">
+      <div className="relative min-h-44 bg-[linear-gradient(135deg,var(--mp-primary,#FF7A18),var(--mp-secondary,#7B61FF))]">
         {profile.header_image_url ? (
           <img
             src={profile.header_image_url}
@@ -199,7 +199,7 @@ export function ProfileHeader({
               {statusText(profile)}
             </span>
             {profile.status_message ? (
-              <p className="rounded-full bg-[color-mix(in_srgb,var(--mp-secondary,#3b6ea5)_16%,white)] px-3 py-1 text-sm font-semibold">
+              <p className="rounded-full bg-[color-mix(in_srgb,var(--mp-secondary,#7B61FF)_16%,white)] px-3 py-1 text-sm font-semibold">
                 {profile.status_message}
               </p>
             ) : null}
@@ -214,14 +214,14 @@ export function ProfileHeader({
         </div>
 
         <dl className="grid min-w-48 grid-cols-2 gap-3 text-sm sm:grid-cols-1">
-          <div className="rounded border border-[color-mix(in_srgb,var(--mp-primary,#1a365d)_20%,transparent)] bg-white/60 p-3">
+          <div className="rounded border border-[color-mix(in_srgb,var(--mp-primary,#FF7A18)_20%,transparent)] bg-white/60 p-3">
             <dt className="flex items-center gap-1 text-xs font-bold uppercase tracking-wide opacity-70">
               <Eye className="h-3.5 w-3.5" aria-hidden="true" />
               Views
             </dt>
             <dd className="mt-1 text-lg font-black">{views.toLocaleString()}</dd>
           </div>
-          <div className="rounded border border-[color-mix(in_srgb,var(--mp-primary,#1a365d)_20%,transparent)] bg-white/60 p-3">
+          <div className="rounded border border-[color-mix(in_srgb,var(--mp-primary,#FF7A18)_20%,transparent)] bg-white/60 p-3">
             <dt className="flex items-center gap-1 text-xs font-bold uppercase tracking-wide opacity-70">
               <CalendarDays className="h-3.5 w-3.5" aria-hidden="true" />
               Member since

@@ -30,8 +30,8 @@ export function ErrorState({
           <AlertTriangle aria-hidden="true" className="h-4 w-4" />
         </span>
         <div>
-          <h2 className="text-sm font-bold text-[#0f2744]">{title}</h2>
-          <p className="mt-1 text-sm text-[#5b6b7c]">{message}</p>
+          <h2 className="text-sm font-bold text-[#222222]">{title}</h2>
+          <p className="mt-1 text-sm text-[#6E6E6E]">{message}</p>
         </div>
       </div>
       {onRetry ? (

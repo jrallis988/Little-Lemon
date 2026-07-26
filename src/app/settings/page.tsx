@@ -25,7 +25,7 @@ import {
 } from "@/app/_components/vibe-page-utils";
 
 function selectClass() {
-  return "mt-1.5 block min-h-9 w-full rounded-[4px] border border-[#c5d0dc] bg-white px-3 py-2 text-sm text-[#0f2744]";
+  return "mt-1.5 block min-h-9 w-full rounded-[4px] border border-[#E5E5E5] bg-white px-3 py-2 text-sm text-[#222222]";
 }
 
 function SettingsContent() {
@@ -76,11 +76,11 @@ function SettingsContent() {
   return (
     <div className="space-y-5">
       <Card>
-        <h1 className="text-3xl font-black text-[#0f2744]">Settings</h1>
-        <p className="mt-2 text-sm text-[#5b6b7c]">
+        <h1 className="text-3xl font-black text-[#222222]">Settings</h1>
+        <p className="mt-2 text-sm text-[#6E6E6E]">
           Manage your account, privacy, notifications, blocks, and mock account lifecycle.
         </p>
-        {status ? <p className="mt-3 text-sm font-semibold text-[#1f7a4d]">{status}</p> : null}
+        {status ? <p className="mt-3 text-sm font-semibold text-[#1E824C]">{status}</p> : null}
       </Card>
 
       <div className="grid gap-5 lg:grid-cols-2">
@@ -177,7 +177,7 @@ function SettingsContent() {
                   ["notify_comments", "Comments"],
                   ["notify_reactions", "Reactions"],
                 ].map(([key, label]) => (
-                  <label key={key} className="flex items-center gap-2 text-sm font-semibold text-[#0f2744]">
+                  <label key={key} className="flex items-center gap-2 text-sm font-semibold text-[#222222]">
                     <input
                       type="checkbox"
                       checked={Boolean(privacy[key as keyof PrivacySettings])}
@@ -209,7 +209,7 @@ function SettingsContent() {
                   value={privacy.photos_visibility}
                   onChange={(value) => patchPrivacy({ photos_visibility: value }, "Photo visibility saved.")}
                 />
-                <label className="text-sm font-semibold text-[#0f2744]" htmlFor="friend-requests-from">
+                <label className="text-sm font-semibold text-[#222222]" htmlFor="friend-requests-from">
                   Who can friend me
                   <select
                     id="friend-requests-from"
@@ -230,7 +230,7 @@ function SettingsContent() {
                     <option value="nobody">Nobody</option>
                   </select>
                 </label>
-                <label className="text-sm font-semibold text-[#0f2744]" htmlFor="messages-from">
+                <label className="text-sm font-semibold text-[#222222]" htmlFor="messages-from">
                   Who can message me
                   <select
                     id="messages-from"
@@ -248,7 +248,7 @@ function SettingsContent() {
                     <option value="nobody">Nobody</option>
                   </select>
                 </label>
-                <label className="text-sm font-semibold text-[#0f2744]" htmlFor="comments-from">
+                <label className="text-sm font-semibold text-[#222222]" htmlFor="comments-from">
                   Who can comment
                   <select
                     id="comments-from"
@@ -266,7 +266,7 @@ function SettingsContent() {
                     <option value="nobody">Nobody</option>
                   </select>
                 </label>
-                <label className="flex items-center gap-2 text-sm font-semibold text-[#0f2744]">
+                <label className="flex items-center gap-2 text-sm font-semibold text-[#222222]">
                   <input
                     type="checkbox"
                     checked={privacy.show_online_status}
@@ -284,7 +284,7 @@ function SettingsContent() {
         <Card>
           <SectionTitle title="Blocked users" />
           <div className="space-y-3">
-            <label className="text-sm font-semibold text-[#0f2744]" htmlFor="block-user">
+            <label className="text-sm font-semibold text-[#222222]" htmlFor="block-user">
               Add blocked user
               <select
                 id="block-user"
@@ -316,7 +316,7 @@ function SettingsContent() {
             </Button>
             <div className="space-y-2">
               {blocked.length === 0 ? (
-                <p className="text-sm text-[#5b6b7c]">No blocked users.</p>
+                <p className="text-sm text-[#6E6E6E]">No blocked users.</p>
               ) : (
                 blocked.map((item) => (
                   <ProfileListItem
@@ -345,7 +345,7 @@ function SettingsContent() {
 
         <Card>
           <SectionTitle title="Data export" />
-          <p className="text-sm text-[#5b6b7c]">
+          <p className="text-sm text-[#6E6E6E]">
             Download a JSON snapshot of your profile, privacy, friends, posts, messages, and notifications.
           </p>
           <Button
@@ -378,7 +378,7 @@ function SettingsContent() {
 
         <Card>
           <SectionTitle title="Account deactivation" />
-          <p className="text-sm text-[#5b6b7c]">
+          <p className="text-sm text-[#6E6E6E]">
             Deactivation marks your mock account inactive without removing your data.
           </p>
           <Button
@@ -404,7 +404,7 @@ function SettingsContent() {
 
         <Card className="border-[#b42318]/40">
           <SectionTitle title="Account deletion" />
-          <p className="text-sm text-[#5b6b7c]">
+          <p className="text-sm text-[#6E6E6E]">
             Type DELETE to remove this mock account and related local data.
           </p>
           <Input

@@ -94,8 +94,8 @@ export function SignupForm({ onSubmit, error, className }: SignupFormProps) {
   return (
     <form className={cn("mp-card space-y-4 p-5", className)} onSubmit={handleSubmit}>
       <div>
-        <h1 className="text-2xl font-black text-[#0f2744]">Create your profile</h1>
-        <p className="mt-1 text-sm text-[#5b6b7c]">
+        <h1 className="text-2xl font-black text-[#222222]">Create your profile</h1>
+        <p className="mt-1 text-sm text-[#6E6E6E]">
           Claim a username and start making your place feel like you.
         </p>
       </div>
@@ -165,7 +165,7 @@ export function SignupForm({ onSubmit, error, className }: SignupFormProps) {
         {submitting ? "Creating..." : "Create account"}
       </Button>
 
-      <p className="text-center text-sm text-[#5b6b7c]">
+      <p className="text-center text-sm text-[#6E6E6E]">
         Already have an account?{" "}
         <Link href="/login" className="font-semibold hover:underline">
           Sign in

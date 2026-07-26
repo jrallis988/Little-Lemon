@@ -95,15 +95,15 @@ export function FriendsList({
               <div className="min-w-0 flex-1">
                 <Link
                   href={`/profile/${friend.username}`}
-                  className="block truncate font-bold text-[#0f2744] hover:underline"
+                  className="block truncate font-bold text-[#222222] hover:underline"
                 >
                   {friend.display_name}
                 </Link>
-                <p className="truncate text-sm text-[#5b6b7c]">
+                <p className="truncate text-sm text-[#6E6E6E]">
                   @{friend.username}
                 </p>
                 {friend.bio ? (
-                  <p className="mt-2 line-clamp-2 text-sm text-[#1a2332]">
+                  <p className="mt-2 line-clamp-2 text-sm text-[#222222]">
                     {friend.bio}
                   </p>
                 ) : null}

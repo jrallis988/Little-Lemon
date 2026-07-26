@@ -51,7 +51,7 @@ export function PrivacySelector({
     <div className="space-y-1.5">
       <label
         htmlFor={id}
-        className="block text-xs font-semibold uppercase tracking-wide text-[#0f2744]"
+        className="block text-xs font-semibold uppercase tracking-wide text-[#222222]"
       >
         {label}
         {required ? <span className="ml-1 text-[#b42318]">*</span> : null}
@@ -64,9 +64,9 @@ export function PrivacySelector({
         aria-describedby={error ? `${descriptionId} ${errorId}` : descriptionId}
         onChange={(event) => onChange(event.target.value as Visibility)}
         className={cn(
-          "block min-h-9 w-full rounded-[4px] border bg-white px-3 py-2 text-sm font-medium text-[#0f2744] shadow-[0_1px_2px_rgba(15,39,68,0.04)]",
-          "focus:border-[#3b6ea5] focus:outline-none focus:ring-2 focus:ring-[#3b6ea5]/20 disabled:cursor-not-allowed disabled:bg-[#eef3f8]",
-          error ? "border-[#b42318]" : "border-[#c5d0dc]",
+          "block min-h-9 w-full rounded-[4px] border bg-white px-3 py-2 text-sm font-medium text-[#222222] shadow-[0_1px_2px_rgba(34,34,34,0.04)]",
+          "focus:border-[#FF7A18] focus:outline-none focus:ring-2 focus:ring-[#FF7A18]/20 disabled:cursor-not-allowed disabled:bg-[#eef3f8]",
+          error ? "border-[#b42318]" : "border-[#E5E5E5]",
           className
         )}
         {...props}
@@ -77,7 +77,7 @@ export function PrivacySelector({
           </option>
         ))}
       </select>
-      <p id={descriptionId} className="text-xs text-[#5b6b7c]">
+      <p id={descriptionId} className="text-xs text-[#6E6E6E]">
         {selected?.description}
       </p>
       {error ? (

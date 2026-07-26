@@ -23,7 +23,7 @@ export default function OnboardingPage() {
   const [interests, setInterests] = useState("");
   const [favoriteMusic, setFavoriteMusic] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
-  const [themeName, setThemeName] = useState<ThemePresetName>("Classic Blue");
+  const [themeName, setThemeName] = useState<ThemePresetName>("Classic");
   const [status, setStatus] = useState("");
   const [error, setError] = useState("");
 
@@ -83,20 +83,20 @@ export default function OnboardingPage() {
   if (loading || !profile) {
     return (
       <main id="main-content" className="mx-auto max-w-3xl px-4 py-12">
-        <section className="mp-card animate-pulse p-6 text-[#5b6b7c]">Loading onboarding...</section>
+        <section className="mp-card animate-pulse p-6 text-[#6E6E6E]">Loading onboarding...</section>
       </main>
     );
   }
 
   return (
-    <main id="main-content" className="min-h-screen bg-[#e9eef4] px-4 py-12">
+    <main id="main-content" className="min-h-screen bg-[#F5F5F5] px-4 py-12">
       <section className="mx-auto max-w-3xl">
         <div className="mp-card p-6">
-          <p className="text-sm font-black uppercase tracking-[0.18em] text-[#3b6ea5]">
+          <p className="text-sm font-black uppercase tracking-[0.18em] text-[#7B61FF]">
             {PLATFORM_NAME} onboarding · {PLATFORM_AUDIENCE}
           </p>
-          <h1 className="mt-2 text-3xl font-black text-[#0f2744]">Make your page feel like you</h1>
-          <p className="mt-2 text-sm text-[#5b6b7c]">
+          <h1 className="mt-2 text-3xl font-black text-[#222222]">Make your page feel like you</h1>
+          <p className="mt-2 text-sm text-[#6E6E6E]">
             Add the teen basics, pick a starter theme, and you can remix everything later.
           </p>
 
@@ -175,7 +175,7 @@ export default function OnboardingPage() {
             <div>
               <label
                 htmlFor="onboarding-theme"
-                className="block text-xs font-semibold uppercase tracking-wide text-[#0f2744]"
+                className="block text-xs font-semibold uppercase tracking-wide text-[#222222]"
               >
                 Starter theme
               </label>
@@ -183,7 +183,7 @@ export default function OnboardingPage() {
                 id="onboarding-theme"
                 value={themeName}
                 onChange={(event) => setThemeName(event.target.value as ThemePresetName)}
-                className="mt-1.5 block min-h-9 w-full rounded-[4px] border border-[#c5d0dc] bg-white px-3 py-2 text-sm text-[#1a2332]"
+                className="mt-1.5 block min-h-9 w-full rounded-[4px] border border-[#E5E5E5] bg-white px-3 py-2 text-sm text-[#222222]"
               >
                 {(Object.keys(THEME_PRESETS) as ThemePresetName[]).map((preset) => (
                   <option key={preset} value={preset}>
@@ -198,7 +198,7 @@ export default function OnboardingPage() {
               </p>
             ) : null}
             {status ? (
-              <p className="rounded-[4px] border border-[#3b6ea5]/30 bg-[#d7e4f3] px-3 py-2 text-sm font-medium text-[#0f2744]">
+              <p className="rounded-[4px] border border-[#7B61FF]/30 bg-[#EEE9FF] px-3 py-2 text-sm font-medium text-[#222222]">
                 {status}
               </p>
             ) : null}

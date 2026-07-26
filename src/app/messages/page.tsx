@@ -35,8 +35,8 @@ function MessagesContent() {
   return (
     <div className="space-y-5">
       <Card>
-        <h1 className="text-3xl font-black text-[#0f2744]">Messages</h1>
-        <p className="mt-2 text-sm text-[#5b6b7c]">Pick a conversation to keep chatting.</p>
+        <h1 className="text-3xl font-black text-[#222222]">Messages</h1>
+        <p className="mt-2 text-sm text-[#6E6E6E]">Pick a conversation to keep chatting.</p>
       </Card>
 
       <Card>
@@ -45,7 +45,7 @@ function MessagesContent() {
           {conversations.map((summary) => (
             <article
               key={summary.conversation?.id}
-              className="flex items-center justify-between gap-3 rounded border border-[#c5d0dc] bg-white p-3"
+              className="flex items-center justify-between gap-3 rounded border border-[#E5E5E5] bg-white p-3"
             >
               <button
                 type="button"
@@ -56,21 +56,21 @@ function MessagesContent() {
               >
                 <Avatar profile={summary.otherProfile} size="lg" showOnline />
                 <span className="min-w-0">
-                  <span className="block font-bold text-[#0f2744]">
+                  <span className="block font-bold text-[#222222]">
                     {summary.otherProfile?.display_name}
                   </span>
-                  <span className="block truncate text-sm text-[#5b6b7c]">
+                  <span className="block truncate text-sm text-[#6E6E6E]">
                     {summary.lastMessage?.body ?? "No messages yet."}
                   </span>
                   {summary.lastMessage ? (
-                    <span className="block text-xs text-[#5b6b7c]">
+                    <span className="block text-xs text-[#6E6E6E]">
                       {formatRelative(summary.lastMessage.created_at)}
                     </span>
                   ) : null}
                 </span>
               </button>
               {summary.unread > 0 ? (
-                <span className="rounded-full bg-[#0f2744] px-2 py-1 text-xs font-black text-white">
+                <span className="rounded-full bg-[#FF7A18] px-2 py-1 text-xs font-black text-white">
                   {summary.unread}
                 </span>
               ) : null}

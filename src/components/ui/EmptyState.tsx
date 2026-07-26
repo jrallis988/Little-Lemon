@@ -27,11 +27,11 @@ export function EmptyState({
         className
       )}
     >
-      <span className="mb-3 inline-flex h-11 w-11 items-center justify-center rounded-[4px] border border-[#c5d0dc] bg-[#d7e4f3] text-[#0f2744]">
+      <span className="mb-3 inline-flex h-11 w-11 items-center justify-center rounded-[4px] border border-[#E5E5E5] bg-[#EEE9FF] text-[#222222]">
         <Icon aria-hidden="true" className="h-5 w-5" />
       </span>
-      <h2 className="text-base font-bold text-[#0f2744]">{title}</h2>
-      <p className="mt-1 max-w-md text-sm text-[#5b6b7c]">{description}</p>
+      <h2 className="text-base font-bold text-[#222222]">{title}</h2>
+      <p className="mt-1 max-w-md text-sm text-[#6E6E6E]">{description}</p>
       {actionLabel && onAction ? (
         <Button onClick={onAction} className="mt-4" size="sm">
           {actionLabel}

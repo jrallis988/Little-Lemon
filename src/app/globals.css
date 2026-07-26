@@ -1,23 +1,33 @@
 @import "tailwindcss";
 
 :root {
-  /* Vibe default chrome — deep navy / medium blue / light gray */
-  --mp-navy: #0f2744;
-  --mp-navy-deep: #0a1b30;
-  --mp-blue: #3b6ea5;
-  --mp-blue-mid: #2f5f91;
-  --mp-blue-soft: #d7e4f3;
-  --mp-page: #e9eef4;
+  /* Vibe chrome — orange primary, purple secondary, green action */
+  --mp-primary: #ff7a18;
+  --mp-primary-hover: #e5670a;
+  --mp-secondary: #7b61ff;
+  --mp-secondary-hover: #6348e0;
+  --mp-secondary-soft: #eee9ff;
+  --mp-primary-soft: #fff1e6;
+  --mp-page: #f5f5f5;
   --mp-card: #ffffff;
-  --mp-border: #c5d0dc;
-  --mp-text: #1a2332;
-  --mp-muted: #5b6b7c;
-  --mp-accent: #1d4f91;
-  --mp-success: #1f7a4d;
+  --mp-border: #e5e5e5;
+  --mp-text: #222222;
+  --mp-muted: #6e6e6e;
+  --mp-accent: #7b61ff;
+  --mp-success: #1e824c;
   --mp-danger: #b42318;
-  --mp-warning: #a15c00;
+  --mp-warning: #ff7a18;
+  --mp-header: #222222;
   --mp-radius: 4px;
-  --mp-shadow: 0 1px 2px rgba(15, 39, 68, 0.08);
+  --mp-shadow: 0 1px 2px rgba(34, 34, 34, 0.08);
+
+  /* Back-compat aliases used across components */
+  --mp-navy: var(--mp-primary);
+  --mp-navy-deep: var(--mp-primary-hover);
+  --mp-blue: var(--mp-secondary);
+  --mp-blue-mid: var(--mp-secondary-hover);
+  --mp-blue-soft: var(--mp-secondary-soft);
+
   --background: var(--mp-page);
   --foreground: var(--mp-text);
 }
@@ -30,6 +40,8 @@
   --color-mp-blue: var(--mp-blue);
   --color-mp-blue-mid: var(--mp-blue-mid);
   --color-mp-blue-soft: var(--mp-blue-soft);
+  --color-mp-primary: var(--mp-primary);
+  --color-mp-secondary: var(--mp-secondary);
   --color-mp-page: var(--mp-page);
   --color-mp-card: var(--mp-card);
   --color-mp-border: var(--mp-border);
@@ -39,6 +51,7 @@
   --color-mp-success: var(--mp-success);
   --color-mp-danger: var(--mp-danger);
   --color-mp-warning: var(--mp-warning);
+  --color-mp-header: var(--mp-header);
   --font-sans: var(--font-body);
   --font-display: var(--font-display);
 }
@@ -67,6 +80,7 @@ h4 {
   font-family: var(--font-display), Outfit, system-ui, sans-serif;
   letter-spacing: -0.01em;
   line-height: 1.2;
+  color: var(--mp-text);
 }
 
 a {
@@ -76,11 +90,11 @@ a {
 }
 
 a:hover {
-  color: var(--mp-navy);
+  color: var(--mp-primary);
 }
 
 :focus-visible {
-  outline: 2px solid var(--mp-blue);
+  outline: 2px solid var(--mp-primary);
   outline-offset: 2px;
 }
 
@@ -89,7 +103,7 @@ a:hover {
   left: -9999px;
   top: 0;
   z-index: 100;
-  background: var(--mp-navy);
+  background: var(--mp-header);
   color: white;
   padding: 0.5rem 1rem;
 }
@@ -109,18 +123,18 @@ a:hover {
 .mp-section-title {
   font-size: 0.95rem;
   font-weight: 700;
-  color: var(--mp-navy);
+  color: var(--mp-text);
   border-bottom: 1px solid var(--mp-border);
   padding-bottom: 0.35rem;
   margin-bottom: 0.75rem;
 }
 
 .profile-themed {
-  color: var(--mp-text, #1a2332);
+  color: var(--mp-text, #222222);
 }
 
 .profile-themed a {
-  color: var(--mp-link, #1d4f91);
+  color: var(--mp-link, #7b61ff);
 }
 
 .profile-themed h1,
@@ -128,12 +142,12 @@ a:hover {
 .profile-themed h3,
 .profile-themed .profile-heading {
   font-family: var(--mp-heading-font, inherit);
-  color: var(--mp-primary, #1a365d);
+  color: var(--mp-primary, #ff7a18);
 }
 
 .profile-themed .profile-module {
   background: color-mix(in srgb, white calc(var(--mp-card-alpha, 0.95) * 100%), transparent);
-  border: 1px var(--mp-border-style, solid) color-mix(in srgb, var(--mp-primary, #1a365d) 35%, transparent);
+  border: 1px var(--mp-border-style, solid) color-mix(in srgb, var(--mp-primary, #ff7a18) 35%, transparent);
   border-radius: 4px;
   padding: 0.85rem;
 }

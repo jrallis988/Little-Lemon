@@ -39,7 +39,7 @@ import { createThemeForProfile } from "@/lib/themes/presets";
 import { sanitizeTheme } from "@/lib/themes/sanitize";
 import { USERNAME_PATTERN } from "@/lib/constants";
 
-const STORAGE_KEY = "vibe-mock-store-v2";
+const STORAGE_KEY = "vibe-mock-store-v3";
 const SESSION_KEY = "vibe-session-user";
 
 export type MockStore = {
@@ -295,7 +295,7 @@ export function signupAccount(input: {
   mutateStore((s) => {
     s.users.push(user);
     s.profiles.push(profile);
-    s.themes.push(createThemeForProfile(id, "Classic Blue"));
+    s.themes.push(createThemeForProfile(id, "Classic"));
     s.privacy.push({
       profile_id: id,
       profile_visibility: "public",

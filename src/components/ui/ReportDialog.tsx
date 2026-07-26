@@ -130,7 +130,7 @@ export function ReportDialog({
         <div className="space-y-1.5">
           <label
             htmlFor={reasonId}
-            className="block text-xs font-semibold uppercase tracking-wide text-[#0f2744]"
+            className="block text-xs font-semibold uppercase tracking-wide text-[#222222]"
           >
             Reason <span className="text-[#b42318]">*</span>
           </label>
@@ -139,7 +139,7 @@ export function ReportDialog({
             value={reason}
             required
             onChange={(event) => setReason(event.target.value)}
-            className="block min-h-9 w-full rounded-[4px] border border-[#c5d0dc] bg-white px-3 py-2 text-sm text-[#0f2744] shadow-[0_1px_2px_rgba(15,39,68,0.04)] focus:border-[#3b6ea5] focus:outline-none focus:ring-2 focus:ring-[#3b6ea5]/20"
+            className="block min-h-9 w-full rounded-[4px] border border-[#E5E5E5] bg-white px-3 py-2 text-sm text-[#222222] shadow-[0_1px_2px_rgba(34,34,34,0.04)] focus:border-[#FF7A18] focus:outline-none focus:ring-2 focus:ring-[#FF7A18]/20"
           >
             <option value="">Select a reason</option>
             {reportReasons.map((option) => (

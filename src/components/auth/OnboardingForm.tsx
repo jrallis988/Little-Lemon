@@ -67,7 +67,7 @@ export function OnboardingForm({
     initialValues?.favoriteMusic ?? ""
   );
   const [themePreset, setThemePreset] = useState<ThemePresetName>(
-    initialValues?.themePreset ?? "Classic Blue"
+    initialValues?.themePreset ?? "Classic"
   );
   const [submitting, setSubmitting] = useState(false);
 
@@ -121,10 +121,10 @@ export function OnboardingForm({
   return (
     <form className={cn("mp-card space-y-5 p-5", className)} onSubmit={handleSubmit}>
       <div>
-        <p className="text-xs font-bold uppercase tracking-wide text-[#5b6b7c]">
+        <p className="text-xs font-bold uppercase tracking-wide text-[#6E6E6E]">
           Step {step + 1} of {steps.length}
         </p>
-        <h1 className="mt-1 text-2xl font-black text-[#0f2744]">
+        <h1 className="mt-1 text-2xl font-black text-[#222222]">
           {steps[step]}
         </h1>
       </div>
@@ -135,13 +135,13 @@ export function OnboardingForm({
             <div
               className={cn(
                 "h-2 rounded-full",
-                index <= step ? "bg-[#3b6ea5]" : "bg-[#c5d0dc]"
+                index <= step ? "bg-[#7B61FF]" : "bg-[#E5E5E5]"
               )}
             />
             <p
               className={cn(
                 "text-xs font-semibold",
-                index === step ? "text-[#0f2744]" : "text-[#5b6b7c]"
+                index === step ? "text-[#222222]" : "text-[#6E6E6E]"
               )}
             >
               {label}
@@ -225,7 +225,7 @@ export function OnboardingForm({
 
       {step === 3 ? (
         <fieldset className="space-y-3">
-          <legend className="text-sm font-bold text-[#0f2744]">
+          <legend className="text-sm font-bold text-[#222222]">
             Pick a theme preset
           </legend>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -241,8 +241,8 @@ export function OnboardingForm({
                   className={cn(
                     "rounded-[4px] border p-3 text-left transition hover:-translate-y-0.5 hover:shadow-md",
                     selected
-                      ? "border-[#0f2744] ring-2 ring-[#3b6ea5]/25"
-                      : "border-[#c5d0dc]"
+                      ? "border-[#FF7A18] ring-2 ring-[#7B61FF]/25"
+                      : "border-[#E5E5E5]"
                   )}
                   aria-pressed={selected}
                 >
@@ -253,12 +253,12 @@ export function OnboardingForm({
                     }}
                   />
                   <span className="mt-2 flex items-center justify-between gap-2">
-                    <span className="font-bold text-[#0f2744]">{presetName}</span>
+                    <span className="font-bold text-[#222222]">{presetName}</span>
                     {selected ? (
-                      <Check className="h-4 w-4 text-[#1f7a4d]" aria-hidden="true" />
+                      <Check className="h-4 w-4 text-[#1E824C]" aria-hidden="true" />
                     ) : null}
                   </span>
-                  <span className="mt-1 block text-xs text-[#5b6b7c]">
+                  <span className="mt-1 block text-xs text-[#6E6E6E]">
                     {preset.display_mode} / {preset.heading_font}
                   </span>
                 </button>
@@ -268,7 +268,7 @@ export function OnboardingForm({
         </fieldset>
       ) : null}
 
-      <div className="flex items-center justify-between gap-3 border-t border-[#c5d0dc] pt-4">
+      <div className="flex items-center justify-between gap-3 border-t border-[#E5E5E5] pt-4">
         <Button
           type="button"
           variant="secondary"

@@ -54,15 +54,15 @@ export function FeatureCards({ className }: FeatureCardsProps) {
         return (
           <article
             key={feature.title}
-            className="rounded-[4px] border border-[#c5d0dc] bg-white/75 p-4 shadow-[0_1px_2px_rgba(15,39,68,0.08)]"
+            className="rounded-[4px] border border-[#E5E5E5] bg-white/75 p-4 shadow-[0_1px_2px_rgba(34,34,34,0.08)]"
           >
-            <span className="inline-flex h-9 w-9 items-center justify-center rounded-[4px] border border-[#c5d0dc] bg-[#d7e4f3] text-[#0f2744]">
+            <span className="inline-flex h-9 w-9 items-center justify-center rounded-[4px] border border-[#E5E5E5] bg-[#EEE9FF] text-[#222222]">
               <Icon className="h-4 w-4" aria-hidden="true" />
             </span>
-            <h2 className="mt-3 text-base font-black text-[#0f2744]">
+            <h2 className="mt-3 text-base font-black text-[#222222]">
               {feature.title}
             </h2>
-            <p className="mt-2 text-sm leading-relaxed text-[#5b6b7c]">
+            <p className="mt-2 text-sm leading-relaxed text-[#6E6E6E]">
               {feature.description}
             </p>
           </article>

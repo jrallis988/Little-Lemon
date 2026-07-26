@@ -59,7 +59,7 @@ export function Avatar({
     <span className={cn("relative inline-flex shrink-0", className)}>
       <span
         className={cn(
-          "flex overflow-hidden rounded-[4px] border border-[#c5d0dc] bg-[#d7e4f3] font-bold text-[#0f2744] shadow-[0_1px_2px_rgba(15,39,68,0.08)]",
+          "flex overflow-hidden rounded-[4px] border border-[#E5E5E5] bg-[#EEE9FF] font-bold text-[#222222] shadow-[0_1px_2px_rgba(34,34,34,0.08)]",
           sizeClasses[size]
         )}
       >

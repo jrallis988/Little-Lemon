@@ -25,7 +25,7 @@ export function Input({
     <div className="space-y-1.5">
       <label
         htmlFor={id}
-        className="block text-xs font-semibold uppercase tracking-wide text-[#0f2744]"
+        className="block text-xs font-semibold uppercase tracking-wide text-[#222222]"
       >
         {label}
         {required ? <span className="ml-1 text-[#b42318]">*</span> : null}
@@ -36,16 +36,16 @@ export function Input({
         aria-invalid={error ? "true" : undefined}
         aria-describedby={describedBy}
         className={cn(
-          "block min-h-9 w-full rounded-[4px] border bg-white px-3 py-2 text-sm text-[#1a2332] shadow-[0_1px_2px_rgba(15,39,68,0.04)]",
-          "placeholder:text-[#5b6b7c] focus:border-[#3b6ea5] focus:outline-none focus:ring-2 focus:ring-[#3b6ea5]/20",
-          "disabled:cursor-not-allowed disabled:bg-[#eef3f8] disabled:text-[#5b6b7c]",
-          error ? "border-[#b42318]" : "border-[#c5d0dc]",
+          "block min-h-9 w-full rounded-[4px] border bg-white px-3 py-2 text-sm text-[#222222] shadow-[0_1px_2px_rgba(34,34,34,0.04)]",
+          "placeholder:text-[#6E6E6E] focus:border-[#FF7A18] focus:outline-none focus:ring-2 focus:ring-[#FF7A18]/20",
+          "disabled:cursor-not-allowed disabled:bg-[#eef3f8] disabled:text-[#6E6E6E]",
+          error ? "border-[#b42318]" : "border-[#E5E5E5]",
           className
         )}
         {...props}
       />
       {hint ? (
-        <p id={hintId} className="text-xs text-[#5b6b7c]">
+        <p id={hintId} className="text-xs text-[#6E6E6E]">
           {hint}
         </p>
       ) : null}

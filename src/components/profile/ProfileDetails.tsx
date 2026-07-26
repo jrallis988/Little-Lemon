@@ -60,7 +60,7 @@ function renderValue(item: DetailItem) {
         {item.value.map((value) => (
           <span
             key={value}
-            className="rounded-full bg-[color-mix(in_srgb,var(--mp-secondary,#3b6ea5)_18%,white)] px-2 py-1 text-sm"
+            className="rounded-full bg-[color-mix(in_srgb,var(--mp-secondary,#7B61FF)_18%,white)] px-2 py-1 text-sm"
           >
             {value}
           </span>
@@ -221,7 +221,7 @@ export function ProfileDetails({
           return (
             <article
               key={item.key}
-              className="rounded border border-[color-mix(in_srgb,var(--mp-primary,#1a365d)_18%,transparent)] bg-white/50 p-3"
+              className="rounded border border-[color-mix(in_srgb,var(--mp-primary,#FF7A18)_18%,transparent)] bg-white/50 p-3"
             >
               <h3 className="mb-2 flex items-center gap-2 text-sm font-black uppercase tracking-wide opacity-80">
                 <Icon className="h-4 w-4" aria-hidden="true" />

@@ -65,7 +65,7 @@ export function ProfileComments({
       </div>
 
       {canCompose ? (
-        <form onSubmit={handleSubmit} className="mt-4 rounded border border-[color-mix(in_srgb,var(--mp-primary,#1a365d)_18%,transparent)] bg-white/55 p-3">
+        <form onSubmit={handleSubmit} className="mt-4 rounded border border-[color-mix(in_srgb,var(--mp-primary,#FF7A18)_18%,transparent)] bg-white/55 p-3">
           <label htmlFor="profile-comment" className="text-sm font-black">
             Leave a comment
           </label>
@@ -82,7 +82,7 @@ export function ProfileComments({
             <span className="text-xs opacity-60">{draft.length}/1000</span>
             <button
               type="submit"
-              className="inline-flex items-center gap-2 rounded bg-[color:var(--mp-primary,#1a365d)] px-3 py-2 text-sm font-bold text-white hover:brightness-110 disabled:opacity-50"
+              className="inline-flex items-center gap-2 rounded bg-[color:var(--mp-primary,#FF7A18)] px-3 py-2 text-sm font-bold text-white hover:brightness-110 disabled:opacity-50"
               disabled={!draft.trim()}
             >
               <Send className="h-4 w-4" aria-hidden="true" />
@@ -105,7 +105,7 @@ export function ProfileComments({
             return (
               <li
                 key={comment.id}
-                className="flex gap-3 rounded border border-[color-mix(in_srgb,var(--mp-primary,#1a365d)_18%,transparent)] bg-white/55 p-3"
+                className="flex gap-3 rounded border border-[color-mix(in_srgb,var(--mp-primary,#FF7A18)_18%,transparent)] bg-white/55 p-3"
               >
                 <img
                   src={author?.avatar_url ?? PLACEHOLDER_AVATAR}
@@ -150,7 +150,7 @@ export function ProfileComments({
       {visibleCount < sortedComments.length ? (
         <button
           type="button"
-          className="mt-4 w-full rounded border border-[color:var(--mp-primary,#1a365d)] bg-white/70 px-3 py-2 text-sm font-black text-[color:var(--mp-primary,#1a365d)] hover:bg-white"
+          className="mt-4 w-full rounded border border-[color:var(--mp-primary,#FF7A18)] bg-white/70 px-3 py-2 text-sm font-black text-[color:var(--mp-primary,#FF7A18)] hover:bg-white"
           onClick={() => setVisibleCount((count) => count + pageSize)}
         >
           Load More

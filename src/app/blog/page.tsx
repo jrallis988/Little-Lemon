@@ -33,8 +33,8 @@ function BlogContent() {
   return (
     <div className="space-y-5">
       <Card>
-        <h1 className="text-3xl font-black text-[#0f2744]">Blog</h1>
-        <p className="mt-2 text-sm text-[#5b6b7c]">
+        <h1 className="text-3xl font-black text-[#222222]">Blog</h1>
+        <p className="mt-2 text-sm text-[#6E6E6E]">
           Read public posts and friends-only posts available to your account.
         </p>
       </Card>
@@ -62,20 +62,20 @@ function BlogContent() {
           }
         />
         {posts.length === 0 ? (
-          <p className="text-sm text-[#5b6b7c]">No posts to show in this view.</p>
+          <p className="text-sm text-[#6E6E6E]">No posts to show in this view.</p>
         ) : (
           <div className="space-y-4">
             {posts.map((post) => {
               const author = blogPostAuthor(store, post);
               const commentCount = store.blogComments.filter((comment) => comment.post_id === post.id).length;
               return (
-                <article key={post.id} className="rounded border border-[#c5d0dc] bg-white p-4">
+                <article key={post.id} className="rounded border border-[#E5E5E5] bg-white p-4">
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div>
                       <Link href={`/blog/${post.id}`} className="text-2xl font-black no-underline">
                         {post.title}
                       </Link>
-                      <p className="mt-1 text-sm text-[#5b6b7c]">
+                      <p className="mt-1 text-sm text-[#6E6E6E]">
                         by{" "}
                         {author ? (
                           <Link href={`/profile/${author.username}`}>{author.display_name}</Link>
@@ -85,18 +85,18 @@ function BlogContent() {
                         on {formatDate(post.published_at)}
                       </p>
                     </div>
-                    <span className="rounded-full border border-[#c5d0dc] px-2 py-1 text-xs font-bold">
+                    <span className="rounded-full border border-[#E5E5E5] px-2 py-1 text-xs font-bold">
                       {post.visibility}
                     </span>
                   </div>
                   <p className="mt-3 line-clamp-3 whitespace-pre-line text-sm">{post.body}</p>
-                  <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-sm text-[#5b6b7c]">
+                  <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-sm text-[#6E6E6E]">
                     <span>
                       Mood: {post.mood ?? "unspecified"} | Comments: {commentCount}
                     </span>
                     <Link
                       href={`/blog/${post.id}`}
-                      className="rounded border border-[#3b6ea5] bg-white px-3 py-2 font-bold no-underline"
+                      className="rounded border border-[#7B61FF] bg-white px-3 py-2 font-bold no-underline"
                     >
                       Read post
                     </Link>

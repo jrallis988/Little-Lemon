@@ -57,7 +57,7 @@ export function BlogPreview({
           {visiblePosts.map((post) => (
             <article
               key={post.id}
-              className="rounded border border-[color-mix(in_srgb,var(--mp-primary,#1a365d)_18%,transparent)] bg-white/55 p-3"
+              className="rounded border border-[color-mix(in_srgb,var(--mp-primary,#FF7A18)_18%,transparent)] bg-white/55 p-3"
             >
               <Link href={`/blog/${post.id}`} className="group">
                 <h3 className="profile-heading text-lg font-black group-hover:underline">

@@ -65,7 +65,7 @@ function SearchContent() {
   return (
     <div className="space-y-5">
       <Card>
-        <h1 className="text-3xl font-black text-[#0f2744]">Search</h1>
+        <h1 className="text-3xl font-black text-[#222222]">Search</h1>
         <form onSubmit={submitSearch} className="mt-4 flex flex-col gap-3 sm:flex-row">
           <div className="flex-1">
             <Input
@@ -83,7 +83,7 @@ function SearchContent() {
       </Card>
 
       {!q.trim() ? (
-        <Card className="text-sm text-[#5b6b7c]">
+        <Card className="text-sm text-[#6E6E6E]">
           Enter a search term to find people, blog posts, and shared interests.
         </Card>
       ) : (
@@ -91,7 +91,7 @@ function SearchContent() {
           <Card>
             <SectionTitle title={`People (${results.people.length})`} />
             {results.people.length === 0 ? (
-              <p className="text-sm text-[#5b6b7c]">No people matched &quot;{q}&quot;.</p>
+              <p className="text-sm text-[#6E6E6E]">No people matched &quot;{q}&quot;.</p>
             ) : (
               <div className="grid gap-4 md:grid-cols-2">
                 {results.people.map((profile) => (
@@ -104,17 +104,17 @@ function SearchContent() {
           <Card>
             <SectionTitle title={`Blog posts (${results.posts.length})`} />
             {results.posts.length === 0 ? (
-              <p className="text-sm text-[#5b6b7c]">No blog posts matched &quot;{q}&quot;.</p>
+              <p className="text-sm text-[#6E6E6E]">No blog posts matched &quot;{q}&quot;.</p>
             ) : (
               <div className="space-y-3">
                 {results.posts.map((post) => {
                   const author = blogPostAuthor(store, post);
                   return (
-                    <article key={post.id} className="rounded border border-[#c5d0dc] bg-white p-3">
+                    <article key={post.id} className="rounded border border-[#E5E5E5] bg-white p-3">
                       <Link href={`/blog/${post.id}`} className="text-lg font-black no-underline">
                         {post.title}
                       </Link>
-                      <p className="text-sm text-[#5b6b7c]">
+                      <p className="text-sm text-[#6E6E6E]">
                         by {author?.display_name ?? "Vibe member"}
                       </p>
                       <p className="mt-2 line-clamp-2 text-sm">{post.body}</p>
@@ -128,14 +128,14 @@ function SearchContent() {
           <Card>
             <SectionTitle title={`Interests (${results.interests.length})`} />
             {results.interests.length === 0 ? (
-              <p className="text-sm text-[#5b6b7c]">No interests matched &quot;{q}&quot;.</p>
+              <p className="text-sm text-[#6E6E6E]">No interests matched &quot;{q}&quot;.</p>
             ) : (
               <div className="flex flex-wrap gap-2">
                 {results.interests.map((interest) => (
                   <button
                     key={interest}
                     type="button"
-                    className="rounded-full border border-[#3b6ea5] bg-white px-3 py-1 text-sm font-bold text-[#0f2744]"
+                    className="rounded-full border border-[#7B61FF] bg-white px-3 py-1 text-sm font-bold text-[#222222]"
                     onClick={() => {
                       setDraft(interest);
                       router.push(`/search?q=${encodeURIComponent(interest)}`);

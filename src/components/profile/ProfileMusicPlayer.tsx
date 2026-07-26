@@ -145,7 +145,7 @@ export function ProfileMusicPlayer({
       >
         <div
           className={cn(
-            "aspect-square overflow-hidden rounded border bg-[color-mix(in_srgb,var(--mp-secondary,#3b6ea5)_15%,white)]",
+            "aspect-square overflow-hidden rounded border bg-[color-mix(in_srgb,var(--mp-secondary,#7B61FF)_15%,white)]",
             style === "compact" ? "max-w-24" : "max-w-40"
           )}
         >
@@ -185,7 +185,7 @@ export function ProfileMusicPlayer({
           <div className="mt-4 flex flex-wrap items-center gap-2">
             <button
               type="button"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--mp-primary,#1a365d)] bg-white text-[color:var(--mp-primary,#1a365d)] hover:bg-[color-mix(in_srgb,var(--mp-secondary,#3b6ea5)_12%,white)]"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--mp-primary,#FF7A18)] bg-white text-[color:var(--mp-primary,#FF7A18)] hover:bg-[color-mix(in_srgb,var(--mp-secondary,#7B61FF)_12%,white)]"
               onClick={() => goToRelativeTrack(-1)}
               aria-label="Previous track"
             >
@@ -193,7 +193,7 @@ export function ProfileMusicPlayer({
             </button>
             <button
               type="button"
-              className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[color:var(--mp-primary,#1a365d)] text-white shadow hover:brightness-110"
+              className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[color:var(--mp-primary,#FF7A18)] text-white shadow hover:brightness-110"
               onClick={playCurrent}
               aria-label={isPlaying ? "Pause music" : "Play music"}
             >
@@ -205,7 +205,7 @@ export function ProfileMusicPlayer({
             </button>
             <button
               type="button"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--mp-primary,#1a365d)] bg-white text-[color:var(--mp-primary,#1a365d)] hover:bg-[color-mix(in_srgb,var(--mp-secondary,#3b6ea5)_12%,white)]"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--mp-primary,#FF7A18)] bg-white text-[color:var(--mp-primary,#FF7A18)] hover:bg-[color-mix(in_srgb,var(--mp-secondary,#7B61FF)_12%,white)]"
               onClick={() => goToRelativeTrack(1)}
               aria-label="Next track"
             >
@@ -227,14 +227,14 @@ export function ProfileMusicPlayer({
 
           {error ? <p className="mt-2 text-sm text-red-700">{error}</p> : null}
 
-          <ol className="mt-4 divide-y divide-[color-mix(in_srgb,var(--mp-primary,#1a365d)_15%,transparent)] overflow-hidden rounded border border-[color-mix(in_srgb,var(--mp-primary,#1a365d)_18%,transparent)] bg-white/55">
+          <ol className="mt-4 divide-y divide-[color-mix(in_srgb,var(--mp-primary,#FF7A18)_15%,transparent)] overflow-hidden rounded border border-[color-mix(in_srgb,var(--mp-primary,#FF7A18)_18%,transparent)] bg-white/55">
             {orderedTracks.map((track, index) => (
               <li key={track.id}>
                 <button
                   type="button"
                   className={cn(
                     "flex w-full items-center justify-between gap-3 px-3 py-2 text-left text-sm hover:bg-white/80",
-                    index === currentIndex && "bg-[color-mix(in_srgb,var(--mp-secondary,#3b6ea5)_16%,white)]"
+                    index === currentIndex && "bg-[color-mix(in_srgb,var(--mp-secondary,#7B61FF)_16%,white)]"
                   )}
                   onClick={() => chooseTrack(index, isPlaying)}
                   aria-current={index === currentIndex ? "true" : undefined}

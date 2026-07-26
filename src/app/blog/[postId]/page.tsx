@@ -101,8 +101,8 @@ function BlogPostContent() {
         >
           Back to blog
         </Button>
-        <h1 className="mt-4 text-4xl font-black text-[#0f2744]">{currentPost.title}</h1>
-        <p className="mt-2 text-sm text-[#5b6b7c]">
+        <h1 className="mt-4 text-4xl font-black text-[#222222]">{currentPost.title}</h1>
+        <p className="mt-2 text-sm text-[#6E6E6E]">
           by{" "}
           {author ? (
             <Link href={`/profile/${author.username}`}>{author.display_name}</Link>
@@ -112,17 +112,17 @@ function BlogPostContent() {
           on {formatDate(currentPost.published_at)}
         </p>
         <div className="mt-3 flex flex-wrap gap-2 text-xs font-bold">
-          <span className="rounded-full border border-[#c5d0dc] px-2 py-1">Mood: {currentPost.mood ?? "none"}</span>
-          <span className="rounded-full border border-[#c5d0dc] px-2 py-1">
+          <span className="rounded-full border border-[#E5E5E5] px-2 py-1">Mood: {currentPost.mood ?? "none"}</span>
+          <span className="rounded-full border border-[#E5E5E5] px-2 py-1">
             Listening: {currentPost.currently_listening ?? "nothing listed"}
           </span>
-          <span className="rounded-full border border-[#c5d0dc] px-2 py-1">{currentPost.visibility}</span>
+          <span className="rounded-full border border-[#E5E5E5] px-2 py-1">{currentPost.visibility}</span>
         </div>
       </Card>
 
       <Card>
         <article className="prose max-w-none">
-          <p className="whitespace-pre-line text-base leading-7 text-[#1a2332]">{currentPost.body}</p>
+          <p className="whitespace-pre-line text-base leading-7 text-[#222222]">{currentPost.body}</p>
         </article>
       </Card>
 
@@ -130,18 +130,18 @@ function BlogPostContent() {
         <h2 className="mp-section-title">Comments ({comments.length})</h2>
         <div className="space-y-3">
           {comments.length === 0 ? (
-            <p className="text-sm text-[#5b6b7c]">No comments yet.</p>
+            <p className="text-sm text-[#6E6E6E]">No comments yet.</p>
           ) : (
             comments.map((item) => {
               const commentAuthor = profileById(store, item.author_id);
               return (
-                <article key={item.id} className="flex gap-3 rounded border border-[#c5d0dc] bg-white p-3">
+                <article key={item.id} className="flex gap-3 rounded border border-[#E5E5E5] bg-white p-3">
                   <Avatar profile={commentAuthor} size="md" />
                   <div>
-                    <p className="font-bold text-[#0f2744]">
+                    <p className="font-bold text-[#222222]">
                       {commentAuthor?.display_name ?? "Vibe member"}
                     </p>
-                    <time className="text-xs text-[#5b6b7c]" dateTime={item.created_at}>
+                    <time className="text-xs text-[#6E6E6E]" dateTime={item.created_at}>
                       {formatDateTime(item.created_at)}
                     </time>
                     <p className="mt-2 whitespace-pre-line text-sm">{item.body}</p>
@@ -161,7 +161,7 @@ function BlogPostContent() {
             required
           />
           <div className="flex flex-wrap items-center justify-between gap-3">
-            {status ? <p className="text-sm font-semibold text-[#1f7a4d]">{status}</p> : <span />}
+            {status ? <p className="text-sm font-semibold text-[#1E824C]">{status}</p> : <span />}
             <Button type="submit">Post comment</Button>
           </div>
         </form>

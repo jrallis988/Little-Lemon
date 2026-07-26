@@ -58,7 +58,7 @@ function BottomLink({ href, label, icon: Icon, badge }: MobileLink) {
       aria-current={isActive ? "page" : undefined}
       className={cn(
         "relative flex min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-[4px] px-1 py-1.5 text-[11px] font-semibold no-underline",
-        isActive ? "bg-[#d7e4f3] text-[#0f2744]" : "text-[#5b6b7c]"
+        isActive ? "bg-[#EEE9FF] text-[#222222]" : "text-[#6E6E6E]"
       )}
     >
       <span className="relative">
@@ -81,14 +81,14 @@ function PanelLink({
     <Link
       href={href}
       onClick={onNavigate}
-      className="flex items-center justify-between rounded-[4px] px-3 py-2 text-sm font-semibold text-[#0f2744] no-underline hover:bg-[#d7e4f3]"
+      className="flex items-center justify-between rounded-[4px] px-3 py-2 text-sm font-semibold text-[#222222] no-underline hover:bg-[#EEE9FF]"
     >
       <span className="flex items-center gap-2">
         <Icon aria-hidden="true" className="h-4 w-4" />
         {label}
       </span>
       {badge ? (
-        <span className="rounded-full bg-[#3b6ea5] px-1.5 py-0.5 text-[10px] font-bold text-white">
+        <span className="rounded-full bg-[#7B61FF] px-1.5 py-0.5 text-[10px] font-bold text-white">
           {badge > 99 ? "99+" : badge}
         </span>
       ) : null}
@@ -150,27 +150,27 @@ export function MobileNavigation({
   return (
     <>
       {open ? (
-        <div className="fixed inset-0 z-40 bg-[#0f2744]/50 md:hidden">
+        <div className="fixed inset-0 z-40 bg-[#FF7A18]/50 md:hidden">
           <div
             role="dialog"
             aria-modal="true"
             aria-label="Mobile navigation menu"
-            className="absolute bottom-16 left-3 right-3 rounded-[4px] border border-[#c5d0dc] bg-white shadow-xl"
+            className="absolute bottom-16 left-3 right-3 rounded-[4px] border border-[#E5E5E5] bg-white shadow-xl"
           >
-            <div className="flex items-center justify-between border-b border-[#c5d0dc] px-3 py-3">
+            <div className="flex items-center justify-between border-b border-[#E5E5E5] px-3 py-3">
               <div className="flex items-center gap-2">
                 {profile ? (
                   <Avatar profile={profile} size="sm" showOnline />
                 ) : (
-                  <span className="flex h-8 w-8 items-center justify-center rounded-[4px] bg-[#d7e4f3] text-sm font-black text-[#0f2744]">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-[4px] bg-[#EEE9FF] text-sm font-black text-[#222222]">
                     M
                   </span>
                 )}
                 <div>
-                  <p className="text-sm font-bold text-[#0f2744]">
+                  <p className="text-sm font-bold text-[#222222]">
                     {profile?.display_name ?? PLATFORM_NAME}
                   </p>
-                  <p className="text-xs text-[#5b6b7c]">
+                  <p className="text-xs text-[#6E6E6E]">
                     {profile ? `@${profile.username}` : "Welcome"}
                   </p>
                 </div>
@@ -178,7 +178,7 @@ export function MobileNavigation({
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="rounded-[4px] p-2 text-[#0f2744] hover:bg-[#d7e4f3]"
+                className="rounded-[4px] p-2 text-[#222222] hover:bg-[#EEE9FF]"
                 aria-label="Close mobile navigation"
               >
                 <X aria-hidden="true" className="h-4 w-4" />
@@ -220,7 +220,7 @@ export function MobileNavigation({
       <nav
         aria-label="Mobile primary navigation"
         className={cn(
-          "fixed bottom-0 left-0 right-0 z-50 border-t border-[#c5d0dc] bg-white px-2 py-1 shadow-[0_-1px_4px_rgba(15,39,68,0.08)] md:hidden",
+          "fixed bottom-0 left-0 right-0 z-50 border-t border-[#E5E5E5] bg-white px-2 py-1 shadow-[0_-1px_4px_rgba(34,34,34,0.08)] md:hidden",
           className
         )}
       >
@@ -235,7 +235,7 @@ export function MobileNavigation({
             onClick={() => setOpen((current) => !current)}
             className={cn(
               "relative flex min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-[4px] px-1 py-1.5 text-[11px] font-semibold",
-              open ? "bg-[#d7e4f3] text-[#0f2744]" : "text-[#5b6b7c]"
+              open ? "bg-[#EEE9FF] text-[#222222]" : "text-[#6E6E6E]"
             )}
           >
             <span className="relative">

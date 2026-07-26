@@ -12,7 +12,7 @@ function SkeletonBlock({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "animate-pulse rounded-[4px] bg-[#c5d0dc]/70",
+        "animate-pulse rounded-[4px] bg-[#E5E5E5]/70",
         className
       )}
     />

@@ -53,8 +53,8 @@ export function SectionTitle({
   action?: ReactNode;
 }) {
   return (
-    <div className="mb-3 flex items-center justify-between gap-3 border-b border-[#c5d0dc] pb-2">
-      <h2 className="text-base font-black text-[#0f2744]">{title}</h2>
+    <div className="mb-3 flex items-center justify-between gap-3 border-b border-[#E5E5E5] pb-2">
+      <h2 className="text-base font-black text-[#222222]">{title}</h2>
       {action}
     </div>
   );
@@ -62,7 +62,7 @@ export function SectionTitle({
 
 export function FieldLabel({ children }: { children: ReactNode }) {
   return (
-    <span className="block text-xs font-semibold uppercase tracking-wide text-[#0f2744]">
+    <span className="block text-xs font-semibold uppercase tracking-wide text-[#222222]">
       {children}
     </span>
   );
@@ -96,7 +96,7 @@ export function VibeShell({
 }
 
 export function LoadingCard({ label = "Loading Vibe..." }: { label?: string }) {
-  return <Card className="animate-pulse text-sm text-[#5b6b7c]">{label}</Card>;
+  return <Card className="animate-pulse text-sm text-[#6E6E6E]">{label}</Card>;
 }
 
 export function profileById(store: MockStore, id: string | null | undefined) {
@@ -246,16 +246,16 @@ export function ProfileListItem({
   action?: ReactNode;
 }) {
   return (
-    <div className="flex items-center justify-between gap-3 rounded-[4px] border border-[#c5d0dc] bg-white p-3">
+    <div className="flex items-center justify-between gap-3 rounded-[4px] border border-[#E5E5E5] bg-white p-3">
       <Link
         href={`/profile/${profile.username}`}
         className="flex min-w-0 items-center gap-3 no-underline"
       >
         <Avatar profile={profile} size="lg" showOnline />
         <span className="min-w-0">
-          <span className="block truncate font-bold text-[#0f2744]">{profile.display_name}</span>
-          <span className="block truncate text-sm text-[#5b6b7c]">@{profile.username}</span>
-          {meta ? <span className="block text-xs text-[#5b6b7c]">{meta}</span> : null}
+          <span className="block truncate font-bold text-[#222222]">{profile.display_name}</span>
+          <span className="block truncate text-sm text-[#6E6E6E]">@{profile.username}</span>
+          {meta ? <span className="block text-xs text-[#6E6E6E]">{meta}</span> : null}
         </span>
       </Link>
       {action ? <div className="shrink-0">{action}</div> : null}
@@ -276,8 +276,8 @@ export function EmptyNotice({
 }) {
   return (
     <Card className="text-center">
-      <h2 className="text-lg font-black text-[#0f2744]">{title}</h2>
-      <p className="mx-auto mt-2 max-w-xl text-sm text-[#5b6b7c]">{children}</p>
+      <h2 className="text-lg font-black text-[#222222]">{title}</h2>
+      <p className="mx-auto mt-2 max-w-xl text-sm text-[#6E6E6E]">{children}</p>
       {actionHref && actionLabel ? (
         <Button
           className="mt-4"

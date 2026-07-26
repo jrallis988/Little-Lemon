@@ -38,7 +38,7 @@ export function AppShell({
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#e9eef4]">
+      <div className="min-h-screen bg-[#F5F5F5]">
         <SkipToContent />
         <main id="main-content" className="mx-auto max-w-6xl px-4 py-6">
           <LoadingSkeleton variant="profile" />
@@ -49,7 +49,7 @@ export function AppShell({
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-[#e9eef4]">
+      <div className="min-h-screen bg-[#F5F5F5]">
         <SkipToContent />
         <main id="main-content" className="mx-auto max-w-6xl px-4 py-6">
           <LoadingSkeleton variant="card" />
@@ -59,7 +59,7 @@ export function AppShell({
   }
 
   return (
-    <div className="min-h-screen bg-[#e9eef4]">
+    <div className="min-h-screen bg-[#F5F5F5]">
       <SkipToContent />
       <AppHeader
         profile={profile}

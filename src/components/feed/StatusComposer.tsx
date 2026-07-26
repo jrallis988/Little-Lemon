@@ -62,7 +62,7 @@ export function StatusComposer({
         <p
           className={cn(
             "text-xs font-semibold",
-            isOverLimit ? "text-[#b42318]" : "text-[#5b6b7c]"
+            isOverLimit ? "text-[#b42318]" : "text-[#6E6E6E]"
           )}
           aria-live="polite"
         >

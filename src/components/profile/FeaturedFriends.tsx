@@ -55,7 +55,7 @@ export function FeaturedFriends({
             <Link
               key={friend.id}
               href={`/profile/${friend.username}`}
-              className="group rounded border border-[color-mix(in_srgb,var(--mp-primary,#1a365d)_20%,transparent)] bg-white/55 p-2 text-center transition hover:-translate-y-0.5 hover:bg-white/75"
+              className="group rounded border border-[color-mix(in_srgb,var(--mp-primary,#FF7A18)_20%,transparent)] bg-white/55 p-2 text-center transition hover:-translate-y-0.5 hover:bg-white/75"
             >
               <span className="relative mx-auto block aspect-square overflow-hidden rounded border bg-white">
                 <img

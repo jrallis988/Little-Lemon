@@ -65,10 +65,10 @@ function StatusComposer({
           placeholder="Share a status update..."
         />
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <span className="text-xs text-[#5b6b7c]">{body.length}/280</span>
+          <span className="text-xs text-[#6E6E6E]">{body.length}/280</span>
           <Button type="submit">Post status</Button>
         </div>
-        {status ? <p className="text-sm font-semibold text-[#1f7a4d]">{status}</p> : null}
+        {status ? <p className="text-sm font-semibold text-[#1E824C]">{status}</p> : null}
       </form>
     </Card>
   );
@@ -101,7 +101,7 @@ function ActivityFeed({
           return (
             <article
               key={item.id}
-              className="rounded-[4px] border border-[#c5d0dc] bg-white p-3"
+              className="rounded-[4px] border border-[#E5E5E5] bg-white p-3"
             >
               <div className="flex gap-3">
                 <Avatar profile={actor} showOnline />
@@ -109,13 +109,13 @@ function ActivityFeed({
                   <div className="flex flex-wrap items-center gap-2">
                     <Link
                       href={`/profile/${actor?.username ?? ""}`}
-                      className="font-bold text-[#0f2744] no-underline"
+                      className="font-bold text-[#222222] no-underline"
                     >
                       {actor?.display_name ?? "Vibe member"}
                     </Link>
-                    <span className="text-xs text-[#5b6b7c]">{formatRelative(item.created_at)}</span>
+                    <span className="text-xs text-[#6E6E6E]">{formatRelative(item.created_at)}</span>
                   </div>
-                  <p className="mt-1 text-sm text-[#1a2332]">{item.body}</p>
+                  <p className="mt-1 text-sm text-[#222222]">{item.body}</p>
                   <div className="mt-3 flex flex-wrap items-center gap-2">
                     <Button
                       size="sm"
@@ -188,19 +188,19 @@ function HomeDashboard() {
         <Card>
           <div className="text-center">
             <Avatar profile={profile} size="xl" showOnline className="mx-auto" />
-            <h1 className="mt-3 text-2xl font-black text-[#0f2744]">{profile.display_name}</h1>
-            <p className="text-sm text-[#5b6b7c]">@{profile.username}</p>
-            <p className="mt-3 rounded bg-[#d7e4f3] p-2 text-sm font-semibold text-[#0f2744]">
+            <h1 className="mt-3 text-2xl font-black text-[#222222]">{profile.display_name}</h1>
+            <p className="text-sm text-[#6E6E6E]">@{profile.username}</p>
+            <p className="mt-3 rounded bg-[#EEE9FF] p-2 text-sm font-semibold text-[#222222]">
               {profile.status_message ?? "No status yet."}
             </p>
           </div>
           <div className="mt-4 grid grid-cols-2 gap-2 text-center text-sm">
-            <div className="rounded border border-[#c5d0dc] bg-white p-2">
-              <strong className="block text-lg text-[#0f2744]">{dashboard.friends.length}</strong>
+            <div className="rounded border border-[#E5E5E5] bg-white p-2">
+              <strong className="block text-lg text-[#222222]">{dashboard.friends.length}</strong>
               friends
             </div>
-            <div className="rounded border border-[#c5d0dc] bg-white p-2">
-              <strong className="block text-lg text-[#0f2744]">{dashboard.unreadMessages}</strong>
+            <div className="rounded border border-[#E5E5E5] bg-white p-2">
+              <strong className="block text-lg text-[#222222]">{dashboard.unreadMessages}</strong>
               new messages
             </div>
           </div>
@@ -223,7 +223,7 @@ function HomeDashboard() {
               Edit Profile
             </Button>
           </div>
-          <p className="mt-4 text-sm text-[#5b6b7c]">
+          <p className="mt-4 text-sm text-[#6E6E6E]">
             Online status: <strong>{profile.online_status}</strong>
           </p>
         </Card>
@@ -238,7 +238,7 @@ function HomeDashboard() {
         <Card>
           <SectionTitle title="Friend requests" action={<Link href="/friends">View all</Link>} />
           {dashboard.pending.length === 0 ? (
-            <p className="text-sm text-[#5b6b7c]">No pending requests.</p>
+            <p className="text-sm text-[#6E6E6E]">No pending requests.</p>
           ) : (
             <div className="space-y-2">
               {dashboard.pending.map(({ friendship, requester }) => (
@@ -329,9 +329,9 @@ function HomeDashboard() {
             {DEMO_ANNOUNCEMENTS.filter(
               (announcement) => !dismissedAnnouncements.includes(announcement.id)
             ).map((announcement) => (
-              <article key={announcement.id} className="rounded border border-[#c5d0dc] bg-white p-3">
-                <h3 className="font-bold text-[#0f2744]">{announcement.title}</h3>
-                <p className="mt-1 text-sm text-[#5b6b7c]">{announcement.body}</p>
+              <article key={announcement.id} className="rounded border border-[#E5E5E5] bg-white p-3">
+                <h3 className="font-bold text-[#222222]">{announcement.title}</h3>
+                <p className="mt-1 text-sm text-[#6E6E6E]">{announcement.body}</p>
                 <Button
                   size="sm"
                   variant="ghost"
@@ -347,7 +347,7 @@ function HomeDashboard() {
             {DEMO_ANNOUNCEMENTS.every((announcement) =>
               dismissedAnnouncements.includes(announcement.id)
             ) ? (
-              <p className="text-sm text-[#5b6b7c]">All caught up.</p>
+              <p className="text-sm text-[#6E6E6E]">All caught up.</p>
             ) : null}
           </div>
         </Card>

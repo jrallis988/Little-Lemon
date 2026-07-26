@@ -80,11 +80,11 @@ function ProfileRouteContent() {
     <div className="space-y-4">
       <Card className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-xl font-black text-[#0f2744]">{target.display_name}</h1>
-          <p className="text-sm text-[#5b6b7c]">
+          <h1 className="text-xl font-black text-[#222222]">{target.display_name}</h1>
+          <p className="text-sm text-[#6E6E6E]">
             Viewing @{target.username} {following ? "- following" : ""}
           </p>
-          {status ? <p className="mt-1 text-sm font-semibold text-[#1f7a4d]">{status}</p> : null}
+          {status ? <p className="mt-1 text-sm font-semibold text-[#1E824C]">{status}</p> : null}
         </div>
         {target.id !== viewer.id ? (
           <Button

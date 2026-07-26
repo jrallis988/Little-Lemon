@@ -109,12 +109,12 @@ export function PhotoGallery({
           className={cn(
             "min-w-28 rounded border p-2 text-left text-sm font-bold",
             selectedAlbumId === "all"
-              ? "border-[color:var(--mp-primary,#1a365d)] bg-white"
+              ? "border-[color:var(--mp-primary,#FF7A18)] bg-white"
               : "border-transparent bg-white/50"
           )}
           onClick={() => setSelectedAlbumId("all")}
         >
-          <span className="flex h-16 items-center justify-center rounded bg-[color-mix(in_srgb,var(--mp-secondary,#3b6ea5)_20%,white)]">
+          <span className="flex h-16 items-center justify-center rounded bg-[color-mix(in_srgb,var(--mp-secondary,#7B61FF)_20%,white)]">
             <ImageIcon className="h-7 w-7 opacity-65" aria-hidden="true" />
           </span>
           <span className="mt-2 block">All photos</span>
@@ -129,12 +129,12 @@ export function PhotoGallery({
               className={cn(
                 "min-w-28 rounded border p-2 text-left text-sm font-bold",
                 selectedAlbumId === album.id
-                  ? "border-[color:var(--mp-primary,#1a365d)] bg-white"
+                  ? "border-[color:var(--mp-primary,#FF7A18)] bg-white"
                   : "border-transparent bg-white/50"
               )}
               onClick={() => setSelectedAlbumId(album.id)}
             >
-              <span className="relative block h-16 overflow-hidden rounded bg-[color-mix(in_srgb,var(--mp-secondary,#3b6ea5)_20%,white)]">
+              <span className="relative block h-16 overflow-hidden rounded bg-[color-mix(in_srgb,var(--mp-secondary,#7B61FF)_20%,white)]">
                 {cover ? (
                   <img src={cover.url} alt={`${album.title} album cover`} className="h-full w-full object-cover" />
                 ) : (
@@ -160,7 +160,7 @@ export function PhotoGallery({
             <button
               key={photo.id}
               type="button"
-              className="group relative aspect-square overflow-hidden rounded border border-[color-mix(in_srgb,var(--mp-primary,#1a365d)_18%,transparent)] bg-white text-left"
+              className="group relative aspect-square overflow-hidden rounded border border-[color-mix(in_srgb,var(--mp-primary,#FF7A18)_18%,transparent)] bg-white text-left"
               onClick={() => setViewerIndex(index)}
             >
               <img

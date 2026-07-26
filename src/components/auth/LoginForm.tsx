@@ -53,8 +53,8 @@ export function LoginForm({ onSubmit, error, className }: LoginFormProps) {
   return (
     <form className={cn("mp-card space-y-4 p-5", className)} onSubmit={handleSubmit}>
       <div>
-        <h1 className="text-2xl font-black text-[#0f2744]">Sign in</h1>
-        <p className="mt-1 text-sm text-[#5b6b7c]">
+        <h1 className="text-2xl font-black text-[#222222]">Sign in</h1>
+        <p className="mt-1 text-sm text-[#6E6E6E]">
           Demo: nova@example.com / {DEMO_PASSWORD}
         </p>
       </div>

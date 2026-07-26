@@ -138,11 +138,11 @@ function ProfileEditContent() {
   return (
     <div className="space-y-6">
       <Card>
-        <h1 className="text-3xl font-black text-[#0f2744]">Edit profile</h1>
-        <p className="mt-2 text-sm text-[#5b6b7c]">
+        <h1 className="text-3xl font-black text-[#222222]">Edit profile</h1>
+        <p className="mt-2 text-sm text-[#6E6E6E]">
           Update profile content, then tune and publish your visual theme.
         </p>
-        {status ? <p className="mt-3 text-sm font-semibold text-[#1f7a4d]">{status}</p> : null}
+        {status ? <p className="mt-3 text-sm font-semibold text-[#1E824C]">{status}</p> : null}
       </Card>
 
       <form onSubmit={saveProfile} className="grid gap-4">
@@ -177,7 +177,7 @@ function ProfileEditContent() {
               value={draft.age}
               onChange={(event) => setField("age", event.target.value)}
             />
-            <label className="flex items-center gap-2 text-sm font-semibold text-[#0f2744] md:col-span-2">
+            <label className="flex items-center gap-2 text-sm font-semibold text-[#222222] md:col-span-2">
               <input
                 type="checkbox"
                 checked={draft.show_age}
@@ -333,16 +333,16 @@ function ProfileEditContent() {
         onSave={(theme) => saveTheme(theme)}
         onPublish={(theme) => saveTheme({ ...theme, published: true }, "Theme published.")}
         onReset={() => {
-          const preset = THEME_PRESETS["Classic Blue"];
+          const preset = THEME_PRESETS["Classic"];
           saveTheme(
             {
               ...currentThemeDraft,
               ...preset,
-              preset_name: "Classic Blue",
+              preset_name: "Classic",
               module_order: [...preset.module_order],
               stickers: preset.stickers.map((sticker) => ({ ...sticker })),
             },
-            "Theme reset to Classic Blue."
+            "Theme reset to Classic."
           );
         }}
       />

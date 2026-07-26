@@ -43,7 +43,7 @@ function Badge({ count }: { count?: number }) {
   if (!count) return null;
 
   return (
-    <span className="ml-1 rounded-full bg-white px-1.5 py-0.5 text-[10px] font-bold leading-none text-[#0f2744]">
+    <span className="ml-1 rounded-[4px] bg-white px-1.5 py-0.5 text-[10px] font-bold leading-none text-[#222222]">
       {count > 99 ? "99+" : count}
     </span>
   );
@@ -59,7 +59,7 @@ function NavItem({ href, label, icon: Icon, badge }: HeaderLink) {
       aria-current={isActive ? "page" : undefined}
       className={cn(
         "inline-flex min-h-9 items-center gap-1.5 rounded-[4px] px-3 py-2 text-sm font-semibold text-white no-underline transition-colors",
-        isActive ? "bg-[#0f2744]" : "hover:bg-[#2f5f91]"
+        isActive ? "bg-[#FF7A18]" : "hover:bg-[#6348E0]"
       )}
     >
       <Icon aria-hidden="true" className="h-4 w-4" />
@@ -126,8 +126,8 @@ export function AppHeader({
   const lastActive = profile ? formatRelative(profile.last_active_at) : "";
 
   return (
-    <header className={cn("hidden border-b border-[#071424] md:block", className)}>
-      <div className="bg-[#0f2744]">
+    <header className={cn("hidden border-b border-[#CC5A09] md:block", className)}>
+      <div className="bg-[#FF7A18]">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
           <Link
             href="/"
@@ -136,7 +136,7 @@ export function AppHeader({
             {PLATFORM_NAME}
           </Link>
           {profile ? (
-            <div className="flex items-center gap-2 text-xs text-[#d7e4f3]">
+            <div className="flex items-center gap-2 text-xs text-[#EEE9FF]">
               <Avatar profile={profile} size="sm" showOnline />
               <div className="leading-tight">
                 <p className="font-semibold text-white">{profile.display_name}</p>
@@ -160,7 +160,7 @@ export function AppHeader({
           )}
         </div>
       </div>
-      <div className="bg-[#3b6ea5]">
+      <div className="bg-[#7B61FF]">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4">
           <nav aria-label="Primary navigation" className="flex items-center gap-1">
             {links.map((link) => (
@@ -176,7 +176,7 @@ export function AppHeader({
                 aria-haspopup="menu"
                 aria-expanded={menuOpen}
                 onClick={() => setMenuOpen((open) => !open)}
-                className="border-white/20 text-white hover:bg-[#2f5f91] active:bg-[#0f2744]"
+                className="border-white/20 text-white hover:bg-[#6348E0] active:bg-[#FF7A18]"
               >
                 <UserCircle aria-hidden="true" className="h-4 w-4" />
                 Profile
@@ -186,12 +186,12 @@ export function AppHeader({
                 <div
                   role="menu"
                   aria-label="Profile menu"
-                  className="absolute right-0 top-full z-40 mt-1 w-52 rounded-[4px] border border-[#c5d0dc] bg-white py-1 text-sm shadow-lg"
+                  className="absolute right-0 top-full z-40 mt-1 w-52 rounded-[4px] border border-[#E5E5E5] bg-white py-1 text-sm shadow-lg"
                 >
                   <Link
                     role="menuitem"
                     href={profileHref}
-                    className="flex items-center gap-2 px-3 py-2 text-[#0f2744] no-underline hover:bg-[#d7e4f3]"
+                    className="flex items-center gap-2 px-3 py-2 text-[#222222] no-underline hover:bg-[#EEE9FF]"
                   >
                     <UserCircle aria-hidden="true" className="h-4 w-4" />
                     View Profile
@@ -199,7 +199,7 @@ export function AppHeader({
                   <Link
                     role="menuitem"
                     href="/profile/edit"
-                    className="flex items-center gap-2 px-3 py-2 text-[#0f2744] no-underline hover:bg-[#d7e4f3]"
+                    className="flex items-center gap-2 px-3 py-2 text-[#222222] no-underline hover:bg-[#EEE9FF]"
                   >
                     <Edit3 aria-hidden="true" className="h-4 w-4" />
                     Edit Profile
@@ -207,7 +207,7 @@ export function AppHeader({
                   <Link
                     role="menuitem"
                     href="/settings"
-                    className="flex items-center gap-2 px-3 py-2 text-[#0f2744] no-underline hover:bg-[#d7e4f3]"
+                    className="flex items-center gap-2 px-3 py-2 text-[#222222] no-underline hover:bg-[#EEE9FF]"
                   >
                     <Settings aria-hidden="true" className="h-4 w-4" />
                     Settings

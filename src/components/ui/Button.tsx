@@ -6,11 +6,11 @@ type ButtonSize = "sm" | "md";
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    "border-[#0f2744] bg-[#0f2744] text-white hover:bg-[#0a1b30] active:bg-[#071424]",
+    "border-[#FF7A18] bg-[#FF7A18] text-white hover:bg-[#E5670A] active:bg-[#CC5A09]",
   secondary:
-    "border-[#3b6ea5] bg-white text-[#0f2744] hover:bg-[#d7e4f3] active:bg-[#c7d9ee]",
+    "border-[#7B61FF] bg-white text-[#222222] hover:bg-[#EEE9FF] active:bg-[#E0D8FF]",
   ghost:
-    "border-transparent bg-transparent text-[#0f2744] hover:bg-[#d7e4f3] active:bg-[#c7d9ee]",
+    "border-transparent bg-transparent text-[#222222] hover:bg-[#FFF1E6] active:bg-[#FFE4CC]",
   danger:
     "border-[#b42318] bg-[#b42318] text-white hover:bg-[#941b13] active:bg-[#7a160f]",
 };
@@ -38,8 +38,8 @@ export function Button({
     <button
       type={type}
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-[4px] border font-semibold leading-none shadow-[0_1px_2px_rgba(15,39,68,0.08)] transition-colors",
-        "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3b6ea5]",
+        "inline-flex items-center justify-center gap-2 rounded-[4px] border font-semibold leading-none shadow-[0_1px_2px_rgba(34,34,34,0.08)] transition-colors",
+        "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FF7A18]",
         "disabled:cursor-not-allowed disabled:opacity-55",
         variantClasses[variant],
         sizeClasses[size],

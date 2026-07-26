@@ -74,10 +74,10 @@ function MessageThreadContent() {
         <div className="flex items-center gap-3">
           <Avatar profile={summary.otherProfile} size="lg" showOnline />
           <div>
-            <h1 className="text-2xl font-black text-[#0f2744]">
+            <h1 className="text-2xl font-black text-[#222222]">
               {summary.otherProfile.display_name}
             </h1>
-            <p className="text-sm text-[#5b6b7c]">@{summary.otherProfile.username}</p>
+            <p className="text-sm text-[#6E6E6E]">@{summary.otherProfile.username}</p>
           </div>
         </div>
         <div className="flex gap-2">
@@ -104,7 +104,7 @@ function MessageThreadContent() {
         <h2 className="mp-section-title">MessageThread</h2>
         <div className="space-y-3">
           {summary.messages.length === 0 ? (
-            <p className="text-sm text-[#5b6b7c]">No messages yet. Say hello below.</p>
+            <p className="text-sm text-[#6E6E6E]">No messages yet. Say hello below.</p>
           ) : (
             summary.messages.map((message) => {
               const sender = profileById(store, message.sender_id);
@@ -118,14 +118,14 @@ function MessageThreadContent() {
                   <div
                     className={`max-w-[78%] rounded-[8px] border p-3 ${
                       mine
-                        ? "border-[#0f2744] bg-[#0f2744] text-white"
-                        : "border-[#c5d0dc] bg-white text-[#1a2332]"
+                        ? "border-[#FF7A18] bg-[#FF7A18] text-white"
+                        : "border-[#E5E5E5] bg-white text-[#222222]"
                     }`}
                   >
                     <p className="whitespace-pre-line text-sm">{message.body}</p>
                     <time
                       dateTime={message.created_at}
-                      className={`mt-1 block text-xs ${mine ? "text-white/75" : "text-[#5b6b7c]"}`}
+                      className={`mt-1 block text-xs ${mine ? "text-white/75" : "text-[#6E6E6E]"}`}
                     >
                       {formatDateTime(message.created_at)}
                     </time>
@@ -149,7 +149,7 @@ function MessageThreadContent() {
             required
           />
           <div className="flex flex-wrap items-center justify-between gap-3">
-            {status ? <p className="text-sm font-semibold text-[#1f7a4d]">{status}</p> : <span />}
+            {status ? <p className="text-sm font-semibold text-[#1E824C]">{status}</p> : <span />}
             <Button type="submit">Send message</Button>
           </div>
         </form>

@@ -40,7 +40,7 @@ export function ProfileCard({
       )}
     >
       <article className="flex gap-3">
-        <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-md border border-[color-mix(in_srgb,var(--mp-primary,#1a365d)_25%,transparent)] bg-white">
+        <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-md border border-[color-mix(in_srgb,var(--mp-primary,#FF7A18)_25%,transparent)] bg-white">
           <img
             src={profile.avatar_url ?? PLACEHOLDER_AVATAR}
             alt={`${profile.display_name}'s avatar`}
@@ -85,7 +85,7 @@ export function ProfileCard({
               {interests.map((interest) => (
                 <span
                   key={interest}
-                  className="rounded-full bg-[color-mix(in_srgb,var(--mp-secondary,#3b6ea5)_18%,white)] px-2 py-0.5 text-[color:var(--mp-text,#1a2332)]"
+                  className="rounded-full bg-[color-mix(in_srgb,var(--mp-secondary,#7B61FF)_18%,white)] px-2 py-0.5 text-[color:var(--mp-text,#222222)]"
                 >
                   {interest}
                 </span>

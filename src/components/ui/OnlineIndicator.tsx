@@ -2,9 +2,9 @@ import type { OnlineStatus } from "@/lib/types/database";
 import { cn } from "@/lib/utils/cn";
 
 const statusClasses: Record<OnlineStatus, string> = {
-  online: "bg-[#1f7a4d]",
-  away: "bg-[#a15c00]",
-  offline: "bg-[#8a98a8]",
+  online: "bg-[#1E824C]",
+  away: "bg-[#FF7A18]",
+  offline: "bg-[#6E6E6E]",
 };
 
 const statusLabels: Record<OnlineStatus, string> = {

@@ -92,11 +92,11 @@ function FriendsContent() {
   return (
     <div className="space-y-5">
       <Card>
-        <h1 className="text-3xl font-black text-[#0f2744]">Friends</h1>
-        <p className="mt-2 text-sm text-[#5b6b7c]">
+        <h1 className="text-3xl font-black text-[#222222]">Friends</h1>
+        <p className="mt-2 text-sm text-[#6E6E6E]">
           Manage requests, browse your friends, and choose who appears on your profile.
         </p>
-        {status ? <p className="mt-3 text-sm font-semibold text-[#1f7a4d]">{status}</p> : null}
+        {status ? <p className="mt-3 text-sm font-semibold text-[#1E824C]">{status}</p> : null}
       </Card>
 
       <div className="grid gap-5 lg:grid-cols-[1fr_320px]">
@@ -104,7 +104,7 @@ function FriendsContent() {
           <Card>
             <SectionTitle title={`Pending requests (${data.pending.length})`} />
             {data.pending.length === 0 ? (
-              <p className="text-sm text-[#5b6b7c]">No friend requests waiting.</p>
+              <p className="text-sm text-[#6E6E6E]">No friend requests waiting.</p>
             ) : (
               <div className="space-y-2">
                 {data.pending.map(({ friendship, requester }) => (
@@ -151,7 +151,7 @@ function FriendsContent() {
             />
             <div className="mt-4 space-y-2">
               {data.filteredFriends.length === 0 ? (
-                <p className="text-sm text-[#5b6b7c]">No friends match that search.</p>
+                <p className="text-sm text-[#6E6E6E]">No friends match that search.</p>
               ) : (
                 data.filteredFriends.map((friend) => (
                   <ProfileListItem
@@ -179,7 +179,7 @@ function FriendsContent() {
           <Card>
             <SectionTitle title="Mutual friends" />
             {data.mutuals.length === 0 ? (
-              <p className="text-sm text-[#5b6b7c]">No mutual friend suggestions right now.</p>
+              <p className="text-sm text-[#6E6E6E]">No mutual friend suggestions right now.</p>
             ) : (
               <div className="space-y-2">
                 {data.mutuals.slice(0, 6).map(({ candidate, mutualFriends }) => (
@@ -202,7 +202,7 @@ function FriendsContent() {
             <SectionTitle title="Featured friends" />
             <label
               htmlFor="featured-count"
-              className="block text-xs font-semibold uppercase tracking-wide text-[#0f2744]"
+              className="block text-xs font-semibold uppercase tracking-wide text-[#222222]"
             >
               Featured count
             </label>
@@ -214,7 +214,7 @@ function FriendsContent() {
                 setSelectedCount(next);
                 setSelectedFeatured((items) => items.slice(0, next));
               }}
-              className="mt-1.5 block w-full rounded border border-[#c5d0dc] bg-white p-2 text-sm"
+              className="mt-1.5 block w-full rounded border border-[#E5E5E5] bg-white p-2 text-sm"
             >
               {FEATURED_FRIEND_OPTIONS.map((count) => (
                 <option key={count} value={count}>
@@ -228,7 +228,7 @@ function FriendsContent() {
                 return (
                   <label
                     key={friend.id}
-                    className="flex items-center gap-2 rounded border border-[#c5d0dc] bg-white p-2 text-sm"
+                    className="flex items-center gap-2 rounded border border-[#E5E5E5] bg-white p-2 text-sm"
                   >
                     <input
                       type="checkbox"

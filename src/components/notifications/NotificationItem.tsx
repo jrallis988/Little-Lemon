@@ -55,7 +55,7 @@ export function NotificationItem({
     <article
       className={cn(
         "mp-card flex items-start gap-3 p-4",
-        !notification.read && "border-[#3b6ea5] bg-[#f8fbff]",
+        !notification.read && "border-[#7B61FF] bg-[#f8fbff]",
         className
       )}
     >
@@ -63,8 +63,8 @@ export function NotificationItem({
         className={cn(
           "mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-[4px] border",
           notification.read
-            ? "border-[#c5d0dc] bg-white text-[#5b6b7c]"
-            : "border-[#3b6ea5] bg-[#d7e4f3] text-[#0f2744]"
+            ? "border-[#E5E5E5] bg-white text-[#6E6E6E]"
+            : "border-[#7B61FF] bg-[#EEE9FF] text-[#222222]"
         )}
       >
         <Icon className="h-4 w-4" aria-hidden="true" />
@@ -75,13 +75,13 @@ export function NotificationItem({
           <span className="min-w-0">
             <span
               className={cn(
-                "block truncate text-sm text-[#0f2744]",
+                "block truncate text-sm text-[#222222]",
                 notification.read ? "font-semibold" : "font-bold"
               )}
             >
               {notification.title}
             </span>
-            <span className="mt-1 block text-sm text-[#1a2332]">
+            <span className="mt-1 block text-sm text-[#222222]">
               {notification.body}
             </span>
           </span>
@@ -94,7 +94,7 @@ export function NotificationItem({
         </span>
         <time
           dateTime={notification.created_at}
-          className="mt-2 block text-xs text-[#5b6b7c]"
+          className="mt-2 block text-xs text-[#6E6E6E]"
         >
           {formatRelative(notification.created_at)}
         </time>

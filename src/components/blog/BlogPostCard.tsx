@@ -37,17 +37,17 @@ export function BlogPostCard({
 
         <div className="min-w-0 flex-1">
           <Link href={href} className="group">
-            <h2 className="text-xl font-black text-[#0f2744] group-hover:underline">
+            <h2 className="text-xl font-black text-[#222222] group-hover:underline">
               {post.title}
             </h2>
           </Link>
 
-          <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-semibold text-[#5b6b7c]">
+          <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-semibold text-[#6E6E6E]">
             <span>
               by{" "}
               <Link
                 href={`/profile/${author.username}`}
-                className="text-[#1d4f91] hover:underline"
+                className="text-[#7B61FF] hover:underline"
               >
                 {author.display_name}
               </Link>
@@ -64,13 +64,13 @@ export function BlogPostCard({
             ) : null}
           </div>
 
-          <p className="mt-3 text-sm leading-relaxed text-[#1a2332]">
+          <p className="mt-3 text-sm leading-relaxed text-[#222222]">
             {previewText(post.body, previewLength)}
           </p>
 
           <Link
             href={href}
-            className="mt-3 inline-flex text-sm font-black text-[#1d4f91] underline"
+            className="mt-3 inline-flex text-sm font-black text-[#7B61FF] underline"
           >
             Read full post
           </Link>

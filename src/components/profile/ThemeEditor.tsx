@@ -134,7 +134,7 @@ export function ThemeEditor({
           <div className="flex flex-wrap gap-2">
             <button
               type="button"
-              className="inline-flex items-center gap-2 rounded border border-[color:var(--mp-primary,#1a365d)] bg-white px-3 py-2 text-sm font-bold text-[color:var(--mp-primary,#1a365d)] hover:bg-white/80"
+              className="inline-flex items-center gap-2 rounded border border-[color:var(--mp-primary,#FF7A18)] bg-white px-3 py-2 text-sm font-bold text-[color:var(--mp-primary,#FF7A18)] hover:bg-white/80"
               onClick={() => onSave?.(draft)}
             >
               <Save className="h-4 w-4" aria-hidden="true" />
@@ -157,7 +157,7 @@ export function ThemeEditor({
             </Link>
             <button
               type="button"
-              className="inline-flex items-center gap-2 rounded bg-[color:var(--mp-primary,#1a365d)] px-3 py-2 text-sm font-bold text-white hover:brightness-110"
+              className="inline-flex items-center gap-2 rounded bg-[color:var(--mp-primary,#FF7A18)] px-3 py-2 text-sm font-bold text-white hover:brightness-110"
               onClick={() => onPublish?.({ ...draft, published: true })}
             >
               <Send className="h-4 w-4" aria-hidden="true" />
@@ -173,7 +173,7 @@ export function ThemeEditor({
         ) : null}
 
         <div className="mt-6 grid gap-5">
-          <fieldset className="rounded border border-[color-mix(in_srgb,var(--mp-primary,#1a365d)_20%,transparent)] p-4">
+          <fieldset className="rounded border border-[color-mix(in_srgb,var(--mp-primary,#FF7A18)_20%,transparent)] p-4">
             <legend className="px-1 text-sm font-black uppercase tracking-wide">Preset</legend>
             <label htmlFor={fieldId("preset")} className="text-sm font-bold">
               Theme preset
@@ -192,7 +192,7 @@ export function ThemeEditor({
             </select>
           </fieldset>
 
-          <fieldset className="rounded border border-[color-mix(in_srgb,var(--mp-primary,#1a365d)_20%,transparent)] p-4">
+          <fieldset className="rounded border border-[color-mix(in_srgb,var(--mp-primary,#FF7A18)_20%,transparent)] p-4">
             <legend className="px-1 text-sm font-black uppercase tracking-wide">Background</legend>
             <div className="grid gap-4 sm:grid-cols-2">
               <label className="text-sm font-bold" htmlFor={fieldId("background-color")}>
@@ -249,7 +249,7 @@ export function ThemeEditor({
             </div>
           </fieldset>
 
-          <fieldset className="rounded border border-[color-mix(in_srgb,var(--mp-primary,#1a365d)_20%,transparent)] p-4">
+          <fieldset className="rounded border border-[color-mix(in_srgb,var(--mp-primary,#FF7A18)_20%,transparent)] p-4">
             <legend className="px-1 text-sm font-black uppercase tracking-wide">Colors</legend>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {[
@@ -274,7 +274,7 @@ export function ThemeEditor({
             </div>
           </fieldset>
 
-          <fieldset className="rounded border border-[color-mix(in_srgb,var(--mp-primary,#1a365d)_20%,transparent)] p-4">
+          <fieldset className="rounded border border-[color-mix(in_srgb,var(--mp-primary,#FF7A18)_20%,transparent)] p-4">
             <legend className="px-1 text-sm font-black uppercase tracking-wide">Typography</legend>
             <div className="grid gap-4 sm:grid-cols-2">
               <label className="text-sm font-bold" htmlFor={fieldId("heading-font")}>
@@ -310,7 +310,7 @@ export function ThemeEditor({
             </div>
           </fieldset>
 
-          <fieldset className="rounded border border-[color-mix(in_srgb,var(--mp-primary,#1a365d)_20%,transparent)] p-4">
+          <fieldset className="rounded border border-[color-mix(in_srgb,var(--mp-primary,#FF7A18)_20%,transparent)] p-4">
             <legend className="px-1 text-sm font-black uppercase tracking-wide">Modules</legend>
             <div className="grid gap-4 sm:grid-cols-2">
               <label className="text-sm font-bold" htmlFor={fieldId("border-style")}>
@@ -422,7 +422,7 @@ export function ThemeEditor({
             </div>
           </fieldset>
 
-          <fieldset className="rounded border border-[color-mix(in_srgb,var(--mp-primary,#1a365d)_20%,transparent)] p-4">
+          <fieldset className="rounded border border-[color-mix(in_srgb,var(--mp-primary,#FF7A18)_20%,transparent)] p-4">
             <legend className="px-1 text-sm font-black uppercase tracking-wide">Header & effects</legend>
             <div className="grid gap-4 sm:grid-cols-2">
               <label className="text-sm font-bold" htmlFor={fieldId("header-image")}>
@@ -468,7 +468,7 @@ export function ThemeEditor({
             </div>
           </fieldset>
 
-          <fieldset className="rounded border border-[color-mix(in_srgb,var(--mp-primary,#1a365d)_20%,transparent)] p-4">
+          <fieldset className="rounded border border-[color-mix(in_srgb,var(--mp-primary,#FF7A18)_20%,transparent)] p-4">
             <legend className="px-1 text-sm font-black uppercase tracking-wide">Stickers</legend>
             <div className="flex flex-wrap items-end gap-3">
               <label className="text-sm font-bold" htmlFor={fieldId("sticker-emoji")}>
@@ -488,7 +488,7 @@ export function ThemeEditor({
               </label>
               <button
                 type="button"
-                className="inline-flex items-center gap-2 rounded border border-[color:var(--mp-primary,#1a365d)] bg-white px-3 py-2 text-sm font-bold text-[color:var(--mp-primary,#1a365d)]"
+                className="inline-flex items-center gap-2 rounded border border-[color:var(--mp-primary,#FF7A18)] bg-white px-3 py-2 text-sm font-bold text-[color:var(--mp-primary,#FF7A18)]"
                 onClick={addSticker}
               >
                 <Sparkles className="h-4 w-4" aria-hidden="true" />

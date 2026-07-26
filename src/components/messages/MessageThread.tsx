@@ -59,14 +59,14 @@ export function MessageThread({
 
   return (
     <section className={cn("mp-card flex h-full min-h-[32rem] flex-col", className)}>
-      <header className="flex items-center justify-between gap-3 border-b border-[#c5d0dc] p-4">
+      <header className="flex items-center justify-between gap-3 border-b border-[#E5E5E5] p-4">
         <div className="flex min-w-0 items-center gap-3">
           <Avatar profile={otherParticipant} size="md" showOnline />
           <div className="min-w-0">
-            <h2 className="truncate font-bold text-[#0f2744]">
+            <h2 className="truncate font-bold text-[#222222]">
               {otherParticipant.display_name}
             </h2>
-            <p className="truncate text-xs text-[#5b6b7c]">
+            <p className="truncate text-xs text-[#6E6E6E]">
               @{otherParticipant.username}
             </p>
           </div>
@@ -110,10 +110,10 @@ export function MessageThread({
                 {!isOwn ? <Avatar profile={sender} size="sm" /> : null}
                 <div
                   className={cn(
-                    "max-w-[78%] rounded-[4px] border px-3 py-2 shadow-[0_1px_2px_rgba(15,39,68,0.08)]",
+                    "max-w-[78%] rounded-[4px] border px-3 py-2 shadow-[0_1px_2px_rgba(34,34,34,0.08)]",
                     isOwn
-                      ? "border-[#0f2744] bg-[#0f2744] text-white"
-                      : "border-[#c5d0dc] bg-white text-[#1a2332]"
+                      ? "border-[#FF7A18] bg-[#FF7A18] text-white"
+                      : "border-[#E5E5E5] bg-white text-[#222222]"
                   )}
                 >
                   <p className="whitespace-pre-wrap text-sm leading-relaxed">
@@ -123,7 +123,7 @@ export function MessageThread({
                     dateTime={message.created_at}
                     className={cn(
                       "mt-1 block text-[11px]",
-                      isOwn ? "text-white/75" : "text-[#5b6b7c]"
+                      isOwn ? "text-white/75" : "text-[#6E6E6E]"
                     )}
                   >
                     {formatDateTime(message.created_at)}
@@ -137,7 +137,7 @@ export function MessageThread({
         </div>
       </div>
 
-      <form className="border-t border-[#c5d0dc] bg-white p-4" onSubmit={handleSubmit}>
+      <form className="border-t border-[#E5E5E5] bg-white p-4" onSubmit={handleSubmit}>
         <Textarea
           id={textareaId}
           label="Write a message"
