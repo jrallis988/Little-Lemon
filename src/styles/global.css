@@ -1477,6 +1477,55 @@ main {
   border-color: rgba(255, 255, 255, 0.45);
 }
 
+/* Sitemap */
+.sitemap-layout {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.5rem 3rem;
+}
+
+.sitemap-group h2 {
+  font-size: 1.4rem;
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--gold);
+}
+
+.sitemap-group ul {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.sitemap-group a {
+  color: var(--navy);
+  font-weight: 500;
+}
+
+.sitemap-group a:hover {
+  color: var(--sea);
+}
+
+.sitemap-group a span {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.sitemap-programs {
+  grid-column: 1 / -1;
+}
+
+.sitemap-program-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.4rem 1.5rem;
+}
+
+@media (max-width: 800px) {
+  .sitemap-layout,
+  .sitemap-program-list {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Responsive */
 @media (max-width: 1100px) {
   .program-filters {

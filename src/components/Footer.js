@@ -70,6 +70,9 @@ function Footer() {
               </a>
             </li>
           ))}
+          <li>
+            <Link to="/sitemap">Sitemap</Link>
+          </li>
         </ul>
       </div>
     </footer>
