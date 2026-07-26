@@ -3,12 +3,12 @@ import { campusHighlights } from "../data/content";
 
 const gallery = [
   {
-    src: "/media/residence.jpg",
-    alt: "Langley Hall arcade on the NHTI campus",
+    src: "/media/campus-hero.jpg",
+    alt: "NHTI campus quad with Student Center rotunda",
   },
   {
-    src: "/media/lounge.jpg",
-    alt: "Residence hall lounge at NHTI",
+    src: "/media/residence.jpg",
+    alt: "Langley Hall arcade on the NHTI campus",
   },
   {
     src: "/media/athletics.jpg",

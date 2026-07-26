@@ -14,6 +14,6 @@ test("renders NHTI brand in the hero", () => {
     screen.getByRole("heading", { name: /learn where new hampshire works/i })
   ).toBeInTheDocument();
   expect(
-    screen.getByLabelText(/aerial view of the nhti campus/i)
+    screen.getByLabelText(/nhti campus quad/i)
   ).toBeInTheDocument();
 });

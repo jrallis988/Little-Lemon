@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
 import { focusAreas, reasons, newsItems } from "../data/content";
 
-const campusImage = "/media/campus-quad.jpg";
-const HERO_VIDEO = "/media/campus-hero-web.mp4";
-const HERO_POSTER = "/media/campus-hero-poster.jpg";
+const heroImage = "/media/campus-hero.jpg";
+const campusImage = "/media/campus-hero.jpg";
 
 const highlights = [
   { value: "70+", label: "Degree and certificate programs" },
@@ -15,19 +14,12 @@ function Home() {
   return (
     <>
       <section className="hero">
-        <div className="hero__media">
-          <video
-            className="hero__video"
-            autoPlay
-            muted
-            loop
-            playsInline
-            poster={HERO_POSTER}
-            aria-label="Aerial view of the NHTI campus in Concord, New Hampshire"
-          >
-            <source src={HERO_VIDEO} type="video/mp4" />
-          </video>
-        </div>
+        <div
+          className="hero__media"
+          style={{ backgroundImage: `url(${heroImage})` }}
+          role="img"
+          aria-label="NHTI campus quad with Little Hall and the Student Center in Concord, New Hampshire"
+        />
         <div className="hero__veil" aria-hidden="true" />
         <div className="hero__content">
           <p className="hero__brand reveal">NHTI</p>
@@ -35,8 +27,8 @@ function Home() {
             Learn where New Hampshire works.
           </h1>
           <p className="hero__support reveal reveal--delay-2">
-            Concord&apos;s Community College — career and transfer programs on a
-            full riverside campus.
+            Concord&apos;s Community College — 80+ career and transfer programs on
+            a full riverside campus.
           </p>
           <div className="hero__actions reveal reveal--delay-3">
             <Link to="/admissions" className="btn btn--solid">
@@ -89,7 +81,7 @@ function Home() {
           className="split-band__media"
           style={{ backgroundImage: `url(${campusImage})` }}
           role="img"
-          aria-label="NHTI campus buildings and grounds in Concord"
+          aria-label="NHTI campus buildings across the quad lawn"
         />
         <div className="split-band__copy">
           <h2>The only NH community college with residence halls</h2>
