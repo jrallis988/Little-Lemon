@@ -1,0 +1,64 @@
+import { Link } from "react-router-dom";
+
+function Footer() {
+  return (
+    <footer className="site-footer">
+      <div className="footer-inner">
+        <div className="footer-brand">
+          <p className="footer-kicker">Great Bay Community College</p>
+          <p className="footer-lead">
+            Affordable higher education on New Hampshire&apos;s Seacoast —
+            pathways to careers, transfer, and lifelong opportunity.
+          </p>
+        </div>
+
+        <div className="footer-cols">
+          <div>
+            <h2>Explore</h2>
+            <ul>
+              <li>
+                <Link to="/academics">Academics</Link>
+              </li>
+              <li>
+                <Link to="/admissions">Admissions &amp; Aid</Link>
+              </li>
+              <li>
+                <Link to="/about">About GBCC</Link>
+              </li>
+              <li>
+                <Link to="/contact">Visit Campus</Link>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h2>Contact</h2>
+            <ul>
+              <li>320 Corporate Drive</li>
+              <li>Portsmouth, NH 03801</li>
+              <li>
+                <a href="tel:6034277600">(603) 427-7600</a>
+              </li>
+              <li>
+                <a href="mailto:askgreatbay@ccsnh.edu">askgreatbay@ccsnh.edu</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h2>Hours</h2>
+            <ul>
+              <li>Mon–Thu: 7:00am – 9:00pm</li>
+              <li>Friday: 7:00am – 4:00pm</li>
+              <li>Sat–Sun: Closed</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div className="footer-bottom">
+        <p>© {new Date().getFullYear()} Great Bay Community College</p>
+        <p>A member of the Community College System of New Hampshire</p>
+      </div>
+    </footer>
+  );
+}
+
+export default Footer;
