@@ -555,7 +555,7 @@ function CollapsibleModule({
         title === "BULLETIN BOARD" && "border-[#c49a6c]"
       )}
     >
-      <summary className="group flex cursor-pointer list-none items-center justify-between gap-3 rounded-t-[22px] bg-gradient-to-r from-[#ff8a3d] via-[#ff7a33] to-[#f08ad0] px-4 py-3 text-white">
+      <summary className="group flex cursor-pointer list-none items-center justify-between gap-3 rounded-t-[22px] bg-gradient-to-r from-brand via-brand to-accent px-4 py-3 text-white">
         <span className="min-w-0">
           <span className="flex items-center gap-2 text-xs font-black uppercase tracking-[0.18em]">
             {icon}

@@ -80,10 +80,10 @@ function LoopHomeContent() {
   return (
     <AuthenticatedShell mainClassName="max-w-none bg-zinc-950 px-0 py-0 text-white md:pb-0">
       <div className="mx-auto min-h-[calc(100vh-3.5rem)] max-w-7xl space-y-8 px-3 py-5 sm:px-4 lg:px-6">
-        <section className="overflow-hidden rounded-[28px] border border-white/10 bg-[radial-gradient(circle_at_top_right,rgba(255,92,0,0.28),transparent_34%),linear-gradient(135deg,#111111,#050505)] p-5 shadow-[0_24px_80px_rgba(0,0,0,0.35)] sm:p-7">
+        <section className="overflow-hidden rounded-[28px] border border-white/10 bg-[radial-gradient(circle_at_top_right,rgba(255,122,24,0.28),transparent_34%),linear-gradient(135deg,#111111,#050505)] p-5 shadow-[0_24px_80px_rgba(0,0,0,0.35)] sm:p-7">
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-end">
             <div>
-              <Badge className="border-[#FF6A1A]/40 bg-[#FF5C00]/15 text-[#FFB68A]">
+              <Badge className="border-brand-light/40 bg-brand/15 text-brand-soft">
                 <ShieldCheck className="h-3 w-3" aria-hidden />
                 Verified student loop
               </Badge>
@@ -97,14 +97,14 @@ function LoopHomeContent() {
               <div className="mt-6 flex flex-wrap gap-3">
                 <Link
                   href="/vibe/new"
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-[#FF6A1A] bg-[#FF5C00] px-5 py-3 text-sm font-black text-white shadow-[0_10px_30px_rgba(255,92,0,0.35)] hover:bg-[#FF6A1A] hover:no-underline"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-brand-light bg-brand px-5 py-3 text-sm font-black text-white shadow-[0_10px_30px_rgba(255,122,24,0.35)] hover:bg-brand-light hover:no-underline"
                 >
                   <Plus className="h-4 w-4" aria-hidden />
                   Start a Vibe
                 </Link>
                 <button
                   type="button"
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-black text-white hover:border-[#FF6A1A]/60"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-black text-white hover:border-brand-light/60"
                   onClick={() =>
                     notify(`Showing school-only moments for ${currentSchool?.name}.`)
                   }
@@ -115,7 +115,7 @@ function LoopHomeContent() {
               </div>
             </div>
             <div className="rounded-[24px] border border-white/10 bg-white/[0.04] p-4">
-              <p className="text-xs font-black uppercase tracking-[0.24em] text-[#FFB68A]">
+              <p className="text-xs font-black uppercase tracking-[0.24em] text-brand-soft">
                 Popular right now
               </p>
               <div className="mt-3 grid grid-cols-2 gap-2">
@@ -126,7 +126,7 @@ function LoopHomeContent() {
                     <button
                       key={activity.id}
                       type="button"
-                      className="rounded-[18px] border border-white/10 bg-black/25 p-3 text-left transition hover:border-[#FF6A1A]/70"
+                      className="rounded-[18px] border border-white/10 bg-black/25 p-3 text-left transition hover:border-brand-light/70"
                       onClick={() => notify(`${activity.label} vibes moved up in your Loop.`)}
                     >
                       <span className="text-[10px] font-black text-[#FF8D4D]">
@@ -143,7 +143,7 @@ function LoopHomeContent() {
         </section>
 
         {notice ? (
-          <div className="sticky top-16 z-30 rounded-[18px] border border-[#FF6A1A]/40 bg-[#FF5C00] px-4 py-3 text-sm font-black text-white shadow-[0_12px_40px_rgba(255,92,0,0.28)]">
+          <div className="sticky top-16 z-30 rounded-[18px] border border-brand-light/40 bg-brand px-4 py-3 text-sm font-black text-white shadow-[0_12px_40px_rgba(255,122,24,0.28)]">
             {notice}
           </div>
         ) : null}
@@ -187,7 +187,7 @@ function LoopHomeContent() {
               </div>
               <Link
                 href="/events"
-                className="text-sm font-black text-[#FF8D4D] hover:text-[#FFB68A]"
+                className="text-sm font-black text-[#FF8D4D] hover:text-brand-soft"
               >
                 See events
               </Link>
@@ -214,8 +214,8 @@ function LoopHomeContent() {
                   key={vibe.id}
                   href={`/vibe/${vibe.id}`}
                   className={cn(
-                    "block rounded-[18px] border border-white/10 bg-black/25 p-3 hover:border-[#FF6A1A]/60 hover:no-underline",
-                    vibe.status === "live" && "border-[#FF6A1A]/40"
+                    "block rounded-[18px] border border-white/10 bg-black/25 p-3 hover:border-brand-light/60 hover:no-underline",
+                    vibe.status === "live" && "border-brand-light/40"
                   )}
                 >
                   <div className="flex items-center justify-between gap-3">
@@ -229,7 +229,7 @@ function LoopHomeContent() {
                     <Badge
                       className={
                         vibe.status === "live"
-                          ? "border-[#FF6A1A]/40 bg-[#FF5C00] text-white"
+                          ? "border-brand-light/40 bg-brand text-white"
                           : "border-white/10 bg-white/5 text-zinc-300"
                       }
                     >
@@ -255,7 +255,7 @@ function LoopHomeContent() {
             </div>
             <Link
               href="/groups"
-              className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-black text-white hover:border-[#FF6A1A]/60 hover:no-underline"
+              className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-black text-white hover:border-brand-light/60 hover:no-underline"
             >
               Browse Groups & Circles
             </Link>

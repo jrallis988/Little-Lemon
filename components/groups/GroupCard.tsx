@@ -79,7 +79,7 @@ export function GroupCard({
           </div>
           <Button
             size="sm"
-            className="rounded-full border-[#FF6A1A] bg-[#FF5C00] text-white hover:bg-[#FF6A1A]"
+            className="rounded-full border-brand-light bg-brand text-white hover:bg-brand-light"
             onClick={() => onJoin(group)}
           >
             {isMember ? "Open" : "Join"}

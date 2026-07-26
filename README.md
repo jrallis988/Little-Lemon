@@ -77,9 +77,19 @@ supabase/schema.sql  # Postgres draft + RLS notes
 
 ## Design notes
 
-- **Chrome:** navy/blue header, script “Vibe” wordmark  
-- **Loop energy:** dark surfaces + flame orange CTAs (`#FF5C00`)  
-- **Profiles:** light cards, collapsible modules, teen-safe fields only  
+Official palette:
+
+| Token | Hex | Use |
+|-------|-----|-----|
+| Primary Orange | `#FF7A18` | Brand, headers, Loop CTAs |
+| Surface White | `#FFFFFF` | Cards / surfaces |
+| Action Green | `#1E824C` | Add Friend / success actions |
+| Secondary Purple | `#7B61FF` | Music, verified accents |
+| Muted Neutral | `#6E6E6E` | Secondary text |
+| Dark Charcoal | `#222222` | Primary text |
+
+- Script “Vibe” wordmark  
+- Profiles: light cards, collapsible modules, teen-safe fields only  
 
 ## Scripts
 

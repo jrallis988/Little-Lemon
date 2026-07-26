@@ -74,7 +74,7 @@ export function AppHeader({
   };
 
   return (
-    <header className="sticky top-0 z-40 border-b border-orange-500/30 bg-gradient-to-r from-[#ff8a3d] via-[#ff7a33] to-[#f08ad0] text-white shadow-card">
+    <header className="sticky top-0 z-40 border-b border-brand/30 bg-gradient-to-r from-brand via-brand to-accent text-white shadow-card">
       <div className="mx-auto flex min-h-14 max-w-6xl items-center justify-between gap-3 px-3 py-2 sm:px-4">
         <Logo href="/home" />
 

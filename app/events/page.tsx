@@ -53,7 +53,7 @@ function EventsContent() {
     <AuthenticatedShell mainClassName="max-w-6xl">
       <div className="space-y-6">
         <section className="rounded-[28px] bg-zinc-950 p-5 text-white shadow-[0_24px_80px_rgba(0,0,0,0.25)] sm:p-7">
-          <Badge className="border-[#FF6A1A]/40 bg-[#FF5C00]/15 text-[#FFB68A]">
+          <Badge className="border-brand-light/40 bg-brand/15 text-brand-soft">
             <CalendarDays className="h-3 w-3" aria-hidden />
             School-connected events
           </Badge>
@@ -67,7 +67,7 @@ function EventsContent() {
         </section>
 
         {notice ? (
-          <div className="rounded-[18px] border border-[#FF6A1A]/30 bg-[#FF5C00] px-4 py-3 text-sm font-black text-white">
+          <div className="rounded-[18px] border border-brand-light/30 bg-brand px-4 py-3 text-sm font-black text-white">
             {notice}
           </div>
         ) : null}
@@ -81,7 +81,7 @@ function EventsContent() {
             return (
               <article
                 key={event.id}
-                className="rounded-[24px] border border-surface-border bg-white p-4 shadow-card transition hover:border-[#FF6A1A]/50 sm:p-5"
+                className="rounded-[24px] border border-surface-border bg-white p-4 shadow-card transition hover:border-brand-light/50 sm:p-5"
               >
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                   <div className="min-w-0">
@@ -89,7 +89,7 @@ function EventsContent() {
                       <Badge
                         className={
                           event.source === "vibe"
-                            ? "border-[#FF6A1A]/30 bg-[#FF5C00]/10 text-[#C24700]"
+                            ? "border-brand-light/30 bg-brand/10 text-brand-dark"
                             : undefined
                         }
                       >
@@ -106,7 +106,7 @@ function EventsContent() {
                       {event.source === "vibe" ? (
                         <Link
                           href={event.href}
-                          className="hover:text-[#FF5C00] hover:no-underline"
+                          className="hover:text-brand hover:no-underline"
                         >
                           {event.title}
                         </Link>
@@ -119,14 +119,14 @@ function EventsContent() {
                       {event.source === "vibe" ? (
                         <Link
                           href={event.href}
-                          className="inline-flex items-center gap-1 hover:text-[#FF5C00] hover:no-underline"
+                          className="inline-flex items-center gap-1 hover:text-brand hover:no-underline"
                         >
-                          <MapPin className="h-4 w-4 text-[#FF5C00]" aria-hidden />
+                          <MapPin className="h-4 w-4 text-brand" aria-hidden />
                           {event.locationName}
                         </Link>
                       ) : (
                         <span className="inline-flex items-center gap-1">
-                          <MapPin className="h-4 w-4 text-[#FF5C00]" aria-hidden />
+                          <MapPin className="h-4 w-4 text-brand" aria-hidden />
                           {event.locationName}
                         </span>
                       )}
@@ -134,7 +134,7 @@ function EventsContent() {
                     </div>
                   </div>
                   <Button
-                    className="rounded-full border-[#FF6A1A] bg-[#FF5C00] text-white hover:bg-[#FF6A1A]"
+                    className="rounded-full border-brand-light bg-brand text-white hover:bg-brand-light"
                     onClick={() => setNotice(`RSVP saved for ${event.title}.`)}
                   >
                     RSVP

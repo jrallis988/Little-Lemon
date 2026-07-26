@@ -57,7 +57,7 @@ function GroupsContent() {
     <AuthenticatedShell mainClassName="max-w-7xl">
       <div className="space-y-6">
         <section className="rounded-[28px] bg-zinc-950 p-5 text-white shadow-[0_24px_80px_rgba(0,0,0,0.25)] sm:p-7">
-          <Badge className="border-[#FF6A1A]/40 bg-[#FF5C00]/15 text-[#FFB68A]">
+          <Badge className="border-brand-light/40 bg-brand/15 text-brand-soft">
             <UsersRound className="h-3 w-3" aria-hidden />
             Groups & Circles
           </Badge>
@@ -71,14 +71,14 @@ function GroupsContent() {
         </section>
 
         {notice ? (
-          <div className="rounded-[18px] border border-[#FF6A1A]/30 bg-[#FF5C00] px-4 py-3 text-sm font-black text-white">
+          <div className="rounded-[18px] border border-brand-light/30 bg-brand px-4 py-3 text-sm font-black text-white">
             {notice}
           </div>
         ) : null}
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="text-xs font-black uppercase tracking-[0.22em] text-[#FF5C00]">
+            <p className="text-xs font-black uppercase tracking-[0.22em] text-brand">
               Discovery
             </p>
             <h2 className="font-display text-3xl font-black text-navy-900">
@@ -93,7 +93,7 @@ function GroupsContent() {
                 className={cn(
                   "rounded-full px-4 py-2 text-sm font-black capitalize transition",
                   tab === item
-                    ? "bg-[#FF5C00] text-white"
+                    ? "bg-brand text-white"
                     : "text-navy-600 hover:bg-surface-muted"
                 )}
                 onClick={() => setTab(item)}
@@ -119,7 +119,7 @@ function GroupsContent() {
 
         {visibleGroups.length === 0 ? (
           <div className="rounded-[24px] border border-dashed border-surface-border bg-white p-8 text-center">
-            <Compass className="mx-auto h-10 w-10 text-[#FF5C00]" aria-hidden />
+            <Compass className="mx-auto h-10 w-10 text-brand" aria-hidden />
             <h3 className="mt-3 font-display text-2xl font-black text-navy-900">
               No groups yet
             </h3>

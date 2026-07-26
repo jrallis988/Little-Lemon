@@ -13,7 +13,7 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 const variantStyles: Record<BadgeVariant, string> = {
   default: "border-surface-border bg-surface-muted text-navy-700",
   info: "border-brand/25 bg-brand-soft text-brand-dark",
-  success: "border-green-200 bg-green-50 text-green-800",
+  success: "border-friend/25 bg-friend-soft text-friend-dark",
   warning: "border-amber-200 bg-amber-50 text-amber-800",
   danger: "border-red-200 bg-red-50 text-red-800",
 };

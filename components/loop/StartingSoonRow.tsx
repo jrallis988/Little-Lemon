@@ -41,7 +41,7 @@ export function StartingSoonRow({
               <div className="min-w-0">
                 <h3 className="truncate text-sm font-black text-white">{vibe.title}</h3>
                 <p className="mt-1 flex items-center gap-1 text-xs text-zinc-400">
-                  <Clock3 className="h-3.5 w-3.5 text-[#FF6A1A]" aria-hidden />
+                  <Clock3 className="h-3.5 w-3.5 text-brand-light" aria-hidden />
                   {formatDateTime(vibe.startsAt)}
                 </p>
                 <p className="mt-1 truncate text-xs text-zinc-500">
@@ -54,7 +54,7 @@ export function StartingSoonRow({
             ) : null}
             <Button
               size="sm"
-              className="rounded-full border-[#FF6A1A] bg-[#FF5C00] text-white hover:bg-[#FF6A1A]"
+              className="rounded-full border-brand-light bg-brand text-white hover:bg-brand-light"
               onClick={() => onRemind(vibe)}
             >
               Remind

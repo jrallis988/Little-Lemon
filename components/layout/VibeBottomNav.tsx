@@ -45,7 +45,7 @@ export function VibeBottomNav({
   return (
     <nav
       className={cn(
-        "fixed inset-x-0 bottom-0 z-40 border-t border-orange-200/70 bg-white/95 text-navy-800 shadow-[0_-10px_30px_rgba(255,122,51,0.18)] backdrop-blur md:hidden",
+        "fixed inset-x-0 bottom-0 z-40 border-t border-orange-200/70 bg-white/95 text-navy-800 shadow-[0_-10px_30px_rgba(255,122,24,0.18)] backdrop-blur md:hidden",
         className
       )}
       aria-label="Vibe mobile navigation"
@@ -62,7 +62,7 @@ export function VibeBottomNav({
 
         <Link
           href="/vibe/new"
-          className="relative mx-auto -mt-6 grid h-16 w-16 place-items-center rounded-full border-4 border-white bg-brand text-white shadow-[0_10px_30px_rgba(255,122,51,0.4)] transition hover:bg-brand-dark hover:no-underline"
+          className="relative mx-auto -mt-6 grid h-16 w-16 place-items-center rounded-full border-4 border-white bg-brand text-white shadow-[0_10px_30px_rgba(255,122,24,0.4)] transition hover:bg-brand-dark hover:no-underline"
           aria-label="Start a vibe"
         >
           <Plus className="h-8 w-8" aria-hidden />

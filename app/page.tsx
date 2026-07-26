@@ -157,7 +157,7 @@ export default function LandingPage() {
 
   return (
     <main className="min-h-screen overflow-hidden text-navy-900">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_0%,rgba(255,176,136,0.7),transparent_36%),radial-gradient(circle_at_88%_10%,rgba(201,160,232,0.55),transparent_34%),linear-gradient(165deg,#ffe0c2_0%,#ffd0b8_28%,#f3d2ea_62%,#e8d7f5_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_0%,rgba(255,122,24,0.22),transparent_36%),radial-gradient(circle_at_88%_10%,rgba(123,97,255,0.18),transparent_34%),linear-gradient(165deg,#FFF7F0_0%,#FFFFFF_45%,#F4F0FF_100%)]" />
       <div className="absolute inset-0 opacity-[0.08] [background-image:radial-gradient(#ffffff_1px,transparent_1px)] [background-size:22px_22px]" />
       <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col px-4 py-5 sm:px-6 lg:px-8">
         <header className="animate-fade-in flex items-center justify-between gap-3">
@@ -166,7 +166,7 @@ export default function LandingPage() {
               V
             </span>
             <span>
-              <span className="block text-4xl leading-none text-[#ff7a33] [font-family:var(--font-script)]">
+              <span className="block text-4xl leading-none text-brand [font-family:var(--font-script)]">
                 {APP_NAME}
               </span>
               <span className="text-xs font-bold uppercase tracking-[0.22em] text-navy-500">

@@ -53,7 +53,7 @@ function StartVibeContent() {
     <AuthenticatedShell mainClassName="max-w-5xl">
       <div className="space-y-6">
         <section className="overflow-hidden rounded-[28px] bg-zinc-950 p-5 text-white shadow-[0_24px_80px_rgba(0,0,0,0.28)] sm:p-7">
-          <Badge className="border-[#FF6A1A]/40 bg-[#FF5C00]/15 text-[#FFB68A]">
+          <Badge className="border-brand-light/40 bg-brand/15 text-brand-soft">
             <Sparkles className="h-3 w-3" aria-hidden />
             Start a Vibe
           </Badge>
@@ -67,7 +67,7 @@ function StartVibeContent() {
         </section>
 
         {notice ? (
-          <div className="rounded-[18px] border border-[#FF6A1A]/30 bg-[#FF5C00] px-4 py-3 text-sm font-black text-white">
+          <div className="rounded-[18px] border border-brand-light/30 bg-brand px-4 py-3 text-sm font-black text-white">
             {notice}
           </div>
         ) : null}
@@ -95,7 +95,7 @@ function StartVibeContent() {
           <div className="rounded-[24px] border border-surface-border bg-white p-4 shadow-card sm:p-5">
             <div className="mb-4 flex items-center justify-between gap-3">
               <div>
-                <p className="text-xs font-black uppercase tracking-[0.22em] text-[#FF5C00]">
+                <p className="text-xs font-black uppercase tracking-[0.22em] text-brand">
                   Popular
                 </p>
                 <h2 className="font-display text-2xl font-black text-navy-900">
@@ -113,8 +113,8 @@ function StartVibeContent() {
                     className={cn(
                       "rounded-[20px] border p-4 text-left transition",
                       selected === activity.id
-                        ? "border-[#FF6A1A] bg-[#FF5C00] text-white shadow-[0_12px_35px_rgba(255,92,0,0.25)]"
-                        : "border-surface-border bg-surface-muted text-navy-900 hover:border-[#FF6A1A]/60"
+                        ? "border-brand-light bg-brand text-white shadow-[0_12px_35px_rgba(255,122,24,0.25)]"
+                        : "border-surface-border bg-surface-muted text-navy-900 hover:border-brand-light/60"
                     )}
                     onClick={() => {
                       setSelected(activity.id);
@@ -134,7 +134,7 @@ function StartVibeContent() {
 
           <aside className="space-y-4">
             <div className="rounded-[24px] border border-surface-border bg-white p-4 shadow-card">
-              <p className="text-xs font-black uppercase tracking-[0.22em] text-[#FF5C00]">
+              <p className="text-xs font-black uppercase tracking-[0.22em] text-brand">
                 More activities
               </p>
               <div className="mt-3 flex flex-wrap gap-2">
@@ -147,8 +147,8 @@ function StartVibeContent() {
                       className={cn(
                         "rounded-full border px-3 py-2 text-xs font-black transition",
                         selected === activity.id
-                          ? "border-[#FF6A1A] bg-[#FF5C00] text-white"
-                          : "border-surface-border bg-white text-navy-700 hover:border-[#FF6A1A]/60"
+                          ? "border-brand-light bg-brand text-white"
+                          : "border-surface-border bg-white text-navy-700 hover:border-brand-light/60"
                       )}
                       onClick={() => {
                         setSelected(activity.id);
@@ -179,7 +179,7 @@ function StartVibeContent() {
                 />
               </div>
               <Button
-                className="mt-4 w-full rounded-full border-[#FF6A1A] bg-[#FF5C00] text-white hover:bg-[#FF6A1A]"
+                className="mt-4 w-full rounded-full border-brand-light bg-brand text-white hover:bg-brand-light"
                 onClick={startVibe}
               >
                 Start this vibe

@@ -44,7 +44,7 @@ function GroupHubContent() {
           </h1>
           <Link
             href="/groups"
-            className="mt-4 inline-flex rounded-full bg-[#FF5C00] px-5 py-3 text-sm font-black text-white hover:bg-[#FF6A1A] hover:no-underline"
+            className="mt-4 inline-flex rounded-full bg-brand px-5 py-3 text-sm font-black text-white hover:bg-brand-light hover:no-underline"
           >
             Back to groups
           </Link>
@@ -101,7 +101,7 @@ function GroupHubContent() {
         </section>
 
         {notice ? (
-          <div className="rounded-[18px] border border-[#FF6A1A]/30 bg-[#FF5C00] px-4 py-3 text-sm font-black text-white">
+          <div className="rounded-[18px] border border-brand-light/30 bg-brand px-4 py-3 text-sm font-black text-white">
             {notice}
           </div>
         ) : null}
@@ -120,7 +120,7 @@ function GroupHubContent() {
                 />
                 <div className="flex flex-wrap gap-3">
                   <Button
-                    className="rounded-full border-[#FF6A1A] bg-[#FF5C00] text-white hover:bg-[#FF6A1A]"
+                    className="rounded-full border-brand-light bg-brand text-white hover:bg-brand-light"
                     onClick={publishPost}
                   >
                     <MessageSquarePlus className="h-4 w-4" aria-hidden />
@@ -144,7 +144,7 @@ function GroupHubContent() {
                     className="rounded-[18px] border border-surface-border bg-surface-muted p-4"
                   >
                     <p className="text-sm leading-6 text-navy-700">{item}</p>
-                    <p className="mt-2 text-xs font-bold uppercase tracking-wide text-[#FF5C00]">
+                    <p className="mt-2 text-xs font-bold uppercase tracking-wide text-brand">
                       just now
                     </p>
                   </article>
@@ -167,7 +167,7 @@ function GroupHubContent() {
                   <Link
                     key={vibe.id}
                     href={`/vibe/${vibe.id}`}
-                    className="rounded-[18px] border border-surface-border bg-surface-muted p-4 hover:border-[#FF6A1A]/60 hover:no-underline"
+                    className="rounded-[18px] border border-surface-border bg-surface-muted p-4 hover:border-brand-light/60 hover:no-underline"
                   >
                     <p className="font-black text-navy-900">{vibe.title}</p>
                     <p className="mt-1 text-xs text-navy-500">
@@ -181,7 +181,7 @@ function GroupHubContent() {
 
           <aside className="rounded-[24px] border border-surface-border bg-white p-5 shadow-card">
             <h2 className="flex items-center gap-2 font-display text-2xl font-black text-navy-900">
-              <UsersRound className="h-5 w-5 text-[#FF5C00]" aria-hidden />
+              <UsersRound className="h-5 w-5 text-brand" aria-hidden />
               Members
             </h2>
             <div className="mt-4 space-y-3">

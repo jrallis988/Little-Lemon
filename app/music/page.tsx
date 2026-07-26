@@ -44,7 +44,7 @@ function MusicContent() {
     <AuthenticatedShell mainClassName="max-w-6xl">
       <div className="space-y-6">
         <section className="rounded-[28px] bg-zinc-950 p-5 text-white shadow-[0_24px_80px_rgba(0,0,0,0.25)] sm:p-7">
-          <Badge className="border-[#FF6A1A]/40 bg-[#FF5C00]/15 text-[#FFB68A]">
+          <Badge className="border-brand-light/40 bg-brand/15 text-brand-soft">
             <Music2 className="h-3 w-3" aria-hidden />
             Music discovery
           </Badge>
@@ -58,7 +58,7 @@ function MusicContent() {
         </section>
 
         {notice ? (
-          <div className="rounded-[18px] border border-[#FF6A1A]/30 bg-[#FF5C00] px-4 py-3 text-sm font-black text-white">
+          <div className="rounded-[18px] border border-brand-light/30 bg-brand px-4 py-3 text-sm font-black text-white">
             {notice}
           </div>
         ) : null}
@@ -71,7 +71,7 @@ function MusicContent() {
               className={cn(
                 "rounded-full px-4 py-2 text-sm font-black capitalize transition",
                 tab === item
-                  ? "bg-[#FF5C00] text-white"
+                  ? "bg-brand text-white"
                   : "text-navy-600 hover:bg-surface-muted"
               )}
               onClick={() => setTab(item)}
@@ -92,7 +92,7 @@ function MusicContent() {
                   key={playlist.id}
                   className="rounded-[24px] border border-surface-border bg-white p-5 shadow-card"
                 >
-                  <Badge className="border-[#FF6A1A]/30 bg-[#FF5C00]/10 text-[#C24700]">
+                  <Badge className="border-brand-light/30 bg-brand/10 text-brand-dark">
                     <ListMusic className="h-3 w-3" aria-hidden />
                     Playlist
                   </Badge>
@@ -116,7 +116,7 @@ function MusicContent() {
                           </span>
                           <span className="text-xs text-navy-500">{track.artist}</span>
                         </span>
-                        <PlayCircle className="h-5 w-5 text-[#FF5C00]" aria-hidden />
+                        <PlayCircle className="h-5 w-5 text-brand" aria-hidden />
                       </button>
                     ))}
                   </div>
@@ -139,7 +139,7 @@ function MusicContent() {
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap gap-2">
-                      <Badge className="border-[#FF6A1A]/30 bg-[#FF5C00]/10 text-[#C24700]">
+                      <Badge className="border-brand-light/30 bg-brand/10 text-brand-dark">
                         {track.mood}
                       </Badge>
                       {playingId === track.id ? <Badge variant="success">Playing</Badge> : null}
@@ -151,7 +151,7 @@ function MusicContent() {
                   </div>
                   <div className="flex flex-wrap gap-2">
                     <Button
-                      className="rounded-full border-[#FF6A1A] bg-[#FF5C00] text-white hover:bg-[#FF6A1A]"
+                      className="rounded-full border-brand-light bg-brand text-white hover:bg-brand-light"
                       onClick={() => playTrack(track.id)}
                     >
                       <PlayCircle className="h-4 w-4" aria-hidden />
@@ -165,7 +165,7 @@ function MusicContent() {
                       <Heart
                         className={cn(
                           "h-4 w-4",
-                          likedIds.includes(track.id) && "fill-[#FF5C00] text-[#FF5C00]"
+                          likedIds.includes(track.id) && "fill-brand text-brand"
                         )}
                         aria-hidden
                       />
@@ -183,7 +183,7 @@ function MusicContent() {
 
         {tab === "liked" && likedTracks.length === 0 ? (
           <div className="rounded-[24px] border border-dashed border-surface-border bg-white p-8 text-center">
-            <Heart className="mx-auto h-10 w-10 text-[#FF5C00]" aria-hidden />
+            <Heart className="mx-auto h-10 w-10 text-brand" aria-hidden />
             <h2 className="mt-3 font-display text-2xl font-black text-navy-900">
               No liked tracks yet
             </h2>

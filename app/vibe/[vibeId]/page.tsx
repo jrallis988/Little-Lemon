@@ -50,7 +50,7 @@ function VibeDetailContent() {
           <p className="mt-2 text-navy-600">That moment is not in the demo Loop.</p>
           <Link
             href="/home"
-            className="mt-4 inline-flex rounded-full bg-[#FF5C00] px-5 py-3 text-sm font-black text-white hover:bg-[#FF6A1A] hover:no-underline"
+            className="mt-4 inline-flex rounded-full bg-brand px-5 py-3 text-sm font-black text-white hover:bg-brand-light hover:no-underline"
           >
             Back to Loop
           </Link>
@@ -103,7 +103,7 @@ function VibeDetailContent() {
             <img src={vibe.coverUrl} alt="" className="h-full w-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/35 to-transparent" />
             <div className="absolute left-5 top-5 flex flex-wrap gap-2">
-              <Badge className="border-white/15 bg-[#FF5C00] text-white">
+              <Badge className="border-white/15 bg-brand text-white">
                 <Radio className={live ? "h-3 w-3 animate-pulse" : "h-3 w-3"} aria-hidden />
                 {live ? "LIVE" : vibe.status === "starting_soon" ? "Starting soon" : "Ended"}
               </Badge>
@@ -112,7 +112,7 @@ function VibeDetailContent() {
               </Badge>
             </div>
             <div className="absolute bottom-5 left-5 right-5">
-              <p className="text-xs font-black uppercase tracking-[0.24em] text-[#FFB68A]">
+              <p className="text-xs font-black uppercase tracking-[0.24em] text-brand-soft">
                 {school?.name ?? "Vibe Loop"}
               </p>
               <h1 className="mt-2 max-w-3xl font-display text-4xl font-black text-white sm:text-6xl">
@@ -120,7 +120,7 @@ function VibeDetailContent() {
               </h1>
               <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-zinc-300">
                 <span className="inline-flex items-center gap-1">
-                  <MapPin className="h-4 w-4 text-[#FF6A1A]" aria-hidden />
+                  <MapPin className="h-4 w-4 text-brand-light" aria-hidden />
                   {vibe.locationName}
                 </span>
                 <span>{formatDateTime(vibe.startsAt)}</span>
@@ -131,7 +131,7 @@ function VibeDetailContent() {
         </section>
 
         {notice ? (
-          <div className="rounded-[18px] border border-[#FF6A1A]/40 bg-[#FF5C00] px-4 py-3 text-sm font-black text-white">
+          <div className="rounded-[18px] border border-brand-light/40 bg-brand px-4 py-3 text-sm font-black text-white">
             {notice}
           </div>
         ) : null}
@@ -145,7 +145,7 @@ function VibeDetailContent() {
               <p className="mt-3 leading-7 text-zinc-300">{vibe.description}</p>
               <div className="mt-5 flex flex-wrap gap-3">
                 <Button
-                  className="rounded-full border-[#FF6A1A] bg-[#FF5C00] text-white hover:bg-[#FF6A1A]"
+                  className="rounded-full border-brand-light bg-brand text-white hover:bg-brand-light"
                   onClick={() =>
                     notify(live ? "You are marked here." : "Reminder saved.")
                   }
@@ -183,7 +183,7 @@ function VibeDetailContent() {
                   className="min-h-24 border-white/10 bg-black/30 text-white placeholder:text-zinc-500"
                 />
                 <Button
-                  className="rounded-full border-[#FF6A1A] bg-[#FF5C00] text-white hover:bg-[#FF6A1A]"
+                  className="rounded-full border-brand-light bg-brand text-white hover:bg-brand-light"
                   onClick={postUpdate}
                 >
                   <Send className="h-4 w-4" aria-hidden />
@@ -237,7 +237,7 @@ function VibeDetailContent() {
           <aside className="space-y-5">
             <section className="rounded-[24px] border border-white/10 bg-white/[0.04] p-5">
               <h2 className="flex items-center gap-2 font-display text-2xl font-black text-white">
-                <UsersRound className="h-5 w-5 text-[#FF6A1A]" aria-hidden />
+                <UsersRound className="h-5 w-5 text-brand-light" aria-hidden />
                 Who&apos;s here
               </h2>
               <div className="mt-4 space-y-3">
@@ -246,7 +246,7 @@ function VibeDetailContent() {
                     <Link
                       key={attendee.id}
                       href={`/profile/${attendee.username}`}
-                      className="flex items-center gap-3 rounded-[18px] border border-white/10 bg-black/25 p-3 hover:border-[#FF6A1A]/60 hover:no-underline"
+                      className="flex items-center gap-3 rounded-[18px] border border-white/10 bg-black/25 p-3 hover:border-brand-light/60 hover:no-underline"
                     >
                       <Avatar
                         name={attendee.displayName}

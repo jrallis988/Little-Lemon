@@ -60,7 +60,7 @@ export function VibeCard({
             <Badge
               className={cn(
                 "border-white/15 text-white",
-                live ? "bg-[#FF5C00]" : "bg-black/60"
+                live ? "bg-brand" : "bg-black/60"
               )}
             >
               <Radio className={cn("h-3 w-3", live && "animate-pulse")} aria-hidden />
@@ -71,7 +71,7 @@ export function VibeCard({
             </Badge>
           </div>
           <div className="absolute bottom-3 left-3 right-3">
-            <p className="text-[11px] font-black uppercase tracking-[0.22em] text-[#FFB68A]">
+            <p className="text-[11px] font-black uppercase tracking-[0.22em] text-brand-soft">
               {school?.name ?? "Vibe Loop"}
             </p>
             <h3 className="mt-1 line-clamp-2 font-display text-xl font-black text-white">
@@ -85,7 +85,7 @@ export function VibeCard({
         <div className="flex items-start justify-between gap-3 text-sm text-zinc-300">
           <div className="min-w-0 space-y-1">
             <p className="flex items-center gap-1.5">
-              <MapPin className="h-4 w-4 text-[#FF6A1A]" aria-hidden />
+              <MapPin className="h-4 w-4 text-brand-light" aria-hidden />
               <span className="truncate">{vibe.locationName}</span>
             </p>
             <p className="text-xs text-zinc-500">
@@ -125,7 +125,7 @@ export function VibeCard({
           </div>
           <Button
             size="sm"
-            className="rounded-full border-[#FF6A1A] bg-[#FF5C00] px-4 text-white hover:bg-[#FF6A1A]"
+            className="rounded-full border-brand-light bg-brand px-4 text-white hover:bg-brand-light"
             onClick={() => onJoin?.(vibe)}
           >
             {live ? "Join" : "Remind me"}
