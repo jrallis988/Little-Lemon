@@ -3,14 +3,23 @@ import { Link } from "react-router-dom";
 function About() {
   return (
     <>
-      <section className="page-hero">
-        <p className="eyebrow">About NHTI</p>
-        <h1>Cultivating potential in every learner</h1>
-        <p className="page-hero__lede">
-          Since 1965, NHTI has grown from New Hampshire Technical Institute into
-          Concord&apos;s Community College — still grounded in technical
-          excellence, now serving 4,600+ students each year across 80+ programs.
-        </p>
+      <section className="page-hero page-hero--with-seal">
+        <img
+          className="page-hero__seal"
+          src="/brand/nhti-seal.png"
+          alt="NHTI – Concord's Community College official seal"
+          width="160"
+          height="165"
+        />
+        <div>
+          <p className="eyebrow">About NHTI</p>
+          <h1>Cultivating potential in every learner</h1>
+          <p className="page-hero__lede">
+            Since 1965, NHTI has grown from New Hampshire Technical Institute into
+            Concord&apos;s Community College — still grounded in technical
+            excellence, now serving 4,600+ students each year across 80+ programs.
+          </p>
+        </div>
       </section>
 
       <section className="section">

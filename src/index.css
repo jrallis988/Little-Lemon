@@ -63,8 +63,7 @@ h2,
 h3,
 .hero__brand,
 .footer-brand,
-.fact-strip__value,
-.brand-mark__sigil {
+.fact-strip__value {
   font-family: var(--font-display);
   line-height: 1.1;
   letter-spacing: -0.02em;
@@ -151,16 +150,12 @@ address {
   color: var(--maroon-deep);
 }
 
-.brand-mark__sigil {
-  width: 2.4rem;
-  height: 2.4rem;
-  display: grid;
-  place-items: center;
-  background: linear-gradient(145deg, var(--maroon), var(--maroon-deep));
-  color: var(--gold);
-  font-size: 1.25rem;
-  font-weight: 800;
-  border-radius: 0.4rem 0.9rem 0.4rem 0.9rem;
+.brand-mark__seal {
+  width: 3.25rem;
+  height: 3.25rem;
+  flex-shrink: 0;
+  object-fit: contain;
+  display: block;
 }
 
 .brand-mark__text {
@@ -451,6 +446,19 @@ address {
   width: var(--container);
   margin: 0 auto;
   padding: 4.5rem 0 2rem;
+}
+
+.page-hero--with-seal {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.75rem;
+  align-items: center;
+}
+
+.page-hero__seal {
+  width: clamp(7rem, 14vw, 10rem);
+  height: auto;
+  object-fit: contain;
 }
 
 .eyebrow {
@@ -773,6 +781,19 @@ address {
   gap: 2rem;
 }
 
+.footer-brand-block {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.footer-seal {
+  width: 4.5rem;
+  height: 4.5rem;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
 .footer-brand {
   margin: 0 0 0.65rem;
   font-size: 2.4rem;
@@ -871,6 +892,11 @@ address {
 }
 
 @media (max-width: 760px) {
+  .page-hero--with-seal {
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+
   .nav-toggle {
     display: flex;
   }

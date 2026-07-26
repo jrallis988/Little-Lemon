@@ -15,9 +15,13 @@ function Header() {
     <header className="site-header">
       <div className="header-inner">
         <Link to="/" className="brand-mark" onClick={() => setOpen(false)}>
-          <span className="brand-mark__sigil" aria-hidden="true">
-            N
-          </span>
+          <img
+            className="brand-mark__seal"
+            src="/brand/nhti-seal-256.png"
+            alt=""
+            width="52"
+            height="52"
+          />
           <span className="brand-mark__text">
             <strong>NHTI</strong>
             <span>Concord&apos;s Community College</span>

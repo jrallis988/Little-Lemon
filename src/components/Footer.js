@@ -4,12 +4,21 @@ function Footer() {
   return (
     <footer className="site-footer">
       <div className="footer-grid">
-        <div>
-          <p className="footer-brand">NHTI</p>
-          <p className="footer-lede">
-            Concord&apos;s Community College — pathways for career, transfer, and
-            lifelong learning on the Merrimack River.
-          </p>
+        <div className="footer-brand-block">
+          <img
+            className="footer-seal"
+            src="/brand/nhti-seal-gold-256.png"
+            alt="NHTI – Concord's Community College seal"
+            width="72"
+            height="72"
+          />
+          <div>
+            <p className="footer-brand">NHTI</p>
+            <p className="footer-lede">
+              Concord&apos;s Community College — pathways for career, transfer, and
+              lifelong learning on the Merrimack River.
+            </p>
+          </div>
         </div>
         <div>
           <p className="footer-label">Explore</p>
