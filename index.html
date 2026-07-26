@@ -548,14 +548,18 @@
     <script>
         // Scroll Animations with IntersectionObserver
         const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
+            threshold: 0.05,
+            rootMargin: '0px 0px -10% 0px'
         };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
+                    // Reveal grid children together so bottom cards never stay faded
+                    entry.target.querySelectorAll('.stagger-item').forEach(card => {
+                        card.classList.add('visible');
+                    });
                     observer.unobserve(entry.target);
                 }
             });
@@ -567,16 +571,19 @@
             observer.observe(el);
         });
 
-        // Stagger animations for grids
-
-        document.querySelectorAll('.services-grid > .service-card').forEach(el => {
-            el.classList.add('stagger-item');
-            observer.observe(el);
+        // Animate the services grid as one unit (avoids bottom cards stuck at opacity 0)
+        document.querySelectorAll('.services-grid').forEach(grid => {
+            grid.querySelectorAll('.service-card').forEach(card => {
+                card.classList.add('stagger-item');
+            });
+            observer.observe(grid);
         });
 
-        document.querySelectorAll('.testimonial-grid > .testimonial-card').forEach(el => {
-            el.classList.add('stagger-item');
-            observer.observe(el);
+        document.querySelectorAll('.testimonial-grid').forEach(grid => {
+            grid.querySelectorAll('.testimonial-card').forEach(card => {
+                card.classList.add('stagger-item');
+            });
+            observer.observe(grid);
         });
 
         // Hamburger menu toggle
