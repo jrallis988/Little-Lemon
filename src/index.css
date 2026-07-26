@@ -583,7 +583,7 @@ address {
 .news-head {
   display: flex;
   justify-content: space-between;
-  align-items: end;
+  align-items: flex-end;
   gap: 1rem;
   margin-bottom: 1.5rem;
 }
@@ -664,7 +664,7 @@ address {
   display: flex;
   flex-wrap: wrap;
   gap: 0.55rem;
-  align-content: start;
+  align-content: flex-start;
 }
 
 .program-chips li {

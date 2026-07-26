@@ -7,7 +7,11 @@ function Layout() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    try {
+      window.scrollTo(0, 0);
+    } catch {
+      // jsdom does not implement scrollTo
+    }
   }, [pathname]);
 
   return (
