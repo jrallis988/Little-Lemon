@@ -39,7 +39,7 @@ module.exports = {
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
         "fade-in": {
-          "0%": { opacity: "0" },
+          "0%": { opacity: "0.35" },
           "100%": { opacity: "1" },
         },
         "ken-burns": {
@@ -47,7 +47,7 @@ module.exports = {
           "100%": { transform: "scale(1)" },
         },
         "draw-line": {
-          "0%": { transform: "scaleX(0)" },
+          "0%": { transform: "scaleX(0.2)" },
           "100%": { transform: "scaleX(1)" },
         },
       },
@@ -56,9 +56,9 @@ module.exports = {
         "fade-up-delay": "fade-up 0.9s ease-out 0.15s both",
         "fade-up-delay-2": "fade-up 0.9s ease-out 0.3s both",
         "fade-up-delay-3": "fade-up 0.9s ease-out 0.45s both",
-        "fade-in": "fade-in 1.1s ease-out both",
+        "fade-in": "fade-in 1s ease-out both",
         "ken-burns": "ken-burns 14s ease-out both",
-        "draw-line": "draw-line 0.8s ease-out 0.5s both",
+        "draw-line": "draw-line 0.9s ease-out both",
       },
     },
   },

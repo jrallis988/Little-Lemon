@@ -3,7 +3,7 @@ import useReveal from "../hooks/useReveal";
 import { campuses, outcomes, programAreas, supports } from "../data/content";
 
 const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=2000&q=80";
+  "https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=2000&q=80";
 
 export default function Home() {
   const revealRef = useReveal();
@@ -13,26 +13,26 @@ export default function Home() {
       <section className="relative min-h-[100svh] overflow-hidden text-white">
         <img
           src={HERO_IMAGE}
-          alt="Mist rising over a green New England river valley"
+          alt="Morning light on a calm New England river and valley shoreline"
           className="absolute inset-0 h-full w-full object-cover animate-ken-burns"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-river-deep/90 via-river-deep/70 to-valley/35" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(212,160,23,0.18),transparent_42%)]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-river-deep/92 via-river-deep/72 to-valley/40" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(212,160,23,0.2),transparent_42%)]" />
 
         <div className="relative section-shell flex min-h-[100svh] flex-col justify-end pb-16 pt-28 sm:pb-20 lg:pb-24">
-          <div className="max-w-3xl">
-            <p className="animate-fade-up font-display text-sm font-semibold uppercase tracking-[0.28em] text-sunrise sm:text-base">
+          <div className="max-w-4xl">
+            <p className="animate-fade-in font-display text-4xl font-semibold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl">
               River Valley Community College
             </p>
-            <div className="mt-4 h-px w-24 origin-left scale-x-0 bg-sunrise animate-draw-line" />
-            <h1 className="animate-fade-up-delay mt-6 font-display text-5xl font-semibold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
+            <div className="mt-5 h-px w-28 origin-left bg-sunrise animate-draw-line" />
+            <h1 className="mt-6 font-display text-2xl font-medium tracking-tight text-sunrise sm:text-3xl lg:text-4xl">
               Soar into your future
             </h1>
-            <p className="animate-fade-up-delay-2 mt-6 max-w-xl text-lg leading-relaxed text-white/85 sm:text-xl">
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/88 sm:text-xl">
               Affordable degrees and certificates across Claremont, Keene, and
               Lebanon — with the support to finish strong.
             </p>
-            <div className="animate-fade-up-delay-3 mt-9 flex flex-wrap gap-3">
+            <div className="mt-9 flex flex-wrap gap-3">
               <Link to="/admissions" className="btn-primary">
                 Apply now
               </Link>

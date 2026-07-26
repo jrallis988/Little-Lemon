@@ -12,5 +12,8 @@ test("renders River Valley brand in the hero", () => {
   expect(
     screen.getAllByText(/River Valley Community College/i).length
   ).toBeGreaterThan(0);
-  expect(screen.getByRole("heading", { name: /soar into your future/i })).toBeInTheDocument();
+  expect(
+    screen.getByRole("heading", { name: /soar into your future/i })
+  ).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: /apply now/i })).toBeInTheDocument();
 });
