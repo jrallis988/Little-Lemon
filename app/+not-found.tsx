@@ -2,7 +2,7 @@ import { Link, Stack } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { StaticBackground } from '@/components/ui/StaticBackground';
-import { colors, spacing, typography } from '@/constants/theme';
+import { colors, spacing, typography, fonts } from '@/constants/theme';
 
 export default function NotFoundScreen() {
   return (

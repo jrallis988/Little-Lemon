@@ -18,7 +18,7 @@ import { PortalHeader } from '@/components/editorial/PortalHeader';
 import { RecentlyFeaturedList } from '@/components/editorial/RecentlyFeaturedList';
 import { TrackChartRow } from '@/components/editorial/TrackChartRow';
 import { StaticBackground } from '@/components/ui/StaticBackground';
-import { colors, portalBox, spacing } from '@/constants/theme';
+import { colors, portalBox, spacing, fonts } from '@/constants/theme';
 import { useAudioBarInset } from '@/hooks/useAudioBarInset';
 import {
   DEMO_COMMENTS,
@@ -246,12 +246,11 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   panelTitle: {
-    fontFamily: 'SpaceMono',
-    fontSize: 10,
-    letterSpacing: 0.6,
+    fontFamily: fonts.sansBold,
+    fontSize: 12,
+    letterSpacing: 0.4,
     color: colors.text,
     textTransform: 'uppercase',
-    fontWeight: '700',
   },
   panelBody: {
     padding: spacing.sm,
@@ -274,9 +273,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   albumMark: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.condensedBold,
     fontSize: 28,
-    color: colors.phosphorDim,
+    color: colors.textDim,
   },
   albumMeta: {
     paddingHorizontal: spacing.sm,
@@ -284,14 +283,14 @@ const styles = StyleSheet.create({
     gap: 2,
   },
   albumTitle: {
-    fontFamily: 'SpaceMono',
-    fontSize: 12,
+    fontFamily: fonts.sansBold,
+    fontSize: 14,
     color: colors.text,
-    fontWeight: '700',
   },
   albumArtist: {
-    fontFamily: 'SpaceMono',
-    fontSize: 11,
+    fontFamily: fonts.sans,
+    fontSize: 13,
     color: colors.textMuted,
   },
 });
+

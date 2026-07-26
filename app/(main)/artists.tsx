@@ -12,7 +12,7 @@ import {
 import { AlphaScrubber } from '@/components/directory/AlphaScrubber';
 import { DirectoryArtistRow } from '@/components/directory/DirectoryArtistRow';
 import { StaticBackground } from '@/components/ui/StaticBackground';
-import { colors, portalBox, spacing } from '@/constants/theme';
+import { colors, portalBox, spacing, fonts } from '@/constants/theme';
 import { useAudioBarInset } from '@/hooks/useAudioBarInset';
 import {
   groupArtistsAlphabetically,
@@ -128,18 +128,14 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   brand: {
-    fontFamily: 'SpaceMono',
-    fontSize: 18,
-    letterSpacing: 1,
-    color: colors.phosphor,
-    textTransform: 'uppercase',
+    fontFamily: fonts.sansBold,
+    fontSize: 20,
+    color: colors.text,
   },
   meta: {
-    fontFamily: 'SpaceMono',
-    fontSize: 8,
-    letterSpacing: 0.5,
-    color: colors.textDim,
-    textTransform: 'uppercase',
+    fontFamily: fonts.sans,
+    fontSize: 12,
+    color: colors.textMuted,
   },
   listPad: {
     paddingHorizontal: spacing.md,
@@ -154,22 +150,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: colors.toolbar,
+    backgroundColor: colors.surfaceRaised,
     borderBottomWidth: 1,
-    borderBottomColor: colors.accentLine,
+    borderBottomColor: colors.border,
     paddingHorizontal: spacing.sm,
     paddingVertical: 6,
   },
   sectionLetter: {
-    fontFamily: 'SpaceMono',
-    fontSize: 14,
-    letterSpacing: 1,
-    color: colors.phosphor,
+    fontFamily: fonts.sansBold,
+    fontSize: 16,
+    color: colors.text,
   },
   sectionCount: {
-    fontFamily: 'SpaceMono',
-    fontSize: 8,
-    letterSpacing: 0.5,
+    fontFamily: fonts.sans,
+    fontSize: 11,
     color: colors.textDim,
   },
 });
+

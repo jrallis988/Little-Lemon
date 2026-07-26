@@ -1,80 +1,91 @@
 /**
- * StaticVolume — Analog Archive theme
- * CRT warm off-blacks, muted amber phosphor, charcoal portal rules.
+ * StaticVolume — PureVolume portal theme
+ * Light gray/white body, black header chrome, clean sans type, blue links.
  */
+export const fonts = {
+  sans: 'Barlow',
+  sansBold: 'BarlowBold',
+  condensed: 'BarlowCondensed',
+  condensedBold: 'BarlowCondensedBold',
+} as const;
+
 export const colors = {
-  /** Deep CRT monitor backing */
-  background: '#121212',
-  backgroundElevated: '#181818',
-  surface: '#1C1C1C',
-  surfaceRaised: '#222222',
+  /** Page canvas — classic PV white / light gray */
+  background: '#FFFFFF',
+  backgroundElevated: '#F0F0F0',
+  surface: '#FFFFFF',
+  surfaceRaised: '#E8E8E8',
 
-  /** Dark charcoal box separation */
-  border: '#333333',
-  borderSubtle: '#2A2A2A',
-  borderStrong: '#3D3D3D',
+  /** Thin portal rules */
+  border: '#D0D0D0',
+  borderSubtle: '#E4E4E4',
+  borderStrong: '#B0B0B0',
 
-  text: '#E8E0D0',
-  textMuted: '#A09078',
-  textDim: '#6A6054',
+  /** Near-black header / footer chrome */
+  header: '#111111',
+  headerText: '#FFFFFF',
 
-  /** Muted amber / orange — active, highlights, callouts */
-  phosphor: '#FFB000',
-  phosphorDim: '#E58300',
-  accentLine: '#E58300',
-  copper: '#E58300',
-  copperDim: '#B06800',
+  text: '#222222',
+  textMuted: '#666666',
+  textDim: '#999999',
+  textOnDark: '#FFFFFF',
 
-  snow: 'rgba(255, 176, 0, 0.04)',
-  scanline: 'rgba(0, 0, 0, 0.28)',
-  aberrationRed: 'rgba(220, 80, 60, 0.07)',
-  aberrationCyan: 'rgba(60, 180, 200, 0.05)',
+  /** Classic portal link / active blue (not amber) */
+  link: '#1A6DB5',
+  linkHover: '#155A96',
+  /** Mapped aliases used across existing components */
+  phosphor: '#1A6DB5',
+  phosphorDim: '#155A96',
+  accentLine: '#1A6DB5',
+  copper: '#444444',
+  copperDim: '#666666',
 
-  toolbar: '#181818',
-  toolbarActive: '#222222',
-  toolbarEdge: '#333333',
+  snow: 'transparent',
+  scanline: 'transparent',
+  aberrationRed: 'transparent',
+  aberrationCyan: 'transparent',
 
-  danger: '#C45A4A',
-  success: '#8A9A6A',
+  toolbar: '#E6E6E6',
+  toolbarActive: '#FFFFFF',
+  toolbarEdge: '#CCCCCC',
+
+  danger: '#C0392B',
+  success: '#2E7D32',
   transparent: 'transparent',
 } as const;
 
 export const typography = {
   brand: {
-    fontFamily: 'SpaceMono',
-    fontSize: 28,
-    letterSpacing: 2,
-    textTransform: 'uppercase' as const,
+    fontFamily: fonts.condensedBold,
+    fontSize: 22,
+    letterSpacing: 0.5,
+    textTransform: 'lowercase' as const,
   },
   headline: {
-    fontFamily: 'SpaceMono',
-    fontSize: 18,
-    letterSpacing: 0.5,
-    textTransform: 'uppercase' as const,
+    fontFamily: fonts.sansBold,
+    fontSize: 20,
+    letterSpacing: 0,
   },
   title: {
-    fontFamily: 'SpaceMono',
-    fontSize: 14,
-    letterSpacing: 0.4,
-    textTransform: 'uppercase' as const,
+    fontFamily: fonts.sansBold,
+    fontSize: 15,
+    letterSpacing: 0,
   },
   body: {
-    fontFamily: 'SpaceMono',
-    fontSize: 12,
-    letterSpacing: 0.15,
-    lineHeight: 18,
+    fontFamily: fonts.sans,
+    fontSize: 14,
+    letterSpacing: 0,
+    lineHeight: 20,
   },
   caption: {
-    fontFamily: 'SpaceMono',
-    fontSize: 11,
-    letterSpacing: 0.4,
-    textTransform: 'uppercase' as const,
+    fontFamily: fonts.sans,
+    fontSize: 12,
+    letterSpacing: 0.2,
   },
   monoTiny: {
-    fontFamily: 'SpaceMono',
-    fontSize: 9,
-    letterSpacing: 0.6,
-    textTransform: 'uppercase' as const,
+    fontFamily: fonts.sans,
+    fontSize: 11,
+    letterSpacing: 0.3,
   },
 } as const;
 
@@ -91,20 +102,21 @@ export const spacing = {
 
 export const radii = {
   none: 0,
-  sm: 0,
-  md: 0,
-  media: 0,
+  sm: 2,
+  md: 3,
+  media: 2,
 } as const;
 
 export const portalBox = {
   borderWidth: 1,
   borderColor: colors.border,
-  backgroundColor: colors.backgroundElevated,
+  backgroundColor: colors.surface,
   borderRadius: 0,
 } as const;
 
 export const theme = {
   colors,
+  fonts,
   typography,
   spacing,
   radii,

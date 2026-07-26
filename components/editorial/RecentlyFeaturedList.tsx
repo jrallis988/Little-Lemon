@@ -1,7 +1,14 @@
 import { Link } from 'expo-router';
-import { Pressable, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  type StyleProp,
+  type ViewStyle,
+} from 'react-native';
 
-import { colors, portalBox, spacing } from '@/constants/theme';
+import { colors, fonts, portalBox, spacing } from '@/constants/theme';
 import { getArtistById } from '@/lib/demoData';
 import type { Track } from '@/types/models';
 
@@ -61,12 +68,11 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   headerText: {
-    fontFamily: 'SpaceMono',
-    fontSize: 10,
-    letterSpacing: 0.6,
+    fontFamily: fonts.sansBold,
+    fontSize: 11,
+    letterSpacing: 0.4,
     color: colors.text,
     textTransform: 'uppercase',
-    fontWeight: '700',
   },
   row: {
     flexDirection: 'row',
@@ -76,9 +82,10 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderBottomWidth: 1,
     borderBottomColor: colors.borderSubtle,
+    backgroundColor: colors.surface,
   },
   pressed: {
-    backgroundColor: colors.toolbarActive,
+    backgroundColor: colors.backgroundElevated,
   },
   thumb: {
     width: 48,
@@ -90,9 +97,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   thumbMark: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sansBold,
     fontSize: 16,
-    color: colors.phosphorDim,
+    color: colors.textMuted,
   },
   meta: {
     flex: 1,
@@ -100,14 +107,13 @@ const styles = StyleSheet.create({
     minWidth: 0,
   },
   name: {
-    fontFamily: 'SpaceMono',
-    fontSize: 12,
+    fontFamily: fonts.sansBold,
+    fontSize: 13,
     color: colors.text,
-    fontWeight: '700',
   },
   sub: {
-    fontFamily: 'SpaceMono',
-    fontSize: 10,
+    fontFamily: fonts.sans,
+    fontSize: 12,
     color: colors.textMuted,
   },
 });

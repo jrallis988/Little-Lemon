@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-import { colors, portalBox, spacing } from '@/constants/theme';
+import { colors, portalBox, spacing, fonts } from '@/constants/theme';
 import type { UserProfile } from '@/types/models';
 
 type ArtistArchiveMetaProps = {
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
   },
   headerText: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 9,
     letterSpacing: 0.8,
     color: colors.phosphor,
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.borderSubtle,
   },
   key: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 9,
     letterSpacing: 0.4,
     color: colors.phosphorDim,
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   },
   value: {
     flex: 1,
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 9,
     letterSpacing: 0.2,
     color: colors.text,

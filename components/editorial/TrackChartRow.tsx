@@ -2,7 +2,7 @@ import { Link } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { useAudioStore } from '@/store/useAudioStore';
-import { colors, spacing } from '@/constants/theme';
+import { colors, spacing, fonts } from '@/constants/theme';
 import type { Track } from '@/types/models';
 
 type TrackChartRowProps = {
@@ -55,10 +55,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundElevated,
   },
   rank: {
-    fontFamily: 'SpaceMono',
-    fontSize: 10,
-    letterSpacing: 0.3,
-    color: colors.phosphorDim,
+    fontFamily: fonts.sans,
+    fontSize: 12,
+    color: colors.textDim,
     width: 22,
   },
   play: {
@@ -72,9 +71,9 @@ const styles = StyleSheet.create({
     borderRadius: 0,
   },
   playLabel: {
-    fontFamily: 'SpaceMono',
-    fontSize: 9,
-    color: colors.accentLine,
+    fontFamily: fonts.sansBold,
+    fontSize: 10,
+    color: colors.link,
   },
   meta: {
     flex: 1,
@@ -82,18 +81,14 @@ const styles = StyleSheet.create({
     minWidth: 0,
   },
   title: {
-    fontFamily: 'SpaceMono',
-    fontSize: 11,
-    letterSpacing: 0.3,
-    color: colors.text,
-    textTransform: 'uppercase',
+    fontFamily: fonts.sansBold,
+    fontSize: 13,
+    color: colors.link,
   },
   artist: {
-    fontFamily: 'SpaceMono',
-    fontSize: 8,
-    letterSpacing: 0.2,
+    fontFamily: fonts.sans,
+    fontSize: 12,
     color: colors.textMuted,
-    textTransform: 'uppercase',
   },
   metric: {
     alignItems: 'flex-end',
@@ -101,13 +96,13 @@ const styles = StyleSheet.create({
     minWidth: 48,
   },
   metricValue: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sansBold,
     fontSize: 11,
     letterSpacing: 0.2,
     color: colors.copper,
   },
   metricLabel: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 8,
     letterSpacing: 0.4,
     color: colors.textDim,

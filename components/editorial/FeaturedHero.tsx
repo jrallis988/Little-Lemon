@@ -9,7 +9,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-import { colors, portalBox, spacing, typography } from '@/constants/theme';
+import { colors, portalBox, spacing, typography, fonts } from '@/constants/theme';
 import type { FeaturedSpotlight } from '@/lib/demoData';
 import type { Track } from '@/types/models';
 
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     letterSpacing: 1.2,
   },
   headline: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 28,
     letterSpacing: 1,
     color: colors.text,
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
   blurb: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 10,
     letterSpacing: 0.3,
     lineHeight: 15,
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     marginRight: spacing.sm,
   },
   ctaPrimaryText: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 10,
     letterSpacing: 1,
     color: colors.background,
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     borderRadius: 0,
   },
   ctaGhostText: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 10,
     letterSpacing: 1,
     color: colors.phosphor,

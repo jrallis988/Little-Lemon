@@ -1,7 +1,7 @@
 import { Tabs } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { colors, spacing, typography } from '@/constants/theme';
+import { colors, fonts, spacing } from '@/constants/theme';
 import { useAudioStore } from '@/store/useAudioStore';
 
 function TabLabel({ label, focused }: { label: string; focused: boolean }) {
@@ -10,10 +10,6 @@ function TabLabel({ label, focused }: { label: string; focused: boolean }) {
   );
 }
 
-/**
- * Main tab shell. Global player lives in the root layout so it persists
- * across artist / track detail routes as well.
- */
 export default function MainLayout() {
   const hasTrack = useAudioStore((s) => s.currentTrack != null);
 
@@ -21,17 +17,17 @@ export default function MainLayout() {
     <View style={styles.root}>
       <Tabs
         screenOptions={{
-          headerStyle: { backgroundColor: colors.backgroundElevated },
-          headerTintColor: colors.text,
+          headerStyle: { backgroundColor: colors.header },
+          headerTintColor: colors.headerText,
           headerTitleStyle: {
-            fontFamily: 'SpaceMono',
-            fontSize: 13,
-            color: colors.phosphor,
+            fontFamily: fonts.sansBold,
+            fontSize: 14,
+            color: colors.headerText,
           },
           headerShadowVisible: false,
-          sceneStyle: { backgroundColor: colors.background },
+          sceneStyle: { backgroundColor: colors.backgroundElevated },
           tabBarStyle: {
-            backgroundColor: colors.backgroundElevated,
+            backgroundColor: colors.surface,
             borderTopColor: colors.border,
             borderTopWidth: 1,
             height: spacing.tabBar + 12,
@@ -39,26 +35,26 @@ export default function MainLayout() {
             paddingTop: 6,
             marginBottom: hasTrack ? spacing.audioBar : 0,
           },
-          tabBarActiveTintColor: colors.phosphor,
+          tabBarActiveTintColor: colors.link,
           tabBarInactiveTintColor: colors.textDim,
         }}
       >
         <Tabs.Screen
           name="index"
           options={{
-            title: 'EDITORIAL',
+            title: 'Featured',
             headerShown: false,
-            tabBarLabel: ({ focused }) => <TabLabel label="HOME" focused={focused} />,
+            tabBarLabel: ({ focused }) => <TabLabel label="Home" focused={focused} />,
             tabBarIcon: () => null,
           }}
         />
         <Tabs.Screen
           name="artists"
           options={{
-            title: 'ARTISTS',
+            title: 'Artists',
             headerShown: false,
             tabBarLabel: ({ focused }) => (
-              <TabLabel label="ARTISTS" focused={focused} />
+              <TabLabel label="Artists" focused={focused} />
             ),
             tabBarIcon: () => null,
           }}
@@ -66,24 +62,24 @@ export default function MainLayout() {
         <Tabs.Screen
           name="explore"
           options={{
-            title: 'SCENE',
-            tabBarLabel: ({ focused }) => <TabLabel label="SCENE" focused={focused} />,
+            title: 'Scene',
+            tabBarLabel: ({ focused }) => <TabLabel label="Scene" focused={focused} />,
             tabBarIcon: () => null,
           }}
         />
         <Tabs.Screen
           name="following"
           options={{
-            title: 'FOLLOWING',
-            tabBarLabel: ({ focused }) => <TabLabel label="FEED" focused={focused} />,
+            title: 'Following',
+            tabBarLabel: ({ focused }) => <TabLabel label="Feed" focused={focused} />,
             tabBarIcon: () => null,
           }}
         />
         <Tabs.Screen
           name="profile"
           options={{
-            title: 'PROFILE',
-            tabBarLabel: ({ focused }) => <TabLabel label="YOU" focused={focused} />,
+            title: 'You',
+            tabBarLabel: ({ focused }) => <TabLabel label="You" focused={focused} />,
             tabBarIcon: () => null,
           }}
         />
@@ -95,13 +91,15 @@ export default function MainLayout() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: colors.backgroundElevated,
   },
   tabLabel: {
-    ...typography.monoTiny,
+    fontFamily: fonts.sans,
+    fontSize: 11,
     color: colors.textDim,
   },
   tabLabelFocused: {
-    color: colors.phosphor,
+    color: colors.link,
+    fontFamily: fonts.sansBold,
   },
 });

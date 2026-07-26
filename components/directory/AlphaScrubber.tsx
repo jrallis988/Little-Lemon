@@ -1,6 +1,6 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import { colors, spacing } from '@/constants/theme';
+import { colors, spacing, fonts } from '@/constants/theme';
 import { ALPHA_LETTERS } from '@/lib/demoData';
 
 type AlphaScrubberProps = {
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     opacity: 0.35,
   },
   letterText: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 10,
     letterSpacing: 0.5,
     color: colors.textMuted,

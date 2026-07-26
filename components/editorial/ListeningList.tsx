@@ -1,7 +1,14 @@
 import { Link } from 'expo-router';
-import { Pressable, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  type StyleProp,
+  type ViewStyle,
+} from 'react-native';
 
-import { colors, portalBox, spacing } from '@/constants/theme';
+import { colors, fonts, portalBox, spacing } from '@/constants/theme';
 import type { Track } from '@/types/models';
 
 type ListeningListProps = {
@@ -10,7 +17,7 @@ type ListeningListProps = {
 };
 
 /**
- * PureVolume "Everybody's Listening" / chart-style compact list.
+ * PureVolume "Everybody's Listening" compact list.
  */
 export function ListeningList({
   title = "EVERYBODY'S LISTENING",
@@ -64,12 +71,11 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   headerText: {
-    fontFamily: 'SpaceMono',
-    fontSize: 10,
-    letterSpacing: 0.6,
+    fontFamily: fonts.sansBold,
+    fontSize: 11,
+    letterSpacing: 0.4,
     color: colors.text,
     textTransform: 'uppercase',
-    fontWeight: '700',
   },
   row: {
     flexDirection: 'row',
@@ -79,9 +85,10 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderBottomWidth: 1,
     borderBottomColor: colors.borderSubtle,
+    backgroundColor: colors.surface,
   },
   pressed: {
-    backgroundColor: colors.toolbarActive,
+    backgroundColor: colors.backgroundElevated,
   },
   avatar: {
     width: 36,
@@ -94,9 +101,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   avatarMark: {
-    fontFamily: 'SpaceMono',
-    fontSize: 12,
-    color: colors.phosphor,
+    fontFamily: fonts.sansBold,
+    fontSize: 13,
+    color: colors.textMuted,
   },
   meta: {
     flex: 1,
@@ -104,22 +111,23 @@ const styles = StyleSheet.create({
     minWidth: 0,
   },
   song: {
-    fontFamily: 'SpaceMono',
-    fontSize: 11,
-    color: colors.phosphor,
+    fontFamily: fonts.sansBold,
+    fontSize: 13,
+    color: colors.link,
   },
   artist: {
-    fontFamily: 'SpaceMono',
-    fontSize: 10,
+    fontFamily: fonts.sans,
+    fontSize: 12,
     color: colors.textMuted,
   },
   footer: {
     paddingHorizontal: spacing.sm,
     paddingVertical: 8,
+    backgroundColor: colors.surface,
   },
   footerLink: {
-    fontFamily: 'SpaceMono',
-    fontSize: 10,
-    color: colors.phosphorDim,
+    fontFamily: fonts.sans,
+    fontSize: 12,
+    color: colors.link,
   },
 });

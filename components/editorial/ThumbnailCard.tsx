@@ -1,7 +1,7 @@
 import { Link } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { colors, spacing } from '@/constants/theme';
+import { colors, spacing, fonts } from '@/constants/theme';
 import type { Track } from '@/types/models';
 
 type ThumbnailCardProps = {
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.toolbarActive,
   },
   rank: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 9,
     letterSpacing: 0.3,
     color: colors.textDim,
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     height: 24,
   },
   thumbMark: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 8,
     color: colors.phosphorDim,
   },
@@ -95,14 +95,14 @@ const styles = StyleSheet.create({
     minWidth: 0,
   },
   title: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 10,
     letterSpacing: 0.2,
     color: colors.text,
     textTransform: 'uppercase',
   },
   artist: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 8,
     letterSpacing: 0.2,
     color: colors.textMuted,
@@ -113,14 +113,14 @@ const styles = StyleSheet.create({
     gap: 1,
   },
   metricPrimary: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 8,
     letterSpacing: 0.3,
     color: colors.copper,
     textTransform: 'uppercase',
   },
   metricSecondary: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 8,
     letterSpacing: 0.3,
     color: colors.textDim,

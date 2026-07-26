@@ -8,12 +8,12 @@ import {
   View,
 } from 'react-native';
 
-import { colors, spacing } from '@/constants/theme';
+import { colors, fonts, spacing } from '@/constants/theme';
 
 const PRIMARY_NAV = ['Music', 'News', 'People', 'Charts'] as const;
 
 /**
- * Classic PureVolume top chrome — dark bar, brand, primary links, search, auth.
+ * Classic PureVolume top chrome — black bar, white wordmark, search, auth.
  */
 export function PortalHeader() {
   const { width } = useWindowDimensions();
@@ -39,7 +39,7 @@ export function PortalHeader() {
             <TextInput
               style={styles.searchInput}
               placeholder="Search"
-              placeholderTextColor={colors.textDim}
+              placeholderTextColor="#888"
               editable={false}
             />
           </View>
@@ -50,7 +50,9 @@ export function PortalHeader() {
           </Pressable>
         </Link>
         <Link href="/(auth)/login" asChild>
-          <Pressable style={StyleSheet.flatten([styles.authBtn, styles.authBtnGhost])}>
+          <Pressable
+            style={StyleSheet.flatten([styles.authBtn, styles.authBtnGhost])}
+          >
             <Text style={styles.authTextGhost}>Log In</Text>
           </Pressable>
         </Link>
@@ -61,9 +63,9 @@ export function PortalHeader() {
 
 const styles = StyleSheet.create({
   bar: {
-    backgroundColor: '#0A0A0A',
+    backgroundColor: colors.header,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border,
+    borderBottomColor: '#000',
     paddingHorizontal: spacing.md,
     paddingVertical: 10,
     flexDirection: 'row',
@@ -78,10 +80,10 @@ const styles = StyleSheet.create({
     flexShrink: 1,
   },
   logo: {
-    fontFamily: 'SpaceMono',
-    fontSize: 16,
+    fontFamily: fonts.condensedBold,
+    fontSize: 20,
     letterSpacing: 0.5,
-    color: colors.text,
+    color: colors.headerText,
     textTransform: 'lowercase',
   },
   nav: {
@@ -89,9 +91,9 @@ const styles = StyleSheet.create({
     gap: spacing.md,
   },
   navItem: {
-    fontFamily: 'SpaceMono',
-    fontSize: 11,
-    color: colors.textMuted,
+    fontFamily: fonts.sans,
+    fontSize: 13,
+    color: '#DDDDDD',
   },
   right: {
     flexDirection: 'row',
@@ -100,38 +102,37 @@ const styles = StyleSheet.create({
   },
   search: {
     borderWidth: 1,
-    borderColor: colors.border,
-    backgroundColor: colors.surface,
+    borderColor: '#333',
+    backgroundColor: '#FFFFFF',
     marginRight: 4,
   },
   searchInput: {
-    fontFamily: 'SpaceMono',
-    fontSize: 11,
+    fontFamily: fonts.sans,
+    fontSize: 13,
     color: colors.text,
     paddingHorizontal: 8,
     paddingVertical: 5,
     minWidth: 110,
   },
   authBtn: {
-    backgroundColor: colors.phosphor,
+    backgroundColor: '#DDDDDD',
     paddingHorizontal: 10,
     paddingVertical: 6,
+    borderWidth: 1,
+    borderColor: '#BBBBBB',
   },
   authBtnGhost: {
-    backgroundColor: colors.surfaceRaised,
-    borderWidth: 1,
-    borderColor: colors.border,
+    backgroundColor: '#2A2A2A',
+    borderColor: '#444',
   },
   authText: {
-    fontFamily: 'SpaceMono',
-    fontSize: 10,
-    color: colors.background,
-    textTransform: 'uppercase',
+    fontFamily: fonts.sansBold,
+    fontSize: 12,
+    color: colors.text,
   },
   authTextGhost: {
-    fontFamily: 'SpaceMono',
-    fontSize: 10,
-    color: colors.text,
-    textTransform: 'uppercase',
+    fontFamily: fonts.sansBold,
+    fontSize: 12,
+    color: colors.headerText,
   },
 });

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 
 import { ThumbnailCard } from '@/components/editorial/ThumbnailCard';
-import { colors, portalBox, spacing } from '@/constants/theme';
+import { colors, portalBox, spacing, fonts } from '@/constants/theme';
 import type { Track } from '@/types/models';
 
 type SidebarSection = {
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
   },
   sectionTitle: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 9,
     letterSpacing: 0.8,
     color: colors.accentLine,

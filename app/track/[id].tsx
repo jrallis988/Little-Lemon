@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { WaveformPlayer } from '@/components/audio/WaveformPlayer';
 import { StaticBackground } from '@/components/ui/StaticBackground';
-import { colors, spacing, typography } from '@/constants/theme';
+import { colors, spacing, typography, fonts } from '@/constants/theme';
 import { useAudioBarInset } from '@/hooks/useAudioBarInset';
 import { DEMO_COMMENTS, DEMO_TRACKS } from '@/lib/demoData';
 

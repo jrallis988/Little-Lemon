@@ -3,7 +3,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { BandCard } from '@/components/ui/BandCard';
 import { StaticBackground } from '@/components/ui/StaticBackground';
-import { colors, spacing, typography } from '@/constants/theme';
+import { colors, spacing, typography, fonts } from '@/constants/theme';
 import { useAudioBarInset } from '@/hooks/useAudioBarInset';
 import { DEMO_ARTISTS, DEMO_TRACKS, GEOGRAPHIES, SCENES } from '@/lib/demoData';
 

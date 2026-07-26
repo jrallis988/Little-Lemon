@@ -1,7 +1,7 @@
 import { Link } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { colors } from '@/constants/theme';
+import { colors, fonts } from '@/constants/theme';
 import type { UserProfile } from '@/types/models';
 
 type DirectoryArtistRowProps = {
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   thumbMark: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 12,
     color: colors.phosphorDim,
   },
@@ -92,14 +92,14 @@ const styles = StyleSheet.create({
     minWidth: 0,
   },
   name: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 12,
     letterSpacing: 0.3,
     color: colors.text,
     textTransform: 'uppercase',
   },
   origin: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 8,
     letterSpacing: 0.3,
     color: colors.textMuted,
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
   },
   tagText: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 8,
     letterSpacing: 0.4,
     color: colors.phosphorDim,
@@ -130,14 +130,14 @@ const styles = StyleSheet.create({
     minWidth: 64,
   },
   metricLabel: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 7,
     letterSpacing: 0.5,
     color: colors.textDim,
     textTransform: 'uppercase',
   },
   metricValue: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 12,
     color: colors.phosphor,
   },

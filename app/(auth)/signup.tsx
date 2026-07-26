@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 
 import { StaticBackground } from '@/components/ui/StaticBackground';
-import { colors, spacing, typography } from '@/constants/theme';
+import { colors, spacing, typography, fonts } from '@/constants/theme';
 import { useUserStore } from '@/store/useUserStore';
 import type { AccountRole } from '@/types/models';
 

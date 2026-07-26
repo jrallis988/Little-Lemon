@@ -1,3 +1,11 @@
+import {
+  Barlow_400Regular,
+  Barlow_700Bold,
+} from '@expo-google-fonts/barlow';
+import {
+  BarlowCondensed_600SemiBold,
+  BarlowCondensed_700Bold,
+} from '@expo-google-fonts/barlow-condensed';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
@@ -9,7 +17,7 @@ import { Audio } from 'expo-av';
 import 'react-native-reanimated';
 
 import { GlobalAudioBar } from '@/components/audio/GlobalAudioBar';
-import { colors } from '@/constants/theme';
+import { colors, fonts } from '@/constants/theme';
 import { useUserStore } from '@/store/useUserStore';
 
 export { ErrorBoundary } from 'expo-router';
@@ -45,7 +53,10 @@ async function configureAudioSession() {
 export default function RootLayout() {
   const hydrate = useUserStore((s) => s.hydrate);
   const [loaded, error] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    [fonts.sans]: Barlow_400Regular,
+    [fonts.sansBold]: Barlow_700Bold,
+    [fonts.condensed]: BarlowCondensed_600SemiBold,
+    [fonts.condensedBold]: BarlowCondensed_700Bold,
   });
 
   useEffect(() => {
@@ -69,17 +80,17 @@ export default function RootLayout() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <StatusBar style="light" />
+      <StatusBar style="dark" />
       <View style={styles.root}>
         <Stack
           screenOptions={{
-            headerStyle: { backgroundColor: colors.backgroundElevated },
-            headerTintColor: colors.phosphor,
+            headerStyle: { backgroundColor: colors.header },
+            headerTintColor: colors.headerText,
             headerTitleStyle: {
-              fontFamily: 'SpaceMono',
+              fontFamily: fonts.sansBold,
               fontSize: 14,
             },
-            contentStyle: { backgroundColor: colors.background },
+            contentStyle: { backgroundColor: colors.backgroundElevated },
             headerShadowVisible: false,
           }}
         >
@@ -87,11 +98,11 @@ export default function RootLayout() {
           <Stack.Screen name="(auth)" options={{ headerShown: false }} />
           <Stack.Screen
             name="artist/[id]"
-            options={{ title: 'ARTIST', presentation: 'card' }}
+            options={{ title: 'Artist', presentation: 'card' }}
           />
           <Stack.Screen
             name="track/[id]"
-            options={{ title: 'TRACK', presentation: 'card' }}
+            options={{ title: 'Track', presentation: 'card' }}
           />
         </Stack>
         <GlobalAudioBar />
@@ -103,6 +114,6 @@ export default function RootLayout() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: colors.backgroundElevated,
   },
 });

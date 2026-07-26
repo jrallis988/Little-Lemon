@@ -8,12 +8,11 @@ import {
 import { Link } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { colors, spacing, typography } from '@/constants/theme';
+import { colors, fonts, spacing } from '@/constants/theme';
 import { useAudioStore } from '@/store/useAudioStore';
 
 /**
- * Sticky bottom-docked player — mounted in the root layout so it persists
- * across tabs and stack routes (artist/[id], track/[id]).
+ * Sticky bottom-docked player — persists across tabs and stack routes.
  */
 export function GlobalAudioBar() {
   const insets = useSafeAreaInsets();
@@ -24,42 +23,39 @@ export function GlobalAudioBar() {
   }
 
   return (
-    <View
-      pointerEvents="box-none"
-      style={styles.host}
-    >
+    <View pointerEvents="box-none" style={styles.host}>
       <View
         style={[styles.dock, { paddingBottom: Math.max(insets.bottom, spacing.sm) }]}
       >
-      <View style={styles.progressTrack}>
-        <View
-          style={[
-            styles.progressFill,
-            { width: `${progress * 100}%` as DimensionValue },
-          ]}
-        />
-      </View>
-      <View style={styles.row}>
-        <View style={styles.art}>
-          <Text style={styles.artMark}>◆</Text>
+        <View style={styles.progressTrack}>
+          <View
+            style={[
+              styles.progressFill,
+              { width: `${progress * 100}%` as DimensionValue },
+            ]}
+          />
         </View>
-        <Link href={`/track/${currentTrack.id}`} asChild>
-          <Pressable style={styles.meta}>
-            <Text style={styles.title} numberOfLines={1}>
-              {currentTrack.title}
-            </Text>
-            <Text style={styles.artist} numberOfLines={1}>
-              {currentTrack.artistName}
-            </Text>
+        <View style={styles.row}>
+          <View style={styles.art}>
+            <Text style={styles.artMark}>▶</Text>
+          </View>
+          <Link href={`/track/${currentTrack.id}`} asChild>
+            <Pressable style={styles.meta}>
+              <Text style={styles.title} numberOfLines={1}>
+                {currentTrack.title}
+              </Text>
+              <Text style={styles.artist} numberOfLines={1}>
+                {currentTrack.artistName}
+              </Text>
+            </Pressable>
+          </Link>
+          <Pressable onPress={togglePlay} style={styles.control} hitSlop={10}>
+            <Text style={styles.controlLabel}>{isPlaying ? '||' : '▶'}</Text>
           </Pressable>
-        </Link>
-        <Pressable onPress={togglePlay} style={styles.control} hitSlop={10}>
-          <Text style={styles.controlLabel}>{isPlaying ? '||' : '▶'}</Text>
-        </Pressable>
-        <Pressable onPress={skipNext} style={styles.control} hitSlop={10}>
-          <Text style={styles.controlLabel}>»»</Text>
-        </Pressable>
-      </View>
+          <Pressable onPress={skipNext} style={styles.control} hitSlop={10}>
+            <Text style={styles.controlLabel}>»»</Text>
+          </Pressable>
+        </View>
       </View>
     </View>
   );
@@ -73,7 +69,7 @@ const styles = StyleSheet.create({
     elevation: 24,
   },
   dock: {
-    backgroundColor: colors.backgroundElevated,
+    backgroundColor: colors.surface,
     borderTopWidth: 1,
     borderTopColor: colors.border,
   },
@@ -83,7 +79,7 @@ const styles = StyleSheet.create({
   },
   progressFill: {
     height: 2,
-    backgroundColor: colors.phosphor,
+    backgroundColor: colors.link,
   },
   row: {
     flexDirection: 'row',
@@ -96,14 +92,14 @@ const styles = StyleSheet.create({
   art: {
     width: 40,
     height: 40,
-    backgroundColor: colors.surface,
+    backgroundColor: colors.surfaceRaised,
     borderWidth: 1,
     borderColor: colors.border,
     alignItems: 'center',
     justifyContent: 'center',
   },
   artMark: {
-    color: colors.phosphorDim,
+    color: colors.link,
     fontSize: 12,
   },
   meta: {
@@ -111,11 +107,13 @@ const styles = StyleSheet.create({
     gap: 2,
   },
   title: {
-    ...typography.caption,
+    fontFamily: fonts.sansBold,
+    fontSize: 13,
     color: colors.text,
   },
   artist: {
-    ...typography.monoTiny,
+    fontFamily: fonts.sans,
+    fontSize: 12,
     color: colors.textMuted,
   },
   control: {
@@ -125,7 +123,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   controlLabel: {
-    ...typography.caption,
-    color: colors.phosphor,
+    fontFamily: fonts.sansBold,
+    fontSize: 14,
+    color: colors.link,
   },
 });

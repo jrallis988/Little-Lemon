@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { ArtistArchiveMeta } from '@/components/artist/ArtistArchiveMeta';
 import { WaveformPlayer } from '@/components/audio/WaveformPlayer';
 import { StaticBackground } from '@/components/ui/StaticBackground';
-import { colors, portalBox, spacing } from '@/constants/theme';
+import { colors, portalBox, spacing, fonts } from '@/constants/theme';
 import { useAudioBarInset } from '@/hooks/useAudioBarInset';
 import { DEMO_ARTISTS, DEMO_TRACKS } from '@/lib/demoData';
 
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   artworkMark: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 28,
     color: colors.phosphorDim,
   },
@@ -136,21 +136,21 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   kicker: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 8,
     letterSpacing: 0.8,
     color: colors.phosphorDim,
     textTransform: 'uppercase',
   },
   name: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 18,
     letterSpacing: 0.5,
     color: colors.text,
     textTransform: 'uppercase',
   },
   rawStat: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 9,
     letterSpacing: 0.4,
     color: colors.phosphor,
@@ -170,14 +170,14 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
   },
   sectionTitle: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 9,
     letterSpacing: 0.8,
     color: colors.phosphor,
     textTransform: 'uppercase',
   },
   sectionCount: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 9,
     color: colors.textDim,
   },
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
   },
   empty: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 10,
     letterSpacing: 0.3,
     color: colors.textDim,

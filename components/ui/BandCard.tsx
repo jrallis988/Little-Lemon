@@ -1,8 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Link } from 'expo-router';
 
-import { colors } from '@/constants/theme';
-
+import { colors, fonts } from '@/constants/theme';
 export type BandCardProps = {
   id: string;
   name: string;
@@ -79,7 +78,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   artworkMark: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 8,
     color: colors.phosphorDim,
     letterSpacing: 0.4,
@@ -90,14 +89,14 @@ const styles = StyleSheet.create({
     minWidth: 0,
   },
   name: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 11,
     letterSpacing: 0.3,
     color: colors.text,
     textTransform: 'uppercase',
   },
   scene: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 8,
     letterSpacing: 0.3,
     color: colors.textMuted,
@@ -108,12 +107,12 @@ const styles = StyleSheet.create({
     gap: 1,
   },
   metricValue: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 11,
     color: colors.copper,
   },
   metricLabel: {
-    fontFamily: 'SpaceMono',
+    fontFamily: fonts.sans,
     fontSize: 8,
     letterSpacing: 0.4,
     color: colors.textDim,

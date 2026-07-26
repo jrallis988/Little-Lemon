@@ -1,7 +1,7 @@
 import { router } from 'expo-router';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import { colors } from '@/constants/theme';
+import { colors, fonts } from '@/constants/theme';
 
 export const EDITORIAL_TABS = [
   'Featured',
@@ -20,7 +20,7 @@ type EditorialSubNavProps = {
 };
 
 /**
- * PureVolume secondary toolbar — full-bleed segmented tabs under the header.
+ * PureVolume secondary toolbar — light gray segmented tabs under black header.
  */
 export function EditorialSubNav({ active, onChange }: EditorialSubNavProps) {
   return (
@@ -64,11 +64,9 @@ export function EditorialSubNav({ active, onChange }: EditorialSubNavProps) {
 
 const styles = StyleSheet.create({
   bar: {
-    backgroundColor: colors.surfaceRaised,
+    backgroundColor: colors.toolbar,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border,
-    borderTopWidth: 1,
-    borderTopColor: colors.borderSubtle,
+    borderBottomColor: colors.toolbarEdge,
   },
   row: {
     flexDirection: 'row',
@@ -80,27 +78,26 @@ const styles = StyleSheet.create({
   },
   tab: {
     paddingHorizontal: 14,
-    paddingVertical: 12,
-    backgroundColor: colors.surfaceRaised,
+    paddingVertical: 11,
+    backgroundColor: colors.toolbar,
     justifyContent: 'center',
   },
   tabActive: {
-    backgroundColor: colors.backgroundElevated,
+    backgroundColor: colors.toolbarActive,
     borderTopWidth: 2,
-    borderTopColor: colors.phosphor,
+    borderTopColor: colors.link,
   },
   tabText: {
-    fontFamily: 'SpaceMono',
-    fontSize: 11,
-    letterSpacing: 0.2,
-    color: colors.textDim,
+    fontFamily: fonts.sans,
+    fontSize: 13,
+    color: colors.textMuted,
   },
   tabTextActive: {
     color: colors.text,
-    fontWeight: '700',
+    fontFamily: fonts.sansBold,
   },
   divider: {
     width: 1,
-    backgroundColor: colors.border,
+    backgroundColor: colors.toolbarEdge,
   },
 });

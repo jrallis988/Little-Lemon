@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 
-import { colors, spacing } from '@/constants/theme';
+import { colors, spacing, fonts } from '@/constants/theme';
 import { useAudioStore } from '@/store/useAudioStore';
 import type { Track, WaveformComment } from '@/types/models';
 
@@ -189,36 +189,28 @@ const styles = StyleSheet.create({
     borderRadius: 0,
   },
   playLabel: {
-    fontFamily: 'SpaceMono',
-    fontSize: 11,
-    letterSpacing: 0.4,
-    color: colors.accentLine,
-    textTransform: 'uppercase',
+    fontFamily: fonts.sansBold,
+    fontSize: 12,
+    color: colors.link,
   },
   titles: {
     flex: 1,
     gap: 2,
   },
   title: {
-    fontFamily: 'SpaceMono',
-    fontSize: 12,
-    letterSpacing: 0.3,
+    fontFamily: fonts.sansBold,
+    fontSize: 14,
     color: colors.text,
-    textTransform: 'uppercase',
   },
   artist: {
-    fontFamily: 'SpaceMono',
-    fontSize: 9,
-    letterSpacing: 0.3,
+    fontFamily: fonts.sans,
+    fontSize: 12,
     color: colors.textMuted,
-    textTransform: 'uppercase',
   },
   time: {
-    fontFamily: 'SpaceMono',
-    fontSize: 9,
-    letterSpacing: 0.3,
+    fontFamily: fonts.sans,
+    fontSize: 11,
     color: colors.textDim,
-    textTransform: 'uppercase',
   },
   waveWrap: {
     height: 64,
@@ -263,17 +255,14 @@ const styles = StyleSheet.create({
     gap: spacing.md,
   },
   stat: {
-    fontFamily: 'SpaceMono',
-    fontSize: 9,
-    letterSpacing: 0.6,
-    color: colors.copper,
-    textTransform: 'uppercase',
+    fontFamily: fonts.sansBold,
+    fontSize: 11,
+    color: colors.text,
   },
   statMuted: {
-    fontFamily: 'SpaceMono',
-    fontSize: 9,
-    letterSpacing: 0.6,
-    color: colors.textDim,
-    textTransform: 'uppercase',
+    fontFamily: fonts.sans,
+    fontSize: 11,
+    color: colors.textMuted,
   },
 });
+
