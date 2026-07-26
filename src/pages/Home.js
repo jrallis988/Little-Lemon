@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { highlights, programAreas } from "../data/programs";
+import { focusAreas, highlights } from "../data/programs";
 
 function Home() {
   return (
@@ -83,7 +83,7 @@ function Home() {
             </p>
           </div>
           <div className="area-grid">
-            {programAreas.slice(0, 4).map((area) => (
+            {focusAreas.slice(0, 4).map((area) => (
               <article key={area.id} className="area-item">
                 <h3>{area.title}</h3>
                 <p>{area.description}</p>

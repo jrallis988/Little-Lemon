@@ -239,11 +239,25 @@ function Admissions() {
                   onBlur={formik.handleBlur}
                 >
                   <option value="">Select one</option>
-                  <option value="health">Health Sciences</option>
-                  <option value="stem">STEM &amp; Manufacturing</option>
-                  <option value="business">Business &amp; Technology</option>
-                  <option value="liberal-arts">Liberal Arts &amp; Transfer</option>
-                  <option value="career">Career &amp; Technical</option>
+                  <option value="arts-humanities-communication-and-design">
+                    Arts, Humanities, Communication and Design
+                  </option>
+                  <option value="business">Business</option>
+                  <option value="health-sciences-and-services">
+                    Health Sciences and Services
+                  </option>
+                  <option value="hospitality-and-culinary">
+                    Hospitality and Culinary
+                  </option>
+                  <option value="industry-and-transportation">
+                    Industry and Transportation
+                  </option>
+                  <option value="social-educational-and-behavioral-science">
+                    Social, Educational and Behavioral Science
+                  </option>
+                  <option value="stem-and-advanced-manufacturing">
+                    STEM and Advanced Manufacturing
+                  </option>
                   <option value="unsure">Not sure yet</option>
                 </select>
                 {formik.touched.interest && formik.errors.interest ? (
