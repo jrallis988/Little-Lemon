@@ -12,7 +12,7 @@ function ProgramDetail() {
         <div className="container program-empty">
           <h1>Program not found</h1>
           <p>That program isn’t in our catalog. Browse all programs instead.</p>
-          <Link className="btn btn-navy" to="/academics">
+          <Link className="btn btn-primary" to="/academics">
             Back to Academics
           </Link>
         </div>
@@ -32,6 +32,18 @@ function ProgramDetail() {
         copy={`${program.credential} · ${program.location} Campus`}
         image={program.image || "/images/students.jpg"}
         compact
+        actions={[
+          {
+            label: "Apply Now",
+            to: "/admissions/how-to-apply",
+            className: "btn btn-gold",
+          },
+          {
+            label: "Browse Programs",
+            to: "/academics",
+            className: "btn btn-ghost-light",
+          },
+        ]}
       />
 
       <section className="section">
@@ -39,21 +51,30 @@ function ProgramDetail() {
           <div className="program-detail-main">
             <p className="eyebrow">Program overview</p>
             <h2>What you’ll study</h2>
+            <p>{program.summary}</p>
             <p>
               The {program.title} {program.credential.toLowerCase()} at White
-              Mountains Community College prepares students through a{" "}
-              {program.kind.toLowerCase()} pathway grounded in{" "}
+              Mountains Community College is a {program.kind.toLowerCase()} pathway
+              grounded in{" "}
               {areas.map((area) => area.title).join(" and ").toLowerCase() ||
                 "career and transfer readiness"}
               . Faculty combine academic rigor with practical learning so you can
               move into the workforce or continue to a four-year institution.
             </p>
 
+            <h3>What you can expect</h3>
+            <ul className="check-list">
+              {(program.outcomes || []).map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+
             <h3>At a glance</h3>
             <ul className="check-list">
               <li>Credential: {program.credential}</li>
               <li>Program type: {program.kind}</li>
               <li>Campus location: {program.location}</li>
+              <li>Learning format: {program.format}</li>
               <li>
                 Focus area:{" "}
                 {areas.map((area) => area.title).join(", ") || "General studies"}
@@ -107,7 +128,7 @@ function ProgramDetail() {
             </p>
           </div>
           <Link
-            className="btn btn-navy"
+            className="btn btn-primary"
             to={areas[0] ? `/academics?focus=${areas[0].id}` : "/academics"}
           >
             View Catalog

@@ -34,6 +34,18 @@ function AdmissionsHub() {
         title="Begin the process."
         copy="Whether you’re starting college for the first time, returning to finish, transferring credits, or preparing for a new career — White Mountains Community College can help you take the next step."
         image="/images/campus-lobby.jpg"
+        actions={[
+          {
+            label: "Apply Now",
+            to: "/admissions/how-to-apply",
+            className: "btn btn-gold",
+          },
+          {
+            label: "Visit Campus",
+            to: "/admissions/visit",
+            className: "btn btn-ghost-light",
+          },
+        ]}
       />
       <SectionNav label="Admissions section" items={admissionsNav} />
 
@@ -69,7 +81,7 @@ function AdmissionsHub() {
               <li>Berlin campus and Littleton Academic Center access</li>
               <li>Transfer pathways across New England</li>
             </ul>
-            <Link className="btn btn-navy" to="/admissions/how-to-apply">
+            <Link className="btn btn-primary" to="/admissions/how-to-apply">
               Start Your Application
             </Link>
           </div>

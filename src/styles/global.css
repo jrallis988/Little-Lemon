@@ -158,7 +158,7 @@ main {
   color: var(--gold);
 }
 
-.utility-mygbcc {
+.utility-portal {
   background: var(--gold);
   color: var(--navy) !important;
   font-weight: 800;
@@ -166,7 +166,7 @@ main {
   margin-left: 0.25rem;
 }
 
-.utility-mygbcc:hover {
+.utility-portal:hover {
   background: var(--gold-deep);
   color: var(--navy) !important;
 }
@@ -188,7 +188,7 @@ main {
 }
 
 .brand-logo {
-  width: clamp(160px, 22vw, 220px);
+  width: clamp(180px, 24vw, 260px);
   height: auto;
   display: block;
 }
@@ -322,12 +322,12 @@ main {
   background: var(--gold-deep);
 }
 
-.btn-navy {
+.btn-primary {
   background: var(--navy);
   color: var(--white);
 }
 
-.btn-navy:hover {
+.btn-primary:hover {
   background: var(--navy-soft);
 }
 
@@ -406,9 +406,9 @@ main {
   z-index: 2;
   background: linear-gradient(
     90deg,
-    rgba(0, 72, 51, 0.28) 0%,
-    rgba(0, 72, 51, 0.08) 45%,
-    rgba(0, 0, 0, 0.12) 100%
+    rgba(0, 72, 51, 0.42) 0%,
+    rgba(0, 72, 51, 0.14) 45%,
+    rgba(0, 0, 0, 0.18) 100%
   );
   pointer-events: none;
 }
@@ -565,7 +565,7 @@ main {
 
 .quick-links a {
   text-align: center;
-  padding: 1.1rem 0.75rem;
+  padding: 0.85rem 0.75rem;
   font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -623,8 +623,8 @@ main {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(115deg, rgba(1, 50, 36, 0.82) 0%, rgba(0, 72, 51, 0.55) 48%, rgba(47, 122, 104, 0.28) 100%),
-    linear-gradient(0deg, rgba(1, 50, 36, 0.55) 0%, transparent 45%);
+    linear-gradient(115deg, rgba(1, 50, 36, 0.88) 0%, rgba(0, 72, 51, 0.62) 48%, rgba(47, 122, 104, 0.34) 100%),
+    linear-gradient(0deg, rgba(1, 50, 36, 0.6) 0%, transparent 45%);
 }
 
 .page-hero h1 {
@@ -703,6 +703,18 @@ main {
   color: var(--white);
 }
 
+.stats-band-light {
+  background:
+    linear-gradient(180deg, rgba(238, 245, 241, 0.95), rgba(255, 255, 255, 0.9));
+  color: var(--ink);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.stats-band-light .section-intro {
+  margin-bottom: 2rem;
+}
+
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -717,16 +729,28 @@ main {
   line-height: 1;
 }
 
+.stats-band-light .stat-value {
+  color: var(--navy);
+}
+
 .stat-label {
   margin: 0.55rem 0 0.2rem;
   font-weight: 600;
   color: var(--white);
 }
 
+.stats-band-light .stat-label {
+  color: var(--navy);
+}
+
 .stat-detail {
   margin: 0;
   color: rgba(255, 255, 255, 0.7);
   font-size: 0.92rem;
+}
+
+.stats-band-light .stat-detail {
+  color: var(--muted);
 }
 
 .split {

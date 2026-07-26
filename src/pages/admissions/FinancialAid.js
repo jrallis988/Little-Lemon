@@ -11,6 +11,19 @@ function FinancialAid() {
         title="Financial aid"
         copy="Many WMCC students receive financial aid. Start with the FAFSA and let our team guide the next steps."
         image="/images/campus-lobby.jpg"
+        actions={[
+          {
+            label: "Start FAFSA",
+            to: "https://studentaid.gov/h/apply-for-aid/fafsa",
+            className: "btn btn-gold",
+            external: true,
+          },
+          {
+            label: "View Tuition",
+            to: "/admissions/tuition",
+            className: "btn btn-ghost-light",
+          },
+        ]}
       />
       <SectionNav label="Admissions section" items={admissionsNav} />
 
@@ -99,7 +112,7 @@ function FinancialAid() {
             </article>
           </div>
           <div className="section-cta">
-            <Link className="btn btn-navy" to="/admissions/tuition">
+            <Link className="btn btn-primary" to="/admissions/tuition">
               View Tuition Rates
             </Link>
           </div>

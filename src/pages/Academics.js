@@ -147,7 +147,7 @@ function Academics() {
             <div className="filter-actions">
               <button
                 type="button"
-                className="btn btn-navy"
+                className="btn btn-primary"
                 onClick={clearFilters}
               >
                 Clear
@@ -293,7 +293,7 @@ function Academics() {
               Riverside Drive.
             </p>
           </div>
-          <Link className="btn btn-navy" to="/admissions">
+          <Link className="btn btn-primary" to="/admissions">
             Talk to Admissions
           </Link>
         </div>

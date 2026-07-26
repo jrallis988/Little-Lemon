@@ -12,6 +12,18 @@ function Visit() {
         title="Plan your visit"
         copy="See campus, learn about programs, and get questions answered by college staff — through tours, Open Houses, and Express Admissions Days."
         image="/images/campus-exterior.jpg"
+        actions={[
+          {
+            label: "Request Info",
+            to: "/contact",
+            className: "btn btn-gold",
+          },
+          {
+            label: "Apply Now",
+            to: "/admissions/how-to-apply",
+            className: "btn btn-ghost-light",
+          },
+        ]}
       />
       <SectionNav label="Admissions section" items={admissionsNav} />
 

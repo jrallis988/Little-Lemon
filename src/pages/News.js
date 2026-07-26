@@ -29,7 +29,7 @@ function News() {
 
           <div className="section-cta">
             <a
-              className="btn btn-navy"
+              className="btn btn-primary"
               href="https://www.wmcc.edu/"
               target="_blank"
               rel="noreferrer"

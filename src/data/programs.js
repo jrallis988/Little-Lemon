@@ -53,9 +53,11 @@ const img = {
   science: "/images/science-lab.jpg",
   littleton: "/images/littleton.jpg",
   campus: "/images/campus-exterior.jpg",
+  automotive: "/images/automotive.jpg",
+  trades: "/images/trades.jpg",
 };
 
-export const programs = [
+const rawPrograms = [
   {
     id: "accounting",
     title: "Accounting",
@@ -84,7 +86,7 @@ export const programs = [
     focusAreas: ["industry-and-transportation"],
     location: "Berlin",
     url: "https://www.wmcc.edu/programs/",
-    image: img.diesel,
+    image: img.automotive,
   },
   {
     id: "automotive-technology-certificate",
@@ -94,7 +96,7 @@ export const programs = [
     focusAreas: ["industry-and-transportation"],
     location: "Berlin",
     url: "https://www.wmcc.edu/programs/",
-    image: img.diesel,
+    image: img.automotive,
   },
   {
     id: "baking-and-pastry-arts",
@@ -424,7 +426,7 @@ export const programs = [
     focusAreas: ["industry-and-transportation"],
     location: "Berlin",
     url: "https://www.wmcc.edu/programs/",
-    image: img.welding,
+    image: img.trades,
   },
   {
     id: "veterinary-assistant",
@@ -437,6 +439,99 @@ export const programs = [
     image: img.science,
   },
 ];
+
+
+const focusCopy = {
+  "arts-humanities-communication-and-design": {
+    summary:
+      "Build a flexible foundation for transfer or career pathways in the arts, humanities, and communication fields.",
+    outcomes: [
+      "Transfer-ready coursework aligned with four-year pathways",
+      "Strong writing, research, and communication skills",
+      "Advising support for major and transfer planning",
+    ],
+    format: "Day, evening, hybrid, and online options depending on course",
+  },
+  business: {
+    summary:
+      "Learn practical accounting and business skills for workplace readiness or continued study.",
+    outcomes: [
+      "Core business and accounting competencies",
+      "Preparation for entry-level roles or transfer",
+      "Applied projects tied to real workplace scenarios",
+    ],
+    format: "Flexible scheduling across Berlin, Littleton, and online formats",
+  },
+  "health-sciences-and-services": {
+    summary:
+      "Prepare for patient-centered careers through classroom learning and hands-on clinical practice.",
+    outcomes: [
+      "Clinical readiness for healthcare and allied health settings",
+      "Professional standards and patient-care foundations",
+      "Clear next steps toward licensure or advanced study where applicable",
+    ],
+    format: "Campus-based labs with clinical/practical components",
+  },
+  "hospitality-and-culinary": {
+    summary:
+      "Train for kitchens, bakeries, and hospitality operations with applied, production-focused coursework.",
+    outcomes: [
+      "Hands-on culinary and food-service technique",
+      "Industry-ready workplace habits and teamwork",
+      "Pathways into restaurants, resorts, and related careers",
+    ],
+    format: "Lab-intensive courses on the Berlin campus",
+  },
+  "industry-and-transportation": {
+    summary:
+      "Develop technical skills for high-demand trades through shop-based learning and employer-aligned training.",
+    outcomes: [
+      "Hands-on shop and equipment experience",
+      "Safety, diagnostics, and technician fundamentals",
+      "Direct routes into regional industry and transportation careers",
+    ],
+    format: "Primarily in-person labs and shops on the Berlin campus",
+  },
+  "social-educational-and-behavioral-science": {
+    summary:
+      "Prepare for education, public service, and human services roles with classroom and field-ready skills.",
+    outcomes: [
+      "Foundations in teaching, justice, or human services practice",
+      "Communication and community-focused competencies",
+      "Transfer and career options across the North Country",
+    ],
+    format: "Berlin, Littleton, and flexible course formats",
+  },
+  "stem-and-advanced-manufacturing": {
+    summary:
+      "Study science, conservation, and technology pathways that connect field learning with regional opportunity.",
+    outcomes: [
+      "STEM foundations for work or transfer",
+      "Applied problem-solving and technical literacy",
+      "Pathways into environmental, conservation, and IT-related roles",
+    ],
+    format: "Campus, field, and online options by course",
+  },
+};
+
+export const programs = rawPrograms.map((program) => {
+  const focus = program.focusAreas[0];
+  const copy = focusCopy[focus] || {
+    summary: `Explore the ${program.title} pathway at White Mountains Community College.`,
+    outcomes: [
+      "Career-focused coursework with faculty support",
+      "Advising for transfer or workforce goals",
+      "Flexible formats designed for North Country students",
+    ],
+    format: "Berlin campus with online and hybrid options where available",
+  };
+  return {
+    ...program,
+    summary: copy.summary,
+    outcomes: copy.outcomes,
+    format: copy.format,
+  };
+});
 
 export const programTypes = [
   { id: "all", label: "All Programs" },

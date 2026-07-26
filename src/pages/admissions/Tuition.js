@@ -12,6 +12,18 @@ function Tuition() {
         title="Tuition & fees"
         copy="White Mountains Community College provides a quality education at an affordable price. Rates below are for the 2025–2026 academic year."
         image="/images/graduation.jpg"
+        actions={[
+          {
+            label: "Explore Financial Aid",
+            to: "/admissions/financial-aid",
+            className: "btn btn-gold",
+          },
+          {
+            label: "How to Apply",
+            to: "/admissions/how-to-apply",
+            className: "btn btn-ghost-light",
+          },
+        ]}
       />
       <SectionNav label="Admissions section" items={admissionsNav} />
 
@@ -70,7 +82,7 @@ function Tuition() {
               Program-specific expenses may include books, tools, uniforms, and
               equipment. Contact the Welcome Center for estimates and next steps.
             </p>
-            <Link className="btn btn-navy" to="/admissions/financial-aid">
+            <Link className="btn btn-primary" to="/admissions/financial-aid">
               Explore Financial Aid
             </Link>
           </div>

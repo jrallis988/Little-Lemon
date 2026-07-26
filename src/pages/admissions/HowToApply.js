@@ -12,6 +12,18 @@ function HowToApply() {
         title="How to apply"
         copy="Applying is straightforward — whether you are a first-time college student, a transfer student, or someone who just wants to take a course or two."
         image="/images/students.jpg"
+        actions={[
+          {
+            label: "Browse Programs",
+            to: "/academics",
+            className: "btn btn-gold",
+          },
+          {
+            label: "Financial Aid",
+            to: "/admissions/financial-aid",
+            className: "btn btn-ghost-light",
+          },
+        ]}
       />
       <SectionNav label="Admissions section" items={admissionsNav} />
 
@@ -89,7 +101,7 @@ function HowToApply() {
             <Link className="btn btn-gold" to="/academics">
               Browse Programs
             </Link>
-            <Link className="btn btn-navy" to="/admissions/financial-aid">
+            <Link className="btn btn-primary" to="/admissions/financial-aid">
               Financial Aid
             </Link>
           </div>

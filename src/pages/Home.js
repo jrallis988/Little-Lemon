@@ -7,24 +7,12 @@ function Home() {
     <>
       <HeroCarousel />
 
-      <section className="quick-links">
+      <section className="quick-links" aria-label="Quick links">
         <div className="container quick-links-grid">
           <Link to="/admissions/visit">Visit</Link>
           <Link to="/admissions/how-to-apply">Apply</Link>
           <Link to="/academics">Explore</Link>
           <Link to="/contact">Request Info</Link>
-        </div>
-      </section>
-
-      <section className="section stats-band">
-        <div className="container stats-grid">
-          {highlights.map((item) => (
-            <div key={item.label} className="stat">
-              <p className="stat-value">{item.value}</p>
-              <p className="stat-label">{item.label}</p>
-              <p className="stat-detail">{item.detail}</p>
-            </div>
-          ))}
         </div>
       </section>
 
@@ -57,6 +45,24 @@ function Home() {
         </div>
       </section>
 
+      <section className="section stats-band stats-band-light">
+        <div className="container">
+          <div className="section-intro narrow">
+            <p className="eyebrow">At a glance</p>
+            <h2>Affordable access across the North Country.</h2>
+          </div>
+          <div className="stats-grid">
+            {highlights.map((item) => (
+              <div key={item.label} className="stat">
+                <p className="stat-value">{item.value}</p>
+                <p className="stat-label">{item.label}</p>
+                <p className="stat-detail">{item.detail}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="section section-tint">
         <div className="container">
           <div className="section-intro">
@@ -76,7 +82,7 @@ function Home() {
             ))}
           </div>
           <div className="section-cta">
-            <Link className="btn btn-navy" to="/academics">
+            <Link className="btn btn-primary" to="/academics">
               View All Programs
             </Link>
           </div>

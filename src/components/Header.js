@@ -72,7 +72,7 @@ function Header() {
             Faculty/Staff
           </a>
           <a
-            className="utility-mygbcc"
+            className="utility-portal"
             href="https://sis.ccsnh.edu/"
             target="_blank"
             rel="noreferrer"
@@ -86,10 +86,10 @@ function Header() {
         <Link to="/" className="brand" onClick={() => setOpen(false)}>
           <img
             className="brand-logo"
-            src="/images/wmcc-logo.png"
+            src="/images/wmcc-mark.svg"
             alt="White Mountains Community College"
-            width="220"
-            height="75"
+            width="280"
+            height="72"
           />
         </Link>
 

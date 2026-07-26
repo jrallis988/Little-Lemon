@@ -55,7 +55,7 @@ function Sitemap() {
       <PageHero
         brand="Sitemap"
         title="Find your way around WMCC."
-        copy="A full list of pages and programs on this site — organized like the NHTI and Great Bay college websites."
+        copy="A full list of pages and programs on this White Mountains Community College site."
         image="/images/campus-exterior.jpg"
         compact
       />
