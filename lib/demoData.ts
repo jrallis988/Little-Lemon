@@ -300,6 +300,83 @@ export const FEATURED_SPOTLIGHT: FeaturedSpotlight = {
   badge: 'FEATURED ARTIST',
 };
 
+/** PureVolume mosaic tiles — image-forward featured grid */
+export type FeatureTile = {
+  id: string;
+  artistId: string;
+  trackId?: string;
+  title: string;
+  subtitle: string;
+  size: 'hero' | 'secondary' | 'small' | 'promo';
+  tone: 'ash' | 'rust' | 'slate' | 'ember' | 'ink' | 'steel';
+};
+
+export const FEATURE_TILES: FeatureTile[] = [
+  {
+    id: 'tile-static-bloom',
+    artistId: 'artist-static-bloom',
+    trackId: 'track-snow-on-the-tape',
+    title: 'Static Bloom',
+    subtitle: "Exclusive stream — 'Snow on the Tape'",
+    size: 'hero',
+    tone: 'ash',
+  },
+  {
+    id: 'tile-chrome-petal',
+    artistId: 'artist-chrome-petal',
+    trackId: 'track-pixel-bruise',
+    title: 'Chrome Petal',
+    subtitle: 'The SV Q&A — Hyperpop in LA',
+    size: 'secondary',
+    tone: 'ember',
+  },
+  {
+    id: 'tile-blackout',
+    artistId: 'artist-blackout-relay',
+    trackId: 'track-blown-cone',
+    title: 'Blackout Relay',
+    subtitle: 'Watch now — basement hardcore',
+    size: 'small',
+    tone: 'ink',
+  },
+  {
+    id: 'tile-signal',
+    artistId: 'artist-signal-decay',
+    trackId: 'track-shift-change',
+    title: 'Signal Decay',
+    subtitle: 'From Detroit, MI',
+    size: 'small',
+    tone: 'steel',
+  },
+  {
+    id: 'tile-north',
+    artistId: 'artist-north-exit',
+    trackId: 'track-exit-ramp',
+    title: 'North Exit',
+    subtitle: 'Punk bands in NH',
+    size: 'small',
+    tone: 'rust',
+  },
+  {
+    id: 'tile-promo',
+    artistId: 'artist-lot-lights',
+    trackId: 'track-sodium-glow',
+    title: 'Archive Picks 2026',
+    subtitle: 'Human-curated · No algorithm',
+    size: 'promo',
+    tone: 'slate',
+  },
+];
+
+export const EVERYBODY_LISTENING = [
+  'track-pixel-bruise',
+  'track-snow-on-the-tape',
+  'track-blown-cone',
+  'track-bus-route-7',
+  'track-shift-change',
+  'track-sodium-glow',
+] as const;
+
 export const EDITORS_PICKS = [
   'track-pixel-bruise',
   'track-shift-change',

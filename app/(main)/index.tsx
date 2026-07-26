@@ -8,39 +8,43 @@ import {
 } from 'react-native';
 
 import { WaveformPlayer } from '@/components/audio/WaveformPlayer';
-import { EditorialSidebar } from '@/components/editorial/EditorialSidebar';
 import {
   EditorialSubNav,
   type EditorialTab,
 } from '@/components/editorial/EditorialSubNav';
-import { FeaturedHero } from '@/components/editorial/FeaturedHero';
+import { FeaturedMosaic } from '@/components/editorial/FeaturedMosaic';
+import { ListeningList } from '@/components/editorial/ListeningList';
+import { PortalHeader } from '@/components/editorial/PortalHeader';
+import { RecentlyFeaturedList } from '@/components/editorial/RecentlyFeaturedList';
 import { TrackChartRow } from '@/components/editorial/TrackChartRow';
 import { StaticBackground } from '@/components/ui/StaticBackground';
-import { colors, portalBox, spacing, typography } from '@/constants/theme';
+import { colors, portalBox, spacing } from '@/constants/theme';
 import { useAudioBarInset } from '@/hooks/useAudioBarInset';
 import {
   DEMO_COMMENTS,
   DEMO_TRACKS,
-  EDITORS_PICKS,
+  EVERYBODY_LISTENING,
   FEATURED_SPOTLIGHT,
   RECENTLY_FEATURED,
-  TRENDING_TRACKS,
   getTrackById,
   tracksByDownloads,
   tracksByReposts,
 } from '@/lib/demoData';
 
-const SPLIT_BREAKPOINT = 780;
+const WIDE = 900;
+const MID = 700;
 
 /**
- * PureVolume-inspired editorial homepage:
- * bordered hero → portal toolbar → split bordered feed + sidebar.
+ * PureVolume-structured editorial homepage:
+ * dark portal header → segmented toolbar → featured mosaic →
+ * Everybody's Listening | center feed | Recently Featured.
  */
 export default function EditorialScreen() {
   const [tab, setTab] = useState<EditorialTab>('Featured');
   const { width } = useWindowDimensions();
   const bottomInset = useAudioBarInset(spacing.tabBar);
-  const isWide = width >= SPLIT_BREAKPOINT;
+  const isWide = width >= WIDE;
+  const isMid = width >= MID;
 
   const spotlightTrack =
     getTrackById(FEATURED_SPOTLIGHT.trackId) ?? DEMO_TRACKS[0];
@@ -48,27 +52,19 @@ export default function EditorialScreen() {
     (c) => c.trackId === spotlightTrack.id,
   );
 
-  const sidebarSections = useMemo(
-    () => [
-      {
-        title: "EDITOR'S PICKS",
-        tracks: EDITORS_PICKS.map((id) => getTrackById(id)).filter(
-          (t): t is NonNullable<typeof t> => t != null,
-        ),
-      },
-      {
-        title: 'TRENDING',
-        tracks: TRENDING_TRACKS.map((id) => getTrackById(id)).filter(
-          (t): t is NonNullable<typeof t> => t != null,
-        ),
-      },
-      {
-        title: 'RECENTLY FEATURED',
-        tracks: RECENTLY_FEATURED.map((id) => getTrackById(id)).filter(
-          (t): t is NonNullable<typeof t> => t != null,
-        ),
-      },
-    ],
+  const listening = useMemo(
+    () =>
+      EVERYBODY_LISTENING.map((id) => getTrackById(id)).filter(
+        (t): t is NonNullable<typeof t> => t != null,
+      ),
+    [],
+  );
+
+  const recentlyFeatured = useMemo(
+    () =>
+      RECENTLY_FEATURED.map((id) => getTrackById(id)).filter(
+        (t): t is NonNullable<typeof t> => t != null,
+      ),
     [],
   );
 
@@ -78,89 +74,53 @@ export default function EditorialScreen() {
   return (
     <StaticBackground>
       <ScrollView
-        stickyHeaderIndices={[2]}
+        stickyHeaderIndices={[0, 1]}
         contentContainerStyle={{ paddingBottom: bottomInset }}
       >
-        <View style={styles.masthead}>
-          <Text style={styles.brand}>STATICVOLUME</Text>
-          <Text style={styles.tagline}>
-            HUMAN-CURATED DISCOVERY · DOWNLOADS COUNT · NO LIKES
-          </Text>
-        </View>
-
-        <FeaturedHero spotlight={FEATURED_SPOTLIGHT} track={spotlightTrack} />
-
+        <PortalHeader />
         <EditorialSubNav active={tab} onChange={setTab} />
 
-        <View style={[styles.split, isWide && styles.splitWide]}>
-          <View style={[styles.mainCol, isWide && styles.mainColWide]}>
-            {tab === 'Featured' ? (
-              <View style={styles.panel}>
-                <View style={styles.panelHeader}>
-                  <Text style={styles.panelKicker}>NOW PLAYING ON THE WIRE</Text>
-                  <Text style={styles.panelTitle}>FEATURED TRANSMISSION</Text>
+        {tab === 'Featured' ? (
+          <>
+            <FeaturedMosaic />
+
+            <View
+              style={[
+                styles.columns,
+                isWide && styles.columnsWide,
+                isMid && !isWide && styles.columnsMid,
+              ]}
+            >
+              {(isWide || isMid) && (
+                <View style={[styles.sideCol, isWide && styles.leftRail]}>
+                  <ListeningList tracks={listening} />
                 </View>
-                <View style={styles.panelBody}>
-                  <View style={styles.playerBlock}>
+              )}
+
+              <View style={[styles.mainCol, isWide && styles.mainWide]}>
+                {!isMid ? (
+                  <View style={styles.mobileListen}>
+                    <ListeningList tracks={listening.slice(0, 4)} />
+                  </View>
+                ) : null}
+
+                <View style={styles.panel}>
+                  <View style={styles.panelHeader}>
+                    <Text style={styles.panelTitle}>NOW PLAYING</Text>
+                  </View>
+                  <View style={styles.panelBody}>
                     <WaveformPlayer
                       track={spotlightTrack}
                       comments={spotlightComments}
                     />
                   </View>
-                  <Text style={styles.panelNote}>
-                    Primary engagement: downloads & reposts. Play counts remain
-                    private to the artist.
-                  </Text>
-                  <View style={styles.subHeader}>
-                    <Text style={styles.moreLabel}>MORE ON THE HOMEPAGE</Text>
+                </View>
+
+                <View style={styles.panel}>
+                  <View style={styles.panelHeader}>
+                    <Text style={styles.panelTitle}>LATEST ON THE WIRE</Text>
                   </View>
-                  {DEMO_TRACKS.filter((t) => t.id !== spotlightTrack.id)
-                    .slice(0, 3)
-                    .map((track, index) => (
-                      <TrackChartRow
-                        key={track.id}
-                        track={track}
-                        rank={index + 2}
-                        metric="downloads"
-                      />
-                    ))}
-                </View>
-              </View>
-            ) : null}
-
-            {tab === 'Top Songs' ? (
-              <View style={styles.panel}>
-                <View style={styles.panelHeader}>
-                  <Text style={styles.panelKicker}>CHARTS</Text>
-                  <Text style={styles.panelTitle}>TOP SONGS</Text>
-                </View>
-                <View style={styles.panelBody}>
-                  <Text style={styles.panelNote}>
-                    Ranked by reposts — scene propagation, not private plays.
-                  </Text>
-                  {topSongs.map((track, index) => (
-                    <TrackChartRow
-                      key={track.id}
-                      track={track}
-                      rank={index + 1}
-                      metric="reposts"
-                    />
-                  ))}
-                </View>
-              </View>
-            ) : null}
-
-            {tab === 'Top Downloads' ? (
-              <View style={styles.panel}>
-                <View style={styles.panelHeader}>
-                  <Text style={styles.panelKicker}>CHARTS</Text>
-                  <Text style={styles.panelTitle}>TOP DOWNLOADS</Text>
-                </View>
-                <View style={styles.panelBody}>
-                  <Text style={styles.panelNote}>
-                    Download count is the primary public engagement signal.
-                  </Text>
-                  {topDownloads.map((track, index) => (
+                  {DEMO_TRACKS.slice(0, 5).map((track, index) => (
                     <TrackChartRow
                       key={track.id}
                       track={track}
@@ -170,126 +130,168 @@ export default function EditorialScreen() {
                   ))}
                 </View>
               </View>
-            ) : null}
 
-          </View>
+              {isWide ? (
+                <View style={styles.rightRail}>
+                  <RecentlyFeaturedList tracks={recentlyFeatured} />
+                  <View style={{ height: spacing.sm }} />
+                  <View style={styles.albumBox}>
+                    <View style={styles.panelHeader}>
+                      <Text style={styles.panelTitle}>FEATURED ALBUM</Text>
+                    </View>
+                    <View style={styles.albumArt}>
+                      <Text style={styles.albumMark}>SV</Text>
+                    </View>
+                    <View style={styles.albumMeta}>
+                      <Text style={styles.albumTitle}>Snow on the Tape</Text>
+                      <Text style={styles.albumArtist}>Static Bloom</Text>
+                    </View>
+                  </View>
+                </View>
+              ) : (
+                <View style={styles.mobileRecent}>
+                  <RecentlyFeaturedList tracks={recentlyFeatured} />
+                </View>
+              )}
+            </View>
+          </>
+        ) : null}
 
-          <View style={[styles.sideCol, isWide && styles.sideColWide]}>
-            <EditorialSidebar sections={sidebarSections} />
+        {tab === 'Top Songs' ? (
+          <View style={styles.chartWrap}>
+            <View style={styles.panel}>
+              <View style={styles.panelHeader}>
+                <Text style={styles.panelTitle}>TOP SONGS</Text>
+              </View>
+              {topSongs.map((track, index) => (
+                <TrackChartRow
+                  key={track.id}
+                  track={track}
+                  rank={index + 1}
+                  metric="reposts"
+                />
+              ))}
+            </View>
           </View>
-        </View>
+        ) : null}
+
+        {tab === 'Top Downloads' ? (
+          <View style={styles.chartWrap}>
+            <View style={styles.panel}>
+              <View style={styles.panelHeader}>
+                <Text style={styles.panelTitle}>TOP DOWNLOADS</Text>
+              </View>
+              {topDownloads.map((track, index) => (
+                <TrackChartRow
+                  key={track.id}
+                  track={track}
+                  rank={index + 1}
+                  metric="downloads"
+                />
+              ))}
+            </View>
+          </View>
+        ) : null}
       </ScrollView>
     </StaticBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  masthead: {
+  columns: {
     paddingHorizontal: spacing.md,
     paddingTop: spacing.md,
-    paddingBottom: spacing.sm,
-    backgroundColor: colors.background,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
-    gap: 2,
+    gap: spacing.md,
   },
-  brand: {
-    ...typography.brand,
-    fontSize: 20,
-    letterSpacing: 2,
-    color: colors.accentLine,
-  },
-  tagline: {
-    ...typography.monoTiny,
-    color: colors.textDim,
-    letterSpacing: 0.6,
-  },
-  split: {
-    flexDirection: 'column',
-    paddingHorizontal: spacing.md,
-    paddingTop: spacing.sm,
-    gap: spacing.sm,
-  },
-  splitWide: {
+  columnsMid: {
     flexDirection: 'row',
     alignItems: 'flex-start',
   },
-  mainCol: {
-    flex: 1,
-  },
-  mainColWide: {
-    flex: 1.7,
+  columnsWide: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
   },
   sideCol: {
-    flex: 1,
+    width: 220,
   },
-  sideColWide: {
+  leftRail: {
+    width: 230,
+  },
+  rightRail: {
+    width: 240,
+  },
+  mainCol: {
     flex: 1,
-    maxWidth: 280,
+    gap: spacing.md,
+    minWidth: 0,
+  },
+  mainWide: {
+    flex: 1.4,
+  },
+  mobileListen: {
+    marginBottom: 0,
+  },
+  mobileRecent: {
+    marginTop: 0,
   },
   panel: {
     ...portalBox,
-    borderColor: colors.border,
     overflow: 'hidden',
   },
   panelHeader: {
-    backgroundColor: colors.toolbar,
+    backgroundColor: colors.surfaceRaised,
     borderBottomWidth: 1,
-    borderBottomColor: colors.accentLine,
+    borderBottomColor: colors.border,
     paddingHorizontal: spacing.sm,
     paddingVertical: 8,
-    gap: 2,
-  },
-  panelBody: {
-    paddingHorizontal: spacing.sm,
-    paddingTop: spacing.sm,
-    paddingBottom: spacing.md,
-  },
-  panelKicker: {
-    fontFamily: 'SpaceMono',
-    fontSize: 8,
-    letterSpacing: 0.8,
-    color: colors.copper,
-    textTransform: 'uppercase',
   },
   panelTitle: {
     fontFamily: 'SpaceMono',
-    fontSize: 14,
-    letterSpacing: 0.5,
+    fontSize: 10,
+    letterSpacing: 0.6,
     color: colors.text,
     textTransform: 'uppercase',
+    fontWeight: '700',
   },
-  panelNote: {
-    fontFamily: 'SpaceMono',
-    fontSize: 10,
-    letterSpacing: 0.1,
-    lineHeight: 15,
-    color: colors.textMuted,
-    marginBottom: spacing.sm,
-    textTransform: 'none',
-  },
-  playerBlock: {
-    marginBottom: spacing.sm,
-    paddingBottom: spacing.sm,
-    borderWidth: 1,
-    borderColor: colors.border,
-    backgroundColor: colors.surface,
+  panelBody: {
     padding: spacing.sm,
   },
-  subHeader: {
-    backgroundColor: colors.toolbar,
+  chartWrap: {
+    paddingHorizontal: spacing.md,
+    paddingTop: spacing.md,
+  },
+  albumBox: {
+    ...portalBox,
+    overflow: 'hidden',
+  },
+  albumArt: {
+    margin: spacing.sm,
+    height: 160,
     borderWidth: 1,
     borderColor: colors.border,
-    borderBottomWidth: 0,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: 5,
-    marginTop: spacing.xs,
+    backgroundColor: colors.surfaceRaised,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  moreLabel: {
+  albumMark: {
     fontFamily: 'SpaceMono',
-    fontSize: 8,
-    letterSpacing: 0.8,
-    color: colors.accentLine,
-    textTransform: 'uppercase',
+    fontSize: 28,
+    color: colors.phosphorDim,
+  },
+  albumMeta: {
+    paddingHorizontal: spacing.sm,
+    paddingBottom: spacing.sm,
+    gap: 2,
+  },
+  albumTitle: {
+    fontFamily: 'SpaceMono',
+    fontSize: 12,
+    color: colors.text,
+    fontWeight: '700',
+  },
+  albumArtist: {
+    fontFamily: 'SpaceMono',
+    fontSize: 11,
+    color: colors.textMuted,
   },
 });
