@@ -17,45 +17,32 @@ function Footer() {
           <div>
             <h2>Explore</h2>
             <ul>
-              <li>
-                <Link to="/academics">Academics</Link>
-              </li>
-              <li>
-                <Link to="/admissions">Admissions &amp; Aid</Link>
-              </li>
-              <li>
-                <Link to="/student-experience">Student Experience</Link>
-              </li>
-              <li>
-                <Link to="/workforce">Workforce Development</Link>
-              </li>
-              <li>
-                <Link to="/news">News</Link>
-              </li>
+              <li><Link to="/academics">Academics</Link></li>
+              <li><Link to="/academics/resources">Academic Resources</Link></li>
+              <li><Link to="/admissions">Admissions &amp; Aid</Link></li>
+              <li><Link to="/student-experience">Student Experience</Link></li>
+              <li><Link to="/workforce">Workforce Development</Link></li>
+              <li><Link to="/news">News</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h2>Campus</h2>
+            <ul>
+              <li><Link to="/directory">Faculty &amp; Staff Directory</Link></li>
+              <li><Link to="/academics/calendar">Calendar &amp; Schedule</Link></li>
+              <li><Link to="/contact">Hours &amp; Directions</Link></li>
+              <li>320 Corporate Drive</li>
+              <li>Portsmouth, NH 03801</li>
             </ul>
           </div>
           <div>
             <h2>Contact</h2>
             <ul>
-              <li>320 Corporate Drive</li>
-              <li>Portsmouth, NH 03801</li>
-              <li>
-                <a href="tel:6034277600">(603) 427-7600</a>
-              </li>
-              <li>
-                <a href="mailto:askgreatbay@ccsnh.edu">askgreatbay@ccsnh.edu</a>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h2>Hours</h2>
-            <ul>
+              <li><a href="tel:6034277600">(603) 427-7600</a></li>
+              <li><a href="mailto:askgreatbay@ccsnh.edu">askgreatbay@ccsnh.edu</a></li>
               <li>Mon–Thu: 7:00am – 9:00pm</li>
               <li>Friday: 7:00am – 4:00pm</li>
               <li>Sat–Sun: Closed</li>
-              <li>
-                <Link to="/contact">Directions</Link>
-              </li>
             </ul>
           </div>
         </div>
@@ -70,9 +57,7 @@ function Footer() {
               </a>
             </li>
           ))}
-          <li>
-            <Link to="/sitemap">Sitemap</Link>
-          </li>
+          <li><Link to="/sitemap">Sitemap</Link></li>
         </ul>
       </div>
     </footer>

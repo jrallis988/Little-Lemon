@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import PageHero from "../components/PageHero";
+import { getProgramProfile } from "../data/academicsContent";
 import { focusAreas, programs } from "../data/programs";
 
 function ProgramDetail() {
@@ -20,9 +21,15 @@ function ProgramDetail() {
     );
   }
 
-  const areas = focusAreas.filter((area) =>
-    program.focusAreas.includes(area.id)
-  );
+  const areas = focusAreas.filter((area) => program.focusAreas.includes(area.id));
+  const profile = getProgramProfile(program, focusAreas);
+  const relatedPrograms = programs
+    .filter(
+      (item) =>
+        item.id !== program.id &&
+        item.focusAreas.some((area) => program.focusAreas.includes(area))
+    )
+    .slice(0, 4);
 
   return (
     <>
@@ -39,38 +46,66 @@ function ProgramDetail() {
           <div className="program-detail-main">
             <p className="eyebrow">Program overview</p>
             <h2>What you’ll study</h2>
-            <p>
-              The {program.title} {program.credential.toLowerCase()} at Great
-              Bay Community College prepares students through a{" "}
-              {program.kind.toLowerCase()} pathway grounded in{" "}
-              {areas.map((area) => area.title).join(" and ").toLowerCase() ||
-                "career and transfer readiness"}
-              . Faculty combine academic rigor with practical learning so you
-              can move into the workforce or continue to a four-year institution.
-            </p>
+            <p>{profile.overview}</p>
+            <p>{profile.format}</p>
 
-            <h3>At a glance</h3>
-            <ul className="check-list">
-              <li>Credential: {program.credential}</li>
-              <li>Program type: {program.kind}</li>
-              <li>Campus location: {program.location}</li>
-              <li>
-                Focus area:{" "}
-                {areas.map((area) => area.title).join(", ") || "General studies"}
-              </li>
-            </ul>
+            <div className="program-section-grid">
+              <section>
+                <h3>At a glance</h3>
+                <ul className="check-list">
+                  <li>Credential: {program.credential}</li>
+                  <li>Program type: {program.kind}</li>
+                  <li>Campus location: {program.location}</li>
+                  <li>Focus area: {profile.areaNames.join(", ") || "General studies"}</li>
+                </ul>
+              </section>
+              <section>
+                <h3>Learning outcomes</h3>
+                <ul className="check-list">
+                  {profile.outcomes.map((outcome) => (
+                    <li key={outcome}>{outcome}</li>
+                  ))}
+                </ul>
+              </section>
+            </div>
 
-            <h3>Next steps</h3>
-            <ol className="numbered-list">
-              <li>Review admissions requirements and apply to GBCC.</li>
-              <li>Complete placement (if required) and meet with an advisor.</li>
-              <li>File the FAFSA using school code 002583.</li>
-              <li>Register for courses and begin your first semester.</li>
-            </ol>
+            <div className="program-section-grid">
+              <section>
+                <h3>Sample coursework</h3>
+                <ul className="program-chip-list">
+                  {profile.courses.map((course) => (
+                    <li key={course}>{course}</li>
+                  ))}
+                </ul>
+              </section>
+              <section>
+                <h3>Career pathways</h3>
+                <ul className="program-chip-list">
+                  {profile.careers.map((career) => (
+                    <li key={career}>{career}</li>
+                  ))}
+                </ul>
+              </section>
+            </div>
+
+            <section>
+              <h3>Next steps</h3>
+              <ol className="numbered-list">
+                <li>Review admissions requirements and apply to GBCC.</li>
+                <li>Complete placement (if required) and meet with an advisor.</li>
+                <li>File the FAFSA using school code 002583.</li>
+                <li>Register for courses and begin your first semester.</li>
+              </ol>
+            </section>
           </div>
 
           <aside className="info-panel program-detail-aside">
-            <h3>Ready to begin?</h3>
+            <h3>Program contact</h3>
+            <p>{profile.contact.name}</p>
+            <ul>
+              <li><a href={`mailto:${profile.contact.email}`}>{profile.contact.email}</a></li>
+              <li><a href={`tel:${profile.contact.phone.replace(/[^\d]/g, "")}`}>{profile.contact.phone}</a></li>
+            </ul>
             <p>
               Admissions can help you confirm prerequisites, timelines, and
               whether this {program.kind.toLowerCase()} fits your goals.
@@ -81,6 +116,9 @@ function ProgramDetail() {
               </Link>
               <Link className="btn btn-ghost" to="/admissions/visit">
                 Visit Campus
+              </Link>
+              <Link className="btn btn-ghost" to="/directory">
+                Faculty Directory
               </Link>
               {program.url ? (
                 <a
@@ -98,24 +136,30 @@ function ProgramDetail() {
       </section>
 
       <section className="section section-tint">
-        <div className="container callout-row">
-          <div>
-            <h2>Explore related programs</h2>
-            <p>
-              Stay in {areas[0]?.title || "this focus area"} or browse the full
-              catalog.
-            </p>
+        <div className="container">
+          <div className="section-intro narrow">
+            <p className="eyebrow">Related programs</p>
+            <h2>Explore nearby pathways in the catalog.</h2>
           </div>
-          <Link
-            className="btn btn-navy"
-            to={
-              areas[0]
-                ? `/academics?focus=${areas[0].id}`
-                : "/academics"
-            }
-          >
-            View Catalog
-          </Link>
+          <div className="program-related-grid">
+            {relatedPrograms.map((item) => (
+              <article key={item.id} className="mini-card">
+                <h3>{item.title}</h3>
+                <p>{item.credential}</p>
+                <Link className="text-link" to={`/academics/programs/${item.id}`}>
+                  View program
+                </Link>
+              </article>
+            ))}
+          </div>
+          <div className="section-cta">
+            <Link
+              className="btn btn-navy"
+              to={areas[0] ? `/academics?focus=${areas[0].id}` : "/academics"}
+            >
+              View Catalog
+            </Link>
+          </div>
         </div>
       </section>
     </>

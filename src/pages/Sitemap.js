@@ -9,16 +9,16 @@ const siteSections = [
       { label: "Home", to: "/" },
       { label: "News", to: "/news" },
       { label: "Contact / Hours & Directions", to: "/contact" },
+      { label: "Faculty & Staff Directory", to: "/directory" },
     ],
   },
   {
     title: "Academics",
     links: [
       { label: "Our Programs", to: "/academics" },
-      ...focusAreas.map((area) => ({
-        label: area.title,
-        to: `/academics?focus=${area.id}`,
-      })),
+      { label: "Academic Resources", to: "/academics/resources" },
+      { label: "Calendar & Schedule", to: "/academics/calendar" },
+      ...focusAreas.map((area) => ({ label: area.title, to: `/academics?focus=${area.id}` })),
     ],
   },
   {
@@ -37,27 +37,26 @@ const siteSections = [
   },
   {
     title: "Workforce Development",
-    links: [
-      { label: "Business & Training Center", to: "/workforce" },
-    ],
+    links: [{ label: "Business & Training Center", to: "/workforce" }],
   },
   {
     title: "About",
-    links: [{ label: "Mission, Vision & Values", to: "/about" }],
+    links: [
+      { label: "Mission, Vision & Values", to: "/about" },
+      { label: "News & Events", to: "/news" },
+    ],
   },
 ];
 
 function Sitemap() {
-  const sortedPrograms = [...programs].sort((a, b) =>
-    a.title.localeCompare(b.title)
-  );
+  const sortedPrograms = [...programs].sort((a, b) => a.title.localeCompare(b.title));
 
   return (
     <>
       <PageHero
         brand="Sitemap"
         title="Find your way around Great Bay."
-        copy="A full list of pages and programs on this site — similar to the sitemap on greatbay.edu."
+        copy="A full list of pages, pathways, and programs on this site — similar to the sitemap on greatbay.edu."
         image="/images/campus-exterior.jpg"
         compact
       />
@@ -79,9 +78,7 @@ function Sitemap() {
 
           <div className="sitemap-group sitemap-programs">
             <h2>Programs</h2>
-            <p className="fine-print">
-              All {sortedPrograms.length} degree and certificate programs
-            </p>
+            <p className="fine-print">All {sortedPrograms.length} degree and certificate programs</p>
             <ul className="sitemap-program-list">
               {sortedPrograms.map((program) => (
                 <li key={program.id}>

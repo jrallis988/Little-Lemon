@@ -1,11 +1,8 @@
 import { Link, useSearchParams } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
-import {
-  focusAreas,
-  locations,
-  programTypes,
-  programs,
-} from "../data/programs";
+import SectionNav from "../components/SectionNav";
+import { academicsNav, academicResources } from "../data/academicsContent";
+import { focusAreas, locations, programTypes, programs } from "../data/programs";
 
 const emptyFilters = {
   query: "",
@@ -29,8 +26,7 @@ function Academics() {
   }, [searchParams]);
 
   const focusLabels = useMemo(
-    () =>
-      Object.fromEntries(focusAreas.map((area) => [area.id, area.title])),
+    () => Object.fromEntries(focusAreas.map((area) => [area.id, area.title])),
     []
   );
 
@@ -46,16 +42,9 @@ function Academics() {
           (focusLabels[area] || "").toLowerCase().includes(query)
         );
 
-      const matchesType =
-        filters.type === "all" || program.kind === filters.type;
-
-      const matchesFocus =
-        filters.focus === "all" ||
-        program.focusAreas.includes(filters.focus);
-
-      const matchesLocation =
-        filters.location === "all" ||
-        program.location === filters.location;
+      const matchesType = filters.type === "all" || program.kind === filters.type;
+      const matchesFocus = filters.focus === "all" || program.focusAreas.includes(filters.focus);
+      const matchesLocation = filters.location === "all" || program.location === filters.location;
 
       return matchesQuery && matchesType && matchesFocus && matchesLocation;
     });
@@ -78,12 +67,13 @@ function Academics() {
           <p className="hero-brand">Academics</p>
           <h1>Our Programs</h1>
           <p>
-            Search every degree and certificate at Great Bay — the same academic
-            focus areas you&apos;ll find on the official site, from Arts &amp;
-            Humanities to STEM and Advanced Manufacturing.
+            Search every degree and certificate at Great Bay, then dig into
+            support services, scheduling, and faculty resources that help you
+            build a real academic plan.
           </p>
         </div>
       </section>
+      <SectionNav label="Academics section" items={academicsNav} />
 
       <section className="section programs-section">
         <div className="container">
@@ -104,64 +94,40 @@ function Academics() {
 
             <label>
               <span>Program Types</span>
-              <select
-                value={filters.type}
-                onChange={(event) => updateFilter("type", event.target.value)}
-              >
+              <select value={filters.type} onChange={(event) => updateFilter("type", event.target.value)}>
                 {programTypes.map((type) => (
-                  <option key={type.id} value={type.id}>
-                    {type.label}
-                  </option>
+                  <option key={type.id} value={type.id}>{type.label}</option>
                 ))}
               </select>
             </label>
 
             <label>
               <span>Academic Focus Area</span>
-              <select
-                value={filters.focus}
-                onChange={(event) => updateFilter("focus", event.target.value)}
-              >
+              <select value={filters.focus} onChange={(event) => updateFilter("focus", event.target.value)}>
                 <option value="all">All Focus Areas</option>
                 {focusAreas.map((area) => (
-                  <option key={area.id} value={area.id}>
-                    {area.title}
-                  </option>
+                  <option key={area.id} value={area.id}>{area.title}</option>
                 ))}
               </select>
             </label>
 
             <label>
               <span>Location</span>
-              <select
-                value={filters.location}
-                onChange={(event) =>
-                  updateFilter("location", event.target.value)
-                }
-              >
+              <select value={filters.location} onChange={(event) => updateFilter("location", event.target.value)}>
                 {locations.map((location) => (
-                  <option key={location.id} value={location.id}>
-                    {location.label}
-                  </option>
+                  <option key={location.id} value={location.id}>{location.label}</option>
                 ))}
               </select>
             </label>
 
             <div className="filter-actions">
-              <button
-                type="button"
-                className="btn btn-navy"
-                onClick={clearFilters}
-              >
-                Clear
-              </button>
+              <button type="button" className="btn btn-navy" onClick={clearFilters}>Clear</button>
             </div>
           </form>
 
           <div className="program-results-meta">
             <p>
-              Showing <strong>{results.length}</strong> of{" "}
-              <strong>{programs.length}</strong> programs
+              Showing <strong>{results.length}</strong> of <strong>{programs.length}</strong> programs
             </p>
           </div>
 
@@ -169,9 +135,7 @@ function Academics() {
             <div className="program-empty">
               <h2>No programs match those filters.</h2>
               <p>Try clearing your search or choosing a different focus area.</p>
-              <button type="button" className="btn btn-gold" onClick={clearFilters}>
-                Clear Filters
-              </button>
+              <button type="button" className="btn btn-gold" onClick={clearFilters}>Clear Filters</button>
             </div>
           ) : (
             <div className="program-results">
@@ -179,11 +143,7 @@ function Academics() {
                 <article key={program.id} className="program-result">
                   <div
                     className="program-result-media"
-                    style={
-                      program.image
-                        ? { backgroundImage: `url(${program.image})` }
-                        : undefined
-                    }
+                    style={program.image ? { backgroundImage: `url(${program.image})` } : undefined}
                     aria-hidden="true"
                   />
                   <div className="program-result-body">
@@ -191,18 +151,10 @@ function Academics() {
                     <h2>{program.title}</h2>
                     <p className="program-credential">{program.credential}</p>
                     <p className="program-focus">
-                      {program.focusAreas
-                        .map((area) => focusLabels[area])
-                        .filter(Boolean)
-                        .join(" · ")}
+                      {program.focusAreas.map((area) => focusLabels[area]).filter(Boolean).join(" · ")}
                     </p>
                     <p className="program-location">{program.location} Campus</p>
-                    <Link
-                      className="text-link"
-                      to={`/academics/programs/${program.id}`}
-                    >
-                      View program
-                    </Link>
+                    <Link className="text-link" to={`/academics/programs/${program.id}`}>View program</Link>
                   </div>
                 </article>
               ))}
@@ -219,9 +171,7 @@ function Academics() {
           </div>
           <div className="area-grid focus-overview">
             {focusAreas.map((area) => {
-              const count = programs.filter((program) =>
-                program.focusAreas.includes(area.id)
-              ).length;
+              const count = programs.filter((program) => program.focusAreas.includes(area.id)).length;
 
               return (
                 <article key={area.id} className="area-item">
@@ -231,13 +181,8 @@ function Academics() {
                     type="button"
                     className="text-link button-link"
                     onClick={() => {
-                      setFilters({
-                        ...emptyFilters,
-                        focus: area.id,
-                      });
-                      document
-                        .querySelector(".program-filters")
-                        ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                      setFilters({ ...emptyFilters, focus: area.id });
+                      document.querySelector(".program-filters")?.scrollIntoView({ behavior: "smooth", block: "start" });
                     }}
                   >
                     View {count} programs
@@ -250,34 +195,24 @@ function Academics() {
       </section>
 
       <section className="section">
-        <div className="container support-grid">
-          <div>
-            <p className="eyebrow">Student success</p>
-            <h2>Support that stays with you.</h2>
-            <p>
-              The Center for Academic Planning and Support (CAPS) offers advising,
-              tutoring, accessibility services, success coaching, and career
-              guidance — so you never have to figure it out alone.
-            </p>
+        <div className="container">
+          <div className="section-intro narrow">
+            <p className="eyebrow">Plan beyond the major</p>
+            <h2>Catalog, schedule, support, and directory pages built into the site.</h2>
           </div>
-          <ul className="support-list">
-            <li>
-              <strong>Academic advising</strong>
-              <span>Plan your path semester by semester</span>
-            </li>
-            <li>
-              <strong>Tutoring &amp; coaching</strong>
-              <span>In-person help plus 24/7 online support</span>
-            </li>
-            <li>
-              <strong>Transfer options</strong>
-              <span>Agreements with colleges across New England</span>
-            </li>
-            <li>
-              <strong>Career Center</strong>
-              <span>Resume help, internships, and job search support</span>
-            </li>
-          </ul>
+          <div className="mini-card-grid">
+            {academicResources.slice(0, 4).map((resource) => (
+              <article key={resource.title} className="mini-card">
+                <h3>{resource.title}</h3>
+                <p>{resource.copy}</p>
+                {resource.to ? (
+                  <Link className="text-link" to={resource.to}>{resource.linkLabel}</Link>
+                ) : (
+                  <a className="text-link" href={resource.href} target="_blank" rel="noreferrer">{resource.linkLabel}</a>
+                )}
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -286,17 +221,13 @@ function Academics() {
           <div>
             <h2>Questions about programs or courses?</h2>
             <p>
-              Contact the Advising and Transfer Center at{" "}
-              <a href="mailto:greatbayadvising@ccsnh.edu">
-                greatbayadvising@ccsnh.edu
-              </a>{" "}
-              or call <a href="tel:6034277728">(603) 427-7728</a>. Suite 100,
-              Portsmouth Campus.
+              Contact the Advising and Transfer Center at <a href="mailto:greatbayadvising@ccsnh.edu">greatbayadvising@ccsnh.edu</a> or call <a href="tel:6034277728">(603) 427-7728</a>. Suite 100, Portsmouth Campus.
             </p>
           </div>
-          <Link className="btn btn-navy" to="/admissions">
-            Talk to Admissions
-          </Link>
+          <div className="cta-actions">
+            <Link className="btn btn-navy" to="/directory">Faculty Directory</Link>
+            <Link className="btn btn-gold" to="/admissions">Talk to Admissions</Link>
+          </div>
         </div>
       </section>
     </>

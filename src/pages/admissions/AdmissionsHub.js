@@ -48,9 +48,7 @@ function AdmissionsHub() {
               <article key={item.to} className="area-item">
                 <h3>{item.title}</h3>
                 <p>{item.copy}</p>
-                <Link className="text-link" to={item.to}>
-                  Explore
-                </Link>
+                <Link className="text-link" to={item.to}>Explore</Link>
               </article>
             ))}
           </div>
@@ -69,9 +67,7 @@ function AdmissionsHub() {
               <li>Transfer pathways to UNH and colleges across New England</li>
               <li>No application fee for most students</li>
             </ul>
-            <Link className="btn btn-navy" to="/admissions/how-to-apply">
-              Start Your Application
-            </Link>
+            <Link className="btn btn-navy" to="/admissions/how-to-apply">Start Your Application</Link>
           </div>
           <div className="info-panel">
             <h3>Talk with Admissions</h3>
@@ -80,18 +76,13 @@ function AdmissionsHub() {
               pathways, understand costs, and map next steps.
             </p>
             <ul>
-              <li>
-                <a href="tel:6034277632">(603) 427-7632</a>
-              </li>
-              <li>
-                <a href="mailto:greatbayadmissions@ccsnh.edu">
-                  greatbayadmissions@ccsnh.edu
-                </a>
-              </li>
+              <li><a href="tel:6034277632">(603) 427-7632</a></li>
+              <li><a href="mailto:greatbayadmissions@ccsnh.edu">greatbayadmissions@ccsnh.edu</a></li>
             </ul>
-            <Link className="btn btn-gold" to="/admissions/visit">
-              Plan a Visit
-            </Link>
+            <div className="cta-actions stacked-mobile">
+              <Link className="btn btn-gold" to="/admissions/visit">Plan a Visit</Link>
+              <Link className="btn btn-ghost" to="/directory">Faculty/Staff Directory</Link>
+            </div>
           </div>
         </div>
       </section>

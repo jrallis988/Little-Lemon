@@ -3,6 +3,8 @@ import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import Academics from "./pages/Academics";
 import ProgramDetail from "./pages/ProgramDetail";
+import AcademicResources from "./pages/academics/AcademicResources";
+import AcademicCalendar from "./pages/academics/AcademicCalendar";
 import AdmissionsHub from "./pages/admissions/AdmissionsHub";
 import HowToApply from "./pages/admissions/HowToApply";
 import Visit from "./pages/admissions/Visit";
@@ -13,6 +15,7 @@ import Workforce from "./pages/Workforce";
 import About from "./pages/About";
 import News from "./pages/News";
 import Contact from "./pages/Contact";
+import Directory from "./pages/Directory";
 import Sitemap from "./pages/Sitemap";
 
 function App() {
@@ -21,6 +24,8 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="academics" element={<Academics />} />
+        <Route path="academics/resources" element={<AcademicResources />} />
+        <Route path="academics/calendar" element={<AcademicCalendar />} />
         <Route path="academics/programs/:programId" element={<ProgramDetail />} />
         <Route path="admissions" element={<AdmissionsHub />} />
         <Route path="admissions/how-to-apply" element={<HowToApply />} />
@@ -32,6 +37,7 @@ function App() {
         <Route path="about" element={<About />} />
         <Route path="news" element={<News />} />
         <Route path="contact" element={<Contact />} />
+        <Route path="directory" element={<Directory />} />
         <Route path="sitemap" element={<Sitemap />} />
       </Route>
     </Routes>

@@ -7,7 +7,9 @@ const navItems = [
     to: "/academics",
     children: [
       { to: "/academics", label: "Our Programs" },
-      { to: "/admissions/how-to-apply", label: "Registration Path" },
+      { to: "/academics/resources", label: "Academic Resources" },
+      { to: "/academics/calendar", label: "Calendar & Schedule" },
+      { to: "/directory", label: "Faculty Directory" },
     ],
   },
   {
@@ -68,9 +70,7 @@ function Header() {
           <a href="https://www.greatbay.edu/current-students/" target="_blank" rel="noreferrer">
             Current Students
           </a>
-          <a href="https://www.ccsnh.edu/human-resources/" target="_blank" rel="noreferrer">
-            Faculty/Staff
-          </a>
+          <Link to="/directory">Faculty/Staff</Link>
           <a
             className="utility-mygbcc"
             href="https://mygbcc.greatbay.edu/"
