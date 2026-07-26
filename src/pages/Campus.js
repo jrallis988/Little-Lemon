@@ -3,8 +3,8 @@ import { campusHighlights } from "../data/content";
 
 const gallery = [
   {
-    src: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80",
-    alt: "Graduates celebrating outdoors",
+    src: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1200&q=80",
+    alt: "Students celebrating together outdoors",
   },
   {
     src: "https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?auto=format&fit=crop&w=1200&q=80",
