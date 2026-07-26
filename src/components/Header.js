@@ -25,7 +25,7 @@ const navItems = [
     to: "/student-experience",
   },
   {
-    label: "Workforce",
+    label: "Workforce Development",
     to: "/workforce",
   },
   {
@@ -68,7 +68,15 @@ function Header() {
           <a href="https://www.greatbay.edu/current-students/" target="_blank" rel="noreferrer">
             Current Students
           </a>
-          <a href="https://mygbcc.greatbay.edu/" target="_blank" rel="noreferrer">
+          <a href="https://www.ccsnh.edu/human-resources/" target="_blank" rel="noreferrer">
+            Faculty/Staff
+          </a>
+          <a
+            className="utility-mygbcc"
+            href="https://mygbcc.greatbay.edu/"
+            target="_blank"
+            rel="noreferrer"
+          >
             MyGBCC
           </a>
         </div>
@@ -126,13 +134,6 @@ function Header() {
               </li>
             ))}
           </ul>
-          <Link
-            className="btn btn-gold"
-            to="/admissions/how-to-apply"
-            onClick={() => setOpen(false)}
-          >
-            Apply Now
-          </Link>
         </nav>
       </div>
     </header>

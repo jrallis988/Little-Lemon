@@ -1,36 +1,18 @@
 import { Link } from "react-router-dom";
+import HeroCarousel from "../components/HeroCarousel";
 import { focusAreas, highlights } from "../data/programs";
 
 function Home() {
   return (
     <>
-      <section className="hero">
-        <div className="hero-media" aria-hidden="true">
-          <img
-            src="/images/campus-exterior.jpg"
-            alt=""
-            className="hero-image"
-          />
-          <div className="hero-veil" />
-        </div>
-        <div className="hero-content">
-          <p className="hero-brand animate-rise">Great Bay Community College</p>
-          <h1 className="animate-rise delay-1">
-            Start here.
-            <span>Go further.</span>
-          </h1>
-          <p className="hero-copy animate-rise delay-2">
-            Affordable degrees, certificates, and career training on New
-            Hampshire&apos;s Seacoast — with the support to finish strong.
-          </p>
-          <div className="hero-actions animate-rise delay-3">
-            <Link className="btn btn-gold" to="/admissions/how-to-apply">
-              Begin the Process
-            </Link>
-            <Link className="btn btn-ghost" to="/academics">
-              Explore Programs
-            </Link>
-          </div>
+      <HeroCarousel />
+
+      <section className="quick-links">
+        <div className="container quick-links-grid">
+          <Link to="/admissions/visit">Visit</Link>
+          <Link to="/admissions/how-to-apply">Apply</Link>
+          <Link to="/academics">Explore</Link>
+          <Link to="/contact">Request Info</Link>
         </div>
       </section>
 
@@ -58,16 +40,24 @@ function Home() {
             </p>
             <ul className="check-list">
               <li>One-on-one advising through CAPS academic support</li>
-              <li>Transfer pathways, including to the University of New Hampshire</li>
+              <li>
+                Transfer pathways, including to the University of New Hampshire
+              </li>
               <li>Short-term training that moves you from classroom to career</li>
-              <li>State-of-the-art labs for nursing, veterinary tech, and life sciences</li>
+              <li>
+                State-of-the-art labs for nursing, veterinary tech, and life
+                sciences
+              </li>
             </ul>
             <Link className="text-link" to="/about">
               Discover GBCC
             </Link>
           </div>
           <figure className="split-media">
-            <img src="/images/science-lab.jpg" alt="Students working in a Great Bay science lab" />
+            <img
+              src="/images/science-lab.jpg"
+              alt="Students working in a Great Bay science lab"
+            />
           </figure>
         </div>
       </section>
