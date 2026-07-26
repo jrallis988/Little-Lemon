@@ -52,12 +52,12 @@ export function Header() {
         <div className="mx-auto flex max-w-content items-center justify-between gap-4 px-6 py-3 md:px-8">
           <Link
             href="/"
-            className="relative block h-12 w-48 sm:h-14 sm:w-56"
+            className="relative block h-14 w-[13.5rem] sm:h-16 sm:w-[17.5rem]"
             aria-label={`${candidate.fullName} for ${candidate.office} — home`}
           >
             <Image
               src="/images/logo.svg"
-              alt={`${candidate.fullName} for ${candidate.office}`}
+              alt={`${candidate.fullName} — To represent the state of New Hampshire`}
               fill
               className="object-contain object-left"
               priority

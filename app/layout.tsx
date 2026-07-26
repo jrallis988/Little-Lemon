@@ -27,11 +27,16 @@ export const metadata: Metadata = {
   description:
     "People Over Politics. Nick Varga is an independent write-in candidate for U.S. Senate from New Hampshire — putting families first, not party bosses or donors.",
   metadataBase: new URL("https://nickvarga.com"),
+  icons: {
+    icon: "/images/logo-mark.svg",
+    apple: "/images/logo-mark.svg",
+  },
   openGraph: {
     title: `${candidate.fullName} for ${candidate.office} — Write-In`,
     description: candidate.tagline,
     locale: "en_US",
     type: "website",
+    images: [{ url: "/images/newmarket-hero.jpg", width: 2400, height: 1607, alt: "Downtown Newmarket, New Hampshire along the Lamprey River" }],
   },
   robots: { index: true, follow: true },
 };

@@ -6,30 +6,33 @@ export function Hero() {
   return (
     <section
       aria-labelledby="hero-heading"
-      className="relative isolate overflow-hidden bg-ink"
+      className="relative isolate min-h-[78vh] overflow-hidden bg-ink md:min-h-[86vh]"
     >
       <div className="absolute inset-0 -z-10" aria-hidden="true">
         <Image
-          src="/images/nh-landscape.svg"
+          src="/images/newmarket-hero.jpg"
           alt=""
           fill
           priority
-          className="object-cover object-center opacity-50"
+          sizes="100vw"
+          className="object-cover object-[68%_42%]"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/90 to-navy/70" />
+        {/* Left/bottom scrim keeps yellow tagline readable over river & mills */}
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/55 to-ink/25" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-ink/30" />
       </div>
 
-      <div className="mx-auto max-w-content px-6 py-20 md:px-8 md:py-28">
-        <p className="animate-fade-up font-display text-overline font-normal uppercase text-red">
-          Independent Write-In Candidate · New Hampshire
+      <div className="mx-auto flex min-h-[78vh] max-w-content flex-col justify-end px-6 pb-16 pt-28 md:min-h-[86vh] md:px-8 md:pb-24 md:pt-32">
+        <p className="animate-fade-up font-display text-overline font-normal uppercase tracking-[0.14em] text-yellow">
+          Independent Write-In · Newmarket, NH
         </p>
         <h1
           id="hero-heading"
-          className="animate-fade-up animate-delay-1 mt-6 max-w-4xl font-display text-hero-display font-normal uppercase text-yellow"
+          className="animate-fade-up animate-delay-1 mt-5 max-w-4xl font-display text-hero-display font-normal uppercase text-yellow drop-shadow-[0_2px_18px_rgba(0,0,0,0.45)]"
         >
           {candidate.tagline}
         </h1>
-        <p className="animate-fade-up animate-delay-2 mt-6 max-w-2xl text-lg leading-[1.75] text-white/85 sm:text-xl">
+        <p className="animate-fade-up animate-delay-2 mt-6 max-w-xl text-lg leading-[1.75] text-white/90 sm:text-xl">
           {candidate.positioningLong}
         </p>
         <div className="animate-fade-up animate-delay-2 mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
