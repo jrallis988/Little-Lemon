@@ -36,12 +36,14 @@
                 <span class="logo-line-2">Fountain</span>
             </a>
         </div>
-        <nav class="nav" id="main-nav">
-            <li><a href="#about">The Designer</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#portfolio">Portfolio</a></li>
-            <li><a href="#blog">Blog</a></li>
-            <li><a href="resume.pdf" download>Resume</a></li>
+        <nav aria-label="Primary">
+            <ul class="nav" id="main-nav">
+                <li><a href="#about">The Designer</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#blog">Blog</a></li>
+                <li><a href="resume.pdf" download>Resume</a></li>
+            </ul>
         </nav>
         <div class="header-right">
             <button class="nav-toggle" onclick="toggleNav()" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="main-nav">
@@ -57,9 +59,15 @@
     <!-- Hero -->
     <section class="hero">
         <div class="hero-content">
-            <div class="hero-label">Welcome to Artistic Fountain</div>
-            <h1>Strategic Design<br>for <span class="accent">Ambitious Brands</span></h1>
-            <p>I design visual identities and digital experiences for brands that refuse to blend in. From speculative rebrands to production-ready sites — bold, strategic, and built to ship.</p>
+            <h1 class="hero-brand">
+                <span class="hero-brand-line">Artistic</span>
+                <span class="hero-brand-line accent">Fountain</span>
+            </h1>
+            <p class="hero-offer">Strategic design for ambitious brands — visual identities and digital experiences built to ship.</p>
+            <div class="hero-actions">
+                <a href="#portfolio" id="hero-btn" class="cta-btn">View Work</a>
+                <a href="#contact-form" class="cta-btn cta-btn--soft">Start a Project</a>
+            </div>
         </div>
     </section>
 
@@ -128,7 +136,7 @@
                     <p>I'm <strong>James</strong>, a New Hampshire designer running Artistic Fountain as a one-person studio.</p>
                     <p>I work across brand systems, product strategy, and full-stack web — from institutional identity work like <strong>NHTI</strong> and <strong>Great Bay</strong>, to speculative rebrands for consumer brands, to production HTML for launch-ready sites.</p>
                     <p>My work is defined by <strong>strategic depth over surface polish</strong>. Every project starts with the problem, not the palette. If you're building something and want a designer who ships, not just decks, let's talk.</p>
-                    <a href="#designer-full-story" id="designer-btn" class="view-btn" style="margin-top: 2rem; display: inline-block;">Learn More</a>
+                    <a href="#contact-form" id="designer-btn" class="view-btn" style="margin-top: 2rem; display: inline-block;">Start a Project</a>
                 </div>
             </div>
         </div>
@@ -137,8 +145,8 @@
     <!-- My Design Philosophy & Approach -->
     <section class="philosophy">
         <div class="philosophy-section">
-            <h3>My Design Philosophy & Approach</h3>
-            <p>I believe in <strong>intentional systems over arbitrary aesthetics</strong>. Every project follows a structured, collaborative process designed to transform your vision into measurable results.</p>
+            <h3>How I Work</h3>
+            <p>Intentional systems over arbitrary aesthetics — a clear process from discovery through launch.</p>
             
             <div class="process-steps">
                 <div class="process-step">
@@ -168,144 +176,30 @@
         </div>
     </section>
 
-    <!-- Designer Full Story -->
-    <section class="designer-story" id="designer-full-story">
-        <div class="designer-story-wrapper">
-            <h2>My Full Story</h2>
-            
-            <!-- About Content -->
-            <div class="story-section">
-                <h3>Who I Am</h3>
-                <p>I'm <strong>James</strong>, a designer based in New Hampshire, running Artistic Fountain as a solo studio.</p>
-                <p>My work spans brand systems, product strategy, and full-stack web — from institutional identity redesigns for schools like <strong>NHTI</strong> and <strong>Great Bay Community College</strong>, to speculative rebrands for national brands like <strong>Gap</strong>, <strong>Old Navy</strong>, and <strong>Aveeno</strong>, to production HTML for launch-ready sites like <strong>Seacoast Flōte</strong>.</p>
-                <p>My background spans creative direction, full-stack development, marketing analytics, and business operations. That means I don't design in isolation — I understand how design intersects with technology, strategy, and results.</p>
-            </div>
-
-            <!-- Design Philosophy -->
-            <div class="story-section">
-                <h3>My Design Philosophy</h3>
-                <p>I believe in <strong>intentional systems over arbitrary aesthetics</strong>. Every color choice, typeface, interaction, and layout decision should serve a purpose. Good design isn't about being pretty—it's about being smart, scalable, and user-centered.</p>
-                <p>I focus on:</p>
-                <ul>
-                    <li><strong>Strategic Clarity:</strong> Understanding the problem before proposing solutions.</li>
-                    <li><strong>User-Centric Thinking:</strong> Designing for real people with real needs, not for award submissions.</li>
-                    <li><strong>Systems & Scalability:</strong> Building design systems that work across platforms, contexts, and time.</li>
-                    <li><strong>Technical Integration:</strong> Ensuring design translates flawlessly into code and implementation.</li>
-                    <li><strong>Data-Informed Decisions:</strong> Using analytics and user feedback to refine and optimize continuously.</li>
-                </ul>
-            </div>
-
-            <!-- Tech Stack -->
-            <div class="story-section">
-                <h3>Tech Stack & Capabilities</h3>
-                
-                <div class="tech-category">
-                    <h4>Creative Direction & Design</h4>
-                    <p><strong>Design Tools:</strong> Adobe Creative Suite (After Effects, Firefly, Illustrator, InDesign, Lightroom, Photoshop)</p>
-                    <p><strong>Visual Assets:</strong> Blender (3D Modeling & Animation), Toon Boom Harmony, DaVinci Resolve, Final Cut Pro</p>
-                    <p><strong>AI Integration:</strong> Leonardo AI, Pika Labs, Runway ML, Sora, Notion AI</p>
+    <!-- Capabilities -->
+    <section class="capabilities" id="capabilities">
+        <div class="capabilities-wrapper">
+            <h2>Capabilities</h2>
+            <p class="capabilities-lead">One studio across brand systems, product strategy, and full-stack delivery.</p>
+            <div class="capabilities-grid">
+                <div class="capability">
+                    <h3>Creative Direction</h3>
+                    <p>Brand systems, art direction, motion, and production assets — Adobe suite, Figma, Blender, and AI-assisted pipelines.</p>
                 </div>
-
-                <div class="tech-category">
-                    <h4>Full-Stack Development</h4>
-                    <p><strong>Languages/Frameworks:</strong> Python, JavaScript, Swift, HTML, CSS, React, Angular, Bootstrap</p>
-                    <p><strong>Environments:</strong> Unity, Unreal Engine 5, Apple ARKit, Google ARCore, Xcode</p>
-                    <p><strong>Audio/Spatial:</strong> FMOD, Wwise, Audacity</p>
+                <div class="capability">
+                    <h3>Full-Stack Web</h3>
+                    <p>Production HTML/CSS/JS, React, and launch-ready sites with accessibility and performance built in.</p>
                 </div>
-
-                <div class="tech-category">
-                    <h4>Marketing & Data Analytics</h4>
-                    <p><strong>Campaign Management:</strong> Meta Business Suite, Facebook/TikTok/LinkedIn/Twitter Ads, HubSpot, Mailchimp</p>
-                    <p><strong>Analytics & Reporting:</strong> Google Analytics/Ads Suite, Google Data Studio (Looker Studio), Tableau, Power BI</p>
-                    <p><strong>Optimization:</strong> A/B Testing, Predictive Analytics, SEO, Digital Asset Management (DAM)</p>
-                </div>
-
-                <div class="tech-category">
-                    <h4>Operations & Project Management</h4>
-                    <p><strong>Collaboration:</strong> Jira, Trello, Monday.com, Microsoft Teams, Slack</p>
-                    <p><strong>CRM/Business:</strong> Salesforce, NetSuite, Zoho CRM, Zapier</p>
-                    <p><strong>Point of Sale:</strong> Square, Toast, Clover</p>
+                <div class="capability">
+                    <h3>Strategy &amp; Analytics</h3>
+                    <p>Positioning, campaign design, and measurement — from discovery through post-launch optimization.</p>
                 </div>
             </div>
-
-            <!-- Honors & Awards -->
-            <div class="story-section">
-                <h3>Honors & Awards</h3>
-                <ul>
-                    <li><strong>Eagle Scout Rank</strong> — Boy Scouts of America, August 2009</li>
-                    <li><strong>Students Highlighting Outstanding Work, Grand DaVino Wine Box Project</strong> — Great Bay Community College, May 2015</li>
-                    <li><strong>Honorable Mention, Great Chef Tasting Party</strong> — American Culinary Federation, May 2014</li>
-                </ul>
+            <div class="capabilities-cta">
+                <a href="resume.pdf" class="view-btn" download>Download Resume</a>
             </div>
-
-            <!-- Technical Skills -->
-            <div class="story-section">
-                <h3>Technical Skills</h3>
-                
-                <div class="tech-category">
-                    <h4>Creative & Design</h4>
-                    <p>Adobe Creative Suite (After Effects, Firefly, Illustrator, InDesign, Lightroom, Photoshop), Blender (3D Modeling & Animation), DaVinci Resolve, Final Cut Pro, Figma, Sketch, Toon Boom Harmony</p>
-                </div>
-
-                <div class="tech-category">
-                    <h4>Development & Web</h4>
-                    <p>Angular, Bootstrap, CSS, HTML, JavaScript, React, Swift, Unity, Unreal Engine 5, Webflow, WordPress, Xcode</p>
-                </div>
-
-                <div class="tech-category">
-                    <h4>AR/VR & Audio</h4>
-                    <p>Apple ARKit, Audacity, FMOD (Spatial Audio), Google ARCore, Pika Labs, Runway ML, Sora, Wwise (Audio Middleware)</p>
-                </div>
-
-                <div class="tech-category">
-                    <h4>Operations & Systems</h4>
-                    <p>Digital Asset Management (DAM) Systems, Frame.io, Jira, Microsoft Teams, Monday.com, NetSuite, Notion AI, POS Systems (Square, Toast, Clover), Salesforce, Trello, Workflow Automation, Zapier, Zoho CRM</p>
-                </div>
-            </div>
-
-            <!-- Marketing Skills -->
-            <div class="story-section">
-                <h3>Marketing Skills</h3>
-                
-                <div class="tech-category">
-                    <h4>Strategy & Planning</h4>
-                    <p>Brand Development, Media Planning, Public Relations, Social Media Strategy, Integrated Marketing Campaigns, Event Coordination</p>
-                </div>
-
-                <div class="tech-category">
-                    <h4>Content & Engagement</h4>
-                    <p>Content Creation, Copywriting, Customer Engagement, Community Management, Visual Storytelling, Video Marketing</p>
-                </div>
-
-                <div class="tech-category">
-                    <h4>Advertising & Growth</h4>
-                    <p>Digital Advertising, Email Marketing, Search Engine Optimization (SEO), Facebook Ads, Google Ads, LinkedIn Ads, TikTok Ads, Twitter Ads, Meta Business Suite, Mailchimp</p>
-                </div>
-            </div>
-
-            <!-- Analytical Skills -->
-            <div class="story-section">
-                <h3>Analytical Skills</h3>
-                
-                <div class="tech-category">
-                    <h4>Data & Insights</h4>
-                    <p>Data Analysis, Market Research, KPI Tracking, Performance Monitoring, Reporting & Analytics, Customer Insights Analysis, Trend Forecasting, Predictive Analytics & A/B Testing</p>
-                </div>
-
-                <div class="tech-category">
-                    <h4>Execution</h4>
-                    <p>Data Entry & Accuracy, Decision-Making</p>
-                </div>
-
-                <div class="tech-category">
-                    <h4>Platforms</h4>
-                    <p>Google Analytics Suite, Google Data Studio (Looker Studio), HubSpot, Power BI, Social Media Scheduling Tools (Hootsuite, Buffer, Later), Tableau</p>
-                </div>
-            </div>
-
         </div>
     </section>
-
 
     <!-- Portfolio -->
     <section class="portfolio" id="portfolio">
@@ -351,108 +245,36 @@
         </div>
     </section>
 
-    <!-- Blog intro -->
-    <section class="blog-intro">
-        <div class="blog-wrapper">
-            <h2>My Blog</h2>
-            <p>Thoughts on design, strategy, digital media, and what's shaping the industry.</p>
-        </div>
-    </section>
-
-    <!-- Full Blog -->
+    <!-- Blog -->
     <section class="full-blog" id="blog">
         <div class="blog-wrapper">
+            <h2>Blog</h2>
+            <p class="blog-lead">Notes on design, strategy, and digital media.</p>
             <div class="blog-grid">
-                <!-- Blog Post 1 -->
                 <article class="blog-card">
                     <div class="blog-header">
                         <span class="blog-category">Design</span>
                         <span class="blog-date">Jul 2026</span>
                     </div>
                     <h3>The Silent Power of Negative Space</h3>
-                    <p>Minimalism isn't about removing everything—it's about being intentional with what remains. We explore how strategic empty space creates focus, builds hierarchy, and lets your message breathe. Why less often says more.</p>
-                    <a href="#" class="read-more">Read More →</a>
+                    <p>Minimalism isn't about removing everything—it's about being intentional with what remains. Strategic empty space creates focus and lets your message breathe.</p>
                 </article>
-
-                <!-- Blog Post 2 -->
                 <article class="blog-card">
                     <div class="blog-header">
                         <span class="blog-category">Digital Media</span>
                         <span class="blog-date">Jun 2026</span>
                     </div>
                     <h3>Video as the New Design Canvas</h3>
-                    <p>Motion graphics and animated design aren't extras anymore—they're essential. From micro-interactions to full animated explainers, we break down how video elevates digital experiences and drives engagement in 2026.</p>
-                    <a href="#" class="read-more">Read More →</a>
+                    <p>Motion graphics aren't extras anymore. From micro-interactions to animated explainers, video elevates digital experiences and drives engagement.</p>
                 </article>
-
-                <!-- Blog Post 3 -->
                 <article class="blog-card">
                     <div class="blog-header">
                         <span class="blog-category">Strategy</span>
                         <span class="blog-date">May 2026</span>
                     </div>
-                    <h3>Brand Redesign: When to Evolve, When to Revolution</h3>
-                    <p>Not every brand needs a complete overhaul. Sometimes a refresh wins. Sometimes a revolution. We outline the key signals that tell you which path your brand needs, and the risks of choosing wrong.</p>
-                    <a href="#" class="read-more">Read More →</a>
+                    <h3>Brand Redesign: Evolve or Revolution</h3>
+                    <p>Not every brand needs a complete overhaul. The key is reading the signals that tell you whether a refresh or a revolution is the right move.</p>
                 </article>
-
-                <!-- Blog Post 4 -->
-                <article class="blog-card">
-                    <div class="blog-header">
-                        <span class="blog-category">Digital Media</span>
-                        <span class="blog-date">Apr 2026</span>
-                    </div>
-                    <h3>The Psychology Behind Color in Web Design</h3>
-                    <p>Color isn't decoration—it's psychology. Learn how different palettes influence user behavior, evoke emotion, and guide decision-making. Plus: how to pick colors that actually work for your brand and audience.</p>
-                    <a href="#" class="read-more">Read More →</a>
-                </article>
-
-                <!-- Blog Post 5 -->
-                <article class="blog-card">
-                    <div class="blog-header">
-                        <span class="blog-category">Design</span>
-                        <span class="blog-date">Mar 2026</span>
-                    </div>
-                    <h3>Typography That Tells a Story</h3>
-                    <p>A typeface isn't just letters—it's voice. Discover how font selection shapes brand perception, impacts readability, and creates emotional resonance. From serif to sans-serif, every choice matters.</p>
-                    <a href="#" class="read-more">Read More →</a>
-                </article>
-
-                <!-- Blog Post 6 -->
-                <article class="blog-card">
-                    <div class="blog-header">
-                        <span class="blog-category">Digital Media</span>
-                        <span class="blog-date">Feb 2026</span>
-                    </div>
-                    <h3>Micro-Interactions: The Details That Delight</h3>
-                    <p>Users notice small moments. A hover state, a loading animation, a button response—these micro-interactions build trust and polish. Learn how subtle motion creates big impressions in digital design.</p>
-                    <a href="#" class="read-more">Read More →</a>
-                </article>
-
-                <!-- Blog Post 7 -->
-                <article class="blog-card">
-                    <div class="blog-header">
-                        <span class="blog-category">Strategy</span>
-                        <span class="blog-date">Jan 2026</span>
-                    </div>
-                    <h3>Building a Design System That Scales</h3>
-                    <p>Design systems aren't luxuries—they're infrastructure. We walk through how to build and maintain design systems that grow with your product, keep teams aligned, and accelerate development cycles.</p>
-                    <a href="#" class="read-more">Read More →</a>
-                </article>
-
-                <!-- Blog Post 8 -->
-                <article class="blog-card">
-                    <div class="blog-header">
-                        <span class="blog-category">Design</span>
-                        <span class="blog-date">Dec 2025</span>
-                    </div>
-                    <h3>Accessibility Isn't an Afterthought</h3>
-                    <p>Inclusive design benefits everyone. From color contrast to keyboard navigation, we explore why accessibility is core to good design—and how to build digital experiences that work for all users.</p>
-                    <a href="#" class="read-more">Read More →</a>
-                </article>
-            </div>
-            <div style="text-align: center; margin-top: 4rem;">
-                <a href="#full-blog" id="blog-btn" class="view-btn">View All Blogs</a>
             </div>
         </div>
     </section>
@@ -461,167 +283,35 @@
     <section class="services" id="services">
         <div class="services-wrapper">
             <h2>Services</h2>
+            <p class="services-lead">Focused offerings for brands that need strategy and shipping power in one studio.</p>
             <div class="services-grid">
                 <div class="service-card">
-                    <div class="service-icon">🎨</div>
-                    <h3>Brand Strategy & Identity</h3>
-                    <p>Comprehensive visual systems that define who you are and what you stand for—from digital to print.</p>
+                    <h3>Brand Strategy &amp; Identity</h3>
+                    <p>Visual systems that define who you are — from digital to print.</p>
                 </div>
                 <div class="service-card">
-                    <div class="service-icon">🌐</div>
-                    <h3>Digital Design & UX</h3>
-                    <p>Websites and digital experiences built for clarity, conversion, and delight. Including motion graphics, animations, and interactive elements.</p>
+                    <h3>Digital Design &amp; UX</h3>
+                    <p>Sites and product experiences built for clarity, conversion, and motion.</p>
                 </div>
                 <div class="service-card">
-                    <div class="service-icon">✏️</div>
                     <h3>Art Direction</h3>
-                    <p>Strategic visual guidance for campaigns, publications, and brand evolution.</p>
+                    <p>Campaign and publication guidance that keeps every touchpoint intentional.</p>
                 </div>
                 <div class="service-card">
-                    <div class="service-icon">📦</div>
                     <h3>Package Design</h3>
-                    <p>Eye-catching product packaging that stands out on shelves and communicates your brand story. From concept to production-ready artwork.</p>
+                    <p>Shelf-ready packaging that communicates the brand story at a glance.</p>
                 </div>
                 <div class="service-card">
-                    <div class="service-icon">📱</div>
                     <h3>Social Media Marketing</h3>
-                    <p>Content strategy, campaign design, and community engagement that turns followers into customers. Built for platforms your audience actually uses.</p>
+                    <p>Content strategy and campaign design that turns attention into customers.</p>
                 </div>
             </div>
-            <div style="margin-top: 3rem; text-align: center;">
-                <a href="#services-detail" id="services-btn" class="view-btn">VIEW ALL SERVICES</a>
+            <div class="services-cta">
+                <a href="#contact-form" id="services-btn" class="cta-btn">Discuss a Project</a>
             </div>
         </div>
     </section>
 
-    <!-- Services Detail Page -->
-    <section class="services-detail" id="services-detail">
-        <div class="services-detail-wrapper">
-            <h2>Our Services</h2>
-            
-            <!-- Service 1 -->
-            <div class="service-detail-card">
-                <h3>🎨 Brand Strategy & Identity</h3>
-                <p>A strong brand isn't just a logo—it's a complete visual and strategic system that communicates who you are and what you stand for across all touchpoints, digital and print. We create comprehensive brand strategies that include:</p>
-                <ul>
-                    <li>Brand positioning and messaging</li>
-                    <li>Logo design and identity systems</li>
-                    <li>Color palettes and typography guidelines</li>
-                    <li>Print design (business cards, letterheads, packaging, labels)</li>
-                    <li>Brand documentation and asset libraries</li>
-                </ul>
-            </div>
-
-            <!-- Service 2 -->
-            <div class="service-detail-card">
-                <h3>🌐 Digital Design & UX</h3>
-                <p>Your website is often the first impression. We design digital experiences that are beautiful, intuitive, and built to convert. Every element serves a purpose, including strategic motion graphics and animations that enhance engagement.</p>
-                <ul>
-                    <li>Website design and development</li>
-                    <li>User experience (UX) strategy</li>
-                    <li>Interface design (UI)</li>
-                    <li>Motion graphics and animations</li>
-                    <li>Animated explainer videos</li>
-                    <li>Interactive micro-interactions</li>
-                    <li>E-commerce and conversion optimization</li>
-                </ul>
-            </div>
-
-            <!-- Service 3 -->
-            <div class="service-detail-card">
-                <h3>✏️ Art Direction</h3>
-                <p>Strategic visual guidance that brings your campaigns, publications, and brand evolution to life. We ensure consistency and impact across all touchpoints.</p>
-                <ul>
-                    <li>Campaign art direction</li>
-                    <li>Visual storytelling</li>
-                    <li>Publication design</li>
-                    <li>Brand evolution guidance</li>
-                </ul>
-            </div>
-
-            <!-- Service 4 -->
-            <div class="service-detail-card">
-                <h3>📱 Mobile & App Development</h3>
-                <p>Native iOS and Android applications built with modern frameworks. We combine design excellence with production-quality code for seamless user experiences.</p>
-                <ul>
-                    <li>iOS app development (Swift)</li>
-                    <li>Android app development (Kotlin)</li>
-                    <li>React Native cross-platform apps</li>
-                    <li>App design and prototyping</li>
-                </ul>
-            </div>
-
-            <!-- Service 5 -->
-            <div class="service-detail-card">
-                <h3>📦 Package Design</h3>
-                <p>Product packaging is often your first (and last) impression. We design eye-catching, functional packaging that tells your brand story and stands out on shelves. From concept through production-ready artwork.</p>
-                <ul>
-                    <li>Package concept and design</li>
-                    <li>Label design and layout</li>
-                    <li>Production-ready artwork</li>
-                    <li>Brand consistency across packaging</li>
-                    <li>Sustainability-focused design options</li>
-                    <li>Die-line preparation and specifications</li>
-                </ul>
-            </div>
-
-            <!-- Process Section -->
-            <div class="services-process">
-                <h3>How We Work</h3>
-                <div class="process-steps">
-                    <div class="process-step">
-                        <div class="step-number">01</div>
-                        <h4>Discovery & Strategy</h4>
-                        <p>We dive deep to understand your brand, goals, and audience. Research informs everything we do.</p>
-                    </div>
-                    <div class="process-step">
-                        <div class="step-number">02</div>
-                        <h4>Design & Prototyping</h4>
-                        <p>We create detailed designs and interactive prototypes to visualize the solution before development.</p>
-                    </div>
-                    <div class="process-step">
-                        <div class="step-number">03</div>
-                        <h4>Development & Execution</h4>
-                        <p>Our team builds production-quality code that brings designs to life with performance and polish.</p>
-                    </div>
-                    <div class="process-step">
-                        <div class="step-number">04</div>
-                        <h4>Launch & Support</h4>
-                        <p>We launch with precision and provide ongoing support to ensure your success.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Engagement Tracks -->
-            <div class="services-pricing">
-                <h3>Engagement Tracks</h3>
-                <p>Every project is unique. We work with you to create a custom strategy that delivers real results based on your scope and goals.</p>
-                <div class="pricing-cards">
-                    <div class="pricing-card">
-                        <h4>Foundation Track</h4>
-                        <p class="price">Focused Scope</p>
-                        <p>Perfect for brand identity projects, logo design, small web projects, or targeted design refreshes. We deliver strategic, intentional work at an accessible scale.</p>
-                    </div>
-                    <div class="pricing-card">
-                        <h4>Comprehensive Track</h4>
-                        <p class="price">Full Service</p>
-                        <p>Full brand suites, complete website design & development, end-to-end digital experiences, and integrated marketing design. Strategic depth with comprehensive execution.</p>
-                    </div>
-                    <div class="pricing-card">
-                        <h4>Strategic & Complex Track</h4>
-                        <p class="price">Enterprise Solutions</p>
-                        <p>App development, complex product strategies, large-scale digital transformations, and strategic consulting. Multi-phase projects with ongoing optimization and support.</p>
-                    </div>
-                </div>
-                <p style="text-align: center; margin-top: 2rem; font-size: 0.95rem; color: var(--text-muted);">Every project is unique. Let's discuss your project scope to create a custom strategy that delivers real results.</p>
-            </div>
-
-            <!-- CTA Button -->
-            <div style="text-align: center; margin-top: 3rem;">
-                <a href="#contact-form" class="cta-btn" onclick="document.getElementById('contact-form').scrollIntoView({behavior:'smooth'})">Start Your Project</a>
-            </div>
-        </div>
-    </section>
     <!--
         TESTIMONIALS SECTION — hidden until real client quotes are collected.
         To restore: delete the comment wrapper (this line and the "END HIDDEN" one)
@@ -1063,99 +753,9 @@
         window.addEventListener('load', initCookieConsent);
     </script>
 
-    <script>
-        // Designer Full Story Visibility Logic
-        function handleDesignerStory() {
-            const designerStory = document.getElementById('designer-full-story');
-            const learnMoreBtn = document.querySelector('a[href="#designer-full-story"]');
-            
-            // Function to show designer story
-            function showDesignerStory() {
-                designerStory.classList.add('active');
-            }
-            
-            // Function to hide designer story
-            function hideDesignerStory() {
-                designerStory.classList.remove('active');
-            }
-            
-            // Check if URL has #designer-full-story
-            if (window.location.hash === '#designer-full-story') {
-                showDesignerStory();
-            }
-            
-            // Handle Learn More button click
-            if (learnMoreBtn) {
-                learnMoreBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    showDesignerStory();
-                    // Smooth scroll to designer story
-                    setTimeout(() => {
-                        designerStory.scrollIntoView({ behavior: 'smooth' });
-                    }, 100);
-                });
-            }
-            
-            // Handle hash changes
-            window.addEventListener('hashchange', () => {
-                if (window.location.hash === '#designer-full-story') {
-                    showDesignerStory();
-                    setTimeout(() => {
-                        designerStory.scrollIntoView({ behavior: 'smooth' });
-                    }, 100);
-                }
-            });
-        }
-        
-        document.addEventListener('DOMContentLoaded', handleDesignerStory);
-    </script>
+    
 
-    <script>
-        // Services Detail Visibility Logic
-        function handleServicesDetail() {
-            const servicesDetail = document.getElementById('services-detail');
-            const viewServicesBtn = document.querySelector('a[href="#services-detail"]');
-            
-            // Function to show services detail
-            function showServicesDetail() {
-                servicesDetail.classList.add('active');
-            }
-            
-            // Function to hide services detail
-            function hideServicesDetail() {
-                servicesDetail.classList.remove('active');
-            }
-            
-            // Check if URL has #services-detail
-            if (window.location.hash === '#services-detail') {
-                showServicesDetail();
-            }
-            
-            // Handle View All Services button click
-            if (viewServicesBtn) {
-                viewServicesBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    showServicesDetail();
-                    // Smooth scroll to services detail
-                    setTimeout(() => {
-                        servicesDetail.scrollIntoView({ behavior: 'smooth' });
-                    }, 100);
-                });
-            }
-            
-            // Handle hash changes
-            window.addEventListener('hashchange', () => {
-                if (window.location.hash === '#services-detail') {
-                    showServicesDetail();
-                    setTimeout(() => {
-                        servicesDetail.scrollIntoView({ behavior: 'smooth' });
-                    }, 100);
-                }
-            });
-        }
-        
-        document.addEventListener('DOMContentLoaded', handleServicesDetail);
-    </script>
+    
 
 </body>
 </html>
