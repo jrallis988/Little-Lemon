@@ -1,0 +1,148 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Official Vibe palette */
+  --vibe-orange: #ff7a18;
+  --vibe-green: #1e824c;
+  --vibe-purple: #7b61ff;
+  --vibe-muted: #6e6e6e;
+  --vibe-ink: #222222;
+  --vibe-surface: #ffffff;
+  --mp-navy: #222222;
+  --mp-brand: #ff7a18;
+  --mp-brand-light: #ff9447;
+  --mp-accent: #7b61ff;
+  --mp-surface: #ffffff;
+  --mp-muted: #fff7f0;
+  --mp-border: #e8e4df;
+  --font-display: var(--font-display), "Trebuchet MS", sans-serif;
+  --font-body: var(--font-body), "Segoe UI", sans-serif;
+  --font-script: var(--font-script), "Brush Script MT", cursive;
+  --font-mono: ui-monospace, "Cascadia Code", monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    @apply text-navy-900 antialiased;
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.5;
+    background:
+      radial-gradient(circle at 12% 0%, rgba(255, 122, 24, 0.18), transparent 34%),
+      radial-gradient(circle at 88% 8%, rgba(123, 97, 255, 0.16), transparent 32%),
+      linear-gradient(165deg, #fff7f0 0%, #ffffff 42%, #f4f0ff 100%);
+    background-attachment: fixed;
+    color: var(--vibe-ink);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    color: var(--vibe-ink);
+  }
+
+  a {
+    @apply text-brand underline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand;
+  }
+
+  :focus-visible {
+    outline: 2px solid #ff7a18;
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: #ffe8d6;
+  }
+}
+
+@layer components {
+  .mp-card {
+    @apply rounded-card border border-surface-border bg-surface shadow-soft;
+  }
+
+  .mp-section-title {
+    @apply border-b border-surface-border pb-1 text-sm font-bold uppercase tracking-wide text-navy-800;
+  }
+
+  .sunset-shell {
+    background:
+      radial-gradient(circle at 15% 0%, rgba(255, 122, 24, 0.16), transparent 36%),
+      radial-gradient(circle at 90% 10%, rgba(123, 97, 255, 0.14), transparent 34%),
+      linear-gradient(165deg, #fff7f0 0%, #ffffff 45%, #f4f0ff 100%);
+  }
+
+  .vibe-card {
+    @apply rounded-[22px] border border-surface-border bg-surface shadow-card;
+  }
+
+  .vibe-card-title {
+    @apply flex items-center gap-2 text-xs font-black uppercase tracking-[0.16em] text-brand-dark;
+  }
+
+  .bulletin-board {
+    background-color: #efe4d4;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.22), transparent 28%),
+      radial-gradient(circle at 80% 70%, rgba(34, 34, 34, 0.05), transparent 30%);
+    @apply rounded-[22px] border border-[#d8c3a8] p-4 shadow-card;
+  }
+
+  .mp-profile-canvas {
+    background-color: var(--mp-bg, transparent);
+    background-image: var(--mp-bg-image, none);
+    background-repeat: var(--mp-bg-repeat, no-repeat);
+    background-position: var(--mp-bg-position, center top);
+    color: var(--mp-text, #222222);
+    font-family: var(--mp-body-font, var(--font-body));
+  }
+
+  .mp-profile-canvas h1,
+  .mp-profile-canvas h2,
+  .mp-profile-canvas h3 {
+    font-family: var(--mp-heading-font, var(--font-display));
+    color: var(--mp-primary, #ff7a18);
+  }
+
+  .mp-profile-canvas a {
+    color: var(--mp-link, #7b61ff);
+  }
+
+  .mp-profile-module {
+    border-style: var(--mp-border-style, solid);
+    border-width: 1px;
+    border-color: color-mix(in srgb, var(--mp-primary, #ff7a18) 28%, transparent);
+    background: color-mix(
+      in srgb,
+      #ffffff calc(var(--mp-card-alpha, 0.96) * 100%),
+      transparent
+    );
+    @apply rounded-[22px] p-3 shadow-soft;
+  }
+
+  .teen-chip {
+    @apply inline-flex items-center rounded-btn border border-brand/20 bg-brand-soft px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-brand-dark;
+  }
+}
