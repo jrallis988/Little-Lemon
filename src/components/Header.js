@@ -76,13 +76,13 @@ function Header() {
 
       <div className="header-inner">
         <Link to="/" className="brand" onClick={() => setOpen(false)}>
-          <span className="brand-mark" aria-hidden="true">
-            GB
-          </span>
-          <span className="brand-text">
-            <span className="brand-name">Great Bay</span>
-            <span className="brand-sub">Community College</span>
-          </span>
+          <img
+            className="brand-logo"
+            src="/images/gbcc-logo.png"
+            alt="Great Bay Community College"
+            width="220"
+            height="58"
+          />
         </Link>
 
         <button
