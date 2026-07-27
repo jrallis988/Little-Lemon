@@ -1,11 +1,12 @@
 import { SafetyBadge } from "@/components/mail/SafetyBadge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { FOLDERS, LEARNING_STAGE_LABELS } from "@/data/seed";
-import { STAGE_COPY } from "@/lib/stageCopy";
+import { FOLDERS } from "@/data/seed";
+import { copyForGrade } from "@/lib/stageCopy";
 import { cn } from "@/lib/utils";
 import { useMailStore } from "@/store/mailStore";
-import type { FolderId, LearningStage } from "@/types/mail";
+import type { FolderId, GradeLevel } from "@/types/mail";
+import { bandLabelForGrade } from "@/types/mail";
 import {
   FileText,
   Inbox,
@@ -22,7 +23,11 @@ const icons: Record<FolderId, typeof Inbox> = {
   "safe-contacts": ShieldCheck,
 };
 
-const stages: LearningStage[] = ["elementary", "middle", "high"];
+const GRADE_GROUPS: { label: string; grades: GradeLevel[] }[] = [
+  { label: "Elementary", grades: [1, 2, 3, 4, 5] },
+  { label: "Middle school", grades: [6, 7, 8] },
+  { label: "High school", grades: [9, 10, 11, 12] },
+];
 
 export function Sidebar() {
   const location = useLocation();
@@ -31,9 +36,10 @@ export function Sidebar() {
   const setFolder = useMailStore((s) => s.setFolder);
   const messages = useMailStore((s) => s.messages);
   const contacts = useMailStore((s) => s.contacts);
+  const grade = useMailStore((s) => s.grade);
   const learningStage = useMailStore((s) => s.learningStage);
-  const setLearningStage = useMailStore((s) => s.setLearningStage);
-  const copy = STAGE_COPY[learningStage];
+  const setGrade = useMailStore((s) => s.setGrade);
+  const copy = copyForGrade(grade);
 
   const unreadInbox = messages.filter(
     (m) => m.folder === "inbox" && m.unread,
@@ -50,8 +56,8 @@ export function Sidebar() {
   return (
     <aside
       className={cn(
-        "flex h-full shrink-0 flex-col border-r border-border/70 bg-white/70 backdrop-blur-sm",
-        learningStage === "high" ? "w-[232px]" : "w-[260px]",
+        "flex h-full w-[280px] shrink-0 flex-col border-r border-border/70 bg-white/70 backdrop-blur-sm",
+        learningStage === "high" && "w-[252px]",
       )}
     >
       <div className="px-5 pb-2 pt-6">
@@ -84,7 +90,7 @@ export function Sidebar() {
         </Button>
       </div>
 
-      <nav className="flex-1 space-y-1 px-3" aria-label="Mail folders">
+      <nav className="flex-1 space-y-1 overflow-y-auto px-3" aria-label="Mail folders">
         {FOLDERS.map((item) => {
           const Icon = icons[item.id];
           const active = location.pathname === "/" && folder === item.id;
@@ -141,30 +147,51 @@ export function Sidebar() {
 
       <div className="mt-auto space-y-3 p-4">
         <div className="space-y-2">
-          <p className="px-1 text-xs font-bold uppercase tracking-wide text-muted-foreground">
-            Learning stage
-          </p>
-          <div className="grid grid-cols-3 gap-1 rounded-2xl bg-muted/80 p-1">
-            {stages.map((stage) => (
-              <button
-                key={stage}
-                type="button"
-                onClick={() => setLearningStage(stage)}
-                className={cn(
-                  "rounded-xl px-1 py-2 text-[11px] font-bold transition-colors",
-                  learningStage === stage
-                    ? "bg-card text-foreground shadow-sm"
-                    : "text-muted-foreground hover:text-foreground",
-                )}
-                aria-pressed={learningStage === stage}
-                title={LEARNING_STAGE_LABELS[stage]}
-              >
-                {stage === "elementary"
-                  ? "1–5"
-                  : stage === "middle"
-                    ? "6–8"
-                    : "9–12"}
-              </button>
+          <div className="flex items-baseline justify-between px-1">
+            <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
+              Grade
+            </p>
+            <p className="text-xs font-semibold text-foreground">
+              Grade {grade} · {bandLabelForGrade(grade)}
+            </p>
+          </div>
+
+          <div className="space-y-2 rounded-2xl bg-muted/80 p-2">
+            {GRADE_GROUPS.map((group) => (
+              <div key={group.label} className="space-y-1">
+                <p className="px-1 text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
+                  {group.label}
+                </p>
+                <div
+                  className={cn(
+                    "grid gap-1",
+                    group.grades.length === 3
+                      ? "grid-cols-3"
+                      : group.grades.length === 4
+                        ? "grid-cols-4"
+                        : "grid-cols-5",
+                  )}
+                >
+                  {group.grades.map((value) => (
+                    <button
+                      key={value}
+                      type="button"
+                      onClick={() => setGrade(value)}
+                      className={cn(
+                        "rounded-xl py-2 text-xs font-bold transition-colors",
+                        grade === value
+                          ? "bg-card text-foreground shadow-sm ring-1 ring-primary/25"
+                          : "text-muted-foreground hover:bg-card/70 hover:text-foreground",
+                      )}
+                      aria-pressed={grade === value}
+                      aria-label={`Grade ${value}`}
+                      title={`Grade ${value}`}
+                    >
+                      {value}
+                    </button>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </div>

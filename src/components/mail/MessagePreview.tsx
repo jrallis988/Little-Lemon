@@ -2,7 +2,7 @@ import { ContactAvatar } from "@/components/mail/ContactAvatar";
 import { SafetyBadge } from "@/components/mail/SafetyBadge";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { STAGE_COPY } from "@/lib/stageCopy";
+import { copyForGrade } from "@/lib/stageCopy";
 import { cn, formatMessageTime } from "@/lib/utils";
 import { getContact, useMailStore } from "@/store/mailStore";
 import { Reply, Share2 } from "lucide-react";
@@ -13,8 +13,9 @@ export function MessagePreview() {
   const contacts = useMailStore((s) => s.contacts);
   const selectedMessageId = useMailStore((s) => s.selectedMessageId);
   const folder = useMailStore((s) => s.folder);
+  const grade = useMailStore((s) => s.grade);
   const learningStage = useMailStore((s) => s.learningStage);
-  const copy = STAGE_COPY[learningStage];
+  const copy = copyForGrade(grade);
 
   const message = messages.find((m) => m.id === selectedMessageId);
   const contact = message
@@ -127,8 +128,9 @@ export function MessagePreview() {
 
 function SafeContactsPane() {
   const contacts = useMailStore((s) => s.contacts);
+  const grade = useMailStore((s) => s.grade);
   const learningStage = useMailStore((s) => s.learningStage);
-  const copy = STAGE_COPY[learningStage];
+  const copy = copyForGrade(grade);
   const safe = contacts.filter((c) => c.safety !== "unknown");
 
   return (

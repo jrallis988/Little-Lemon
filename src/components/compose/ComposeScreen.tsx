@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { STAGE_COPY } from "@/lib/stageCopy";
+import { copyForGrade } from "@/lib/stageCopy";
 import { cn } from "@/lib/utils";
 import { useMailStore } from "@/store/mailStore";
 import { Bold, Italic, Paperclip, Send, Underline, X } from "lucide-react";
@@ -12,8 +12,9 @@ export function ComposeScreen() {
   const navigate = useNavigate();
   const saveDraft = useMailStore((s) => s.saveDraft);
   const sendDraft = useMailStore((s) => s.sendDraft);
+  const grade = useMailStore((s) => s.grade);
   const learningStage = useMailStore((s) => s.learningStage);
-  const copy = STAGE_COPY[learningStage];
+  const copy = copyForGrade(grade);
 
   const [to, setTo] = useState("");
   const [subject, setSubject] = useState("");

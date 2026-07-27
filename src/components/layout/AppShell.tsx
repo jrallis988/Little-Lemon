@@ -6,11 +6,13 @@ import { Outlet } from "react-router-dom";
 import { useEffect } from "react";
 
 export function AppShell() {
+  const grade = useMailStore((s) => s.grade);
   const learningStage = useMailStore((s) => s.learningStage);
 
   useEffect(() => {
     document.documentElement.dataset.stage = learningStage;
-  }, [learningStage]);
+    document.documentElement.dataset.grade = String(grade);
+  }, [grade, learningStage]);
 
   return (
     <TooltipProvider delayDuration={200}>

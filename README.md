@@ -14,15 +14,15 @@ When someone hears **Mailbox**, they should think: “That’s an email app.”
 
 ## Design philosophy
 
-Maturity comes from the interface, not the name. One product; one name; a learning stage that evolves:
+Maturity comes from the interface, not the name. One product; one name; every grade from **1 through 12** selectable, with experience profiles that evolve:
 
-| Stage | Grades | Experience |
+| Band | Grades | Experience |
 | --- | --- | --- |
-| Elementary | 1–5 | Larger targets, guided language, warmer visual cues |
-| Middle | 6–8 | Cleaner chrome, fewer prompts, more independence |
-| High | 9–12 | Professional density, productivity-forward layout |
+| Elementary | 1, 2, 3, 4, 5 | Larger targets, guided language, warmer visual cues |
+| Middle school | **6, 7, 8** | Cleaner chrome, growing independence (grade-specific guidance) |
+| High school | 9, 10, 11, 12 | Professional density, productivity-forward layout |
 
-**Guiding principle:** We do not make email easier by removing features. We present features at the right time, in the right way, for the student’s stage of learning.
+**Guiding principle:** We do not make email easier by removing features. We present features at the right time, in the right way, for the student’s grade.
 
 ## Stack
 
@@ -44,4 +44,4 @@ npm run tauri:dev    # desktop shell
 1. **Split-pane inbox** — folders, message list, reading pane
 2. **Compose** — focused writing with Send / Attach / Format
 3. **Safety indicators** — verified folders and Safe Contacts woven into the UI
-4. **Learning stage switcher** — preview how the same product matures across K–12
+4. **Grade selector (1–12)** — including middle school grades 6, 7, and 8 as first-class options

@@ -1,4 +1,4 @@
-import type { Contact, Draft, FolderMeta, LearningStage, Message } from "@/types/mail";
+import type { Contact, Draft, FolderMeta, Message } from "@/types/mail";
 
 export const FOLDERS: FolderMeta[] = [
   {
@@ -25,12 +25,6 @@ export const FOLDERS: FolderMeta[] = [
     verified: true,
   },
 ];
-
-export const LEARNING_STAGE_LABELS: Record<LearningStage, string> = {
-  elementary: "Grades 1–5",
-  middle: "Grades 6–8",
-  high: "Grades 9–12",
-};
 
 export const SEED_CONTACTS: Contact[] = [
   {

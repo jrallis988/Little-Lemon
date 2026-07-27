@@ -1,23 +1,44 @@
 import { create } from "zustand";
 import { db, ensureSeedData } from "@/lib/db";
-import type { Contact, Draft, FolderId, LearningStage, Message } from "@/types/mail";
+import type {
+  Contact,
+  Draft,
+  FolderId,
+  GradeLevel,
+  LearningStage,
+  Message,
+} from "@/types/mail";
+import { stageFromGrade } from "@/types/mail";
 
-const STAGE_STORAGE_KEY = "mailbox.learningStage";
+const GRADE_STORAGE_KEY = "mailbox.grade";
+const LEGACY_STAGE_STORAGE_KEY = "mailbox.learningStage";
 
-function readStoredStage(): LearningStage {
+function isGradeLevel(value: number): value is GradeLevel {
+  return Number.isInteger(value) && value >= 1 && value <= 12;
+}
+
+function readStoredGrade(): GradeLevel {
   try {
-    const value = localStorage.getItem(STAGE_STORAGE_KEY);
-    if (value === "elementary" || value === "middle" || value === "high") {
-      return value;
+    const raw = localStorage.getItem(GRADE_STORAGE_KEY);
+    if (raw) {
+      const parsed = Number(raw);
+      if (isGradeLevel(parsed)) return parsed;
     }
+
+    // Migrate older band-only preference into a representative grade.
+    const legacy = localStorage.getItem(LEGACY_STAGE_STORAGE_KEY);
+    if (legacy === "middle") return 7;
+    if (legacy === "high") return 10;
+    if (legacy === "elementary") return 3;
   } catch {
     /* ignore */
   }
-  return "elementary";
+  return 3;
 }
 
 interface MailState {
   ready: boolean;
+  grade: GradeLevel;
   learningStage: LearningStage;
   folder: FolderId;
   selectedMessageId: string | null;
@@ -26,7 +47,7 @@ interface MailState {
   drafts: Draft[];
   searchQuery: string;
   hydrate: () => Promise<void>;
-  setLearningStage: (stage: LearningStage) => void;
+  setGrade: (grade: GradeLevel) => void;
   setFolder: (folder: FolderId) => void;
   selectMessage: (id: string | null) => void;
   markRead: (id: string) => Promise<void>;
@@ -52,6 +73,7 @@ export function getContact(
 
 export const useMailStore = create<MailState>((set, get) => ({
   ready: false,
+  grade: 3,
   learningStage: "elementary",
   folder: "inbox",
   selectedMessageId: null,
@@ -68,10 +90,12 @@ export const useMailStore = create<MailState>((set, get) => ({
       db.drafts.orderBy("updatedAt").reverse().toArray(),
     ]);
 
+    const grade = readStoredGrade();
     const inboxFirst = messages.find((m) => m.folder === "inbox");
     set({
       ready: true,
-      learningStage: readStoredStage(),
+      grade,
+      learningStage: stageFromGrade(grade),
       messages,
       contacts,
       drafts,
@@ -79,13 +103,14 @@ export const useMailStore = create<MailState>((set, get) => ({
     });
   },
 
-  setLearningStage: (learningStage) => {
+  setGrade: (grade) => {
     try {
-      localStorage.setItem(STAGE_STORAGE_KEY, learningStage);
+      localStorage.setItem(GRADE_STORAGE_KEY, String(grade));
+      localStorage.removeItem(LEGACY_STAGE_STORAGE_KEY);
     } catch {
       /* ignore */
     }
-    set({ learningStage });
+    set({ grade, learningStage: stageFromGrade(grade) });
   },
 
   setFolder: (folder) => {

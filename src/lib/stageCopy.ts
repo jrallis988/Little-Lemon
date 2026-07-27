@@ -1,6 +1,7 @@
-import type { LearningStage } from "@/types/mail";
+import type { GradeLevel, LearningStage } from "@/types/mail";
+import { stageFromGrade } from "@/types/mail";
 
-interface StageCopy {
+export interface StageCopy {
   tagline: string;
   composeTitle: string;
   composeHint: string;
@@ -62,3 +63,42 @@ export const STAGE_COPY: Record<LearningStage, StageCopy> = {
     showFolderDescriptions: false,
   },
 };
+
+/** Middle school grades refine guidance while sharing the same experience band. */
+const MIDDLE_GRADE_COPY: Record<6 | 7 | 8, Partial<StageCopy>> = {
+  6: {
+    tagline: "Email for middle school",
+    composeHint: "Include a greeting, a clear subject, and what you need.",
+    bodyPlaceholder:
+      "Start with a greeting, then share your update or question.",
+    safetyFooter:
+      "Grade 6 tip: pause on unknown senders and ask a teacher if something feels off.",
+  },
+  7: {
+    tagline: "Clear school communication",
+    composeHint: "Lead with your purpose, then add only the details that matter.",
+    bodyPlaceholder: "Write a clear message with a purpose in the first lines…",
+    safetyFooter:
+      "Grade 7 tip: verify senders before clicking links or sharing personal info.",
+  },
+  8: {
+    tagline: "Independent communication",
+    composeHint: "Be specific, polite, and ready to follow up if needed.",
+    composeCta: "Compose",
+    showFolderDescriptions: false,
+    bodyPlaceholder: "Write your message…",
+    safetyFooter:
+      "Grade 8 tip: treat unknown mail carefully — confirm before you respond.",
+    unknownSenderHint:
+      "Unknown sender. Confirm with a teacher or parent before interacting.",
+  },
+};
+
+export function copyForGrade(grade: GradeLevel): StageCopy {
+  const stage = stageFromGrade(grade);
+  const base = STAGE_COPY[stage];
+  if (grade === 6 || grade === 7 || grade === 8) {
+    return { ...base, ...MIDDLE_GRADE_COPY[grade] };
+  }
+  return base;
+}
