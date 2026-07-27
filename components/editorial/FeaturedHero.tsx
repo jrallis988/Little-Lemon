@@ -62,7 +62,7 @@ export function FeaturedHero({ spotlight, track }: FeaturedHeroProps) {
             <View style={styles.ctaRow}>
               <Link href={`/track/${track.id}`} asChild>
                 <Pressable style={styles.ctaPrimary}>
-                  <Text style={styles.ctaPrimaryText}>LISTEN NOW</Text>
+                  <Text style={styles.ctaPrimaryText}>LOG / REVIEW</Text>
                 </Pressable>
               </Link>
               <Link href={`/artist/${track.artistId}`} asChild>

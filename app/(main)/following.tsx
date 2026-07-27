@@ -1,39 +1,34 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Link } from 'expo-router';
 
-import { TrackListing } from '@/components/tracks/TrackListing';
+import { ActivityEntry } from '@/components/social/ActivityEntry';
 import { StaticBackground } from '@/components/ui/StaticBackground';
 import { colors, fonts, spacing } from '@/constants/theme';
 import { useBottomInset } from '@/hooks/useBottomInset';
-import { DEMO_TRACKS } from '@/lib/demoData';
+import { DEMO_ACTIVITY } from '@/lib/demoData';
 
 /**
- * Chronological following feed — newest first, discovery only.
+ * Letterboxd-style activity feed — friends logging, reviewing, listing.
+ * Chronological only. Not an artist broadcast feed. Not a player queue.
  */
-export default function FollowingScreen() {
-  const feed = [...DEMO_TRACKS].reverse();
+export default function ActivityScreen() {
   const bottomInset = useBottomInset(spacing.tabBar);
+  const feed = [...DEMO_ACTIVITY].sort((a, b) =>
+    b.createdAt.localeCompare(a.createdAt),
+  );
 
   return (
     <StaticBackground>
       <ScrollView
         contentContainerStyle={[styles.content, { paddingBottom: bottomInset }]}
       >
-        <Text style={styles.headline}>Following</Text>
+        <Text style={styles.headline}>Activity</Text>
         <Text style={styles.lede}>
-          Chronological posts from artists you follow. No algorithmic reorder.
+          People you follow logging tracks, writing reviews, and building lists.
+          Chronological — no algorithmic reorder. No in-app player.
         </Text>
 
-        {feed.map((track) => (
-          <View key={track.id} style={styles.item}>
-            <Text style={styles.stamp}>New transmission</Text>
-            <TrackListing track={track} />
-            <Link href={`/artist/${track.artistId}`}>
-              <Text style={styles.artistLink}>
-                Open {track.artistName} →
-              </Text>
-            </Link>
-          </View>
+        {feed.map((item) => (
+          <ActivityEntry key={item.id} item={item} />
         ))}
       </ScrollView>
     </StaticBackground>
@@ -42,7 +37,7 @@ export default function FollowingScreen() {
 
 const styles = StyleSheet.create({
   content: {
-    paddingHorizontal: spacing.lg,
+    paddingHorizontal: spacing.md,
     paddingTop: spacing.lg,
   },
   headline: {
@@ -57,20 +52,5 @@ const styles = StyleSheet.create({
     color: colors.textMuted,
     marginBottom: spacing.lg,
     lineHeight: 20,
-  },
-  item: {
-    marginBottom: spacing.lg,
-    gap: spacing.sm,
-  },
-  stamp: {
-    fontFamily: fonts.sansBold,
-    fontSize: 11,
-    color: colors.textDim,
-    textTransform: 'uppercase',
-  },
-  artistLink: {
-    fontFamily: fonts.sans,
-    fontSize: 13,
-    color: colors.link,
   },
 });

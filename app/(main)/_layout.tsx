@@ -66,8 +66,8 @@ export default function MainLayout() {
         <Tabs.Screen
           name="following"
           options={{
-            title: 'Following',
-            tabBarLabel: ({ focused }) => <TabLabel label="Feed" focused={focused} />,
+            title: 'Activity',
+            tabBarLabel: ({ focused }) => <TabLabel label="Activity" focused={focused} />,
             tabBarIcon: () => null,
           }}
         />

@@ -1,26 +1,31 @@
 import { Link, useLocalSearchParams } from 'expo-router';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
+import { RatingStars } from '@/components/social/RatingStars';
+import { ReviewCard } from '@/components/social/ReviewCard';
 import { StaticBackground } from '@/components/ui/StaticBackground';
 import { colors, fonts, portalBox, spacing } from '@/constants/theme';
 import { useBottomInset } from '@/hooks/useBottomInset';
-import { DEMO_COMMENTS, DEMO_TRACKS } from '@/lib/demoData';
+import { DEMO_TRACKS, reviewsForTrack } from '@/lib/demoData';
+import { useTasteStore } from '@/store/useTasteStore';
+import type { RatingValue } from '@/types/models';
 
-function formatStamp(ms: number): string {
-  const totalSec = Math.floor(ms / 1000);
-  const m = Math.floor(totalSec / 60);
-  const s = totalSec % 60;
-  return `${m}:${s.toString().padStart(2, '0')}`;
-}
+const RATING_OPTIONS: RatingValue[] = [1, 2, 3, 4, 5];
 
 /**
- * Track detail — download/repost focused discovery page (no player).
+ * Track detail — Letterboxd log/rate/review + PureVolume download/repost.
+ * No music player.
  */
 export default function TrackScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const bottomInset = useBottomInset();
   const track = DEMO_TRACKS.find((t) => t.id === id) ?? DEMO_TRACKS[0];
-  const comments = DEMO_COMMENTS.filter((c) => c.trackId === track.id);
+  const reviews = reviewsForTrack(track.id);
+
+  const logged = useTasteStore((s) => Boolean(s.loggedIds[track.id]));
+  const rating = useTasteStore((s) => s.ratings[track.id]);
+  const toggleLog = useTasteStore((s) => s.toggleLog);
+  const setRating = useTasteStore((s) => s.setRating);
 
   return (
     <StaticBackground>
@@ -39,6 +44,43 @@ export default function TrackScreen() {
             <Text style={styles.scene}>
               {[track.scene, track.geography].filter(Boolean).join(' · ')}
             </Text>
+            {rating ? <RatingStars value={rating} size="md" /> : null}
+          </View>
+        </View>
+
+        <View style={styles.logBox}>
+          <Text style={styles.sectionLabel}>Your diary</Text>
+          <Pressable
+            style={[styles.ctaPrimary, logged && styles.ctaLogged]}
+            onPress={() => toggleLog(track.id)}
+          >
+            <Text
+              style={[styles.ctaPrimaryText, logged && styles.ctaLoggedText]}
+            >
+              {logged ? 'Logged' : 'Log this track'}
+            </Text>
+          </Pressable>
+          <Text style={styles.rateHint}>Rate</Text>
+          <View style={styles.rateRow}>
+            {RATING_OPTIONS.map((value) => {
+              const active = rating === value;
+              return (
+                <Pressable
+                  key={value}
+                  style={[styles.rateChip, active && styles.rateChipActive]}
+                  onPress={() => setRating(track.id, value)}
+                >
+                  <Text
+                    style={[
+                      styles.rateChipText,
+                      active && styles.rateChipTextActive,
+                    ]}
+                  >
+                    {value}★
+                  </Text>
+                </Pressable>
+              );
+            })}
           </View>
         </View>
 
@@ -58,8 +100,8 @@ export default function TrackScreen() {
         </View>
 
         <View style={styles.actions}>
-          <Pressable style={styles.ctaPrimary}>
-            <Text style={styles.ctaPrimaryText}>Download</Text>
+          <Pressable style={styles.ctaSecondary}>
+            <Text style={styles.ctaSecondaryText}>Download</Text>
           </Pressable>
           <Pressable style={styles.ctaSecondary}>
             <Text style={styles.ctaSecondaryText}>Repost</Text>
@@ -67,28 +109,22 @@ export default function TrackScreen() {
         </View>
 
         <Text style={styles.note}>
-          Play counts stay private to the artist. No likes. Downloads are the
-          public signal.
+          Log and review like Letterboxd. Download and repost support the
+          artist. Play counts stay private. No in-app player.
         </Text>
 
         <View style={styles.panel}>
           <View style={styles.panelHeader}>
-            <Text style={styles.panelTitle}>Comments</Text>
+            <Text style={styles.panelTitle}>Reviews</Text>
           </View>
-          {comments.length === 0 ? (
-            <Text style={styles.empty}>No comments yet.</Text>
+          {reviews.length === 0 ? (
+            <Text style={styles.empty}>No reviews yet. Be the first.</Text>
           ) : (
-            comments.map((comment) => (
-              <View key={comment.id} style={styles.comment}>
-                <Text style={styles.commentMeta}>
-                  {comment.displayName}
-                  {comment.timestampMs > 0
-                    ? ` · ${formatStamp(comment.timestampMs)}`
-                    : ''}
-                </Text>
-                <Text style={styles.commentBody}>{comment.body}</Text>
-              </View>
-            ))
+            <View style={styles.panelBody}>
+              {reviews.map((review) => (
+                <ReviewCard key={review.id} review={review} />
+              ))}
+            </View>
           )}
         </View>
       </ScrollView>
@@ -142,6 +178,48 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: colors.textMuted,
   },
+  logBox: {
+    ...portalBox,
+    padding: spacing.sm,
+    gap: 8,
+  },
+  sectionLabel: {
+    fontFamily: fonts.sansBold,
+    fontSize: 11,
+    letterSpacing: 0.4,
+    color: colors.textDim,
+    textTransform: 'uppercase',
+  },
+  rateHint: {
+    fontFamily: fonts.sans,
+    fontSize: 12,
+    color: colors.textMuted,
+    marginTop: 4,
+  },
+  rateRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+  },
+  rateChip: {
+    borderWidth: 1,
+    borderColor: colors.border,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    backgroundColor: colors.surface,
+  },
+  rateChipActive: {
+    borderColor: colors.link,
+    backgroundColor: colors.link,
+  },
+  rateChipText: {
+    fontFamily: fonts.sansBold,
+    fontSize: 12,
+    color: colors.text,
+  },
+  rateChipTextActive: {
+    color: '#FFFFFF',
+  },
   statsBox: {
     ...portalBox,
     flexDirection: 'row',
@@ -167,7 +245,6 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
   },
   ctaPrimary: {
-    flex: 1,
     backgroundColor: colors.link,
     paddingVertical: 12,
     alignItems: 'center',
@@ -176,6 +253,14 @@ const styles = StyleSheet.create({
     fontFamily: fonts.sansBold,
     fontSize: 14,
     color: '#FFFFFF',
+  },
+  ctaLogged: {
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.link,
+  },
+  ctaLoggedText: {
+    color: colors.link,
   },
   ctaSecondary: {
     flex: 1,
@@ -214,28 +299,14 @@ const styles = StyleSheet.create({
     color: colors.text,
     textTransform: 'uppercase',
   },
+  panelBody: {
+    padding: spacing.sm,
+    paddingBottom: 0,
+  },
   empty: {
     fontFamily: fonts.sans,
     fontSize: 13,
     color: colors.textDim,
     padding: spacing.md,
-  },
-  comment: {
-    paddingHorizontal: spacing.sm,
-    paddingVertical: spacing.sm,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.borderSubtle,
-    gap: 4,
-  },
-  commentMeta: {
-    fontFamily: fonts.sansBold,
-    fontSize: 12,
-    color: colors.link,
-  },
-  commentBody: {
-    fontFamily: fonts.sans,
-    fontSize: 14,
-    color: colors.text,
-    lineHeight: 20,
   },
 });

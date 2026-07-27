@@ -16,15 +16,19 @@ import { ListeningList } from '@/components/editorial/ListeningList';
 import { PortalHeader } from '@/components/editorial/PortalHeader';
 import { RecentlyFeaturedList } from '@/components/editorial/RecentlyFeaturedList';
 import { TrackChartRow } from '@/components/editorial/TrackChartRow';
+import { ListCard } from '@/components/social/ListCard';
+import { ReviewCard } from '@/components/social/ReviewCard';
 import { StaticBackground } from '@/components/ui/StaticBackground';
 import { colors, fonts, portalBox, spacing } from '@/constants/theme';
 import { useBottomInset } from '@/hooks/useBottomInset';
 import {
+  DEMO_LISTS,
   DEMO_TRACKS,
   EVERYBODY_LISTENING,
   FEATURED_SPOTLIGHT,
   RECENTLY_FEATURED,
   getTrackById,
+  popularReviews,
   tracksByDownloads,
   tracksByReposts,
 } from '@/lib/demoData';
@@ -33,7 +37,8 @@ const WIDE = 900;
 const MID = 700;
 
 /**
- * PureVolume-structured editorial homepage — discovery only, no player.
+ * Editorial homepage — PureVolume discovery frame + Letterboxd social taste.
+ * No music player.
  */
 export default function EditorialScreen() {
   const [tab, setTab] = useState<EditorialTab>('Featured');
@@ -63,6 +68,8 @@ export default function EditorialScreen() {
 
   const topSongs = useMemo(() => tracksByReposts(), []);
   const topDownloads = useMemo(() => tracksByDownloads(), []);
+  const reviews = useMemo(() => popularReviews(3), []);
+  const lists = useMemo(() => DEMO_LISTS.slice(0, 2), []);
 
   return (
     <StaticBackground>
@@ -99,6 +106,21 @@ export default function EditorialScreen() {
 
                 <View style={styles.panel}>
                   <View style={styles.panelHeader}>
+                    <Text style={styles.panelTitle}>POPULAR REVIEWS</Text>
+                  </View>
+                  <View style={styles.reviewPad}>
+                    {reviews.map((review) => (
+                      <ReviewCard
+                        key={review.id}
+                        review={review}
+                        showTrack
+                      />
+                    ))}
+                  </View>
+                </View>
+
+                <View style={styles.panel}>
+                  <View style={styles.panelHeader}>
                     <Text style={styles.panelTitle}>LATEST ON THE WIRE</Text>
                   </View>
                   {DEMO_TRACKS.slice(0, 5).map((track, index) => (
@@ -109,6 +131,17 @@ export default function EditorialScreen() {
                       metric="downloads"
                     />
                   ))}
+                </View>
+
+                <View style={styles.panel}>
+                  <View style={styles.panelHeader}>
+                    <Text style={styles.panelTitle}>POPULAR LISTS</Text>
+                  </View>
+                  <View style={styles.reviewPad}>
+                    {lists.map((list) => (
+                      <ListCard key={list.id} list={list} />
+                    ))}
+                  </View>
                 </View>
               </View>
 
@@ -282,5 +315,9 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: colors.textDim,
     marginTop: 4,
+  },
+  reviewPad: {
+    padding: spacing.sm,
+    paddingBottom: 0,
   },
 });

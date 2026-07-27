@@ -17,10 +17,10 @@ type ListeningListProps = {
 };
 
 /**
- * PureVolume "Everybody's Listening" compact list.
+ * Compact “everybody’s logging” rail — social heat without a player.
  */
 export function ListeningList({
-  title = "EVERYBODY'S LISTENING",
+  title = "EVERYBODY'S LOGGING",
   tracks,
 }: ListeningListProps) {
   return (

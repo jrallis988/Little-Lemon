@@ -1,4 +1,12 @@
-import type { Track, UserProfile, TrackComment } from '@/types/models';
+import type {
+  ActivityItem,
+  DiaryEntry,
+  Review,
+  TasteList,
+  Track,
+  TrackComment,
+  UserProfile,
+} from '@/types/models';
 
 /** Placeholder editorial / discovery content for scaffolding UI */
 export const DEMO_ARTISTS: UserProfile[] = [
@@ -317,7 +325,7 @@ export const FEATURE_TILES: FeatureTile[] = [
     artistId: 'artist-static-bloom',
     trackId: 'track-snow-on-the-tape',
     title: 'Static Bloom',
-    subtitle: "Exclusive stream — 'Snow on the Tape'",
+    subtitle: "Featured — 'Snow on the Tape'",
     size: 'hero',
     tone: 'ash',
   },
@@ -335,7 +343,7 @@ export const FEATURE_TILES: FeatureTile[] = [
     artistId: 'artist-blackout-relay',
     trackId: 'track-blown-cone',
     title: 'Blackout Relay',
-    subtitle: 'Watch now — basement hardcore',
+    subtitle: 'Basement hardcore feature',
     size: 'small',
     tone: 'ink',
   },
@@ -416,6 +424,271 @@ export const DEMO_COMMENTS: TrackComment[] = [
     createdAt: '2026-07-21T09:30:00Z',
   },
 ];
+
+/** Listener profiles — taste archive owners (Letterboxd “members”) */
+export const DEMO_LISTENERS: UserProfile[] = [
+  {
+    id: 'listener-mira',
+    email: 'mira@example.com',
+    displayName: 'mira_tape',
+    role: 'listener',
+    bio: 'Basement shows + rainy drives. Logging what sticks.',
+    geography: 'Portland, OR',
+    followerCount: 128,
+  },
+  {
+    id: 'listener-jon',
+    email: 'jon@example.com',
+    displayName: 'jon_exit',
+    role: 'listener',
+    bio: 'Punk first, then whatever’s left on the USB.',
+    geography: 'Manchester, NH',
+    followerCount: 64,
+  },
+  {
+    id: 'listener-kai',
+    email: 'kai@example.com',
+    displayName: 'kai_sodium',
+    role: 'listener',
+    bio: 'Lists > algorithms.',
+    geography: 'Austin, TX',
+    followerCount: 211,
+  },
+];
+
+export const DEMO_REVIEWS: Review[] = [
+  {
+    id: 'rev-1',
+    userId: 'listener-mira',
+    displayName: 'mira_tape',
+    trackId: 'track-snow-on-the-tape',
+    rating: 4.5,
+    body: 'Feels like the last bus home in February. Not background music — you sit with it.',
+    createdAt: '2026-07-22T18:00:00Z',
+    likeCount: 24,
+  },
+  {
+    id: 'rev-2',
+    userId: 'listener-jon',
+    displayName: 'jon_exit',
+    trackId: 'track-exit-ramp',
+    rating: 4,
+    body: 'Two minutes of pure New England hallway energy. Logged after the Manchester show.',
+    createdAt: '2026-07-23T11:20:00Z',
+    likeCount: 11,
+  },
+  {
+    id: 'rev-3',
+    userId: 'listener-kai',
+    displayName: 'kai_sodium',
+    trackId: 'track-pixel-bruise',
+    rating: 3.5,
+    body: 'Glitchy sugar rush. Great for a night drive list — not sure it survives a second week.',
+    createdAt: '2026-07-24T09:10:00Z',
+    likeCount: 8,
+  },
+  {
+    id: 'rev-4',
+    userId: 'listener-mira',
+    displayName: 'mira_tape',
+    trackId: 'track-blown-cone',
+    rating: 5,
+    body: 'Maximum volume or don’t bother. Instant diary staple.',
+    createdAt: '2026-07-25T21:00:00Z',
+    likeCount: 41,
+  },
+];
+
+export const DEMO_DIARY: DiaryEntry[] = [
+  {
+    id: 'diary-1',
+    userId: 'listener-mira',
+    displayName: 'mira_tape',
+    trackId: 'track-snow-on-the-tape',
+    loggedOn: '2026-07-22',
+    rating: 4.5,
+    reviewId: 'rev-1',
+  },
+  {
+    id: 'diary-2',
+    userId: 'listener-jon',
+    displayName: 'jon_exit',
+    trackId: 'track-exit-ramp',
+    loggedOn: '2026-07-23',
+    rating: 4,
+    reviewId: 'rev-2',
+  },
+  {
+    id: 'diary-3',
+    userId: 'listener-kai',
+    displayName: 'kai_sodium',
+    trackId: 'track-pixel-bruise',
+    loggedOn: '2026-07-24',
+    rating: 3.5,
+    reviewId: 'rev-3',
+  },
+  {
+    id: 'diary-4',
+    userId: 'listener-mira',
+    displayName: 'mira_tape',
+    trackId: 'track-blown-cone',
+    loggedOn: '2026-07-25',
+    rating: 5,
+    reviewId: 'rev-4',
+  },
+  {
+    id: 'diary-5',
+    userId: 'listener-jon',
+    displayName: 'jon_exit',
+    trackId: 'track-bus-route-7',
+    loggedOn: '2026-07-26',
+    rating: 3,
+    note: 'Solid commute track.',
+  },
+  {
+    id: 'diary-6',
+    userId: 'listener-kai',
+    displayName: 'kai_sodium',
+    trackId: 'track-sodium-glow',
+    loggedOn: '2026-07-26',
+    rating: 4,
+  },
+];
+
+export const DEMO_LISTS: TasteList[] = [
+  {
+    id: 'list-rain',
+    userId: 'listener-mira',
+    displayName: 'mira_tape',
+    title: 'Rainy drive home',
+    description: 'Shoegaze and sodium lights. Windows fogged.',
+    trackIds: [
+      'track-snow-on-the-tape',
+      'track-sodium-glow',
+      'track-porch-mic',
+      'track-bus-route-7',
+    ],
+    createdAt: '2026-07-10T12:00:00Z',
+    ranked: true,
+  },
+  {
+    id: 'list-basement',
+    userId: 'listener-jon',
+    displayName: 'jon_exit',
+    title: 'Basement bills worth the cover',
+    description: 'Hardcore / punk that still hits after the ringing stops.',
+    trackIds: [
+      'track-blown-cone',
+      'track-exit-ramp',
+      'track-shift-change',
+    ],
+    createdAt: '2026-07-12T15:00:00Z',
+    ranked: false,
+  },
+  {
+    id: 'list-usb',
+    userId: 'listener-kai',
+    displayName: 'kai_sodium',
+    title: 'USB leftovers 2026',
+    description: 'Whatever survived the end-of-year wipe.',
+    trackIds: [
+      'track-pixel-bruise',
+      'track-snow-on-the-tape',
+      'track-sodium-glow',
+      'track-shift-change',
+      'track-bus-route-7',
+    ],
+    createdAt: '2026-07-18T08:00:00Z',
+    ranked: true,
+  },
+];
+
+/** Chronological social feed — people logging / reviewing / listing */
+export const DEMO_ACTIVITY: ActivityItem[] = [
+  {
+    id: 'act-1',
+    kind: 'reviewed',
+    userId: 'listener-mira',
+    displayName: 'mira_tape',
+    trackId: 'track-blown-cone',
+    createdAt: '2026-07-25T21:05:00Z',
+    rating: 5,
+    excerpt: 'Maximum volume or don’t bother. Instant diary staple.',
+  },
+  {
+    id: 'act-2',
+    kind: 'logged',
+    userId: 'listener-kai',
+    displayName: 'kai_sodium',
+    trackId: 'track-sodium-glow',
+    createdAt: '2026-07-26T10:00:00Z',
+    rating: 4,
+  },
+  {
+    id: 'act-3',
+    kind: 'logged',
+    userId: 'listener-jon',
+    displayName: 'jon_exit',
+    trackId: 'track-bus-route-7',
+    createdAt: '2026-07-26T08:30:00Z',
+    rating: 3,
+    excerpt: 'Solid commute track.',
+  },
+  {
+    id: 'act-4',
+    kind: 'reviewed',
+    userId: 'listener-kai',
+    displayName: 'kai_sodium',
+    trackId: 'track-pixel-bruise',
+    createdAt: '2026-07-24T09:15:00Z',
+    rating: 3.5,
+    excerpt:
+      'Glitchy sugar rush. Great for a night drive list — not sure it survives a second week.',
+  },
+  {
+    id: 'act-5',
+    kind: 'listed',
+    userId: 'listener-mira',
+    displayName: 'mira_tape',
+    trackId: 'track-snow-on-the-tape',
+    createdAt: '2026-07-22T19:00:00Z',
+    listTitle: 'Rainy drive home',
+    rating: 4.5,
+  },
+  {
+    id: 'act-6',
+    kind: 'reviewed',
+    userId: 'listener-jon',
+    displayName: 'jon_exit',
+    trackId: 'track-exit-ramp',
+    createdAt: '2026-07-23T11:25:00Z',
+    rating: 4,
+    excerpt:
+      'Two minutes of pure New England hallway energy. Logged after the Manchester show.',
+  },
+];
+
+export function reviewsForTrack(trackId: string): Review[] {
+  return DEMO_REVIEWS.filter((r) => r.trackId === trackId).sort(
+    (a, b) => b.likeCount - a.likeCount,
+  );
+}
+
+export function popularReviews(limit = 4): Review[] {
+  return [...DEMO_REVIEWS]
+    .sort((a, b) => b.likeCount - a.likeCount)
+    .slice(0, limit);
+}
+
+export function diaryForUser(userId: string): DiaryEntry[] {
+  return DEMO_DIARY.filter((d) => d.userId === userId).sort((a, b) =>
+    b.loggedOn.localeCompare(a.loggedOn),
+  );
+}
+
+export function listsForUser(userId: string): TasteList[] {
+  return DEMO_LISTS.filter((l) => l.userId === userId);
+}
 
 export const SCENES = [
   'Punk',

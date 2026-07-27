@@ -54,3 +54,58 @@ export type ArtistWallPost = {
   commentsEnabled: boolean;
   createdAt: string;
 };
+
+/** Half-star scale like Letterboxd (0.5–5). */
+export type RatingValue = 0.5 | 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 4.5 | 5;
+
+/**
+ * Diary log — “I heard this” with an optional date.
+ * StaticVolume’s Letterboxd-style listener action (not streaming play).
+ */
+export type DiaryEntry = {
+  id: string;
+  userId: string;
+  displayName: string;
+  trackId: string;
+  loggedOn: string;
+  rating?: RatingValue | null;
+  reviewId?: string | null;
+  /** Optional one-line note when there’s no full review */
+  note?: string | null;
+};
+
+export type Review = {
+  id: string;
+  userId: string;
+  displayName: string;
+  trackId: string;
+  rating: RatingValue;
+  body: string;
+  createdAt: string;
+  likeCount: number;
+};
+
+export type TasteList = {
+  id: string;
+  userId: string;
+  displayName: string;
+  title: string;
+  description: string;
+  trackIds: string[];
+  createdAt: string;
+  ranked: boolean;
+};
+
+export type ActivityKind = 'logged' | 'reviewed' | 'listed';
+
+export type ActivityItem = {
+  id: string;
+  kind: ActivityKind;
+  userId: string;
+  displayName: string;
+  trackId: string;
+  createdAt: string;
+  rating?: RatingValue | null;
+  excerpt?: string | null;
+  listTitle?: string | null;
+};
