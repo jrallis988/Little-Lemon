@@ -111,13 +111,20 @@ export const shows = [
   },
 ];
 
-/** Primary studio brand hubs — Disney Jr is a first-class peer. */
+/** Primary studio brand hubs — Disney Jr sits beside Disney for quick access. */
 export const brands = [
   {
     id: "disney",
     label: "Disney",
     to: "/",
     variant: "disney",
+  },
+  {
+    id: "disney-jr",
+    label: "Disney Jr.",
+    to: "/disney-jr",
+    variant: "disney-jr",
+    featured: true,
   },
   {
     id: "pixar",
@@ -142,13 +149,6 @@ export const brands = [
     label: "National Geographic",
     to: "/",
     variant: "nat-geo",
-  },
-  {
-    id: "disney-jr",
-    label: "Disney Jr.",
-    to: "/disney-jr",
-    variant: "disney-jr",
-    featured: true,
   },
 ];
 

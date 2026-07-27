@@ -16,6 +16,29 @@ test("renders Disney+ brand hubs including Disney Jr tile", () => {
   expect(screen.getByRole("heading", { level: 1, name: /Academy Rock/i })).toBeInTheDocument();
 });
 
+test("brand row order places Disney Jr immediately after Disney", () => {
+  render(
+    <MemoryRouter initialEntries={["/"]}>
+      <App />
+    </MemoryRouter>
+  );
+  const brandRow = document.getElementById("brands");
+  const hubs = [...brandRow.querySelectorAll("[data-brand-index]")];
+  const order = hubs.map((el) => el.getAttribute("aria-label"));
+  expect(order).toEqual([
+    "Disney brand hub",
+    "Disney Jr. brand hub",
+    "Pixar brand hub",
+    "Marvel brand hub",
+    "Star Wars brand hub",
+    "National Geographic brand hub",
+  ]);
+  expect(hubs[0].tabIndex).toBeLessThanOrEqual(0);
+  expect(hubs[1].tabIndex).toBeLessThanOrEqual(0);
+  expect(Number(hubs[0].dataset.brandIndex)).toBe(0);
+  expect(Number(hubs[1].dataset.brandIndex)).toBe(1);
+});
+
 test("Disney Jr brand tile routes to standalone hub", () => {
   render(
     <MemoryRouter initialEntries={["/disney-jr"]}>
