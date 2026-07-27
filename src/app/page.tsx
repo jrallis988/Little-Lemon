@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { ArrowRight, HeartHandshake, MapPinned, ScanBarcode } from "lucide-react";
 import { DrugSearch } from "@/components/search/drug-search";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { DRUGS } from "@/lib/data/drugs";
+import { cn } from "@/lib/utils";
 
 const POPULAR = DRUGS.slice(0, 6);
 
@@ -96,22 +97,25 @@ export default function HomePage() {
           </ol>
 
           <div className="mt-12 flex flex-wrap gap-3">
-            <Button
-              size="lg"
-              className="min-h-12 text-base"
-              render={<Link href="/search" />}
+            <Link
+              href="/search"
+              className={cn(
+                buttonVariants({ size: "lg" }),
+                "min-h-12 gap-1.5 text-base"
+              )}
             >
               Compare prices
-              <ArrowRight />
-            </Button>
-            <Button
-              render={<Link href="/pharmacies" />}
-              variant="outline"
-              size="lg"
-              className="min-h-12 text-base"
+              <ArrowRight className="size-4" aria-hidden />
+            </Link>
+            <Link
+              href="/pharmacies"
+              className={cn(
+                buttonVariants({ variant: "outline", size: "lg" }),
+                "min-h-12 text-base"
+              )}
             >
               Find pharmacies
-            </Button>
+            </Link>
           </div>
         </div>
       </section>

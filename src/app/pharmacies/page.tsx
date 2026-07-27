@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { LocationPicker } from "@/components/pharmacy/location-picker";
 import { PharmacyCard } from "@/components/pharmacy/pharmacy-card";
@@ -13,7 +14,7 @@ import {
 } from "@/lib/pricing";
 import { useLocationStore } from "@/lib/store/location-store";
 import type { Pharmacy, PharmacyPriceOffer } from "@/lib/types";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -21,6 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 
 type SortMode = "distance" | "price";
 
@@ -149,9 +151,12 @@ export default function PharmaciesPage() {
         </div>
 
         <div className="flex justify-center">
-          <Button render={<a href="/search?drug=atorvastatin" />} size="lg">
+          <Link
+            href="/search?drug=atorvastatin"
+            className={cn(buttonVariants({ size: "lg" }), "min-h-11")}
+          >
             Compare more medications
-          </Button>
+          </Link>
         </div>
       </div>
 

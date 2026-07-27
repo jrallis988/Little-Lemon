@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Bell, BellOff, Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -11,6 +11,7 @@ import { getPharmacyById } from "@/lib/data/pharmacies";
 import { formatCurrency, generateOffersForDrug } from "@/lib/pricing";
 import { useLocationStore } from "@/lib/store/location-store";
 import { useProfileStore } from "@/lib/store/profile-store";
+import { cn } from "@/lib/utils";
 
 export default function ProfilePage() {
   const location = useLocationStore((s) => s.location);
@@ -71,9 +72,12 @@ export default function ProfilePage() {
         <section className="space-y-4">
           <div className="flex items-center justify-between gap-3">
             <h2 className="font-display text-2xl font-semibold">Saved meds</h2>
-            <Button render={<Link href="/search" />} variant="outline">
+            <Link
+              href="/search"
+              className={cn(buttonVariants({ variant: "outline" }))}
+            >
               Add from search
-            </Button>
+            </Link>
           </div>
 
           {savedMedications.length === 0 ? (
@@ -160,15 +164,15 @@ export default function ProfilePage() {
                       </div>
                     </div>
                     <div className="mt-3">
-                      <Button
-                        render={
-                          <Link href={`/search?drug=${drug.id}`} />
-                        }
-                        variant="secondary"
-                        className="min-h-10"
+                      <Link
+                        href={`/search?drug=${drug.id}`}
+                        className={cn(
+                          buttonVariants({ variant: "secondary" }),
+                          "min-h-10"
+                        )}
                       >
                         View prices
-                      </Button>
+                      </Link>
                     </div>
                   </li>
                 );
