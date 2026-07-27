@@ -21,17 +21,16 @@
       --green: #16A34A;
       --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
       --mesh:
-        radial-gradient(ellipse 80% 60% at 20% 15%, #2F6FE0 0%, transparent 55%),
-        radial-gradient(ellipse 70% 55% at 78% 18%, #38BDF8 0%, transparent 50%),
-        radial-gradient(ellipse 65% 50% at 85% 78%, #A78BFA 0%, transparent 55%),
-        radial-gradient(ellipse 70% 55% at 18% 82%, #1E3A8A 0%, transparent 50%),
-        linear-gradient(160deg, #1D4ED8 0%, #1E40AF 42%, #312E81 100%);
+        radial-gradient(ellipse 90% 70% at 15% 10%, rgba(96, 165, 250, 0.55) 0%, transparent 58%),
+        radial-gradient(ellipse 80% 60% at 88% 20%, rgba(125, 211, 252, 0.35) 0%, transparent 55%),
+        radial-gradient(ellipse 75% 55% at 80% 88%, rgba(196, 181, 253, 0.28) 0%, transparent 58%),
+        linear-gradient(180deg, #5B8DEF 0%, #6EA0F2 45%, #7BA6E8 100%);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: Poppins, system-ui, sans-serif;
       color: var(--ink);
-      background: var(--bg);
+      background: #6B95E8;
       background-image: var(--mesh);
       background-attachment: fixed;
       line-height: 1.5;
@@ -45,9 +44,9 @@
       position: sticky;
       top: 0;
       z-index: 30;
-      background: rgba(15, 40, 110, 0.72);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.55);
     }
     .header-row {
       display: flex;
@@ -66,7 +65,7 @@
       font-weight: 800;
       font-size: 1.35rem;
       letter-spacing: -0.03em;
-      color: white;
+      color: #0F172A;
     }
     .search-box {
       flex: 1;
@@ -77,9 +76,9 @@
       border-radius: 999px;
       padding: 0.55rem 0.55rem 0.55rem 1rem;
       background: white;
-      box-shadow: 0 8px 24px rgba(8, 20, 60, 0.18);
+      box-shadow: 0 6px 18px rgba(37, 70, 140, 0.12);
     }
-    .search-box:focus-within { box-shadow: 0 0 0 3px rgba(255,255,255,0.25), 0 8px 24px rgba(8, 20, 60, 0.18); }
+    .search-box:focus-within { box-shadow: 0 0 0 3px rgba(27,111,248,0.18), 0 6px 18px rgba(37, 70, 140, 0.12); }
     .search-box input {
       flex: 1;
       border: 0;
@@ -100,9 +99,9 @@
       display: inline-flex;
       align-items: center;
       gap: 0.35rem;
-      background: rgba(255,255,255,0.14);
-      color: #BBF7D0;
-      border: 1px solid rgba(255,255,255,0.18);
+      background: #ECFDF5;
+      color: var(--green);
+      border: 0;
       border-radius: 999px;
       padding: 0.45rem 0.8rem;
       font-size: 0.82rem;
@@ -113,7 +112,7 @@
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: #4ADE80;
+      background: #16A34A;
       display: inline-block;
     }
 
@@ -126,7 +125,7 @@
     .filter {
       border: 0;
       background: transparent;
-      color: rgba(255,255,255,0.78);
+      color: #334155;
       font-weight: 600;
       padding: 0.45rem 0.85rem;
       border-radius: 999px;
@@ -134,12 +133,12 @@
       white-space: nowrap;
     }
     .filter.active {
-      background: rgba(255,255,255,0.18);
-      color: white;
+      background: rgba(255,255,255,0.75);
+      color: var(--blue);
     }
 
     .meta {
-      color: rgba(255,255,255,0.86);
+      color: #1E293B;
       font-size: 0.9rem;
       padding: 1.1rem 0 0.75rem;
     }
@@ -319,22 +318,22 @@
       font-size: 1.15rem;
       font-weight: 800;
       margin-bottom: 0.75rem;
-      color: white;
+      color: #0F172A;
     }
     .related-list { display: flex; flex-wrap: wrap; gap: 0.55rem; }
     .related-list a {
-      background: rgba(255,255,255,0.14);
-      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.7);
+      border: 1px solid rgba(255,255,255,0.85);
       border-radius: 999px;
       padding: 0.55rem 0.9rem;
       font-size: 0.9rem;
       font-weight: 500;
-      color: white;
-      backdrop-filter: blur(10px);
+      color: #0F172A;
     }
     .related-list a:hover {
-      border-color: rgba(255,255,255,0.45);
-      background: rgba(255,255,255,0.22);
+      border-color: #BFDBFE;
+      background: white;
+      color: var(--blue);
     }
 
     @media (max-width: 720px) {

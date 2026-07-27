@@ -25,13 +25,12 @@
     body {
       font-family: Poppins, system-ui, sans-serif;
       color: var(--ink);
-      background: #123A8C;
+      background: #6B95E8;
       background-image:
-        radial-gradient(ellipse 80% 60% at 20% 15%, #2F6FE0 0%, transparent 55%),
-        radial-gradient(ellipse 70% 55% at 78% 18%, #38BDF8 0%, transparent 50%),
-        radial-gradient(ellipse 65% 50% at 85% 78%, #A78BFA 0%, transparent 55%),
-        radial-gradient(ellipse 70% 55% at 18% 82%, #1E3A8A 0%, transparent 50%),
-        linear-gradient(160deg, #1D4ED8 0%, #1E40AF 42%, #312E81 100%);
+        radial-gradient(ellipse 90% 70% at 15% 10%, rgba(96, 165, 250, 0.55) 0%, transparent 58%),
+        radial-gradient(ellipse 80% 60% at 88% 20%, rgba(125, 211, 252, 0.35) 0%, transparent 55%),
+        radial-gradient(ellipse 75% 55% at 80% 88%, rgba(196, 181, 253, 0.28) 0%, transparent 58%),
+        linear-gradient(180deg, #5B8DEF 0%, #6EA0F2 45%, #7BA6E8 100%);
       background-attachment: fixed;
       line-height: 1.6;
     }
@@ -40,9 +39,9 @@
     .wrap { width: min(920px, calc(100% - 2rem)); margin: 0 auto; }
 
     .topbar {
-      background: rgba(15, 40, 110, 0.72);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.55);
       position: sticky;
       top: 0;
       z-index: 20;
@@ -61,15 +60,15 @@
       font-family: Nunito, sans-serif;
       font-weight: 800;
       font-size: 1.3rem;
-      color: white;
+      color: #0F172A;
     }
     .pill {
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      background: rgba(255,255,255,0.14);
-      color: #FED7AA;
-      border: 1px solid rgba(255,255,255,0.2);
+      background: #FFF7ED;
+      color: var(--orange);
+      border: 0;
       border-radius: 999px;
       padding: 0.4rem 0.8rem;
       font-size: 0.82rem;
