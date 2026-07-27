@@ -157,7 +157,7 @@ export function DrugSearch({
           id={listId}
           role="listbox"
           aria-label="Medication suggestions"
-          className="absolute z-30 mt-2 max-h-80 w-full overflow-auto rounded-xl border border-border bg-popover p-1.5 shadow-lg animate-cd-fade-up"
+          className="absolute z-30 mt-2 max-h-80 w-full overflow-auto rounded-xl border border-border bg-popover p-1.5 shadow-lg animate-trx-fade-up"
         >
           {suggestions.map((s, index) => (
             <li key={`${s.drug.id}-${s.matchType}`} role="presentation">

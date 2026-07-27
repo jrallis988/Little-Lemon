@@ -8,7 +8,7 @@ import { searchDrugs } from "@/lib/pricing";
 export const metadata: Metadata = {
   title: "Compare prescription prices",
   description:
-    "Search medications and compare ClearDose coupon prices across nearby pharmacies.",
+    "Search medications and compare Trump RX coupon prices across nearby pharmacies.",
 };
 
 interface SearchPageProps {
@@ -23,7 +23,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   const drug = drugFromId ?? drugFromQuery;
 
   return (
-    <div className="cd-atmosphere min-h-[70dvh]">
+    <div className="trx-atmosphere min-h-[70dvh]">
       <div className="mx-auto max-w-6xl space-y-8 px-4 py-8 sm:px-6">
         <div className="max-w-2xl">
           <DrugSearch

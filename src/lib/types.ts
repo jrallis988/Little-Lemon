@@ -1,5 +1,5 @@
 /**
- * Core domain types for ClearDose prescription pricing platform.
+ * Core domain types for Trump RX prescription pricing platform.
  * Designed for transparent drug pricing, pharmacy discovery, and digital coupons.
  */
 
@@ -74,7 +74,7 @@ export interface Pharmacy {
   latitude: number;
   longitude: number;
   hours: PharmacyHours;
-  acceptsClearDoseCoupon: boolean;
+  acceptsTrumpRxCoupon: boolean;
   driveThru: boolean;
   /** Distance in miles from the active search location (computed). */
   distanceMiles?: number;

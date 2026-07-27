@@ -50,8 +50,8 @@ function buildCoupon(pharmacyId: string, drugId: string): CouponBinDetails {
   const member = String(100000000 + (seed % 899999999));
   return {
     bin: "610020",
-    pcn: "CLRDOSE",
-    group: "CDSAVE",
+    pcn: "TRUMPRX",
+    group: "TRXSAVE",
     memberId: member,
     barcodeValue: `610020${member}`,
   };
@@ -256,7 +256,7 @@ export function buildSavingsTips(
     tips.push({
       id: "pharmacy",
       title: `${lowest.pharmacy.name} currently has the lowest price nearby`,
-      body: `${formatCurrency(lowest.offer.couponPrice)} with ClearDose coupon · ${lowest.pharmacy.distanceMiles?.toFixed(1) ?? "—"} mi away`,
+      body: `${formatCurrency(lowest.offer.couponPrice)} with Trump RX coupon · ${lowest.pharmacy.distanceMiles?.toFixed(1) ?? "—"} mi away`,
       kind: "pharmacy",
     });
   }
@@ -264,7 +264,7 @@ export function buildSavingsTips(
   tips.push({
     id: "timing",
     title: "Compare before you fill",
-    body: "Prices shift by pharmacy and quantity. Re-check ClearDose when your refill is due — you never pay ClearDose a fee at the counter.",
+    body: "Prices shift by pharmacy and quantity. Re-check Trump RX when your refill is due — you never pay Trump RX a fee at the counter.",
     kind: "timing",
   });
 

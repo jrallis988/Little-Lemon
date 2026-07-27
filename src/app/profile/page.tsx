@@ -29,7 +29,7 @@ export default function ProfilePage() {
   );
 
   return (
-    <div className="cd-atmosphere min-h-[70dvh]">
+    <div className="trx-atmosphere min-h-[70dvh]">
       <div className="mx-auto max-w-3xl space-y-10 px-4 py-8 sm:px-6">
         <header className="space-y-2">
           <h1 className="font-display text-3xl font-semibold tracking-tight md:text-4xl">

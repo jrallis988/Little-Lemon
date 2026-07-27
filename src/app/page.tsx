@@ -8,24 +8,25 @@ const POPULAR = DRUGS.slice(0, 6);
 
 export default function HomePage() {
   return (
-    <div className="cd-atmosphere relative overflow-hidden">
-      <div className="cd-hero-grid pointer-events-none absolute inset-0" aria-hidden />
+    <div className="trx-atmosphere relative overflow-hidden">
+      <div className="trx-hero-grid pointer-events-none absolute inset-0" aria-hidden />
 
       <section className="relative mx-auto flex min-h-[calc(100dvh-8.5rem)] max-w-6xl flex-col justify-center px-4 pb-16 pt-10 sm:px-6 sm:pb-20 sm:pt-14">
         <div className="max-w-3xl">
-          <p className="animate-cd-fade-up font-display text-4xl font-semibold tracking-tight text-primary sm:text-5xl md:text-6xl">
-            ClearDose
+          <p className="animate-trx-fade-up font-display text-4xl font-semibold tracking-tight text-primary sm:text-5xl md:text-6xl">
+            Trump RX
           </p>
-          <h1 className="animate-cd-fade-up-delay mt-3 max-w-2xl font-display text-3xl font-medium leading-tight tracking-tight text-foreground sm:text-4xl md:text-[2.75rem]">
-            Know the pharmacy price before you fill.
+          <h1 className="animate-trx-fade-up-delay mt-3 max-w-2xl font-display text-3xl font-medium leading-tight tracking-tight text-foreground sm:text-4xl md:text-[2.75rem]">
+            Lower drug prices. Clearer choices. Real pharmacies near you.
           </h1>
-          <p className="animate-cd-fade-up-delay-2 mt-4 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
-            Compare transparent coupon prices at CVS, Walgreens, Walmart, and
-            independents nearby — then show a digital discount at the counter.
+          <p className="animate-trx-fade-up-delay-2 mt-4 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
+            A better Trump RX experience — search brand <em>and</em> generic
+            meds, compare coupon prices across local pharmacies, and show a
+            digital discount at the counter in seconds.
           </p>
         </div>
 
-        <div className="animate-cd-fade-up-delay-2 mt-8 max-w-2xl">
+        <div className="animate-trx-fade-up-delay-2 mt-8 max-w-2xl">
           <DrugSearch size="hero" autoFocus />
           <p className="mt-3 text-sm text-muted-foreground">
             Try{" "}
@@ -53,11 +54,12 @@ export default function HomePage() {
             id="how-it-works"
             className="font-display text-3xl font-semibold tracking-tight"
           >
-            Three calm steps to savings
+            Built to beat the boutique catalog
           </h2>
           <p className="mt-2 max-w-2xl text-muted-foreground">
-            Built for patients, caregivers, and seniors — large type, clear
-            prices, no account required to compare.
+            Where the old experience felt narrow, Trump RX puts supermarket-style
+            coverage, local price comparison, and a pharmacist-ready coupon in
+            one calm flow.
           </p>
 
           <ol className="mt-10 grid gap-10 md:grid-cols-3">
@@ -65,10 +67,10 @@ export default function HomePage() {
               <span className="flex size-12 items-center justify-center rounded-2xl bg-secondary text-secondary-foreground">
                 <ScanBarcode className="size-6" aria-hidden />
               </span>
-              <h3 className="text-xl font-semibold">1. Search your medication</h3>
+              <h3 className="text-xl font-semibold">1. Search any common med</h3>
               <p className="leading-relaxed text-muted-foreground">
                 Autocomplete finds brand and generic names, dosages, and common
-                quantities in moments.
+                quantities — not just a short brand-deal list.
               </p>
             </li>
             <li className="space-y-3">

@@ -86,7 +86,7 @@ function BarcodeDisplay({ value }: { value: string }) {
     <div className="relative overflow-hidden rounded-xl border border-border bg-white p-4">
       <div
         className="pointer-events-none absolute inset-y-0 w-16 bg-gradient-to-r from-transparent via-primary/10 to-transparent opacity-70"
-        style={{ animation: "cd-barcode-shine 2.8s ease-in-out infinite" }}
+        style={{ animation: "trx-barcode-shine 2.8s ease-in-out infinite" }}
         aria-hidden
       />
       <svg
@@ -130,7 +130,7 @@ export function CouponModal({
 
         <div className="space-y-4">
           <div className="rounded-2xl bg-primary px-4 py-5 text-primary-foreground">
-            <p className="text-sm opacity-90">ClearDose coupon price</p>
+            <p className="text-sm opacity-90">Trump RX coupon price</p>
             <p className="font-display text-4xl font-semibold tabular-nums">
               {formatCurrency(offer.couponPrice)}
             </p>
@@ -162,7 +162,7 @@ export function CouponModal({
               your insurance copay is lower, use insurance instead.
             </p>
             <p>
-              ClearDose does not charge you at the pharmacy. This is not
+              Trump RX does not charge you at the pharmacy. This is not
               insurance and does not replace your health plan.
             </p>
           </div>

@@ -32,17 +32,17 @@ export function SiteHeader() {
         <Link
           href="/"
           className="group flex items-center gap-2.5 rounded-lg focus-visible:outline-none"
-          aria-label="ClearDose home"
+          aria-label="Trump RX home"
         >
           <span className="flex size-10 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm transition-transform group-hover:scale-[1.03]">
             <Pill className="size-5" aria-hidden />
           </span>
           <span className="flex flex-col leading-none">
             <span className="font-display text-xl font-semibold tracking-tight text-foreground">
-              ClearDose
+              Trump RX
             </span>
             <span className="text-xs text-muted-foreground">
-              Know the price before you fill
+              Lower prices. Local pharmacies.
             </span>
           </span>
         </Link>

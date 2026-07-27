@@ -19,7 +19,7 @@ export const PHARMACIES: Pharmacy[] = [
       sunday: "9:00 AM – 7:00 PM",
       pharmacyDeskNote: "Pharmacist on duty until close",
     },
-    acceptsClearDoseCoupon: true,
+    acceptsTrumpRxCoupon: true,
     driveThru: false,
   },
   {
@@ -39,7 +39,7 @@ export const PHARMACIES: Pharmacy[] = [
       sunday: "8:00 AM – 10:00 PM",
       pharmacyDeskNote: "24-hour locations nearby — ask staff",
     },
-    acceptsClearDoseCoupon: true,
+    acceptsTrumpRxCoupon: true,
     driveThru: false,
   },
   {
@@ -58,7 +58,7 @@ export const PHARMACIES: Pharmacy[] = [
       saturday: "9:00 AM – 7:00 PM",
       sunday: "10:00 AM – 6:00 PM",
     },
-    acceptsClearDoseCoupon: true,
+    acceptsTrumpRxCoupon: true,
     driveThru: true,
   },
   {
@@ -78,7 +78,7 @@ export const PHARMACIES: Pharmacy[] = [
       sunday: "10:00 AM – 6:00 PM",
       pharmacyDeskNote: "Membership may be required for store entry",
     },
-    acceptsClearDoseCoupon: true,
+    acceptsTrumpRxCoupon: true,
     driveThru: false,
   },
   {
@@ -97,7 +97,7 @@ export const PHARMACIES: Pharmacy[] = [
       saturday: "9:00 AM – 6:00 PM",
       sunday: "10:00 AM – 5:00 PM",
     },
-    acceptsClearDoseCoupon: true,
+    acceptsTrumpRxCoupon: true,
     driveThru: false,
   },
   {
@@ -116,7 +116,7 @@ export const PHARMACIES: Pharmacy[] = [
       saturday: "8:00 AM – 10:00 PM",
       sunday: "9:00 AM – 8:00 PM",
     },
-    acceptsClearDoseCoupon: true,
+    acceptsTrumpRxCoupon: true,
     driveThru: false,
   },
   {
@@ -136,7 +136,7 @@ export const PHARMACIES: Pharmacy[] = [
       sunday: "Closed",
       pharmacyDeskNote: "Independent — often matches chain coupon pricing",
     },
-    acceptsClearDoseCoupon: true,
+    acceptsTrumpRxCoupon: true,
     driveThru: false,
   },
   {
@@ -156,7 +156,7 @@ export const PHARMACIES: Pharmacy[] = [
       sunday: "24 hours",
       pharmacyDeskNote: "Open 24 hours — ideal for urgent refills",
     },
-    acceptsClearDoseCoupon: true,
+    acceptsTrumpRxCoupon: true,
     driveThru: false,
   },
 ];

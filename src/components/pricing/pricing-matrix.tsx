@@ -185,7 +185,12 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
               }
             >
               <SelectTrigger className="h-11 w-full text-base">
-                <SelectValue />
+                <SelectValue>
+                  {(value: string | null) =>
+                    drug.strengths.find((s) => s.id === value)?.label ??
+                    "Select dosage"
+                  }
+                </SelectValue>
               </SelectTrigger>
               <SelectContent>
                 {drug.strengths.map((s) => (
@@ -209,7 +214,11 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
               }
             >
               <SelectTrigger className="h-11 w-full text-base">
-                <SelectValue />
+                <SelectValue>
+                  {(value: string | null) =>
+                    value ? `${value} units` : "Select quantity"
+                  }
+                </SelectValue>
               </SelectTrigger>
               <SelectContent>
                 {[
@@ -241,7 +250,16 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
               }
             >
               <SelectTrigger className="h-11 w-full text-base">
-                <SelectValue />
+                <SelectValue>
+                  {(value: string | null) => {
+                    const labels: Record<string, string> = {
+                      price: "Lowest price",
+                      distance: "Nearest pharmacy",
+                      savings: "Biggest savings",
+                    };
+                    return labels[value ?? ""] ?? "Sort by";
+                  }}
+                </SelectValue>
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="price">Lowest price</SelectItem>

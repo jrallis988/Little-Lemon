@@ -14,7 +14,7 @@ export function DisclaimerBanner() {
           aria-hidden
         />
         <p>
-          <span className="font-semibold">ClearDose is a prescription discount
+          <span className="font-semibold">Trump RX is a prescription discount
           provider — not insurance.</span>{" "}
           Coupons cannot be combined with insurance. Compare with your plan and
           ask the pharmacist which option costs less.{" "}

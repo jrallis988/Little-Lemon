@@ -65,7 +65,7 @@ export default function PharmaciesPage() {
   }, [location, sort, sampleDrug]);
 
   return (
-    <div className="cd-atmosphere min-h-[70dvh]">
+    <div className="trx-atmosphere min-h-[70dvh]">
       <div className="mx-auto max-w-6xl space-y-8 px-4 py-8 sm:px-6">
         <header className="max-w-2xl space-y-2">
           <h1 className="font-display text-3xl font-semibold tracking-tight md:text-4xl">
@@ -87,7 +87,13 @@ export default function PharmaciesPage() {
                 onValueChange={(v) => setSort((v as SortMode) ?? "distance")}
               >
                 <SelectTrigger className="h-11 w-full text-base">
-                  <SelectValue />
+                  <SelectValue>
+                    {(value: string | null) =>
+                      value === "price"
+                        ? "Lowest sample price"
+                        : "Nearest first"
+                    }
+                  </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="distance">Nearest first</SelectItem>

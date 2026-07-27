@@ -4,21 +4,21 @@ import { ShieldCheck, EyeOff, Scale } from "lucide-react";
 export const metadata: Metadata = {
   title: "Privacy & compliance",
   description:
-    "How ClearDose handles health searches, discount disclosures, and privacy-first defaults.",
+    "How Trump RX handles health searches, discount disclosures, and privacy-first defaults.",
 };
 
 export default function PrivacyPage() {
   return (
-    <div className="cd-atmosphere min-h-[70dvh]">
+    <div className="trx-atmosphere min-h-[70dvh]">
       <article className="mx-auto max-w-3xl space-y-10 px-4 py-10 sm:px-6">
         <header className="space-y-3">
           <h1 className="font-display text-3xl font-semibold tracking-tight md:text-4xl">
             Privacy, transparency &amp; compliance
           </h1>
           <p className="text-lg leading-relaxed text-muted-foreground">
-            ClearDose is designed so patients and caregivers can compare
+            Trump RX is designed so patients and caregivers can compare
             prescription discounts without aggressive paywalls or opaque data
-            practices.
+            practices — with clearer pharmacy pricing than a boutique deal list.
           </p>
         </header>
 
@@ -28,7 +28,7 @@ export default function PrivacyPage() {
             <div>
               <h2 className="text-lg font-semibold">Discount provider — not insurance</h2>
               <p className="mt-1 leading-relaxed">
-                ClearDose coupons are pharmacy discount offers. They are{" "}
+                Trump RX coupons are pharmacy discount offers. They are{" "}
                 <strong>not insurance</strong>, not a Medicare/Medicaid benefit,
                 and generally cannot be combined with insurance. Always compare
                 the coupon price with your plan copay and choose the lower
@@ -47,7 +47,7 @@ export default function PrivacyPage() {
                 <li>
                   Medication searches and saved meds in this demo are stored in{" "}
                   <strong className="text-foreground">your browser only</strong>{" "}
-                  (local storage) — not on ClearDose servers.
+                  (local storage) — not on Trump RX servers.
                 </li>
                 <li>
                   Personalized tips are <strong className="text-foreground">opt-in</strong> and
@@ -85,9 +85,9 @@ export default function PrivacyPage() {
           <h2 className="text-base font-semibold text-foreground">Demo notice</h2>
           <p>
             Prices, BIN/PCN values, and pharmacy inventory in this project are
-            simulated for product demonstration. A production deployment would
-            connect to licensed pharmacy benefit / cash-pay pricing networks and
-            publish a full privacy policy and terms of use.
+            simulated for product demonstration. This is an improved product
+            concept inspired by TrumpRx.gov — not an official government website
+            or live claims network.
           </p>
         </section>
       </article>

@@ -91,6 +91,6 @@ export const useProfileStore = create<ProfileState>()(
         });
       },
     }),
-    { name: "cleardose-profile-v1" }
+    { name: "trump-rx-profile-v1" }
   )
 );

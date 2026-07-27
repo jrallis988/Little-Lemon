@@ -54,45 +54,45 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-/* ClearDose: calm teal healthcare trust — light-first for senior readability */
+/* Trump RX: authoritative navy + restrained crimson — light-first for seniors */
 :root {
-  --background: oklch(0.985 0.012 195);
-  --foreground: oklch(0.22 0.03 210);
-  --card: oklch(0.995 0.005 195);
-  --card-foreground: oklch(0.22 0.03 210);
-  --popover: oklch(0.995 0.005 195);
-  --popover-foreground: oklch(0.22 0.03 210);
-  --primary: oklch(0.42 0.09 195);
-  --primary-foreground: oklch(0.98 0.01 195);
-  --secondary: oklch(0.94 0.025 185);
-  --secondary-foreground: oklch(0.28 0.05 195);
-  --muted: oklch(0.95 0.015 200);
-  --muted-foreground: oklch(0.45 0.03 210);
-  --accent: oklch(0.93 0.04 175);
-  --accent-foreground: oklch(0.28 0.06 185);
+  --background: oklch(0.985 0.008 250);
+  --foreground: oklch(0.2 0.04 255);
+  --card: oklch(0.995 0.004 250);
+  --card-foreground: oklch(0.2 0.04 255);
+  --popover: oklch(0.995 0.004 250);
+  --popover-foreground: oklch(0.2 0.04 255);
+  --primary: oklch(0.32 0.08 255);
+  --primary-foreground: oklch(0.98 0.01 250);
+  --secondary: oklch(0.94 0.02 250);
+  --secondary-foreground: oklch(0.28 0.06 255);
+  --muted: oklch(0.95 0.012 250);
+  --muted-foreground: oklch(0.45 0.03 255);
+  --accent: oklch(0.94 0.03 25);
+  --accent-foreground: oklch(0.3 0.08 25);
   --destructive: oklch(0.55 0.2 25);
-  --border: oklch(0.88 0.02 200);
-  --input: oklch(0.9 0.02 200);
-  --ring: oklch(0.5 0.08 195);
-  --trust: oklch(0.38 0.07 230);
-  --trust-foreground: oklch(0.98 0.01 230);
-  --savings: oklch(0.48 0.12 145);
-  --savings-foreground: oklch(0.98 0.02 145);
-  --surface: oklch(0.97 0.02 190);
-  --chart-1: oklch(0.55 0.1 195);
-  --chart-2: oklch(0.62 0.12 145);
-  --chart-3: oklch(0.7 0.08 85);
-  --chart-4: oklch(0.5 0.06 230);
-  --chart-5: oklch(0.4 0.05 210);
+  --border: oklch(0.88 0.02 250);
+  --input: oklch(0.9 0.015 250);
+  --ring: oklch(0.45 0.08 255);
+  --trust: oklch(0.35 0.07 250);
+  --trust-foreground: oklch(0.98 0.01 250);
+  --savings: oklch(0.48 0.14 25);
+  --savings-foreground: oklch(0.99 0.01 25);
+  --surface: oklch(0.97 0.012 250);
+  --chart-1: oklch(0.4 0.08 255);
+  --chart-2: oklch(0.55 0.14 25);
+  --chart-3: oklch(0.7 0.06 85);
+  --chart-4: oklch(0.5 0.05 230);
+  --chart-5: oklch(0.35 0.04 210);
   --radius: 0.75rem;
-  --sidebar: oklch(0.97 0.015 195);
-  --sidebar-foreground: oklch(0.22 0.03 210);
-  --sidebar-primary: oklch(0.42 0.09 195);
-  --sidebar-primary-foreground: oklch(0.98 0.01 195);
-  --sidebar-accent: oklch(0.94 0.025 185);
-  --sidebar-accent-foreground: oklch(0.28 0.05 195);
-  --sidebar-border: oklch(0.88 0.02 200);
-  --sidebar-ring: oklch(0.5 0.08 195);
+  --sidebar: oklch(0.97 0.01 250);
+  --sidebar-foreground: oklch(0.2 0.04 255);
+  --sidebar-primary: oklch(0.32 0.08 255);
+  --sidebar-primary-foreground: oklch(0.98 0.01 250);
+  --sidebar-accent: oklch(0.94 0.02 250);
+  --sidebar-accent-foreground: oklch(0.28 0.06 255);
+  --sidebar-border: oklch(0.88 0.02 250);
+  --sidebar-ring: oklch(0.45 0.08 255);
 }
 
 @layer base {
@@ -111,24 +111,24 @@
   }
 }
 
-/* Atmospheric mesh — soft teal/sky, never flat white */
-.cd-atmosphere {
+/* Soft navy / sky atmosphere — not flat white */
+.trx-atmosphere {
   background:
-    radial-gradient(ellipse 80% 60% at 10% 0%, oklch(0.92 0.05 185 / 0.9), transparent 55%),
-    radial-gradient(ellipse 70% 50% at 90% 10%, oklch(0.93 0.04 220 / 0.75), transparent 50%),
-    radial-gradient(ellipse 60% 40% at 50% 100%, oklch(0.94 0.03 160 / 0.5), transparent 45%),
-    linear-gradient(180deg, oklch(0.98 0.015 195), oklch(0.965 0.02 200));
+    radial-gradient(ellipse 80% 55% at 8% 0%, oklch(0.9 0.04 250 / 0.85), transparent 55%),
+    radial-gradient(ellipse 65% 45% at 92% 8%, oklch(0.93 0.035 25 / 0.35), transparent 50%),
+    radial-gradient(ellipse 55% 40% at 50% 100%, oklch(0.94 0.025 240 / 0.45), transparent 45%),
+    linear-gradient(180deg, oklch(0.985 0.01 250), oklch(0.97 0.015 255));
 }
 
-.cd-hero-grid {
+.trx-hero-grid {
   background-image:
-    linear-gradient(oklch(0.42 0.09 195 / 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, oklch(0.42 0.09 195 / 0.04) 1px, transparent 1px);
+    linear-gradient(oklch(0.32 0.08 255 / 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(0.32 0.08 255 / 0.045) 1px, transparent 1px);
   background-size: 48px 48px;
   mask-image: linear-gradient(180deg, black 40%, transparent 100%);
 }
 
-@keyframes cd-fade-up {
+@keyframes trx-fade-up {
   from {
     opacity: 0;
     transform: translateY(12px);
@@ -139,7 +139,7 @@
   }
 }
 
-@keyframes cd-pulse-soft {
+@keyframes trx-pulse-soft {
   0%,
   100% {
     opacity: 0.55;
@@ -149,7 +149,7 @@
   }
 }
 
-@keyframes cd-barcode-shine {
+@keyframes trx-barcode-shine {
   from {
     transform: translateX(-120%);
   }
@@ -158,27 +158,27 @@
   }
 }
 
-.animate-cd-fade-up {
-  animation: cd-fade-up 0.55s ease-out both;
+.animate-trx-fade-up {
+  animation: trx-fade-up 0.55s ease-out both;
 }
 
-.animate-cd-fade-up-delay {
-  animation: cd-fade-up 0.55s ease-out 0.12s both;
+.animate-trx-fade-up-delay {
+  animation: trx-fade-up 0.55s ease-out 0.12s both;
 }
 
-.animate-cd-fade-up-delay-2 {
-  animation: cd-fade-up 0.55s ease-out 0.22s both;
+.animate-trx-fade-up-delay-2 {
+  animation: trx-fade-up 0.55s ease-out 0.22s both;
 }
 
-.animate-cd-pulse-soft {
-  animation: cd-pulse-soft 2.4s ease-in-out infinite;
+.animate-trx-pulse-soft {
+  animation: trx-pulse-soft 2.4s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-cd-fade-up,
-  .animate-cd-fade-up-delay,
-  .animate-cd-fade-up-delay-2,
-  .animate-cd-pulse-soft {
+  .animate-trx-fade-up,
+  .animate-trx-fade-up-delay,
+  .animate-trx-fade-up-delay-2,
+  .animate-trx-pulse-soft {
     animation: none;
   }
 }

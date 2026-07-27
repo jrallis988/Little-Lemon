@@ -105,9 +105,9 @@ export function PharmacyCard({
       </ul>
 
       <div className="mt-3 flex flex-wrap gap-2">
-        {pharmacy.acceptsClearDoseCoupon ? (
+        {pharmacy.acceptsTrumpRxCoupon ? (
           <Badge variant="secondary" className="font-medium">
-            Accepts ClearDose coupon
+            Accepts Trump RX coupon
           </Badge>
         ) : (
           <Badge variant="outline">Call to confirm discount</Badge>

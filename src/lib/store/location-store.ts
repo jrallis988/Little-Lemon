@@ -53,6 +53,6 @@ export const useLocationStore = create<LocationState>()(
           );
         }),
     }),
-    { name: "cleardose-location-v1" }
+    { name: "trump-rx-location-v1" }
   )
 );

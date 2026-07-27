@@ -10,11 +10,12 @@ export function SiteFooter() {
             <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
               <Pill className="size-4" aria-hidden />
             </span>
-            <span className="font-display text-lg font-semibold">ClearDose</span>
+            <span className="font-display text-lg font-semibold">Trump RX</span>
           </div>
           <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
-            Transparent prescription pricing and pharmacy coupons for patients,
-            caregivers, and anyone navigating high medication costs.
+            An improved Trump RX experience — transparent pricing, broader
+            brand + generic search, and pharmacist-ready coupons for patients
+            and caregivers.
           </p>
           <p className="flex items-start gap-2 text-xs text-muted-foreground">
             <ShieldCheck className="mt-0.5 size-3.5 shrink-0 text-primary" aria-hidden />
@@ -58,7 +59,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-border/80 py-4 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} ClearDose. Demo pricing for product
+        © {new Date().getFullYear()} Trump RX. Demo pricing for product
         illustration — not live claims adjudication.
       </div>
     </footer>

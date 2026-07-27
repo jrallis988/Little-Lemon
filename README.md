@@ -1,20 +1,22 @@
-# ClearDose
+# Trump RX
 
-Transparent prescription pricing and pharmacy coupons — a GoodRx-inspired web platform built for patients, caregivers, and seniors navigating high medication costs.
+An improved **Trump RX** web experience for transparent prescription pricing, local pharmacy coupon discovery, and frictionless savings — designed as a better, broader alternative to the boutique-style catalog experience of the current site.
+
+## What this improves
+
+- **Broader catalog feel** — brand *and* generic search, not a short deal list
+- **Local pharmacy matrix** — compare CVS, Walgreens, Walmart, Costco, independents by price and distance
+- **30 / 90-day supply toggles** with clear savings tips
+- **Show-to-pharmacist coupon** with large barcode + BIN / PCN / Group / Member ID
+- **Optional local profile** — saved meds and alerts without forced account walls
+- **Accessibility-first** UI for patients, caregivers, and seniors
 
 ## Stack
 
 - **Next.js 15** (App Router) + **TypeScript (strict)**
-- **Tailwind CSS v4** + **shadcn/ui** (Base UI primitives)
-- Local-first profile via **Zustand** (optional saved meds / alerts)
+- **Tailwind CSS v4** + **shadcn/ui**
+- Local-first profile via **Zustand**
 - Scannable coupons via **JsBarcode**
-
-## Core pillars
-
-1. **Intelligent drug search & pricing matrix** — autocomplete, dosage/quantity/30–90 day toggles, pharmacy comparison table
-2. **Location-based pharmacy finder** — ZIP / geolocation, distance sorting, store cards with hours & coupon acceptance
-3. **Show-to-pharmacist coupon UX** — large barcode, BIN / PCN / Group / Member ID
-4. **Trust & compliance** — discount-provider disclaimers, privacy-first local storage defaults
 
 ## Getting started
 
@@ -26,8 +28,8 @@ npm run dev
 Open [http://localhost:3000](http://localhost:3000).
 
 ```bash
-npm run build   # production build
-npm run lint    # ESLint
+npm run build
+npm run lint
 ```
 
 ## Project layout
@@ -51,4 +53,4 @@ src/
 
 ## Important disclaimer
 
-ClearDose is a **prescription discount provider, not insurance**. Demo prices and BIN/PCN values are illustrative for product development — not live claims adjudication.
+Trump RX (this demo) is a **prescription discount provider concept, not insurance**. Demo prices and BIN/PCN values are illustrative for product development — not live claims adjudication or an official government service.

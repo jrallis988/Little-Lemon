@@ -24,12 +24,14 @@ const mono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "ClearDose — Transparent prescription prices & pharmacy coupons",
-    template: "%s · ClearDose",
+    default: "Trump RX — Lower prescription prices at pharmacies near you",
+    template: "%s · Trump RX",
   },
   description:
-    "Compare real local pharmacy prices, unlock digital coupons, and save on prescriptions. ClearDose is a discount provider — not insurance.",
+    "An improved Trump RX experience: search brand and generic meds, compare local pharmacy coupon prices, and show a digital discount at the counter. Discount provider — not insurance.",
   keywords: [
+    "Trump RX",
+    "TrumpRx",
     "prescription coupons",
     "drug prices",
     "pharmacy discount",
@@ -37,15 +39,15 @@ export const metadata: Metadata = {
     "generic vs brand",
   ],
   openGraph: {
-    title: "ClearDose — Know the price before you fill",
+    title: "Trump RX — Compare pharmacy prices. Keep more of your money.",
     description:
-      "Search medications, compare nearby pharmacies, and show a digital coupon at the counter.",
+      "Search medications, compare nearby pharmacies, and show a digital coupon at the counter — brand and generic.",
     type: "website",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0f6e6a",
+  themeColor: "#1a2f66",
   width: "device-width",
   initialScale: 1,
 };
