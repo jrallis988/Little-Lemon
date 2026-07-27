@@ -108,22 +108,26 @@ export function PricingMatrix() {
         <div className="absolute inset-x-0 bottom-0 px-4 pb-3 md:px-5">
           <div>
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-pf-yellow">
-              Membership options
+              Memberships
             </p>
             <h2
               id="pricing-heading"
               className="font-display text-2xl tracking-tight text-white sm:text-3xl md:text-4xl"
             >
-              Two ways to join. Full price list on the page.
+              Our Memberships
             </h2>
             {club ? (
-              <p className="mt-1 text-sm text-white/80">
-                Showing local rates for{" "}
-                <span className="font-semibold text-white">{club.name}</span>
+              <p className="mt-1 max-w-2xl text-sm text-white/80">
+                Local rates for{" "}
+                <span className="font-semibold text-white">{club.name}</span>.
+                Both get you The Judgement Free Zone® and tons of cardio &amp;
+                strength equipment.
               </p>
             ) : (
-              <p className="mt-1 text-sm text-white/70">
-                National starting rates—pick a club above to lock local dues.
+              <p className="mt-1 max-w-2xl text-sm text-white/70">
+                We offer the PF Black Card® Membership and Classic Membership.
+                Both get you The Judgement Free Zone® and tons of cardio and
+                strength equipment. Pick a club to lock local dues.
               </p>
             )}
           </div>
@@ -179,65 +183,77 @@ export function PricingMatrix() {
                 >
                   {plan.tagline}
                 </p>
-                <div className="mt-4 flex flex-wrap items-end justify-between gap-3">
-                  <p className="flex items-end gap-1">
-                    <span
+                <div className="mt-4">
+                  <div className="flex flex-wrap items-end justify-between gap-3">
+                    <div>
+                      <p className="flex items-end gap-1">
+                        <span
+                          className={cn(
+                            "font-display text-4xl tracking-tight md:text-5xl",
+                            featured ? "text-pf-yellow" : "text-pf-purple"
+                          )}
+                        >
+                          {formatCurrency(local.monthlyDues)}
+                        </span>
+                        <span
+                          className={cn(
+                            "mb-1 text-sm",
+                            featured ? "text-white/60" : "text-pf-ink/50"
+                          )}
+                        >
+                          /mo*
+                        </span>
+                      </p>
+                      <p
+                        className={cn(
+                          "text-xs",
+                          featured ? "text-white/55" : "text-pf-ink/50"
+                        )}
+                      >
+                        plus taxes &amp; fees
+                      </p>
+                    </div>
+                    <dl
                       className={cn(
-                        "font-display text-4xl tracking-tight md:text-5xl",
-                        featured ? "text-pf-yellow" : "text-pf-purple"
+                        "grid grid-cols-3 gap-x-3 text-[11px] uppercase tracking-wide",
+                        featured ? "text-white/55" : "text-pf-ink/50"
                       )}
                     >
-                      {formatCurrency(local.monthlyDues)}
-                    </span>
-                    <span
-                      className={cn(
-                        "mb-1 text-sm",
-                        featured ? "text-white/60" : "text-pf-ink/50"
-                      )}
-                    >
-                      /mo*
-                    </span>
-                  </p>
-                  <dl
-                    className={cn(
-                      "grid grid-cols-3 gap-x-3 text-[11px] uppercase tracking-wide",
-                      featured ? "text-white/55" : "text-pf-ink/50"
-                    )}
-                  >
-                    <div>
-                      <dt>Enroll</dt>
-                      <dd
-                        className={cn(
-                          "text-sm font-semibold normal-case tracking-normal",
-                          featured ? "text-white" : "text-pf-ink"
-                        )}
-                      >
-                        {formatCurrency(local.enrollmentFee)}
-                      </dd>
-                    </div>
-                    <div>
-                      <dt>Annual</dt>
-                      <dd
-                        className={cn(
-                          "text-sm font-semibold normal-case tracking-normal",
-                          featured ? "text-white" : "text-pf-ink"
-                        )}
-                      >
-                        {formatCurrency(local.annualFee)}
-                      </dd>
-                    </div>
-                    <div>
-                      <dt>Cancel</dt>
-                      <dd
-                        className={cn(
-                          "text-sm font-semibold normal-case tracking-normal",
-                          featured ? "text-white" : "text-pf-ink"
-                        )}
-                      >
-                        $0 fee
-                      </dd>
-                    </div>
-                  </dl>
+                      <div>
+                        <dt>Enroll</dt>
+                        <dd
+                          className={cn(
+                            "text-sm font-semibold normal-case tracking-normal",
+                            featured ? "text-white" : "text-pf-ink"
+                          )}
+                        >
+                          {formatCurrency(local.enrollmentFee)}
+                        </dd>
+                      </div>
+                      <div>
+                        <dt>Annual</dt>
+                        <dd
+                          className={cn(
+                            "text-sm font-semibold normal-case tracking-normal",
+                            featured ? "text-white" : "text-pf-ink"
+                          )}
+                        >
+                          {formatCurrency(local.annualFee)}
+                        </dd>
+                      </div>
+                      <div>
+                        <dt>Cancel</dt>
+                        <dd
+                          className={cn(
+                            "text-sm font-semibold normal-case tracking-normal",
+                            featured ? "text-white" : "text-pf-ink"
+                          )}
+                        >
+                          $0 fee
+                        </dd>
+                      </div>
+                    </dl>
+                  </div>
                 </div>
                 <ul
                   className={cn(
@@ -265,31 +281,43 @@ export function PricingMatrix() {
                     Unavailable here
                   </Button>
                 ) : (
-                  <Button
-                    asChild
-                    variant={featured ? "app" : "purple"}
-                    className="mt-4 w-full"
-                  >
-                    <Link
-                      href={joinHref(plan.id)}
-                      onClick={() =>
-                        track("plan_select", {
-                          plan: plan.id,
-                          clubId,
-                          source: "pricing_matrix",
-                        })
+                  <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                    <Button
+                      asChild
+                      variant={featured ? "outline" : "outline"}
+                      className={
+                        featured
+                          ? "border-white/40 bg-transparent text-white hover:bg-white/10 hover:text-white"
+                          : undefined
                       }
                     >
-                      Join Now
-                    </Link>
-                  </Button>
+                      <a href="#pricing-compare">Learn More</a>
+                    </Button>
+                    <Button asChild variant={featured ? "app" : "purple"}>
+                      <Link
+                        href={joinHref(plan.id)}
+                        onClick={() =>
+                          track("plan_select", {
+                            plan: plan.id,
+                            clubId,
+                            source: "pricing_matrix",
+                          })
+                        }
+                      >
+                        Join Now
+                      </Link>
+                    </Button>
+                  </div>
                 )}
               </article>
             );
           })}
         </div>
 
-        <div className="mx-auto mt-4 max-w-5xl overflow-hidden rounded-2xl pf-grad-footer text-white shadow-[0_8px_24px_-12px_rgba(61,9,88,0.4)]">
+        <div
+          id="pricing-compare"
+          className="mx-auto mt-4 max-w-5xl scroll-mt-16 overflow-hidden rounded-2xl pf-grad-footer text-white shadow-[0_8px_24px_-12px_rgba(61,9,88,0.4)]"
+        >
           <table className="w-full min-w-[34rem] border-collapse text-left">
             <caption className="sr-only">
               Classic vs Black Card membership comparison

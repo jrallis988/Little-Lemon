@@ -231,7 +231,10 @@ function ClubDetail({ club }: { club: Club }) {
             </ul>
           </div>
 
-          <div className="mt-auto flex gap-2 pt-1">
+          <div className="mt-auto flex flex-col gap-2 pt-1 sm:flex-row">
+            <Button asChild variant="purple" className="flex-1">
+              <a href="#pricing">Review Plans</a>
+            </Button>
             <Button asChild className="flex-1">
               <Link
                 href={`/join?club=${club.id}&plan=${
@@ -245,13 +248,13 @@ function ClubDetail({ club }: { club: Club }) {
                   })
                 }
               >
-                Join here
+                Join Now
               </Link>
             </Button>
             <Button
               asChild
               variant="outline"
-              className="flex-1 border-white/30 bg-transparent text-white hover:bg-white/10 hover:text-white"
+              className="border-white/30 bg-transparent text-white hover:bg-white/10 hover:text-white sm:flex-none"
             >
               <a
                 href={`https://maps.google.com/?q=${encodeURIComponent(
@@ -398,8 +401,12 @@ export function ClubLocator() {
             id="club-locator-heading"
             className="mt-2 max-w-md text-lg font-medium leading-snug text-white sm:text-xl"
           >
-            A nearby gym. Clear membership pricing. Ready when you are.
+            Find a Club Near You
           </h1>
+          <p className="mt-1.5 max-w-md text-sm text-white/80 sm:text-base">
+            Clear local membership pricing. The Judgement Free Zone®—a gym where
+            everyone feels welcome.
+          </p>
 
           <div className="mt-4 max-w-md">
             <label htmlFor="club-search" className="sr-only">
@@ -415,7 +422,7 @@ export function ClubLocator() {
                   id="club-search"
                   value={query}
                   onChange={(event) => onSearchChange(event.target.value)}
-                  placeholder="City or ZIP…"
+                  placeholder="Search by address, city, or ZIP…"
                   className="h-11 border-0 bg-white pl-10 text-base shadow-none"
                   autoComplete="postal-code"
                   role="combobox"
@@ -430,17 +437,26 @@ export function ClubLocator() {
                 />
               </div>
               <Button
-                asChild
-                variant="outline"
-                className="h-11 border-white/50 bg-black/30 text-white hover:bg-white/15 hover:text-white"
+                type="button"
+                variant="purple"
+                className="h-11 shrink-0 rounded-full px-4"
+                aria-label="Search clubs"
+                onClick={() => {
+                  listRef.current?.focus();
+                  track("club_search", {
+                    query,
+                    resultCount: results.length,
+                    source: "search_button",
+                  });
+                }}
               >
-                <Link href="#pricing">Pricing</Link>
+                <Search className="h-4 w-4" aria-hidden />
               </Button>
             </div>
             <p className="mt-1.5 text-xs text-white/70" aria-live="polite">
               {isPending
                 ? "Searching…"
-                : `${results.length} club${results.length === 1 ? "" : "s"} nearby`}
+                : `${results.length} club${results.length === 1 ? "" : "s"} nearby · 2,700+ worldwide`}
             </p>
           </div>
         </div>
