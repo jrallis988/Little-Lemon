@@ -91,6 +91,18 @@ export function browserSetChromeHeight(chromeHeight: number): Promise<void> {
   });
 }
 
+export function browserFindInPage(args: {
+  tabId: string;
+  query: string;
+  forward?: boolean;
+}): Promise<boolean> {
+  return invokeBrowserCommand("browser_find_in_page", {
+    tab_id: args.tabId,
+    query: args.query,
+    forward: args.forward ?? true,
+  });
+}
+
 export function setParentAllowlist(domains: string[]): Promise<void> {
   return invokeBrowserCommand("set_parent_allowlist", { domains });
 }

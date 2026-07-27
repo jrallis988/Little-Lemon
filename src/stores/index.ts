@@ -7,3 +7,4 @@ export { useBookmarksStore } from "@/stores/bookmarksStore";
 export { useHistoryStore } from "@/stores/historyStore";
 export { useAnalyticsStore } from "@/stores/analyticsStore";
 export { useProjectsStore } from "@/stores/projectsStore";
+export { useDownloadsStore } from "@/stores/downloadsStore";

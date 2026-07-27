@@ -19,6 +19,7 @@ commands.allow = [
   "browser_go_back",
   "browser_go_forward",
   "browser_set_chrome_height",
+  "browser_find_in_page",
   "educational_search",
   "set_parent_allowlist",
 ]

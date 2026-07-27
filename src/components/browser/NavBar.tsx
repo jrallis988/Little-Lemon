@@ -30,6 +30,8 @@ type Props = {
   aiOpen: boolean;
   onMenuOpenChange: (open: boolean) => void;
   onAiOpenChange: (open: boolean) => void;
+  onAskAi: (prompt: string) => void;
+  onFind: () => void;
 };
 
 export function NavBar({
@@ -39,6 +41,8 @@ export function NavBar({
   aiOpen,
   onMenuOpenChange,
   onAiOpenChange,
+  onAskAi,
+  onFind,
 }: Props) {
   const { openReactTab } = useBrowserActions();
   const updateTab = useBrowserStore((state) => state.updateTab);
@@ -51,7 +55,7 @@ export function NavBar({
 
   return (
     <div className="flex items-center gap-2 px-3 py-2">
-      <div className="flex items-center gap-1">
+      <div className="hidden items-center gap-1 sm:flex">
         <Button
           variant="ghost"
           size="icon"
@@ -95,11 +99,16 @@ export function NavBar({
         </Button>
       </div>
 
-      <AddressBar ref={addressRef} activeTab={activeTab} />
+      <AddressBar
+        ref={addressRef}
+        activeTab={activeTab}
+        onAskAi={onAskAi}
+      />
 
       <Button
         variant="ghost"
         size="icon"
+        className="hidden sm:inline-flex"
         aria-label={bookmarked ? "Remove bookmark" : "Bookmark page"}
         disabled={!activeTab || activeTab.url === "/"}
         onClick={() => {
@@ -118,12 +127,13 @@ export function NavBar({
       <Button
         variant={aiOpen ? "secondary" : "ghost"}
         size="icon"
+        className="hidden sm:inline-flex"
         aria-label="AI assistant"
         onClick={() => onAiOpenChange(!aiOpen)}
       >
         <Bot className="h-4 w-4" />
       </Button>
-      <div className="relative">
+      <div className="relative hidden sm:block">
         <Button
           variant={menuOpen ? "secondary" : "ghost"}
           size="icon"
@@ -132,7 +142,12 @@ export function NavBar({
         >
           <Menu className="h-4 w-4" />
         </Button>
-        {menuOpen && <BrowserMenu onClose={() => onMenuOpenChange(false)} />}
+        {menuOpen && (
+          <BrowserMenu
+            onClose={() => onMenuOpenChange(false)}
+            onFind={onFind}
+          />
+        )}
       </div>
     </div>
   );

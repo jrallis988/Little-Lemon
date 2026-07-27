@@ -1,7 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AiAssistantPanel } from "@/components/browser/AiAssistantPanel";
+import { BrowserMenu } from "@/components/browser/BrowserMenu";
 import { ContentArea } from "@/components/browser/ContentArea";
+import { DownloadsPanel } from "@/components/browser/DownloadsPanel";
+import { FindBar } from "@/components/browser/FindBar";
+import { MobileBottomChrome } from "@/components/browser/MobileBottomChrome";
 import { NavBar } from "@/components/browser/NavBar";
 import { TabBar } from "@/components/browser/TabBar";
 import { LearningModeOverlay } from "@/components/learning/LearningModeOverlay";
@@ -51,6 +55,9 @@ export function BrowserShell() {
   const previousActiveId = useRef<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [aiOpen, setAiOpen] = useState(false);
+  const [aiPrompt, setAiPrompt] = useState("");
+  const [findOpen, setFindOpen] = useState(false);
+  const [mobileTabsOpen, setMobileTabsOpen] = useState(false);
 
   const tabs = useBrowserStore((state) => state.tabs);
   const activeTabId = useBrowserStore((state) => state.activeTabId);
@@ -85,7 +92,7 @@ export function BrowserShell() {
     });
     observer.observe(node);
     return () => observer.disconnect();
-  }, [setChromeHeight]);
+  }, [setChromeHeight, findOpen]);
 
   useEffect(() => {
     let cleanupBlocked: (() => void) | undefined;
@@ -189,10 +196,17 @@ export function BrowserShell() {
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       const mod = event.metaKey || event.ctrlKey;
+      const key = event.key.toLowerCase();
+
+      if (mod && key === "f") {
+        event.preventDefault();
+        setFindOpen(true);
+        return;
+      }
+
       if (!mod || event.altKey) return;
 
       const active = useBrowserStore.getState().getActiveTab();
-      const key = event.key.toLowerCase();
       if (key === "t") {
         event.preventDefault();
         openNewTab();
@@ -218,8 +232,6 @@ export function BrowserShell() {
         const index = Number(event.key) - 1;
         const tab = useBrowserStore.getState().tabs[index];
         if (tab) useBrowserStore.getState().switchTab(tab.id);
-      } else if (event.key === "0" || key === "+" || key === "-" || key === "=") {
-        event.preventDefault();
       }
     };
 
@@ -242,7 +254,9 @@ export function BrowserShell() {
         ref={chromeRef}
         className="sticky top-0 z-30 border-b border-white/60 bg-cream/90 shadow-soft backdrop-blur-xl"
       >
-        <TabBar />
+        <div className={mobileTabsOpen ? "block" : "hidden md:block"}>
+          <TabBar />
+        </div>
         <NavBar
           activeTab={activeTab}
           addressRef={addressRef}
@@ -250,16 +264,44 @@ export function BrowserShell() {
           aiOpen={aiOpen}
           onMenuOpenChange={setMenuOpen}
           onAiOpenChange={setAiOpen}
+          onAskAi={(prompt) => {
+            setAiPrompt(prompt);
+            setAiOpen(true);
+          }}
+          onFind={() => setFindOpen(true)}
+        />
+        <FindBar
+          open={findOpen}
+          activeTab={activeTab}
+          onClose={() => setFindOpen(false)}
         />
       </div>
 
       <ContentArea activeTab={activeTab} />
+
+      <MobileBottomChrome
+        activeTab={activeTab}
+        onOpenMenu={() => setMenuOpen((value) => !value)}
+        onOpenTabs={() => setMobileTabsOpen((value) => !value)}
+      />
+
+      {menuOpen && (
+        <div className="md:hidden">
+          <BrowserMenu
+            onClose={() => setMenuOpen(false)}
+            onFind={() => setFindOpen(true)}
+          />
+        </div>
+      )}
+
       {aiOpen && (
         <AiAssistantPanel
           activeTab={activeTab}
+          initialPrompt={aiPrompt}
           onClose={() => setAiOpen(false)}
         />
       )}
+      <DownloadsPanel />
       <LearningModeOverlay />
     </div>
   );

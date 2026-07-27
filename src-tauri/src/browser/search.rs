@@ -25,6 +25,7 @@ pub struct EducationalSearchResult {
     pub favicon_url: String,
     pub source: String,
     pub category: String,
+    pub result_type: String,
     pub trust_score: u8,
     pub reading_level: String,
     pub estimated_minutes: u32,
@@ -132,6 +133,7 @@ fn parse_duckduckgo_html(
             favicon_url: format!("https://icons.duckduckgo.com/ip3/{domain}.ico"),
             source: "DuckDuckGo HTML".to_string(),
             category: category_for(&target_url, &domain),
+            result_type: result_type_for(&target_url, &domain, &description),
             trust_score,
             reading_level: reading_level_for(&domain, &description),
             estimated_minutes: estimated_minutes(&description),
@@ -305,6 +307,40 @@ fn category_for(url: &Url, domain: &str) -> String {
     }
 
     "Educational reference".to_string()
+}
+
+fn result_type_for(url: &Url, domain: &str, description: &str) -> String {
+    let path = url.path().to_lowercase();
+    let haystack = format!("{path} {description}").to_lowercase();
+
+    if path.ends_with(".pdf") || haystack.contains("pdf") {
+        return "document".to_string();
+    }
+    if domain.contains("ted.com")
+        || domain.contains("khanacademy")
+        || path.contains("/video")
+        || haystack.contains("watch")
+        || haystack.contains("video lesson")
+    {
+        return "video".to_string();
+    }
+    if path.contains("/image")
+        || path.contains("/gallery")
+        || path.contains("/photo")
+        || haystack.contains("image collection")
+        || haystack.contains("photograph")
+    {
+        return "image".to_string();
+    }
+    if domain.contains("britannica")
+        || domain.contains("wikipedia")
+        || domain.contains("loc.gov")
+        || domain.contains("si.edu")
+    {
+        return "reference".to_string();
+    }
+
+    "article".to_string()
 }
 
 fn reading_level_for(domain: &str, description: &str) -> String {

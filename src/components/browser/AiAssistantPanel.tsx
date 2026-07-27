@@ -1,22 +1,29 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Bot, Loader2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { AI_ACTIONS, runAiAction } from "@/services/aiAssistant";
 import { pageContextFromTab } from "@/services/browserBridge";
 import type { AiActionResult, BrowserTab } from "@/types";
 
 type Props = {
   activeTab: BrowserTab | null;
+  initialPrompt?: string;
   onClose: () => void;
 };
 
-export function AiAssistantPanel({ activeTab, onClose }: Props) {
+export function AiAssistantPanel({ activeTab, initialPrompt = "", onClose }: Props) {
   const context = useMemo(() => pageContextFromTab(activeTab), [activeTab]);
+  const [prompt, setPrompt] = useState(initialPrompt);
   const [result, setResult] = useState<AiActionResult | null>(null);
   const [loadingAction, setLoadingAction] = useState<string | null>(null);
 
+  useEffect(() => {
+    setPrompt(initialPrompt);
+  }, [initialPrompt]);
+
   return (
-    <aside className="fixed bottom-4 right-4 top-32 z-40 flex w-[22rem] max-w-[calc(100vw-2rem)] flex-col rounded-3xl border border-white/70 bg-white/95 p-4 shadow-glass">
+    <aside className="fixed bottom-20 right-4 top-28 z-40 flex w-[22rem] max-w-[calc(100vw-2rem)] flex-col rounded-3xl border border-white/70 bg-white/95 p-4 shadow-glass md:bottom-4 md:top-32">
       <header className="flex items-start justify-between gap-3 border-b border-border/70 pb-3">
         <div className="flex items-center gap-2">
           <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-navy text-foam">
@@ -27,7 +34,7 @@ export function AiAssistantPanel({ activeTab, onClose }: Props) {
               Surf AI
             </h2>
             <p className="text-xs text-slate">
-              Uses current page context when configured.
+              Ask from the address bar or run page actions.
             </p>
           </div>
         </div>
@@ -36,6 +43,30 @@ export function AiAssistantPanel({ activeTab, onClose }: Props) {
         </Button>
       </header>
 
+      <form
+        className="mt-4 space-y-2"
+        onSubmit={async (event) => {
+          event.preventDefault();
+          const action = AI_ACTIONS[0];
+          if (!action) return;
+          setLoadingAction(action.id);
+          setResult(
+            await runAiAction(action, context, prompt.trim() || undefined),
+          );
+          setLoadingAction(null);
+        }}
+      >
+        <Input
+          value={prompt}
+          onChange={(event) => setPrompt(event.target.value)}
+          placeholder="Ask about this page or topic…"
+          aria-label="AI prompt"
+        />
+        <Button type="submit" className="w-full" disabled={!prompt.trim() && !context}>
+          Ask Surf AI
+        </Button>
+      </form>
+
       <div className="mt-4 rounded-2xl bg-cream/70 p-3 text-xs text-slate">
         {context ? (
           <>
@@ -43,11 +74,11 @@ export function AiAssistantPanel({ activeTab, onClose }: Props) {
             <p className="mt-1 break-all">{context.url}</p>
           </>
         ) : (
-          "Open a web page to give Surf AI page context."
+          "Open a web page for page-aware help, or ask a learning question above."
         )}
       </div>
 
-      <div className="mt-4 space-y-2">
+      <div className="mt-4 space-y-2 overflow-auto">
         {AI_ACTIONS.map((action) => (
           <Button
             key={action.id}
@@ -55,7 +86,7 @@ export function AiAssistantPanel({ activeTab, onClose }: Props) {
             className="h-auto w-full justify-start rounded-2xl px-3 py-3 text-left"
             onClick={async () => {
               setLoadingAction(action.id);
-              setResult(await runAiAction(action, context));
+              setResult(await runAiAction(action, context, prompt.trim() || undefined));
               setLoadingAction(null);
             }}
           >

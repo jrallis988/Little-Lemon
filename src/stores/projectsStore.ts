@@ -6,10 +6,13 @@ import type { Citation, Highlight, Project, ProjectNote, ProjectPage } from "@/t
 
 type ProjectsState = {
   projects: Project[];
+  activeProjectId: string | null;
+  setActiveProject: (id: string | null) => void;
   createProject: (title: string, description?: string) => Project;
   addPageToProject: (projectId: string, page: Omit<ProjectPage, "id" | "addedAt">) => void;
   addNoteToProject: (projectId: string, text: string) => void;
   addHighlightToProject: (projectId: string, highlight: Omit<Highlight, "id" | "createdAt">) => void;
+  addHighlightToActive: (highlight: Omit<Highlight, "id" | "createdAt">) => void;
   addCitationToProject: (projectId: string, citation: Omit<Citation, "id">) => void;
 };
 
@@ -19,8 +22,10 @@ function touch(project: Project): Project {
 
 export const useProjectsStore = create<ProjectsState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       projects: [],
+      activeProjectId: null,
+      setActiveProject: (id) => set({ activeProjectId: id }),
       createProject: (title, description) => {
         const now = new Date().toISOString();
         const project: Project = {
@@ -34,7 +39,10 @@ export const useProjectsStore = create<ProjectsState>()(
           createdAt: now,
           updatedAt: now,
         };
-        set((state) => ({ projects: [project, ...state.projects] }));
+        set((state) => ({
+          projects: [project, ...state.projects],
+          activeProjectId: project.id,
+        }));
         return project;
       },
       addPageToProject: (projectId, page) =>
@@ -87,6 +95,14 @@ export const useProjectsStore = create<ProjectsState>()(
               : project,
           ),
         })),
+      addHighlightToActive: (highlight) => {
+        const state = get();
+        let projectId = state.activeProjectId;
+        if (!projectId || !state.projects.some((project) => project.id === projectId)) {
+          projectId = state.createProject("Research notes").id;
+        }
+        state.addHighlightToProject(projectId, highlight);
+      },
       addCitationToProject: (projectId, citation) =>
         set((state) => ({
           projects: state.projects.map((project) =>

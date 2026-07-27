@@ -1,21 +1,34 @@
 import type { ReactNode } from "react";
-import { Bookmark, Download, History, Printer, Search, Settings, ZoomIn } from "lucide-react";
+import {
+  Bookmark,
+  Download,
+  FolderKanban,
+  History,
+  Printer,
+  Search,
+  Settings,
+  Shield,
+  ZoomIn,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useBrowserActions } from "@/hooks/useBrowserActions";
 import { useBookmarksStore } from "@/stores/bookmarksStore";
+import { useDownloadsStore } from "@/stores/downloadsStore";
 import { useHistoryStore } from "@/stores/historyStore";
 
 type Props = {
   onClose: () => void;
+  onFind?: () => void;
 };
 
-export function BrowserMenu({ onClose }: Props) {
+export function BrowserMenu({ onClose, onFind }: Props) {
   const bookmarks = useBookmarksStore((state) => state.bookmarks);
   const history = useHistoryStore((state) => state.entries);
+  const setDownloadsOpen = useDownloadsStore((state) => state.setPanelOpen);
   const { openReactTab, openWebUrl } = useBrowserActions();
 
   return (
-    <aside className="absolute right-0 top-12 z-50 w-80 rounded-3xl border border-white/70 bg-white/95 p-4 shadow-glass">
+    <aside className="absolute bottom-14 left-3 right-3 z-50 max-h-[70vh] overflow-auto rounded-3xl border border-white/70 bg-white/95 p-4 shadow-glass md:bottom-auto md:left-auto md:right-0 md:top-12 md:w-80">
       <div className="space-y-2">
         <MenuButton
           icon={<History className="h-4 w-4" />}
@@ -70,8 +83,10 @@ export function BrowserMenu({ onClose }: Props) {
         <MenuButton
           icon={<Download className="h-4 w-4" />}
           label="Downloads"
-          detail="No downloads in this build"
-          onClick={() => undefined}
+          onClick={() => {
+            setDownloadsOpen(true);
+            onClose();
+          }}
         />
         <MenuButton
           icon={<Settings className="h-4 w-4" />}
@@ -82,7 +97,7 @@ export function BrowserMenu({ onClose }: Props) {
           }}
         />
         <MenuButton
-          icon={<Search className="h-4 w-4" />}
+          icon={<FolderKanban className="h-4 w-4" />}
           label="Projects"
           onClick={() => {
             openReactTab("projects", "Projects", "/projects");
@@ -90,7 +105,7 @@ export function BrowserMenu({ onClose }: Props) {
           }}
         />
         <MenuButton
-          icon={<Settings className="h-4 w-4" />}
+          icon={<Shield className="h-4 w-4" />}
           label="Parent dashboard"
           onClick={() => {
             openReactTab("parent", "Parent", "/parent");
@@ -100,14 +115,17 @@ export function BrowserMenu({ onClose }: Props) {
         <MenuButton
           icon={<ZoomIn className="h-4 w-4" />}
           label="Zoom"
-          detail="Keyboard zoom stubs are ready"
+          detail="Use Ctrl/Cmd + and -"
           onClick={() => undefined}
         />
         <MenuButton
           icon={<Search className="h-4 w-4" />}
-          label="Find"
-          detail="Use the page find shortcut in native content"
-          onClick={() => undefined}
+          label="Find in page"
+          detail="Ctrl/Cmd + F"
+          onClick={() => {
+            onFind?.();
+            onClose();
+          }}
         />
         <MenuButton
           icon={<Printer className="h-4 w-4" />}

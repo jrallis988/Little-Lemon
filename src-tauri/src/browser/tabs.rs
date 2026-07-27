@@ -223,6 +223,33 @@ pub fn browser_set_chrome_height(
     Ok(())
 }
 
+/// Find text in the active content webview using the platform find API.
+#[tauri::command]
+pub fn browser_find_in_page(
+    window: Window,
+    tab_id: String,
+    query: String,
+    forward: Option<bool>,
+) -> Result<bool, String> {
+    ensure_main_window(&window)?;
+    let tab_id = validate_tab_id(&tab_id)?;
+    let webview = get_tab_webview(&window, &tab_id)?;
+    let forward = forward.unwrap_or(true);
+    let escaped = serde_json::to_string(&query).map_err(|error| error.to_string())?;
+    let script = format!(
+        r#"(function(){{
+          try {{
+            return window.find({escaped}, false, {backwards}, true, false, false, false);
+          }} catch (error) {{
+            return false;
+          }}
+        }})()"#,
+        backwards = if forward { "false" } else { "true" }
+    );
+    webview.eval(&script).map_err(|error| error.to_string())?;
+    Ok(true)
+}
+
 fn content_webview_builder(
     window: &Window,
     tab_id: &str,

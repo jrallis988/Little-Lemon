@@ -32,12 +32,13 @@ function hasAiProviderKey(): boolean {
 export async function runAiAction(
   action: AiAction,
   context: PageContext | null,
+  prompt?: string,
 ): Promise<AiActionResult> {
-  if (!context) {
+  if (!context && !prompt) {
     return {
       status: "unavailable",
-      title: "Open a learning page first",
-      message: "AI actions need a current page URL and title.",
+      title: "Ask a question or open a page",
+      message: "AI actions need a prompt from the address bar or a current page.",
     };
   }
 
@@ -46,13 +47,17 @@ export async function runAiAction(
       status: "unavailable",
       title: `${action.label} unavailable`,
       message:
-        "Surf AI is not configured. Set SURF_AI_API_KEY for the desktop app to enable page-aware assistance.",
+        "Surf AI is not configured. Set VITE_SURF_AI_API_KEY to enable page-aware assistance.",
     };
   }
+
+  const subject = context
+    ? `${context.title} (${context.url})`
+    : "your learning question";
 
   return {
     status: "unavailable",
     title: `${action.label} not connected`,
-    message: `Surf captured page context for ${context.title} (${context.url}), but the production AI provider bridge is not wired yet.`,
+    message: `Surf captured context for ${subject}${prompt ? ` with prompt “${prompt}”` : ""}, but the production AI provider bridge is not wired yet.`,
   };
 }

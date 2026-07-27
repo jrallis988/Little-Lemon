@@ -35,6 +35,7 @@ export type EducationalSearchResult = {
   favicon_url: string;
   source: string;
   category: string;
+  result_type: "article" | "video" | "image" | "reference" | "document" | string;
   trust_score: number;
   reading_level: string;
   estimated_minutes: number;
