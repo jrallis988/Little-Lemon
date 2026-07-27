@@ -10,7 +10,7 @@ export default function App() {
     <div className="min-h-screen">
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-ember focus:px-3 focus:py-2 focus:text-ink"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:bg-buoy focus:px-3 focus:py-2 focus:text-foam"
       >
         Skip to content
       </a>

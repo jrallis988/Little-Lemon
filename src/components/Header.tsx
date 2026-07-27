@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 const links = [
   { href: "#beers", label: "Beers" },
-  { href: "#taproom", label: "Taproom" },
+  { href: "#visit", label: "Visit" },
   { href: "#story", label: "Story" },
 ];
 
@@ -55,8 +55,11 @@ export function Header() {
       }`}
     >
       <div className="mx-auto flex max-w-site items-center justify-between px-5 py-4 md:px-8">
-        <a href="#top" className="font-display text-2xl font-bold tracking-[0.04em] md:text-[1.65rem]">
-          MILLHOUSE
+        <a
+          href="#top"
+          className="font-display text-2xl font-bold uppercase tracking-[0.06em] md:text-[1.7rem]"
+        >
+          Smuttynose
         </a>
 
         <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
@@ -70,8 +73,8 @@ export function Header() {
             </a>
           ))}
           <a
-            href="#taproom"
-            className="bg-ember px-4 py-2 text-sm font-semibold tracking-wide text-ink transition-transform duration-300 hover:-translate-y-0.5"
+            href="#visit"
+            className="bg-buoy px-4 py-2 text-sm font-semibold tracking-wide text-foam transition-transform duration-300 hover:-translate-y-0.5"
           >
             Plan a visit
           </a>
@@ -124,8 +127,8 @@ export function Header() {
             </a>
           ))}
           <a
-            href="#taproom"
-            className="mt-2 bg-ember px-4 py-3 text-center text-sm font-semibold text-ink"
+            href="#visit"
+            className="mt-2 bg-buoy px-4 py-3 text-center text-sm font-semibold text-foam"
             onClick={() => setOpen(false)}
           >
             Plan a visit

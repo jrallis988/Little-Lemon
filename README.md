@@ -1,6 +1,6 @@
-# Millhouse Brewing Co.
+# Smuttynose Brewing
 
-Marketing site for a fictional Vermont riverside craft brewery — full-bleed hero, current pours, taproom details, and brewery story.
+Redesigned marketing site for **Smuttynose Brewing** in Hampton, New Hampshire — coastal New England craft brewery on Towle Farm.
 
 ## Stack
 

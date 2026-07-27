@@ -7,27 +7,27 @@ export type Beer = {
 
 export const beers: Beer[] = [
   {
-    name: "River Latch",
-    style: "American Pale Ale",
-    abv: "5.4%",
-    note: "Bright citrus peel over clean malt — our house pour.",
+    name: "Finestkind IPA",
+    style: "American IPA",
+    abv: "6.9%",
+    note: "Citrusy Simcoe and Santiam hops with a crisp, unfiltered finish — the house classic.",
   },
   {
-    name: "Millstone Stout",
-    style: "Oatmeal Stout",
-    abv: "6.1%",
-    note: "Roasted grain, soft coffee, and a velvet finish.",
+    name: "Old Brown Dog",
+    style: "American Brown Ale",
+    abv: "5.7%",
+    note: "Toasty malt, caramel, and a smooth finish. An early craft classic still pouring strong.",
   },
   {
-    name: "Hearth Lager",
-    style: "Czech-Style Pils",
-    abv: "4.8%",
-    note: "Crisp, floral hops with a long mineral snap.",
+    name: "Shoals Pale Ale",
+    style: "English-Style Pale Ale",
+    abv: "5.0%",
+    note: "Named for the Isles of Shoals — balanced, hop-forward, and built for another round.",
   },
   {
-    name: "Barn Door",
-    style: "New England IPA",
-    abv: "6.8%",
-    note: "Hazy mango and pine, soft body, low bitterness.",
+    name: "Robust Porter",
+    style: "American Porter",
+    abv: "6.2%",
+    note: "Dark chocolate and roast with a clean bitterness. Multiple GABF medal winner.",
   },
 ];

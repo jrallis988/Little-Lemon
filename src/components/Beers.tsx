@@ -12,15 +12,15 @@ export function Beers() {
             visible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
           }`}
         >
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-forge">
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-tide">
             On tap
           </p>
-          <h2 className="mt-3 font-display text-4xl font-bold tracking-wide md:text-5xl">
-            Current pours
+          <h2 className="mt-3 font-display text-4xl font-bold uppercase tracking-wide md:text-5xl">
+            Current classics
           </h2>
           <p className="mt-4 max-w-lg text-steel">
-            Four year-round beers, rotated seasonals, and the occasional barrel
-            experiment from the mill floor.
+            Unfiltered New Hampshire beer — from Finestkind IPA to longtime
+            favorites that put Smuttynose on the map.
           </p>
         </div>
 
@@ -28,16 +28,16 @@ export function Beers() {
           {beers.map((beer, index) => (
             <li
               key={beer.name}
-              className={`grid gap-3 py-6 transition-all duration-700 md:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)_auto] md:items-end md:gap-8 ${
+              className={`grid gap-3 py-6 transition-all duration-700 md:grid-cols-[minmax(0,1.15fr)_minmax(0,0.95fr)_auto] md:items-end md:gap-8 ${
                 visible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
               }`}
               style={{ transitionDelay: visible ? `${120 + index * 90}ms` : "0ms" }}
             >
               <div>
-                <h3 className="font-display text-3xl font-bold tracking-wide md:text-4xl">
+                <h3 className="font-display text-3xl font-bold uppercase tracking-wide md:text-4xl">
                   {beer.name}
                 </h3>
-                <p className="mt-1 text-sm font-medium uppercase tracking-[0.14em] text-forge">
+                <p className="mt-1 text-sm font-medium uppercase tracking-[0.14em] text-tide">
                   {beer.style}
                 </p>
               </div>

@@ -5,19 +5,19 @@ export function Story() {
 
   return (
     <section id="story" ref={ref} className="px-5 py-20 md:px-8 md:py-28">
-      <div className="mx-auto grid max-w-site gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-16 lg:items-end">
+      <div className="mx-auto grid max-w-site gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-end lg:gap-16">
         <div
           className={`transition-all duration-700 ${
             visible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
           }`}
         >
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-forge">
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-tide">
             Our story
           </p>
-          <h2 className="mt-3 font-display text-4xl font-bold tracking-wide md:text-5xl">
-            Built in a mill.
+          <h2 className="mt-3 font-display text-4xl font-bold uppercase tracking-wide md:text-5xl">
+            Named for an island.
             <br />
-            Brewed for the bank.
+            Brewed for New Hampshire.
           </h2>
         </div>
 
@@ -28,14 +28,15 @@ export function Story() {
           style={{ transitionDelay: visible ? "120ms" : "0ms" }}
         >
           <p>
-            Millhouse started in a restored grain mill on the Mad River — same
-            stone walls, new tanks, and a stubborn belief that beer should taste
-            like the place it was made.
+            Smuttynose takes its name from Smuttynose Island in the Isles of
+            Shoals — a rocky outpost off the New Hampshire coast. Founded in
+            1994, the brewery grew from Portsmouth roots to a LEED Gold campus
+            on historic Towle Farm in Hampton.
           </p>
           <p>
-            We brew in small runs, source grain from nearby farms when we can,
-            and keep the tap list honest. No gimmicks. Just clean fermentation
-            and a good seat by the water.
+            Today the farm hosts production, pours, food, and events — still
+            shipping unfiltered New England beer with the same irreverent
+            spirit that started it all.
           </p>
         </div>
       </div>

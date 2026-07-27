@@ -3,14 +3,14 @@
 @tailwind utilities;
 
 :root {
-  --ink: #101618;
-  --mist: #dfe6e8;
-  --foam: #f3f1ec;
-  --forge: #3d6b58;
-  --forge-deep: #244438;
-  --ember: #d4853a;
-  --steel: #5a6a72;
-  --grain: #c4b49a;
+  --ink: #0c1620;
+  --mist: #d5dde3;
+  --foam: #f1f4f6;
+  --tide: #1a4f5c;
+  --tide-deep: #0f333c;
+  --buoy: #d94e1f;
+  --steel: #5c6b75;
+  --salt: #9aabb6;
 }
 
 *,
@@ -21,6 +21,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 6.5rem;
 }
 
 body {
@@ -29,9 +30,9 @@ body {
   font-family: "Figtree", ui-sans-serif, system-ui, sans-serif;
   color: var(--ink);
   background:
-    radial-gradient(120% 80% at 10% -10%, rgba(61, 107, 88, 0.14), transparent 55%),
-    radial-gradient(90% 70% at 100% 0%, rgba(212, 133, 58, 0.1), transparent 45%),
-    linear-gradient(180deg, #eef2f3 0%, var(--foam) 42%, #e7e2d8 100%);
+    radial-gradient(110% 70% at 0% -10%, rgba(26, 79, 92, 0.16), transparent 55%),
+    radial-gradient(80% 60% at 100% 0%, rgba(217, 78, 31, 0.08), transparent 40%),
+    linear-gradient(180deg, #e8eef1 0%, var(--foam) 45%, #dde4e8 100%);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -46,16 +47,12 @@ a {
   text-decoration: none;
 }
 
-html {
-  scroll-padding-top: 6.5rem;
-}
-
 ::selection {
-  background: rgba(61, 107, 88, 0.28);
+  background: rgba(26, 79, 92, 0.28);
 }
 
 :focus-visible {
-  outline: 2px solid rgba(212, 133, 58, 0.7);
+  outline: 2px solid rgba(217, 78, 31, 0.75);
   outline-offset: 3px;
 }
 
