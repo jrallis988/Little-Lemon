@@ -16,7 +16,13 @@ import {
 } from "@/lib/pricing";
 import { cn } from "@/lib/utils";
 
-function CellValue({ value }: { value: string }) {
+function CellValue({
+  value,
+  onDark = false,
+}: {
+  value: string;
+  onDark?: boolean;
+}) {
   const negative =
     value.toLowerCase().startsWith("not included") ||
     value.toLowerCase().includes("not included") ||
@@ -26,14 +32,26 @@ function CellValue({ value }: { value: string }) {
     <span
       className={cn(
         "inline-flex items-center gap-1.5 text-sm font-medium",
-        negative ? "text-white/40" : "text-white"
+        negative
+          ? onDark
+            ? "text-white/40"
+            : "text-pf-ink/40"
+          : onDark
+            ? "text-white"
+            : "text-pf-ink"
       )}
     >
       {negative ? (
         <Minus className="h-3.5 w-3.5" aria-hidden />
       ) : value.toLowerCase().includes("included") ||
         value.toLowerCase().includes("anytime") ? (
-        <Check className="h-3.5 w-3.5 text-pf-yellow" aria-hidden />
+        <Check
+          className={cn(
+            "h-3.5 w-3.5",
+            onDark ? "text-pf-yellow" : "text-pf-purple"
+          )}
+          aria-hidden
+        />
       ) : null}
       {value}
     </span>
@@ -51,7 +69,7 @@ export function PricingMatrix() {
     <section
       id="pricing"
       aria-labelledby="pricing-heading"
-      className="relative scroll-mt-14 overflow-hidden bg-[#0f0618] text-white"
+      className="relative scroll-mt-14 overflow-hidden bg-pf-mist text-pf-ink"
     >
       <div className="relative">
         <div className="grid h-28 grid-cols-3 gap-0.5 sm:h-36 md:h-44">
@@ -86,7 +104,7 @@ export function PricingMatrix() {
             />
           </div>
         </div>
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0f0618] via-[#0f0618]/35 to-black/20" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-pf-purple-deep via-pf-purple/50 to-pf-purple/20" />
         <div className="absolute inset-x-0 bottom-0 px-4 pb-3 md:px-5">
           <div>
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-pf-yellow">
@@ -99,12 +117,12 @@ export function PricingMatrix() {
               Two ways to join. Full price list on the page.
             </h2>
             {club ? (
-              <p className="mt-1 text-sm text-white/75">
+              <p className="mt-1 text-sm text-white/80">
                 Showing local rates for{" "}
                 <span className="font-semibold text-white">{club.name}</span>
               </p>
             ) : (
-              <p className="mt-1 text-sm text-white/60">
+              <p className="mt-1 text-sm text-white/70">
                 National starting rates—pick a club above to lock local dues.
               </p>
             )}
@@ -112,8 +130,8 @@ export function PricingMatrix() {
         </div>
       </div>
 
-      <div>
-        <div className="grid gap-0.5 lg:grid-cols-2">
+      <div className="bg-gradient-to-b from-white to-pf-mist px-4 py-5 md:px-6 md:py-6">
+        <div className="mx-auto grid max-w-5xl gap-3 lg:grid-cols-2">
           {MEMBERSHIP_PLANS.map((plan, index) => {
             const featured = plan.id === "black-card";
             const local = getLocalPricing(club, plan.id);
@@ -122,85 +140,135 @@ export function PricingMatrix() {
               <article
                 key={plan.id}
                 className={cn(
-                  "animate-fade-up p-4 md:p-5",
+                  "animate-fade-up rounded-3xl p-5 shadow-[0_8px_24px_-12px_rgba(61,9,88,0.35)] md:p-6",
                   featured
-                    ? "bg-[linear-gradient(160deg,#5c2d91_0%,#2f124a_100%)] ring-1 ring-inset ring-pf-yellow"
-                    : "bg-[#1a0d28] ring-1 ring-inset ring-white/10",
+                    ? "pf-grad-black-card text-white"
+                    : "border border-pf-line/80 bg-white text-pf-ink",
                   unavailable && "opacity-55"
                 )}
                 style={{ animationDelay: `${index * 60}ms` }}
               >
                 <div className="flex items-center justify-between gap-2">
-                  <h3 className="font-display text-2xl tracking-tight">
-                    {plan.name}
+                  <h3
+                    className={cn(
+                      "font-display text-2xl tracking-tight uppercase",
+                      featured ? "text-white" : "text-pf-ink"
+                    )}
+                  >
+                    {featured ? "PF Black Card®" : plan.name}
                   </h3>
                   {unavailable ? (
-                    <Badge className="bg-white/10 text-white">
+                    <Badge className="bg-black/20 text-white">
                       Not at this club
                     </Badge>
                   ) : featured ? (
                     <Badge variant="yellow">
-                      {club ? "Local rate" : "Most chosen"}
+                      {club ? "Local rate" : "Best Value"}
                     </Badge>
                   ) : (
-                    <Badge className="bg-white/10 text-white">
+                    <Badge className="bg-pf-mist text-pf-purple">
                       {club ? "Local rate" : "Home club"}
                     </Badge>
                   )}
                 </div>
-                <p className="mt-1 text-sm text-white/70">{plan.tagline}</p>
-                <div className="mt-3 flex flex-wrap items-end justify-between gap-3">
+                <p
+                  className={cn(
+                    "mt-1 text-sm",
+                    featured ? "text-white/75" : "text-pf-ink/65"
+                  )}
+                >
+                  {plan.tagline}
+                </p>
+                <div className="mt-4 flex flex-wrap items-end justify-between gap-3">
                   <p className="flex items-end gap-1">
-                    <span className="font-display text-4xl tracking-tight">
+                    <span
+                      className={cn(
+                        "font-display text-4xl tracking-tight md:text-5xl",
+                        featured ? "text-pf-yellow" : "text-pf-purple"
+                      )}
+                    >
                       {formatCurrency(local.monthlyDues)}
                     </span>
-                    <span className="mb-1 text-sm text-white/55">/ month</span>
+                    <span
+                      className={cn(
+                        "mb-1 text-sm",
+                        featured ? "text-white/60" : "text-pf-ink/50"
+                      )}
+                    >
+                      /mo*
+                    </span>
                   </p>
-                  <dl className="grid grid-cols-3 gap-x-3 text-[11px] uppercase tracking-wide text-white/55">
+                  <dl
+                    className={cn(
+                      "grid grid-cols-3 gap-x-3 text-[11px] uppercase tracking-wide",
+                      featured ? "text-white/55" : "text-pf-ink/50"
+                    )}
+                  >
                     <div>
                       <dt>Enroll</dt>
-                      <dd className="text-sm font-semibold normal-case tracking-normal text-white">
+                      <dd
+                        className={cn(
+                          "text-sm font-semibold normal-case tracking-normal",
+                          featured ? "text-white" : "text-pf-ink"
+                        )}
+                      >
                         {formatCurrency(local.enrollmentFee)}
                       </dd>
                     </div>
                     <div>
                       <dt>Annual</dt>
-                      <dd className="text-sm font-semibold normal-case tracking-normal text-white">
+                      <dd
+                        className={cn(
+                          "text-sm font-semibold normal-case tracking-normal",
+                          featured ? "text-white" : "text-pf-ink"
+                        )}
+                      >
                         {formatCurrency(local.annualFee)}
                       </dd>
                     </div>
                     <div>
                       <dt>Cancel</dt>
-                      <dd className="text-sm font-semibold normal-case tracking-normal text-white">
+                      <dd
+                        className={cn(
+                          "text-sm font-semibold normal-case tracking-normal",
+                          featured ? "text-white" : "text-pf-ink"
+                        )}
+                      >
                         $0 fee
                       </dd>
                     </div>
                   </dl>
                 </div>
-                <ul className="mt-3 grid gap-1 border-t border-white/15 pt-3 sm:grid-cols-2">
+                <ul
+                  className={cn(
+                    "mt-4 grid gap-1.5 border-t pt-3 sm:grid-cols-2",
+                    featured ? "border-white/15" : "border-pf-line"
+                  )}
+                >
                   {plan.highlights.map((item) => (
                     <li key={item} className="flex items-start gap-1.5 text-sm">
                       <Check
-                        className="mt-0.5 h-3.5 w-3.5 shrink-0 text-pf-yellow"
+                        className={cn(
+                          "mt-0.5 h-3.5 w-3.5 shrink-0",
+                          featured ? "text-pf-yellow" : "text-pf-purple"
+                        )}
                         aria-hidden
                       />
-                      <span className="text-white/85">{item}</span>
+                      <span className={featured ? "text-white/90" : "text-pf-ink/80"}>
+                        {item}
+                      </span>
                     </li>
                   ))}
                 </ul>
                 {unavailable ? (
-                  <Button className="mt-3 w-full" disabled>
+                  <Button className="mt-4 w-full" disabled>
                     Unavailable here
                   </Button>
                 ) : (
                   <Button
                     asChild
-                    variant={featured ? "default" : "outline"}
-                    className={cn(
-                      "mt-3 w-full",
-                      !featured &&
-                        "border-white/30 bg-transparent text-white hover:bg-white/10 hover:text-white"
-                    )}
+                    variant={featured ? "app" : "purple"}
+                    className="mt-4 w-full"
                   >
                     <Link
                       href={joinHref(plan.id)}
@@ -212,10 +280,7 @@ export function PricingMatrix() {
                         })
                       }
                     >
-                      Start with {plan.name}
-                      {club
-                        ? ` · ${club.name.replace("Planet Fitness ", "")}`
-                        : ""}
+                      Join Now
                     </Link>
                   </Button>
                 )}
@@ -224,16 +289,16 @@ export function PricingMatrix() {
           })}
         </div>
 
-        <div className="overflow-x-auto bg-black/50">
+        <div className="mx-auto mt-4 max-w-5xl overflow-hidden rounded-2xl pf-grad-footer text-white shadow-[0_8px_24px_-12px_rgba(61,9,88,0.4)]">
           <table className="w-full min-w-[34rem] border-collapse text-left">
             <caption className="sr-only">
               Classic vs Black Card membership comparison
             </caption>
             <thead>
-              <tr className="bg-white/5">
+              <tr className="bg-black/15">
                 <th
                   scope="col"
-                  className="px-4 py-2.5 text-[10px] font-bold uppercase tracking-wider text-white/45 md:px-5"
+                  className="px-4 py-2.5 text-[10px] font-bold uppercase tracking-wider text-white/55 md:px-5"
                 >
                   At the gym
                 </th>
@@ -260,16 +325,16 @@ export function PricingMatrix() {
                   >
                     {row.label}
                     {row.note ? (
-                      <p className="mt-0.5 font-normal text-[11px] text-white/40">
+                      <p className="mt-0.5 font-normal text-[11px] text-white/45">
                         {row.note}
                       </p>
                     ) : null}
                   </th>
                   <td className="px-4 py-2.5 md:px-5">
-                    <CellValue value={row.classic} />
+                    <CellValue value={row.classic} onDark />
                   </td>
                   <td className="px-4 py-2.5 md:px-5">
-                    <CellValue value={row.blackCard} />
+                    <CellValue value={row.blackCard} onDark />
                   </td>
                 </tr>
               ))}
@@ -277,8 +342,8 @@ export function PricingMatrix() {
           </table>
         </div>
 
-        <p className="flex items-start gap-2 px-4 py-3 text-xs text-white/55 md:px-5 md:text-sm">
-          <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-pf-yellow" />
+        <p className="mx-auto mt-3 flex max-w-5xl items-start gap-2 text-xs text-pf-ink/60 md:text-sm">
+          <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-pf-purple" />
           {club
             ? `Card rates are confirmed for ${club.name}. Matrix shows national starting ranges.`
             : "Pick a club to confirm local dues on the cards. Matrix shows national starting ranges."}{" "}

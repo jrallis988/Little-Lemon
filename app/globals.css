@@ -3,13 +3,28 @@
 @tailwind utilities;
 
 :root {
-  --pf-purple: #5c2d91;
-  --pf-purple-deep: #2f124a;
-  --pf-purple-soft: #efe6f8;
-  --pf-yellow: #f5c518;
-  --pf-ink: #1a1224;
-  --pf-mist: #f6f1fb;
+  /* Brand anchors from planetfitness.com references */
+  --pf-purple: #5f259f;
+  --pf-purple-bright: #6d20ab;
+  --pf-purple-mid: #592c82;
+  --pf-purple-deep: #3d0958;
+  --pf-purple-ink: #140024;
+  --pf-purple-soft: #f3f0f8;
+  --pf-lavender: #b294ff;
+  --pf-yellow: #ffce08;
+  --pf-gold: #ffb81c;
+  --pf-ink: #000521;
+  --pf-mist: #f7f4fb;
   --pf-line: #e4d9f0;
+
+  /* Gradients matching live PF surfaces */
+  --pf-grad-footer: linear-gradient(180deg, #5f1092 0%, #3d0958 100%);
+  --pf-grad-clubs: linear-gradient(180deg, #6d20ab 0%, #4a148c 55%, #3d0958 100%);
+  --pf-grad-black-card: linear-gradient(145deg, #5f1482 0%, #3b0a63 48%, #140024 100%);
+  --pf-grad-app: linear-gradient(115deg, #5f259f 0%, #7a2fb8 42%, #ffb81c 100%);
+  --pf-grad-hero: linear-gradient(125deg, rgba(95, 37, 159, 0.92) 0%, rgba(61, 9, 88, 0.72) 48%, rgba(20, 0, 36, 0.55) 100%);
+  --pf-grad-btn: linear-gradient(90deg, #4a148c 0%, #6d20ab 100%);
+  --pf-grad-promo: linear-gradient(160deg, #9172ec 0%, #5f259f 55%, #5946a7 100%);
 }
 
 html {
@@ -18,11 +33,50 @@ html {
 
 body {
   min-height: 100vh;
-  background: #14081f;
+  background: var(--pf-purple-ink);
   color: var(--pf-ink);
   font-family: var(--font-body), sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+}
+
+@layer components {
+  .pf-grad-footer {
+    background-image: var(--pf-grad-footer);
+  }
+
+  .pf-grad-clubs {
+    background-image: var(--pf-grad-clubs);
+  }
+
+  .pf-grad-black-card {
+    background-image: var(--pf-grad-black-card);
+  }
+
+  .pf-grad-app {
+    background-image: var(--pf-grad-app);
+  }
+
+  .pf-grad-hero {
+    background-image: var(--pf-grad-hero);
+  }
+
+  .pf-grad-btn {
+    background-image: var(--pf-grad-btn);
+  }
+
+  .pf-grad-promo {
+    background-image: var(--pf-grad-promo);
+  }
+
+  /* Subtle mesh like Explore Clubs on planetfitness.com */
+  .pf-texture {
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.08), transparent 28%),
+      radial-gradient(circle at 80% 0%, rgba(255, 206, 8, 0.08), transparent 30%),
+      linear-gradient(0deg, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.12)),
+      var(--pf-grad-clubs);
+  }
 }
 
 @keyframes hero-zoom {

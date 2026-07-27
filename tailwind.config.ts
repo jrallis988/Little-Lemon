@@ -21,13 +21,27 @@ const config: Config = {
       colors: {
         pf: {
           purple: "var(--pf-purple)",
+          "purple-bright": "var(--pf-purple-bright)",
+          "purple-mid": "var(--pf-purple-mid)",
           "purple-deep": "var(--pf-purple-deep)",
+          "purple-ink": "var(--pf-purple-ink)",
           "purple-soft": "var(--pf-purple-soft)",
+          lavender: "var(--pf-lavender)",
           yellow: "var(--pf-yellow)",
+          gold: "var(--pf-gold)",
           ink: "var(--pf-ink)",
           mist: "var(--pf-mist)",
           line: "var(--pf-line)",
         },
+      },
+      backgroundImage: {
+        "pf-footer": "var(--pf-grad-footer)",
+        "pf-clubs": "var(--pf-grad-clubs)",
+        "pf-black-card": "var(--pf-grad-black-card)",
+        "pf-app": "var(--pf-grad-app)",
+        "pf-hero": "var(--pf-grad-hero)",
+        "pf-btn": "var(--pf-grad-btn)",
+        "pf-promo": "var(--pf-grad-promo)",
       },
       fontFamily: {
         display: ["var(--font-display)", "sans-serif"],

@@ -56,7 +56,7 @@ function FeeSummary({
 }) {
   const plan = getPlan(planId);
   return (
-    <aside className="border border-white/15 bg-white/5 p-4">
+    <aside className="rounded-3xl pf-grad-black-card p-4 text-white shadow-[0_8px_24px_-12px_rgba(61,9,88,0.45)]">
       <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-pf-yellow">
         Confirmed for this club
       </p>
@@ -64,7 +64,7 @@ function FeeSummary({
         {club ? club.name : "Select a club"}
       </p>
       {club ? (
-        <p className="mt-0.5 text-xs text-white/55">
+        <p className="mt-0.5 text-xs text-white/60">
           {club.city}, {club.state} {club.zip}
         </p>
       ) : (
@@ -73,25 +73,25 @@ function FeeSummary({
         </Link>
       )}
 
-      <dl className="mt-4 space-y-2 border-t border-white/10 pt-3 text-sm">
+      <dl className="mt-4 space-y-2 border-t border-white/15 pt-3 text-sm">
         <div className="flex justify-between gap-3">
-          <dt className="text-white/55">Plan</dt>
+          <dt className="text-white/60">Plan</dt>
           <dd className="font-semibold">{plan.name}</dd>
         </div>
         <div className="flex justify-between gap-3">
-          <dt className="text-white/55">Monthly dues</dt>
-          <dd className="font-semibold">
+          <dt className="text-white/60">Monthly dues</dt>
+          <dd className="font-semibold text-pf-yellow">
             {formatCurrency(pricing.monthlyDues)} / mo
           </dd>
         </div>
         <div className="flex justify-between gap-3">
-          <dt className="text-white/55">Enrollment</dt>
+          <dt className="text-white/60">Enrollment</dt>
           <dd className="font-semibold">
             {formatCurrency(pricing.enrollmentFee)}
           </dd>
         </div>
         <div className="flex justify-between gap-3">
-          <dt className="text-white/55">
+          <dt className="text-white/60">
             Annual ({pricing.annualFeeMonth})
           </dt>
           <dd className="font-semibold">
@@ -99,17 +99,17 @@ function FeeSummary({
           </dd>
         </div>
         <div className="flex justify-between gap-3">
-          <dt className="text-white/55">Cancel</dt>
+          <dt className="text-white/60">Cancel</dt>
           <dd className="font-semibold">Anytime · $0</dd>
         </div>
-        <div className="flex justify-between gap-3 border-t border-white/10 pt-2">
-          <dt className="text-white/55">Due today</dt>
+        <div className="flex justify-between gap-3 border-t border-white/15 pt-2">
+          <dt className="text-white/60">Due today</dt>
           <dd className="font-semibold text-pf-yellow">
             {formatCurrency(dueToday(pricing))}
           </dd>
         </div>
       </dl>
-      <p className="mt-3 text-[11px] text-white/45">
+      <p className="mt-3 text-[11px] text-white/50">
         Local club rate—not a national average. No hidden fees on this page.
       </p>
     </aside>
@@ -127,7 +127,7 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={id} className="text-xs font-semibold text-white/65">
+      <label htmlFor={id} className="text-xs font-semibold text-pf-ink/65">
         {label}
       </label>
       <div className="mt-1">{children}</div>
@@ -251,13 +251,13 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
   }
 
   return (
-    <div className="min-h-[calc(100dvh-3.5rem)] bg-[#14081f] text-white">
+    <div className="min-h-[calc(100dvh-3.5rem)] bg-gradient-to-b from-pf-mist via-white to-pf-purple-soft text-pf-ink">
       <div className="mx-auto grid max-w-5xl gap-4 px-4 py-6 md:grid-cols-[minmax(0,1fr)_17rem] md:px-6 md:py-8">
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-pf-yellow">
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-pf-purple">
             Start your membership
           </p>
-          <h1 className="mt-1 font-display text-3xl tracking-tight md:text-4xl">
+          <h1 className="mt-1 font-display text-3xl tracking-tight text-pf-ink md:text-4xl">
             Join in a few short steps
           </h1>
 
@@ -269,10 +269,10 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
                 <li
                   key={item.id}
                   className={cn(
-                    "inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold",
-                    active && "bg-pf-yellow text-pf-ink",
-                    done && !active && "bg-white/15 text-white",
-                    !active && !done && "bg-white/5 text-white/45"
+                    "inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold",
+                    active && "bg-pf-btn text-white",
+                    done && !active && "bg-pf-purple-soft text-pf-purple",
+                    !active && !done && "bg-white text-pf-ink/40 ring-1 ring-pf-line"
                   )}
                 >
                   {done ? <Check className="h-3 w-3" aria-hidden /> : null}
@@ -284,17 +284,17 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
             })}
           </ol>
 
-          <div className="mt-5 border border-white/15 bg-[#1a0d28] p-4 md:p-5">
+          <div className="mt-5 rounded-3xl border border-pf-line bg-white p-4 shadow-[0_8px_24px_-14px_rgba(61,9,88,0.25)] md:p-5">
             {step === "confirm" && (
               <div className="space-y-4">
                 <div>
-                  <h2 className="font-display text-2xl">Confirm club & plan</h2>
-                  <p className="mt-1 text-sm text-white/65">
+                  <h2 className="font-display text-2xl text-pf-ink">Confirm club & plan</h2>
+                  <p className="mt-1 text-sm text-pf-ink/65">
                     Fees on the right are the local rate for this club.
                   </p>
                 </div>
                 {!club ? (
-                  <Button asChild>
+                  <Button asChild variant="purple">
                     <Link href="/#clubs">Find a club first</Link>
                   </Button>
                 ) : (
@@ -309,17 +309,27 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
                           type="button"
                           onClick={() => setPlanId(tier)}
                           className={cn(
-                            "border p-3 text-left transition",
+                            "rounded-2xl border p-3 text-left transition",
                             selected
-                              ? "border-pf-yellow bg-pf-yellow/10"
-                              : "border-white/15 hover:border-white/35"
+                              ? "border-transparent pf-grad-black-card text-white"
+                              : "border-pf-line bg-pf-mist/60 hover:border-pf-purple"
                           )}
                         >
                           <p className="font-display text-xl">{plan.name}</p>
-                          <p className="mt-1 text-sm text-white/70">
+                          <p
+                            className={cn(
+                              "mt-1 text-sm",
+                              selected ? "text-pf-yellow" : "text-pf-purple"
+                            )}
+                          >
                             {formatCurrency(local.monthlyDues)} / month
                           </p>
-                          <p className="mt-1 text-xs text-white/50">
+                          <p
+                            className={cn(
+                              "mt-1 text-xs",
+                              selected ? "text-white/60" : "text-pf-ink/50"
+                            )}
+                          >
                             Enroll {formatCurrency(local.enrollmentFee)} · Annual{" "}
                             {formatCurrency(local.annualFee)}
                           </p>
@@ -334,8 +344,8 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
             {step === "identity" && (
               <div className="space-y-4">
                 <div>
-                  <h2 className="font-display text-2xl">About you</h2>
-                  <p className="mt-1 text-sm text-white/65">
+                  <h2 className="font-display text-2xl text-pf-ink">About you</h2>
+                  <p className="mt-1 text-sm text-pf-ink/65">
                     We’ll use this for your membership and the PF app invite.
                   </p>
                 </div>
@@ -350,7 +360,7 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
                           firstName: e.target.value,
                         }))
                       }
-                      className="border-white/15 bg-black/30 text-white"
+                      className="border-pf-line bg-white text-pf-ink"
                       autoComplete="given-name"
                     />
                   </Field>
@@ -364,7 +374,7 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
                           lastName: e.target.value,
                         }))
                       }
-                      className="border-white/15 bg-black/30 text-white"
+                      className="border-pf-line bg-white text-pf-ink"
                       autoComplete="family-name"
                     />
                   </Field>
@@ -379,7 +389,7 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
                           email: e.target.value,
                         }))
                       }
-                      className="border-white/15 bg-black/30 text-white"
+                      className="border-pf-line bg-white text-pf-ink"
                       autoComplete="email"
                     />
                   </Field>
@@ -394,7 +404,7 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
                           phone: e.target.value,
                         }))
                       }
-                      className="border-white/15 bg-black/30 text-white"
+                      className="border-pf-line bg-white text-pf-ink"
                       autoComplete="tel"
                     />
                   </Field>
@@ -405,8 +415,8 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
             {step === "payment" && (
               <div className="space-y-4">
                 <div>
-                  <h2 className="font-display text-2xl">Payment</h2>
-                  <p className="mt-1 text-sm text-white/65">
+                  <h2 className="font-display text-2xl text-pf-ink">Payment</h2>
+                  <p className="mt-1 text-sm text-pf-ink/65">
                     Demo checkout only—nothing is charged. Due today stays{" "}
                     {formatCurrency(dueToday(pricing))}.
                   </p>
@@ -422,7 +432,7 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
                           nameOnCard: e.target.value,
                         }))
                       }
-                      className="border-white/15 bg-black/30 text-white"
+                      className="border-pf-line bg-white text-pf-ink"
                       autoComplete="cc-name"
                     />
                   </Field>
@@ -437,7 +447,7 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
                           cardNumber: e.target.value,
                         }))
                       }
-                      className="border-white/15 bg-black/30 text-white"
+                      className="border-pf-line bg-white text-pf-ink"
                       placeholder="4242 4242 4242 4242"
                       autoComplete="cc-number"
                     />
@@ -453,7 +463,7 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
                             expiry: e.target.value,
                           }))
                         }
-                        className="border-white/15 bg-black/30 text-white"
+                        className="border-pf-line bg-white text-pf-ink"
                         placeholder="MM/YY"
                         autoComplete="cc-exp"
                       />
@@ -468,7 +478,7 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
                             cvc: e.target.value,
                           }))
                         }
-                        className="border-white/15 bg-black/30 text-white"
+                        className="border-pf-line bg-white text-pf-ink"
                         autoComplete="cc-csc"
                       />
                     </Field>
@@ -482,7 +492,7 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
                             zip: e.target.value,
                           }))
                         }
-                        className="border-white/15 bg-black/30 text-white"
+                        className="border-pf-line bg-white text-pf-ink"
                         autoComplete="postal-code"
                       />
                     </Field>
@@ -493,30 +503,30 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
 
             {step === "done" && (
               <div className="space-y-3 py-2 text-center sm:text-left">
-                <p className="inline-flex items-center gap-2 bg-emerald-500/15 px-3 py-1 text-sm font-semibold text-emerald-300">
+                <p className="inline-flex items-center gap-2 rounded-full bg-emerald-500/15 px-3 py-1 text-sm font-semibold text-emerald-700">
                   <Check className="h-4 w-4" aria-hidden />
                   Membership started
                 </p>
-                <h2 className="font-display text-3xl">
+                <h2 className="font-display text-3xl text-pf-ink">
                   You’re set, {identity.firstName || "member"}.
                 </h2>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-pf-ink/70">
                   {getPlan(planId).name} at {club?.name}. Download the Planet
                   Fitness app for check-in and your digital keytag—those stay in
                   the app, not on this site.
                 </p>
                 <div className="flex flex-wrap justify-center gap-2 pt-2 sm:justify-start">
-                  <Button asChild>
+                  <Button asChild variant="app" className="bg-pf-btn text-white hover:brightness-110">
                     <a
                       href="https://www.planetfitness.com/mobileapp"
                       target="_blank"
                       rel="noreferrer"
                       onClick={() => track("app_banner_click", { source: "join_done" })}
                     >
-                      Get the app
+                      Download the PF App
                     </a>
                   </Button>
-                  <Button asChild variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10 hover:text-white">
+                  <Button asChild variant="outline">
                     <Link href="/">Back to clubs</Link>
                   </Button>
                 </div>
@@ -524,7 +534,7 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
             )}
 
             {error ? (
-              <p className="mt-4 text-sm text-red-300" role="alert">
+              <p className="mt-4 text-sm text-red-600" role="alert">
                 {error}
               </p>
             ) : null}
@@ -532,18 +542,14 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
             {step !== "done" ? (
               <div className="mt-5 flex items-center gap-2">
                 {step !== "confirm" ? (
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={goBack}
-                    className="border-white/30 bg-transparent text-white hover:bg-white/10 hover:text-white"
-                  >
+                  <Button type="button" variant="outline" onClick={goBack}>
                     <ChevronLeft className="h-4 w-4" aria-hidden />
                     Back
                   </Button>
                 ) : null}
                 <Button
                   type="button"
+                  variant="purple"
                   className="flex-1"
                   onClick={goNext}
                   disabled={submitting || (step === "confirm" && !club)}

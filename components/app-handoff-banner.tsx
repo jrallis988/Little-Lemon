@@ -26,28 +26,28 @@ export function AppHandoffBanner() {
     <div
       role="region"
       aria-label="Download the Planet Fitness app"
-      className="fixed inset-x-0 bottom-0 z-50 animate-banner-in border-t border-white/10 bg-[#1a0d28] text-white"
+      className="fixed inset-x-0 bottom-0 z-50 animate-banner-in pf-grad-app text-white shadow-[0_-10px_30px_-18px_rgba(61,9,88,0.65)]"
     >
-      <div className="flex items-center gap-3 px-3 py-2 md:px-6">
+      <div className="flex items-center gap-3 px-3 py-2.5 md:px-6">
         <Smartphone className="h-4 w-4 shrink-0 text-pf-yellow" aria-hidden />
-        <p className="min-w-0 flex-1 truncate text-sm text-white/85">
-          <span className="font-semibold text-white">Already a member?</span>{" "}
-          Check in and unlock the door in the app.
+        <p className="min-w-0 flex-1 truncate text-sm text-white/95">
+          <span className="font-semibold">Already a member?</span> Check in and
+          unlock the door in the PF app.
         </p>
-        <Button asChild size="sm" className="shrink-0">
+        <Button asChild size="sm" variant="app" className="shrink-0">
           <a
             href="https://www.planetfitness.com/mobileapp"
             target="_blank"
             rel="noreferrer"
             onClick={() => track("app_banner_click", { source: "banner" })}
           >
-            Get the app
+            Download the PF App
           </a>
         </Button>
         <button
           type="button"
           aria-label="Dismiss app banner"
-          className="inline-flex h-8 w-8 shrink-0 items-center justify-center text-white/70 hover:text-white"
+          className="inline-flex h-8 w-8 shrink-0 items-center justify-center text-white/80 hover:text-white"
           onClick={() => {
             setVisible(false);
             try {

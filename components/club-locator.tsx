@@ -121,7 +121,7 @@ function ClubDetail({ club }: { club: Club }) {
   const black = club.pricing["black-card"];
 
   return (
-    <div key={club.id} className="flex h-full min-h-0 flex-col bg-[#1a0d28]">
+    <div key={club.id} className="flex h-full min-h-0 flex-col bg-pf-purple-ink/80">
       <div className="relative h-48 shrink-0 overflow-hidden sm:h-56 lg:h-64">
         <Image
           src={club.image}
@@ -131,7 +131,7 @@ function ClubDetail({ club }: { club: Club }) {
           sizes="(max-width: 1024px) 100vw, 50vw"
           priority={false}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1a0d28] via-[#1a0d28]/35 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-pf-purple-ink via-pf-purple-deep/50 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-3">
           <div>
             <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-pf-yellow">
@@ -373,7 +373,7 @@ export function ClubLocator() {
     <section
       id="clubs"
       aria-labelledby="club-locator-heading"
-      className="relative grid min-h-[calc(100dvh-3.5rem)] bg-[#14081f] lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]"
+      className="relative grid min-h-[calc(100dvh-3.5rem)] pf-texture lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]"
     >
       <div className="relative min-h-[38vh] overflow-hidden lg:min-h-full">
         <Image
@@ -384,9 +384,10 @@ export function ClubLocator() {
           className="object-cover object-center animate-[hero-zoom_20s_ease-out_forwards]"
           sizes="(max-width: 1024px) 100vw, 50vw"
         />
+        <div aria-hidden className="absolute inset-0 pf-grad-hero" />
         <div
           aria-hidden
-          className="absolute inset-0 bg-gradient-to-t from-[#14081f] via-[#2f124a]/55 to-black/25 lg:bg-gradient-to-r lg:from-black/30 lg:via-[#2f124a]/45 lg:to-[#14081f]"
+          className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-pf-purple-deep/90 to-transparent lg:hidden"
         />
 
         <div className="relative flex h-full min-h-[38vh] flex-col justify-end p-4 pb-5 sm:p-6 lg:min-h-full lg:p-8 lg:pb-8">
@@ -445,7 +446,7 @@ export function ClubLocator() {
         </div>
       </div>
 
-      <div className="flex min-h-[50vh] flex-col border-t border-white/10 lg:min-h-0 lg:border-l lg:border-t-0">
+      <div className="flex min-h-[50vh] flex-col border-t border-white/15 lg:min-h-0 lg:border-l lg:border-t-0">
         <div className="grid min-h-0 flex-1 lg:grid-cols-[15.5rem_minmax(0,1fr)]">
           <div
             ref={listRef}
@@ -454,7 +455,7 @@ export function ClubLocator() {
             aria-label="Nearby clubs"
             tabIndex={0}
             onKeyDown={onListKeyDown}
-            className="max-h-[40vh] overflow-y-auto border-b border-white/10 bg-[#0f0618] outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-pf-yellow lg:max-h-none lg:border-b-0 lg:border-r"
+            className="max-h-[40vh] overflow-y-auto border-b border-white/15 bg-pf-purple-ink/35 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-pf-yellow lg:max-h-none lg:border-b-0 lg:border-r lg:border-white/15"
           >
             {results.length === 0 ? (
               <div className="px-3 py-6 text-center text-sm text-white/55">

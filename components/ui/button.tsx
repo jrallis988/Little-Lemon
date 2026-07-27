@@ -9,19 +9,20 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-pf-yellow text-pf-ink hover:bg-[#ffd84a] active:bg-[#e6b800]",
+          "rounded-full bg-pf-yellow text-pf-ink hover:bg-[#ffe14d] active:bg-[#e6b800]",
         purple:
-          "bg-pf-purple text-white hover:bg-pf-purple-deep active:bg-[#2f124a]",
+          "rounded-full bg-pf-btn text-white shadow-sm hover:brightness-110 active:brightness-95",
         outline:
-          "border border-pf-line bg-white text-pf-ink hover:border-pf-purple hover:text-pf-purple",
-        ghost: "text-pf-ink hover:bg-pf-mist",
+          "rounded-full border border-pf-line bg-white text-pf-ink hover:border-pf-purple hover:text-pf-purple",
+        ghost: "rounded-full text-pf-ink hover:bg-pf-mist",
         link: "text-pf-purple underline-offset-4 hover:underline",
+        app: "rounded-full bg-white text-pf-purple hover:bg-white/90",
       },
       size: {
         default: "h-11 px-5",
-        sm: "h-9 px-3 text-xs",
+        sm: "h-9 px-4 text-xs",
         lg: "h-12 px-6 text-base",
-        icon: "h-10 w-10",
+        icon: "h-10 w-10 rounded-full",
       },
     },
     defaultVariants: {
