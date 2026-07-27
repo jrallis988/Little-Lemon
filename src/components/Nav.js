@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { SITE } from "../data";
+import { SITE, asset } from "../data";
 
 const LINKS = [
   { href: "#rooms", label: "Rooms" },
@@ -34,7 +34,7 @@ export default function Nav() {
       <header className={`nav${scrolled || open ? " is-scrolled" : ""}`}>
         <div className="nav__inner">
           <a className="nav__brand" href="#top" onClick={close}>
-            <img className="nav__mark" src="/icon.svg" alt="" width="36" height="36" />
+            <img className="nav__mark" src={asset("/icon.svg")} alt="" width="36" height="36" />
             <span>{SITE.name}</span>
           </a>
 

@@ -1,4 +1,4 @@
-import { NEARBY, SITE } from "../data";
+import { NEARBY, SITE, asset } from "../data";
 
 export default function Location() {
   return (
@@ -52,7 +52,7 @@ export default function Location() {
           aria-label="Open Seascape Inn location on OpenStreetMap"
         >
           <img
-            src="/images/seascape-photo2.jpg"
+            src={asset("/images/seascape-photo2.jpg")}
             alt="Coastal view near Seascape Inn at Plaice Cove"
             loading="lazy"
           />

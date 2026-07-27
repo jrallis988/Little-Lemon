@@ -1,4 +1,4 @@
-import { AMENITIES, GALLERY, SITE } from "../data";
+import { AMENITIES, GALLERY, SITE, asset } from "../data";
 
 export default function Shore() {
   return (
@@ -26,7 +26,7 @@ export default function Shore() {
 
         <div className="shore__visual">
           <img
-            src="/images/nh-north-view.jpg"
+            src={asset("/images/nh-north-view.jpg")}
             alt="Hampton Beach shoreline looking south from the north end of the beach"
             loading="lazy"
           />

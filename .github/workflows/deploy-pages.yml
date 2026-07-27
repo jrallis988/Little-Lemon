@@ -1,8 +1,9 @@
-name: Deploy GitHub Pages
+name: CI and GitHub Pages
 
 on:
   push:
     branches: ["cursor/beach-motel-website-1cb8", "main"]
+  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -11,7 +12,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -24,12 +25,17 @@ jobs:
           node-version: "20"
           cache: npm
       - run: npm ci
+      - run: CI=true npm test -- --watchAll=false
       - run: npm run build
-      - uses: actions/upload-pages-artifact@v3
+      - if: github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v3
         with:
           path: build
 
+  # Only deploy from main after GitHub Pages is enabled:
+  # Settings → Pages → Source: GitHub Actions
   deploy:
+    if: github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
     environment:
