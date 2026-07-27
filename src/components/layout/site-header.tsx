@@ -19,7 +19,8 @@ const NAV = [
   { href: "/search", label: "Compare prices" },
   { href: "/pharmacies", label: "Pharmacies" },
   { href: "/profile", label: "My meds" },
-  { href: "/privacy", label: "Privacy" },
+  { href: "/help", label: "Help" },
+  { href: "/membership", label: "Membership" },
 ];
 
 export function SiteHeader() {

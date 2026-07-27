@@ -42,6 +42,16 @@ export function SiteFooter() {
                 Saved medications
               </Link>
             </li>
+            <li>
+              <Link href="/help" className="hover:text-foreground">
+                How coupons work
+              </Link>
+            </li>
+            <li>
+              <Link href="/membership" className="hover:text-foreground">
+                Free vs membership
+              </Link>
+            </li>
           </ul>
         </div>
 

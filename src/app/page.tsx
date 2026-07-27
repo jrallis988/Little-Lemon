@@ -59,7 +59,7 @@ export default function HomePage() {
   return (
     <div>
       {/* Full-bleed photo hero — GoodRx-style search-first density */}
-      <section className="relative isolate min-h-[min(78dvh,40rem)] overflow-hidden">
+      <section className="relative isolate min-h-[min(68dvh,36rem)] overflow-hidden sm:min-h-[min(72dvh,38rem)]">
         <Image
           src="/images/hero-pharmacy.webp"
           alt=""
@@ -77,7 +77,7 @@ export default function HomePage() {
           aria-hidden
         />
 
-        <div className="relative mx-auto flex min-h-[min(78dvh,40rem)] max-w-6xl flex-col justify-center px-4 py-12 sm:px-6 sm:py-14">
+        <div className="relative mx-auto flex min-h-[min(68dvh,36rem)] max-w-6xl flex-col justify-center px-4 py-10 sm:min-h-[min(72dvh,38rem)] sm:px-6 sm:py-12">
           <div className="max-w-2xl animate-trx-fade-up text-primary-foreground">
             <p className="font-display text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
               Trump RX

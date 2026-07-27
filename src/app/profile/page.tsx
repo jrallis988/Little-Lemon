@@ -1,11 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { Bell, BellOff, Trash2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Bell, BellOff, BookmarkX, Trash2 } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { EmptyState } from "@/components/design/empty-state";
+import { TrustCallout } from "@/components/design/trust-callout";
 import { getDrugById } from "@/lib/data/drugs";
 import { getPharmacyById } from "@/lib/data/pharmacies";
 import { formatCurrency, generateOffersForDrug } from "@/lib/pricing";
@@ -28,21 +31,43 @@ export default function ProfilePage() {
   const togglePreferredPharmacy = useProfileStore(
     (s) => s.togglePreferredPharmacy
   );
+  const [highContrast, setHighContrast] = useState(false);
+  const [largeText, setLargeText] = useState(false);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("high-contrast", highContrast);
+    document.documentElement.classList.toggle("text-senior", largeText);
+    return () => {
+      document.documentElement.classList.remove("high-contrast", "text-senior");
+    };
+  }, [highContrast, largeText]);
 
   return (
-    <div className="trx-atmosphere min-h-[70dvh]">
-      <div className="mx-auto max-w-3xl space-y-10 px-4 py-8 sm:px-6">
-        <header className="space-y-2">
+    <div className="min-h-[70dvh] bg-background">
+      <div className="mx-auto max-w-3xl space-y-6 px-4 py-6 sm:px-6">
+        <header className="space-y-1.5">
           <h1 className="font-display text-3xl font-semibold tracking-tight md:text-4xl">
             My medications
           </h1>
-          <p className="text-lg text-muted-foreground">
-            Optional local profile — no account required. Saved meds and
-            preferences stay in this browser.
+          <p className="text-base text-muted-foreground sm:text-lg">
+            Optional local profile — no account required. Saved meds stay in
+            this browser.
           </p>
         </header>
 
-        <section className="space-y-4 rounded-2xl border border-border bg-card p-5">
+        <TrustCallout title="Caregiver-friendly controls">
+          Use larger text or high contrast below. Membership sync across devices
+          is previewed on the{" "}
+          <Link
+            href="/membership"
+            className="font-medium underline-offset-2 hover:underline"
+          >
+            membership page
+          </Link>
+          .
+        </TrustCallout>
+
+        <section className="space-y-4 rounded-2xl border border-border bg-card p-4 sm:p-5">
           <h2 className="text-lg font-semibold">Light profile</h2>
           <div className="space-y-1.5">
             <Label htmlFor="display-name">Display name (optional)</Label>
@@ -58,7 +83,7 @@ export default function ProfilePage() {
             <div>
               <p className="font-medium">Personalized savings tips</p>
               <p className="text-sm text-muted-foreground">
-                Opt-in only. Off by default. We never sell search history.
+                Opt-in only. Off by default.
               </p>
             </div>
             <Switch
@@ -67,9 +92,35 @@ export default function ProfilePage() {
               aria-label="Allow personalized savings tips"
             />
           </div>
+          <div className="flex items-center justify-between gap-4 rounded-xl bg-muted/60 px-3 py-3">
+            <div>
+              <p className="font-medium">Larger text</p>
+              <p className="text-sm text-muted-foreground">
+                Increases body text for easier reading.
+              </p>
+            </div>
+            <Switch
+              checked={largeText}
+              onCheckedChange={setLargeText}
+              aria-label="Enable larger text"
+            />
+          </div>
+          <div className="flex items-center justify-between gap-4 rounded-xl bg-muted/60 px-3 py-3">
+            <div>
+              <p className="font-medium">High contrast</p>
+              <p className="text-sm text-muted-foreground">
+                Stronger borders and darker text.
+              </p>
+            </div>
+            <Switch
+              checked={highContrast}
+              onCheckedChange={setHighContrast}
+              aria-label="Enable high contrast"
+            />
+          </div>
         </section>
 
-        <section className="space-y-4">
+        <section className="space-y-3">
           <div className="flex items-center justify-between gap-3">
             <h2 className="font-display text-2xl font-semibold">Saved meds</h2>
             <Link
@@ -81,12 +132,15 @@ export default function ProfilePage() {
           </div>
 
           {savedMedications.length === 0 ? (
-            <p className="rounded-2xl border border-dashed border-border bg-card/70 px-5 py-10 text-center text-muted-foreground">
-              No saved medications yet. Search a drug and tap{" "}
-              <strong className="text-foreground">Save medication</strong>.
-            </p>
+            <EmptyState
+              icon={BookmarkX}
+              title="No saved medications yet"
+              description="Search a drug and tap Save medication to track prices here."
+              actionHref="/search"
+              actionLabel="Search medications"
+            />
           ) : (
-            <ul className="space-y-3">
+            <ul className="space-y-2.5">
               {savedMedications.map((med) => {
                 const drug = getDrugById(med.drugId);
                 if (!drug) return null;
@@ -108,7 +162,7 @@ export default function ProfilePage() {
                 return (
                   <li
                     key={`${med.drugId}-${med.strengthId}`}
-                    className="rounded-2xl border border-border bg-card p-4"
+                    className="rounded-2xl border border-border bg-card p-3.5"
                   >
                     <div className="flex flex-wrap items-start justify-between gap-3">
                       <div>
@@ -188,7 +242,10 @@ export default function ProfilePage() {
           {preferredPharmacyIds.length === 0 ? (
             <p className="text-muted-foreground">
               Star pharmacies from search results or the{" "}
-              <Link href="/pharmacies" className="text-primary underline-offset-2 hover:underline">
+              <Link
+                href="/pharmacies"
+                className="text-primary underline-offset-2 hover:underline"
+              >
                 pharmacy finder
               </Link>
               .

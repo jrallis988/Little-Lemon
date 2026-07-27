@@ -182,3 +182,147 @@
     animation: none;
   }
 }
+
+/* Dense product spacing + senior-readable type helpers */
+.trx-section {
+  padding-inline: 1rem;
+  padding-block: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .trx-section {
+    padding-inline: 1.5rem;
+    padding-block: 1.5rem;
+  }
+}
+
+.trx-price {
+  font-family: var(--font-display), ui-serif, Georgia, serif;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  color: var(--primary);
+}
+
+.trx-price-lg {
+  font-family: var(--font-display), ui-serif, Georgia, serif;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  color: var(--primary);
+  font-size: 1.875rem;
+  line-height: 1;
+}
+
+@media (min-width: 640px) {
+  .trx-price-lg {
+    font-size: 2.25rem;
+  }
+}
+
+.trx-price-md {
+  font-family: var(--font-display), ui-serif, Georgia, serif;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  color: var(--primary);
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.trx-retail {
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted-foreground);
+  text-decoration: line-through;
+}
+
+.trx-save {
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--savings);
+}
+
+.trx-photo {
+  overflow: hidden;
+  border-radius: var(--radius-2xl, 1.05rem);
+  box-shadow: inset 0 0 0 1px var(--border);
+}
+
+.trx-sticky-filters {
+  position: sticky;
+  top: 3.25rem;
+  z-index: 30;
+  border-bottom: 1px solid color-mix(in oklch, var(--border) 80%, transparent);
+  background: color-mix(in oklch, var(--background) 95%, transparent);
+  backdrop-filter: blur(10px);
+}
+
+.trx-row {
+  border-bottom: 1px solid color-mix(in oklch, var(--border) 70%, transparent);
+  transition: background-color 0.15s ease;
+}
+
+.trx-row:hover {
+  background: color-mix(in oklch, var(--muted) 40%, transparent);
+}
+
+.text-senior {
+  font-size: 1.125rem;
+  line-height: 1.55;
+}
+
+.high-contrast {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.12 0 0);
+  --muted-foreground: oklch(0.28 0 0);
+  --border: oklch(0.55 0 0);
+  --primary: oklch(0.22 0.08 255);
+  --savings: oklch(0.35 0.14 25);
+}
+
+@keyframes trx-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-trx-slide-up {
+  animation: trx-slide-up 0.35s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-trx-slide-up {
+    animation: none;
+  }
+}
+
+/* Pharmacist full-screen coupon mode */
+.trx-coupon-print {
+  background: white;
+  color: black;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .trx-coupon-print,
+  .trx-coupon-print * {
+    visibility: visible;
+  }
+  .trx-coupon-print {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+  }
+  .no-print {
+    display: none !important;
+  }
+}

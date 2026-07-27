@@ -1,9 +1,16 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Bell, BookmarkPlus, Lightbulb } from "lucide-react";
+import Link from "next/link";
+import {
+  Bell,
+  BookmarkPlus,
+  Lightbulb,
+  MapPinOff,
+  SearchX,
+  SlidersHorizontal,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import {
   Select,
   SelectContent,
@@ -11,21 +18,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { PharmacyCard } from "@/components/pharmacy/pharmacy-card";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { PharmacyRow } from "@/components/pharmacy/pharmacy-row";
 import { CouponModal } from "@/components/coupon/coupon-modal";
+import { EmptyState } from "@/components/design/empty-state";
+import { TrustCallout } from "@/components/design/trust-callout";
+import { PriceDisplay } from "@/components/design/price-display";
 import {
   buildSavingsTips,
-  formatCurrency,
   generateOffersForDrug,
   sortComparisonRows,
 } from "@/lib/pricing";
@@ -37,10 +44,116 @@ import type {
   SearchFilters,
   SupplyDays,
 } from "@/lib/types";
-import { cn } from "@/lib/utils";
 
 interface PricingMatrixProps {
   drug: Drug;
+}
+
+function FilterControls({
+  drug,
+  filters,
+  setFilters,
+}: {
+  drug: Drug;
+  filters: SearchFilters;
+  setFilters: React.Dispatch<React.SetStateAction<SearchFilters>>;
+}) {
+  return (
+    <div className="grid gap-3 sm:grid-cols-3">
+      <label className="space-y-1 text-sm">
+        <span className="font-medium">Dosage</span>
+        <Select
+          value={filters.strengthId ?? undefined}
+          onValueChange={(v) =>
+            setFilters((f) => ({ ...f, strengthId: v ?? null }))
+          }
+        >
+          <SelectTrigger className="h-11 w-full text-base">
+            <SelectValue>
+              {(value: string | null) =>
+                drug.strengths.find((s) => s.id === value)?.label ??
+                "Select dosage"
+              }
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            {drug.strengths.map((s) => (
+              <SelectItem key={s.id} value={s.id}>
+                {s.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </label>
+
+      <label className="space-y-1 text-sm">
+        <span className="font-medium">Quantity</span>
+        <Select
+          value={String(filters.quantity)}
+          onValueChange={(v) =>
+            setFilters((f) => ({
+              ...f,
+              quantity: Number(v ?? f.quantity),
+            }))
+          }
+        >
+          <SelectTrigger className="h-11 w-full text-base">
+            <SelectValue>
+              {(value: string | null) =>
+                value ? `${value} units` : "Select quantity"
+              }
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            {[
+              ...new Set([
+                ...drug.commonQuantities,
+                filters.quantity,
+                filters.supplyDays === 90 ? 90 : 30,
+              ]),
+            ]
+              .sort((a, b) => a - b)
+              .map((q) => (
+                <SelectItem key={q} value={String(q)}>
+                  {q} units
+                </SelectItem>
+              ))}
+          </SelectContent>
+        </Select>
+      </label>
+
+      <label className="space-y-1 text-sm">
+        <span className="font-medium">Sort by</span>
+        <Select
+          value={filters.sortBy}
+          onValueChange={(v) =>
+            setFilters((f) => ({
+              ...f,
+              sortBy: (v ?? "price") as SearchFilters["sortBy"],
+            }))
+          }
+        >
+          <SelectTrigger className="h-11 w-full text-base">
+            <SelectValue>
+              {(value: string | null) => {
+                const labels: Record<string, string> = {
+                  price: "Lowest price",
+                  distance: "Nearest pharmacy",
+                  savings: "Biggest savings",
+                };
+                return labels[value ?? ""] ?? "Sort by";
+              }}
+            </SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="price">Lowest price</SelectItem>
+            <SelectItem value="distance">Nearest pharmacy</SelectItem>
+            <SelectItem value="savings">Biggest savings</SelectItem>
+          </SelectContent>
+        </Select>
+      </label>
+    </div>
+  );
 }
 
 export function PricingMatrix({ drug }: PricingMatrixProps) {
@@ -59,6 +172,8 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
   const [activeOffer, setActiveOffer] = useState<PriceComparisonRow | null>(
     null
   );
+  const [showAll, setShowAll] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   const strength =
     drug.strengths.find((s) => s.id === filters.strengthId) ??
@@ -83,6 +198,7 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
   );
 
   const lowest = rows[0];
+  const visibleRows = showAll ? rows : rows.slice(0, 3);
   const isSaved = savedMedications.some(
     (m) => m.drugId === drug.id && m.strengthId === strength?.id
   );
@@ -103,18 +219,54 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
     }
   }
 
+  if (!strength) {
+    return (
+      <EmptyState
+        icon={SearchX}
+        title="Dosage unavailable"
+        description="We couldn’t load strengths for this medication. Try another search."
+        actionHref="/search"
+        actionLabel="Search again"
+      />
+    );
+  }
+
+  if (rows.length === 0) {
+    return (
+      <EmptyState
+        icon={MapPinOff}
+        title="No pharmacies nearby"
+        description="We couldn’t find coupon prices for this ZIP. Try another location or browse pharmacies."
+        actionHref="/pharmacies"
+        actionLabel="Find pharmacies"
+        secondaryHref="/help"
+        secondaryLabel="How coupons work"
+      />
+    );
+  }
+
   return (
-    <div className="space-y-5">
-      <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
-        <div>
-          <p className="text-sm font-medium uppercase tracking-wide text-primary">
+    <div className="space-y-4">
+      {/* Dense drug summary strip */}
+      <div className="flex flex-col gap-3 rounded-2xl border border-border bg-card p-3.5 sm:flex-row sm:items-end sm:justify-between sm:p-4">
+        <div className="min-w-0">
+          <p className="text-xs font-semibold uppercase tracking-wide text-primary">
             {drug.therapeuticClass}
           </p>
-          <h1 className="font-display text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
-            {drug.genericName}
-          </h1>
-          <p className="mt-0.5 text-base text-muted-foreground">
-            Brand: {drug.brandName} · Showing coupon prices near{" "}
+          <div className="mt-0.5 flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+            <h1 className="font-display text-2xl font-semibold tracking-tight md:text-3xl">
+              {drug.genericName}
+            </h1>
+            <Link
+              href={`/drugs/${drug.id}`}
+              className="text-sm font-medium text-primary underline-offset-2 hover:underline"
+            >
+              Drug details
+            </Link>
+          </div>
+          <p className="mt-1 text-sm text-muted-foreground sm:text-base">
+            Brand {drug.brandName} · {strength.label} · Qty {filters.quantity} ·{" "}
+            {filters.supplyDays}-day · near{" "}
             <span className="font-medium text-foreground">{location.label}</span>
           </p>
         </div>
@@ -124,254 +276,205 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
             variant="outline"
             className="min-h-11"
             onClick={() => onSaveMed(false)}
-            disabled={!strength}
           >
             <BookmarkPlus />
-            {isSaved ? "Update saved med" : "Save medication"}
+            {isSaved ? "Update saved" : "Save med"}
           </Button>
           <Button
             type="button"
             variant="secondary"
             className="min-h-11"
             onClick={() => onSaveMed(true)}
-            disabled={!strength || !lowest}
+            disabled={!lowest}
           >
             <Bell />
-            Price drop alert
+            Price alert
           </Button>
         </div>
       </div>
 
-      <div className="flex flex-col gap-3 rounded-2xl border border-border bg-card p-3.5 sm:p-4">
-        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-          <div>
-            <p className="text-sm font-semibold">Supply length</p>
-            <p className="text-sm text-muted-foreground">
-              90-day fills often cost less per tablet
-            </p>
+      <TrustCallout variant="warning" title="Check your insurance copay first">
+        Trump RX coupons are cash discount prices — not insurance. If your plan
+        copay is lower, use insurance at the pharmacy.
+      </TrustCallout>
+
+      {/* Sticky filters */}
+      <div className="trx-sticky-filters rounded-b-xl">
+        <div className="flex flex-col gap-3 px-1 py-3 sm:px-0">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <p className="text-sm font-semibold">Supply length</p>
+              <p className="text-xs text-muted-foreground sm:text-sm">
+                90-day often costs less per tablet
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              <Tabs
+                value={String(filters.supplyDays)}
+                onValueChange={(v) =>
+                  setFilters((f) => ({
+                    ...f,
+                    supplyDays: Number(v) as SupplyDays,
+                    quantity:
+                      Number(v) === 90
+                        ? drug.commonQuantities.find((q) => q >= 90) ??
+                          f.quantity * 3
+                        : drug.commonQuantities[0] ?? 30,
+                  }))
+                }
+              >
+                <TabsList className="h-11">
+                  <TabsTrigger value="30" className="min-w-[4.75rem] px-3 text-base">
+                    30-day
+                  </TabsTrigger>
+                  <TabsTrigger value="90" className="min-w-[4.75rem] px-3 text-base">
+                    90-day
+                  </TabsTrigger>
+                </TabsList>
+              </Tabs>
+
+              <Sheet open={filtersOpen} onOpenChange={setFiltersOpen}>
+                <SheetTrigger
+                  render={
+                    <Button
+                      variant="outline"
+                      className="min-h-11 md:hidden"
+                      aria-label="Open filters"
+                    />
+                  }
+                >
+                  <SlidersHorizontal />
+                  Filters
+                </SheetTrigger>
+                <SheetContent side="bottom" className="max-h-[85dvh] rounded-t-2xl">
+                  <SheetHeader>
+                    <SheetTitle className="font-display text-left text-xl">
+                      Filters
+                    </SheetTitle>
+                  </SheetHeader>
+                  <div className="space-y-4 px-1 pb-6">
+                    <FilterControls
+                      drug={drug}
+                      filters={filters}
+                      setFilters={setFilters}
+                    />
+                    <Button
+                      className="min-h-11 w-full"
+                      onClick={() => setFiltersOpen(false)}
+                    >
+                      Show prices
+                    </Button>
+                  </div>
+                </SheetContent>
+              </Sheet>
+            </div>
           </div>
-          <Tabs
-            value={String(filters.supplyDays)}
-            onValueChange={(v) =>
-              setFilters((f) => ({
-                ...f,
-                supplyDays: Number(v) as SupplyDays,
-                quantity:
-                  Number(v) === 90
-                    ? drug.commonQuantities.find((q) => q >= 90) ??
-                      f.quantity * 3
-                    : drug.commonQuantities[0] ?? 30,
-              }))
-            }
-          >
-            <TabsList className="h-11 w-full sm:w-auto">
-              <TabsTrigger value="30" className="min-w-[5.5rem] px-4 text-base">
-                30-day
-              </TabsTrigger>
-              <TabsTrigger value="90" className="min-w-[5.5rem] px-4 text-base">
-                90-day
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
-        </div>
 
-        <div className="grid gap-3 sm:grid-cols-3">
-          <label className="space-y-1.5 text-sm">
-            <span className="font-medium">Dosage</span>
-            <Select
-              value={filters.strengthId ?? undefined}
-              onValueChange={(v) =>
-                setFilters((f) => ({ ...f, strengthId: v ?? null }))
-              }
-            >
-              <SelectTrigger className="h-11 w-full text-base">
-                <SelectValue>
-                  {(value: string | null) =>
-                    drug.strengths.find((s) => s.id === value)?.label ??
-                    "Select dosage"
-                  }
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                {drug.strengths.map((s) => (
-                  <SelectItem key={s.id} value={s.id}>
-                    {s.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </label>
-
-          <label className="space-y-1.5 text-sm">
-            <span className="font-medium">Quantity</span>
-            <Select
-              value={String(filters.quantity)}
-              onValueChange={(v) =>
-                setFilters((f) => ({
-                  ...f,
-                  quantity: Number(v ?? f.quantity),
-                }))
-              }
-            >
-              <SelectTrigger className="h-11 w-full text-base">
-                <SelectValue>
-                  {(value: string | null) =>
-                    value ? `${value} units` : "Select quantity"
-                  }
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                {[
-                  ...new Set([
-                    ...drug.commonQuantities,
-                    filters.quantity,
-                    filters.supplyDays === 90 ? 90 : 30,
-                  ]),
-                ]
-                  .sort((a, b) => a - b)
-                  .map((q) => (
-                    <SelectItem key={q} value={String(q)}>
-                      {q} units
-                    </SelectItem>
-                  ))}
-              </SelectContent>
-            </Select>
-          </label>
-
-          <label className="space-y-1.5 text-sm">
-            <span className="font-medium">Sort by</span>
-            <Select
-              value={filters.sortBy}
-              onValueChange={(v) =>
-                setFilters((f) => ({
-                  ...f,
-                  sortBy: (v ?? "price") as SearchFilters["sortBy"],
-                }))
-              }
-            >
-              <SelectTrigger className="h-11 w-full text-base">
-                <SelectValue>
-                  {(value: string | null) => {
-                    const labels: Record<string, string> = {
-                      price: "Lowest price",
-                      distance: "Nearest pharmacy",
-                      savings: "Biggest savings",
-                    };
-                    return labels[value ?? ""] ?? "Sort by";
-                  }}
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="price">Lowest price</SelectItem>
-                <SelectItem value="distance">Nearest pharmacy</SelectItem>
-                <SelectItem value="savings">Biggest savings</SelectItem>
-              </SelectContent>
-            </Select>
-          </label>
+          <div className="hidden md:block">
+            <FilterControls
+              drug={drug}
+              filters={filters}
+              setFilters={setFilters}
+            />
+          </div>
         </div>
       </div>
 
+      {/* Lowest price highlight */}
       {lowest && (
-        <Alert className="border-savings/30 bg-savings/10 text-foreground">
-          <Lightbulb className="text-savings" />
-          <AlertTitle className="text-base">
-            Lowest price: {formatCurrency(lowest.offer.couponPrice)} at{" "}
-            {lowest.pharmacy.name}
-          </AlertTitle>
-          <AlertDescription className="text-sm text-foreground/80">
-            Save {formatCurrency(lowest.savingsAmount)} (
-            {lowest.savingsPercent}% off est. retail). Generic{" "}
-            <strong>{drug.genericName}</strong> is typically filled instead of
-            brand {drug.brandName}.
-          </AlertDescription>
-        </Alert>
+        <div className="flex flex-col gap-3 rounded-2xl border border-savings/25 bg-savings/10 p-3.5 sm:flex-row sm:items-center sm:justify-between sm:p-4">
+          <div className="flex gap-3">
+            <Lightbulb className="mt-0.5 size-5 shrink-0 text-savings" aria-hidden />
+            <div>
+              <p className="font-semibold">
+                Lowest nearby: {lowest.pharmacy.name}
+              </p>
+              <p className="text-sm text-foreground/80">
+                Generic <strong>{drug.genericName}</strong> is typically filled
+                instead of brand {drug.brandName}.{" "}
+                <button
+                  type="button"
+                  className="font-medium text-primary underline-offset-2 hover:underline"
+                  onClick={() => {
+                    const el = document.getElementById("why-this-price");
+                    el?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }}
+                >
+                  Why this price?
+                </button>
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <PriceDisplay
+              couponPrice={lowest.offer.couponPrice}
+              savingsAmount={lowest.savingsAmount}
+              savingsPercent={lowest.savingsPercent}
+              size="md"
+            />
+            <Button className="min-h-11" onClick={() => setActiveOffer(lowest)}>
+              Get coupon
+            </Button>
+          </div>
+        </div>
       )}
 
-      {/* Desktop matrix */}
-      <div className="hidden overflow-hidden rounded-2xl border border-border md:block">
-        <Table>
-          <TableHeader>
-            <TableRow className="bg-muted/50 hover:bg-muted/50">
-              <TableHead className="text-base font-semibold">Pharmacy</TableHead>
-              <TableHead className="text-base font-semibold">Distance</TableHead>
-              <TableHead className="text-base font-semibold">Retail</TableHead>
-              <TableHead className="text-base font-semibold">Coupon</TableHead>
-              <TableHead className="text-base font-semibold">You save</TableHead>
-              <TableHead className="text-right text-base font-semibold">
-                Action
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {rows.map((row, index) => (
-              <TableRow
-                key={row.offer.id}
-                className={cn(
-                  index === 0 && "bg-accent/40",
-                  !row.offer.inStock && "opacity-60"
-                )}
-              >
-                <TableCell>
-                  <div className="font-semibold">{row.pharmacy.name}</div>
-                  <div className="text-sm text-muted-foreground">
-                    {row.pharmacy.address}
-                    {!row.offer.inStock && " · Call to confirm stock"}
-                  </div>
-                </TableCell>
-                <TableCell className="tabular-nums">
-                  {row.pharmacy.distanceMiles?.toFixed(1)} mi
-                </TableCell>
-                <TableCell className="tabular-nums text-muted-foreground line-through">
-                  {formatCurrency(row.offer.retailPrice)}
-                </TableCell>
-                <TableCell>
-                  <span className="font-display text-xl font-semibold tabular-nums text-primary">
-                    {formatCurrency(row.offer.couponPrice)}
-                  </span>
-                  {index === 0 && (
-                    <Badge className="ml-2 bg-savings text-savings-foreground">
-                      Best
-                    </Badge>
-                  )}
-                </TableCell>
-                <TableCell className="tabular-nums text-savings">
-                  {formatCurrency(row.savingsAmount)} ({row.savingsPercent}%)
-                </TableCell>
-                <TableCell className="text-right">
-                  <Button
-                    size="lg"
-                    className="min-h-10"
-                    onClick={() => setActiveOffer(row)}
-                  >
-                    Get coupon
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+      {/* Dense pharmacy list */}
+      <div className="overflow-hidden rounded-2xl border border-border bg-card">
+        <div className="flex items-center justify-between gap-2 border-b border-border bg-muted/40 px-3 py-2.5 sm:px-4">
+          <p className="text-sm font-semibold">
+            {showAll ? `All ${rows.length} pharmacies` : "Top 3 lowest prices"}
+          </p>
+          <p className="text-xs text-muted-foreground sm:text-sm">
+            Cash coupon prices · updated for demo
+          </p>
+        </div>
+        <div>
+          {visibleRows.map((row, index) => (
+            <PharmacyRow
+              key={row.offer.id}
+              row={row}
+              rank={filters.sortBy === "price" ? index + 1 : undefined}
+              highlighted={index === 0 && filters.sortBy === "price"}
+              onGetCoupon={() => setActiveOffer(row)}
+            />
+          ))}
+        </div>
+        {rows.length > 3 && (
+          <div className="border-t border-border p-3">
+            <Button
+              type="button"
+              variant="outline"
+              className="min-h-11 w-full"
+              onClick={() => setShowAll((v) => !v)}
+            >
+              {showAll ? "Show top 3 only" : `See all ${rows.length} pharmacies`}
+            </Button>
+          </div>
+        )}
       </div>
 
-      {/* Mobile cards */}
-      <div className="grid gap-4 md:hidden">
-        {rows.map((row, index) => (
-          <PharmacyCard
-            key={row.offer.id}
-            pharmacy={row.pharmacy}
-            priceLabel={formatCurrency(row.offer.couponPrice)}
-            highlighted={index === 0}
-            onSelectCoupon={() => setActiveOffer(row)}
-          />
-        ))}
+      {/* Trust / clarity modules */}
+      <div className="grid gap-3 md:grid-cols-2">
+        <TrustCallout title="Generic vs brand">
+          Most pharmacies fill <strong>{drug.brandName}</strong> as{" "}
+          <strong>{drug.genericName}</strong> — usually the same active
+          ingredient at a lower coupon price.
+        </TrustCallout>
+        <TrustCallout title="Price types you’ll see">
+          <strong>Coupon</strong> = discount card at the counter.{" "}
+          <strong>Retail</strong> = estimated cash without discount. Membership
+          tiers can be lower still.
+        </TrustCallout>
       </div>
 
-      <section aria-labelledby="savings-tips-heading" className="space-y-2.5">
-        <h2
-          id="savings-tips-heading"
-          className="font-display text-xl font-semibold"
-        >
-          Savings tips
-        </h2>
+      <section id="why-this-price" className="space-y-2.5 scroll-mt-28">
+        <h2 className="font-display text-xl font-semibold">Why this price?</h2>
+        <p className="text-sm leading-relaxed text-muted-foreground">
+          Prices vary by pharmacy contracts, quantity, and supply length. The
+          coupon uses BIN / PCN / Group / Member ID so the pharmacy can process
+          a discount card claim. Always re-check before you fill — prices shift.
+        </p>
         <ul className="grid gap-2.5 sm:grid-cols-2">
           {tips.map((tip) => (
             <li
@@ -392,7 +495,18 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
         </ul>
       </section>
 
-      {activeOffer && strength && (
+      <p className="text-center text-sm text-muted-foreground">
+        Need help at the counter?{" "}
+        <Link href="/help" className="font-medium text-primary underline-offset-2 hover:underline">
+          How coupons work
+        </Link>
+        {" · "}
+        <Link href="/membership" className="font-medium text-primary underline-offset-2 hover:underline">
+          Free vs membership
+        </Link>
+      </p>
+
+      {activeOffer && (
         <CouponModal
           open={!!activeOffer}
           onOpenChange={(o) => !o && setActiveOffer(null)}

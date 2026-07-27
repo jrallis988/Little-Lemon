@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { DrugSearch } from "@/components/search/drug-search";
 import { PricingMatrix } from "@/components/pricing/pricing-matrix";
+import { EmptyState } from "@/components/design/empty-state";
 import { getDrugById } from "@/lib/data/drugs";
 import { searchDrugs } from "@/lib/pricing";
+import { SearchX } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Compare prescription prices",
@@ -35,7 +36,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           priority={!drug}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/92 to-background/70" />
-        <div className="relative mx-auto max-w-6xl px-4 py-5 sm:px-6 sm:py-6">
+        <div className="relative mx-auto max-w-6xl px-4 py-4 sm:px-6 sm:py-5">
           <div className="max-w-2xl">
             <DrugSearch
               size="compact"
@@ -45,29 +46,26 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         </div>
       </div>
 
-      <div className="mx-auto max-w-6xl space-y-5 px-4 py-5 sm:px-6 sm:py-6">
+      <div className="mx-auto max-w-6xl space-y-4 px-4 py-4 sm:px-6 sm:py-5">
         {drug ? (
           <PricingMatrix drug={drug} />
         ) : (
           <div className="grid gap-4 sm:grid-cols-[1.1fr_0.9fr] sm:items-stretch">
-            <div className="rounded-2xl border border-dashed border-border bg-surface px-5 py-8">
-              <h2 className="font-display text-xl font-semibold">
-                {params.q
+            <EmptyState
+              icon={SearchX}
+              title={
+                params.q
                   ? `No exact match for “${params.q}”`
-                  : "Start with a medication name"}
-              </h2>
-              <p className="mt-2 max-w-md text-sm text-muted-foreground">
-                Try atorvastatin, metformin, or lisinopril — or browse{" "}
-                <Link
-                  href="/pharmacies"
-                  className="font-medium text-primary underline-offset-2 hover:underline"
-                >
-                  nearby pharmacies
-                </Link>
-                .
-              </p>
-            </div>
-            <div className="relative min-h-48 overflow-hidden rounded-2xl ring-1 ring-border">
+                  : "Start with a medication name"
+              }
+              description="Try atorvastatin, metformin, Ozempic, or Wegovy — or browse nearby pharmacies."
+              actionHref="/pharmacies"
+              actionLabel="Find pharmacies"
+              secondaryHref="/help"
+              secondaryLabel="How coupons work"
+              className="h-full"
+            />
+            <div className="relative min-h-52 overflow-hidden rounded-2xl ring-1 ring-border">
               <Image
                 src="/images/step-search.webp"
                 alt="Prescription bottles ready for price comparison"
