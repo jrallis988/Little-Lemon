@@ -6,7 +6,13 @@ function Footer() {
     <footer className="site-footer">
       <div className="footer-inner">
         <div className="footer-brand">
-          <p className="footer-kicker">Great Bay Community College</p>
+          <img
+            className="footer-logo"
+            src="/images/gbcc-logo-stacked.png"
+            alt="Great Bay Community College"
+            width="160"
+            height="168"
+          />
           <p className="footer-lead">
             Affordable higher education on New Hampshire&apos;s Seacoast —
             pathways to careers, transfer, and lifelong opportunity.

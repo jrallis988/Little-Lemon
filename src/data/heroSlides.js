@@ -1,16 +1,16 @@
 export const heroSlides = [
   {
-    id: "medical-assistant",
-    image: "/images/medical-assistant.jpg",
-    imageAlt: "Medical assistant student in clinical training",
-    kicker: "Great Bay's short-term healthcare training",
-    title: "Medical Assistant",
+    id: "cover",
+    image: "/images/cover.jpg",
+    imageAlt:
+      "Great Bay Community College students gathered at outdoor tables on campus",
+    kicker: "Welcome to Great Bay",
+    title: "Start here. Go anywhere.",
     lines: [
-      "Go from Classroom to Career in Just 12 Weeks!",
-      "Next Class Starts in September!",
-      "Learn more — Info Session August 10th, 5:00 PM Live via Zoom",
+      "50+ certificates and associate degrees on New Hampshire’s Seacoast.",
+      "Flexible day, evening, and online classes designed to fit your life.",
     ],
-    cta: { label: "Learn More", to: "/workforce" },
+    cta: { label: "Request Info", to: "/contact" },
   },
   {
     id: "express-admissions",
@@ -23,6 +23,19 @@ export const heroSlides = [
       "Leave ready to start your next semester.",
     ],
     cta: { label: "Register", to: "/admissions/visit" },
+  },
+  {
+    id: "medical-assistant",
+    image: "/images/medical-assistant.jpg",
+    imageAlt: "Medical assistant student in clinical training",
+    kicker: "Great Bay's short-term healthcare training",
+    title: "Medical Assistant",
+    lines: [
+      "Go from Classroom to Career in Just 12 Weeks!",
+      "Next Class Starts in September!",
+      "Learn more — Info Session August 10th, 5:00 PM Live via Zoom",
+    ],
+    cta: { label: "Learn More", to: "/workforce" },
   },
   {
     id: "culinary",

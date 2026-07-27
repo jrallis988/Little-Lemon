@@ -130,6 +130,115 @@ export const workforceTracks = [
   },
 ];
 
+export const apartPillars = [
+  {
+    id: "academic-excellence",
+    title: "Academic Excellence",
+    copy:
+      "Over fifty degree and certificate programs in healthcare, business, STEM, and liberal arts taught by credentialed faculty with years of experience in higher education and industry.",
+    to: "/academics",
+  },
+  {
+    id: "support-to-succeed",
+    title: "Support to Succeed",
+    copy:
+      "Admissions counselors, academic advisors, tutors, and staff from our award-winning Center for Academic Planning and Support (CAPS) work one-on-one to ensure student success.",
+    to: "/academics/resources",
+  },
+  {
+    id: "transfer-pathways",
+    title: "Transfer Pathways",
+    copy:
+      "Transfer agreements with colleges and universities in New Hampshire and beyond — plus transfer advisors to guide you. Great Bay is one of the largest transfer feeder schools to the University of New Hampshire.",
+    to: "/admissions",
+  },
+  {
+    id: "career-workforce",
+    title: "Career & Workforce Programs",
+    copy:
+      "Academic programs, certificates, and short-term training designed for direct entry into the workforce. The Business & Training Center also offers in-demand courses and customized corporate training.",
+    to: "/workforce",
+  },
+  {
+    id: "facilities",
+    title: "State of the Art Facilities",
+    copy:
+      "Designated lab spaces for life sciences, nursing, veterinary technology, computer technology, surgical technology, and information systems — plus high-tech classrooms and space to study and gather.",
+    to: "/about",
+  },
+  {
+    id: "athletics",
+    title: "Athletics",
+    copy:
+      "Men’s basketball and baseball; women’s basketball and volleyball; men’s and women’s golf and track & field. GBCC is a YSCC member within the USCAA. In 2025 the men’s basketball team won the conference championship.",
+    to: "/student-experience",
+  },
+];
+
+export const homeEvents = [
+  {
+    id: "nursing-info",
+    dateLabel: "7.29.26",
+    time: "12:00pm – 1:00pm",
+    title: "Nursing Info Session – July 29",
+    to: "/admissions/visit",
+  },
+  {
+    id: "express-august",
+    dateLabel: "8.11.26",
+    time: "9:00am – 4:00pm",
+    title: "Express Admissions Day August 2026",
+    to: "/admissions/visit",
+  },
+  {
+    id: "business-info",
+    dateLabel: "7.30.26",
+    time: "4:00pm – 6:00pm",
+    title: "Business Programs Info Night",
+    to: "/admissions/visit",
+  },
+];
+
+export const socialPosts = [
+  {
+    id: "fall-start",
+    when: "3 days ago",
+    copy:
+      "Whether you're starting fresh, returning to school, exploring career options, or planning to transfer, Great Bay can help you take the next step. Choose from 50+ certificates and associate degrees with flexible day, evening, and online classes.",
+  },
+  {
+    id: "caps-tutoring",
+    when: "4 days ago",
+    copy:
+      "Wrapping up summer semester papers and finals? CAPS tutors can help — and Great Bay students also have free 24/7 Brainfuse tutoring through Canvas for Math, Chemistry, Nursing, English, and more.",
+  },
+  {
+    id: "lna-pass",
+    when: "5 days ago",
+    copy:
+      "Congratulations to the first students in Great Bay’s LNA program — February and March cohorts achieved a 100% pass rate on the LNA State Testing Exam.",
+  },
+];
+
+export const homeQuotes = [
+  {
+    quote:
+      "If I could identify one thing that made a difference, it would be Great Bay. I talk all the time about how much Great Bay changed my life and gave me a huge foundation. I am incredibly grateful for my time there.",
+    name: "John Woelflein",
+    detail: "GBCC Alum · Graduate, Harvard University",
+    image: "/images/graduation.jpg",
+    imageAlt: "Great Bay Community College graduate at commencement",
+  },
+  {
+    quote:
+      "I believe that through studying for my English degree, I have become a more open-minded, sympathetic and empathetic person.",
+    name: "Madeline Ramirez",
+    detail: "GBCC Graduate",
+    image: "/images/campus-lobby.jpg",
+    imageAlt: "Students gathering in the Great Bay campus lobby",
+  },
+];
+
 export const newsItems = [
   {
     id: "early-college-advocate",

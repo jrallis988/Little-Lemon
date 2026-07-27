@@ -86,10 +86,10 @@ function Header() {
         <Link to="/" className="brand" onClick={() => setOpen(false)}>
           <img
             className="brand-logo"
-            src="/images/gbcc-logo.png"
+            src="/images/gbcc-logo-header.png"
             alt="Great Bay Community College"
             width="220"
-            height="58"
+            height="69"
           />
         </Link>
 

@@ -13,6 +13,8 @@ test("renders Great Bay brand on the home page", () => {
     screen.getAllByText(/Great Bay Community College/i).length
   ).toBeGreaterThan(0);
   expect(
-    screen.getByRole("heading", { name: /Medical Assistant/i })
+    screen.getByRole("heading", { name: /Start here\. Go anywhere\./i })
   ).toBeInTheDocument();
+  expect(screen.getByText(/What sets Great Bay apart/i)).toBeInTheDocument();
+  expect(screen.getByText(/News and Events/i)).toBeInTheDocument();
 });
