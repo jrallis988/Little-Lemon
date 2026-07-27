@@ -34,7 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${display.variable} ${body.variable}`}>
-      <body className="pb-28 font-sans antialiased">
+      <body className="pb-12 font-sans antialiased">
         <SiteHeader />
         <main>{children}</main>
         <AppHandoffBanner />
