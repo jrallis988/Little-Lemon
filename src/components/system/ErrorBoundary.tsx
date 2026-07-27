@@ -19,7 +19,7 @@ export class ErrorBoundary extends Component<Props, State> {
     if (this.state.hasError) {
       return (
         <div className="shelf-container flex min-h-[50vh] flex-col items-start justify-center gap-4 py-16">
-          <p className="text-2xs font-semibold uppercase tracking-[0.12em] text-deal">
+          <p className="text-2xs font-semibold uppercase tracking-[0.12em] text-primary">
             Something went wrong
           </p>
           <h1 className="font-display text-display-sm font-bold tracking-tight">

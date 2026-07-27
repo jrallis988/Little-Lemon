@@ -4,65 +4,69 @@
 
 @layer base {
   :root {
-    /* Marshalls brand system — red #D71920, blue #003DA5, clean white retail */
+    /* Marshalls navy system — royal blue primary, sky accent; no TJ Maxx red */
     --background: 0 0% 100%;
-    --foreground: 220 18% 12%;
+    --foreground: 222 47% 11%;
 
     --surface: 0 0% 100%;
-    --surface-muted: 210 16% 96%;
+    --surface-muted: 210 40% 98%;
     --surface-elevated: 0 0% 100%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 18% 12%;
+    --card-foreground: 222 47% 11%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 18% 12%;
+    --popover-foreground: 222 47% 11%;
 
-    /* Marshalls Red — primary CTAs & brand */
-    --primary: 358 79% 47%;
+    /* Deep Marshalls navy */
+    --primary: 218 100% 28%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 16% 95%;
-    --secondary-foreground: 220 18% 16%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 16%;
 
-    --muted: 210 14% 94%;
-    --muted-foreground: 215 10% 42%;
+    --muted: 210 30% 96%;
+    --muted-foreground: 215 16% 42%;
 
-    --accent: 218 100% 96%;
-    --accent-foreground: 218 100% 32%;
+    /* Sky blue accent */
+    --accent: 205 90% 94%;
+    --accent-foreground: 210 90% 32%;
 
-    --destructive: 358 79% 42%;
+    --sky: 205 85% 55%;
+    --sky-foreground: 0 0% 100%;
+    --sky-soft: 205 90% 94%;
+
+    --destructive: 0 65% 45%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Savings / compare-at callouts use brand red */
-    --deal: 358 79% 47%;
+    /* Savings stay navy — not red */
+    --deal: 218 100% 28%;
     --deal-foreground: 0 0% 100%;
-    --deal-soft: 358 70% 96%;
+    --deal-soft: 218 70% 95%;
 
-    /* Marshalls Blue for links & secondary emphasis */
-    --brand-blue: 218 100% 32%;
+    --brand-blue: 218 100% 28%;
     --brand-blue-foreground: 0 0% 100%;
 
     --inventory-low: 28 90% 44%;
     --inventory-in: 152 45% 32%;
     --inventory-out: 215 10% 52%;
 
-    --border: 214 14% 88%;
-    --input: 214 14% 86%;
-    --ring: 358 79% 47%;
+    --border: 214 20% 90%;
+    --input: 214 20% 88%;
+    --ring: 218 100% 28%;
 
     --radius: 0.25rem;
 
-    --font-display: "Montserrat", system-ui, sans-serif;
+    --font-display: "Libre Baskerville", Georgia, serif;
     --font-sans: "Source Sans 3", system-ui, sans-serif;
 
-    --layout-max: 1280px;
+    --layout-max: 1200px;
     --layout-gutter: clamp(1rem, 2.5vw, 2rem);
-    --layout-rail: 260px;
-    --promo-height: 2.5rem;
-    --utility-height: 2.25rem;
-    --header-height: 4rem;
-    --chrome-offset: calc(var(--promo-height) + var(--utility-height) + var(--header-height));
+    --layout-rail: 250px;
+    --promo-height: 0px;
+    --utility-height: 0px;
+    --header-height: 4.25rem;
+    --chrome-offset: var(--header-height);
   }
 
   * {
@@ -109,7 +113,7 @@
   }
 
   .price-deal {
-    @apply font-bold tabular-nums text-deal;
+    @apply font-bold tabular-nums text-foreground;
   }
 
   .badge-inventory {
@@ -156,7 +160,17 @@
   }
 
   .marshalls-wordmark {
-    @apply font-display text-[1.65rem] font-extrabold italic tracking-[-0.03em] text-primary sm:text-[1.85rem];
+    @apply font-display text-[1.55rem] font-bold italic tracking-[-0.02em] text-primary-foreground sm:text-[1.75rem];
+  }
+
+  .section-rule-title {
+    @apply flex items-center gap-4;
+  }
+
+  .section-rule-title::before,
+  .section-rule-title::after {
+    content: "";
+    @apply h-px flex-1 bg-border;
   }
 }
 

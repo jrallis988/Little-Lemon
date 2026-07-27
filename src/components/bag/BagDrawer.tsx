@@ -234,12 +234,12 @@ export function BagDrawer() {
                 <dt className="text-muted-foreground">Subtotal</dt>
                 <dd className="tabular">{formatCurrency(subtotal)}</dd>
               </div>
-              <div className="flex justify-between text-deal">
+              <div className="flex justify-between text-primary">
                 <dt>You save</dt>
                 <dd className="tabular">−{formatCurrency(merchandiseSavings)}</dd>
               </div>
               {promoDiscount > 0 && (
-                <div className="flex justify-between text-deal">
+                <div className="flex justify-between text-primary">
                   <dt>Promo ({promoCode})</dt>
                   <dd className="tabular">−{formatCurrency(promoDiscount)}</dd>
                 </div>

@@ -71,7 +71,7 @@ export function QuickViewDialog({
               Compare at {formatCurrency(product.compareAt)}
             </span>
             {pct > 0 && (
-              <Badge className="bg-deal-soft text-deal">{pct}% off</Badge>
+              <Badge className="bg-sky-soft text-primary">{pct}% off</Badge>
             )}
           </div>
 

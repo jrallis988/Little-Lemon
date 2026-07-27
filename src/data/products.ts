@@ -52,8 +52,8 @@ export const PRODUCTS: Product[] = [
     price: 298,
     compareAt: 675,
     images: [
-      "https://images.unsplash.com/photo-1614252231334-ae8634305d4b?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1533867617858-e7b97e060509?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1614252369475-531eba835eb1?auto=format&fit=crop&w=900&q=80",
     ],
     colorways: [
       { id: "black", name: "Black", hex: "#111111" },

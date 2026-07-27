@@ -60,12 +60,12 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
 
           <div className="absolute left-2.5 top-2.5 flex flex-col gap-1.5">
             {pct >= 20 && (
-              <Badge className="bg-deal text-deal-foreground shadow-soft">
+              <Badge className="bg-primary text-primary-foreground shadow-soft">
                 {pct}% off
               </Badge>
             )}
             {product.isNew && (
-              <Badge className="bg-brand-blue text-brand-blue-foreground shadow-soft">
+              <Badge className="bg-sky text-sky-foreground shadow-soft">
                 New
               </Badge>
             )}

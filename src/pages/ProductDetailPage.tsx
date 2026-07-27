@@ -90,7 +90,7 @@ export function ProductDetailPage() {
               <span className="price-compare text-base">
                 Compare at {formatCurrency(product.compareAt)}
               </span>
-              <Badge className="bg-deal text-deal-foreground">{pct}% off</Badge>
+              <Badge className="bg-primary text-primary-foreground">{pct}% off</Badge>
             </div>
             <p className="mt-1 text-sm text-muted-foreground">
               You save {formatCurrency(product.compareAt - product.price)} vs. compare at
