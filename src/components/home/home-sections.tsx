@@ -24,7 +24,7 @@ import { PRODUCTS } from "@/lib/data/catalog";
 
 export function HomeHero() {
   return (
-    <section className="relative isolate min-h-[min(88vh,720px)] overflow-hidden">
+    <section className="relative isolate min-h-[min(78vh,640px)] overflow-hidden">
       <div className="absolute inset-0 -z-10">
         <Image
           src="/images/hero-pharmacist.jpg"
@@ -34,11 +34,11 @@ export function HomeHero() {
           className="object-cover object-center"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/72 via-black/45 to-black/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-black/25" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/50 to-black/25" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20" />
       </div>
 
-      <div className="mx-auto flex min-h-[min(88vh,720px)] max-w-6xl items-end px-4 pb-16 pt-28 sm:items-center sm:px-6 sm:pb-20">
+      <div className="mx-auto flex min-h-[min(78vh,640px)] max-w-6xl items-center px-4 py-16 sm:px-6 sm:py-20">
         <div className="max-w-xl text-white">
           <p className="animate-rise font-display text-5xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl">
             Walgreens
