@@ -3,17 +3,18 @@ import Image from "next/image";
 export type CurriculumCardProps = {
   title: string;
   description: string;
-  kind: "module" | "diagnostic" | "structure";
+  kind: "feature" | "plan" | "workflow";
   items?: string[];
   href?: string;
   imageSrc?: string;
   imageAlt?: string;
+  ctaLabel?: string;
 };
 
 const kindLabel: Record<CurriculumCardProps["kind"], string> = {
-  module: "Module",
-  diagnostic: "Diagnostic",
-  structure: "Structure",
+  feature: "Feature",
+  plan: "Plan",
+  workflow: "Workflow",
 };
 
 export function CurriculumCard({
@@ -21,9 +22,10 @@ export function CurriculumCard({
   description,
   kind,
   items = [],
-  href = "#curriculum",
+  href = "#features",
   imageSrc,
   imageAlt = "",
+  ctaLabel = "Learn more",
 }: CurriculumCardProps) {
   return (
     <a
@@ -66,7 +68,7 @@ export function CurriculumCard({
         ) : null}
 
         <span className="link-arrow mt-5">
-          View details
+          {ctaLabel}
           <span aria-hidden className="transition-transform duration-200 group-hover:translate-x-0.5">
             →
           </span>

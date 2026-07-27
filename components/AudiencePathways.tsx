@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { CurriculumCard } from "@/components/CurriculumCard";
 
-type Pathway = {
+type Plan = {
   id: string;
   label: string;
   eyebrow: string;
@@ -13,206 +13,216 @@ type Pathway = {
   cards: Array<{
     title: string;
     description: string;
-    kind: "module" | "diagnostic" | "structure";
+    kind: "feature" | "plan" | "workflow";
     items: string[];
     href: string;
     imageSrc: string;
     imageAlt: string;
+    ctaLabel: string;
   }>;
 };
 
-const pathways: Pathway[] = [
+const plans: Plan[] = [
   {
-    id: "intervention-kit",
-    label: "Intervention Kit",
-    eyebrow: "Core program",
-    title: "A complete intervention kit for students who need a different route to mastery.",
+    id: "classroom",
+    label: "Classroom",
+    eyebrow: "Best for individual teachers",
+    title: "A classroom license for teachers who need flexible intervention tools now.",
     description:
-      "Designed for classrooms, tutoring programs, and pull-out support periods, this package combines diagnostics, targeted lessons, and progress tracking in one adoptable program.",
-    cta: { href: "#start", label: "Request school pricing" },
+      "Give one teacher a full software workspace: learner diagnostics, adaptive lesson paths, and progress tracking for their own students.",
+    cta: { href: "#buy", label: "Get classroom pricing" },
     cards: [
       {
-        title: "Placement & learning profile diagnostic",
+        title: "Teacher workspace",
         description:
-          "Place each student into the right starting point with screening tools that identify both skill gaps and learning-style preferences.",
-        kind: "diagnostic",
+          "Set up classes, assign diagnostics, and launch lessons from one simple teacher dashboard.",
+        kind: "plan",
         items: [
-          "Teacher-ready placement screener",
-          "Learning-style inventory",
-          "Baseline comprehension check",
+          "1 teacher seat",
+          "Up to 35 student profiles",
+          "Class-level reporting",
         ],
-        href: "#start",
+        href: "#buy",
         imageSrc: "/images/card-diagnostic.jpg",
-        imageAlt: "Teacher reviewing classroom diagnostic materials",
+        imageAlt: "Teacher reviewing student progress on academic software",
+        ctaLabel: "See classroom plan",
       },
       {
-        title: "Teacher-led lesson modules",
+        title: "Adaptive lesson library",
         description:
-          "Structured lesson sets that reteach core concepts through visual, auditory, kinesthetic, and verbal pathways so more students can access the material.",
-        kind: "module",
+          "Assign modules that present the same skill through visual, auditory, kinesthetic, and verbal pathways.",
+        kind: "feature",
         items: [
-          "Print and digital lesson paths",
-          "Small-group intervention activities",
-          "Practice and reinforcement sets",
+          "Ready-to-assign lesson paths",
+          "Built-in practice checks",
+          "Reteach options by learning style",
         ],
-        href: "#curriculum",
+        href: "#features",
         imageSrc: "/images/card-modules.jpg",
-        imageAlt: "Students using classroom learning materials",
+        imageAlt: "Students learning with digital classroom tools",
+        ctaLabel: "Explore features",
       },
       {
-        title: "Progress monitoring system",
+        title: "Student progress view",
         description:
-          "Keep instruction organized with checkpoints, remediation guidance, and progress reporting that teachers can actually use week to week.",
-        kind: "structure",
+          "See who is stuck, why they are stuck, and which instructional path is working best.",
+        kind: "workflow",
         items: [
-          "Weekly mastery checks",
-          "Intervention regrouping guidance",
-          "Family-facing progress summaries",
+          "Mastery checkpoints",
+          "Barrier tags",
+          "Family-ready summaries",
         ],
-        href: "#curriculum",
+        href: "#features",
         imageSrc: "/images/card-path.jpg",
-        imageAlt: "Teacher leading a focused support group",
+        imageAlt: "Teacher monitoring classroom learning outcomes",
+        ctaLabel: "See how tracking works",
       },
     ],
   },
   {
-    id: "classroom-adoption",
-    label: "Classroom Adoption",
-    eyebrow: "For teachers and schools",
-    title: "Adopt Morgan Bright for one classroom, one grade, or a full intervention block.",
+    id: "school",
+    label: "School",
+    eyebrow: "Best for campuses and intervention teams",
+    title: "A school license for shared use across teachers, grades, and support staff.",
     description:
-      "Choose the rollout that fits your setting: pilot in one class, equip a grade-level team, or standardize support across intervention staff.",
-    cta: { href: "#start", label: "Talk to a program specialist" },
+      "Standardize diagnostics and intervention workflows across a campus while giving leaders visibility into student progress.",
+    cta: { href: "#buy", label: "Get school pricing" },
     cards: [
       {
-        title: "Single-classroom starter set",
+        title: "Multi-teacher access",
         description:
-          "Everything a teacher needs to launch Morgan Bright with one group of students and begin targeted support quickly.",
-        kind: "diagnostic",
+          "Equip classroom teachers and interventionists with shared tools, consistent workflows, and aligned reporting.",
+        kind: "plan",
         items: [
-          "Placement tools included",
-          "Core lesson set",
-          "Teacher guide and pacing map",
+          "Multiple teacher seats",
+          "Shared student records",
+          "Campus implementation guide",
         ],
-        href: "#start",
+        href: "#buy",
         imageSrc: "/images/card-diagnostic.jpg",
-        imageAlt: "Starter classroom curriculum materials",
+        imageAlt: "School staff collaborating around instructional software",
+        ctaLabel: "See school plan",
       },
       {
-        title: "Grade-level classroom pack",
+        title: "Intervention team workflows",
         description:
-          "A broader package for teams who want shared diagnostics, consistent instructional routines, and aligned progress monitoring.",
-        kind: "module",
+          "Coordinate pull-out support, regrouping decisions, and reteach cycles without rebuilding the process each week.",
+        kind: "workflow",
         items: [
-          "Multiple teacher licenses",
-          "Shared reporting tools",
-          "Team implementation resources",
+          "Group and individual assignment",
+          "Regrouping recommendations",
+          "Shared notes across staff",
         ],
-        href: "#curriculum",
+        href: "#features",
         imageSrc: "/images/card-modules.jpg",
-        imageAlt: "Grade-level educators using instructional tools",
+        imageAlt: "Intervention team planning with digital tools",
+        ctaLabel: "Explore workflows",
       },
       {
-        title: "School intervention package",
+        title: "Campus reporting",
         description:
-          "For schools building a dedicated support program with consistent materials, implementation support, and program oversight.",
-        kind: "structure",
+          "Give administrators a clear view of usage, student movement, and where support is making an impact.",
+        kind: "feature",
         items: [
-          "Program onboarding support",
-          "Intervention-block planning tools",
-          "Administrative visibility",
+          "School-wide dashboards",
+          "Teacher activity overview",
+          "Exportable progress reports",
         ],
-        href: "#curriculum",
+        href: "#features",
         imageSrc: "/images/card-path.jpg",
-        imageAlt: "School staff planning intervention rollout",
+        imageAlt: "School leaders reviewing academic progress data",
+        ctaLabel: "See reporting tools",
       },
     ],
   },
   {
-    id: "home-support",
-    label: "Home Support",
-    eyebrow: "Family companion materials",
-    title: "Optional take-home support for families who want reinforcement between lessons.",
+    id: "district",
+    label: "District",
+    eyebrow: "Best for multi-school rollout",
+    title: "A district license for consistent academic support software across schools.",
     description:
-      "Like the best home-learning programs of the past, Morgan Bright can extend beyond the classroom with simple, guided reinforcement materials.",
-    cta: { href: "#start", label: "Ask about family packs" },
+      "Deploy Morgan Bright with centralized administration, implementation support, and reporting built for district decision-makers.",
+    cta: { href: "#buy", label: "Talk to district sales" },
     cards: [
       {
-        title: "Family progress guide",
+        title: "Centralized administration",
         description:
-          "A plain-language summary that helps caregivers understand where a student is struggling and how the program is addressing it.",
-        kind: "diagnostic",
+          "Manage schools, seats, and permissions from one district control layer while keeping classroom tools simple for teachers.",
+        kind: "plan",
         items: [
-          "Readable learner profile",
-          "Weekly focus summary",
-          "Questions families can ask",
+          "Multi-school provisioning",
+          "Role-based access",
+          "District onboarding support",
         ],
-        href: "#start",
+        href: "#buy",
         imageSrc: "/images/card-diagnostic.jpg",
-        imageAlt: "Caregiver reviewing student learning guide",
+        imageAlt: "District team reviewing academic software rollout",
+        ctaLabel: "See district plan",
       },
       {
-        title: "Take-home practice pack",
+        title: "Implementation support",
         description:
-          "Short reinforcement activities aligned to the same modalities students use in class, so home practice actually matches instruction.",
-        kind: "module",
+          "Get rollout guidance, training pathways, and adoption support so schools start strong and stay consistent.",
+        kind: "workflow",
         items: [
-          "Short printed practice sets",
-          "Style-matched review activities",
-          "Parent cueing notes",
+          "Training for teachers and coaches",
+          "Rollout timeline guidance",
+          "Ongoing success check-ins",
         ],
-        href: "#curriculum",
+        href: "#buy",
         imageSrc: "/images/card-modules.jpg",
-        imageAlt: "Student completing take-home practice",
+        imageAlt: "Educators in software training session",
+        ctaLabel: "Ask about rollout",
       },
       {
-        title: "School-to-home progress reports",
+        title: "District insights",
         description:
-          "Keep school and home aligned with progress reports that show milestones, next steps, and where added practice is helping most.",
-        kind: "structure",
+          "Compare schools, monitor adoption, and identify where learning-style-based intervention is closing gaps.",
+        kind: "feature",
         items: [
-          "Milestone visibility",
-          "Recommended next steps",
-          "Simple follow-up prompts",
+          "Cross-school reporting",
+          "Adoption and usage metrics",
+          "Leadership summary views",
         ],
-        href: "#curriculum",
+        href: "#features",
         imageSrc: "/images/card-path.jpg",
-        imageAlt: "Family reviewing progress updates",
+        imageAlt: "Leaders reviewing district learning outcomes",
+        ctaLabel: "See district insights",
       },
     ],
   },
 ];
 
 export function AudiencePathways() {
-  const [activeId, setActiveId] = useState(pathways[0].id);
-  const active = pathways.find((pathway) => pathway.id === activeId) ?? pathways[0];
+  const [activeId, setActiveId] = useState(plans[0].id);
+  const active = plans.find((plan) => plan.id === activeId) ?? plans[0];
 
   return (
-    <section id="pathways" className="bg-white">
+    <section id="plans" className="bg-white">
       <div className="border-b border-line bg-paper-warm">
         <div
           className="mx-auto flex max-w-site gap-1 overflow-x-auto px-5 sm:px-8"
           role="tablist"
-          aria-label="Audience pathways"
+          aria-label="Software plans"
         >
-          {pathways.map((pathway) => {
-            const selected = pathway.id === active.id;
+          {plans.map((plan) => {
+            const selected = plan.id === active.id;
             return (
               <button
-                key={pathway.id}
+                key={plan.id}
                 type="button"
                 role="tab"
                 aria-selected={selected}
-                id={`tab-${pathway.id}`}
-                aria-controls={`panel-${pathway.id}`}
+                id={`tab-${plan.id}`}
+                aria-controls={`panel-${plan.id}`}
                 className={`shrink-0 border-b-4 px-4 py-4 text-sm font-bold transition-colors sm:px-6 sm:text-base ${
                   selected
                     ? "border-accent text-navy"
                     : "border-transparent text-mute hover:text-navy"
                 }`}
-                onClick={() => setActiveId(pathway.id)}
+                onClick={() => setActiveId(plan.id)}
               >
-                {pathway.label}
+                {plan.label}
               </button>
             );
           })}

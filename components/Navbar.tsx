@@ -4,10 +4,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const links = [
-  { href: "#pathways", label: "Programs" },
+  { href: "#features", label: "Features" },
+  { href: "#plans", label: "Plans" },
   { href: "#approach", label: "Approach" },
-  { href: "#curriculum", label: "Components" },
-  { href: "#about", label: "About" },
+  { href: "#buy", label: "Buy" },
 ];
 
 export function Navbar() {
@@ -36,11 +36,11 @@ export function Navbar() {
     >
       <div className="border-b border-navy bg-navy text-white">
         <div className="mx-auto flex h-9 max-w-site items-center justify-end gap-5 px-5 text-xs font-medium sm:px-8">
-          <a href="#start" className="transition-opacity hover:opacity-80">
-            Ordering support
+          <a href="#buy" className="transition-opacity hover:opacity-80">
+            Sales support
           </a>
-          <a href="#start" className="transition-opacity hover:opacity-80">
-            Contact sales
+          <a href="#buy" className="transition-opacity hover:opacity-80">
+            Request demo
           </a>
         </div>
       </div>
@@ -75,11 +75,11 @@ export function Navbar() {
         </ul>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <a href="#curriculum" className="btn-outline !py-2">
-            Browse programs
+          <a href="#plans" className="btn-outline !py-2">
+            Compare plans
           </a>
-          <a href="#start" className="btn-primary !py-2">
-            Request quote
+          <a href="#buy" className="btn-primary !py-2">
+            Get pricing
           </a>
         </div>
 
@@ -130,11 +130,11 @@ export function Navbar() {
             ))}
           </ul>
           <div className="flex flex-col gap-3 px-5 pb-6 sm:px-8">
-            <a href="#curriculum" className="btn-outline" onClick={() => setOpen(false)}>
-              Browse programs
+            <a href="#plans" className="btn-outline" onClick={() => setOpen(false)}>
+              Compare plans
             </a>
-            <a href="#start" className="btn-primary" onClick={() => setOpen(false)}>
-              Request quote
+            <a href="#buy" className="btn-primary" onClick={() => setOpen(false)}>
+              Get pricing
             </a>
           </div>
         </div>

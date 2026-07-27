@@ -2,29 +2,29 @@ import Link from "next/link";
 
 const columns = [
   {
-    title: "Programs",
+    title: "Product",
     links: [
-      { href: "#pathways", label: "Intervention kit" },
-      { href: "#pathways", label: "Classroom adoption" },
-      { href: "#pathways", label: "Home support" },
-      { href: "#curriculum", label: "Program components" },
+      { href: "#features", label: "Platform features" },
+      { href: "#plans", label: "Classroom plan" },
+      { href: "#plans", label: "School plan" },
+      { href: "#plans", label: "District plan" },
     ],
   },
   {
-    title: "Resources",
+    title: "Buy",
     links: [
-      { href: "#approach", label: "Instructional approach" },
-      { href: "#start", label: "Ordering information" },
-      { href: "#about", label: "About Morgan Bright" },
-      { href: "#start", label: "Implementation support" },
+      { href: "#buy", label: "How to buy" },
+      { href: "#buy", label: "Get pricing" },
+      { href: "#buy", label: "Request a demo" },
+      { href: "#approach", label: "Our approach" },
     ],
   },
   {
-    title: "Connect",
+    title: "Company",
     links: [
-      { href: "mailto:hello@morganbright.learn", label: "Contact" },
-      { href: "#start", label: "Request a quote" },
-      { href: "#start", label: "School purchasing" },
+      { href: "#about", label: "Why schools buy it" },
+      { href: "mailto:hello@morganbright.learn", label: "Contact sales" },
+      { href: "#buy", label: "Sales support" },
     ],
   },
 ];
@@ -44,8 +44,9 @@ export function Footer() {
             <span className="text-xl font-bold tracking-tight">Morgan Bright</span>
           </Link>
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/70">
-            A classroom-ready intervention program that helps teachers assess,
-            teach, and monitor students who need another route to success.
+            Academic software that helps teachers diagnose learning hurdles,
+            adapt instruction, and track progress across classroom, school, and
+            district plans.
           </p>
         </div>
 
@@ -73,7 +74,7 @@ export function Footer() {
       <div className="border-t border-white/15">
         <div className="mx-auto flex max-w-site flex-col gap-3 px-5 py-5 text-xs text-white/55 sm:flex-row sm:items-center sm:justify-between sm:px-8">
           <p>© {year} Morgan Bright. All rights reserved.</p>
-          <p>Built for classroom adoption, intervention teams, and school support programs.</p>
+          <p>Sales site for classroom, school, and district academic software.</p>
         </div>
       </div>
     </footer>

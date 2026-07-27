@@ -12,17 +12,18 @@ const plusJakarta = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "Morgan Bright | Personalized Learning Paths",
+    default: "Morgan Bright | Academic Software for Schools",
     template: "%s | Morgan Bright",
   },
   description:
-    "Navigate your educational journey with Morgan Bright. We help instructors and learners clear individual hurdles and tailor instruction to diverse learning styles.",
+    "Buy Morgan Bright academic software for classrooms, schools, and districts. Diagnose learning hurdles, adapt instruction, and track progress.",
   keywords: [
     "Morgan Bright",
+    "academic software",
+    "education software",
     "learning styles",
-    "adaptive education",
-    "diagnostic learning",
-    "personalized instruction",
+    "adaptive instruction",
+    "school software sales",
   ],
 };
 
