@@ -23,13 +23,13 @@ export default function PageHero({
         </div>
       )}
 
-      <div className="relative section-shell pb-16 pt-8">
+      <div className="relative section-shell pb-10 pt-6 sm:pb-12 sm:pt-8">
         <p className="eyebrow !text-sunrise animate-fade-in">{eyebrow}</p>
-        <h1 className="mt-4 max-w-3xl font-display text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
+        <h1 className="mt-3 max-w-3xl font-display text-3xl font-semibold tracking-tight sm:mt-4 sm:text-4xl lg:text-5xl">
           {title}
         </h1>
         {summary ? (
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/85">
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/85 sm:mt-5 sm:text-lg">
             {summary}
           </p>
         ) : null}
