@@ -4,8 +4,8 @@ import { ShieldAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useUrlInterceptor } from "@/hooks/useUrlInterceptor";
-import { useNavigationStore } from "@/stores/navigationStore";
+import { useBrowserActions } from "@/hooks/useBrowserActions";
+import { useBrowserStore } from "@/stores/browserStore";
 import { useParentStore } from "@/stores/profileStore";
 import { ROUTES } from "@/routes/paths";
 
@@ -13,12 +13,12 @@ import { ROUTES } from "@/routes/paths";
 export function BlockedSiteScreen() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
-  const { goHome } = useUrlInterceptor();
+  const { openReactTab } = useBrowserActions();
+  const activeTab = useBrowserStore((state) => state.getActiveTab());
   const blockedUrl =
-    useNavigationStore((s) => s.blockedUrl) ?? params.get("url") ?? "";
+    activeTab?.kind === "blocked" ? activeTab.url : params.get("url") ?? "";
   const blockedReason =
-    useNavigationStore((s) => s.blockedReason) ??
-    params.get("reason") ??
+    (activeTab?.kind === "blocked" ? activeTab.blockedReason : params.get("reason")) ??
     "Only parent-approved educational sites can open in Surf.";
   const unlock = useParentStore((s) => s.unlock);
   const [pin, setPin] = useState("");
@@ -54,7 +54,10 @@ export function BlockedSiteScreen() {
         )}
 
         <div className="mt-8 flex flex-col gap-3">
-          <Button size="lg" onClick={goHome}>
+          <Button
+            size="lg"
+            onClick={() => openReactTab("newtab", "New Tab", ROUTES.home)}
+          >
             Back to Surf Search
           </Button>
           <Button variant="ghost" onClick={() => setShowPin((v) => !v)}>

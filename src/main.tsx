@@ -1,6 +1,7 @@
 import { StrictMode, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
+import { ErrorBoundary } from "@/components/system/ErrorBoundary";
 import { AppRouter } from "@/routes";
 import { useParentStore, useProfileStore } from "@/stores/profileStore";
 import { useSessionStore } from "@/stores/sessionStore";
@@ -35,8 +36,10 @@ function Bootstrap() {
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter>
-      <Bootstrap />
-    </BrowserRouter>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <Bootstrap />
+      </BrowserRouter>
+    </ErrorBoundary>
   </StrictMode>,
 );

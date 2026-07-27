@@ -8,6 +8,8 @@ export const ROUTES = {
   break: "/break",
   profile: "/profile",
   parent: "/parent",
+  projects: "/projects",
+  settings: "/settings",
 } as const;
 
 export type AppRoute = (typeof ROUTES)[keyof typeof ROUTES];

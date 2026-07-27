@@ -14,6 +14,10 @@ export const STORAGE_KEYS = {
   session: "surf.session.v1",
   history: "surf.history.v1",
   usage: "surf.usage.v1",
+  search: "surf.search.v1",
+  bookmarks: "surf.bookmarks.v1",
+  analytics: "surf.analytics.v1",
+  projects: "surf.projects.v1",
 } as const;
 
 export const DEFAULT_WHITELIST = [

@@ -3,6 +3,7 @@ import { persist } from "zustand/middleware";
 import { STORAGE_KEYS } from "@/lib/constants";
 import type { SessionSnapshot } from "@/types";
 import { useParentStore } from "@/stores/profileStore";
+import { useAnalyticsStore } from "@/stores/analyticsStore";
 
 type SessionState = SessionSnapshot & {
   startSession: (profileId: string) => void;
@@ -64,6 +65,7 @@ export const useSessionStore = create<SessionState>()(
           useParentStore
             .getState()
             .recordUsageTick(state.profileId, nextElapsed);
+          useAnalyticsStore.getState().recordLearningMinute();
         }
       },
       resetForNewDay: () =>

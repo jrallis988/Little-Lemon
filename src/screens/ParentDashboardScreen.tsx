@@ -15,6 +15,8 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { isValidPinFormat } from "@/services/parentGate";
+import { useAnalyticsStore } from "@/stores/analyticsStore";
+import { useHistoryStore } from "@/stores/historyStore";
 import { useParentStore } from "@/stores/profileStore";
 import { useSessionStore } from "@/stores/sessionStore";
 import { extractDomain, formatMinutes } from "@/lib/utils";
@@ -26,8 +28,8 @@ export function ParentDashboardScreen() {
   const unlock = useParentStore((s) => s.unlock);
   const lock = useParentStore((s) => s.lock);
   const controls = useParentStore((s) => s.controls);
-  const history = useParentStore((s) => s.history);
-  const usage = useParentStore((s) => s.usage);
+  const history = useHistoryStore((s) => s.entries);
+  const analyticsDays = useAnalyticsStore((s) => s.daily);
   const setDailyLimit = useParentStore((s) => s.setDailyLimit);
   const addWhitelistDomain = useParentStore((s) => s.addWhitelistDomain);
   const removeWhitelistDomain = useParentStore((s) => s.removeWhitelistDomain);
@@ -42,17 +44,8 @@ export function ParentDashboardScreen() {
   const [error, setError] = useState("");
 
   const chartData = useMemo(() => {
-    if (usage.length > 0) return usage.slice(-7);
-    return [
-      { date: "Mon", minutes: 18, searches: 4, blockedAttempts: 1 },
-      { date: "Tue", minutes: 26, searches: 7, blockedAttempts: 0 },
-      { date: "Wed", minutes: 12, searches: 3, blockedAttempts: 2 },
-      { date: "Thu", minutes: 34, searches: 9, blockedAttempts: 1 },
-      { date: "Fri", minutes: 22, searches: 5, blockedAttempts: 0 },
-      { date: "Sat", minutes: 40, searches: 11, blockedAttempts: 3 },
-      { date: "Sun", minutes: 15, searches: 2, blockedAttempts: 0 },
-    ];
-  }, [usage]);
+    return analyticsDays.slice(-7);
+  }, [analyticsDays]);
 
   const onUnlock = async (event: FormEvent) => {
     event.preventDefault();
@@ -123,28 +116,34 @@ export function ParentDashboardScreen() {
           <h2 className="font-display text-xl font-semibold text-navy">
             Weekly usage
           </h2>
-          <div className="mt-4 h-56">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={chartData}>
-                <defs>
-                  <linearGradient id="minutes" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#288CC1" stopOpacity={0.45} />
-                    <stop offset="95%" stopColor="#288CC1" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#D7DEE7" />
-                <XAxis dataKey="date" tick={{ fill: "#6B7C93", fontSize: 12 }} />
-                <YAxis tick={{ fill: "#6B7C93", fontSize: 12 }} />
-                <Tooltip />
-                <Area
-                  type="monotone"
-                  dataKey="minutes"
-                  stroke="#234197"
-                  fill="url(#minutes)"
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
+          {chartData.length === 0 ? (
+            <div className="mt-4 flex h-56 items-center justify-center rounded-2xl bg-cream/70 text-center text-sm text-slate">
+              No usage yet. Learning minutes will appear after real sessions.
+            </div>
+          ) : (
+            <div className="mt-4 h-56">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={chartData}>
+                  <defs>
+                    <linearGradient id="minutes" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#288CC1" stopOpacity={0.45} />
+                      <stop offset="95%" stopColor="#288CC1" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#D7DEE7" />
+                  <XAxis dataKey="date" tick={{ fill: "#6B7C93", fontSize: 12 }} />
+                  <YAxis tick={{ fill: "#6B7C93", fontSize: 12 }} />
+                  <Tooltip />
+                  <Area
+                    type="monotone"
+                    dataKey="learningMinutes"
+                    stroke="#234197"
+                    fill="url(#minutes)"
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+          )}
         </div>
 
         <div className="rounded-3xl border border-white/60 bg-white/80 p-6 shadow-soft">

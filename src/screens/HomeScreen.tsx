@@ -1,23 +1,43 @@
 import { FormEvent, useState } from "react";
-import { Search } from "lucide-react";
+import { ExternalLink, Search } from "lucide-react";
 import { SurfWordmark } from "@/components/brand/SurfLogo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useUrlInterceptor } from "@/hooks/useUrlInterceptor";
 import {
   APP_BIOGRAPHY_SHORT,
   APP_NAME_DISPLAY,
   APP_TAGLINE,
 } from "@/brand/identity";
+import { useBrowserActions } from "@/hooks/useBrowserActions";
+import { useSearchStore } from "@/stores/searchStore";
 
-/** Screen 1 — Home: search-only view with logo brand hero */
+const TRUSTED_LINKS = [
+  {
+    title: "NASA Space Place",
+    url: "https://spaceplace.nasa.gov",
+    description: "Space, Earth science, and astronomy for young learners.",
+  },
+  {
+    title: "Smithsonian Learning Lab",
+    url: "https://learninglab.si.edu",
+    description: "Museum collections and activities for research projects.",
+  },
+  {
+    title: "Khan Academy",
+    url: "https://www.khanacademy.org",
+    description: "Math, science, history, and more curriculum lessons.",
+  },
+];
+
+/** New Tab page: search, recent searches, and trusted learning links. */
 export function HomeScreen() {
-  const { search } = useUrlInterceptor();
+  const { openSearch, openWebUrl } = useBrowserActions();
+  const recentSearches = useSearchStore((state) => state.recentSearches);
   const [value, setValue] = useState("");
 
   const onSubmit = (event: FormEvent) => {
     event.preventDefault();
-    search(value);
+    openSearch(value);
   };
 
   return (
@@ -25,7 +45,7 @@ export function HomeScreen() {
       <div className="absolute inset-0 logo-mesh" aria-hidden />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(15,23,60,0.28)_100%)]" />
 
-      <div className="relative z-10 flex w-full max-w-2xl flex-col items-center px-6 py-16 text-center">
+      <div className="relative z-10 flex w-full max-w-3xl flex-col items-center px-6 py-16 text-center">
         <div className="mb-8 scale-110 animate-rise-in">
           <SurfWordmark inverse />
         </div>
@@ -61,6 +81,40 @@ export function HomeScreen() {
         <p className="mt-6 text-sm text-foam/75">
           Try: planets, coral reefs, or inventors
         </p>
+
+        {recentSearches.length > 0 && (
+          <div className="mt-8 flex flex-wrap justify-center gap-2">
+            {recentSearches.map((query) => (
+              <button
+                key={query}
+                type="button"
+                className="rounded-full bg-white/15 px-3 py-1.5 text-sm font-medium text-foam ring-1 ring-white/25 transition hover:bg-white/25"
+                onClick={() => openSearch(query)}
+              >
+                {query}
+              </button>
+            ))}
+          </div>
+        )}
+
+        <div className="mt-10 grid w-full gap-3 text-left md:grid-cols-3">
+          {TRUSTED_LINKS.map((link) => (
+            <button
+              key={link.url}
+              type="button"
+              className="rounded-3xl border border-white/25 bg-white/12 p-4 text-foam backdrop-blur-sm transition hover:bg-white/20"
+              onClick={() => void openWebUrl(link.url, link.title)}
+            >
+              <span className="flex items-center justify-between gap-2 font-display text-lg font-semibold">
+                {link.title}
+                <ExternalLink className="h-4 w-4" />
+              </span>
+              <span className="mt-2 block text-sm leading-relaxed text-foam/75">
+                {link.description}
+              </span>
+            </button>
+          ))}
+        </div>
       </div>
     </section>
   );

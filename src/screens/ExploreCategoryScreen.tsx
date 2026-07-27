@@ -1,19 +1,22 @@
 import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { getCategoryById } from "@/data/curatedContent";
-import { useUrlInterceptor } from "@/hooks/useUrlInterceptor";
+import { useBrowserActions } from "@/hooks/useBrowserActions";
 
 /** Screen 5 — Explore Drill-Down via React routing */
 export function ExploreCategoryScreen() {
   const { categoryId = "" } = useParams();
   const category = getCategoryById(categoryId);
-  const { search, goHome } = useUrlInterceptor();
+  const { openSearch, openReactTab } = useBrowserActions();
 
   if (!category) {
     return (
       <section className="rounded-3xl bg-white/75 p-10 text-center shadow-soft">
         <p className="text-slate">That explore path wasn’t found.</p>
-        <Button className="mt-4" onClick={goHome}>
+        <Button
+          className="mt-4"
+          onClick={() => openReactTab("newtab", "New Tab", "/")}
+        >
           Back to Surf Search
         </Button>
       </section>
@@ -37,13 +40,13 @@ export function ExploreCategoryScreen() {
           “{category.searchPrompt}”
         </p>
         <p className="mt-3 text-sm text-slate">
-          This opens Surf Search with curated educational results — never a
-          content feed.
+          This opens live Surf Search with educational results — never generated
+          demo cards or a content feed.
         </p>
         <Button
           className="mt-6"
           size="lg"
-          onClick={() => search(category.searchPrompt)}
+          onClick={() => openSearch(category.searchPrompt)}
         >
           Search this theme
         </Button>
