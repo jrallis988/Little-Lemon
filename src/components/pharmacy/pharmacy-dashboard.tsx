@@ -7,7 +7,6 @@ import { formatCurrency } from "@/lib/pharmacy";
 import { usePharmacy } from "@/lib/store/pharmacy";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 import { PrescriptionTracker } from "@/components/pharmacy/prescription-tracker";
 import { ProfileSwitcher } from "@/components/pharmacy/profile-switcher";
 
@@ -127,17 +126,23 @@ export function PharmacyDashboard() {
         <ul className="mt-5 divide-y divide-border/70" role="list">
           {refillable.map((rx) => {
             const checked = selectedIds.includes(rx.id);
-            const fieldId = `refill-${rx.id}`;
+            const labelId = `refill-label-${rx.id}`;
             return (
               <li key={rx.id} className="flex items-start gap-3 py-4">
                 <Checkbox
-                  id={fieldId}
                   checked={checked}
                   onCheckedChange={(value) => toggleRx(rx.id, value === true)}
                   className="mt-1"
                   disabled={isAdvancing}
+                  aria-labelledby={labelId}
                 />
-                <Label htmlFor={fieldId} className="flex-1 cursor-pointer">
+                <button
+                  type="button"
+                  id={labelId}
+                  className="flex-1 cursor-pointer text-left disabled:cursor-not-allowed disabled:opacity-60"
+                  disabled={isAdvancing}
+                  onClick={() => toggleRx(rx.id, !checked)}
+                >
                   <span className="block text-sm font-medium text-foreground">
                     {rx.medicationName}
                   </span>
@@ -147,7 +152,7 @@ export function PharmacyDashboard() {
                       ? ` · est. ${formatCurrency(rx.estimatedCopay)}`
                       : ""}
                   </span>
-                </Label>
+                </button>
               </li>
             );
           })}
