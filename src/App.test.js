@@ -39,7 +39,7 @@ test("renders live rates, rooms, seasonal guide, and contact details", () => {
   ).toBeInTheDocument();
   expect(screen.getByText(/about \$165–\$240 \/ night/i)).toBeInTheDocument();
   expect(
-    screen.getByRole("button", { name: /see live rates & book/i })
+    screen.getByRole("link", { name: /see live rates & book/i })
   ).toBeInTheDocument();
   expect(
     screen.getByTitle(/seascape inn live booking calendar/i)

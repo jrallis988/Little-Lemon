@@ -45,10 +45,14 @@ export default function Location() {
 
     const onResize = () => map.invalidateSize();
     window.addEventListener("resize", onResize);
-    const timer = window.setTimeout(onResize, 300);
+    // Skip delayed invalidate in Jest — it keeps the worker alive after tests.
+    const timer =
+      process.env.NODE_ENV === "test"
+        ? null
+        : window.setTimeout(onResize, 300);
 
     return () => {
-      window.clearTimeout(timer);
+      if (timer != null) window.clearTimeout(timer);
       window.removeEventListener("resize", onResize);
       map.remove();
       mapInstance.current = null;
