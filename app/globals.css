@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-ink: #222222;
+  --color-ink-soft: #333333;
+  --color-paper: #ffffff;
+  --color-paper-warm: #f2f2f2;
+  --color-accent: #e11d2e;
+  --color-accent-deep: #b71622;
+  --color-navy: #06235b;
+  --color-navy-deep: #041839;
+  --color-link: #006bd6;
+  --color-line: #d9d9d9;
+  --color-mute: #707070;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-paper text-ink antialiased;
+    font-family: var(--font-sans);
+  }
+
+  ::selection {
+    background: rgba(225, 29, 46, 0.18);
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded bg-accent px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-accent-deep;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded border border-white/80 bg-transparent px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-white hover:text-navy;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center rounded border border-navy bg-transparent px-5 py-2.5 text-sm font-semibold text-navy transition-colors duration-200 hover:bg-navy hover:text-white;
+  }
+
+  .section-label {
+    @apply text-sm font-semibold uppercase tracking-[0.08em] text-accent;
+  }
+
+  .link-arrow {
+    @apply inline-flex items-center gap-1.5 text-sm font-semibold text-link transition-colors hover:text-navy;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
