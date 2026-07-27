@@ -1,6 +1,7 @@
 import {
   HomeCategories,
   HomeDeals,
+  HomeFollow,
   HomeHealthMatters,
   HomeHero,
   HomePharmacyPreview,
@@ -19,6 +20,7 @@ export default function HomePage() {
       <HomeCategories />
       <HomePharmacyPreview />
       <HomePickup />
+      <HomeFollow />
       <HomeShopPreview />
     </>
   );

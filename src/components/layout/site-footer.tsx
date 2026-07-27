@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { SocialLinks } from "@/components/layout/social-links";
 import { SITE_NAME, SITE_TAGLINE } from "@/lib/brand";
 import { NAV_CATEGORIES } from "@/lib/data/catalog";
 
@@ -12,6 +13,10 @@ export function SiteFooter() {
           <p className="mt-2 max-w-md text-sm text-muted-foreground">
             {SITE_TAGLINE} — redesigned for clarity, speed, and accessibility.
           </p>
+          <div className="mt-6">
+            <p className="text-sm font-semibold text-foreground">Follow us</p>
+            <SocialLinks className="mt-3" />
+          </div>
         </div>
         <div>
           <p className="text-sm font-semibold text-foreground">Explore</p>

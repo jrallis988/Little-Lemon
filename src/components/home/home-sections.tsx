@@ -17,9 +17,11 @@ import {
 import { PRESCRIPTIONS, REWARDS } from "@/lib/data/catalog";
 import { formatPoints } from "@/lib/pharmacy";
 import { Button } from "@/components/ui/button";
+import { SocialLinks } from "@/components/layout/social-links";
 import { PrescriptionTracker } from "@/components/pharmacy/prescription-tracker";
 import { ProductCard } from "@/components/shop/product-discovery";
 import { PRODUCTS } from "@/lib/data/catalog";
+import { SITE_NAME } from "@/lib/brand";
 
 export function HomeHero() {
   return (
@@ -400,6 +402,31 @@ export function HomePickup() {
             Ready at your neighborhood Walgreens RX
           </p>
         </div>
+      </div>
+    </section>
+  );
+}
+
+export function HomeFollow() {
+  return (
+    <section
+      aria-labelledby="home-follow-heading"
+      className="border-y border-border/60 bg-gradient-to-br from-surface via-surface-elevated to-brand/5"
+    >
+      <div className="mx-auto flex max-w-6xl flex-col items-start gap-5 px-4 py-12 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+        <div>
+          <h2
+            id="home-follow-heading"
+            className="font-display text-2xl font-semibold tracking-tight sm:text-3xl"
+          >
+            Follow {SITE_NAME}
+          </h2>
+          <p className="mt-2 max-w-md text-muted-foreground">
+            Everyday health tips, pharmacy updates, and deals from the official
+            Walgreens channels.
+          </p>
+        </div>
+        <SocialLinks />
       </div>
     </section>
   );
