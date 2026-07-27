@@ -9,11 +9,11 @@ export default function Rooms() {
     <section className="section" id="rooms" aria-labelledby="rooms-title">
       <p className="section__eyebrow">Rooms</p>
       <h2 className="section__title" id="rooms-title">
-        Simple stays with the ocean close.
+        Clean, comfortable rooms by the beach.
       </h2>
       <p className="section__copy">
-        Every room is cleaned daily, stocked with soft towels, and a short walk
-        from the water.
+        About 20 rooms with air-conditioning, refrigerators, microwaves, cable,
+        and free Wi‑Fi—steps from North Beach at Plaice Cove.
       </p>
 
       <div className="rooms">

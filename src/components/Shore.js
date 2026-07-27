@@ -1,17 +1,18 @@
-import { AMENITIES } from "../data";
+import { AMENITIES, GALLERY, SITE } from "../data";
 
 export default function Shore() {
   return (
     <section className="shore section--wide" id="shore" aria-labelledby="shore-title">
       <div className="section__inner shore__grid">
         <div>
-          <p className="section__eyebrow">The Shore</p>
+          <p className="section__eyebrow">Plaice Cove</p>
           <h2 className="section__title" id="shore-title">
-            Built for slow beach days.
+            Quiet Hampton beach days.
           </h2>
           <p className="section__copy">
-            Saltline sits on a quiet stretch of coastline—close enough to hear
-            the surf, far enough from the boardwalk crowds.
+            {SITE.name} sits about three miles north of the main Hampton Beach
+            strip—close enough for an easy visit, far enough for a calmer stay
+            on North Beach.
           </p>
           <ul className="shore__list">
             {AMENITIES.map((item) => (
@@ -25,24 +26,17 @@ export default function Shore() {
 
         <div className="shore__visual">
           <img
-            src="/images/shore-coast.jpg"
-            alt="Empty shoreline at golden hour with gentle waves"
+            src="/images/seascape-hampton-beach.jpg"
+            alt="Sandy shoreline at Hampton Beach near the inn"
             loading="lazy"
           />
         </div>
       </div>
 
-      <div className="section__inner shore__gallery" aria-label="Moments around the motel">
-        <img
-          src="/images/gallery-path.jpg"
-          alt="Morning light on the beach near Saltline Motel"
-          loading="lazy"
-        />
-        <img
-          src="/images/gallery-bikes.jpg"
-          alt="Lounge chairs on the sand at sunset"
-          loading="lazy"
-        />
+      <div className="section__inner shore__gallery" aria-label="Around Seascape Inn">
+        {GALLERY.map((shot) => (
+          <img key={shot.src} src={shot.src} alt={shot.alt} loading="lazy" />
+        ))}
       </div>
     </section>
   );

@@ -1,15 +1,18 @@
-import { REVIEWS } from "../data";
+import { REVIEWS, SITE } from "../data";
 
 export default function Reviews() {
   return (
     <section className="section reviews" id="reviews" aria-labelledby="reviews-title">
       <p className="section__eyebrow">Guest notes</p>
       <h2 className="section__title" id="reviews-title">
-        Why people come back.
+        Why guests choose Seascape.
       </h2>
       <p className="section__copy">
-        Quiet mornings, clean rooms, and a path that puts you on the sand before
-        coffee cools.
+        Highlights from travelers on{" "}
+        <a className="text-link" href={SITE.tripadvisorUrl} target="_blank" rel="noreferrer">
+          TripAdvisor
+        </a>
+        —clean rooms, friendly help, and the beach across the street.
       </p>
 
       <ul className="reviews__list">

@@ -7,17 +7,17 @@ export default function Location() {
         <div>
           <p className="section__eyebrow">Location</p>
           <h2 className="section__title" id="location-title">
-            Steps from the sand in Seabreeze Cove.
+            Steps from North Beach in Hampton, NH.
           </h2>
           <p className="section__copy">
-            {SITE.address}. Turn left at the cypress stand, park once, and walk
-            the boardwalk straight to the water.
+            {SITE.address}. {SITE.neighborhood}—a quieter stretch of Ocean
+            Boulevard with the sand right across the street.
           </p>
 
           <ol className="location__directions">
-            <li>From Highway 1, exit onto Shore Road toward the harbor.</li>
-            <li>Continue 1.2 miles until you see the Saltline sign on the right.</li>
-            <li>Guest parking is behind the office; beach path starts at Room 1.</li>
+            <li>Follow Ocean Boulevard north from Hampton Beach toward North Beach.</li>
+            <li>Look for Seascape Inn at 955 Ocean Blvd in Plaice Cove.</li>
+            <li>Park on site, then walk straight across to the beach path.</li>
           </ol>
 
           <ul className="shore__list">
@@ -49,15 +49,15 @@ export default function Location() {
           href={SITE.mapLink}
           target="_blank"
           rel="noreferrer"
-          aria-label="Open Saltline Motel location on OpenStreetMap"
+          aria-label="Open Seascape Inn location on OpenStreetMap"
         >
           <img
-            src="/images/map-fallback.jpg"
-            alt="Coastal view near Saltline Motel in Seabreeze Cove"
+            src="/images/seascape-photo2.jpg"
+            alt="Coastal view near Seascape Inn at Plaice Cove"
             loading="lazy"
           />
           <span className="location__map-badge">
-            118 Shore Road · View on OpenStreetMap
+            955 Ocean Blvd · View on OpenStreetMap
           </span>
         </a>
       </div>

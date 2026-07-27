@@ -98,7 +98,7 @@ async function submitBooking(values) {
         ...values,
         roomName: room?.name,
         estimate,
-        _subject: `Saltline booking: ${room?.name}`,
+        _subject: `Seascape Inn booking: ${room?.name}`,
       }),
     });
     if (!response.ok) {
@@ -141,8 +141,8 @@ export default function BookingForm() {
         Book your room by the water.
       </h2>
       <p className="section__copy">
-        Check dates for availability, then send a request. We’ll confirm by email
-        within a few hours.
+        Check dates for availability, then send a request. We’ll confirm by phone
+        or email—same inn guests recommend for beach access and quiet stays.
       </p>
 
       <div className="booking__layout">

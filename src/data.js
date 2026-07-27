@@ -1,21 +1,27 @@
 export const SITE = {
-  name: "Saltline Motel",
-  tagline: "Sleep where the tide turns.",
-  phone: "(831) 555-0148",
-  phoneHref: "tel:+18315550148",
-  email: "stay@saltlinemotel.com",
-  address: "118 Shore Road, Seabreeze Cove, CA 95060",
-  addressShort: "118 Shore Road, Seabreeze Cove",
+  name: "Seascape Inn",
+  shortName: "Seascape Inn",
+  tagline: "Beachfront at Plaice Cove, Hampton NH.",
+  phone: "(603) 926-1750",
+  phoneHref: "tel:+16039261750",
+  email: "stay@seascapeinnhamptonnh.com",
+  website: "https://seascapeinnhamptonnh.com/",
+  tripadvisorUrl:
+    "https://www.tripadvisor.com/Hotel_Review-g46111-d667889-Reviews-Seascape_Inn_at_Plaice_Cove-Hampton_New_Hampshire.html",
+  address: "955 Ocean Boulevard, Hampton, NH 03842",
+  addressShort: "955 Ocean Blvd, Hampton, NH",
+  neighborhood: "Plaice Cove · North Beach",
   mapEmbedUrl:
-    "https://www.openstreetmap.org/export/embed.html?bbox=-122.035%2C36.955%2C-121.995%2C36.975&layer=mapnik&marker=36.965%2C-122.015",
+    "https://www.openstreetmap.org/export/embed.html?bbox=-70.801%2C42.938%2C-70.782%2C42.948&layer=mapnik&marker=42.94326%2C-70.79161",
   mapLink:
-    "https://www.openstreetmap.org/?mlat=36.965&mlon=-122.015#map=15/36.965/-122.015",
+    "https://www.openstreetmap.org/?mlat=42.94326&mlon=-70.79161#map=16/42.94326/-70.79161",
   social: {
     instagram: "https://instagram.com/",
     facebook: "https://facebook.com/",
   },
   checkIn: "3:00 PM",
   checkOut: "11:00 AM",
+  hours: "Front desk 8:30 AM – 10:00 PM",
 };
 
 export const ROOMS = [
@@ -25,170 +31,194 @@ export const ROOMS = [
     rate: 189,
     rateLabel: "From $189 / night",
     sleeps: 2,
-    size: "320 sq ft",
+    size: "Comfortable king room",
     description:
-      "A wide room with a private balcony facing the break. Morning light, salt air, and a king bed made for long sleeps.",
-    image: "/images/room-ocean-king.jpg",
-    imageAlt: "Bright motel room with ocean-facing window and king bed",
+      "A bright, cozy room with coastal touches—made for quiet nights after a day on North Beach, right across the street.",
+    image: "/images/seascape-beach.jpg",
+    imageAlt: "Seascape Inn guest room with white bedding and beach-themed wall art",
     gallery: [
       {
-        src: "/images/room-ocean-king.jpg",
-        alt: "Ocean King room with king bed and coastal light",
+        src: "/images/seascape-beach.jpg",
+        alt: "Clean guest room with two beds and BEACH letter wall art",
       },
       {
         src: "/images/room-ocean-king-2.jpg",
-        alt: "Ocean King bedding detail with soft morning light",
+        alt: "Soft bedding detail in a bright coastal guest room",
       },
     ],
     amenities: [
-      "King bed",
-      "Private balcony",
-      "Ocean view",
-      "Wi‑Fi",
-      "AC / heat",
-      "Ensuite shower",
+      "King or double setup",
+      "Air-conditioning",
+      "Refrigerator",
+      "Microwave",
+      "Cable TV",
+      "Free Wi‑Fi",
     ],
   },
   {
     id: "dune-double",
-    name: "Dune Double",
+    name: "Cove Double",
     rate: 149,
     rateLabel: "From $149 / night",
     sleeps: 4,
-    size: "290 sq ft",
+    size: "Two-bed room",
     description:
-      "Two plush doubles for friends or family, a few sandy steps from the path that leads straight to the beach.",
+      "A practical room for friends or family—close to the sand, the gazebo lawn, and the quiet stretch of Plaice Cove.",
     image: "/images/room-dune-double.jpg",
-    imageAlt: "Cozy guest room with twin beds and soft coastal light",
+    imageAlt: "Guest room with two beds and soft coastal light",
     gallery: [
       {
         src: "/images/room-dune-double.jpg",
-        alt: "Dune Double room with two beds",
+        alt: "Cove Double room with two beds",
       },
       {
-        src: "/images/room-dune-double-2.jpg",
-        alt: "Dune Double seating area near the window",
+        src: "/images/seascape-vacancy.jpg",
+        alt: "Seascape Inn exterior along Ocean Boulevard",
       },
     ],
     amenities: [
-      "Two double beds",
-      "Garden view",
-      "Wi‑Fi",
-      "AC / heat",
-      "Mini fridge",
-      "Blackout curtains",
+      "Two beds",
+      "Air-conditioning",
+      "Refrigerator",
+      "Microwave",
+      "Cable TV",
+      "Free Wi‑Fi",
     ],
   },
   {
     id: "tide-suite",
-    name: "Tide Suite",
-    rate: 239,
-    rateLabel: "From $239 / night",
+    name: "Plaice Cove Stay",
+    rate: 219,
+    rateLabel: "From $219 / night",
     sleeps: 4,
-    size: "480 sq ft",
+    size: "Our roomiest option",
     description:
-      "Our largest stay: sitting nook, kitchenette, and a wraparound porch for watching the tide slip out.",
+      "Extra space for a longer Hampton getaway—still steps from the beach path and a short drive from the main Hampton Beach strip.",
     image: "/images/room-tide-suite.jpg",
-    imageAlt: "Suite living area with soft seating near large windows",
+    imageAlt: "Spacious suite-style seating area near large windows",
     gallery: [
       {
         src: "/images/room-tide-suite.jpg",
-        alt: "Tide Suite living area with lounge seating",
+        alt: "Sitting area in a larger Seascape Inn room",
       },
       {
         src: "/images/room-tide-suite-2.jpg",
-        alt: "Tide Suite bedroom with wide windows",
+        alt: "Bedroom with wide windows and soft daylight",
       },
     ],
     amenities: [
-      "King bed + sofa bed",
-      "Kitchenette",
-      "Wraparound porch",
-      "Wi‑Fi",
-      "AC / heat",
-      "Coffee maker",
+      "Extra space",
+      "Air-conditioning",
+      "Refrigerator",
+      "Microwave",
+      "Cable TV",
+      "Free Wi‑Fi",
     ],
   },
 ];
 
 export const AMENITIES = [
   {
-    title: "Beach path access",
-    detail: "A private boardwalk puts you on the sand in under a minute.",
+    title: "Beach across the street",
+    detail:
+      "North Beach at Plaice Cove is a quick walk from your door—sandy, open, and quieter than the main boardwalk.",
   },
   {
-    title: "Sunrise coffee",
-    detail: "Complimentary drip and pastries from 6:30 to 10:00 each morning.",
+    title: "Pet-friendly stays",
+    detail:
+      "Bring one dog (up to 40 lbs). Guests love the on-site pet park and beach walks right across Ocean Boulevard.",
   },
   {
-    title: "Outdoor showers",
-    detail: "Rinse the salt off before you step back into your room.",
+    title: "Gazebo & BBQ lawn",
+    detail:
+      "Relax under the gazebo or cook out on the guest BBQ—an easy outdoor hang after the beach.",
   },
   {
-    title: "Bikes & boards",
-    detail: "Cruiser bikes and soft-tops available for guests, weather permitting.",
+    title: "Year-round inn",
+    detail:
+      "Open all year with weekly and monthly winter options. Rooms include AC, fridge, microwave, cable, and free Wi‑Fi.",
   },
 ];
 
+/** Positive guest notes only — drawn from public TripAdvisor praise. */
 export const REVIEWS = [
   {
     id: "r1",
     quote:
-      "We fell asleep to the surf and woke up with coffee on the balcony. Exactly the quiet beach stay we needed.",
-    name: "Maya R.",
-    detail: "Ocean King · June stay",
+      "I was very pleased to find the room very clean and updated. The beach was right across the street, and the front office staff were so accommodating.",
+    name: "Anne C.",
+    detail: "TripAdvisor · Family stay",
   },
   {
     id: "r2",
     quote:
-      "The boardwalk made mornings easy with the kids. Rooms were spotless and the staff remembered our names.",
-    name: "Chris & Ana L.",
-    detail: "Dune Double · August stay",
+      "Although small, the rooms were cozy and the location quiet. Access to the beach was quick and convenient.",
+    name: "Stefan M.",
+    detail: "TripAdvisor · Couple stay",
   },
   {
     id: "r3",
     quote:
-      "Tide Suite felt like a tiny home by the water. Porch sunsets became the whole trip.",
-    name: "Jordan P.",
-    detail: "Tide Suite · October stay",
+      "Seascape is an incredible and quiet place with direct access to a beautiful sandy beach. The staff is really friendly and the rooms were so clean.",
+    name: "Karine L.",
+    detail: "TripAdvisor · Friends trip",
   },
 ];
 
 export const NEARBY = [
   {
-    title: "Seabreeze Main Beach",
-    detail: "2-minute walk — soft sand, gentle break, lifeguards in summer.",
+    title: "North Beach / Plaice Cove",
+    detail: "Across Ocean Boulevard — long sandy beach for walks, sunsets, and dogs.",
   },
   {
-    title: "Harbor Walk",
-    detail: "12-minute bike — fish tacos, bait shop coffee, evening lights.",
+    title: "Hampton Beach center",
+    detail: "About 3 miles south — Casino Ballroom, shops, and the main boardwalk scene.",
   },
   {
-    title: "Cypress Point Trail",
-    detail: "10-minute drive — bluff views and a quiet loop for sunset.",
+    title: "Portsmouth & Pease",
+    detail: "Easy day trip north for dining and downtown Portsmouth; Pease airport nearby.",
   },
 ];
 
 export const POLICIES = [
   {
-    id: "cancellation",
-    title: "Cancellation",
-    body: "Free cancellation up to 48 hours before check-in. Later changes may be charged one night.",
-  },
-  {
     id: "pets",
     title: "Pets",
-    body: "Dogs welcome in Dune Double with a $35 cleaning fee. Please keep pets leashed on motel grounds.",
-  },
-  {
-    id: "parking",
-    title: "Parking",
-    body: "Free on-site parking for one vehicle per room. Additional spots available on Shore Road.",
+    body: "Pet-friendly inn: one dog up to 40 lbs. Enjoy the pet park on site and beach walks across the street.",
   },
   {
     id: "checkin",
     title: "Check-in & out",
-    body: `Check-in from ${SITE.checkIn}. Check-out by ${SITE.checkOut}. Early arrival depends on same-day availability.`,
+    body: `Check-in from ${SITE.checkIn}. Check-out by ${SITE.checkOut}. Front desk hours ${SITE.hours.replace("Front desk ", "")}.`,
+  },
+  {
+    id: "cancellation",
+    title: "Cancellation",
+    body: "Free cancellation up to 48 hours before check-in when possible. Call the inn to confirm your reservation details.",
+  },
+  {
+    id: "parking",
+    title: "Parking",
+    body: "On-site parking for guests along Ocean Boulevard at Plaice Cove / North Beach.",
+  },
+];
+
+export const GALLERY = [
+  {
+    src: "/images/seascape-photo2.jpg",
+    alt: "Sunrise over North Beach near Seascape Inn",
+  },
+  {
+    src: "/images/seascape-gazebo.jpg",
+    alt: "Gazebo and guest BBQ lawn at Seascape Inn",
+  },
+  {
+    src: "/images/seascape-vacancy.jpg",
+    alt: "Seascape Inn building along Ocean Boulevard",
+  },
+  {
+    src: "/images/seascape-dog-beach.jpg",
+    alt: "Dog-friendly beach area across from the inn",
   },
 ];
 

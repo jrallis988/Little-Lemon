@@ -1,6 +1,6 @@
-# Saltline Motel
+# Seascape Inn
 
-A beachfront motel website with room listings, guest reviews, a location map, and a booking request form with availability checks.
+Beachfront motel website for Seascape Inn at Plaice Cove, Hampton, NH — rooms, guest highlights from TripAdvisor, location, and booking requests.
 
 ## Run locally
 
@@ -13,7 +13,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Booking submissions
 
-By default, **Request booking** opens a prefilled email to the motel.
+By default, **Request booking** opens a prefilled email to the inn.
 
 To send requests through [Formspree](https://formspree.io) instead, copy `.env.example` to `.env` and set:
 

@@ -678,6 +678,17 @@ p {
   }
 }
 
+.text-link {
+  color: var(--ocean);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.text-link:hover {
+  color: var(--ocean-deep);
+}
+
 /* Reviews */
 .reviews__list {
   list-style: none;

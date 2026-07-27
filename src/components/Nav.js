@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { SITE } from "../data";
 
 const LINKS = [
   { href: "#rooms", label: "Rooms" },
@@ -32,7 +33,7 @@ export default function Nav() {
       <header className={`nav${scrolled || open ? " is-scrolled" : ""}`}>
         <div className="nav__inner">
           <a className="nav__brand" href="#top" onClick={close}>
-            Saltline Motel
+            {SITE.name}
           </a>
 
           <ul className="nav__links">
