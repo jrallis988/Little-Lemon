@@ -3,7 +3,7 @@
   "identifier": "default",
   "description": "Default Surf capabilities for window controls, native browser tabs, secure store, and filter IPC",
   "windows": ["main"],
-  "webviews": ["main"],
+  "webviews": ["main", "surf-tab-*"],
   "permissions": [
     "core:default",
     "core:webview:default",

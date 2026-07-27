@@ -17,6 +17,7 @@ import {
   isTauriRuntime,
   listenBlockedNavigation,
   listenNativeNewTab,
+  setParentAllowlist,
 } from "@/services/browserBridge";
 import { ROUTES } from "@/routes/paths";
 import { useAccessibility } from "@/hooks/useAccessibility";
@@ -25,7 +26,7 @@ import { useSessionTimer } from "@/hooks/useSessionTimer";
 import { useAnalyticsStore } from "@/stores/analyticsStore";
 import { useBrowserStore } from "@/stores/browserStore";
 import { useHistoryStore } from "@/stores/historyStore";
-import { useProfileStore } from "@/stores/profileStore";
+import { useParentStore, useProfileStore } from "@/stores/profileStore";
 import { useSessionStore } from "@/stores/sessionStore";
 import type { BrowserTab } from "@/types";
 
@@ -58,6 +59,7 @@ export function BrowserShell() {
   const createTab = useBrowserStore((state) => state.createTab);
   const switchTab = useBrowserStore((state) => state.switchTab);
   const activeProfileId = useProfileStore((state) => state.activeProfileId);
+  const parentWhitelist = useParentStore((state) => state.controls.whitelist);
   const limitReached = useSessionStore((state) => state.limitReached);
   const { openNewTab } = useBrowserActions();
 
@@ -65,6 +67,11 @@ export function BrowserShell() {
     () => tabs.find((tab) => tab.id === activeTabId) ?? null,
     [activeTabId, tabs],
   );
+
+  useEffect(() => {
+    if (!isTauriRuntime()) return;
+    void setParentAllowlist(parentWhitelist);
+  }, [parentWhitelist]);
 
   useEffect(() => {
     const node = chromeRef.current;

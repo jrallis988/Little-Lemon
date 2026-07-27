@@ -6,6 +6,7 @@ pub struct AppState {
     pub secure_kv: HashMap<String, String>,
     pub browser: BrowserState,
     pub parent_security: ParentSecurityState,
+    pub parent_allowlist: Vec<String>,
 }
 
 impl Default for AppState {
@@ -14,6 +15,7 @@ impl Default for AppState {
             secure_kv: HashMap::new(),
             browser: BrowserState::default(),
             parent_security: ParentSecurityState::default(),
+            parent_allowlist: Vec::new(),
         }
     }
 }

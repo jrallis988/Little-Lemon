@@ -53,7 +53,10 @@ pub fn browser_create_tab(
         return Err(format!("A browser tab already exists for id {tab_id}."));
     }
 
-    let decision = filter::evaluate_url(&url, &[]);
+    let decision = {
+        let guard = state.lock().map_err(|_| "state lock failed".to_string())?;
+        filter::evaluate_url(&url, &guard.parent_allowlist)
+    };
     if !decision.allowed {
         emit_blocked_navigation(&window, &tab_id, &url, decision.reason, decision.domain);
         return Err("Navigation blocked by Surf's educational filter.".to_string());
@@ -99,7 +102,10 @@ pub fn browser_navigate(
     ensure_main_window(&window)?;
     let tab_id = validate_tab_id(&tab_id)?;
     let webview = get_tab_webview(&window, &tab_id)?;
-    let decision = filter::evaluate_url(&url, &[]);
+    let decision = {
+        let guard = state.lock().map_err(|_| "state lock failed".to_string())?;
+        filter::evaluate_url(&url, &guard.parent_allowlist)
+    };
 
     if !decision.allowed {
         emit_blocked_navigation(&window, &tab_id, &url, decision.reason, decision.domain);
@@ -230,7 +236,12 @@ fn content_webview_builder(
 
     WebviewBuilder::new(label, WebviewUrl::External(url))
         .on_navigation(move |navigation_url| {
-            let decision = filter::evaluate_parsed_url(navigation_url.clone(), &[]);
+            let allowlist = navigation_window
+                .state::<Mutex<AppState>>()
+                .lock()
+                .map(|guard| guard.parent_allowlist.clone())
+                .unwrap_or_default();
+            let decision = filter::evaluate_parsed_url(navigation_url.clone(), &allowlist);
             if decision.allowed {
                 true
             } else {
@@ -245,7 +256,12 @@ fn content_webview_builder(
             }
         })
         .on_new_window(move |new_url, _features| {
-            let decision = filter::evaluate_parsed_url(new_url.clone(), &[]);
+            let allowlist = new_window_window
+                .state::<Mutex<AppState>>()
+                .lock()
+                .map(|guard| guard.parent_allowlist.clone())
+                .unwrap_or_default();
+            let decision = filter::evaluate_parsed_url(new_url.clone(), &allowlist);
             if decision.allowed {
                 if let Err(error) =
                     create_popup_tab(&new_window_window, &new_window_tab_id, new_url)

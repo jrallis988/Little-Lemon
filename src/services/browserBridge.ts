@@ -91,6 +91,10 @@ export function browserSetChromeHeight(chromeHeight: number): Promise<void> {
   });
 }
 
+export function setParentAllowlist(domains: string[]): Promise<void> {
+  return invokeBrowserCommand("set_parent_allowlist", { domains });
+}
+
 export async function listenBlockedNavigation(
   handler: (payload: BlockedNavigationPayload) => void,
 ): Promise<Unlisten> {

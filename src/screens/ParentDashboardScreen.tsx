@@ -51,7 +51,7 @@ export function ParentDashboardScreen() {
     event.preventDefault();
     const ok = await unlock(pin);
     if (!ok) {
-      setError("Incorrect PIN. Default demo PIN is 0000.");
+      setError("Incorrect PIN.");
       return;
     }
     setError("");

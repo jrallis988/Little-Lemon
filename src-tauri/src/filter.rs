@@ -13,12 +13,12 @@ const ALWAYS_BLOCKED: &[&str] = &[
     "x.com",
     "twitter.com",
     "reddit.com",
-    "youtube.com",
-    "youtu.be",
     "snapchat.com",
     "discord.com",
     "twitch.tv",
 ];
+// Note: YouTube is not hard-blocked so parents can whitelist educational video hosts.
+// Without an allowlist entry / .edu/.gov match, YouTube remains blocked by default policy.
 
 const DEFAULT_EXACT_ALLOW: &[&str] = &[
     "nasa.gov",
