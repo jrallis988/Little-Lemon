@@ -1,11 +1,13 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
-import { Star } from "lucide-react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Check, Star } from "lucide-react";
 
 import { PRODUCT_FILTERS, PRODUCTS, REWARDS } from "@/lib/data/catalog";
 import { formatCurrency, formatPoints } from "@/lib/pharmacy";
+import { useCart } from "@/lib/store/cart";
 import type { Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -113,6 +115,15 @@ export function CategoryFilters({
 }
 
 export function ProductCard({ product }: { product: Product }) {
+  const { addProduct } = useCart();
+  const [justAdded, setJustAdded] = useState(false);
+
+  function handleAdd() {
+    addProduct(product);
+    setJustAdded(true);
+    window.setTimeout(() => setJustAdded(false), 1400);
+  }
+
   return (
     <article className="group flex flex-col">
       <div className="relative aspect-square overflow-hidden rounded-xl bg-muted/50">
@@ -160,8 +171,17 @@ export function ProductCard({ product }: { product: Product }) {
         <Button
           className="mt-4 w-full bg-brand text-brand-foreground hover:bg-brand/90"
           size="sm"
+          onClick={handleAdd}
+          aria-live="polite"
         >
-          Add to cart
+          {justAdded ? (
+            <>
+              <Check className="size-4" aria-hidden />
+              Added
+            </>
+          ) : (
+            "Add to cart"
+          )}
         </Button>
       </div>
     </article>
@@ -193,20 +213,52 @@ export function RewardsBanner({ className }: { className?: string }) {
 }
 
 export function ProductDiscoveryGrid() {
-  const [categories, setCategories] = useState<string[]>([]);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const query = searchParams.get("q")?.trim() ?? "";
+  const categoryParam = searchParams.get("category");
+
+  const [categories, setCategories] = useState<string[]>(
+    categoryParam ? [categoryParam] : [],
+  );
   const [brands, setBrands] = useState<string[]>([]);
   const [prices, setPrices] = useState<string[]>([]);
   const [fulfillment, setFulfillment] = useState<string[]>([]);
 
-  function toggle(setter: typeof setCategories, value: string) {
-    setter((current) =>
-      current.includes(value)
+  useEffect(() => {
+    if (categoryParam) {
+      setCategories([categoryParam]);
+    }
+  }, [categoryParam]);
+
+  function toggle(
+    setter: typeof setCategories,
+    value: string,
+    syncCategory = false,
+  ) {
+    setter((current) => {
+      const next = current.includes(value)
         ? current.filter((item) => item !== value)
-        : [...current, value],
-    );
+        : [...current, value];
+
+      if (syncCategory) {
+        const params = new URLSearchParams(searchParams.toString());
+        if (next.length === 1) {
+          params.set("category", next[0]);
+        } else {
+          params.delete("category");
+        }
+        const qs = params.toString();
+        router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
+      }
+
+      return next;
+    });
   }
 
   const products = useMemo(() => {
+    const normalizedQuery = query.toLowerCase();
     return PRODUCTS.filter((product) => {
       if (categories.length && !categories.includes(product.categoryId)) {
         return false;
@@ -227,9 +279,15 @@ export function ProductDiscoveryGrid() {
       ) {
         return false;
       }
+      if (normalizedQuery) {
+        const haystack = `${product.name} ${product.brand} ${product.tags.join(" ")}`.toLowerCase();
+        if (!haystack.includes(normalizedQuery)) {
+          return false;
+        }
+      }
       return true;
     });
-  }, [brands, categories, fulfillment, prices]);
+  }, [brands, categories, fulfillment, prices, query]);
 
   return (
     <section aria-labelledby="shop-heading" className="space-y-6">
@@ -242,6 +300,12 @@ export function ProductDiscoveryGrid() {
         </h1>
         <p className="mt-2 max-w-xl text-muted-foreground">
           Clean filters, clear rewards, and pickup-ready essentials.
+          {query ? (
+            <>
+              {" "}
+              Showing results for <span className="font-medium text-foreground">“{query}”</span>.
+            </>
+          ) : null}
         </p>
       </div>
 
@@ -253,7 +317,7 @@ export function ProductDiscoveryGrid() {
           selectedBrands={brands}
           selectedPrices={prices}
           selectedFulfillment={fulfillment}
-          onToggleCategory={(value) => toggle(setCategories, value)}
+          onToggleCategory={(value) => toggle(setCategories, value, true)}
           onToggleBrand={(value) => toggle(setBrands, value)}
           onTogglePrice={(value) => toggle(setPrices, value)}
           onToggleFulfillment={(value) => toggle(setFulfillment, value)}

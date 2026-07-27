@@ -5,6 +5,7 @@ import { MapPin, Menu, ShoppingBag, UserRound } from "lucide-react";
 
 import { ACTIVE_STORE, NAV_CATEGORIES, REWARDS } from "@/lib/data/catalog";
 import { formatPoints } from "@/lib/pharmacy";
+import { useCart } from "@/lib/store/cart";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -17,6 +18,8 @@ import { MegaMenu } from "@/components/layout/mega-menu";
 import { SmartSearch } from "@/components/layout/smart-search";
 
 export function SiteHeader() {
+  const { itemCount } = useCart();
+
   return (
     <header className="sticky top-0 z-40 border-b border-border/70 bg-surface-elevated/85 backdrop-blur-md">
       <div className="border-b border-border/50 bg-brand text-brand-foreground">
@@ -99,11 +102,19 @@ export function SiteHeader() {
             <Button
               variant="ghost"
               size="icon"
-              aria-label="Cart"
+              aria-label={
+                itemCount > 0 ? `Cart, ${itemCount} items` : "Cart, empty"
+              }
+              className="relative"
               nativeButton={false}
               render={<Link href="/checkout" />}
             >
               <ShoppingBag className="size-5" />
+              {itemCount > 0 ? (
+                <span className="absolute -top-0.5 -right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand px-1 text-[10px] font-semibold text-brand-foreground">
+                  {itemCount > 99 ? "99+" : itemCount}
+                </span>
+              ) : null}
             </Button>
           </div>
         </div>

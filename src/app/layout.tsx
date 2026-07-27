@@ -3,6 +3,7 @@ import { Outfit, Source_Sans_3 } from "next/font/google";
 
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
+import { AppProviders } from "@/components/providers/app-providers";
 
 import "./globals.css";
 
@@ -43,9 +44,11 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
-        <SiteHeader />
-        <main id="main-content">{children}</main>
-        <SiteFooter />
+        <AppProviders>
+          <SiteHeader />
+          <main id="main-content">{children}</main>
+          <SiteFooter />
+        </AppProviders>
       </body>
     </html>
   );

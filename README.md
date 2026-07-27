@@ -17,6 +17,13 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+### Interactive prototype flows
+
+- **Shop → cart → checkout:** Add items; the header badge updates; place order to clear the cart and see confirmation
+- **Pharmacy refill:** Select prescriptions and refill — trackers advance Received → Filling → Ready
+- **Search:** Enter submits to `/shop?q=…` or opens the highlighted suggestion
+- **Filters:** `/shop?category=skincare` (and category checkboxes) sync with the URL
+
 ## Scripts
 
 - `npm run dev` — development server (Turbopack)

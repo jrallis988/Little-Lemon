@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import {
   CalendarClock,
@@ -49,6 +50,7 @@ function filterSuggestions(query: string): SearchSuggestion[] {
 }
 
 export function SmartSearch({ className }: { className?: string }) {
+  const router = useRouter();
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -64,6 +66,22 @@ export function SmartSearch({ className }: { className?: string }) {
       {} as Partial<Record<SearchIntent, number>>,
     );
   }, [results]);
+
+  function navigateToResult(href: string) {
+    setOpen(false);
+    router.push(href);
+  }
+
+  function submitSearch() {
+    const trimmed = query.trim();
+    if (results[activeIndex]) {
+      navigateToResult(results[activeIndex].href);
+      return;
+    }
+    if (trimmed) {
+      navigateToResult(`/shop?q=${encodeURIComponent(trimmed)}`);
+    }
+  }
 
   return (
     <div className={cn("relative w-full", className)}>
@@ -98,12 +116,13 @@ export function SmartSearch({ className }: { className?: string }) {
             window.setTimeout(() => setOpen(false), 150);
           }}
           onKeyDown={(event) => {
-            if (!open || results.length === 0) return;
             if (event.key === "ArrowDown") {
+              if (!open || results.length === 0) return;
               event.preventDefault();
               setActiveIndex((index) => (index + 1) % results.length);
             }
             if (event.key === "ArrowUp") {
+              if (!open || results.length === 0) return;
               event.preventDefault();
               setActiveIndex(
                 (index) => (index - 1 + results.length) % results.length,
@@ -111,6 +130,10 @@ export function SmartSearch({ className }: { className?: string }) {
             }
             if (event.key === "Escape") {
               setOpen(false);
+            }
+            if (event.key === "Enter") {
+              event.preventDefault();
+              submitSearch();
             }
           }}
           className="h-11 border-border/80 bg-surface-elevated/90 pr-4 pl-10 shadow-none"
@@ -154,6 +177,7 @@ export function SmartSearch({ className }: { className?: string }) {
                         isActive ? "bg-muted/80" : "hover:bg-muted/60",
                       )}
                       onMouseEnter={() => setActiveIndex(index)}
+                      onClick={() => setOpen(false)}
                     >
                       <span
                         className={cn(

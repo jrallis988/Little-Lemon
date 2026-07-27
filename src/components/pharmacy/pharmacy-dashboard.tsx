@@ -1,10 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { RefreshCw } from "lucide-react";
+import { CheckCircle2, RefreshCw } from "lucide-react";
 
-import { PRESCRIPTIONS } from "@/lib/data/catalog";
 import { formatCurrency } from "@/lib/pharmacy";
+import { usePharmacy } from "@/lib/store/pharmacy";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
@@ -12,22 +12,39 @@ import { PrescriptionTracker } from "@/components/pharmacy/prescription-tracker"
 import { ProfileSwitcher } from "@/components/pharmacy/profile-switcher";
 
 export function PharmacyDashboard() {
+  const { prescriptions, refillPrescriptions, advancingIds } = usePharmacy();
   const [profileId, setProfileId] = useState("profile-self");
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [lastRefillCount, setLastRefillCount] = useState(0);
 
-  const prescriptions = useMemo(
-    () => PRESCRIPTIONS.filter((rx) => rx.profileId === profileId),
-    [profileId],
+  const profilePrescriptions = useMemo(
+    () => prescriptions.filter((rx) => rx.profileId === profileId),
+    [prescriptions, profileId],
   );
 
-  const refillable = prescriptions.filter(
-    (rx) => rx.refillsRemaining > 0 && rx.status !== "filling",
+  const refillable = profilePrescriptions.filter(
+    (rx) =>
+      rx.refillsRemaining > 0 &&
+      rx.status !== "filling" &&
+      rx.status !== "received",
+  );
+
+  const isAdvancing = advancingIds.some((id) =>
+    profilePrescriptions.some((rx) => rx.id === id),
   );
 
   function toggleRx(id: string, checked: boolean) {
     setSelectedIds((current) =>
       checked ? [...current, id] : current.filter((item) => item !== id),
     );
+  }
+
+  function handleRefill() {
+    if (selectedIds.length === 0) return;
+    const count = selectedIds.length;
+    refillPrescriptions(selectedIds);
+    setLastRefillCount(count);
+    setSelectedIds([]);
   }
 
   return (
@@ -54,13 +71,29 @@ export function PharmacyDashboard() {
         />
       </div>
 
+      {lastRefillCount > 0 ? (
+        <div
+          className="flex items-start gap-3 rounded-xl border border-health/25 bg-health/10 px-4 py-3 text-sm text-foreground"
+          role="status"
+          aria-live="polite"
+        >
+          <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-health" aria-hidden />
+          <p>
+            Refill submitted for {lastRefillCount} prescription
+            {lastRefillCount === 1 ? "" : "s"}. Watch the tracker move from
+            Received → Filling → Ready.
+            {isAdvancing ? " Pharmacy is processing now…" : ""}
+          </p>
+        </div>
+      ) : null}
+
       <div className="grid gap-4 lg:grid-cols-2">
-        {prescriptions.length === 0 ? (
+        {profilePrescriptions.length === 0 ? (
           <p className="rounded-2xl border border-dashed border-border bg-surface/60 p-8 text-sm text-muted-foreground lg:col-span-2">
             No active prescriptions for this profile.
           </p>
         ) : (
-          prescriptions.map((rx) => (
+          profilePrescriptions.map((rx) => (
             <PrescriptionTracker key={rx.id} prescription={rx} />
           ))
         )}
@@ -77,11 +110,17 @@ export function PharmacyDashboard() {
             </p>
           </div>
           <Button
-            disabled={selectedIds.length === 0}
+            disabled={selectedIds.length === 0 || isAdvancing}
             className="bg-brand text-brand-foreground hover:bg-brand/90"
+            onClick={handleRefill}
           >
-            <RefreshCw className="size-4" aria-hidden />
-            Refill selected ({selectedIds.length})
+            <RefreshCw
+              className={`size-4 ${isAdvancing ? "animate-spin" : ""}`}
+              aria-hidden
+            />
+            {isAdvancing
+              ? "Processing…"
+              : `Refill selected (${selectedIds.length})`}
           </Button>
         </div>
 
@@ -96,6 +135,7 @@ export function PharmacyDashboard() {
                   checked={checked}
                   onCheckedChange={(value) => toggleRx(rx.id, value === true)}
                   className="mt-1"
+                  disabled={isAdvancing}
                 />
                 <Label htmlFor={fieldId} className="flex-1 cursor-pointer">
                   <span className="block text-sm font-medium text-foreground">
@@ -113,7 +153,9 @@ export function PharmacyDashboard() {
           })}
           {refillable.length === 0 ? (
             <li className="py-6 text-sm text-muted-foreground">
-              Nothing ready to refill right now.
+              {isAdvancing
+                ? "Fill in progress — trackers above are updating."
+                : "Nothing ready to refill right now."}
             </li>
           ) : null}
         </ul>
