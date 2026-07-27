@@ -1,22 +1,24 @@
-import Nav from "./components/Nav";
-import Hero from "./components/Hero";
-import Rooms from "./components/Rooms";
-import LiveRates from "./components/LiveRates";
-import Shore from "./components/Shore";
-import Reviews from "./components/Reviews";
-import Location from "./components/Location";
+import About from "./components/About";
 import BookingForm from "./components/BookingForm";
 import Footer from "./components/Footer";
+import Hero from "./components/Hero";
+import LiveRates from "./components/LiveRates";
+import Location from "./components/Location";
+import Nav from "./components/Nav";
+import Reviews from "./components/Reviews";
+import Rooms from "./components/Rooms";
+import Shore from "./components/Shore";
 
-export default function App() {
+function App() {
   return (
-    <div className="site">
+    <div className="App">
       <a className="skip-link" href="#main">
         Skip to content
       </a>
       <Nav />
       <main id="main">
         <Hero />
+        <About />
         <Rooms />
         <LiveRates />
         <Shore />
@@ -28,3 +30,5 @@ export default function App() {
     </div>
   );
 }
+
+export default App;

@@ -29,3 +29,10 @@ test("builds RezStream booking URLs with date params", () => {
   expect(url).toContain("DepartureDate=2026-08-12");
   expect(url).toContain("Adults=3");
 });
+
+test("exposes seasonal rate guidance", () => {
+  const { SEASONAL_RATES, SITE } = require("./data");
+  expect(SEASONAL_RATES).toHaveLength(3);
+  expect(SITE.history.title).toMatch(/1953/);
+  expect(SITE.trustLine.length).toBeGreaterThan(2);
+});

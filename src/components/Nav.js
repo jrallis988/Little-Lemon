@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { SITE, asset } from "../data";
 
 const LINKS = [
+  { href: "#about", label: "About" },
   { href: "#rooms", label: "Rooms" },
   { href: "#rates", label: "Rates" },
   { href: "#reviews", label: "Reviews" },

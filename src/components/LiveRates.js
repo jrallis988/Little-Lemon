@@ -1,5 +1,11 @@
 import { useMemo, useState } from "react";
-import { SITE, buildBookingUrl, estimateTotal, nightsBetween } from "../data";
+import {
+  SITE,
+  SEASONAL_RATES,
+  buildBookingUrl,
+  estimateTotal,
+  nightsBetween,
+} from "../data";
 
 const today = () => new Date().toISOString().slice(0, 10);
 
@@ -13,6 +19,7 @@ export default function LiveRates() {
   const [checkIn, setCheckIn] = useState(today());
   const [checkOut, setCheckOut] = useState(addDays(today(), 2));
   const [guests, setGuests] = useState(2);
+  const [showEmbed, setShowEmbed] = useState(true);
 
   const nights = nightsBetween(checkIn, checkOut);
   const sample = estimateTotal("queen", checkIn, checkOut);
@@ -20,7 +27,6 @@ export default function LiveRates() {
     () => buildBookingUrl({ checkIn, checkOut, guests }),
     [checkIn, checkOut, guests]
   );
-
   const invalid = !checkIn || !checkOut || checkOut <= checkIn;
 
   return (
@@ -30,16 +36,29 @@ export default function LiveRates() {
         Check exact prices for your dates.
       </h2>
       <p className="section__copy">
-        Pick dates below, then open the inn’s RezStream calendar for live
-        availability and final pricing. {SITE.typicalRateNote}
+        Seasonal ranges below are a guide. The embedded RezStream calendar shows
+        live availability and final pricing. {SITE.typicalRateNote}
       </p>
+
+      <ul className="season-list">
+        {SEASONAL_RATES.map((season) => (
+          <li key={season.id}>
+            <strong>{season.name}</strong>
+            <span className="season-list__when">{season.when}</span>
+            <span className="season-list__range">{season.range}</span>
+            <span className="season-list__note">{season.note}</span>
+          </li>
+        ))}
+      </ul>
 
       <form
         className="rates__form"
         onSubmit={(event) => {
           event.preventDefault();
           if (invalid) return;
-          window.open(bookingHref, "_blank", "noopener,noreferrer");
+          setShowEmbed(true);
+          const frame = document.getElementById("rezstream-embed");
+          if (frame) frame.src = bookingHref;
         }}
       >
         <div className="form-row">
@@ -87,19 +106,47 @@ export default function LiveRates() {
           {invalid
             ? "Choose a check-out date after check-in."
             : sample
-              ? `${nights} night${nights === 1 ? "" : "s"} · rough estimate from ~$${sample.rate}/night ≈ $${sample.total} before taxes. Confirm exact rates on RezStream.`
-              : "Open RezStream to see live rates for these dates."}
+              ? `${nights} night${nights === 1 ? "" : "s"} · rough estimate from ~$${sample.rate}/night ≈ $${sample.total} before taxes. Confirm exact rates in the calendar.`
+              : "Load the calendar to see live rates for these dates."}
         </p>
 
         <div className="rates__actions">
           <button className="btn btn-primary" type="submit" disabled={invalid}>
-            See live rates & book
+            Update calendar
           </button>
+          <a
+            className="btn btn-ghost"
+            href={bookingHref}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Open booking in new tab
+          </a>
           <a className="btn btn-ghost" href={SITE.phoneHref}>
-            Or call {SITE.phone}
+            Call {SITE.phone}
           </a>
         </div>
       </form>
+
+      {showEmbed ? (
+        <div className="rates__embed-wrap">
+          <iframe
+            id="rezstream-embed"
+            className="rates__embed"
+            title="Seascape Inn live booking calendar"
+            src={bookingHref}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+          <p className="rates__embed-note">
+            If the calendar is blank, your browser may block embeds — use{" "}
+            <a href={bookingHref} target="_blank" rel="noreferrer">
+              Open booking in new tab
+            </a>
+            . Online reservations must still be confirmed with the office.
+          </p>
+        </div>
+      ) : null}
     </section>
   );
 }

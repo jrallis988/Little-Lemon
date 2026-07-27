@@ -1,6 +1,60 @@
-import { NEARBY, SITE, asset } from "../data";
+import { useEffect, useRef } from "react";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+import { NEARBY, SITE } from "../data";
+import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
+
+// Fix default marker paths under CRA / webpack.
+const DefaultIcon = L.icon({
+  iconUrl: markerIcon,
+  iconRetinaUrl: markerIcon2x,
+  shadowUrl: markerShadow,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+L.Marker.prototype.options.icon = DefaultIcon;
 
 export default function Location() {
+  const mapRef = useRef(null);
+  const mapInstance = useRef(null);
+
+  useEffect(() => {
+    if (!mapRef.current || mapInstance.current) return undefined;
+
+    const map = L.map(mapRef.current, {
+      scrollWheelZoom: false,
+    }).setView([SITE.lat, SITE.lon], 15);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      maxZoom: 19,
+    }).addTo(map);
+
+    L.marker([SITE.lat, SITE.lon])
+      .addTo(map)
+      .bindPopup(
+        `<strong>${SITE.name}</strong><br/>${SITE.addressShort}<br/>North Beach · Plaice Cove`
+      );
+
+    mapInstance.current = map;
+
+    const onResize = () => map.invalidateSize();
+    window.addEventListener("resize", onResize);
+    const timer = window.setTimeout(onResize, 300);
+
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener("resize", onResize);
+      map.remove();
+      mapInstance.current = null;
+    };
+  }, []);
+
   return (
     <section className="location section--wide" id="location" aria-labelledby="location-title">
       <div className="section__inner location__grid">
@@ -44,22 +98,12 @@ export default function Location() {
           </div>
         </div>
 
-        <a
+        <div
           className="location__map"
-          href={SITE.mapLink}
-          target="_blank"
-          rel="noreferrer"
-          aria-label="Open Seascape Inn location on OpenStreetMap"
-        >
-          <img
-            src={asset("/images/seascape-photo2.jpg")}
-            alt="Coastal view near Seascape Inn at Plaice Cove"
-            loading="lazy"
-          />
-          <span className="location__map-badge">
-            955 Ocean Blvd · View on OpenStreetMap
-          </span>
-        </a>
+          ref={mapRef}
+          role="region"
+          aria-label="Interactive map of Seascape Inn in Hampton, New Hampshire"
+        />
       </div>
     </section>
   );

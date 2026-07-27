@@ -425,6 +425,17 @@ p {
   animation: rise-in 900ms var(--ease) 420ms forwards;
 }
 
+.hero__trust {
+  margin-top: 1rem;
+  max-width: 42ch;
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.82);
+  opacity: 0;
+  transform: translateY(18px);
+  animation: rise-in 900ms var(--ease) 500ms forwards;
+}
+
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
@@ -803,41 +814,24 @@ p {
 .location__map {
   position: relative;
   display: block;
-  min-height: 280px;
+  min-height: 320px;
+  height: 100%;
   border-radius: var(--radius);
   overflow: hidden;
   border: 1px solid var(--line);
   background: var(--mist-deep);
-  color: var(--foam);
-  text-decoration: none;
+  z-index: 0;
 }
 
-.location__map img {
+.location__map .leaflet-container {
   width: 100%;
   height: 100%;
   min-height: 320px;
-  object-fit: cover;
-  transition: transform 700ms var(--ease);
+  font: inherit;
 }
 
-.location__map:hover img {
-  transform: scale(1.03);
-}
-
-.location__map:focus-visible {
-  outline: 2px solid var(--sun);
-  outline-offset: 3px;
-}
-
-.location__map-badge {
-  position: absolute;
-  left: 1rem;
-  bottom: 1rem;
-  padding: 0.7rem 0.9rem;
-  background: rgba(7, 58, 80, 0.9);
-  border-radius: var(--radius);
-  font-weight: 700;
-  font-size: 0.95rem;
+.location__map .leaflet-control-attribution {
+  font-size: 0.7rem;
 }
 
 @media (min-width: 900px) {
@@ -848,7 +842,7 @@ p {
   }
 
   .location__map,
-  .location__map img {
+  .location__map .leaflet-container {
     min-height: 460px;
   }
 }
@@ -947,6 +941,46 @@ p {
   scroll-margin-top: calc(var(--nav-h) + 1rem);
 }
 
+.season-list {
+  list-style: none;
+  margin: 1.75rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.season-list li {
+  display: grid;
+  gap: 0.2rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.season-list strong {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--ocean-deep);
+}
+
+.season-list__when,
+.season-list__note {
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+
+.season-list__range {
+  font-weight: 700;
+  color: var(--ocean);
+}
+
+@media (min-width: 800px) {
+  .season-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 .rates__form {
   margin-top: 2rem;
   padding: clamp(1.25rem, 3vw, 2rem);
@@ -966,6 +1000,61 @@ p {
   flex-wrap: wrap;
   gap: 0.75rem;
   margin-top: 1.25rem;
+}
+
+.rates__embed-wrap {
+  margin-top: 1.5rem;
+}
+
+.rates__embed {
+  display: block;
+  width: 100%;
+  min-height: 640px;
+  border: 1px solid var(--line);
+  border-radius: calc(var(--radius) + 2px);
+  background: var(--foam);
+}
+
+.rates__embed-note {
+  margin: 0.75rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.rates__embed-note a {
+  color: var(--ocean);
+  font-weight: 600;
+}
+
+/* About */
+.about {
+  scroll-margin-top: calc(var(--nav-h) + 1rem);
+}
+
+.about__points {
+  list-style: none;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+  max-width: 54ch;
+}
+
+.about__points li {
+  position: relative;
+  padding-left: 1.15rem;
+  color: var(--ink-soft);
+}
+
+.about__points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--ocean);
 }
 
 /* Booking */
@@ -1256,6 +1345,7 @@ p {
   .hero__brand,
   .hero__headline,
   .hero__lede,
+  .hero__trust,
   .hero__actions,
   .room__media img,
   .btn {

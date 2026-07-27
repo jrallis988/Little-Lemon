@@ -41,38 +41,26 @@ function roomFromHash() {
   return ROOMS.some((item) => item.id === room) ? room : ROOMS[0].id;
 }
 
-function buildMailto(values) {
-  const room = ROOMS.find((item) => item.id === values.room);
-  const estimate = estimateTotal(values.room, values.checkIn, values.checkOut);
-  const subject = encodeURIComponent(
-    `Stay inquiry: ${room?.name || "Room"} (${values.checkIn} → ${values.checkOut})`
-  );
-  const body = encodeURIComponent(
-    [
-      `Name: ${values.name}`,
-      `Email: ${values.email}`,
-      `Phone: ${values.phone}`,
-      `Room interest: ${room?.name}`,
-      `Guests: ${values.guests}`,
-      `Check-in: ${values.checkIn}`,
-      `Check-out: ${values.checkOut}`,
-      estimate
-        ? `Rough estimate (not a quote): ${estimate.nights} night(s) × ~$${estimate.rate} = ~$${estimate.total}`
-        : null,
-      values.notes ? `Notes: ${values.notes}` : null,
-      "",
-      "Sent from the Seascape Inn website inquiry form.",
-    ]
-      .filter((line) => line !== null)
-      .join("\n")
-  );
-  return `mailto:${SITE.email}?subject=${subject}&body=${body}`;
-}
-
 async function submitInquiry(values) {
-  const formspreeId = process.env.REACT_APP_FORMSPREE_ID;
   const room = ROOMS.find((item) => item.id === values.room);
   const estimate = estimateTotal(values.room, values.checkIn, values.checkOut);
+  const formspreeId = process.env.REACT_APP_FORMSPREE_ID;
+
+  const payload = {
+    name: values.name,
+    email: values.email,
+    phone: values.phone,
+    checkIn: values.checkIn,
+    checkOut: values.checkOut,
+    guests: values.guests,
+    room: values.room,
+    roomName: room?.name,
+    notes: values.notes || "None",
+    estimate: estimate
+      ? `${estimate.nights} night(s) × ~$${estimate.rate} ≈ $${estimate.total}`
+      : "n/a",
+    _subject: `Seascape Inn inquiry: ${room?.name || "Room"}`,
+  };
 
   if (formspreeId) {
     const response = await fetch(`https://formspree.io/f/${formspreeId}`, {
@@ -81,21 +69,39 @@ async function submitInquiry(values) {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        ...values,
-        roomName: room?.name,
-        estimate,
-        _subject: `Seascape Inn inquiry: ${room?.name}`,
-      }),
+      body: JSON.stringify(payload),
     });
     if (!response.ok) {
-      throw new Error("We couldn’t send that request. Please try again or call us.");
+      throw new Error(
+        `We couldn’t send that request. Call ${SITE.phone} or email ${SITE.email}.`
+      );
     }
     return { method: "formspree" };
   }
 
-  window.location.href = buildMailto(values);
-  return { method: "mailto" };
+  const response = await fetch(
+    `https://formsubmit.co/ajax/${encodeURIComponent(SITE.email)}`,
+    {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...payload,
+        _template: "table",
+        _captcha: "false",
+      }),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(
+      `We couldn’t send that request. Call ${SITE.phone} or email ${SITE.email}.`
+    );
+  }
+
+  return { method: "formsubmit" };
 }
 
 export default function BookingForm() {
@@ -128,21 +134,22 @@ export default function BookingForm() {
         Book your room by the water.
       </h2>
       <p className="section__copy">
-        Check live rates and availability on the inn’s booking system, then call{" "}
-        {SITE.phone} to confirm. {SITE.typicalRateNote}
+        Prefer a human reply? Send dates here and the inn will follow up. For
+        instant confirmation, use the live calendar in Rates &amp; availability,
+        then call {SITE.phone} to verify.
       </p>
 
       <div className="booking__live">
+        <a className="btn btn-primary" href="#rates">
+          See live rates & book
+        </a>
         <a
-          className="btn btn-primary"
+          className="btn btn-ghost"
           href={SITE.bookingUrl}
           target="_blank"
           rel="noreferrer"
         >
           Check availability & book
-        </a>
-        <a className="btn btn-ghost" href="#rates">
-          Pick dates for live rates
         </a>
         <a className="btn btn-ghost" href={SITE.phoneHref}>
           Call {SITE.phone}
@@ -184,16 +191,14 @@ export default function BookingForm() {
               if (status?.success) {
                 return (
                   <div className="success" role="status">
-                    <h3>Inquiry ready</h3>
+                    <h3>Inquiry sent</h3>
                     <p>
-                      Thanks, {status.summary.name}.{" "}
-                      {status.method === "formspree"
-                        ? `We received your note and will reply to ${status.summary.email}.`
-                        : `Your email draft to ${SITE.email} should be open — send it to reach the inn.`}
+                      Thanks, {status.summary.name}. We received your note and
+                      will reply to {status.summary.email}.
                     </p>
                     <p>
-                      For the fastest confirmation, also book or call via the
-                      buttons above.
+                      For the fastest confirmation, also book online or call{" "}
+                      {SITE.phone}.
                     </p>
                     <button
                       className="btn btn-ghost"

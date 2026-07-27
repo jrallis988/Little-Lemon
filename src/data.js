@@ -20,8 +20,8 @@ export const SITE = {
   neighborhood: "Plaice Cove · North Beach",
   roomCount: 20,
   founded: 1953,
-  mapEmbedUrl:
-    "https://www.openstreetmap.org/export/embed.html?bbox=-70.801%2C42.938%2C-70.782%2C42.948&layer=mapnik&marker=42.94326%2C-70.79161",
+  lat: 42.94326,
+  lon: -70.79161,
   mapLink:
     "https://www.openstreetmap.org/?mlat=42.94326&mlon=-70.79161#map=16/42.94326/-70.79161",
   social: {
@@ -31,8 +31,51 @@ export const SITE = {
   checkOut: "10:00 AM",
   hours: "Front desk 8:30 AM – 10:00 PM",
   typicalRateNote:
-    "Rates often run around $165/night depending on dates — use the live booking calendar for exact pricing.",
+    "Use the live calendar below for exact pricing — seasonal ranges are a guide only.",
+  trustLine: [
+    "Beach across the street",
+    "Pet-friendly",
+    "Open year-round",
+    "About 20 rooms",
+  ],
+  history: {
+    eyebrow: "Our story",
+    title: "A North Beach inn since 1953.",
+    copy:
+      "Founded as the Seascape Motel in 1953 by Hartley C. Rice and later run by longtime resident managers, Seascape Inn still sits three miles north of the main Hampton Beach strip—in quiet Plaice Cove, steps from North Beach.",
+    points: [
+      "Family-style beach inn with roughly 20 rooms",
+      "Quieter North Beach location on Ocean Boulevard",
+      "Gazebo lawn, guest BBQ, and a small pet park",
+      "Year-round stays, including weekly and monthly winter options",
+    ],
+  },
 };
+
+/** Seasonal guidance based on public “fair value / ~$165 typical” comps. */
+export const SEASONAL_RATES = [
+  {
+    id: "summer",
+    name: "Summer",
+    when: "June – early September",
+    range: "About $165–$240 / night",
+    note: "Peak beach weeks book earliest — confirm live rates for weekends and holidays.",
+  },
+  {
+    id: "shoulder",
+    name: "Spring & fall",
+    when: "April – May · mid-September – October",
+    range: "About $120–$180 / night",
+    note: "Quieter cove stays with easier parking and cooler beach walks.",
+  },
+  {
+    id: "winter",
+    name: "Winter",
+    when: "November – March",
+    range: "About $90–$150 / night",
+    note: "Weekly and monthly winter rentals available — call the office for longer stays.",
+  },
+];
 
 export function buildBookingUrl({ checkIn, checkOut, guests = 2 } = {}) {
   const url = new URL(SITE.bookingUrl);
@@ -61,8 +104,12 @@ export const ROOMS = [
         alt: "Queen room with beach-themed wall art",
       },
       {
+        src: asset("/images/seascape-vacancy.jpg"),
+        alt: "Seascape Inn roadside sign",
+      },
+      {
         src: asset("/images/exterior-courtyard.jpg"),
-        alt: "Seascape Inn courtyard with room balconies",
+        alt: "Courtyard outside guest rooms",
       },
     ],
     amenities: [
@@ -93,8 +140,12 @@ export const ROOMS = [
         alt: "Two-bed guest room with matching quilts",
       },
       {
+        src: asset("/images/view-from-inn.jpg"),
+        alt: "Ocean view near the inn property",
+      },
+      {
         src: asset("/images/exterior-courtyard.jpg"),
-        alt: "Courtyard seating outside guest rooms",
+        alt: "Room balconies and courtyard seating",
       },
     ],
     amenities: [
@@ -122,11 +173,15 @@ export const ROOMS = [
     gallery: [
       {
         src: asset("/images/room-economy.jpg"),
-        alt: "Economy room with colorful quilts and twin plus double bed",
+        alt: "Economy room with colorful quilts",
+      },
+      {
+        src: asset("/images/seascape-exterior.jpg"),
+        alt: "Seascape Inn exterior along Ocean Boulevard",
       },
       {
         src: asset("/images/seascape-hampton-beach.jpg"),
-        alt: "Hampton Beach area with dune grass",
+        alt: "North Beach / Hampton Beach area signage",
       },
     ],
     amenities: [
@@ -160,8 +215,12 @@ export const ROOMS = [
         alt: "Spacious two-bed room layout",
       },
       {
+        src: asset("/images/view-from-inn.jpg"),
+        alt: "Water view near Plaice Cove",
+      },
+      {
         src: asset("/images/exterior-courtyard.jpg"),
-        alt: "Inn exterior and courtyard",
+        alt: "Inn courtyard and guest walkways",
       },
     ],
     amenities: [
@@ -292,8 +351,8 @@ export const GALLERY = [
     alt: "Seascape Inn sign along Ocean Boulevard",
   },
   {
-    src: asset("/images/coast-view.jpg"),
-    alt: "Coastal view near Hampton Beach",
+    src: asset("/images/view-from-inn.jpg"),
+    alt: "Ocean view near Plaice Cove",
   },
   {
     src: asset("/images/nh-north-view.jpg"),

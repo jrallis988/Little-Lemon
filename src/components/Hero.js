@@ -15,13 +15,9 @@ export default function Hero() {
           A pet-friendly inn at Plaice Cove in Hampton, NH—about {SITE.roomCount}{" "}
           rooms, a gazebo lawn, and the sand just across Ocean Boulevard.
         </p>
+        <p className="hero__trust">{SITE.trustLine.join(" · ")}</p>
         <div className="hero__actions">
-          <a
-            className="btn btn-primary"
-            href={SITE.bookingUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a className="btn btn-primary" href="#rates">
             Book a stay
           </a>
           <a className="btn btn-secondary" href="#rooms">
