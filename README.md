@@ -2,7 +2,13 @@
 
 Child-safe, minimalist, **search-first** educational web browser for families and schools.
 
-Surf is not a content feed, launcher, or game hub. Kids search, open curated educational sources, and read in a calm distraction-free environment — with parent-controlled safety filters.
+Surf is not a content feed, launcher, or game hub. Kids search, open curated educational sources, and read in a calm distraction-free environment — while parents keep the guardrails.
+
+## Brand
+
+- **Logo:** orange surfboard mark + lowercase `surf` wordmark
+- **Palette:** deep blue `#234197`, ocean `#288CC1`, sky `#5F9ED1`, violet glow `#8C6DE6`, board orange `#F7921E` → `#F25C1D`, foam `#F3EFE6`
+- **Tagline:** Search first. Learn safely. Ride curiosity.
 
 ## Stack
 
@@ -55,6 +61,7 @@ npm run tauri:dev
 
 ```
 src/
+  brand/          Logo palette + biography
   components/     UI + shell + Learning Mode overlay
   data/           Curated explore categories + search stub
   hooks/          Session timer, URL interceptor, a11y

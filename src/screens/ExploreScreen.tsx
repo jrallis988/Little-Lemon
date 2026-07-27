@@ -8,7 +8,7 @@ export function ExploreScreen() {
   return (
     <section className="animate-fade-in pb-16">
       <header className="mb-10 max-w-2xl">
-        <p className="text-sm font-medium uppercase tracking-[0.14em] text-sage">
+        <p className="text-sm font-medium uppercase tracking-[0.14em] text-ocean">
           Explore
         </p>
         <h1 className="mt-2 font-display text-4xl font-semibold text-navy">

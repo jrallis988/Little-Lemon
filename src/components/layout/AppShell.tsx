@@ -35,7 +35,7 @@ export function AppShell() {
   return (
     <div className="relative min-h-screen">
       {!isImmersive && (
-        <header className="sticky top-0 z-30 border-b border-white/40 bg-cream/75 backdrop-blur-xl">
+        <header className="sticky top-0 z-30 border-b border-white/40 bg-white/70 backdrop-blur-xl">
           <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3">
             <SurfLogo />
             <nav className="hidden items-center gap-1 md:flex">

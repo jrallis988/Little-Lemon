@@ -27,8 +27,8 @@ function createDefaultProfiles(): UserProfile[] {
       displayName: "Avery",
       avatar: {
         shape: "soft-blob",
-        primary: "#7FA88A",
-        secondary: "#1B2A4A",
+        primary: "#F7921E",
+        secondary: "#234197",
       },
       accessibility: { ...defaultAccessibility },
       createdAt: new Date().toISOString(),
@@ -38,8 +38,8 @@ function createDefaultProfiles(): UserProfile[] {
       displayName: "Jordan",
       avatar: {
         shape: "hex",
-        primary: "#A8C4B0",
-        secondary: "#4A5D78",
+        primary: "#288CC1",
+        secondary: "#8C6DE6",
       },
       accessibility: { ...defaultAccessibility },
       createdAt: new Date().toISOString(),
@@ -94,8 +94,8 @@ export const useProfileStore = create<ProfileState>()(
                 displayName,
                 avatar: {
                   shape: "circle",
-                  primary: "#4A5D78",
-                  secondary: "#7FA88A",
+                  primary: "#234197",
+                  secondary: "#F7921E",
                 },
                 accessibility: { ...defaultAccessibility },
                 createdAt: new Date().toISOString(),

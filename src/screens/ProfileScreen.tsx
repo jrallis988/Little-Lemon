@@ -20,7 +20,7 @@ export function ProfileScreen() {
   return (
     <section className="animate-fade-in pb-16">
       <header className="mb-8 max-w-2xl">
-        <p className="text-sm font-medium uppercase tracking-[0.14em] text-sage">
+        <p className="text-sm font-medium uppercase tracking-[0.14em] text-ocean">
           Profiles
         </p>
         <h1 className="mt-2 font-display text-4xl font-semibold text-navy">
@@ -46,7 +46,7 @@ export function ProfileScreen() {
               className={cn(
                 "rounded-3xl border p-5 text-left shadow-soft transition",
                 selected
-                  ? "border-sage bg-white"
+                  ? "border-ocean bg-white"
                   : "border-white/60 bg-white/70 hover:bg-white",
               )}
             >

@@ -36,8 +36,10 @@ export function BlockedSiteScreen() {
   };
 
   return (
-    <section className="flex min-h-screen items-center justify-center bg-[radial-gradient(circle_at_top,_#A8C4B0_0%,_#F4F0E8_45%,_#E8EEF4_100%)] px-6 animate-fade-in">
-      <div className="w-full max-w-lg rounded-[2rem] border border-white/70 bg-white/80 p-8 text-center shadow-glass backdrop-blur-xl md:p-10">
+    <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 animate-fade-in">
+      <div className="absolute inset-0 logo-mesh opacity-90" aria-hidden />
+      <div className="absolute inset-0 bg-navy-deep/35" />
+      <div className="relative z-10 w-full max-w-lg rounded-[2rem] border border-white/70 bg-white/85 p-8 text-center shadow-glass backdrop-blur-xl md:p-10">
         <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-cream-muted text-navy">
           <ShieldAlert className="h-7 w-7" />
         </div>

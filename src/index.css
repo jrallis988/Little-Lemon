@@ -3,42 +3,60 @@
 @tailwind utilities;
 
 :root {
-  /* Soft slate · sage · warm cream · deep navy */
-  --cream: 40 33% 96%;
-  --cream-muted: 38 28% 92%;
-  --slate-soft: 215 18% 88%;
-  --slate: 215 16% 46%;
-  --slate-deep: 215 22% 28%;
-  --sage-soft: 152 22% 90%;
-  --sage: 152 24% 42%;
-  --sage-deep: 152 28% 28%;
-  --navy: 222 44% 20%;
-  --navy-deep: 222 48% 12%;
-  --navy-mist: 222 30% 94%;
+  /*
+   * Logo palette
+   * deep blue #234197 · ocean #288CC1 · sky #5F9ED1
+   * violet glow #8C6DE6 · board orange #F7921E → #F25C1D · foam #F3EFE6
+   */
+  --cream: 40 33% 95%;
+  --cream-muted: 210 40% 96%;
+  --slate-soft: 210 35% 90%;
+  --slate: 215 22% 42%;
+  --slate-deep: 222 40% 28%;
+  --sage-soft: 28 100% 95%;
+  --sage: 28 93% 54%;
+  --sage-deep: 16 88% 53%;
+  --navy: 228 63% 36%;
+  --navy-deep: 228 68% 24%;
+  --navy-mist: 210 55% 94%;
+  --ocean: 198 66% 46%;
+  --sky: 205 54% 60%;
+  --violet: 255 70% 66%;
+  --orange: 28 93% 54%;
+  --orange-deep: 16 88% 53%;
+  --foam: 40 33% 95%;
 
   --background: var(--cream);
   --foreground: var(--navy);
   --card: 0 0% 100%;
   --card-foreground: var(--navy);
-  --primary: var(--navy);
-  --primary-foreground: var(--cream);
-  --secondary: var(--sage-soft);
-  --secondary-foreground: var(--sage-deep);
+  --primary: var(--orange);
+  --primary-foreground: 0 0% 100%;
+  --secondary: 198 55% 92%;
+  --secondary-foreground: var(--navy-deep);
   --muted: var(--cream-muted);
   --muted-foreground: var(--slate);
-  --accent: var(--sage);
+  --accent: var(--ocean);
   --accent-foreground: 0 0% 100%;
   --destructive: 4 62% 48%;
   --destructive-foreground: 0 0% 100%;
-  --border: 215 18% 86%;
-  --input: 215 18% 86%;
-  --ring: var(--sage);
+  --border: 210 30% 86%;
+  --input: 210 30% 86%;
+  --ring: var(--ocean);
   --radius: 1rem;
 
   --app-bg:
-    radial-gradient(1200px 600px at 10% -10%, hsl(152 30% 88% / 0.55), transparent 55%),
-    radial-gradient(900px 500px at 90% 0%, hsl(222 40% 88% / 0.45), transparent 50%),
-    linear-gradient(180deg, hsl(var(--cream)) 0%, hsl(var(--cream-muted)) 100%);
+    radial-gradient(1000px 520px at 8% -8%, hsl(228 63% 36% / 0.18), transparent 55%),
+    radial-gradient(900px 480px at 92% 0%, hsl(198 66% 46% / 0.22), transparent 52%),
+    radial-gradient(700px 420px at 80% 100%, hsl(255 70% 66% / 0.14), transparent 48%),
+    linear-gradient(180deg, hsl(var(--cream)) 0%, hsl(210 45% 96%) 100%);
+
+  --logo-mesh:
+    radial-gradient(circle at 18% 20%, #234197 0%, transparent 42%),
+    radial-gradient(circle at 82% 18%, #06b6d4 0%, transparent 40%),
+    radial-gradient(circle at 78% 78%, #8c6de6 0%, transparent 45%),
+    radial-gradient(circle at 22% 82%, #3b82f6 0%, transparent 42%),
+    linear-gradient(135deg, #234197 0%, #288cc1 45%, #5f9ed1 70%, #8c6de6 100%);
 }
 
 .high-contrast {
@@ -53,11 +71,17 @@
   --navy: 0 0% 0%;
   --navy-deep: 0 0% 0%;
   --navy-mist: 0 0% 94%;
+  --ocean: 0 0% 20%;
+  --sky: 0 0% 35%;
+  --violet: 0 0% 25%;
+  --orange: 0 0% 10%;
+  --orange-deep: 0 0% 5%;
   --background: 0 0% 100%;
   --foreground: 0 0% 0%;
   --border: 0 0% 0%;
   --muted-foreground: 0 0% 20%;
   --app-bg: #ffffff;
+  --logo-mesh: #000000;
 }
 
 .large-text {
@@ -89,13 +113,17 @@
   }
 
   ::selection {
-    background: hsl(var(--sage) / 0.25);
+    background: hsl(var(--ocean) / 0.22);
   }
 }
 
 @layer utilities {
   .glass-panel {
     @apply border border-white/50 bg-white/70 shadow-glass backdrop-blur-xl;
+  }
+
+  .logo-mesh {
+    background-image: var(--logo-mesh);
   }
 
   .text-balance {

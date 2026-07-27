@@ -69,7 +69,7 @@ export function ParentDashboardScreen() {
     return (
       <section className="mx-auto flex min-h-[60vh] max-w-md flex-col justify-center animate-fade-in">
         <div className="rounded-3xl border border-white/60 bg-white/80 p-8 shadow-soft">
-          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-navy text-cream">
+          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-navy text-foam">
             <LockKeyhole className="h-5 w-5" />
           </div>
           <h1 className="font-display text-3xl font-semibold text-navy">
@@ -102,7 +102,7 @@ export function ParentDashboardScreen() {
     <section className="animate-fade-in space-y-8 pb-20">
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="text-sm font-medium uppercase tracking-[0.14em] text-sage">
+          <p className="text-sm font-medium uppercase tracking-[0.14em] text-ocean">
             Parent dashboard
           </p>
           <h1 className="mt-2 font-display text-4xl font-semibold text-navy">
@@ -128,8 +128,8 @@ export function ParentDashboardScreen() {
               <AreaChart data={chartData}>
                 <defs>
                   <linearGradient id="minutes" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#7FA88A" stopOpacity={0.45} />
-                    <stop offset="95%" stopColor="#7FA88A" stopOpacity={0} />
+                    <stop offset="5%" stopColor="#288CC1" stopOpacity={0.45} />
+                    <stop offset="95%" stopColor="#288CC1" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#D7DEE7" />
@@ -139,7 +139,7 @@ export function ParentDashboardScreen() {
                 <Area
                   type="monotone"
                   dataKey="minutes"
-                  stroke="#1B2A4A"
+                  stroke="#234197"
                   fill="url(#minutes)"
                 />
               </AreaChart>

@@ -24,7 +24,7 @@ export function SearchResultsScreen() {
   return (
     <section className="animate-fade-in pb-16">
       <header className="mb-8 max-w-2xl">
-        <p className="text-sm font-medium uppercase tracking-[0.14em] text-sage">
+        <p className="text-sm font-medium uppercase tracking-[0.14em] text-ocean">
           Curated results
         </p>
         <h1 className="mt-2 font-display text-3xl font-semibold text-navy md:text-4xl">
@@ -43,8 +43,8 @@ export function SearchResultsScreen() {
             style={{ animationDelay: `${index * 60}ms` }}
           >
             <div className="mb-3 flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-1 rounded-full bg-sage-soft px-3 py-1 text-xs font-semibold text-sage-deep">
-                <BadgeCheck className="h-3.5 w-3.5" />
+              <span className="inline-flex items-center gap-1 rounded-full bg-navy-mist px-3 py-1 text-xs font-semibold text-navy">
+                <BadgeCheck className="h-3.5 w-3.5 text-ocean" />
                 {result.sourceBadge}
               </span>
               <span className="text-xs text-slate">{result.domain}</span>

@@ -23,8 +23,8 @@ export function ArticleScreen() {
   return (
     <section className="mx-auto max-w-3xl animate-fade-in pb-20">
       <div className="mb-6 flex items-center justify-between gap-3">
-        <div className="inline-flex items-center gap-2 rounded-full bg-sage-soft px-3 py-1 text-xs font-semibold text-sage-deep">
-          <BookOpen className="h-3.5 w-3.5" />
+        <div className="inline-flex items-center gap-2 rounded-full bg-navy-mist px-3 py-1 text-xs font-semibold text-navy">
+          <BookOpen className="h-3.5 w-3.5 text-ocean" />
           Reader mode · ~{article.estimatedMinutes} min
         </div>
         <Button variant="outline" size="sm" onClick={() => navigate(-1)}>
@@ -35,7 +35,7 @@ export function ArticleScreen() {
       <article className="rounded-[2rem] border border-white/70 bg-white/85 p-8 shadow-soft md:p-12">
         <style>{`
           .surf-reader header .source {
-            color: hsl(152 28% 28%);
+            color: #288CC1;
             font-size: 0.75rem;
             font-weight: 700;
             letter-spacing: 0.12em;
@@ -45,7 +45,7 @@ export function ArticleScreen() {
           .surf-reader h1 {
             font-family: Sora, sans-serif;
             font-size: clamp(1.75rem, 3vw, 2.35rem);
-            color: hsl(222 44% 20%);
+            color: #234197;
             line-height: 1.2;
             margin-bottom: 1.5rem;
           }

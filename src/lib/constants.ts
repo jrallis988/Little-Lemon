@@ -1,5 +1,11 @@
-export const APP_NAME = "Surf";
-export const APP_TAGLINE = "Search calmly. Learn safely.";
+export {
+  APP_NAME_DISPLAY as APP_NAME,
+  APP_TAGLINE,
+  APP_BIOGRAPHY,
+  APP_BIOGRAPHY_SHORT,
+  APP_POSITIONING,
+  BRAND_PALETTE,
+} from "@/brand/identity";
 
 export const STORAGE_KEYS = {
   profiles: "surf.profiles.v1",

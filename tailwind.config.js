@@ -16,6 +16,7 @@ export default {
           DEFAULT: "hsl(var(--cream))",
           muted: "hsl(var(--cream-muted))",
         },
+        foam: "hsl(var(--foam))",
         slate: {
           soft: "hsl(var(--slate-soft))",
           DEFAULT: "hsl(var(--slate))",
@@ -26,6 +27,13 @@ export default {
           DEFAULT: "hsl(var(--sage))",
           deep: "hsl(var(--sage-deep))",
         },
+        orange: {
+          DEFAULT: "hsl(var(--orange))",
+          deep: "hsl(var(--orange-deep))",
+        },
+        ocean: "hsl(var(--ocean))",
+        sky: "hsl(var(--sky))",
+        violet: "hsl(var(--violet))",
         navy: {
           DEFAULT: "hsl(var(--navy))",
           deep: "hsl(var(--navy-deep))",

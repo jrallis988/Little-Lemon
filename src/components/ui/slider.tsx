@@ -15,9 +15,9 @@ export const Slider = React.forwardRef<
     {...props}
   >
     <SliderPrimitive.Track className="relative h-2 w-full grow overflow-hidden rounded-full bg-slate-soft">
-      <SliderPrimitive.Range className="absolute h-full bg-sage" />
+      <SliderPrimitive.Range className="absolute h-full bg-ocean" />
     </SliderPrimitive.Track>
-    <SliderPrimitive.Thumb className="block h-5 w-5 rounded-full border-2 border-sage bg-white shadow transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
+    <SliderPrimitive.Thumb className="block h-5 w-5 rounded-full border-2 border-ocean bg-white shadow transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
   </SliderPrimitive.Root>
 ));
 Slider.displayName = SliderPrimitive.Root.displayName;
