@@ -78,8 +78,8 @@ export default function PharmaciesPage() {
           sizes="100vw"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/55" />
-        <div className="relative mx-auto max-w-6xl px-4 py-7 sm:px-6 sm:py-8">
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/40" />
+        <div className="relative mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-7">
           <h1 className="font-display text-3xl font-semibold tracking-tight md:text-4xl">
             Pharmacies near you
           </h1>

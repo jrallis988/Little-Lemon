@@ -111,12 +111,20 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Dense popular searches — sits tight under hero */}
+      {/* Dense popular searches — photo-backed strip under hero */}
       <section
         aria-labelledby="popular-heading"
-        className="border-b border-border bg-background"
+        className="relative isolate overflow-hidden border-b border-border"
       >
-        <div className="mx-auto max-w-6xl px-4 py-5 sm:px-6">
+        <Image
+          src="/images/pharmacy-shelves.webp"
+          alt=""
+          fill
+          className="object-cover opacity-40"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-background/88" aria-hidden />
+        <div className="relative mx-auto max-w-6xl px-4 py-5 sm:px-6">
           <div className="flex flex-wrap items-end justify-between gap-2">
             <h2
               id="popular-heading"
@@ -136,7 +144,7 @@ export default function HomePage() {
               <li key={d.id}>
                 <Link
                   href={`/search?drug=${d.id}`}
-                  className="inline-flex min-h-10 items-center rounded-lg border border-border bg-surface px-3 text-sm font-medium transition-colors hover:border-primary/35 hover:bg-accent"
+                  className="inline-flex min-h-10 items-center rounded-lg border border-border bg-card/95 px-3 text-sm font-medium shadow-sm transition-colors hover:border-primary/35 hover:bg-accent"
                 >
                   {d.genericName}
                   <span className="ml-1.5 text-muted-foreground">
