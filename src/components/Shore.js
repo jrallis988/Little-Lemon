@@ -25,11 +25,24 @@ export default function Shore() {
 
         <div className="shore__visual">
           <img
-            src="https://images.unsplash.com/photo-1473116763249-2faaef81ccda?auto=format&fit=crop&w=1400&q=80"
+            src="/images/shore-coast.jpg"
             alt="Empty shoreline at golden hour with gentle waves"
             loading="lazy"
           />
         </div>
+      </div>
+
+      <div className="section__inner shore__gallery" aria-label="Moments around the motel">
+        <img
+          src="/images/gallery-path.jpg"
+          alt="Sandy path leading toward the water"
+          loading="lazy"
+        />
+        <img
+          src="/images/gallery-bikes.jpg"
+          alt="Cruiser bike parked near the coast"
+          loading="lazy"
+        />
       </div>
     </section>
   );

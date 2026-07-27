@@ -2,10 +2,7 @@ export default function Hero() {
   return (
     <section className="hero" id="top" aria-label="Saltline Motel welcome">
       <div className="hero__media" aria-hidden="true">
-        <img
-          src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80"
-          alt=""
-        />
+        <img src="/images/hero-beach.jpg" alt="" />
         <div className="hero__shade" />
       </div>
 

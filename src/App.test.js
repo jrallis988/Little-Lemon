@@ -7,3 +7,18 @@ test("renders motel brand and booking CTA", () => {
   expect(screen.getAllByRole("link", { name: /book a stay/i }).length).toBeGreaterThan(0);
   expect(screen.getByRole("heading", { name: /book your room by the water/i })).toBeInTheDocument();
 });
+
+test("renders reviews and location sections", () => {
+  render(<App />);
+  expect(screen.getByRole("heading", { name: /why people come back/i })).toBeInTheDocument();
+  expect(
+    screen.getByRole("heading", { name: /steps from the sand in seabreeze cove/i })
+  ).toBeInTheDocument();
+  expect(screen.getByTitle(/map showing saltline motel/i)).toBeInTheDocument();
+});
+
+test("renders room details controls", () => {
+  render(<App />);
+  expect(screen.getAllByRole("button", { name: /view details/i }).length).toBeGreaterThan(0);
+  expect(screen.getByRole("link", { name: /skip to content/i })).toBeInTheDocument();
+});

@@ -1,6 +1,12 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { ROOMS } from "../data";
+import { useEffect, useMemo, useState } from "react";
+import {
+  ROOMS,
+  SITE,
+  estimateTotal,
+  isRoomAvailable,
+} from "../data";
 
 const today = () => new Date().toISOString().slice(0, 10);
 
@@ -23,7 +29,17 @@ const schema = Yup.object({
         return value > checkIn;
       }
     ),
-  room: Yup.string().required("Select a room"),
+  room: Yup.string()
+    .required("Select a room")
+    .test(
+      "available",
+      "Those dates are unavailable for this room — try another room or dates",
+      function available(value) {
+        const { checkIn, checkOut } = this.parent;
+        if (!value || !checkIn || !checkOut || checkOut <= checkIn) return true;
+        return isRoomAvailable(value, checkIn, checkOut);
+      }
+    ),
   guests: Yup.number()
     .min(1, "At least one guest")
     .max(6, "For larger groups, call the front desk")
@@ -31,18 +47,93 @@ const schema = Yup.object({
   notes: Yup.string().max(400, "Keep notes under 400 characters"),
 });
 
-const initialValues = {
-  name: "",
-  email: "",
-  phone: "",
-  checkIn: "",
-  checkOut: "",
-  room: ROOMS[0].id,
-  guests: 2,
-  notes: "",
-};
+function roomFromHash() {
+  if (typeof window === "undefined") return ROOMS[0].id;
+  const hash = window.location.hash;
+  const query = hash.includes("?") ? hash.split("?")[1] : "";
+  const params = new URLSearchParams(query);
+  const room = params.get("room");
+  return ROOMS.some((item) => item.id === room) ? room : ROOMS[0].id;
+}
+
+function buildMailto(values) {
+  const room = ROOMS.find((item) => item.id === values.room);
+  const estimate = estimateTotal(values.room, values.checkIn, values.checkOut);
+  const subject = encodeURIComponent(
+    `Booking request: ${room?.name || "Room"} (${values.checkIn} → ${values.checkOut})`
+  );
+  const body = encodeURIComponent(
+    [
+      `Name: ${values.name}`,
+      `Email: ${values.email}`,
+      `Phone: ${values.phone}`,
+      `Room: ${room?.name}`,
+      `Guests: ${values.guests}`,
+      `Check-in: ${values.checkIn}`,
+      `Check-out: ${values.checkOut}`,
+      estimate
+        ? `Estimate: ${estimate.nights} night(s) × $${estimate.rate} = $${estimate.total}`
+        : null,
+      values.notes ? `Notes: ${values.notes}` : null,
+    ]
+      .filter(Boolean)
+      .join("\n")
+  );
+  return `mailto:${SITE.email}?subject=${subject}&body=${body}`;
+}
+
+async function submitBooking(values) {
+  const formspreeId = process.env.REACT_APP_FORMSPREE_ID;
+  const room = ROOMS.find((item) => item.id === values.room);
+  const estimate = estimateTotal(values.room, values.checkIn, values.checkOut);
+
+  if (formspreeId) {
+    const response = await fetch(`https://formspree.io/f/${formspreeId}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...values,
+        roomName: room?.name,
+        estimate,
+        _subject: `Saltline booking: ${room?.name}`,
+      }),
+    });
+    if (!response.ok) {
+      throw new Error("We couldn’t send that request. Please try again or call us.");
+    }
+    return { method: "formspree" };
+  }
+
+  window.location.href = buildMailto(values);
+  return { method: "mailto" };
+}
 
 export default function BookingForm() {
+  const [roomId, setRoomId] = useState(roomFromHash);
+
+  useEffect(() => {
+    const sync = () => setRoomId(roomFromHash());
+    window.addEventListener("hashchange", sync);
+    return () => window.removeEventListener("hashchange", sync);
+  }, []);
+
+  const initialValues = useMemo(
+    () => ({
+      name: "",
+      email: "",
+      phone: "",
+      checkIn: "",
+      checkOut: "",
+      room: roomId,
+      guests: 2,
+      notes: "",
+    }),
+    [roomId]
+  );
+
   return (
     <section className="section booking" id="booking" aria-labelledby="booking-title">
       <p className="section__eyebrow">Reservations</p>
@@ -50,42 +141,82 @@ export default function BookingForm() {
         Book your room by the water.
       </h2>
       <p className="section__copy">
-        Send a request and we’ll confirm availability within a few hours.
+        Check dates for availability, then send a request. We’ll confirm by email
+        within a few hours.
       </p>
 
       <div className="booking__layout">
         <div className="booking__panel">
           <Formik
+            enableReinitialize
             initialValues={initialValues}
             validationSchema={schema}
-            onSubmit={(values, helpers) => {
-              helpers.setStatus({
-                success: true,
-                summary: values,
-              });
-              helpers.setSubmitting(false);
+            onSubmit={async (values, helpers) => {
+              try {
+                const result = await submitBooking(values);
+                helpers.setStatus({
+                  success: true,
+                  summary: values,
+                  method: result.method,
+                });
+              } catch (error) {
+                helpers.setStatus({
+                  success: false,
+                  error: error.message || "Something went wrong.",
+                });
+              } finally {
+                helpers.setSubmitting(false);
+              }
             }}
           >
-            {({ isSubmitting, status, resetForm }) =>
-              status?.success ? (
-                <div className="success" role="status">
-                  <h3>Request received</h3>
-                  <p>
-                    Thanks, {status.summary.name}. We’ll email{" "}
-                    {status.summary.email} to confirm your{" "}
-                    {ROOMS.find((room) => room.id === status.summary.room)?.name}{" "}
-                    stay from {status.summary.checkIn} to {status.summary.checkOut}.
-                  </p>
-                  <button
-                    className="btn btn-ghost"
-                    type="button"
-                    onClick={() => resetForm({ values: initialValues, status: undefined })}
-                  >
-                    Make another request
-                  </button>
-                </div>
-              ) : (
+            {({ isSubmitting, status, resetForm, values, setStatus }) => {
+              const estimate = estimateTotal(
+                values.room,
+                values.checkIn,
+                values.checkOut
+              );
+              const available =
+                values.checkIn &&
+                values.checkOut &&
+                values.checkOut > values.checkIn
+                  ? isRoomAvailable(values.room, values.checkIn, values.checkOut)
+                  : null;
+
+              if (status?.success) {
+                return (
+                  <div className="success" role="status">
+                    <h3>Request ready</h3>
+                    <p>
+                      Thanks, {status.summary.name}.{" "}
+                      {status.method === "formspree"
+                        ? `We received your request and will email ${status.summary.email} to confirm.`
+                        : `Your email draft to ${SITE.email} should be open — send it to finish the request.`}
+                    </p>
+                    <p>
+                      {ROOMS.find((room) => room.id === status.summary.room)?.name}{" "}
+                      from {status.summary.checkIn} to {status.summary.checkOut}.
+                    </p>
+                    <button
+                      className="btn btn-ghost"
+                      type="button"
+                      onClick={() =>
+                        resetForm({ values: initialValues, status: undefined })
+                      }
+                    >
+                      Make another request
+                    </button>
+                  </div>
+                );
+              }
+
+              return (
                 <Form className="booking__form" noValidate>
+                  {status?.error ? (
+                    <div className="form-alert" role="alert">
+                      {status.error}
+                    </div>
+                  ) : null}
+
                   <div className="form-row">
                     <div className="field">
                       <label htmlFor="name">Full name</label>
@@ -130,6 +261,7 @@ export default function BookingForm() {
                         name="checkIn"
                         type="date"
                         min={today()}
+                        onFocus={() => setStatus(undefined)}
                       />
                       <ErrorMessage className="field__error" component="div" name="checkIn" />
                     </div>
@@ -139,7 +271,8 @@ export default function BookingForm() {
                         id="checkOut"
                         name="checkOut"
                         type="date"
-                        min={today()}
+                        min={values.checkIn || today()}
+                        onFocus={() => setStatus(undefined)}
                       />
                       <ErrorMessage className="field__error" component="div" name="checkOut" />
                     </div>
@@ -150,12 +283,25 @@ export default function BookingForm() {
                     <Field id="room" name="room" as="select">
                       {ROOMS.map((room) => (
                         <option key={room.id} value={room.id}>
-                          {room.name} — {room.rate}
+                          {room.name} — {room.rateLabel}
                         </option>
                       ))}
                     </Field>
                     <ErrorMessage className="field__error" component="div" name="room" />
                   </div>
+
+                  {available === true && estimate ? (
+                    <p className="availability availability--ok" role="status">
+                      Available · {estimate.nights} night
+                      {estimate.nights === 1 ? "" : "s"} · estimated ${estimate.total}
+                    </p>
+                  ) : null}
+                  {available === false ? (
+                    <p className="availability availability--no" role="status">
+                      Those dates are booked for this room. Pick another room or
+                      shift your dates.
+                    </p>
+                  ) : null}
 
                   <div className="field">
                     <label htmlFor="notes">Notes (optional)</label>
@@ -172,21 +318,21 @@ export default function BookingForm() {
                     {isSubmitting ? "Sending…" : "Request booking"}
                   </button>
                 </Form>
-              )
-            }
+              );
+            }}
           </Formik>
         </div>
 
         <aside className="booking__aside">
           <p className="booking__note">
-            Check-in from 3:00 PM · Check-out by 11:00 AM · Free cancellation up
-            to 48 hours before arrival.
+            Check-in from {SITE.checkIn} · Check-out by {SITE.checkOut} · Free
+            cancellation up to 48 hours before arrival.
           </p>
           <div className="booking__contact">
             <strong>Prefer to call?</strong>
-            <span>(831) 555-0148</span>
-            <span>stay@saltlinemotel.com</span>
-            <span>118 Shore Road, Seabreeze Cove</span>
+            <a href={SITE.phoneHref}>{SITE.phone}</a>
+            <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+            <span>{SITE.addressShort}</span>
           </div>
         </aside>
       </div>

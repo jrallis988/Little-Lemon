@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 
 const LINKS = [
   { href: "#rooms", label: "Rooms" },
-  { href: "#shore", label: "The Shore" },
+  { href: "#reviews", label: "Reviews" },
+  { href: "#location", label: "Location" },
   { href: "#booking", label: "Book" },
 ];
 
