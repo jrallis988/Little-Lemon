@@ -69,23 +69,23 @@ export default function HomePage() {
           sizes="100vw"
         />
         <div
-          className="absolute inset-0 bg-gradient-to-r from-primary/92 via-primary/78 to-primary/35"
+          className="absolute inset-0 bg-gradient-to-r from-trust/94 via-trust/80 to-primary/40"
           aria-hidden
         />
         <div
-          className="absolute inset-0 bg-gradient-to-t from-primary/55 via-transparent to-primary/25"
+          className="absolute inset-0 bg-gradient-to-t from-trust/60 via-transparent to-primary/20"
           aria-hidden
         />
 
         <div className="relative mx-auto flex min-h-[min(68dvh,36rem)] max-w-6xl flex-col justify-center px-4 py-10 sm:min-h-[min(72dvh,38rem)] sm:px-6 sm:py-12">
-          <div className="max-w-2xl animate-trx-fade-up text-primary-foreground">
+          <div className="max-w-2xl animate-trx-fade-up text-trust-foreground">
             <p className="font-display text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
               Trump RX
             </p>
             <h1 className="mt-2 font-display text-2xl font-medium leading-snug tracking-tight sm:text-3xl md:text-4xl">
               Find the lowest prices on your prescriptions.
             </h1>
-            <p className="mt-3 max-w-lg text-base leading-relaxed text-primary-foreground/90 sm:text-lg">
+            <p className="mt-3 max-w-lg text-base leading-relaxed text-trust-foreground/90 sm:text-lg">
               Search brand and generic meds, compare local pharmacies, and show
               a digital coupon at the counter — a clearer Trump RX experience.
             </p>
@@ -93,7 +93,7 @@ export default function HomePage() {
 
           <div className="animate-trx-fade-up-delay mt-6 max-w-2xl">
             <DrugSearch size="hero" autoFocus />
-            <p className="mt-2.5 text-sm text-primary-foreground/85">
+            <p className="mt-2.5 text-sm text-trust-foreground/85">
               Popular:{" "}
               {POPULAR.slice(0, 4).map((d, i) => (
                 <span key={d.id}>
@@ -248,8 +248,8 @@ export default function HomePage() {
                   className="object-cover"
                   sizes="(max-width: 768px) 50vw, 25vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/15 to-transparent" />
-                <p className="absolute inset-x-0 bottom-0 p-3 text-sm font-semibold text-primary-foreground">
+                <div className="absolute inset-0 bg-gradient-to-t from-trust/85 via-trust/20 to-transparent" />
+                <p className="absolute inset-x-0 bottom-0 p-3 text-sm font-semibold text-trust-foreground">
                   {item.name}
                 </p>
               </li>
@@ -267,7 +267,7 @@ export default function HomePage() {
           className="object-cover"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-primary/88" aria-hidden />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/92 via-primary/85 to-trust/80" aria-hidden />
         <div className="relative mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-9">
           <div className="max-w-xl text-primary-foreground">
             <h2 className="font-display text-2xl font-semibold tracking-tight">
@@ -282,7 +282,7 @@ export default function HomePage() {
             href="/search"
             className={cn(
               buttonVariants({ variant: "secondary", size: "lg" }),
-              "min-h-11 shrink-0 gap-1.5 text-base"
+              "min-h-11 shrink-0 gap-1.5 border-0 bg-background text-base text-foreground hover:bg-background/90"
             )}
           >
             Compare prices
