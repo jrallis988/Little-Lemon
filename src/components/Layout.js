@@ -6,10 +6,8 @@ export default function Layout({ children }) {
       <Navbar />
       <main className="site-main">{children}</main>
       <footer className="site-footer">
-        <div className="brand-mark">
-          Disney<span className="jr">Jr</span>
-        </div>
-        <p>Streaming made for little learners and big imaginations.</p>
+        <p className="brand-plus-word footer-logo">Disney+</p>
+        <p>Disney Jr · Academy Rock and more, streaming anytime.</p>
       </footer>
     </div>
   );

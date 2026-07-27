@@ -1,12 +1,12 @@
-# Disney Jr Streaming
+# Disney+ · Disney Jr
 
-A playful streaming web app for **Disney Jr**, with a dedicated home for the original series **Academy Rock**.
+A Disney+-style streaming web app focused on **Disney Jr**, with a dedicated title page for **Academy Rock**.
 
 ## Features
 
-- Disney Jr branded home with a full-bleed hero and show browser
-- Dedicated **Academy Rock** show page with episodes, stage preview, and cast
-- Responsive layout for desktop and mobile
+- Dark cinematic Disney+ chrome (nav, hero, content rails)
+- Brand collection tiles and horizontal poster rows
+- Dedicated Academy Rock page with episodes and “More Like This”
 
 ## Getting started
 
@@ -16,9 +16,3 @@ npm start
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
-
-## Scripts
-
-- `npm start` — development server
-- `npm test` — run tests
-- `npm run build` — production build
