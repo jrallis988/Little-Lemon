@@ -15,20 +15,30 @@
       --orange: #F97316;
       --orange-soft: #FFF4EB;
       --ink: #0F172A;
-      --muted: #64748B;
-      --line: #E2E8F0;
-      --bg: #FFFFFF;
-      --soft: #F8FAFC;
-      --green: #16A34A;
+      --muted: #E2E8F0;
+      --line: rgba(255, 255, 255, 0.22);
+      --bg: #123A8C;
+      --soft: rgba(255, 255, 255, 0.12);
+      --green: #4ADE80;
+      --foam: #FFFFFF;
       --radius: 18px;
-      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --shadow: 0 18px 50px rgba(8, 20, 60, 0.28);
+      --mesh:
+        radial-gradient(ellipse 80% 60% at 20% 15%, #2F6FE0 0%, transparent 55%),
+        radial-gradient(ellipse 70% 55% at 78% 18%, #38BDF8 0%, transparent 50%),
+        radial-gradient(ellipse 65% 50% at 85% 78%, #A78BFA 0%, transparent 55%),
+        radial-gradient(ellipse 70% 55% at 18% 82%, #1E3A8A 0%, transparent 50%),
+        linear-gradient(160deg, #1D4ED8 0%, #1E40AF 42%, #312E81 100%);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: Poppins, system-ui, sans-serif;
-      color: var(--ink);
+      color: var(--foam);
       background: var(--bg);
+      background-image: var(--mesh);
+      background-attachment: fixed;
+      background-size: cover;
       line-height: 1.5;
       min-height: 100vh;
     }
@@ -52,21 +62,22 @@
       display: flex;
       gap: 1.25rem;
       align-items: center;
-      color: var(--muted);
+      color: rgba(255, 255, 255, 0.86);
       font-size: 0.95rem;
       font-weight: 500;
     }
-    .nav-links a:hover { color: var(--blue); }
+    .nav-links a:hover { color: white; }
     .btn-signin {
-      background: var(--blue);
+      background: rgba(255, 255, 255, 0.16);
       color: white;
-      border: 0;
+      border: 1px solid rgba(255, 255, 255, 0.28);
       border-radius: 999px;
       padding: 0.55rem 1rem;
       font-weight: 600;
       cursor: pointer;
+      backdrop-filter: blur(10px);
     }
-    .btn-signin:hover { background: var(--blue-dark); }
+    .btn-signin:hover { background: rgba(255, 255, 255, 0.24); }
 
     /* Logo */
     .logo {
@@ -80,7 +91,7 @@
       font-weight: 800;
       font-size: 1.55rem;
       letter-spacing: -0.03em;
-      color: var(--ink);
+      color: white;
     }
 
     /* Hero */
@@ -95,16 +106,17 @@
       margin-bottom: 1.25rem;
     }
     .hero-logo .logo-mark { width: 54px; height: 54px; }
-    .hero-logo .logo-word { font-size: 3rem; }
+    .hero-logo .logo-word { font-size: 3rem; color: white; }
     .hero h1 {
       font-family: Nunito, sans-serif;
       font-size: clamp(1.6rem, 3vw, 2.2rem);
       font-weight: 800;
       letter-spacing: -0.03em;
       margin-bottom: 0.5rem;
+      color: white;
     }
     .hero p {
-      color: var(--muted);
+      color: rgba(255, 255, 255, 0.88);
       max-width: 36rem;
       margin: 0 auto 1.75rem;
     }
@@ -120,15 +132,14 @@
       align-items: center;
       gap: 0.75rem;
       background: white;
-      border: 2px solid var(--line);
+      border: 0;
       border-radius: 999px;
       padding: 0.85rem 0.85rem 0.85rem 1.25rem;
       box-shadow: var(--shadow);
-      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      transition: box-shadow 0.15s ease, transform 0.15s ease;
     }
     .search-box:focus-within {
-      border-color: var(--blue);
-      box-shadow: 0 0 0 4px rgba(27, 111, 248, 0.12), var(--shadow);
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.22), var(--shadow);
     }
     .search-box input {
       flex: 1;
@@ -136,9 +147,11 @@
       outline: none;
       font-size: 1.05rem;
       background: transparent;
+      color: #0F172A;
     }
+    .search-box input::placeholder { color: #94A3B8; }
     .search-box button {
-      background: var(--blue);
+      background: var(--orange);
       color: white;
       border: 0;
       border-radius: 999px;
@@ -146,20 +159,21 @@
       font-weight: 600;
       cursor: pointer;
     }
-    .search-box button:hover { background: var(--blue-dark); }
+    .search-box button:hover { background: #EA580C; }
     .suggestions {
       position: absolute;
       left: 0;
       right: 0;
       top: calc(100% + 0.45rem);
       background: white;
-      border: 1px solid var(--line);
+      border: 1px solid #E2E8F0;
       border-radius: 1rem;
       box-shadow: var(--shadow);
       overflow: hidden;
       display: none;
       z-index: 20;
       text-align: left;
+      color: #0F172A;
     }
     .suggestions.open { display: block; }
     .suggestions button {
@@ -169,7 +183,7 @@
       text-align: left;
       padding: 0.85rem 1.1rem;
       cursor: pointer;
-      color: var(--ink);
+      color: #0F172A;
     }
     .suggestions button:hover,
     .suggestions button.active {
@@ -185,7 +199,7 @@
       gap: 0.75rem 1.25rem;
       margin: 1.75rem auto 0;
       max-width: 760px;
-      color: var(--muted);
+      color: rgba(255, 255, 255, 0.9);
       font-size: 0.88rem;
       font-weight: 500;
     }
@@ -200,6 +214,7 @@
       border-radius: 50%;
       background: var(--green);
       display: inline-block;
+      box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.2);
     }
 
     /* Topics */
@@ -211,9 +226,10 @@
       font-size: 1.6rem;
       font-weight: 800;
       margin-bottom: 0.35rem;
+      color: white;
     }
     .topics .sub {
-      color: var(--muted);
+      color: rgba(255, 255, 255, 0.82);
       margin-bottom: 1.5rem;
     }
     .topic-grid {
@@ -222,16 +238,18 @@
       gap: 1rem;
     }
     .topic-card {
-      border: 1px solid var(--line);
+      border: 1px solid rgba(255, 255, 255, 0.22);
       border-radius: var(--radius);
       padding: 1.15rem;
-      background: white;
-      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+      background: rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(14px);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
       min-height: 132px;
+      color: white;
     }
     .topic-card:hover {
       transform: translateY(-3px);
-      border-color: #BFDBFE;
+      background: rgba(255, 255, 255, 0.22);
       box-shadow: var(--shadow);
     }
     .topic-emoji {
@@ -245,15 +263,15 @@
       margin-bottom: 0.25rem;
     }
     .topic-card p {
-      color: var(--muted);
+      color: rgba(255, 255, 255, 0.8);
       font-size: 0.88rem;
     }
 
     /* Footer */
     footer {
-      border-top: 1px solid var(--line);
+      border-top: 1px solid rgba(255, 255, 255, 0.18);
       padding: 1.5rem 0 2rem;
-      color: var(--muted);
+      color: rgba(255, 255, 255, 0.78);
       font-size: 0.9rem;
     }
     .footer-row {
@@ -268,7 +286,7 @@
       gap: 1rem;
       flex-wrap: wrap;
     }
-    .footer-links a:hover { color: var(--blue); }
+    .footer-links a:hover { color: white; }
 
     @media (max-width: 900px) {
       .topic-grid { grid-template-columns: repeat(2, 1fr); }
@@ -322,8 +340,8 @@
           </svg>
           <span class="logo-word">surf</span>
         </div>
-        <h1>Safe search for curious kids</h1>
-        <p>A clean, search-first engine for grades 1–8. Academic sources only. No ads. Safety built in.</p>
+        <h1>Search first. Learn safely. Ride curiosity.</h1>
+        <p>Surf is the educational search engine designed for students, by educators and technologists.</p>
 
         <form class="search-shell" id="searchForm" action="surf_results.html" method="get" autocomplete="off">
           <div class="search-box">
@@ -335,7 +353,7 @@
               id="searchInput"
               name="q"
               type="search"
-              placeholder="Search the solar system, dinosaurs, fractions…"
+              placeholder="Search for topics, homework help and more…"
               aria-label="Search"
               aria-autocomplete="list"
               aria-controls="suggestions"

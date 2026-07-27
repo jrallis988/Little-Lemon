@@ -16,17 +16,26 @@
       --ink: #0F172A;
       --muted: #64748B;
       --line: #E2E8F0;
-      --bg: #FFFFFF;
+      --bg: #123A8C;
       --soft: #F8FAFC;
       --green: #16A34A;
       --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --mesh:
+        radial-gradient(ellipse 80% 60% at 20% 15%, #2F6FE0 0%, transparent 55%),
+        radial-gradient(ellipse 70% 55% at 78% 18%, #38BDF8 0%, transparent 50%),
+        radial-gradient(ellipse 65% 50% at 85% 78%, #A78BFA 0%, transparent 55%),
+        radial-gradient(ellipse 70% 55% at 18% 82%, #1E3A8A 0%, transparent 50%),
+        linear-gradient(160deg, #1D4ED8 0%, #1E40AF 42%, #312E81 100%);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: Poppins, system-ui, sans-serif;
       color: var(--ink);
       background: var(--bg);
+      background-image: var(--mesh);
+      background-attachment: fixed;
       line-height: 1.5;
+      min-height: 100vh;
     }
     a { color: inherit; text-decoration: none; }
     button, input { font: inherit; }
@@ -36,9 +45,9 @@
       position: sticky;
       top: 0;
       z-index: 30;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--line);
+      background: rgba(15, 40, 110, 0.72);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.16);
     }
     .header-row {
       display: flex;
@@ -57,27 +66,30 @@
       font-weight: 800;
       font-size: 1.35rem;
       letter-spacing: -0.03em;
+      color: white;
     }
     .search-box {
       flex: 1;
       display: flex;
       align-items: center;
       gap: 0.6rem;
-      border: 2px solid var(--line);
+      border: 0;
       border-radius: 999px;
       padding: 0.55rem 0.55rem 0.55rem 1rem;
       background: white;
+      box-shadow: 0 8px 24px rgba(8, 20, 60, 0.18);
     }
-    .search-box:focus-within { border-color: var(--blue); }
+    .search-box:focus-within { box-shadow: 0 0 0 3px rgba(255,255,255,0.25), 0 8px 24px rgba(8, 20, 60, 0.18); }
     .search-box input {
       flex: 1;
       border: 0;
       outline: none;
       background: transparent;
+      color: var(--ink);
     }
     .search-box button {
       border: 0;
-      background: var(--blue);
+      background: var(--orange);
       color: white;
       border-radius: 999px;
       padding: 0.55rem 1rem;
@@ -88,8 +100,9 @@
       display: inline-flex;
       align-items: center;
       gap: 0.35rem;
-      background: #ECFDF5;
-      color: var(--green);
+      background: rgba(255,255,255,0.14);
+      color: #BBF7D0;
+      border: 1px solid rgba(255,255,255,0.18);
       border-radius: 999px;
       padding: 0.45rem 0.8rem;
       font-size: 0.82rem;
@@ -100,7 +113,7 @@
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: var(--green);
+      background: #4ADE80;
       display: inline-block;
     }
 
@@ -113,7 +126,7 @@
     .filter {
       border: 0;
       background: transparent;
-      color: var(--muted);
+      color: rgba(255,255,255,0.78);
       font-weight: 600;
       padding: 0.45rem 0.85rem;
       border-radius: 999px;
@@ -121,22 +134,22 @@
       white-space: nowrap;
     }
     .filter.active {
-      background: #EFF6FF;
-      color: var(--blue);
+      background: rgba(255,255,255,0.18);
+      color: white;
     }
 
     .meta {
-      color: var(--muted);
+      color: rgba(255,255,255,0.86);
       font-size: 0.9rem;
       padding: 1.1rem 0 0.75rem;
     }
 
     .panel {
-      border: 1px solid var(--line);
+      border: 1px solid rgba(255,255,255,0.55);
       border-radius: 1.1rem;
       padding: 1.1rem 1.2rem;
       margin-bottom: 1rem;
-      background: white;
+      background: rgba(255,255,255,0.94);
       box-shadow: var(--shadow);
     }
     .panel h2 {
@@ -204,6 +217,15 @@
     }
     .ai-reply.visible { display: block; }
     .ai-status { color: var(--muted); font-size: 0.88rem; margin-top: 0.55rem; }
+
+    #results {
+      border: 1px solid rgba(255,255,255,0.55);
+      border-radius: 1.1rem;
+      padding: 0.35rem 1.2rem;
+      margin-bottom: 1rem;
+      background: rgba(255,255,255,0.94);
+      box-shadow: var(--shadow);
+    }
 
     .result {
       padding: 1.15rem 0;
