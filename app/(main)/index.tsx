@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react';
+import { router } from 'expo-router';
 import {
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -108,6 +110,20 @@ export default function EditorialScreen() {
                 ) : null}
 
                 <JustFoundPanel artists={justFound} />
+
+                <Pressable
+                  style={styles.historyTeaser}
+                  onPress={() => router.push('/(main)/history')}
+                >
+                  <Text style={styles.historyKicker}>Archive</Text>
+                  <Text style={styles.historyTitle}>
+                    PureVolume → StaticVolume
+                  </Text>
+                  <Text style={styles.historyBody}>
+                    From the 2003 portal launch through shutdown — and why this
+                    revival exists. Open the full timeline →
+                  </Text>
+                </Pressable>
 
                 <View style={styles.panel}>
                   <View style={styles.panelHeader}>
@@ -324,5 +340,29 @@ const styles = StyleSheet.create({
   reviewPad: {
     padding: spacing.sm,
     paddingBottom: 0,
+  },
+  historyTeaser: {
+    ...portalBox,
+    padding: spacing.sm,
+    gap: 4,
+    borderColor: colors.link,
+  },
+  historyKicker: {
+    fontFamily: fonts.sansBold,
+    fontSize: 10,
+    letterSpacing: 0.5,
+    color: colors.link,
+    textTransform: 'uppercase',
+  },
+  historyTitle: {
+    fontFamily: fonts.sansBold,
+    fontSize: 16,
+    color: colors.text,
+  },
+  historyBody: {
+    fontFamily: fonts.sans,
+    fontSize: 13,
+    color: colors.textMuted,
+    lineHeight: 18,
   },
 });

@@ -10,7 +10,12 @@ import {
 
 import { colors, fonts, spacing } from '@/constants/theme';
 
-const PRIMARY_NAV = ['Music', 'News', 'People', 'Charts'] as const;
+const PRIMARY_NAV = [
+  { label: 'Music', href: '/(main)' as const },
+  { label: 'Find', href: '/(main)/explore' as const },
+  { label: 'People', href: '/(main)/artists' as const },
+  { label: 'History', href: '/(main)/history' as const },
+] as const;
 
 /**
  * Classic PureVolume top chrome — black bar, white wordmark, search, auth.
@@ -24,16 +29,22 @@ export function PortalHeader() {
   return (
     <View style={styles.bar}>
       <View style={styles.left}>
-        <Text style={styles.logo}>staticvolume</Text>
+        <Pressable onPress={() => router.push('/(main)')}>
+          <Text style={styles.logo}>staticvolume</Text>
+        </Pressable>
         {showNav ? (
           <View style={styles.nav}>
             {PRIMARY_NAV.map((item) => (
-              <Text key={item} style={styles.navItem}>
-                {item}
-              </Text>
+              <Pressable key={item.label} onPress={() => router.push(item.href)}>
+                <Text style={styles.navItem}>{item.label}</Text>
+              </Pressable>
             ))}
           </View>
-        ) : null}
+        ) : (
+          <Pressable onPress={() => router.push('/(main)/history')} hitSlop={6}>
+            <Text style={styles.navItem}>History</Text>
+          </Pressable>
+        )}
       </View>
       <View style={styles.right}>
         {showInlineSearch ? (

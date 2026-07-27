@@ -1,0 +1,24 @@
+# StaticVolume — Cursor rules
+
+## Vision
+Spiritual successor to **PureVolume** (2003–2018 indie discovery portal) + **Letterboxd for music**.
+Read `PROJECT.md` before large UI or product changes.
+
+## Hard product rules
+- **Not a music player.** No GlobalAudioBar, waveform transport, Expo AV playback UI, or “Listen Now” streaming chrome.
+- Artist signals: **Downloads + Reposts**. Play counts private. No track likes.
+- Keep PureVolume portal aesthetic: light canvas, black header, blue links, Barlow, mosaic/grid, bordered dossiers.
+- Avoid purple SaaS gradients, glassmorphism, Inter/Roboto defaults, and hero card clutter.
+
+## Must-have surfaces
+- Editorial home (mosaic + charts + Just Found + reviews)
+- Find (unsigned / brand-new)
+- Artists A–Z + search hybrid
+- Catalog Search (artist · song · genre)
+- Activity / diary / lists (Letterboxd layer)
+- **History timeline** (PureVolume founding → present / StaticVolume)
+
+## When adding features
+- Prefer portal boxes, section headers, and table-density lists over card stacks in heroes.
+- Emerging finds and contemporary catalog coexist (`catalogKind`).
+- Timeline copy should stay historically grounded (2003 launch, PurePicks, SpinMedia 2010, Hive 2016, shutdown 2018).

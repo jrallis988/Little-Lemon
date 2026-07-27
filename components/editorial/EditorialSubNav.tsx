@@ -9,6 +9,7 @@ export const EDITORIAL_TABS = [
   'Top Songs',
   'Top Downloads',
   'Browse Artists',
+  'History',
   'Past Features',
   'Albums',
 ] as const;
@@ -44,6 +45,10 @@ export function EditorialSubNav({ active, onChange }: EditorialSubNavProps) {
                   }
                   if (tab === 'New Artists') {
                     router.push('/(main)/explore');
+                    return;
+                  }
+                  if (tab === 'History') {
+                    router.push('/(main)/history');
                     return;
                   }
                   if (tab === 'Past Features' || tab === 'Albums') {

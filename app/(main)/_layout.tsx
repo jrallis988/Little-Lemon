@@ -72,6 +72,14 @@ export default function MainLayout() {
           }}
         />
         <Tabs.Screen
+          name="history"
+          options={{
+            title: 'History',
+            href: null,
+            headerShown: true,
+          }}
+        />
+        <Tabs.Screen
           name="following"
           options={{
             title: 'Activity',
