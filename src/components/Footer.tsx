@@ -1,3 +1,5 @@
+import { links } from "../data/links";
+
 export function Footer() {
   return (
     <footer className="border-t border-ink/10 bg-ink text-foam">
@@ -9,19 +11,26 @@ export function Footer() {
           <p className="mt-2 max-w-sm text-sm text-foam/70">
             Smuttynose Brewing · Hampton, New Hampshire · Est. 1994
           </p>
+          <p className="mt-1 text-sm text-foam/60">{links.address}</p>
         </div>
         <div className="flex flex-wrap gap-6 text-sm text-foam/80">
           <a href="#beers" className="transition-colors hover:text-foam">
             Beers
           </a>
+          <a href="#events" className="transition-colors hover:text-foam">
+            Events
+          </a>
+          <a href="#food" className="transition-colors hover:text-foam">
+            Food
+          </a>
           <a href="#visit" className="transition-colors hover:text-foam">
             Visit
           </a>
-          <a href="#story" className="transition-colors hover:text-foam">
-            Story
+          <a href="#shop" className="transition-colors hover:text-foam">
+            Shop
           </a>
           <a
-            href="https://smuttynose.com/"
+            href={links.home}
             target="_blank"
             rel="noreferrer"
             className="transition-colors hover:text-foam"

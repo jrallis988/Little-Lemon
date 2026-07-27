@@ -2,7 +2,10 @@ import { useEffect, useRef, useState } from "react";
 
 const links = [
   { href: "#beers", label: "Beers" },
+  { href: "#events", label: "Events" },
+  { href: "#food", label: "Food" },
   { href: "#visit", label: "Visit" },
+  { href: "#shop", label: "Shop" },
   { href: "#story", label: "Story" },
 ];
 
@@ -62,7 +65,7 @@ export function Header() {
           Smuttynose
         </a>
 
-        <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-6 lg:flex" aria-label="Primary">
           {links.map((link) => (
             <a
               key={link.href}
@@ -82,7 +85,7 @@ export function Header() {
 
         <button
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center md:hidden"
+          className="inline-flex h-10 w-10 items-center justify-center lg:hidden"
           aria-expanded={open}
           aria-controls="mobile-nav"
           aria-label={open ? "Close menu" : "Open menu"}
@@ -112,7 +115,7 @@ export function Header() {
 
       <div
         id="mobile-nav"
-        className={`border-t border-foam/10 md:hidden ${open ? "block" : "hidden"}`}
+        className={`border-t border-foam/10 lg:hidden ${open ? "block" : "hidden"}`}
         aria-hidden={!open}
       >
         <nav className="flex flex-col gap-1 px-5 py-4" aria-label="Mobile">

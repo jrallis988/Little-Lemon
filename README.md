@@ -1,6 +1,6 @@
 # Smuttynose Brewing
 
-Redesigned marketing site for **Smuttynose Brewing** in Hampton, New Hampshire — coastal New England craft brewery on Towle Farm.
+Redesigned marketing site for **Smuttynose Brewing** in Hampton, New Hampshire — Towle Farm campus, Backyard events, tap list, food, shop & Suds Club.
 
 ## Stack
 

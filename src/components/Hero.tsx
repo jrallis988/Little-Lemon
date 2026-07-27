@@ -6,11 +6,11 @@ export function Hero() {
       aria-label="Smuttynose Brewing hero"
     >
       <div className="absolute inset-0">
-        <img
-          src="/images/hero-pour.jpg"
-          alt="Golden ale pouring from a tap into a glass"
-          className="h-full w-full object-cover animate-ken-burns"
-        />
+          <img
+            src="/images/taproom-bar.jpg"
+            alt="Warmly lit brewery bar with draft taps and chalkboard menus"
+            className="h-full w-full object-cover animate-ken-burns"
+          />
         <div className="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/55 to-ink/20" />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/75 via-transparent to-ink/40" />
       </div>
