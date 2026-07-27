@@ -3,6 +3,7 @@ import { SITE } from "../data";
 
 const LINKS = [
   { href: "#rooms", label: "Rooms" },
+  { href: "#rates", label: "Rates" },
   { href: "#reviews", label: "Reviews" },
   { href: "#location", label: "Location" },
   { href: "#booking", label: "Book" },
@@ -33,7 +34,8 @@ export default function Nav() {
       <header className={`nav${scrolled || open ? " is-scrolled" : ""}`}>
         <div className="nav__inner">
           <a className="nav__brand" href="#top" onClick={close}>
-            {SITE.name}
+            <img className="nav__mark" src="/icon.svg" alt="" width="36" height="36" />
+            <span>{SITE.name}</span>
           </a>
 
           <ul className="nav__links">

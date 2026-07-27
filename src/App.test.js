@@ -19,7 +19,7 @@ test("renders reviews and location sections", () => {
   ).toBeInTheDocument();
 });
 
-test("renders real booking and contact details", () => {
+test("renders live rates, rooms, and contact details", () => {
   render(<App />);
   expect(screen.getAllByRole("button", { name: /view details/i }).length).toBeGreaterThan(0);
   expect(screen.getByRole("link", { name: /skip to content/i })).toBeInTheDocument();
@@ -29,4 +29,10 @@ test("renders real booking and contact details", () => {
   ).toHaveAttribute("href", expect.stringContaining("rezstream.com"));
   expect(screen.getAllByText(/seascapeinn@hotmail.com/i).length).toBeGreaterThan(0);
   expect(screen.getByRole("heading", { name: /standard queen/i })).toBeInTheDocument();
+  expect(
+    screen.getByRole("heading", { name: /check exact prices for your dates/i })
+  ).toBeInTheDocument();
+  expect(
+    screen.getByRole("button", { name: /see live rates & book/i })
+  ).toBeInTheDocument();
 });

@@ -31,6 +31,7 @@ export default function Footer() {
 
           <nav className="footer__nav" aria-label="Footer">
             <a href="#rooms">Rooms</a>
+            <a href="#rates">Rates</a>
             <a href="#shore">Plaice Cove</a>
             <a href="#reviews">Guest notes</a>
             <a href="#location">Location</a>

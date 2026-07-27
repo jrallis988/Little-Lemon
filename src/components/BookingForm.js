@@ -141,6 +141,9 @@ export default function BookingForm() {
         >
           Check availability & book
         </a>
+        <a className="btn btn-ghost" href="#rates">
+          Pick dates for live rates
+        </a>
         <a className="btn btn-ghost" href={SITE.phoneHref}>
           Call {SITE.phone}
         </a>

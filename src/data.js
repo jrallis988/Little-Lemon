@@ -24,8 +24,17 @@ export const SITE = {
   checkIn: "3:00 PM",
   checkOut: "10:00 AM",
   hours: "Front desk 8:30 AM – 10:00 PM",
-  typicalRateNote: "Rates often run around $165/night depending on dates — confirm live pricing when you book.",
+  typicalRateNote:
+    "Rates often run around $165/night depending on dates — use the live booking calendar for exact pricing.",
 };
+
+export function buildBookingUrl({ checkIn, checkOut, guests = 2 } = {}) {
+  const url = new URL(SITE.bookingUrl);
+  if (checkIn) url.searchParams.set("ArrivalDate", checkIn);
+  if (checkOut) url.searchParams.set("DepartureDate", checkOut);
+  if (guests) url.searchParams.set("Adults", String(guests));
+  return url.toString();
+}
 
 export const ROOMS = [
   {
@@ -38,16 +47,16 @@ export const ROOMS = [
     size: "Standard room",
     description:
       "A clean queen room with the essentials for a North Beach stay—air-conditioning, fridge, microwave, cable TV, and free Wi‑Fi.",
-    image: "/images/seascape-beach.jpg",
-    imageAlt: "Seascape Inn guest room with white bedding and beach-themed wall art",
+    image: "/images/room-queen.jpg",
+    imageAlt: "Seascape Inn queen guest room with coastal bedding",
     gallery: [
       {
-        src: "/images/seascape-beach.jpg",
-        alt: "Clean guest room with beds and BEACH letter wall art",
+        src: "/images/room-queen.jpg",
+        alt: "Queen room with beach-themed wall art",
       },
       {
-        src: "/images/seascape-gazebo.jpg",
-        alt: "Gazebo lawn guests can enjoy during their stay",
+        src: "/images/exterior-courtyard.jpg",
+        alt: "Seascape Inn courtyard with room balconies",
       },
     ],
     amenities: [
@@ -70,16 +79,16 @@ export const ROOMS = [
     size: "Standard room",
     description:
       "Two double beds for friends or family—steps from North Beach and a quieter stretch of Ocean Boulevard than the main Hampton strip.",
-    image: "/images/seascape-beach.jpg",
-    imageAlt: "Seascape Inn room setup suited for two beds",
+    image: "/images/room-doubles.jpg",
+    imageAlt: "Guest room with two double beds at Seascape Inn",
     gallery: [
       {
-        src: "/images/seascape-beach.jpg",
-        alt: "Guest room interior at Seascape Inn",
+        src: "/images/room-doubles.jpg",
+        alt: "Two-bed guest room with matching quilts",
       },
       {
-        src: "/images/seascape-vacancy.jpg",
-        alt: "Seascape Inn sign along Ocean Boulevard",
+        src: "/images/exterior-courtyard.jpg",
+        alt: "Courtyard seating outside guest rooms",
       },
     ],
     amenities: [
@@ -102,16 +111,16 @@ export const ROOMS = [
     size: "Economy room",
     description:
       "A practical layout with a double and a single bed—good value for a short Hampton getaway near the sand.",
-    image: "/images/seascape-exterior.jpg",
-    imageAlt: "Exterior view of Seascape Inn at Plaice Cove",
+    image: "/images/room-economy.jpg",
+    imageAlt: "Economy room with double and twin beds",
     gallery: [
       {
-        src: "/images/seascape-exterior.jpg",
-        alt: "Seascape Inn exterior",
+        src: "/images/room-economy.jpg",
+        alt: "Economy room with colorful quilts and twin plus double bed",
       },
       {
         src: "/images/seascape-hampton-beach.jpg",
-        alt: "Hampton Beach welcome area with dune grass",
+        alt: "Hampton Beach area with dune grass",
       },
     ],
     amenities: [
@@ -133,16 +142,20 @@ export const ROOMS = [
     size: "Junior suite",
     description:
       "Extra space with two queen beds for a longer stay—still across from the beach with gazebo and BBQ access on the lawn.",
-    image: "/images/seascape-gazebo.jpg",
-    imageAlt: "Outdoor gazebo and lawn at Seascape Inn",
+    image: "/images/gazebo-bbq.jpg",
+    imageAlt: "Gazebo and BBQ lawn for suite guests",
     gallery: [
       {
-        src: "/images/seascape-gazebo.jpg",
-        alt: "Gazebo and patio seating at Seascape Inn",
+        src: "/images/gazebo-bbq.jpg",
+        alt: "Gazebo and barbecue area at Seascape Inn",
       },
       {
-        src: "/images/seascape-beach.jpg",
-        alt: "Bright guest room interior",
+        src: "/images/room-doubles.jpg",
+        alt: "Spacious two-bed room layout",
+      },
+      {
+        src: "/images/exterior-courtyard.jpg",
+        alt: "Inn exterior and courtyard",
       },
     ],
     amenities: [
@@ -249,12 +262,20 @@ export const GALLERY = [
     alt: "Sunrise over North Beach near Seascape Inn",
   },
   {
+    src: "/images/exterior-courtyard.jpg",
+    alt: "Seascape Inn courtyard and guest room balconies",
+  },
+  {
     src: "/images/nh-seawall.jpg",
     alt: "Hampton Beach sea wall and sandy shore",
   },
   {
-    src: "/images/seascape-gazebo.jpg",
+    src: "/images/gazebo-bbq.jpg",
     alt: "Gazebo and guest BBQ lawn at Seascape Inn",
+  },
+  {
+    src: "/images/room-doubles.jpg",
+    alt: "Guest room with two beds at Seascape Inn",
   },
   {
     src: "/images/nh-boardwalk.jpg",
@@ -265,16 +286,16 @@ export const GALLERY = [
     alt: "Seascape Inn sign along Ocean Boulevard",
   },
   {
+    src: "/images/coast-view.jpg",
+    alt: "Coastal view near Hampton Beach",
+  },
+  {
     src: "/images/nh-north-view.jpg",
     alt: "View of Hampton Beach looking south from the north end",
   },
   {
     src: "/images/seascape-hampton-beach.jpg",
     alt: "Welcome to Hampton Beach sign with dune grass",
-  },
-  {
-    src: "/images/seascape-dog-beach.jpg",
-    alt: "Busy summer day on the sand near Hampton Beach",
   },
 ];
 

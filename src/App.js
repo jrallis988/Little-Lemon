@@ -1,6 +1,7 @@
 import Nav from "./components/Nav";
 import Hero from "./components/Hero";
 import Rooms from "./components/Rooms";
+import LiveRates from "./components/LiveRates";
 import Shore from "./components/Shore";
 import Reviews from "./components/Reviews";
 import Location from "./components/Location";
@@ -17,6 +18,7 @@ export default function App() {
       <main id="main">
         <Hero />
         <Rooms />
+        <LiveRates />
         <Shore />
         <Reviews />
         <Location />
