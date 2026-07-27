@@ -58,8 +58,8 @@ export default function MainLayout() {
         <Tabs.Screen
           name="explore"
           options={{
-            title: 'Scene',
-            tabBarLabel: ({ focused }) => <TabLabel label="Scene" focused={focused} />,
+            title: 'Find',
+            tabBarLabel: ({ focused }) => <TabLabel label="Find" focused={focused} />,
             tabBarIcon: () => null,
           }}
         />

@@ -41,9 +41,10 @@ export default function ProfileScreen() {
           <View style={styles.pitch}>
             <Text style={styles.brand}>staticvolume</Text>
             <Text style={styles.lede}>
-              The music version of Letterboxd — log tracks, write reviews, keep
-              lists, follow people&apos;s taste. Artists still get downloads and
-              reposts. Nobody gets a music player.
+              The music version of Letterboxd — and a place to actually find
+              unsigned bands and brand-new friend groups. Log tracks, write
+              reviews, keep lists. Artists get downloads and reposts. Nobody
+              gets a music player.
             </Text>
             {!isSupabaseConfigured ? (
               <Text style={styles.warn}>

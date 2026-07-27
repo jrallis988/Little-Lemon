@@ -35,12 +35,22 @@ export function DirectoryArtistRow({
           </Text>
         </View>
         <View style={styles.meta}>
-          <Text style={styles.name} numberOfLines={1}>
-            {artist.displayName}
-          </Text>
+          <View style={styles.nameRow}>
+            <Text style={styles.name} numberOfLines={1}>
+              {artist.displayName}
+            </Text>
+            {artist.status === 'UNSIGNED' ? (
+              <Text style={styles.unsigned}>UNSIGNED</Text>
+            ) : null}
+          </View>
           <Text style={styles.origin} numberOfLines={1}>
             {artist.geography ?? 'ORIGIN: N/A'}
           </Text>
+          {artist.lineupNote ? (
+            <Text style={styles.lineup} numberOfLines={1}>
+              {artist.lineupNote}
+            </Text>
+          ) : null}
           <View style={styles.tags}>
             {tags.map((tag) => (
               <View key={tag} style={styles.tag}>
@@ -91,12 +101,24 @@ const styles = StyleSheet.create({
     gap: 3,
     minWidth: 0,
   },
+  nameRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
   name: {
     fontFamily: fonts.sans,
     fontSize: 12,
     letterSpacing: 0.3,
     color: colors.text,
     textTransform: 'uppercase',
+    flexShrink: 1,
+  },
+  unsigned: {
+    fontFamily: fonts.sansBold,
+    fontSize: 8,
+    letterSpacing: 0.4,
+    color: colors.link,
   },
   origin: {
     fontFamily: fonts.sans,
@@ -104,6 +126,11 @@ const styles = StyleSheet.create({
     letterSpacing: 0.3,
     color: colors.textMuted,
     textTransform: 'uppercase',
+  },
+  lineup: {
+    fontFamily: fonts.sans,
+    fontSize: 10,
+    color: colors.textMuted,
   },
   tags: {
     flexDirection: 'row',

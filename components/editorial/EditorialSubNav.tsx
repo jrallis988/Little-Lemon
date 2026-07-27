@@ -5,6 +5,7 @@ import { colors, fonts } from '@/constants/theme';
 
 export const EDITORIAL_TABS = [
   'Featured',
+  'New Artists',
   'Top Songs',
   'Top Downloads',
   'Browse Artists',
@@ -39,6 +40,10 @@ export function EditorialSubNav({ active, onChange }: EditorialSubNavProps) {
                 onPress={() => {
                   if (tab === 'Browse Artists') {
                     router.push('/(main)/artists');
+                    return;
+                  }
+                  if (tab === 'New Artists') {
+                    router.push('/(main)/explore');
                     return;
                   }
                   if (tab === 'Past Features' || tab === 'Albums') {

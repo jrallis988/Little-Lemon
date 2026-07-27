@@ -16,6 +16,7 @@ import { ListeningList } from '@/components/editorial/ListeningList';
 import { PortalHeader } from '@/components/editorial/PortalHeader';
 import { RecentlyFeaturedList } from '@/components/editorial/RecentlyFeaturedList';
 import { TrackChartRow } from '@/components/editorial/TrackChartRow';
+import { JustFoundPanel } from '@/components/discovery/JustFoundPanel';
 import { ListCard } from '@/components/social/ListCard';
 import { ReviewCard } from '@/components/social/ReviewCard';
 import { StaticBackground } from '@/components/ui/StaticBackground';
@@ -27,6 +28,7 @@ import {
   EVERYBODY_LISTENING,
   FEATURED_SPOTLIGHT,
   RECENTLY_FEATURED,
+  brandNewArtists,
   getTrackById,
   popularReviews,
   tracksByDownloads,
@@ -37,7 +39,7 @@ const WIDE = 900;
 const MID = 700;
 
 /**
- * Editorial homepage — PureVolume discovery frame + Letterboxd social taste.
+ * Editorial homepage — find unsigned bands + Letterboxd taste + PureVolume portal.
  * No music player.
  */
 export default function EditorialScreen() {
@@ -70,6 +72,7 @@ export default function EditorialScreen() {
   const topDownloads = useMemo(() => tracksByDownloads(), []);
   const reviews = useMemo(() => popularReviews(3), []);
   const lists = useMemo(() => DEMO_LISTS.slice(0, 2), []);
+  const justFound = useMemo(() => brandNewArtists(4), []);
 
   return (
     <StaticBackground>
@@ -103,6 +106,8 @@ export default function EditorialScreen() {
                     <ListeningList tracks={listening.slice(0, 4)} />
                   </View>
                 ) : null}
+
+                <JustFoundPanel artists={justFound} />
 
                 <View style={styles.panel}>
                   <View style={styles.panelHeader}>

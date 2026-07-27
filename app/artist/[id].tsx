@@ -6,10 +6,11 @@ import { TrackListing } from '@/components/tracks/TrackListing';
 import { StaticBackground } from '@/components/ui/StaticBackground';
 import { colors, fonts, portalBox, spacing } from '@/constants/theme';
 import { useBottomInset } from '@/hooks/useBottomInset';
-import { DEMO_ARTISTS, DEMO_TRACKS } from '@/lib/demoData';
+import { DEMO_ARTISTS, DEMO_TRACKS, isBrandNew } from '@/lib/demoData';
 
 /**
  * Artist archive page — dossier + track listings (no player).
+ * Emphasizes unsigned / brand-new friend-group discovery.
  */
 export default function ArtistScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -32,6 +33,14 @@ export default function ArtistScreen() {
   const tracks = DEMO_TRACKS.filter((t) => t.artistId === artist.id);
   const totalDownloads = tracks.reduce((sum, t) => sum + t.downloadCount, 0);
   const totalReposts = tracks.reduce((sum, t) => sum + t.repostCount, 0);
+  const brandNew = isBrandNew(artist);
+
+  const statusLabel =
+    artist.status === 'UNSIGNED'
+      ? 'Unsigned artist'
+      : artist.status === 'INDEPENDENT'
+        ? 'Independent artist'
+        : 'Artist';
 
   return (
     <StaticBackground>
@@ -45,10 +54,17 @@ export default function ArtistScreen() {
             </Text>
           </View>
           <View style={styles.headerMeta}>
-            <Text style={styles.kicker}>Artist</Text>
+            <Text style={styles.kicker}>
+              {statusLabel}
+              {brandNew ? ' · New on StaticVolume' : ''}
+            </Text>
             <Text style={styles.name}>{artist.displayName}</Text>
+            {artist.lineupNote ? (
+              <Text style={styles.lineup}>{artist.lineupNote}</Text>
+            ) : null}
             <Text style={styles.rawStat}>
-              Status: {artist.status ?? 'INDEPENDENT'}
+              {[artist.scene, artist.geography].filter(Boolean).join(' · ') ||
+                'Scene unlisted'}
             </Text>
             <Text style={styles.rawStat}>
               Total downloads: {totalDownloads.toLocaleString()}
@@ -140,6 +156,13 @@ const styles = StyleSheet.create({
     fontFamily: fonts.sansBold,
     fontSize: 22,
     color: colors.text,
+  },
+  lineup: {
+    fontFamily: fonts.sans,
+    fontSize: 14,
+    color: colors.text,
+    lineHeight: 20,
+    marginTop: 2,
   },
   rawStat: {
     fontFamily: fonts.sans,

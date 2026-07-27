@@ -11,6 +11,87 @@ import type {
 /** Placeholder editorial / discovery content for scaffolding UI */
 export const DEMO_ARTISTS: UserProfile[] = [
   {
+    id: 'artist-couch-static',
+    email: '',
+    displayName: 'Couch Static',
+    role: 'artist',
+    scene: 'Indie',
+    geography: 'Providence, RI',
+    followerCount: 38,
+    bio: 'Recorded in a living room between shifts.',
+    activeYears: '2026–PRESENT',
+    status: 'UNSIGNED',
+    genreTags: ['Indie', 'Lo-fi'],
+    sceneDescription: 'Brand-new Providence living-room band.',
+    lineupNote: 'Four roommates. One couch. First songs online this month.',
+    joinedAt: '2026-07-08',
+  },
+  {
+    id: 'artist-secondhand-van',
+    email: '',
+    displayName: 'Secondhand Van',
+    role: 'artist',
+    scene: 'Punk',
+    geography: 'Richmond, VA',
+    followerCount: 61,
+    bio: 'Borrowed gear, borrowed van, real songs.',
+    activeYears: '2026–PRESENT',
+    status: 'UNSIGNED',
+    genreTags: ['Punk', 'Garage'],
+    sceneDescription: 'Fresh Richmond house-show punk.',
+    lineupNote: 'A group of friends who booked their first basement show last weekend.',
+    joinedAt: '2026-07-14',
+  },
+  {
+    id: 'artist-hallway-radio',
+    email: '',
+    displayName: 'Hallway Radio',
+    role: 'artist',
+    scene: 'Shoegaze',
+    geography: 'Seattle, WA',
+    followerCount: 44,
+    bio: 'Demos taped in a shared apartment hallway.',
+    activeYears: '2026–PRESENT',
+    status: 'UNSIGNED',
+    genreTags: ['Shoegaze', 'Dream Pop'],
+    sceneDescription: 'New Seattle apartment-scene shoegaze.',
+    lineupNote: 'Two friends + a neighbor on drums. Nobody signed. Yet.',
+    joinedAt: '2026-07-18',
+  },
+  {
+    id: 'artist-night-shift-kids',
+    email: '',
+    displayName: 'Night Shift Kids',
+    role: 'artist',
+    scene: 'Electronic',
+    geography: 'Minneapolis, MN',
+    followerCount: 27,
+    bio: 'After-close synths from a diner parking lot.',
+    activeYears: '2026–PRESENT',
+    status: 'UNSIGNED',
+    genreTags: ['Electronic', 'Synth'],
+    sceneDescription: 'Just-uploaded Minneapolis bedroom electronic.',
+    lineupNote: 'College friends making tracks after closing shifts.',
+    joinedAt: '2026-07-21',
+  },
+  {
+    id: 'artist-split-lip-sunday',
+    email: '',
+    displayName: 'Split Lip Sunday',
+    role: 'artist',
+    scene: 'Hardcore',
+    geography: 'Cleveland, OH',
+    followerCount: 73,
+    bio: 'First EP burned to USB sticks at practice.',
+    activeYears: '2025–PRESENT',
+    status: 'UNSIGNED',
+    genreTags: ['Hardcore', 'Punk'],
+    sceneDescription: 'Cleveland DIY — still playing living rooms.',
+    lineupNote: 'High-school friends who never got a label call. Good.',
+    joinedAt: '2026-06-29',
+  },
+
+  {
     id: 'artist-amber-circuit',
     email: '',
     displayName: 'Amber Circuit',
@@ -23,6 +104,8 @@ export const DEMO_ARTISTS: UserProfile[] = [
     status: 'INDEPENDENT',
     genreTags: ['Electronic', 'Ambient'],
     sceneDescription: 'Midwest modular / warehouse afterhours.',
+    lineupNote: 'Modular night crew from Chicago warehouses.',
+    joinedAt: '2024-03-12',
   },
   {
     id: 'artist-blackout-relay',
@@ -37,6 +120,8 @@ export const DEMO_ARTISTS: UserProfile[] = [
     status: 'UNSIGNED',
     genreTags: ['Hardcore', 'Punk'],
     sceneDescription: 'DIY hardcore circuit, Northeast corridor.',
+    lineupNote: 'Basement hardcore — same four kids since high school.',
+    joinedAt: '2023-11-02',
   },
   {
     id: 'artist-chrome-petal',
@@ -51,6 +136,8 @@ export const DEMO_ARTISTS: UserProfile[] = [
     status: 'INDEPENDENT',
     genreTags: ['Hyperpop', 'Electronic'],
     sceneDescription: 'LA bedroom hyperpop / net-label orbit.',
+    lineupNote: 'One laptop, one roommate, LA freeways at 2am.',
+    joinedAt: '2024-08-19',
   },
   {
     id: 'artist-drift-kiln',
@@ -65,6 +152,8 @@ export const DEMO_ARTISTS: UserProfile[] = [
     status: 'INACTIVE',
     genreTags: ['Folk', 'Indie'],
     sceneDescription: 'Appalachian folk / living-room sessions.',
+    lineupNote: 'Porch sessions with whoever’s in town.',
+    joinedAt: '2022-05-01',
   },
   {
     id: 'artist-fault-line-choir',
@@ -79,6 +168,8 @@ export const DEMO_ARTISTS: UserProfile[] = [
     status: 'UNSIGNED',
     genreTags: ['Indie', 'Post-Punk'],
     sceneDescription: 'Bay Area warehouse indie.',
+    lineupNote: 'Four voices, one cracked PA, Oakland warehouse nights.',
+    joinedAt: '2025-01-14',
   },
   {
     id: 'artist-lot-lights',
@@ -93,6 +184,8 @@ export const DEMO_ARTISTS: UserProfile[] = [
     status: 'INDEPENDENT',
     genreTags: ['Indie', 'Rock'],
     sceneDescription: 'Texas parking-lot rock / SXSW periphery.',
+    lineupNote: 'Parking-lot rock with friends who still share a van.',
+    joinedAt: '2024-06-22',
   },
   {
     id: 'artist-north-exit',
@@ -107,6 +200,8 @@ export const DEMO_ARTISTS: UserProfile[] = [
     status: 'UNSIGNED',
     genreTags: ['Punk', 'Hardcore'],
     sceneDescription: 'New England basement punk.',
+    lineupNote: 'Three friends from Manchester, NH. One practice space.',
+    joinedAt: '2025-09-03',
   },
   {
     id: 'artist-oxide-room',
@@ -121,6 +216,8 @@ export const DEMO_ARTISTS: UserProfile[] = [
     status: 'INDEPENDENT',
     genreTags: ['Industrial', 'Electronic'],
     sceneDescription: 'Rust-belt industrial / club leftovers.',
+    lineupNote: 'Rust-belt industrial duo out of a Pittsburgh loft.',
+    joinedAt: '2023-04-18',
   },
   {
     id: 'artist-signal-decay',
@@ -135,6 +232,8 @@ export const DEMO_ARTISTS: UserProfile[] = [
     status: 'INDEPENDENT',
     genreTags: ['Industrial', 'Electronic'],
     sceneDescription: 'Detroit warehouse industrial.',
+    lineupNote: 'Late-shift warehouse crew, Detroit.',
+    joinedAt: '2022-12-09',
   },
   {
     id: 'artist-static-bloom',
@@ -149,6 +248,8 @@ export const DEMO_ARTISTS: UserProfile[] = [
     status: 'INDEPENDENT',
     genreTags: ['Shoegaze', 'Indie'],
     sceneDescription: 'Pacific Northwest shoegaze / DIY tape scene.',
+    lineupNote: 'Tape-saturated Portland duo — still unsigned energy.',
+    joinedAt: '2024-01-28',
   },
   {
     id: 'artist-volt-garden',
@@ -163,6 +264,8 @@ export const DEMO_ARTISTS: UserProfile[] = [
     status: 'LABEL',
     genreTags: ['Electronic', 'Synth'],
     sceneDescription: 'Montreal synth / coldwave adjacent.',
+    lineupNote: 'Montreal synth project that snuck onto a small label.',
+    joinedAt: '2023-07-30',
   },
   {
     id: 'artist-wire-hymnal',
@@ -177,6 +280,8 @@ export const DEMO_ARTISTS: UserProfile[] = [
     status: 'UNSIGNED',
     genreTags: ['Post-Punk', 'Indie'],
     sceneDescription: 'Philly post-punk / church-basement circuit.',
+    lineupNote: 'Philly post-punk friends who book their own church basements.',
+    joinedAt: '2024-10-11',
   },
   {
     id: 'artist-zinc-parade',
@@ -191,10 +296,73 @@ export const DEMO_ARTISTS: UserProfile[] = [
     status: 'UNSIGNED',
     genreTags: ['Punk', 'Garage'],
     sceneDescription: 'Midwest garage punk / house-show network.',
+    lineupNote: 'Midwest house-show punk. Friends first, band second.',
+    joinedAt: '2025-11-20',
   },
 ];
 
 export const DEMO_TRACKS: Track[] = [
+  {
+    id: 'track-living-room-static',
+    title: 'Living Room Static',
+    artistId: 'artist-couch-static',
+    artistName: 'Couch Static',
+    downloadUrl: '',
+    durationMs: 168000,
+    downloadCount: 42,
+    repostCount: 9,
+    scene: 'Indie',
+    geography: 'Providence, RI',
+  },
+  {
+    id: 'track-borrowed-cables',
+    title: 'Borrowed Cables',
+    artistId: 'artist-secondhand-van',
+    artistName: 'Secondhand Van',
+    downloadUrl: '',
+    durationMs: 131000,
+    downloadCount: 67,
+    repostCount: 14,
+    scene: 'Punk',
+    geography: 'Richmond, VA',
+  },
+  {
+    id: 'track-apartment-reverb',
+    title: 'Apartment Reverb',
+    artistId: 'artist-hallway-radio',
+    artistName: 'Hallway Radio',
+    downloadUrl: '',
+    durationMs: 203000,
+    downloadCount: 51,
+    repostCount: 11,
+    scene: 'Shoegaze',
+    geography: 'Seattle, WA',
+  },
+  {
+    id: 'track-after-close',
+    title: 'After Close',
+    artistId: 'artist-night-shift-kids',
+    artistName: 'Night Shift Kids',
+    downloadUrl: '',
+    durationMs: 194000,
+    downloadCount: 33,
+    repostCount: 6,
+    scene: 'Electronic',
+    geography: 'Minneapolis, MN',
+  },
+  {
+    id: 'track-usb-first-ep',
+    title: 'USB First EP',
+    artistId: 'artist-split-lip-sunday',
+    artistName: 'Split Lip Sunday',
+    downloadUrl: '',
+    durationMs: 118000,
+    downloadCount: 88,
+    repostCount: 19,
+    scene: 'Hardcore',
+    geography: 'Cleveland, OH',
+  },
+
   {
     id: 'track-snow-on-the-tape',
     title: 'Snow on the Tape',
@@ -367,9 +535,9 @@ export const FEATURE_TILES: FeatureTile[] = [
   },
   {
     id: 'tile-promo',
-    artistId: 'artist-lot-lights',
-    trackId: 'track-sodium-glow',
-    title: 'Archive Picks 2026',
+    artistId: 'artist-couch-static',
+    trackId: 'track-living-room-static',
+    title: 'Just Found',
     subtitle: 'Human-curated · No algorithm',
     size: 'promo',
     tone: 'slate',
@@ -716,9 +884,47 @@ export const GEOGRAPHIES = [
   'Montreal, QC',
   'Philadelphia, PA',
   'Columbus, OH',
+  'Providence, RI',
+  'Richmond, VA',
+  'Seattle, WA',
+  'Minneapolis, MN',
+  'Cleveland, OH',
 ] as const;
 
 export const ALPHA_LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
+
+/** Artists who feel like a YouTube stumble — unsigned / independent, often brand-new. */
+export function isDiscoverableFind(artist: UserProfile): boolean {
+  return artist.status === 'UNSIGNED' || artist.status === 'INDEPENDENT';
+}
+
+export function isBrandNew(artist: UserProfile, withinDays = 60): boolean {
+  if (!artist.joinedAt) return false;
+  const joined = new Date(artist.joinedAt).getTime();
+  const cutoff = Date.now() - withinDays * 24 * 60 * 60 * 1000;
+  return joined >= cutoff;
+}
+
+export function unsignedArtists(): UserProfile[] {
+  return DEMO_ARTISTS.filter((a) => a.status === 'UNSIGNED');
+}
+
+/** Newest joiners first — the “random new band” discovery rail. */
+export function justFoundArtists(limit = 8): UserProfile[] {
+  return [...DEMO_ARTISTS]
+    .filter(isDiscoverableFind)
+    .sort((a, b) => (b.joinedAt ?? '').localeCompare(a.joinedAt ?? ''))
+    .slice(0, limit);
+}
+
+export function brandNewArtists(limit = 8): UserProfile[] {
+  return justFoundArtists(40).filter((a) => isBrandNew(a)).slice(0, limit);
+}
+
+export function firstTrackForArtist(artistId: string): Track | undefined {
+  return DEMO_TRACKS.find((t) => t.artistId === artistId);
+}
 
 export function getTrackById(id: string): Track | undefined {
   return DEMO_TRACKS.find((t) => t.id === id);

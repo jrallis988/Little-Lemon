@@ -18,6 +18,13 @@ export type UserProfile = {
   status?: ArtistStatus | null;
   genreTags?: string[] | null;
   sceneDescription?: string | null;
+  /**
+   * Who they are in plain language — “three friends + a practice space”.
+   * Powers the stumble-upon / unsigned discovery feel.
+   */
+  lineupNote?: string | null;
+  /** When they joined StaticVolume (ISO date). Newer = more “just found”. */
+  joinedAt?: string | null;
 };
 
 export type Track = {

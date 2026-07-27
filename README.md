@@ -4,17 +4,18 @@ Mobile-native artist discovery and social taste logging — a genre-agnostic spi
 
 Built with **Expo (SDK 57)**, **Expo Router**, **Supabase**, **Zustand**, and **TanStack Query**.
 
-StaticVolume is **not a music player**. You log tracks, write reviews, keep lists, and follow people’s taste. Artists still get downloads and reposts.
+StaticVolume is **not a music player**. It’s where you **find unsigned bands and brand-new musicians** (the friend-group act you’d stumble on once on YouTube), then log tracks, write reviews, keep lists, and follow people’s taste. Artists get downloads and reposts.
 
 ## Product model
 
-| Letterboxd | StaticVolume |
+| Letterboxd / PureVolume | StaticVolume |
 | --- | --- |
+| Stumble on a new film / unsigned band | **Find** — brand-new & unsigned artists by scene + place |
 | Log a film | Log a track |
 | Stars + review | Stars + review |
 | Lists | Ranked / unranked track lists |
 | Activity / following | Chronological diary activity feed |
-| Films catalog | Artists + scene/geography discovery |
+| Films catalog | Artists A–Z + scene/geography discovery |
 | — | Downloads + reposts (artist D2F signal) |
 
 No in-app streaming queue, waveforms, or sticky player.
@@ -35,10 +36,11 @@ No in-app streaming queue, waveforms, or sticky player.
 ```
 app/
 ├── (auth)/          # login, signup (artist | listener)
-├── (main)/          # home, artists, scene, activity, profile
+├── (main)/          # home, artists, find, activity, profile
 ├── artist/[id].tsx  # artist archive / EPK
 └── track/[id].tsx   # log · rate · review · download · repost
 components/
+├── discovery/       # just-found / unsigned find cards
 ├── editorial/       # portal header, mosaic, charts
 ├── directory/       # A–Z artist directory
 ├── social/          # activity, reviews, lists, ratings
@@ -51,6 +53,7 @@ constants/theme.ts   # PureVolume light portal palette + Barlow
 
 ## Social model (MVP rules)
 
+- **Find unsigned / brand-new bands** — friend groups and independent acts, filterable by scene + place.
 - **Log / rate / review / list** — listener taste (Letterboxd layer).
 - **Download / repost** — public support for artists (PureVolume layer).
 - **No likes on tracks** — review likes are social only; play counts stay private.
