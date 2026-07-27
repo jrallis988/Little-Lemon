@@ -104,16 +104,16 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
   }
 
   return (
-    <div className="space-y-8">
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+    <div className="space-y-5">
+      <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <p className="text-sm font-medium uppercase tracking-wide text-primary">
             {drug.therapeuticClass}
           </p>
-          <h1 className="font-display text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+          <h1 className="font-display text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
             {drug.genericName}
           </h1>
-          <p className="mt-1 text-lg text-muted-foreground">
+          <p className="mt-0.5 text-base text-muted-foreground">
             Brand: {drug.brandName} · Showing coupon prices near{" "}
             <span className="font-medium text-foreground">{location.label}</span>
           </p>
@@ -142,8 +142,8 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
         </div>
       </div>
 
-      <div className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-4 sm:p-5">
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <div className="flex flex-col gap-3 rounded-2xl border border-border bg-card p-3.5 sm:p-4">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div>
             <p className="text-sm font-semibold">Supply length</p>
             <p className="text-sm text-muted-foreground">
@@ -365,25 +365,25 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
         ))}
       </div>
 
-      <section aria-labelledby="savings-tips-heading" className="space-y-3">
+      <section aria-labelledby="savings-tips-heading" className="space-y-2.5">
         <h2
           id="savings-tips-heading"
-          className="font-display text-2xl font-semibold"
+          className="font-display text-xl font-semibold"
         >
           Savings tips
         </h2>
-        <ul className="grid gap-3 sm:grid-cols-2">
+        <ul className="grid gap-2.5 sm:grid-cols-2">
           {tips.map((tip) => (
             <li
               key={tip.id}
-              className="rounded-2xl border border-border/80 bg-surface p-4"
+              className="rounded-xl border border-border/80 bg-surface px-3.5 py-3"
             >
               <p className="font-semibold text-foreground">{tip.title}</p>
-              <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+              <p className="mt-0.5 text-sm leading-snug text-muted-foreground">
                 {tip.body}
               </p>
               {tip.potentialSavingsLabel && (
-                <p className="mt-2 text-sm font-medium text-savings">
+                <p className="mt-1.5 text-sm font-medium text-savings">
                   {tip.potentialSavingsLabel}
                 </p>
               )}
