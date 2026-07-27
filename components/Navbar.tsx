@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 const links = [
   { href: "#pathways", label: "Programs" },
   { href: "#approach", label: "Approach" },
-  { href: "#curriculum", label: "Curriculum" },
+  { href: "#curriculum", label: "Components" },
   { href: "#about", label: "About" },
 ];
 
@@ -37,10 +37,10 @@ export function Navbar() {
       <div className="border-b border-navy bg-navy text-white">
         <div className="mx-auto flex h-9 max-w-site items-center justify-end gap-5 px-5 text-xs font-medium sm:px-8">
           <a href="#start" className="transition-opacity hover:opacity-80">
-            Support
+            Ordering support
           </a>
           <a href="#start" className="transition-opacity hover:opacity-80">
-            Sign in
+            Contact sales
           </a>
         </div>
       </div>
@@ -76,10 +76,10 @@ export function Navbar() {
 
         <div className="hidden items-center gap-3 lg:flex">
           <a href="#curriculum" className="btn-outline !py-2">
-            Explore programs
+            Browse programs
           </a>
           <a href="#start" className="btn-primary !py-2">
-            Get started
+            Request quote
           </a>
         </div>
 
@@ -131,10 +131,10 @@ export function Navbar() {
           </ul>
           <div className="flex flex-col gap-3 px-5 pb-6 sm:px-8">
             <a href="#curriculum" className="btn-outline" onClick={() => setOpen(false)}>
-              Explore programs
+              Browse programs
             </a>
             <a href="#start" className="btn-primary" onClick={() => setOpen(false)}>
-              Get started
+              Request quote
             </a>
           </div>
         </div>

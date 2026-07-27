@@ -4,27 +4,27 @@ const columns = [
   {
     title: "Programs",
     links: [
-      { href: "#pathways", label: "Learners" },
-      { href: "#pathways", label: "Educators" },
-      { href: "#pathways", label: "Families" },
-      { href: "#curriculum", label: "Curriculum" },
+      { href: "#pathways", label: "Intervention kit" },
+      { href: "#pathways", label: "Classroom adoption" },
+      { href: "#pathways", label: "Home support" },
+      { href: "#curriculum", label: "Program components" },
     ],
   },
   {
     title: "Resources",
     links: [
-      { href: "#approach", label: "Our approach" },
-      { href: "#start", label: "Getting started" },
+      { href: "#approach", label: "Instructional approach" },
+      { href: "#start", label: "Ordering information" },
       { href: "#about", label: "About Morgan Bright" },
-      { href: "#start", label: "Support" },
+      { href: "#start", label: "Implementation support" },
     ],
   },
   {
     title: "Connect",
     links: [
       { href: "mailto:hello@morganbright.learn", label: "Contact" },
-      { href: "#start", label: "Request access" },
-      { href: "#start", label: "Sign in" },
+      { href: "#start", label: "Request a quote" },
+      { href: "#start", label: "School purchasing" },
     ],
   },
 ];
@@ -44,8 +44,8 @@ export function Footer() {
             <span className="text-xl font-bold tracking-tight">Morgan Bright</span>
           </Link>
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/70">
-            Unlock the full potential of each learner with instruction shaped
-            around how they learn—not the other way around.
+            A classroom-ready intervention program that helps teachers assess,
+            teach, and monitor students who need another route to success.
           </p>
         </div>
 
@@ -73,7 +73,7 @@ export function Footer() {
       <div className="border-t border-white/15">
         <div className="mx-auto flex max-w-site flex-col gap-3 px-5 py-5 text-xs text-white/55 sm:flex-row sm:items-center sm:justify-between sm:px-8">
           <p>© {year} Morgan Bright. All rights reserved.</p>
-          <p>Built for educators, learners, and families.</p>
+          <p>Built for classroom adoption, intervention teams, and school support programs.</p>
         </div>
       </div>
     </footer>

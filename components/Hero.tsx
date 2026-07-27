@@ -19,30 +19,31 @@ export function Hero() {
       <div className="relative mx-auto flex min-h-[min(calc(92svh-6.5rem),45.5rem)] max-w-site flex-col justify-center px-5 py-16 sm:px-8 sm:py-24">
         <div className="max-w-2xl text-white">
           <p className="animate-fade-up text-sm font-bold uppercase tracking-[0.14em] text-white">
-            Morgan Bright
+            Classroom intervention program
           </p>
           <h1
             className="mt-4 animate-fade-up text-4xl font-bold leading-[1.1] tracking-tight text-balance sm:text-5xl md:text-6xl"
             style={{ animationDelay: "0.08s" }}
           >
-            Find the path past every learning hurdle.
+            Order a learning program built for students who need another way in.
           </h1>
           <p
             className="mt-5 max-w-xl animate-fade-up text-lg leading-relaxed text-white/90 sm:text-xl"
             style={{ animationDelay: "0.16s" }}
           >
-            Every teaching and learning journey is unique. We diagnose individual
-            barriers and tailor instruction to the styles that unlock progress.
+            Morgan Bright gives teachers and school leaders a structured system:
+            diagnostics, printed and digital lesson modules, and guided support
+            for students who are not thriving with one-size-fits-all instruction.
           </p>
           <div
             className="mt-8 flex animate-fade-up flex-wrap gap-3"
             style={{ animationDelay: "0.24s" }}
           >
-            <a href="#approach" className="btn-primary">
-              Learn more about us
+            <a href="#start" className="btn-primary">
+              Request a quote
             </a>
-            <a href="#pathways" className="btn-secondary">
-              Explore pathways
+            <a href="#curriculum" className="btn-secondary">
+              View program components
             </a>
           </div>
         </div>

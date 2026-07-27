@@ -5,46 +5,46 @@ import { CurriculumCard } from "@/components/CurriculumCard";
 
 const spotlight = [
   {
-    title: "Learning profile diagnostic",
+    title: "Placement & learning profile diagnostic",
     description:
-      "Map strengths, friction points, and preferred modalities so instruction starts from evidence—not assumptions.",
+      "A teacher-ready screener that identifies skill gaps and the learning-style patterns affecting classroom performance.",
     kind: "diagnostic" as const,
     items: [
-      "Style preference inventory",
-      "Barrier identification prompts",
+      "Placement screener",
+      "Learning-style inventory",
       "Baseline comprehension check",
     ],
     href: "#start",
     imageSrc: "/images/card-diagnostic.jpg",
-    imageAlt: "Learner reviewing notes at a desk",
+    imageAlt: "Teacher reviewing intervention screening materials",
   },
   {
-    title: "Adaptive instruction modules",
+    title: "Teacher-led lesson modules",
     description:
-      "Short, focused units that reframe the same concept through visual, auditory, kinesthetic, and verbal pathways.",
+      "Ready-to-use lessons that reteach core concepts through multiple modalities so teachers can intervene without building a new system from scratch.",
     kind: "module" as const,
     items: [
-      "Concept introduction tracks",
-      "Practice with feedback loops",
-      "Transfer tasks for retention",
+      "Print and digital lesson paths",
+      "Small-group activities",
+      "Practice and reinforcement sets",
     ],
     href: "#curriculum",
     imageSrc: "/images/card-modules.jpg",
-    imageAlt: "Students collaborating with tablets in class",
+    imageAlt: "Classroom lesson resources in use",
   },
   {
-    title: "Structured progression path",
+    title: "Progress monitoring system",
     description:
-      "A clear sequence from diagnosis to mastery, with checkpoints that adjust pace without lowering expectations.",
+      "A clear intervention sequence with checkpoints, regrouping guidance, and family-ready reporting for ongoing classroom use.",
     kind: "structure" as const,
     items: [
-      "Weekly milestone markers",
-      "Remediation side-paths",
-      "Mastery criteria you can see",
+      "Weekly mastery checks",
+      "Regrouping guidance",
+      "Family-facing summaries",
     ],
     href: "#curriculum",
     imageSrc: "/images/card-path.jpg",
-    imageAlt: "Educator guiding a small group discussion",
+    imageAlt: "Teacher leading structured intervention support",
   },
 ];
 
@@ -59,30 +59,31 @@ export default function HomePage() {
         <div className="mx-auto max-w-site px-5 py-16 sm:px-8 sm:py-24">
           <p className="section-label">Approach</p>
           <h2 className="mt-3 max-w-3xl text-3xl font-bold tracking-tight text-navy text-balance sm:text-4xl">
-            Expand what’s possible for every learner.
+            Built like a program teachers can adopt, not just a concept they can admire.
           </h2>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-mute">
-            Morgan Bright treats learning differences as design inputs. We
-            isolate the specific hurdle, match instruction to the styles that
-            work, and rebuild confidence through measurable progress.
+            Morgan Bright is positioned as a structured instructional solution
+            for classrooms and intervention blocks. Schools can review the
+            components, choose a rollout model, and order a package that helps
+            teachers reach students who need a different instructional entry point.
           </p>
 
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {[
               {
-                term: "Diagnose",
+                term: "Assess",
                 definition:
-                  "Surface the precise barrier—attention, prior knowledge, modality mismatch, or pacing.",
+                  "Screen for the exact academic hurdle and the learning-style mismatch that may be slowing progress.",
               },
               {
-                term: "Adapt",
+                term: "Teach",
                 definition:
-                  "Retarget the lesson through the pathways that fit this learner, not a one-size template.",
+                  "Use ready-to-teach modules that present the same skill through multiple pathways instead of one fixed approach.",
               },
               {
-                term: "Advance",
+                term: "Track",
                 definition:
-                  "Move forward with clear checkpoints, so progress is visible and sustainable.",
+                  "Monitor mastery with clear checkpoints, regrouping guidance, and reporting that supports teachers and families.",
               },
             ].map((item) => (
               <div
@@ -106,15 +107,16 @@ export default function HomePage() {
             <div className="max-w-2xl">
               <p className="section-label">Curriculum</p>
               <h2 className="mt-3 text-3xl font-bold tracking-tight text-navy text-balance sm:text-4xl">
-                Tools and modules built for real classrooms.
+                Program components built for classroom ordering and adoption.
               </h2>
               <p className="mt-4 text-lg leading-relaxed text-mute">
-                Diagnostics that clarify, modules that adapt, and a progression
-                path that stays readable for instructors, learners, and families.
+                Review the core pieces schools would expect in a purchasable
+                intervention program: placement, instructional materials, and
+                progress tracking.
               </p>
             </div>
             <a href="#start" className="btn-outline shrink-0 self-start">
-              Get started
+              Request ordering info
             </a>
           </div>
 
@@ -130,19 +132,19 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-site items-center gap-10 px-5 py-16 sm:px-8 sm:py-24 lg:grid-cols-2 lg:gap-14">
           <div>
             <p className="text-sm font-bold uppercase tracking-[0.08em] text-white/70">
-              Our culture
+              Why schools adopt it
             </p>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-balance sm:text-4xl">
-              Unlock the full potential of each learner.
+              Familiar program structure, modern intervention philosophy.
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-white/80">
-              Working together, we help create a brighter path for learners who
-              have been asked to fit a single mold. Clarity, accessibility, and
-              respect for how people learn are at the center of everything we
-              build.
+              The best classroom programs make it easy for teachers to know what
+              to do next. Morgan Bright pairs that classic adoptable-program
+              feel with stronger diagnostics and better support for different
+              learning styles.
             </p>
             <a href="#start" className="btn-primary mt-8">
-              Learn more about us
+              Talk to sales
             </a>
           </div>
           <div className="relative aspect-[4/3] overflow-hidden rounded">
@@ -160,23 +162,24 @@ export default function HomePage() {
       <section id="start" className="bg-paper-warm">
         <div className="mx-auto max-w-site px-5 py-16 sm:px-8 sm:py-24">
           <div className="max-w-2xl rounded bg-white p-8 shadow-card sm:p-10">
-            <p className="section-label">Get started</p>
+            <p className="section-label">Ordering</p>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-navy text-balance sm:text-4xl">
-              Ready to see how you learn?
+              Ready to bring Morgan Bright to your classroom or school?
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-mute">
-              Begin with a short diagnostic. You’ll leave with a clear profile
-              of strengths, friction points, and a recommended first module.
+              Request program information, school pricing, and rollout guidance.
+              We’ll help you choose the right package for a single classroom, a
+              grade-level team, or a broader intervention model.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
-                href="mailto:hello@morganbright.learn?subject=Begin%20assessment"
+                href="mailto:hello@morganbright.learn?subject=Request%20Morgan%20Bright%20quote"
                 className="btn-primary"
               >
-                Request access
+                Request a quote
               </a>
               <a href="#curriculum" className="btn-outline">
-                Browse curriculum
+                Review program components
               </a>
             </div>
           </div>

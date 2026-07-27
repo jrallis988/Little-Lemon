@@ -66,7 +66,7 @@ export function CurriculumCard({
         ) : null}
 
         <span className="link-arrow mt-5">
-          Learn more
+          View details
           <span aria-hidden className="transition-transform duration-200 group-hover:translate-x-0.5">
             →
           </span>
