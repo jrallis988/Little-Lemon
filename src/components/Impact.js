@@ -11,8 +11,7 @@ function Impact() {
       id="impact"
       className="section-pad relative overflow-hidden bg-gradient-to-b from-ink-soft to-ink"
     >
-      <div className="absolute -left-24 top-10 h-72 w-72 rounded-full bg-violet-deep/40 blur-3xl" />
-      <div className="absolute -right-16 bottom-0 h-64 w-64 rounded-full bg-gold/10 blur-3xl" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(59,22,104,0.22),transparent_40%,rgba(201,162,39,0.08))]" />
 
       <div className="container relative">
         <div className="mx-auto max-w-3xl text-center">
