@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import App from "./App";
 
-test("renders River Valley brand in the hero", () => {
+test("renders River Valley brand and soar headline", () => {
   render(
     <MemoryRouter>
       <App />
@@ -10,15 +10,16 @@ test("renders River Valley brand in the hero", () => {
   );
 
   expect(
-    screen.getAllByText(/River Valley Community College/i).length
+    screen.getAllByRole("img", { name: /river valley community college/i }).length
   ).toBeGreaterThan(0);
   expect(
     screen.getByRole("heading", { name: /soar into your future/i })
   ).toBeInTheDocument();
   expect(screen.getByRole("link", { name: /apply now/i })).toBeInTheDocument();
+  expect(screen.getByText(/what’s happening/i)).toBeInTheDocument();
 });
 
-test("renders a program detail page", () => {
+test("renders a rich program detail page", () => {
   render(
     <MemoryRouter initialEntries={["/programs/nursing"]}>
       <App />
@@ -28,7 +29,10 @@ test("renders a program detail page", () => {
   expect(
     screen.getByRole("heading", { name: /nursing — rn & lpn/i })
   ).toBeInTheDocument();
-  expect(screen.getByText(/pathway overview/i)).toBeInTheDocument();
+  expect(screen.getByText(/typical length/i)).toBeInTheDocument();
+  expect(screen.getByText(/before you begin/i)).toBeInTheDocument();
+  expect(screen.getByText(/where this pathway can lead/i)).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: /plan a campus visit/i })).toBeInTheDocument();
 });
 
 test("renders financial aid page", () => {

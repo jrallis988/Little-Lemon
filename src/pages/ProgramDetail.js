@@ -38,6 +38,13 @@ export default function ProgramDetail() {
           ? "Students working in an RVCC science laboratory"
           : "Students and campus life at River Valley Community College";
 
+  const facts = [
+    { label: "Credential", value: program.credential },
+    { label: "Format", value: program.format },
+    { label: "Typical length", value: program.duration },
+    { label: "Start terms", value: program.startTerms.join(" · ") },
+  ];
+
   return (
     <div ref={revealRef}>
       <PageHero
@@ -46,56 +53,116 @@ export default function ProgramDetail() {
         summary={program.summary}
         image={heroImage}
         imageAlt={heroAlt}
-      />
+      >
+        <div className="flex flex-wrap gap-3">
+          <Link to="/admissions" className="btn-primary">
+            Start admissions
+          </Link>
+          <Link to="/admissions" className="btn-secondary">
+            Plan a campus visit
+          </Link>
+        </div>
+      </PageHero>
 
-      <section className="section-shell grid gap-12 py-16 sm:py-20 lg:grid-cols-[1.2fr_0.8fr]">
-        <div className="reveal" data-reveal>
-          <p className="eyebrow">Pathway overview</p>
-          <h2 className="display-title mt-3">What you will build here</h2>
-          <ul className="mt-8 space-y-4">
-            {program.highlights.map((item) => (
-              <li key={item} className="flex gap-3 text-lg text-granite">
-                <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-valley" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-8 text-lg leading-relaxed text-granite-muted">
-            {program.nextStep}
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link to="/admissions" className="btn-primary">
-              Start admissions
-            </Link>
-            <Link to="/financial-aid" className="btn-ghost">
-              Review financial aid
-            </Link>
+      <section className="border-b border-river/10 bg-white/80">
+        <div className="section-shell grid gap-6 py-6 sm:grid-cols-2 lg:grid-cols-4">
+          {facts.map((fact) => (
+            <div key={fact.label}>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-valley">
+                {fact.label}
+              </p>
+              <p className="mt-2 font-display text-base font-semibold leading-snug text-river-deep">
+                {fact.value}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="section-shell grid gap-12 py-12 sm:py-16 lg:grid-cols-[1.15fr_0.85fr]">
+        <div className="space-y-12">
+          <div className="reveal" data-reveal>
+            <p className="eyebrow">What you will build</p>
+            <h2 className="display-title mt-3 !text-3xl sm:!text-4xl">
+              Skills that travel into real jobs
+            </h2>
+            <ul className="mt-6 space-y-3">
+              {program.highlights.map((item) => (
+                <li key={item} className="flex gap-3 text-lg text-granite">
+                  <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-valley" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="reveal" data-reveal>
+            <p className="eyebrow">Prerequisites</p>
+            <h2 className="mt-3 font-display text-2xl font-semibold text-river-deep">
+              Before you begin
+            </h2>
+            <ul className="mt-5 space-y-3 text-granite">
+              {program.prerequisites.map((item) => (
+                <li key={item} className="flex gap-3">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-river" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="reveal" data-reveal>
+            <p className="eyebrow">Careers</p>
+            <h2 className="mt-3 font-display text-2xl font-semibold text-river-deep">
+              Where this pathway can lead
+            </h2>
+            <ul className="mt-5 flex flex-wrap gap-2">
+              {program.careers.map((career) => (
+                <li
+                  key={career}
+                  className="border border-river/15 bg-river-mist/70 px-3 py-2 text-sm font-medium text-river-deep"
+                >
+                  {career}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-6 text-lg leading-relaxed text-granite-muted">
+              {program.nextStep}
+            </p>
           </div>
         </div>
 
-        <aside className="reveal border border-river/15 bg-white/70 p-6 sm:p-8" data-reveal>
-          <dl className="space-y-6">
+        <aside className="reveal h-fit border border-river/15 bg-white/80 p-6 sm:p-8" data-reveal>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-valley">
+            At a glance
+          </p>
+          <dl className="mt-6 space-y-5">
             <div>
-              <dt className="text-xs font-semibold uppercase tracking-[0.18em] text-valley">
-                Credential
-              </dt>
-              <dd className="mt-2 font-display text-lg font-semibold text-river-deep">
-                {program.credential}
+              <dt className="text-sm text-granite-muted">Campuses / formats</dt>
+              <dd className="mt-1 font-medium text-river-deep">
+                {program.campuses.join(" · ")}
               </dd>
             </div>
             <div>
-              <dt className="text-xs font-semibold uppercase tracking-[0.18em] text-valley">
-                Format
-              </dt>
-              <dd className="mt-2 text-granite">{program.format}</dd>
+              <dt className="text-sm text-granite-muted">Focus area</dt>
+              <dd className="mt-1 font-medium text-river-deep">{program.area}</dd>
             </div>
             <div>
-              <dt className="text-xs font-semibold uppercase tracking-[0.18em] text-valley">
-                Focus area
-              </dt>
-              <dd className="mt-2 text-granite">{program.area}</dd>
+              <dt className="text-sm text-granite-muted">Next step</dt>
+              <dd className="mt-1 text-granite">{program.nextStep}</dd>
             </div>
           </dl>
+          <div className="mt-8 flex flex-col gap-3">
+            <Link to="/admissions" className="btn-primary w-full text-center">
+              Talk with admissions
+            </Link>
+            <Link to="/financial-aid" className="btn-ghost w-full text-center">
+              Review financial aid
+            </Link>
+            <Link to="/programs" className="text-center text-sm font-semibold text-river underline-offset-2 hover:underline">
+              Back to all programs
+            </Link>
+          </div>
         </aside>
       </section>
 
@@ -103,14 +170,16 @@ export default function ProgramDetail() {
         <section className="section-shell pb-16 sm:pb-20">
           <div className="reveal" data-reveal>
             <p className="eyebrow">Related pathways</p>
-            <h2 className="display-title mt-3">Keep exploring</h2>
+            <h2 className="display-title mt-3 !text-3xl sm:!text-4xl">
+              Keep exploring
+            </h2>
           </div>
           <ul className="mt-8 grid gap-4 md:grid-cols-3">
             {related.map((item) => (
               <li key={item.slug} className="reveal" data-reveal>
                 <Link
                   to={`/programs/${item.slug}`}
-                  className="block border border-river/10 bg-white/60 px-5 py-5 transition hover:-translate-y-0.5 hover:border-river/30"
+                  className="block border border-river/10 bg-white/60 px-5 py-5 transition hover:-translate-y-0.5 hover:border-river/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river"
                 >
                   <span className="font-display text-lg font-semibold text-river-deep">
                     {item.name}

@@ -47,6 +47,49 @@ body {
   color: var(--river-deep);
 }
 
+:focus-visible {
+  outline: 2px solid var(--sunrise);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -3rem;
+  z-index: 60;
+  border-radius: 0.375rem;
+  background: var(--sunrise);
+  color: var(--river-deep);
+  padding: 0.65rem 1rem;
+  font-family: "Sora", system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
 @layer components {
   .section-shell {
     @apply mx-auto w-full max-w-6xl px-5 lg:px-8;

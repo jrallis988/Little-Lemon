@@ -32,6 +32,27 @@ export const images = {
   testimonial: "/images/diane-cammarata.jpg",
 };
 
+export const happening = [
+  {
+    title: "New Student Orientation",
+    detail: "Keene — Tue, Aug 25 · 11 AM · Claremont — Thu, Aug 27 · 11 AM",
+    cta: "Let us know you’re coming",
+    to: "/admissions",
+  },
+  {
+    title: "Walk-In Week",
+    detail: "July 20–24 · 8 AM–4 PM · Claremont, Keene & Lebanon · free T-shirt",
+    cta: "Plan your visit",
+    to: "/admissions",
+  },
+  {
+    title: "Scholarships & Aid",
+    detail: "Grants and scholarships are available — start with FAFSA and RVCC awards",
+    cta: "Explore financial aid",
+    to: "/financial-aid",
+  },
+];
+
 export const programs = [
   {
     slug: "nursing",
@@ -39,6 +60,19 @@ export const programs = [
     area: "Health Sciences",
     credential: "Associate of Science / Certificate pathways",
     format: "In-person with clinical rotations",
+    duration: "1–2 years depending on pathway",
+    campuses: ["Claremont"],
+    startTerms: ["Fall", "Spring"],
+    prerequisites: [
+      "High school diploma or equivalent",
+      "Placement or prerequisite coursework as advised",
+      "Clinical clearance requirements before rotations",
+    ],
+    careers: [
+      "Registered Nurse",
+      "Licensed Practical Nurse",
+      "Hospital and clinic care roles",
+    ],
     summary:
       "Prepare for bedside care through rigorous classroom learning and supervised clinical experience across the river valley.",
     highlights: [
@@ -54,6 +88,19 @@ export const programs = [
     area: "Health Sciences",
     credential: "Associate in Science",
     format: "In-person labs + clinicals",
+    duration: "About 2 years",
+    campuses: ["Claremont"],
+    startTerms: ["Fall"],
+    prerequisites: [
+      "Program application and advising review",
+      "Science and math readiness",
+      "Ability to meet clinical site requirements",
+    ],
+    careers: [
+      "Radiologic technologist",
+      "Diagnostic imaging roles",
+      "Hospital imaging departments",
+    ],
     summary:
       "Train on modern imaging equipment — including RVCC’s digital X-ray lab — and step into diagnostic imaging careers.",
     highlights: [
@@ -69,6 +116,19 @@ export const programs = [
     area: "Health Sciences",
     credential: "Associate in Science",
     format: "In-person with clinicals",
+    duration: "About 2 years",
+    campuses: ["Claremont"],
+    startTerms: ["Fall"],
+    prerequisites: [
+      "Advising appointment recommended",
+      "Science readiness for clinical coursework",
+      "Clinical clearance before patient care",
+    ],
+    careers: [
+      "Respiratory therapist",
+      "Cardiopulmonary care teams",
+      "Hospital and clinic settings",
+    ],
     summary:
       "Learn cardiopulmonary care for hospitals and clinics through focused coursework and real patient settings.",
     highlights: [
@@ -84,6 +144,18 @@ export const programs = [
     area: "STEM & Technology",
     credential: "Associate in Science / Certificate",
     format: "Hybrid-friendly",
+    duration: "Certificate or 2-year degree path",
+    campuses: ["Claremont", "Keene", "Online / hybrid"],
+    startTerms: ["Fall", "Spring"],
+    prerequisites: [
+      "Comfort with computers and problem-solving",
+      "Advising to choose certificate vs. degree",
+    ],
+    careers: [
+      "Security analyst (entry-level)",
+      "Network defense support",
+      "IT security operations",
+    ],
     summary:
       "Build defensive security skills for networks, systems, and modern threat landscapes.",
     highlights: [
@@ -99,6 +171,18 @@ export const programs = [
     area: "STEM & Technology",
     credential: "Associate in Science",
     format: "In-person, online, and hybrid",
+    duration: "About 2 years",
+    campuses: ["Claremont", "Keene", "Lebanon", "Online / hybrid"],
+    startTerms: ["Fall", "Spring"],
+    prerequisites: [
+      "Basic computer literacy",
+      "Advising for transfer or employment goals",
+    ],
+    careers: [
+      "Help desk / IT support",
+      "Network technician",
+      "Systems administration pathways",
+    ],
     summary:
       "Gain the systems, networking, and support skills employers expect from entry-level IT professionals.",
     highlights: [
@@ -114,6 +198,18 @@ export const programs = [
     area: "Business & Accounting",
     credential: "Associate of Science",
     format: "In-person, online, and hybrid",
+    duration: "About 2 years",
+    campuses: ["Claremont", "Keene", "Lebanon", "Online / hybrid"],
+    startTerms: ["Fall", "Spring", "Summer"],
+    prerequisites: [
+      "High school diploma or equivalent",
+      "Advising for transfer planning if needed",
+    ],
+    careers: [
+      "Office and operations roles",
+      "Supervisor / team lead pathways",
+      "Transfer into bachelor’s business programs",
+    ],
     summary:
       "Develop practical management, operations, and leadership skills for local employers and transfer paths.",
     highlights: [
@@ -129,6 +225,18 @@ export const programs = [
     area: "Business & Accounting",
     credential: "Degree & certificate options",
     format: "Flexible formats",
+    duration: "Certificate to 2-year degree",
+    campuses: ["Claremont", "Keene", "Online / hybrid"],
+    startTerms: ["Fall", "Spring"],
+    prerequisites: [
+      "Comfort with numbers and detail work",
+      "Advising to choose certificate vs. degree",
+    ],
+    careers: [
+      "Bookkeeping",
+      "Accounting clerk",
+      "Small-business financial support",
+    ],
     summary:
       "Build bookkeeping-to-analysis skills that support small businesses, offices, and further study.",
     highlights: [
@@ -144,6 +252,18 @@ export const programs = [
     area: "Education & Human Services",
     credential: "Associate in Science / Certificates",
     format: "Flexible for working caregivers",
+    duration: "Stackable certificates to associate degree",
+    campuses: ["Claremont", "Keene", "Lebanon"],
+    startTerms: ["Fall", "Spring"],
+    prerequisites: [
+      "Interest in working with young children",
+      "Background checks as required by placements",
+    ],
+    careers: [
+      "Early childhood educator",
+      "Childcare center roles",
+      "Infant/toddler specialist pathways",
+    ],
     summary:
       "Prepare to support infants, toddlers, and young learners in classrooms and community settings.",
     highlights: [
@@ -159,6 +279,18 @@ export const programs = [
     area: "Education & Human Services",
     credential: "Associate in Arts",
     format: "In-person, online, and hybrid",
+    duration: "About 2 years",
+    campuses: ["Claremont", "Keene", "Lebanon", "Online / hybrid"],
+    startTerms: ["Fall", "Spring", "Summer"],
+    prerequisites: [
+      "High school diploma or equivalent",
+      "Advising for transfer destination planning",
+    ],
+    careers: [
+      "Transfer into four-year programs",
+      "Communications and office roles",
+      "Exploration before specializing",
+    ],
     summary:
       "A flexible foundation for transfer, exploration, and communication-heavy careers.",
     highlights: [
@@ -174,6 +306,18 @@ export const programs = [
     area: "Education & Human Services",
     credential: "Associate in Science",
     format: "Flexible formats",
+    duration: "About 2 years",
+    campuses: ["Claremont", "Keene", "Lebanon"],
+    startTerms: ["Fall", "Spring"],
+    prerequisites: [
+      "Interest in helping professions",
+      "Advising for internship and career goals",
+    ],
+    careers: [
+      "Community support roles",
+      "Human services assistant pathways",
+      "Nonprofit and agency settings",
+    ],
     summary:
       "Prepare for community support roles helping families, clients, and local organizations.",
     highlights: [
