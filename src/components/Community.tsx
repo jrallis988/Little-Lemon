@@ -1,3 +1,5 @@
+import { SocialLinks } from "./SocialLinks";
+
 export function Community() {
   return (
     <section
@@ -50,6 +52,10 @@ export function Community() {
             </p>
           </figcaption>
         </figure>
+
+        <div className="mx-auto mt-12 max-w-4xl rounded-[1.75rem] border border-ink/8 bg-white/70 p-6 sm:p-8">
+          <SocialLinks variant="panel" />
+        </div>
       </div>
     </section>
   );

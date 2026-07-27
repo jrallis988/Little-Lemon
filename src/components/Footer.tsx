@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Logo } from "./Logo";
+import { SocialLinks } from "./SocialLinks";
 
 const columns = [
   {
@@ -35,12 +36,13 @@ export function Footer() {
   return (
     <footer className="border-t border-ink/8 pb-10 pt-14">
       <div className="section-shell">
-        <div className="grid gap-10 md:grid-cols-[1.2fr_repeat(3,0.7fr)]">
+        <div className="grid gap-10 lg:grid-cols-[1.15fr_repeat(3,0.7fr)]">
           <div>
             <Logo />
             <p className="mt-4 max-w-xs font-serif text-base leading-relaxed text-ink/60">
               Science-backed weight health for real life—since 1963, redesigned for what’s next.
             </p>
+            <SocialLinks className="mt-6" />
           </div>
 
           {columns.map((column) => (
