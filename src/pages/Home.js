@@ -17,15 +17,15 @@ export default function Home() {
       <section className="relative min-h-[100svh] overflow-hidden text-white">
         <img
           src={images.hero}
-          alt="Students collaborating outdoors on a college campus"
-          className="absolute inset-0 h-full w-full object-cover object-[center_30%] animate-ken-burns"
+          alt="Aerial view of River Valley Community College’s Claremont campus"
+          className="absolute inset-0 h-full w-full object-cover object-[center_45%] animate-ken-burns"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-river-deep via-river-deep/88 to-river-deep/45" />
-        <div className="absolute inset-0 bg-gradient-to-t from-river-deep/80 via-transparent to-river-deep/40" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(212,160,23,0.18),transparent_40%)]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-river-deep via-river-deep/85 to-river-deep/35" />
+        <div className="absolute inset-0 bg-gradient-to-t from-river-deep/85 via-transparent to-river-deep/45" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(212,160,23,0.16),transparent_40%)]" />
 
         <div className="relative section-shell flex min-h-[100svh] flex-col justify-end pb-16 pt-36 sm:pb-20 lg:pb-24">
-          <div className="max-w-3xl rounded-sm bg-river-deep/25 p-1 backdrop-blur-[2px] sm:bg-transparent sm:p-0 sm:backdrop-blur-0">
+          <div className="max-w-3xl">
             <p className="animate-fade-in font-display text-4xl font-semibold leading-[1.05] tracking-tight text-white drop-shadow-sm sm:text-5xl lg:text-6xl">
               River Valley Community College
             </p>
@@ -64,8 +64,8 @@ export default function Home() {
           </div>
           <div className="overflow-hidden">
             <img
-              src={images.campus}
-              alt="College campus building surrounded by trees"
+              src={images.science}
+              alt="Students and faculty working in an RVCC science lab"
               className="h-72 w-full object-cover sm:h-80"
             />
           </div>
@@ -164,19 +164,26 @@ export default function Home() {
           {campuses.map((campus, index) => (
             <article
               key={campus.name}
-              className="reveal border-l border-river/20 pl-5"
+              className="reveal overflow-hidden"
               data-reveal
               style={{ transitionDelay: `${index * 0.08}s` }}
             >
-              <p className="font-display text-xs font-semibold uppercase tracking-[0.18em] text-valley">
-                {campus.role}
-              </p>
-              <h3 className="mt-3 font-display text-2xl font-semibold text-river-deep">
-                {campus.name}
-              </h3>
-              <p className="mt-3 text-base leading-relaxed text-granite-muted">
-                {campus.detail}
-              </p>
+              <img
+                src={campus.image}
+                alt={`${campus.name} campus`}
+                className="h-44 w-full object-cover"
+              />
+              <div className="border-l border-river/20 pl-5 pt-5">
+                <p className="font-display text-xs font-semibold uppercase tracking-[0.18em] text-valley">
+                  {campus.role}
+                </p>
+                <h3 className="mt-3 font-display text-2xl font-semibold text-river-deep">
+                  {campus.name}
+                </h3>
+                <p className="mt-3 text-base leading-relaxed text-granite-muted">
+                  {campus.detail}
+                </p>
+              </div>
             </article>
           ))}
         </div>
@@ -184,32 +191,39 @@ export default function Home() {
 
       <section className="section-shell pb-8">
         <div
-          className="reveal overflow-hidden bg-river-deep px-6 py-12 text-white sm:px-10 sm:py-14"
+          className="reveal overflow-hidden bg-river-deep text-white"
           data-reveal
         >
-          <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:items-center">
-            <blockquote className="max-w-xl">
-              <p className="font-display text-2xl font-medium leading-snug sm:text-3xl">
-                “I am grateful for all of the encouragement I received while I
-                was here. Every bit of help really mattered to me.”
-              </p>
-              <footer className="mt-6 text-sm uppercase tracking-[0.16em] text-sunrise">
-                Diane Cammarata, Class of ’19
-              </footer>
-            </blockquote>
+          <div className="grid gap-0 lg:grid-cols-[0.9fr_1.1fr] lg:items-stretch">
+            <img
+              src={images.testimonial}
+              alt="Diane Cammarata, RVCC Class of 2019"
+              className="h-64 w-full object-cover object-top lg:h-full"
+            />
+            <div className="flex flex-col justify-center px-6 py-12 sm:px-10 sm:py-14">
+              <blockquote className="max-w-xl">
+                <p className="font-display text-2xl font-medium leading-snug sm:text-3xl">
+                  “I am grateful for all of the encouragement I received while I
+                  was here. Every bit of help really mattered to me.”
+                </p>
+                <footer className="mt-6 text-sm uppercase tracking-[0.16em] text-sunrise">
+                  Diane Cammarata, Class of ’19
+                </footer>
+              </blockquote>
 
-            <dl className="grid grid-cols-2 gap-6 border-t border-white/15 pt-8 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0">
-              {outcomes.map((item) => (
-                <div key={item.label}>
-                  <dt className="font-display text-3xl font-semibold text-white">
-                    {item.value}
-                  </dt>
-                  <dd className="mt-2 text-sm leading-snug text-white/70">
-                    {item.label}
-                  </dd>
-                </div>
-              ))}
-            </dl>
+              <dl className="mt-10 grid grid-cols-2 gap-6 border-t border-white/15 pt-8">
+                {outcomes.map((item) => (
+                  <div key={item.label}>
+                    <dt className="font-display text-3xl font-semibold text-white">
+                      {item.value}
+                    </dt>
+                    <dd className="mt-2 text-sm leading-snug text-white/70">
+                      {item.label}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
           </div>
         </div>
       </section>

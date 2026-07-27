@@ -13,7 +13,7 @@ export default function About() {
         title="A proud river-valley college since 1968"
         summary="Originally New Hampshire Vocational Institute at Claremont, River Valley Community College has grown into a three-campus community known for allied health excellence and accessible education."
         image={images.campus}
-        imageAlt="College campus building among trees"
+        imageAlt="River Valley Community College campus grounds"
       />
 
       <section className="section-shell grid gap-12 py-16 sm:py-20 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
@@ -39,7 +39,7 @@ export default function About() {
         <div className="reveal relative overflow-hidden" data-reveal>
           <img
             src={images.hero}
-            alt="Students collaborating outdoors"
+            alt="Aerial view of the Claremont campus"
             className="h-full min-h-[20rem] w-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-river-deep/50 to-transparent" />

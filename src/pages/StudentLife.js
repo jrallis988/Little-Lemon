@@ -13,7 +13,7 @@ export default function StudentLife() {
         title="Support that shows up when life gets busy"
         summary="Food access, free bus passes, library help, and campuses designed for real schedules — not just the ideal semester."
         image={images.community}
-        imageAlt="Students talking and laughing together outdoors"
+        imageAlt="Students gathering outdoors at River Valley Community College"
       />
 
       <section className="section-shell py-16 sm:py-20">

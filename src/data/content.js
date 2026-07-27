@@ -19,20 +19,17 @@ export const contact = {
 };
 
 export const images = {
-  hero:
-    "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=2000&q=80",
-  campus:
-    "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1600&q=80",
-  classroom:
-    "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=1600&q=80",
-  healthcare:
-    "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?auto=format&fit=crop&w=1600&q=80",
-  library:
-    "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1600&q=80",
-  community:
-    "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1600&q=80",
-  programs:
-    "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1600&q=80",
+  hero: "/images/hero-claremont.jpg",
+  campus: "/images/about-campus.jpg",
+  classroom: "/images/classroom.jpg",
+  healthcare: "/images/nursing-lab.jpg",
+  radiology: "/images/xray-lab.jpg",
+  science: "/images/science-lab.jpg",
+  library: "/images/students-panel.jpg",
+  community: "/images/students-campus.jpg",
+  programs: "/images/students-panel.jpg",
+  promo: "/images/promo-slide.jpg",
+  testimonial: "/images/diane-cammarata.jpg",
 };
 
 export const programs = [
@@ -202,7 +199,7 @@ export const programAreas = [
     name: "STEM & Technology",
     summary:
       "Hands-on preparation for cybersecurity, networks, science, and advanced manufacturing roles.",
-    image: images.classroom,
+    image: images.science,
     programSlugs: ["cybersecurity", "information-technology"],
   },
   {
@@ -210,7 +207,7 @@ export const programAreas = [
     name: "Business & Accounting",
     summary:
       "Practical credentials that move you into accounting, management, and workplace leadership.",
-    image: images.programs,
+    image: images.classroom,
     programSlugs: ["business-management", "accounting"],
   },
   {
@@ -229,18 +226,21 @@ export const campuses = [
     role: "Main Campus",
     detail:
       "One main building with parking, a soccer field, pond, nearby trails, and a courtyard built for collaboration.",
+    image: images.hero,
   },
   {
     name: "Keene",
     role: "Academic Center",
     detail:
       "Classes, student services, computer labs, and study space on the Keene State College campus.",
+    image: images.classroom,
   },
   {
     name: "Lebanon",
     role: "Academic Center",
     detail:
       "Right on the Mall in downtown Lebanon — surrounded by shops and restaurants, with services and study space inside.",
+    image: images.community,
   },
 ];
 

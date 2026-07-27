@@ -17,7 +17,7 @@ export default function Programs() {
         title="Degrees and certificates that meet the moment"
         summary="Explore academic focus areas across health sciences, STEM, business, education, and the liberal arts — offered in person, online, and hybrid formats."
         image={images.programs}
-        imageAlt="Students collaborating around a laptop"
+        imageAlt="RVCC students and campus life"
       />
 
       <section className="section-shell py-16 sm:py-20">

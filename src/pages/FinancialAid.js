@@ -13,7 +13,7 @@ export default function FinancialAid() {
         title="Make college affordable — then finish"
         summary="Nearly 89% of RVCC students receive grants, scholarships, or loans. Start early, ask questions, and stack every dollar that fits."
         image={images.library}
-        imageAlt="Students studying in a bright library space"
+        imageAlt="Students and staff gathered for a panel discussion at RVCC"
       />
 
       <section className="section-shell py-16 sm:py-20">

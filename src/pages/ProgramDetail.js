@@ -19,13 +19,24 @@ export default function ProgramDetail() {
     .slice(0, 3);
 
   const heroImage =
-    program.area === "Health Sciences"
-      ? images.healthcare
-      : program.area === "STEM & Technology"
-        ? images.classroom
-        : program.area === "Business & Accounting"
-          ? images.programs
-          : images.community;
+    program.slug === "radiologic-technology"
+      ? images.radiology
+      : program.slug === "nursing" || program.area === "Health Sciences"
+        ? images.healthcare
+        : program.area === "STEM & Technology"
+          ? images.science
+          : program.area === "Business & Accounting"
+            ? images.classroom
+            : images.community;
+
+  const heroAlt =
+    program.slug === "radiologic-technology"
+      ? "Radiologic technology students in RVCC’s digital X-ray lab"
+      : program.slug === "nursing"
+        ? "Nursing students training in an RVCC simulation lab"
+        : program.area === "STEM & Technology"
+          ? "Students working in an RVCC science laboratory"
+          : "Students and campus life at River Valley Community College";
 
   return (
     <div ref={revealRef}>
@@ -34,7 +45,7 @@ export default function ProgramDetail() {
         title={program.name}
         summary={program.summary}
         image={heroImage}
-        imageAlt=""
+        imageAlt={heroAlt}
       />
 
       <section className="section-shell grid gap-12 py-16 sm:py-20 lg:grid-cols-[1.2fr_0.8fr]">

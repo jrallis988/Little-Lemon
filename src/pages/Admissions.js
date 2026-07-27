@@ -96,7 +96,7 @@ export default function Admissions() {
         title="Your next step starts here"
         summary="Whether you are returning to school, changing careers, or starting fresh, admissions will help you map a clear, affordable path."
         image={images.campus}
-        imageAlt="Campus building with walkways and trees"
+        imageAlt="River Valley Community College campus entrance area"
       />
 
       <section className="section-shell grid gap-14 py-16 sm:py-20 lg:grid-cols-[1fr_1fr]">
