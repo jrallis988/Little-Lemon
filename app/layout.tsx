@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     template: "%s · Planet Fitness",
   },
   description:
-    "Lightning-fast club lookup, transparent Classic vs Black Card pricing, and a frictionless path to join. Member check-ins live in the app.",
+    "Find a nearby Planet Fitness, compare Classic and Black Card membership pricing, and join online. Check-in and your digital keytag live in the app.",
 };
 
 export default function RootLayout({

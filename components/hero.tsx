@@ -27,16 +27,16 @@ export function Hero() {
             Planet Fitness
           </p>
           <h1 className="mt-5 max-w-2xl animate-fade-up text-3xl font-medium leading-tight tracking-tight text-white [animation-delay:90ms] md:text-4xl">
-            Find a club. See the real price. Join without the runaround.
+            A nearby gym. Clear membership pricing. Ready when you are.
           </h1>
           <p className="mt-4 max-w-xl animate-fade-up text-base text-white/75 [animation-delay:160ms] md:text-lg">
-            Lightning-fast local discovery and radical pricing transparency.
-            Check-ins and workouts stay in the app—this site gets you through
-            the door.
+            Pick a local club, compare Classic and Black Card side by side, then
+            join online. Check-in and your digital keytag stay in the app—this
+            page is just for getting started.
           </p>
           <div className="mt-8 flex animate-fade-up flex-wrap gap-3 [animation-delay:230ms]">
             <Button asChild size="lg">
-              <a href="#clubs">Find a club</a>
+              <a href="#clubs">Find a club near you</a>
             </Button>
             <Button
               asChild
@@ -44,7 +44,7 @@ export function Hero() {
               variant="outline"
               className="border-white/35 bg-transparent text-white hover:border-white hover:bg-white/10 hover:text-white"
             >
-              <Link href="#pricing">Compare memberships</Link>
+              <Link href="#pricing">See membership options</Link>
             </Button>
           </div>
         </div>

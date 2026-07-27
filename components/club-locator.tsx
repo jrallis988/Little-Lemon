@@ -79,7 +79,7 @@ function ClubDetail({ club }: { club: Club }) {
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-pf-purple">
-            Selected club
+            Your club
           </p>
           <h3 className="mt-1 font-display text-3xl tracking-tight text-pf-ink">
             {club.name}
@@ -123,7 +123,7 @@ function ClubDetail({ club }: { club: Club }) {
 
         <div>
           <h4 className="text-sm font-semibold uppercase tracking-wider text-pf-ink/55">
-            Amenities
+            On the floor
           </h4>
           <ul className="mt-3 flex flex-wrap gap-2">
             {club.amenities.map((amenity) => (
@@ -134,7 +134,7 @@ function ClubDetail({ club }: { club: Club }) {
           </ul>
           <div className="mt-6 flex flex-col gap-2 sm:flex-row">
             <Button asChild className="flex-1">
-              <a href={`/join?club=${club.id}`}>Join this club</a>
+              <a href={`/join?club=${club.id}`}>Join this location</a>
             </Button>
             <Button asChild variant="outline" className="flex-1">
               <a
@@ -178,17 +178,17 @@ export function ClubLocator() {
       <div className="container py-16 md:py-20">
         <div className="max-w-2xl animate-fade-up">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-pf-purple">
-            Instant club locator
+            Find a club
           </p>
           <h2
             id="club-locator-heading"
             className="mt-3 font-display text-4xl tracking-tight text-pf-ink md:text-5xl"
           >
-            Find your local club in seconds.
+            Where will you work out?
           </h2>
           <p className="mt-3 max-w-xl text-base text-pf-ink/70 md:text-lg">
-            Search by city, ZIP, or neighborhood. Hours, amenities, and location
-            details surface immediately—no account required.
+            Search by city or ZIP. We’ll show hours, what’s on the floor, and how
+            to get there—before you commit to a membership.
           </p>
         </div>
 
@@ -212,13 +212,15 @@ export function ClubLocator() {
                   setSelectedId(nextResults[0]?.id ?? null);
                 });
               }}
-              placeholder="City, ZIP, or street…"
+              placeholder="City or ZIP code…"
               className="h-14 pl-12 text-lg"
               autoComplete="postal-code"
             />
           </div>
           <p className="mt-2 text-sm text-pf-ink/55" aria-live="polite">
-            {isPending ? "Updating…" : `${results.length} club${results.length === 1 ? "" : "s"} near you`}
+            {isPending
+              ? "Searching…"
+              : `${results.length} club${results.length === 1 ? "" : "s"} nearby`}
           </p>
         </div>
 
@@ -245,7 +247,7 @@ export function ClubLocator() {
               <ClubDetail club={selected} />
             ) : (
               <div className="flex h-full min-h-64 items-center justify-center rounded-xl border border-dashed border-pf-line bg-white/60 px-6 text-center text-pf-ink/60">
-                Search to see hours, amenities, and directions.
+                Search above to see hours, equipment, and directions.
               </div>
             )}
           </div>

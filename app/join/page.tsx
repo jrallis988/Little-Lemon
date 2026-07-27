@@ -20,14 +20,14 @@ export default async function JoinPage({ searchParams }: JoinPageProps) {
     <div className="min-h-[70vh] bg-[linear-gradient(180deg,var(--pf-mist),#ffffff_40%)]">
       <div className="container max-w-2xl py-14 md:py-20">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-pf-purple">
-          Streamlined checkout
+          Start your membership
         </p>
         <h1 className="mt-3 font-display text-4xl tracking-tight text-pf-ink md:text-5xl">
-          Join {plan.name}
+          Join with {plan.name}
         </h1>
         <p className="mt-3 text-pf-ink/70">
-          Multi-step signup is next. For now, confirm your club and plan—fees
-          stay visible before you continue.
+          Confirm your club and plan first. We’ll keep every fee visible before
+          you finish signing up.
         </p>
 
         <div className="mt-8 space-y-4 rounded-xl border border-pf-line bg-white p-6 shadow-lift">
@@ -86,11 +86,10 @@ export default async function JoinPage({ searchParams }: JoinPageProps) {
           </div>
 
           <Button size="lg" className="w-full" disabled={!club}>
-            Continue to checkout
+            Continue
           </Button>
           <p className="text-center text-xs text-pf-ink/50">
-            Checkout steps (identity → payment → confirm) ship in the next
-            iteration.
+            Next: a short sign-up—your info, payment, then you’re set to work out.
           </p>
         </div>
       </div>

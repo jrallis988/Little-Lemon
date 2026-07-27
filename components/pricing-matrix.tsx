@@ -52,17 +52,18 @@ export function PricingMatrix({
       <div className="container py-16 md:py-20">
         <div className="mx-auto max-w-2xl text-center animate-fade-up">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-pf-purple">
-            Transparent pricing
+            Membership options
           </p>
           <h2
             id="pricing-heading"
             className="mt-3 font-display text-4xl tracking-tight text-pf-ink md:text-5xl"
           >
-            Classic vs Black Card—every fee on the page.
+            Two ways to join. The full price list stays visible.
           </h2>
           <p className="mt-3 text-base text-pf-ink/70 md:text-lg">
-            Monthly dues, annual fees, and cancellation terms. No hidden modals.
-            No surprise fine print after checkout.
+            Classic for your home club. Black Card if you want more locations and
+            spa amenities. Monthly dues, annual fee, and cancel terms—all right
+            here.
           </p>
         </div>
 
@@ -85,7 +86,7 @@ export function PricingMatrix({
                     {plan.name}
                   </h3>
                   {featured ? (
-                    <Badge variant="yellow">Most popular</Badge>
+                    <Badge variant="yellow">Most chosen</Badge>
                   ) : (
                     <Badge variant="muted">Home club</Badge>
                   )}
@@ -162,7 +163,7 @@ export function PricingMatrix({
                   size="lg"
                   className="mt-6 w-full"
                 >
-                  <Link href={joinHref(plan.id)}>Choose {plan.name}</Link>
+                  <Link href={joinHref(plan.id)}>Start with {plan.name}</Link>
                 </Button>
               </article>
             );
@@ -173,7 +174,7 @@ export function PricingMatrix({
           <table className="w-full min-w-[36rem] border-collapse text-left">
             <caption className="sr-only">
               Side-by-side comparison of Classic and Black Card membership fees
-              and benefits
+              and what’s included at the gym
             </caption>
             <thead>
               <tr className="bg-pf-mist/80">
@@ -181,7 +182,7 @@ export function PricingMatrix({
                   scope="col"
                   className="px-4 py-4 text-xs font-semibold uppercase tracking-wider text-pf-ink/55 md:px-5"
                 >
-                  What you pay & get
+                  What you pay &amp; get at the gym
                 </th>
                 <th
                   scope="col"
@@ -229,10 +230,9 @@ export function PricingMatrix({
         <div className="mt-6 flex items-start gap-3 rounded-lg bg-pf-mist/70 px-4 py-3 text-sm text-pf-ink/70">
           <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-pf-purple" />
           <p>
-            Rates shown are starting offers for discovery. Your selected club
-            confirms the final local price before payment—still on this site,
-            still without modal traps. Membership utilities (check-in, keytag,
-            crowd meter) live in the PF app after you join.
+            Starting rates shown above. Your club confirms the final local price
+            before you pay. After you join, use the Planet Fitness app to check
+            in, open the door with your digital keytag, and manage your account.
           </p>
         </div>
       </div>

@@ -14,8 +14,8 @@ export default function HomePage() {
             Planet Fitness
           </p>
           <p>
-            Website for discovery &amp; signup. Member tools live in the mobile
-            app.
+            Find a club and start a membership here. Day-to-day gym tools live in
+            the Planet Fitness app.
           </p>
         </div>
       </footer>

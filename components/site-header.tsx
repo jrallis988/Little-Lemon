@@ -10,7 +10,7 @@ export function SiteHeader() {
             Planet Fitness
           </span>
           <span className="hidden text-[10px] font-semibold uppercase tracking-[0.18em] text-white/55 sm:inline">
-            Find · Price · Join
+            Clubs · Memberships · Join
           </span>
         </Link>
         <nav aria-label="Primary" className="flex items-center gap-1 sm:gap-2">
@@ -21,7 +21,7 @@ export function SiteHeader() {
             <a href="#pricing">Pricing</a>
           </Button>
           <Button asChild size="sm" className="ml-1">
-            <Link href="/join">Join now</Link>
+            <Link href="/join">Start a membership</Link>
           </Button>
         </nav>
       </div>

@@ -34,11 +34,11 @@ export function AppHandoffBanner() {
           </div>
           <div>
             <p className="font-display text-lg tracking-tight">
-              Already a member? Use the app.
+              Already a member?
             </p>
             <p className="text-sm text-white/75">
-              Check-ins, digital keytag, crowd meter, and account management live
-              in the Planet Fitness app—not on this site.
+              Check in, unlock the door, and manage your membership in the
+              Planet Fitness app.
             </p>
           </div>
         </div>
