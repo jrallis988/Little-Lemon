@@ -1,3 +1,14 @@
+import {
+  formatHours,
+  isOpenAt,
+  scheduleWeekday24,
+  toDisplayHours,
+  todaysHoursLabel,
+  type DisplayHoursRow,
+  type WeeklySchedule,
+} from "@/lib/hours";
+import type { MembershipTier } from "@/lib/pricing";
+
 export type ClubAmenity =
   | "30-Minute Circuit"
   | "Cardio"
@@ -10,14 +21,15 @@ export type ClubAmenity =
   | "Wifi"
   | "Locker Rooms";
 
-export type DayHours = {
-  day: string;
-  open: string;
-  close: string;
-  closed?: boolean;
+export type LocalPlanPricing = {
+  monthlyDues: number;
+  enrollmentFee: number;
+  annualFee: number;
+  annualFeeMonth: string;
+  available: boolean;
 };
 
-export type Club = {
+export type ClubRecord = {
   id: string;
   name: string;
   city: string;
@@ -29,12 +41,19 @@ export type Club = {
   latitude: number;
   longitude: number;
   amenities: ClubAmenity[];
-  hours: DayHours[];
-  openNow: boolean;
+  schedule: WeeklySchedule;
   blackCardAvailable: boolean;
+  image: string;
+  pricing: Record<MembershipTier, LocalPlanPricing>;
 };
 
-export const CLUBS: Club[] = [
+export type Club = ClubRecord & {
+  hours: DisplayHoursRow[];
+  openNow: boolean;
+  todayLabel: string;
+};
+
+const CLUB_RECORDS: ClubRecord[] = [
   {
     id: "pf-midtown",
     name: "Planet Fitness Midtown",
@@ -56,14 +75,31 @@ export const CLUBS: Club[] = [
       "Wifi",
       "Locker Rooms",
     ],
-    hours: [
-      { day: "Mon–Thu", open: "24 hours", close: "" },
-      { day: "Fri", open: "12:00 AM", close: "10:00 PM" },
-      { day: "Sat", open: "7:00 AM", close: "7:00 PM" },
-      { day: "Sun", open: "7:00 AM", close: "7:00 PM" },
-    ],
-    openNow: true,
+    schedule: scheduleWeekday24({
+      friClose: 22 * 60,
+      satOpen: 7 * 60,
+      satClose: 19 * 60,
+      sunOpen: 7 * 60,
+      sunClose: 19 * 60,
+    }),
     blackCardAvailable: true,
+    image: "/images/floor-gym.jpg",
+    pricing: {
+      classic: {
+        monthlyDues: 15,
+        enrollmentFee: 0,
+        annualFee: 49,
+        annualFeeMonth: "June",
+        available: true,
+      },
+      "black-card": {
+        monthlyDues: 24.99,
+        enrollmentFee: 0,
+        annualFee: 49,
+        annualFeeMonth: "June",
+        available: true,
+      },
+    },
   },
   {
     id: "pf-decatur",
@@ -86,14 +122,31 @@ export const CLUBS: Club[] = [
       "Wifi",
       "Locker Rooms",
     ],
-    hours: [
-      { day: "Mon–Thu", open: "24 hours", close: "" },
-      { day: "Fri", open: "12:00 AM", close: "9:00 PM" },
-      { day: "Sat", open: "7:00 AM", close: "7:00 PM" },
-      { day: "Sun", open: "7:00 AM", close: "7:00 PM" },
-    ],
-    openNow: true,
+    schedule: scheduleWeekday24({
+      friClose: 21 * 60,
+      satOpen: 7 * 60,
+      satClose: 19 * 60,
+      sunOpen: 7 * 60,
+      sunClose: 19 * 60,
+    }),
     blackCardAvailable: true,
+    image: "/images/cardio-gym.jpg",
+    pricing: {
+      classic: {
+        monthlyDues: 15,
+        enrollmentFee: 0,
+        annualFee: 49,
+        annualFeeMonth: "June",
+        available: true,
+      },
+      "black-card": {
+        monthlyDues: 22.99,
+        enrollmentFee: 0,
+        annualFee: 49,
+        annualFeeMonth: "June",
+        available: true,
+      },
+    },
   },
   {
     id: "pf-buckhead",
@@ -116,14 +169,31 @@ export const CLUBS: Club[] = [
       "Wifi",
       "Locker Rooms",
     ],
-    hours: [
-      { day: "Mon–Thu", open: "24 hours", close: "" },
-      { day: "Fri", open: "12:00 AM", close: "10:00 PM" },
-      { day: "Sat", open: "6:00 AM", close: "8:00 PM" },
-      { day: "Sun", open: "7:00 AM", close: "7:00 PM" },
-    ],
-    openNow: true,
+    schedule: scheduleWeekday24({
+      friClose: 22 * 60,
+      satOpen: 6 * 60,
+      satClose: 20 * 60,
+      sunOpen: 7 * 60,
+      sunClose: 19 * 60,
+    }),
     blackCardAvailable: true,
+    image: "/images/floor-gym.jpg",
+    pricing: {
+      classic: {
+        monthlyDues: 19.99,
+        enrollmentFee: 0,
+        annualFee: 49,
+        annualFeeMonth: "June",
+        available: true,
+      },
+      "black-card": {
+        monthlyDues: 24.99,
+        enrollmentFee: 0,
+        annualFee: 49,
+        annualFeeMonth: "June",
+        available: true,
+      },
+    },
   },
   {
     id: "pf-marietta",
@@ -143,14 +213,31 @@ export const CLUBS: Club[] = [
       "Wifi",
       "Locker Rooms",
     ],
-    hours: [
-      { day: "Mon–Thu", open: "24 hours", close: "" },
-      { day: "Fri", open: "12:00 AM", close: "9:00 PM" },
-      { day: "Sat", open: "7:00 AM", close: "7:00 PM" },
-      { day: "Sun", open: "8:00 AM", close: "6:00 PM" },
-    ],
-    openNow: false,
+    schedule: scheduleWeekday24({
+      friClose: 21 * 60,
+      satOpen: 7 * 60,
+      satClose: 19 * 60,
+      sunOpen: 8 * 60,
+      sunClose: 18 * 60,
+    }),
     blackCardAvailable: false,
+    image: "/images/hero-gym.jpg",
+    pricing: {
+      classic: {
+        monthlyDues: 10,
+        enrollmentFee: 0,
+        annualFee: 39,
+        annualFeeMonth: "June",
+        available: true,
+      },
+      "black-card": {
+        monthlyDues: 24.99,
+        enrollmentFee: 0,
+        annualFee: 49,
+        annualFeeMonth: "June",
+        available: false,
+      },
+    },
   },
   {
     id: "pf-sandy-springs",
@@ -173,24 +260,61 @@ export const CLUBS: Club[] = [
       "Wifi",
       "Locker Rooms",
     ],
-    hours: [
-      { day: "Mon–Thu", open: "24 hours", close: "" },
-      { day: "Fri", open: "12:00 AM", close: "10:00 PM" },
-      { day: "Sat", open: "7:00 AM", close: "7:00 PM" },
-      { day: "Sun", open: "7:00 AM", close: "7:00 PM" },
-    ],
-    openNow: true,
+    schedule: scheduleWeekday24({
+      friClose: 22 * 60,
+      satOpen: 7 * 60,
+      satClose: 19 * 60,
+      sunOpen: 7 * 60,
+      sunClose: 19 * 60,
+    }),
     blackCardAvailable: true,
+    image: "/images/cardio-gym.jpg",
+    pricing: {
+      classic: {
+        monthlyDues: 15,
+        enrollmentFee: 0,
+        annualFee: 49,
+        annualFeeMonth: "June",
+        available: true,
+      },
+      "black-card": {
+        monthlyDues: 24.99,
+        enrollmentFee: 1,
+        annualFee: 49,
+        annualFeeMonth: "June",
+        available: true,
+      },
+    },
   },
 ];
 
-export function searchClubs(query: string): Club[] {
-  const normalized = query.trim().toLowerCase();
-  if (!normalized) {
-    return [...CLUBS].sort((a, b) => a.distanceMiles - b.distanceMiles);
-  }
+function enrichClub(record: ClubRecord, now = new Date()): Club {
+  return {
+    ...record,
+    hours: toDisplayHours(record.schedule),
+    openNow: isOpenAt(record.schedule, now),
+    todayLabel: todaysHoursLabel(record.schedule, now),
+  };
+}
 
-  return CLUBS.filter((club) => {
+/** API-shaped club feed. Swap this for a CMS/HTTP source later. */
+export function getClubs(now = new Date()): Club[] {
+  return CLUB_RECORDS.map((record) => enrichClub(record, now)).sort(
+    (a, b) => a.distanceMiles - b.distanceMiles
+  );
+}
+
+export function getClubById(id: string, now = new Date()): Club | null {
+  const record = CLUB_RECORDS.find((club) => club.id === id);
+  return record ? enrichClub(record, now) : null;
+}
+
+export function searchClubs(query: string, now = new Date()): Club[] {
+  const clubs = getClubs(now);
+  const normalized = query.trim().toLowerCase();
+  if (!normalized) return clubs;
+
+  return clubs.filter((club) => {
     const haystack = [
       club.name,
       club.city,
@@ -201,11 +325,10 @@ export function searchClubs(query: string): Club[] {
       .join(" ")
       .toLowerCase();
     return haystack.includes(normalized);
-  }).sort((a, b) => a.distanceMiles - b.distanceMiles);
+  });
 }
 
-export function formatHours(hours: DayHours): string {
-  if (hours.closed) return "Closed";
-  if (!hours.close) return hours.open;
-  return `${hours.open} – ${hours.close}`;
-}
+export { formatHours };
+
+/** @deprecated use getClubs() — kept for gradual migration */
+export const CLUBS = getClubs();

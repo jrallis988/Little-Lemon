@@ -5,10 +5,13 @@ import Link from "next/link";
 import { Check, Minus, ShieldCheck } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useSelectedClub } from "@/components/selected-club-context";
+import { track } from "@/lib/analytics";
 import {
   MEMBERSHIP_PLANS,
   PRICING_MATRIX,
   formatCurrency,
+  getLocalPricing,
   type MembershipTier,
 } from "@/lib/pricing";
 import { cn } from "@/lib/utils";
@@ -16,6 +19,7 @@ import { cn } from "@/lib/utils";
 function CellValue({ value }: { value: string }) {
   const negative =
     value.toLowerCase().startsWith("not included") ||
+    value.toLowerCase().includes("not included") ||
     value.toLowerCase() === "—";
 
   return (
@@ -36,11 +40,10 @@ function CellValue({ value }: { value: string }) {
   );
 }
 
-export function PricingMatrix({
-  clubId,
-}: {
-  clubId?: string | null;
-}) {
+export function PricingMatrix() {
+  const { club } = useSelectedClub();
+  const clubId = club?.id ?? null;
+
   const joinHref = (tier: MembershipTier) =>
     clubId ? `/join?club=${clubId}&plan=${tier}` : `/join?plan=${tier}`;
 
@@ -50,7 +53,6 @@ export function PricingMatrix({
       aria-labelledby="pricing-heading"
       className="relative scroll-mt-14 overflow-hidden bg-[#0f0618] text-white"
     >
-      {/* Photo rail — fills visual width before pricing */}
       <div className="relative">
         <div className="grid h-28 grid-cols-3 gap-0.5 sm:h-36 md:h-44">
           <div className="relative">
@@ -60,6 +62,7 @@ export function PricingMatrix({
               fill
               className="object-cover object-[center_40%]"
               sizes="33vw"
+              loading="lazy"
             />
           </div>
           <div className="relative">
@@ -69,6 +72,7 @@ export function PricingMatrix({
               fill
               className="object-cover"
               sizes="33vw"
+              loading="lazy"
             />
           </div>
           <div className="relative">
@@ -78,6 +82,7 @@ export function PricingMatrix({
               fill
               className="object-cover object-center"
               sizes="33vw"
+              loading="lazy"
             />
           </div>
         </div>
@@ -93,14 +98,26 @@ export function PricingMatrix({
             >
               Two ways to join. Full price list on the page.
             </h2>
+            {club ? (
+              <p className="mt-1 text-sm text-white/75">
+                Showing local rates for{" "}
+                <span className="font-semibold text-white">{club.name}</span>
+              </p>
+            ) : (
+              <p className="mt-1 text-sm text-white/60">
+                National starting rates—pick a club above to lock local dues.
+              </p>
+            )}
           </div>
         </div>
       </div>
 
-      <div className="px-0 py-0 md:py-0">
+      <div>
         <div className="grid gap-0.5 lg:grid-cols-2">
           {MEMBERSHIP_PLANS.map((plan, index) => {
             const featured = plan.id === "black-card";
+            const local = getLocalPricing(club, plan.id);
+            const unavailable = club ? !local.available : false;
             return (
               <article
                 key={plan.id}
@@ -108,7 +125,8 @@ export function PricingMatrix({
                   "animate-fade-up p-4 md:p-5",
                   featured
                     ? "bg-[linear-gradient(160deg,#5c2d91_0%,#2f124a_100%)] ring-1 ring-inset ring-pf-yellow"
-                    : "bg-[#1a0d28] ring-1 ring-inset ring-white/10"
+                    : "bg-[#1a0d28] ring-1 ring-inset ring-white/10",
+                  unavailable && "opacity-55"
                 )}
                 style={{ animationDelay: `${index * 60}ms` }}
               >
@@ -116,17 +134,25 @@ export function PricingMatrix({
                   <h3 className="font-display text-2xl tracking-tight">
                     {plan.name}
                   </h3>
-                  {featured ? (
-                    <Badge variant="yellow">Most chosen</Badge>
+                  {unavailable ? (
+                    <Badge className="bg-white/10 text-white">
+                      Not at this club
+                    </Badge>
+                  ) : featured ? (
+                    <Badge variant="yellow">
+                      {club ? "Local rate" : "Most chosen"}
+                    </Badge>
                   ) : (
-                    <Badge className="bg-white/10 text-white">Home club</Badge>
+                    <Badge className="bg-white/10 text-white">
+                      {club ? "Local rate" : "Home club"}
+                    </Badge>
                   )}
                 </div>
                 <p className="mt-1 text-sm text-white/70">{plan.tagline}</p>
                 <div className="mt-3 flex flex-wrap items-end justify-between gap-3">
                   <p className="flex items-end gap-1">
                     <span className="font-display text-4xl tracking-tight">
-                      {formatCurrency(plan.monthlyDues)}
+                      {formatCurrency(local.monthlyDues)}
                     </span>
                     <span className="mb-1 text-sm text-white/55">/ month</span>
                   </p>
@@ -134,13 +160,13 @@ export function PricingMatrix({
                     <div>
                       <dt>Enroll</dt>
                       <dd className="text-sm font-semibold normal-case tracking-normal text-white">
-                        {formatCurrency(plan.enrollmentFee)}
+                        {formatCurrency(local.enrollmentFee)}
                       </dd>
                     </div>
                     <div>
                       <dt>Annual</dt>
                       <dd className="text-sm font-semibold normal-case tracking-normal text-white">
-                        {formatCurrency(plan.annualFee)}
+                        {formatCurrency(local.annualFee)}
                       </dd>
                     </div>
                     <div>
@@ -162,17 +188,37 @@ export function PricingMatrix({
                     </li>
                   ))}
                 </ul>
-                <Button
-                  asChild
-                  variant={featured ? "default" : "outline"}
-                  className={cn(
-                    "mt-3 w-full",
-                    !featured &&
-                      "border-white/30 bg-transparent text-white hover:bg-white/10 hover:text-white"
-                  )}
-                >
-                  <Link href={joinHref(plan.id)}>Start with {plan.name}</Link>
-                </Button>
+                {unavailable ? (
+                  <Button className="mt-3 w-full" disabled>
+                    Unavailable here
+                  </Button>
+                ) : (
+                  <Button
+                    asChild
+                    variant={featured ? "default" : "outline"}
+                    className={cn(
+                      "mt-3 w-full",
+                      !featured &&
+                        "border-white/30 bg-transparent text-white hover:bg-white/10 hover:text-white"
+                    )}
+                  >
+                    <Link
+                      href={joinHref(plan.id)}
+                      onClick={() =>
+                        track("plan_select", {
+                          plan: plan.id,
+                          clubId,
+                          source: "pricing_matrix",
+                        })
+                      }
+                    >
+                      Start with {plan.name}
+                      {club
+                        ? ` · ${club.name.replace("Planet Fitness ", "")}`
+                        : ""}
+                    </Link>
+                  </Button>
+                )}
               </article>
             );
           })}
@@ -191,7 +237,10 @@ export function PricingMatrix({
                 >
                   At the gym
                 </th>
-                <th scope="col" className="px-4 py-2.5 font-display text-lg md:px-5">
+                <th
+                  scope="col"
+                  className="px-4 py-2.5 font-display text-lg md:px-5"
+                >
                   Classic
                 </th>
                 <th
@@ -230,8 +279,10 @@ export function PricingMatrix({
 
         <p className="flex items-start gap-2 px-4 py-3 text-xs text-white/55 md:px-5 md:text-sm">
           <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-pf-yellow" />
-          Starting rates shown. Your club confirms the final local price before
-          you pay. Check-in and digital keytag live in the Planet Fitness app.
+          {club
+            ? `Card rates are confirmed for ${club.name}. Matrix shows national starting ranges.`
+            : "Pick a club to confirm local dues on the cards. Matrix shows national starting ranges."}{" "}
+          Check-in and digital keytag live in the Planet Fitness app.
         </p>
       </div>
     </section>

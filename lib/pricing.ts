@@ -1,3 +1,5 @@
+import type { Club, LocalPlanPricing } from "@/lib/clubs";
+
 export type MembershipTier = "classic" | "black-card";
 
 export type PricingLine = {
@@ -19,6 +21,7 @@ export type MembershipPlan = {
   highlights: string[];
 };
 
+/** National starting rates shown on the marketing matrix */
 export const MEMBERSHIP_PLANS: MembershipPlan[] = [
   {
     id: "classic",
@@ -28,7 +31,8 @@ export const MEMBERSHIP_PLANS: MembershipPlan[] = [
     enrollmentFee: 0,
     annualFee: 49,
     annualFeeMonth: "June",
-    cancellation: "Cancel anytime online or in club. No cancellation fee. Remaining prepaid days are non-refundable.",
+    cancellation:
+      "Cancel anytime online or in club. No cancellation fee. Remaining prepaid days are non-refundable.",
     highlights: [
       "Unlimited visits to your home club",
       "Cardio machines, free weights & 30-minute circuit",
@@ -44,7 +48,8 @@ export const MEMBERSHIP_PLANS: MembershipPlan[] = [
     enrollmentFee: 0,
     annualFee: 49,
     annualFeeMonth: "June",
-    cancellation: "Cancel anytime online or in club. No cancellation fee. Remaining prepaid days are non-refundable.",
+    cancellation:
+      "Cancel anytime online or in club. No cancellation fee. Remaining prepaid days are non-refundable.",
     highlights: [
       "Work out at any Planet Fitness nationwide",
       "Bring one guest with you each visit",
@@ -57,21 +62,21 @@ export const MEMBERSHIP_PLANS: MembershipPlan[] = [
 export const PRICING_MATRIX: PricingLine[] = [
   {
     label: "Monthly dues",
-    classic: "$15 / month",
-    blackCard: "$24.99 / month",
-    note: "Billed monthly. Starting rate shown; your local club may differ slightly.",
+    classic: "From $15 / month",
+    blackCard: "From $22.99 / month",
+    note: "Starting national rates. Your club confirms the local price before you pay.",
   },
   {
     label: "Enrollment / start-up fee",
-    classic: "$0",
-    blackCard: "$0",
-    note: "No start-up fee on this offer. You’ll see it clearly before you pay.",
+    classic: "Usually $0",
+    blackCard: "Usually $0",
+    note: "Shown clearly for your selected club before checkout.",
   },
   {
     label: "Annual fee",
-    classic: "$49 / year",
+    classic: "$39–$49 / year",
     blackCard: "$49 / year",
-    note: "Charged each June. Listed here so it isn’t a surprise later.",
+    note: "Typically charged each June. Confirmed per club.",
   },
   {
     label: "Home club access",
@@ -107,4 +112,38 @@ export function formatCurrency(amount: number): string {
     currency: "USD",
     minimumFractionDigits: amount % 1 === 0 ? 0 : 2,
   }).format(amount);
+}
+
+export function getPlan(tier: MembershipTier): MembershipPlan {
+  return (
+    MEMBERSHIP_PLANS.find((plan) => plan.id === tier) ?? MEMBERSHIP_PLANS[1]
+  );
+}
+
+export function getLocalPricing(
+  club: Club | null | undefined,
+  tier: MembershipTier
+): LocalPlanPricing {
+  if (club) return club.pricing[tier];
+  const plan = getPlan(tier);
+  return {
+    monthlyDues: plan.monthlyDues,
+    enrollmentFee: plan.enrollmentFee,
+    annualFee: plan.annualFee,
+    annualFeeMonth: plan.annualFeeMonth,
+    available: true,
+  };
+}
+
+export function dueToday(pricing: LocalPlanPricing): number {
+  return pricing.enrollmentFee;
+}
+
+export function summarizeLocalRates(club: Club): string {
+  const classic = club.pricing.classic;
+  const black = club.pricing["black-card"];
+  if (!black.available) {
+    return `Classic ${formatCurrency(classic.monthlyDues)}/mo at this club`;
+  }
+  return `Classic ${formatCurrency(classic.monthlyDues)} · Black Card ${formatCurrency(black.monthlyDues)}/mo`;
 }

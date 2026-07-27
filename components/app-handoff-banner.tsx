@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Smartphone, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { track } from "@/lib/analytics";
 
 const STORAGE_KEY = "pf-app-banner-dismissed";
 
@@ -38,6 +39,7 @@ export function AppHandoffBanner() {
             href="https://www.planetfitness.com/mobileapp"
             target="_blank"
             rel="noreferrer"
+            onClick={() => track("app_banner_click", { source: "banner" })}
           >
             Get the app
           </a>

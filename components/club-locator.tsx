@@ -2,7 +2,16 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useDeferredValue, useMemo, useState, useTransition } from "react";
+import {
+  useCallback,
+  useDeferredValue,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+  useTransition,
+} from "react";
 import {
   Clock3,
   MapPin,
@@ -14,21 +23,34 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { formatHours, searchClubs, type Club } from "@/lib/clubs";
+import { track } from "@/lib/analytics";
+import {
+  formatHours,
+  getClubs,
+  searchClubs,
+  type Club,
+} from "@/lib/clubs";
+import { formatCurrency, summarizeLocalRates } from "@/lib/pricing";
 import { cn } from "@/lib/utils";
+import { useSelectedClub } from "@/components/selected-club-context";
 
 function ClubResult({
   club,
   selected,
   onSelect,
+  optionId,
 }: {
   club: Club;
   selected: boolean;
   onSelect: (club: Club) => void;
+  optionId: string;
 }) {
   return (
     <button
       type="button"
+      id={optionId}
+      role="option"
+      aria-selected={selected}
       onClick={() => onSelect(club)}
       className={cn(
         "w-full border-b border-white/10 px-3 py-2 text-left transition-colors last:border-0",
@@ -95,17 +117,21 @@ function ClubResult({
 }
 
 function ClubDetail({ club }: { club: Club }) {
+  const classic = club.pricing.classic;
+  const black = club.pricing["black-card"];
+
   return (
     <div key={club.id} className="flex h-full min-h-0 flex-col bg-[#1a0d28]">
-      <div className="relative h-36 shrink-0 overflow-hidden sm:h-44 lg:h-52">
+      <div className="relative h-48 shrink-0 overflow-hidden sm:h-56 lg:h-64">
         <Image
-          src="/images/floor-gym.jpg"
-          alt="Gym floor equipment"
+          src={club.image}
+          alt={`Interior photo for ${club.name}`}
           fill
           className="object-cover"
           sizes="(max-width: 1024px) 100vw, 50vw"
+          priority={false}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1a0d28] via-[#1a0d28]/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1a0d28] via-[#1a0d28]/35 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-3">
           <div>
             <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-pf-yellow">
@@ -114,6 +140,7 @@ function ClubDetail({ club }: { club: Club }) {
             <h3 className="font-display text-xl leading-none tracking-tight text-white sm:text-2xl">
               {club.name}
             </h3>
+            <p className="mt-1 text-xs text-white/75">{club.todayLabel}</p>
           </div>
           <Badge variant={club.openNow ? "success" : "muted"}>
             {club.openNow ? "Open now" : "Closed"}
@@ -121,8 +148,8 @@ function ClubDetail({ club }: { club: Club }) {
         </div>
       </div>
 
-      <div className="grid flex-1 md:grid-cols-2">
-        <div className="space-y-3 border-b border-white/10 p-3 md:border-b-0 md:border-r">
+      <div className="grid flex-1 lg:grid-cols-2">
+        <div className="space-y-2.5 border-b border-white/10 p-3 lg:border-b-0 lg:border-r">
           <p className="flex items-start gap-2 text-sm text-white/85">
             <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-pf-yellow" />
             <span>
@@ -156,22 +183,70 @@ function ClubDetail({ club }: { club: Club }) {
           </a>
         </div>
 
-        <div className="flex flex-col p-3">
-          <h4 className="text-[10px] font-bold uppercase tracking-[0.16em] text-white/45">
-            On the floor
-          </h4>
-          <ul className="mt-1.5 flex flex-wrap gap-1">
-            {club.amenities.map((amenity) => (
-              <li key={amenity}>
-                <span className="inline-flex bg-white/10 px-1.5 py-0.5 text-[11px] font-medium text-white/90">
-                  {amenity}
-                </span>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-auto flex gap-2 pt-3">
+        <div className="flex flex-col gap-3 p-3">
+          <div>
+            <h4 className="text-[10px] font-bold uppercase tracking-[0.16em] text-white/45">
+              Local membership rates
+            </h4>
+            <p className="mt-1 text-xs text-white/55">
+              Confirmed for this location—not a national average.
+            </p>
+            <dl className="mt-2 grid gap-1.5 text-sm">
+              <div className="flex justify-between gap-2 bg-white/5 px-2 py-1.5">
+                <dt className="text-white/70">Classic</dt>
+                <dd className="font-semibold">
+                  {formatCurrency(classic.monthlyDues)}/mo
+                  {classic.enrollmentFee > 0
+                    ? ` · enroll ${formatCurrency(classic.enrollmentFee)}`
+                    : ""}
+                </dd>
+              </div>
+              <div className="flex justify-between gap-2 bg-white/5 px-2 py-1.5">
+                <dt className="text-white/70">Black Card</dt>
+                <dd className="font-semibold">
+                  {black.available
+                    ? `${formatCurrency(black.monthlyDues)}/mo${
+                        black.enrollmentFee > 0
+                          ? ` · enroll ${formatCurrency(black.enrollmentFee)}`
+                          : ""
+                      }`
+                    : "Not offered here"}
+                </dd>
+              </div>
+            </dl>
+          </div>
+
+          <div>
+            <h4 className="text-[10px] font-bold uppercase tracking-[0.16em] text-white/45">
+              On the floor
+            </h4>
+            <ul className="mt-1.5 flex flex-wrap gap-1">
+              {club.amenities.map((amenity) => (
+                <li key={amenity}>
+                  <span className="inline-flex bg-white/10 px-1.5 py-0.5 text-[11px] font-medium text-white/90">
+                    {amenity}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="mt-auto flex gap-2 pt-1">
             <Button asChild className="flex-1">
-              <a href={`/join?club=${club.id}`}>Join here</a>
+              <Link
+                href={`/join?club=${club.id}&plan=${
+                  black.available ? "black-card" : "classic"
+                }`}
+                onClick={() =>
+                  track("plan_select", {
+                    clubId: club.id,
+                    plan: black.available ? "black-card" : "classic",
+                    source: "club_detail",
+                  })
+                }
+              >
+                Join here
+              </Link>
             </Button>
             <Button
               asChild
@@ -196,18 +271,103 @@ function ClubDetail({ club }: { club: Club }) {
 }
 
 export function ClubLocator() {
+  const listboxId = useId();
+  const { setClub: setSelectedClubContext } = useSelectedClub();
   const [query, setQuery] = useState("");
-  const [selectedId, setSelectedId] = useState<string | null>(CLUBS_DEFAULT_ID);
+  const [clubs, setClubs] = useState<Club[]>(() => getClubs());
+  const [selectedId, setSelectedId] = useState<string | null>(
+    () => getClubs()[0]?.id ?? null
+  );
+  const [activeIndex, setActiveIndex] = useState(0);
   const deferredQuery = useDeferredValue(query);
   const [isPending, startTransition] = useTransition();
+  const listRef = useRef<HTMLDivElement>(null);
+  const searchTimer = useRef<number | null>(null);
 
-  const results = useMemo(
-    () => searchClubs(deferredQuery),
-    [deferredQuery]
-  );
+  const results = useMemo(() => {
+    if (!deferredQuery.trim()) return clubs;
+    return searchClubs(deferredQuery);
+  }, [clubs, deferredQuery]);
 
   const selected =
     results.find((club) => club.id === selectedId) ?? results[0] ?? null;
+
+  useEffect(() => {
+    if (selected) setSelectedClubContext(selected);
+  }, [selected, setSelectedClubContext]);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/clubs")
+      .then((res) => res.json())
+      .then((data: { clubs?: Club[] }) => {
+        if (cancelled || !data.clubs?.length) return;
+        setClubs(data.clubs);
+        setSelectedId((prev) => prev ?? data.clubs![0]?.id ?? null);
+      })
+      .catch(() => {
+        /* local getClubs() already seeded state */
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    const index = Math.max(
+      0,
+      results.findIndex((club) => club.id === selected?.id)
+    );
+    setActiveIndex(index === -1 ? 0 : index);
+  }, [results, selected?.id]);
+
+  const selectClub = useCallback((club: Club) => {
+    setSelectedId(club.id);
+    track("club_select", {
+      clubId: club.id,
+      openNow: club.openNow,
+      rates: summarizeLocalRates(club),
+    });
+  }, []);
+
+  const onSearchChange = (next: string) => {
+    setQuery(next);
+    startTransition(() => {
+      const nextResults = searchClubs(next);
+      setSelectedId(nextResults[0]?.id ?? null);
+    });
+    if (searchTimer.current) window.clearTimeout(searchTimer.current);
+    searchTimer.current = window.setTimeout(() => {
+      track("club_search", { query: next, resultCount: searchClubs(next).length });
+    }, 350);
+  };
+
+  const onListKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (!results.length) return;
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      const next = Math.min(results.length - 1, activeIndex + 1);
+      setActiveIndex(next);
+      selectClub(results[next]);
+    } else if (event.key === "ArrowUp") {
+      event.preventDefault();
+      const next = Math.max(0, activeIndex - 1);
+      setActiveIndex(next);
+      selectClub(results[next]);
+    } else if (event.key === "Home") {
+      event.preventDefault();
+      setActiveIndex(0);
+      selectClub(results[0]);
+    } else if (event.key === "End") {
+      event.preventDefault();
+      const next = results.length - 1;
+      setActiveIndex(next);
+      selectClub(results[next]);
+    } else if (event.key === "Enter" && results[activeIndex]) {
+      event.preventDefault();
+      selectClub(results[activeIndex]);
+    }
+  };
 
   return (
     <section
@@ -215,7 +375,6 @@ export function ClubLocator() {
       aria-labelledby="club-locator-heading"
       className="relative grid min-h-[calc(100dvh-3.5rem)] bg-[#14081f] lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]"
     >
-      {/* Gym photo + brand + search — fills half the viewport */}
       <div className="relative min-h-[38vh] overflow-hidden lg:min-h-full">
         <Image
           src="/images/hero-gym.jpg"
@@ -254,20 +413,26 @@ export function ClubLocator() {
                 <Input
                   id="club-search"
                   value={query}
-                  onChange={(event) => {
-                    const next = event.target.value;
-                    setQuery(next);
-                    startTransition(() => {
-                      const nextResults = searchClubs(next);
-                      setSelectedId(nextResults[0]?.id ?? null);
-                    });
-                  }}
+                  onChange={(event) => onSearchChange(event.target.value)}
                   placeholder="City or ZIP…"
                   className="h-11 border-0 bg-white pl-10 text-base shadow-none"
                   autoComplete="postal-code"
+                  role="combobox"
+                  aria-expanded={true}
+                  aria-controls={listboxId}
+                  aria-autocomplete="list"
+                  aria-activedescendant={
+                    results[activeIndex]
+                      ? `${listboxId}-option-${results[activeIndex].id}`
+                      : undefined
+                  }
                 />
               </div>
-              <Button asChild variant="outline" className="h-11 border-white/50 bg-black/30 text-white hover:bg-white/15 hover:text-white">
+              <Button
+                asChild
+                variant="outline"
+                className="h-11 border-white/50 bg-black/30 text-white hover:bg-white/15 hover:text-white"
+              >
                 <Link href="#pricing">Pricing</Link>
               </Button>
             </div>
@@ -280,10 +445,17 @@ export function ClubLocator() {
         </div>
       </div>
 
-      {/* Club list + detail — fills the other half, edge to edge */}
       <div className="flex min-h-[50vh] flex-col border-t border-white/10 lg:min-h-0 lg:border-l lg:border-t-0">
         <div className="grid min-h-0 flex-1 lg:grid-cols-[15.5rem_minmax(0,1fr)]">
-          <div className="max-h-[40vh] overflow-y-auto border-b border-white/10 bg-[#0f0618] lg:max-h-none lg:border-b-0 lg:border-r">
+          <div
+            ref={listRef}
+            id={listboxId}
+            role="listbox"
+            aria-label="Nearby clubs"
+            tabIndex={0}
+            onKeyDown={onListKeyDown}
+            className="max-h-[40vh] overflow-y-auto border-b border-white/10 bg-[#0f0618] outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-pf-yellow lg:max-h-none lg:border-b-0 lg:border-r"
+          >
             {results.length === 0 ? (
               <div className="px-3 py-6 text-center text-sm text-white/55">
                 No clubs match “{query}”.
@@ -293,18 +465,19 @@ export function ClubLocator() {
                 <ClubResult
                   key={club.id}
                   club={club}
+                  optionId={`${listboxId}-option-${club.id}`}
                   selected={selected?.id === club.id}
-                  onSelect={(next) => setSelectedId(next.id)}
+                  onSelect={selectClub}
                 />
               ))
             )}
           </div>
-          <div className="min-h-[22rem] flex-1 lg:min-h-0">
+          <div className="min-h-[24rem] flex-1 lg:min-h-0">
             {selected ? (
               <ClubDetail club={selected} />
             ) : (
               <div className="flex h-full items-center justify-center text-sm text-white/50">
-                Pick a club to see hours and what’s on the floor.
+                Pick a club to see hours, local rates, and what’s on the floor.
               </div>
             )}
           </div>
@@ -313,5 +486,3 @@ export function ClubLocator() {
     </section>
   );
 }
-
-const CLUBS_DEFAULT_ID = "pf-midtown";
