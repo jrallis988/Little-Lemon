@@ -2,6 +2,9 @@ export type AccountRole = 'listener' | 'artist';
 
 export type ArtistStatus = 'INDEPENDENT' | 'UNSIGNED' | 'LABEL' | 'INACTIVE';
 
+/** Emerging = unsigned/new finds; catalog = known contemporary acts (Spotify-era). */
+export type CatalogKind = 'emerging' | 'catalog';
+
 export type UserProfile = {
   id: string;
   email: string;
@@ -25,6 +28,8 @@ export type UserProfile = {
   lineupNote?: string | null;
   /** When they joined StaticVolume (ISO date). Newer = more “just found”. */
   joinedAt?: string | null;
+  /** emerging = Just Found lane; catalog = look-up any current artist */
+  catalogKind?: CatalogKind | null;
 };
 
 export type Track = {
@@ -40,6 +45,8 @@ export type Track = {
   repostCount: number;
   scene?: string | null;
   geography?: string | null;
+  /** Calendar year for catalog browse (Spotify-era coverage target: 2010–present) */
+  releaseYear?: number | null;
 };
 
 export type TrackComment = {

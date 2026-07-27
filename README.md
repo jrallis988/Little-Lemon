@@ -4,7 +4,18 @@ Mobile-native artist discovery and social taste logging — a genre-agnostic spi
 
 Built with **Expo (SDK 57)**, **Expo Router**, **Supabase**, **Zustand**, and **TanStack Query**.
 
-StaticVolume is **not a music player**. It’s where you **find unsigned bands and brand-new musicians** (the friend-group act you’d stumble on once on YouTube), then log tracks, write reviews, keep lists, and follow people’s taste. Artists get downloads and reposts.
+StaticVolume is **not a music player**. It’s where you **find unsigned bands and brand-new musicians** *and* look up **contemporary catalog artists** (Olivia Rodrigo, Black Veil Brides, Weird Al, …) — the Spotify-era coverage target (~2010–present). Then log tracks, write reviews, keep lists. Artists get downloads and reposts.
+
+## Catalog + search
+
+| Surface | What it does |
+| --- | --- |
+| **Search** (header) | Facets: All · Artist · Song · Genre |
+| **Artists** | A–Z directory + quick filter; link to full search |
+| **Find** | Brand-new / unsigned stumble-upon lane |
+| **Spotify sync** (stub) | `lib/spotify.ts` + `EXPO_PUBLIC_SPOTIFY_CLIENT_ID` for full catalog ingest |
+
+Demo seed includes emerging friend-group acts **and** a slice of recognizable contemporary catalog. Full Spotify-scale sync is the backend follow-up.
 
 ## Product model
 

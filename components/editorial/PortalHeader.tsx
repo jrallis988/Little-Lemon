@@ -1,4 +1,4 @@
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 import {
   Pressable,
   StyleSheet,
@@ -14,10 +14,12 @@ const PRIMARY_NAV = ['Music', 'News', 'People', 'Charts'] as const;
 
 /**
  * Classic PureVolume top chrome — black bar, white wordmark, search, auth.
+ * Search opens the multi-facet catalog (artist / song / genre).
  */
 export function PortalHeader() {
   const { width } = useWindowDimensions();
   const showNav = width >= 700;
+  const showInlineSearch = width >= 420;
 
   return (
     <View style={styles.bar}>
@@ -34,16 +36,28 @@ export function PortalHeader() {
         ) : null}
       </View>
       <View style={styles.right}>
-        {width >= 420 ? (
-          <View style={styles.search}>
+        {showInlineSearch ? (
+          <Pressable
+            style={styles.search}
+            onPress={() => router.push('/(main)/search')}
+          >
             <TextInput
               style={styles.searchInput}
-              placeholder="Search"
+              placeholder="Search artists, songs, genres"
               placeholderTextColor="#888"
               editable={false}
+              pointerEvents="none"
             />
-          </View>
-        ) : null}
+          </Pressable>
+        ) : (
+          <Pressable
+            style={styles.searchIconBtn}
+            onPress={() => router.push('/(main)/search')}
+            hitSlop={8}
+          >
+            <Text style={styles.searchIconText}>Search</Text>
+          </Pressable>
+        )}
         <Link href="/(auth)/signup" asChild>
           <Pressable style={styles.authBtn}>
             <Text style={styles.authText}>Sign Up</Text>
@@ -112,7 +126,17 @@ const styles = StyleSheet.create({
     color: colors.text,
     paddingHorizontal: 8,
     paddingVertical: 5,
-    minWidth: 110,
+    minWidth: 180,
+  },
+  searchIconBtn: {
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+    marginRight: 2,
+  },
+  searchIconText: {
+    fontFamily: fonts.sansBold,
+    fontSize: 12,
+    color: colors.headerText,
   },
   authBtn: {
     backgroundColor: '#DDDDDD',

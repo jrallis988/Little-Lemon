@@ -41,6 +41,8 @@ export function DirectoryArtistRow({
             </Text>
             {artist.status === 'UNSIGNED' ? (
               <Text style={styles.unsigned}>UNSIGNED</Text>
+            ) : artist.catalogKind === 'catalog' ? (
+              <Text style={styles.catalog}>CATALOG</Text>
             ) : null}
           </View>
           <Text style={styles.origin} numberOfLines={1}>
@@ -119,6 +121,12 @@ const styles = StyleSheet.create({
     fontSize: 8,
     letterSpacing: 0.4,
     color: colors.link,
+  },
+  catalog: {
+    fontFamily: fonts.sansBold,
+    fontSize: 8,
+    letterSpacing: 0.4,
+    color: colors.textMuted,
   },
   origin: {
     fontFamily: fonts.sans,

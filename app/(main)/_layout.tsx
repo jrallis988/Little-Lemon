@@ -64,6 +64,14 @@ export default function MainLayout() {
           }}
         />
         <Tabs.Screen
+          name="search"
+          options={{
+            title: 'Search',
+            href: null,
+            headerShown: true,
+          }}
+        />
+        <Tabs.Screen
           name="following"
           options={{
             title: 'Activity',

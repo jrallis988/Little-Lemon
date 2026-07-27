@@ -1,6 +1,8 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
+import { router } from 'expo-router';
 import {
   LayoutChangeEvent,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -22,8 +24,8 @@ import {
 } from '@/lib/demoData';
 
 /**
- * Artist directory — mobile-practical hybrid:
- * search when you know the name, A–Z scrubber when you’re browsing.
+ * Artist directory — A–Z browse + jump to full catalog search
+ * (artist / song / genre, emerging + contemporary).
  */
 export default function ArtistsDirectoryScreen() {
   const bottomInset = useBottomInset(spacing.tabBar);
@@ -88,27 +90,38 @@ export default function ArtistsDirectoryScreen() {
     [activeLetter, groups, isSearching],
   );
 
+  const openFullSearch = (q?: string) => {
+    router.push({
+      pathname: '/(main)/search',
+      params: q ? { q } : {},
+    });
+  };
+
   return (
     <StaticBackground>
       <View style={styles.shell}>
         <View style={styles.masthead}>
           <Text style={styles.brand}>Browse artists</Text>
           <Text style={styles.meta}>
-            {totalArtists} indexed · search or jump A–Z
+            {totalArtists} indexed · unsigned finds + contemporary catalog ·
+            search or jump A–Z
           </Text>
 
           <View style={styles.searchWrap}>
             <TextInput
               value={query}
               onChangeText={setQuery}
-              placeholder="Search artists, scenes, places…"
+              placeholder="Filter this directory…"
               placeholderTextColor={colors.textDim}
               autoCapitalize="none"
               autoCorrect={false}
               clearButtonMode="while-editing"
               returnKeyType="search"
+              onSubmitEditing={() => {
+                if (query.trim()) openFullSearch(query.trim());
+              }}
               style={styles.searchInput}
-              accessibilityLabel="Search artists"
+              accessibilityLabel="Filter artists directory"
             />
             {query.length > 0 ? (
               <Text style={styles.clearHint} onPress={() => setQuery('')}>
@@ -116,6 +129,15 @@ export default function ArtistsDirectoryScreen() {
               </Text>
             ) : null}
           </View>
+
+          <Pressable
+            style={styles.fullSearch}
+            onPress={() => openFullSearch(query)}
+          >
+            <Text style={styles.fullSearchText}>
+              Open full search (artist · song · genre) →
+            </Text>
+          </Pressable>
         </View>
 
         {!isSearching ? (
@@ -145,8 +167,14 @@ export default function ArtistsDirectoryScreen() {
                 </View>
                 {searchResults.length === 0 ? (
                   <Text style={styles.empty}>
-                    No artists match “{query.trim()}”. Try a letter browse
-                    instead.
+                    No artists match “{query.trim()}” in the directory. Try{' '}
+                    <Text
+                      style={styles.emptyLink}
+                      onPress={() => openFullSearch(query.trim())}
+                    >
+                      full catalog search
+                    </Text>{' '}
+                    for songs and genres.
                   </Text>
                 ) : (
                   searchResults.map((artist) => (
@@ -211,6 +239,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.sans,
     fontSize: 12,
     color: colors.textMuted,
+    lineHeight: 17,
   },
   searchWrap: {
     marginTop: 4,
@@ -234,6 +263,14 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: colors.link,
     paddingVertical: 8,
+  },
+  fullSearch: {
+    paddingVertical: 4,
+  },
+  fullSearchText: {
+    fontFamily: fonts.sansBold,
+    fontSize: 13,
+    color: colors.link,
   },
   listPad: {
     paddingHorizontal: spacing.md,
@@ -270,5 +307,9 @@ const styles = StyleSheet.create({
     color: colors.textMuted,
     lineHeight: 20,
     padding: spacing.md,
+  },
+  emptyLink: {
+    color: colors.link,
+    fontFamily: fonts.sansBold,
   },
 });

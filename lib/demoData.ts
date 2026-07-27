@@ -7,9 +7,11 @@ import type {
   TrackComment,
   UserProfile,
 } from '@/types/models';
+import { CATALOG_ARTISTS, CATALOG_TRACKS } from '@/lib/catalogSeed';
 
 /** Placeholder editorial / discovery content for scaffolding UI */
 export const DEMO_ARTISTS: UserProfile[] = [
+  ...CATALOG_ARTISTS,
   {
     id: 'artist-couch-static',
     email: '',
@@ -25,6 +27,7 @@ export const DEMO_ARTISTS: UserProfile[] = [
     sceneDescription: 'Brand-new Providence living-room band.',
     lineupNote: 'Four roommates. One couch. First songs online this month.',
     joinedAt: '2026-07-08',
+    catalogKind: 'emerging',
   },
   {
     id: 'artist-secondhand-van',
@@ -41,6 +44,7 @@ export const DEMO_ARTISTS: UserProfile[] = [
     sceneDescription: 'Fresh Richmond house-show punk.',
     lineupNote: 'A group of friends who booked their first basement show last weekend.',
     joinedAt: '2026-07-14',
+    catalogKind: 'emerging',
   },
   {
     id: 'artist-hallway-radio',
@@ -57,6 +61,7 @@ export const DEMO_ARTISTS: UserProfile[] = [
     sceneDescription: 'New Seattle apartment-scene shoegaze.',
     lineupNote: 'Two friends + a neighbor on drums. Nobody signed. Yet.',
     joinedAt: '2026-07-18',
+    catalogKind: 'emerging',
   },
   {
     id: 'artist-night-shift-kids',
@@ -73,6 +78,7 @@ export const DEMO_ARTISTS: UserProfile[] = [
     sceneDescription: 'Just-uploaded Minneapolis bedroom electronic.',
     lineupNote: 'College friends making tracks after closing shifts.',
     joinedAt: '2026-07-21',
+    catalogKind: 'emerging',
   },
   {
     id: 'artist-split-lip-sunday',
@@ -89,6 +95,7 @@ export const DEMO_ARTISTS: UserProfile[] = [
     sceneDescription: 'Cleveland DIY — still playing living rooms.',
     lineupNote: 'High-school friends who never got a label call. Good.',
     joinedAt: '2026-06-29',
+    catalogKind: 'emerging',
   },
 
   {
@@ -106,6 +113,7 @@ export const DEMO_ARTISTS: UserProfile[] = [
     sceneDescription: 'Midwest modular / warehouse afterhours.',
     lineupNote: 'Modular night crew from Chicago warehouses.',
     joinedAt: '2024-03-12',
+    catalogKind: 'emerging',
   },
   {
     id: 'artist-blackout-relay',
@@ -122,6 +130,7 @@ export const DEMO_ARTISTS: UserProfile[] = [
     sceneDescription: 'DIY hardcore circuit, Northeast corridor.',
     lineupNote: 'Basement hardcore — same four kids since high school.',
     joinedAt: '2023-11-02',
+    catalogKind: 'emerging',
   },
   {
     id: 'artist-chrome-petal',
@@ -138,6 +147,7 @@ export const DEMO_ARTISTS: UserProfile[] = [
     sceneDescription: 'LA bedroom hyperpop / net-label orbit.',
     lineupNote: 'One laptop, one roommate, LA freeways at 2am.',
     joinedAt: '2024-08-19',
+    catalogKind: 'emerging',
   },
   {
     id: 'artist-drift-kiln',
@@ -154,6 +164,7 @@ export const DEMO_ARTISTS: UserProfile[] = [
     sceneDescription: 'Appalachian folk / living-room sessions.',
     lineupNote: 'Porch sessions with whoever’s in town.',
     joinedAt: '2022-05-01',
+    catalogKind: 'emerging',
   },
   {
     id: 'artist-fault-line-choir',
@@ -170,6 +181,7 @@ export const DEMO_ARTISTS: UserProfile[] = [
     sceneDescription: 'Bay Area warehouse indie.',
     lineupNote: 'Four voices, one cracked PA, Oakland warehouse nights.',
     joinedAt: '2025-01-14',
+    catalogKind: 'emerging',
   },
   {
     id: 'artist-lot-lights',
@@ -186,6 +198,7 @@ export const DEMO_ARTISTS: UserProfile[] = [
     sceneDescription: 'Texas parking-lot rock / SXSW periphery.',
     lineupNote: 'Parking-lot rock with friends who still share a van.',
     joinedAt: '2024-06-22',
+    catalogKind: 'emerging',
   },
   {
     id: 'artist-north-exit',
@@ -202,6 +215,7 @@ export const DEMO_ARTISTS: UserProfile[] = [
     sceneDescription: 'New England basement punk.',
     lineupNote: 'Three friends from Manchester, NH. One practice space.',
     joinedAt: '2025-09-03',
+    catalogKind: 'emerging',
   },
   {
     id: 'artist-oxide-room',
@@ -218,6 +232,7 @@ export const DEMO_ARTISTS: UserProfile[] = [
     sceneDescription: 'Rust-belt industrial / club leftovers.',
     lineupNote: 'Rust-belt industrial duo out of a Pittsburgh loft.',
     joinedAt: '2023-04-18',
+    catalogKind: 'emerging',
   },
   {
     id: 'artist-signal-decay',
@@ -234,6 +249,7 @@ export const DEMO_ARTISTS: UserProfile[] = [
     sceneDescription: 'Detroit warehouse industrial.',
     lineupNote: 'Late-shift warehouse crew, Detroit.',
     joinedAt: '2022-12-09',
+    catalogKind: 'emerging',
   },
   {
     id: 'artist-static-bloom',
@@ -250,6 +266,7 @@ export const DEMO_ARTISTS: UserProfile[] = [
     sceneDescription: 'Pacific Northwest shoegaze / DIY tape scene.',
     lineupNote: 'Tape-saturated Portland duo — still unsigned energy.',
     joinedAt: '2024-01-28',
+    catalogKind: 'emerging',
   },
   {
     id: 'artist-volt-garden',
@@ -266,6 +283,7 @@ export const DEMO_ARTISTS: UserProfile[] = [
     sceneDescription: 'Montreal synth / coldwave adjacent.',
     lineupNote: 'Montreal synth project that snuck onto a small label.',
     joinedAt: '2023-07-30',
+    catalogKind: 'emerging',
   },
   {
     id: 'artist-wire-hymnal',
@@ -282,6 +300,7 @@ export const DEMO_ARTISTS: UserProfile[] = [
     sceneDescription: 'Philly post-punk / church-basement circuit.',
     lineupNote: 'Philly post-punk friends who book their own church basements.',
     joinedAt: '2024-10-11',
+    catalogKind: 'emerging',
   },
   {
     id: 'artist-zinc-parade',
@@ -298,10 +317,12 @@ export const DEMO_ARTISTS: UserProfile[] = [
     sceneDescription: 'Midwest garage punk / house-show network.',
     lineupNote: 'Midwest house-show punk. Friends first, band second.',
     joinedAt: '2025-11-20',
+    catalogKind: 'emerging',
   },
 ];
 
 export const DEMO_TRACKS: Track[] = [
+  ...CATALOG_TRACKS,
   {
     id: 'track-living-room-static',
     title: 'Living Room Static',
@@ -859,15 +880,25 @@ export function listsForUser(userId: string): TasteList[] {
 }
 
 export const SCENES = [
+  'Pop',
+  'Alt-Pop',
+  'Pop-Punk',
+  'Hip-Hop',
+  'R&B',
+  'Indie',
   'Punk',
+  'Hardcore',
+  'Metalcore',
+  'Metal',
   'Shoegaze',
   'Hyperpop',
-  'Industrial',
-  'Indie',
-  'Hardcore',
   'Electronic',
+  'Psych',
   'Folk',
+  'Comedy',
+  'Industrial',
   'Post-Punk',
+  'Dance-Pop',
 ] as const;
 
 export const GEOGRAPHIES = [
@@ -889,6 +920,15 @@ export const GEOGRAPHIES = [
   'Seattle, WA',
   'Minneapolis, MN',
   'Cleveland, OH',
+  'London, UK',
+  'Toronto, ON',
+  'Nashville, TN',
+  'Sheffield, UK',
+  'Perth, AU',
+  'Hollywood, CA',
+  'Franklin, TN',
+  'Baltimore, MD',
+  'New York, NY',
 ] as const;
 
 export const ALPHA_LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -896,7 +936,16 @@ export const ALPHA_LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
 /** Artists who feel like a YouTube stumble — unsigned / independent, often brand-new. */
 export function isDiscoverableFind(artist: UserProfile): boolean {
+  if (artist.catalogKind === 'catalog') return false;
   return artist.status === 'UNSIGNED' || artist.status === 'INDEPENDENT';
+}
+
+export function catalogArtists(): UserProfile[] {
+  return DEMO_ARTISTS.filter((a) => a.catalogKind === 'catalog');
+}
+
+export function emergingArtists(): UserProfile[] {
+  return DEMO_ARTISTS.filter((a) => a.catalogKind !== 'catalog');
 }
 
 export function isBrandNew(artist: UserProfile, withinDays = 60): boolean {
