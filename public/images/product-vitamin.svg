@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400" role="img" aria-label="Vitamin bottle">
+  <rect width="400" height="400" fill="#eef2f7"/>
+  <rect x="155" y="80" width="90" height="40" rx="8" fill="#6b7c8a"/>
+  <rect x="145" y="120" width="110" height="180" rx="18" fill="#f8fafc" stroke="#8fa0ae" stroke-width="4"/>
+  <rect x="165" y="160" width="70" height="16" rx="4" fill="#e31837"/>
+  <rect x="175" y="195" width="50" height="10" rx="3" fill="#b7c3cb"/>
+</svg>

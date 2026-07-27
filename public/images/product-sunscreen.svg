@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400" role="img" aria-label="Sunscreen bottle">
+  <rect width="400" height="400" fill="#f3eef2"/>
+  <rect x="170" y="70" width="60" height="30" rx="8" fill="#5a6a78"/>
+  <rect x="155" y="100" width="90" height="210" rx="28" fill="#fff8fb" stroke="#d4a5b5" stroke-width="4"/>
+  <circle cx="200" cy="180" r="22" fill="#e31837"/>
+  <rect x="175" y="220" width="50" height="10" rx="3" fill="#c9b0ba"/>
+</svg>
