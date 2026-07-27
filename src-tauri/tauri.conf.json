@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "MailNest",
+  "productName": "Mailbox",
   "version": "0.1.0",
-  "identifier": "app.mailnest.desktop",
+  "identifier": "app.mailbox.desktop",
   "build": {
     "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:1420",
@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "MailNest",
+        "title": "Mailbox",
         "width": 1280,
         "height": 840,
         "minWidth": 960,

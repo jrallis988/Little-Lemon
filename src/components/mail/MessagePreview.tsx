@@ -2,6 +2,7 @@ import { ContactAvatar } from "@/components/mail/ContactAvatar";
 import { SafetyBadge } from "@/components/mail/SafetyBadge";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { STAGE_COPY } from "@/lib/stageCopy";
 import { cn, formatMessageTime } from "@/lib/utils";
 import { getContact, useMailStore } from "@/store/mailStore";
 import { Reply, Share2 } from "lucide-react";
@@ -12,6 +13,8 @@ export function MessagePreview() {
   const contacts = useMailStore((s) => s.contacts);
   const selectedMessageId = useMailStore((s) => s.selectedMessageId);
   const folder = useMailStore((s) => s.folder);
+  const learningStage = useMailStore((s) => s.learningStage);
+  const copy = STAGE_COPY[learningStage];
 
   const message = messages.find((m) => m.id === selectedMessageId);
   const contact = message
@@ -27,10 +30,10 @@ export function MessagePreview() {
       <section className="flex h-full items-center justify-center bg-gradient-to-br from-white/30 to-nest-mist/40 p-8">
         <div className="max-w-sm rounded-3xl bg-card/90 px-6 py-10 text-center shadow-panel animate-fade-up">
           <p className="font-display text-2xl font-extrabold text-foreground">
-            Pick a message
+            Select a message
           </p>
-          <p className="mt-2 text-sm font-semibold text-muted-foreground">
-            Choose something from the list to read it in a calm, quiet space.
+          <p className="mt-2 text-sm font-medium text-muted-foreground">
+            Choose a message from the list to read it here.
           </p>
         </div>
       </section>
@@ -38,7 +41,14 @@ export function MessagePreview() {
   }
 
   return (
-    <section className="flex h-full min-w-0 flex-col bg-gradient-to-br from-white/50 via-white/30 to-nest-mist/50">
+    <section
+      className={cn(
+        "flex h-full min-w-0 flex-col",
+        learningStage === "high"
+          ? "bg-card"
+          : "bg-gradient-to-br from-white/50 via-white/30 to-nest-mist/50",
+      )}
+    >
       <header className="border-b border-border/70 px-6 py-5">
         <div className="flex flex-wrap items-start gap-4">
           <ContactAvatar contact={contact} size="lg" />
@@ -49,7 +59,7 @@ export function MessagePreview() {
               </h2>
               <SafetyBadge level={contact.safety} />
             </div>
-            <p className="mt-1 text-sm font-bold text-foreground/85">
+            <p className="mt-1 text-sm font-semibold text-foreground/85">
               {message.folder === "sent" ? (
                 <>
                   To <span className="text-primary">{message.toLabel}</span>
@@ -66,7 +76,7 @@ export function MessagePreview() {
                 </>
               )}
             </p>
-            <p className="text-xs font-bold text-muted-foreground">
+            <p className="text-xs font-semibold text-muted-foreground">
               {formatMessageTime(message.sentAt)} · {contact.email}
             </p>
           </div>
@@ -77,28 +87,35 @@ export function MessagePreview() {
                 Reply
               </Link>
             </Button>
-            <Button variant="ghost" size="icon" aria-label="Share safely">
+            <Button variant="ghost" size="icon" aria-label="Forward">
               <Share2 className="size-4" />
             </Button>
           </div>
         </div>
 
         {contact.safety === "unknown" && (
-          <div
-            className={cn(
-              "mt-4 rounded-3xl border-2 border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-900 animate-fade-up",
-            )}
-          >
-            This sender is not on your Safe Contacts list. Ask a grown-up before
-            tapping links or sharing personal information.
+          <div className="mt-4 rounded-3xl border-2 border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-900 animate-fade-up">
+            {copy.unknownSenderHint}
           </div>
         )}
       </header>
 
       <ScrollArea className="flex-1">
         <article className="px-6 py-6">
-          <div className="rounded-[1.75rem] bg-card p-6 shadow-panel animate-fade-up">
-            <p className="whitespace-pre-wrap text-base font-semibold leading-8 text-foreground/90">
+          <div
+            className={cn(
+              "bg-card p-6 animate-fade-up",
+              learningStage === "high"
+                ? "rounded-xl border border-border"
+                : "rounded-[1.75rem] shadow-panel",
+            )}
+          >
+            <p
+              className={cn(
+                "whitespace-pre-wrap font-medium leading-8 text-foreground/90",
+                learningStage === "elementary" ? "text-base" : "text-[15px]",
+              )}
+            >
               {message.body}
             </p>
           </div>
@@ -110,10 +127,19 @@ export function MessagePreview() {
 
 function SafeContactsPane() {
   const contacts = useMailStore((s) => s.contacts);
+  const learningStage = useMailStore((s) => s.learningStage);
+  const copy = STAGE_COPY[learningStage];
   const safe = contacts.filter((c) => c.safety !== "unknown");
 
   return (
-    <section className="flex h-full flex-col bg-gradient-to-br from-safe-soft/40 via-white/40 to-nest-mist/50">
+    <section
+      className={cn(
+        "flex h-full flex-col",
+        learningStage === "high"
+          ? "bg-card"
+          : "bg-gradient-to-br from-safe-soft/40 via-white/40 to-nest-mist/50",
+      )}
+    >
       <header className="border-b border-border/70 px-6 py-5">
         <div className="flex flex-wrap items-center gap-2">
           <h2 className="font-display text-2xl font-extrabold tracking-tight">
@@ -121,8 +147,8 @@ function SafeContactsPane() {
           </h2>
           <SafetyBadge level="verified" />
         </div>
-        <p className="mt-1 text-sm font-semibold text-muted-foreground">
-          These are people and places your family has marked as okay to message.
+        <p className="mt-1 text-sm font-medium text-muted-foreground">
+          {copy.safeContactsHint}
         </p>
       </header>
       <ScrollArea className="flex-1">
@@ -130,14 +156,19 @@ function SafeContactsPane() {
           {safe.map((contact) => (
             <li
               key={contact.id}
-              className="flex items-center gap-3 rounded-3xl bg-card p-4 shadow-panel animate-fade-up"
+              className={cn(
+                "flex items-center gap-3 bg-card p-4 animate-fade-up",
+                learningStage === "high"
+                  ? "rounded-xl border border-border"
+                  : "rounded-3xl shadow-panel",
+              )}
             >
               <ContactAvatar contact={contact} size="lg" />
               <div className="min-w-0">
-                <p className="truncate font-extrabold text-foreground">
+                <p className="truncate font-bold text-foreground">
                   {contact.name}
                 </p>
-                <p className="truncate text-sm font-semibold text-muted-foreground">
+                <p className="truncate text-sm font-medium text-muted-foreground">
                   {contact.relationship ?? contact.email}
                 </p>
                 <div className="mt-2">

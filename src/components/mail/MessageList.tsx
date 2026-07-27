@@ -56,9 +56,9 @@ export function MessageList() {
         <div className="space-y-1 p-2">
           {filtered.length === 0 ? (
             <div className="rounded-3xl bg-white/60 px-4 py-10 text-center">
-              <p className="font-extrabold text-foreground">No messages here</p>
-              <p className="mt-1 text-sm font-semibold text-muted-foreground">
-                Try another folder, or write someone a note.
+              <p className="font-bold text-foreground">No messages here</p>
+              <p className="mt-1 text-sm font-medium text-muted-foreground">
+                Try another folder, or compose a new message.
               </p>
             </div>
           ) : (

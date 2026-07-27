@@ -8,17 +8,17 @@ const copy: Record<
 > = {
   verified: {
     label: "Verified",
-    hint: "A trusted place or person confirmed by your family",
+    hint: "Confirmed as a trusted school or family contact",
     icon: BadgeCheck,
   },
   trusted: {
     label: "Safe contact",
-    hint: "Someone on your Safe Contacts list",
+    hint: "On your approved Safe Contacts list",
     icon: ShieldCheck,
   },
   unknown: {
-    label: "Be careful",
-    hint: "Ask a grown-up before opening links or replying",
+    label: "Unknown",
+    hint: "Not on your Safe Contacts list — review carefully",
     icon: ShieldAlert,
   },
 };
@@ -41,7 +41,7 @@ export function SafetyBadge({
     <span
       title={meta.hint}
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-extrabold tracking-wide",
+        "inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-bold tracking-wide",
         level === "verified" && "bg-safe-soft text-safe",
         level === "trusted" && "bg-safe-soft text-safe",
         level === "unknown" && "bg-amber-100 text-amber-800",

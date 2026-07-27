@@ -2,6 +2,9 @@ export type FolderId = "inbox" | "drafts" | "sent" | "safe-contacts";
 
 export type SafetyLevel = "verified" | "trusted" | "unknown";
 
+/** Progressive experience bands across K–12 — same product, maturing UI. */
+export type LearningStage = "elementary" | "middle" | "high";
+
 export interface Contact {
   id: string;
   name: string;

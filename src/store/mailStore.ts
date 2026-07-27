@@ -1,9 +1,24 @@
 import { create } from "zustand";
 import { db, ensureSeedData } from "@/lib/db";
-import type { Contact, Draft, FolderId, Message } from "@/types/mail";
+import type { Contact, Draft, FolderId, LearningStage, Message } from "@/types/mail";
+
+const STAGE_STORAGE_KEY = "mailbox.learningStage";
+
+function readStoredStage(): LearningStage {
+  try {
+    const value = localStorage.getItem(STAGE_STORAGE_KEY);
+    if (value === "elementary" || value === "middle" || value === "high") {
+      return value;
+    }
+  } catch {
+    /* ignore */
+  }
+  return "elementary";
+}
 
 interface MailState {
   ready: boolean;
+  learningStage: LearningStage;
   folder: FolderId;
   selectedMessageId: string | null;
   messages: Message[];
@@ -11,12 +26,17 @@ interface MailState {
   drafts: Draft[];
   searchQuery: string;
   hydrate: () => Promise<void>;
+  setLearningStage: (stage: LearningStage) => void;
   setFolder: (folder: FolderId) => void;
   selectMessage: (id: string | null) => void;
   markRead: (id: string) => Promise<void>;
   setSearchQuery: (query: string) => void;
-  saveDraft: (draft: Omit<Draft, "id" | "updatedAt"> & { id?: string }) => Promise<string>;
-  sendDraft: (draft: Omit<Draft, "id" | "updatedAt"> & { id?: string }) => Promise<void>;
+  saveDraft: (
+    draft: Omit<Draft, "id" | "updatedAt"> & { id?: string },
+  ) => Promise<string>;
+  sendDraft: (
+    draft: Omit<Draft, "id" | "updatedAt"> & { id?: string },
+  ) => Promise<void>;
 }
 
 function contactMap(contacts: Contact[]) {
@@ -32,6 +52,7 @@ export function getContact(
 
 export const useMailStore = create<MailState>((set, get) => ({
   ready: false,
+  learningStage: "elementary",
   folder: "inbox",
   selectedMessageId: null,
   messages: [],
@@ -50,11 +71,21 @@ export const useMailStore = create<MailState>((set, get) => ({
     const inboxFirst = messages.find((m) => m.folder === "inbox");
     set({
       ready: true,
+      learningStage: readStoredStage(),
       messages,
       contacts,
       drafts,
       selectedMessageId: get().selectedMessageId ?? inboxFirst?.id ?? null,
     });
+  },
+
+  setLearningStage: (learningStage) => {
+    try {
+      localStorage.setItem(STAGE_STORAGE_KEY, learningStage);
+    } catch {
+      /* ignore */
+    }
+    set({ learningStage });
   },
 
   setFolder: (folder) => {
@@ -101,8 +132,8 @@ export const useMailStore = create<MailState>((set, get) => ({
     const message: Message = {
       id: crypto.randomUUID(),
       folder: "sent",
-      fromContactId: "c-grandma",
-      toLabel: draftInput.to || "Someone special",
+      fromContactId: "c-teacher",
+      toLabel: draftInput.to || "Recipient",
       subject: draftInput.subject || "(No subject)",
       preview: draftInput.body.slice(0, 90),
       body: draftInput.body,

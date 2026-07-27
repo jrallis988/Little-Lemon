@@ -1,12 +1,12 @@
 [package]
-name = "mailnest"
+name = "mailbox"
 version = "0.1.0"
-description = "MailNest — a kid-friendly email client"
-authors = ["MailNest"]
+description = "Mailbox — email for students in grades 1–12"
+authors = ["Mailbox"]
 edition = "2021"
 
 [lib]
-name = "mailnest_lib"
+name = "mailbox_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]

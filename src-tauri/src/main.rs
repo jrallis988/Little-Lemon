@@ -1,3 +1,3 @@
 fn main() {
-    mailnest_lib::run();
+    mailbox_lib::run();
 }

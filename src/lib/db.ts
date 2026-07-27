@@ -2,13 +2,13 @@ import Dexie, { type EntityTable } from "dexie";
 import { SEED_CONTACTS, SEED_DRAFTS, SEED_MESSAGES } from "@/data/seed";
 import type { Contact, Draft, Message } from "@/types/mail";
 
-class MailNestDB extends Dexie {
+class MailboxDB extends Dexie {
   messages!: EntityTable<Message, "id">;
   contacts!: EntityTable<Contact, "id">;
   drafts!: EntityTable<Draft, "id">;
 
   constructor() {
-    super("mailnest");
+    super("mailbox");
     this.version(1).stores({
       messages: "id, folder, sentAt, unread, fromContactId",
       contacts: "id, email, safety",
@@ -17,7 +17,7 @@ class MailNestDB extends Dexie {
   }
 }
 
-export const db = new MailNestDB();
+export const db = new MailboxDB();
 
 let seedPromise: Promise<void> | null = null;
 
