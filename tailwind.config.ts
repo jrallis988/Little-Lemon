@@ -14,7 +14,7 @@ const config: Config = {
         lg: "2rem",
       },
       screens: {
-        "2xl": "1200px",
+        "2xl": "1320px",
       },
     },
     extend: {
@@ -38,12 +38,8 @@ const config: Config = {
       },
       keyframes: {
         "fade-up": {
-          from: { opacity: "0", transform: "translateY(12px)" },
+          from: { opacity: "0", transform: "translateY(10px)" },
           to: { opacity: "1", transform: "translateY(0)" },
-        },
-        "search-pulse": {
-          "0%, 100%": { boxShadow: "0 0 0 0 rgba(245, 197, 24, 0.35)" },
-          "50%": { boxShadow: "0 0 0 8px rgba(245, 197, 24, 0)" },
         },
         "banner-in": {
           from: { opacity: "0", transform: "translateY(100%)" },
@@ -51,8 +47,7 @@ const config: Config = {
         },
       },
       animation: {
-        "fade-up": "fade-up 0.55s ease-out both",
-        "search-pulse": "search-pulse 2.4s ease-in-out infinite",
+        "fade-up": "fade-up 0.45s ease-out both",
         "banner-in": "banner-in 0.45s ease-out both",
       },
     },

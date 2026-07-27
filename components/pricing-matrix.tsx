@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { Check, Minus, ShieldCheck } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -21,14 +22,14 @@ function CellValue({ value }: { value: string }) {
     <span
       className={cn(
         "inline-flex items-center gap-1.5 text-sm font-medium",
-        negative ? "text-pf-ink/45" : "text-pf-ink"
+        negative ? "text-white/40" : "text-white"
       )}
     >
       {negative ? (
         <Minus className="h-3.5 w-3.5" aria-hidden />
       ) : value.toLowerCase().includes("included") ||
         value.toLowerCase().includes("anytime") ? (
-        <Check className="h-3.5 w-3.5 text-emerald-600" aria-hidden />
+        <Check className="h-3.5 w-3.5 text-pf-yellow" aria-hidden />
       ) : null}
       {value}
     </span>
@@ -47,87 +48,80 @@ export function PricingMatrix({
     <section
       id="pricing"
       aria-labelledby="pricing-heading"
-      className="scroll-mt-24 border-t border-pf-line/80 bg-white"
+      className="relative scroll-mt-20 overflow-hidden bg-[#14081f] text-white"
     >
-      <div className="container py-16 md:py-20">
-        <div className="mx-auto max-w-2xl text-center animate-fade-up">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-pf-purple">
-            Membership options
-          </p>
-          <h2
-            id="pricing-heading"
-            className="mt-3 font-display text-4xl tracking-tight text-pf-ink md:text-5xl"
-          >
-            Two ways to join. The full price list stays visible.
-          </h2>
-          <p className="mt-3 text-base text-pf-ink/70 md:text-lg">
-            Classic for your home club. Black Card if you want more locations and
-            spa amenities. Monthly dues, annual fee, and cancel terms—all right
-            here.
+      <div className="absolute inset-0 opacity-40">
+        <Image
+          src="/images/floor-gym.jpg"
+          alt=""
+          fill
+          className="object-cover object-center"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-[#14081f]/85" />
+      </div>
+
+      <div className="container relative py-8 md:py-9">
+        <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:items-end">
+          <div className="animate-fade-up">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-pf-yellow">
+              Membership options
+            </p>
+            <h2
+              id="pricing-heading"
+              className="mt-1 font-display text-3xl tracking-tight md:text-4xl"
+            >
+              Two ways to join. Full price list, no surprises.
+            </h2>
+          </div>
+          <p className="animate-fade-up text-sm text-white/70 [animation-delay:60ms] md:text-base">
+            Classic for your home club. Black Card for more locations and spa
+            perks. Dues, annual fee, and cancel terms stay on this page.
           </p>
         </div>
 
-        <div className="mt-10 grid gap-4 md:grid-cols-2">
+        <div className="mt-5 grid gap-3 md:grid-cols-2">
           {MEMBERSHIP_PLANS.map((plan, index) => {
             const featured = plan.id === "black-card";
             return (
               <article
                 key={plan.id}
                 className={cn(
-                  "animate-fade-up rounded-xl border p-6 md:p-7",
+                  "animate-fade-up border p-5",
                   featured
-                    ? "border-pf-purple bg-[linear-gradient(165deg,#2f124a_0%,#5c2d91_55%,#6e3aa8_100%)] text-white shadow-lift"
-                    : "border-pf-line bg-pf-mist/40 text-pf-ink"
+                    ? "border-pf-yellow/50 bg-[linear-gradient(160deg,#5c2d91_0%,#2f124a_100%)]"
+                    : "border-white/15 bg-white/5"
                 )}
-                style={{ animationDelay: `${index * 90}ms` }}
+                style={{ animationDelay: `${index * 70}ms` }}
               >
                 <div className="flex items-center justify-between gap-3">
-                  <h3 className="font-display text-3xl tracking-tight">
+                  <h3 className="font-display text-2xl tracking-tight md:text-3xl">
                     {plan.name}
                   </h3>
                   {featured ? (
                     <Badge variant="yellow">Most chosen</Badge>
                   ) : (
-                    <Badge variant="muted">Home club</Badge>
+                    <Badge className="bg-white/10 text-white">Home club</Badge>
                   )}
                 </div>
-                <p
-                  className={cn(
-                    "mt-2 text-sm",
-                    featured ? "text-white/75" : "text-pf-ink/65"
-                  )}
-                >
-                  {plan.tagline}
-                </p>
-                <p className="mt-6 flex items-end gap-1">
-                  <span className="font-display text-5xl tracking-tight">
+                <p className="mt-1.5 text-sm text-white/70">{plan.tagline}</p>
+                <p className="mt-4 flex items-end gap-1">
+                  <span className="font-display text-4xl tracking-tight md:text-5xl">
                     {formatCurrency(plan.monthlyDues)}
                   </span>
-                  <span
-                    className={cn(
-                      "mb-1 text-sm font-medium",
-                      featured ? "text-white/70" : "text-pf-ink/55"
-                    )}
-                  >
+                  <span className="mb-1 text-sm font-medium text-white/60">
                     / month
                   </span>
                 </p>
-                <dl
-                  className={cn(
-                    "mt-4 space-y-2 border-t pt-4 text-sm",
-                    featured ? "border-white/15" : "border-pf-line"
-                  )}
-                >
+                <dl className="mt-3 space-y-1.5 border-t border-white/15 pt-3 text-sm">
                   <div className="flex justify-between gap-3">
-                    <dt className={featured ? "text-white/65" : "text-pf-ink/55"}>
-                      Enrollment fee
-                    </dt>
+                    <dt className="text-white/55">Enrollment fee</dt>
                     <dd className="font-semibold">
                       {formatCurrency(plan.enrollmentFee)}
                     </dd>
                   </div>
                   <div className="flex justify-between gap-3">
-                    <dt className={featured ? "text-white/65" : "text-pf-ink/55"}>
+                    <dt className="text-white/55">
                       Annual fee ({plan.annualFeeMonth})
                     </dt>
                     <dd className="font-semibold">
@@ -135,33 +129,30 @@ export function PricingMatrix({
                     </dd>
                   </div>
                   <div className="flex justify-between gap-3">
-                    <dt className={featured ? "text-white/65" : "text-pf-ink/55"}>
-                      Cancellation
-                    </dt>
+                    <dt className="text-white/55">Cancellation</dt>
                     <dd className="font-semibold">Anytime · $0 fee</dd>
                   </div>
                 </dl>
-                <ul className="mt-5 space-y-2">
+                <ul className="mt-4 space-y-1.5">
                   {plan.highlights.map((item) => (
                     <li key={item} className="flex items-start gap-2 text-sm">
                       <Check
-                        className={cn(
-                          "mt-0.5 h-4 w-4 shrink-0",
-                          featured ? "text-pf-yellow" : "text-pf-purple"
-                        )}
+                        className="mt-0.5 h-4 w-4 shrink-0 text-pf-yellow"
                         aria-hidden
                       />
-                      <span className={featured ? "text-white/90" : "text-pf-ink/80"}>
-                        {item}
-                      </span>
+                      <span className="text-white/85">{item}</span>
                     </li>
                   ))}
                 </ul>
                 <Button
                   asChild
-                  variant={featured ? "default" : "purple"}
+                  variant={featured ? "default" : "outline"}
                   size="lg"
-                  className="mt-6 w-full"
+                  className={cn(
+                    "mt-5 w-full",
+                    !featured &&
+                      "border-white/30 bg-transparent text-white hover:border-white hover:bg-white/10 hover:text-white"
+                  )}
                 >
                   <Link href={joinHref(plan.id)}>Start with {plan.name}</Link>
                 </Button>
@@ -170,29 +161,29 @@ export function PricingMatrix({
           })}
         </div>
 
-        <div className="mt-10 animate-fade-up overflow-x-auto rounded-xl border border-pf-line [animation-delay:160ms]">
+        <div className="mt-6 animate-fade-up overflow-x-auto border border-white/15 bg-black/25 [animation-delay:120ms]">
           <table className="w-full min-w-[36rem] border-collapse text-left">
             <caption className="sr-only">
               Side-by-side comparison of Classic and Black Card membership fees
               and what’s included at the gym
             </caption>
             <thead>
-              <tr className="bg-pf-mist/80">
+              <tr className="bg-white/5">
                 <th
                   scope="col"
-                  className="px-4 py-4 text-xs font-semibold uppercase tracking-wider text-pf-ink/55 md:px-5"
+                  className="px-4 py-3 text-[11px] font-semibold uppercase tracking-wider text-white/50 md:px-5"
                 >
                   What you pay &amp; get at the gym
                 </th>
                 <th
                   scope="col"
-                  className="px-4 py-4 font-display text-xl text-pf-ink md:px-5"
+                  className="px-4 py-3 font-display text-xl text-white md:px-5"
                 >
                   Classic
                 </th>
                 <th
                   scope="col"
-                  className="px-4 py-4 font-display text-xl text-pf-purple md:px-5"
+                  className="px-4 py-3 font-display text-xl text-pf-yellow md:px-5"
                 >
                   Black Card
                 </th>
@@ -202,23 +193,23 @@ export function PricingMatrix({
               {PRICING_MATRIX.map((row) => (
                 <tr
                   key={row.label}
-                  className="border-t border-pf-line align-top"
+                  className="border-t border-white/10 align-top"
                 >
                   <th
                     scope="row"
-                    className="px-4 py-4 text-sm font-semibold text-pf-ink md:px-5"
+                    className="px-4 py-3 text-sm font-semibold text-white md:px-5"
                   >
                     {row.label}
                     {row.note ? (
-                      <p className="mt-1 font-normal text-xs text-pf-ink/50">
+                      <p className="mt-1 font-normal text-xs text-white/45">
                         {row.note}
                       </p>
                     ) : null}
                   </th>
-                  <td className="px-4 py-4 md:px-5">
+                  <td className="px-4 py-3 md:px-5">
                     <CellValue value={row.classic} />
                   </td>
-                  <td className="px-4 py-4 md:px-5">
+                  <td className="px-4 py-3 md:px-5">
                     <CellValue value={row.blackCard} />
                   </td>
                 </tr>
@@ -227,12 +218,12 @@ export function PricingMatrix({
           </table>
         </div>
 
-        <div className="mt-6 flex items-start gap-3 rounded-lg bg-pf-mist/70 px-4 py-3 text-sm text-pf-ink/70">
-          <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-pf-purple" />
+        <div className="mt-4 flex items-start gap-3 border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/70">
+          <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-pf-yellow" />
           <p>
             Starting rates shown above. Your club confirms the final local price
             before you pay. After you join, use the Planet Fitness app to check
-            in, open the door with your digital keytag, and manage your account.
+            in, unlock the door, and manage your account.
           </p>
         </div>
       </div>

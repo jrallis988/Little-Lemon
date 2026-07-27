@@ -17,61 +17,61 @@ export default async function JoinPage({ searchParams }: JoinPageProps) {
     MEMBERSHIP_PLANS.find((item) => item.id === planId) ?? MEMBERSHIP_PLANS[1];
 
   return (
-    <div className="min-h-[70vh] bg-[linear-gradient(180deg,var(--pf-mist),#ffffff_40%)]">
-      <div className="container max-w-2xl py-14 md:py-20">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-pf-purple">
+    <div className="min-h-[70vh] bg-[#14081f] text-white">
+      <div className="container max-w-xl py-10 md:py-12">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-pf-yellow">
           Start your membership
         </p>
-        <h1 className="mt-3 font-display text-4xl tracking-tight text-pf-ink md:text-5xl">
+        <h1 className="mt-2 font-display text-4xl tracking-tight md:text-5xl">
           Join with {plan.name}
         </h1>
-        <p className="mt-3 text-pf-ink/70">
-          Confirm your club and plan first. We’ll keep every fee visible before
-          you finish signing up.
+        <p className="mt-2 text-sm text-white/70 md:text-base">
+          Confirm your club and plan. Every fee stays visible before you finish
+          signing up.
         </p>
 
-        <div className="mt-8 space-y-4 rounded-xl border border-pf-line bg-white p-6 shadow-lift">
+        <div className="mt-6 space-y-4 border border-white/15 bg-white/5 p-5">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-pf-ink/50">
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-white/50">
               Home club
             </p>
-            <p className="mt-1 font-display text-2xl text-pf-ink">
+            <p className="mt-1 font-display text-2xl">
               {club ? club.name : "Select a club first"}
             </p>
             {club ? (
-              <p className="mt-1 text-sm text-pf-ink/65">
+              <p className="mt-1 text-sm text-white/65">
                 {club.address}, {club.city}, {club.state} {club.zip}
               </p>
             ) : (
-              <Button asChild variant="link" className="mt-1 h-auto px-0">
+              <Button asChild variant="link" className="mt-1 h-auto px-0 text-pf-yellow">
                 <Link href="/#clubs">Find a club</Link>
               </Button>
             )}
           </div>
 
-          <div className="border-t border-pf-line pt-4">
-            <p className="text-xs font-semibold uppercase tracking-wider text-pf-ink/50">
+          <div className="border-t border-white/15 pt-4">
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-white/50">
               Plan &amp; dues
             </p>
             <dl className="mt-3 space-y-2 text-sm">
               <div className="flex justify-between gap-3">
-                <dt className="text-pf-ink/60">Membership</dt>
+                <dt className="text-white/55">Membership</dt>
                 <dd className="font-semibold">{plan.name}</dd>
               </div>
               <div className="flex justify-between gap-3">
-                <dt className="text-pf-ink/60">Monthly dues</dt>
+                <dt className="text-white/55">Monthly dues</dt>
                 <dd className="font-semibold">
                   {formatCurrency(plan.monthlyDues)} / month
                 </dd>
               </div>
               <div className="flex justify-between gap-3">
-                <dt className="text-pf-ink/60">Enrollment fee</dt>
+                <dt className="text-white/55">Enrollment fee</dt>
                 <dd className="font-semibold">
                   {formatCurrency(plan.enrollmentFee)}
                 </dd>
               </div>
               <div className="flex justify-between gap-3">
-                <dt className="text-pf-ink/60">
+                <dt className="text-white/55">
                   Annual fee ({plan.annualFeeMonth})
                 </dt>
                 <dd className="font-semibold">
@@ -79,7 +79,7 @@ export default async function JoinPage({ searchParams }: JoinPageProps) {
                 </dd>
               </div>
               <div className="flex justify-between gap-3">
-                <dt className="text-pf-ink/60">Cancellation</dt>
+                <dt className="text-white/55">Cancellation</dt>
                 <dd className="font-semibold">Anytime · $0 fee</dd>
               </div>
             </dl>
@@ -88,7 +88,7 @@ export default async function JoinPage({ searchParams }: JoinPageProps) {
           <Button size="lg" className="w-full" disabled={!club}>
             Continue
           </Button>
-          <p className="text-center text-xs text-pf-ink/50">
+          <p className="text-center text-xs text-white/45">
             Next: a short sign-up—your info, payment, then you’re set to work out.
           </p>
         </div>

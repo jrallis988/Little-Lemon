@@ -18,11 +18,20 @@ html {
 
 body {
   min-height: 100vh;
-  background: #ffffff;
+  background: #14081f;
   color: var(--pf-ink);
   font-family: var(--font-body), sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+}
+
+@keyframes hero-zoom {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 
 ::selection {

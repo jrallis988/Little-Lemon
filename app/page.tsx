@@ -8,14 +8,14 @@ export default function HomePage() {
       <Hero />
       <ClubLocator />
       <PricingMatrix />
-      <footer className="border-t border-pf-line bg-pf-mist/50">
-        <div className="container flex flex-col gap-2 py-10 text-sm text-pf-ink/60 md:flex-row md:items-center md:justify-between">
-          <p className="font-display text-lg tracking-tight text-pf-purple">
+      <footer className="border-t border-white/10 bg-pf-ink text-white">
+        <div className="container flex flex-col gap-1 py-6 text-sm text-white/60 md:flex-row md:items-center md:justify-between">
+          <p className="font-display text-lg tracking-tight text-pf-yellow">
             Planet Fitness
           </p>
           <p>
             Find a club and start a membership here. Day-to-day gym tools live in
-            the Planet Fitness app.
+            the app.
           </p>
         </div>
       </footer>
