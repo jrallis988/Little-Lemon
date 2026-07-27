@@ -9,7 +9,9 @@ export type FunnelEvent =
   | "plan_select"
   | "join_step"
   | "join_complete"
-  | "app_banner_click";
+  | "app_banner_click"
+  | "summer_pass_click"
+  | "virtual_tour_play";
 
 declare global {
   interface Window {

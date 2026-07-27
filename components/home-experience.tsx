@@ -8,6 +8,7 @@ import { GetStarted } from "@/components/get-started";
 import { PlanetFitnessLogo } from "@/components/brand-logo";
 import { PricingDisclaimer } from "@/components/pricing-disclaimer";
 import { SelectedClubProvider } from "@/components/selected-club-context";
+import { SummerPass } from "@/components/summer-pass";
 import { VirtualTour } from "@/components/virtual-tour";
 
 const PricingMatrix = dynamic(
@@ -26,6 +27,7 @@ export function HomeExperience() {
       <BrandPerks />
       <PricingMatrix />
       <PricingDisclaimer />
+      <SummerPass />
       <AppPromo />
       <VirtualTour />
       <GetStarted />
@@ -65,6 +67,11 @@ export function HomeExperience() {
                 <li>
                   <a className="hover:underline" href="#tour">
                     Virtual Tour
+                  </a>
+                </li>
+                <li>
+                  <a className="hover:underline" href="#summer-pass">
+                    Summer Pass
                   </a>
                 </li>
                 <li>
