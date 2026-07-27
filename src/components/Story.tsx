@@ -38,8 +38,8 @@ export function Story() {
 
         <div className="relative order-1 min-h-[18rem] lg:order-2 lg:min-h-full">
           <img
-            src="/images/beer-mug.jpg"
-            alt="Frosty mug of golden beer with overflowing foam"
+            src="/images/campus-patio.jpg"
+            alt="Outdoor patio seating at Smuttynose Towle Farm campus"
             className={`h-full w-full object-cover transition-transform duration-[1.4s] ease-out ${
               visible ? "scale-100" : "scale-105"
             }`}

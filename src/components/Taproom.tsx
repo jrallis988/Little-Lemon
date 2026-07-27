@@ -9,8 +9,8 @@ export function Taproom() {
       <div className="grid min-h-[34rem] lg:grid-cols-2">
         <div className="relative min-h-[18rem] overflow-hidden lg:min-h-full">
           <img
-            src="/images/towle-farm.jpg"
-            alt="Golden grain fields at sunset near the Towle Farm campus"
+            src="/images/campus-entrance.jpg"
+            alt="Entrance to Smuttynose on Towle Farm with lawn, patio seating, and the red brewery building"
             className={`h-full w-full object-cover transition-transform duration-[1.4s] ease-out ${
               visible ? "scale-100" : "scale-110"
             }`}

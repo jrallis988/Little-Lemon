@@ -12,6 +12,18 @@ export function Footer() {
             Smuttynose Brewing · Hampton, New Hampshire · Est. 1994
           </p>
           <p className="mt-1 text-sm text-foam/60">{links.address}</p>
+          <p className="mt-3 max-w-sm text-xs text-foam/45">
+            Campus photo © SmuttynoseBeer /{" "}
+            <a
+              href="https://commons.wikimedia.org/wiki/File:SBC_rtl4637.jpg"
+              target="_blank"
+              rel="noreferrer"
+              className="underline-offset-2 hover:underline"
+            >
+              Wikimedia Commons
+            </a>{" "}
+            (CC BY-SA 4.0)
+          </p>
         </div>
         <div className="flex flex-wrap gap-6 text-sm text-foam/80">
           <a href="#beers" className="transition-colors hover:text-foam">

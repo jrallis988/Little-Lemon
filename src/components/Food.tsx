@@ -9,8 +9,8 @@ export function Food() {
       <div className="grid lg:grid-cols-2">
         <div className="relative min-h-[18rem] overflow-hidden lg:min-h-[34rem]">
           <img
-            src="/images/food-table.jpg"
-            alt="Shared plates and drinks on a restaurant table"
+            src="/images/hayseed-plate.jpg"
+            alt="Fried chicken plate and Hayseed glass on the Smuttynose patio"
             className={`h-full w-full object-cover transition-transform duration-[1.4s] ease-out ${
               visible ? "scale-100" : "scale-110"
             }`}

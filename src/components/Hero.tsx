@@ -6,13 +6,13 @@ export function Hero() {
       aria-label="Smuttynose Brewing hero"
     >
       <div className="absolute inset-0">
-          <img
-            src="/images/taproom-bar.jpg"
-            alt="Warmly lit brewery bar with draft taps and chalkboard menus"
-            className="h-full w-full object-cover animate-ken-burns"
-          />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/55 to-ink/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/75 via-transparent to-ink/40" />
+        <img
+          src="/images/campus-day.jpg"
+          alt="Smuttynose Brewing headquarters on Towle Farm in Hampton, New Hampshire — red brewery building with grain silos"
+          className="h-full w-full object-cover animate-ken-burns"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/88 via-ink/55 to-ink/25" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/75 via-transparent to-ink/35" />
       </div>
 
       <div className="relative mx-auto flex min-h-[100svh] max-w-site flex-col justify-end px-5 pb-16 pt-28 md:px-8 md:pb-24">
