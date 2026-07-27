@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ROOMS } from "../data";
+import { ROOMS, SITE } from "../data";
 import RoomModal from "./RoomModal";
 
 export default function Rooms() {
@@ -12,8 +12,9 @@ export default function Rooms() {
         Clean, comfortable rooms by the beach.
       </h2>
       <p className="section__copy">
-        About 20 rooms with air-conditioning, refrigerators, microwaves, cable,
-        and free Wi‑Fi—steps from North Beach at Plaice Cove.
+        About {SITE.roomCount} rooms with air-conditioning, refrigerators,
+        microwaves, cable, and free Wi‑Fi—steps from North Beach at Plaice Cove.{" "}
+        {SITE.typicalRateNote}
       </p>
 
       <div className="rooms">
@@ -30,7 +31,7 @@ export default function Rooms() {
             <div className="room__body">
               <h3>{room.name}</h3>
               <p className="room__meta">
-                {room.rateLabel} · Sleeps {room.sleeps} · {room.size}
+                {room.beds} · Sleeps {room.sleeps} · {room.rateLabel}
               </p>
               <p className="room__desc">{room.description}</p>
               <ul className="amenity-list amenity-list--compact">
@@ -39,7 +40,12 @@ export default function Rooms() {
                 ))}
               </ul>
               <div className="room__actions">
-                <a className="btn btn-ocean" href={`#booking?room=${room.id}`}>
+                <a
+                  className="btn btn-ocean"
+                  href={SITE.bookingUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   Book {room.name}
                 </a>
                 <button

@@ -1,12 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useEffect, useMemo, useState } from "react";
-import {
-  ROOMS,
-  SITE,
-  estimateTotal,
-  isRoomAvailable,
-} from "../data";
+import { ROOMS, SITE, estimateTotal } from "../data";
 
 const today = () => new Date().toISOString().slice(0, 10);
 
@@ -29,17 +24,7 @@ const schema = Yup.object({
         return value > checkIn;
       }
     ),
-  room: Yup.string()
-    .required("Select a room")
-    .test(
-      "available",
-      "Those dates are unavailable for this room — try another room or dates",
-      function available(value) {
-        const { checkIn, checkOut } = this.parent;
-        if (!value || !checkIn || !checkOut || checkOut <= checkIn) return true;
-        return isRoomAvailable(value, checkIn, checkOut);
-      }
-    ),
+  room: Yup.string().required("Select a room"),
   guests: Yup.number()
     .min(1, "At least one guest")
     .max(6, "For larger groups, call the front desk")
@@ -60,29 +45,31 @@ function buildMailto(values) {
   const room = ROOMS.find((item) => item.id === values.room);
   const estimate = estimateTotal(values.room, values.checkIn, values.checkOut);
   const subject = encodeURIComponent(
-    `Booking request: ${room?.name || "Room"} (${values.checkIn} → ${values.checkOut})`
+    `Stay inquiry: ${room?.name || "Room"} (${values.checkIn} → ${values.checkOut})`
   );
   const body = encodeURIComponent(
     [
       `Name: ${values.name}`,
       `Email: ${values.email}`,
       `Phone: ${values.phone}`,
-      `Room: ${room?.name}`,
+      `Room interest: ${room?.name}`,
       `Guests: ${values.guests}`,
       `Check-in: ${values.checkIn}`,
       `Check-out: ${values.checkOut}`,
       estimate
-        ? `Estimate: ${estimate.nights} night(s) × $${estimate.rate} = $${estimate.total}`
+        ? `Rough estimate (not a quote): ${estimate.nights} night(s) × ~$${estimate.rate} = ~$${estimate.total}`
         : null,
       values.notes ? `Notes: ${values.notes}` : null,
+      "",
+      "Sent from the Seascape Inn website inquiry form.",
     ]
-      .filter(Boolean)
+      .filter((line) => line !== null)
       .join("\n")
   );
   return `mailto:${SITE.email}?subject=${subject}&body=${body}`;
 }
 
-async function submitBooking(values) {
+async function submitInquiry(values) {
   const formspreeId = process.env.REACT_APP_FORMSPREE_ID;
   const room = ROOMS.find((item) => item.id === values.room);
   const estimate = estimateTotal(values.room, values.checkIn, values.checkOut);
@@ -98,7 +85,7 @@ async function submitBooking(values) {
         ...values,
         roomName: room?.name,
         estimate,
-        _subject: `Seascape Inn booking: ${room?.name}`,
+        _subject: `Seascape Inn inquiry: ${room?.name}`,
       }),
     });
     if (!response.ok) {
@@ -141,19 +128,34 @@ export default function BookingForm() {
         Book your room by the water.
       </h2>
       <p className="section__copy">
-        Check dates for availability, then send a request. We’ll confirm by phone
-        or email—same inn guests recommend for beach access and quiet stays.
+        Check live rates and availability on the inn’s booking system, then call{" "}
+        {SITE.phone} to confirm. {SITE.typicalRateNote}
       </p>
+
+      <div className="booking__live">
+        <a
+          className="btn btn-primary"
+          href={SITE.bookingUrl}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Check availability & book
+        </a>
+        <a className="btn btn-ghost" href={SITE.phoneHref}>
+          Call {SITE.phone}
+        </a>
+      </div>
 
       <div className="booking__layout">
         <div className="booking__panel">
+          <h3 className="booking__panel-title">Or send a quick inquiry</h3>
           <Formik
             enableReinitialize
             initialValues={initialValues}
             validationSchema={schema}
             onSubmit={async (values, helpers) => {
               try {
-                const result = await submitBooking(values);
+                const result = await submitInquiry(values);
                 helpers.setStatus({
                   success: true,
                   summary: values,
@@ -175,26 +177,20 @@ export default function BookingForm() {
                 values.checkIn,
                 values.checkOut
               );
-              const available =
-                values.checkIn &&
-                values.checkOut &&
-                values.checkOut > values.checkIn
-                  ? isRoomAvailable(values.room, values.checkIn, values.checkOut)
-                  : null;
 
               if (status?.success) {
                 return (
                   <div className="success" role="status">
-                    <h3>Request ready</h3>
+                    <h3>Inquiry ready</h3>
                     <p>
                       Thanks, {status.summary.name}.{" "}
                       {status.method === "formspree"
-                        ? `We received your request and will email ${status.summary.email} to confirm.`
-                        : `Your email draft to ${SITE.email} should be open — send it to finish the request.`}
+                        ? `We received your note and will reply to ${status.summary.email}.`
+                        : `Your email draft to ${SITE.email} should be open — send it to reach the inn.`}
                     </p>
                     <p>
-                      {ROOMS.find((room) => room.id === status.summary.room)?.name}{" "}
-                      from {status.summary.checkIn} to {status.summary.checkOut}.
+                      For the fastest confirmation, also book or call via the
+                      buttons above.
                     </p>
                     <button
                       className="btn btn-ghost"
@@ -203,7 +199,7 @@ export default function BookingForm() {
                         resetForm({ values: initialValues, status: undefined })
                       }
                     >
-                      Make another request
+                      Send another inquiry
                     </button>
                   </div>
                 );
@@ -279,27 +275,22 @@ export default function BookingForm() {
                   </div>
 
                   <div className="field">
-                    <label htmlFor="room">Room</label>
+                    <label htmlFor="room">Room interest</label>
                     <Field id="room" name="room" as="select">
                       {ROOMS.map((room) => (
                         <option key={room.id} value={room.id}>
-                          {room.name} — {room.rateLabel}
+                          {room.name} — {room.beds}
                         </option>
                       ))}
                     </Field>
                     <ErrorMessage className="field__error" component="div" name="room" />
                   </div>
 
-                  {available === true && estimate ? (
+                  {estimate ? (
                     <p className="availability availability--ok" role="status">
-                      Available · {estimate.nights} night
-                      {estimate.nights === 1 ? "" : "s"} · estimated ${estimate.total}
-                    </p>
-                  ) : null}
-                  {available === false ? (
-                    <p className="availability availability--no" role="status">
-                      Those dates are booked for this room. Pick another room or
-                      shift your dates.
+                      Rough estimate only: {estimate.nights} night
+                      {estimate.nights === 1 ? "" : "s"} · about ${estimate.total}.
+                      Live rates may differ.
                     </p>
                   ) : null}
 
@@ -309,13 +300,13 @@ export default function BookingForm() {
                       id="notes"
                       name="notes"
                       as="textarea"
-                      placeholder="Early check-in, crib, ground-floor preference…"
+                      placeholder="Pet dog under 40 lbs, early arrival, ground-floor preference…"
                     />
                     <ErrorMessage className="field__error" component="div" name="notes" />
                   </div>
 
-                  <button className="btn btn-primary" type="submit" disabled={isSubmitting}>
-                    {isSubmitting ? "Sending…" : "Request booking"}
+                  <button className="btn btn-ocean" type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? "Sending…" : "Send inquiry"}
                   </button>
                 </Form>
               );
@@ -325,14 +316,22 @@ export default function BookingForm() {
 
         <aside className="booking__aside">
           <p className="booking__note">
-            Check-in from {SITE.checkIn} · Check-out by {SITE.checkOut} · Free
-            cancellation up to 48 hours before arrival.
+            Check-in from {SITE.checkIn} · Check-out by {SITE.checkOut} EST ·
+            Online bookings must be confirmed with the office.
           </p>
           <div className="booking__contact">
             <strong>Prefer to call?</strong>
             <a href={SITE.phoneHref}>{SITE.phone}</a>
             <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
             <span>{SITE.addressShort}</span>
+            <a
+              className="text-link"
+              href={SITE.bookingUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Open RezStream booking
+            </a>
           </div>
         </aside>
       </div>

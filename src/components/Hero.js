@@ -12,11 +12,16 @@ export default function Hero() {
         <p className="hero__brand">{SITE.name}</p>
         <h1 className="hero__headline">Sleep by North Beach.</h1>
         <p className="hero__lede">
-          A pet-friendly inn at Plaice Cove in Hampton, NH—quiet rooms, a
-          gazebo lawn, and the sand just across Ocean Boulevard.
+          A pet-friendly inn at Plaice Cove in Hampton, NH—about {SITE.roomCount}{" "}
+          rooms, a gazebo lawn, and the sand just across Ocean Boulevard.
         </p>
         <div className="hero__actions">
-          <a className="btn btn-primary" href="#booking">
+          <a
+            className="btn btn-primary"
+            href={SITE.bookingUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
             Book a stay
           </a>
           <a className="btn btn-secondary" href="#rooms">

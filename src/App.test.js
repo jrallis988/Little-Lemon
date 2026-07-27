@@ -19,9 +19,14 @@ test("renders reviews and location sections", () => {
   ).toBeInTheDocument();
 });
 
-test("renders room details controls and tripadvisor link", () => {
+test("renders real booking and contact details", () => {
   render(<App />);
   expect(screen.getAllByRole("button", { name: /view details/i }).length).toBeGreaterThan(0);
   expect(screen.getByRole("link", { name: /skip to content/i })).toBeInTheDocument();
-  expect(screen.getByRole("link", { name: /tripadvisor/i })).toBeInTheDocument();
+  expect(screen.getAllByRole("link", { name: /tripadvisor/i }).length).toBeGreaterThan(0);
+  expect(
+    screen.getByRole("link", { name: /check availability & book/i })
+  ).toHaveAttribute("href", expect.stringContaining("rezstream.com"));
+  expect(screen.getByText(/seascapeinn@hotmail.com/i)).toBeInTheDocument();
+  expect(screen.getByRole("heading", { name: /standard queen/i })).toBeInTheDocument();
 });

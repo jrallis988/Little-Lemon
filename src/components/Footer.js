@@ -14,18 +14,24 @@ export default function Footer() {
               <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
             </div>
             <div className="footer__social">
-              <a href={SITE.social.instagram} target="_blank" rel="noreferrer">
-                Instagram
-              </a>
               <a href={SITE.social.facebook} target="_blank" rel="noreferrer">
                 Facebook
+              </a>
+              <a href={SITE.website} target="_blank" rel="noreferrer">
+                Official website
+              </a>
+              <a href={SITE.tripadvisorUrl} target="_blank" rel="noreferrer">
+                TripAdvisor
+              </a>
+              <a href={SITE.bookingUrl} target="_blank" rel="noreferrer">
+                Book online
               </a>
             </div>
           </div>
 
           <nav className="footer__nav" aria-label="Footer">
             <a href="#rooms">Rooms</a>
-            <a href="#shore">The Shore</a>
+            <a href="#shore">Plaice Cove</a>
             <a href="#reviews">Guest notes</a>
             <a href="#location">Location</a>
             <a href="#booking">Book</a>
@@ -43,7 +49,8 @@ export default function Footer() {
         </div>
 
         <p className="footer__copy">
-          © {new Date().getFullYear()} {SITE.name}. All rights reserved.
+          © {new Date().getFullYear()} {SITE.name}. Family inn since around{" "}
+          {SITE.founded}. All rights reserved.
         </p>
       </div>
     </footer>

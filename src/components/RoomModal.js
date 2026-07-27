@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef } from "react";
+import { SITE } from "../data";
 
 export default function RoomModal({ room, onClose }) {
   const titleId = useId();
@@ -51,7 +52,7 @@ export default function RoomModal({ room, onClose }) {
           <p className="section__eyebrow">Room details</p>
           <h2 id={titleId}>{room.name}</h2>
           <p className="room__meta">
-            {room.rateLabel} · Sleeps {room.sleeps} · {room.size}
+            {room.beds} · Sleeps {room.sleeps} · {room.rateLabel}
           </p>
           <p className="modal__copy">{room.description}</p>
 
@@ -64,7 +65,9 @@ export default function RoomModal({ room, onClose }) {
           <div className="modal__actions">
             <a
               className="btn btn-primary"
-              href={`#booking?room=${room.id}`}
+              href={SITE.bookingUrl}
+              target="_blank"
+              rel="noreferrer"
               onClick={onClose}
             >
               Book {room.name}

@@ -4,80 +4,118 @@ export const SITE = {
   tagline: "Beachfront at Plaice Cove, Hampton NH.",
   phone: "(603) 926-1750",
   phoneHref: "tel:+16039261750",
-  email: "stay@seascapeinnhamptonnh.com",
+  email: "seascapeinn@hotmail.com",
   website: "https://seascapeinnhamptonnh.com/",
+  bookingUrl: "https://guest.rezstream.com/search/seascape-inn",
   tripadvisorUrl:
     "https://www.tripadvisor.com/Hotel_Review-g46111-d667889-Reviews-Seascape_Inn_at_Plaice_Cove-Hampton_New_Hampshire.html",
   address: "955 Ocean Boulevard, Hampton, NH 03842",
   addressShort: "955 Ocean Blvd, Hampton, NH",
   neighborhood: "Plaice Cove · North Beach",
+  roomCount: 20,
+  founded: 1953,
   mapEmbedUrl:
     "https://www.openstreetmap.org/export/embed.html?bbox=-70.801%2C42.938%2C-70.782%2C42.948&layer=mapnik&marker=42.94326%2C-70.79161",
   mapLink:
     "https://www.openstreetmap.org/?mlat=42.94326&mlon=-70.79161#map=16/42.94326/-70.79161",
   social: {
-    instagram: "https://instagram.com/",
-    facebook: "https://facebook.com/",
+    facebook: "https://www.facebook.com/seascape.inn.1",
   },
   checkIn: "3:00 PM",
-  checkOut: "11:00 AM",
+  checkOut: "10:00 AM",
   hours: "Front desk 8:30 AM – 10:00 PM",
+  typicalRateNote: "Rates often run around $165/night depending on dates — confirm live pricing when you book.",
 };
 
 export const ROOMS = [
   {
-    id: "ocean-king",
-    name: "Ocean King",
-    rate: 189,
-    rateLabel: "From $189 / night",
+    id: "queen",
+    name: "Standard Queen",
+    beds: "1 queen bed",
+    rate: 165,
+    rateLabel: "Typically from ~$165 / night",
     sleeps: 2,
-    size: "Comfortable king room",
+    size: "Standard room",
     description:
-      "A bright, cozy room with coastal touches—made for quiet nights after a day on North Beach, right across the street.",
+      "A clean queen room with the essentials for a North Beach stay—air-conditioning, fridge, microwave, cable TV, and free Wi‑Fi.",
     image: "/images/seascape-beach.jpg",
     imageAlt: "Seascape Inn guest room with white bedding and beach-themed wall art",
     gallery: [
       {
         src: "/images/seascape-beach.jpg",
-        alt: "Clean guest room with two beds and BEACH letter wall art",
+        alt: "Clean guest room with beds and BEACH letter wall art",
       },
       {
-        src: "/images/room-ocean-king-2.jpg",
-        alt: "Soft bedding detail in a bright coastal guest room",
+        src: "/images/seascape-gazebo.jpg",
+        alt: "Gazebo lawn guests can enjoy during their stay",
       },
     ],
     amenities: [
-      "King or double setup",
+      "Queen bed",
       "Air-conditioning",
       "Refrigerator",
       "Microwave",
       "Cable TV",
       "Free Wi‑Fi",
+      "Private bath",
     ],
   },
   {
-    id: "dune-double",
-    name: "Cove Double",
-    rate: 149,
-    rateLabel: "From $149 / night",
+    id: "two-doubles",
+    name: "Standard Two Doubles",
+    beds: "2 double beds",
+    rate: 165,
+    rateLabel: "Typically from ~$165 / night",
     sleeps: 4,
-    size: "Two-bed room",
+    size: "Standard room",
     description:
-      "A practical room for friends or family—close to the sand, the gazebo lawn, and the quiet stretch of Plaice Cove.",
-    image: "/images/room-dune-double.jpg",
-    imageAlt: "Guest room with two beds and soft coastal light",
+      "Two double beds for friends or family—steps from North Beach and a quieter stretch of Ocean Boulevard than the main Hampton strip.",
+    image: "/images/seascape-beach.jpg",
+    imageAlt: "Seascape Inn room setup suited for two beds",
     gallery: [
       {
-        src: "/images/room-dune-double.jpg",
-        alt: "Cove Double room with two beds",
+        src: "/images/seascape-beach.jpg",
+        alt: "Guest room interior at Seascape Inn",
       },
       {
         src: "/images/seascape-vacancy.jpg",
-        alt: "Seascape Inn exterior along Ocean Boulevard",
+        alt: "Seascape Inn sign along Ocean Boulevard",
       },
     ],
     amenities: [
-      "Two beds",
+      "Two double beds",
+      "Air-conditioning",
+      "Refrigerator",
+      "Microwave",
+      "Cable TV",
+      "Free Wi‑Fi",
+      "Private bath",
+    ],
+  },
+  {
+    id: "economy",
+    name: "Economy Room",
+    beds: "1 double + 1 single",
+    rate: 145,
+    rateLabel: "Typically from ~$145 / night",
+    sleeps: 3,
+    size: "Economy room",
+    description:
+      "A practical layout with a double and a single bed—good value for a short Hampton getaway near the sand.",
+    image: "/images/seascape-exterior.jpg",
+    imageAlt: "Exterior view of Seascape Inn at Plaice Cove",
+    gallery: [
+      {
+        src: "/images/seascape-exterior.jpg",
+        alt: "Seascape Inn exterior",
+      },
+      {
+        src: "/images/seascape-hampton-beach.jpg",
+        alt: "Hampton Beach welcome area with dune grass",
+      },
+    ],
+    amenities: [
+      "Double + single bed",
       "Air-conditioning",
       "Refrigerator",
       "Microwave",
@@ -86,33 +124,35 @@ export const ROOMS = [
     ],
   },
   {
-    id: "tide-suite",
-    name: "Plaice Cove Stay",
-    rate: 219,
-    rateLabel: "From $219 / night",
+    id: "junior-suite",
+    name: "Junior Suite",
+    beds: "2 queen beds",
+    rate: 195,
+    rateLabel: "Typically from ~$195 / night",
     sleeps: 4,
-    size: "Our roomiest option",
+    size: "Junior suite",
     description:
-      "Extra space for a longer Hampton getaway—still steps from the beach path and a short drive from the main Hampton Beach strip.",
-    image: "/images/room-tide-suite.jpg",
-    imageAlt: "Spacious suite-style seating area near large windows",
+      "Extra space with two queen beds for a longer stay—still across from the beach with gazebo and BBQ access on the lawn.",
+    image: "/images/seascape-gazebo.jpg",
+    imageAlt: "Outdoor gazebo and lawn at Seascape Inn",
     gallery: [
       {
-        src: "/images/room-tide-suite.jpg",
-        alt: "Sitting area in a larger Seascape Inn room",
+        src: "/images/seascape-gazebo.jpg",
+        alt: "Gazebo and patio seating at Seascape Inn",
       },
       {
-        src: "/images/room-tide-suite-2.jpg",
-        alt: "Bedroom with wide windows and soft daylight",
+        src: "/images/seascape-beach.jpg",
+        alt: "Bright guest room interior",
       },
     ],
     amenities: [
-      "Extra space",
+      "Two queen beds",
       "Air-conditioning",
       "Refrigerator",
       "Microwave",
       "Cable TV",
       "Free Wi‑Fi",
+      "Extra space",
     ],
   },
 ];
@@ -121,22 +161,22 @@ export const AMENITIES = [
   {
     title: "Beach across the street",
     detail:
-      "North Beach at Plaice Cove is a quick walk from your door—sandy, open, and quieter than the main boardwalk.",
+      "North Beach at Plaice Cove is a short walk from your door—about three miles north of the main Hampton Beach boardwalk.",
   },
   {
     title: "Pet-friendly stays",
     detail:
-      "Bring one dog (up to 40 lbs). Guests love the on-site pet park and beach walks right across Ocean Boulevard.",
+      "One dog up to 40 lbs welcome. Use the on-site pet park or walk about 300 feet to the beach.",
   },
   {
     title: "Gazebo & BBQ lawn",
     detail:
-      "Relax under the gazebo or cook out on the guest BBQ—an easy outdoor hang after the beach.",
+      "Guest BBQ area and gazebo on the lawn—an easy outdoor hang after the beach.",
   },
   {
     title: "Year-round inn",
     detail:
-      "Open all year with weekly and monthly winter options. Rooms include AC, fridge, microwave, cable, and free Wi‑Fi.",
+      "About 20 rooms open year-round, with weekly and monthly winter options. AC, fridge, microwave, cable, and free Wi‑Fi in every room.",
   },
 ];
 
@@ -168,38 +208,38 @@ export const REVIEWS = [
 export const NEARBY = [
   {
     title: "North Beach / Plaice Cove",
-    detail: "Across Ocean Boulevard — long sandy beach for walks, sunsets, and dogs.",
+    detail: "Across Ocean Boulevard — sandy beach for walks, sunsets, and dogs.",
   },
   {
     title: "Hampton Beach center",
-    detail: "About 3 miles south — Casino Ballroom, shops, and the main boardwalk scene.",
+    detail: "About 2.5–3 miles south — Casino Ballroom, shops, and the main boardwalk.",
   },
   {
     title: "Portsmouth & Pease",
-    detail: "Easy day trip north for dining and downtown Portsmouth; Pease airport nearby.",
+    detail: "Roughly 10 miles to Portsmouth International at Pease; easy day trip for downtown Portsmouth.",
   },
 ];
 
 export const POLICIES = [
   {
+    id: "booking",
+    title: "Online booking",
+    body: "Book through RezStream, then call the office at (603) 926-1750 to confirm. Online reservations must be verified by the motel for accuracy.",
+  },
+  {
     id: "pets",
     title: "Pets",
-    body: "Pet-friendly inn: one dog up to 40 lbs. Enjoy the pet park on site and beach walks across the street.",
+    body: "Dogs only — one dog up to 40 lbs. Pet park on site; beach walks across the street.",
   },
   {
     id: "checkin",
     title: "Check-in & out",
-    body: `Check-in from ${SITE.checkIn}. Check-out by ${SITE.checkOut}. Front desk hours ${SITE.hours.replace("Front desk ", "")}.`,
+    body: `Check-in from ${SITE.checkIn}. Check-out by ${SITE.checkOut} EST. Front desk ${SITE.hours.replace("Front desk ", "")}.`,
   },
   {
-    id: "cancellation",
-    title: "Cancellation",
-    body: "Free cancellation up to 48 hours before check-in when possible. Call the inn to confirm your reservation details.",
-  },
-  {
-    id: "parking",
-    title: "Parking",
-    body: "On-site parking for guests along Ocean Boulevard at Plaice Cove / North Beach.",
+    id: "payment",
+    title: "Payment & smoking",
+    body: "Major credit cards accepted. Room charges are typically charged in full (no deposit). Non-smoking property with one designated outdoor smoking area.",
   },
 ];
 
@@ -237,28 +277,6 @@ export const GALLERY = [
     alt: "Busy summer day on the sand near Hampton Beach",
   },
 ];
-
-/** Mock blocked ranges used for availability checks (ISO dates). */
-export const BLOCKED_DATES = {
-  "ocean-king": [
-    { start: "2026-08-12", end: "2026-08-16" },
-    { start: "2026-09-04", end: "2026-09-07" },
-  ],
-  "dune-double": [{ start: "2026-08-20", end: "2026-08-23" }],
-  "tide-suite": [{ start: "2026-07-30", end: "2026-08-03" }],
-};
-
-export function rangesOverlap(checkIn, checkOut, start, end) {
-  return checkIn < end && checkOut > start;
-}
-
-export function isRoomAvailable(roomId, checkIn, checkOut) {
-  if (!checkIn || !checkOut || checkOut <= checkIn) return false;
-  const blocks = BLOCKED_DATES[roomId] || [];
-  return !blocks.some((block) =>
-    rangesOverlap(checkIn, checkOut, block.start, block.end)
-  );
-}
 
 export function nightsBetween(checkIn, checkOut) {
   if (!checkIn || !checkOut) return 0;
