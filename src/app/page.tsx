@@ -1,7 +1,11 @@
 import {
+  HomeCategories,
+  HomeDeals,
+  HomeHealthMatters,
   HomeHero,
   HomePharmacyPreview,
-  HomeServices,
+  HomePickup,
+  HomeQuickPaths,
   HomeShopPreview,
 } from "@/components/home/home-sections";
 
@@ -9,8 +13,12 @@ export default function HomePage() {
   return (
     <>
       <HomeHero />
+      <HomeQuickPaths />
+      <HomeDeals />
+      <HomeHealthMatters />
+      <HomeCategories />
       <HomePharmacyPreview />
-      <HomeServices />
+      <HomePickup />
       <HomeShopPreview />
     </>
   );
