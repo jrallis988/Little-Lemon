@@ -1,10 +1,18 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
-  "description": "Default Surf capabilities for window controls, secure store, and filter IPC",
+  "description": "Default Surf capabilities for window controls, native browser tabs, secure store, and filter IPC",
   "windows": ["main"],
+  "webviews": ["main"],
   "permissions": [
     "core:default",
+    "core:webview:default",
+    "core:webview:allow-create-webview",
+    "core:webview:allow-webview-show",
+    "core:webview:allow-webview-hide",
+    "core:webview:allow-webview-close",
+    "core:webview:allow-set-webview-position",
+    "core:webview:allow-set-webview-size",
     "core:window:allow-minimize",
     "core:window:allow-close",
     "core:window:allow-show",
@@ -12,16 +20,6 @@
     "core:window:allow-set-focus",
     "core:event:default",
     "store:default",
-    {
-      "identifier": "surf-custom-commands",
-      "allow": [
-        { "cmd": "check_url" },
-        { "cmd": "verify_parent_pin" },
-        { "cmd": "minimize_window" },
-        { "cmd": "close_window" },
-        { "cmd": "secure_get" },
-        { "cmd": "secure_set" }
-      ]
-    }
+    "surf-custom-commands"
   ]
 }
