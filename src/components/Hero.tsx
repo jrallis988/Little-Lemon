@@ -11,8 +11,8 @@ export function Hero() {
           alt="A person stretching outdoors in soft morning light"
           className="h-full w-full object-cover object-[center_30%] scale-105 animate-[rise_1.4s_cubic-bezier(0.22,1,0.36,1)_both]"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/55 to-ink/25" />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/50 via-transparent to-ink/30" />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/75 via-ink/45 to-ink/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/45 via-transparent to-ink/25" />
       </div>
 
       <div className="section-shell relative flex min-h-[100svh] flex-col justify-end pb-16 pt-28 sm:pb-20 sm:pt-32">
