@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: #07060a;
+  --ink-soft: #12101a;
+  --violet: #6b2fa0;
+  --violet-deep: #3b1668;
+  --gold: #c9a227;
+  --gold-light: #e4c65a;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--ink);
+  color: #f5f0ff;
+  font-family: "Figtree", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgba(201, 162, 39, 0.35);
+  color: #fff;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+@layer components {
+  .section-pad {
+    @apply py-20 md:py-28;
+  }
+
+  .eyebrow {
+    @apply font-body text-xs uppercase tracking-[0.28em] text-gold;
+  }
+
+  .display {
+    @apply font-display font-bold tracking-tight text-white;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-sm bg-gold px-6 py-3 font-body text-sm font-semibold uppercase tracking-[0.14em] text-ink transition duration-300 hover:bg-gold-light;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center rounded-sm border border-violet-mist/40 px-6 py-3 font-body text-sm font-semibold uppercase tracking-[0.14em] text-white transition duration-300 hover:border-gold hover:text-gold;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
