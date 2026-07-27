@@ -14,7 +14,9 @@ test("renders reviews and location sections", () => {
   expect(
     screen.getByRole("heading", { name: /steps from the sand in seabreeze cove/i })
   ).toBeInTheDocument();
-  expect(screen.getByTitle(/map showing saltline motel/i)).toBeInTheDocument();
+  expect(
+    screen.getByRole("link", { name: /open saltline motel location on openstreetmap/i })
+  ).toBeInTheDocument();
 });
 
 test("renders room details controls", () => {

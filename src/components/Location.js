@@ -44,14 +44,22 @@ export default function Location() {
           </div>
         </div>
 
-        <div className="location__map">
-          <iframe
-            title="Map showing Saltline Motel in Seabreeze Cove"
-            src={SITE.mapEmbedUrl}
+        <a
+          className="location__map"
+          href={SITE.mapLink}
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Open Saltline Motel location on OpenStreetMap"
+        >
+          <img
+            src="/images/map-fallback.jpg"
+            alt="Coastal view near Saltline Motel in Seabreeze Cove"
             loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
           />
-        </div>
+          <span className="location__map-badge">
+            118 Shore Road · View on OpenStreetMap
+          </span>
+        </a>
       </div>
     </section>
   );

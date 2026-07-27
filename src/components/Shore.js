@@ -35,12 +35,12 @@ export default function Shore() {
       <div className="section__inner shore__gallery" aria-label="Moments around the motel">
         <img
           src="/images/gallery-path.jpg"
-          alt="Sandy path leading toward the water"
+          alt="Morning light on the beach near Saltline Motel"
           loading="lazy"
         />
         <img
           src="/images/gallery-bikes.jpg"
-          alt="Cruiser bike parked near the coast"
+          alt="Lounge chairs on the sand at sunset"
           loading="lazy"
         />
       </div>
