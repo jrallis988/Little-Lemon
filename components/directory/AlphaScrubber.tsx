@@ -10,7 +10,9 @@ type AlphaScrubberProps = {
 };
 
 /**
- * Full A–Z index scrubber — classic music-archive directory chrome.
+ * Horizontal A–Z jump bar for browse mode.
+ * On phone: easy thumb taps without opening the keyboard.
+ * Paired with a search field when the user already knows the name.
  */
 export function AlphaScrubber({
   activeLetter,

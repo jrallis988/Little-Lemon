@@ -4,6 +4,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   View,
   type NativeScrollEvent,
   type NativeSyntheticEvent,
@@ -15,28 +16,52 @@ import { StaticBackground } from '@/components/ui/StaticBackground';
 import { colors, portalBox, spacing, fonts } from '@/constants/theme';
 import { useBottomInset } from '@/hooks/useBottomInset';
 import {
+  DEMO_ARTISTS,
   groupArtistsAlphabetically,
   totalDownloadsForArtist,
 } from '@/lib/demoData';
 
 /**
- * Alphabetical artist directory — PureVolume-style A–Z archive browse.
+ * Artist directory — mobile-practical hybrid:
+ * search when you know the name, A–Z scrubber when you’re browsing.
  */
 export default function ArtistsDirectoryScreen() {
   const bottomInset = useBottomInset(spacing.tabBar);
   const scrollRef = useRef<ScrollView>(null);
   const sectionOffsets = useRef<Record<string, number>>({});
   const [activeLetter, setActiveLetter] = useState<string | null>(null);
+  const [query, setQuery] = useState('');
+
+  const normalizedQuery = query.trim().toLowerCase();
+  const isSearching = normalizedQuery.length > 0;
+
+  const searchResults = useMemo(() => {
+    if (!isSearching) return [];
+    return DEMO_ARTISTS.filter((artist) => {
+      const haystack = [
+        artist.displayName,
+        artist.scene,
+        artist.geography,
+        artist.lineupNote,
+        ...(artist.genreTags ?? []),
+      ]
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase();
+      return haystack.includes(normalizedQuery);
+    }).sort((a, b) =>
+      a.displayName.localeCompare(b.displayName, undefined, {
+        sensitivity: 'base',
+      }),
+    );
+  }, [isSearching, normalizedQuery]);
 
   const groups = useMemo(() => groupArtistsAlphabetically(), []);
   const availableLetters = useMemo(
     () => new Set(groups.map((g) => g.letter)),
     [groups],
   );
-  const totalArtists = useMemo(
-    () => groups.reduce((sum, g) => sum + g.artists.length, 0),
-    [groups],
-  );
+  const totalArtists = DEMO_ARTISTS.length;
 
   const onSectionLayout = useCallback((letter: string, e: LayoutChangeEvent) => {
     sectionOffsets.current[letter] = e.nativeEvent.layout.y;
@@ -51,6 +76,7 @@ export default function ArtistsDirectoryScreen() {
 
   const onScroll = useCallback(
     (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+      if (isSearching) return;
       const y = e.nativeEvent.contentOffset.y + 24;
       let current: string | null = null;
       for (const group of groups) {
@@ -59,54 +85,103 @@ export default function ArtistsDirectoryScreen() {
       }
       if (current !== activeLetter) setActiveLetter(current);
     },
-    [activeLetter, groups],
+    [activeLetter, groups, isSearching],
   );
 
   return (
     <StaticBackground>
       <View style={styles.shell}>
         <View style={styles.masthead}>
-          <Text style={styles.brand}>BROWSE ARTISTS</Text>
+          <Text style={styles.brand}>Browse artists</Text>
           <Text style={styles.meta}>
-            INDEXED: {totalArtists} · SORT: A–Z · MODE: ARCHIVE DIRECTORY
+            {totalArtists} indexed · search or jump A–Z
           </Text>
+
+          <View style={styles.searchWrap}>
+            <TextInput
+              value={query}
+              onChangeText={setQuery}
+              placeholder="Search artists, scenes, places…"
+              placeholderTextColor={colors.textDim}
+              autoCapitalize="none"
+              autoCorrect={false}
+              clearButtonMode="while-editing"
+              returnKeyType="search"
+              style={styles.searchInput}
+              accessibilityLabel="Search artists"
+            />
+            {query.length > 0 ? (
+              <Text style={styles.clearHint} onPress={() => setQuery('')}>
+                Clear
+              </Text>
+            ) : null}
+          </View>
         </View>
 
-        <AlphaScrubber
-          activeLetter={activeLetter}
-          availableLetters={availableLetters}
-          onSelect={scrollToLetter}
-        />
+        {!isSearching ? (
+          <AlphaScrubber
+            activeLetter={activeLetter}
+            availableLetters={availableLetters}
+            onSelect={scrollToLetter}
+          />
+        ) : null}
 
         <ScrollView
           ref={scrollRef}
           onScroll={onScroll}
           scrollEventThrottle={16}
+          keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ paddingBottom: bottomInset }}
         >
           <View style={styles.listPad}>
-            {groups.map((group) => (
-              <View
-                key={group.letter}
-                onLayout={(e) => onSectionLayout(group.letter, e)}
-                style={styles.section}
-              >
+            {isSearching ? (
+              <View style={styles.section}>
                 <View style={styles.sectionHeader}>
-                  <Text style={styles.sectionLetter}>{group.letter}</Text>
+                  <Text style={styles.sectionLetter}>Results</Text>
                   <Text style={styles.sectionCount}>
-                    {group.artists.length} ARTIST
-                    {group.artists.length === 1 ? '' : 'S'}
+                    {searchResults.length} match
+                    {searchResults.length === 1 ? '' : 'es'}
                   </Text>
                 </View>
-                {group.artists.map((artist) => (
-                  <DirectoryArtistRow
-                    key={artist.id}
-                    artist={artist}
-                    downloadCount={totalDownloadsForArtist(artist.id)}
-                  />
-                ))}
+                {searchResults.length === 0 ? (
+                  <Text style={styles.empty}>
+                    No artists match “{query.trim()}”. Try a letter browse
+                    instead.
+                  </Text>
+                ) : (
+                  searchResults.map((artist) => (
+                    <DirectoryArtistRow
+                      key={artist.id}
+                      artist={artist}
+                      downloadCount={totalDownloadsForArtist(artist.id)}
+                    />
+                  ))
+                )}
               </View>
-            ))}
+            ) : (
+              groups.map((group) => (
+                <View
+                  key={group.letter}
+                  onLayout={(e) => onSectionLayout(group.letter, e)}
+                  style={styles.section}
+                >
+                  <View style={styles.sectionHeader}>
+                    <Text style={styles.sectionLetter}>{group.letter}</Text>
+                    <Text style={styles.sectionCount}>
+                      {group.artists.length} artist
+                      {group.artists.length === 1 ? '' : 's'}
+                    </Text>
+                  </View>
+                  {group.artists.map((artist) => (
+                    <DirectoryArtistRow
+                      key={artist.id}
+                      artist={artist}
+                      downloadCount={totalDownloadsForArtist(artist.id)}
+                    />
+                  ))}
+                </View>
+              ))
+            )}
           </View>
         </ScrollView>
       </View>
@@ -125,7 +200,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
     backgroundColor: colors.background,
-    gap: 4,
+    gap: 6,
   },
   brand: {
     fontFamily: fonts.sansBold,
@@ -136,6 +211,29 @@ const styles = StyleSheet.create({
     fontFamily: fonts.sans,
     fontSize: 12,
     color: colors.textMuted,
+  },
+  searchWrap: {
+    marginTop: 4,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  searchInput: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: colors.border,
+    backgroundColor: colors.surface,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    fontFamily: fonts.sans,
+    fontSize: 15,
+    color: colors.text,
+  },
+  clearHint: {
+    fontFamily: fonts.sansBold,
+    fontSize: 13,
+    color: colors.link,
+    paddingVertical: 8,
   },
   listPad: {
     paddingHorizontal: spacing.md,
@@ -166,5 +264,11 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: colors.textDim,
   },
+  empty: {
+    fontFamily: fonts.sans,
+    fontSize: 14,
+    color: colors.textMuted,
+    lineHeight: 20,
+    padding: spacing.md,
+  },
 });
-
