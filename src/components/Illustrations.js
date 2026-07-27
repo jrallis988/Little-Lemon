@@ -158,33 +158,157 @@ export function ShowPoster({ colors, title, id }) {
   );
 }
 
-export function BrandTile({ label, gradient, featured }) {
-  const id = `brand-${label.replace(/\s+/g, "-").toLowerCase()}`;
+function BrandTileShell({ id, children, featured, stops }) {
   return (
-    <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="brand-tile-art">
       <defs>
-        <linearGradient id={id} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor={gradient[0]} />
-          <stop offset="100%" stopColor={gradient[1]} />
+        <linearGradient id={id} x1="0" y1="0" x2="0" y2="1">
+          {stops.map((stop, i) => (
+            <stop key={i} offset={stop.offset} stopColor={stop.color} />
+          ))}
         </linearGradient>
       </defs>
-      <rect width="320" height="180" rx="8" fill={`url(#${id})`} />
-      {featured && (
-        <rect x="0" y="0" width="320" height="180" rx="8" fill="none" stroke="#fff" strokeWidth="3" opacity="0.35" />
-      )}
-      <text
-        x="160"
-        y="98"
-        textAnchor="middle"
-        fill="#fff"
-        fontFamily="Outfit, sans-serif"
-        fontSize={label.length > 12 ? 22 : 28}
-        fontWeight="700"
-      >
-        {label}
-      </text>
+      <rect width="320" height="180" rx="10" fill={`url(#${id})`} />
+      <rect
+        x="1.5"
+        y="1.5"
+        width="317"
+        height="177"
+        rx="9"
+        fill="none"
+        stroke={featured ? "rgba(255,255,255,0.55)" : "rgba(255,255,255,0.14)"}
+        strokeWidth="2"
+      />
+      {children}
     </svg>
   );
+}
+
+/** Studio brand marks — Disney Jr uses the distinct magenta + yellow Jr mark. */
+export function BrandTile({ variant, featured }) {
+  switch (variant) {
+    case "disney":
+      return (
+        <BrandTileShell
+          id="grad-disney"
+          featured={featured}
+          stops={[
+            { offset: "0%", color: "#14213d" },
+            { offset: "100%", color: "#0a0f1c" },
+          ]}
+        >
+          <text x="160" y="102" textAnchor="middle" fill="#fff" fontFamily="Georgia, serif" fontSize="42" fontStyle="italic" fontWeight="700">
+            Disney
+          </text>
+        </BrandTileShell>
+      );
+    case "pixar":
+      return (
+        <BrandTileShell
+          id="grad-pixar"
+          featured={featured}
+          stops={[
+            { offset: "0%", color: "#152238" },
+            { offset: "100%", color: "#0a0f1c" },
+          ]}
+        >
+          <text x="160" y="104" textAnchor="middle" fill="#fff" fontFamily="Outfit, sans-serif" fontSize="40" fontWeight="800" letterSpacing="2">
+            PIXAR
+          </text>
+        </BrandTileShell>
+      );
+    case "marvel":
+      return (
+        <BrandTileShell
+          id="grad-marvel"
+          featured={featured}
+          stops={[
+            { offset: "0%", color: "#1a0a0a" },
+            { offset: "100%", color: "#0a0f1c" },
+          ]}
+        >
+          <rect x="70" y="62" width="180" height="56" rx="4" fill="#e62429" />
+          <text x="160" y="100" textAnchor="middle" fill="#fff" fontFamily="Outfit, sans-serif" fontSize="30" fontWeight="800" letterSpacing="1">
+            MARVEL
+          </text>
+        </BrandTileShell>
+      );
+    case "star-wars":
+      return (
+        <BrandTileShell
+          id="grad-sw"
+          featured={featured}
+          stops={[
+            { offset: "0%", color: "#141414" },
+            { offset: "100%", color: "#050505" },
+          ]}
+        >
+          <text x="160" y="88" textAnchor="middle" fill="#ffe81f" fontFamily="Outfit, sans-serif" fontSize="26" fontWeight="800" letterSpacing="3">
+            STAR
+          </text>
+          <text x="160" y="118" textAnchor="middle" fill="#ffe81f" fontFamily="Outfit, sans-serif" fontSize="26" fontWeight="800" letterSpacing="3">
+            WARS
+          </text>
+        </BrandTileShell>
+      );
+    case "nat-geo":
+      return (
+        <BrandTileShell
+          id="grad-natgeo"
+          featured={featured}
+          stops={[
+            { offset: "0%", color: "#161616" },
+            { offset: "100%", color: "#0a0a0a" },
+          ]}
+        >
+          <rect x="118" y="38" width="84" height="104" fill="none" stroke="#ffcc00" strokeWidth="8" />
+          <text x="160" y="158" textAnchor="middle" fill="#fff" fontFamily="Outfit, sans-serif" fontSize="11" fontWeight="700" letterSpacing="1">
+            NATIONAL GEOGRAPHIC
+          </text>
+        </BrandTileShell>
+      );
+    case "disney-jr":
+    default:
+      return (
+        <BrandTileShell
+          id="grad-disney-jr"
+          featured={featured}
+          stops={[
+            { offset: "0%", color: "#ff2e86" },
+            { offset: "55%", color: "#e0186a" },
+            { offset: "100%", color: "#9b0f6a" },
+          ]}
+        >
+          {/* Soft sparkles for preschool recognition */}
+          <circle cx="48" cy="42" r="5" fill="#ffd54f" opacity="0.9" />
+          <circle cx="278" cy="50" r="4" fill="#fff59d" opacity="0.85" />
+          <circle cx="292" cy="130" r="6" fill="#ffd54f" opacity="0.75" />
+          <text
+            x="160"
+            y="82"
+            textAnchor="middle"
+            fill="#fff"
+            fontFamily="Georgia, serif"
+            fontSize="34"
+            fontStyle="italic"
+            fontWeight="700"
+          >
+            Disney
+          </text>
+          <text
+            x="160"
+            y="128"
+            textAnchor="middle"
+            fill="#ffd54f"
+            fontFamily="Fredoka, Outfit, sans-serif"
+            fontSize="44"
+            fontWeight="700"
+          >
+            Jr.
+          </text>
+        </BrandTileShell>
+      );
+  }
 }
 
 export function EpisodeThumb({ color }) {

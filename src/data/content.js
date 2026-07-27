@@ -8,6 +8,7 @@ export const shows = [
     to: "/academy-rock",
     palette: ["#1a0b2e", "#39e6c4", "#ff4d6d"],
     progress: null,
+    characters: ["Mia", "Theo", "Lila"],
   },
   {
     id: "sunny-paws",
@@ -15,9 +16,10 @@ export const shows = [
     meta: "2023 · 2 Seasons · Ages 2–5",
     tagline: "Adventures under a bright sky.",
     featured: false,
-    to: "/",
+    to: "/disney-jr",
     palette: ["#00b4e4", "#ffc107", "#0a1628"],
     progress: 0.45,
+    characters: ["Sunny"],
   },
   {
     id: "little-harbor",
@@ -25,9 +27,10 @@ export const shows = [
     meta: "2022 · 3 Seasons · Ages 2–5",
     tagline: "Friends on every tide.",
     featured: false,
-    to: "/",
+    to: "/disney-jr",
     palette: ["#ff1f7a", "#7ec8ff", "#0a1628"],
     progress: 0.7,
+    characters: ["Cap"],
   },
   {
     id: "count-with-coco",
@@ -35,9 +38,10 @@ export const shows = [
     meta: "2024 · 1 Season · Ages 2–5",
     tagline: "Numbers that bounce and sing.",
     featured: false,
-    to: "/",
+    to: "/disney-jr",
     palette: ["#ff9800", "#1a237e", "#ffe082"],
     progress: null,
+    characters: ["Coco"],
   },
   {
     id: "rainbow-bus",
@@ -45,9 +49,10 @@ export const shows = [
     meta: "2021 · 4 Seasons · Ages 2–5",
     tagline: "Hop on for a musical ride.",
     featured: false,
-    to: "/",
+    to: "/disney-jr",
     palette: ["#00c853", "#ff1f7a", "#00b4e4"],
     progress: 0.2,
+    characters: ["Beep"],
   },
   {
     id: "starlight-story",
@@ -55,9 +60,10 @@ export const shows = [
     meta: "2023 · 1 Season · Ages 2–5",
     tagline: "Bedtime tales under glowing skies.",
     featured: false,
-    to: "/",
+    to: "/disney-jr",
     palette: ["#0d47a1", "#ce93d8", "#fff59d"],
     progress: null,
+    characters: ["Nova"],
   },
   {
     id: "puppy-dog-pals",
@@ -65,9 +71,10 @@ export const shows = [
     meta: "2020 · 5 Seasons · Ages 2–5",
     tagline: "Two pals, one big song.",
     featured: false,
-    to: "/",
+    to: "/disney-jr",
     palette: ["#1565c0", "#ef5350", "#ffecb3"],
     progress: null,
+    characters: ["Bingo", "Rolly"],
   },
   {
     id: "garden-grove",
@@ -75,41 +82,120 @@ export const shows = [
     meta: "2022 · 2 Seasons · Ages 2–5",
     tagline: "Grow kindness, one seed at a time.",
     featured: false,
-    to: "/",
+    to: "/disney-jr",
     palette: ["#2e7d32", "#aed581", "#fff8e1"],
     progress: null,
+    characters: ["Pip"],
+  },
+  {
+    id: "dance-party",
+    title: "Dance Party Parade",
+    meta: "2024 · Playlist · Ages 2–5",
+    tagline: "Move, clap, and cheer along.",
+    featured: false,
+    to: "/disney-jr",
+    palette: ["#e91e63", "#ffeb3b", "#7c4dff"],
+    progress: null,
+    characters: ["Mia", "Beep"],
+  },
+  {
+    id: "calm-corner",
+    title: "Calm Corner",
+    meta: "2023 · Playlist · Ages 2–5",
+    tagline: "Soft songs for quiet time.",
+    featured: false,
+    to: "/disney-jr",
+    palette: ["#5c6bc0", "#b39ddb", "#e8eaf6"],
+    progress: null,
+    characters: ["Nova"],
   },
 ];
 
+/** Primary studio brand hubs — Disney Jr is a first-class peer. */
 export const brands = [
-  { id: "disney", label: "Disney", gradient: ["#113ccf", "#0b1d51"] },
-  { id: "pixar", label: "Pixar", gradient: ["#1089ff", "#003087"] },
-  { id: "marvel", label: "Marvel", gradient: ["#ed1d24", "#7a0c10"] },
-  { id: "star-wars", label: "Star Wars", gradient: ["#1a1a1a", "#000"] },
-  { id: "nat-geo", label: "National Geographic", gradient: ["#ffcc00", "#1a1a1a"] },
-  { id: "disney-jr", label: "Disney Jr", gradient: ["#ff1f7a", "#7b1fa2"], featured: true },
-];
-
-export const rows = [
   {
-    id: "continue",
-    title: "Continue Watching",
-    showIds: ["little-harbor", "sunny-paws", "rainbow-bus"],
+    id: "disney",
+    label: "Disney",
+    to: "/",
+    variant: "disney",
   },
   {
-    id: "disney-jr-originals",
-    title: "Disney Jr Originals",
+    id: "pixar",
+    label: "Pixar",
+    to: "/",
+    variant: "pixar",
+  },
+  {
+    id: "marvel",
+    label: "Marvel",
+    to: "/",
+    variant: "marvel",
+  },
+  {
+    id: "star-wars",
+    label: "Star Wars",
+    to: "/",
+    variant: "star-wars",
+  },
+  {
+    id: "nat-geo",
+    label: "National Geographic",
+    to: "/",
+    variant: "nat-geo",
+  },
+  {
+    id: "disney-jr",
+    label: "Disney Jr.",
+    to: "/disney-jr",
+    variant: "disney-jr",
+    featured: true,
+  },
+];
+
+export const homeRows = [
+  {
+    id: "originals",
+    title: "Originals",
     showIds: ["academy-rock", "count-with-coco", "starlight-story", "sunny-paws", "garden-grove"],
   },
   {
-    id: "music",
-    title: "Music & Sing-Alongs",
-    showIds: ["academy-rock", "rainbow-bus", "puppy-dog-pals", "little-harbor", "sunny-paws"],
+    id: "continue",
+    title: "Continue Watching",
+    showIds: ["little-harbor", "sunny-paws", "rainbow-bus", "academy-rock"],
+  },
+];
+
+/** Preschool-optimized carousels for the Disney Jr hub */
+export const disneyJrHubRows = [
+  {
+    id: "jr-continue",
+    title: "Recently Watched",
+    showIds: ["little-harbor", "sunny-paws", "rainbow-bus", "academy-rock"],
   },
   {
-    id: "recommended",
-    title: "Recommended For You",
-    showIds: ["academy-rock", "garden-grove", "sunny-paws", "starlight-story", "count-with-coco", "rainbow-bus"],
+    id: "jr-characters",
+    title: "Characters Kids Love",
+    showIds: ["academy-rock", "puppy-dog-pals", "sunny-paws", "count-with-coco", "garden-grove"],
+  },
+  {
+    id: "jr-playlists",
+    title: "Continuous Play",
+    showIds: ["dance-party", "calm-corner", "rainbow-bus", "academy-rock", "starlight-story"],
+  },
+  {
+    id: "jr-music",
+    title: "Music & Sing-Alongs",
+    showIds: ["academy-rock", "rainbow-bus", "puppy-dog-pals", "dance-party", "little-harbor"],
+  },
+  {
+    id: "jr-learning",
+    title: "Learn Through Play",
+    showIds: ["count-with-coco", "garden-grove", "starlight-story", "sunny-paws"],
+  },
+  {
+    id: "jr-originals",
+    title: "Disney Jr Originals",
+    showIds: ["academy-rock", "count-with-coco", "starlight-story", "sunny-paws", "garden-grove"],
   },
 ];
 

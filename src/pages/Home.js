@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import { brands, getShowsByIds, rows, shows } from "../data/content";
-import { BrandTile, HeroStageArt, PlayIcon } from "../components/Illustrations";
+import { getShowsByIds, homeRows } from "../data/content";
+import { HeroStageArt, PlayIcon } from "../components/Illustrations";
+import BrandRow from "../components/BrandRow";
 import ContentRow from "../components/ContentRow";
 
 export default function Home() {
@@ -22,57 +23,24 @@ export default function Home() {
             <Link to="/academy-rock" className="btn btn-play">
               <PlayIcon /> Play
             </Link>
-            <Link to="/academy-rock" className="btn btn-details">
-              Details
+            <Link to="/disney-jr" className="btn btn-details">
+              Explore Disney Jr.
             </Link>
           </div>
         </div>
       </section>
 
       <div className="catalog">
-        <section className="brands-row" id="brands" aria-label="Brands">
-          <div className="rail brands-rail" role="list">
-            {brands.map((brand) => {
-              const isJr = brand.id === "disney-jr";
-              const className = `brand-tile${brand.featured ? " featured" : ""}`;
-              if (isJr) {
-                return (
-                  <a
-                    key={brand.id}
-                    href="#originals"
-                    className={className}
-                    role="listitem"
-                    aria-label={brand.label}
-                  >
-                    <BrandTile label={brand.label} gradient={brand.gradient} featured={brand.featured} />
-                  </a>
-                );
-              }
-              return (
-                <button
-                  key={brand.id}
-                  type="button"
-                  className={className}
-                  role="listitem"
-                  aria-label={brand.label}
-                >
-                  <BrandTile label={brand.label} gradient={brand.gradient} featured={brand.featured} />
-                </button>
-              );
-            })}
-          </div>
-        </section>
+        <BrandRow />
 
-        {rows.map((row) => (
+        {homeRows.map((row) => (
           <ContentRow
             key={row.id}
-            id={row.id === "disney-jr-originals" ? "originals" : row.id}
+            id={row.id}
             title={row.title}
             shows={getShowsByIds(row.showIds)}
           />
         ))}
-
-        <ContentRow id="shows" title="All Disney Jr Series" shows={shows} />
       </div>
     </>
   );
