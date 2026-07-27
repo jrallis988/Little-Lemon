@@ -678,6 +678,17 @@ p {
   }
 }
 
+@media (min-width: 1000px) {
+  .shore__gallery {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .shore__gallery img:nth-child(1),
+  .shore__gallery img:nth-child(2) {
+    grid-column: span 2;
+  }
+}
+
 .text-link {
   color: var(--ocean);
   font-weight: 700;

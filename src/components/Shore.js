@@ -26,8 +26,8 @@ export default function Shore() {
 
         <div className="shore__visual">
           <img
-            src="/images/seascape-hampton-beach.jpg"
-            alt="Sandy shoreline at Hampton Beach near the inn"
+            src="/images/nh-north-view.jpg"
+            alt="Hampton Beach shoreline looking south from the north end of the beach"
             loading="lazy"
           />
         </div>

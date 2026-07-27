@@ -209,16 +209,32 @@ export const GALLERY = [
     alt: "Sunrise over North Beach near Seascape Inn",
   },
   {
+    src: "/images/nh-seawall.jpg",
+    alt: "Hampton Beach sea wall and sandy shore",
+  },
+  {
     src: "/images/seascape-gazebo.jpg",
     alt: "Gazebo and guest BBQ lawn at Seascape Inn",
   },
   {
+    src: "/images/nh-boardwalk.jpg",
+    alt: "Boardwalk and beach scene at Hampton Beach, New Hampshire",
+  },
+  {
     src: "/images/seascape-vacancy.jpg",
-    alt: "Seascape Inn building along Ocean Boulevard",
+    alt: "Seascape Inn sign along Ocean Boulevard",
+  },
+  {
+    src: "/images/nh-north-view.jpg",
+    alt: "View of Hampton Beach looking south from the north end",
+  },
+  {
+    src: "/images/seascape-hampton-beach.jpg",
+    alt: "Welcome to Hampton Beach sign with dune grass",
   },
   {
     src: "/images/seascape-dog-beach.jpg",
-    alt: "Dog-friendly beach area across from the inn",
+    alt: "Busy summer day on the sand near Hampton Beach",
   },
 ];
 
