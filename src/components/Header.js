@@ -5,6 +5,8 @@ const links = [
   { to: "/academics", label: "Academics" },
   { to: "/admissions", label: "Admissions" },
   { to: "/campus", label: "Campus Life" },
+  { to: "/events", label: "Events" },
+  { to: "/news", label: "News" },
   { to: "/about", label: "About" },
 ];
 

@@ -33,6 +33,12 @@ function Footer() {
               <Link to="/campus">Campus Life</Link>
             </li>
             <li>
+              <Link to="/events">Events</Link>
+            </li>
+            <li>
+              <Link to="/news">News</Link>
+            </li>
+            <li>
               <Link to="/about">About</Link>
             </li>
           </ul>
@@ -46,6 +52,15 @@ function Footer() {
             <br />
             <a href="tel:6032304001">603-230-4001</a>
           </address>
+          <p className="footer-tour">
+            <a
+              href="https://ccsnhmaps.college-tour.com/maps/map.php?ID=6"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Take the virtual tour
+            </a>
+          </p>
         </div>
       </div>
       <div className="footer-meta">

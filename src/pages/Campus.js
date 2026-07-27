@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { campusHighlights } from "../data/content";
+import { campusHighlights, events } from "../data/content";
 
 const gallery = [
   {
@@ -50,11 +50,37 @@ function Campus() {
       </section>
 
       <section className="section">
-        <div className="highlight-grid">
+        <div className="highlight-media-grid">
           {campusHighlights.map((item) => (
-            <article key={item.title} className="highlight">
-              <h2>{item.title}</h2>
-              <p>{item.text}</p>
+            <article key={item.title} className="highlight-media">
+              <img src={item.image} alt="" loading="lazy" />
+              <div>
+                <h2>{item.title}</h2>
+                <p>{item.text}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section section--muted">
+        <div className="news-head">
+          <h2>Upcoming on campus</h2>
+          <Link to="/events" className="text-link">
+            All events
+          </Link>
+        </div>
+        <div className="event-list event-list--compact">
+          {events.slice(0, 3).map((event) => (
+            <article key={event.id} className="event-item">
+              <div className="event-item__date">
+                <time dateTime={event.date}>{event.displayDate}</time>
+                <span>{event.time}</span>
+              </div>
+              <div>
+                <h3>{event.title}</h3>
+                <p>{event.summary}</p>
+              </div>
             </article>
           ))}
         </div>
@@ -67,9 +93,19 @@ function Campus() {
             From I-93 Exit 15 East to I-393 Exit 1 — follow the signs to 31
             College Drive, Concord.
           </p>
-          <Link to="/admissions" className="btn btn--solid">
-            Plan a visit
-          </Link>
+          <div className="hero__actions">
+            <Link to="/admissions" className="btn btn--solid">
+              Plan a visit
+            </Link>
+            <a
+              className="btn btn--ghost"
+              href="https://ccsnhmaps.college-tour.com/maps/map.php?ID=6"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Virtual tour
+            </a>
+          </div>
         </div>
       </section>
     </>

@@ -2,8 +2,12 @@ import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import Academics from "./pages/Academics";
+import ProgramDetail from "./pages/ProgramDetail";
 import Admissions from "./pages/Admissions";
 import Campus from "./pages/Campus";
+import Events from "./pages/Events";
+import News from "./pages/News";
+import NewsDetail from "./pages/NewsDetail";
 import About from "./pages/About";
 
 function App() {
@@ -12,8 +16,12 @@ function App() {
       <Route element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="academics" element={<Academics />} />
+        <Route path="academics/:programId" element={<ProgramDetail />} />
         <Route path="admissions" element={<Admissions />} />
         <Route path="campus" element={<Campus />} />
+        <Route path="events" element={<Events />} />
+        <Route path="news" element={<News />} />
+        <Route path="news/:newsId" element={<NewsDetail />} />
         <Route path="about" element={<About />} />
       </Route>
     </Routes>

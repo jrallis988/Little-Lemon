@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { focusAreas, reasons, newsItems } from "../data/content";
+import { focusAreas, reasons, newsItems, events, programs } from "../data/content";
 
 const heroImage = "/media/campus-hero.jpg";
 const campusImage = "/media/campus-hero.jpg";
@@ -27,8 +27,8 @@ function Home() {
             Learn where New Hampshire works.
           </h1>
           <p className="hero__support reveal reveal--delay-2">
-            Concord&apos;s Community College — 80+ career and transfer programs on
-            a full riverside campus.
+            Concord&apos;s Community College — {programs.length}+ featured career
+            and transfer programs on a full riverside campus.
           </p>
           <div className="hero__actions reveal reveal--delay-3">
             <Link to="/admissions" className="btn btn--solid">
@@ -74,6 +74,11 @@ function Home() {
             </Link>
           ))}
         </div>
+        <div className="section-follow">
+          <Link to="/academics" className="text-link">
+            Search all programs
+          </Link>
+        </div>
       </section>
 
       <section className="split-band">
@@ -112,20 +117,44 @@ function Home() {
       </section>
 
       <section className="section section--muted">
-        <div className="news-head">
-          <h2>Campus news</h2>
-          <Link to="/about" className="text-link">
-            About NHTI
-          </Link>
+        <div className="home-split">
+          <div>
+            <div className="news-head">
+              <h2>Campus news</h2>
+              <Link to="/news" className="text-link">
+                All news
+              </Link>
+            </div>
+            <ul className="news-list">
+              {newsItems.map((item) => (
+                <li key={item.id}>
+                  <time dateTime={item.date}>{item.displayDate}</time>
+                  <p>
+                    <Link to={`/news/${item.id}`}>{item.title}</Link>
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <div className="news-head">
+              <h2>Upcoming events</h2>
+              <Link to="/events" className="text-link">
+                All events
+              </Link>
+            </div>
+            <ul className="news-list">
+              {events.slice(0, 3).map((event) => (
+                <li key={event.id}>
+                  <time dateTime={event.date}>{event.displayDate}</time>
+                  <p>
+                    <Link to="/events">{event.title}</Link>
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-        <ul className="news-list">
-          {newsItems.map((item) => (
-            <li key={item.title}>
-              <time dateTime={item.date}>{item.date}</time>
-              <p>{item.title}</p>
-            </li>
-          ))}
-        </ul>
       </section>
 
       <section className="cta-band">
