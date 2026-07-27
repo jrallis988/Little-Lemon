@@ -1,17 +1,33 @@
+import { Link } from "react-router-dom";
 import { Logo } from "./Logo";
 
 const columns = [
   {
     title: "Programs",
-    links: ["Core / Points", "Med+", "GLP-1 Success", "Menopause care"],
+    links: [
+      { label: "Core / Points", to: "/#pathways" },
+      { label: "Med+", to: "/#pathways" },
+      { label: "WW 63 Campaign", to: "/63" },
+      { label: "Timeline", to: "/63#timeline" },
+    ],
   },
   {
     title: "Support",
-    links: ["Find a Coach", "Member stories", "Help center", "Contact"],
+    links: [
+      { label: "Find a Coach", to: "/#community" },
+      { label: "Member stories", to: "/#community" },
+      { label: "Archive vault", to: "/63#archive" },
+      { label: "Philosophy", to: "/63#philosophy" },
+    ],
   },
   {
     title: "Company",
-    links: ["About", "Careers", "Press", "Science"],
+    links: [
+      { label: "About", to: "/63" },
+      { label: "Careers", to: "/#join" },
+      { label: "Press", to: "/63#archive" },
+      { label: "Science", to: "/63#philosophy" },
+    ],
   },
 ];
 
@@ -34,13 +50,13 @@ export function Footer() {
               </p>
               <ul className="mt-4 space-y-2.5">
                 {column.links.map((link) => (
-                  <li key={link}>
-                    <a
-                      href="#join"
+                  <li key={link.label}>
+                    <Link
+                      to={link.to}
                       className="font-sans text-sm text-ink/65 transition hover:text-ink"
                     >
-                      {link}
-                    </a>
+                      {link.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -53,9 +69,7 @@ export function Footer() {
             © {new Date().getFullYear()} Weight Watchers redesign concept. Not affiliated with WW
             International, Inc.
           </p>
-          <p className="font-sans text-xs text-ink/45">
-            Privacy · Terms · Accessibility
-          </p>
+          <p className="font-sans text-xs text-ink/45">Privacy · Terms · Accessibility</p>
         </div>
       </div>
     </footer>

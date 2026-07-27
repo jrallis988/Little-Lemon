@@ -1,11 +1,17 @@
-# Weight Watchers — Redesign Concept
+# Weight Watchers — Redesign + WW 63 Campaign
 
-A modern marketing site concept for Weight Watchers, inspired by the brand’s cobalt refresh and integrated care platform (Points, coaching, community, and Med+).
+A modern marketing site concept for Weight Watchers, plus a **Weight Watchers 63** digital history campaign.
+
+## Routes
+
+- `/` — Brand marketing homepage (programs, Modes, tools, community)
+- `/63` — Campaign ecosystem: interactive timeline, archive vault, philosophy matrix
 
 ## Stack
 
 - Vite
 - React 18 + TypeScript
+- React Router
 - Tailwind CSS
 
 ## Scripts
@@ -18,8 +24,8 @@ npm run build
 
 ## Design notes
 
-- Brand-first hero with a full-bleed lifestyle image
-- Progress-bar motif in the logo and UI
-- Sections for programs, Modes, tools, community, and signup
+- Cobalt brand system with progress-bar logo motif
 - Syne / Newsreader / Figtree typography
-- Cobalt + tide accent palette on an airy paper background
+- Timeline scrubber from 1961 → today
+- Archive vault for milestone artifacts
+- Philosophy matrix mapping living-room peer support to digital habit loops

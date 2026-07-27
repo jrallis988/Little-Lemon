@@ -1,14 +1,23 @@
 import { useEffect, useState } from "react";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { Logo } from "./Logo";
 
-const links = [
-  { href: "#pathways", label: "Programs" },
-  { href: "#modes", label: "Modes" },
-  { href: "#tools", label: "Tools" },
-  { href: "#community", label: "Community" },
+const homeLinks = [
+  { href: "/#pathways", label: "Programs" },
+  { href: "/#modes", label: "Modes" },
+  { href: "/#tools", label: "Tools" },
+  { href: "/#community", label: "Community" },
+];
+
+const campaignLinks = [
+  { href: "/63#timeline", label: "Timeline" },
+  { href: "/63#archive", label: "Archive" },
+  { href: "/63#philosophy", label: "Philosophy" },
 ];
 
 export function Header() {
+  const location = useLocation();
+  const isCampaign = location.pathname.startsWith("/63");
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -20,6 +29,20 @@ export function Header() {
   }, []);
 
   useEffect(() => {
+    setOpen(false);
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace("#", "");
+      requestAnimationFrame(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+      });
+    }
+  }, [location.hash, location.pathname]);
+
+  useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
@@ -27,6 +50,7 @@ export function Header() {
   }, [open]);
 
   const overHero = !scrolled && !open;
+  const links = isCampaign ? campaignLinks : homeLinks;
 
   return (
     <header
@@ -39,33 +63,39 @@ export function Header() {
       <div className="section-shell flex h-[4.25rem] items-center justify-between">
         <Logo light={overHero} />
 
-        <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-7 md:flex" aria-label="Primary">
           {links.map((link) => (
-            <a
+            <Link
               key={link.href}
-              href={link.href}
+              to={link.href}
               className={`link-underline font-sans text-sm font-medium transition ${
-                overHero
-                  ? "text-white/75 hover:text-white"
-                  : "text-ink/70 hover:text-ink"
+                overHero ? "text-white/75 hover:text-white" : "text-ink/70 hover:text-ink"
               }`}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
+          <NavLink
+            to={isCampaign ? "/" : "/63"}
+            className={`font-sans text-sm font-semibold transition ${
+              overHero ? "text-tide hover:text-white" : "text-cobalt-700 hover:text-cobalt-800"
+            }`}
+          >
+            {isCampaign ? "Today" : "WW 63"}
+          </NavLink>
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
-          <a
-            href="#join"
+          <Link
+            to="/#join"
             className={`font-sans text-sm font-semibold transition ${
               overHero ? "text-white/75 hover:text-white" : "text-ink/70 hover:text-ink"
             }`}
           >
             Sign in
-          </a>
-          <a
-            href="#join"
+          </Link>
+          <Link
+            to="/#join"
             className={`rounded-2xl px-5 py-2.5 font-sans text-sm font-semibold transition ${
               overHero
                 ? "bg-white text-ink hover:bg-cloud"
@@ -73,7 +103,7 @@ export function Header() {
             }`}
           >
             Start free
-          </a>
+          </Link>
         </div>
 
         <button
@@ -113,22 +143,29 @@ export function Header() {
       >
         <nav className="section-shell flex flex-col gap-1 py-4" aria-label="Mobile">
           {links.map((link) => (
-            <a
+            <Link
               key={link.href}
-              href={link.href}
+              to={link.href}
               className="rounded-xl px-3 py-3 font-sans text-base font-medium text-ink/80 hover:bg-mist"
               onClick={() => setOpen(false)}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
-          <a
-            href="#join"
+          <Link
+            to={isCampaign ? "/" : "/63"}
+            className="rounded-xl px-3 py-3 font-sans text-base font-medium text-cobalt-700 hover:bg-mist"
+            onClick={() => setOpen(false)}
+          >
+            {isCampaign ? "Back to today" : "Weight Watchers 63"}
+          </Link>
+          <Link
+            to="/#join"
             className="mt-2 rounded-2xl bg-cobalt-600 px-5 py-3 text-center font-sans text-sm font-semibold text-white"
             onClick={() => setOpen(false)}
           >
             Start free
-          </a>
+          </Link>
         </nav>
       </div>
     </header>

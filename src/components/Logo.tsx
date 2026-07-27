@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 type LogoProps = {
   className?: string;
   light?: boolean;
@@ -5,8 +7,8 @@ type LogoProps = {
 
 export function Logo({ className = "", light = false }: LogoProps) {
   return (
-    <a
-      href="#top"
+    <Link
+      to="/"
       className={`group inline-flex items-center gap-2.5 ${className}`}
       aria-label="Weight Watchers home"
     >
@@ -39,6 +41,6 @@ export function Logo({ className = "", light = false }: LogoProps) {
       >
         Weight Watchers
       </span>
-    </a>
+    </Link>
   );
 }
