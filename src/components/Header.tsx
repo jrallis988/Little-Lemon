@@ -50,7 +50,7 @@ export function Header() {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
         scrolled || open
-          ? "bg-ink/95 text-foam backdrop-blur-md"
+          ? "bg-ink text-foam shadow-sm shadow-ink/20"
           : "bg-transparent text-foam"
       }`}
     >
