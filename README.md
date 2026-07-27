@@ -10,7 +10,15 @@ A modern marketing site for [River Valley Community College](https://www.riverva
 
 ## Pages
 
-- `/` — brand-forward home with programs, campuses, and outcomes
-- `/programs` — degree and certificate pathways
+- `/` — brand-forward home
+- `/programs` — program areas with linked pathways
+- `/programs/:slug` — program detail pages
+- `/admissions` — application steps + inquiry form
+- `/financial-aid` — aid steps and tuition snapshot
+- `/student-life` — campus supports and belonging
 - `/about` — history, campuses, and college snapshot
-- `/admissions` — application steps and inquiry form
+
+## Admissions form
+
+Set `REACT_APP_FORMSPREE_ID` to your Formspree form id to send inquiries live.
+Without it, submissions are saved to `localStorage` for local demos.

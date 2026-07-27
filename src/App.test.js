@@ -17,3 +17,28 @@ test("renders River Valley brand in the hero", () => {
   ).toBeInTheDocument();
   expect(screen.getByRole("link", { name: /apply now/i })).toBeInTheDocument();
 });
+
+test("renders a program detail page", () => {
+  render(
+    <MemoryRouter initialEntries={["/programs/nursing"]}>
+      <App />
+    </MemoryRouter>
+  );
+
+  expect(
+    screen.getByRole("heading", { name: /nursing — rn & lpn/i })
+  ).toBeInTheDocument();
+  expect(screen.getByText(/pathway overview/i)).toBeInTheDocument();
+});
+
+test("renders financial aid page", () => {
+  render(
+    <MemoryRouter initialEntries={["/financial-aid"]}>
+      <App />
+    </MemoryRouter>
+  );
+
+  expect(
+    screen.getByRole("heading", { name: /make college affordable/i })
+  ).toBeInTheDocument();
+});

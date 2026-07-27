@@ -1,55 +1,225 @@
 export const navLinks = [
   { to: "/programs", label: "Programs" },
-  { to: "/about", label: "About" },
   { to: "/admissions", label: "Admissions" },
+  { to: "/financial-aid", label: "Financial Aid" },
+  { to: "/student-life", label: "Student Life" },
+  { to: "/about", label: "About" },
+];
+
+export const utilityLinks = [
+  { to: "/student-life", label: "Current Students" },
+  { to: "/about", label: "Faculty & Staff" },
+  { href: "https://www.rivervalley.edu", label: "CCSNH Portal", external: true },
+];
+
+export const contact = {
+  phone: "(603) 542-7744",
+  email: "admissions@rivervalley.edu",
+  address: "1 College Place, Claremont, NH 03743",
+};
+
+export const images = {
+  hero:
+    "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=2000&q=80",
+  campus:
+    "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1600&q=80",
+  classroom:
+    "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=1600&q=80",
+  healthcare:
+    "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1600&q=80",
+  library:
+    "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1600&q=80",
+  community:
+    "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1600&q=80",
+  programs:
+    "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1600&q=80",
+};
+
+export const programs = [
+  {
+    slug: "nursing",
+    name: "Nursing — RN & LPN",
+    area: "Health Sciences",
+    credential: "Associate of Science / Certificate pathways",
+    format: "In-person with clinical rotations",
+    summary:
+      "Prepare for bedside care through rigorous classroom learning and supervised clinical experience across the river valley.",
+    highlights: [
+      "RN and LPN pathways",
+      "Clinical placements with regional partners",
+      "Strong NCLEX preparation culture",
+    ],
+    nextStep: "Talk with admissions about prerequisites and start terms.",
+  },
+  {
+    slug: "radiologic-technology",
+    name: "Radiologic Technology",
+    area: "Health Sciences",
+    credential: "Associate in Science",
+    format: "In-person labs + clinicals",
+    summary:
+      "Train on modern imaging equipment — including RVCC’s digital X-ray lab — and step into diagnostic imaging careers.",
+    highlights: [
+      "State-of-the-art digital X-ray lab",
+      "Hands-on patient positioning practice",
+      "Career-ready imaging fundamentals",
+    ],
+    nextStep: "Review program requirements and schedule a campus visit.",
+  },
+  {
+    slug: "respiratory-therapy",
+    name: "Respiratory Therapy",
+    area: "Health Sciences",
+    credential: "Associate in Science",
+    format: "In-person with clinicals",
+    summary:
+      "Learn cardiopulmonary care for hospitals and clinics through focused coursework and real patient settings.",
+    highlights: [
+      "Critical care and patient assessment skills",
+      "Clinical rotations in regional facilities",
+      "High-demand allied health pathway",
+    ],
+    nextStep: "Ask admissions about cohort timing and clinical readiness.",
+  },
+  {
+    slug: "cybersecurity",
+    name: "Cybersecurity",
+    area: "STEM & Technology",
+    credential: "Associate in Science / Certificate",
+    format: "Hybrid-friendly",
+    summary:
+      "Build defensive security skills for networks, systems, and modern threat landscapes.",
+    highlights: [
+      "Network defense foundations",
+      "Practical labs and scenario work",
+      "Stackable certificate and degree options",
+    ],
+    nextStep: "Explore whether the certificate or degree path fits your goals.",
+  },
+  {
+    slug: "information-technology",
+    name: "Information Technology & Network Administration",
+    area: "STEM & Technology",
+    credential: "Associate in Science",
+    format: "In-person, online, and hybrid",
+    summary:
+      "Gain the systems, networking, and support skills employers expect from entry-level IT professionals.",
+    highlights: [
+      "Network administration focus",
+      "Flexible course formats",
+      "Direct workplace skill mapping",
+    ],
+    nextStep: "Map transfer or employment goals with an advisor.",
+  },
+  {
+    slug: "business-management",
+    name: "Business Management",
+    area: "Business & Accounting",
+    credential: "Associate of Science",
+    format: "In-person, online, and hybrid",
+    summary:
+      "Develop practical management, operations, and leadership skills for local employers and transfer paths.",
+    highlights: [
+      "Operations and people leadership basics",
+      "Flexible scheduling for working students",
+      "Transfer-friendly coursework",
+    ],
+    nextStep: "Compare management and accounting pathways with admissions.",
+  },
+  {
+    slug: "accounting",
+    name: "Accounting",
+    area: "Business & Accounting",
+    credential: "Degree & certificate options",
+    format: "Flexible formats",
+    summary:
+      "Build bookkeeping-to-analysis skills that support small businesses, offices, and further study.",
+    highlights: [
+      "Certificate and degree ladders",
+      "Advanced accounting options",
+      "Workplace-ready financial skills",
+    ],
+    nextStep: "Choose a starting credential based on your timeline.",
+  },
+  {
+    slug: "early-childhood-education",
+    name: "Early Childhood Education",
+    area: "Education & Human Services",
+    credential: "Associate in Science / Certificates",
+    format: "Flexible for working caregivers",
+    summary:
+      "Prepare to support infants, toddlers, and young learners in classrooms and community settings.",
+    highlights: [
+      "Infant and toddler pathways",
+      "Level I and Level II certificates",
+      "Practical classroom-focused learning",
+    ],
+    nextStep: "Identify which ECE credential matches your workplace needs.",
+  },
+  {
+    slug: "liberal-arts",
+    name: "Liberal Arts",
+    area: "Education & Human Services",
+    credential: "Associate in Arts",
+    format: "In-person, online, and hybrid",
+    summary:
+      "A flexible foundation for transfer, exploration, and communication-heavy careers.",
+    highlights: [
+      "Transfer-friendly core",
+      "Room to explore interests",
+      "Strong writing and critical thinking",
+    ],
+    nextStep: "Plan a transfer map with advising early.",
+  },
+  {
+    slug: "social-services",
+    name: "Social Services",
+    area: "Education & Human Services",
+    credential: "Associate in Science",
+    format: "Flexible formats",
+    summary:
+      "Prepare for community support roles helping families, clients, and local organizations.",
+    highlights: [
+      "Human services foundations",
+      "Community-centered skill building",
+      "Pathways into helping professions",
+    ],
+    nextStep: "Discuss internship and career interests with advising.",
+  },
 ];
 
 export const programAreas = [
   {
+    slug: "health-sciences",
     name: "Health Sciences",
     summary:
       "Nursing, radiologic technology, respiratory therapy, and allied health pathways built for clinical careers.",
-    programs: [
-      "Nursing — RN & LPN",
-      "Radiologic Technology",
-      "Respiratory Therapy",
-      "Medical Assistant",
-      "Occupational Therapy Assistant",
-      "Physical Therapist Assistant",
-    ],
+    image: images.healthcare,
+    programSlugs: ["nursing", "radiologic-technology", "respiratory-therapy"],
   },
   {
+    slug: "stem-technology",
     name: "STEM & Technology",
     summary:
       "Hands-on preparation for cybersecurity, networks, science, and advanced manufacturing roles.",
-    programs: [
-      "Cybersecurity",
-      "Information Technology & Network Administration",
-      "Mathematics",
-      "Science",
-    ],
+    image: images.classroom,
+    programSlugs: ["cybersecurity", "information-technology"],
   },
   {
+    slug: "business-accounting",
     name: "Business & Accounting",
     summary:
       "Practical credentials that move you into accounting, management, and workplace leadership.",
-    programs: [
-      "Accounting Degree & Certificate",
-      "Advanced Accounting",
-      "Business Management",
-    ],
+    image: images.programs,
+    programSlugs: ["business-management", "accounting"],
   },
   {
+    slug: "education-human-services",
     name: "Education & Human Services",
     summary:
       "Programs for educators, caregivers, and community-centered professionals.",
-    programs: [
-      "Early Childhood Education",
-      "Psychology",
-      "Social Services",
-      "Liberal Arts",
-      "English",
-    ],
+    image: images.community,
+    programSlugs: ["early-childhood-education", "liberal-arts", "social-services"],
   },
 ];
 
@@ -95,3 +265,49 @@ export const outcomes = [
   { value: "35+", label: "degrees and certificates" },
   { value: "900", label: "students enrolled each year" },
 ];
+
+export const aidSteps = [
+  {
+    title: "Complete the FAFSA",
+    copy: "Use RVCC’s school code and submit early so grants and loans can be packaged on time.",
+  },
+  {
+    title: "Review your award",
+    copy: "Compare grants, scholarships, and loan options with Financial Aid before you accept anything.",
+  },
+  {
+    title: "Apply for scholarships",
+    copy: "Local and college scholarships can stack with federal aid and lower what you borrow.",
+  },
+  {
+    title: "Ask before you stall",
+    copy: "If paperwork or balance questions come up, talk with aid counselors before classes start.",
+  },
+];
+
+export const lifeSupports = [
+  {
+    title: "Food pantries",
+    copy: "Snacks and meals are available so hunger does not get in the way of class.",
+  },
+  {
+    title: "Transit help",
+    copy: "Free bus passes from campus make it easier to reach work, clinicals, and home.",
+  },
+  {
+    title: "Library & tutoring",
+    copy: "Online and on-site resources, quiet study space, and people who will help you dig in.",
+  },
+  {
+    title: "Advising that knows you",
+    copy: "With a 7:1 student-to-faculty ratio, support is personal — not a ticket queue.",
+  },
+];
+
+export function getProgram(slug) {
+  return programs.find((program) => program.slug === slug);
+}
+
+export function getProgramsForArea(area) {
+  return programs.filter((program) => area.programSlugs.includes(program.slug));
+}

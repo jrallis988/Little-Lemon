@@ -4,8 +4,11 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Programs from "./pages/Programs";
+import ProgramDetail from "./pages/ProgramDetail";
 import About from "./pages/About";
 import Admissions from "./pages/Admissions";
+import FinancialAid from "./pages/FinancialAid";
+import StudentLife from "./pages/StudentLife";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -28,8 +31,11 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/programs" element={<Programs />} />
+          <Route path="/programs/:slug" element={<ProgramDetail />} />
           <Route path="/about" element={<About />} />
           <Route path="/admissions" element={<Admissions />} />
+          <Route path="/financial-aid" element={<FinancialAid />} />
+          <Route path="/student-life" element={<StudentLife />} />
         </Routes>
       </main>
       <Footer />

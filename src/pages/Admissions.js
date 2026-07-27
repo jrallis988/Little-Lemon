@@ -1,5 +1,8 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import PageHero from "../components/PageHero";
 import useReveal from "../hooks/useReveal";
+import { images } from "../data/content";
 
 const steps = [
   {
@@ -28,37 +31,73 @@ const initialForm = {
   message: "",
 };
 
+const FORMSPREE_ID = process.env.REACT_APP_FORMSPREE_ID;
+
 export default function Admissions() {
   const revealRef = useReveal();
   const [form, setForm] = useState(initialForm);
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState("idle");
+  const [error, setError] = useState("");
 
   function handleChange(event) {
     const { name, value } = event.target;
     setForm((current) => ({ ...current, [name]: value }));
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    setSubmitted(true);
-    setForm(initialForm);
+    setStatus("submitting");
+    setError("");
+
+    const payload = {
+      ...form,
+      _subject: `RVCC admissions inquiry from ${form.name}`,
+      submittedAt: new Date().toISOString(),
+    };
+
+    try {
+      if (FORMSPREE_ID) {
+        const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+          throw new Error("Unable to send right now. Please try again.");
+        }
+      } else {
+        const existing = JSON.parse(
+          window.localStorage.getItem("rvcc-admissions-inquiries") || "[]"
+        );
+        existing.push(payload);
+        window.localStorage.setItem(
+          "rvcc-admissions-inquiries",
+          JSON.stringify(existing)
+        );
+        await new Promise((resolve) => setTimeout(resolve, 450));
+      }
+
+      setStatus("success");
+      setForm(initialForm);
+    } catch (err) {
+      setStatus("error");
+      setError(err.message || "Something went wrong. Please try again.");
+    }
   }
 
   return (
     <div ref={revealRef}>
-      <section className="relative overflow-hidden bg-river-deep pt-28 text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_0%,rgba(212,160,23,0.2),transparent_40%)]" />
-        <div className="relative section-shell pb-16 pt-8">
-          <p className="eyebrow !text-sunrise">Admissions</p>
-          <h1 className="mt-4 max-w-3xl font-display text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-            Your next step starts here
-          </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/80">
-            Whether you are returning to school, changing careers, or starting
-            fresh, admissions will help you map a clear, affordable path.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="Admissions"
+        title="Your next step starts here"
+        summary="Whether you are returning to school, changing careers, or starting fresh, admissions will help you map a clear, affordable path."
+        image={images.campus}
+        imageAlt="Campus building with walkways and trees"
+      />
 
       <section className="section-shell grid gap-14 py-16 sm:py-20 lg:grid-cols-[1fr_1fr]">
         <div>
@@ -83,12 +122,19 @@ export default function Admissions() {
               </li>
             ))}
           </ol>
+          <p className="reveal mt-10 text-granite-muted" data-reveal>
+            Need aid details first?{" "}
+            <Link to="/financial-aid" className="font-semibold text-river underline-offset-2 hover:underline">
+              Visit Financial Aid
+            </Link>
+            .
+          </p>
         </div>
 
         <div className="reveal" data-reveal>
           <form
             onSubmit={handleSubmit}
-            className="border border-river/15 bg-white/80 p-6 shadow-sm backdrop-blur sm:p-8"
+            className="border border-river/15 bg-white/80 p-6 backdrop-blur sm:p-8"
           >
             <h2 className="font-display text-2xl font-semibold text-river-deep">
               Request information
@@ -177,14 +223,25 @@ export default function Admissions() {
               </label>
             </div>
 
-            <button type="submit" className="btn-primary mt-7 w-full sm:w-auto">
-              Send request
+            <button
+              type="submit"
+              className="btn-primary mt-7 w-full sm:w-auto disabled:cursor-not-allowed disabled:opacity-70"
+              disabled={status === "submitting"}
+            >
+              {status === "submitting" ? "Sending…" : "Send request"}
             </button>
 
-            {submitted ? (
+            {status === "success" ? (
               <p className="mt-4 text-sm font-medium text-valley" role="status">
-                Thanks — your request is ready. In a live site, this would reach
-                the admissions team.
+                Thanks — your inquiry was saved
+                {FORMSPREE_ID ? " and sent to admissions" : " locally for this demo"}
+                . We will follow up soon.
+              </p>
+            ) : null}
+
+            {status === "error" ? (
+              <p className="mt-4 text-sm font-medium text-red-700" role="alert">
+                {error}
               </p>
             ) : null}
           </form>

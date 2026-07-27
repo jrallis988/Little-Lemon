@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
 import useReveal from "../hooks/useReveal";
-import { campuses, outcomes, programAreas, supports } from "../data/content";
-
-const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=2000&q=80";
+import {
+  campuses,
+  getProgramsForArea,
+  images,
+  outcomes,
+  programAreas,
+  supports,
+} from "../data/content";
 
 export default function Home() {
   const revealRef = useReveal();
@@ -12,23 +16,24 @@ export default function Home() {
     <div ref={revealRef}>
       <section className="relative min-h-[100svh] overflow-hidden text-white">
         <img
-          src={HERO_IMAGE}
-          alt="Morning light on a calm New England river and valley shoreline"
-          className="absolute inset-0 h-full w-full object-cover animate-ken-burns"
+          src={images.hero}
+          alt="Students collaborating outdoors on a college campus"
+          className="absolute inset-0 h-full w-full object-cover object-[center_30%] animate-ken-burns"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-river-deep/92 via-river-deep/72 to-valley/40" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(212,160,23,0.2),transparent_42%)]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-river-deep via-river-deep/88 to-river-deep/45" />
+        <div className="absolute inset-0 bg-gradient-to-t from-river-deep/80 via-transparent to-river-deep/40" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(212,160,23,0.18),transparent_40%)]" />
 
-        <div className="relative section-shell flex min-h-[100svh] flex-col justify-end pb-16 pt-28 sm:pb-20 lg:pb-24">
-          <div className="max-w-4xl">
-            <p className="animate-fade-in font-display text-4xl font-semibold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl">
+        <div className="relative section-shell flex min-h-[100svh] flex-col justify-end pb-16 pt-36 sm:pb-20 lg:pb-24">
+          <div className="max-w-3xl rounded-sm bg-river-deep/25 p-1 backdrop-blur-[2px] sm:bg-transparent sm:p-0 sm:backdrop-blur-0">
+            <p className="animate-fade-in font-display text-4xl font-semibold leading-[1.05] tracking-tight text-white drop-shadow-sm sm:text-5xl lg:text-6xl">
               River Valley Community College
             </p>
             <div className="mt-5 h-px w-28 origin-left bg-sunrise animate-draw-line" />
             <h1 className="mt-6 font-display text-2xl font-medium tracking-tight text-sunrise sm:text-3xl lg:text-4xl">
               Soar into your future
             </h1>
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/88 sm:text-xl">
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/90 sm:text-xl">
               Affordable degrees and certificates across Claremont, Keene, and
               Lebanon — with the support to finish strong.
             </p>
@@ -45,16 +50,25 @@ export default function Home() {
       </section>
 
       <section className="section-shell py-20 sm:py-24">
-        <div className="reveal max-w-3xl" data-reveal>
-          <p className="eyebrow">Why students choose RVCC</p>
-          <h2 className="display-title mt-3">
-            A college built around the life you already have
-          </h2>
-          <p className="body-copy mt-5">
-            Study in person, online, or both. Nearly nine in ten students receive
-            financial aid, and every campus offers food access, transit support,
-            and people who know your name.
-          </p>
+        <div className="reveal grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]" data-reveal>
+          <div>
+            <p className="eyebrow">Why students choose RVCC</p>
+            <h2 className="display-title mt-3">
+              A college built around the life you already have
+            </h2>
+            <p className="body-copy mt-5">
+              Study in person, online, or both. Nearly nine in ten students
+              receive financial aid, and every campus offers food access, transit
+              support, and people who know your name.
+            </p>
+          </div>
+          <div className="overflow-hidden">
+            <img
+              src={images.campus}
+              alt="College campus building surrounded by trees"
+              className="h-72 w-full object-cover sm:h-80"
+            />
+          </div>
         </div>
 
         <div className="mt-12 grid gap-10 border-t border-river/15 pt-10 md:grid-cols-3">
@@ -74,7 +88,10 @@ export default function Home() {
       <section className="relative overflow-hidden py-20 sm:py-24">
         <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(10,92,117,0.08),rgba(36,92,59,0.1))]" />
         <div className="relative section-shell">
-          <div className="reveal flex flex-col gap-6 md:flex-row md:items-end md:justify-between" data-reveal>
+          <div
+            className="reveal flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
+            data-reveal
+          >
             <div className="max-w-2xl">
               <p className="eyebrow">Programs</p>
               <h2 className="display-title mt-3">
@@ -90,25 +107,47 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="mt-12 grid gap-x-10 gap-y-12 md:grid-cols-2">
-            {programAreas.map((area) => (
-              <article key={area.name} className="reveal" data-reveal>
-                <h3 className="font-display text-2xl font-semibold text-river-deep">
-                  {area.name}
-                </h3>
-                <p className="mt-3 max-w-md text-base leading-relaxed text-granite-muted">
-                  {area.summary}
-                </p>
-                <ul className="mt-5 space-y-2 text-sm text-granite">
-                  {area.programs.slice(0, 4).map((program) => (
-                    <li key={program} className="flex gap-3">
-                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-valley" />
-                      <span>{program}</span>
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            ))}
+          <div className="mt-12 grid gap-8 md:grid-cols-2">
+            {programAreas.map((area) => {
+              const areaPrograms = getProgramsForArea(area);
+              return (
+                <article
+                  key={area.slug}
+                  className="reveal group overflow-hidden border border-river/10 bg-white/70 transition duration-300 hover:-translate-y-1 hover:border-river/25"
+                  data-reveal
+                >
+                  <div className="relative h-44 overflow-hidden">
+                    <img
+                      src={area.image}
+                      alt=""
+                      className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-river-deep/50 to-transparent" />
+                  </div>
+                  <div className="p-6">
+                    <h3 className="font-display text-2xl font-semibold text-river-deep">
+                      {area.name}
+                    </h3>
+                    <p className="mt-3 max-w-md text-base leading-relaxed text-granite-muted">
+                      {area.summary}
+                    </p>
+                    <ul className="mt-5 space-y-2 text-sm text-granite">
+                      {areaPrograms.map((program) => (
+                        <li key={program.slug}>
+                          <Link
+                            to={`/programs/${program.slug}`}
+                            className="inline-flex items-center gap-2 font-medium text-river transition hover:text-river-deep"
+                          >
+                            <span className="h-1.5 w-1.5 rounded-full bg-valley" />
+                            {program.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -144,7 +183,10 @@ export default function Home() {
       </section>
 
       <section className="section-shell pb-8">
-        <div className="reveal overflow-hidden rounded-2xl bg-river-deep px-6 py-12 text-white sm:px-10 sm:py-14" data-reveal>
+        <div
+          className="reveal overflow-hidden bg-river-deep px-6 py-12 text-white sm:px-10 sm:py-14"
+          data-reveal
+        >
           <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:items-center">
             <blockquote className="max-w-xl">
               <p className="font-display text-2xl font-medium leading-snug sm:text-3xl">
@@ -173,7 +215,10 @@ export default function Home() {
       </section>
 
       <section className="section-shell py-16 sm:py-20">
-        <div className="reveal flex flex-col gap-6 md:flex-row md:items-center md:justify-between" data-reveal>
+        <div
+          className="reveal flex flex-col gap-6 md:flex-row md:items-center md:justify-between"
+          data-reveal
+        >
           <div className="max-w-2xl">
             <h2 className="display-title">Ready when you are</h2>
             <p className="body-copy mt-4">
@@ -185,8 +230,8 @@ export default function Home() {
             <Link to="/admissions" className="btn-primary">
               Start your application
             </Link>
-            <Link to="/about" className="btn-ghost">
-              Meet RVCC
+            <Link to="/financial-aid" className="btn-ghost">
+              Explore financial aid
             </Link>
           </div>
         </div>
