@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Search results · Surf</title>
+  <meta name="description" content="Safe educational search results for kids on Surf." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blue: #1B6FF8;
+      --blue-dark: #0F4FCC;
+      --orange: #F97316;
+      --ink: #0F172A;
+      --muted: #64748B;
+      --line: #E2E8F0;
+      --bg: #FFFFFF;
+      --soft: #F8FAFC;
+      --green: #16A34A;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Poppins, system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.5;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    .wrap { width: min(980px, calc(100% - 2rem)); margin: 0 auto; }
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    .header-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.85rem 0;
+    }
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      flex-shrink: 0;
+    }
+    .logo-word {
+      font-family: Nunito, sans-serif;
+      font-weight: 800;
+      font-size: 1.35rem;
+      letter-spacing: -0.03em;
+    }
+    .search-box {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      border: 2px solid var(--line);
+      border-radius: 999px;
+      padding: 0.55rem 0.55rem 0.55rem 1rem;
+      background: white;
+    }
+    .search-box:focus-within { border-color: var(--blue); }
+    .search-box input {
+      flex: 1;
+      border: 0;
+      outline: none;
+      background: transparent;
+    }
+    .search-box button {
+      border: 0;
+      background: var(--blue);
+      color: white;
+      border-radius: 999px;
+      padding: 0.55rem 1rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .safe-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: #ECFDF5;
+      color: var(--green);
+      border-radius: 999px;
+      padding: 0.45rem 0.8rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .safe-badge i {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      display: inline-block;
+    }
+
+    .filters {
+      display: flex;
+      gap: 0.35rem;
+      padding: 0 0 0.85rem;
+      overflow-x: auto;
+    }
+    .filter {
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font-weight: 600;
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .filter.active {
+      background: #EFF6FF;
+      color: var(--blue);
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 0.9rem;
+      padding: 1.1rem 0 0.75rem;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 1.1rem;
+      padding: 1.1rem 1.2rem;
+      margin-bottom: 1rem;
+      background: white;
+      box-shadow: var(--shadow);
+    }
+    .panel h2 {
+      font-family: Nunito, sans-serif;
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 0.55rem;
+    }
+    .dict-word {
+      font-family: Nunito, sans-serif;
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--blue);
+    }
+    .phonetic { color: var(--muted); font-size: 0.92rem; margin: 0.15rem 0 0.55rem; }
+    .example {
+      margin-top: 0.65rem;
+      padding: 0.75rem 0.9rem;
+      background: var(--soft);
+      border-radius: 0.85rem;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .ai-panel { border-color: #BFDBFE; background: linear-gradient(180deg, #F8FBFF, #FFFFFF); }
+    .ai-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: var(--blue);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.45rem;
+    }
+    .ai-follow {
+      display: flex;
+      gap: 0.55rem;
+      margin-top: 0.9rem;
+    }
+    .ai-follow input {
+      flex: 1;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0.7rem 1rem;
+      outline: none;
+    }
+    .ai-follow input:focus { border-color: var(--blue); }
+    .ai-follow button {
+      border: 0;
+      background: var(--orange);
+      color: white;
+      border-radius: 999px;
+      padding: 0.7rem 1rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .ai-reply {
+      margin-top: 0.85rem;
+      padding-top: 0.85rem;
+      border-top: 1px solid var(--line);
+      color: var(--ink);
+      display: none;
+    }
+    .ai-reply.visible { display: block; }
+    .ai-status { color: var(--muted); font-size: 0.88rem; margin-top: 0.55rem; }
+
+    .result {
+      padding: 1.15rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .result:last-of-type { border-bottom: 0; }
+    .result-top {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      margin-bottom: 0.35rem;
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+    .favicon {
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      background: #E2E8F0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--blue-dark);
+    }
+    .badges { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.35rem 0 0.45rem; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 0.2rem 0.55rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .badge.academic { background: #EFF6FF; color: var(--blue); }
+    .badge.educational { background: #FFF7ED; color: var(--orange); }
+    .badge.government { background: #ECFDF5; color: var(--green); }
+    .badge.level { background: var(--soft); color: var(--muted); }
+    .result h3 {
+      font-family: Nunito, sans-serif;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--blue-dark);
+      margin-bottom: 0.25rem;
+    }
+    .result h3:hover { text-decoration: underline; }
+    .result p { color: #334155; font-size: 0.95rem; }
+    .result-meta { margin-top: 0.4rem; color: var(--muted); font-size: 0.82rem; }
+
+    .video-result {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+    .thumb {
+      position: relative;
+      border-radius: 0.85rem;
+      overflow: hidden;
+      background: linear-gradient(135deg, #1B6FF8, #38BDF8);
+      min-height: 104px;
+      color: white;
+      display: flex;
+      align-items: flex-end;
+      padding: 0.6rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .thumb::before {
+      content: "▶";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-size: 1.4rem;
+      opacity: 0.95;
+    }
+    .duration {
+      margin-left: auto;
+      background: rgba(15,23,42,0.75);
+      border-radius: 0.4rem;
+      padding: 0.15rem 0.4rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .related { padding: 1.5rem 0 3rem; }
+    .related h2 {
+      font-family: Nunito, sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+    }
+    .related-list { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+    .related-list a {
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0.55rem 0.9rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    .related-list a:hover { border-color: #BFDBFE; color: var(--blue); }
+
+    @media (max-width: 720px) {
+      .safe-badge { display: none; }
+      .video-result { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="wrap">
+      <div class="header-row">
+        <a class="logo" href="surf_home.html" aria-label="Back to Surf home">
+          <svg width="28" height="28" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="board" x1="32" y1="6" x2="32" y2="58" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#FB923C"/>
+                <stop offset="1" stop-color="#F97316"/>
+              </linearGradient>
+            </defs>
+            <path d="M32 6c6 0 10 5 10 12v28c0 7-4 12-10 12s-10-5-10-12V18c0-7 4-12 10-12Z" fill="url(#board)"/>
+            <path d="M32 12v40" stroke="#FFF7ED" stroke-width="3" stroke-linecap="round"/>
+            <path d="M38 46l6 5-7 2z" fill="#FFF7ED"/>
+          </svg>
+          <span class="logo-word">surf</span>
+        </a>
+        <form class="search-box" id="searchForm" action="surf_results.html" method="get">
+          <input id="searchInput" name="q" type="search" aria-label="Search" />
+          <button type="submit">Search</button>
+        </form>
+        <div class="safe-badge"><i></i> Safe Search On</div>
+      </div>
+      <div class="filters" role="tablist" aria-label="Result filters">
+        <button class="filter active" type="button" data-filter="all">All</button>
+        <button class="filter" type="button" data-filter="videos">Videos</button>
+        <button class="filter" type="button" data-filter="images">Images</button>
+        <button class="filter" type="button" data-filter="articles">Articles</button>
+        <button class="filter" type="button" data-filter="games">Games</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <p class="meta" id="resultsMeta">About 5 results (0.31 seconds)</p>
+
+    <section class="panel" aria-label="Kid Dictionary">
+      <h2>Kid Dictionary</h2>
+      <div class="dict-word" id="dictWord">photosynthesis</div>
+      <div class="phonetic" id="dictPhonetic">/ˌfoʊ.toʊˈsɪn.θə.sɪs/</div>
+      <p id="dictDefinition">Photosynthesis is how plants make their own food using sunlight, water, and air.</p>
+      <div class="example" id="dictExample">
+        <strong>Example:</strong> Leaves use photosynthesis to turn sunlight into energy for the plant.
+      </div>
+    </section>
+
+    <section class="panel ai-panel" aria-label="AI Instant Answer">
+      <div class="ai-label">✨ AI Instant Answer</div>
+      <h2 id="aiTitle">A kid-friendly answer</h2>
+      <p id="aiSummary">
+        Photosynthesis is the special way green plants make food. They catch sunlight with their leaves,
+        mix it with water from the ground and a gas from the air called carbon dioxide, then make sugar
+        for energy and release oxygen that people and animals breathe.
+      </p>
+      <form class="ai-follow" id="aiForm">
+        <input id="aiInput" type="text" placeholder="Ask a follow-up question…" aria-label="Ask Surf AI a follow-up" />
+        <button type="submit">Ask</button>
+      </form>
+      <div class="ai-status" id="aiStatus"></div>
+      <div class="ai-reply" id="aiReply" aria-live="polite"></div>
+    </section>
+
+    <section id="results" aria-label="Search results"></section>
+
+    <section class="related">
+      <h2>Related searches</h2>
+      <div class="related-list" id="related"></div>
+    </section>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const query = (params.get("q") || "photosynthesis").trim();
+    document.getElementById("searchInput").value = query;
+    document.title = `${query} · Surf`;
+
+    const DICTIONARY = {
+      photosynthesis: {
+        word: "photosynthesis",
+        phonetic: "/ˌfoʊ.toʊˈsɪn.θə.sɪs/",
+        definition: "Photosynthesis is how plants make their own food using sunlight, water, and air.",
+        example: "Leaves use photosynthesis to turn sunlight into energy for the plant."
+      },
+      volcanoes: {
+        word: "volcano",
+        phonetic: "/vɑːlˈkeɪ.noʊ/",
+        definition: "A volcano is a mountain that can erupt and send out lava, ash, and gas from deep inside Earth.",
+        example: "When the volcano erupted, glowing lava flowed down the side."
+      },
+      dinosaurs: {
+        word: "dinosaur",
+        phonetic: "/ˈdaɪ.nə.sɔːr/",
+        definition: "Dinosaurs were ancient reptiles that lived on Earth millions of years ago.",
+        example: "Scientists study dinosaur fossils to learn how these animals lived."
+      }
+    };
+
+    function dictionaryFor(q) {
+      const key = Object.keys(DICTIONARY).find((item) => q.toLowerCase().includes(item));
+      if (key) return DICTIONARY[key];
+      return {
+        word: q.split(" ")[0],
+        phonetic: "",
+        definition: `A school-safe starter definition for “${q}” will appear here as Surf’s dictionary grows.`,
+        example: `Try reading one trusted result below to learn more about ${q}.`
+      };
+    }
+
+    const dict = dictionaryFor(query);
+    document.getElementById("dictWord").textContent = dict.word;
+    document.getElementById("dictPhonetic").textContent = dict.phonetic;
+    document.getElementById("dictDefinition").textContent = dict.definition;
+    document.getElementById("dictExample").innerHTML = `<strong>Example:</strong> ${dict.example}`;
+
+    document.getElementById("aiTitle").textContent = `What is ${query}?`;
+    document.getElementById("aiSummary").textContent =
+      query.toLowerCase().includes("photosynthesis")
+        ? "Photosynthesis is the special way green plants make food. They catch sunlight with their leaves, mix it with water from the ground and a gas from the air called carbon dioxide, then make sugar for energy and release oxygen that people and animals breathe."
+        : `${query} is a great learning topic. Surf shows trusted academic, educational, and government sources first so kids can explore safely without ads.`;
+
+    const RESULTS = [
+      {
+        type: "article",
+        favicon: "N",
+        domain: "nasa.gov",
+        path: "/science-for-kids",
+        badge: { className: "government", label: "Government" },
+        level: "Grades 3–5",
+        title: `${capitalize(query)} explained for young scientists`,
+        href: "surf_article_math_mode.html",
+        description: "A clear, classroom-ready overview with diagrams and vocabulary chosen for elementary and middle school readers.",
+        meta: "NASA Education · Updated 2025"
+      },
+      {
+        type: "video",
+        favicon: "P",
+        domain: "pbskids.org",
+        path: "/learning/" + encodeURIComponent(query),
+        badge: { className: "educational", label: "Educational" },
+        level: "Grades 1–3",
+        title: `Watch: ${capitalize(query)} in 3 minutes`,
+        href: "surf_article_math_mode.html",
+        description: "A short animated explainer that keeps language simple and stays focused on one big idea at a time.",
+        meta: "PBS Learning · Video · 3:12",
+        duration: "3:12"
+      },
+      {
+        type: "article",
+        favicon: "S",
+        domain: "si.edu",
+        path: "/kids/" + encodeURIComponent(query),
+        badge: { className: "academic", label: "Academic" },
+        level: "Grades 3–5",
+        title: `Smithsonian kids guide to ${query}`,
+        href: "surf_article_math_mode.html",
+        description: "Museum educators break the topic into friendly sections with real examples and safe follow-up activities.",
+        meta: "Smithsonian Learning Lab"
+      },
+      {
+        type: "article",
+        favicon: "B",
+        domain: "britannica.com",
+        path: "/kids/" + encodeURIComponent(query),
+        badge: { className: "academic", label: "Academic" },
+        level: "Grades 6–8",
+        title: `Britannica Kids: ${capitalize(query)}`,
+        href: "surf_article_math_mode.html",
+        description: "A trusted reference article with reading-level controls and citations students can use for school projects.",
+        meta: "Encyclopædia Britannica · Reference"
+      },
+      {
+        type: "article",
+        favicon: "K",
+        domain: "khanacademy.org",
+        path: "/search?query=" + encodeURIComponent(query),
+        badge: { className: "educational", label: "Educational" },
+        level: "Grades 6–8",
+        title: `Practice and lessons about ${query}`,
+        href: "surf_article_math_mode.html",
+        description: "Free lessons and practice questions that help kids check understanding after reading.",
+        meta: "Khan Academy · Lesson + Practice"
+      }
+    ];
+
+    const RELATED = [
+      `${query} for kids`,
+      `${query} facts`,
+      `how ${query} works`,
+      `${query} experiment`
+    ];
+
+    const resultsEl = document.getElementById("results");
+    function renderResults(filter = "all") {
+      const list = RESULTS.filter((item) => filter === "all" || item.type === filter.slice(0, -1) || (filter === "videos" && item.type === "video") || (filter === "articles" && item.type === "article"));
+      // Filters are visual for images/games until those result types are added.
+      const visible = filter === "images" || filter === "games" ? [] : list;
+      document.getElementById("resultsMeta").textContent = `About ${visible.length || RESULTS.length} results (0.31 seconds)`;
+
+      if (!visible.length) {
+        resultsEl.innerHTML = `<div class="panel"><p>This filter is coming soon. Try <strong>All</strong>, <strong>Videos</strong>, or <strong>Articles</strong>.</p></div>`;
+        return;
+      }
+
+      resultsEl.innerHTML = visible.map((item) => {
+        const body = `
+          <div class="result-top">
+            <span class="favicon">${item.favicon}</span>
+            <span>${item.domain}</span>
+            <span>› ${item.path}</span>
+          </div>
+          <div class="badges">
+            <span class="badge ${item.badge.className}">Verified · ${item.badge.label}</span>
+            <span class="badge level">${item.level}</span>
+          </div>
+          <a href="${item.href}"><h3>${item.title}</h3></a>
+          <p>${item.description}</p>
+          <div class="result-meta">${item.meta}</div>
+        `;
+        if (item.type === "video") {
+          return `<article class="result"><div class="video-result"><div class="thumb"><span class="duration">${item.duration}</span></div><div>${body}</div></div></article>`;
+        }
+        return `<article class="result">${body}</article>`;
+      }).join("");
+    }
+
+    renderResults("all");
+
+    document.querySelectorAll(".filter").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".filter").forEach((b) => b.classList.remove("active"));
+        button.classList.add("active");
+        renderResults(button.dataset.filter);
+      });
+    });
+
+    document.getElementById("related").innerHTML = RELATED.map((item) =>
+      `<a href="surf_results.html?q=${encodeURIComponent(item)}">${item}</a>`
+    ).join("");
+
+    function capitalize(value) {
+      return value ? value.charAt(0).toUpperCase() + value.slice(1) : value;
+    }
+
+    // AI follow-up via Anthropic Claude.
+    // Set your key in localStorage: localStorage.setItem('SURF_ANTHROPIC_API_KEY', 'sk-...')
+    // For production, proxy this request through your backend so keys are never exposed in the browser.
+    const aiForm = document.getElementById("aiForm");
+    const aiInput = document.getElementById("aiInput");
+    const aiStatus = document.getElementById("aiStatus");
+    const aiReply = document.getElementById("aiReply");
+
+    aiForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const question = aiInput.value.trim();
+      if (!question) return;
+
+      const apiKey = localStorage.getItem("SURF_ANTHROPIC_API_KEY");
+      if (!apiKey) {
+        aiStatus.textContent = "Add an Anthropic API key with localStorage.setItem('SURF_ANTHROPIC_API_KEY', 'your-key') to enable live follow-ups. Production should use a secure backend proxy.";
+        return;
+      }
+
+      aiStatus.textContent = "Thinking of a kid-friendly answer…";
+      aiReply.classList.remove("visible");
+
+      try {
+        const response = await fetch("https://api.anthropic.com/v1/messages", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+            "x-api-key": apiKey,
+            "anthropic-version": "2023-06-01",
+            "anthropic-dangerous-direct-browser-access": "true"
+          },
+          body: JSON.stringify({
+            model: "claude-sonnet-4-6",
+            max_tokens: 400,
+            system: "You are Surf, a safe search assistant for children in grades 1–8. Use clear, friendly language. Avoid scary, violent, or adult topics. Keep answers short, accurate, and encouraging. If a question is inappropriate for kids, gently redirect to a safe learning angle.",
+            messages: [
+              {
+                role: "user",
+                content: `The student searched for "${query}". Their follow-up question is: ${question}`
+              }
+            ]
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`Claude API error (${response.status})`);
+        }
+
+        const data = await response.json();
+        const text = (data.content || [])
+          .filter((part) => part.type === "text")
+          .map((part) => part.text)
+          .join("\n")
+          .trim();
+
+        aiReply.textContent = text || "I could not find a clear answer. Try asking in a simpler way.";
+        aiReply.classList.add("visible");
+        aiStatus.textContent = "";
+        aiInput.value = "";
+      } catch (error) {
+        aiStatus.textContent = error.message || "Something went wrong talking to Surf AI.";
+      }
+    });
+  </script>
+</body>
+</html>

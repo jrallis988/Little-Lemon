@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Surf — Safe Search for Kids</title>
+  <meta name="description" content="Surf is a safe search engine for kids in grades 1–8. No ads. Academic sources only. COPPA compliant." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blue: #1B6FF8;
+      --blue-dark: #0F4FCC;
+      --orange: #F97316;
+      --orange-soft: #FFF4EB;
+      --ink: #0F172A;
+      --muted: #64748B;
+      --line: #E2E8F0;
+      --bg: #FFFFFF;
+      --soft: #F8FAFC;
+      --green: #16A34A;
+      --radius: 18px;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Poppins, system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+
+    .wrap {
+      width: min(1120px, calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    /* Nav */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 0;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.25rem;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+    .nav-links a:hover { color: var(--blue); }
+    .btn-signin {
+      background: var(--blue);
+      color: white;
+      border: 0;
+      border-radius: 999px;
+      padding: 0.55rem 1rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-signin:hover { background: var(--blue-dark); }
+
+    /* Logo */
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+    .logo-mark { width: 34px; height: 34px; }
+    .logo-word {
+      font-family: Nunito, sans-serif;
+      font-weight: 800;
+      font-size: 1.55rem;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 4.5rem 0 2.5rem;
+      text-align: center;
+    }
+    .hero-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin-bottom: 1.25rem;
+    }
+    .hero-logo .logo-mark { width: 54px; height: 54px; }
+    .hero-logo .logo-word { font-size: 3rem; }
+    .hero h1 {
+      font-family: Nunito, sans-serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+    }
+    .hero p {
+      color: var(--muted);
+      max-width: 36rem;
+      margin: 0 auto 1.75rem;
+    }
+
+    /* Search */
+    .search-shell {
+      position: relative;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: white;
+      border: 2px solid var(--line);
+      border-radius: 999px;
+      padding: 0.85rem 0.85rem 0.85rem 1.25rem;
+      box-shadow: var(--shadow);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .search-box:focus-within {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(27, 111, 248, 0.12), var(--shadow);
+    }
+    .search-box input {
+      flex: 1;
+      border: 0;
+      outline: none;
+      font-size: 1.05rem;
+      background: transparent;
+    }
+    .search-box button {
+      background: var(--blue);
+      color: white;
+      border: 0;
+      border-radius: 999px;
+      padding: 0.7rem 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .search-box button:hover { background: var(--blue-dark); }
+    .suggestions {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(100% + 0.45rem);
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: none;
+      z-index: 20;
+      text-align: left;
+    }
+    .suggestions.open { display: block; }
+    .suggestions button {
+      width: 100%;
+      border: 0;
+      background: white;
+      text-align: left;
+      padding: 0.85rem 1.1rem;
+      cursor: pointer;
+      color: var(--ink);
+    }
+    .suggestions button:hover,
+    .suggestions button.active {
+      background: #F0F7FF;
+      color: var(--blue-dark);
+    }
+
+    /* Trust bar */
+    .trust {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem 1.25rem;
+      margin: 1.75rem auto 0;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 500;
+    }
+    .trust span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      display: inline-block;
+    }
+
+    /* Topics */
+    .topics {
+      padding: 3rem 0 4.5rem;
+    }
+    .topics h2 {
+      font-family: Nunito, sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 0.35rem;
+    }
+    .topics .sub {
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+    .topic-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    .topic-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.15rem;
+      background: white;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+      min-height: 132px;
+    }
+    .topic-card:hover {
+      transform: translateY(-3px);
+      border-color: #BFDBFE;
+      box-shadow: var(--shadow);
+    }
+    .topic-emoji {
+      font-size: 1.6rem;
+      margin-bottom: 0.6rem;
+    }
+    .topic-card h3 {
+      font-family: Nunito, sans-serif;
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 0.25rem;
+    }
+    .topic-card p {
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 1.5rem 0 2rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .footer-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .footer-links a:hover { color: var(--blue); }
+
+    @media (max-width: 900px) {
+      .topic-grid { grid-template-columns: repeat(2, 1fr); }
+      .nav-links a:not(.btn-signin) { display: none; }
+    }
+    @media (max-width: 560px) {
+      .topic-grid { grid-template-columns: 1fr; }
+      .hero { padding-top: 2.5rem; }
+      .hero-logo .logo-word { font-size: 2.4rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="nav">
+      <a class="logo" href="surf_home.html" aria-label="Surf home">
+        <svg class="logo-mark" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="board" x1="32" y1="6" x2="32" y2="58" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#FB923C"/>
+              <stop offset="1" stop-color="#F97316"/>
+            </linearGradient>
+          </defs>
+          <path d="M32 6c6 0 10 5 10 12v28c0 7-4 12-10 12s-10-5-10-12V18c0-7 4-12 10-12Z" fill="url(#board)"/>
+          <path d="M32 12v40" stroke="#FFF7ED" stroke-width="3" stroke-linecap="round"/>
+          <path d="M38 46l6 5-7 2z" fill="#FFF7ED"/>
+        </svg>
+        <span class="logo-word">surf</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#parents">For Parents</a>
+        <a href="#safety">Safety</a>
+        <a class="btn-signin" href="#signin">Sign In</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-logo" aria-hidden="true">
+          <svg class="logo-mark" viewBox="0 0 64 64" fill="none">
+            <defs>
+              <linearGradient id="board2" x1="32" y1="6" x2="32" y2="58" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#FB923C"/>
+                <stop offset="1" stop-color="#F97316"/>
+              </linearGradient>
+            </defs>
+            <path d="M32 6c6 0 10 5 10 12v28c0 7-4 12-10 12s-10-5-10-12V18c0-7 4-12 10-12Z" fill="url(#board2)"/>
+            <path d="M32 12v40" stroke="#FFF7ED" stroke-width="3" stroke-linecap="round"/>
+            <path d="M38 46l6 5-7 2z" fill="#FFF7ED"/>
+          </svg>
+          <span class="logo-word">surf</span>
+        </div>
+        <h1>Safe search for curious kids</h1>
+        <p>A clean, search-first engine for grades 1–8. Academic sources only. No ads. Safety built in.</p>
+
+        <form class="search-shell" id="searchForm" action="surf_results.html" method="get" autocomplete="off">
+          <div class="search-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="11" cy="11" r="7" stroke="#94A3B8" stroke-width="2"/>
+              <path d="M20 20l-3.5-3.5" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <input
+              id="searchInput"
+              name="q"
+              type="search"
+              placeholder="Search the solar system, dinosaurs, fractions…"
+              aria-label="Search"
+              aria-autocomplete="list"
+              aria-controls="suggestions"
+              aria-expanded="false"
+            />
+            <button type="submit">Search</button>
+          </div>
+          <div class="suggestions" id="suggestions" role="listbox" aria-label="Search suggestions"></div>
+        </form>
+
+        <div class="trust" aria-label="Trust signals">
+          <span><i class="dot"></i> Safe Search Always On</span>
+          <span><i class="dot"></i> No Ads, Ever</span>
+          <span><i class="dot"></i> Academic Sources Only</span>
+          <span><i class="dot"></i> COPPA Compliant</span>
+        </div>
+      </section>
+
+      <section class="topics" id="explore">
+        <h2>Explore by Topic</h2>
+        <p class="sub">Pick a topic to start a safe, school-ready search.</p>
+        <div class="topic-grid" id="topicGrid"></div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-row">
+        <div>© <span id="year"></span> Surf · Built for kids, trusted by parents & schools</div>
+        <div class="footer-links">
+          <a href="#privacy">Privacy</a>
+          <a href="#terms">Terms</a>
+          <a href="#parents">Parents</a>
+          <a href="#help">Help</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const SUGGESTIONS = [
+      "solar system",
+      "photosynthesis",
+      "dinosaurs",
+      "volcanoes",
+      "ancient egypt",
+      "human body",
+      "rainforest animals",
+      "fractions",
+      "oceans",
+      "space stations",
+      "computers",
+      "coral reefs",
+      "moon phases",
+      "water cycle",
+      "insects",
+      "math multiplication"
+    ];
+
+    const TOPICS = [
+      { title: "Space", emoji: "🚀", blurb: "Planets, stars, and astronauts", q: "space" },
+      { title: "Ocean", emoji: "🌊", blurb: "Sea life and underwater worlds", q: "ocean" },
+      { title: "Dinosaurs", emoji: "🦕", blurb: "Fossils and prehistoric giants", q: "dinosaurs" },
+      { title: "Volcanoes", emoji: "🌋", blurb: "Lava, magma, and Earth science", q: "volcanoes" },
+      { title: "Ancient Egypt", emoji: "🛕", blurb: "Pyramids, pharaohs, and history", q: "ancient egypt" },
+      { title: "Human Body", emoji: "🧠", blurb: "Bones, brains, and how we work", q: "human body" },
+      { title: "Rainforest", emoji: "🌴", blurb: "Jungles, animals, and climate", q: "rainforest" },
+      { title: "Computers", emoji: "💻", blurb: "Coding, internet, and tech basics", q: "computers" }
+    ];
+
+    const input = document.getElementById("searchInput");
+    const suggestionsEl = document.getElementById("suggestions");
+    const form = document.getElementById("searchForm");
+    const topicGrid = document.getElementById("topicGrid");
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    topicGrid.innerHTML = TOPICS.map((topic) => `
+      <a class="topic-card" href="surf_results.html?q=${encodeURIComponent(topic.q)}">
+        <div class="topic-emoji">${topic.emoji}</div>
+        <h3>${topic.title}</h3>
+        <p>${topic.blurb}</p>
+      </a>
+    `).join("");
+
+    let activeIndex = -1;
+
+    function renderSuggestions(query) {
+      const q = query.trim().toLowerCase();
+      if (!q) {
+        suggestionsEl.classList.remove("open");
+        input.setAttribute("aria-expanded", "false");
+        suggestionsEl.innerHTML = "";
+        activeIndex = -1;
+        return;
+      }
+
+      const matches = SUGGESTIONS.filter((item) => item.includes(q)).slice(0, 6);
+      if (!matches.length) {
+        suggestionsEl.classList.remove("open");
+        input.setAttribute("aria-expanded", "false");
+        suggestionsEl.innerHTML = "";
+        activeIndex = -1;
+        return;
+      }
+
+      suggestionsEl.innerHTML = matches.map((item, index) => `
+        <button type="button" role="option" data-index="${index}" data-value="${item}">${item}</button>
+      `).join("");
+      suggestionsEl.classList.add("open");
+      input.setAttribute("aria-expanded", "true");
+      activeIndex = -1;
+
+      suggestionsEl.querySelectorAll("button").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          input.value = btn.dataset.value;
+          form.submit();
+        });
+      });
+    }
+
+    input.addEventListener("input", () => renderSuggestions(input.value));
+    input.addEventListener("keydown", (event) => {
+      const buttons = [...suggestionsEl.querySelectorAll("button")];
+      if (!buttons.length) return;
+
+      if (event.key === "ArrowDown") {
+        event.preventDefault();
+        activeIndex = (activeIndex + 1) % buttons.length;
+      } else if (event.key === "ArrowUp") {
+        event.preventDefault();
+        activeIndex = (activeIndex - 1 + buttons.length) % buttons.length;
+      } else if (event.key === "Enter" && activeIndex >= 0) {
+        event.preventDefault();
+        input.value = buttons[activeIndex].dataset.value;
+        form.submit();
+        return;
+      } else if (event.key === "Escape") {
+        suggestionsEl.classList.remove("open");
+        return;
+      } else {
+        return;
+      }
+
+      buttons.forEach((btn, index) => btn.classList.toggle("active", index === activeIndex));
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!form.contains(event.target)) suggestionsEl.classList.remove("open");
+    });
+  </script>
+</body>
+</html>

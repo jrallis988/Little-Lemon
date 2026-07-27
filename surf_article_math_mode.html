@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Math Mode · Fractions Are Fair Shares · Surf</title>
+  <meta name="description" content="A Surf sample article with Math Mode for grades 1–8." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blue: #1B6FF8;
+      --blue-dark: #0F4FCC;
+      --orange: #F97316;
+      --ink: #0F172A;
+      --muted: #64748B;
+      --line: #E2E8F0;
+      --bg: #FFFFFF;
+      --soft: #F8FAFC;
+      --green: #16A34A;
+      --shadow: 0 12px 32px rgba(15, 23, 42, 0.1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Poppins, system-ui, sans-serif;
+      color: var(--ink);
+      background: #FFF8F3;
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; }
+    .wrap { width: min(920px, calc(100% - 2rem)); margin: 0 auto; }
+
+    .topbar {
+      background: white;
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.85rem 0;
+    }
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-family: Nunito, sans-serif;
+      font-weight: 800;
+      font-size: 1.3rem;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #FFF7ED;
+      color: var(--orange);
+      border-radius: 999px;
+      padding: 0.4rem 0.8rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #FB923C 0%, #F97316 55%, #EA580C 100%);
+      color: white;
+      padding: 2.5rem 0 2rem;
+    }
+    .hero-card {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 1.4rem;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+    .eyebrow {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      opacity: 0.9;
+      margin-bottom: 0.55rem;
+    }
+    .hero h1 {
+      font-family: Nunito, sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 0.75rem;
+    }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 1rem;
+    }
+    .hero-meta span {
+      background: rgba(255,255,255,0.16);
+      border-radius: 999px;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.4fr 0.8fr;
+      gap: 1.25rem;
+      padding: 1.5rem 0 3rem;
+      align-items: start;
+    }
+    .article, .sidebar-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 1.25rem;
+      box-shadow: var(--shadow);
+    }
+    .article { padding: 1.5rem; }
+    .article h2 {
+      font-family: Nunito, sans-serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin: 1.4rem 0 0.55rem;
+    }
+    .article p { margin-bottom: 0.9rem; color: #1E293B; }
+    .article ul { margin: 0 0 1rem 1.2rem; color: #1E293B; }
+    .callout {
+      background: #FFF7ED;
+      border-left: 4px solid var(--orange);
+      border-radius: 0.9rem;
+      padding: 0.95rem 1rem;
+      margin: 1rem 0;
+    }
+
+    .math-box {
+      background: linear-gradient(180deg, #FFF7ED, #FFFFFF);
+      border: 1px solid #FED7AA;
+      border-radius: 1rem;
+      padding: 1rem;
+      margin: 1.1rem 0;
+    }
+    .math-box h3 {
+      font-family: Nunito, sans-serif;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--orange);
+      margin-bottom: 0.45rem;
+    }
+    .equation {
+      font-family: Nunito, sans-serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      margin: 0.4rem 0 0.7rem;
+    }
+    .pizza {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.4rem;
+      max-width: 220px;
+    }
+    .slice {
+      aspect-ratio: 1;
+      border-radius: 0.55rem;
+      background: #FED7AA;
+      border: 2px solid #F97316;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      color: #9A3412;
+    }
+    .slice.off {
+      background: #F1F5F9;
+      border-color: #CBD5E1;
+      color: #94A3B8;
+    }
+
+    .sidebar-card { padding: 1.1rem; }
+    .sidebar-card h3 {
+      font-family: Nunito, sans-serif;
+      font-weight: 800;
+      margin-bottom: 0.55rem;
+    }
+    .mode-toggle {
+      display: grid;
+      gap: 0.45rem;
+      margin-bottom: 1rem;
+    }
+    .mode-toggle button {
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 0.8rem;
+      padding: 0.7rem 0.85rem;
+      text-align: left;
+      font-weight: 600;
+    }
+    .mode-toggle button.active {
+      border-color: #FDBA74;
+      background: #FFF7ED;
+      color: #C2410C;
+    }
+    .check {
+      display: flex;
+      gap: 0.5rem;
+      align-items: flex-start;
+      margin-bottom: 0.55rem;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+    .check b { color: var(--green); }
+    .back {
+      display: inline-flex;
+      margin-top: 0.75rem;
+      color: var(--blue);
+      font-weight: 600;
+    }
+    .back:hover { text-decoration: underline; }
+
+    @media (max-width: 840px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="logo" href="surf_home.html">
+        <svg width="28" height="28" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="board" x1="32" y1="6" x2="32" y2="58" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#FB923C"/>
+              <stop offset="1" stop-color="#F97316"/>
+            </linearGradient>
+          </defs>
+          <path d="M32 6c6 0 10 5 10 12v28c0 7-4 12-10 12s-10-5-10-12V18c0-7 4-12 10-12Z" fill="url(#board)"/>
+          <path d="M32 12v40" stroke="#FFF7ED" stroke-width="3" stroke-linecap="round"/>
+          <path d="M38 46l6 5-7 2z" fill="#FFF7ED"/>
+        </svg>
+        surf
+      </a>
+      <div class="pill">Math Mode On</div>
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="wrap">
+      <div class="hero-card">
+        <div class="eyebrow">Sample Surf article</div>
+        <h1>Fractions Are Fair Shares</h1>
+        <p>
+          Learn what a fraction means by splitting pizza, snacks, and shapes into equal parts.
+          Math Mode highlights the key idea, shows a simple model, and gives a quick practice check.
+        </p>
+        <div class="hero-meta">
+          <span>Grades 3–5</span>
+          <span>Verified · Educational</span>
+          <span>5 min read</span>
+          <span>Safe Search On</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap layout">
+    <article class="article">
+      <p>
+        A fraction is a way to talk about equal parts of a whole. If a pizza is cut into 4 equal slices
+        and you eat 1 slice, you ate <strong>1/4</strong> of the pizza.
+      </p>
+
+      <div class="math-box" id="mathModeBox">
+        <h3>Math Mode</h3>
+        <div class="equation">1 ÷ 4 = 1/4</div>
+        <p style="color:#9A3412; margin-bottom:0.75rem;">
+          The bottom number (denominator) tells how many equal parts. The top number (numerator)
+          tells how many parts you have.
+        </p>
+        <div class="pizza" aria-label="Fraction model showing one of four slices">
+          <div class="slice">1</div>
+          <div class="slice off">2</div>
+          <div class="slice off">3</div>
+          <div class="slice off">4</div>
+        </div>
+      </div>
+
+      <h2>Why fractions matter</h2>
+      <p>
+        Kids use fractions every day: half a sandwich, a quarter of an hour, or three-fourths of a
+        completed worksheet. Understanding fair shares helps with cooking, time, money, and later algebra.
+      </p>
+
+      <div class="callout">
+        <strong>Kid tip:</strong> Equal parts must be the same size. Four pieces that are not equal
+        are not a true fraction model.
+      </div>
+
+      <h2>Try this</h2>
+      <ul>
+        <li>Draw a rectangle and split it into 3 equal parts. Shade 2 parts. That is 2/3.</li>
+        <li>Share 8 crayons equally with 4 friends. Each friend gets 2 crayons, or 2/8 which simplifies to 1/4 of the box each if the whole box is 8.</li>
+        <li>Say the fraction out loud: “one fourth” for 1/4.</li>
+      </ul>
+
+      <h2>Quick check</h2>
+      <p>If a granola bar is broken into 2 equal pieces and you eat both, how much did you eat?</p>
+      <p><strong>Answer:</strong> 2/2, which equals 1 whole granola bar.</p>
+
+      <a class="back" href="surf_results.html?q=fractions">← Back to Surf results</a>
+    </article>
+
+    <aside>
+      <div class="sidebar-card">
+        <h3>Learning modes</h3>
+        <div class="mode-toggle">
+          <button type="button" class="active" id="mathModeBtn">Math Mode</button>
+          <button type="button" id="readModeBtn">Read Mode</button>
+        </div>
+        <div class="check"><b>✓</b><span>Equal-part models</span></div>
+        <div class="check"><b>✓</b><span>Kid-friendly vocabulary</span></div>
+        <div class="check"><b>✓</b><span>No ads or side quests</span></div>
+        <div class="check"><b>✓</b><span>Grade-banded reading</span></div>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    const mathBox = document.getElementById("mathModeBox");
+    const mathBtn = document.getElementById("mathModeBtn");
+    const readBtn = document.getElementById("readModeBtn");
+
+    mathBtn.addEventListener("click", () => {
+      mathBtn.classList.add("active");
+      readBtn.classList.remove("active");
+      mathBox.style.display = "block";
+    });
+
+    readBtn.addEventListener("click", () => {
+      readBtn.classList.add("active");
+      mathBtn.classList.remove("active");
+      mathBox.style.display = "none";
+    });
+  </script>
+</body>
+</html>
