@@ -81,7 +81,7 @@ export default function ProgramDetail() {
 
       <section className="section-shell grid gap-12 py-12 sm:py-16 lg:grid-cols-[1.15fr_0.85fr]">
         <div className="space-y-12">
-          <div className="reveal" data-reveal>
+          <div>
             <p className="eyebrow">What you will build</p>
             <h2 className="display-title mt-3 !text-3xl sm:!text-4xl">
               Skills that travel into real jobs
@@ -96,7 +96,7 @@ export default function ProgramDetail() {
             </ul>
           </div>
 
-          <div className="reveal" data-reveal>
+          <div>
             <p className="eyebrow">Prerequisites</p>
             <h2 className="mt-3 font-display text-2xl font-semibold text-river-deep">
               Before you begin
@@ -132,7 +132,7 @@ export default function ProgramDetail() {
           </div>
         </div>
 
-        <aside className="reveal h-fit border border-river/15 bg-white/80 p-6 sm:p-8" data-reveal>
+        <aside className="h-fit border border-river/15 bg-white/80 p-6 sm:p-8">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-valley">
             At a glance
           </p>
