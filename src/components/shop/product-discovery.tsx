@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type MouseEvent } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Check, Star } from "lucide-react";
 
@@ -118,7 +119,9 @@ export function ProductCard({ product }: { product: Product }) {
   const { addProduct } = useCart();
   const [justAdded, setJustAdded] = useState(false);
 
-  function handleAdd() {
+  function handleAdd(event: MouseEvent) {
+    event.preventDefault();
+    event.stopPropagation();
     addProduct(product);
     setJustAdded(true);
     window.setTimeout(() => setJustAdded(false), 1400);
@@ -126,64 +129,66 @@ export function ProductCard({ product }: { product: Product }) {
 
   return (
     <article className="group flex flex-col">
-      <div className="relative aspect-square overflow-hidden rounded-xl bg-muted/50">
-        <Image
-          src={product.imageUrl}
-          alt={product.imageAlt}
-          fill
-          className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-        />
-      </div>
-      <div className="mt-3 flex flex-1 flex-col">
-        <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
-          {product.brand}
-        </p>
-        <h3 className="mt-1 text-sm font-semibold text-foreground">
-          {product.name}
-        </h3>
-        <p className="mt-2 flex items-center gap-1 text-xs text-muted-foreground">
-          <Star className="size-3.5 fill-current text-brand" aria-hidden />
-          <span>
-            {product.rating.toFixed(1)} · {product.reviewCount} reviews
-          </span>
-        </p>
-        <div className="mt-3 flex items-end justify-between gap-2">
-          <div>
-            <p className="text-base font-semibold text-foreground">
-              {formatCurrency(product.price)}
-            </p>
-            {product.compareAtPrice ? (
-              <p className="text-xs text-muted-foreground line-through">
-                {formatCurrency(product.compareAtPrice)}
+      <Link href={`/shop/${product.slug}`} className="block">
+        <div className="relative aspect-square overflow-hidden rounded-xl bg-muted/50">
+          <Image
+            src={product.imageUrl}
+            alt={product.imageAlt}
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+          />
+        </div>
+        <div className="mt-3">
+          <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
+            {product.brand}
+          </p>
+          <h3 className="mt-1 text-sm font-semibold text-foreground group-hover:underline">
+            {product.name}
+          </h3>
+          <p className="mt-2 flex items-center gap-1 text-xs text-muted-foreground">
+            <Star className="size-3.5 fill-current text-brand" aria-hidden />
+            <span>
+              {product.rating.toFixed(1)} · {product.reviewCount} reviews
+            </span>
+          </p>
+          <div className="mt-3 flex items-end justify-between gap-2">
+            <div>
+              <p className="text-base font-semibold text-foreground">
+                {formatCurrency(product.price)}
               </p>
+              {product.compareAtPrice ? (
+                <p className="text-xs text-muted-foreground line-through">
+                  {formatCurrency(product.compareAtPrice)}
+                </p>
+              ) : null}
+            </div>
+            {product.rewardsPoints ? (
+              <Badge
+                variant="outline"
+                className="border-brand/25 bg-brand/5 text-[10px] text-brand"
+              >
+                +{product.rewardsPoints} pts
+              </Badge>
             ) : null}
           </div>
-          {product.rewardsPoints ? (
-            <Badge
-              variant="outline"
-              className="border-brand/25 bg-brand/5 text-[10px] text-brand"
-            >
-              +{product.rewardsPoints} pts
-            </Badge>
-          ) : null}
         </div>
-        <Button
-          className="mt-4 w-full bg-brand text-brand-foreground hover:bg-brand/90"
-          size="sm"
-          onClick={handleAdd}
-          aria-live="polite"
-        >
-          {justAdded ? (
-            <>
-              <Check className="size-4" aria-hidden />
-              Added
-            </>
-          ) : (
-            "Add to cart"
-          )}
-        </Button>
-      </div>
+      </Link>
+      <Button
+        className="mt-4 w-full bg-brand text-brand-foreground hover:bg-brand/90"
+        size="sm"
+        onClick={handleAdd}
+        aria-live="polite"
+      >
+        {justAdded ? (
+          <>
+            <Check className="size-4" aria-hidden />
+            Added
+          </>
+        ) : (
+          "Add to cart"
+        )}
+      </Button>
     </article>
   );
 }

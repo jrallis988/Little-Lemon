@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Outfit, Source_Sans_3 } from "next/font/google";
 
+import { SITE_DESCRIPTION, SITE_NAME } from "@/lib/brand";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { AppProviders } from "@/components/providers/app-providers";
@@ -21,11 +22,10 @@ const sourceSans = Source_Sans_3({
 
 export const metadata: Metadata = {
   title: {
-    default: "Walgreens | Pharmacy, Health & Beauty",
-    template: "%s | Walgreens",
+    default: `${SITE_NAME} | Pharmacy, Health & Beauty`,
+    template: `%s | ${SITE_NAME}`,
   },
-  description:
-    "Modern Walgreens redesign — pharmacy refills, clinical services, and frictionless health commerce.",
+  description: SITE_DESCRIPTION,
 };
 
 export default function RootLayout({

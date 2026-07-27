@@ -101,10 +101,18 @@ export function MegaMenu({ className }: { className?: string }) {
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink
-            render={<Link href="/checkout" />}
+            render={<Link href="/deals" />}
             className="rounded-lg px-3 py-2 text-sm font-medium hover:bg-muted/70"
           >
-            Checkout
+            Deals
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink
+            render={<Link href="/stores" />}
+            className="rounded-lg px-3 py-2 text-sm font-medium hover:bg-muted/70"
+          >
+            Stores
           </NavigationMenuLink>
         </NavigationMenuItem>
       </NavigationMenuList>

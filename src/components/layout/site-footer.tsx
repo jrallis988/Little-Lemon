@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { SITE_NAME, SITE_TAGLINE } from "@/lib/brand";
 import { NAV_CATEGORIES } from "@/lib/data/catalog";
 
 export function SiteFooter() {
@@ -7,10 +8,9 @@ export function SiteFooter() {
     <footer className="mt-16 border-t border-border/70 bg-surface/80">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-4">
         <div className="lg:col-span-2">
-          <p className="font-display text-2xl font-bold text-brand">Walgreens</p>
+          <p className="font-display text-2xl font-bold text-brand">{SITE_NAME}</p>
           <p className="mt-2 max-w-md text-sm text-muted-foreground">
-            Pharmacy care, clinical services, and everyday essentials — redesigned
-            for clarity, speed, and accessibility.
+            {SITE_TAGLINE} — redesigned for clarity, speed, and accessibility.
           </p>
         </div>
         <div>
@@ -38,7 +38,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-border/60 py-4 text-center text-xs text-muted-foreground">
-        Redesign prototype · Not affiliated with Walgreens Boots Alliance
+        {SITE_NAME} redesign prototype · Not affiliated with Walgreens Boots Alliance
       </div>
     </footer>
   );

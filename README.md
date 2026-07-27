@@ -1,6 +1,6 @@
-# Walgreens Redesign
+# Walgreens RX
 
-Modern, accessible redesign of the Walgreens experience built with **Next.js 15 (App Router)**, **TypeScript (strict)**, **Tailwind CSS**, and **shadcn/ui**.
+Modern, accessible redesign prototype branded **Walgreens RX**, built with **Next.js 15 (App Router)**, **TypeScript (strict)**, **Tailwind CSS**, and **shadcn/ui**.
 
 ## Core pillars
 
@@ -19,10 +19,11 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ### Interactive prototype flows
 
-- **Shop → cart → checkout:** Add items; the header badge updates; place order to clear the cart and see confirmation
+- **Shop → product → cart → checkout:** Product detail pages, header badge, place order confirmation
 - **Pharmacy refill:** Select prescriptions and refill — trackers advance Received → Filling → Ready
 - **Search:** Enter submits to `/shop?q=…` or opens the highlighted suggestion
 - **Filters:** `/shop?category=skincare` (and category checkboxes) sync with the URL
+- **More surfaces:** `/deals`, `/photo`, `/stores`
 
 ## Scripts
 
@@ -30,30 +31,25 @@ Open [http://localhost:3000](http://localhost:3000).
 - `npm run build` — production build
 - `npm run start` — serve production build
 - `npm run lint` — ESLint
+- `npm run test:e2e` — Playwright smoke tests
 
 ## Project structure
 
 ```
 src/
-  app/                  # App Router pages (home, pharmacy, shop, checkout)
+  app/                  # App Router pages
   components/
     layout/             # Header, mega-menu, smart search, footer
     pharmacy/           # Dashboard, tracker, profile switcher
-    shop/               # Product grid, filters, rewards
+    shop/               # Product grid, detail, filters, rewards
     checkout/           # Guest / member / quick-pay funnel
     home/               # Landing sections
     ui/                 # shadcn/ui primitives
   lib/
+    brand.ts            # Walgreens RX naming
     types/              # Domain TypeScript interfaces
-    data/               # Mock catalog & pharmacy data
-    pharmacy.ts         # Status helpers & formatters
+    data/               # Mock catalog, landing, stores
+    store/              # Cart + pharmacy client state
 ```
-
-## Accessibility
-
-- Skip link, semantic landmarks, labeled form controls
-- Keyboard-friendly search combobox and navigation
-- Visible focus styles; `prefers-reduced-motion` respected for animations
-- Color contrast oriented toward WCAG 2.1 AA
 
 This is a design/engineering prototype and is not affiliated with Walgreens Boots Alliance.

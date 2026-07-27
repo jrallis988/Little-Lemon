@@ -13,7 +13,7 @@ import type {
 
 export const ACTIVE_STORE: StoreLocation = {
   id: "store-4821",
-  name: "Walgreens — Market & 5th",
+  name: "Walgreens RX — Market & 5th",
   address: "850 Market Street",
   city: "San Francisco",
   state: "CA",
@@ -150,6 +150,24 @@ export const NAV_CATEGORIES: NavCategory[] = [
     description: "Health, beauty, and everyday essentials",
   },
   {
+    id: "deals",
+    label: "Weekly deals",
+    href: "/deals",
+    description: "Coupons, BOGOs, and seasonal savings",
+  },
+  {
+    id: "photo",
+    label: "Photo",
+    href: "/photo",
+    description: "Prints, same-day books, and yard signs",
+  },
+  {
+    id: "stores",
+    label: "Find a store",
+    href: "/stores",
+    description: "Hours, drive-thru, and pickup options",
+  },
+  {
     id: "rewards",
     label: "myWalgreens",
     href: "/#rewards",
@@ -258,6 +276,25 @@ export const MEGA_MENU: MegaMenuColumn[] = [
             label: "First aid",
             href: "/shop?category=first-aid",
             intent: "retail",
+          },
+          {
+            id: "weekly-deals",
+            label: "Weekly deals",
+            href: "/deals",
+            intent: "retail",
+            badge: "New",
+          },
+          {
+            id: "photo-center",
+            label: "Photo center",
+            href: "/photo",
+            intent: "retail",
+          },
+          {
+            id: "find-store",
+            label: "Find a store",
+            href: "/stores",
+            intent: "general",
           },
         ],
       },

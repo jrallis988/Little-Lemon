@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
-  Clock3,
   MapPin,
   Pill,
   Smartphone,
@@ -41,7 +40,7 @@ export function HomeHero() {
       <div className="mx-auto flex min-h-[min(78vh,640px)] max-w-6xl items-center px-4 py-16 sm:px-6 sm:py-20">
         <div className="max-w-xl text-white">
           <p className="animate-rise font-display text-5xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl">
-            Walgreens
+            Walgreens RX
           </p>
           <h1 className="animate-rise-delay mt-4 font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
             Pharmacy, health & everyday essentials
@@ -91,16 +90,16 @@ export function HomeQuickPaths() {
       icon: Syringe,
     },
     {
-      href: "/shop",
+            href: "/deals",
       label: "Weekly deals",
       detail: "Save in store",
       icon: Smartphone,
     },
     {
-      href: "/checkout",
-      label: "30-min pickup",
-      detail: "Order online",
-      icon: Clock3,
+      href: "/stores",
+      label: "Find a store",
+      detail: "Hours & pickup",
+      icon: MapPin,
     },
   ] as const;
 
@@ -161,7 +160,7 @@ export function HomeDeals() {
           </h2>
           <p className="mt-3 max-w-md text-white/85">
             Pickup discounts, seasonal essentials, and myWalgreens exclusive
-            offers — clipped from what&apos;s live on Walgreens.com.
+            offers — inspired by what&apos;s live on Walgreens.com.
           </p>
           <Button
             className="mt-6 bg-white text-brand hover:bg-white/90"
@@ -226,7 +225,7 @@ export function HomeHealthMatters() {
             Because your health matters
           </h2>
           <p className="mt-3 max-w-md text-muted-foreground">
-            Same neighborhood care you know from Walgreens — vaccines, Rx
+            Same neighborhood care you know from Walgreens RX — vaccines, Rx
             tracking, and clinical services in one place.
           </p>
           <ul className="mt-8 space-y-6">
@@ -398,7 +397,7 @@ export function HomePickup() {
           </Button>
           <p className="flex items-center gap-2 self-center text-sm text-white/80">
             <MapPin className="size-4" aria-hidden />
-            Ready at your neighborhood Walgreens
+            Ready at your neighborhood Walgreens RX
           </p>
         </div>
       </div>
@@ -431,13 +430,23 @@ export function HomeShopPreview() {
             <li>5% on Walgreens branded products</li>
             <li>{REWARDS.pointsToNextReward} points to your next reward</li>
           </ul>
-          <Button
-            className="mt-6 w-fit bg-white text-brand hover:bg-white/90"
-            nativeButton={false}
-            render={<Link href="/shop" />}
-          >
-            Shop with rewards
-          </Button>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Button
+              className="w-fit bg-white text-brand hover:bg-white/90"
+              nativeButton={false}
+              render={<Link href="/shop" />}
+            >
+              Shop with rewards
+            </Button>
+            <Button
+              variant="outline"
+              className="border-white/40 bg-transparent text-white hover:bg-white/10 hover:text-white"
+              nativeButton={false}
+              render={<Link href="/photo" />}
+            >
+              Photo center
+            </Button>
+          </div>
         </div>
         <div className="relative min-h-[240px]">
           <Image
