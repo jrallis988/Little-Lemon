@@ -881,7 +881,7 @@ p {
 .location__map-panel {
   display: grid;
   gap: 0.65rem;
-  align-content: start;
+  align-content: flex-start;
 }
 
 .location__map-label {
@@ -974,7 +974,7 @@ p {
   .location__grid {
     grid-template-columns: 1fr 1.05fr;
     gap: 3rem;
-    align-items: start;
+    align-items: flex-start;
   }
 
   .location__map,
@@ -1396,7 +1396,7 @@ p {
 .booking__aside {
   display: grid;
   gap: 1.25rem;
-  align-content: start;
+  align-content: flex-start;
 }
 
 .booking__note {
@@ -1446,7 +1446,7 @@ p {
 @media (min-width: 900px) {
   .booking__layout {
     grid-template-columns: 1.35fr 0.85fr;
-    align-items: start;
+    align-items: flex-start;
   }
 }
 
@@ -1513,7 +1513,7 @@ p {
 }
 
 .footer__nav {
-  align-content: start;
+  align-content: flex-start;
 }
 
 .footer__policies {
@@ -1675,7 +1675,7 @@ p {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  align-items: start;
+  align-items: flex-start;
 }
 
 .winter__ghost {
