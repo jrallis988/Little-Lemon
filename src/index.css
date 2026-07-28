@@ -91,6 +91,9 @@ a {
 .stagger > .reveal:nth-child(4) {
   transition-delay: 0.35s;
 }
+.stagger > .reveal:nth-child(5) {
+  transition-delay: 0.45s;
+}
 
 .project-row {
   border-top: 1px solid rgba(217, 226, 232, 0.14);

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Nav from "./components/Nav";
 import Hero from "./components/Hero";
 import Work from "./components/Work";
+import Focus from "./components/Focus";
 import About from "./components/About";
 import Skills from "./components/Skills";
 import Contact from "./components/Contact";
@@ -21,6 +22,7 @@ function App() {
       <main>
         <Hero />
         <Work />
+        <Focus />
         <About />
         <Skills />
         <Contact />

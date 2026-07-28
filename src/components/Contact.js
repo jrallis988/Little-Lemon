@@ -13,7 +13,7 @@ export default function Contact() {
           </h2>
           <p className="reveal mt-5 max-w-xl text-base leading-relaxed text-sand/85 md:text-lg">
             Tell me about your product, site, or team. I&apos;m especially interested
-            in front-end roles and collaborative builds.
+            in React/Next frontends, FastAPI backends, and RAG-powered apps.
           </p>
           <div className="reveal mt-9 flex flex-wrap gap-3">
             <a href="mailto:jjrallis@unh.edu" className="btn-primary">

@@ -14,21 +14,21 @@ export default function About() {
             Interfaces that feel considered, not crowded.
           </h2>
           <p className="reveal mt-5 text-base leading-relaxed text-sand/85 md:text-lg">
-            I&apos;m a front-end developer focused on turning product ideas into
-            polished browser experiences. My process balances design intent with
-            clean component structure, so teams can ship and iterate with confidence.
+            I&apos;m a developer focused on product surfaces first—clear React and
+            Next.js UIs—then the systems that power them: FastAPI services, RAG
+            pipelines, and deploy paths that stay simple.
           </p>
           <p className="reveal mt-4 text-base leading-relaxed text-sand/85 md:text-lg">
             Based in New Hampshire, I collaborate remotely on websites and web apps
-            that need strong visual hierarchy, responsive behavior, and accessible
-            interaction patterns.
+            that need strong visual hierarchy, accessible interaction, and real
+            backend or AI depth when the problem calls for it.
           </p>
         </div>
 
         <aside className="reveal border-l border-foam/40 pl-6 md:pl-8">
           <p className="font-display text-xl font-semibold leading-snug text-chalk md:text-2xl">
-            Currently open to front-end roles, freelance partnerships, and product
-            collaborations.
+            Open to front-end and full-stack product roles, freelance builds, and
+            AI-assisted app collaborations.
           </p>
           <p className="mt-4 text-sm uppercase tracking-[0.16em] text-sand/65">
             Available for new work

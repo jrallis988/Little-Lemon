@@ -12,8 +12,8 @@ export default function Work() {
             Projects that put clarity first.
           </h2>
           <p className="reveal mt-4 text-base leading-relaxed text-sand/85 md:text-lg">
-            Recent front-end builds spanning restaurant booking, product dashboards,
-            and brand storytelling.
+            Selected builds across product UI, FastAPI services, and RAG-powered
+            experiences—kept clear, shippable, and easy to extend.
           </p>
         </div>
 
