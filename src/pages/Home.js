@@ -224,6 +224,7 @@ export default function Home() {
                 <p className="mt-3 text-base leading-relaxed text-granite-muted">
                   {campus.detail}
                 </p>
+                <p className="mt-3 text-sm text-granite">{campus.address}</p>
               </div>
             </article>
           ))}

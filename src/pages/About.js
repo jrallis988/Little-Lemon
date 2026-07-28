@@ -66,26 +66,67 @@ export default function About() {
       </section>
 
       <section className="section-shell py-16 sm:py-20">
-        <div className="reveal max-w-2xl" data-reveal>
+        <div className="max-w-2xl">
           <p className="eyebrow">Campuses</p>
           <h2 className="display-title mt-3">Find your place to learn</h2>
         </div>
-        <div className="mt-10 grid gap-8 md:grid-cols-3">
+
+        <div className="mt-10 space-y-14">
           {campuses.map((campus) => (
-            <article key={campus.name} className="reveal" data-reveal>
-              <p className="font-display text-xs font-semibold uppercase tracking-[0.18em] text-valley">
-                {campus.role}
-              </p>
-              <h3 className="mt-3 font-display text-2xl font-semibold text-river-deep">
-                {campus.name}
-              </h3>
-              <p className="mt-3 leading-relaxed text-granite-muted">
-                {campus.detail}
-              </p>
+            <article
+              key={campus.name}
+              className="grid gap-8 border-t border-river/15 pt-10 lg:grid-cols-[0.95fr_1.05fr]"
+            >
+              <div>
+                <img
+                  src={campus.image}
+                  alt={`${campus.name} campus`}
+                  className="h-56 w-full object-cover"
+                />
+                <p className="mt-5 font-display text-xs font-semibold uppercase tracking-[0.18em] text-valley">
+                  {campus.role}
+                </p>
+                <h3 className="mt-3 font-display text-3xl font-semibold text-river-deep">
+                  {campus.name}
+                </h3>
+                <p className="mt-3 leading-relaxed text-granite-muted">
+                  {campus.detail}
+                </p>
+                <ul className="mt-5 space-y-2 text-sm text-granite">
+                  <li>{campus.address}</li>
+                  <li>{campus.hours}</li>
+                  <li>
+                    <a
+                      href={`tel:${campus.phone.replace(/[^\d+]/g, "")}`}
+                      className="font-semibold text-river underline-offset-2 hover:underline"
+                    >
+                      {campus.phone}
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <iframe
+                  title={`${campus.name} campus map`}
+                  src={campus.mapEmbed}
+                  className="h-64 w-full border border-river/15 bg-river-mist sm:h-80"
+                  loading="lazy"
+                />
+                <a
+                  href={campus.mapLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-3 inline-flex text-sm font-semibold text-river underline-offset-2 hover:underline"
+                >
+                  Open larger map →
+                </a>
+              </div>
             </article>
           ))}
         </div>
-        <div className="reveal mt-12 flex flex-wrap gap-3" data-reveal>
+
+        <div className="mt-12 flex flex-wrap gap-3">
           <Link to="/admissions" className="btn-primary">
             Plan a campus visit
           </Link>

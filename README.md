@@ -10,15 +10,18 @@ A modern marketing site for [River Valley Community College](https://www.riverva
 
 ## Pages
 
-- `/` — brand-forward home
-- `/programs` — program areas with linked pathways
-- `/programs/:slug` — program detail pages
-- `/admissions` — application steps + inquiry form
-- `/financial-aid` — aid steps and tuition snapshot
-- `/student-life` — campus supports and belonging
-- `/about` — history, campuses, and college snapshot
+- `/` — brand-forward home with happening strip
+- `/programs` — filterable catalog (area, credential, campus, search)
+- `/programs/:slug` — pathway details
+- `/admissions` — steps + inquiry form
+- `/financial-aid` — tuition rates + estimate calculator
+- `/student-life` — supports and belonging
+- `/about` — history, campuses, and maps
 
 ## Admissions form
 
-Set `REACT_APP_FORMSPREE_ID` to your Formspree form id to send inquiries live.
-Without it, submissions are saved to `localStorage` for local demos.
+1. Copy `.env.example` to `.env`
+2. Set `REACT_APP_FORMSPREE_ID` to your Formspree form id
+3. Restart `npm start`
+
+Without Formspree, submissions open a mailto draft to admissions and save a local copy in the browser.

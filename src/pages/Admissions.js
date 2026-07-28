@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import PageHero from "../components/PageHero";
 import useReveal from "../hooks/useReveal";
-import { images } from "../data/content";
+import { contact, images } from "../data/content";
 
 const steps = [
   {
@@ -38,6 +38,7 @@ export default function Admissions() {
   const [form, setForm] = useState(initialForm);
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState("");
+  const [delivery, setDelivery] = useState("");
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -48,6 +49,7 @@ export default function Admissions() {
     event.preventDefault();
     setStatus("submitting");
     setError("");
+    setDelivery("");
 
     const payload = {
       ...form,
@@ -56,6 +58,15 @@ export default function Admissions() {
     };
 
     try {
+      const existing = JSON.parse(
+        window.localStorage.getItem("rvcc-admissions-inquiries") || "[]"
+      );
+      existing.push(payload);
+      window.localStorage.setItem(
+        "rvcc-admissions-inquiries",
+        JSON.stringify(existing)
+      );
+
       if (FORMSPREE_ID) {
         const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
           method: "POST",
@@ -69,16 +80,23 @@ export default function Admissions() {
         if (!response.ok) {
           throw new Error("Unable to send right now. Please try again.");
         }
+        setDelivery("formspree");
       } else {
-        const existing = JSON.parse(
-          window.localStorage.getItem("rvcc-admissions-inquiries") || "[]"
-        );
-        existing.push(payload);
-        window.localStorage.setItem(
-          "rvcc-admissions-inquiries",
-          JSON.stringify(existing)
-        );
-        await new Promise((resolve) => setTimeout(resolve, 450));
+        const body = [
+          `Name: ${form.name}`,
+          `Email: ${form.email}`,
+          `Interest: ${form.interest}`,
+          `Campus: ${form.campus}`,
+          "",
+          form.message || "(No additional message)",
+        ].join("\n");
+
+        const mailto = `mailto:${contact.email}?subject=${encodeURIComponent(
+          payload._subject
+        )}&body=${encodeURIComponent(body)}`;
+        window.location.href = mailto;
+        setDelivery("mailto");
+        await new Promise((resolve) => setTimeout(resolve, 300));
       }
 
       setStatus("success");
@@ -124,10 +142,23 @@ export default function Admissions() {
           </ol>
           <p className="reveal mt-10 text-granite-muted" data-reveal>
             Need aid details first?{" "}
-            <Link to="/financial-aid" className="font-semibold text-river underline-offset-2 hover:underline">
+            <Link
+              to="/financial-aid"
+              className="font-semibold text-river underline-offset-2 hover:underline"
+            >
               Visit Financial Aid
             </Link>
             .
+          </p>
+          <p className="mt-4 text-sm text-granite-muted">
+            Or email{" "}
+            <a
+              href={`mailto:${contact.email}`}
+              className="font-semibold text-river underline-offset-2 hover:underline"
+            >
+              {contact.email}
+            </a>{" "}
+            · {contact.phone}
           </p>
         </div>
 
@@ -141,7 +172,10 @@ export default function Admissions() {
             </h2>
             <p className="mt-2 text-granite-muted">
               Tell us a little about yourself and we will follow up with next
-              steps.
+              steps
+              {FORMSPREE_ID
+                ? "."
+                : " — this opens an email draft to admissions."}
             </p>
 
             <div className="mt-8 space-y-5">
@@ -233,9 +267,9 @@ export default function Admissions() {
 
             {status === "success" ? (
               <p className="mt-4 text-sm font-medium text-valley" role="status">
-                Thanks — your inquiry was saved
-                {FORMSPREE_ID ? " and sent to admissions" : " locally for this demo"}
-                . We will follow up soon.
+                {delivery === "formspree"
+                  ? "Thanks — your inquiry was sent to admissions."
+                  : "Thanks — your email draft should be open, and a local copy was saved in this browser."}
               </p>
             ) : null}
 

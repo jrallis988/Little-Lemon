@@ -21,13 +21,17 @@ export default function ProgramDetail() {
   const heroImage =
     program.slug === "radiologic-technology"
       ? images.radiology
-      : program.slug === "nursing" || program.area === "Health Sciences"
-        ? images.healthcare
-        : program.area === "STEM & Technology"
-          ? images.science
-          : program.area === "Business & Accounting"
-            ? images.classroom
-            : images.community;
+      : program.slug === "medical-assistant"
+        ? images.medicalAssistant
+        : program.slug === "early-childhood-education"
+          ? images.ece
+          : program.slug === "nursing" || program.area === "Health Sciences"
+            ? images.healthcare
+            : program.area === "STEM & Technology"
+              ? images.science
+              : program.area === "Business & Accounting"
+                ? images.classroom
+                : images.community;
 
   const heroAlt =
     program.slug === "radiologic-technology"

@@ -35,14 +35,24 @@ test("renders a rich program detail page", () => {
   expect(screen.getByRole("link", { name: /plan a campus visit/i })).toBeInTheDocument();
 });
 
-test("renders financial aid page", () => {
+test("filters programs by campus", () => {
+  render(
+    <MemoryRouter initialEntries={["/programs"]}>
+      <App />
+    </MemoryRouter>
+  );
+
+  expect(screen.getByText(/showing/i)).toBeInTheDocument();
+  expect(screen.getByRole("heading", { name: /find the pathway/i })).toBeInTheDocument();
+});
+
+test("renders tuition estimate tools", () => {
   render(
     <MemoryRouter initialEntries={["/financial-aid"]}>
       <App />
     </MemoryRouter>
   );
 
-  expect(
-    screen.getByRole("heading", { name: /make college affordable/i })
-  ).toBeInTheDocument();
+  expect(screen.getByText(/rough annual tuition calculator/i)).toBeInTheDocument();
+  expect(screen.getAllByText(/new hampshire resident/i).length).toBeGreaterThan(0);
 });

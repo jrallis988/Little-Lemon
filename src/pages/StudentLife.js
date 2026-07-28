@@ -16,29 +16,31 @@ export default function StudentLife() {
         imageAlt="Students gathering outdoors at River Valley Community College"
       />
 
-      <section className="section-shell py-16 sm:py-20">
-        <div className="reveal max-w-3xl" data-reveal>
+      <section className="section-shell grid gap-10 py-16 sm:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+        <div className="reveal" data-reveal>
           <p className="eyebrow">Everyday support</p>
           <h2 className="display-title mt-3">
             Built for working students and caregivers
           </h2>
+          <div className="mt-10 grid gap-8 sm:grid-cols-2">
+            {lifeSupports.map((item) => (
+              <article key={item.title}>
+                <h3 className="font-display text-xl font-semibold text-river-deep">
+                  {item.title}
+                </h3>
+                <p className="mt-3 leading-relaxed text-granite-muted">
+                  {item.copy}
+                </p>
+              </article>
+            ))}
+          </div>
         </div>
-
-        <div className="mt-12 grid gap-8 md:grid-cols-2">
-          {lifeSupports.map((item) => (
-            <article
-              key={item.title}
-              className="reveal border-t border-river/15 pt-6"
-              data-reveal
-            >
-              <h3 className="font-display text-2xl font-semibold text-river-deep">
-                {item.title}
-              </h3>
-              <p className="mt-3 leading-relaxed text-granite-muted">
-                {item.copy}
-              </p>
-            </article>
-          ))}
+        <div className="reveal overflow-hidden" data-reveal>
+          <img
+            src={images.foodPantry}
+            alt="Food pantry shelves stocked for RVCC students"
+            className="h-full min-h-[18rem] w-full object-cover"
+          />
         </div>
       </section>
 
