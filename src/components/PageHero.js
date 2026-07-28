@@ -5,6 +5,7 @@ export default function PageHero({
   image,
   imageAlt = "",
   children,
+  priority = true,
 }) {
   return (
     <section className="relative overflow-hidden pt-28 text-white">
@@ -14,6 +15,9 @@ export default function PageHero({
             src={image}
             alt={imageAlt}
             className="absolute inset-0 h-full w-full object-cover"
+            loading={priority ? "eager" : "lazy"}
+            decoding="async"
+            fetchpriority={priority ? "high" : "auto"}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-river-deep/88 via-river-deep/68 to-river-deep/35" />
           <div className="absolute inset-0 bg-gradient-to-t from-river-deep/45 via-transparent to-river-deep/25" />

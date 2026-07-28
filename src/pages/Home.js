@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Seo from "../components/Seo";
 import useReveal from "../hooks/useReveal";
 import {
   campuses,
@@ -15,11 +16,15 @@ export default function Home() {
 
   return (
     <div ref={revealRef}>
+      <Seo path="/" />
       <section className="relative min-h-[100svh] overflow-hidden text-white">
         <img
           src={images.hero}
           alt="Aerial view of River Valley Community College’s Claremont campus"
           className="absolute inset-0 h-full w-full object-cover object-[center_42%] animate-ken-burns"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-river-deep/90 via-river-deep/55 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-river-deep/75 via-transparent to-river-deep/30" />
@@ -108,6 +113,8 @@ export default function Home() {
               src={images.science}
               alt="Students and faculty working in an RVCC science lab"
               className="h-72 w-full object-cover sm:h-80"
+              loading="lazy"
+              decoding="async"
             />
           </div>
         </div>
@@ -162,6 +169,8 @@ export default function Home() {
                       src={area.image}
                       alt=""
                       className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                      loading="lazy"
+                      decoding="async"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-river-deep/40 to-transparent" />
                   </div>
@@ -223,6 +232,8 @@ export default function Home() {
                 src={campus.image}
                 alt={`${campus.name} campus`}
                 className="h-44 w-full object-cover"
+                loading="lazy"
+                decoding="async"
               />
               <div className="border-l border-river/20 pl-5 pt-5">
                 <p className="font-display text-xs font-semibold uppercase tracking-[0.18em] text-valley">
@@ -251,6 +262,8 @@ export default function Home() {
               src={images.testimonial}
               alt="Diane Cammarata, RVCC Class of 2019"
               className="h-64 w-full object-cover object-top lg:h-full"
+              loading="lazy"
+              decoding="async"
             />
             <div className="flex flex-col justify-center px-6 py-12 sm:px-10 sm:py-14">
               <blockquote className="max-w-xl">

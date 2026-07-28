@@ -1,5 +1,6 @@
 import { Link, Navigate, useParams } from "react-router-dom";
 import PageHero from "../components/PageHero";
+import Seo from "../components/Seo";
 import useReveal from "../hooks/useReveal";
 import { getProgram, images, programs } from "../data/content";
 
@@ -49,8 +50,18 @@ export default function ProgramDetail() {
     { label: "Start terms", value: program.startTerms.join(" · ") },
   ];
 
+  const officialHref =
+    program.officialUrl ||
+    program.catalogUrl ||
+    "https://catalog.rivervalley.edu/degrees";
+
   return (
     <div ref={revealRef}>
+      <Seo
+        title={program.name}
+        description={program.summary}
+        path={`/programs/${program.slug}`}
+      />
       <PageHero
         eyebrow={program.area}
         title={program.name}
@@ -62,9 +73,14 @@ export default function ProgramDetail() {
           <Link to="/admissions" className="btn-primary">
             Start admissions
           </Link>
-          <Link to="/admissions" className="btn-secondary">
-            Plan a campus visit
-          </Link>
+          <a
+            href={officialHref}
+            target="_blank"
+            rel="noreferrer"
+            className="btn-secondary"
+          >
+            Official requirements
+          </a>
         </div>
       </PageHero>
 
@@ -126,6 +142,31 @@ export default function ProgramDetail() {
             </ul>
           </div>
 
+          <div
+            className="reveal border border-river/15 bg-river-mist/50 p-5 sm:p-6"
+            data-reveal
+          >
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-valley">
+              Source of truth
+            </p>
+            <h2 className="mt-3 font-display text-xl font-semibold text-river-deep">
+              Confirm requirements on the official listing
+            </h2>
+            <p className="mt-3 text-sm leading-relaxed text-granite-muted">
+              Admission details, clinical hours, and tuition for this pathway can
+              change. Use the official RVCC catalog or program page before you
+              apply.
+            </p>
+            <a
+              href={officialHref}
+              target="_blank"
+              rel="noreferrer"
+              className="btn-primary mt-5 inline-flex"
+            >
+              Open official requirements
+            </a>
+          </div>
+
           <div className="reveal" data-reveal>
             <p className="eyebrow">Careers</p>
             <h2 className="mt-3 font-display text-2xl font-semibold text-river-deep">
@@ -171,20 +212,21 @@ export default function ProgramDetail() {
             <Link to="/admissions" className="btn-primary w-full text-center">
               Talk with admissions
             </Link>
+            <a
+              href={officialHref}
+              target="_blank"
+              rel="noreferrer"
+              className="btn-ghost w-full text-center"
+            >
+              Official requirements
+            </a>
             <Link to="/financial-aid" className="btn-ghost w-full text-center">
               Review financial aid
             </Link>
-            <a
-              href={
-                program.catalogUrl || "https://catalog.rivervalley.edu/degrees"
-              }
-              target="_blank"
-              rel="noreferrer"
+            <Link
+              to="/programs"
               className="text-center text-sm font-semibold text-river underline-offset-2 hover:underline"
             >
-              Official catalog entry →
-            </a>
-            <Link to="/programs" className="text-center text-sm font-semibold text-river underline-offset-2 hover:underline">
               Back to all programs
             </Link>
           </div>

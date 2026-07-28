@@ -32,7 +32,7 @@ test("renders a rich program detail page", () => {
   expect(screen.getByText(/typical length/i)).toBeInTheDocument();
   expect(screen.getByText(/before you begin/i)).toBeInTheDocument();
   expect(screen.getByText(/where this pathway can lead/i)).toBeInTheDocument();
-  expect(screen.getByRole("link", { name: /plan a campus visit/i })).toBeInTheDocument();
+  expect(screen.getAllByRole("link", { name: /official requirements/i }).length).toBeGreaterThan(0);
 });
 
 test("filters programs by campus", () => {
@@ -71,6 +71,9 @@ test("renders expanded catalog pathways", () => {
     screen.getByRole("heading", { name: /medical laboratory technician/i })
   ).toBeInTheDocument();
   expect(screen.getByText(/selective admission:/i)).toBeInTheDocument();
+  expect(
+    screen.getAllByRole("link", { name: /official requirements/i }).length
+  ).toBeGreaterThan(0);
 });
 
 test("renders CCSNH portal links on student life", () => {
@@ -84,4 +87,7 @@ test("renders CCSNH portal links on student life", () => {
   expect(
     screen.getAllByRole("link", { name: /ccsnh online resources/i }).length
   ).toBeGreaterThan(0);
+  expect(
+    screen.getByRole("heading", { name: /easylogin · register · pay/i })
+  ).toBeInTheDocument();
 });

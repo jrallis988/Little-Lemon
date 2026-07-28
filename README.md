@@ -12,19 +12,22 @@ A modern marketing site for [River Valley Community College](https://www.riverva
 
 - `/` — brand-forward home with happening strip
 - `/programs` — filterable catalog (area, credential, campus, search)
-- `/programs/:slug` — pathway details + official catalog links
-- `/admissions` — steps, inquiry form, team, and portal links
+- `/programs/:slug` — pathway details + official requirements bridge
+- `/admissions` — steps, Formspree inquiry form, team, portal links
 - `/financial-aid` — FAFSA code, aid steps, tuition rates + calculator
-- `/student-life` — supports, success resources, and CCSNH portals
+- `/student-life` — EasyLogin · Register · Pay strip, supports, portals
 - `/about` — history, campuses, and maps
 
-## Admissions form (Formspree)
+## Activate Formspree (required for form delivery)
 
-1. Copy `.env.example` to `.env`
-2. Create a form at [formspree.io](https://formspree.io) and set `REACT_APP_FORMSPREE_ID` to the form id
-3. Restart `npm start`
+1. Open this claim link and sign in / create a Formspree account:  
+   [Claim RVCC Admissions form](https://formspree.io/claim?name=RVCC+Admissions+Inquiry&project=river-valley-website&field.name=text,required,maxlength:100,prettyName:Full+name&field.email=email,required&field.phone=text,maxlength:40,prettyName:Phone&field.interest=text,maxlength:100,prettyName:Area+of+interest&field.campus=text,maxlength:40,prettyName:Preferred+campus&field.startTerm=text,maxlength:40,prettyName:Preferred+start+term&field.message=text,maxlength:2000&action.email=jjrallis%40unh.edu)
+2. Copy `.env.example` → `.env`
+3. Set `REACT_APP_FORMSPREE_ID` to the id after `/f/` in your endpoint
+4. Optionally set `REACT_APP_SITE_URL` to your deployed origin for absolute OG tags
+5. Restart `npm start`
 
-Without Formspree, submissions open a mailto draft to admissions and save a local copy in the browser.
+Without a Formspree id, the inquiry form stays on-page (no `mailto:` popup) and asks the visitor to email or call admissions.
 
 ## Official links used on the site
 

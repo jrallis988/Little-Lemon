@@ -45,6 +45,49 @@ export const portalLinks = [
   },
 ];
 
+/** Claim this Formspree form, then paste the /f/{id} into REACT_APP_FORMSPREE_ID */
+export const formspreeClaimUrl =
+  "https://formspree.io/claim?name=RVCC+Admissions+Inquiry&project=river-valley-website&field.name=text,required,maxlength:100,prettyName:Full+name&field.email=email,required&field.phone=text,maxlength:40,prettyName:Phone&field.interest=text,maxlength:100,prettyName:Area+of+interest&field.campus=text,maxlength:40,prettyName:Preferred+campus&field.startTerm=text,maxlength:40,prettyName:Preferred+start+term&field.message=text,maxlength:2000&action.email=jjrallis%40unh.edu";
+
+export const studentOps = [
+  {
+    key: "01",
+    title: "EasyLogin",
+    code: "passwordstu.ccsnh.edu",
+    steps: [
+      "Open CCSNH Online Resources → Student EasyLogin Self Service",
+      "Reset password with the EasyLogin username from Admissions",
+      "Enable MFA, then sign in at portal.ccsnh.edu",
+    ],
+    href: "https://passwordstu.ccsnh.edu/showLogin.cc",
+    cta: "Open EasyLogin",
+  },
+  {
+    key: "02",
+    title: "Register",
+    code: "sis.ccsnh.edu · myrvcc",
+    steps: [
+      "Review the course schedule for your campus/term",
+      "Meet your advisor (or use Navigate) to confirm your plan",
+      "Register in SIS / My RVCC before payment deadlines",
+    ],
+    href: "https://www.rivervalley.edu/admissions/course-schedules/",
+    cta: "Course schedules",
+  },
+  {
+    key: "03",
+    title: "Pay",
+    code: "SIS → Student Account",
+    steps: [
+      "Accept aid awards in SIS when prompted",
+      "Pay remaining balance online or at Student Accounts",
+      "Confirm enrollment holds are cleared before day one",
+    ],
+    href: "https://www.ccsnh.edu/online-resources/",
+    cta: "Open SIS resources",
+  },
+];
+
 export const contact = {
   phone: "(603) 542-7744",
   tollFree: "(800) 837-0658",
@@ -494,9 +537,12 @@ export const programs = [
     duration: "Certificate pathway",
     campuses: ["Lebanon"],
     startTerms: ["Fall", "Spring"],
+    catalogUrl: "https://catalog.rivervalley.edu/massage-therapy",
+    officialUrl: "https://www.rivervalley.edu/program/massage-therapy/",
     prerequisites: [
       "Interest in bodywork and client care",
       "Program kit and clinical readiness as advised",
+      "See official catalog for current hour and licensure requirements",
     ],
     careers: [
       "Licensed massage therapist pathway",
@@ -510,7 +556,7 @@ export const programs = [
       "Hands-on technique development",
       "Client-care focused training",
     ],
-    nextStep: "Ask about Lebanon start dates and program kits.",
+    nextStep: "Confirm Lebanon start dates and kits against the official catalog.",
   },
   {
     slug: "psychology",
@@ -549,9 +595,12 @@ export const programs = [
     campuses: ["Claremont", "Lebanon"],
     startTerms: ["Fall", "Spring"],
     selective: true,
+    catalogUrl: "https://catalog.rivervalley.edu/phlebotomy",
+    officialUrl: "https://www.rivervalley.edu/program/phlebotomy/",
     prerequisites: [
       "High school diploma or equivalent",
-      "Clinical readiness as required",
+      "Clinical readiness as required by the current catalog",
+      "Program-specific health and background clearances",
     ],
     careers: [
       "Phlebotomy technician",
@@ -565,7 +614,7 @@ export const programs = [
       "Fast path into healthcare support",
       "Hands-on practice emphasis",
     ],
-    nextStep: "Check upcoming certificate start dates.",
+    nextStep: "Verify upcoming cohort dates in the official phlebotomy listing.",
   },
   {
     slug: "medical-laboratory-technician",
@@ -577,7 +626,8 @@ export const programs = [
     campuses: ["Claremont"],
     startTerms: ["Fall"],
     selective: true,
-    catalogUrl: "https://catalog.rivervalley.edu/degrees",
+    catalogUrl: "https://catalog.rivervalley.edu/medical-laboratory-technician",
+    officialUrl: "https://catalog.rivervalley.edu/medical-laboratory-technician",
     prerequisites: [
       "Program advising and selective admission review",
       "Science readiness for clinical lab coursework",
@@ -595,7 +645,7 @@ export const programs = [
       "Hands-on lab technique and quality practices",
       "Selective allied health pathway with clinical placements",
     ],
-    nextStep: "Ask admissions about MLT prerequisites and application timing.",
+    nextStep: "Review MLT admission requirements in the official catalog.",
   },
   {
     slug: "healthcare-applications",
@@ -606,9 +656,13 @@ export const programs = [
     duration: "Stackable certificate pathway",
     campuses: ["Claremont", "Keene", "Lebanon", "Online / hybrid"],
     startTerms: ["Fall", "Spring"],
+    catalogUrl:
+      "https://catalog.rivervalley.edu/healthcare/healthcare-applications-certificate",
+    officialUrl: "https://www.rivervalley.edu/program/healthcare-2/",
     prerequisites: [
       "High school diploma or equivalent",
-      "Advising to choose the right pre-professional track",
+      "Advising to choose the matching pre-professional track",
+      "See catalog tracks: Pre-RN, Pre-LPN, Pre-Rad Tech, Pre-OTA/PTA, Pre-Respiratory, Pre-MLT, Pre-Dental Hygiene",
     ],
     careers: [
       "Preparation for competitive health programs",
@@ -618,11 +672,11 @@ export const programs = [
     summary:
       "Build the science and healthcare foundations used for pre-RN, pre-LPN, pre-Rad Tech, pre-OTA/PTA, pre-Respiratory, and related tracks.",
     highlights: [
-      "Pre-professional options aligned to selective health programs",
+      "Named pre-professional options in the official catalog",
       "Stackable coursework while you prepare to apply",
       "Advising support to choose the right sequence",
     ],
-    nextStep: "Map your target program with an allied health advisor.",
+    nextStep: "Open the catalog certificate page and pick your pre-professional track.",
   },
   {
     slug: "licensed-nursing-assistant",
@@ -630,12 +684,15 @@ export const programs = [
     area: "Health Sciences",
     credential: "Certificate",
     format: "In-person with clinical practice",
-    duration: "Short-term certificate",
+    duration: "Short-term workforce certificate",
     campuses: ["Claremont", "Lebanon"],
     startTerms: ["Fall", "Spring"],
+    catalogUrl: "https://www.rivervalley.edu/program/lna-licensed-nursing-assistant-2/",
+    officialUrl: "https://www.rivervalley.edu/program/lna-licensed-nursing-assistant-2/",
     prerequisites: [
       "Interest in direct patient care",
-      "Clinical readiness and background requirements as advised",
+      "Clinical readiness and background requirements as published on the LNA program page",
+      "Workforce Development confirmation of cohort schedule and tuition",
     ],
     careers: [
       "Licensed nursing assistant",
@@ -645,11 +702,11 @@ export const programs = [
     summary:
       "Enter patient care quickly with skills for bedside support in hospitals, clinics, and long-term care settings.",
     highlights: [
-      "Fast workforce entry into healthcare",
-      "Hands-on clinical skill practice",
-      "Natural ladder into nursing programs",
+      "Workforce Development pathway with published NH salary ranges",
+      "Hands-on nursing lab practice supported by Byrne and Mascoma foundations",
+      "Natural ladder into practical and registered nursing programs",
     ],
-    nextStep: "Ask admissions about upcoming LNA cohorts and clinical sites.",
+    nextStep: "Use the official LNA page for admission, schedule, and tuition details.",
   },
   {
     slug: "general-studies",
@@ -660,6 +717,8 @@ export const programs = [
     duration: "About 2 years",
     campuses: ["Claremont", "Keene", "Lebanon", "Online / hybrid"],
     startTerms: ["Fall", "Spring", "Summer"],
+    catalogUrl: "https://catalog.rivervalley.edu/general-studies",
+    officialUrl: "https://catalog.rivervalley.edu/general-studies",
     prerequisites: [
       "High school diploma or equivalent",
       "Advising to design a goal-aligned course plan",
@@ -687,6 +746,8 @@ export const programs = [
     duration: "Certificate pathway",
     campuses: ["Claremont"],
     startTerms: ["Fall", "Spring"],
+    catalogUrl: "https://catalog.rivervalley.edu/advanced-machine-tool-technology",
+    officialUrl: "https://catalog.rivervalley.edu/advanced-machine-tool-technology",
     prerequisites: [
       "Comfort with hands-on technical work",
       "Advising for shop safety and tool readiness",
@@ -703,20 +764,23 @@ export const programs = [
       "Manufacturing-ready technical skills",
       "Certificate focused on workplace readiness",
     ],
-    nextStep: "Ask about lab schedules and certificate start terms.",
+    nextStep: "Confirm lab schedules in the official catalog entry.",
   },
   {
     slug: "peer-support",
     name: "Peer Support",
     area: "Education & Human Services",
     credential: "Certificate",
-    format: "Flexible formats",
+    format: "Workforce / flexible formats",
     duration: "Short-term certificate",
     campuses: ["Claremont", "Keene", "Lebanon"],
     startTerms: ["Fall", "Spring"],
+    catalogUrl: "https://www.rivervalley.edu/program/peersupport/",
+    officialUrl: "https://www.rivervalley.edu/program/peersupport/",
     prerequisites: [
       "Interest in recovery-oriented and helping roles",
-      "Advising for certificate requirements",
+      "Confirm current class format, cost, and schedule on the official Peer Support page",
+      "Workforce Development contact for cohort timing",
     ],
     careers: [
       "Peer support specialist pathways",
@@ -726,11 +790,11 @@ export const programs = [
     summary:
       "Prepare to support others through lived-experience informed, recovery-oriented helping skills.",
     highlights: [
+      "Workforce Development pathway with published schedule and cost details",
       "Community mental health and recovery focus",
       "Practical helping and communication skills",
-      "Pathway into human services settings",
     ],
-    nextStep: "Talk with admissions about peer support certificate timing.",
+    nextStep: "Open the official Peer Support page for format, cost, and schedule.",
   },
 ];
 

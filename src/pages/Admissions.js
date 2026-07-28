@@ -6,9 +6,11 @@ import {
   admissionsTeam,
   contact,
   filterOptions,
+  formspreeClaimUrl,
   images,
   portalLinks,
 } from "../data/content";
+import Seo from "../components/Seo";
 
 const steps = [
   {
@@ -90,40 +92,26 @@ export default function Admissions() {
         JSON.stringify(existing)
       );
 
-      if (FORMSPREE_ID) {
-        const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
-        });
-
-        if (!response.ok) {
-          throw new Error("Unable to send right now. Please try again.");
-        }
-        setDelivery("formspree");
-      } else {
-        const body = [
-          `Name: ${form.name}`,
-          `Email: ${form.email}`,
-          `Phone: ${form.phone || "(not provided)"}`,
-          `Interest: ${form.interest}`,
-          `Campus: ${form.campus}`,
-          `Preferred start: ${form.startTerm}`,
-          "",
-          form.message || "(No additional message)",
-        ].join("\n");
-
-        const mailto = `mailto:${contact.email}?subject=${encodeURIComponent(
-          payload._subject
-        )}&body=${encodeURIComponent(body)}`;
-        window.location.href = mailto;
-        setDelivery("mailto");
-        await new Promise((resolve) => setTimeout(resolve, 300));
+      if (!FORMSPREE_ID) {
+        throw new Error(
+          `Form delivery is not connected yet. Email ${contact.email} or call ${contact.phone} and we will follow up.`
+        );
       }
 
+      const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error("Unable to send right now. Please try again.");
+      }
+
+      setDelivery("formspree");
       setStatus("success");
       setForm(initialForm);
     } catch (err) {
@@ -136,6 +124,11 @@ export default function Admissions() {
 
   return (
     <div ref={revealRef}>
+      <Seo
+        title="Admissions"
+        description="Apply to River Valley Community College, request information, and meet the admissions team serving Claremont, Keene, and Lebanon."
+        path="/admissions"
+      />
       <PageHero
         eyebrow="Admissions"
         title="Your next step starts here"
@@ -216,11 +209,23 @@ export default function Admissions() {
             </h2>
             <p className="mt-2 text-granite-muted">
               Tell us a little about yourself and we will follow up with next
-              steps
-              {FORMSPREE_ID
-                ? "."
-                : " — this opens an email draft to admissions."}
+              steps over email.
             </p>
+            {!FORMSPREE_ID && process.env.NODE_ENV === "development" ? (
+              <p className="mt-3 rounded-md border border-sunrise/40 bg-sunrise/10 px-3 py-2 text-sm text-river-deep">
+                Dev: claim Formspree, then set{" "}
+                <code className="font-mono text-xs">REACT_APP_FORMSPREE_ID</code>.{" "}
+                <a
+                  href={formspreeClaimUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="font-semibold underline underline-offset-2"
+                >
+                  Open claim link
+                </a>
+                .
+              </p>
+            ) : null}
 
             <div className="mt-8 space-y-5">
               <label className="block">
@@ -360,11 +365,9 @@ export default function Admissions() {
             <div id={statusId} aria-live="polite" className="mt-4 min-h-[1.25rem]">
               {status === "success" ? (
                 <p className="text-sm font-medium text-valley" role="status">
-                  {delivery === "formspree"
-                    ? "Thanks — your inquiry was sent to admissions."
-                    : delivery === "spam"
-                      ? "Thanks — we received your request."
-                      : "Thanks — your email draft should be open, and a local copy was saved in this browser."}
+                  {delivery === "spam"
+                    ? "Thanks — we received your request."
+                    : "Thanks — your inquiry was sent to admissions."}
                 </p>
               ) : null}
 

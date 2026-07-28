@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import PageHero from "../components/PageHero";
+import Seo from "../components/Seo";
 import useReveal from "../hooks/useReveal";
 import {
   aidSteps,
@@ -26,6 +27,11 @@ export default function FinancialAid() {
 
   return (
     <div ref={revealRef}>
+      <Seo
+        title="Financial Aid"
+        description="FAFSA school code 007560, tuition rates, and a quick estimate calculator for River Valley Community College."
+        path="/financial-aid"
+      />
       <PageHero
         eyebrow="Financial Aid"
         title="Make college affordable — then finish"

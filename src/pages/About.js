@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import PageHero from "../components/PageHero";
+import Seo from "../components/Seo";
 import useReveal from "../hooks/useReveal";
 import { campuses, images, outcomes } from "../data/content";
 
@@ -8,6 +9,11 @@ export default function About() {
 
   return (
     <div ref={revealRef}>
+      <Seo
+        title="About"
+        description="River Valley Community College history, outcomes, and campus maps for Claremont, Keene, and Lebanon."
+        path="/about"
+      />
       <PageHero
         eyebrow="About RVCC"
         title="A proud river-valley college since 1968"
@@ -41,6 +47,8 @@ export default function About() {
             src={images.hero}
             alt="Aerial view of the Claremont campus"
             className="h-full min-h-[20rem] w-full object-cover"
+            loading="lazy"
+            decoding="async"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-river-deep/50 to-transparent" />
         </div>
@@ -82,6 +90,8 @@ export default function About() {
                   src={campus.image}
                   alt={`${campus.name} campus`}
                   className="h-56 w-full object-cover"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <p className="mt-5 font-display text-xs font-semibold uppercase tracking-[0.18em] text-valley">
                   {campus.role}

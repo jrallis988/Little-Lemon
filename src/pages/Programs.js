@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import PageHero from "../components/PageHero";
+import Seo from "../components/Seo";
 import {
   filterOptions,
   filterPrograms,
@@ -25,6 +26,11 @@ export default function Programs() {
 
   return (
     <div>
+      <Seo
+        title="Programs"
+        description="Filter River Valley Community College degrees and certificates by focus area, credential, and campus."
+        path="/programs"
+      />
       <PageHero
         eyebrow="Programs"
         title="Find the pathway that fits your next chapter"

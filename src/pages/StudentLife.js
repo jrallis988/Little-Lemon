@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import PageHero from "../components/PageHero";
+import Seo from "../components/Seo";
 import useReveal from "../hooks/useReveal";
 import {
   campuses,
@@ -7,6 +8,7 @@ import {
   images,
   lifeSupports,
   portalLinks,
+  studentOps,
   studentResources,
 } from "../data/content";
 
@@ -15,6 +17,11 @@ export default function StudentLife() {
 
   return (
     <div ref={revealRef}>
+      <Seo
+        title="Student Life"
+        description="Food access, transit support, advising, and the EasyLogin → register → pay flow for River Valley Community College students."
+        path="/student-life"
+      />
       <PageHero
         eyebrow="Student Life"
         title="Support that shows up when life gets busy"
@@ -22,6 +29,46 @@ export default function StudentLife() {
         image={images.community}
         imageAlt="Students gathering outdoors at River Valley Community College"
       />
+
+      <section className="border-b border-river/15 bg-river-deep text-white">
+        <div className="section-shell py-10 sm:py-12">
+          <div className="max-w-2xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-sunrise">
+              Current students
+            </p>
+            <h2 className="mt-3 font-display text-2xl font-semibold tracking-tight sm:text-3xl">
+              EasyLogin · Register · Pay
+            </h2>
+          </div>
+          <ol className="mt-8 grid gap-8 lg:grid-cols-3">
+            {studentOps.map((item) => (
+              <li key={item.key} className="border-t border-white/15 pt-5">
+                <p className="font-mono text-xs tracking-wide text-sunrise">
+                  {item.key} · {item.code}
+                </p>
+                <h3 className="mt-3 font-display text-xl font-semibold">
+                  {item.title}
+                </h3>
+                <ol className="mt-4 space-y-2 font-mono text-[13px] leading-relaxed text-white/75">
+                  {item.steps.map((step, index) => (
+                    <li key={step}>
+                      <span className="text-sunrise">{index + 1}.</span> {step}
+                    </li>
+                  ))}
+                </ol>
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-5 inline-flex font-mono text-xs font-semibold uppercase tracking-[0.14em] text-sunrise underline-offset-4 hover:underline"
+                >
+                  {item.cta} →
+                </a>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
 
       <section className="section-shell grid gap-10 py-16 sm:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
         <div className="reveal" data-reveal>
@@ -47,6 +94,8 @@ export default function StudentLife() {
             src={images.foodPantry}
             alt="Food pantry shelves stocked for RVCC students"
             className="h-full min-h-[18rem] w-full object-cover"
+            loading="lazy"
+            decoding="async"
           />
         </div>
       </section>
@@ -116,6 +165,8 @@ export default function StudentLife() {
           src={images.campus}
           alt=""
           className="absolute inset-0 h-full w-full object-cover"
+          loading="lazy"
+          decoding="async"
         />
         <div className="absolute inset-0 bg-river-deep/88" />
         <div className="relative section-shell text-white">
