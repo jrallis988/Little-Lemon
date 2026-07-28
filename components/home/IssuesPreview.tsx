@@ -32,8 +32,11 @@ export function IssuesPreview() {
               <p className="mt-3 text-body-lg text-slate-text">
                 {featured.oneLiner}
               </p>
-              <Link href={`/issues/${featured.slug}`} className="link-cta mt-5">
-                Read More →
+              <Link
+                href={`/issues/${featured.slug}`}
+                className="link-cta mt-5"
+              >
+                Read more about {featured.title} →
               </Link>
             </div>
           </div>

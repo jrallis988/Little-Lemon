@@ -12,6 +12,10 @@ export default function EndorsementsPage() {
   return (
     <>
       <PageHero
+        breadcrumbs={[
+          { href: "/", label: "Home" },
+          { label: "Endorsements" },
+        ]}
         overline="Supporters"
         title="Endorsements"
         subtitle="Named endorsements from real New Hampshire supporters will appear here as they are confirmed."

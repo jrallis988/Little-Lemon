@@ -1,31 +1,31 @@
 "use client";
 
-import { FormEvent, useId, useState } from "react";
-import { AlertCircle, CheckCircle2 } from "lucide-react";
+import { RequiredLegend, RequiredMark, useAccessibleForm } from "@/components/a11y/FormFeedback";
 
 export function TownRequestForm() {
-  const statusId = useId();
-  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
-  const [error, setError] = useState("");
+  const { statusId, status, fieldProps, FieldError, StatusRegion, reportErrors, reportSuccess } =
+    useAccessibleForm();
 
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     const name = String(data.get("name") || "").trim();
     const email = String(data.get("email") || "").trim();
     const town = String(data.get("town") || "").trim();
-    if (!name || !town) {
-      setStatus("error");
-      setError("Please include your name and town.");
-      return;
-    }
+    const errors: Record<string, string> = {};
+
+    if (!name) errors.name = "Enter your name.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setStatus("error");
-      setError("Enter a valid email address.");
+      errors.email = "Enter a valid email address.";
+    }
+    if (!town) errors.town = "Enter your town or city.";
+
+    if (Object.keys(errors).length) {
+      reportErrors(errors);
       return;
     }
-    setStatus("success");
-    setError("");
+
+    reportSuccess("Visit request received — we’ll be in touch.");
     e.currentTarget.reset();
   }
 
@@ -36,21 +36,43 @@ export function TownRequestForm() {
       className="space-y-4 border border-slate-line bg-white p-6 sm:p-8"
       aria-describedby={status !== "idle" ? statusId : undefined}
     >
+      <RequiredLegend />
       <div>
         <label htmlFor="town-name" className="label-field">
           Your name
+          <RequiredMark />
         </label>
-        <input id="town-name" name="name" type="text" className="input-field" autoComplete="name" />
+        <input
+          id="town-name"
+          name="name"
+          type="text"
+          className="input-field"
+          autoComplete="name"
+          required
+          {...fieldProps("name")}
+        />
+        <FieldError name="name" />
       </div>
       <div>
         <label htmlFor="town-email" className="label-field">
           Email
+          <RequiredMark />
         </label>
-        <input id="town-email" name="email" type="email" className="input-field" autoComplete="email" />
+        <input
+          id="town-email"
+          name="email"
+          type="email"
+          className="input-field"
+          autoComplete="email"
+          required
+          {...fieldProps("email")}
+        />
+        <FieldError name="email" />
       </div>
       <div>
         <label htmlFor="town-town" className="label-field">
           Town or city
+          <RequiredMark />
         </label>
         <input
           id="town-town"
@@ -58,7 +80,10 @@ export function TownRequestForm() {
           type="text"
           className="input-field"
           placeholder="e.g. Newmarket"
+          required
+          {...fieldProps("town")}
         />
+        <FieldError name="town" />
       </div>
       <div>
         <label htmlFor="town-notes" className="label-field">
@@ -69,27 +94,7 @@ export function TownRequestForm() {
       <button type="submit" className="btn-primary w-full sm:w-auto">
         Request a Visit
       </button>
-      {status !== "idle" && (
-        <div
-          id={statusId}
-          role="status"
-          aria-live="polite"
-          className={`flex items-start gap-2 rounded-sm px-3 py-2.5 text-sm ${
-            status === "success" ? "bg-paper text-navy" : "bg-paper text-red"
-          }`}
-        >
-          {status === "success" ? (
-            <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
-          ) : (
-            <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
-          )}
-          <span>
-            {status === "success"
-              ? "Got it — we’ll follow up about bringing Nick to your town."
-              : error}
-          </span>
-        </div>
-      )}
+      <StatusRegion successMessage="Visit request received — we’ll be in touch." />
     </form>
   );
 }

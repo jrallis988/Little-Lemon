@@ -1,32 +1,31 @@
 "use client";
 
-import { FormEvent, useId, useState } from "react";
 import Link from "next/link";
-import { AlertCircle, CheckCircle2 } from "lucide-react";
 import { volunteerRoles } from "@/lib/volunteers";
+import { RequiredLegend, RequiredMark, useAccessibleForm } from "@/components/a11y/FormFeedback";
 
 export function VolunteerSignup() {
-  const statusId = useId();
-  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
-  const [error, setError] = useState("");
+  const { statusId, status, fieldProps, FieldError, StatusRegion, reportErrors, reportSuccess } =
+    useAccessibleForm();
 
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     const name = String(data.get("name") || "").trim();
     const email = String(data.get("email") || "").trim();
-    if (!name) {
-      setStatus("error");
-      setError("Please enter your name.");
-      return;
-    }
+    const errors: Record<string, string> = {};
+
+    if (!name) errors.name = "Enter your name.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setStatus("error");
-      setError("Enter a valid email address.");
+      errors.email = "Enter a valid email address.";
+    }
+
+    if (Object.keys(errors).length) {
+      reportErrors(errors);
       return;
     }
-    setStatus("success");
-    setError("");
+
+    reportSuccess("Volunteer sign-up received — thank you.");
     e.currentTarget.reset();
   }
 
@@ -38,14 +37,18 @@ export function VolunteerSignup() {
       className="mt-14 scroll-mt-28 space-y-4 border border-slate-line bg-paper p-6 sm:p-8"
       aria-describedby={status !== "idle" ? statusId : undefined}
     >
-      <h2 className="font-display text-2xl font-bold text-ink">
-        Sign up to volunteer
-      </h2>
+      <h2 className="font-display text-2xl font-bold text-ink">Sign up to volunteer</h2>
+      <RequiredLegend />
       <div>
         <label htmlFor="vol-role" className="label-field">
           Opportunity
         </label>
-        <select id="vol-role" name="role" className="input-field" defaultValue={volunteerRoles[0]?.id}>
+        <select
+          id="vol-role"
+          name="role"
+          className="input-field"
+          defaultValue={volunteerRoles[0]?.id}
+        >
           {volunteerRoles.map((item) => (
             <option key={item.id} value={item.id}>
               {item.title} — {item.location}
@@ -57,14 +60,34 @@ export function VolunteerSignup() {
         <div>
           <label htmlFor="vol-name" className="label-field">
             Full name
+            <RequiredMark />
           </label>
-          <input id="vol-name" name="name" type="text" className="input-field" autoComplete="name" />
+          <input
+            id="vol-name"
+            name="name"
+            type="text"
+            className="input-field"
+            autoComplete="name"
+            required
+            {...fieldProps("name")}
+          />
+          <FieldError name="name" />
         </div>
         <div>
           <label htmlFor="vol-email" className="label-field">
             Email
+            <RequiredMark />
           </label>
-          <input id="vol-email" name="email" type="email" className="input-field" autoComplete="email" />
+          <input
+            id="vol-email"
+            name="email"
+            type="email"
+            className="input-field"
+            autoComplete="email"
+            required
+            {...fieldProps("email")}
+          />
+          <FieldError name="email" />
         </div>
       </div>
       <div>
@@ -79,33 +102,11 @@ export function VolunteerSignup() {
       <p className="text-sm text-slate-muted">
         Prefer email first?{" "}
         <Link href="/#join" className="font-semibold text-red underline-offset-2 hover:underline">
-          Join Team Varga
+          Join Team Varga on the homepage
         </Link>
         .
       </p>
-      {status !== "idle" && (
-        <div
-          id={statusId}
-          role="status"
-          aria-live="polite"
-          className={`flex items-start gap-2 rounded-sm px-3 py-2.5 text-sm ${
-            status === "success"
-              ? "bg-paper text-navy"
-              : "bg-paper text-red"
-          }`}
-        >
-          {status === "success" ? (
-            <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
-          ) : (
-            <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
-          )}
-          <span>
-            {status === "success"
-              ? "Thanks — our volunteer coordinator will follow up."
-              : error}
-          </span>
-        </div>
-      )}
+      <StatusRegion successMessage="Volunteer sign-up received — thank you." />
     </form>
   );
 }

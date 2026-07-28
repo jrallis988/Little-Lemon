@@ -13,6 +13,10 @@ export default function HowToVotePage() {
   return (
     <>
       <PageHero
+        breadcrumbs={[
+          { href: "/", label: "Home" },
+          { label: "How to Vote" },
+        ]}
         overline="General Election · November 3, 2026"
         title="How to Vote Write-In for Nick Varga"
         subtitle="Nick is an independent write-in candidate. Your vote for him happens on the General Election — the final vote that decides who holds the seat."

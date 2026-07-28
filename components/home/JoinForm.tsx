@@ -1,49 +1,49 @@
 "use client";
 
-import { FormEvent, useId, useState } from "react";
 import Link from "next/link";
-import { AlertCircle, CheckCircle2 } from "lucide-react";
 import { SectionIntro } from "@/components/SectionIntro";
+import { RequiredLegend, RequiredMark, useAccessibleForm } from "@/components/a11y/FormFeedback";
 
 export function JoinForm() {
-  const statusId = useId();
-  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
-  const [error, setError] = useState("");
+  const {
+    statusId,
+    status,
+    fieldProps,
+    FieldError,
+    StatusRegion,
+    reportErrors,
+    reportSuccess,
+  } = useAccessibleForm();
 
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     const first = String(data.get("first_name") || "").trim();
     const last = String(data.get("last_name") || "").trim();
     const email = String(data.get("email") || "").trim();
     const zip = String(data.get("zip") || "").trim();
+    const errors: Record<string, string> = {};
 
-    if (!first || !last) {
-      setStatus("error");
-      setError("Please enter your first and last name.");
-      return;
-    }
+    if (!first) errors.first_name = "Enter your first name.";
+    if (!last) errors.last_name = "Enter your last name.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setStatus("error");
-      setError("Enter a valid email address.");
-      return;
+      errors.email = "Enter a valid email address.";
     }
     if (zip && !/^\d{5}(-\d{4})?$/.test(zip)) {
-      setStatus("error");
-      setError("Enter a valid ZIP code.");
+      errors.zip = "Enter a valid ZIP code.";
+    }
+
+    if (Object.keys(errors).length) {
+      reportErrors(errors);
       return;
     }
-    setStatus("success");
-    setError("");
+
+    reportSuccess("You’re on the list — thank you for joining Team Varga.");
     e.currentTarget.reset();
   }
 
   return (
-    <section
-      id="join"
-      aria-labelledby="join-heading"
-      className="scroll-mt-28 bg-navy"
-    >
+    <section id="join" aria-labelledby="join-heading" className="scroll-mt-28 bg-navy">
       <div className="mx-auto max-w-content section-pad">
         <div className="mx-auto max-w-2xl">
           <SectionIntro
@@ -60,35 +60,45 @@ export function JoinForm() {
             className="mt-8 space-y-4 border border-white/15 bg-ink/30 p-6 sm:p-8"
             aria-describedby={status !== "idle" ? statusId : undefined}
           >
+            <RequiredLegend />
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <label htmlFor="join-first" className="mb-1.5 block text-sm font-semibold text-white/85">
+                <label htmlFor="join-first" className="mb-1.5 block text-sm font-semibold text-white">
                   First Name
+                  <RequiredMark />
                 </label>
                 <input
                   id="join-first"
                   name="first_name"
                   type="text"
                   autoComplete="given-name"
-                  className="w-full rounded-cta border border-white/20 bg-navy px-4 py-3 text-white placeholder:text-white/40 focus:border-red focus:outline-none focus:ring-2 focus:ring-red/30"
+                  required
+                  className="input-field border-white/20 bg-navy text-white placeholder:text-white/50"
+                  {...fieldProps("first_name")}
                 />
+                <FieldError name="first_name" />
               </div>
               <div>
-                <label htmlFor="join-last" className="mb-1.5 block text-sm font-semibold text-white/85">
+                <label htmlFor="join-last" className="mb-1.5 block text-sm font-semibold text-white">
                   Last Name
+                  <RequiredMark />
                 </label>
                 <input
                   id="join-last"
                   name="last_name"
                   type="text"
                   autoComplete="family-name"
-                  className="w-full rounded-cta border border-white/20 bg-navy px-4 py-3 text-white placeholder:text-white/40 focus:border-red focus:outline-none focus:ring-2 focus:ring-red/30"
+                  required
+                  className="input-field border-white/20 bg-navy text-white placeholder:text-white/50"
+                  {...fieldProps("last_name")}
                 />
+                <FieldError name="last_name" />
               </div>
             </div>
             <div>
-              <label htmlFor="join-email" className="mb-1.5 block text-sm font-semibold text-white/85">
-                Email <span className="text-red">*</span>
+              <label htmlFor="join-email" className="mb-1.5 block text-sm font-semibold text-white">
+                Email
+                <RequiredMark />
               </label>
               <input
                 id="join-email"
@@ -96,71 +106,38 @@ export function JoinForm() {
                 type="email"
                 autoComplete="email"
                 required
-                className="w-full rounded-cta border border-white/20 bg-navy px-4 py-3 text-white placeholder:text-white/40 focus:border-red focus:outline-none focus:ring-2 focus:ring-red/30"
+                className="input-field border-white/20 bg-navy text-white placeholder:text-white/50"
+                {...fieldProps("email")}
               />
+              <FieldError name="email" />
             </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div>
-                <label htmlFor="join-phone" className="mb-1.5 block text-sm font-semibold text-white/85">
-                  Cell Phone
-                </label>
-                <input
-                  id="join-phone"
-                  name="phone"
-                  type="tel"
-                  autoComplete="tel"
-                  className="w-full rounded-cta border border-white/20 bg-navy px-4 py-3 text-white placeholder:text-white/40 focus:border-red focus:outline-none focus:ring-2 focus:ring-red/30"
-                />
-              </div>
-              <div>
-                <label htmlFor="join-zip" className="mb-1.5 block text-sm font-semibold text-white/85">
-                  Zip Code
-                </label>
-                <input
-                  id="join-zip"
-                  name="zip"
-                  type="text"
-                  inputMode="numeric"
-                  autoComplete="postal-code"
-                  className="w-full rounded-cta border border-white/20 bg-navy px-4 py-3 text-white placeholder:text-white/40 focus:border-red focus:outline-none focus:ring-2 focus:ring-red/30"
-                />
-              </div>
+            <div>
+              <label htmlFor="join-zip" className="mb-1.5 block text-sm font-semibold text-white">
+                ZIP code
+              </label>
+              <input
+                id="join-zip"
+                name="zip"
+                type="text"
+                inputMode="numeric"
+                autoComplete="postal-code"
+                className="input-field border-white/20 bg-navy text-white placeholder:text-white/50"
+                {...fieldProps("zip")}
+                aria-required={undefined}
+              />
+              <FieldError name="zip" />
             </div>
             <button type="submit" className="btn-primary w-full">
-              Join The Team →
+              Join the campaign
             </button>
-            <p className="text-xs leading-relaxed text-white/50">
-              By submitting your cell phone number you agree to receive periodic
-              text messages from the Nick Varga Campaign. Message and data rates
-              may apply. Text HELP for info. Text STOP to stop.{" "}
+            <p className="text-sm text-white/85">
+              By signing up you agree to our{" "}
               <Link href="/privacy" className="underline underline-offset-2">
                 Privacy Policy
               </Link>
               .
             </p>
-            {status !== "idle" && (
-              <div
-                id={statusId}
-                role="status"
-                aria-live="polite"
-                className={`flex items-start gap-2 rounded-cta px-3 py-2.5 text-sm ${
-                  status === "success"
-                    ? "bg-white/10 text-white"
-                    : "bg-red/20 text-white"
-                }`}
-              >
-                {status === "success" ? (
-                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
-                ) : (
-                  <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
-                )}
-                <span>
-                  {status === "success"
-                    ? "You're on the team — welcome aboard."
-                    : error}
-                </span>
-              </div>
-            )}
+            <StatusRegion successMessage="You’re on the list — thank you for joining Team Varga." />
           </form>
         </div>
       </div>

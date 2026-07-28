@@ -14,6 +14,10 @@ export default function MeetNickPage() {
   return (
     <>
       <PageHero
+        breadcrumbs={[
+          { href: "/", label: "Home" },
+          { label: "Meet Nick" },
+        ]}
         overline="Meet Nick"
         title="Nick Varga, New Hampshire."
         subtitle="Independent write-in candidate for U.S. Senate. Founder of the Violet Party. Neighbor first."

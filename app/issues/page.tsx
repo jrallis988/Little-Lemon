@@ -16,6 +16,10 @@ export default function IssuesPage() {
   return (
     <>
       <PageHero
+        breadcrumbs={[
+          { href: "/", label: "Home" },
+          { label: "Issues" },
+        ]}
         overline="Where Nick Stands"
         title="The Platform"
         subtitle="Practical answers. Written in plain English. Start with the signature priority — then dig into every issue."
@@ -34,7 +38,7 @@ export default function IssuesPage() {
           <p className="mt-3 max-w-3xl text-body-lg text-slate-text">
             {featured.oneLiner}
           </p>
-          <p className="link-cta mt-5">Read more →</p>
+          <p className="link-cta mt-5">Read more about {featured.title} →</p>
         </Link>
 
         <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -51,7 +55,7 @@ export default function IssuesPage() {
                   {issue.oneLiner}
                 </p>
                 <p className="mt-4 font-display text-cta font-normal uppercase text-red">
-                  Read more →
+                  Read more about {issue.title} →
                 </p>
               </Link>
             </li>

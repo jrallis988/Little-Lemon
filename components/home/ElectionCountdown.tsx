@@ -63,28 +63,28 @@ export function ElectionCountdown() {
             </p>
           </Link>
 
-          <div
-            className="flex flex-col justify-center border border-white/10 bg-ink/40 p-7 text-white sm:p-10"
-            aria-live="polite"
-          >
+          <div className="flex flex-col justify-center border border-white/10 bg-ink/40 p-7 text-white sm:p-10">
             <p className="font-display text-overline font-normal uppercase text-yellow">
               Countdown to Nov 3, 2026
             </p>
-            <div className="mt-4 flex gap-8">
+            <div
+              className="mt-4 flex gap-8"
+              aria-label={`${remaining.days} days and ${remaining.hours} hours until Election Day`}
+            >
               <div>
-                <p className="font-display text-4xl font-normal tabular-nums text-white">
+                <p className="font-display text-4xl font-normal tabular-nums text-white" aria-hidden>
                   {remaining.days}
                 </p>
-                <p className="text-sm text-white/60">Days</p>
+                <p className="text-sm text-white/85">Days</p>
               </div>
               <div>
-                <p className="font-display text-4xl font-normal tabular-nums text-white">
+                <p className="font-display text-4xl font-normal tabular-nums text-white" aria-hidden>
                   {remaining.hours}
                 </p>
-                <p className="text-sm text-white/60">Hours</p>
+                <p className="text-sm text-white/85">Hours</p>
               </div>
             </div>
-            <p className="mt-4 text-sm text-white/65">
+            <p className="mt-4 text-sm text-white/85">
               Write in “{candidate.fullName}” on the General Election ballot.
             </p>
           </div>

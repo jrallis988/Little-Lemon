@@ -13,6 +13,10 @@ export default function VolunteerPage() {
   return (
     <>
       <PageHero
+        breadcrumbs={[
+          { href: "/", label: "Home" },
+          { label: "Volunteer" },
+        ]}
         overline="Take action"
         title="Volunteer"
         subtitle="Phone banks, canvassing, events, and ops — pick a role and we’ll put you to work."

@@ -14,6 +14,10 @@ export default function VioletPartyPage() {
   return (
     <>
       <PageHero
+        breadcrumbs={[
+          { href: "/", label: "Home" },
+          { label: "Violet Party" },
+        ]}
         overline={violetParty.overline}
         title={violetParty.headline}
         subtitle={violetParty.subhead}

@@ -12,6 +12,10 @@ export default function ContactPage() {
   return (
     <>
       <PageHero
+        breadcrumbs={[
+          { href: "/", label: "Home" },
+          { label: "Contact" },
+        ]}
         overline="Get in touch"
         title="Contact"
         subtitle="Questions about volunteering, events, press, or write-in voting — reach out."

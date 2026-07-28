@@ -9,6 +9,7 @@ const quickLinks = [
   { href: "/how-to-vote", label: "How to Vote" },
   { href: "/violet-party", label: "Violet Party" },
   { href: "/contact", label: "Contact" },
+  { href: "/accessibility", label: "Accessibility" },
   { href: "/privacy", label: "Privacy" },
   { href: "/terms", label: "Terms & Conditions" },
   { href: "/transparency", label: "Transparency" },
@@ -55,10 +56,10 @@ export function Footer() {
                 <li key={label}>
                   <a
                     href={href}
-                    aria-label={label}
+                    aria-label={`${label} (opens in a new window)`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex rounded-cta p-2 text-white/70 hover:bg-white/10 hover:text-white"
+                    className="inline-flex rounded-cta p-2 text-white/85 hover:bg-white/10 hover:text-white"
                   >
                     <Icon className="h-4 w-4" aria-hidden />
                   </a>
@@ -68,7 +69,7 @@ export function Footer() {
           </div>
 
           <nav aria-label="Footer">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/45">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/80">
               Quick links
             </p>
             <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2">
@@ -86,7 +87,7 @@ export function Footer() {
           </nav>
         </div>
 
-        <div className="mt-10 space-y-3 border-t border-white/15 pt-8 text-xs leading-relaxed text-white/50">
+        <div className="mt-10 space-y-3 border-t border-white/15 pt-8 text-xs leading-relaxed text-white/80">
           <p>Paid for by {candidate.committee}.</p>
           <p>
             © {year} {candidate.fullName} for {candidate.office}. All rights
@@ -97,6 +98,10 @@ export function Footer() {
             {" · "}
             <Link href="/terms" className="underline underline-offset-2 hover:text-white">
               Terms &amp; Conditions
+            </Link>
+            {" · "}
+            <Link href="/accessibility" className="underline underline-offset-2 hover:text-white">
+              Accessibility
             </Link>
           </p>
         </div>

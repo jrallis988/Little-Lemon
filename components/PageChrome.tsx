@@ -1,18 +1,26 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { Breadcrumbs, type Crumb } from "@/components/Breadcrumbs";
 
 export function PageHero({
   overline,
   title,
   subtitle,
+  breadcrumbs,
 }: {
   overline?: string;
   title: string;
   subtitle?: string;
+  breadcrumbs?: Crumb[];
 }) {
   return (
     <header className="border-b border-slate-line bg-navy">
       <div className="mx-auto max-w-content section-pad !py-14 md:!py-20">
+        {breadcrumbs && breadcrumbs.length > 0 && (
+          <div className="mb-6 [&_a]:text-white [&_li]:text-white/80 [&_span]:text-white">
+            <Breadcrumbs items={breadcrumbs} />
+          </div>
+        )}
         <span className="accent-line" aria-hidden />
         {overline && <p className="section-overline">{overline}</p>}
         <h1 className="section-headline-light">{title}</h1>

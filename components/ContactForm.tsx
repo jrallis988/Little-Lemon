@@ -1,31 +1,31 @@
 "use client";
 
-import { FormEvent, useId, useState } from "react";
-import { AlertCircle, CheckCircle2 } from "lucide-react";
+import { RequiredLegend, RequiredMark, useAccessibleForm } from "@/components/a11y/FormFeedback";
 
 export function ContactForm() {
-  const statusId = useId();
-  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
-  const [error, setError] = useState("");
+  const { statusId, status, fieldProps, FieldError, StatusRegion, reportErrors, reportSuccess } =
+    useAccessibleForm();
 
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     const name = String(data.get("name") || "").trim();
     const email = String(data.get("email") || "").trim();
     const message = String(data.get("message") || "").trim();
-    if (!name || !message) {
-      setStatus("error");
-      setError("Please include your name and a message.");
-      return;
-    }
+    const errors: Record<string, string> = {};
+
+    if (!name) errors.name = "Enter your name.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setStatus("error");
-      setError("Enter a valid email address.");
+      errors.email = "Enter a valid email address.";
+    }
+    if (!message) errors.message = "Enter a message.";
+
+    if (Object.keys(errors).length) {
+      reportErrors(errors);
       return;
     }
-    setStatus("success");
-    setError("");
+
+    reportSuccess("Message received — we’ll follow up.");
     e.currentTarget.reset();
   }
 
@@ -36,46 +36,58 @@ export function ContactForm() {
       className="space-y-4 border border-slate-line bg-white p-6"
       aria-describedby={status !== "idle" ? statusId : undefined}
     >
+      <RequiredLegend />
       <div>
         <label htmlFor="contact-name" className="label-field">
           Name
+          <RequiredMark />
         </label>
-        <input id="contact-name" name="name" type="text" className="input-field" autoComplete="name" />
+        <input
+          id="contact-name"
+          name="name"
+          type="text"
+          className="input-field"
+          autoComplete="name"
+          required
+          {...fieldProps("name")}
+        />
+        <FieldError name="name" />
       </div>
       <div>
         <label htmlFor="contact-email" className="label-field">
           Email
+          <RequiredMark />
         </label>
-        <input id="contact-email" name="email" type="email" className="input-field" autoComplete="email" />
+        <input
+          id="contact-email"
+          name="email"
+          type="email"
+          className="input-field"
+          autoComplete="email"
+          required
+          {...fieldProps("email")}
+        />
+        <FieldError name="email" />
       </div>
       <div>
         <label htmlFor="contact-message" className="label-field">
           Message
+          <RequiredMark />
         </label>
-        <textarea id="contact-message" name="message" rows={5} className="input-field" />
+        <textarea
+          id="contact-message"
+          name="message"
+          rows={5}
+          className="input-field"
+          required
+          {...fieldProps("message")}
+        />
+        <FieldError name="message" />
       </div>
       <button type="submit" className="btn-primary">
         Send message
       </button>
-      {status !== "idle" && (
-        <div
-          id={statusId}
-          role="status"
-          aria-live="polite"
-          className={`flex items-start gap-2 rounded-sm px-3 py-2.5 text-sm ${
-            status === "success" ? "bg-paper text-navy" : "bg-paper text-red"
-          }`}
-        >
-          {status === "success" ? (
-            <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
-          ) : (
-            <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
-          )}
-          <span>
-            {status === "success" ? "Message received — we’ll follow up." : error}
-          </span>
-        </div>
-      )}
+      <StatusRegion successMessage="Message received — we’ll follow up." />
     </form>
   );
 }
