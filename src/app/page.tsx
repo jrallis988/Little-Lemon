@@ -3,10 +3,9 @@ import Link from "next/link";
 import { ArrowRight, MapPin } from "lucide-react";
 import { DrugSearch } from "@/components/search/drug-search";
 import { buttonVariants } from "@/components/ui/button";
-import { DRUGS } from "@/lib/data/drugs";
+import { prisma } from "@/lib/db";
+import { mapDrug } from "@/lib/pricing-service";
 import { cn } from "@/lib/utils";
-
-const POPULAR = DRUGS.slice(0, 8);
 
 const STEPS = [
   {
@@ -55,7 +54,15 @@ const PHARMACY_STRIP = [
   },
 ] as const;
 
-export default function HomePage() {
+export default async function HomePage() {
+  const popular = (
+    await prisma.drug.findMany({
+      take: 8,
+      orderBy: { createdAt: "asc" },
+      include: { strengths: true, quantities: true },
+    })
+  ).map(mapDrug);
+
   return (
     <div>
       {/* Full-bleed photo hero — GoodRx-style search-first density */}
@@ -95,7 +102,7 @@ export default function HomePage() {
             <DrugSearch size="hero" autoFocus />
             <p className="mt-2.5 text-sm text-trust-foreground/85">
               Popular:{" "}
-              {POPULAR.slice(0, 4).map((d, i) => (
+              {popular.slice(0, 4).map((d, i) => (
                 <span key={d.id}>
                   {i > 0 && " · "}
                   <Link
@@ -140,7 +147,7 @@ export default function HomePage() {
             </Link>
           </div>
           <ul className="mt-2.5 flex flex-wrap gap-2">
-            {POPULAR.map((d) => (
+            {popular.map((d) => (
               <li key={d.id}>
                 <Link
                   href={`/search?drug=${d.id}`}

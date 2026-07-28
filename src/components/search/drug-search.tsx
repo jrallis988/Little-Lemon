@@ -6,7 +6,6 @@ import { Loader2, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { searchDrugs } from "@/lib/pricing";
 import type { DrugSearchSuggestion } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -36,12 +35,26 @@ export function DrugSearch({
       setSuggestions([]);
       return;
     }
-    const handle = window.setTimeout(() => {
-      setSuggestions(searchDrugs(query, 7));
-      setOpen(true);
-      setActiveIndex(-1);
-    }, 80);
-    return () => window.clearTimeout(handle);
+    const controller = new AbortController();
+    const handle = window.setTimeout(async () => {
+      try {
+        const res = await fetch(
+          `/api/drugs?q=${encodeURIComponent(query)}&limit=7`,
+          { signal: controller.signal }
+        );
+        if (!res.ok) return;
+        const data = (await res.json()) as { results: DrugSearchSuggestion[] };
+        setSuggestions(data.results);
+        setOpen(true);
+        setActiveIndex(-1);
+      } catch {
+        /* aborted or network */
+      }
+    }, 120);
+    return () => {
+      controller.abort();
+      window.clearTimeout(handle);
+    };
   }, [query]);
 
   function navigateToDrug(drugId: string) {

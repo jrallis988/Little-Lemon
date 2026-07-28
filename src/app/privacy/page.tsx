@@ -17,8 +17,8 @@ export default function PrivacyPage() {
           </h1>
           <p className="text-lg leading-relaxed text-muted-foreground">
             Trump RX is designed so patients and caregivers can compare
-            prescription discounts without aggressive paywalls or opaque data
-            practices — with clearer pharmacy pricing than a boutique deal list.
+            prescription discounts with clear information about how account,
+            search, and location data are handled.
           </p>
         </header>
 
@@ -42,24 +42,25 @@ export default function PrivacyPage() {
           <div className="flex items-start gap-3">
             <EyeOff className="mt-1 size-5 text-primary" aria-hidden />
             <div>
-              <h2 className="text-xl font-semibold">Privacy-first search defaults</h2>
+              <h2 className="text-xl font-semibold">How we handle your data</h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-muted-foreground">
                 <li>
-                  Medication searches and saved meds in this demo are stored in{" "}
-                  <strong className="text-foreground">your browser only</strong>{" "}
-                  (local storage) — not on Trump RX servers.
+                  Medication searches are sent to Trump RX API routes to return
+                  catalog and network pricing results.
                 </li>
                 <li>
-                  Personalized tips are <strong className="text-foreground">opt-in</strong> and
-                  off by default.
+                  When you sign in, saved medications, preferred pharmacies,
+                  coupons, and price alerts are stored server-side with your
+                  account.
                 </li>
                 <li>
                   We do not sell health query data, medication lists, or location
-                  history to advertisers.
+                  data.
                 </li>
                 <li>
-                  Geolocation is requested only when you tap “Near me,” and you
-                  can use ZIP code entry instead.
+                  ZIP codes are resolved through our geocoding API so we can
+                  calculate nearby pharmacy distances. Browser geolocation is
+                  requested only when you choose “Near me.”
                 </li>
               </ul>
             </div>
@@ -82,12 +83,11 @@ export default function PrivacyPage() {
         </section>
 
         <section className="space-y-2 text-sm text-muted-foreground">
-          <h2 className="text-base font-semibold text-foreground">Demo notice</h2>
+          <h2 className="text-base font-semibold text-foreground">Questions</h2>
           <p>
-            Prices, BIN/PCN values, and pharmacy inventory in this project are
-            simulated for product demonstration. This is an improved product
-            concept inspired by TrumpRx.gov — not an official government website
-            or live claims network.
+            Contact Trump RX support with privacy questions or requests relating
+            to your account data. We retain data only as needed to provide the
+            service, meet legal requirements, and protect the platform.
           </p>
         </section>
       </article>

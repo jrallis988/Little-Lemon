@@ -3,8 +3,7 @@ import Image from "next/image";
 import { DrugSearch } from "@/components/search/drug-search";
 import { PricingMatrix } from "@/components/pricing/pricing-matrix";
 import { EmptyState } from "@/components/design/empty-state";
-import { getDrugById } from "@/lib/data/drugs";
-import { searchDrugs } from "@/lib/pricing";
+import { getDrugById, searchDrugs } from "@/lib/pricing-service";
 import { SearchX } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -19,9 +18,11 @@ interface SearchPageProps {
 
 export default async function SearchPage({ searchParams }: SearchPageProps) {
   const params = await searchParams;
-  const drugFromId = params.drug ? getDrugById(params.drug) : undefined;
+  const drugFromId = params.drug ? await getDrugById(params.drug) : null;
   const drugFromQuery =
-    !drugFromId && params.q ? searchDrugs(params.q, 1)[0]?.drug : undefined;
+    !drugFromId && params.q
+      ? (await searchDrugs(params.q, 1))[0]?.drug
+      : undefined;
   const drug = drugFromId ?? drugFromQuery;
 
   return (

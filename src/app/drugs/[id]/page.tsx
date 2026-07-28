@@ -3,10 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight } from "lucide-react";
-import { getDrugById, DRUGS } from "@/lib/data/drugs";
 import { buttonVariants } from "@/components/ui/button";
 import { TrustCallout } from "@/components/design/trust-callout";
+import { prisma } from "@/lib/db";
 import { formatCurrency } from "@/lib/pricing";
+import { getDrugById } from "@/lib/pricing-service";
 import { cn } from "@/lib/utils";
 
 interface PageProps {
@@ -14,12 +15,13 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  return DRUGS.map((d) => ({ id: d.id }));
+  const drugs = await prisma.drug.findMany({ select: { id: true } });
+  return drugs.map(({ id }) => ({ id }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = await params;
-  const drug = getDrugById(id);
+  const drug = await getDrugById(id);
   if (!drug) return { title: "Medication" };
   return {
     title: `${drug.genericName} (${drug.brandName}) prices`,
@@ -29,7 +31,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function DrugDetailPage({ params }: PageProps) {
   const { id } = await params;
-  const drug = getDrugById(id);
+  const drug = await getDrugById(id);
   if (!drug) notFound();
 
   return (

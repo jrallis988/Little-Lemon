@@ -2,37 +2,83 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Bell, BellOff, BookmarkX, Trash2 } from "lucide-react";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Bell, BookmarkX, Loader2, MapPin } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { EmptyState } from "@/components/design/empty-state";
 import { TrustCallout } from "@/components/design/trust-callout";
-import { getDrugById } from "@/lib/data/drugs";
-import { getPharmacyById } from "@/lib/data/pharmacies";
-import { formatCurrency, generateOffersForDrug } from "@/lib/pricing";
-import { useLocationStore } from "@/lib/store/location-store";
-import { useProfileStore } from "@/lib/store/profile-store";
+import { formatCurrency } from "@/lib/pricing";
 import { cn } from "@/lib/utils";
 
+interface ProfileData {
+  id: string;
+  email: string;
+  name: string | null;
+  allowPersonalizedTips: boolean;
+  membershipTier: string;
+  membershipStatus: string | null;
+  membershipExpiresAt: string | null;
+  savedMedications: Array<{
+    id: string;
+    strengthId: string;
+    quantity: number;
+    supplyDays: number;
+    drug: {
+      id: string;
+      genericName: string;
+      brandName: string;
+      strengths: Array<{ id: string; label: string }>;
+    };
+  }>;
+  preferredPharmacies: Array<{
+    id: string;
+    name: string;
+    address: string;
+    city: string;
+    state: string;
+  }>;
+  priceAlerts: Array<{
+    id: string;
+    baselinePrice: number;
+    targetPrice: number | null;
+    drug: { id: string; genericName: string };
+  }>;
+}
+
 export default function ProfilePage() {
-  const location = useLocationStore((s) => s.location);
-  const displayName = useProfileStore((s) => s.displayName);
-  const setDisplayName = useProfileStore((s) => s.setDisplayName);
-  const savedMedications = useProfileStore((s) => s.savedMedications);
-  const preferredPharmacyIds = useProfileStore((s) => s.preferredPharmacyIds);
-  const removeMedication = useProfileStore((s) => s.removeMedication);
-  const setPriceAlert = useProfileStore((s) => s.setPriceAlert);
-  const allowPersonalizedTips = useProfileStore((s) => s.allowPersonalizedTips);
-  const setAllowPersonalizedTips = useProfileStore(
-    (s) => s.setAllowPersonalizedTips
-  );
-  const togglePreferredPharmacy = useProfileStore(
-    (s) => s.togglePreferredPharmacy
-  );
+  const [profile, setProfile] = useState<ProfileData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [unauthorized, setUnauthorized] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [highContrast, setHighContrast] = useState(false);
   const [largeText, setLargeText] = useState(false);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function loadProfile() {
+      try {
+        const response = await fetch("/api/me", { signal: controller.signal });
+        if (response.status === 401) {
+          setUnauthorized(true);
+          return;
+        }
+        if (!response.ok) throw new Error("Could not load your account.");
+        const data = (await response.json()) as { profile: ProfileData };
+        setProfile(data.profile);
+      } catch (caught) {
+        if (caught instanceof DOMException && caught.name === "AbortError") return;
+        setError(
+          caught instanceof Error ? caught.message : "Could not load your account."
+        );
+      } finally {
+        if (!controller.signal.aborted) setLoading(false);
+      }
+    }
+
+    void loadProfile();
+    return () => controller.abort();
+  }, []);
 
   useEffect(() => {
     document.documentElement.classList.toggle("high-contrast", highContrast);
@@ -42,6 +88,41 @@ export default function ProfilePage() {
     };
   }, [highContrast, largeText]);
 
+  if (loading) {
+    return (
+      <div className="flex min-h-[60dvh] items-center justify-center text-muted-foreground">
+        <Loader2 className="mr-2 size-5 animate-spin" />
+        Loading your account…
+      </div>
+    );
+  }
+
+  if (unauthorized) {
+    return (
+      <div className="mx-auto max-w-xl px-4 py-12 text-center">
+        <h1 className="font-display text-3xl font-semibold">Sign in to view your account</h1>
+        <p className="mt-2 text-muted-foreground">
+          Saved medications, preferred pharmacies, alerts, and membership are
+          stored securely with your account.
+        </p>
+        <Link
+          href="/login"
+          className={cn(buttonVariants({ size: "lg" }), "mt-5 min-h-11")}
+        >
+          Sign in
+        </Link>
+      </div>
+    );
+  }
+
+  if (error || !profile) {
+    return (
+      <div className="mx-auto max-w-xl px-4 py-12 text-center text-destructive">
+        {error ?? "Could not load your account."}
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-[70dvh] bg-background">
       <div className="mx-auto max-w-3xl space-y-6 px-4 py-6 sm:px-6">
@@ -50,14 +131,13 @@ export default function ProfilePage() {
             My medications
           </h1>
           <p className="text-base text-muted-foreground sm:text-lg">
-            Optional local profile — no account required. Saved meds stay in
-            this browser.
+            Manage your saved prescriptions, pharmacies, alerts, and membership.
           </p>
         </header>
 
         <TrustCallout title="Caregiver-friendly controls">
-          Use larger text or high contrast below. Membership sync across devices
-          is previewed on the{" "}
+          Use larger text or high contrast below. Your signed-in account keeps
+          saved information available across devices. Manage plan options on the{" "}
           <Link
             href="/membership"
             className="font-medium underline-offset-2 hover:underline"
@@ -68,29 +148,35 @@ export default function ProfilePage() {
         </TrustCallout>
 
         <section className="space-y-4 rounded-2xl border border-border bg-card p-4 sm:p-5">
-          <h2 className="text-lg font-semibold">Light profile</h2>
-          <div className="space-y-1.5">
-            <Label htmlFor="display-name">Display name (optional)</Label>
-            <Input
-              id="display-name"
-              value={displayName}
-              onChange={(e) => setDisplayName(e.target.value)}
-              placeholder="Alex"
-              className="h-11 max-w-sm text-base"
-            />
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <h2 className="text-lg font-semibold">
+                {profile.name || "Trump RX member"}
+              </h2>
+              <p className="text-sm text-muted-foreground">{profile.email}</p>
+            </div>
+            <div className="rounded-lg bg-secondary px-3 py-2 text-sm">
+              <span className="font-semibold capitalize">
+                {profile.membershipTier}
+              </span>
+              {profile.membershipStatus && (
+                <span className="text-muted-foreground">
+                  {" "}
+                  · {profile.membershipStatus}
+                </span>
+              )}
+            </div>
           </div>
           <div className="flex items-center justify-between gap-4 rounded-xl bg-muted/60 px-3 py-3">
             <div>
               <p className="font-medium">Personalized savings tips</p>
               <p className="text-sm text-muted-foreground">
-                Opt-in only. Off by default.
+                {profile.allowPersonalizedTips ? "Enabled" : "Not enabled"}
               </p>
             </div>
-            <Switch
-              checked={allowPersonalizedTips}
-              onCheckedChange={setAllowPersonalizedTips}
-              aria-label="Allow personalized savings tips"
-            />
+            <span className="text-sm font-medium">
+              {profile.allowPersonalizedTips ? "On" : "Off"}
+            </span>
           </div>
           <div className="flex items-center justify-between gap-4 rounded-xl bg-muted/60 px-3 py-3">
             <div>
@@ -131,7 +217,7 @@ export default function ProfilePage() {
             </Link>
           </div>
 
-          {savedMedications.length === 0 ? (
+          {profile.savedMedications.length === 0 ? (
             <EmptyState
               icon={BookmarkX}
               title="No saved medications yet"
@@ -141,85 +227,30 @@ export default function ProfilePage() {
             />
           ) : (
             <ul className="space-y-2.5">
-              {savedMedications.map((med) => {
-                const drug = getDrugById(med.drugId);
-                if (!drug) return null;
-                const strength = drug.strengths.find(
+              {profile.savedMedications.map((med) => {
+                const strength = med.drug.strengths.find(
                   (s) => s.id === med.strengthId
                 );
-                const current = generateOffersForDrug(
-                  drug,
-                  {
-                    strengthId: med.strengthId,
-                    quantity: med.quantity,
-                    supplyDays: med.supplyDays,
-                  },
-                  location
-                ).sort(
-                  (a, b) => a.offer.couponPrice - b.offer.couponPrice
-                )[0];
 
                 return (
                   <li
-                    key={`${med.drugId}-${med.strengthId}`}
+                    key={med.id}
                     className="rounded-2xl border border-border bg-card p-3.5"
                   >
                     <div className="flex flex-wrap items-start justify-between gap-3">
                       <div>
                         <p className="text-lg font-semibold capitalize">
-                          {drug.genericName}
+                          {med.drug.genericName}
                         </p>
                         <p className="text-sm text-muted-foreground">
                           {strength?.label} · Qty {med.quantity} ·{" "}
                           {med.supplyDays}-day
                         </p>
-                        {current && (
-                          <p className="mt-1 text-sm">
-                            Lowest nearby:{" "}
-                            <span className="font-semibold text-primary">
-                              {formatCurrency(current.offer.couponPrice)}
-                            </span>{" "}
-                            at {current.pharmacy.name}
-                          </p>
-                        )}
-                      </div>
-                      <div className="flex gap-2">
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="icon-lg"
-                          aria-label={
-                            med.priceAlertEnabled
-                              ? "Disable price alert"
-                              : "Enable price alert"
-                          }
-                          onClick={() =>
-                            setPriceAlert(
-                              med.drugId,
-                              med.strengthId,
-                              !med.priceAlertEnabled,
-                              current?.offer.couponPrice
-                            )
-                          }
-                        >
-                          {med.priceAlertEnabled ? <Bell /> : <BellOff />}
-                        </Button>
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="icon-lg"
-                          aria-label="Remove saved medication"
-                          onClick={() =>
-                            removeMedication(med.drugId, med.strengthId)
-                          }
-                        >
-                          <Trash2 />
-                        </Button>
                       </div>
                     </div>
                     <div className="mt-3">
                       <Link
-                        href={`/search?drug=${drug.id}`}
+                        href={`/search?drug=${med.drug.id}`}
                         className={cn(
                           buttonVariants({ variant: "secondary" }),
                           "min-h-10"
@@ -239,7 +270,7 @@ export default function ProfilePage() {
           <h2 className="font-display text-2xl font-semibold">
             Preferred pharmacies
           </h2>
-          {preferredPharmacyIds.length === 0 ? (
+          {profile.preferredPharmacies.length === 0 ? (
             <p className="text-muted-foreground">
               Star pharmacies from search results or the{" "}
               <Link
@@ -252,30 +283,56 @@ export default function ProfilePage() {
             </p>
           ) : (
             <ul className="space-y-2">
-              {preferredPharmacyIds.map((id) => {
-                const pharmacy = getPharmacyById(id);
-                if (!pharmacy) return null;
-                return (
-                  <li
-                    key={id}
-                    className="flex items-center justify-between gap-3 rounded-xl border border-border bg-card px-4 py-3"
-                  >
-                    <div>
-                      <p className="font-medium">{pharmacy.name}</p>
-                      <p className="text-sm text-muted-foreground">
-                        {pharmacy.address}, {pharmacy.city}
-                      </p>
-                    </div>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      onClick={() => togglePreferredPharmacy(id)}
+              {profile.preferredPharmacies.map((pharmacy) => (
+                <li
+                  key={pharmacy.id}
+                  className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3"
+                >
+                  <MapPin className="size-4 shrink-0 text-primary" />
+                  <div>
+                    <Link
+                      href={`/pharmacies/${pharmacy.id}`}
+                      className="font-medium hover:underline"
                     >
-                      Remove
-                    </Button>
-                  </li>
-                );
-              })}
+                      {pharmacy.name}
+                    </Link>
+                    <p className="text-sm text-muted-foreground">
+                      {pharmacy.address}, {pharmacy.city}, {pharmacy.state}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+
+        <section className="space-y-3">
+          <h2 className="font-display text-2xl font-semibold">Price alerts</h2>
+          {profile.priceAlerts.length === 0 ? (
+            <p className="text-muted-foreground">
+              No active alerts. Set an alert while comparing medication prices.
+            </p>
+          ) : (
+            <ul className="space-y-2">
+              {profile.priceAlerts.map((alert) => (
+                <li
+                  key={alert.id}
+                  className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3"
+                >
+                  <Bell className="size-4 shrink-0 text-primary" />
+                  <div>
+                    <p className="font-medium capitalize">
+                      {alert.drug.genericName}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      Baseline {formatCurrency(alert.baselinePrice)}
+                      {alert.targetPrice
+                        ? ` · Target ${formatCurrency(alert.targetPrice)}`
+                        : ""}
+                    </p>
+                  </div>
+                </li>
+              ))}
             </ul>
           )}
         </section>

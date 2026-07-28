@@ -1,71 +1,30 @@
-"use client";
-
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
-import { useParams } from "next/navigation";
-import { Clock, MapPin, Phone, Star, MapPinOff } from "lucide-react";
-import { getPharmacyById, CHAIN_LABELS } from "@/lib/data/pharmacies";
-import { getDrugById } from "@/lib/data/drugs";
-import {
-  formatCurrency,
-  generateOffersForDrug,
-  withDistances,
-} from "@/lib/pricing";
-import { useLocationStore } from "@/lib/store/location-store";
-import { useProfileStore } from "@/lib/store/profile-store";
+import { notFound } from "next/navigation";
+import { Clock, MapPin, Phone } from "lucide-react";
+import { CHAIN_LABELS } from "@/lib/chains";
+import { getPharmacyById } from "@/lib/pricing-service";
 import { ChainMark } from "@/components/pharmacy/chain-mark";
-import { CouponModal } from "@/components/coupon/coupon-modal";
 import { TrustCallout } from "@/components/design/trust-callout";
-import { EmptyState } from "@/components/design/empty-state";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import type { PharmacyPriceOffer } from "@/lib/types";
 
-export default function PharmacyDetailPage() {
-  const params = useParams<{ id: string }>();
-  const location = useLocationStore((s) => s.location);
-  const preferred = useProfileStore((s) => s.preferredPharmacyIds);
-  const togglePreferred = useProfileStore((s) => s.togglePreferredPharmacy);
-  const [offer, setOffer] = useState<PharmacyPriceOffer | null>(null);
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
 
-  const pharmacyBase = getPharmacyById(params.id);
-  const sampleDrug = getDrugById("atorvastatin")!;
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const pharmacy = await getPharmacyById((await params).id);
+  return {
+    title: pharmacy ? `${pharmacy.name} prescription discounts` : "Pharmacy",
+  };
+}
 
-  const pharmacy = useMemo(() => {
-    if (!pharmacyBase) return null;
-    return withDistances([pharmacyBase], location)[0] ?? null;
-  }, [pharmacyBase, location]);
-
-  const sampleOffer = useMemo(() => {
-    if (!pharmacy) return null;
-    return generateOffersForDrug(
-      sampleDrug,
-      {
-        strengthId: sampleDrug.strengths[1]?.id ?? sampleDrug.strengths[0].id,
-        quantity: 30,
-        supplyDays: 30,
-      },
-      location
-    ).find((r) => r.pharmacy.id === pharmacy.id);
-  }, [pharmacy, sampleDrug, location]);
-
-  if (!pharmacyBase || !pharmacy) {
-    return (
-      <div className="mx-auto max-w-3xl px-4 py-10">
-        <EmptyState
-          icon={MapPinOff}
-          title="Pharmacy not found"
-          description="That pharmacy ID isn’t in our demo directory."
-          actionHref="/pharmacies"
-          actionLabel="Browse pharmacies"
-        />
-      </div>
-    );
-  }
-
-  const isPreferred = preferred.includes(pharmacy.id);
+export default async function PharmacyDetailPage({ params }: PageProps) {
+  const pharmacy = await getPharmacyById((await params).id);
+  if (!pharmacy) notFound();
 
   return (
     <div className="min-h-[70dvh] bg-background">
@@ -97,26 +56,12 @@ export default function PharmacyDetailPage() {
               </p>
             </div>
           </div>
-          <div className="flex flex-wrap gap-2">
-            <Button
-              type="button"
-              variant={isPreferred ? "secondary" : "outline"}
-              className="min-h-11"
-              onClick={() => togglePreferred(pharmacy.id)}
-              aria-pressed={isPreferred}
-            >
-              <Star className={cn(isPreferred && "fill-current")} />
-              {isPreferred ? "Preferred" : "Save pharmacy"}
-            </Button>
-            {sampleOffer && (
-              <Button
-                className="min-h-11"
-                onClick={() => setOffer(sampleOffer.offer)}
-              >
-                Show sample coupon
-              </Button>
-            )}
-          </div>
+          <Link
+            href="/search"
+            className={cn(buttonVariants({ size: "lg" }), "min-h-11")}
+          >
+            Compare prices here
+          </Link>
         </div>
       </div>
 
@@ -167,14 +112,9 @@ export default function PharmacyDetailPage() {
             )}
           </section>
 
-          <TrustCallout title="Sample price at this store">
-            Atorvastatin 20 mg (30-day) coupon estimate:{" "}
-            <strong>
-              {sampleOffer
-                ? formatCurrency(sampleOffer.offer.couponPrice)
-                : "Unavailable"}
-            </strong>
-            . Search your exact medication for live comparison.
+          <TrustCallout title="Prices depend on your prescription">
+            Search your exact medication, strength, quantity, and supply length
+            to see current network cash-discount pricing at nearby pharmacies.
           </TrustCallout>
         </div>
 
@@ -206,19 +146,6 @@ export default function PharmacyDetailPage() {
         </aside>
       </div>
 
-      {offer && sampleOffer && (
-        <CouponModal
-          open={!!offer}
-          onOpenChange={(o) => !o && setOffer(null)}
-          drug={sampleDrug}
-          pharmacy={pharmacy}
-          offer={offer}
-          strengthLabel={
-            sampleDrug.strengths.find((s) => s.id === offer.strengthId)?.label ??
-            "tablet"
-          }
-        />
-      )}
     </div>
   );
 }

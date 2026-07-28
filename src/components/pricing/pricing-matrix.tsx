@@ -1,11 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   Bell,
   BookmarkPlus,
   Lightbulb,
+  Loader2,
   MapPinOff,
   SearchX,
   SlidersHorizontal,
@@ -31,16 +32,11 @@ import { CouponModal } from "@/components/coupon/coupon-modal";
 import { EmptyState } from "@/components/design/empty-state";
 import { TrustCallout } from "@/components/design/trust-callout";
 import { PriceDisplay } from "@/components/design/price-display";
-import {
-  buildSavingsTips,
-  generateOffersForDrug,
-  sortComparisonRows,
-} from "@/lib/pricing";
 import { useLocationStore } from "@/lib/store/location-store";
-import { useProfileStore } from "@/lib/store/profile-store";
 import type {
   Drug,
   PriceComparisonRow,
+  SavingsTip,
   SearchFilters,
   SupplyDays,
 } from "@/lib/types";
@@ -158,9 +154,6 @@ function FilterControls({
 
 export function PricingMatrix({ drug }: PricingMatrixProps) {
   const location = useLocationStore((s) => s.location);
-  const saveMedication = useProfileStore((s) => s.saveMedication);
-  const setPriceAlert = useProfileStore((s) => s.setPriceAlert);
-  const savedMedications = useProfileStore((s) => s.savedMedications);
 
   const [filters, setFilters] = useState<SearchFilters>({
     supplyDays: 30,
@@ -174,49 +167,99 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
   );
   const [showAll, setShowAll] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [rows, setRows] = useState<PriceComparisonRow[]>([]);
+  const [tips, setTips] = useState<SavingsTip[]>([]);
+  const [plusMember, setPlusMember] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [quotedAt, setQuotedAt] = useState<string | null>(null);
+  const [saveMessage, setSaveMessage] = useState<string | null>(null);
 
   const strength =
     drug.strengths.find((s) => s.id === filters.strengthId) ??
     drug.strengths[0];
 
-  const rows = useMemo(() => {
-    const generated = generateOffersForDrug(
-      drug,
-      {
-        strengthId: filters.strengthId,
-        quantity: filters.quantity,
-        supplyDays: filters.supplyDays,
-      },
-      location
-    );
-    return sortComparisonRows(generated, filters.sortBy);
-  }, [drug, filters, location]);
-
-  const tips = useMemo(
-    () => buildSavingsTips(drug, rows, filters.supplyDays),
-    [drug, rows, filters.supplyDays]
-  );
+  useEffect(() => {
+    if (!filters.strengthId) return;
+    const controller = new AbortController();
+    setLoading(true);
+    const params = new URLSearchParams({
+      drugId: drug.id,
+      strengthId: filters.strengthId,
+      quantity: String(filters.quantity),
+      supplyDays: String(filters.supplyDays),
+      zip: location.zip,
+      sortBy: filters.sortBy,
+    });
+    fetch(`/api/prices?${params}`, { signal: controller.signal })
+      .then(async (res) => {
+        if (!res.ok) throw new Error("price fetch failed");
+        return res.json() as Promise<{
+          rows: PriceComparisonRow[];
+          tips: SavingsTip[];
+          plusMember: boolean;
+          quotedAt: string;
+        }>;
+      })
+      .then((data) => {
+        setRows(data.rows);
+        setTips(data.tips);
+        setPlusMember(data.plusMember);
+        setQuotedAt(data.quotedAt);
+      })
+      .catch(() => {
+        if (!controller.signal.aborted) {
+          setRows([]);
+          setTips([]);
+        }
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) setLoading(false);
+      });
+    return () => controller.abort();
+  }, [drug.id, filters, location.zip]);
 
   const lowest = rows[0];
   const visibleRows = showAll ? rows : rows.slice(0, 3);
-  const isSaved = savedMedications.some(
-    (m) => m.drugId === drug.id && m.strengthId === strength?.id
-  );
 
-  function onSaveMed(withAlert: boolean) {
+  async function onSaveMed(withAlert: boolean) {
     if (!strength || !lowest) return;
-    saveMedication({
-      drugId: drug.id,
-      strengthId: strength.id,
-      quantity: filters.quantity,
-      supplyDays: filters.supplyDays,
-      preferredPharmacyId: lowest.pharmacy.id,
-      priceAlertEnabled: withAlert,
-      alertBaselinePrice: withAlert ? lowest.offer.couponPrice : undefined,
+    setSaveMessage(null);
+    const medRes = await fetch("/api/me/medications", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        drugId: drug.id,
+        strengthId: strength.id,
+        quantity: filters.quantity,
+        supplyDays: filters.supplyDays,
+        preferredPharmacyId: lowest.pharmacy.id,
+      }),
     });
-    if (withAlert) {
-      setPriceAlert(drug.id, strength.id, true, lowest.offer.couponPrice);
+    if (medRes.status === 401) {
+      setSaveMessage("Sign in to save medications across devices.");
+      return;
     }
+    if (withAlert) {
+      const alertRes = await fetch("/api/alerts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          drugId: drug.id,
+          strengthId: strength.id,
+          quantity: filters.quantity,
+          supplyDays: filters.supplyDays,
+          baselinePrice: lowest.offer.couponPrice,
+          zip: location.zip,
+        }),
+      });
+      if (alertRes.status === 401) {
+        setSaveMessage("Sign in to enable price alerts.");
+        return;
+      }
+      setSaveMessage("Saved with price alert.");
+      return;
+    }
+    setSaveMessage("Medication saved to your account.");
   }
 
   if (!strength) {
@@ -228,6 +271,15 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
         actionHref="/search"
         actionLabel="Search again"
       />
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="flex min-h-48 items-center justify-center gap-2 text-muted-foreground">
+        <Loader2 className="size-5 animate-spin" aria-hidden />
+        Loading network prices…
+      </div>
     );
   }
 
@@ -278,7 +330,7 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
             onClick={() => onSaveMed(false)}
           >
             <BookmarkPlus />
-            {isSaved ? "Update saved" : "Save med"}
+            Save med
           </Button>
           <Button
             type="button"
@@ -292,6 +344,21 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
           </Button>
         </div>
       </div>
+      {saveMessage && (
+        <p className="text-sm text-muted-foreground" role="status">
+          {saveMessage}{" "}
+          {saveMessage.includes("Sign in") && (
+            <Link href="/login" className="font-medium text-primary underline-offset-2 hover:underline">
+              Sign in
+            </Link>
+          )}
+        </p>
+      )}
+      {plusMember && (
+        <p className="text-sm font-medium text-savings">
+          Plus member pricing applied to this quote.
+        </p>
+      )}
 
       <TrustCallout variant="warning" title="Check your insurance copay first">
         Trump RX coupons are cash discount prices — not insurance. If your plan
@@ -426,7 +493,10 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
             {showAll ? `All ${rows.length} pharmacies` : "Top 3 lowest prices"}
           </p>
           <p className="text-xs text-muted-foreground sm:text-sm">
-            Cash coupon prices · updated for demo
+            Network cash prices
+            {quotedAt
+              ? ` · quoted ${new Date(quotedAt).toLocaleTimeString()}`
+              : ""}
           </p>
         </div>
         <div>

@@ -1,0 +1,255 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                     String    @id @default(cuid())
+  name                   String?
+  email                  String    @unique
+  emailVerified          DateTime?
+  image                  String?
+  passwordHash           String?
+  allowPersonalizedTips  Boolean   @default(false)
+  membershipTier         String    @default("free") // free | plus
+  stripeCustomerId       String?
+  stripeSubscriptionId   String?
+  membershipStatus       String? // active | canceled | past_due
+  membershipExpiresAt    DateTime?
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
+
+  accounts               Account[]
+  sessions               Session[]
+  savedMedications       SavedMedication[]
+  preferredPharmacies    PreferredPharmacy[]
+  coupons                Coupon[]
+  priceAlerts            PriceAlert[]
+  familyMembers          FamilyMember[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Drug {
+  id                 String   @id
+  brandName          String
+  genericName        String
+  therapeuticClass   String
+  rxnormId           String?
+  isControlled       Boolean  @default(false)
+  retailCashPrice30  Float
+  retailCashPrice90  Float
+  searchAliasesJson  String   @default("[]")
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  strengths          DrugStrength[]
+  quantities         DrugQuantity[]
+  contracts          PharmacyContract[]
+  savedMedications   SavedMedication[]
+  coupons            Coupon[]
+  priceAlerts        PriceAlert[]
+}
+
+model DrugStrength {
+  id       String @id @default(cuid())
+  drugId   String
+  label    String
+  amountMg Float
+  form     String
+  ndc      String?
+
+  drug Drug @relation(fields: [drugId], references: [id], onDelete: Cascade)
+
+  @@index([drugId])
+}
+
+model DrugQuantity {
+  id       String @id @default(cuid())
+  drugId   String
+  quantity Int
+
+  drug Drug @relation(fields: [drugId], references: [id], onDelete: Cascade)
+
+  @@unique([drugId, quantity])
+}
+
+model Pharmacy {
+  id                    String   @id
+  name                  String
+  chain                 String
+  npi                   String?
+  ncpdpId               String?
+  address               String
+  city                  String
+  state                 String
+  zip                   String
+  phone                 String
+  latitude              Float
+  longitude             Float
+  hoursWeekday          String
+  hoursSaturday         String
+  hoursSunday           String
+  pharmacyDeskNote      String?
+  acceptsTrumpRxCoupon  Boolean  @default(true)
+  driveThru             Boolean  @default(false)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  contracts             PharmacyContract[]
+  preferredBy           PreferredPharmacy[]
+  coupons               Coupon[]
+}
+
+model PharmacyContract {
+  id              String   @id @default(cuid())
+  pharmacyId      String
+  drugId          String
+  /// Multiplier applied to retail cash for cash-discount network price.
+  discountFactor  Float
+  /// Absolute floors for 30-day and 90-day coupon prices.
+  floorPrice30    Float    @default(3.99)
+  floorPrice90    Float    @default(9.99)
+  inNetwork       Boolean  @default(true)
+  updatedAt       DateTime @updatedAt
+
+  pharmacy Pharmacy @relation(fields: [pharmacyId], references: [id], onDelete: Cascade)
+  drug     Drug     @relation(fields: [drugId], references: [id], onDelete: Cascade)
+
+  @@unique([pharmacyId, drugId])
+  @@index([drugId])
+}
+
+model Coupon {
+  id           String   @id @default(cuid())
+  userId       String?
+  pharmacyId   String
+  drugId       String
+  strengthId   String
+  quantity     Int
+  supplyDays   Int
+  couponPrice  Float
+  retailPrice  Float
+  bin          String
+  pcn          String
+  groupCode    String
+  memberId     String
+  barcodeValue String
+  status       String   @default("issued") // issued | redeemed | expired | void
+  issuedAt     DateTime @default(now())
+  expiresAt    DateTime
+  redeemedAt   DateTime?
+
+  user     User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  pharmacy Pharmacy @relation(fields: [pharmacyId], references: [id])
+  drug     Drug     @relation(fields: [drugId], references: [id])
+
+  @@index([memberId])
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model SavedMedication {
+  id                   String   @id @default(cuid())
+  userId               String
+  drugId               String
+  strengthId           String
+  quantity             Int
+  supplyDays           Int
+  preferredPharmacyId  String?
+  savedAt              DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  drug Drug @relation(fields: [drugId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, drugId, strengthId, quantity, supplyDays])
+}
+
+model PreferredPharmacy {
+  id         String   @id @default(cuid())
+  userId     String
+  pharmacyId String
+  createdAt  DateTime @default(now())
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  pharmacy Pharmacy @relation(fields: [pharmacyId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, pharmacyId])
+}
+
+model PriceAlert {
+  id            String    @id @default(cuid())
+  userId        String
+  drugId        String
+  strengthId    String
+  quantity      Int
+  supplyDays    Int
+  baselinePrice Float
+  targetPrice   Float?
+  active        Boolean   @default(true)
+  lastCheckedAt DateTime?
+  lastNotifiedAt DateTime?
+  createdAt     DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  drug Drug @relation(fields: [drugId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, drugId, strengthId, quantity, supplyDays])
+}
+
+model FamilyMember {
+  id        String   @id @default(cuid())
+  userId    String
+  name      String
+  relation  String?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ZipLocation {
+  zip       String @id
+  city      String
+  state     String
+  latitude  Float
+  longitude Float
+  label     String
+}

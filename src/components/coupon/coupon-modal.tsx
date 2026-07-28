@@ -21,7 +21,12 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { TrustCallout } from "@/components/design/trust-callout";
 import { formatCurrency } from "@/lib/pricing";
-import type { Drug, Pharmacy, PharmacyPriceOffer } from "@/lib/types";
+import type {
+  CouponBinDetails,
+  Drug,
+  Pharmacy,
+  PharmacyPriceOffer,
+} from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 interface CouponModalProps {
@@ -31,6 +36,11 @@ interface CouponModalProps {
   pharmacy: Pharmacy;
   offer: PharmacyPriceOffer;
   strengthLabel: string;
+}
+
+interface IssuedCoupon extends CouponBinDetails {
+  id: string;
+  expiresAt: string;
 }
 
 function CopyField({ label, value }: { label: string; value: string }) {
@@ -123,25 +133,83 @@ export function CouponModal({
   offer,
   strengthLabel,
 }: CouponModalProps) {
-  const { coupon } = offer;
+  const [coupon, setCoupon] = useState<IssuedCoupon | null>(null);
+  const [issuing, setIssuing] = useState(false);
+  const [issueError, setIssueError] = useState<string | null>(null);
   const [pharmacistMode, setPharmacistMode] = useState(false);
   const [sharedMsg, setSharedMsg] = useState<string | null>(null);
 
   useEffect(() => {
     if (!open) {
+      setCoupon(null);
+      setIssueError(null);
       setPharmacistMode(false);
       setSharedMsg(null);
+      return;
     }
-  }, [open]);
+
+    const controller = new AbortController();
+    async function issueCoupon() {
+      setIssuing(true);
+      setCoupon(null);
+      setIssueError(null);
+      try {
+        const response = await fetch("/api/coupons", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            pharmacyId: offer.pharmacyId,
+            drugId: offer.drugId,
+            strengthId: offer.strengthId,
+            quantity: offer.quantity,
+            supplyDays: offer.supplyDays,
+            couponPrice: offer.couponPrice,
+            retailPrice: offer.retailPrice,
+          }),
+          signal: controller.signal,
+        });
+        const data = (await response.json()) as {
+          coupon?: IssuedCoupon;
+          error?: string;
+        };
+        if (!response.ok || !data.coupon) {
+          throw new Error(data.error ?? "Could not issue this coupon.");
+        }
+        setCoupon(data.coupon);
+      } catch (caught) {
+        if (caught instanceof DOMException && caught.name === "AbortError") return;
+        setIssueError(
+          caught instanceof Error ? caught.message : "Could not issue this coupon."
+        );
+      } finally {
+        if (!controller.signal.aborted) setIssuing(false);
+      }
+    }
+
+    void issueCoupon();
+    return () => controller.abort();
+  }, [
+    open,
+    offer.pharmacyId,
+    offer.drugId,
+    offer.strengthId,
+    offer.quantity,
+    offer.supplyDays,
+    offer.couponPrice,
+    offer.retailPrice,
+  ]);
 
   const summary = `${drug.genericName} · ${strengthLabel} · Qty ${offer.quantity} · ${offer.supplyDays}-day`;
-  const shareBody = [
-    `Trump RX coupon for ${pharmacy.name}`,
-    summary,
-    `Price: ${formatCurrency(offer.couponPrice)}`,
-    `BIN ${coupon.bin} · PCN ${coupon.pcn} · Group ${coupon.group} · Member ${coupon.memberId}`,
-    "Not insurance — compare with your plan copay.",
-  ].join("\n");
+  const shareBody = coupon
+    ? [
+        `Trump RX coupon for ${pharmacy.name}`,
+        summary,
+        `Price: ${formatCurrency(offer.couponPrice)}`,
+        `BIN ${coupon.bin} · PCN ${coupon.pcn} · Group ${coupon.group} · Member ${coupon.memberId}`,
+        `Expires ${new Date(coupon.expiresAt).toLocaleDateString()}`,
+        "Not insurance — compare with your plan copay.",
+      ].join("\n")
+    : "";
 
   function onPrint() {
     window.print();
@@ -208,6 +276,22 @@ export function CouponModal({
             )}
           </div>
 
+          {issuing && (
+            <div className="rounded-xl bg-muted p-4 text-center text-sm text-muted-foreground">
+              Issuing your secure coupon…
+            </div>
+          )}
+          {issueError && (
+            <div
+              className="rounded-xl border border-destructive/30 bg-destructive/5 p-4 text-sm text-destructive"
+              role="alert"
+            >
+              {issueError}
+            </div>
+          )}
+
+          {coupon && (
+            <>
           <TrustCallout variant="warning" title="Not insurance — compare your copay">
             Ask the pharmacist which is lower: this coupon or your insurance.
             Coupons generally cannot be combined with insurance.
@@ -233,6 +317,17 @@ export function CouponModal({
             <CopyField label="Group" value={coupon.group} />
             <CopyField label="Member ID" value={coupon.memberId} />
           </div>
+          <p className="text-center text-sm text-muted-foreground">
+            Coupon expires{" "}
+            <time dateTime={coupon.expiresAt}>
+              {new Date(coupon.expiresAt).toLocaleDateString(undefined, {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </time>
+            .
+          </p>
 
           {!pharmacistMode && (
             <>
@@ -312,6 +407,8 @@ export function CouponModal({
                 Exit pharmacist mode
               </Button>
             </div>
+          )}
+            </>
           )}
         </div>
       </DialogContent>

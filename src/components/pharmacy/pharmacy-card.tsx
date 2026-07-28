@@ -3,10 +3,11 @@
 import { Clock, MapPin, Phone, Star, Store } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { CHAIN_LABELS } from "@/lib/data/pharmacies";
-import { useProfileStore } from "@/lib/store/profile-store";
+import { CHAIN_LABELS } from "@/lib/chains";
+import { usePreferredPharmacy } from "@/lib/hooks/use-preferred-pharmacy";
 import type { Pharmacy } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 interface PharmacyCardProps {
   pharmacy: Pharmacy;
@@ -23,9 +24,7 @@ export function PharmacyCard({
   onSelectCoupon,
   className,
 }: PharmacyCardProps) {
-  const preferred = useProfileStore((s) => s.preferredPharmacyIds);
-  const togglePreferred = useProfileStore((s) => s.togglePreferredPharmacy);
-  const isPreferred = preferred.includes(pharmacy.id);
+  const { isPreferred, togglePreferred, message } = usePreferredPharmacy(false);
 
   return (
     <article
@@ -125,7 +124,7 @@ export function PharmacyCard({
           type="button"
           variant={isPreferred ? "secondary" : "outline"}
           className="min-h-11"
-          onClick={() => togglePreferred(pharmacy.id)}
+          onClick={() => void togglePreferred(pharmacy.id)}
           aria-pressed={isPreferred}
         >
           <Star
@@ -135,6 +134,14 @@ export function PharmacyCard({
           {isPreferred ? "Preferred" : "Save pharmacy"}
         </Button>
       </div>
+      {message && (
+        <p className="mt-2 text-sm text-muted-foreground" role="status">
+          {message}{" "}
+          <Link href="/login" className="font-medium text-primary underline-offset-2 hover:underline">
+            Sign in
+          </Link>
+        </p>
+      )}
     </article>
   );
 }

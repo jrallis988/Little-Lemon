@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Check } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { TrustCallout } from "@/components/design/trust-callout";
+import { UpgradeButton } from "@/components/upgrade-button";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -106,17 +107,10 @@ export default function MembershipPage() {
                 </li>
               ))}
             </ul>
-            <Link
-              href="/profile"
-              className={cn(
-                buttonVariants({ variant: "secondary", size: "lg" }),
-                "mt-5 min-h-11 w-full"
-              )}
-            >
-              Preview membership in profile
-            </Link>
+            <UpgradeButton />
             <p className="mt-2 text-center text-xs text-muted-foreground">
-              Demo concept — billing not connected yet.
+              Stripe checkout is used when configured. Otherwise, Plus is
+              activated locally for development.
             </p>
           </section>
         </div>

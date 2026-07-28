@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Pill } from "lucide-react";
+import { Menu, Pill, UserRound } from "lucide-react";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -25,7 +26,12 @@ const NAV = [
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const { status } = useSession();
   const [open, setOpen] = useState(false);
+  const accountLink =
+    status === "authenticated"
+      ? { href: "/profile", label: "Account" }
+      : { href: "/login", label: "Sign in" };
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/70 bg-background/90 backdrop-blur-md">
@@ -68,8 +74,19 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-2 lg:flex">
-          <LocationPicker compact />
+        <div className="hidden items-center gap-2 md:flex">
+          <div className="hidden lg:block">
+            <LocationPicker compact />
+          </div>
+          {status !== "loading" && (
+            <Link
+              href={accountLink.href}
+              className="inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-border bg-background px-3 text-sm font-medium hover:bg-muted"
+            >
+              <UserRound className="size-4" />
+              {accountLink.label}
+            </Link>
+          )}
         </div>
 
         <Sheet open={open} onOpenChange={setOpen}>
@@ -107,6 +124,16 @@ export function SiteHeader() {
                     {item.label}
                   </Link>
                 ))}
+                {status !== "loading" && (
+                  <Link
+                    href={accountLink.href}
+                    onClick={() => setOpen(false)}
+                    className="mt-2 flex items-center gap-2 rounded-lg bg-secondary px-3 py-3 text-base font-medium"
+                  >
+                    <UserRound className="size-4" />
+                    {accountLink.label}
+                  </Link>
+                )}
               </nav>
             </div>
           </SheetContent>

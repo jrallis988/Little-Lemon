@@ -32,10 +32,14 @@ export function LocationPicker({ compact = false, className }: LocationPickerPro
     else setMessage("Using your current location for pharmacy distances.");
   }
 
-  function onApplyZip(e: React.FormEvent) {
+  async function onApplyZip(e: React.FormEvent) {
     e.preventDefault();
-    const ok = setZip(zipInput);
-    setMessage(ok ? `Showing pharmacies near ${zipInput}` : "Enter a valid 5-digit ZIP.");
+    const ok = await setZip(zipInput);
+    setMessage(
+      ok
+        ? `Showing pharmacies near ${zipInput}`
+        : "Enter a valid US 5-digit ZIP."
+    );
   }
 
   if (compact) {

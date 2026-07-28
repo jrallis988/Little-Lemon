@@ -19,8 +19,7 @@ export function SiteFooter() {
           </p>
           <p className="flex items-start gap-2 text-xs text-muted-foreground">
             <ShieldCheck className="mt-0.5 size-3.5 shrink-0 text-primary" aria-hidden />
-            Searches stay on your device by default. We never sell health query
-            data.
+            We never sell health query or medication data.
           </p>
         </div>
 
@@ -63,14 +62,19 @@ export function SiteFooter() {
                 Privacy &amp; compliance
               </Link>
             </li>
+            <li>
+              <Link href="/terms" className="hover:text-foreground">
+                Terms of Service
+              </Link>
+            </li>
             <li>Not insurance · Discount cards only</li>
             <li>WCAG 2.1 AA oriented interface</li>
           </ul>
         </div>
       </div>
       <div className="border-t border-border/80 py-4 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Trump RX. Demo pricing for product
-        illustration — not live claims adjudication.
+        © {new Date().getFullYear()} Trump RX. Prices are network cash-discount
+        pricing and may vary at the pharmacy.
       </div>
     </footer>
   );

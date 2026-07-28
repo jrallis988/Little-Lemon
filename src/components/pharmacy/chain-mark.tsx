@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import type { PharmacyChain } from "@/lib/types";
-import { CHAIN_LABELS } from "@/lib/data/pharmacies";
+import { CHAIN_LABELS } from "@/lib/chains";
 
 const MARK: Record<PharmacyChain, { letter: string; className: string }> = {
   cvs: { letter: "CVS", className: "bg-[#CC0000] text-white" },

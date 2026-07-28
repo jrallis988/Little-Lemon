@@ -2,19 +2,19 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { Loader2 } from "lucide-react";
 import { LocationPicker } from "@/components/pharmacy/location-picker";
 import { PharmacyCard } from "@/components/pharmacy/pharmacy-card";
 import { CouponModal } from "@/components/coupon/coupon-modal";
-import { PHARMACIES } from "@/lib/data/pharmacies";
-import { getDrugById } from "@/lib/data/drugs";
-import {
-  formatCurrency,
-  generateOffersForDrug,
-  withDistances,
-} from "@/lib/pricing";
+import { formatCurrency } from "@/lib/pricing";
 import { useLocationStore } from "@/lib/store/location-store";
-import type { Pharmacy, PharmacyPriceOffer } from "@/lib/types";
+import type {
+  Drug,
+  Pharmacy,
+  PharmacyPriceOffer,
+  PriceComparisonRow,
+} from "@/lib/types";
 import { buttonVariants } from "@/components/ui/button";
 import {
   Select,
@@ -27,45 +27,101 @@ import { cn } from "@/lib/utils";
 
 type SortMode = "distance" | "price";
 
+interface PharmacyResult {
+  pharmacy: Pharmacy;
+  row?: PriceComparisonRow;
+}
+
 export default function PharmaciesPage() {
   const location = useLocationStore((s) => s.location);
   const [sort, setSort] = useState<SortMode>("distance");
+  const [sampleDrug, setSampleDrug] = useState<Drug | null>(null);
+  const [results, setResults] = useState<PharmacyResult[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [couponTarget, setCouponTarget] = useState<{
     pharmacy: Pharmacy;
     offer: PharmacyPriceOffer;
   } | null>(null);
 
-  const sampleDrug = getDrugById("atorvastatin")!;
+  useEffect(() => {
+    const controller = new AbortController();
 
-  const pharmacies = useMemo(() => {
-    const withDist = withDistances(PHARMACIES, location);
-    const offers = generateOffersForDrug(
-      sampleDrug,
-      {
-        strengthId: sampleDrug.strengths[1]?.id ?? sampleDrug.strengths[0].id,
-        quantity: 30,
-        supplyDays: 30,
-      },
-      location
-    );
-    const priceByPharmacy = new Map(
-      offers.map((r) => [r.pharmacy.id, r] as const)
-    );
+    async function load() {
+      setLoading(true);
+      setError(null);
+      try {
+        const [drugResponse, pharmacyResponse] = await Promise.all([
+          fetch("/api/drugs?id=atorvastatin", { signal: controller.signal }),
+          fetch(`/api/pharmacies?zip=${encodeURIComponent(location.zip)}`, {
+            signal: controller.signal,
+          }),
+        ]);
+        if (!drugResponse.ok || !pharmacyResponse.ok) {
+          throw new Error("Could not load nearby pharmacy data.");
+        }
 
-    const enriched = withDist.map((p) => ({
-      pharmacy: p,
-      row: priceByPharmacy.get(p.id),
-    }));
+        const { drug } = (await drugResponse.json()) as { drug: Drug };
+        const { pharmacies } = (await pharmacyResponse.json()) as {
+          pharmacies: Pharmacy[];
+        };
+        const strength = drug.strengths[1] ?? drug.strengths[0];
+        if (!strength) throw new Error("Sample medication has no strength data.");
 
-    return enriched.sort((a, b) => {
+        const priceParams = new URLSearchParams({
+          drugId: drug.id,
+          strengthId: strength.id,
+          quantity: "30",
+          supplyDays: "30",
+          zip: location.zip,
+          sortBy: "price",
+        });
+        const priceResponse = await fetch(`/api/prices?${priceParams}`, {
+          signal: controller.signal,
+        });
+        if (!priceResponse.ok) {
+          throw new Error("Could not load sample prices.");
+        }
+        const { rows } = (await priceResponse.json()) as {
+          rows: PriceComparisonRow[];
+        };
+        const prices = new Map(rows.map((row) => [row.pharmacy.id, row]));
+
+        setSampleDrug(drug);
+        setResults(
+          pharmacies.map((pharmacy) => ({
+            pharmacy,
+            row: prices.get(pharmacy.id),
+          }))
+        );
+      } catch (caught) {
+        if (caught instanceof DOMException && caught.name === "AbortError") return;
+        setError(
+          caught instanceof Error
+            ? caught.message
+            : "Could not load nearby pharmacies."
+        );
+      } finally {
+        if (!controller.signal.aborted) setLoading(false);
+      }
+    }
+
+    void load();
+    return () => controller.abort();
+  }, [location.zip]);
+
+  const pharmacies = useMemo(
+    () =>
+      [...results].sort((a, b) => {
       if (sort === "price") {
         return (
           (a.row?.offer.couponPrice ?? 999) - (b.row?.offer.couponPrice ?? 999)
         );
       }
       return (a.pharmacy.distanceMiles ?? 99) - (b.pharmacy.distanceMiles ?? 99);
-    });
-  }, [location, sort, sampleDrug]);
+      }),
+    [results, sort]
+  );
 
   return (
     <div className="min-h-[70dvh] bg-background">
@@ -129,26 +185,39 @@ export default function PharmaciesPage() {
             </div>
           </aside>
 
-          <div className="grid gap-3 sm:grid-cols-2">
-            {pharmacies.map(({ pharmacy, row }, index) => (
-              <PharmacyCard
-                key={pharmacy.id}
-                pharmacy={pharmacy}
-                highlighted={index === 0 && sort === "price"}
-                priceLabel={
-                  row ? formatCurrency(row.offer.couponPrice) : undefined
-                }
-                onSelectCoupon={
-                  row
-                    ? () =>
-                        setCouponTarget({
-                          pharmacy,
-                          offer: row.offer,
-                        })
-                    : undefined
-                }
-              />
-            ))}
+          <div>
+            {loading ? (
+              <div className="flex min-h-48 items-center justify-center rounded-2xl border border-border bg-card text-muted-foreground">
+                <Loader2 className="mr-2 size-5 animate-spin" />
+                Loading nearby pharmacies…
+              </div>
+            ) : error ? (
+              <div className="rounded-2xl border border-destructive/30 bg-card p-5 text-destructive">
+                {error}
+              </div>
+            ) : (
+              <div className="grid gap-3 sm:grid-cols-2">
+                {pharmacies.map(({ pharmacy, row }, index) => (
+                  <PharmacyCard
+                    key={pharmacy.id}
+                    pharmacy={pharmacy}
+                    highlighted={index === 0 && sort === "price"}
+                    priceLabel={
+                      row ? formatCurrency(row.offer.couponPrice) : undefined
+                    }
+                    onSelectCoupon={
+                      row
+                        ? () =>
+                            setCouponTarget({
+                              pharmacy,
+                              offer: row.offer,
+                            })
+                        : undefined
+                    }
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
@@ -162,7 +231,7 @@ export default function PharmaciesPage() {
         </div>
       </div>
 
-      {couponTarget && (
+      {couponTarget && sampleDrug && (
         <CouponModal
           open={!!couponTarget}
           onOpenChange={(o) => !o && setCouponTarget(null)}
