@@ -38,6 +38,7 @@ import { FulfillmentPanel } from "@/components/fulfillment/fulfillment-panel";
 import { SmartSwitchRouteHint } from "@/components/coupon/smart-switch-route-hint";
 import { useLocationStore } from "@/lib/store/location-store";
 import { useCheckoutCartStore } from "@/lib/store/checkout-cart-store";
+import { useToast } from "@/components/providers/toast-provider";
 import type {
   Drug,
   PriceComparisonRow,
@@ -180,14 +181,15 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
   const [quotedAt, setQuotedAt] = useState<string | null>(null);
   const [saveMessage, setSaveMessage] = useState<string | null>(null);
   const addToCheckout = useCheckoutCartStore((s) => s.addItem);
+  const { toast } = useToast();
 
   const strength =
     drug.strengths.find((s) => s.id === filters.strengthId) ??
     drug.strengths[0];
 
-  function stageCheckout(row: PriceComparisonRow) {
+  async function stageCheckout(row: PriceComparisonRow) {
     if (!strength) return;
-    addToCheckout({
+    const result = await addToCheckout({
       drugId: drug.id,
       genericName: drug.genericName,
       brandName: drug.brandName,
@@ -202,7 +204,19 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
       retailPrice: row.offer.retailPrice,
       coupon: row.offer.coupon,
     });
+    if (!result.ok) {
+      toast({
+        title: "Could not add to checkout",
+        description: result.error,
+        tone: "error",
+      });
+      return;
+    }
     setSaveMessage("Added to digital checkout — open Checkout to issue your pass.");
+    toast({
+      title: "Added to checkout",
+      tone: "success",
+    });
   }
 
   useEffect(() => {
@@ -534,7 +548,7 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
                 type="button"
                 variant="outline"
                 className="min-h-11"
-                onClick={() => stageCheckout(lowest)}
+                onClick={() => void stageCheckout(lowest)}
               >
                 Add to checkout
               </Button>
@@ -564,7 +578,7 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
               rank={filters.sortBy === "price" ? index + 1 : undefined}
               highlighted={index === 0 && filters.sortBy === "price"}
               onGetCoupon={() => setActiveOffer(row)}
-              onAddToCheckout={() => stageCheckout(row)}
+              onAddToCheckout={() => void stageCheckout(row)}
             />
           ))}
         </div>

@@ -54,9 +54,9 @@ export function buildFulfillmentHandoff(
     return {
       channel: "telehealth",
       status: "partner_required",
-      title: "Telehealth partner not connected yet",
-      body: "Set TELEHEALTH_PARTNER_URL to enable one-tap clinical handoff. Until then, use your own clinician and bring the Trump RX coupon to any in-network pharmacy.",
-      ctaLabel: "Compare local pharmacies",
+      title: "Telehealth handoff unavailable",
+      body: "A clinical partner endpoint is not configured for this environment. Use your clinician and bring the Trump RX coupon to an in-network pharmacy.",
+      ctaLabel: "Compare pharmacies",
       ctaUrl: `${env.NEXT_PUBLIC_APP_URL}/pharmacies`,
     };
   }
@@ -82,9 +82,9 @@ export function buildFulfillmentHandoff(
     return {
       channel: req.channel,
       status: "partner_required",
-      title: "Mail-order partner not connected yet",
-      body: "Set MAIL_ORDER_PARTNER_URL to enable transfer chaining. You can still fill locally with a Trump RX coupon today.",
-      ctaLabel: "Get local coupon",
+      title: "Mail-order transfer unavailable",
+      body: "A mail-order partner endpoint is not configured for this environment. You can still fill locally with a Trump RX coupon.",
+      ctaLabel: "Get coupon",
       ctaUrl: `${env.NEXT_PUBLIC_APP_URL}/search?drug=${encodeURIComponent(req.drugId)}`,
     };
   }

@@ -6,7 +6,7 @@ Maps the reinvention brief (Parts 1–2) to what this codebase ships vs what sti
 
 | Blueprint item | Status | Implementation |
 |---|---|---|
-| **1. Unified real-time adjudication (Smart Switch)** | Shipped (simulated; live when partner env set) | `src/lib/switch/adjudication.ts`, `POST /api/switch/precheck`, `POST /api/switch/route` (universal router ranks pharmacies by network + BIN/PCN/Group pre-test), `SmartSwitchBadge`, `SmartSwitchRouteHint` |
+| **1. Unified real-time adjudication (Smart Switch)** | Shipped (live switch when `SWITCH_API_URL` set; otherwise network verification rules) | `src/lib/switch/adjudication.ts`, `POST /api/switch/precheck`, `POST /api/switch/route`, `SmartSwitchBadge`, `SmartSwitchRouteHint` |
 | **2. Insurance vs cash decision matrix** | Shipped | `src/lib/insurance/decision-matrix.ts`, `POST /api/decision/insurance-vs-cash`, `InsuranceVsCashMatrix` on search |
 | **3. Telehealth & fulfillment chaining** | Shipped (stubs; live URLs via env) | `src/lib/fulfillment/handoff.ts`, `POST /api/fulfillment/handoff`, `FulfillmentPanel` on search + checkout |
 | **4. Transparent generic price benchmarking** | Shipped | `src/lib/benchmarking.ts`, `BenchmarkDrawer` side-by-side cash comps |

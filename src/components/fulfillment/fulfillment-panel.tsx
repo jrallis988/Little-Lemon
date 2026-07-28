@@ -17,8 +17,7 @@ interface FulfillmentPanelProps {
 }
 
 /**
- * Telehealth / mail-order CTAs — hidden until partners are configured
- * (LAUNCH.md Part 1 §5), unless forced via showWhenUnconfigured for demos.
+ * Telehealth / mail-order CTAs — shown only when partner endpoints are configured.
  */
 export function FulfillmentPanel({
   drugId,

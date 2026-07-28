@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { logger } from "@/lib/logger";
 import type Stripe from "stripe";
 import { prisma } from "@/lib/db";
 import { getEnv, isStripeWebhookConfigured } from "@/lib/env";
@@ -83,7 +84,7 @@ export async function POST(req: Request) {
   try {
     event = stripe.webhooks.constructEvent(raw, sig, env.STRIPE_WEBHOOK_SECRET);
   } catch (err) {
-    console.error("[stripe-webhook] signature error", err);
+    logger.error("stripe_webhook_signature_error", { error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
 
@@ -104,7 +105,7 @@ export async function POST(req: Request) {
         break;
     }
   } catch (err) {
-    console.error("[stripe-webhook] handler error", event.type, err);
+    logger.error("stripe_webhook_handler_error", { type: event.type, error: err instanceof Error ? err.message : String(err) });
     return NextResponse.json({ error: "Webhook handler failed" }, { status: 500 });
   }
 

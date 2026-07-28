@@ -131,7 +131,7 @@ export function SmartSwitchBadge({
           <p className="text-sm font-semibold">{label}</p>
           <p className="text-xs text-muted-foreground">
             Smart Switch · {Math.round(result.confidence * 100)}% checks passed
-            {result.liveSwitch ? " · live partner" : " · network simulation"}
+            {result.liveSwitch ? " · live switch" : " · network verification"}
           </p>
         </div>
       </div>

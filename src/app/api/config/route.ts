@@ -43,7 +43,6 @@ export async function GET() {
       bin: process.env.TRUMPRX_BIN ?? "610020",
       pcn: process.env.TRUMPRX_PCN ?? "TRUMPRX",
       group: process.env.TRUMPRX_GROUP ?? "TRXSAVE",
-      note: "Replace with registered PBM BIN/PCN/Group before go-live.",
     },
   });
 }

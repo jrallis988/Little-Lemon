@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db";
+import { logger } from "@/lib/logger";
 
 /** Persist Smart Switch outcomes for claim-reject analytics. */
 export async function logSwitchEvent(input: {
@@ -23,6 +24,9 @@ export async function logSwitchEvent(input: {
       },
     });
   } catch (err) {
-    console.error("[switch-event] failed to persist", err);
+    logger.error("switch_event_persist_failed", {
+      error: err instanceof Error ? err.message : String(err),
+      status: input.status,
+    });
   }
 }

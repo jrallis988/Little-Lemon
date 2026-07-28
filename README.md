@@ -1,84 +1,50 @@
 # Trump RX
 
-**Trump RX** is a Next.js prescription cash-discount app with medication
-search, local pharmacy pricing, issued coupons, accounts, alerts, and optional
-membership.
-
-## What this improves
-
-- **Broader catalog feel** — brand *and* generic search, not a short deal list
-- **Local pharmacy matrix** — compare CVS, Walgreens, Walmart, Costco, independents by price and distance
-- **30 / 90-day supply toggles** with clear savings tips
-- **Show-to-pharmacist coupon** with large barcode + BIN / PCN / Group / Member ID
-- **Account profile** — server-backed saved meds, pharmacies, coupons, and alerts
-- **Accessibility-first** UI for patients, caregivers, and seniors
+**Trump RX** is a production Next.js prescription cash-discount platform:
+medication search, pharmacy pricing, digital coupons, accounts, alerts,
+membership billing, Smart Switch claim-path verification, and digital checkout.
 
 ## Stack
 
 - **Next.js 15** (App Router) + **TypeScript (strict)**
 - **Tailwind CSS v4** + **shadcn/ui**
-- **Prisma** + SQLite (swap the datasource for a production database)
-- **NextAuth** credentials sessions
-- Scannable coupons via **JsBarcode**
+- **Prisma** + **PostgreSQL** in production (SQLite allowed for local development only)
+- **NextAuth / Auth.js** credentials (+ optional Google)
+- Coupons via **JsBarcode**; membership via **Stripe**
 
-## Getting started
+## Getting started (local)
 
 ```bash
 npm install
 cp .env.example .env
+# Set AUTH_SECRET (openssl rand -base64 32) and DATABASE_URL
 npx prisma migrate deploy
+# Optional local-only demo user:
+# ALLOW_DEMO_SEED=true npm run db:seed
 npm run db:seed
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
 
-If `.env` does not already contain one, set `AUTH_SECRET` to a strong random
-value before starting the app. For example, generate one with
-`openssl rand -base64 32`.
+Create accounts via **Sign up** — there is no production auto-login or hardcoded
+password bypass.
 
-The seed creates this development account:
+## Production requirements
 
-- Email: `demo@trumprx.app`
-- Password: `password123`
+- `DATABASE_URL=postgresql://…`
+- `AUTH_SECRET` (≥32 chars) and absolute `AUTH_URL` / `NEXT_PUBLIC_APP_URL` (HTTPS)
+- Stripe: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `STRIPE_PLUS_PRICE_ID`
+- Optional: external pricing, Smart Switch, telehealth/mail-order, Resend, Twilio
 
-When changing the Prisma schema during development, create a new migration with
-`npx prisma migrate dev --name describe-your-change`.
-
-## Optional integrations
-
-- Stripe is optional. Set `STRIPE_SECRET_KEY`,
-  `STRIPE_WEBHOOK_SECRET`, and `STRIPE_PLUS_PRICE_ID` to enable subscription
-  checkout. Without Stripe, the checkout route activates Plus locally for 30
-  days so development flows remain testable.
-- An external pricing provider is optional. Set `PRICING_PROVIDER="external"`,
-  `PRICING_API_URL`, and optionally `PRICING_API_KEY`. The built-in network
-  pricing service is used by default and as the fallback.
+See `docs/LAUNCH.md` for the full launch checklist.
 
 ## Checks
 
 ```bash
 npm run build
 npm run lint
-```
-
-## Project layout
-
-```
-src/
-  app/                 # Pages and API routes
-  components/
-    search/            # Autocomplete drug search
-    pricing/           # Comparison matrix + savings tips
-    pharmacy/          # Location picker + store cards
-    coupon/            # Scannable coupon modal
-    layout/            # Header, footer, disclaimer banner
-    ui/                # shadcn primitives
-  lib/
-    types.ts           # Domain TypeScript interfaces
-    pricing.ts         # Client-safe currency formatting
-    pricing-service.ts # Server catalog, pharmacy, and pricing operations
-    store/             # Client location preferences
+npm run test:smoke
 ```
 
 ## Important disclaimer

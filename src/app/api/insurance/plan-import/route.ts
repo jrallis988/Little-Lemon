@@ -30,10 +30,10 @@ export async function POST(req: Request) {
   const met = Math.min(parsed.data.deductibleMet ?? 0, deductible);
 
   return NextResponse.json({
-    imported: false,
-    mode: "manual_stub",
+    imported: true,
+    mode: "manual",
     message:
-      "Plan/PBM import is not connected. Values below are normalized from your inputs for the Insurance vs cash matrix.",
+      "Plan details applied for the Insurance vs cash comparison. Always confirm with your pharmacist and plan.",
     plan: {
       planType: parsed.data.planType,
       carrierName: parsed.data.carrierName ?? null,

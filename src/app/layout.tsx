@@ -4,6 +4,8 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { DisclaimerBanner } from "@/components/layout/disclaimer-banner";
 import { SessionProvider } from "@/components/providers/session-provider";
+import { ToastProvider } from "@/components/providers/toast-provider";
+import { CartHydrator } from "@/components/providers/cart-hydrator";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
@@ -64,18 +66,21 @@ export default function RootLayout({
         className={`${display.variable} ${sans.variable} ${mono.variable} min-h-dvh font-sans antialiased`}
       >
         <SessionProvider>
-          <TooltipProvider>
-            <a
-              href="#main-content"
-              className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
-            >
-              Skip to main content
-            </a>
-            <DisclaimerBanner />
-            <SiteHeader />
-            <main id="main-content">{children}</main>
-            <SiteFooter />
-          </TooltipProvider>
+          <ToastProvider>
+            <TooltipProvider>
+              <CartHydrator />
+              <a
+                href="#main-content"
+                className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
+              >
+                Skip to main content
+              </a>
+              <DisclaimerBanner />
+              <SiteHeader />
+              <main id="main-content">{children}</main>
+              <SiteFooter />
+            </TooltipProvider>
+          </ToastProvider>
         </SessionProvider>
       </body>
     </html>

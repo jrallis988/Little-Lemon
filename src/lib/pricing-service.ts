@@ -327,12 +327,18 @@ async function externalQuotes(params: {
   plusMember?: boolean;
   radiusMiles?: number;
 }): Promise<PriceComparisonRow[]> {
+  const { fetchExternalQuotes } = await import("@/lib/pricing-provider");
   try {
-    const { fetchExternalQuotes } = await import("@/lib/pricing-provider");
     return await fetchExternalQuotes(params);
   } catch (err) {
-    console.error("[pricing] external provider failed; falling back to network", err);
-    return networkQuotes(params);
+    const { logger } = await import("@/lib/logger");
+    logger.error("external_pricing_failed", {
+      drugId: params.drugId,
+      error: err instanceof Error ? err.message : String(err),
+    });
+    throw new Error(
+      "Live pharmacy pricing is temporarily unavailable. Please try again shortly."
+    );
   }
 }
 

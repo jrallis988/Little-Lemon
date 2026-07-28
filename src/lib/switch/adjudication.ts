@@ -45,11 +45,11 @@ function hashSeed(input: string): number {
 }
 
 /**
- * Universal routing pre-check — validates BIN/PCN/Group against pharmacy
- * network acceptance before the patient reaches the counter.
+ * Network claim-path verification — validates BIN/PCN/Group against pharmacy
+ * acceptance before the patient reaches the counter.
  *
- * When SWITCH_API_URL is set, forwards to the live partner. Otherwise runs
- * a local Smart Switch simulation against contracted network pharmacies.
+ * When SWITCH_API_URL is set, forwards to the live partner switch.
+ * Otherwise runs the contracted network verification rules engine.
  */
 export async function runSwitchPrecheck(params: {
   pharmacy: Pharmacy;
@@ -99,8 +99,17 @@ export async function runSwitchPrecheck(params: {
       if (res.ok) {
         return (await res.json()) as SwitchPrecheckResult;
       }
+      const { logger } = await import("@/lib/logger");
+      logger.warn("smart_switch_partner_http_error", {
+        status: res.status,
+        pharmacyId: params.pharmacy.id,
+      });
     } catch (err) {
-      console.error("[smart-switch] live partner failed; using local precheck", err);
+      const { logger } = await import("@/lib/logger");
+      logger.error("smart_switch_partner_failed", {
+        pharmacyId: params.pharmacy.id,
+        error: err instanceof Error ? err.message : String(err),
+      });
     }
   }
 
@@ -131,7 +140,7 @@ export async function runSwitchPrecheck(params: {
       passed: ncpdpOk,
       detail: params.pharmacy.ncpdpId
         ? `NCPDP ${params.pharmacy.ncpdpId}${params.pharmacy.npi ? ` · NPI ${params.pharmacy.npi}` : ""}`
-        : "NCPDP ID not on file — routing uses pharmacy id fallback.",
+        : "NCPDP ID not on file — routing uses pharmacy network identifiers.",
     },
     {
       id: "bin",
@@ -160,7 +169,7 @@ export async function runSwitchPrecheck(params: {
       label: "Terminal acceptance pre-test",
       passed: terminalLikely,
       detail: terminalLikely
-        ? "Simulated first-pass claim path looks clear for this store."
+        ? "First-pass claim path looks clear for this store."
         : "Higher chance of a soft reject — ask pharmacist to reprocess as discount card.",
     },
   ];

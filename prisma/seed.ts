@@ -663,20 +663,32 @@ async function main() {
     }
   }
 
-  const passwordHash = await bcrypt.hash("password123", 10);
-  await prisma.user.create({
-    data: {
-      email: "demo@trumprx.app",
-      name: "Alex Patient",
-      passwordHash,
-      allowPersonalizedTips: true,
-      membershipTier: "free",
-    },
-  });
+  const allowDemoSeed =
+    process.env.ALLOW_DEMO_SEED === "true" &&
+    process.env.NODE_ENV !== "production";
 
-  console.log(
-    `Seeded ${DRUGS.length} drugs, ${PHARMACIES.length} pharmacies, ${ZIP_SEEDS.length} ZIPs, and demo user demo@trumprx.app / password123`
-  );
+  if (allowDemoSeed) {
+    const passwordHash = await bcrypt.hash(
+      process.env.DEMO_SEED_PASSWORD ?? "password123",
+      10
+    );
+    await prisma.user.create({
+      data: {
+        email: "demo@trumprx.app",
+        name: "Alex Patient",
+        passwordHash,
+        allowPersonalizedTips: true,
+        membershipTier: "free",
+      },
+    });
+    console.log(
+      `Seeded ${DRUGS.length} drugs, ${PHARMACIES.length} pharmacies, ${ZIP_SEEDS.length} ZIPs, and optional demo user (ALLOW_DEMO_SEED=true)`
+    );
+  } else {
+    console.log(
+      `Seeded ${DRUGS.length} drugs, ${PHARMACIES.length} pharmacies, ${ZIP_SEEDS.length} ZIPs (no demo user — set ALLOW_DEMO_SEED=true for local only)`
+    );
+  }
 }
 
 main()

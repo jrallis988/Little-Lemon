@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 
 export function UpgradeButton() {
   const router = useRouter();
-  const { data: session, update } = useSession();
+  const { data: session } = useSession();
   const [loading, setLoading] = useState(false);
   const [portalLoading, setPortalLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
@@ -24,7 +24,6 @@ export function UpgradeButton() {
       const response = await fetch("/api/stripe/checkout", { method: "POST" });
       const data = (await response.json()) as {
         url?: string;
-        mode?: "stripe" | "local";
         message?: string;
         error?: string;
       };
@@ -41,11 +40,7 @@ export function UpgradeButton() {
         return;
       }
 
-      setMessage(
-        data.message ?? "Trump RX Plus is active. Your account is being refreshed."
-      );
-      await update();
-      router.refresh();
+      throw new Error(data.error ?? "Checkout did not return a payment URL.");
     } catch (caught) {
       setMessage(
         caught instanceof Error ? caught.message : "Could not start the upgrade."

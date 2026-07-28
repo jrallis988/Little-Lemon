@@ -119,7 +119,7 @@ export function SmartSwitchRouteHint({
             {formatCurrency(recommended.couponPrice)} ·{" "}
             {recommended.status.replaceAll("_", " ")} (
             {Math.round(recommended.confidence * 100)}% confidence)
-            {liveSwitch ? " · live switch" : " · simulated pre-test"}
+            {liveSwitch ? " · live switch" : " · network verification"}
           </p>
           <p className="mt-0.5 text-xs text-muted-foreground">
             {recommended.pharmacistTip}

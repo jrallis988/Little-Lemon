@@ -147,7 +147,7 @@ export default function TermsPage() {
             >
               Privacy Policy
             </Link>
-            . Compliance placeholders (e.g., CCPA / GDPR requests) may be updated
+            . Compliance language (e.g., CCPA / GDPR requests) may be updated
             as we expand jurisdictions — contact support for access or deletion
             requests related to your account.
           </p>

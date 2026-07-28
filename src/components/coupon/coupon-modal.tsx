@@ -24,6 +24,7 @@ import { TrustCallout } from "@/components/design/trust-callout";
 import { SmartSwitchBadge } from "@/components/coupon/smart-switch-badge";
 import { formatCurrency } from "@/lib/pricing";
 import { useCheckoutCartStore } from "@/lib/store/checkout-cart-store";
+import { useToast } from "@/components/providers/toast-provider";
 import type {
   CouponBinDetails,
   Drug,
@@ -144,6 +145,7 @@ export function CouponModal({
   const [sharedMsg, setSharedMsg] = useState<string | null>(null);
   const [addedToCheckout, setAddedToCheckout] = useState(false);
   const addItem = useCheckoutCartStore((s) => s.addItem);
+  const { toast } = useToast();
 
   useEffect(() => {
     if (!open) {
@@ -238,8 +240,8 @@ export function CouponModal({
     );
   }
 
-  function onAddToCheckout() {
-    addItem({
+  async function onAddToCheckout() {
+    const result = await addItem({
       drugId: drug.id,
       genericName: drug.genericName,
       brandName: drug.brandName,
@@ -254,8 +256,21 @@ export function CouponModal({
       retailPrice: offer.retailPrice,
       coupon: coupon ?? undefined,
     });
+    if (!result.ok) {
+      toast({
+        title: "Could not add to checkout",
+        description: result.error,
+        tone: "error",
+      });
+      return;
+    }
     setAddedToCheckout(true);
     setSharedMsg("Added to digital checkout.");
+    toast({
+      title: "Added to checkout",
+      description: "Your cart is saved securely.",
+      tone: "success",
+    });
   }
 
   return (
@@ -412,7 +427,7 @@ export function CouponModal({
                 type="button"
                 variant={addedToCheckout ? "secondary" : "default"}
                 className="no-print min-h-11 w-full"
-                onClick={onAddToCheckout}
+                onClick={() => void onAddToCheckout()}
               >
                 <ShoppingBag />
                 {addedToCheckout ? "Updated in checkout" : "Add to digital checkout"}

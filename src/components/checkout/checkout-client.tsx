@@ -18,6 +18,7 @@ import {
   useCheckoutCartStore,
   type CheckoutCartItem,
 } from "@/lib/store/checkout-cart-store";
+import { useToast } from "@/components/providers/toast-provider";
 import { formatCurrency } from "@/lib/pricing";
 import { cn } from "@/lib/utils";
 
@@ -121,9 +122,16 @@ export function CheckoutClient() {
   const items = useCheckoutCartStore((s) => s.items);
   const removeItem = useCheckoutCartStore((s) => s.removeItem);
   const clear = useCheckoutCartStore((s) => s.clear);
+  const hydrate = useCheckoutCartStore((s) => s.hydrate);
+  const hydrated = useCheckoutCartStore((s) => s.hydrated);
+  const { toast } = useToast();
   const [issuing, setIssuing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [pass, setPass] = useState<IssuedPass | null>(null);
+
+  useEffect(() => {
+    if (!hydrated) void hydrate();
+  }, [hydrate, hydrated]);
 
   const total = items.reduce((sum, i) => sum + i.couponPrice, 0);
   const first = items[0];
@@ -152,10 +160,18 @@ export function CheckoutClient() {
       const data = (await res.json()) as IssuedPass & { error?: string };
       if (!res.ok) throw new Error(data.error ?? "Could not issue digital pass.");
       setPass(data);
+      toast({
+        title: "Digital pass issued",
+        description: data.savedToAccount
+          ? "Saved to your account."
+          : "Sign in next time to keep passes on your account.",
+        tone: "success",
+      });
     } catch (caught) {
-      setError(
-        caught instanceof Error ? caught.message : "Checkout failed. Try again."
-      );
+      const message =
+        caught instanceof Error ? caught.message : "Checkout failed. Try again.";
+      setError(message);
+      toast({ title: "Checkout failed", description: message, tone: "error" });
     } finally {
       setIssuing(false);
     }
@@ -207,7 +223,17 @@ export function CheckoutClient() {
             <CartLine
               key={item.id}
               item={item}
-              onRemove={() => removeItem(item.id)}
+              onRemove={() => {
+                void removeItem(item.id).then((result) => {
+                  if (!result.ok) {
+                    toast({
+                      title: "Could not remove item",
+                      description: result.error,
+                      tone: "error",
+                    });
+                  }
+                });
+              }}
             />
           ))}
           <div className="flex flex-col gap-3 border-t border-border py-4 sm:flex-row sm:items-center sm:justify-between">
@@ -220,7 +246,21 @@ export function CheckoutClient() {
               </p>
             </div>
             <div className="flex flex-wrap gap-2">
-              <Button type="button" variant="outline" onClick={() => clear()}>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  void clear().then((result) => {
+                    if (!result.ok) {
+                      toast({
+                        title: "Could not clear cart",
+                        description: result.error,
+                        tone: "error",
+                      });
+                    }
+                  });
+                }}
+              >
                 Clear
               </Button>
               <Button
@@ -277,7 +317,7 @@ export function CheckoutClient() {
                 variant="secondary"
                 onClick={() => {
                   setPass(null);
-                  clear();
+                  void clear();
                 }}
               >
                 Start new checkout

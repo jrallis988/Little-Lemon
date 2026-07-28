@@ -6,6 +6,7 @@ import { getEnv } from "@/lib/env";
 import { DEFAULT_LOCATION } from "@/lib/chains";
 import { dispatchPriceAlert } from "@/lib/alerts/dispatch";
 import { getPriceQuotes, sortComparisonRows } from "@/lib/pricing-service";
+import { logger } from "@/lib/logger";
 
 const createSchema = z.object({
   drugId: z.string(),
@@ -154,7 +155,6 @@ export async function PUT(req: Request) {
       const anyDelivered = delivery.some((d) => d.ok);
       // Advance baseline when at least one channel succeeded, or when all
       // channels were intentionally skipped (providers not configured) so
-      // local/dev cron still progresses.
       const onlySkipped = delivery.every((d) => d.skipped);
       if (anyDelivered || onlySkipped) {
         await prisma.priceAlert.update({
@@ -171,7 +171,7 @@ export async function PUT(req: Request) {
       });
     } catch (err) {
       const message = err instanceof Error ? err.message : "alert check failed";
-      console.error("[alerts-cron]", alert.id, message);
+      logger.error("alerts_cron_dispatch_failed", { alertId: alert.id, message });
       failures.push({ alertId: alert.id, error: message });
     }
   }
@@ -182,7 +182,7 @@ export async function PUT(req: Request) {
       data: { status: "expired" },
     });
   } catch (err) {
-    console.error("[alerts-cron] coupon expiry sweep failed", err);
+    logger.error("alerts_cron_expiry_sweep_failed", { error: err instanceof Error ? err.message : String(err) });
   }
 
   return NextResponse.json({

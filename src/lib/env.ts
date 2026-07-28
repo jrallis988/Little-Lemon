@@ -1,25 +1,25 @@
 import { z } from "zod";
+import { logger } from "@/lib/logger";
+import { databaseProviderFromUrl } from "@/lib/env-db";
 
 const isProd = process.env.NODE_ENV === "production";
 
 /**
- * Production requires strong AUTH_SECRET and AUTH_URL.
- * Development keeps a documented fallback so local seed/dev still boots.
+ * Environment validation. Production requires AUTH_SECRET, AUTH_URL, and Postgres.
+ * No hardcoded auth secrets or membership bypasses.
  */
 const envSchema = z
   .object({
     NODE_ENV: z.enum(["development", "test", "production"]).optional(),
-    DATABASE_URL: z
+    DATABASE_URL: z.string().min(1, "DATABASE_URL is required"),
+    AUTH_SECRET: z
       .string()
-      .min(1, "DATABASE_URL is required (sqlite file:./dev.db or postgres://…)"),
-    AUTH_SECRET: isProd
-      ? z
-          .string()
-          .min(32, "AUTH_SECRET must be at least 32 characters in production")
-      : z
-          .string()
-          .min(16)
-          .default("dev-trump-rx-change-me-in-production-32chars"),
+      .min(
+        isProd ? 32 : 16,
+        isProd
+          ? "AUTH_SECRET must be at least 32 characters in production"
+          : "AUTH_SECRET must be at least 16 characters"
+      ),
     AUTH_URL: isProd
       ? z.string().url("AUTH_URL must be a valid absolute URL in production")
       : z.string().url().optional(),
@@ -36,19 +36,21 @@ const envSchema = z
     STRIPE_WEBHOOK_SECRET: z.string().optional(),
     STRIPE_PLUS_PRICE_ID: z.string().optional(),
     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string().optional(),
-  ALERTS_CRON_SECRET: z.string().optional(),
-  RESEND_API_KEY: z.string().optional(),
-  RESEND_FROM_EMAIL: z.string().email().optional(),
-  TWILIO_ACCOUNT_SID: z.string().optional(),
-  TWILIO_AUTH_TOKEN: z.string().optional(),
-  TWILIO_FROM_NUMBER: z.string().optional(),
-  SWITCH_API_URL: z.string().url().optional(),
-  SWITCH_API_KEY: z.string().optional(),
-  TELEHEALTH_PARTNER_URL: z.string().url().optional(),
-  MAIL_ORDER_PARTNER_URL: z.string().url().optional(),
-  NEXT_PUBLIC_APP_URL: z.string().default("http://127.0.0.1:3000"),
-  NEXT_PUBLIC_APP_NAME: z.string().default("Trump RX"),
-})
+    ALERTS_CRON_SECRET: z.string().optional(),
+    RESEND_API_KEY: z.string().optional(),
+    RESEND_FROM_EMAIL: z.string().email().optional(),
+    TWILIO_ACCOUNT_SID: z.string().optional(),
+    TWILIO_AUTH_TOKEN: z.string().optional(),
+    TWILIO_FROM_NUMBER: z.string().optional(),
+    SWITCH_API_URL: z.string().url().optional(),
+    SWITCH_API_KEY: z.string().optional(),
+    TELEHEALTH_PARTNER_URL: z.string().url().optional(),
+    MAIL_ORDER_PARTNER_URL: z.string().url().optional(),
+    ALLOW_DEMO_SEED: z.string().optional(),
+    NEXT_PUBLIC_APP_URL: z.string().default("http://127.0.0.1:3000"),
+    NEXT_PUBLIC_APP_NAME: z.string().default("Trump RX"),
+    ADMIN_EMAILS: z.string().optional(),
+  })
   .superRefine((val, ctx) => {
     if (val.PRICING_PROVIDER === "external" && !val.PRICING_API_URL) {
       ctx.addIssue({
@@ -64,6 +66,17 @@ const envSchema = z
         message: "STRIPE_PLUS_PRICE_ID is required when Stripe is enabled",
       });
     }
+    if (isProd) {
+      const provider = databaseProviderFromUrl(val.DATABASE_URL);
+      if (provider !== "postgres") {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["DATABASE_URL"],
+          message:
+            "Production requires a PostgreSQL DATABASE_URL (postgresql://…)",
+        });
+      }
+    }
   });
 
 export type AppEnv = z.infer<typeof envSchema>;
@@ -74,7 +87,9 @@ export function getEnv(): AppEnv {
   if (cached) return cached;
   const parsed = envSchema.safeParse(process.env);
   if (!parsed.success) {
-    console.error("[env]", parsed.error.flatten().fieldErrors);
+    logger.error("invalid_env", {
+      fields: parsed.error.flatten().fieldErrors,
+    });
     throw new Error("Invalid environment configuration");
   }
   cached = parsed.data;
@@ -114,9 +129,4 @@ export function isTwilioConfigured(): boolean {
   );
 }
 
-export function databaseProviderFromUrl(url: string): "sqlite" | "postgres" {
-  if (url.startsWith("postgres://") || url.startsWith("postgresql://")) {
-    return "postgres";
-  }
-  return "sqlite";
-}
+export { databaseProviderFromUrl } from "@/lib/env-db";

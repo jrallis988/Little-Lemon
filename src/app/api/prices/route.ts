@@ -3,6 +3,7 @@ import { z } from "zod";
 import { auth } from "@/lib/auth";
 import { DEFAULT_LOCATION } from "@/lib/chains";
 import { resolveZip } from "@/lib/geo";
+import { logger } from "@/lib/logger";
 import {
   buildSavingsTips,
   getDrugById,
@@ -53,30 +54,46 @@ export async function GET(req: Request) {
     session?.user?.membershipTier === "plus" &&
     session.user.membershipStatus === "active";
 
-  const rows = await getPriceQuotes({
-    drugId: parsed.data.drugId,
-    strengthId: parsed.data.strengthId,
-    quantity: parsed.data.quantity,
-    supplyDays: parsed.data.supplyDays as 30 | 90,
-    location,
-    plusMember,
-    radiusMiles: parsed.data.radiusMiles,
-  });
+  try {
+    const rows = await getPriceQuotes({
+      drugId: parsed.data.drugId,
+      strengthId: parsed.data.strengthId,
+      quantity: parsed.data.quantity,
+      supplyDays: parsed.data.supplyDays as 30 | 90,
+      location,
+      plusMember,
+      radiusMiles: parsed.data.radiusMiles,
+    });
 
-  const sorted = sortComparisonRows(rows, parsed.data.sortBy);
-  const tips = buildSavingsTips({
-    drug,
-    rows: sorted,
-    supplyDays: parsed.data.supplyDays as 30 | 90,
-  });
+    const sorted = sortComparisonRows(rows, parsed.data.sortBy);
+    const tips = buildSavingsTips({
+      drug,
+      rows: sorted,
+      supplyDays: parsed.data.supplyDays as 30 | 90,
+    });
 
-  return NextResponse.json({
-    drug,
-    location,
-    plusMember,
-    rows: sorted,
-    tips,
-    quotedAt: new Date().toISOString(),
-    provider: process.env.PRICING_PROVIDER ?? "network",
-  });
+    return NextResponse.json({
+      drug,
+      location,
+      plusMember,
+      rows: sorted,
+      tips,
+      quotedAt: new Date().toISOString(),
+      provider: process.env.PRICING_PROVIDER ?? "network",
+    });
+  } catch (err) {
+    logger.error("prices_route_failed", {
+      drugId: parsed.data.drugId,
+      error: err instanceof Error ? err.message : String(err),
+    });
+    return NextResponse.json(
+      {
+        error:
+          err instanceof Error
+            ? err.message
+            : "Could not load pharmacy prices. Please try again.",
+      },
+      { status: 502 }
+    );
+  }
 }

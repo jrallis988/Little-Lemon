@@ -17,7 +17,7 @@ const FREE = [
   "Search brand and generic medications",
   "Compare local pharmacy coupon prices",
   "Show-to-pharmacist digital coupon",
-  "Save meds on this device",
+  "Save meds to your account",
   "No account required to compare",
 ];
 
@@ -109,8 +109,7 @@ export default function MembershipPage() {
             </ul>
             <UpgradeButton />
             <p className="mt-2 text-center text-xs text-muted-foreground">
-              Stripe checkout is used when configured. Otherwise, Plus is
-              activated locally for development.
+              Secure Stripe checkout. Cancel anytime from Manage billing.
             </p>
           </section>
         </div>

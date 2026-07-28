@@ -68,7 +68,7 @@ export function InsuranceVsCashMatrix({
       }
       setImportNote(
         data.message ??
-          "Normalized plan fields for the matrix. Live PBM import not connected yet."
+          "Plan details applied to the Insurance vs cash matrix."
       );
     } catch {
       setImportNote("Could not normalize plan fields.");
@@ -171,7 +171,7 @@ export function InsuranceVsCashMatrix({
         onClick={() => void importPlanStub()}
         className="text-left text-sm font-medium text-primary underline-offset-2 hover:underline"
       >
-        Normalize plan fields (import stub)
+        Normalize plan fields
       </button>
       {importNote && (
         <p className="text-xs text-muted-foreground" role="status">

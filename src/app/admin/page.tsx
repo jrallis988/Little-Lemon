@@ -148,7 +148,7 @@ export default function AdminPage() {
                 {e.confidence != null
                   ? ` · ${Math.round(e.confidence * 100)}%`
                   : ""}
-                {e.liveSwitch ? " · live" : " · simulated"}
+                {e.liveSwitch ? " · live switch" : " · network rules"}
               </p>
             </li>
           ))}

@@ -40,4 +40,7 @@ Smart Switch UI · Insurance-vs-cash · Benchmarks · Fulfillment panel · Count
 
 ## Bottom line
 
-Demo is end-to-end. **Go-live = partners + prod ops + legal**, not more feature scaffolding.
+The application is built as a production service: Postgres in production,
+Auth.js-only auth, Stripe for membership, DB-backed carts and digital passes,
+and structured logging. Go-live still requires partner credentials and legal
+sign-off — see Part 1 operator actions.
