@@ -107,6 +107,7 @@ export function Footer() {
               Terms &amp; Conditions
             </Link>
           </p>
+          <p className="text-white/70">Powered by Artistic Fountain</p>
         </div>
       </div>
     </footer>
