@@ -59,7 +59,7 @@ export function SiteFooter() {
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
             <li>
               <Link href="/privacy" className="hover:text-foreground">
-                Privacy &amp; compliance
+                Privacy Policy
               </Link>
             </li>
             <li>
@@ -72,9 +72,22 @@ export function SiteFooter() {
           </ul>
         </div>
       </div>
-      <div className="border-t border-border/80 py-4 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Trump RX. Prices are network cash-discount
-        pricing and may vary at the pharmacy.
+      <div className="border-t border-border/80 py-4">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-center gap-2 px-4 text-center text-xs text-muted-foreground sm:flex-row sm:gap-4 sm:px-6">
+          <p>
+            © {new Date().getFullYear()} Trump RX. Prices are network
+            cash-discount pricing and may vary at the pharmacy.
+          </p>
+          <span className="hidden sm:inline" aria-hidden>
+            ·
+          </span>
+          <Link
+            href="/privacy"
+            className="font-medium text-foreground/80 underline-offset-2 hover:text-foreground hover:underline"
+          >
+            Privacy Policy
+          </Link>
+        </div>
       </div>
     </footer>
   );
