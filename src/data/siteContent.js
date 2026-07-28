@@ -1,11 +1,11 @@
 export const admissionsSteps = [
   {
     title: "Choose your program",
-    copy: "Explore 35+ certificates and associate degrees across career and transfer pathways. Not sure where to start? Contact Admissions or visit Berlin or Littleton.",
+    copy: "Explore 35+ certificates and associate degrees across career and transfer pathways. Not sure where to start? Contact Admissions or visit Berlin, Littleton, or North Conway.",
   },
   {
     title: "Submit your application",
-    copy: "Apply online through the CCSNH admissions portal and review any program-specific requirements before submitting.",
+    copy: "Apply online through the official CCSNH admissions portal at ccsnh.my.site.com/apply, then review any program-specific requirements before submitting.",
   },
   {
     title: "Send transcripts",
@@ -17,7 +17,7 @@ export const admissionsSteps = [
   },
   {
     title: "Meet with an advisor",
-    copy: "Once accepted, schedule advising to choose your classes and map your path at Berlin, Littleton, or online.",
+    copy: "Once accepted, schedule advising to choose your classes and map your path at Berlin, Littleton, North Conway, or online.",
   },
   {
     title: "Apply for financial aid",

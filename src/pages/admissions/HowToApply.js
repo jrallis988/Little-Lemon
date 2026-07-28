@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import PageHero from "../../components/PageHero";
 import SectionNav from "../../components/SectionNav";
 import { admissionsSteps } from "../../data/siteContent";
+import { APPLY_URL } from "../../data/links";
 import { admissionsNav } from "./admissionsNav";
 
 function HowToApply() {
@@ -14,13 +15,14 @@ function HowToApply() {
         image="/images/students.jpg"
         actions={[
           {
-            label: "Browse Programs",
-            to: "/academics",
+            label: "Apply Now",
+            to: APPLY_URL,
+            external: true,
             className: "btn btn-gold",
           },
           {
-            label: "Financial Aid",
-            to: "/admissions/financial-aid",
+            label: "Browse Programs",
+            to: "/academics",
             className: "btn btn-ghost-light",
           },
         ]}
@@ -93,14 +95,20 @@ function HowToApply() {
           <div>
             <h2>Ready to move forward?</h2>
             <p>
-              Explore programs, plan a visit, or start your FAFSA with school
-              code <strong>005291</strong>.
+              Start your application in the CCSNH admissions portal, then explore
+              programs or begin your FAFSA with school code{" "}
+              <strong>005291</strong>.
             </p>
           </div>
           <div className="cta-actions">
-            <Link className="btn btn-gold" to="/academics">
-              Browse Programs
-            </Link>
+            <a
+              className="btn btn-gold"
+              href={APPLY_URL}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Apply on CCSNH Portal
+            </a>
             <Link className="btn btn-primary" to="/admissions/financial-aid">
               Financial Aid
             </Link>

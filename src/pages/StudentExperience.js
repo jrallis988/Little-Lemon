@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import PageHero from "../components/PageHero";
 import { clubs } from "../data/siteContent";
+import { APPLY_URL } from "../data/links";
 
 function StudentExperience() {
   return (
@@ -13,7 +14,8 @@ function StudentExperience() {
         actions={[
           {
             label: "Become a Student",
-            to: "/admissions",
+            to: APPLY_URL,
+            external: true,
             className: "btn btn-gold",
           },
           {
@@ -119,9 +121,14 @@ function StudentExperience() {
             </p>
           </div>
           <div className="cta-actions">
-            <Link className="btn btn-gold" to="/admissions">
+            <a
+              className="btn btn-gold"
+              href={APPLY_URL}
+              target="_blank"
+              rel="noreferrer"
+            >
               Become a Student
-            </Link>
+            </a>
             <Link className="btn btn-ghost-light" to="/contact">
               Contact Us
             </Link>

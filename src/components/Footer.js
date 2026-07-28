@@ -13,7 +13,8 @@ function Footer() {
           />
           <p className="footer-lead">
             Affordable higher education in northern New Hampshire — pathways to
-            careers, transfer, and lifelong opportunity from Berlin and Littleton.
+            careers, transfer, and lifelong opportunity from Berlin, Littleton,
+            and North Conway.
           </p>
         </div>
 
@@ -56,9 +57,9 @@ function Footer() {
             <ul>
               <li>Berlin Campus</li>
               <li>Littleton Academic Center</li>
-              <li>Online &amp; hybrid options</li>
+              <li>North Conway Academic Center</li>
               <li>
-                <Link to="/contact">Directions</Link>
+                <Link to="/contact">Hours &amp; Directions</Link>
               </li>
             </ul>
           </div>

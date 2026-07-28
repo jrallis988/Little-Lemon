@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import PageHero from "../components/PageHero";
+import { APPLY_URL } from "../data/links";
 
 const values = [
   {
@@ -54,9 +55,10 @@ function About() {
           <article>
             <p className="eyebrow">Where we serve</p>
             <p>
-              From our main campus in Berlin and Academic Center in Littleton —
-              with online, hybrid, day, and evening options — WMCC brings
-              affordable higher education to the White Mountains region.
+              From our main campus in Berlin and Academic Centers in Littleton
+              and North Conway — with online, hybrid, day, and evening options —
+              WMCC brings affordable higher education to the White Mountains
+              region.
             </p>
           </article>
         </div>
@@ -89,11 +91,12 @@ function About() {
           </figure>
           <div className="split-copy">
             <p className="eyebrow">Campus life</p>
-            <h2>Two locations. One college community.</h2>
+            <h2>Three locations. One college community.</h2>
             <p>
               The Berlin campus anchors hands-on programs in trades, culinary,
-              healthcare, and more. The Littleton Academic Center expands access
-              for students across the North Country with flexible course formats.
+              healthcare, and more. Academic Centers in Littleton and North
+              Conway expand access across the North Country with flexible course
+              formats and advising support.
             </p>
             <ul className="check-list">
               <li>NECHE-accredited public community college</li>
@@ -119,9 +122,14 @@ function About() {
             </p>
           </div>
           <div className="cta-actions">
-            <Link className="btn btn-gold" to="/admissions">
+            <a
+              className="btn btn-gold"
+              href={APPLY_URL}
+              target="_blank"
+              rel="noreferrer"
+            >
               Start Your Application
-            </Link>
+            </a>
             <Link className="btn btn-ghost-light" to="/contact">
               Contact Us
             </Link>

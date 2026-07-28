@@ -13,6 +13,15 @@ test("renders White Mountains brand on the home page", () => {
     screen.getAllByAltText(/White Mountains Community College/i).length
   ).toBeGreaterThan(0);
   expect(
-    screen.getByRole("heading", { name: /Explore Our Programs/i })
+    screen.getByRole("heading", {
+      level: 1,
+      name: /White Mountains Community College/i,
+    })
   ).toBeInTheDocument();
+  const applyLinks = screen.getAllByRole("link", { name: /apply/i });
+  expect(
+    applyLinks.some(
+      (link) => link.getAttribute("href") === "https://ccsnh.my.site.com/apply/"
+    )
+  ).toBe(true);
 });

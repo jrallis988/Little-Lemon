@@ -1,6 +1,7 @@
 import { Link, useSearchParams } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import PageHero from "../components/PageHero";
+import { APPLY_URL } from "../data/links";
 import {
   focusAreas,
   locations,
@@ -53,7 +54,8 @@ function Academics() {
         filters.focus === "all" || program.focusAreas.includes(filters.focus);
 
       const matchesLocation =
-        filters.location === "all" || program.location === filters.location;
+        filters.location === "all" ||
+        (program.locations || [program.location]).includes(filters.location);
 
       return matchesQuery && matchesType && matchesFocus && matchesLocation;
     });
@@ -74,8 +76,9 @@ function Academics() {
         image="/images/students.jpg"
         actions={[
           {
-            label: "How to Apply",
-            to: "/admissions/how-to-apply",
+            label: "Apply Now",
+            to: APPLY_URL,
+            external: true,
             className: "btn btn-gold",
           },
           {
@@ -204,7 +207,9 @@ function Academics() {
                         .filter(Boolean)
                         .join(" · ")}
                     </p>
-                    <p className="program-location">{program.location} Campus</p>
+                    <p className="program-location">
+                      {(program.locations || [program.location]).join(" · ")}
+                    </p>
                     <Link
                       className="text-link"
                       to={`/academics/programs/${program.id}`}

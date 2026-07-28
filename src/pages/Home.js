@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import HeroCarousel from "../components/HeroCarousel";
 import { focusAreas, highlights } from "../data/programs";
+import { APPLY_URL } from "../data/links";
 
 function Home() {
   return (
@@ -10,7 +11,9 @@ function Home() {
       <section className="quick-links" aria-label="Quick links">
         <div className="container quick-links-grid">
           <Link to="/admissions/visit">Visit</Link>
-          <Link to="/admissions/how-to-apply">Apply</Link>
+          <a href={APPLY_URL} target="_blank" rel="noreferrer">
+            Apply
+          </a>
           <Link to="/academics">Explore</Link>
           <Link to="/contact">Request Info</Link>
         </div>
@@ -28,7 +31,7 @@ function Home() {
             </p>
             <ul className="check-list">
               <li>Hands-on labs for welding, diesel, automotive, culinary, and nursing</li>
-              <li>Berlin campus plus Littleton Academic Center options</li>
+              <li>Berlin, Littleton, and North Conway locations — plus online options</li>
               <li>Transfer pathways and advising for four-year goals</li>
               <li>Short-term training that moves you from classroom to career</li>
             </ul>
@@ -78,6 +81,9 @@ function Home() {
               <article key={area.id} className="area-item">
                 <h3>{area.title}</h3>
                 <p>{area.description}</p>
+                <Link className="text-link" to={`/academics?focus=${area.id}`}>
+                  View programs
+                </Link>
               </article>
             ))}
           </div>
@@ -116,17 +122,22 @@ function Home() {
       <section className="section cta-band">
         <div className="container cta-inner">
           <div>
-            <p className="eyebrow light">Fall enrollment</p>
-            <h2>Ready to take the next step?</h2>
+            <p className="eyebrow light">Ready when you are</p>
+            <h2>Take the next step at WMCC.</h2>
             <p>
-              Speak with an admissions counselor, tour Berlin or Littleton, or
-              apply today.
+              Speak with an admissions counselor, tour a North Country location,
+              or apply through the official CCSNH portal.
             </p>
           </div>
           <div className="cta-actions">
-            <Link className="btn btn-gold" to="/admissions/how-to-apply">
+            <a
+              className="btn btn-gold"
+              href={APPLY_URL}
+              target="_blank"
+              rel="noreferrer"
+            >
               Apply Now
-            </Link>
+            </a>
             <Link className="btn btn-ghost-light" to="/admissions/visit">
               Visit Campus
             </Link>

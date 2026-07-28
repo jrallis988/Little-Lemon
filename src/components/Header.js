@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { APPLY_URL } from "../data/links";
 
 const navItems = [
   {
@@ -7,7 +8,7 @@ const navItems = [
     to: "/academics",
     children: [
       { to: "/academics", label: "Our Programs" },
-      { to: "/admissions/how-to-apply", label: "Registration Path" },
+      { to: "/admissions/how-to-apply", label: "How to Apply" },
     ],
   },
   {
@@ -134,6 +135,15 @@ function Header() {
               </li>
             ))}
           </ul>
+          <a
+            className="btn btn-gold header-apply"
+            href={APPLY_URL}
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => setOpen(false)}
+          >
+            Apply
+          </a>
         </nav>
       </div>
     </header>

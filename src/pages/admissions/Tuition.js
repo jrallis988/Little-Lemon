@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import PageHero from "../../components/PageHero";
 import SectionNav from "../../components/SectionNav";
 import { tuitionRates } from "../../data/siteContent";
+import { APPLY_URL } from "../../data/links";
 import { admissionsNav } from "./admissionsNav";
 
 function Tuition() {
@@ -19,8 +20,9 @@ function Tuition() {
             className: "btn btn-gold",
           },
           {
-            label: "How to Apply",
-            to: "/admissions/how-to-apply",
+            label: "Apply Now",
+            to: APPLY_URL,
+            external: true,
             className: "btn btn-ghost-light",
           },
         ]}

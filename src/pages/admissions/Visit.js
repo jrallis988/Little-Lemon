@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import PageHero from "../../components/PageHero";
 import SectionNav from "../../components/SectionNav";
 import { visitEvents } from "../../data/siteContent";
+import { APPLY_URL } from "../../data/links";
 import { admissionsNav } from "./admissionsNav";
 
 function Visit() {
@@ -10,7 +11,7 @@ function Visit() {
       <PageHero
         brand="Admissions & Aid"
         title="Plan your visit"
-        copy="See campus, learn about programs, and get questions answered by college staff — through tours, Open Houses, and Express Admissions Days."
+        copy="See campus, learn about programs, and get questions answered by college staff — through tours, Open Houses, and Express Admissions Days at Berlin, Littleton, or North Conway."
         image="/images/campus-exterior.jpg"
         actions={[
           {
@@ -20,7 +21,8 @@ function Visit() {
           },
           {
             label: "Apply Now",
-            to: "/admissions/how-to-apply",
+            to: APPLY_URL,
+            external: true,
             className: "btn btn-ghost-light",
           },
         ]}
@@ -81,6 +83,7 @@ function Visit() {
             <ul className="check-list">
               <li>Berlin Campus · 2020 Riverside Drive</li>
               <li>Littleton Academic Center · 646 Union Street</li>
+              <li>North Conway Academic Center · 2541 White Mountain Highway</li>
               <li>Learn about Nursing and other program-specific sessions</li>
             </ul>
           </div>

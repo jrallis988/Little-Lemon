@@ -20,18 +20,28 @@ function PageHero({
         {copy ? <p>{copy}</p> : null}
         {actions ? (
           <div className="cta-actions">
-            {actions.map((action) =>
-              action.external ? (
-                <a
-                  key={action.label}
-                  className={action.className || "btn btn-gold"}
-                  href={action.to}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {action.label}
-                </a>
-              ) : (
+            {actions.map((action) => {
+              const isExternal = Boolean(action.external);
+              const isHttp =
+                typeof action.to === "string" &&
+                /^https?:\/\//i.test(action.to);
+
+              if (isExternal) {
+                return (
+                  <a
+                    key={action.label}
+                    className={action.className || "btn btn-gold"}
+                    href={action.to}
+                    {...(isHttp
+                      ? { target: "_blank", rel: "noreferrer" }
+                      : {})}
+                  >
+                    {action.label}
+                  </a>
+                );
+              }
+
+              return (
                 <Link
                   key={action.label}
                   className={action.className || "btn btn-gold"}
@@ -39,8 +49,8 @@ function PageHero({
                 >
                   {action.label}
                 </Link>
-              )
-            )}
+              );
+            })}
           </div>
         ) : null}
       </div>

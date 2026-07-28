@@ -3,6 +3,28 @@ import { Link } from "react-router-dom";
 import { heroSlides } from "../data/heroSlides";
 
 const INTERVAL_MS = 7000;
+const BRAND = "White Mountains Community College";
+
+function CtaButton({ action, className }) {
+  if (!action) return null;
+  if (action.external) {
+    return (
+      <a
+        className={className}
+        href={action.to}
+        target="_blank"
+        rel="noreferrer"
+      >
+        {action.label}
+      </a>
+    );
+  }
+  return (
+    <Link className={className} to={action.to}>
+      {action.label}
+    </Link>
+  );
+}
 
 function HeroCarousel() {
   const [index, setIndex] = useState(0);
@@ -57,22 +79,29 @@ function HeroCarousel() {
           className={`hero-slide ${itemIndex === index ? "is-active" : ""}`}
           aria-hidden={itemIndex !== index}
         >
-          <img src={item.image} alt="" className="hero-slide-image" />
+          <img
+            src={item.image}
+            alt={itemIndex === index ? item.imageAlt || "" : ""}
+            className="hero-slide-image"
+          />
         </div>
       ))}
 
       <div className="hero-slide-veil" aria-hidden="true" />
 
       <div className="hero-carousel-inner">
-        <div className="hero-panel" key={slide.id}>
-          {slide.kicker ? <p className="hero-panel-kicker">{slide.kicker}</p> : null}
-          <h1>{slide.title}</h1>
-          {slide.lines.map((line) => (
-            <p key={line}>{line}</p>
-          ))}
-          <Link className="btn btn-gold" to={slide.cta.to}>
-            {slide.cta.label}
-          </Link>
+        <div className="hero-panel brand-first" key={slide.id}>
+          <p className="hero-brand-mark">White Mountains</p>
+          <h1>{BRAND}</h1>
+          <p className="hero-headline">{slide.headline}</p>
+          <p className="hero-support">{slide.line}</p>
+          <div className="cta-actions">
+            <CtaButton action={slide.cta} className="btn btn-gold" />
+            <CtaButton
+              action={slide.secondaryCta}
+              className="btn btn-ghost-light"
+            />
+          </div>
         </div>
       </div>
 
@@ -100,7 +129,7 @@ function HeroCarousel() {
             type="button"
             role="tab"
             aria-selected={itemIndex === index}
-            aria-label={`Show slide ${itemIndex + 1}: ${item.title}`}
+            aria-label={`Show slide ${itemIndex + 1}: ${item.headline}`}
             className={itemIndex === index ? "is-active" : ""}
             onClick={() => setIndex(itemIndex)}
           />

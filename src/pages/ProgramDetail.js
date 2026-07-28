@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import PageHero from "../components/PageHero";
 import { focusAreas, programs } from "../data/programs";
+import { APPLY_URL, CATALOG_DEGREES_URL } from "../data/links";
 
 function ProgramDetail() {
   const { programId } = useParams();
@@ -29,13 +30,14 @@ function ProgramDetail() {
       <PageHero
         brand={program.kind}
         title={program.title}
-        copy={`${program.credential} · ${program.location} Campus`}
+        copy={`${program.credential} · ${(program.locations || [program.location]).join(" · ")}`}
         image={program.image || "/images/students.jpg"}
         compact
         actions={[
           {
             label: "Apply Now",
-            to: "/admissions/how-to-apply",
+            to: APPLY_URL,
+            external: true,
             className: "btn btn-gold",
           },
           {
@@ -73,7 +75,10 @@ function ProgramDetail() {
             <ul className="check-list">
               <li>Credential: {program.credential}</li>
               <li>Program type: {program.kind}</li>
-              <li>Campus location: {program.location}</li>
+              <li>
+                Campus location:{" "}
+                {(program.locations || [program.location]).join(", ")}
+              </li>
               <li>Learning format: {program.format}</li>
               <li>
                 Focus area:{" "}
@@ -97,7 +102,15 @@ function ProgramDetail() {
               whether this {program.kind.toLowerCase()} fits your goals.
             </p>
             <div className="cta-actions stacked">
-              <Link className="btn btn-gold" to="/admissions/how-to-apply">
+              <a
+                className="btn btn-gold"
+                href={APPLY_URL}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Apply Now
+              </a>
+              <Link className="btn btn-ghost" to="/admissions/how-to-apply">
                 How to Apply
               </Link>
               <Link className="btn btn-ghost" to="/admissions/visit">
@@ -110,7 +123,7 @@ function ProgramDetail() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Official Program Page
+                  Official Catalog Page
                 </a>
               ) : null}
             </div>
@@ -127,12 +140,22 @@ function ProgramDetail() {
               catalog.
             </p>
           </div>
-          <Link
-            className="btn btn-primary"
-            to={areas[0] ? `/academics?focus=${areas[0].id}` : "/academics"}
-          >
-            View Catalog
-          </Link>
+          <div className="cta-actions">
+            <Link
+              className="btn btn-primary"
+              to={areas[0] ? `/academics?focus=${areas[0].id}` : "/academics"}
+            >
+              Related Programs
+            </Link>
+            <a
+              className="btn btn-gold"
+              href={CATALOG_DEGREES_URL}
+              target="_blank"
+              rel="noreferrer"
+            >
+              WMCC Catalog
+            </a>
+          </div>
         </div>
       </section>
     </>

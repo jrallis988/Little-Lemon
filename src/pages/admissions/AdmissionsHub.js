@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import PageHero from "../../components/PageHero";
 import SectionNav from "../../components/SectionNav";
+import { APPLY_URL } from "../../data/links";
 import { admissionsNav } from "./admissionsNav";
 
 const paths = [
@@ -37,7 +38,8 @@ function AdmissionsHub() {
         actions={[
           {
             label: "Apply Now",
-            to: "/admissions/how-to-apply",
+            to: APPLY_URL,
+            external: true,
             className: "btn btn-gold",
           },
           {
@@ -78,12 +80,17 @@ function AdmissionsHub() {
               <li>Career-focused programs designed with employers</li>
               <li>Hands-on training in trades, healthcare, and culinary arts</li>
               <li>Online, hybrid, evening, and daytime options</li>
-              <li>Berlin campus and Littleton Academic Center access</li>
+              <li>Berlin, Littleton, and North Conway locations</li>
               <li>Transfer pathways across New England</li>
             </ul>
-            <Link className="btn btn-primary" to="/admissions/how-to-apply">
+            <a
+              className="btn btn-primary"
+              href={APPLY_URL}
+              target="_blank"
+              rel="noreferrer"
+            >
               Start Your Application
-            </Link>
+            </a>
           </div>
           <div className="info-panel">
             <h3>Talk with Admissions</h3>
