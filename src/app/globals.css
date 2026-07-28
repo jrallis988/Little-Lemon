@@ -74,6 +74,13 @@
     outline-offset: 3px;
     border-radius: 2px;
   }
+
+  /* Ensure skip target receives visible focus when activated */
+  #main:focus-visible,
+  #site-nav:focus-visible {
+    outline: 3px solid var(--ocean);
+    outline-offset: 4px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

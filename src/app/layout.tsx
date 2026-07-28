@@ -31,7 +31,9 @@ export default function RootLayout({
       <body className="pb-[68px] font-sans lg:pb-0">
         <SkipNav />
         <SiteHeader />
-        <main id="main">{children}</main>
+        <main id="main" tabIndex={-1} className="outline-none">
+          {children}
+        </main>
         <SiteFooter />
       </body>
     </html>

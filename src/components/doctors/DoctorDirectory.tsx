@@ -213,13 +213,14 @@ export function DoctorDirectory() {
             </Select>
 
             <div className="ml-auto flex flex-wrap items-center gap-s3">
-              <span
-                className="whitespace-nowrap text-sm font-light text-text-meta"
-                aria-live="polite"
-                aria-atomic="true"
-              >
-                {isPending ? "Updating…" : countLabel}
-              </span>
+          <span
+            className="whitespace-nowrap text-sm font-light text-text-meta"
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            {isPending ? "Updating results…" : countLabel}
+          </span>
               {hasActiveFilters ? (
                 <button
                   type="button"

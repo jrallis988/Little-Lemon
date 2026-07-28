@@ -19,7 +19,7 @@ export function PageHero({
   children?: ReactNode;
 }) {
   return (
-    <div className={cn("bg-blue py-s8", className)} aria-labelledby={id}>
+    <section className={cn("bg-blue py-s8", className)} aria-labelledby={id}>
       <div className="wrap">
         <div className="max-w-[700px]">
           {eyebrow ? (
@@ -40,6 +40,6 @@ export function PageHero({
         </div>
         {children}
       </div>
-    </div>
+    </section>
   );
 }

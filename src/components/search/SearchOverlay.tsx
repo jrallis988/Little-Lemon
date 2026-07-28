@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { IconClose, IconSearch } from "@/components/ui/Icons";
+import { useFocusTrap } from "@/hooks/useFocusTrap";
 import { searchAll, type SearchResult } from "@/lib/data/search";
 import { cn } from "@/lib/cn";
 
@@ -22,16 +23,26 @@ export function SearchOverlay({
   onClose: () => void;
 }) {
   const router = useRouter();
+  const dialogRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const titleId = useId();
+  const statusId = useId();
   const [query, setQuery] = useState("");
   const results = searchAll(query);
 
+  useFocusTrap(open, dialogRef, { restoreFocus: false, initialFocus: false });
+
   useEffect(() => {
-    if (!open) return;
+    if (!open) {
+      setQuery("");
+      return;
+    }
     const t = window.setTimeout(() => inputRef.current?.focus(), 50);
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") {
+        e.stopPropagation();
+        onClose();
+      }
     };
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
@@ -44,19 +55,29 @@ export function SearchOverlay({
 
   if (!open) return null;
 
+  const statusText = !query.trim()
+    ? "Enter a search term. Popular suggestions are shown below."
+    : results.length === 0
+      ? `No results for ${query}.`
+      : `${results.length} result${results.length === 1 ? "" : "s"} available.`;
+
   return (
     <div
       className="fixed inset-0 z-[900] flex items-start justify-center bg-[rgba(10,15,35,.72)] px-4 pt-[12vh] backdrop-blur-sm"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby={titleId}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="w-full max-w-[640px] animate-fade-down overflow-hidden rounded-lg border border-border bg-white shadow-lg">
+      <div
+        ref={dialogRef}
+        className="w-full max-w-[640px] animate-fade-down overflow-hidden rounded-lg border border-border bg-white shadow-lg"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        aria-describedby={statusId}
+      >
         <div className="flex items-center gap-s3 border-b border-border px-s4 py-s3">
-          <IconSearch className="text-ocean" />
+          <IconSearch className="text-ocean" aria-hidden="true" />
           <h2 id={titleId} className="sr-only">
             Site search
           </h2>
@@ -73,6 +94,8 @@ export function SearchOverlay({
             placeholder="Search doctors, conditions, programs…"
             className="min-w-0 flex-1 border-0 bg-transparent text-md font-light text-text outline-none placeholder:text-text-ghost"
             aria-label="Search the site"
+            aria-controls={statusId}
+            autoComplete="off"
           />
           <button
             type="button"
@@ -82,6 +105,16 @@ export function SearchOverlay({
           >
             <IconClose className="h-4 w-4" />
           </button>
+        </div>
+
+        <div
+          id={statusId}
+          className="sr-only"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          {statusText}
         </div>
 
         <div className="max-h-[50vh] overflow-y-auto p-s2">
@@ -106,12 +139,12 @@ export function SearchOverlay({
               </div>
             </div>
           ) : results.length === 0 ? (
-            <p className="px-s4 py-s6 text-base text-text-meta">
+            <p className="px-s4 py-s6 text-base text-text-meta" role="status">
               No results for “{query}”. Try a specialty, doctor name, or
               condition.
             </p>
           ) : (
-            <ul className="flex flex-col">
+            <ul className="flex flex-col" aria-label="Search results">
               {results.slice(0, 8).map((result) => (
                 <li key={result.id}>
                   <Link
@@ -124,7 +157,8 @@ export function SearchOverlay({
                         "mt-0.5 shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide",
                         result.type === "doctor" && "bg-ocean/10 text-ocean",
                         result.type === "condition" && "bg-blue/10 text-blue",
-                        result.type === "program" && "bg-green/12 text-success-text",
+                        result.type === "program" &&
+                          "bg-green/12 text-success-text",
                         result.type === "page" && "bg-surface-2 text-text-meta",
                       )}
                     >
