@@ -2,26 +2,34 @@ import Link from "next/link";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { PageHero } from "@/components/layout/PageHero";
 import { Button } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/Badge";
 import { DoctorCard } from "@/components/doctors/DoctorCard";
 import { IconArrowRight } from "@/components/ui/Icons";
-import { conditions } from "@/lib/data/conditions";
-import { doctors } from "@/lib/data/doctors";
+import { contentApi } from "@/lib/content";
 import type { Program } from "@/lib/data/programs";
 
 export function ProgramLanding({ program }: { program: Program }) {
-  const relatedDoctors = doctors.filter((d) =>
-    program.relatedDoctorSlugs.includes(d.slug),
-  );
-  const relatedConditions = conditions.filter((c) =>
-    program.relatedConditionSlugs.includes(c.slug),
-  );
+  const full = contentApi.getProgram(program.slug);
+  const relations = full
+    ? contentApi.resolveProgramRelations(full)
+    : {
+        doctors: [],
+        conditions: [],
+        trials: [],
+        locations: [],
+        department: undefined,
+      };
+  const relatedDoctors = contentApi
+    .doctorsLegacy()
+    .filter((d) => program.relatedDoctorSlugs.includes(d.slug));
+  const relatedConditions = relations.conditions;
 
   return (
     <>
       <Breadcrumb
         items={[
           { label: "Home", href: "/" },
-          { label: "Programs", href: "/programs/epilepsy-program" },
+          { label: "Programs", href: "/programs" },
           { label: program.name },
         ]}
       />
@@ -39,8 +47,8 @@ export function ProgramLanding({ program }: { program: Program }) {
             >
               Find a specialist
             </Button>
-            <Button href={`tel:${program.phone.replace(/\D/g, "")}`} variant="ghost-white">
-              Call {program.phone}
+            <Button href="/appointments/request" variant="ghost-white">
+              Request an Appointment
             </Button>
           </>
         }
@@ -76,6 +84,25 @@ export function ProgramLanding({ program }: { program: Program }) {
         </div>
       </section>
 
+      {relations.locations.length > 0 ? (
+        <section className="border-y border-border bg-surface py-s6">
+          <div className="wrap flex flex-wrap items-center gap-s3">
+            <span className="text-sm font-extrabold uppercase tracking-wide text-text-meta">
+              Locations
+            </span>
+            {relations.locations.map((loc) => (
+              <Link
+                key={loc.slug}
+                href={`/locations#${loc.slug}`}
+                className="rounded-sm border border-border bg-white px-3 py-1.5 text-sm font-bold text-blue no-underline hover:border-ocean"
+              >
+                {loc.shortName}
+              </Link>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
       {relatedConditions.length > 0 ? (
         <section className="bg-surface py-s9" aria-labelledby="related-cond">
           <div className="wrap">
@@ -100,6 +127,40 @@ export function ProgramLanding({ program }: { program: Program }) {
                   <span className="inline-flex items-center gap-[5px] text-sm font-bold text-ocean">
                     Read condition page
                     <IconArrowRight />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      {relations.trials.length > 0 ? (
+        <section className="bg-white py-s9" aria-labelledby="trials-heading">
+          <div className="wrap">
+            <div className="section-header">
+              <span className="eyebrow">Research</span>
+              <h2 id="trials-heading">Related clinical trials</h2>
+            </div>
+            <div className="mt-s6 grid grid-cols-1 gap-s4 md:grid-cols-2">
+              {relations.trials.map((trial) => (
+                <Link
+                  key={trial.slug}
+                  href={`/research?trial=${trial.slug}`}
+                  className="block rounded-md border border-border p-s5 no-underline hover:shadow-sm"
+                >
+                  <Badge
+                    variant={
+                      trial.status === "recruiting" ? "green" : "ocean"
+                    }
+                  >
+                    {trial.status}
+                  </Badge>
+                  <span className="mt-s2 block text-base font-bold text-text">
+                    {trial.title}
+                  </span>
+                  <span className="mt-1 block text-sm font-light text-text-body">
+                    {trial.summary}
                   </span>
                 </Link>
               ))}

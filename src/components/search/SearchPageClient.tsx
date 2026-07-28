@@ -14,6 +14,8 @@ const filters: Array<"all" | SearchResult["type"]> = [
   "doctor",
   "condition",
   "program",
+  "location",
+  "trial",
   "page",
 ];
 
@@ -22,6 +24,8 @@ const labels: Record<(typeof filters)[number], string> = {
   doctor: "Doctors",
   condition: "Conditions",
   program: "Programs",
+  location: "Locations",
+  trial: "Trials",
   page: "Pages",
 };
 

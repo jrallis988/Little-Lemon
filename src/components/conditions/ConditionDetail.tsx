@@ -12,7 +12,7 @@ export function ConditionDetail({ condition }: { condition: Condition }) {
       <Breadcrumb
         items={[
           { label: "Home", href: "/" },
-          { label: "Conditions A–Z", href: "/search?q=condition" },
+          { label: "Conditions A–Z", href: "/conditions" },
           { label: condition.specialty, href: `/programs/${condition.relatedProgramSlug}` },
           { label: condition.name },
         ]}
@@ -128,9 +128,9 @@ export function ConditionDetail({ condition }: { condition: Condition }) {
               <p className="mb-s4 text-sm font-light text-white/60">
                 {condition.appointment.blurb}
               </p>
-              <Button href="/find-a-doctor" variant="ocean" fullWidth>
-                Request an Appointment
-              </Button>
+            <Button href="/appointments/request" variant="ocean" fullWidth>
+              Request an Appointment
+            </Button>
               <div className="mt-s3 flex items-center gap-1.5">
                 <IconPhone className="text-white/50" />
                 <a

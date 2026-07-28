@@ -72,11 +72,11 @@ export function DoctorCard({ doctor }: { doctor: Doctor }) {
       </div>
 
       {doctor.acceptingNewPatients ? (
-        <Button href={profileHref} variant="primary" fullWidth>
+        <Button href="/appointments/request" variant="primary" fullWidth>
           Request an Appointment
         </Button>
       ) : (
-        <Button href={profileHref} variant="outline" fullWidth>
+        <Button href="/appointments/request" variant="outline" fullWidth>
           Join Waitlist
         </Button>
       )}

@@ -1,6 +1,6 @@
 # Boston Children's Hospital — Redesign Architecture
 
-Modular **Next.js (App Router) + Tailwind CSS** implementation of the BCH redesign prototype.
+Production-oriented **Next.js (App Router) + Tailwind CSS + Radix UI + Zustand** platform evolving from the BCH redesign prototype toward a scalable hospital content & portal shell.
 
 ## Source of truth
 
@@ -12,32 +12,63 @@ The uploaded prototype (`prototypes/bch-redesign-v5.html`) consolidates:
 - **Find a Doctor** (Pattern B — decision support)
 - **Emergency**, **About**, and design-system reference pages
 
-Separate files named `bch-redesign-v10`, `bch-find-a-doctor`, etc. were referenced in the brief; only the v5 multi-page HTML was available in this environment and is treated as the visual/structural source of truth. Program landing and site search modules are derived from homepage program cards + nav search patterns in that prototype.
+Separate files named `bch-redesign-v10`, `bch-find-a-doctor`, etc. were referenced in the brief; only the v5 multi-page HTML was available and is treated as the visual/structural source of truth.
+
+## Production stack direction
+
+| Layer | Choice | Role |
+|-------|--------|------|
+| Frontend | Next.js App Router | Hybrid SSG/SSR for SEO across catalog pages |
+| Styling / a11y primitives | Tailwind + Radix UI | Tokens + accessible menus/dialogs/filters |
+| Content | CMS-shaped schemas (local TS → Sanity/Strapi later) | Conditions, programs, providers, locations, trials |
+| Client state | Zustand (persisted) | Appointment wizard + portal sandbox session |
+| Delivery | Vercel-ready | Edge-friendly static + dynamic routes |
 
 ## Architecture
 
 ```
 src/
-  app/                    # Routes
-    page.tsx              # Homepage
-    find-a-doctor/        # Doctor directory + filters
-    conditions/[slug]/   # Condition clinical pages
-    programs/[slug]/     # Program landing pages
-    search/               # Site search results
-    emergency/ about/ design-system/
+  app/
+    page.tsx                 # Homepage
+    find-a-doctor/           # Directory + [slug] profiles
+    conditions/              # A–Z index + [slug] clinical pages
+    programs/                # Index + [slug] landings
+    locations/               # Campus hub
+    appointments/request/    # Multi-step appointment wizard
+    portal/                  # MyChildren’s sandbox
+    professionals/ research/ patients-families/
+    search/ emergency/ about/ design-system/
   components/
-    ui/                   # Button, Badge, Callout, Input, Icons
-    layout/               # Header, Footer, PageHero, Breadcrumb
-    home/ doctors/ conditions/ programs/ search/
+    ui/ layout/ home/ doctors/ conditions/ programs/
+    search/ appointments/ portal/
+  content/
+    types/                   # Sanity-ready document schemas
+    data/                    # Local catalog (conditions, programs, providers, …)
   lib/
-    data/                 # Mock doctors, conditions, programs, search index
-    cn.ts
-prototypes/               # Archived HTML prototype
+    content/                 # contentApi + relational resolve + legacy adapters
+    data/                    # Thin re-exports for existing UI
+    a11y.ts
+  store/                     # Zustand appointment + portal stores
+prototypes/                  # Archived HTML prototype
 ```
 
-### Design tokens
+### Content catalog (Phase 1)
 
-Extracted into `tailwind.config.ts` + CSS variables in `src/app/globals.css`:
+Unified models for `Condition`, `Program`, `Provider`, `Location`, `Department`, and `ClinicalTrial`. Program pages resolve related doctors, trials, and parent departments via `contentApi`. A–Z indices live at `/conditions` and `/programs`.
+
+### Transactional & portal (Phase 2)
+
+- **`/appointments/request`** — care need → insurance → location/telehealth → contact → mock ticket ID (Zustand + persist)
+- **`/portal`** — MyChildren’s sandbox (sign-in, results, messages, visits, refills)
+
+### Resource hubs (Phase 3)
+
+- `/professionals` — refer-a-patient, directory, CME links
+- `/research` — labs, trials finder, publications
+- `/patients-families` — visit prep, parking, billing, records
+- `/locations` — Longwood, Waltham, Needham, Lexington, Peabody
+
+### Design tokens
 
 | Token | Value | Use |
 |-------|-------|-----|
@@ -47,29 +78,7 @@ Extracted into `tailwind.config.ts` + CSS variables in `src/app/globals.css`:
 | `sky` | `#41B6E6` | Decorative accent |
 | `emergency` | `#E30000` | Life-threatening context only |
 
-Typography: Nunito Sans (Museo Sans spirit). Spacing: 8pt scale (`s1`–`s10`).
-
-### Routing & interactive states
-
-| From | To | Interaction |
-|------|----|-------------|
-| Header search | `/search` + overlay | Instant results + full results page |
-| Find a Doctor CTA | `/find-a-doctor` | URL-synced specialty/location/language/availability/`q` filters |
-| Doctor cards / search | `/find-a-doctor/[slug]` | Full profile (bio, education, related program/conditions) |
-| Condition CTAs | `/find-a-doctor?specialty=…` or profile slug | Pre-filtered directory or direct profile |
-| Program care team | doctor cards → profiles | Linked specialty filters + profiles |
-| Homepage specialties/programs | `/conditions/…`, `/programs/…` | Deep links |
-| ED wait | header + ED page | `aria-live` status updates |
-
-### Accessibility
-
-- Skip links to `#main` and `#site-nav`
-- Keyboard mega menus (Enter/Space, ArrowDown, Escape + focus restore); hover still works
-- Patient Portal disclosure with `aria-expanded` / dialog semantics
-- Mobile nav focus trap, Escape, body scroll lock
-- Search overlay focus trap + live result status
-- Directory filter count uses `role="status"` / `aria-live`
-- Page heroes use `<section aria-labelledby>`
+Typography: Nunito Sans. Spacing: 8pt scale (`s1`–`s10`).
 
 ## Scripts
 

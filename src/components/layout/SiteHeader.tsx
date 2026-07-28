@@ -53,48 +53,37 @@ const navItems: NavItem[] = [
   {
     label: "Care",
     href: "/find-a-doctor",
-    match: ["/find-a-doctor", "/conditions", "/programs", "/emergency"],
+    match: ["/find-a-doctor", "/conditions", "/programs", "/emergency", "/locations", "/appointments"],
     zones: [
       {
         title: "Get care",
         accent: true,
         links: [
           { label: "Find a Doctor", href: "/find-a-doctor" },
-          { label: "Book an Appointment", href: "/find-a-doctor" },
+          { label: "Request an Appointment", href: "/appointments/request" },
           { label: "Emergency Department", href: "/emergency" },
-          { label: "Site search", href: "/search" },
+          { label: "Locations", href: "/locations" },
         ],
       },
       {
         title: "Conditions & programs",
         links: [
+          { label: "Conditions A–Z", href: "/conditions" },
+          { label: "Programs & Services", href: "/programs" },
           {
             label: "Epilepsy in Children",
             href: "/conditions/epilepsy-in-children",
           },
           { label: "Epilepsy Program", href: "/programs/epilepsy-program" },
-          { label: "Heart Center", href: "/programs/heart-center" },
-          {
-            label: "Cancer & Blood Disorders",
-            href: "/programs/cancer-blood-disorders",
-          },
         ],
       },
       {
         title: "Locations",
         links: [
-          {
-            label: "Main Campus — Longwood",
-            href: "/find-a-doctor?location=Main%20Campus%20%E2%80%94%20Longwood",
-          },
-          {
-            label: "Waltham",
-            href: "/find-a-doctor?location=Waltham",
-          },
-          {
-            label: "Peabody",
-            href: "/find-a-doctor?location=Peabody",
-          },
+          { label: "Main Campus — Longwood", href: "/locations#longwood" },
+          { label: "Waltham", href: "/locations#waltham" },
+          { label: "Needham", href: "/locations#needham" },
+          { label: "Lexington", href: "/locations#lexington" },
         ],
       },
     ],
@@ -108,54 +97,62 @@ const navItems: NavItem[] = [
   },
   {
     label: "Patients & Families",
-    href: "/about",
+    href: "/patients-families",
+    match: ["/patients-families", "/portal", "/appointments"],
     zones: [
       {
         title: "Your visit",
         accent: true,
         links: [
-          { label: "Find a Doctor", href: "/find-a-doctor" },
+          { label: "Patients & Families hub", href: "/patients-families" },
+          { label: "MyChildren's Portal", href: "/portal" },
+          { label: "Request an Appointment", href: "/appointments/request" },
           { label: "Emergency Department", href: "/emergency" },
-          { label: "Patient resources", href: "/search?q=patient" },
-          { label: "Design system", href: "/design-system" },
         ],
       },
       {
         title: "Support",
         links: [
-          { label: "Health Library", href: "/search?q=health" },
+          { label: "Health Library / Search", href: "/search?q=health" },
+          { label: "Locations", href: "/locations" },
           { label: "About Boston Children's", href: "/about" },
-          { label: "Interpreter Services", href: "/emergency" },
         ],
       },
     ],
   },
   {
     label: "Professionals",
-    href: "/emergency",
+    href: "/professionals",
+    match: ["/professionals"],
     zones: [
       {
         title: "For clinicians",
         accent: true,
         links: [
+          { label: "Professionals hub", href: "/professionals" },
           { label: "Physician Access Line", href: "/emergency" },
           { label: "Find a specialist", href: "/find-a-doctor" },
-          { label: "Clinical programs", href: "/programs/epilepsy-program" },
+          { label: "Clinical programs", href: "/programs" },
         ],
       },
     ],
   },
   {
     label: "Research",
-    href: "/search?q=research",
+    href: "/research",
+    match: ["/research"],
     zones: [
       {
         title: "Discover",
         accent: true,
         links: [
-          { label: "Search research", href: "/search?q=research" },
+          { label: "Research hub", href: "/research" },
+          { label: "Clinical trials", href: "/research" },
           { label: "Epilepsy Program", href: "/programs/epilepsy-program" },
-          { label: "Cancer & Blood Disorders", href: "/programs/cancer-blood-disorders" },
+          {
+            label: "Cancer & Blood Disorders",
+            href: "/programs/cancer-blood-disorders",
+          },
         ],
       },
     ],
@@ -714,7 +711,7 @@ export function SiteHeader() {
                 Find a Doctor
               </Link>
               <Link
-                href="/find-a-doctor"
+                href="/appointments/request"
                 className={cn(
                   "hidden h-9 items-center whitespace-nowrap rounded-sm bg-ocean px-4 text-sm font-bold text-white no-underline transition-all hover:bg-[#005f9e] lg:flex",
                   headerFocus,

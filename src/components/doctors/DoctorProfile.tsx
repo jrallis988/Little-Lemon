@@ -46,11 +46,11 @@ export function DoctorProfile({ doctor }: { doctor: Doctor }) {
         actions={
           <>
             {doctor.acceptingNewPatients ? (
-              <Button href="#request-appointment" variant="ocean">
+              <Button href="/appointments/request" variant="ocean">
                 Request an Appointment
               </Button>
             ) : (
-              <Button href="#request-appointment" variant="ghost-white">
+              <Button href="/appointments/request" variant="ghost-white">
                 Join Waitlist
               </Button>
             )}
@@ -228,7 +228,7 @@ export function DoctorProfile({ doctor }: { doctor: Doctor }) {
                   ? `Schedule with ${doctor.name.split(",")[0]} at ${doctor.location}.`
                   : `${doctor.name.split(",")[0]} is not accepting new patients right now. You can join the waitlist or browse other ${doctor.specialty} specialists.`}
               </p>
-              <Button href="#request-appointment" variant="ocean" fullWidth>
+              <Button href="/appointments/request" variant="ocean" fullWidth>
                 {doctor.acceptingNewPatients
                   ? "Request an Appointment"
                   : "Join Waitlist"}

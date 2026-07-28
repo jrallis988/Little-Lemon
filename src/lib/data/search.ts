@@ -1,10 +1,8 @@
-import { conditions } from "./conditions";
-import { doctors } from "./doctors";
-import { programs } from "./programs";
+import { contentApi } from "@/lib/content";
 
 export type SearchResult = {
   id: string;
-  type: "doctor" | "condition" | "program" | "page";
+  type: "doctor" | "condition" | "program" | "page" | "location" | "trial";
   title: string;
   description: string;
   href: string;
@@ -27,6 +25,41 @@ const staticPages: SearchResult[] = [
     href: "/find-a-doctor",
   },
   {
+    id: "page-appointments",
+    type: "page",
+    title: "Request an Appointment",
+    description: "Multi-step appointment request for new patients",
+    href: "/appointments/request",
+  },
+  {
+    id: "page-portal",
+    type: "page",
+    title: "MyChildren's Portal",
+    description: "Mock patient portal for results, messages, and visits",
+    href: "/portal",
+  },
+  {
+    id: "page-locations",
+    type: "page",
+    title: "Locations",
+    description: "Longwood, Waltham, Needham, Lexington, and Peabody",
+    href: "/locations",
+  },
+  {
+    id: "page-conditions",
+    type: "page",
+    title: "Conditions A–Z",
+    description: "Browse conditions and treatments",
+    href: "/conditions",
+  },
+  {
+    id: "page-programs",
+    type: "page",
+    title: "Programs & Services",
+    description: "Browse clinical programs",
+    href: "/programs",
+  },
+  {
     id: "page-emergency",
     type: "page",
     title: "Emergency Department",
@@ -41,13 +74,13 @@ export function searchAll(query: string): SearchResult[] {
 
   const results: SearchResult[] = [];
 
-  for (const doc of doctors) {
+  for (const doc of contentApi.providers) {
     const hay = [doc.name, doc.title, doc.specialty, ...doc.tags]
       .join(" ")
       .toLowerCase();
     if (hay.includes(q)) {
       results.push({
-        id: `doc-${doc.id}`,
+        id: `doc-${doc._id}`,
         type: "doctor",
         title: doc.name,
         description: doc.title,
@@ -57,9 +90,9 @@ export function searchAll(query: string): SearchResult[] {
     }
   }
 
-  for (const cond of conditions) {
+  for (const cond of contentApi.conditions) {
     const hay = [cond.name, cond.specialty, cond.lead].join(" ").toLowerCase();
-    if (hay.includes(q)) {
+    if (hay.includes(q) || (q === "seizure" && cond.slug.includes("epilepsy"))) {
       results.push({
         id: `cond-${cond.slug}`,
         type: "condition",
@@ -71,7 +104,7 @@ export function searchAll(query: string): SearchResult[] {
     }
   }
 
-  for (const prog of programs) {
+  for (const prog of contentApi.programs) {
     const hay = [prog.name, prog.specialty, prog.description, prog.lead]
       .join(" ")
       .toLowerCase();
@@ -87,11 +120,39 @@ export function searchAll(query: string): SearchResult[] {
     }
   }
 
+  for (const loc of contentApi.locations) {
+    const hay = [loc.name, loc.city, loc.address, ...loc.services]
+      .join(" ")
+      .toLowerCase();
+    if (hay.includes(q)) {
+      results.push({
+        id: `loc-${loc.slug}`,
+        type: "location",
+        title: loc.name,
+        description: `${loc.address}, ${loc.city}, ${loc.state} ${loc.zip}`,
+        href: `/locations#${loc.slug}`,
+        meta: loc.city,
+      });
+    }
+  }
+
+  for (const trial of contentApi.clinicalTrials) {
+    const hay = [trial.title, trial.summary].join(" ").toLowerCase();
+    if (hay.includes(q)) {
+      results.push({
+        id: `trial-${trial.slug}`,
+        type: "trial",
+        title: trial.title,
+        description: trial.summary,
+        href: `/research?trial=${trial.slug}`,
+        meta: trial.status,
+      });
+    }
+  }
+
   for (const page of staticPages) {
     const hay = [page.title, page.description].join(" ").toLowerCase();
-    if (hay.includes(q)) {
-      results.push(page);
-    }
+    if (hay.includes(q)) results.push(page);
   }
 
   return results;

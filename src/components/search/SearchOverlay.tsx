@@ -13,6 +13,8 @@ const typeLabel: Record<SearchResult["type"], string> = {
   condition: "Condition",
   program: "Program",
   page: "Page",
+  location: "Location",
+  trial: "Trial",
 };
 
 export function SearchOverlay({
@@ -159,6 +161,8 @@ export function SearchOverlay({
                         result.type === "condition" && "bg-blue/10 text-blue",
                         result.type === "program" &&
                           "bg-green/12 text-success-text",
+                        result.type === "location" && "bg-bay/15 text-bay",
+                        result.type === "trial" && "bg-indigo/15 text-indigo",
                         result.type === "page" && "bg-surface-2 text-text-meta",
                       )}
                     >
