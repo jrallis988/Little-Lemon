@@ -51,7 +51,7 @@ export function searchAll(query: string): SearchResult[] {
         type: "doctor",
         title: doc.name,
         description: doc.title,
-        href: `/find-a-doctor?q=${encodeURIComponent(doc.name.split(",")[0])}`,
+        href: `/find-a-doctor/${doc.slug}`,
         meta: doc.specialty,
       });
     }

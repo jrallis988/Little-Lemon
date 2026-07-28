@@ -54,9 +54,10 @@ Typography: Nunito Sans (Museo Sans spirit). Spacing: 8pt scale (`s1`–`s10`).
 | From | To | Interaction |
 |------|----|-------------|
 | Header search | `/search` + overlay | Instant results + full results page |
-| Find a Doctor CTA | `/find-a-doctor` | Specialty/location/language/availability filters |
-| Condition CTAs | `/find-a-doctor?specialty=…` | Pre-filtered directory |
-| Program care team | doctor cards → directory | Linked specialty filters |
+| Find a Doctor CTA | `/find-a-doctor` | URL-synced specialty/location/language/availability/`q` filters |
+| Doctor cards / search | `/find-a-doctor/[slug]` | Full profile (bio, education, related program/conditions) |
+| Condition CTAs | `/find-a-doctor?specialty=…` or profile slug | Pre-filtered directory or direct profile |
+| Program care team | doctor cards → profiles | Linked specialty filters + profiles |
 | Homepage specialties/programs | `/conditions/…`, `/programs/…` | Deep links |
 | ED wait | header + ED page | `aria-live` status updates |
 

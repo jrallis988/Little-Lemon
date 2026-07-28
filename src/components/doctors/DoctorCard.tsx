@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { IconUser } from "@/components/ui/Icons";
@@ -5,6 +6,8 @@ import type { Doctor } from "@/lib/data/doctors";
 import { cn } from "@/lib/cn";
 
 export function DoctorCard({ doctor }: { doctor: Doctor }) {
+  const profileHref = `/find-a-doctor/${doctor.slug}`;
+
   return (
     <article
       className={cn(
@@ -14,7 +17,7 @@ export function DoctorCard({ doctor }: { doctor: Doctor }) {
       role="listitem"
       aria-label={doctor.name}
     >
-      <div className="flex items-start gap-s3">
+      <Link href={profileHref} className="flex items-start gap-s3 no-underline">
         <div
           className="flex h-[60px] w-[60px] shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-border bg-surface-2"
           aria-hidden="true"
@@ -29,7 +32,7 @@ export function DoctorCard({ doctor }: { doctor: Doctor }) {
             {doctor.title}
           </span>
         </div>
-      </div>
+      </Link>
 
       <div className="flex flex-wrap gap-1">
         {doctor.tags.map((tag, i) => (
@@ -69,22 +72,22 @@ export function DoctorCard({ doctor }: { doctor: Doctor }) {
       </div>
 
       {doctor.acceptingNewPatients ? (
-        <Button href="/find-a-doctor" variant="primary" fullWidth>
+        <Button href={profileHref} variant="primary" fullWidth>
           Request an Appointment
         </Button>
       ) : (
-        <Button href="/find-a-doctor" variant="outline" fullWidth>
+        <Button href={profileHref} variant="outline" fullWidth>
           Join Waitlist
         </Button>
       )}
 
-      <a
-        href={`#${doctor.slug}`}
-        className="block text-center text-sm font-semibold text-ocean"
+      <Link
+        href={profileHref}
+        className="block text-center text-sm font-semibold text-ocean no-underline hover:underline"
         aria-label={`View full profile for ${doctor.name}`}
       >
         View full profile
-      </a>
+      </Link>
     </article>
   );
 }

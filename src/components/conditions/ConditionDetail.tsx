@@ -158,7 +158,7 @@ export function ConditionDetail({ condition }: { condition: Condition }) {
                 </div>
               </div>
               <Button
-                href={`/find-a-doctor?q=${encodeURIComponent(condition.careTeam.name.replace(/^Dr\.\s*/, "").split(",")[0])}`}
+                href={`/find-a-doctor/${condition.careTeam.doctorSlug}`}
                 variant="outline"
                 size="sm"
                 fullWidth
