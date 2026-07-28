@@ -1,9 +1,41 @@
-import type { Product } from "@/types"
+import type { NearbyStore, Product } from "@/types"
 
 /**
  * Curated sample assortment — realistic off-price merchandising data.
  * Images use Unsplash product photography with stable crop params.
  */
+
+const DEFAULT_STORES: NearbyStore[] = [
+  {
+    id: "store-union",
+    name: "Marshalls Union Square",
+    distanceMi: 0.8,
+    status: "in_stock",
+    pickup: "Ready in 2 hours",
+  },
+  {
+    id: "store-soho",
+    name: "Marshalls SoHo",
+    distanceMi: 1.4,
+    status: "low_stock",
+    pickup: "Ready today",
+  },
+  {
+    id: "store-bk",
+    name: "Marshalls Downtown Brooklyn",
+    distanceMi: 3.2,
+    status: "in_stock",
+    pickup: "Ready tomorrow",
+  },
+  {
+    id: "store-jc",
+    name: "Marshalls Jersey City",
+    distanceMi: 5.1,
+    status: "out_of_stock",
+    pickup: "Check back soon",
+  },
+]
+
 export const PRODUCTS: Product[] = [
   {
     id: "ar-1001",
@@ -16,13 +48,35 @@ export const PRODUCTS: Product[] = [
     price: 189,
     compareAt: 425,
     images: [
+      "https://images.unsplash.com/photo-1591369822096-ffd140ec948f?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=900&q=80",
     ],
     colorways: [
-      { id: "camel", name: "Camel", hex: "#C4A484" },
-      { id: "ink", name: "Ink", hex: "#1F2937" },
-      { id: "ivory", name: "Ivory", hex: "#F3EDE4" },
+      {
+        id: "camel",
+        name: "Camel",
+        hex: "#C4A484",
+        image:
+          "https://images.unsplash.com/photo-1591369822096-ffd140ec948f?auto=format&fit=crop&w=900&q=80",
+        imageIndex: 0,
+      },
+      {
+        id: "ink",
+        name: "Ink",
+        hex: "#1F2937",
+        image:
+          "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=900&q=80",
+        imageIndex: 1,
+      },
+      {
+        id: "ivory",
+        name: "Ivory",
+        hex: "#F3EDE4",
+        image:
+          "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=900&q=80",
+        imageIndex: 2,
+      },
     ],
     sizes: [
       { label: "00", available: false },
@@ -40,6 +94,7 @@ export const PRODUCTS: Product[] = [
     fitNotes: "True to size. Model is 5'9\" wearing size 2.",
     isNew: true,
     storeStockHint: "Available at 4 nearby stores",
+    nearbyStores: DEFAULT_STORES,
   },
   {
     id: "ar-1002",
@@ -53,11 +108,25 @@ export const PRODUCTS: Product[] = [
     compareAt: 675,
     images: [
       "https://images.unsplash.com/photo-1533867617858-e7b97e060509?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1614252369475-531eba835eb1?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1614252231334-ae8634305d4b?auto=format&fit=crop&w=900&q=80",
     ],
     colorways: [
-      { id: "black", name: "Black", hex: "#111111" },
-      { id: "cognac", name: "Cognac", hex: "#8B5A2B" },
+      {
+        id: "black",
+        name: "Black",
+        hex: "#111111",
+        image:
+          "https://images.unsplash.com/photo-1533867617858-e7b97e060509?auto=format&fit=crop&w=900&q=80",
+        imageIndex: 0,
+      },
+      {
+        id: "cognac",
+        name: "Cognac",
+        hex: "#8B5A2B",
+        image:
+          "https://images.unsplash.com/photo-1614252231334-ae8634305d4b?auto=format&fit=crop&w=900&q=80",
+        imageIndex: 1,
+      },
     ],
     sizes: [
       { label: "8", available: true, stockCount: 2 },
@@ -74,6 +143,7 @@ export const PRODUCTS: Product[] = [
       "Hand-finished calfskin loafer with cushioned insole and stacked leather heel. Made in Italy.",
     fitNotes: "Runs slightly narrow. Consider sizing up a half size.",
     storeStockHint: "In stock at Union Square",
+    nearbyStores: DEFAULT_STORES,
   },
   {
     id: "ar-1003",
@@ -88,11 +158,12 @@ export const PRODUCTS: Product[] = [
     images: [
       "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=900&q=80",
     ],
     colorways: [
-      { id: "heather", name: "Heather Grey", hex: "#A8A29E" },
-      { id: "navy", name: "Navy", hex: "#1E3A5F" },
-      { id: "rose", name: "Dusty Rose", hex: "#C9A99B" },
+      { id: "heather", name: "Heather Grey", hex: "#A8A29E", imageIndex: 0 },
+      { id: "navy", name: "Navy", hex: "#1E3A5F", imageIndex: 1 },
+      { id: "rose", name: "Dusty Rose", hex: "#C9A99B", imageIndex: 2 },
     ],
     sizes: [
       { label: "XS", available: true, stockCount: 4 },
@@ -107,6 +178,7 @@ export const PRODUCTS: Product[] = [
       "Lightweight 100% cashmere crewneck with ribbed trim and a relaxed, layerable drape.",
     fitNotes: "Relaxed fit. Size down for a closer silhouette.",
     isNew: true,
+    nearbyStores: DEFAULT_STORES,
   },
   {
     id: "ar-1004",
@@ -123,8 +195,8 @@ export const PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=900&q=80",
     ],
     colorways: [
-      { id: "indigo", name: "Dark Indigo", hex: "#1B2A4A" },
-      { id: "stone", name: "Stone Wash", hex: "#6B7280" },
+      { id: "indigo", name: "Dark Indigo", hex: "#1B2A4A", imageIndex: 0 },
+      { id: "stone", name: "Stone Wash", hex: "#6B7280", imageIndex: 1 },
     ],
     sizes: [
       { label: "28", available: true, stockCount: 2 },
@@ -139,7 +211,8 @@ export const PRODUCTS: Product[] = [
     tags: ["Denim", "Core"],
     description:
       "Japanese selvedge denim with a slim straight leg, mid rise, and clean fade potential.",
-    fitNotes: "Sits at the hip. Inseam 32\".",
+    fitNotes: 'Sits at the hip. Inseam 32".',
+    nearbyStores: DEFAULT_STORES,
   },
   {
     id: "ar-1005",
@@ -154,11 +227,12 @@ export const PRODUCTS: Product[] = [
     images: [
       "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?auto=format&fit=crop&w=900&q=80",
     ],
     colorways: [
-      { id: "champagne", name: "Champagne", hex: "#E8D5B7" },
-      { id: "black", name: "Black", hex: "#0F0F0F" },
-      { id: "emerald", name: "Emerald", hex: "#0F5C4C" },
+      { id: "champagne", name: "Champagne", hex: "#E8D5B7", imageIndex: 0 },
+      { id: "black", name: "Black", hex: "#0F0F0F", imageIndex: 1 },
+      { id: "emerald", name: "Emerald", hex: "#0F5C4C", imageIndex: 2 },
     ],
     sizes: [
       { label: "XS", available: true, stockCount: 1 },
@@ -172,6 +246,11 @@ export const PRODUCTS: Product[] = [
       "Bias-cut silk satin slip with adjustable straps and a fluid midi length.",
     fitNotes: "Bias cut — runs slightly small. Consider sizing up.",
     storeStockHint: "Last units in select stores",
+    nearbyStores: DEFAULT_STORES.map((s, i) =>
+      i < 2
+        ? { ...s, status: "low_stock" as const }
+        : { ...s, status: "out_of_stock" as const },
+    ),
   },
   {
     id: "ar-1006",
@@ -188,8 +267,8 @@ export const PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=900&q=80",
     ],
     colorways: [
-      { id: "olive", name: "Forage Olive", hex: "#556B2F" },
-      { id: "black", name: "Black", hex: "#121212" },
+      { id: "olive", name: "Forage Olive", hex: "#556B2F", imageIndex: 0 },
+      { id: "black", name: "Black", hex: "#121212", imageIndex: 1 },
     ],
     sizes: [
       { label: "S", available: true, stockCount: 2 },
@@ -202,6 +281,7 @@ export const PRODUCTS: Product[] = [
     description:
       "Packable waterproof shell with articulated sleeves, sealed seams, and a storm hood.",
     isNew: true,
+    nearbyStores: DEFAULT_STORES,
   },
   {
     id: "ar-1007",
@@ -218,9 +298,9 @@ export const PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=80",
     ],
     colorways: [
-      { id: "sand", name: "Sand", hex: "#D6C6A8" },
-      { id: "white", name: "Optic White", hex: "#F8F7F4" },
-      { id: "black", name: "Black", hex: "#1A1A1A" },
+      { id: "sand", name: "Sand", hex: "#D6C6A8", imageIndex: 0 },
+      { id: "white", name: "Optic White", hex: "#F8F7F4", imageIndex: 1 },
+      { id: "black", name: "Black", hex: "#1A1A1A", imageIndex: 0 },
     ],
     sizes: [
       { label: "00", available: true, stockCount: 3 },
@@ -234,6 +314,7 @@ export const PRODUCTS: Product[] = [
     tags: ["Linen", "Summer"],
     description:
       "High-rise wide-leg linen trouser with soft press crease and side-zip closure.",
+    nearbyStores: DEFAULT_STORES,
   },
   {
     id: "ar-1008",
@@ -250,8 +331,8 @@ export const PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=900&q=80",
     ],
     colorways: [
-      { id: "saddle", name: "Saddle", hex: "#8B5E3C" },
-      { id: "black", name: "Black", hex: "#111111" },
+      { id: "saddle", name: "Saddle", hex: "#8B5E3C", imageIndex: 0 },
+      { id: "black", name: "Black", hex: "#111111", imageIndex: 1 },
     ],
     sizes: [{ label: "One Size", available: true, stockCount: 7 }],
     inventory: "in_stock",
@@ -259,6 +340,7 @@ export const PRODUCTS: Product[] = [
     description:
       "Spacious pebbled leather tote with interior zip pocket and magnetic closure.",
     storeStockHint: "Online exclusive colorways available",
+    nearbyStores: DEFAULT_STORES,
   },
   {
     id: "ar-1009",
@@ -275,8 +357,8 @@ export const PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=900&q=80",
     ],
     colorways: [
-      { id: "coral", name: "Coral", hex: "#E07A5F" },
-      { id: "navy", name: "Navy", hex: "#1E3A5F" },
+      { id: "coral", name: "Coral", hex: "#E07A5F", imageIndex: 0 },
+      { id: "navy", name: "Navy", hex: "#1E3A5F", imageIndex: 1 },
     ],
     sizes: [
       { label: "4", available: true, stockCount: 3 },
@@ -287,7 +369,9 @@ export const PRODUCTS: Product[] = [
     ],
     inventory: "in_stock",
     tags: ["Kids", "Outerwear"],
-    description: "Recycled nylon packable puffer with a stuff sack and reflective details.",
+    description:
+      "Recycled nylon packable puffer with a stuff sack and reflective details.",
+    nearbyStores: DEFAULT_STORES,
   },
   {
     id: "ar-1010",
@@ -304,13 +388,15 @@ export const PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=900&q=80",
     ],
     colorways: [
-      { id: "clay", name: "Clay", hex: "#C2A78B" },
-      { id: "slate", name: "Slate", hex: "#6B7280" },
+      { id: "clay", name: "Clay", hex: "#C2A78B", imageIndex: 0 },
+      { id: "slate", name: "Slate", hex: "#6B7280", imageIndex: 1 },
     ],
     sizes: [{ label: "16-Piece", available: true, stockCount: 12 }],
     inventory: "in_stock",
     tags: ["Home", "Dining"],
-    description: "Reactive glaze stoneware set for four — dinner plates, salad plates, bowls, and mugs.",
+    description:
+      "Reactive glaze stoneware set for four — dinner plates, salad plates, bowls, and mugs.",
+    nearbyStores: DEFAULT_STORES,
   },
   {
     id: "ar-1011",
@@ -327,9 +413,9 @@ export const PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80",
     ],
     colorways: [
-      { id: "white", name: "White", hex: "#F5F5F4" },
-      { id: "black", name: "Black", hex: "#171717" },
-      { id: "mocha", name: "Mocha", hex: "#8B7355" },
+      { id: "white", name: "White", hex: "#F5F5F4", imageIndex: 0 },
+      { id: "black", name: "Black", hex: "#171717", imageIndex: 1 },
+      { id: "mocha", name: "Mocha", hex: "#8B7355", imageIndex: 0 },
     ],
     sizes: [
       { label: "XS", available: true, stockCount: 10 },
@@ -340,7 +426,9 @@ export const PRODUCTS: Product[] = [
     ],
     inventory: "in_stock",
     tags: ["Basics", "Value"],
-    description: "Soft ribbed cotton tanks designed for everyday layering. Pack of three.",
+    description:
+      "Soft ribbed cotton tanks designed for everyday layering. Pack of three.",
+    nearbyStores: DEFAULT_STORES,
   },
   {
     id: "ar-1012",
@@ -357,8 +445,8 @@ export const PRODUCTS: Product[] = [
       "https://images.unsplash.com/photo-1605812860427-4024433a70fd?auto=format&fit=crop&w=900&q=80",
     ],
     colorways: [
-      { id: "taupe", name: "Taupe", hex: "#A89882" },
-      { id: "black", name: "Black", hex: "#111111" },
+      { id: "taupe", name: "Taupe", hex: "#A89882", imageIndex: 0 },
+      { id: "black", name: "Black", hex: "#111111", imageIndex: 1 },
     ],
     sizes: [
       { label: "6", available: false },
@@ -373,6 +461,7 @@ export const PRODUCTS: Product[] = [
     tags: ["Boots", "Designer"],
     description: "Soft suede ankle boot with a 55mm block heel and side zip.",
     storeStockHint: "Check nearby stores — limited sizes",
+    nearbyStores: DEFAULT_STORES,
   },
 ]
 
@@ -394,3 +483,5 @@ export const ALL_SIZES = Array.from(
 export const DEPARTMENTS = ["Women", "Men", "Kids", "Home", "Beauty"] as const
 
 export const BRAND_TIERS = ["Designer", "Contemporary", "Modern Essentials"] as const
+
+export { DEFAULT_STORES }

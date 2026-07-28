@@ -63,10 +63,10 @@
     --layout-max: 1200px;
     --layout-gutter: clamp(1rem, 2.5vw, 2rem);
     --layout-rail: 250px;
-    --promo-height: 0px;
+    --promo-height: 2.25rem;
     --utility-height: 0px;
     --header-height: 4.25rem;
-    --chrome-offset: var(--header-height);
+    --chrome-offset: calc(var(--promo-height) + var(--header-height));
   }
 
   * {

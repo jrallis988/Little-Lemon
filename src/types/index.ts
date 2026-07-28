@@ -6,7 +6,18 @@ export type ProductColorway = {
   id: string
   name: string
   hex: string
+  /** Preferred gallery index when this color is selected */
   imageIndex?: number
+  /** Optional dedicated image for this colorway */
+  image?: string
+}
+
+export type NearbyStore = {
+  id: string
+  name: string
+  distanceMi: number
+  status: "in_stock" | "low_stock" | "out_of_stock"
+  pickup: string
 }
 
 export type ProductSize = {
@@ -34,6 +45,7 @@ export type Product = {
   fitNotes?: string
   isNew?: boolean
   storeStockHint?: string
+  nearbyStores?: NearbyStore[]
 }
 
 export type CatalogSort =

@@ -1,9 +1,47 @@
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import { ArrowRight } from "lucide-react"
-import { PRODUCTS } from "@/data/products"
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react"
+import { ALL_BRANDS, PRODUCTS } from "@/data/products"
 import { ProductCard } from "@/components/catalog/ProductCard"
 import { Button } from "@/components/ui/button"
 import { discountPercent, formatCurrency } from "@/lib/utils"
+import { useFilterStore } from "@/stores/filterStore"
+
+const HERO_SLIDES = [
+  {
+    id: "spring",
+    eyebrow: "New season finds",
+    title: "Spring Style Deals",
+    subtitle: "Big Brands. Small Prices.",
+    copy: "Designer and brand-name styles at off-price — never the same store twice.",
+    image:
+      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=80",
+    primary: { label: "Shop Women", to: "/catalog?department=Women" },
+    secondary: { label: "Shop Men", to: "/catalog?department=Men" },
+  },
+  {
+    id: "home",
+    eyebrow: "Home refresh",
+    title: "Wow finds for every room",
+    subtitle: "Designer looks. Marshalls prices.",
+    copy: "Score tabletop, decor, and bedding before it walks out the door.",
+    image:
+      "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1200&q=80",
+    primary: { label: "Shop Home", to: "/catalog?department=Home" },
+    secondary: { label: "Shop Clearance", to: "/catalog?sort=discount" },
+  },
+  {
+    id: "shoes",
+    eyebrow: "Step into savings",
+    title: "Shoes & bags worth the hunt",
+    subtitle: "Brand names. Fresh drops daily.",
+    copy: "From everyday sneakers to evening heels — new styles land often.",
+    image:
+      "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=1200&q=80",
+    primary: { label: "Shop Shoes", to: "/catalog?category=Shoes" },
+    secondary: { label: "Shop Bags", to: "/catalog" },
+  },
+]
 
 const DEPARTMENTS = [
   {
@@ -56,18 +94,104 @@ const DEPARTMENTS = [
   },
 ]
 
-const BRANDS = [
-  "Nike",
-  "Adidas",
-  "Calvin Klein",
-  "Ralph Lauren",
-  "Michael Kors",
-  "Under Armour",
-  "Levi's",
-  "Coach",
-]
+function HeroCarousel() {
+  const [index, setIndex] = useState(0)
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setIndex((i) => (i + 1) % HERO_SLIDES.length)
+    }, 6500)
+    return () => window.clearInterval(timer)
+  }, [])
+
+  const slide = HERO_SLIDES[index]!
+
+  return (
+    <section className="border-b border-border bg-sky-soft/40">
+      <div className="shelf-container relative grid items-center gap-8 py-10 md:grid-cols-2 md:gap-10 md:py-14">
+        <div className="order-2 md:order-1">
+          <p className="text-2xs font-bold uppercase tracking-[0.14em] text-primary">
+            {slide.eyebrow}
+          </p>
+          <h1 className="mt-2 font-display text-4xl font-bold italic leading-tight tracking-tight text-primary sm:text-5xl">
+            {slide.title}
+          </h1>
+          <p className="mt-3 text-lg font-semibold text-foreground">{slide.subtitle}</p>
+          <p className="mt-2 max-w-md text-sm leading-relaxed text-muted-foreground">
+            {slide.copy}
+          </p>
+          <div className="mt-7 flex flex-wrap gap-3">
+            <Button asChild size="lg">
+              <Link to={slide.primary.to}>{slide.primary.label}</Link>
+            </Button>
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="border-primary text-primary hover:bg-primary/5"
+            >
+              <Link to={slide.secondary.to}>
+                {slide.secondary.label}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+
+          <div className="mt-8 flex items-center gap-3">
+            <button
+              type="button"
+              aria-label="Previous slide"
+              className="rounded-full border border-border bg-surface p-2 text-foreground shadow-soft hover:bg-secondary"
+              onClick={() =>
+                setIndex((i) => (i - 1 + HERO_SLIDES.length) % HERO_SLIDES.length)
+              }
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+            <div className="flex gap-1.5">
+              {HERO_SLIDES.map((s, i) => (
+                <button
+                  key={s.id}
+                  type="button"
+                  aria-label={`Go to slide ${i + 1}`}
+                  aria-current={i === index}
+                  onClick={() => setIndex(i)}
+                  className={
+                    i === index
+                      ? "h-2 w-6 rounded-full bg-primary"
+                      : "h-2 w-2 rounded-full bg-primary/25"
+                  }
+                />
+              ))}
+            </div>
+            <button
+              type="button"
+              aria-label="Next slide"
+              className="rounded-full border border-border bg-surface p-2 text-foreground shadow-soft hover:bg-secondary"
+              onClick={() => setIndex((i) => (i + 1) % HERO_SLIDES.length)}
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
+
+        <div className="order-1 overflow-hidden rounded-md shadow-lift md:order-2">
+          <img
+            key={slide.id}
+            src={slide.image}
+            alt=""
+            className="aspect-[4/3] w-full object-cover animate-fade-in md:aspect-[5/4]"
+          />
+        </div>
+      </div>
+    </section>
+  )
+}
 
 export function HomePage() {
+  const toggleBrand = useFilterStore((s) => s.toggleBrand)
+  const clearFilters = useFilterStore((s) => s.clearFilters)
+
   const featured = [...PRODUCTS]
     .sort(
       (a, b) =>
@@ -78,46 +202,8 @@ export function HomePage() {
 
   return (
     <div>
-      {/* Hero — bright lifestyle, navy CTAs */}
-      <section className="border-b border-border bg-sky-soft/40">
-        <div className="shelf-container grid items-center gap-8 py-10 md:grid-cols-2 md:gap-10 md:py-14">
-          <div className="order-2 md:order-1">
-            <p className="text-2xs font-bold uppercase tracking-[0.14em] text-primary">
-              New season finds
-            </p>
-            <h1 className="mt-2 font-display text-4xl font-bold italic leading-tight tracking-tight text-primary sm:text-5xl">
-              Spring Style Deals
-            </h1>
-            <p className="mt-3 text-lg font-semibold text-foreground">
-              Big Brands. Small Prices.
-            </p>
-            <p className="mt-2 max-w-md text-sm leading-relaxed text-muted-foreground">
-              Designer and brand-name styles at off-price — never the same store
-              twice.
-            </p>
-            <div className="mt-7 flex flex-wrap gap-3">
-              <Button asChild size="lg">
-                <Link to="/catalog?department=Women">Shop Women</Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="border-primary text-primary hover:bg-primary/5">
-                <Link to="/catalog?department=Men">
-                  Shop Men
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-          </div>
-          <div className="order-1 overflow-hidden rounded-md shadow-lift md:order-2">
-            <img
-              src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=80"
-              alt=""
-              className="aspect-[4/3] w-full object-cover md:aspect-[5/4]"
-            />
-          </div>
-        </div>
-      </section>
+      <HeroCarousel />
 
-      {/* Department grid with sky/navy overlays */}
       <section className="shelf-container py-10 md:py-14">
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
           {DEPARTMENTS.map((dept) => (
@@ -139,7 +225,6 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* This Week's Best Finds */}
       <section className="border-y border-border bg-surface-muted/50">
         <div className="shelf-container py-12 md:py-14">
           <h2 className="section-rule-title justify-center text-center font-display text-2xl font-bold italic text-primary md:text-3xl">
@@ -188,21 +273,25 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* Brands + clearance (navy, not red) */}
       <section className="shelf-container py-12 md:py-14">
         <div className="grid gap-6 lg:grid-cols-[1fr_280px] lg:items-stretch">
           <div className="rounded-md border border-border bg-surface px-4 py-6 shadow-soft sm:px-6">
             <p className="mb-5 text-center text-2xs font-bold uppercase tracking-[0.12em] text-muted-foreground">
               Brands you love
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
-              {BRANDS.map((brand) => (
-                <span
+            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-3">
+              {ALL_BRANDS.map((brand) => (
+                <Link
                   key={brand}
-                  className="font-display text-sm font-bold italic tracking-tight text-muted-foreground/80 sm:text-base"
+                  to="/catalog"
+                  onClick={() => {
+                    clearFilters()
+                    toggleBrand(brand)
+                  }}
+                  className="rounded-sm px-2 py-1 font-display text-sm font-bold italic tracking-tight text-muted-foreground/80 no-underline transition-colors hover:bg-sky-soft hover:text-primary sm:text-base"
                 >
                   {brand}
-                </span>
+                </Link>
               ))}
             </div>
           </div>
@@ -221,7 +310,6 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* Extra product strip */}
       <section className="border-t border-border bg-surface-muted/40">
         <div className="shelf-container py-12">
           <div className="mb-6 flex items-end justify-between gap-4">
@@ -233,7 +321,11 @@ export function HomePage() {
                 Shop the latest
               </h2>
             </div>
-            <Button variant="outline" asChild className="hidden border-primary text-primary sm:inline-flex">
+            <Button
+              variant="outline"
+              asChild
+              className="hidden border-primary text-primary sm:inline-flex"
+            >
               <Link to="/catalog?sort=newest">View all</Link>
             </Button>
           </div>
