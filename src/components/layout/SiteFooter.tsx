@@ -18,9 +18,9 @@ const columns = [
     links: [
       { label: "Patients & Families hub", href: "/patients-families" },
       { label: "MyChildren's Portal", href: "/portal" },
-      { label: "Prepare for Your Visit", href: "/patients-families" },
-      { label: "Billing & Insurance", href: "/patients-families" },
-      { label: "Medical Records", href: "/patients-families" },
+      { label: "Prepare for Your Visit", href: "/patients-families/prepare-for-your-visit" },
+      { label: "Billing & Insurance", href: "/patients-families/billing" },
+      { label: "Medical Records", href: "/patients-families/medical-records" },
     ],
   },
   {
@@ -29,6 +29,8 @@ const columns = [
       { label: "Research hub", href: "/research" },
       { label: "Clinical Trials", href: "/research" },
       { label: "Professionals", href: "/professionals" },
+      { label: "Refer a Patient", href: "/professionals/refer" },
+      { label: "Second Opinions", href: "/professionals/second-opinion" },
     ],
   },
   {

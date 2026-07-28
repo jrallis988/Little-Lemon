@@ -33,7 +33,7 @@ export const useAppointmentStore = create<AppointmentState>()(
     (set, get) => ({
       step: 0,
       draft: emptyDraft,
-      setStep: (step) => set({ step }),
+      setStep: (step) => set({ step: Math.max(0, Math.min(4, step)) }),
       updateDraft: (partial) =>
         set({ draft: { ...get().draft, ...partial } }),
       reset: () => set({ step: 0, draft: emptyDraft }),
@@ -50,6 +50,13 @@ export const useAppointmentStore = create<AppointmentState>()(
   ),
 );
 
+export type PortalThreadMessage = {
+  id: string;
+  from: string;
+  date: string;
+  body: string;
+};
+
 export type PortalMessage = {
   id: string;
   from: string;
@@ -57,6 +64,7 @@ export type PortalMessage = {
   preview: string;
   date: string;
   unread: boolean;
+  thread: PortalThreadMessage[];
 };
 
 export type PortalResult = {
@@ -64,6 +72,7 @@ export type PortalResult = {
   name: string;
   date: string;
   status: "final" | "pending";
+  detail?: string;
 };
 
 export type PortalVisit = {
@@ -71,6 +80,15 @@ export type PortalVisit = {
   title: string;
   when: string;
   location: string;
+  status: "scheduled" | "cancelled" | "completed";
+};
+
+export type PortalMedication = {
+  id: string;
+  name: string;
+  dose: string;
+  instructions: string;
+  refillsLeft: number;
 };
 
 type PortalState = {
@@ -79,12 +97,17 @@ type PortalState = {
   messages: PortalMessage[];
   results: PortalResult[];
   visits: PortalVisit[];
+  medications: PortalMedication[];
   refillRequested: boolean;
+  selectedMessageId: string | null;
   signIn: () => void;
   signOut: () => void;
   setTab: (tab: PortalState["activeTab"]) => void;
   markMessageRead: (id: string) => void;
+  selectMessage: (id: string) => void;
+  replyToMessage: (id: string, body: string) => void;
   requestRefill: () => void;
+  cancelVisit: (id: string) => void;
 };
 
 export const usePortalStore = create<PortalState>()(
@@ -92,6 +115,7 @@ export const usePortalStore = create<PortalState>()(
     (set, get) => ({
       signedIn: false,
       activeTab: "overview",
+      selectedMessageId: null,
       messages: [
         {
           id: "m1",
@@ -100,6 +124,14 @@ export const usePortalStore = create<PortalState>()(
           preview: "Please complete this form before your upcoming visit.",
           date: "Jul 24",
           unread: true,
+          thread: [
+            {
+              id: "m1-t1",
+              from: "Epilepsy Program Nurse",
+              date: "Jul 24 · 9:12 AM",
+              body: "Please complete the pre-visit questionnaire in MyChildren’s before August 12. It helps us prepare for seizure history updates and medication review.",
+            },
+          ],
         },
         {
           id: "m2",
@@ -108,6 +140,42 @@ export const usePortalStore = create<PortalState>()(
           preview: "Your child's EEG report is ready to review.",
           date: "Jul 18",
           unread: false,
+          thread: [
+            {
+              id: "m2-t1",
+              from: "Dr. Sarah Chen",
+              date: "Jul 18 · 3:40 PM",
+              body: "The routine EEG report is finalized. Overall findings are consistent with prior studies. We’ll review together at the follow-up visit.",
+            },
+            {
+              id: "m2-t2",
+              from: "You",
+              date: "Jul 18 · 4:05 PM",
+              body: "Thank you — should we continue the current medication dose until then?",
+            },
+            {
+              id: "m2-t3",
+              from: "Dr. Sarah Chen",
+              date: "Jul 18 · 4:22 PM",
+              body: "Yes, continue as prescribed unless new side effects appear. Call the nurse line for urgent concerns.",
+            },
+          ],
+        },
+        {
+          id: "m3",
+          from: "Billing Support",
+          subject: "Explanation of benefits",
+          preview: "A new EOB is available for your July imaging visit.",
+          date: "Jul 12",
+          unread: true,
+          thread: [
+            {
+              id: "m3-t1",
+              from: "Billing Support",
+              date: "Jul 12 · 11:00 AM",
+              body: "An explanation of benefits for the July imaging visit is ready. This is a demo message — no payment is due in the sandbox.",
+            },
+          ],
         },
       ],
       results: [
@@ -116,18 +184,29 @@ export const usePortalStore = create<PortalState>()(
           name: "EEG — routine",
           date: "Jul 17, 2025",
           status: "final",
+          detail:
+            "Impression: no electrographic seizures during the recording. Background activity age-appropriate.",
         },
         {
           id: "r2",
           name: "Basic metabolic panel",
           date: "Jul 10, 2025",
           status: "final",
+          detail: "All values within reference range for age.",
         },
         {
           id: "r3",
           name: "MRI brain w/o contrast",
           date: "Pending scheduling",
           status: "pending",
+          detail: "Order placed — scheduling team will contact you.",
+        },
+        {
+          id: "r4",
+          name: "CBC with differential",
+          date: "Jun 28, 2025",
+          status: "final",
+          detail: "No significant abnormalities.",
         },
       ],
       visits: [
@@ -136,17 +215,47 @@ export const usePortalStore = create<PortalState>()(
           title: "Neurology follow-up — Dr. Chen",
           when: "Aug 12, 2025 · 10:30 AM",
           location: "Main Campus — Longwood",
+          status: "scheduled",
         },
         {
           id: "v2",
           title: "Telehealth check-in",
           when: "Sep 3, 2025 · 2:00 PM",
           location: "Telehealth",
+          status: "scheduled",
+        },
+        {
+          id: "v3",
+          title: "EEG appointment",
+          when: "Jul 17, 2025 · 8:00 AM",
+          location: "Main Campus — Longwood",
+          status: "completed",
+        },
+      ],
+      medications: [
+        {
+          id: "med1",
+          name: "Levetiracetam",
+          dose: "250 mg tablet",
+          instructions: "Take twice daily with food",
+          refillsLeft: 2,
+        },
+        {
+          id: "med2",
+          name: "Vitamin D3",
+          dose: "1000 IU",
+          instructions: "Take once daily",
+          refillsLeft: 5,
         },
       ],
       refillRequested: false,
       signIn: () => set({ signedIn: true }),
-      signOut: () => set({ signedIn: false, activeTab: "overview" }),
+      signOut: () =>
+        set({
+          signedIn: false,
+          activeTab: "overview",
+          selectedMessageId: null,
+        }),
       setTab: (activeTab) => set({ activeTab }),
       markMessageRead: (id) =>
         set({
@@ -154,7 +263,34 @@ export const usePortalStore = create<PortalState>()(
             m.id === id ? { ...m, unread: false } : m,
           ),
         }),
+      selectMessage: (id) => set({ selectedMessageId: id }),
+      replyToMessage: (id, body) =>
+        set({
+          messages: get().messages.map((m) =>
+            m.id === id
+              ? {
+                  ...m,
+                  unread: false,
+                  thread: [
+                    ...m.thread,
+                    {
+                      id: `${id}-reply-${m.thread.length + 1}`,
+                      from: "You",
+                      date: "Just now",
+                      body,
+                    },
+                  ],
+                }
+              : m,
+          ),
+        }),
       requestRefill: () => set({ refillRequested: true }),
+      cancelVisit: (id) =>
+        set({
+          visits: get().visits.map((v) =>
+            v.id === id ? { ...v, status: "cancelled" } : v,
+          ),
+        }),
     }),
     { name: "bch-portal-sandbox" },
   ),

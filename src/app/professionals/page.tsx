@@ -22,18 +22,23 @@ export default function ProfessionalsPage() {
             <Button href="/emergency" variant="ocean">
               Physician Access Line
             </Button>
-            <Button href="/appointments/request" variant="ghost-white">
+            <Button href="/professionals/refer" variant="ghost-white">
               Refer a patient
             </Button>
           </>
         }
       />
-      <div className="wrap grid grid-cols-1 gap-s5 py-s7 pb-s10 md:grid-cols-3">
+      <div className="wrap grid grid-cols-1 gap-s5 py-s7 pb-s10 md:grid-cols-2 lg:grid-cols-4">
         {[
           {
             title: "Refer a patient",
-            body: "Start an appointment request and note the referring practice in the comments.",
-            href: "/appointments/request",
+            body: "Send clinical and practice details through the dedicated referral pathway.",
+            href: "/professionals/refer",
+          },
+          {
+            title: "Request a second opinion",
+            body: "Ask a pediatric specialist to review a diagnosis or treatment plan.",
+            href: "/professionals/second-opinion",
           },
           {
             title: "Find a specialist",

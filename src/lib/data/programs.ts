@@ -7,6 +7,7 @@ export type Program = {
   specialty: string;
   description: string;
   lead: string;
+  imageUrl?: string;
   photoClass: "photo-clinic" | "photo-lab" | "photo-family" | "photo-campus";
   highlights: string[];
   relatedConditionSlugs: string[];
@@ -21,6 +22,7 @@ export const programs: Program[] = programDocs.map((p) => ({
   specialty: p.specialty,
   description: p.description,
   lead: p.lead,
+  imageUrl: p.imageUrl,
   photoClass: p.photoClass,
   highlights: p.highlights,
   relatedConditionSlugs: p.relatedConditionSlugs,

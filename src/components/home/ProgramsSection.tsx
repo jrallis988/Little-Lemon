@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { IconArrowRight } from "@/components/ui/Icons";
@@ -23,6 +24,15 @@ export function ProgramsSection() {
               className="group block overflow-hidden rounded-md border border-border bg-white no-underline transition-all duration-ease hover:-translate-y-0.5 hover:shadow-md"
             >
               <div className={`relative h-[155px] overflow-hidden ${prog.photoClass}`}>
+                {prog.imageUrl ? (
+                  <Image
+                    src={prog.imageUrl}
+                    alt=""
+                    fill
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                ) : null}
                 <div className="absolute inset-0 bg-gradient-to-t from-[rgba(0,15,40,.55)] to-transparent" />
               </div>
               <div className="p-s4">

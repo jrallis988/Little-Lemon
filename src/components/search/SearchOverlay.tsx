@@ -3,8 +3,13 @@
 import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { IconClose, IconSearch } from "@/components/ui/Icons";
-import { useFocusTrap } from "@/hooks/useFocusTrap";
+import { IconSearch } from "@/components/ui/Icons";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "@/components/ui/Dialog";
 import { searchAll, type SearchResult } from "@/lib/data/search";
 import { cn } from "@/lib/cn";
 
@@ -25,37 +30,19 @@ export function SearchOverlay({
   onClose: () => void;
 }) {
   const router = useRouter();
-  const dialogRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const titleId = useId();
   const statusId = useId();
   const [query, setQuery] = useState("");
   const results = searchAll(query);
-
-  useFocusTrap(open, dialogRef, { restoreFocus: false, initialFocus: false });
 
   useEffect(() => {
     if (!open) {
       setQuery("");
       return;
     }
-    const t = window.setTimeout(() => inputRef.current?.focus(), 50);
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        e.stopPropagation();
-        onClose();
-      }
-    };
-    document.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
-    return () => {
-      window.clearTimeout(t);
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
-    };
-  }, [open, onClose]);
-
-  if (!open) return null;
+    const t = window.setTimeout(() => inputRef.current?.focus(), 40);
+    return () => window.clearTimeout(t);
+  }, [open]);
 
   const statusText = !query.trim()
     ? "Enter a search term. Popular suggestions are shown below."
@@ -64,25 +51,21 @@ export function SearchOverlay({
       : `${results.length} result${results.length === 1 ? "" : "s"} available.`;
 
   return (
-    <div
-      className="fixed inset-0 z-[900] flex items-start justify-center bg-[rgba(10,15,35,.72)] px-4 pt-[12vh] backdrop-blur-sm"
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
-    >
-      <div
-        ref={dialogRef}
-        className="w-full max-w-[640px] animate-fade-down overflow-hidden rounded-lg border border-border bg-white shadow-lg"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby={titleId}
-        aria-describedby={statusId}
+    <Dialog open={open} onOpenChange={(next) => !next && onClose()}>
+      <DialogContent
+        className="p-0"
+        showClose
+        onOpenAutoFocus={(e) => {
+          e.preventDefault();
+          inputRef.current?.focus();
+        }}
       >
-        <div className="flex items-center gap-s3 border-b border-border px-s4 py-s3">
+        <div className="flex items-center gap-s3 border-b border-border px-s4 py-s3 pr-12">
           <IconSearch className="text-ocean" aria-hidden="true" />
-          <h2 id={titleId} className="sr-only">
-            Site search
-          </h2>
+          <DialogTitle className="sr-only">Site search</DialogTitle>
+          <DialogDescription className="sr-only" id={statusId}>
+            {statusText}
+          </DialogDescription>
           <input
             ref={inputRef}
             value={query}
@@ -96,26 +79,12 @@ export function SearchOverlay({
             placeholder="Search doctors, conditions, programs…"
             className="min-w-0 flex-1 border-0 bg-transparent text-md font-light text-text outline-none placeholder:text-text-ghost"
             aria-label="Search the site"
-            aria-controls={statusId}
+            aria-describedby={statusId}
             autoComplete="off"
           />
-          <button
-            type="button"
-            onClick={onClose}
-            className="flex h-9 w-9 items-center justify-center rounded-sm text-text-meta hover:bg-surface"
-            aria-label="Close search"
-          >
-            <IconClose className="h-4 w-4" />
-          </button>
         </div>
 
-        <div
-          id={statusId}
-          className="sr-only"
-          role="status"
-          aria-live="polite"
-          aria-atomic="true"
-        >
+        <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
           {statusText}
         </div>
 
@@ -194,7 +163,7 @@ export function SearchOverlay({
             </Link>
           </div>
         ) : null}
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 }

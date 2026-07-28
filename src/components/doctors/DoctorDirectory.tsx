@@ -4,7 +4,8 @@ import { useCallback, useEffect, useMemo, useState, useTransition } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { DoctorCard } from "@/components/doctors/DoctorCard";
 import { Button } from "@/components/ui/Button";
-import { Input, Select } from "@/components/ui/Input";
+import { Input } from "@/components/ui/Input";
+import { SelectField } from "@/components/ui/SelectField";
 import { IconSearch } from "@/components/ui/Icons";
 import {
   availabilityOptions,
@@ -163,54 +164,37 @@ export function DoctorDirectory() {
           </form>
 
           <div className="flex flex-wrap items-center gap-s3">
-            <Select
+            <SelectField
               aria-label="Filter by specialty"
               className="min-w-[160px] max-w-[280px] flex-[1.5]"
               value={specialty}
-              onChange={(e) => syncFilters({ specialty: e.target.value })}
-            >
-              {specialties.map((s) => (
-                <option key={s} value={s}>
-                  {s}
-                </option>
-              ))}
-            </Select>
-            <Select
+              onValueChange={(value) => syncFilters({ specialty: value })}
+              options={specialties.map((s) => ({ value: s, label: s }))}
+            />
+            <SelectField
               aria-label="Filter by location"
               className="min-w-[160px] max-w-[220px] flex-1"
               value={location}
-              onChange={(e) => syncFilters({ location: e.target.value })}
-            >
-              {locations.map((l) => (
-                <option key={l} value={l}>
-                  {l}
-                </option>
-              ))}
-            </Select>
-            <Select
+              onValueChange={(value) => syncFilters({ location: value })}
+              options={locations.map((l) => ({ value: l, label: l }))}
+            />
+            <SelectField
               aria-label="Filter by language"
               className="min-w-[160px] max-w-[220px] flex-1"
               value={language}
-              onChange={(e) => syncFilters({ language: e.target.value })}
-            >
-              {languages.map((l) => (
-                <option key={l} value={l}>
-                  {l}
-                </option>
-              ))}
-            </Select>
-            <Select
+              onValueChange={(value) => syncFilters({ language: value })}
+              options={languages.map((l) => ({ value: l, label: l }))}
+            />
+            <SelectField
               aria-label="Filter by availability"
               className="min-w-[160px] max-w-[220px] flex-1"
               value={availability}
-              onChange={(e) => syncFilters({ availability: e.target.value })}
-            >
-              {availabilityOptions.map((opt) => (
-                <option key={opt} value={opt}>
-                  {opt}
-                </option>
-              ))}
-            </Select>
+              onValueChange={(value) => syncFilters({ availability: value })}
+              options={availabilityOptions.map((opt) => ({
+                value: opt,
+                label: opt,
+              }))}
+            />
 
             <div className="ml-auto flex flex-wrap items-center gap-s3">
           <span

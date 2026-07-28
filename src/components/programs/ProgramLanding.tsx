@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { PageHero } from "@/components/layout/PageHero";
@@ -77,8 +78,16 @@ export function ProgramLanding({ program }: { program: Program }) {
           </div>
           <div
             className={`relative min-h-[320px] overflow-hidden rounded-lg ${program.photoClass}`}
-            aria-hidden="true"
           >
+            {program.imageUrl ? (
+              <Image
+                src={program.imageUrl}
+                alt={`${program.name} care team and facilities`}
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-cover"
+              />
+            ) : null}
             <div className="absolute inset-0 bg-gradient-to-t from-[rgba(0,15,40,.45)] to-transparent" />
           </div>
         </div>
@@ -93,7 +102,7 @@ export function ProgramLanding({ program }: { program: Program }) {
             {relations.locations.map((loc) => (
               <Link
                 key={loc.slug}
-                href={`/locations#${loc.slug}`}
+                href={`/locations/${loc.slug}`}
                 className="rounded-sm border border-border bg-white px-3 py-1.5 text-sm font-bold text-blue no-underline hover:border-ocean"
               >
                 {loc.shortName}

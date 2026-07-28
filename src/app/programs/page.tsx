@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { PageHero } from "@/components/layout/PageHero";
@@ -70,7 +71,17 @@ export default function ProgramsIndexPage() {
                   href={`/programs/${prog.slug}`}
                   className="block overflow-hidden rounded-md border border-border bg-white no-underline transition-all hover:-translate-y-0.5 hover:shadow-md"
                 >
-                  <div className={`h-[120px] ${prog.photoClass}`} />
+                  <div className={`relative h-[120px] overflow-hidden ${prog.photoClass}`}>
+                    {prog.imageUrl ? (
+                      <Image
+                        src={prog.imageUrl}
+                        alt=""
+                        fill
+                        sizes="(min-width: 768px) 50vw, 100vw"
+                        className="object-cover"
+                      />
+                    ) : null}
+                  </div>
                   <div className="p-s4">
                     <span className="eyebrow">{prog.specialty}</span>
                     <span className="mt-1 block text-lg font-bold text-text">

@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [main, "cursor/**"]
+  pull_request:
+
+jobs:
+  build-test-a11y:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run test
+      - run: npm run build
+      - name: Lighthouse CI (homepage)
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            http://localhost:3000
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+          configPath: ./.lighthouserc.json
+        continue-on-error: true

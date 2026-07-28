@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -20,9 +21,18 @@ export function DoctorCard({ doctor }: { doctor: Doctor }) {
       <Link href={profileHref} className="flex items-start gap-s3 no-underline">
         <div
           className="flex h-[60px] w-[60px] shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-border bg-surface-2"
-          aria-hidden="true"
         >
-          <IconUser className="text-text-meta" />
+          {doctor.imageUrl ? (
+            <Image
+              src={doctor.imageUrl}
+              alt={doctor.imageAlt ?? `Portrait of ${doctor.name}`}
+              width={60}
+              height={60}
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            <IconUser className="text-text-meta" aria-hidden="true" />
+          )}
         </div>
         <div>
           <span className="mb-0.5 block text-base font-bold text-text">

@@ -19,13 +19,14 @@ import {
   LogoSeal,
 } from "@/components/ui/Icons";
 import { SearchOverlay } from "@/components/search/SearchOverlay";
+import { DesktopPrimaryNav } from "@/components/layout/DesktopPrimaryNav";
 import { focusFirst, getFocusableElements } from "@/lib/a11y";
 import { cn } from "@/lib/cn";
 
 const utilLinks = [
   { label: "Español", href: "/search?q=espanol" },
-  { label: "For Clinicians", href: "/emergency" },
-  { label: "Research", href: "/search?q=research" },
+  { label: "For Clinicians", href: "/professionals" },
+  { label: "Research", href: "/research" },
   { label: "Give to Boston Children's", href: "/about" },
 ];
 
@@ -469,20 +470,24 @@ export function SiteHeader() {
                         {
                           label: "View test results",
                           desc: "Lab results, imaging, and reports",
+                          href: "/portal",
                         },
                         {
                           label: "Message your care team",
                           desc: "Non-urgent questions and follow-up",
+                          href: "/portal",
                         },
                         {
                           label: "Manage appointments",
                           desc: "Upcoming visits, referrals, scheduling",
+                          href: "/appointments/request",
                         },
                       ].map((action) => (
-                        <a
+                        <Link
                           key={action.label}
-                          href="/find-a-doctor"
+                          href={action.href}
                           className="flex min-h-11 items-center justify-between rounded-sm border border-border bg-surface px-3 py-[9px] no-underline transition-all hover:border-border-strong hover:bg-surface-2"
+                          onClick={() => setPortalOpen(false)}
                         >
                           <div>
                             <div className="text-sm font-bold text-blue">
@@ -493,21 +498,23 @@ export function SiteHeader() {
                             </div>
                           </div>
                           <IconChevronRight className="text-text-meta" />
-                        </a>
+                        </Link>
                       ))}
                     </div>
-                    <a
-                      href="/find-a-doctor"
+                    <Link
+                      href="/portal"
                       className="mb-2 flex min-h-11 items-center justify-center rounded-sm bg-blue text-center text-base font-bold text-white no-underline hover:bg-ocean"
+                      onClick={() => setPortalOpen(false)}
                     >
                       Sign in to Portal
-                    </a>
-                    <a
-                      href="/search?q=portal"
+                    </Link>
+                    <Link
+                      href="/patients-families"
                       className="mb-3 block text-center text-sm text-ocean"
+                      onClick={() => setPortalOpen(false)}
                     >
                       New to the portal? Get help setting up
-                    </a>
+                    </Link>
                     <div className="border-t border-border pt-3">
                       <p className="m-0 text-[11px] font-light leading-[1.55] text-text-meta">
                         Secured with two-factor authentication. Your information
@@ -551,140 +558,7 @@ export function SiteHeader() {
               </span>
             </Link>
 
-            <nav
-              className="hidden flex-1 items-center justify-center lg:flex"
-              aria-label="Primary"
-            >
-              {navItems.map((item) => {
-                const menuId = `${baseId}-menu-${item.label.replace(/\s+/g, "-")}`;
-                const expanded = openMenu === item.label;
-                return (
-                  <div
-                    key={item.label}
-                    className="relative"
-                    onMouseEnter={() => openMega(item.label, false)}
-                    onMouseLeave={() => setOpenMenu(null)}
-                  >
-                    <button
-                      ref={(el) => {
-                        menuItemRefs.current[item.label] = el;
-                      }}
-                      type="button"
-                      className={cn(
-                        "flex h-[68px] items-center gap-1 border-b-[3px] border-transparent px-3.5 text-sm font-bold text-white/65 transition-all hover:border-sky hover:text-white",
-                        headerFocus,
-                        (isActive(item) || expanded) && "border-sky text-white",
-                      )}
-                      aria-haspopup="true"
-                      aria-expanded={expanded}
-                      aria-controls={menuId}
-                      onClick={() => {
-                        if (expanded) {
-                          setOpenMenu(null);
-                        } else {
-                          openMega(item.label, true);
-                        }
-                      }}
-                      onKeyDown={(e) => {
-                        if (e.key === "ArrowDown") {
-                          e.preventDefault();
-                          openMega(item.label, true);
-                        }
-                        if (e.key === "Escape" && expanded) {
-                          e.preventDefault();
-                          setOpenMenu(null);
-                        }
-                      }}
-                    >
-                      {item.label}
-                      <IconChevronDown
-                        className={cn(
-                          "opacity-50 transition-transform",
-                          expanded && "rotate-180 opacity-80",
-                        )}
-                      />
-                    </button>
-                    <div
-                      id={menuId}
-                      ref={(el) => {
-                        menuPanelRefs.current[item.label] = el;
-                      }}
-                      hidden={!expanded}
-                      className={cn(
-                        "absolute left-1/2 top-full z-[400] min-w-[680px] -translate-x-1/2 animate-fade-down rounded-b-md border-t-[3px] border-ocean bg-white shadow-lg",
-                        !expanded && "invisible pointer-events-none",
-                      )}
-                      role="region"
-                      aria-label={`${item.label} menu`}
-                    >
-                      <div
-                        className={cn(
-                          "grid gap-0",
-                          item.card
-                            ? "grid-cols-[1.2fr_1fr_1fr_200px]"
-                            : "grid-cols-[1.2fr_1fr_1fr]",
-                        )}
-                      >
-                        {item.zones.map((zone) => (
-                          <div
-                            key={zone.title}
-                            className={cn(
-                              "border-l border-border px-s5 py-s6 first:border-l-0",
-                              zone.accent && "bg-surface",
-                            )}
-                          >
-                            <h5 className="mb-s3 border-b border-border pb-s2 text-[10px] font-extrabold uppercase tracking-[0.07em] text-text-meta">
-                              {zone.title}
-                            </h5>
-                            <ul className="flex flex-col gap-0.5">
-                              {zone.links.map((link) => (
-                                <li key={link.label}>
-                                  <Link
-                                    href={link.href}
-                                    className={cn(
-                                      "block no-underline transition-colors",
-                                      zone.accent
-                                        ? "rounded-sm px-2.5 py-[7px] text-base font-bold text-blue hover:bg-blue/[0.07]"
-                                        : "py-0.5 text-sm font-light text-text-body hover:text-ocean",
-                                    )}
-                                    onClick={() => setOpenMenu(null)}
-                                  >
-                                    {link.label}
-                                  </Link>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        ))}
-                        {item.card ? (
-                          <div className="flex flex-col rounded-br-md bg-blue p-s5">
-                            <span className="eyebrow mb-s2 text-white/40">
-                              {item.card.eyebrow}
-                            </span>
-                            <h4 className="mb-s2 text-base font-bold text-white">
-                              {item.card.title}
-                            </h4>
-                            <p className="mb-s4 flex-1 text-sm text-white/60">
-                              {item.card.body}
-                            </p>
-                            <Link
-                              href={item.card.href}
-                              className={cn(
-                                "flex w-full items-center justify-center rounded-sm border-2 border-white/30 px-[9px] py-[9px] text-sm font-bold text-white no-underline hover:bg-white/10",
-                                headerFocus,
-                              )}
-                              onClick={() => setOpenMenu(null)}
-                            >
-                              {item.card.cta}
-                            </Link>
-                          </div>
-                        ) : null}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </nav>
+            <DesktopPrimaryNav items={navItems} />
 
             <div className="flex shrink-0 items-center gap-s2">
               <button

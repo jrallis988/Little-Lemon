@@ -17,6 +17,13 @@ export type LocationDoc = {
   zip: string;
   phone: string;
   hours?: string;
+  clinicHours?: string;
+  imageUrl?: string;
+  parking?: string;
+  mapEmbedUrl?: string;
+  directionsUrl?: string;
+  lat?: number;
+  lng?: number;
   services: string[];
   hasEmergency?: boolean;
   hasUrgentCare?: boolean;
@@ -37,6 +44,7 @@ export type ConditionDoc = {
   _id: string;
   slug: string;
   name: string;
+  imageUrl?: string;
   specialty: string;
   departmentSlug: CmsSlugRef;
   lead: string;
@@ -61,6 +69,7 @@ export type ProgramDoc = {
   departmentSlug: CmsSlugRef;
   description: string;
   lead: string;
+  imageUrl?: string;
   photoClass: "photo-clinic" | "photo-lab" | "photo-family" | "photo-campus";
   highlights: string[];
   relatedConditionSlugs: CmsSlugRef[];
@@ -75,6 +84,8 @@ export type ProviderDoc = {
   _id: string;
   slug: string;
   name: string;
+  imageUrl?: string;
+  imageAlt?: string;
   title: string;
   specialty: string;
   departmentSlug: CmsSlugRef;
@@ -102,6 +113,8 @@ export type ClinicalTrialDoc = {
   conditionSlugs: CmsSlugRef[];
   programSlugs: CmsSlugRef[];
   phase?: string;
+  principalInvestigator?: string;
+  enrollmentTarget?: number;
 };
 
 export type InsuranceCarrier = {

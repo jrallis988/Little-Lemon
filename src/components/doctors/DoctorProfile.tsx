@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Breadcrumb } from "@/components/layout/Breadcrumb";
 import { PageHero } from "@/components/layout/PageHero";
@@ -69,10 +70,23 @@ export function DoctorProfile({ doctor }: { doctor: Doctor }) {
           <article aria-label={`Profile for ${doctor.name}`}>
             <div className="mb-s6 flex flex-wrap items-start gap-s4">
               <div
-                className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full border-2 border-border bg-surface-2"
-                aria-hidden="true"
+                className="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-border bg-surface-2"
               >
-                <IconUser className="h-10 w-10 text-text-meta" />
+                {doctor.imageUrl ? (
+                  <Image
+                    src={doctor.imageUrl}
+                    alt={doctor.imageAlt ?? `Portrait of ${doctor.name}`}
+                    width={96}
+                    height={96}
+                    className="h-full w-full object-cover"
+                    priority
+                  />
+                ) : (
+                  <IconUser
+                    className="h-10 w-10 text-text-meta"
+                    aria-hidden="true"
+                  />
+                )}
               </div>
               <div className="min-w-0 flex-1">
                 <div className="mb-s3 flex flex-wrap gap-1">

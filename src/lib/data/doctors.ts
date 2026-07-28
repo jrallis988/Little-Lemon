@@ -5,13 +5,8 @@ export type Doctor = ReturnType<typeof contentApi.doctorsLegacy>[number];
 
 export const specialties = [
   "All specialties",
-  "Cardiology",
-  "Neurology",
-  "Oncology",
-  "Orthopedics",
-  "Neuro-oncology",
-  "Genetics",
-] as const;
+  ...Array.from(new Set(contentApi.providers.map((provider) => provider.specialty))).sort(),
+];
 
 export const locations = [
   "All locations",
@@ -20,15 +15,10 @@ export const locations = [
 
 export const languages = [
   "Any language",
-  "Spanish",
-  "Mandarin",
-  "Portuguese",
-  "Hindi",
-  "Korean",
-  "English",
-  "Vietnamese",
-  "Gujarati",
-] as const;
+  ...Array.from(
+    new Set(contentApi.providers.flatMap((provider) => provider.languages)),
+  ).sort(),
+];
 
 export const availabilityOptions = [
   "Any availability",
@@ -48,6 +38,13 @@ export function filterDoctors(filters: {
   availability?: string;
   query?: string;
 }) {
+  const selectedLocation = filters.location
+    ? locationDocs.find(
+        (location) =>
+          location.name === filters.location || location.slug === filters.location,
+      )
+    : undefined;
+
   return doctors.filter((doc) => {
     if (
       filters.specialty &&
@@ -60,7 +57,7 @@ export function filterDoctors(filters: {
     if (
       filters.location &&
       filters.location !== "All locations" &&
-      doc.location !== filters.location
+      (!selectedLocation || !doc.locationSlugs.includes(selectedLocation.slug))
     ) {
       return false;
     }
@@ -85,6 +82,7 @@ export function filterDoctors(filters: {
         doc.specialty,
         ...doc.tags,
         ...doc.languages,
+        ...doc.locationNames,
         ...doc.clinicalInterests,
       ]
         .join(" ")

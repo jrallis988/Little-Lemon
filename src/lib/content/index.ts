@@ -16,10 +16,14 @@ export type LegacyDoctor = {
   id: string;
   slug: string;
   name: string;
+  imageUrl?: string;
+  imageAlt?: string;
   title: string;
   specialty: string;
   tags: string[];
   location: string;
+  locationSlugs: string[];
+  locationNames: string[];
   languages: string[];
   acceptingNewPatients: boolean;
   featured?: boolean;
@@ -51,14 +55,21 @@ export type LegacyCondition = {
 
 function toLegacyDoctor(p: ProviderDoc): LegacyDoctor {
   const primaryLoc = getLoc(p.locationSlugs[0]);
+  const providerLocations = p.locationSlugs.map(
+    (slug) => getLoc(slug)?.name ?? slug,
+  );
   return {
     id: p._id,
     slug: p.slug,
     name: p.name,
+    imageUrl: p.imageUrl,
+    imageAlt: p.imageAlt,
     title: p.title,
     specialty: p.specialty,
     tags: p.tags,
     location: primaryLoc?.name ?? p.locationSlugs[0],
+    locationSlugs: p.locationSlugs,
+    locationNames: providerLocations,
     languages: p.languages,
     acceptingNewPatients: p.acceptingNewPatients,
     featured: p.featured,

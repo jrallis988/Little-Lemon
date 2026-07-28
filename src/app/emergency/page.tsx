@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Button } from "@/components/ui/Button";
 import { Callout, CalloutEmergency, Notice } from "@/components/ui/Callout";
 import { IconPhone } from "@/components/ui/Icons";
+import { LiveWaitTime } from "@/components/emergency/LiveWaitTime";
 
 export const metadata: Metadata = {
   title: "Emergency Department",
@@ -50,21 +51,7 @@ export default function EmergencyPage() {
                   Main campus entrance
                 </div>
               </div>
-              <div>
-                <div className="mb-[5px] text-xs font-extrabold uppercase tracking-[0.08em] text-text-meta">
-                  Current wait time
-                </div>
-                <div
-                  className="text-md font-bold text-success-text"
-                  role="status"
-                  aria-live="polite"
-                >
-                  ~19 minutes
-                </div>
-                <div className="mt-[3px] text-xs font-light text-text-meta">
-                  Updated live · how waits are measured
-                </div>
-              </div>
+              <LiveWaitTime />
               <div>
                 <div className="mb-[5px] text-xs font-extrabold uppercase tracking-[0.08em] text-text-meta">
                   Hours
@@ -92,16 +79,24 @@ export default function EmergencyPage() {
               </div>
             </div>
             <div className="mt-s4 flex flex-wrap gap-s2 border-t border-border pt-s4">
-              <Button href="#" variant="primary" size="sm">
+              <Button
+                href="https://www.google.com/maps/dir/?api=1&destination=300+Longwood+Avenue+Boston+MA+02115"
+                variant="primary"
+                size="sm"
+              >
                 Get Directions
               </Button>
               <Button href="tel:16173556611" variant="outline-ocean" size="sm">
                 Call the ED
               </Button>
-              <Button href="#" variant="outline" size="sm">
+              <Button href="/locations/waltham" variant="outline" size="sm">
                 Urgent Care — Shorter Waits
               </Button>
             </div>
+            <p className="mt-s3 text-xs font-light text-text-meta">
+              Wait estimates can change quickly. Children are seen by medical
+              priority, not arrival order; the sickest children are always seen first.
+            </p>
           </div>
         </div>
       </div>
@@ -173,7 +168,7 @@ export default function EmergencyPage() {
                 pain, a minor cut, or cold and flu symptoms — our urgent care
                 centers often have shorter waits.
               </p>
-              <Button href="#" variant="outline-ocean">
+              <Button href="/locations" variant="outline-ocean">
                 View Urgent Care Locations
               </Button>
             </div>
@@ -188,7 +183,7 @@ export default function EmergencyPage() {
                 For critical transfers and trauma consultations, contact our
                 Transfer Center directly.
               </p>
-              <Button href="#" variant="ocean" fullWidth>
+              <Button href="/professionals/refer" variant="ocean" fullWidth>
                 Physician Access Line
               </Button>
               <div className="mt-s3 flex items-center gap-1.5">
@@ -208,16 +203,16 @@ export default function EmergencyPage() {
               </h5>
               <ul className="flex flex-col gap-1.5">
                 {[
-                  "Main ED · 300 Longwood Ave",
-                  "Urgent Care — Waltham",
-                  "Urgent Care — Peabody",
-                ].map((loc) => (
-                  <li key={loc}>
+                  ["Main ED · 300 Longwood Ave", "/locations/longwood"],
+                  ["Urgent Care — Waltham", "/locations/waltham"],
+                  ["Urgent Care — Peabody", "/locations/peabody"],
+                ].map(([label, href]) => (
+                  <li key={label}>
                     <a
-                      href="#"
+                      href={href}
                       className="text-sm font-semibold text-ocean no-underline hover:text-blue"
                     >
-                      {loc}
+                      {label}
                     </a>
                   </li>
                 ))}

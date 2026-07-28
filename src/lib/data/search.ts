@@ -66,6 +66,62 @@ const staticPages: SearchResult[] = [
     description: "Level 1 pediatric trauma center — open 24/7",
     href: "/emergency",
   },
+  {
+    id: "page-billing",
+    type: "page",
+    title: "Billing & Insurance",
+    description: "Bills, insurance, financial assistance, and payment options",
+    href: "/patients-families/billing",
+  },
+  {
+    id: "page-prepare",
+    type: "page",
+    title: "Prepare for Your Visit",
+    description: "What to bring, arrival tips, and visit checklists",
+    href: "/patients-families/prepare-for-your-visit",
+  },
+  {
+    id: "page-records",
+    type: "page",
+    title: "Medical Records",
+    description: "How to request medical records and forms",
+    href: "/patients-families/medical-records",
+  },
+  {
+    id: "page-refer",
+    type: "page",
+    title: "Refer a Patient",
+    description: "Healthcare professional referral workflow",
+    href: "/professionals/refer",
+  },
+  {
+    id: "page-second-opinion",
+    type: "page",
+    title: "Second Opinion",
+    description: "Request a second opinion from Boston Children's specialists",
+    href: "/professionals/second-opinion",
+  },
+  {
+    id: "page-research",
+    type: "page",
+    title: "Research Hub",
+    description: "Clinical trials, labs, and publications",
+    href: "/research",
+  },
+  {
+    id: "page-professionals",
+    type: "page",
+    title: "For Healthcare Professionals",
+    description: "Referrals, CME, and physician resources",
+    href: "/professionals",
+  },
+  {
+    id: "page-patients",
+    type: "page",
+    title: "Patients & Families",
+    description: "Visit prep, billing, portal, and family resources",
+    href: "/patients-families",
+  },
 ];
 
 export function searchAll(query: string): SearchResult[] {
