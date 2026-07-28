@@ -27,6 +27,7 @@ const siteColumns = [
     title: "Connect",
     links: [
       { label: "About", to: "/about" },
+      { label: "Case Study", to: "/case-study" },
       { label: "Social channels", to: "/#connect" },
       { label: "Start Your Journey", to: "/#finale" },
       { label: "Community", to: "/#community-63" },
@@ -136,8 +137,9 @@ export function Footer() {
           </div>
 
           <p className="mt-6 font-sans text-xs text-ink/55">
-            Redesign concept for demonstration. Content and trademarks belong to WW International,
-            Inc.
+            Independent conceptual redesign created for portfolio purposes. Not affiliated with or
+            commissioned by WeightWatchers. Future product experiences are labeled as Concept /
+            Future Vision / Prototype and do not represent live WeightWatchers products.
           </p>
         </div>
 

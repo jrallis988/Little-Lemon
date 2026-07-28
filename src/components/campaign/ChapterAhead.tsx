@@ -61,9 +61,12 @@ export function ChapterAhead() {
               href="#next-ww-life"
               className="rounded-2xl border border-white/35 px-6 py-3.5 font-sans text-sm font-semibold text-white"
             >
-              Preview flagship products
+              Try interactive prototypes
             </a>
           </div>
+          <p className="mt-4 font-sans text-xs text-white/55">
+            Future Vision · Product Exploration · Portfolio concept prototypes
+          </p>
         </div>
       </div>
 
@@ -101,7 +104,7 @@ export function ChapterAhead() {
               >
                 <div>
                   <p className="font-sans text-xs font-semibold uppercase tracking-[0.22em] text-cobalt-600">
-                    Flagship · 0{index + 1}
+                    Flagship prototype · 0{index + 1}
                   </p>
                   <h3
                     id={`${product.id}-heading`}
@@ -141,15 +144,33 @@ export function ChapterAhead() {
       </div>
 
       <div className="section-shell mt-20">
-        <div className="rounded-[2rem] bg-ink px-6 py-12 text-center text-white sm:px-12">
-          <p className="mx-auto max-w-3xl font-serif text-2xl leading-snug sm:text-3xl">
+        <div className="grid gap-4 md:grid-cols-3">
+          {[
+            ["Past", "63 years of learning from real people."],
+            ["Present", "A Weight Watchers built for today."],
+            ["Future", "A Weight Watchers built around you."],
+          ].map(([title, copy]) => (
+            <div key={title} className="rounded-[1.5rem] border border-ink/8 bg-white px-5 py-6">
+              <p className="font-sans text-xs font-semibold uppercase tracking-[0.16em] text-cobalt-600">
+                {title}
+              </p>
+              <p className="mt-2 font-serif text-lg text-ink/75">{copy}</p>
+            </div>
+          ))}
+        </div>
+        <div className="mt-6 rounded-[2rem] bg-ink px-6 py-12 text-center text-white sm:px-12">
+          <p className="font-serif text-2xl text-tide sm:text-3xl">63 Years of You</p>
+          <p className="mt-3 font-display text-3xl font-bold sm:text-4xl" style={{ fontWeight: 700 }}>
+            And we’re just getting started.
+          </p>
+          <p className="mx-auto mt-4 max-w-3xl font-serif text-lg leading-snug text-white/75 sm:text-xl">
             {futureVision.thesis}
           </p>
           <Link
             to="/whats-next"
             className="mt-8 inline-flex rounded-2xl bg-white px-6 py-3.5 font-sans text-sm font-semibold text-ink"
           >
-            Explore the full ecosystem
+            Explore What’s Next
           </Link>
         </div>
       </div>

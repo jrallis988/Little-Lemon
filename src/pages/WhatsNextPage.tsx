@@ -64,8 +64,8 @@ export function WhatsNextPage() {
           {futureVision.body}
         </p>
         <p className="mt-4 max-w-2xl font-sans text-base text-ink/60">
-          Not another diet app. Not a hospital. Not a generic AI dashboard. A connected personal
-          wellness platform—human, practical, and built around you.
+          Interactive product prototypes—not concept cards. Click through WW Life, Pathways, Kitchen,
+          Team, and Life After GLP-1 inside one shared app shell. Future Vision · Portfolio exploration.
         </p>
       </div>
 

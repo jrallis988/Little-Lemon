@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
+import { CaseStudyPage } from "./pages/CaseStudyPage";
 import { FindYourYearPage } from "./pages/FindYourYearPage";
 import { HomePage } from "./pages/HomePage";
 import { WhatsNextPage } from "./pages/WhatsNextPage";
@@ -28,6 +29,7 @@ export default function App() {
           <Route path="/63" element={<HomePage />} />
           <Route path="/find-your-year" element={<FindYourYearPage />} />
           <Route path="/whats-next" element={<WhatsNextPage />} />
+          <Route path="/case-study" element={<CaseStudyPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/programs" element={<ProgramsPage />} />
           <Route path="/stories" element={<StoriesPage />} />

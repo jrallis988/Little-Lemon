@@ -18,6 +18,7 @@ export function Header() {
 
   const moreLinks = [
     { href: "/whats-next", label: "What’s Next" },
+    { href: "/case-study", label: "Case Study" },
     { href: "/programs", label: "Programs" },
     { href: "/stories", label: "Stories" },
     { href: "/innovation", label: "Innovation" },
