@@ -16,8 +16,8 @@ export function CampaignHero() {
       <div className="absolute inset-0">
         <img
           src="/images/campaign/multi-gen.jpg"
-          alt="Multiple generations of people sharing a warm outdoor moment"
-          className="h-full w-full scale-105 object-cover object-[center_30%]"
+          alt="Friends smiling together around a table—everyday life, not a posed beach silhouette"
+          className="h-full w-full scale-105 object-cover object-[center_35%]"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-ink/85 via-ink/55 to-ink/25" />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-ink/35" />

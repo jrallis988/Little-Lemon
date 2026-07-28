@@ -169,8 +169,8 @@ export function AboutPage() {
     >
       <div className="grid gap-8 lg:grid-cols-2">
         <img
-          src="/images/campaign/multi-gen.jpg"
-          alt="People across generations"
+          src="/images/campaign/family-cook.jpg"
+          alt="People cooking together at home"
           className="rounded-[1.75rem] object-cover"
         />
         <div className="font-serif text-lg leading-relaxed text-ink/70">
