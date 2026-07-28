@@ -14,8 +14,11 @@ type FilterActions = {
   toggleBrand: (value: string) => void
   toggleBrandTier: (value: BrandTier) => void
   toggleSize: (value: string) => void
+  toggleColor: (value: string) => void
   setPriceRange: (range: [number, number]) => void
   setInStockOnly: (value: boolean) => void
+  setSaleOnly: (value: boolean) => void
+  setArrivals: (value: FilterState["arrivals"]) => void
   setQuery: (query: string) => void
   setSort: (sort: CatalogSort) => void
   clearFilters: () => void
@@ -28,8 +31,11 @@ const defaultFilters: FilterState = {
   brands: [],
   brandTiers: [],
   sizes: [],
+  colors: [],
   priceRange: [PRICE_BOUNDS.min, PRICE_BOUNDS.max],
   inStockOnly: false,
+  saleOnly: false,
+  arrivals: "any",
   query: "",
   sort: "featured",
 }
@@ -54,8 +60,12 @@ export const useFilterStore = create<FilterState & FilterActions>()(
         set((s) => ({ brandTiers: toggleInList(s.brandTiers, value) })),
       toggleSize: (value) =>
         set((s) => ({ sizes: toggleInList(s.sizes, value) })),
+      toggleColor: (value) =>
+        set((s) => ({ colors: toggleInList(s.colors, value) })),
       setPriceRange: (priceRange) => set({ priceRange }),
       setInStockOnly: (inStockOnly) => set({ inStockOnly }),
+      setSaleOnly: (saleOnly) => set({ saleOnly }),
+      setArrivals: (arrivals) => set({ arrivals }),
       setQuery: (query) => set({ query }),
       setSort: (sort) => set({ sort }),
       clearFilters: () =>
@@ -72,7 +82,10 @@ export const useFilterStore = create<FilterState & FilterActions>()(
         count += s.brands.length
         count += s.brandTiers.length
         count += s.sizes.length
+        count += s.colors.length
         if (s.inStockOnly) count += 1
+        if (s.saleOnly) count += 1
+        if (s.arrivals === "new") count += 1
         if (
           s.priceRange[0] !== PRICE_BOUNDS.min ||
           s.priceRange[1] !== PRICE_BOUNDS.max
@@ -90,8 +103,11 @@ export const useFilterStore = create<FilterState & FilterActions>()(
         brands: state.brands,
         brandTiers: state.brandTiers,
         sizes: state.sizes,
+        colors: state.colors,
         priceRange: state.priceRange,
         inStockOnly: state.inStockOnly,
+        saleOnly: state.saleOnly,
+        arrivals: state.arrivals,
         sort: state.sort,
       }),
     },

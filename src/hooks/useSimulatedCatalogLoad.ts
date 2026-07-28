@@ -18,8 +18,11 @@ export function useSimulatedCatalogLoad(filters: FilterState, delayMs = 420) {
     filters.brands,
     filters.brandTiers,
     filters.sizes,
+    filters.colors,
     filters.priceRange,
     filters.inStockOnly,
+    filters.saleOnly,
+    filters.arrivals,
     filters.query,
     filters.sort,
   ])

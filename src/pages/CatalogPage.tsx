@@ -4,6 +4,7 @@ import { CatalogView } from "@/components/catalog/CatalogView"
 import { useFilterStore } from "@/stores/filterStore"
 import type { CatalogSort, Department } from "@/types"
 import { ALL_CATEGORIES, DEPARTMENTS } from "@/data/products"
+import { useDocumentMeta } from "@/hooks/useDocumentMeta"
 
 const SORTS: CatalogSort[] = [
   "featured",
@@ -14,6 +15,12 @@ const SORTS: CatalogSort[] = [
 ]
 
 export function CatalogPage() {
+  useDocumentMeta({
+    title: "Shop Brand-Name Finds | Marshalls",
+    description:
+      "Explore new arrivals and savings across women, men, kids, home, beauty, and shoes.",
+  })
+
   const [params] = useSearchParams()
   const toggleDepartment = useFilterStore((s) => s.toggleDepartment)
   const toggleCategory = useFilterStore((s) => s.toggleCategory)

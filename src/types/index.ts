@@ -61,8 +61,11 @@ export type FilterState = {
   brands: string[]
   brandTiers: BrandTier[]
   sizes: string[]
+  colors: string[]
   priceRange: [number, number]
   inStockOnly: boolean
+  saleOnly: boolean
+  arrivals: "any" | "new"
   query: string
   sort: CatalogSort
 }

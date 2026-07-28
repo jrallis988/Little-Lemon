@@ -7,6 +7,9 @@ export function filterProducts(
   filters: FilterState,
 ): Product[] {
   const query = filters.query.trim().toLowerCase()
+  const selectedColors = filters.colors.map((color) =>
+    color.toLowerCase().replace(/[^a-z0-9]/g, ""),
+  )
 
   let result = products.filter((product) => {
     if (
@@ -36,6 +39,19 @@ export function filterProducts(
       )
       if (!hasSize) return false
     }
+    if (selectedColors.length > 0) {
+      const hasColor = product.colorways.some((colorway) => {
+        const colorValues = [colorway.name, colorway.id, colorway.hex].map((value) =>
+          value.toLowerCase().replace(/[^a-z0-9]/g, ""),
+        )
+        return selectedColors.some((selected) =>
+          colorValues.some(
+            (value) => value.includes(selected) || selected.includes(value),
+          ),
+        )
+      })
+      if (!hasColor) return false
+    }
     if (
       product.price < filters.priceRange[0] ||
       product.price > filters.priceRange[1]
@@ -43,6 +59,15 @@ export function filterProducts(
       return false
     }
     if (filters.inStockOnly && product.inventory === "out_of_stock") {
+      return false
+    }
+    if (
+      filters.saleOnly &&
+      discountPercent(product.compareAt, product.price) < 20
+    ) {
+      return false
+    }
+    if (filters.arrivals === "new" && !product.isNew) {
       return false
     }
     if (query) {

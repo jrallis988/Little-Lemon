@@ -28,15 +28,16 @@ const SORT_OPTIONS: { value: CatalogSort; label: string }[] = [
 
 type CatalogToolbarProps = {
   resultCount: number
+  visibleCount: number
 }
 
-export function CatalogToolbar({ resultCount }: CatalogToolbarProps) {
+export function CatalogToolbar({ resultCount, visibleCount }: CatalogToolbarProps) {
   const sort = useFilterStore((s) => s.sort)
   const setSort = useFilterStore((s) => s.setSort)
   const activeFilterCount = useFilterStore((s) => s.activeFilterCount())
 
   return (
-    <div className="flex flex-col gap-3 border-b border-border/70 pb-4 sm:flex-row sm:items-end sm:justify-between">
+    <div className="sticky top-[var(--chrome-offset)] z-20 -mx-2 flex flex-col gap-3 border-b border-border/70 bg-background/95 px-2 py-3 backdrop-blur-md sm:flex-row sm:items-end sm:justify-between">
       <div>
         <nav aria-label="Breadcrumb" className="mb-2 flex items-center gap-1.5 text-2xs text-muted-foreground">
           <span>Home</span>
@@ -47,7 +48,11 @@ export function CatalogToolbar({ resultCount }: CatalogToolbarProps) {
           Shop Marshalls
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          <span className="tabular font-medium text-foreground">{resultCount}</span>{" "}
+          <span className="tabular font-medium text-foreground">
+            {visibleCount < resultCount
+              ? `${visibleCount} of ${resultCount}`
+              : resultCount}
+          </span>{" "}
           {resultCount === 1 ? "item" : "items"} · Brand names for less
         </p>
       </div>
