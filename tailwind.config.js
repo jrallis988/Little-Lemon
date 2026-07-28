@@ -57,9 +57,13 @@ export default {
           foreground: "hsl(var(--sky-foreground))",
           soft: "hsl(var(--sky-soft))",
         },
+        navy: {
+          DEFAULT: "hsl(var(--navy))",
+          foreground: "hsl(var(--navy-foreground))",
+        },
         brand: {
+          red: "hsl(var(--brand-red))",
           blue: "hsl(var(--brand-blue))",
-          "blue-foreground": "hsl(var(--brand-blue-foreground))",
         },
         inventory: {
           low: "hsl(var(--inventory-low))",

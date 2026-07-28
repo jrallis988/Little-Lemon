@@ -4,12 +4,14 @@ import { Input } from "@/components/ui/input"
 
 export function SiteFooter() {
   return (
-    <footer className="mt-auto bg-primary text-primary-foreground">
+    <footer className="mt-auto border-t border-border bg-surface-muted">
       <div className="shelf-container py-12">
         <div className="grid gap-10 lg:grid-cols-[1.2fr_2fr]">
           <div>
-            <p className="marshalls-wordmark text-[1.5rem]">Marshalls</p>
-            <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/80">
+            <p className="marshalls-wordmark text-[1.5rem]">
+              <span className="m-wide">M</span>arshalls
+            </p>
+            <p className="mt-3 max-w-sm text-sm leading-relaxed text-muted-foreground">
               Brand names for less. Get the latest finds delivered to your inbox.
             </p>
             <form
@@ -19,14 +21,10 @@ export function SiteFooter() {
               <Input
                 type="email"
                 placeholder="Email address"
-                className="h-10 border-0 bg-white/95 text-foreground"
+                className="h-10 bg-surface"
                 aria-label="Email address"
               />
-              <Button
-                type="submit"
-                variant="secondary"
-                className="shrink-0 bg-white text-primary hover:bg-white/90"
-              >
+              <Button type="submit" className="shrink-0">
                 Sign Up
               </Button>
             </form>
@@ -34,10 +32,10 @@ export function SiteFooter() {
 
           <div className="grid gap-8 sm:grid-cols-3">
             <div>
-              <p className="mb-3 text-2xs font-bold uppercase tracking-[0.1em] text-white/70">
+              <p className="mb-3 text-2xs font-bold uppercase tracking-[0.1em] text-muted-foreground">
                 Customer Service
               </p>
-              <ul className="space-y-2 text-sm text-white/90">
+              <ul className="space-y-2 text-sm text-foreground/80">
                 <li>Help center</li>
                 <li>Order status</li>
                 <li>Shipping & returns</li>
@@ -45,15 +43,15 @@ export function SiteFooter() {
               </ul>
             </div>
             <div>
-              <p className="mb-3 text-2xs font-bold uppercase tracking-[0.1em] text-white/70">
+              <p className="mb-3 text-2xs font-bold uppercase tracking-[0.1em] text-muted-foreground">
                 Shopping
               </p>
               <ul className="space-y-2 text-sm">
-                {["Women", "Men", "Kids", "Home", "Shoes"].map((item) => (
+                {["Women", "Men", "Kids", "Home", "Shoes", "Clearance"].map((item) => (
                   <li key={item}>
                     <Link
-                      to="/catalog"
-                      className="text-white/90 no-underline hover:text-white"
+                      to={item === "Clearance" ? "/catalog?sort=discount" : "/catalog"}
+                      className="text-foreground/80 no-underline hover:text-primary"
                     >
                       {item}
                     </Link>
@@ -62,10 +60,10 @@ export function SiteFooter() {
               </ul>
             </div>
             <div>
-              <p className="mb-3 text-2xs font-bold uppercase tracking-[0.1em] text-white/70">
+              <p className="mb-3 text-2xs font-bold uppercase tracking-[0.1em] text-muted-foreground">
                 About
               </p>
-              <ul className="space-y-2 text-sm text-white/90">
+              <ul className="space-y-2 text-sm text-foreground/80">
                 <li>Find a store</li>
                 <li>Careers</li>
                 <li>TJX Companies</li>
@@ -76,8 +74,8 @@ export function SiteFooter() {
         </div>
       </div>
 
-      <div className="border-t border-white/15">
-        <div className="shelf-container flex flex-col gap-2 py-5 text-xs text-white/65 sm:flex-row sm:items-center sm:justify-between">
+      <div className="border-t border-border bg-surface">
+        <div className="shelf-container flex flex-col gap-2 py-5 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} Marshalls. Brand names for less.</p>
           <p>Compare at prices based on competitor prices or original ticket.</p>
         </div>
