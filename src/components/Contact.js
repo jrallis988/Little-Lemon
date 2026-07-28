@@ -12,8 +12,9 @@ export default function Contact() {
             Let&apos;s build something people enjoy using.
           </h2>
           <p className="reveal mt-5 max-w-xl text-base leading-relaxed text-sand/85 md:text-lg">
-            Tell me about your product, site, or team. I&apos;m especially interested
-            in React/Next frontends, FastAPI backends, and RAG-powered apps.
+            Tell me about your product, site, prototype, or team. I&apos;m especially
+            interested in React/Next frontends, FastAPI backends, RAG apps, and
+            web-based interactive builds.
           </p>
           <div className="reveal mt-9 flex flex-wrap gap-3">
             <a href="mailto:jjrallis@unh.edu" className="btn-primary">

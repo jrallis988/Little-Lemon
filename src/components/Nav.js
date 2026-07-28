@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 const links = [
   { href: "#work", label: "Work" },
+  { href: "#play", label: "Play" },
   { href: "#focus", label: "Focus" },
   { href: "#about", label: "About" },
   { href: "#skills", label: "Stack" },
@@ -41,7 +42,7 @@ export default function Nav() {
           James Rallis
         </a>
 
-        <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-5 lg:gap-7 md:flex" aria-label="Primary">
           {links.map((link) => (
             <a key={link.href} href={link.href} className="nav-link text-sm font-medium text-sand">
               {link.label}

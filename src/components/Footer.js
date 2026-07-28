@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="border-t border-sand/10 bg-ink py-8">
       <div className="container flex flex-col gap-3 text-sm text-sand/65 sm:flex-row sm:items-center sm:justify-between">
         <p>© {year} James Rallis</p>
-        <p>Product UI · APIs · AI apps</p>
+        <p>Product UI · APIs · Playable prototypes</p>
       </div>
     </footer>
   );

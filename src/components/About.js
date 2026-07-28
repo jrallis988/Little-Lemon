@@ -16,18 +16,18 @@ export default function About() {
           <p className="reveal mt-5 text-base leading-relaxed text-sand/85 md:text-lg">
             I&apos;m a developer focused on product surfaces first—clear React and
             Next.js UIs—then the systems that power them: FastAPI services, RAG
-            pipelines, and deploy paths that stay simple.
+            pipelines, and playable web prototypes when interaction is the idea.
           </p>
           <p className="reveal mt-4 text-base leading-relaxed text-sand/85 md:text-lg">
-            Based in New Hampshire, I collaborate remotely on websites and web apps
-            that need strong visual hierarchy, accessible interaction, and real
-            backend or AI depth when the problem calls for it.
+            Creative game work (world-building, narrative, wireframes) lives on the
+            artistic track. Engineering demos—loops, rendering, Phaser/Three builds—
+            ship here. Based in New Hampshire; collaborate remotely.
           </p>
         </div>
 
         <aside className="reveal border-l border-foam/40 pl-6 md:pl-8">
           <p className="font-display text-xl font-semibold leading-snug text-chalk md:text-2xl">
-            Open to front-end and full-stack product roles, freelance builds, and
+            Open to front-end, product engineering, interactive prototypes, and
             AI-assisted app collaborations.
           </p>
           <p className="mt-4 text-sm uppercase tracking-[0.16em] text-sand/65">

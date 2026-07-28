@@ -10,6 +10,16 @@ const groups = [
     ],
   },
   {
+    title: "Interactive & game",
+    items: [
+      "Phaser.js (2D HTML5)",
+      "Three.js (browser 3D)",
+      "Canvas game loops",
+      "Sprite & vector asset pipeline",
+      "Atmospheric UI for play",
+    ],
+  },
+  {
     title: "AI & backend",
     items: [
       "Python & FastAPI",
@@ -29,14 +39,6 @@ const groups = [
       "Docker / OrbStack",
     ],
   },
-  {
-    title: "Exploring next",
-    items: [
-      "React Native + Expo",
-      "NativeWind",
-      "iOS Simulator workflows",
-    ],
-  },
 ];
 
 export default function Skills() {
@@ -48,11 +50,12 @@ export default function Skills() {
             Stack
           </p>
           <h2 className="reveal font-display text-3xl font-bold text-chalk md:text-5xl">
-            A blueprint built to ship.
+            A blueprint built to ship—and to play.
           </h2>
           <p className="reveal mt-4 text-base leading-relaxed text-sand/85 md:text-lg">
-            Front-end craft first, with a clear path through AI backends and
-            deployment—so demos become products.
+            Product UI and AI backends stay core. Interactive and game work adds Phaser,
+            Three.js, and a custom asset pipeline for web-native prototypes. Mobile
+            (React Native + Expo) remains an optional expansion.
           </p>
         </div>
 

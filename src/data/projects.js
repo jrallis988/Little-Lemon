@@ -1,5 +1,15 @@
 const projects = [
   {
+    id: "foam-drift",
+    name: "Foam Drift",
+    year: "2026",
+    role: "Playable web prototype",
+    stack: "React · Canvas · Game loop",
+    summary:
+      "An embedded catch-the-foam demo with delta-timed updates, pointer/keyboard control, and a short technical writeup.",
+    href: "#play",
+  },
+  {
     id: "little-lemon",
     name: "Little Lemon",
     year: "2024",
@@ -20,24 +30,14 @@ const projects = [
     href: "#contact",
   },
   {
-    id: "harbor-api",
-    name: "Harbor API",
-    year: "2025",
-    role: "Backend & ops",
-    stack: "Python · FastAPI · GitHub Actions · Render",
+    id: "tide-pocket",
+    name: "Tide Pocket",
+    year: "2026",
+    role: "Game prototype (planned)",
+    stack: "Phaser.js · TypeScript · Custom sprites",
     summary:
-      "A typed REST service with Postman collections, CI checks, and a clean deploy path for product frontends.",
-    href: "#contact",
-  },
-  {
-    id: "atelier",
-    name: "Atelier Studio",
-    year: "2025",
-    role: "Landing & motion",
-    stack: "React · TypeScript · Tailwind",
-    summary:
-      "A brand site for a creative studio with deliberate motion, typographic focus, and performance-minded assets.",
-    href: "#contact",
+      "A 2D exploration sketch pairing Phaser scenes with digital-media assets—world mood first, then tight web performance.",
+    href: "#play",
   },
 ];
 

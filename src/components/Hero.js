@@ -32,14 +32,14 @@ export default function Hero() {
             className="max-w-2xl font-display text-3xl font-bold leading-tight text-chalk sm:text-4xl md:text-5xl animate-fade-up"
             style={{ animationDelay: "0.18s" }}
           >
-            Building calm interfaces—and the APIs and AI behind them.
+            Building calm interfaces—and the systems and playable prototypes behind them.
           </h1>
           <p
             className="mt-5 max-w-xl text-base leading-relaxed text-sand/90 sm:text-lg animate-fade-up"
             style={{ animationDelay: "0.3s" }}
           >
-            React and Next.js on the surface. Python, FastAPI, and RAG when the
-            product needs more than a pretty shell.
+            React and Next.js on the surface. FastAPI, RAG, and web game prototypes
+            when the product needs more than a pretty shell.
           </p>
           <div
             className="mt-9 flex flex-wrap gap-3 animate-fade-up"
@@ -48,8 +48,8 @@ export default function Hero() {
             <a href="#work" className="btn-primary">
               View selected work
             </a>
-            <a href="#contact" className="btn-ghost">
-              Get in touch
+            <a href="#play" className="btn-ghost">
+              Try a live demo
             </a>
           </div>
         </div>

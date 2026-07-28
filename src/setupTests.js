@@ -26,3 +26,29 @@ Object.defineProperty(window, "IntersectionObserver", {
   configurable: true,
   value: MockIntersectionObserver,
 });
+
+class MockResizeObserver {
+  constructor() {}
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+
+Object.defineProperty(window, "ResizeObserver", {
+  writable: true,
+  configurable: true,
+  value: MockResizeObserver,
+});
+
+HTMLCanvasElement.prototype.getContext = () => ({
+  setTransform: () => {},
+  fillRect: () => {},
+  beginPath: () => {},
+  arc: () => {},
+  fill: () => {},
+  moveTo: () => {},
+  arcTo: () => {},
+  closePath: () => {},
+  createLinearGradient: () => ({ addColorStop: () => {} }),
+  createRadialGradient: () => ({ addColorStop: () => {} }),
+});

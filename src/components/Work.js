@@ -12,8 +12,8 @@ export default function Work() {
             Projects that put clarity first.
           </h2>
           <p className="reveal mt-4 text-base leading-relaxed text-sand/85 md:text-lg">
-            Selected builds across product UI, FastAPI services, and RAG-powered
-            experiences—kept clear, shippable, and easy to extend.
+            Selected builds across product UI, FastAPI services, RAG apps, and
+            playable web prototypes—kept clear, shippable, and easy to extend.
           </p>
         </div>
 
@@ -39,7 +39,7 @@ export default function Work() {
                 <div className="md:text-right">
                   <p className="text-sm text-foam-soft">{project.stack}</p>
                   <p className="mt-2 text-sm font-semibold text-chalk transition-transform group-hover:translate-x-1">
-                    Discuss project →
+                    {project.href === "#play" ? "Open demo →" : "Discuss project →"}
                   </p>
                 </div>
               </a>
