@@ -1254,6 +1254,38 @@ const ADDITIONAL_PRODUCT_SEEDS: ProductSeed[] = [
     description: "Silky whipped body butter enriched with almond oil for lasting, non-greasy moisture.",
     inventory: "low_stock",
   },
+  {
+    slug: "linen-blend-blazer-sand-sold-out",
+    name: "Linen-Blend Summer Blazer",
+    brand: "Club Monaco",
+    brandTier: "Contemporary",
+    department: "Women",
+    category: "Blazers",
+    price: 79,
+    compareAt: 198,
+    imageIds: ["photo-1591369822096-ffd140ec948f", "photo-1594938298603-c8148c4dae35"],
+    colors: [["sand", "Sand", "#D9C7A7"], ["white", "White", "#F4F1EA"]],
+    sizes: ["XS", "S", "M", "L"],
+    tags: ["Linen", "Sold Through"],
+    description: "Relaxed linen-blend blazer with patch pockets — currently sold through online.",
+    inventory: "out_of_stock",
+  },
+  {
+    slug: "mens-performance-polo-navy-sold-out",
+    name: "Performance Stretch Polo",
+    brand: "Travis Mathew",
+    brandTier: "Contemporary",
+    department: "Men",
+    category: "Tops",
+    price: 34,
+    compareAt: 85,
+    imageIds: ["photo-1618354691373-d851c5c3a990", "photo-1583743814966-8936f5b7be1a"],
+    colors: [["navy", "Navy", "#1E3A5F"], ["heather", "Heather Grey", "#9CA3AF"]],
+    sizes: ["S", "M", "L", "XL"],
+    tags: ["Polo", "Sold Through"],
+    description: "Moisture-wicking polo with a soft hand feel — check nearby stores for remaining sizes.",
+    inventory: "out_of_stock",
+  },
 ]
 
 const ADDITIONAL_PRODUCTS: Product[] = ADDITIONAL_PRODUCT_SEEDS.map(
@@ -1268,12 +1300,20 @@ const ADDITIONAL_PRODUCTS: Product[] = ADDITIONAL_PRODUCT_SEEDS.map(
     price: seed.price,
     compareAt: seed.compareAt,
     images: seed.imageIds.map(unsplash),
-    colorways: seed.colors.map(([id, name, hex], colorIndex) => ({
-      id,
-      name,
-      hex,
-      imageIndex: colorIndex % seed.imageIds.length,
-    })),
+    colorways: seed.colors.map(([id, name, hex], colorIndex) => {
+      const primary = unsplash(seed.imageIds[colorIndex % seed.imageIds.length]!)
+      const secondary = unsplash(
+        seed.imageIds[(colorIndex + 1) % seed.imageIds.length]!,
+      )
+      return {
+        id,
+        name,
+        hex,
+        imageIndex: colorIndex % seed.imageIds.length,
+        image: primary,
+        images: primary === secondary ? [primary] : [primary, secondary],
+      }
+    }),
     sizes: seed.sizes.map((label, sizeIndex) => ({
       label,
       available:
@@ -1290,12 +1330,39 @@ const ADDITIONAL_PRODUCTS: Product[] = ADDITIONAL_PRODUCT_SEEDS.map(
         ? "Online only"
         : seed.inventory === "low_stock"
           ? "Limited availability at nearby stores"
-          : "Available at nearby stores",
+          : seed.inventory === "out_of_stock"
+            ? "Currently sold through online — check stores"
+            : "Available at nearby stores",
     nearbyStores: DEFAULT_STORES,
   }),
 )
 
-export const PRODUCTS: Product[] = [...EXISTING_PRODUCTS, ...ADDITIONAL_PRODUCTS]
+function withColorwayGalleries(product: Product): Product {
+  return {
+    ...product,
+    colorways: product.colorways.map((colorway, index) => {
+      if (colorway.images && colorway.images.length > 0) return colorway
+      const primary =
+        colorway.image ??
+        (typeof colorway.imageIndex === "number"
+          ? product.images[colorway.imageIndex]
+          : undefined) ??
+        product.images[index % product.images.length]
+      if (!primary) return colorway
+      const rest = product.images.filter((src) => src !== primary)
+      return {
+        ...colorway,
+        image: primary,
+        images: [primary, ...rest],
+      }
+    }),
+  }
+}
+
+export const PRODUCTS: Product[] = [
+  ...EXISTING_PRODUCTS,
+  ...ADDITIONAL_PRODUCTS,
+].map(withColorwayGalleries)
 
 export const PRICE_BOUNDS = {
   min: 0,

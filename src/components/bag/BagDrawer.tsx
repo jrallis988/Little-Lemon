@@ -27,6 +27,7 @@ export function BagDrawer() {
   const removeItem = useCartStore((s) => s.removeItem)
   const promoCode = useCartStore((s) => s.promoCode)
   const applyPromo = useCartStore((s) => s.applyPromo)
+  const lastError = useCartStore((s) => s.lastError)
   const subtotal = useCartStore((s) => s.subtotal())
   const compareAtTotal = useCartStore((s) => s.compareAtTotal())
   const [promoInput, setPromoInput] = useState("")
@@ -64,6 +65,12 @@ export function BagDrawer() {
               : `${items.reduce((n, i) => n + i.quantity, 0)} items · savings shown at checkout`}
           </DialogDescription>
         </DialogHeader>
+
+        {lastError && (
+          <p className="border-b border-amber-200 bg-amber-50 px-5 py-2 text-xs text-amber-950">
+            {lastError}
+          </p>
+        )}
 
         <div className="flex-1 overflow-y-auto px-5 py-4">
           {lines.length === 0 ? (

@@ -27,12 +27,14 @@ export function CatalogPage() {
   const departments = useFilterStore((s) => s.departments)
   const categories = useFilterStore((s) => s.categories)
   const setSort = useFilterStore((s) => s.setSort)
+  const setQuery = useFilterStore((s) => s.setQuery)
   const clearFilters = useFilterStore((s) => s.clearFilters)
 
   useEffect(() => {
     const dept = params.get("department")
     const category = params.get("category")
     const sort = params.get("sort")
+    const q = params.get("q")
 
     if (dept && DEPARTMENTS.includes(dept as (typeof DEPARTMENTS)[number])) {
       if (!departments.includes(dept as Department)) {
@@ -50,6 +52,10 @@ export function CatalogPage() {
 
     if (sort && SORTS.includes(sort as CatalogSort)) {
       setSort(sort as CatalogSort)
+    }
+
+    if (q !== null) {
+      setQuery(q)
     }
     // Intentionally sync from URL on param change only
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -5,6 +5,7 @@ import { CatalogPage } from "@/pages/CatalogPage"
 import { ProductDetailPage } from "@/pages/ProductDetailPage"
 import { CheckoutPage } from "@/pages/CheckoutPage"
 import { OrderConfirmationPage } from "@/pages/OrderConfirmationPage"
+import { StoreFinderPage } from "@/pages/StoreFinderPage"
 import { NotFoundPage } from "@/pages/NotFoundPage"
 
 export default function App() {
@@ -14,6 +15,7 @@ export default function App() {
         <Route index element={<HomePage />} />
         <Route path="catalog" element={<CatalogPage />} />
         <Route path="product/:slug" element={<ProductDetailPage />} />
+        <Route path="stores" element={<StoreFinderPage />} />
         <Route path="checkout" element={<CheckoutPage />} />
         <Route path="order-confirmation" element={<OrderConfirmationPage />} />
         <Route path="*" element={<NotFoundPage />} />

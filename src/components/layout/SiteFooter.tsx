@@ -74,7 +74,14 @@ export function SiteFooter() {
                 About
               </p>
               <ul className="space-y-2 text-sm text-foreground/80">
-                <li>Find a store</li>
+                <li>
+                  <Link
+                    to="/stores"
+                    className="text-foreground/80 no-underline hover:text-primary"
+                  >
+                    Find a store
+                  </Link>
+                </li>
                 <li>Careers</li>
                 <li>TJX Companies</li>
                 <li>Accessibility</li>

@@ -19,6 +19,28 @@ export type ProductColorway = {
   imageIndex?: number
   /** Optional dedicated image for this colorway */
   image?: string
+  /** Dedicated multi-image gallery for this colorway */
+  images?: string[]
+}
+
+export type ProductReview = {
+  id: string
+  author: string
+  rating: number
+  title: string
+  body: string
+  date: string
+  verified?: boolean
+  helpful?: number
+}
+
+export type ProductQuestion = {
+  id: string
+  question: string
+  asker: string
+  answer: string
+  answeredBy: string
+  date: string
 }
 
 export type NearbyStore = {
