@@ -66,6 +66,10 @@ export interface Pharmacy {
   id: string;
   name: string;
   chain: PharmacyChain;
+  /** National Provider Identifier when known. */
+  npi?: string;
+  /** NCPDP Provider ID for claim routing. */
+  ncpdpId?: string;
   address: string;
   city: string;
   state: string;

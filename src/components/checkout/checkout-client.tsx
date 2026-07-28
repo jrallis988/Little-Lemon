@@ -23,6 +23,7 @@ import { cn } from "@/lib/utils";
 
 interface IssuedPass {
   passId: string;
+  savedToAccount?: boolean;
   issuedAt: string;
   totalCounterPrice: number;
   note: string;
@@ -260,6 +261,9 @@ export function CheckoutClient() {
                 <p className="text-sm text-muted-foreground">
                   Total counter {formatCurrency(pass.totalCounterPrice)} ·{" "}
                   {new Date(pass.issuedAt).toLocaleString()}
+                  {pass.savedToAccount
+                    ? " · saved to your account"
+                    : " · sign in next time to save passes"}
                 </p>
               </div>
             </div>

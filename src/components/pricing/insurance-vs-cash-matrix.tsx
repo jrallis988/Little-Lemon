@@ -34,6 +34,46 @@ export function InsuranceVsCashMatrix({
   const [planPay, setPlanPay] = useState("");
   const [deductibleLeft, setDeductibleLeft] = useState("");
   const [preferToday, setPreferToday] = useState(true);
+  const [importNote, setImportNote] = useState<string | null>(null);
+
+  async function importPlanStub() {
+    setImportNote(null);
+    const planType =
+      situation === "medicare_part_d"
+        ? "medicare_part_d"
+        : situation === "no_insurance"
+          ? "other"
+          : "commercial";
+    try {
+      const res = await fetch("/api/insurance/plan-import", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          planType,
+          annualDeductible: deductibleLeft ? Number(deductibleLeft) + 200 : undefined,
+          deductibleMet: deductibleLeft ? 200 : 0,
+          typicalCopay: planPay ? Number(planPay) : undefined,
+        }),
+      });
+      const data = (await res.json()) as {
+        message?: string;
+        plan?: { remainingDeductible: number; typicalCopay: number | null };
+      };
+      if (!res.ok) throw new Error("Import failed");
+      if (data.plan) {
+        setDeductibleLeft(String(data.plan.remainingDeductible));
+        if (data.plan.typicalCopay != null) {
+          setPlanPay(String(data.plan.typicalCopay));
+        }
+      }
+      setImportNote(
+        data.message ??
+          "Normalized plan fields for the matrix. Live PBM import not connected yet."
+      );
+    } catch {
+      setImportNote("Could not normalize plan fields.");
+    }
+  }
 
   const decision: InsuranceVsCashResult = useMemo(
     () =>
@@ -125,6 +165,19 @@ export function InsuranceVsCashMatrix({
         />
         Prefer minimizing what I pay today
       </label>
+
+      <button
+        type="button"
+        onClick={() => void importPlanStub()}
+        className="text-left text-sm font-medium text-primary underline-offset-2 hover:underline"
+      >
+        Normalize plan fields (import stub)
+      </button>
+      {importNote && (
+        <p className="text-xs text-muted-foreground" role="status">
+          {importNote}
+        </p>
+      )}
 
       <div className={cn("rounded-xl border p-4", tone)}>
         <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">

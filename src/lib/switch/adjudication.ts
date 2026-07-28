@@ -85,7 +85,8 @@ export async function runSwitchPrecheck(params: {
         },
         body: JSON.stringify({
           pharmacyId: params.pharmacy.id,
-          ncpdpId: undefined,
+          ncpdpId: params.pharmacy.ncpdpId ?? null,
+          npi: params.pharmacy.npi ?? null,
           drugId: params.drugId,
           strengthId: params.strengthId,
           quantity: params.quantity,
@@ -111,8 +112,9 @@ export async function runSwitchPrecheck(params: {
   const pcnOk = routing.pcn.length >= 3;
   const groupOk = routing.group.length >= 3;
   const memberOk = /^\d{6,12}$/.test(routing.memberId);
+  const ncpdpOk = !params.pharmacy.ncpdpId || /^\d{7}$/.test(params.pharmacy.ncpdpId);
   const terminalScore = (seed % 100) / 100;
-  const terminalLikely = networkOk && terminalScore > 0.12;
+  const terminalLikely = networkOk && terminalScore > 0.12 && ncpdpOk;
 
   const checks = [
     {
@@ -122,6 +124,14 @@ export async function runSwitchPrecheck(params: {
       detail: networkOk
         ? "Store is contracted to accept Trump RX discount cards."
         : "Store is not marked as in-network — call ahead.",
+    },
+    {
+      id: "ncpdp",
+      label: "NCPDP / pharmacy ID",
+      passed: ncpdpOk,
+      detail: params.pharmacy.ncpdpId
+        ? `NCPDP ${params.pharmacy.ncpdpId}${params.pharmacy.npi ? ` · NPI ${params.pharmacy.npi}` : ""}`
+        : "NCPDP ID not on file — routing uses pharmacy id fallback.",
     },
     {
       id: "bin",

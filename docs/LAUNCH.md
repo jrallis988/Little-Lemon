@@ -1,0 +1,43 @@
+# Trump RX — Production launch & expansion checklist
+
+Operational checklist for going live. Product blueprint surfaces are already shipped (`docs/REINVENTION.md`).
+
+---
+
+## Part 1 — Must have for a real launch
+
+| # | Item | Code readiness | Operator action |
+|---|---|---|---|
+| 1 | **Live PBM / Switch** | `SWITCH_API_URL` + `SWITCH_API_KEY`; Smart Switch sends `ncpdpId` / NPI when present | Register real BIN/PCN/Group; point env at partner `/v1/precheck` |
+| 2 | **Live pharmacy pricing** | `PRICING_PROVIDER=external` + `PRICING_API_URL` client (`src/lib/pricing-provider`) | Contract feed; flip provider in prod env |
+| 3 | **Production infrastructure** | Prisma works with Postgres `DATABASE_URL`; prod `AUTH_SECRET` (≥32) + `AUTH_URL` enforced | Provision Postgres, host (Vercel/Fly/etc.), HTTPS domain |
+| 4 | **Stripe / Resend / Twilio** | Checkout, portal, `/api/webhooks/stripe`, alert dispatch | Set keys; Stripe webhook → `/api/webhooks/stripe`; cron `PUT /api/alerts` |
+| 5 | **Telehealth + mail-order** | CTAs hidden when partners unset (`/api/config` + fulfillment panel) | Set `TELEHEALTH_PARTNER_URL` / `MAIL_ORDER_PARTNER_URL` or leave hidden |
+| 6 | **Legal / brand review** | Privacy + Terms pages; private-discount (not .gov) copy | Counsel review; naming separation from any official brand |
+
+**Launch readiness probe:** `GET /api/health` and `GET /api/config` (public partner flags).
+
+---
+
+## Part 2 — Strong next product additions
+
+| Addition | Status in repo |
+|---|---|
+| Saved digital passes on account | Shipped — `DigitalPass` + `/api/me/passes` + profile |
+| True insurance plan import | Stub API `POST /api/insurance/plan-import` (manual until PBM) |
+| NCPDP / pharmacy ID enrichment | `Pharmacy.ncpdpId` / `npi` mapped + seed + switch payload |
+| Admin tools | `/admin` + `/api/admin/overview` (email allowlist) |
+| Observability | Health integrations + `SwitchEvent` audit log on prechecks |
+| E2E / smoke | `npm run test:smoke` (matrix + switch unit smoke) |
+
+---
+
+## Part 3 — Already shipped (not missing)
+
+Smart Switch UI · Insurance-vs-cash · Benchmarks · Fulfillment panel · Counter-price UX · In-app digital checkout — see `docs/REINVENTION.md`.
+
+---
+
+## Bottom line
+
+Demo is end-to-end. **Go-live = partners + prod ops + legal**, not more feature scaffolding.

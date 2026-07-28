@@ -626,9 +626,13 @@ async function main() {
   }
 
   for (const p of PHARMACIES) {
+    const ncpdpId =
+      p.ncpdpId ??
+      String(1000000 + (hashSeed(`ncpdp-${p.id}`) % 9000000));
     await prisma.pharmacy.create({
       data: {
         ...p,
+        ncpdpId,
         driveThru: p.driveThru ?? false,
         acceptsTrumpRxCoupon: true,
       },

@@ -336,7 +336,88 @@ export default function ProfilePage() {
             </ul>
           )}
         </section>
+
+        <SavedPassesSection />
       </div>
     </div>
+  );
+}
+
+function SavedPassesSection() {
+  const [passes, setPasses] = useState<
+    Array<{
+      id: string;
+      passCode: string;
+      totalCounterPrice: number;
+      status: string;
+      issuedAt: string;
+      items: Array<{
+        pharmacyName: string | null;
+        counterPrice: number;
+        coupon: { drugName: string; memberId: string; expiresAt: string };
+      }>;
+    }>
+  >([]);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/me/passes")
+      .then(async (res) => {
+        if (!res.ok) return { passes: [] };
+        return res.json() as Promise<{ passes: typeof passes }>;
+      })
+      .then((data) => setPasses(data.passes ?? []))
+      .finally(() => setLoaded(true));
+  }, []);
+
+  return (
+    <section className="space-y-3">
+      <div className="flex items-center justify-between gap-3">
+        <h2 className="font-display text-2xl font-semibold">Digital passes</h2>
+        <Link
+          href="/checkout"
+          className={cn(buttonVariants({ variant: "outline" }))}
+        >
+          Open checkout
+        </Link>
+      </div>
+      {!loaded ? (
+        <p className="text-sm text-muted-foreground">Loading passes…</p>
+      ) : passes.length === 0 ? (
+        <p className="text-muted-foreground">
+          Issue a digital pass from checkout while signed in — it will appear
+          here for the counter.
+        </p>
+      ) : (
+        <ul className="space-y-2">
+          {passes.map((pass) => (
+            <li
+              key={pass.id}
+              className="rounded-xl border border-border bg-card px-4 py-3"
+            >
+              <div className="flex flex-wrap items-baseline justify-between gap-2">
+                <p className="font-semibold">{pass.passCode}</p>
+                <p className="tabular-nums font-medium">
+                  {formatCurrency(pass.totalCounterPrice)}
+                </p>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                {pass.status} · {new Date(pass.issuedAt).toLocaleDateString()} ·{" "}
+                {pass.items.length} item{pass.items.length === 1 ? "" : "s"}
+              </p>
+              <ul className="mt-2 space-y-1 text-sm">
+                {pass.items.map((item, idx) => (
+                  <li key={`${pass.id}-${idx}`} className="text-muted-foreground">
+                    {item.coupon.drugName}
+                    {item.pharmacyName ? ` @ ${item.pharmacyName}` : ""} ·{" "}
+                    {formatCurrency(item.counterPrice)}
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
   );
 }

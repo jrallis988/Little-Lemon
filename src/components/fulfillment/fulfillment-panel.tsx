@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Loader2, Stethoscope, Truck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { FulfillmentHandoffResult } from "@/lib/fulfillment/handoff";
@@ -16,6 +16,10 @@ interface FulfillmentPanelProps {
   className?: string;
 }
 
+/**
+ * Telehealth / mail-order CTAs — hidden until partners are configured
+ * (LAUNCH.md Part 1 §5), unless forced via showWhenUnconfigured for demos.
+ */
 export function FulfillmentPanel({
   drugId,
   strengthId,
@@ -27,6 +31,38 @@ export function FulfillmentPanel({
 }: FulfillmentPanelProps) {
   const [loading, setLoading] = useState<string | null>(null);
   const [handoff, setHandoff] = useState<FulfillmentHandoffResult | null>(null);
+  const [partners, setPartners] = useState<{
+    telehealth: boolean;
+    mailOrder: boolean;
+    show: boolean;
+  } | null>(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch("/api/config", { signal: controller.signal })
+      .then(async (res) => {
+        if (!res.ok) return null;
+        return res.json() as Promise<{
+          partners: { telehealth: boolean; mailOrder: boolean };
+          showFulfillmentPanel: boolean;
+        }>;
+      })
+      .then((data) => {
+        if (!data) {
+          setPartners({ telehealth: false, mailOrder: false, show: false });
+          return;
+        }
+        setPartners({
+          telehealth: data.partners.telehealth,
+          mailOrder: data.partners.mailOrder,
+          show: data.showFulfillmentPanel,
+        });
+      })
+      .catch(() => {
+        setPartners({ telehealth: false, mailOrder: false, show: false });
+      });
+    return () => controller.abort();
+  }, []);
 
   async function start(channel: "telehealth" | "mail_order" | "specialty_transfer") {
     setLoading(channel);
@@ -67,6 +103,14 @@ export function FulfillmentPanel({
     }
   }
 
+  if (partners === null) {
+    return null;
+  }
+
+  if (!partners.show) {
+    return null;
+  }
+
   return (
     <section
       className={cn(
@@ -89,39 +133,49 @@ export function FulfillmentPanel({
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <Button
-          type="button"
-          variant="secondary"
-          className="min-h-11"
-          disabled={!!loading}
-          onClick={() => void start("telehealth")}
-        >
-          {loading === "telehealth" ? (
-            <Loader2 className="animate-spin" />
-          ) : (
-            <Stethoscope />
-          )}
-          Telehealth visit
-        </Button>
-        <Button
-          type="button"
-          variant="outline"
-          className="min-h-11"
-          disabled={!!loading}
-          onClick={() => void start("mail_order")}
-        >
-          {loading === "mail_order" ? <Loader2 className="animate-spin" /> : <Truck />}
-          Mail-order transfer
-        </Button>
-        <Button
-          type="button"
-          variant="outline"
-          className="min-h-11"
-          disabled={!!loading}
-          onClick={() => void start("specialty_transfer")}
-        >
-          Specialty pharmacy
-        </Button>
+        {partners.telehealth && (
+          <Button
+            type="button"
+            variant="secondary"
+            className="min-h-11"
+            disabled={!!loading}
+            onClick={() => void start("telehealth")}
+          >
+            {loading === "telehealth" ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              <Stethoscope />
+            )}
+            Telehealth visit
+          </Button>
+        )}
+        {partners.mailOrder && (
+          <>
+            <Button
+              type="button"
+              variant="outline"
+              className="min-h-11"
+              disabled={!!loading}
+              onClick={() => void start("mail_order")}
+            >
+              {loading === "mail_order" ? (
+                <Loader2 className="animate-spin" />
+              ) : (
+                <Truck />
+              )}
+              Mail-order transfer
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              className="min-h-11"
+              disabled={!!loading}
+              onClick={() => void start("specialty_transfer")}
+            >
+              Specialty pharmacy
+            </Button>
+          </>
+        )}
       </div>
 
       {handoff && (

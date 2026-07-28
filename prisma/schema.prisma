@@ -29,8 +29,10 @@ model User {
   savedMedications       SavedMedication[]
   preferredPharmacies    PreferredPharmacy[]
   coupons                Coupon[]
+  digitalPasses          DigitalPass[]
   priceAlerts            PriceAlert[]
   familyMembers          FamilyMember[]
+  switchEvents           SwitchEvent[]
 }
 
 model Account {
@@ -137,6 +139,7 @@ model Pharmacy {
   contracts             PharmacyContract[]
   preferredBy           PreferredPharmacy[]
   coupons               Coupon[]
+  switchEvents          SwitchEvent[]
 }
 
 model PharmacyContract {
@@ -181,10 +184,65 @@ model Coupon {
   user     User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
   pharmacy Pharmacy @relation(fields: [pharmacyId], references: [id])
   drug     Drug     @relation(fields: [drugId], references: [id])
+  passItems DigitalPassItem[]
 
   @@index([memberId])
   @@index([userId])
   @@index([expiresAt])
+}
+
+// Account-saved multi-coupon digital checkout pass.
+model DigitalPass {
+  id                 String   @id @default(cuid())
+  userId             String?
+  passCode           String   @unique
+  totalCounterPrice  Float
+  status             String   @default("active") // active | expired | void
+  note               String?
+  issuedAt           DateTime @default(now())
+  expiresAt          DateTime?
+
+  user  User?             @relation(fields: [userId], references: [id], onDelete: SetNull)
+  items DigitalPassItem[]
+
+  @@index([userId])
+  @@index([issuedAt])
+}
+
+model DigitalPassItem {
+  id           String  @id @default(cuid())
+  passId       String
+  couponId     String
+  cartItemId   String?
+  pharmacyName String?
+  counterPrice Float
+  retailPrice  Float
+  switchStatus String?
+
+  pass   DigitalPass @relation(fields: [passId], references: [id], onDelete: Cascade)
+  coupon Coupon      @relation(fields: [couponId], references: [id], onDelete: Cascade)
+
+  @@index([passId])
+}
+
+// Observability — Smart Switch precheck / reject audit trail.
+model SwitchEvent {
+  id          String   @id @default(cuid())
+  userId      String?
+  pharmacyId  String?
+  drugId      String?
+  status      String
+  confidence  Float?
+  liveSwitch  Boolean  @default(false)
+  detailJson  String   @default("{}")
+  createdAt   DateTime @default(now())
+
+  user     User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  pharmacy Pharmacy? @relation(fields: [pharmacyId], references: [id], onDelete: SetNull)
+
+  @@index([createdAt])
+  @@index([status])
+  @@index([pharmacyId])
 }
 
 model SavedMedication {

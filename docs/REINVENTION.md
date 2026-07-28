@@ -33,6 +33,8 @@ Maps the reinvention brief (Parts 1–2) to what this codebase ships vs what sti
 | Membership billing | Stripe keys + webhook |
 | Alerts | Resend / Twilio |
 
+**Full production checklist:** `docs/LAUNCH.md` (infra, legal, saved passes, admin, observability).
+
 ## Key product paths
 
 - Compare → coupon → **Add to digital checkout** → `/checkout` → **Issue digital pass**

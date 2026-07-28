@@ -64,6 +64,8 @@ export function mapPharmacy(
     id: p.id,
     name: p.name,
     chain: p.chain as PharmacyChain,
+    npi: p.npi ?? undefined,
+    ncpdpId: p.ncpdpId ?? undefined,
     address: p.address,
     city: p.city,
     state: p.state,

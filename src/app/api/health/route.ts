@@ -38,7 +38,11 @@ export async function GET() {
         resend: envPeek.ok ? isResendConfigured() : false,
         twilio: envPeek.ok ? isTwilioConfigured() : false,
         pricingProvider: process.env.PRICING_PROVIDER ?? "network",
+        liveSwitch: Boolean(process.env.SWITCH_API_URL),
+        telehealth: Boolean(process.env.TELEHEALTH_PARTNER_URL),
+        mailOrder: Boolean(process.env.MAIL_ORDER_PARTNER_URL),
       },
+      launchChecklist: "See docs/LAUNCH.md",
     },
   };
 
