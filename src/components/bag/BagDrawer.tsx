@@ -255,8 +255,10 @@ export function BagDrawer() {
             </p>
 
             <div className="mt-4 flex flex-col gap-2">
-              <Button className="w-full" size="lg">
-                Checkout
+              <Button className="w-full" size="lg" asChild>
+                <Link to="/checkout" onClick={closeBag}>
+                  Checkout
+                </Link>
               </Button>
               <Button variant="outline" className="w-full" asChild>
                 <Link to="/catalog" onClick={closeBag}>

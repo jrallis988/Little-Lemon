@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import { Check, MapPin, Ruler, ShieldCheck } from "lucide-react"
-import { DEFAULT_STORES } from "@/data/products"
+import { DEFAULT_STORES, PRODUCTS } from "@/data/products"
 import { getProductBySlug } from "@/lib/catalog"
 import { discountPercent, formatCurrency } from "@/lib/utils"
 import { useCartStore } from "@/stores/cartStore"
@@ -188,6 +188,17 @@ function StoreStockPanel({
 export function ProductDetailPage() {
   const { slug } = useParams()
   const product = useMemo(() => (slug ? getProductBySlug(slug) : undefined), [slug])
+  const recommendations = useMemo(
+    () =>
+      product
+        ? PRODUCTS.filter(
+            (candidate) =>
+              candidate.department === product.department &&
+              candidate.id !== product.id,
+          ).slice(0, 4)
+        : [],
+    [product],
+  )
   const addItem = useCartStore((s) => s.addItem)
   const [imageIndex, setImageIndex] = useState(0)
   const [size, setSize] = useState<string | null>(null)
@@ -404,6 +415,54 @@ export function ProductDetailPage() {
           </div>
         </div>
       </div>
+
+      {recommendations.length > 0 && (
+        <section className="mt-14 border-t border-border pt-10">
+          <div className="mb-6 flex items-end justify-between gap-4">
+            <div>
+              <p className="text-2xs font-semibold uppercase tracking-[0.1em] text-primary">
+                More to discover
+              </p>
+              <h2 className="mt-1 font-display text-2xl font-bold tracking-tight">
+                You May Also Like
+              </h2>
+            </div>
+            <Link
+              to={`/catalog?department=${product.department}`}
+              className="text-sm font-semibold text-primary hover:underline"
+            >
+              Shop {product.department}
+            </Link>
+          </div>
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+            {recommendations.map((recommendation) => (
+              <Link
+                key={recommendation.id}
+                to={`/product/${recommendation.slug}`}
+                className="group block"
+              >
+                <div className="aspect-[3/4] overflow-hidden rounded-md bg-surface-muted shadow-soft">
+                  <img
+                    src={recommendation.images[0]}
+                    alt={`${recommendation.brand} ${recommendation.name}`}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  />
+                </div>
+                <p className="mt-3 text-2xs font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+                  {recommendation.brand}
+                </p>
+                <p className="line-clamp-2 text-sm font-medium">
+                  {recommendation.name}
+                </p>
+                <p className="mt-1 text-sm font-bold text-primary">
+                  {formatCurrency(recommendation.price)}
+                </p>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   )
 }
