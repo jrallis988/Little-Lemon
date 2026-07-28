@@ -1,5 +1,5 @@
 import { useEffect, useState, type FormEvent } from "react"
-import { Link, NavLink, useNavigate } from "react-router-dom"
+import { Link, NavLink, useNavigate, useSearchParams } from "react-router-dom"
 import {
   Menu,
   Search,
@@ -12,6 +12,7 @@ import {
 } from "lucide-react"
 import { useCartStore } from "@/stores/cartStore"
 import { useFilterStore } from "@/stores/filterStore"
+import { navHref, SHOP_NAV } from "@/data/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -21,18 +22,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { cn } from "@/lib/utils"
-
-const NAV = [
-  { to: "/catalog?department=Women", label: "Women" },
-  { to: "/catalog?department=Men", label: "Men" },
-  { to: "/catalog?department=Boys", label: "Boys" },
-  { to: "/catalog?department=Girls", label: "Girls" },
-  { to: "/catalog?department=Juniors", label: "Jr's" },
-  { to: "/catalog?department=Kids", label: "Kids" },
-  { to: "/catalog?department=Home", label: "Home" },
-  { to: "/catalog?department=Beauty", label: "Beauty" },
-  { to: "/catalog?department=Pets", label: "Pet" },
-]
 
 const PROMO_MESSAGES = [
   "Free shipping on orders $89+",
@@ -86,6 +75,8 @@ function PromoTicker() {
 
 export function SiteHeader() {
   const navigate = useNavigate()
+  const [params] = useSearchParams()
+  const activeNav = params.get("nav")
   const openBag = useCartStore((s) => s.openBag)
   const itemCount = useCartStore((s) => s.itemCount())
   const query = useFilterStore((s) => s.query)
@@ -144,33 +135,25 @@ export function SiteHeader() {
               </span>
             </Link>
 
-            <nav className="ml-1 hidden items-center gap-0.5 lg:flex" aria-label="Primary">
-              {NAV.map((item) => (
-                <NavLink
-                  key={item.label}
-                  to={item.to}
-                  className={({ isActive }) =>
-                    cn(
-                      "rounded-sm px-3 py-2 text-sm font-semibold text-foreground/80 transition-all hover:bg-secondary hover:text-foreground",
-                      isActive && "bg-secondary text-foreground",
-                    )
-                  }
-                >
-                  {item.label}
-                </NavLink>
-              ))}
-              <NavLink
-                to="/catalog?sort=discount"
-                className={({ isActive }) =>
-                  cn(
-                    "rounded-sm px-3 py-2 text-sm font-semibold text-primary transition-all hover:bg-deal-soft",
-                    isActive && "bg-deal-soft",
-                  )
-                }
-              >
-                Clearance
-              </NavLink>
-            </nav>
+            <Button
+              variant="ghost"
+              className="hidden font-semibold lg:inline-flex"
+              onClick={() => setMenuOpen(true)}
+            >
+              Shop
+            </Button>
+
+            <NavLink
+              to="/catalog?sort=discount"
+              className={({ isActive }) =>
+                cn(
+                  "hidden rounded-sm px-3 py-2 text-sm font-semibold text-primary transition-all hover:bg-deal-soft lg:inline-flex",
+                  isActive && "bg-deal-soft",
+                )
+              }
+            >
+              Clearance
+            </NavLink>
 
             <div className="ml-auto flex flex-1 items-center justify-end gap-1 sm:gap-2">
               <form
@@ -224,6 +207,40 @@ export function SiteHeader() {
             </form>
           </div>
         </div>
+
+        {/* Desktop category rail — full taxonomy */}
+        <nav
+          className="hidden border-t border-border/70 lg:block"
+          aria-label="Shop categories"
+        >
+          <div className="shelf-container flex gap-1 overflow-x-auto py-2 scrollbar-none">
+            {SHOP_NAV.map((item) => (
+              <Link
+                key={item.id}
+                to={navHref(item)}
+                className={cn(
+                  "shrink-0 rounded-sm px-2.5 py-1.5 text-xs font-semibold no-underline transition-colors hover:bg-secondary hover:text-foreground",
+                  activeNav === item.id
+                    ? "bg-secondary text-foreground"
+                    : "text-foreground/75",
+                )}
+              >
+                {item.label}
+              </Link>
+            ))}
+            <Link
+              to="/catalog?department=Pets"
+              className={cn(
+                "shrink-0 rounded-sm px-2.5 py-1.5 text-xs font-semibold no-underline transition-colors hover:bg-secondary hover:text-foreground",
+                params.get("department") === "Pets"
+                  ? "bg-secondary text-foreground"
+                  : "text-foreground/75",
+              )}
+            >
+              Pet
+            </Link>
+          </div>
+        </nav>
       </div>
 
       <Dialog open={menuOpen} onOpenChange={setMenuOpen}>
@@ -231,17 +248,32 @@ export function SiteHeader() {
           <DialogHeader className="border-b border-border px-5 py-4 pr-12">
             <DialogTitle className="font-display text-lg">Shop Marshalls</DialogTitle>
           </DialogHeader>
-          <nav className="flex flex-col p-3" aria-label="Mobile">
-            {NAV.map((item) => (
+          <nav className="flex flex-col p-2 pb-8" aria-label="Mobile">
+            {SHOP_NAV.map((item) => (
               <Link
-                key={item.label}
-                to={item.to}
+                key={item.id}
+                to={navHref(item)}
                 onClick={() => setMenuOpen(false)}
-                className="rounded-md px-3 py-3 text-base font-semibold text-foreground no-underline hover:bg-secondary"
+                className="rounded-md px-3 py-3 no-underline hover:bg-secondary"
               >
-                {item.label}
+                <span className="block text-base font-semibold text-foreground">
+                  {item.menuLabel}
+                </span>
+                <span className="mt-0.5 block text-xs text-muted-foreground">
+                  {item.description}
+                </span>
               </Link>
             ))}
+            <Link
+              to="/catalog?department=Pets"
+              onClick={() => setMenuOpen(false)}
+              className="rounded-md px-3 py-3 no-underline hover:bg-secondary"
+            >
+              <span className="block text-base font-semibold text-foreground">Pet</span>
+              <span className="mt-0.5 block text-xs text-muted-foreground">
+                Beds, bowls, toys, and pet apparel
+              </span>
+            </Link>
             <Link
               to="/catalog?sort=discount"
               onClick={() => setMenuOpen(false)}

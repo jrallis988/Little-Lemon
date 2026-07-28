@@ -21,6 +21,11 @@ type FilterActions = {
   setArrivals: (value: FilterState["arrivals"]) => void
   setQuery: (query: string) => void
   setSort: (sort: CatalogSort) => void
+  applyNavPreset: (preset: {
+    departments?: Department[]
+    categories?: string[]
+    query?: string
+  }) => void
   clearFilters: () => void
   activeFilterCount: () => number
 }
@@ -68,6 +73,14 @@ export const useFilterStore = create<FilterState & FilterActions>()(
       setArrivals: (arrivals) => set({ arrivals }),
       setQuery: (query) => set({ query }),
       setSort: (sort) => set({ sort }),
+      applyNavPreset: (preset) =>
+        set({
+          ...defaultFilters,
+          departments: preset.departments ?? [],
+          categories: preset.categories ?? [],
+          query: preset.query ?? "",
+          sort: get().sort,
+        }),
       clearFilters: () =>
         set({
           ...defaultFilters,

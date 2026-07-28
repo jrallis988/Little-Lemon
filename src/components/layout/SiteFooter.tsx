@@ -10,6 +10,7 @@ import {
   Plus,
   Youtube,
 } from "lucide-react"
+import { navHref, SHOP_NAV } from "@/data/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -97,14 +98,10 @@ const FOOTER_ACCORDIONS: {
     id: "shop",
     title: "Shop",
     links: [
-      { label: "Women", to: "/catalog?department=Women" },
-      { label: "Men", to: "/catalog?department=Men" },
-      { label: "Boys", to: "/catalog?department=Boys" },
-      { label: "Girls", to: "/catalog?department=Girls" },
-      { label: "Jr's", to: "/catalog?department=Juniors" },
-      { label: "Kids", to: "/catalog?department=Kids" },
-      { label: "Home", to: "/catalog?department=Home" },
-      { label: "Beauty", to: "/catalog?department=Beauty" },
+      ...SHOP_NAV.map((item) => ({
+        label: item.menuLabel,
+        to: navHref(item),
+      })),
       { label: "Pet", to: "/catalog?department=Pets" },
       { label: "Clearance", to: "/catalog?sort=discount" },
     ],

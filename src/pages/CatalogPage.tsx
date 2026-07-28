@@ -4,6 +4,7 @@ import { CatalogView } from "@/components/catalog/CatalogView"
 import { useFilterStore } from "@/stores/filterStore"
 import type { CatalogSort, Department } from "@/types"
 import { ALL_CATEGORIES, DEPARTMENTS } from "@/data/products"
+import { getNavPreset } from "@/data/navigation"
 import { useDocumentMeta } from "@/hooks/useDocumentMeta"
 
 const SORTS: CatalogSort[] = [
@@ -24,30 +25,39 @@ export function CatalogPage() {
   const [params] = useSearchParams()
   const toggleDepartment = useFilterStore((s) => s.toggleDepartment)
   const toggleCategory = useFilterStore((s) => s.toggleCategory)
-  const departments = useFilterStore((s) => s.departments)
-  const categories = useFilterStore((s) => s.categories)
   const setSort = useFilterStore((s) => s.setSort)
   const setQuery = useFilterStore((s) => s.setQuery)
   const clearFilters = useFilterStore((s) => s.clearFilters)
+  const applyNavPreset = useFilterStore((s) => s.applyNavPreset)
 
   useEffect(() => {
+    const nav = params.get("nav")
     const dept = params.get("department")
     const category = params.get("category")
     const sort = params.get("sort")
     const q = params.get("q")
 
-    if (dept && DEPARTMENTS.includes(dept as (typeof DEPARTMENTS)[number])) {
-      if (!departments.includes(dept as Department)) {
-        clearFilters()
-        toggleDepartment(dept as Department)
+    const preset = getNavPreset(nav)
+    if (preset) {
+      applyNavPreset({
+        departments: preset.departments,
+        categories: preset.categories,
+        query: preset.query ?? (q ?? undefined),
+      })
+      if (sort && SORTS.includes(sort as CatalogSort)) {
+        setSort(sort as CatalogSort)
       }
+      return
+    }
+
+    clearFilters()
+
+    if (dept && DEPARTMENTS.includes(dept as (typeof DEPARTMENTS)[number])) {
+      toggleDepartment(dept as Department)
     }
 
     if (category && ALL_CATEGORIES.includes(category)) {
-      if (!categories.includes(category)) {
-        clearFilters()
-        toggleCategory(category)
-      }
+      toggleCategory(category)
     }
 
     if (sort && SORTS.includes(sort as CatalogSort)) {

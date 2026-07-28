@@ -67,7 +67,16 @@
     --promo-height: 2.35rem;
     --utility-height: 2rem;
     --header-height: 4.25rem;
-    --chrome-offset: calc(var(--promo-height) + var(--utility-height) + var(--header-height));
+    --nav-rail-height: 0px;
+    --chrome-offset: calc(
+      var(--promo-height) + var(--utility-height) + var(--header-height) + var(--nav-rail-height)
+    );
+  }
+
+  @media (min-width: 1024px) {
+    :root {
+      --nav-rail-height: 2.5rem;
+    }
   }
 
   * {
