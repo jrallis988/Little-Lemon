@@ -45,11 +45,16 @@ export default {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-10px)" },
         },
+        kenBurns: {
+          "0%": { transform: "scale(1.05)" },
+          "100%": { transform: "scale(1.14)" },
+        },
       },
       animation: {
         rise: "rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both",
         "fill-bar": "fillBar 1.4s cubic-bezier(0.22, 1, 0.36, 1) both",
         drift: "drift 7s ease-in-out infinite",
+        "ken-burns": "kenBurns 5.5s ease-out forwards",
       },
     },
   },

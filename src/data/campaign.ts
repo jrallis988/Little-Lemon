@@ -7,6 +7,46 @@ export const campaign = {
   anniversaryYears: 63,
 } as const;
 
+export type HeroSlide = {
+  src: string;
+  alt: string;
+  objectPosition: string;
+};
+
+/** Health-forward hero carousel — cooking, food, movement, everyday living */
+export const heroSlides: HeroSlide[] = [
+  {
+    src: "/images/campaign/hero-cook.jpg",
+    alt: "Friends cooking a fresh, colorful salad together in a bright home kitchen",
+    objectPosition: "center 42%",
+  },
+  {
+    src: "/images/campaign/hero-salad.jpg",
+    alt: "A vibrant bowl of greens, egg, avocado, and fresh vegetables",
+    objectPosition: "center center",
+  },
+  {
+    src: "/images/campaign/hero-yoga.jpg",
+    alt: "Members moving together in a bright studio fitness class",
+    objectPosition: "center 30%",
+  },
+  {
+    src: "/images/campaign/grocery.jpg",
+    alt: "Shelves of fresh produce at the market—everyday healthy choices",
+    objectPosition: "center center",
+  },
+  {
+    src: "/images/campaign/hero-smoothie.jpg",
+    alt: "Layered salad jar being finished with seeds—meal prep made inviting",
+    objectPosition: "center 35%",
+  },
+  {
+    src: "/images/campaign/walk-together.jpg",
+    alt: "Taking the next step—everyday movement on outdoor stairs",
+    objectPosition: "center 40%",
+  },
+];
+
 export type Era = {
   id: string;
   decade: string;
