@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom"
 import { SiteHeader } from "@/components/layout/SiteHeader"
 import { SiteFooter } from "@/components/layout/SiteFooter"
 import { BagDrawer } from "@/components/bag/BagDrawer"
+import { SupportChat } from "@/components/support/SupportChat"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { ErrorBoundary } from "@/components/system/ErrorBoundary"
 
@@ -17,6 +18,7 @@ export function AppShell() {
         </main>
         <SiteFooter />
         <BagDrawer />
+        <SupportChat />
       </div>
     </TooltipProvider>
   )
