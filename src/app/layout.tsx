@@ -7,6 +7,7 @@ import { SessionProvider } from "@/components/providers/session-provider";
 import { ToastProvider } from "@/components/providers/toast-provider";
 import { CartHydrator } from "@/components/providers/cart-hydrator";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { SupportChatWidget } from "@/components/chat/support-chat-widget";
 import "./globals.css";
 
 const display = Fraunces({
@@ -77,8 +78,9 @@ export default function RootLayout({
               </a>
               <DisclaimerBanner />
               <SiteHeader />
-              <main id="main-content">{children}</main>
+<main id="main-content">{children}</main>
               <SiteFooter />
+              <SupportChatWidget />
             </TooltipProvider>
           </ToastProvider>
         </SessionProvider>

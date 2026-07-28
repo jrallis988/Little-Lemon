@@ -1,21 +1,12 @@
 import { NextResponse } from "next/server";
-import { auth } from "@/lib/auth";
+import { requireAdmin } from "@/lib/admin";
 import { prisma } from "@/lib/db";
 import { peekEnv, isStripeConfigured } from "@/lib/env";
 
-function isAdminEmail(email: string | null | undefined): boolean {
-  if (!email) return false;
-  const allow = (process.env.ADMIN_EMAILS ?? "")
-    .split(",")
-    .map((s) => s.trim().toLowerCase())
-    .filter(Boolean);
-  return allow.includes(email.toLowerCase());
-}
-
-/** Admin overview — drugs, pharmacies, coupons, switch events. */
+/** Admin overview — drugs, pharmacies, coupons, switch events, chats. */
 export async function GET() {
-  const session = await auth();
-  if (!session?.user?.email || !isAdminEmail(session.user.email)) {
+  const session = await requireAdmin();
+  if (!session) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
@@ -26,6 +17,7 @@ export async function GET() {
     couponCount,
     alertCount,
     passCount,
+    openChats,
     recentSwitch,
     switchByStatus,
   ] = await Promise.all([
@@ -35,6 +27,9 @@ export async function GET() {
     prisma.coupon.count(),
     prisma.priceAlert.count({ where: { active: true } }),
     prisma.digitalPass.count(),
+    prisma.conversation.count({
+      where: { status: { in: ["open", "waiting"] } },
+    }),
     prisma.switchEvent.findMany({
       orderBy: { createdAt: "desc" },
       take: 20,
@@ -56,6 +51,7 @@ export async function GET() {
       coupons: couponCount,
       activeAlerts: alertCount,
       digitalPasses: passCount,
+      openChats,
     },
     switchAnalytics: {
       byStatus: switchByStatus.map((row) => ({

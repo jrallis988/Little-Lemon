@@ -47,6 +47,11 @@ export function SiteFooter() {
               </Link>
             </li>
             <li>
+              <span className="text-foreground/80">
+                Chat with us — use the Messages button
+              </span>
+            </li>
+            <li>
               <Link href="/membership" className="hover:text-foreground">
                 Free vs membership
               </Link>

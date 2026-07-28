@@ -63,6 +63,13 @@ export default function HelpPage() {
           ask the pharmacist to compare prices before processing.
         </TrustCallout>
 
+        <TrustCallout title="Need a person?">
+          Tap <strong>Chat with us</strong> in the corner to message Trump RX
+          about prices, coupons, insurance vs cash, membership, or checkout.
+          You&apos;ll get instant topic help and can wait for a support reply in
+          the same thread.
+        </TrustCallout>
+
         <ol className="grid gap-3 md:grid-cols-2">
           {STEPS.map((step, i) => (
             <li
