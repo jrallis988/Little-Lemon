@@ -88,20 +88,23 @@ export function Footer() {
         </div>
 
         <div className="mt-10 space-y-3 border-t border-white/15 pt-8 text-xs leading-relaxed text-white/80">
-          <p>Paid for by {candidate.committee}.</p>
           <p>
             © {year} {candidate.fullName} for {candidate.office}. All rights
-            reserved.{" "}
+            reserved.
+          </p>
+          <p>
+            Paid for by {candidate.committee} | Independent Write-In Candidate |{" "}
+            <Link href="/accessibility" className="underline underline-offset-2 hover:text-white">
+              Accessibility
+            </Link>
+          </p>
+          <p>
             <Link href="/privacy" className="underline underline-offset-2 hover:text-white">
               Privacy Policy
             </Link>
-            {" · "}
+            {" | "}
             <Link href="/terms" className="underline underline-offset-2 hover:text-white">
               Terms &amp; Conditions
-            </Link>
-            {" · "}
-            <Link href="/accessibility" className="underline underline-offset-2 hover:text-white">
-              Accessibility
             </Link>
           </p>
         </div>

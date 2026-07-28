@@ -152,11 +152,13 @@ export default function PrivacyPage() {
           5. Cookies and Tracking Technologies
         </h2>
         <p>
-          Our website may use cookies and similar technologies to enhance your
-          browsing experience, remember accessibility preferences on your device,
-          and analyze site traffic. You can disable cookies through your browser
-          settings, though doing so may impact certain functional areas of the
-          site.
+          Our website may use cookies and similar technologies to keep the site
+          working, remember accessibility preferences on your device, process form
+          submissions, and analyze site traffic. On your first visit, we ask for
+          cookie consent. You may accept all cookies or continue with essential
+          cookies only. You can also control cookies through your browser
+          settings, though disabling them may impact certain functional areas of
+          the site.
         </p>
 
         <h2 className="font-display text-2xl font-bold text-ink">

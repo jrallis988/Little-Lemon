@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { AccessibilityProvider } from "@/components/a11y/AccessibilityProvider";
 import { AccessibilityPanel } from "@/components/a11y/AccessibilityPanel";
+import { CookieBanner } from "@/components/CookieBanner";
 import { candidate } from "@/lib/candidate";
 import "./globals.css";
 
@@ -93,6 +94,7 @@ export default function RootLayout({
           </main>
           <Footer />
           <AccessibilityPanel />
+          <CookieBanner />
         </AccessibilityProvider>
       </body>
     </html>
