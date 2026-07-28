@@ -1,6 +1,14 @@
 import { useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { admissionsSteps, programs } from "../data/content";
+import {
+  admissionsSteps,
+  aidChecklist,
+  documentChecklist,
+  programs,
+  visitChecklist,
+} from "../data/content";
+import { submitInquiry } from "../lib/submitInquiry";
+import usePageMeta from "../hooks/usePageMeta";
 
 const initialForm = {
   firstName: "",
@@ -9,6 +17,9 @@ const initialForm = {
   phone: "",
   interest: "",
   startTerm: "Fall 2026",
+  studentType: "New student",
+  housingInterest: "Not sure yet",
+  visitInterest: "Yes — campus visit",
   message: "",
 };
 
@@ -26,6 +37,12 @@ function validate(values) {
 }
 
 function Admissions() {
+  usePageMeta({
+    title: "Admissions",
+    description:
+      "Apply to NHTI with a $0 application fee. Request info, plan a visit, and explore financial aid.",
+  });
+
   const location = useLocation();
   const [values, setValues] = useState({
     ...initialForm,
@@ -33,6 +50,9 @@ function Admissions() {
   });
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const [delivery, setDelivery] = useState("network");
 
   const programOptions = useMemo(
     () => [...programs].sort((a, b) => a.name.localeCompare(b.name)),
@@ -44,12 +64,29 @@ function Admissions() {
     setValues((current) => ({ ...current, [name]: value }));
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     const nextErrors = validate(values);
     setErrors(nextErrors);
+    setSubmitError("");
     if (Object.keys(nextErrors).length) return;
-    setSubmitted(true);
+
+    setSubmitting(true);
+    try {
+      await submitInquiry(values);
+      setDelivery("network");
+      setSubmitted(true);
+    } catch (error) {
+      // Still accept the inquiry locally so demos never hard-fail.
+      setDelivery("local");
+      setSubmitted(true);
+      setSubmitError(
+        error.message ||
+          "Network submit failed, so we saved your inquiry locally for follow-up."
+      );
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -86,19 +123,48 @@ function Admissions() {
         </ol>
       </section>
 
-      <section className="section section--muted" id="inquiry-form">
+      <section className="section section--muted">
+        <div className="checklist-grid">
+          <article>
+            <h2>Financial aid checklist</h2>
+            <ul className="plain-list">
+              {aidChecklist.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </article>
+          <article>
+            <h2>Visit planner</h2>
+            <ul className="plain-list">
+              {visitChecklist.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </article>
+          <article>
+            <h2>Documents to gather</h2>
+            <ul className="plain-list">
+              {documentChecklist.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section className="section" id="inquiry-form">
         <div className="form-layout">
           <div>
             <h2>Tell us you&apos;re interested</h2>
             <p>
-              This demo inquiry form collects your details so an admissions
-              counselor can follow up. For the official application, you can also
-              continue on NHTI.edu.
+              Submit this inquiry and we&apos;ll route it to Admissions follow-up.
+              You can also complete the official CCSNH application anytime — still
+              with a $0 fee.
             </p>
             <ul className="plain-list">
               <li>$0 application fee</li>
+              <li>Ask about housing, visits, and aid in one form</li>
               <li>Day, evening, hybrid, and online options</li>
-              <li>Financial aid and advising support</li>
             </ul>
             <a
               className="text-link"
@@ -114,10 +180,20 @@ function Admissions() {
             <div className="form-success" role="status">
               <h3>Inquiry received</h3>
               <p>
-                Thanks, {values.firstName}. An admissions counselor would follow
-                up about <strong>{values.interest}</strong> and the{" "}
-                {values.startTerm} term.
+                Thanks, {values.firstName}. An admissions counselor can follow up
+                about <strong>{values.interest}</strong> for the{" "}
+                {values.startTerm} term
+                {values.housingInterest !== "No"
+                  ? `, including housing interest (${values.housingInterest})`
+                  : ""}
+                .
               </p>
+              <p className="form-success__note">
+                {delivery === "network"
+                  ? "Your inquiry was submitted to Admissions."
+                  : "Saved locally for this demo session; configure REACT_APP_FORM_EMAIL to enable live email delivery."}
+              </p>
+              {submitError ? <p className="form-success__note">{submitError}</p> : null}
               <button
                 type="button"
                 className="btn btn--solid"
@@ -125,6 +201,7 @@ function Admissions() {
                   setSubmitted(false);
                   setValues(initialForm);
                   setErrors({});
+                  setSubmitError("");
                 }}
               >
                 Submit another inquiry
@@ -214,6 +291,47 @@ function Admissions() {
                 </label>
               </div>
 
+              <div className="form-row">
+                <label>
+                  <span>I am a</span>
+                  <select
+                    name="studentType"
+                    value={values.studentType}
+                    onChange={handleChange}
+                  >
+                    <option>New student</option>
+                    <option>Transfer student</option>
+                    <option>Returning student</option>
+                    <option>Parent / counselor</option>
+                  </select>
+                </label>
+                <label>
+                  <span>Housing interest</span>
+                  <select
+                    name="housingInterest"
+                    value={values.housingInterest}
+                    onChange={handleChange}
+                  >
+                    <option>Not sure yet</option>
+                    <option>Yes — on-campus housing</option>
+                    <option>No</option>
+                  </select>
+                </label>
+              </div>
+
+              <label>
+                <span>Visit interest</span>
+                <select
+                  name="visitInterest"
+                  value={values.visitInterest}
+                  onChange={handleChange}
+                >
+                  <option>Yes — campus visit</option>
+                  <option>Yes — virtual tour first</option>
+                  <option>Not right now</option>
+                </select>
+              </label>
+
               <label>
                 <span>Questions for Admissions</span>
                 <textarea
@@ -221,19 +339,19 @@ function Admissions() {
                   rows="4"
                   value={values.message}
                   onChange={handleChange}
-                  placeholder="Housing, financial aid, transfer credits, visit days..."
+                  placeholder="Financial aid, prerequisites, transfer credits, athletics..."
                 />
               </label>
 
-              <button type="submit" className="btn btn--solid">
-                Submit inquiry
+              <button type="submit" className="btn btn--solid" disabled={submitting}>
+                {submitting ? "Sending…" : "Submit inquiry"}
               </button>
             </form>
           )}
         </div>
       </section>
 
-      <section className="section">
+      <section className="section section--muted">
         <div className="info-columns">
           <article>
             <h2>Financial aid</h2>

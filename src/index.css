@@ -1015,8 +1015,37 @@ address {
   border-radius: 0.3rem;
 }
 
-.footer-tour {
-  margin-top: 0.85rem;
+.checklist-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.checklist-grid h2 {
+  font-size: 1.25rem;
+  color: var(--maroon-deep);
+}
+
+.form-success__note {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.event-item__actions {
+  display: grid;
+  gap: 0.55rem;
+  justify-items: end;
+}
+
+.inquiry-form button:disabled {
+  opacity: 0.7;
+  cursor: wait;
+  transform: none;
+}
+
+:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
 }
 
 .footer-tour a {
@@ -1208,6 +1237,7 @@ address {
     min-height: 260px;
   }
 
+  .checklist-grid,
   .reason-grid,
   .highlight-grid,
   .info-columns,

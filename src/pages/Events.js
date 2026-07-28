@@ -1,7 +1,14 @@
 import { Link } from "react-router-dom";
 import { events } from "../data/content";
+import usePageMeta from "../hooks/usePageMeta";
 
 function Events() {
+  usePageMeta({
+    title: "Events",
+    description:
+      "NHTI open houses, info sessions, and campus events in Concord, New Hampshire.",
+  });
+
   return (
     <>
       <section className="page-hero">
@@ -26,9 +33,24 @@ function Events() {
                 <p className="event-item__location">{event.location}</p>
                 <p>{event.summary}</p>
               </div>
-              <Link to="/admissions" className="btn btn--ghost-dark btn--compact">
-                RSVP interest
-              </Link>
+              <div className="event-item__actions">
+                <Link
+                  to="/admissions"
+                  className="btn btn--ghost-dark btn--compact"
+                >
+                  RSVP interest
+                </Link>
+                {event.sourceUrl ? (
+                  <a
+                    className="text-link"
+                    href={event.sourceUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Details
+                  </a>
+                ) : null}
+              </div>
             </article>
           ))}
         </div>

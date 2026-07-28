@@ -1,8 +1,15 @@
 import { useDeferredValue, useMemo, useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { focusAreas, programs, getFocusTitle } from "../data/content";
+import usePageMeta from "../hooks/usePageMeta";
 
 function Academics() {
+  usePageMeta({
+    title: "Academics",
+    description:
+      "Search NHTI degrees and certificates across healthcare, STEM, business, education, and liberal arts.",
+  });
+
   const location = useLocation();
   const [query, setQuery] = useState("");
   const [focus, setFocus] = useState(location.state?.focus || "all");
@@ -40,7 +47,7 @@ function Academics() {
     <>
       <section className="page-hero">
         <p className="eyebrow">Academics</p>
-        <h1>80+ programs built for work and transfer</h1>
+        <h1>{programs.length}+ programs built for work and transfer</h1>
         <p className="page-hero__lede">
           Search degrees and certificates across healthcare, engineering,
           business, education, public service, and the liberal arts — with

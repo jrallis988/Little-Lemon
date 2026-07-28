@@ -1,6 +1,14 @@
 import { Link } from "react-router-dom";
+import { programs, studentQuickLinks } from "../data/content";
+import usePageMeta from "../hooks/usePageMeta";
 
 function About() {
+  usePageMeta({
+    title: "About",
+    description:
+      "Learn about NHTI – Concord's Community College, founded in 1965 and serving 4,600+ students each year.",
+  });
+
   return (
     <>
       <section className="page-hero page-hero--with-seal">
@@ -17,7 +25,8 @@ function About() {
           <p className="page-hero__lede">
             Since 1965, NHTI has grown from New Hampshire Technical Institute into
             Concord&apos;s Community College — still grounded in technical
-            excellence, now serving 4,600+ students each year across 80+ programs.
+            excellence, now serving 4,600+ students each year across{" "}
+            {programs.length}+ cataloged programs.
           </p>
         </div>
       </section>
@@ -49,7 +58,7 @@ function About() {
       <section className="section section--muted">
         <div className="fact-strip" aria-label="NHTI at a glance">
           <div>
-            <p className="fact-strip__value">80+</p>
+            <p className="fact-strip__value">{programs.length}+</p>
             <p className="fact-strip__label">Academic programs</p>
           </div>
           <div>
@@ -68,6 +77,24 @@ function About() {
       </section>
 
       <section className="section">
+        <div className="section-intro">
+          <h2>Student &amp; visitor tools</h2>
+          <p>Quick links to the systems students use every week.</p>
+        </div>
+        <div className="program-grid">
+          {studentQuickLinks.map((item) => (
+            <article key={item.title} className="program-card">
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+              <a className="text-link" href={item.href} target="_blank" rel="noreferrer">
+                Open resource
+              </a>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section section--muted">
         <div className="support-panel">
           <h2>Part of something larger</h2>
           <p>

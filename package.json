@@ -16,7 +16,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "sync:nhti": "node scripts/sync-nhti-content.mjs"
   },
   "eslintConfig": {
     "extends": [

@@ -1,9 +1,15 @@
 import { Link, useParams } from "react-router-dom";
 import { getNewsById } from "../data/content";
+import usePageMeta from "../hooks/usePageMeta";
 
 function NewsDetail() {
   const { newsId } = useParams();
   const article = getNewsById(newsId);
+
+  usePageMeta({
+    title: article ? article.title : "News",
+    description: article?.summary,
+  });
 
   if (!article) {
     return (
@@ -35,9 +41,21 @@ function NewsDetail() {
         />
         <div className="article-body">
           <p>{article.body}</p>
-          <Link to="/news" className="text-link">
-            More campus news
-          </Link>
+          <div className="hero__actions">
+            <Link to="/news" className="text-link">
+              More campus news
+            </Link>
+            {article.sourceUrl ? (
+              <a
+                className="text-link"
+                href={article.sourceUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                View on NHTI.edu
+              </a>
+            ) : null}
+          </div>
         </div>
       </section>
     </>

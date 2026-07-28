@@ -1,16 +1,23 @@
 import { Link } from "react-router-dom";
 import { focusAreas, reasons, newsItems, events, programs } from "../data/content";
+import usePageMeta from "../hooks/usePageMeta";
 
 const heroImage = "/media/campus-hero.jpg";
 const campusImage = "/media/campus-hero.jpg";
 
-const highlights = [
-  { value: "70+", label: "Degree and certificate programs" },
-  { value: "4,600+", label: "Students served annually" },
-  { value: "240", label: "Acre riverside campus" },
-];
-
 function Home() {
+  usePageMeta({
+    title: "Home",
+    description:
+      "NHTI – Concord's Community College. Affordable career and transfer programs on a full riverside campus in Concord, NH.",
+  });
+
+  const highlights = [
+    { value: `${programs.length}+`, label: "Degree and certificate programs" },
+    { value: "4,600+", label: "Students served annually" },
+    { value: "240", label: "Acre riverside campus" },
+  ];
+
   return (
     <>
       <section className="hero">
@@ -27,8 +34,8 @@ function Home() {
             Learn where New Hampshire works.
           </h1>
           <p className="hero__support reveal reveal--delay-2">
-            Concord&apos;s Community College — {programs.length}+ featured career
-            and transfer programs on a full riverside campus.
+            Concord&apos;s Community College — {programs.length}+ career and
+            transfer programs on a full riverside campus.
           </p>
           <div className="hero__actions reveal reveal--delay-3">
             <Link to="/admissions" className="btn btn--solid">

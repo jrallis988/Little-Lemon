@@ -1,0 +1,1642 @@
+[
+  {
+    "id": "accounting",
+    "name": "Accounting",
+    "credential": "Associate of Science",
+    "focus": "business",
+    "type": "degree",
+    "online": true,
+    "summary": "Study Accounting at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/accounting/associate-of-science/accounting"
+  },
+  {
+    "id": "accounting-advanced",
+    "name": "Accounting Advanced",
+    "credential": "Certificate",
+    "focus": "business",
+    "type": "certificate",
+    "online": true,
+    "summary": "Study Accounting Advanced at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/accounting/certificate/accounting-advanced"
+  },
+  {
+    "id": "accounting-basic",
+    "name": "Accounting Basic",
+    "credential": "Certificate",
+    "focus": "business",
+    "type": "certificate",
+    "online": true,
+    "summary": "Study Accounting Basic at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/accounting/certificate/accounting-basic"
+  },
+  {
+    "id": "business-administration",
+    "name": "Business Administration",
+    "credential": "Associate of Science",
+    "focus": "business",
+    "type": "degree",
+    "online": true,
+    "summary": "Study Business Administration at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/business-administration/associate-of-science/business-administration"
+  },
+  {
+    "id": "coaching",
+    "name": "Coaching",
+    "credential": "Certificate",
+    "focus": "healthcare",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Coaching at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/health-science/certificate/coaching"
+  },
+  {
+    "id": "eventconference-management",
+    "name": "Eventconference Management",
+    "credential": "Certificate",
+    "focus": "business",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Eventconference Management at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/hospitality/certificate/eventconference-management"
+  },
+  {
+    "id": "hospitality-and-tourism-management",
+    "name": "Hospitality & Tourism Management",
+    "credential": "Associate of Science",
+    "focus": "business",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Hospitality & Tourism Management at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/hospitality/associate-of-science/hospitality-and-tourism-management"
+  },
+  {
+    "id": "hotel-administration",
+    "name": "Hotel Administration",
+    "credential": "Certificate",
+    "focus": "business",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Hotel Administration at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/hospitality/certificate/hotel-administration"
+  },
+  {
+    "id": "management",
+    "name": "Management",
+    "credential": "Certificate",
+    "focus": "business",
+    "type": "certificate",
+    "online": true,
+    "summary": "Study Management at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/business-administration/certificate/management"
+  },
+  {
+    "id": "medical-coding",
+    "name": "Medical Coding",
+    "credential": "Certificate",
+    "focus": "business",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Medical Coding at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/medical-coding/certificate/medical-coding"
+  },
+  {
+    "id": "paralegal-studies",
+    "name": "Paralegal Studies",
+    "credential": "Associate of Science",
+    "focus": "business",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Paralegal Studies at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/paralegal-studies/associate-of-science/paralegal-studies"
+  },
+  {
+    "id": "paralegal-studies-certificate",
+    "name": "Paralegal Studies",
+    "credential": "Certificate",
+    "focus": "business",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Paralegal Studies at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/paralegal-studies/certificate/paralegal-studies"
+  },
+  {
+    "id": "recreation-and-leisure-studies",
+    "name": "Recreation & Leisure Studies",
+    "credential": "Associate of Science",
+    "focus": "arts",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Recreation & Leisure Studies at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/recreation-and-wellness/associate-of-science/recreation-and-leisure-studies"
+  },
+  {
+    "id": "sports-management",
+    "name": "Sports Management",
+    "credential": "Associate of Science",
+    "focus": "arts",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Sports Management at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/sports-management/associate-of-science/sports-management"
+  },
+  {
+    "id": "sports-management-certificate",
+    "name": "Sports Management",
+    "credential": "Certificate",
+    "focus": "arts",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Sports Management at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/sports-management/certificate/sports-management"
+  },
+  {
+    "id": "travel-and-tourism",
+    "name": "Travel & Tourism",
+    "credential": "Certificate",
+    "focus": "business",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Travel & Tourism at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/hospitality/certificate/travel-and-tourism"
+  },
+  {
+    "id": "wedding-planning",
+    "name": "Wedding Planning",
+    "credential": "Certificate",
+    "focus": "business",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Wedding Planning at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/hospitality/certificate/wedding-planning"
+  },
+  {
+    "id": "criminal-justice",
+    "name": "Criminal Justice",
+    "credential": "Associate of Science",
+    "focus": "public",
+    "type": "degree",
+    "online": true,
+    "summary": "Study Criminal Justice at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/criminal-justice/associate-of-science/criminal-justice"
+  },
+  {
+    "id": "dental-hygiene",
+    "name": "Dental Hygiene",
+    "credential": "Associate of Science",
+    "focus": "healthcare",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Dental Hygiene at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/allied-dental-education/associate-of-science/dental-hygiene"
+  },
+  {
+    "id": "career-and-technical-education-alternative-certification",
+    "name": "Career & Technical Education Alternative Certification",
+    "credential": "Certificate",
+    "focus": "public",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Career & Technical Education Alternative Certification at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/education/certificate/career-and-technical-education-alternative-certification"
+  },
+  {
+    "id": "child-and-family-studies",
+    "name": "Child & Family Studies",
+    "credential": "Associate of Science",
+    "focus": "public",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Child & Family Studies at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/child-and-family-studies/associate-of-science/child-and-family-studies"
+  },
+  {
+    "id": "early-care-and-education-for-young-children-with",
+    "name": "Early Care & Education For Young Children With",
+    "credential": "Associate of Science",
+    "focus": "public",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Early Care & Education For Young Children With at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/early-childhood-education/associate-of-science/early-care-and-education-for-young-children-with"
+  },
+  {
+    "id": "early-childhood-education",
+    "name": "Early Childhood Education",
+    "credential": "Associate of Science",
+    "focus": "public",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Early Childhood Education at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/early-childhood-education/associate-of-science/early-childhood-education"
+  },
+  {
+    "id": "early-childhood-education-certificate",
+    "name": "Early Childhood Education",
+    "credential": "Certificate",
+    "focus": "public",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Early Childhood Education at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/early-childhood-education/certificate/early-childhood-education"
+  },
+  {
+    "id": "early-childhood-education-advanced",
+    "name": "Early Childhood Education Advanced",
+    "credential": "Certificate",
+    "focus": "public",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Early Childhood Education Advanced at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/early-childhood-education/certificate/early-childhood-education-advanced"
+  },
+  {
+    "id": "early-childhood-education-entry-level",
+    "name": "Early Childhood Education Entry Level",
+    "credential": "Certificate",
+    "focus": "public",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Early Childhood Education Entry Level at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/early-childhood-education/certificate/early-childhood-education-entry-level"
+  },
+  {
+    "id": "education",
+    "name": "Education",
+    "credential": "Associate of Science",
+    "focus": "public",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Education at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/education/associate-of-science/education"
+  },
+  {
+    "id": "education-certificate",
+    "name": "Education",
+    "credential": "Certificate",
+    "focus": "public",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Education at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/education/certificate/education"
+  },
+  {
+    "id": "esol",
+    "name": "Esol",
+    "credential": "Certificate",
+    "focus": "public",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Esol at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/education/certificate/esol"
+  },
+  {
+    "id": "special-education",
+    "name": "Special Education",
+    "credential": "Certificate",
+    "focus": "public",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Special Education at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/education/certificate/special-education"
+  },
+  {
+    "id": "teacher-education-conversion-program",
+    "name": "Teacher Education Conversion Program",
+    "credential": "Certificate",
+    "focus": "public",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Teacher Education Conversion Program at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/teacher-education-conversion-program/certificate/teacher-education-conversion-program"
+  },
+  {
+    "id": "teacher-education-conversion-program-general",
+    "name": "Teacher Education Conversion Program General",
+    "credential": "Certificate",
+    "focus": "public",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Teacher Education Conversion Program General at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/teacher-education-conversion-program/certificate/teacher-education-conversion-program-general"
+  },
+  {
+    "id": "teacher-education-conversion-program-general-0",
+    "name": "Teacher Education Conversion Program General 0",
+    "credential": "Certificate",
+    "focus": "public",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Teacher Education Conversion Program General 0 at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/teacher-education-conversion-program/certificate/teacher-education-conversion-program-general-0"
+  },
+  {
+    "id": "teacher-education-conversion-program-mathematics",
+    "name": "Teacher Education Conversion Program Mathematics",
+    "credential": "Certificate",
+    "focus": "stem",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Teacher Education Conversion Program Mathematics at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/teacher-education-conversion-program/certificate/teacher-education-conversion-program-mathematics"
+  },
+  {
+    "id": "teacher-education-conversion-program-for-esol",
+    "name": "Teacher Education Conversion Program For Esol",
+    "credential": "Certificate",
+    "focus": "public",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Teacher Education Conversion Program For Esol at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/teacher-education-conversion-program/certificate/teacher-education-conversion-program-for-esol"
+  },
+  {
+    "id": "diagnostic-medical-sonography",
+    "name": "Diagnostic Medical Sonography",
+    "credential": "Certificate",
+    "focus": "healthcare",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Diagnostic Medical Sonography at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/diagnostic-medical-sonography/certificate/diagnostic-medical-sonography"
+  },
+  {
+    "id": "general-studies",
+    "name": "General Studies",
+    "credential": "Associate of Science",
+    "focus": "arts",
+    "type": "degree",
+    "online": true,
+    "summary": "Study General Studies at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/general-studies/associate-of-science/general-studies"
+  },
+  {
+    "id": "human-services",
+    "name": "Human Services",
+    "credential": "Certificate",
+    "focus": "public",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Human Services at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/human-service/certificate/human-services"
+  },
+  {
+    "id": "legal-nurse-consultant",
+    "name": "Legal Nurse Consultant",
+    "credential": "Certificate",
+    "focus": "arts",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Legal Nurse Consultant at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/legal-nurse-consultant/certificate/legal-nurse-consultant"
+  },
+  {
+    "id": "orthopaedic-technology",
+    "name": "Orthopaedic Technology",
+    "credential": "Certificate",
+    "focus": "healthcare",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Orthopaedic Technology at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/orthopaedic-technology/certificate/orthopaedic-technology"
+  },
+  {
+    "id": "orthopaedic-technology-degree",
+    "name": "Orthopaedic Technology",
+    "credential": "Associate of Science",
+    "focus": "healthcare",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Orthopaedic Technology at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/orthopaedic-technology/associate-of-science/orthopaedic-technology"
+  },
+  {
+    "id": "paramedic-emergency-medicine",
+    "name": "Paramedic Emergency Medicine",
+    "credential": "Associate of Science",
+    "focus": "healthcare",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Paramedic Emergency Medicine at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/paramedic-emergency-medicine/associate-of-science/paramedic-emergency-medicine"
+  },
+  {
+    "id": "radiation-therapy",
+    "name": "Radiation Therapy",
+    "credential": "Certificate",
+    "focus": "healthcare",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Radiation Therapy at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/radiation-therapy/certificate/radiation-therapy"
+  },
+  {
+    "id": "radiation-therapy-degree",
+    "name": "Radiation Therapy",
+    "credential": "Associate of Science",
+    "focus": "healthcare",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Radiation Therapy at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/radiation-therapy/associate-of-science/radiation-therapy"
+  },
+  {
+    "id": "radiologic-technology",
+    "name": "Radiologic Technology",
+    "credential": "Associate of Science",
+    "focus": "healthcare",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Radiologic Technology at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/radiologic-technology/associate-of-science/radiologic-technology"
+  },
+  {
+    "id": "addiction-counseling",
+    "name": "Addiction Counseling",
+    "credential": "Associate of Science",
+    "focus": "public",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Addiction Counseling at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/addiction-counseling/associate-of-science/addiction-counseling"
+  },
+  {
+    "id": "advanced-human-services-certificate",
+    "name": "Advanced Human Services Certificate",
+    "credential": "Certificate",
+    "focus": "public",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Advanced Human Services Certificate at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/human-service/certificate/advanced-human-services-certificate"
+  },
+  {
+    "id": "human-service",
+    "name": "Human Service",
+    "credential": "Associate of Science",
+    "focus": "public",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Human Service at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/human-service/associate-of-science/human-service"
+  },
+  {
+    "id": "substance-use-disorder-treatment-sud-tx",
+    "name": "Substance Use Disorder Treatment (SUD-TX)",
+    "credential": "Certificate",
+    "focus": "public",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Substance Use Disorder Treatment (SUD-TX) at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/addiction-counseling/certificate/substance-use-disorder-treatment-sud-tx"
+  },
+  {
+    "id": "advanced-software-development",
+    "name": "Advanced Software Development",
+    "credential": "Certificate",
+    "focus": "stem",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Advanced Software Development at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/information-technology/certificate/advanced-software-development"
+  },
+  {
+    "id": "animation-and-graphic-game-programming",
+    "name": "Animation & Graphic Game Programming",
+    "credential": "Associate of Science",
+    "focus": "stem",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Animation & Graphic Game Programming at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/animation-and-graphic-game-programming/associate-of-science/animation-and-graphic-game-programming"
+  },
+  {
+    "id": "computer-engineering-technology",
+    "name": "Computer Engineering Technology",
+    "credential": "Associate of Science",
+    "focus": "stem",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Computer Engineering Technology at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/computer-engineering-technology/associate-of-science/computer-engineering-technology"
+  },
+  {
+    "id": "electronic-engineering-technology",
+    "name": "Electronic Engineering Technology",
+    "credential": "Associate of Science",
+    "focus": "stem",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Electronic Engineering Technology at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/electronic-engineering-technology/associate-of-science/electronic-engineering-technology"
+  },
+  {
+    "id": "game-development-programming-certificate",
+    "name": "Game Development Programming Certificate",
+    "credential": "Certificate",
+    "focus": "stem",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Game Development Programming Certificate at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/animation-and-graphic-game-programming/certificate/game-development-programming-certificate"
+  },
+  {
+    "id": "industrial-design-technology",
+    "name": "Industrial Design Technology",
+    "credential": "Associate of Science",
+    "focus": "stem",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Industrial Design Technology at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/industrial-design-technology/associate-of-science/industrial-design-technology"
+  },
+  {
+    "id": "information-technology-entry-level-software-development",
+    "name": "Information Technology Entry Level Software Development",
+    "credential": "Certificate",
+    "focus": "stem",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Information Technology Entry Level Software Development at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/information-technology/certificate/information-technology-entry-level-software-development"
+  },
+  {
+    "id": "information-technology-software-development",
+    "name": "Information Technology Software Development",
+    "credential": "Certificate",
+    "focus": "stem",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Information Technology Software Development at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/information-technology/certificate/information-technology-software-development"
+  },
+  {
+    "id": "information-technology-network-associate",
+    "name": "Information Technology Network Associate",
+    "credential": "Certificate",
+    "focus": "stem",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Information Technology Network Associate at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/information-technology/certificate/information-technology-network-associate"
+  },
+  {
+    "id": "information-technology-software-development-degree",
+    "name": "Information Technology Software Development",
+    "credential": "Associate of Science",
+    "focus": "stem",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Information Technology Software Development at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/information-technology/associate-of-science/information-technology-software-development"
+  },
+  {
+    "id": "information-technology-tech-support",
+    "name": "Information Technology Tech Support",
+    "credential": "Certificate",
+    "focus": "stem",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Information Technology Tech Support at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/information-technology/certificate/information-technology-tech-support"
+  },
+  {
+    "id": "landscape-and-environmental-design",
+    "name": "Landscape & Environmental Design",
+    "credential": "Associate of Science",
+    "focus": "arts",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Landscape & Environmental Design at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/landscape-design/associate-of-science/landscape-and-environmental-design"
+  },
+  {
+    "id": "landscape-design",
+    "name": "Landscape Design",
+    "credential": "Certificate",
+    "focus": "arts",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Landscape Design at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/landscape-design/certificate/landscape-design"
+  },
+  {
+    "id": "manufacturing-engineering-technology-0",
+    "name": "Manufacturing Engineering Technology 0",
+    "credential": "Associate of Science",
+    "focus": "stem",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Manufacturing Engineering Technology 0 at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/manufacturing-engineering-technology/associate-of-science/manufacturing-engineering-technology-0"
+  },
+  {
+    "id": "manufacturing-engineering-technology",
+    "name": "Manufacturing Engineering Technology",
+    "credential": "Associate of Science",
+    "focus": "stem",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Manufacturing Engineering Technology at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/manufacturing-engineering-technology/associate-of-science/manufacturing-engineering-technology"
+  },
+  {
+    "id": "mathematics",
+    "name": "Mathematics",
+    "credential": "Associate of Science",
+    "focus": "stem",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Mathematics at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/mathematics/associate-of-science/mathematics"
+  },
+  {
+    "id": "mechanical-engineering-technology",
+    "name": "Mechanical Engineering Technology",
+    "credential": "Associate of Science",
+    "focus": "stem",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Mechanical Engineering Technology at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/mechanical-engineering-technology/associate-of-science/mechanical-engineering-technology"
+  },
+  {
+    "id": "networking-and-cybersecurity-operations",
+    "name": "Networking & Cybersecurity Operations",
+    "credential": "Associate of Science",
+    "focus": "stem",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Networking & Cybersecurity Operations at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/information-technology/associate-of-science/networking-and-cybersecurity-operations"
+  },
+  {
+    "id": "robotics-and-automation",
+    "name": "Robotics & Automation",
+    "credential": "Associate of Science",
+    "focus": "stem",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Robotics & Automation at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/robotics-and-automation-engineering-technology/associate-of-science/robotics-and-automation"
+  },
+  {
+    "id": "biology",
+    "name": "Biology",
+    "credential": "Associate of Science",
+    "focus": "arts",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Biology at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/biology/associate-of-science/biology"
+  },
+  {
+    "id": "environmental-sciences",
+    "name": "Environmental Sciences",
+    "credential": "Associate of Science",
+    "focus": "arts",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Environmental Sciences at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/environmental-science/associate-of-science/environmental-sciences"
+  },
+  {
+    "id": "health-and-wellness",
+    "name": "Health & Wellness",
+    "credential": "Associate of Science",
+    "focus": "healthcare",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Health & Wellness at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/health-science/associate-of-science/health-and-wellness"
+  },
+  {
+    "id": "health-science",
+    "name": "Health Science",
+    "credential": "Associate of Science",
+    "focus": "healthcare",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Health Science at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/health-science/associate-of-science/health-science"
+  },
+  {
+    "id": "sustainable-agriculture",
+    "name": "Sustainable Agriculture",
+    "credential": "Associate of Science",
+    "focus": "arts",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Sustainable Agriculture at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/agriculture/associate-of-science/sustainable-agriculture"
+  },
+  {
+    "id": "sustainable-agriculture-technology",
+    "name": "Sustainable Agriculture Technology",
+    "credential": "Certificate",
+    "focus": "arts",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Sustainable Agriculture Technology at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/agriculture/certificate/sustainable-agriculture-technology"
+  },
+  {
+    "id": "nursing",
+    "name": "Nursing",
+    "credential": "Associate of Science",
+    "focus": "healthcare",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Nursing at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/nursing/associate-of-science/nursing"
+  },
+  {
+    "id": "nursing-lpn-to-rn-completion-option",
+    "name": "Nursing LPN to RN Completion Option",
+    "credential": "Associate of Science",
+    "focus": "healthcare",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Nursing LPN to RN Completion Option at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/nursing/associate-of-science/nursing-lpn-to-rn-completion-option"
+  },
+  {
+    "id": "nursing-paramedic-to-rn-completion",
+    "name": "Nursing Paramedic to RN Completion",
+    "credential": "Associate of Science",
+    "focus": "healthcare",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Nursing Paramedic to RN Completion at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/nursing/associate-of-science/nursing-paramedic-to-rn-completion"
+  },
+  {
+    "id": "communications",
+    "name": "Communications",
+    "credential": "Associate of Arts",
+    "focus": "arts",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Communications at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/communications/associate-of-arts/communications"
+  },
+  {
+    "id": "english",
+    "name": "English",
+    "credential": "Associate of Arts",
+    "focus": "arts",
+    "type": "degree",
+    "online": false,
+    "summary": "Study English at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/english/associate-of-arts/english"
+  },
+  {
+    "id": "liberal-arts",
+    "name": "Liberal Arts",
+    "credential": "Associate of Arts",
+    "focus": "public",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Liberal Arts at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/arts-humanities-communications-and-design/associate-of-arts/liberal-arts"
+  },
+  {
+    "id": "mindful-communication",
+    "name": "Mindful Communication",
+    "credential": "Certificate",
+    "focus": "arts",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Mindful Communication at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/communications/certificate/mindful-communication"
+  },
+  {
+    "id": "visual-arts",
+    "name": "Visual Arts",
+    "credential": "Associate of Arts",
+    "focus": "arts",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Visual Arts at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/visual-arts/associate-of-arts/visual-arts"
+  }
+]
