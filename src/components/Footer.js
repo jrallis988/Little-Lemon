@@ -50,10 +50,13 @@ export default function Footer() {
           ))}
         </div>
 
-        <p className="footer__copy">
-          © {new Date().getFullYear()} {SITE.name}. Family inn since around{" "}
-          {SITE.founded}. All rights reserved.
-        </p>
+        <div className="footer__bottom">
+          <p className="footer__copy">
+            © {new Date().getFullYear()} {SITE.name}. Family inn since around{" "}
+            {SITE.founded}. All rights reserved.
+          </p>
+          <p className="footer__credit">Powered by Artistic Fountain</p>
+        </div>
       </div>
     </footer>
   );
