@@ -2,10 +2,48 @@ export const campaign = {
   name: "Weight Watchers 63",
   tagline: "63 Years of You",
   thesis:
-    "For 63 years, Weight Watchers has evolved alongside the people it serves—helping every generation build healthier lives in their own way.",
+    "63 years matter because your needs come first—and because Weight Watchers keeps building the next chapter of healthier living with you.",
   foundingYear: 1963,
   anniversaryYears: 63,
 } as const;
+
+/** The strategic spine of the campaign: customer priorities + future direction */
+export const campaignPurpose = {
+  headline: "An anniversary is only useful if it serves people.",
+  lead:
+    "Weight Watchers 63 is not a birthday party. It is proof that when customer needs change, the brand must change—and a clear look at where that responsibility points next.",
+  customerTitle: "Your priorities come first",
+  customerCopy:
+    "Real life is busy, uneven, and personal. Support has to fit food, movement, mindset, community, and—when appropriate—modern medical care around the life you already live.",
+  futureTitle: "Where Weight Watchers goes next",
+  futureCopy:
+    "The next chapter is more personal, more connected, and more human: smarter tools, stronger coaching, and clinical companionship that still puts people—not products—at the center.",
+  futureBeats: [
+    "Personalization that respects real kitchens and real weeks",
+    "Coaching and community that travel with you across screens and rooms",
+    "Connected insights that reduce friction instead of adding noise",
+    "Educational pathways into clinician-supported care when that is the right fit",
+  ],
+} as const;
+
+export const campaignPriorities = [
+  {
+    title: "Food that fits real life",
+    copy: "Flexible structure for grocery runs, leftovers, celebrations, and Tuesday nights—not perfection.",
+  },
+  {
+    title: "Progress you can feel",
+    copy: "Energy, confidence, strength, and consistency matter as much as the number on a scale.",
+  },
+  {
+    title: "Support that shows up",
+    copy: "Coaches, community, and tools that meet you between the good weeks and the hard ones.",
+  },
+  {
+    title: "Care that evolves with you",
+    copy: "From Points to personalization to clinician-supported options—always in service of your next step.",
+  },
+] as const;
 
 export type HeroSlide = {
   src: string;

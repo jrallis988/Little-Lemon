@@ -32,7 +32,7 @@ export function ConnectedSocial({ className = "" }: ConnectedSocialProps) {
     return window.location.origin + window.location.pathname;
   }, []);
   const shareText =
-    "63 years of people, progress and change. Explore Weight Watchers 63 — 63 Years of You.";
+    "Your needs first. Weight Watchers’ future with you. Explore Weight Watchers 63 — 63 Years of You.";
 
   return (
     <section

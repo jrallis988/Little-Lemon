@@ -10,9 +10,9 @@ export function Header() {
   const [open, setOpen] = useState(false);
 
   const primaryLinks = [
-    { href: campaignHash("since-1963", location.pathname), label: "Since 1963" },
-    { href: campaignHash("evolution", location.pathname), label: "Evolution" },
-    { href: campaignHash("years-of-you", location.pathname), label: "63 Years of You" },
+    { href: campaignHash("why-it-matters", location.pathname), label: "Why it matters" },
+    { href: campaignHash("years-of-you", location.pathname), label: "Your priorities" },
+    { href: campaignHash("ahead", location.pathname), label: "What’s next" },
     { href: "/find-your-year", label: "Find Your Year" },
   ];
 

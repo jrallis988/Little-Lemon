@@ -22,11 +22,11 @@ export function ChapterYearsOfYou() {
             className="mt-3 font-display text-4xl font-bold tracking-tight text-ink sm:text-5xl"
             style={{ fontWeight: 700 }}
           >
-            Every journey is unique. That is the story.
+            Customer needs are the whole plot.
           </h2>
           <p className="mt-4 font-serif text-lg leading-relaxed text-ink/65 sm:text-xl">
-            Different ages, backgrounds, lifestyles, and goals. Portraits and life moments—not
-            before-and-afters. Weight Watchers is the guide. People write the chapters.
+            Different ages, schedules, bodies, and goals. The campaign exists because those
+            priorities come first—Weight Watchers is the guide, not the hero.
           </p>
         </div>
 

@@ -21,7 +21,8 @@ export function ChapterSince() {
           }`}
           style={{ fontWeight: 700 }}
         >
-          It started with honesty in a Queens living room.
+          It started with honesty in a Queens living room—because people needed support that
+          treated their lives as the priority.
         </h2>
         <p
           className={`mt-4 max-w-2xl font-serif text-lg leading-relaxed text-white/70 sm:text-xl transition delay-100 duration-700 ${

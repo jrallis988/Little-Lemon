@@ -7,9 +7,9 @@ const siteColumns = [
   {
     title: "Campaign",
     links: [
-      { label: "Since 1963", to: "/#since-1963" },
-      { label: "Evolution", to: "/#evolution" },
-      { label: "63 Years of You", to: "/#years-of-you" },
+      { label: "Why it matters", to: "/#why-it-matters" },
+      { label: "Your priorities", to: "/#years-of-you" },
+      { label: "What’s next", to: "/#ahead" },
       { label: "Find Your Year", to: "/find-your-year" },
     ],
   },

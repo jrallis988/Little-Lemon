@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
 import { AnniversaryBadge } from "../Logo";
-import { heroSlides } from "../../data/campaign";
+import { campaign, heroSlides } from "../../data/campaign";
 import { useCountUp, useInView } from "../../hooks/motion";
 import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 
@@ -102,10 +101,10 @@ export function CampaignHero() {
         </p>
 
         <p
-          className="animate-rise mt-4 max-w-lg font-sans text-base leading-relaxed text-white/80 sm:text-lg"
+          className="animate-rise mt-4 max-w-xl font-sans text-base leading-relaxed text-white/80 sm:text-lg"
           style={{ animationDelay: "240ms" }}
         >
-          For 63 years, Weight Watchers has evolved alongside the people it serves.
+          {campaign.thesis}
         </p>
 
         <div
@@ -114,17 +113,17 @@ export function CampaignHero() {
         >
           <div className="flex flex-wrap gap-3">
             <a
-              href="#since-1963"
+              href="#why-it-matters"
               className="rounded-2xl bg-white px-6 py-3.5 font-sans text-sm font-semibold text-ink transition hover:bg-cloud"
             >
-              Explore 63 Years
+              Why it matters
             </a>
-            <Link
-              to="/find-your-year"
+            <a
+              href="#ahead"
               className="rounded-2xl border border-white/35 bg-white/5 px-6 py-3.5 font-sans text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/15"
             >
-              Find Your Year
-            </Link>
+              Where we’re going
+            </a>
           </div>
 
           <div className="flex items-center gap-3" role="group" aria-label="Hero photo slideshow">

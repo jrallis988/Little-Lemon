@@ -27,28 +27,29 @@ export function CampaignFinale() {
           <div className="absolute inset-0 bg-cobalt-800/80" />
           <div className="relative px-6 py-16 text-center text-white sm:px-12 sm:py-20">
             <p className="mx-auto max-w-2xl font-serif text-2xl leading-snug sm:text-3xl">
-              For 63 years, every chapter has been written by people choosing to begin again.
+              The point of 63 years is not the cake. It is clearer support for your next chapter—and
+              a company still choosing to evolve with you.
             </p>
             <h2
               id="finale-heading"
               className="mt-6 font-display text-4xl font-bold tracking-tight sm:text-5xl"
               style={{ fontWeight: 700 }}
             >
-              Weight Watchers 63
+              Your needs first. Our future with you.
             </h2>
-            <p className="mt-2 font-serif text-xl text-tide sm:text-2xl">63 Years of You</p>
+            <p className="mt-2 font-serif text-xl text-tide sm:text-2xl">Weight Watchers 63 · 63 Years of You</p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Link
-                to="/find-your-year"
+                to="/programs"
                 className="rounded-2xl bg-white px-6 py-3.5 font-sans text-sm font-semibold text-ink transition hover:bg-cloud"
               >
-                Find Your Year
+                Start with your priorities
               </Link>
               <a
                 href="#join-next"
                 className="rounded-2xl border border-white/35 px-6 py-3.5 font-sans text-sm font-semibold text-white transition hover:bg-white/10"
               >
-                Start Your Next Chapter
+                Join what’s next
               </a>
             </div>
           </div>
