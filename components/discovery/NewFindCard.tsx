@@ -2,6 +2,7 @@ import { Link } from 'expo-router';
 import type { Href } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { ArtworkImage } from '@/components/ui/ArtworkImage';
 import { colors, fonts, portalBox, spacing } from '@/constants/theme';
 import { firstTrackForArtist, isBrandNew } from '@/lib/demoData';
 import type { UserProfile } from '@/types/models';
@@ -10,17 +11,13 @@ type NewFindCardProps = {
   artist: UserProfile;
 };
 
-/**
- * Stumble-upon artist card — unsigned / brand-new friend-group energy.
- * Discovery entry point, not a player.
- */
+/** Stumble-upon artist card — unsigned / brand-new friend-group energy. */
 export function NewFindCard({ artist }: NewFindCardProps) {
   const track = firstTrackForArtist(artist.id);
   const brandNew = isBrandNew(artist);
   const status = artist.status ?? 'UNSIGNED';
-  const href = (
-    track ? `/track/${track.id}` : `/artist/${artist.id}`
-  ) as Href;
+  const href = (track ? `/track/${track.id}` : `/artist/${artist.id}`) as Href;
+  const art = artist.avatarUrl || track?.artworkUrl;
 
   return (
     <Link href={href} asChild>
@@ -29,11 +26,12 @@ export function NewFindCard({ artist }: NewFindCardProps) {
           StyleSheet.flatten([styles.card, pressed && styles.pressed])
         }
       >
-        <View style={styles.thumb}>
-          <Text style={styles.thumbMark}>
-            {artist.displayName.charAt(0).toUpperCase()}
-          </Text>
-        </View>
+        <ArtworkImage
+          uri={art}
+          label={artist.displayName}
+          monogram={artist.displayName}
+          style={styles.thumb}
+        />
         <View style={styles.meta}>
           <View style={styles.badges}>
             <Text style={styles.badge}>{status}</Text>
@@ -75,16 +73,6 @@ const styles = StyleSheet.create({
   thumb: {
     width: 72,
     height: 72,
-    borderWidth: 1,
-    borderColor: colors.border,
-    backgroundColor: colors.surfaceRaised,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  thumbMark: {
-    fontFamily: fonts.condensedBold,
-    fontSize: 28,
-    color: colors.textDim,
   },
   meta: {
     flex: 1,

@@ -2,6 +2,7 @@ import { Link } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { RatingStars } from '@/components/social/RatingStars';
+import { ArtworkImage } from '@/components/ui/ArtworkImage';
 import { colors, fonts, portalBox, spacing } from '@/constants/theme';
 import { getTrackById } from '@/lib/demoData';
 import type { ActivityItem } from '@/types/models';
@@ -51,9 +52,12 @@ export function ActivityEntry({ item }: ActivityEntryProps) {
             StyleSheet.flatten([styles.trackRow, pressed && styles.pressed])
           }
         >
-          <View style={styles.thumb}>
-            <Text style={styles.thumbMark}>{track.artistName.charAt(0)}</Text>
-          </View>
+          <ArtworkImage
+            uri={track.artworkUrl}
+            label={track.title}
+            monogram={track.artistName}
+            style={styles.thumb}
+          />
           <View style={styles.meta}>
             <Text style={styles.title} numberOfLines={1}>
               {track.title}
@@ -113,16 +117,6 @@ const styles = StyleSheet.create({
   thumb: {
     width: 48,
     height: 48,
-    borderWidth: 1,
-    borderColor: colors.border,
-    backgroundColor: colors.surfaceRaised,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  thumbMark: {
-    fontFamily: fonts.sansBold,
-    fontSize: 16,
-    color: colors.textMuted,
   },
   meta: {
     flex: 1,

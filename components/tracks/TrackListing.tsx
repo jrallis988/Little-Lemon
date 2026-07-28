@@ -1,6 +1,7 @@
 import { Link } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { ArtworkImage } from '@/components/ui/ArtworkImage';
 import { colors, fonts, spacing } from '@/constants/theme';
 import type { Track } from '@/types/models';
 
@@ -25,9 +26,12 @@ export function TrackListing({ track, rank }: TrackListingProps) {
         {rank != null ? (
           <Text style={styles.rank}>{String(rank).padStart(2, '0')}</Text>
         ) : null}
-        <View style={styles.thumb}>
-          <Text style={styles.thumbMark}>{track.artistName.charAt(0)}</Text>
-        </View>
+        <ArtworkImage
+          uri={track.artworkUrl}
+          label={track.title}
+          monogram={track.artistName}
+          style={styles.thumb}
+        />
         <View style={styles.meta}>
           <Text style={styles.title} numberOfLines={1}>
             {track.title}
@@ -74,16 +78,6 @@ const styles = StyleSheet.create({
   thumb: {
     width: 44,
     height: 44,
-    borderWidth: 1,
-    borderColor: colors.border,
-    backgroundColor: colors.surfaceRaised,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  thumbMark: {
-    fontFamily: fonts.sansBold,
-    fontSize: 16,
-    color: colors.textMuted,
   },
   meta: {
     flex: 1,

@@ -8,6 +8,7 @@ import {
   type ViewStyle,
 } from 'react-native';
 
+import { ArtworkImage } from '@/components/ui/ArtworkImage';
 import { colors, fonts, portalBox, spacing } from '@/constants/theme';
 import { getArtistById } from '@/lib/demoData';
 import type { Track } from '@/types/models';
@@ -34,11 +35,12 @@ export function RecentlyFeaturedList({ tracks }: RecentlyFeaturedListProps) {
                 StyleSheet.flatten([styles.row, pressed && styles.pressed])
               }
             >
-              <View style={styles.thumb}>
-                <Text style={styles.thumbMark}>
-                  {track.artistName.charAt(0)}
-                </Text>
-              </View>
+              <ArtworkImage
+                uri={track.artworkUrl}
+                label={track.title}
+                monogram={track.artistName}
+                style={styles.thumb}
+              />
               <View style={styles.meta}>
                 <Text style={styles.name} numberOfLines={1}>
                   {track.artistName}
@@ -88,18 +90,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundElevated,
   },
   thumb: {
-    width: 48,
-    height: 48,
-    borderWidth: 1,
-    borderColor: colors.border,
-    backgroundColor: colors.surfaceRaised,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  thumbMark: {
-    fontFamily: fonts.sansBold,
-    fontSize: 16,
-    color: colors.textMuted,
+    width: 40,
+    height: 40,
   },
   meta: {
     flex: 1,

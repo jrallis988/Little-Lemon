@@ -1,9 +1,9 @@
 import { Link, type Href } from 'expo-router';
-import { Pressable, StyleSheet, Text, View, type ViewStyle } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View, type ViewStyle } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { colors, fonts } from '@/constants/theme';
-import type { FeatureTile } from '@/lib/demoData';
+import { getArtistById, getTrackById, type FeatureTile } from '@/lib/demoData';
 
 const TONE_COLORS: Record<FeatureTile['tone'], [string, string, string]> = {
   ash: ['#4A4A4A', '#2A2A2A', '#151515'],
@@ -21,7 +21,7 @@ type FeatureCardProps = {
 };
 
 /**
- * PureVolume mosaic tile — full-bleed visual, bottom title overlay.
+ * PureVolume mosaic tile — full-bleed artwork when available, bottom title overlay.
  */
 export function FeatureCard({ tile, style, minHeight = 140 }: FeatureCardProps) {
   const tones = TONE_COLORS[tile.tone];
@@ -29,14 +29,23 @@ export function FeatureCard({ tile, style, minHeight = 140 }: FeatureCardProps) 
     tile.trackId ? `/track/${tile.trackId}` : `/artist/${tile.artistId}`
   ) as Href;
   const cardStyle = StyleSheet.flatten([styles.card, { minHeight }, style]);
+  const track = tile.trackId ? getTrackById(tile.trackId) : undefined;
+  const artist = getArtistById(tile.artistId);
+  const art = track?.artworkUrl || artist?.avatarUrl || null;
 
   return (
     <Link href={href} asChild>
       <Pressable style={cardStyle}>
-        <LinearGradient colors={tones} style={StyleSheet.absoluteFill} />
-        <View style={styles.monogramWrap}>
-          <Text style={styles.monogram}>{tile.title.charAt(0)}</Text>
-        </View>
+        {art ? (
+          <Image source={{ uri: art }} style={StyleSheet.absoluteFill} />
+        ) : (
+          <>
+            <LinearGradient colors={tones} style={StyleSheet.absoluteFill} />
+            <View style={styles.monogramWrap}>
+              <Text style={styles.monogram}>{tile.title.charAt(0)}</Text>
+            </View>
+          </>
+        )}
         <LinearGradient
           colors={['transparent', 'rgba(0,0,0,0.45)', 'rgba(0,0,0,0.88)']}
           style={styles.overlay}

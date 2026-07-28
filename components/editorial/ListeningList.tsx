@@ -8,6 +8,7 @@ import {
   type ViewStyle,
 } from 'react-native';
 
+import { ArtworkImage } from '@/components/ui/ArtworkImage';
 import { colors, fonts, portalBox, spacing } from '@/constants/theme';
 import type { Track } from '@/types/models';
 
@@ -35,11 +36,13 @@ export function ListeningList({
               StyleSheet.flatten([styles.row, pressed && styles.pressed])
             }
           >
-            <View style={styles.avatar}>
-              <Text style={styles.avatarMark}>
-                {track.artistName.charAt(0)}
-              </Text>
-            </View>
+            <ArtworkImage
+              uri={track.artworkUrl}
+              label={track.title}
+              monogram={track.artistName}
+              style={styles.avatar}
+              rounded
+            />
             <View style={styles.meta}>
               <Text style={styles.song} numberOfLines={1}>
                 {track.title}
@@ -91,19 +94,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundElevated,
   },
   avatar: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    borderWidth: 1,
-    borderColor: colors.border,
-    backgroundColor: colors.surfaceRaised,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  avatarMark: {
-    fontFamily: fonts.sansBold,
-    fontSize: 13,
-    color: colors.textMuted,
+    width: 28,
+    height: 28,
   },
   meta: {
     flex: 1,

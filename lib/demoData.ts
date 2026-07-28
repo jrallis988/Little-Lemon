@@ -28,6 +28,7 @@ export const DEMO_ARTISTS: UserProfile[] = [
     lineupNote: 'Four roommates. One couch. First songs online this month.',
     joinedAt: '2026-07-08',
     catalogKind: 'emerging',
+    avatarUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'artist-secondhand-van',
@@ -45,6 +46,7 @@ export const DEMO_ARTISTS: UserProfile[] = [
     lineupNote: 'A group of friends who booked their first basement show last weekend.',
     joinedAt: '2026-07-14',
     catalogKind: 'emerging',
+    avatarUrl: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'artist-hallway-radio',
@@ -62,6 +64,7 @@ export const DEMO_ARTISTS: UserProfile[] = [
     lineupNote: 'Two friends + a neighbor on drums. Nobody signed. Yet.',
     joinedAt: '2026-07-18',
     catalogKind: 'emerging',
+    avatarUrl: 'https://images.unsplash.com/photo-1514320291840-3092126d9b2a?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'artist-night-shift-kids',
@@ -79,6 +82,7 @@ export const DEMO_ARTISTS: UserProfile[] = [
     lineupNote: 'College friends making tracks after closing shifts.',
     joinedAt: '2026-07-21',
     catalogKind: 'emerging',
+    avatarUrl: 'https://images.unsplash.com/photo-1571330735066-03aaa9429d89?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'artist-split-lip-sunday',
@@ -96,6 +100,7 @@ export const DEMO_ARTISTS: UserProfile[] = [
     lineupNote: 'High-school friends who never got a label call. Good.',
     joinedAt: '2026-06-29',
     catalogKind: 'emerging',
+    avatarUrl: 'https://images.unsplash.com/photo-1459749411175-04bf529e0013?auto=format&fit=crop&w=800&q=80',
   },
 
   {
@@ -114,6 +119,7 @@ export const DEMO_ARTISTS: UserProfile[] = [
     lineupNote: 'Modular night crew from Chicago warehouses.',
     joinedAt: '2024-03-12',
     catalogKind: 'emerging',
+    avatarUrl: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'artist-blackout-relay',
@@ -131,6 +137,7 @@ export const DEMO_ARTISTS: UserProfile[] = [
     lineupNote: 'Basement hardcore — same four kids since high school.',
     joinedAt: '2023-11-02',
     catalogKind: 'emerging',
+    avatarUrl: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'artist-chrome-petal',
@@ -148,6 +155,7 @@ export const DEMO_ARTISTS: UserProfile[] = [
     lineupNote: 'One laptop, one roommate, LA freeways at 2am.',
     joinedAt: '2024-08-19',
     catalogKind: 'emerging',
+    avatarUrl: 'https://images.unsplash.com/photo-1487180144351-b8472da7d491?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'artist-drift-kiln',
@@ -199,6 +207,7 @@ export const DEMO_ARTISTS: UserProfile[] = [
     lineupNote: 'Parking-lot rock with friends who still share a van.',
     joinedAt: '2024-06-22',
     catalogKind: 'emerging',
+    avatarUrl: 'https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'artist-north-exit',
@@ -216,6 +225,7 @@ export const DEMO_ARTISTS: UserProfile[] = [
     lineupNote: 'Three friends from Manchester, NH. One practice space.',
     joinedAt: '2025-09-03',
     catalogKind: 'emerging',
+    avatarUrl: 'https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'artist-oxide-room',
@@ -250,6 +260,7 @@ export const DEMO_ARTISTS: UserProfile[] = [
     lineupNote: 'Late-shift warehouse crew, Detroit.',
     joinedAt: '2022-12-09',
     catalogKind: 'emerging',
+    avatarUrl: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'artist-static-bloom',
@@ -267,6 +278,7 @@ export const DEMO_ARTISTS: UserProfile[] = [
     lineupNote: 'Tape-saturated Portland duo — still unsigned energy.',
     joinedAt: '2024-01-28',
     catalogKind: 'emerging',
+    avatarUrl: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'artist-volt-garden',
@@ -334,6 +346,7 @@ export const DEMO_TRACKS: Track[] = [
     repostCount: 9,
     scene: 'Indie',
     geography: 'Providence, RI',
+    artworkUrl: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'track-borrowed-cables',
@@ -346,6 +359,7 @@ export const DEMO_TRACKS: Track[] = [
     repostCount: 14,
     scene: 'Punk',
     geography: 'Richmond, VA',
+    artworkUrl: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'track-apartment-reverb',
@@ -358,6 +372,7 @@ export const DEMO_TRACKS: Track[] = [
     repostCount: 11,
     scene: 'Shoegaze',
     geography: 'Seattle, WA',
+    artworkUrl: 'https://images.unsplash.com/photo-1514320291840-3092126d9b2a?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'track-after-close',
@@ -370,6 +385,7 @@ export const DEMO_TRACKS: Track[] = [
     repostCount: 6,
     scene: 'Electronic',
     geography: 'Minneapolis, MN',
+    artworkUrl: 'https://images.unsplash.com/photo-1571330735066-03aaa9429d89?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'track-usb-first-ep',
@@ -382,6 +398,7 @@ export const DEMO_TRACKS: Track[] = [
     repostCount: 19,
     scene: 'Hardcore',
     geography: 'Cleveland, OH',
+    artworkUrl: 'https://images.unsplash.com/photo-1459749411175-04bf529e0013?auto=format&fit=crop&w=800&q=80',
   },
 
   {
@@ -395,6 +412,7 @@ export const DEMO_TRACKS: Track[] = [
     repostCount: 211,
     scene: 'Shoegaze',
     geography: 'Portland, OR',
+    artworkUrl: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'track-shift-change',
@@ -407,6 +425,7 @@ export const DEMO_TRACKS: Track[] = [
     repostCount: 88,
     scene: 'Industrial',
     geography: 'Detroit, MI',
+    artworkUrl: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'track-exit-ramp',
@@ -419,6 +438,7 @@ export const DEMO_TRACKS: Track[] = [
     repostCount: 73,
     scene: 'Punk',
     geography: 'Manchester, NH',
+    artworkUrl: 'https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'track-pixel-bruise',
@@ -431,6 +451,7 @@ export const DEMO_TRACKS: Track[] = [
     repostCount: 419,
     scene: 'Hyperpop',
     geography: 'Los Angeles, CA',
+    artworkUrl: 'https://images.unsplash.com/photo-1487180144351-b8472da7d491?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'track-bus-route-7',
@@ -443,6 +464,7 @@ export const DEMO_TRACKS: Track[] = [
     repostCount: 156,
     scene: 'Electronic',
     geography: 'Chicago, IL',
+    artworkUrl: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'track-sodium-glow',
@@ -455,6 +477,7 @@ export const DEMO_TRACKS: Track[] = [
     repostCount: 94,
     scene: 'Indie',
     geography: 'Austin, TX',
+    artworkUrl: 'https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'track-blown-cone',
@@ -467,6 +490,7 @@ export const DEMO_TRACKS: Track[] = [
     repostCount: 201,
     scene: 'Hardcore',
     geography: 'Brooklyn, NY',
+    artworkUrl: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=800&q=80',
   },
   {
     id: 'track-porch-mic',

@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 
+import { ArtworkImage } from '@/components/ui/ArtworkImage';
 import { colors, fonts, portalBox, spacing } from '@/constants/theme';
 import { getTrackById } from '@/lib/demoData';
 import type { TasteList } from '@/types/models';
@@ -27,9 +28,13 @@ export function ListCard({ list }: ListCardProps) {
       </Text>
       <View style={styles.thumbs}>
         {tracks.map((track) => (
-          <View key={track.id} style={styles.thumb}>
-            <Text style={styles.thumbMark}>{track.artistName.charAt(0)}</Text>
-          </View>
+          <ArtworkImage
+            key={track.id}
+            uri={track.artworkUrl}
+            label={track.title}
+            monogram={track.artistName}
+            style={styles.thumb}
+          />
         ))}
         <Text style={styles.count}>{list.trackIds.length} tracks</Text>
       </View>
@@ -74,16 +79,6 @@ const styles = StyleSheet.create({
   thumb: {
     width: 36,
     height: 36,
-    borderWidth: 1,
-    borderColor: colors.border,
-    backgroundColor: colors.surfaceRaised,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  thumbMark: {
-    fontFamily: fonts.sansBold,
-    fontSize: 13,
-    color: colors.textMuted,
   },
   count: {
     fontFamily: fonts.sans,

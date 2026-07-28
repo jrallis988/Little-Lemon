@@ -2,6 +2,7 @@ import { Link, useLocalSearchParams } from 'expo-router';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { RatingStars } from '@/components/social/RatingStars';
+import { ArtworkImage } from '@/components/ui/ArtworkImage';
 import { ReviewCard } from '@/components/social/ReviewCard';
 import { StaticBackground } from '@/components/ui/StaticBackground';
 import { colors, fonts, portalBox, spacing } from '@/constants/theme';
@@ -33,9 +34,12 @@ export default function TrackScreen() {
         contentContainerStyle={[styles.content, { paddingBottom: bottomInset }]}
       >
         <View style={styles.hero}>
-          <View style={styles.art}>
-            <Text style={styles.artMark}>{track.artistName.charAt(0)}</Text>
-          </View>
+          <ArtworkImage
+            uri={track.artworkUrl}
+            label={track.title}
+            monogram={track.artistName}
+            style={styles.art}
+          />
           <View style={styles.heroMeta}>
             <Text style={styles.title}>{track.title}</Text>
             <Link href={`/artist/${track.artistId}`}>
@@ -153,11 +157,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  artMark: {
-    fontFamily: fonts.condensedBold,
-    fontSize: 36,
-    color: colors.textDim,
-  },
+  
   heroMeta: {
     flex: 1,
     justifyContent: 'center',

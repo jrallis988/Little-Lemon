@@ -21,6 +21,7 @@ export const CATALOG_ARTISTS: UserProfile[] = [
     sceneDescription: 'Mainstream pop / Gen-Z diary rock.',
     catalogKind: 'catalog',
     joinedAt: '2010-01-01',
+    avatarUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/02/ed/8c/02ed8cab-c089-2fdd-7ce6-ab334a9a4e19/21UMGIM26093.rgb.jpg/600x600bb.jpg',
   },
   {
     id: 'artist-sabrina-carpenter',
@@ -37,6 +38,7 @@ export const CATALOG_ARTISTS: UserProfile[] = [
     sceneDescription: 'Contemporary pop / nightlife radio.',
     catalogKind: 'catalog',
     joinedAt: '2010-01-01',
+    avatarUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/a1/1c/ca/a11ccab6-7d4c-e041-d028-998bcebeb709/24UMGIM61704.rgb.jpg/600x600bb.jpg',
   },
   {
     id: 'artist-black-veil-brides',
@@ -53,6 +55,7 @@ export const CATALOG_ARTISTS: UserProfile[] = [
     sceneDescription: 'Scene / metalcore mainstream.',
     catalogKind: 'catalog',
     joinedAt: '2010-01-01',
+    avatarUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/9e/71/c4/9e71c4ca-b82c-ce51-e911-28cc4b194eed/0.jpg/600x600bb.jpg',
   },
   {
     id: 'artist-weird-al',
@@ -69,6 +72,7 @@ export const CATALOG_ARTISTS: UserProfile[] = [
     sceneDescription: 'Comedy / parody pop institution.',
     catalogKind: 'catalog',
     joinedAt: '2010-01-01',
+    avatarUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/97/86/99/978699ce-0f5c-eb47-e2aa-b45ca84ebc9a/886444695572.jpg/600x600bb.jpg',
   },
   {
     id: 'artist-billie-eilish',
@@ -85,6 +89,7 @@ export const CATALOG_ARTISTS: UserProfile[] = [
     sceneDescription: 'Global alt-pop.',
     catalogKind: 'catalog',
     joinedAt: '2010-01-01',
+    avatarUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/1a/37/d1/1a37d1b1-8508-54f2-f541-bf4e437dda76/19UMGIM05028.rgb.jpg/600x600bb.jpg',
   },
   {
     id: 'artist-taylor-swift',
@@ -101,6 +106,7 @@ export const CATALOG_ARTISTS: UserProfile[] = [
     sceneDescription: 'Stadium pop / re-recording era.',
     catalogKind: 'catalog',
     joinedAt: '2010-01-01',
+    avatarUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/03/3f/fc/033ffc8e-92c9-a104-d1d8-2737764cd42f/22UM1IM21884.rgb.jpg/600x600bb.jpg',
   },
   {
     id: 'artist-the-weeknd',
@@ -117,6 +123,7 @@ export const CATALOG_ARTISTS: UserProfile[] = [
     sceneDescription: 'Mainstream R&B / pop noir.',
     catalogKind: 'catalog',
     joinedAt: '2010-01-01',
+    avatarUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/a6/6e/bf/a66ebf79-5008-8948-b352-a790fc87446b/19UM1IM04638.rgb.jpg/600x600bb.jpg',
   },
   {
     id: 'artist-chappell-roan',
@@ -133,6 +140,7 @@ export const CATALOG_ARTISTS: UserProfile[] = [
     sceneDescription: '2020s breakout pop.',
     catalogKind: 'catalog',
     joinedAt: '2010-01-01',
+    avatarUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/29/a7/c4/29a7c478-351d-25eb-a116-3e68118cdab8/24UMGIM31246.rgb.jpg/600x600bb.jpg',
   },
   {
     id: 'artist-charli-xcx',
@@ -149,6 +157,7 @@ export const CATALOG_ARTISTS: UserProfile[] = [
     sceneDescription: 'Club-pop / hyperpop crossover.',
     catalogKind: 'catalog',
     joinedAt: '2010-01-01',
+    avatarUrl: 'https://coverartarchive.org/release-group/e0fdb431-0109-420d-8a37-f99eaeb4d671/front-500',
   },
   {
     id: 'artist-paramore',
@@ -165,6 +174,7 @@ export const CATALOG_ARTISTS: UserProfile[] = [
     sceneDescription: 'Warped-to-arena pop-punk.',
     catalogKind: 'catalog',
     joinedAt: '2010-01-01',
+    avatarUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/21/de/99/21de99a3-6eb6-5372-6a96-40d992808d9c/075679716224.jpg/600x600bb.jpg',
   },
   {
     id: 'artist-tame-impala',
@@ -181,6 +191,7 @@ export const CATALOG_ARTISTS: UserProfile[] = [
     sceneDescription: 'Modern psych / festival indie.',
     catalogKind: 'catalog',
     joinedAt: '2010-01-01',
+    avatarUrl: 'https://coverartarchive.org/release-group/08aa7a6c-3e43-4459-87b2-e47faf3a088a/front-500',
   },
   {
     id: 'artist-tyler-the-creator',
@@ -197,6 +208,7 @@ export const CATALOG_ARTISTS: UserProfile[] = [
     sceneDescription: 'Left-field hip-hop / art-rap.',
     catalogKind: 'catalog',
     joinedAt: '2010-01-01',
+    avatarUrl: 'https://coverartarchive.org/release-group/e248e931-c26c-4c94-aba2-2f89ce583901/front-500',
   },
   {
     id: 'artist-turnstile',
@@ -213,6 +225,7 @@ export const CATALOG_ARTISTS: UserProfile[] = [
     sceneDescription: 'Modern hardcore crossover.',
     catalogKind: 'catalog',
     joinedAt: '2010-01-01',
+    avatarUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/f0/59/7b/f0597b56-5d30-a9b0-f80d-a5f02d57db55/075679782793.jpg/600x600bb.jpg',
   },
   {
     id: 'artist-boygenius',
@@ -229,6 +242,7 @@ export const CATALOG_ARTISTS: UserProfile[] = [
     sceneDescription: 'Indie / folk-rock summit.',
     catalogKind: 'catalog',
     joinedAt: '2010-01-01',
+    avatarUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/ad/fc/81/adfc819e-00b2-3cb5-deb2-931a5b6da3fa/22UM1IM44998.rgb.jpg/600x600bb.jpg',
   },
   {
     id: 'artist-dua-lipa',
@@ -245,6 +259,7 @@ export const CATALOG_ARTISTS: UserProfile[] = [
     sceneDescription: 'Global dance-pop.',
     catalogKind: 'catalog',
     joinedAt: '2010-01-01',
+    avatarUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/6c/11/d6/6c11d681-aa3a-d59e-4c2e-f77e181026ab/190295092665.jpg/600x600bb.jpg',
   },
   {
     id: 'artist-arctic-monkeys',
@@ -261,6 +276,7 @@ export const CATALOG_ARTISTS: UserProfile[] = [
     sceneDescription: 'UK indie / rock catalog.',
     catalogKind: 'catalog',
     joinedAt: '2010-01-01',
+    avatarUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/69/9c/b5/699cb5d6-115c-ff73-9d26-e57ea4350d72/887828031795.png/600x600bb.jpg',
   },
   {
     id: 'artist-mitski',
@@ -277,6 +293,7 @@ export const CATALOG_ARTISTS: UserProfile[] = [
     sceneDescription: 'Indie / art-rock.',
     catalogKind: 'catalog',
     joinedAt: '2010-01-01',
+    avatarUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/04/bc/5e/04bc5edd-006a-a5d9-0f63-effb5956e44b/656605145068.jpg/600x600bb.jpg',
   },
   {
     id: 'artist-sleep-token',
@@ -293,6 +310,7 @@ export const CATALOG_ARTISTS: UserProfile[] = [
     sceneDescription: 'Modern metal / ritual rock.',
     catalogKind: 'catalog',
     joinedAt: '2010-01-01',
+    avatarUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/e2/c6/0f/e2c60f68-7cec-fa08-6dd3-891aa72c247e/5401148000849_cover.jpg/600x600bb.jpg',
   },
 ];
 
@@ -309,6 +327,7 @@ export const CATALOG_TRACKS: Track[] = [
     scene: 'Pop',
     geography: 'Los Angeles, CA',
     releaseYear: 2021,
+    artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/02/ed/8c/02ed8cab-c089-2fdd-7ce6-ab334a9a4e19/21UMGIM26093.rgb.jpg/600x600bb.jpg',
   },
   {
     id: 'track-good-4-u',
@@ -322,6 +341,7 @@ export const CATALOG_TRACKS: Track[] = [
     scene: 'Pop',
     geography: 'Los Angeles, CA',
     releaseYear: 2021,
+    artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/76/46/48/76464884-0e9c-1951-a3f6-ce02f74c2b19/21UMGIM26093.rgb.jpg/600x600bb.jpg',
   },
   {
     id: 'track-espresso',
@@ -335,6 +355,7 @@ export const CATALOG_TRACKS: Track[] = [
     scene: 'Pop',
     geography: 'Los Angeles, CA',
     releaseYear: 2024,
+    artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/a1/1c/ca/a11ccab6-7d4c-e041-d028-998bcebeb709/24UMGIM61704.rgb.jpg/600x600bb.jpg',
   },
   {
     id: 'track-please-please-please',
@@ -348,6 +369,7 @@ export const CATALOG_TRACKS: Track[] = [
     scene: 'Pop',
     geography: 'Los Angeles, CA',
     releaseYear: 2024,
+    artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/a1/1c/ca/a11ccab6-7d4c-e041-d028-998bcebeb709/24UMGIM61704.rgb.jpg/600x600bb.jpg',
   },
   {
     id: 'track-knives-and-pens',
@@ -361,6 +383,7 @@ export const CATALOG_TRACKS: Track[] = [
     scene: 'Metalcore',
     geography: 'Hollywood, CA',
     releaseYear: 2010,
+    artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/9e/71/c4/9e71c4ca-b82c-ce51-e911-28cc4b194eed/0.jpg/600x600bb.jpg',
   },
   {
     id: 'track-in-the-end-bvb',
@@ -374,6 +397,7 @@ export const CATALOG_TRACKS: Track[] = [
     scene: 'Metalcore',
     geography: 'Hollywood, CA',
     releaseYear: 2012,
+    artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/e5/85/b7/e585b7d1-b5f4-b6ab-2303-9be999870c64/00602537227075.rgb.jpg/600x600bb.jpg',
   },
   {
     id: 'track-word-crimes',
@@ -387,6 +411,7 @@ export const CATALOG_TRACKS: Track[] = [
     scene: 'Comedy',
     geography: 'Los Angeles, CA',
     releaseYear: 2014,
+    artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/97/86/99/978699ce-0f5c-eb47-e2aa-b45ca84ebc9a/886444695572.jpg/600x600bb.jpg',
   },
   {
     id: 'track-white-willy',
@@ -400,6 +425,7 @@ export const CATALOG_TRACKS: Track[] = [
     scene: 'Comedy',
     geography: 'Los Angeles, CA',
     releaseYear: 2006,
+    artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/cc/5c/3b/cc5c3b37-af82-f1e6-afa5-10be62ee7461/888880968999.jpg/600x600bb.jpg',
   },
   {
     id: 'track-bad-guy',
@@ -413,6 +439,7 @@ export const CATALOG_TRACKS: Track[] = [
     scene: 'Alt-Pop',
     geography: 'Los Angeles, CA',
     releaseYear: 2019,
+    artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/1a/37/d1/1a37d1b1-8508-54f2-f541-bf4e437dda76/19UMGIM05028.rgb.jpg/600x600bb.jpg',
   },
   {
     id: 'track-anti-hero',
@@ -426,6 +453,7 @@ export const CATALOG_TRACKS: Track[] = [
     scene: 'Pop',
     geography: 'Nashville, TN',
     releaseYear: 2022,
+    artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/03/3f/fc/033ffc8e-92c9-a104-d1d8-2737764cd42f/22UM1IM21884.rgb.jpg/600x600bb.jpg',
   },
   {
     id: 'track-blinding-lights',
@@ -439,6 +467,7 @@ export const CATALOG_TRACKS: Track[] = [
     scene: 'R&B',
     geography: 'Toronto, ON',
     releaseYear: 2019,
+    artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/a6/6e/bf/a66ebf79-5008-8948-b352-a790fc87446b/19UM1IM04638.rgb.jpg/600x600bb.jpg',
   },
   {
     id: 'track-good-luck-babe',
@@ -452,6 +481,7 @@ export const CATALOG_TRACKS: Track[] = [
     scene: 'Pop',
     geography: 'Los Angeles, CA',
     releaseYear: 2024,
+    artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/29/a7/c4/29a7c478-351d-25eb-a116-3e68118cdab8/24UMGIM31246.rgb.jpg/600x600bb.jpg',
   },
   {
     id: 'track-365',
@@ -465,6 +495,7 @@ export const CATALOG_TRACKS: Track[] = [
     scene: 'Hyperpop',
     geography: 'London, UK',
     releaseYear: 2024,
+    artworkUrl: 'https://coverartarchive.org/release-group/e0fdb431-0109-420d-8a37-f99eaeb4d671/front-500',
   },
   {
     id: 'track-this-is-why',
@@ -478,6 +509,7 @@ export const CATALOG_TRACKS: Track[] = [
     scene: 'Pop-Punk',
     geography: 'Franklin, TN',
     releaseYear: 2023,
+    artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/21/de/99/21de99a3-6eb6-5372-6a96-40d992808d9c/075679716224.jpg/600x600bb.jpg',
   },
   {
     id: 'track-the-less-i-know',
@@ -491,6 +523,7 @@ export const CATALOG_TRACKS: Track[] = [
     scene: 'Psych',
     geography: 'Perth, AU',
     releaseYear: 2015,
+    artworkUrl: 'https://coverartarchive.org/release-group/08aa7a6c-3e43-4459-87b2-e47faf3a088a/front-500',
   },
   {
     id: 'track-see-you-again-tyler',
@@ -504,6 +537,7 @@ export const CATALOG_TRACKS: Track[] = [
     scene: 'Hip-Hop',
     geography: 'Los Angeles, CA',
     releaseYear: 2017,
+    artworkUrl: 'https://coverartarchive.org/release-group/e248e931-c26c-4c94-aba2-2f89ce583901/front-500',
   },
   {
     id: 'track-holiday-turnstile',
@@ -517,6 +551,7 @@ export const CATALOG_TRACKS: Track[] = [
     scene: 'Hardcore',
     geography: 'Baltimore, MD',
     releaseYear: 2021,
+    artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/f0/59/7b/f0597b56-5d30-a9b0-f80d-a5f02d57db55/075679782793.jpg/600x600bb.jpg',
   },
   {
     id: 'track-not-strong-enough',
@@ -530,6 +565,7 @@ export const CATALOG_TRACKS: Track[] = [
     scene: 'Indie',
     geography: 'Los Angeles, CA',
     releaseYear: 2023,
+    artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/ad/fc/81/adfc819e-00b2-3cb5-deb2-931a5b6da3fa/22UM1IM44998.rgb.jpg/600x600bb.jpg',
   },
   {
     id: 'track-levitating',
@@ -543,6 +579,7 @@ export const CATALOG_TRACKS: Track[] = [
     scene: 'Pop',
     geography: 'London, UK',
     releaseYear: 2020,
+    artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/6c/11/d6/6c11d681-aa3a-d59e-4c2e-f77e181026ab/190295092665.jpg/600x600bb.jpg',
   },
   {
     id: 'track-do-i-wanna-know',
@@ -556,6 +593,7 @@ export const CATALOG_TRACKS: Track[] = [
     scene: 'Indie',
     geography: 'Sheffield, UK',
     releaseYear: 2013,
+    artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/69/9c/b5/699cb5d6-115c-ff73-9d26-e57ea4350d72/887828031795.png/600x600bb.jpg',
   },
   {
     id: 'track-nobody',
@@ -569,6 +607,7 @@ export const CATALOG_TRACKS: Track[] = [
     scene: 'Indie',
     geography: 'New York, NY',
     releaseYear: 2018,
+    artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/04/bc/5e/04bc5edd-006a-a5d9-0f63-effb5956e44b/656605145068.jpg/600x600bb.jpg',
   },
   {
     id: 'track-the-summoning',
@@ -582,5 +621,6 @@ export const CATALOG_TRACKS: Track[] = [
     scene: 'Metal',
     geography: 'London, UK',
     releaseYear: 2023,
+    artworkUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/e2/c6/0f/e2c60f68-7cec-fa08-6dd3-891aa72c247e/5401148000849_cover.jpg/600x600bb.jpg',
   },
 ];

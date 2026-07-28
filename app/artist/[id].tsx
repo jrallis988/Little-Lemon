@@ -2,6 +2,7 @@ import { useLocalSearchParams } from 'expo-router';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { ArtistArchiveMeta } from '@/components/artist/ArtistArchiveMeta';
+import { ArtworkImage } from '@/components/ui/ArtworkImage';
 import { TrackListing } from '@/components/tracks/TrackListing';
 import { StaticBackground } from '@/components/ui/StaticBackground';
 import { colors, fonts, portalBox, spacing } from '@/constants/theme';
@@ -48,11 +49,12 @@ export default function ArtistScreen() {
         contentContainerStyle={[styles.content, { paddingBottom: bottomInset }]}
       >
         <View style={styles.headerBox}>
-          <View style={styles.artwork}>
-            <Text style={styles.artworkMark}>
-              {artist.displayName.charAt(0).toUpperCase()}
-            </Text>
-          </View>
+          <ArtworkImage
+            uri={artist.avatarUrl}
+            label={artist.displayName}
+            monogram={artist.displayName}
+            style={styles.artwork}
+          />
           <View style={styles.headerMeta}>
             <Text style={styles.kicker}>
               {statusLabel}
@@ -136,11 +138,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  artworkMark: {
-    fontFamily: fonts.condensedBold,
-    fontSize: 28,
-    color: colors.textDim,
-  },
+  
   headerMeta: {
     flex: 1,
     justifyContent: 'center',

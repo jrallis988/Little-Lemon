@@ -1,6 +1,7 @@
 import { Link } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { ArtworkImage } from '@/components/ui/ArtworkImage';
 import { colors, fonts } from '@/constants/theme';
 import type { UserProfile } from '@/types/models';
 
@@ -29,11 +30,12 @@ export function DirectoryArtistRow({
           StyleSheet.flatten([styles.row, pressed && styles.pressed])
         }
       >
-        <View style={styles.thumb}>
-          <Text style={styles.thumbMark}>
-            {artist.displayName.charAt(0).toUpperCase()}
-          </Text>
-        </View>
+        <ArtworkImage
+          uri={artist.avatarUrl}
+          label={artist.displayName}
+          monogram={artist.displayName}
+          style={styles.thumb}
+        />
         <View style={styles.meta}>
           <View style={styles.nameRow}>
             <Text style={styles.name} numberOfLines={1}>
@@ -85,18 +87,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.toolbarActive,
   },
   thumb: {
-    width: 32,
-    height: 32,
-    borderWidth: 1,
-    borderColor: colors.border,
-    backgroundColor: colors.surfaceRaised,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  thumbMark: {
-    fontFamily: fonts.sans,
-    fontSize: 12,
-    color: colors.phosphorDim,
+    width: 40,
+    height: 40,
   },
   meta: {
     flex: 1,

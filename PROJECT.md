@@ -51,3 +51,19 @@ Expo SDK 57 · Expo Router · TypeScript · Supabase · Zustand · TanStack Quer
 ## Demo vs production
 
 Scaffold uses rich demo data. Supabase auth is wired. Spotify catalog sync is stubbed (`lib/spotify.ts`). Prefer extending existing patterns over inventing parallel design systems.
+
+
+## Artwork & leaving demo stage
+
+### Legal image sources we use
+- **Catalog artists/songs:** album artwork via **iTunes Search API** (Apple CDN) and **Cover Art Archive** / MusicBrainz (e.g. Brat, Flower Boy, Currents).
+- **Emerging / fictional unsigned acts:** **Unsplash** atmospheric music photos as placeholders — not claimed as press photos of those bands.
+- **Do not** scrape Google Images, Spotify without API terms, or fan-site rips.
+
+### Path off demo stage
+1. **Artist uploads** — Supabase Storage for unsigned press photos + track art (source of truth for Find lane).
+2. **Spotify / MusicBrainz sync** — pull `images` + album art for catalog coverage (~2010–present).
+3. **Persist URLs** on `artists.avatar_url` / `tracks.artwork_url` in Postgres (stop hardcoding seeds).
+4. Wire real **download / repost / log** writes so the UI isn’t demo-only.
+
+Until (1)+(2) ship, seeded CDN artwork is the bridge out of letter-monogram placeholders.
