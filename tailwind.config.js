@@ -10,6 +10,7 @@ export default {
         tide: "var(--tide)",
         "tide-deep": "var(--tide-deep)",
         buoy: "var(--buoy)",
+        barn: "var(--barn)",
         steel: "var(--steel)",
         salt: "var(--salt)",
       },

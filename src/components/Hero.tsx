@@ -12,6 +12,7 @@ export function Hero() {
           src="/images/campus-dusk.jpg"
           alt="Smuttynose Brewing on Towle Farm at golden hour — red brewery building and grain silos"
           className="h-full w-full object-cover animate-ken-burns"
+          fetchPriority="high"
         />
         {/* Sunset mood overlays */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#1a0e08]/90 via-[#3a1d10]/35 to-[#1b3a55]/45" />

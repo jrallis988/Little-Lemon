@@ -39,6 +39,23 @@ export function Taproom() {
             <dl className="mt-10 space-y-5 text-sm">
               <div>
                 <dt className="font-semibold uppercase tracking-[0.16em] text-salt">
+                  From the beach
+                </dt>
+                <dd className="mt-1 text-base text-foam/90">
+                  ~10 minutes from Hampton Beach · Route 27 / Towle Farm Road
+                </dd>
+              </div>
+              <div>
+                <dt className="font-semibold uppercase tracking-[0.16em] text-salt">
+                  Parking
+                </dt>
+                <dd className="mt-1 text-base text-foam/90">
+                  Free on-site lot at the brewery entrance — look for the red
+                  building and silos.
+                </dd>
+              </div>
+              <div>
+                <dt className="font-semibold uppercase tracking-[0.16em] text-salt">
                   Backyard hours
                 </dt>
                 <dd className="mt-1 text-base text-foam/90">
@@ -97,8 +114,8 @@ export function Taproom() {
               </h3>
             </div>
             <p className="max-w-md text-sm text-foam/70">
-              Minutes from Hampton Beach — set the GPS to Towle Farm Road and
-              look for the brewery campus.
+              About a 10-minute drive from Hampton Beach. Free parking on campus
+              — set GPS to Towle Farm Road.
             </p>
           </div>
           <div className="overflow-hidden border border-foam/15 bg-ink/30">

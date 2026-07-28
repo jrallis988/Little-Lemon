@@ -45,6 +45,9 @@ export function Footer() {
           <a href="#shop" className="transition-colors hover:text-foam">
             Shop
           </a>
+          <a href="#contact" className="transition-colors hover:text-foam">
+            Contact
+          </a>
           <a
             href={links.home}
             target="_blank"
