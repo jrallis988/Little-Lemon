@@ -10,10 +10,13 @@ import { cn } from "@/lib/utils"
 const NAV = [
   { to: "/catalog?department=Women", label: "Women" },
   { to: "/catalog?department=Men", label: "Men" },
-  { to: "/catalog?category=Shoes", label: "Shoes" },
+  { to: "/catalog?department=Boys", label: "Boys" },
+  { to: "/catalog?department=Girls", label: "Girls" },
+  { to: "/catalog?department=Juniors", label: "Jr's" },
+  { to: "/catalog?department=Kids", label: "Kids" },
   { to: "/catalog?department=Home", label: "Home" },
   { to: "/catalog?department=Beauty", label: "Beauty" },
-  { to: "/catalog?department=Kids", label: "Kids" },
+  { to: "/catalog?department=Pets", label: "Pet" },
 ]
 
 const PROMO_MESSAGES = [

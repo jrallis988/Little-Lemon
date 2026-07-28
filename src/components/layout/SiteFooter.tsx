@@ -47,13 +47,23 @@ export function SiteFooter() {
                 Shopping
               </p>
               <ul className="space-y-2 text-sm">
-                {["Women", "Men", "Kids", "Home", "Shoes", "Clearance"].map((item) => (
-                  <li key={item}>
+                {[
+                  { label: "Women", to: "/catalog?department=Women" },
+                  { label: "Men", to: "/catalog?department=Men" },
+                  { label: "Boys", to: "/catalog?department=Boys" },
+                  { label: "Girls", to: "/catalog?department=Girls" },
+                  { label: "Jr's", to: "/catalog?department=Juniors" },
+                  { label: "Kids", to: "/catalog?department=Kids" },
+                  { label: "Home", to: "/catalog?department=Home" },
+                  { label: "Pet", to: "/catalog?department=Pets" },
+                  { label: "Clearance", to: "/catalog?sort=discount" },
+                ].map((item) => (
+                  <li key={item.label}>
                     <Link
-                      to={item === "Clearance" ? "/catalog?sort=discount" : "/catalog"}
+                      to={item.to}
                       className="text-foreground/80 no-underline hover:text-primary"
                     >
-                      {item}
+                      {item.label}
                     </Link>
                   </li>
                 ))}

@@ -66,14 +66,14 @@ const HERO_SLIDES = [
   },
   {
     id: "kids",
-    eyebrow: "Kids & baby",
+    eyebrow: "Boys · Girls · Jr's",
     title: "Little looks. Big savings.",
     subtitle: "Clothes, shoes & gear.",
     copy: "Outfit the whole crew without the department-store ticket.",
     image:
       "https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=1400&q=80",
-    primary: { label: "Shop Kids", to: "/catalog?department=Kids" },
-    secondary: { label: "Shop New", to: "/catalog?sort=newest" },
+    primary: { label: "Shop Boys", to: "/catalog?department=Boys" },
+    secondary: { label: "Shop Girls", to: "/catalog?department=Girls" },
   },
 ]
 
@@ -91,16 +91,34 @@ const DEPARTMENTS = [
       "https://images.unsplash.com/photo-1617137968427-85924c800a22?auto=format&fit=crop&w=800&h=600&q=80",
   },
   {
+    label: "Boys",
+    to: "/catalog?department=Boys",
+    image:
+      "https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=800&h=600&q=80",
+  },
+  {
+    label: "Girls",
+    to: "/catalog?department=Girls",
+    image:
+      "https://images.unsplash.com/photo-1518834107812-67b0b7c58434?auto=format&fit=crop&w=800&h=600&q=80",
+  },
+  {
+    label: "Jr's",
+    to: "/catalog?department=Juniors",
+    image:
+      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&h=600&q=80",
+  },
+  {
+    label: "Kids",
+    to: "/catalog?department=Kids",
+    image:
+      "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?auto=format&fit=crop&w=800&h=600&q=80",
+  },
+  {
     label: "Home",
     to: "/catalog?department=Home",
     image:
       "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&h=600&q=80",
-  },
-  {
-    label: "Shoes",
-    to: "/catalog?category=Shoes",
-    image:
-      "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=800&h=600&q=80",
   },
   {
     label: "Beauty",
@@ -109,10 +127,16 @@ const DEPARTMENTS = [
       "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=800&h=600&q=80",
   },
   {
-    label: "Kids",
-    to: "/catalog?department=Kids",
+    label: "Pet",
+    to: "/catalog?department=Pets",
     image:
-      "https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=800&h=600&q=80",
+      "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&h=600&q=80",
+  },
+  {
+    label: "Shoes",
+    to: "/catalog?category=Shoes",
+    image:
+      "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=800&h=600&q=80",
   },
   {
     label: "Accessories",

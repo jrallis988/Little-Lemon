@@ -1,4 +1,13 @@
-export type Department = "Women" | "Men" | "Kids" | "Home" | "Beauty"
+export type Department =
+  | "Women"
+  | "Men"
+  | "Boys"
+  | "Girls"
+  | "Juniors"
+  | "Kids"
+  | "Home"
+  | "Beauty"
+  | "Pets"
 export type BrandTier = "Designer" | "Contemporary" | "Modern Essentials"
 export type InventoryStatus = "in_stock" | "low_stock" | "out_of_stock" | "online_only"
 
