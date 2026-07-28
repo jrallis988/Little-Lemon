@@ -1,33 +1,77 @@
 export type EventItem = {
   title: string;
-  when: string;
+  dayOffset: number; // 0 = Sunday ... 6 = Saturday within current week
+  time: string;
   where: string;
   detail: string;
 };
 
-export const events: EventItem[] = [
+/** Recurring weekly campus happenings — resolved to this week's dates in the UI */
+export const weeklyEvents: EventItem[] = [
   {
     title: "Trivia Night",
-    when: "Weekly · 6:00–8:30 PM",
+    dayOffset: 3, // Wednesday
+    time: "6:00–8:30 PM",
     where: "Restaurant",
     detail: "Trivia with DJ Koko. First come, first serve seating.",
   },
   {
     title: "Backyard Club",
-    when: "Fri–Sun · Noon–8 PM",
+    dayOffset: 5, // Friday
+    time: "Noon–8 PM",
     where: "The Backyard",
-    detail: "Cold pours, patio hangs, and rotating live music all season.",
+    detail: "Cold pours, patio hangs, and rotating live music.",
   },
   {
-    title: "Food Truck Lineup",
-    when: "Rotating weekly",
+    title: "Food Truck Friday",
+    dayOffset: 5,
+    time: "Noon–7 PM",
     where: "Campus",
-    detail: "Local trucks keep the menu fresh — check Facebook for this week’s schedule.",
+    detail: "Rotating local trucks — check Facebook for this week’s vendor.",
   },
   {
-    title: "Members-Only Parties",
-    when: "Annual",
-    where: "Towle Farm",
-    detail: "Suds Club exclusive invites for release parties and member nights.",
+    title: "Weekend Backyard",
+    dayOffset: 6, // Saturday
+    time: "Noon–8 PM",
+    where: "The Backyard",
+    detail: "All-day patio energy. Dogs welcome. Live sets when scheduled.",
+  },
+  {
+    title: "Sunday Sessions",
+    dayOffset: 0, // Sunday
+    time: "Noon–8 PM",
+    where: "The Backyard",
+    detail: "Easy pours, family-friendly hangs, and golden-hour patio seats.",
   },
 ];
+
+export function startOfWeek(date = new Date()) {
+  const d = new Date(date);
+  const day = d.getDay();
+  d.setHours(0, 0, 0, 0);
+  d.setDate(d.getDate() - day);
+  return d;
+}
+
+export function dateForWeekday(dayOffset: number, from = new Date()) {
+  const start = startOfWeek(from);
+  const d = new Date(start);
+  d.setDate(start.getDate() + dayOffset);
+  return d;
+}
+
+export function formatEventDay(date: Date) {
+  return date.toLocaleDateString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+  });
+}
+
+export function thisWeekLabel(from = new Date()) {
+  const start = startOfWeek(from);
+  const end = new Date(start);
+  end.setDate(start.getDate() + 6);
+  const opts: Intl.DateTimeFormatOptions = { month: "short", day: "numeric" };
+  return `${start.toLocaleDateString("en-US", opts)} – ${end.toLocaleDateString("en-US", opts)}`;
+}

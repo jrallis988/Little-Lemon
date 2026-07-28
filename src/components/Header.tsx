@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { SealMark } from "./SealMark";
 
 const links = [
   { href: "#beers", label: "Beers" },
@@ -60,9 +61,10 @@ export function Header() {
       <div className="mx-auto flex max-w-site items-center justify-between px-5 py-4 md:px-8">
         <a
           href="#top"
-          className="font-display text-2xl font-bold uppercase tracking-[0.06em] md:text-[1.7rem]"
+          className="inline-flex items-center gap-2.5 font-display text-2xl font-bold uppercase tracking-[0.06em] md:text-[1.7rem]"
         >
-          Smuttynose
+          <SealMark className="h-8 w-8 shrink-0" />
+          <span>Smuttynose</span>
         </a>
 
         <nav className="hidden items-center gap-6 lg:flex" aria-label="Primary">

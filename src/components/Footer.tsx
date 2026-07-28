@@ -1,13 +1,17 @@
 import { links } from "../data/links";
+import { SealMark } from "./SealMark";
 
 export function Footer() {
   return (
     <footer className="border-t border-ink/10 bg-ink text-foam">
       <div className="mx-auto flex max-w-site flex-col gap-8 px-5 py-12 md:flex-row md:items-end md:justify-between md:px-8">
         <div>
-          <p className="font-display text-3xl font-bold uppercase tracking-[0.06em]">
-            Smuttynose
-          </p>
+          <div className="inline-flex items-center gap-3">
+            <SealMark className="h-9 w-9 text-foam" />
+            <p className="font-display text-3xl font-bold uppercase tracking-[0.06em]">
+              Smuttynose
+            </p>
+          </div>
           <p className="mt-2 max-w-sm text-sm text-foam/70">
             Smuttynose Brewing · Hampton, New Hampshire · Est. 1994
           </p>
