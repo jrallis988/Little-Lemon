@@ -9,7 +9,7 @@ export default function Hero() {
           alt=""
           width="1600"
           height="900"
-          fetchPriority="high"
+          fetchpriority="high"
           decoding="async"
         />
         <div className="hero__shade" />

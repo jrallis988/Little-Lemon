@@ -545,6 +545,40 @@ export const FAQ_SECTIONS = [
   },
 ];
 
+export const COOKIE_POLICY = {
+  title: "Cookie policy",
+  updated: "July 28, 2026",
+  intro:
+    "Welcome to Seascape Inn. This Cookie Policy explains how we use cookies and similar tracking technologies on our website to recognize you when you visit, remember your preferences, and support our booking and reservation platform.",
+  sections: [
+    {
+      title: "What are cookies?",
+      body: "Cookies are small data files placed on your computer or mobile device when you visit a website. They are widely used by website owners to make their websites work efficiently, as well as to provide reporting information.",
+    },
+    {
+      title: "How we use cookies",
+      body: "We use cookies for several essential purposes:",
+      bullets: [
+        "Essential & session cookies — Required to operate our website, maintain your secure session, and process room reservations safely.",
+        "Functional cookies — Used to remember your preferences and settings (such as language or check-in details) to enhance your experience.",
+        "Analytical & performance cookies — Help us understand how visitors interact with our website by collecting and reporting information anonymously, so we can improve site performance.",
+      ],
+    },
+    {
+      title: "Managing or disabling cookies",
+      body: "Most web browsers automatically accept cookies, but you can usually modify your browser settings to decline cookies if you prefer. Please note that disabling essential or session cookies may prevent you from completing a reservation or accessing certain functional areas of the Seascape Inn website.",
+    },
+    {
+      title: "Updates to this cookie policy",
+      body: "We may update this Cookie Policy from time to time to reflect operational, legal, or regulatory changes. Please revisit this page periodically to stay informed about our use of cookies.",
+    },
+    {
+      title: "Contact us",
+      body: `If you have questions about our use of cookies, please call ${SITE.phone} or email ${SITE.email}.`,
+    },
+  ],
+};
+
 export const GALLERY = [
   {
     src: asset("/images/seascape-photo2.jpg"),

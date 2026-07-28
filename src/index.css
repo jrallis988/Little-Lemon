@@ -1502,9 +1502,82 @@ p {
   font-size: 0.95rem;
 }
 
+.footer__cookies {
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  scroll-margin-top: calc(var(--nav-h) + 1rem);
+}
+
+.footer__cookies-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1.25rem;
+}
+
+.footer__cookies h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: var(--foam);
+  font-weight: 600;
+}
+
+.footer__cookies-updated {
+  margin: 0;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.footer__cookies-intro {
+  margin: 0.85rem 0 0;
+  max-width: 70ch;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.95rem;
+}
+
+.footer__cookies-sections {
+  margin-top: 1.25rem;
+  display: grid;
+  gap: 1.15rem;
+}
+
+.footer__cookies-sections h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--foam);
+}
+
+.footer__cookies-sections p,
+.footer__cookies-sections li {
+  margin: 0.35rem 0 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.95rem;
+  max-width: 70ch;
+}
+
+.footer__cookies-sections ul {
+  margin: 0.5rem 0 0;
+  padding-left: 1.15rem;
+  display: grid;
+  gap: 0.4rem;
+}
+
 .footer__copy {
   font-size: 0.85rem;
   color: rgba(255, 255, 255, 0.6);
+}
+
+.footer__copy a {
+  color: rgba(255, 255, 255, 0.78);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.footer__copy a:hover {
+  color: var(--sun);
 }
 
 .footer__bottom {
