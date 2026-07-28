@@ -5,7 +5,8 @@ const links = [
   { href: "#play", label: "Play" },
   { href: "#focus", label: "Focus" },
   { href: "#about", label: "About" },
-  { href: "#skills", label: "Stack" },
+  { href: "#bring", label: "Bring" },
+  { href: "#skills", label: "Toolkit" },
   { href: "#contact", label: "Contact" },
 ];
 
@@ -42,7 +43,7 @@ export default function Nav() {
           James Rallis
         </a>
 
-        <nav className="hidden items-center gap-5 lg:gap-7 md:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-4 lg:gap-6 md:flex" aria-label="Primary">
           {links.map((link) => (
             <a key={link.href} href={link.href} className="nav-link text-sm font-medium text-sand">
               {link.label}

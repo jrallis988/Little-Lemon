@@ -5,6 +5,7 @@ import Work from "./components/Work";
 import Playground from "./components/Playground";
 import Focus from "./components/Focus";
 import About from "./components/About";
+import Bring from "./components/Bring";
 import Skills from "./components/Skills";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
@@ -26,6 +27,7 @@ function App() {
         <Playground />
         <Focus />
         <About />
+        <Bring />
         <Skills />
         <Contact />
       </main>

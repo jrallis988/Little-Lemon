@@ -1,68 +1,76 @@
 const groups = [
   {
-    title: "Front-end",
+    title: "Core languages & environment",
     items: [
+      "JavaScript (ES6+)",
       "TypeScript",
+      "Python",
+      "VS Code / Cursor",
+      "Git & GitHub",
+      "iTerm2 / Warp · Homebrew",
+    ],
+  },
+  {
+    title: "Front-end web & mobile",
+    items: [
+      "HTML5",
+      "Modern CSS / SCSS",
       "React & Next.js",
       "Tailwind CSS",
-      "Accessible, responsive UI",
-      "Component-driven design",
+      "Cross-platform mobile UI",
+      "Touch-optimized interfaces",
     ],
   },
   {
-    title: "Interactive & game",
+    title: "Data science & backend",
     items: [
-      "Phaser.js (2D HTML5)",
-      "Three.js (browser 3D)",
-      "Canvas game loops",
-      "Sprite & vector asset pipeline",
-      "Atmospheric UI for play",
+      "Pandas & NumPy",
+      "Data cleaning",
+      "Structured data pipelines",
+      "FastAPI",
+      "Serverless architecture",
+      "REST APIs & JSON",
     ],
   },
   {
-    title: "AI & backend",
+    title: "Cloud & hosting",
     items: [
-      "Python & FastAPI",
-      "LangChain / LlamaIndex",
-      "Chroma & Pinecone",
-      "OpenAI & Anthropic SDKs",
-      "API design & Postman",
-    ],
-  },
-  {
-    title: "Ship & ops",
-    items: [
-      "Git & GitHub",
-      "GitHub Actions CI/CD",
-      "Vercel (frontend)",
-      "Railway / Render (backend)",
-      "Docker / OrbStack",
+      "AWS Amplify, Lambda, S3, CloudFront",
+      "Azure Static Web Apps & App Service",
+      "Vercel",
+      "GitHub Pages",
     ],
   },
 ];
 
 export default function Skills() {
   return (
-    <section id="skills" className="bg-ink py-24 md:py-32">
-      <div className="container">
+    <section id="skills" className="relative overflow-hidden bg-ink-soft py-24 md:py-32">
+      <div
+        className="pointer-events-none absolute -left-16 top-20 h-64 w-64 rounded-full bg-foam/10 blur-3xl"
+        aria-hidden="true"
+      />
+      <div className="container relative">
         <div className="mb-12 max-w-2xl stagger">
           <p className="reveal mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-foam">
-            Stack
+            Toolkit
           </p>
           <h2 className="reveal font-display text-3xl font-bold text-chalk md:text-5xl">
-            A blueprint built to ship—and to play.
+            The essential developer toolkit.
           </h2>
           <p className="reveal mt-4 text-base leading-relaxed text-sand/85 md:text-lg">
-            Product UI and AI backends stay core. Interactive and game work adds Phaser,
-            Three.js, and a custom asset pipeline for web-native prototypes. Mobile
-            (React Native + Expo) remains an optional expansion.
+            Languages, product UI, data/backends, and cloud hosting—the stack I use
+            to ship from idea to production. Interactive prototypes (Phaser, Three.js,
+            canvas) live in the Play section when the work calls for them.
           </p>
         </div>
 
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 stagger">
           {groups.map((group) => (
             <div key={group.title} className="reveal">
-              <h3 className="font-display text-xl font-bold text-foam-soft">{group.title}</h3>
+              <h3 className="font-display text-lg font-bold text-foam-soft md:text-xl">
+                {group.title}
+              </h3>
               <ul className="mt-5 space-y-3">
                 {group.items.map((item) => (
                   <li

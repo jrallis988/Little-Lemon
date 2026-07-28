@@ -32,14 +32,14 @@ export default function Hero() {
             className="max-w-2xl font-display text-3xl font-bold leading-tight text-chalk sm:text-4xl md:text-5xl animate-fade-up"
             style={{ animationDelay: "0.18s" }}
           >
-            Building calm interfaces—and the systems and playable prototypes behind them.
+            Building calm interfaces—and the systems that keep them fast.
           </h1>
           <p
             className="mt-5 max-w-xl text-base leading-relaxed text-sand/90 sm:text-lg animate-fade-up"
             style={{ animationDelay: "0.3s" }}
           >
-            React and Next.js on the surface. FastAPI, RAG, and web game prototypes
-            when the product needs more than a pretty shell.
+            Make it fast, make it clean, and get out of the user&apos;s way—from React
+            and Next.js through Python backends and AWS/Azure.
           </p>
           <div
             className="mt-9 flex flex-wrap gap-3 animate-fade-up"
