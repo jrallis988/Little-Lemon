@@ -1,0 +1,32 @@
+# StaticVolume — Cursor rules
+
+## Vision
+Spiritual successor to **PureVolume** (2003–2018 indie discovery portal) + **Letterboxd for music**.
+Read `PROJECT.md` before large UI or product changes.
+
+## Hard product rules
+- **Not a music player.** No GlobalAudioBar, waveform transport, Expo AV playback UI, embedded Spotify player, queue, or “Listen Now” streaming chrome.
+- Catalog listening = **Open on Spotify** (outbound). Never import/proxy Spotify audio.
+- Artist signals: **Downloads + Reposts**. Play counts private. No track likes.
+- Featured / Just Found = human editorial only (no engagement ranking).
+- Following feed stays chronological (no algo ranking).
+- Keep PureVolume portal aesthetic: light canvas, black header, blue links, Barlow, mosaic/grid, bordered dossiers.
+- Spotify green only on outbound Spotify CTAs.
+- Avoid purple SaaS gradients, glassmorphism, Inter/Roboto defaults, and hero card clutter.
+
+## Phase order (do not skip ahead)
+1. Spotify outbound → 2. Artist uploads → 3. Persist taste in Supabase → 4. Catalog metadata + search → 5. Discovery/editorial → 6. Profiles & activity → 7. Trust & scale.
+
+## Must-have surfaces
+- Editorial home (mosaic + charts + Just Found + reviews)
+- Find (unsigned / brand-new)
+- Artists A–Z + search hybrid
+- Catalog Search (artist · song · genre)
+- Activity / diary / lists (Letterboxd layer)
+- **History timeline** (PureVolume founding → present / StaticVolume)
+
+## When adding features
+- Prefer portal boxes, section headers, and table-density lists over card stacks in heroes.
+- Emerging finds and contemporary catalog coexist (`catalogKind`).
+- Ask: does this help discover, understand, support an artist, or express taste?
+- Timeline copy should stay historically grounded (2003 launch, PurePicks, SpinMedia 2010, Hive 2016, shutdown 2018).
