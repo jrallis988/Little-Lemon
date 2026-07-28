@@ -20,6 +20,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { TrustCallout } from "@/components/design/trust-callout";
+import { SmartSwitchBadge } from "@/components/coupon/smart-switch-badge";
 import { formatCurrency } from "@/lib/pricing";
 import type {
   CouponBinDetails,
@@ -298,7 +299,7 @@ export function CouponModal({
           </TrustCallout>
 
           <div className="rounded-2xl bg-primary px-4 py-5 text-primary-foreground">
-            <p className="text-sm opacity-90">Trump RX coupon price</p>
+            <p className="text-sm opacity-90">Counter price (show this)</p>
             <p className="font-display text-4xl font-semibold tabular-nums sm:text-5xl">
               {formatCurrency(offer.couponPrice)}
             </p>
@@ -308,6 +309,18 @@ export function CouponModal({
               {formatCurrency(offer.retailPrice - offer.couponPrice)}
             </p>
           </div>
+
+          <SmartSwitchBadge
+            className="no-print"
+            pharmacyId={pharmacy.id}
+            pharmacyName={pharmacy.name}
+            drugId={drug.id}
+            strengthId={offer.strengthId}
+            quantity={offer.quantity}
+            supplyDays={offer.supplyDays}
+            couponPrice={offer.couponPrice}
+            coupon={coupon}
+          />
 
           <BarcodeDisplay value={coupon.barcodeValue} large={pharmacistMode} />
 

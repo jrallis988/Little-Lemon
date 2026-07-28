@@ -36,15 +36,19 @@ const envSchema = z
     STRIPE_WEBHOOK_SECRET: z.string().optional(),
     STRIPE_PLUS_PRICE_ID: z.string().optional(),
     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string().optional(),
-    ALERTS_CRON_SECRET: z.string().optional(),
-    RESEND_API_KEY: z.string().optional(),
-    RESEND_FROM_EMAIL: z.string().email().optional(),
-    TWILIO_ACCOUNT_SID: z.string().optional(),
-    TWILIO_AUTH_TOKEN: z.string().optional(),
-    TWILIO_FROM_NUMBER: z.string().optional(),
-    NEXT_PUBLIC_APP_URL: z.string().default("http://127.0.0.1:3000"),
-    NEXT_PUBLIC_APP_NAME: z.string().default("Trump RX"),
-  })
+  ALERTS_CRON_SECRET: z.string().optional(),
+  RESEND_API_KEY: z.string().optional(),
+  RESEND_FROM_EMAIL: z.string().email().optional(),
+  TWILIO_ACCOUNT_SID: z.string().optional(),
+  TWILIO_AUTH_TOKEN: z.string().optional(),
+  TWILIO_FROM_NUMBER: z.string().optional(),
+  SWITCH_API_URL: z.string().url().optional(),
+  SWITCH_API_KEY: z.string().optional(),
+  TELEHEALTH_PARTNER_URL: z.string().url().optional(),
+  MAIL_ORDER_PARTNER_URL: z.string().url().optional(),
+  NEXT_PUBLIC_APP_URL: z.string().default("http://127.0.0.1:3000"),
+  NEXT_PUBLIC_APP_NAME: z.string().default("Trump RX"),
+})
   .superRefine((val, ctx) => {
     if (val.PRICING_PROVIDER === "external" && !val.PRICING_API_URL) {
       ctx.addIssue({

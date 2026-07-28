@@ -32,6 +32,9 @@ import { CouponModal } from "@/components/coupon/coupon-modal";
 import { EmptyState } from "@/components/design/empty-state";
 import { TrustCallout } from "@/components/design/trust-callout";
 import { PriceDisplay } from "@/components/design/price-display";
+import { InsuranceVsCashMatrix } from "@/components/pricing/insurance-vs-cash-matrix";
+import { BenchmarkDrawer } from "@/components/pricing/benchmark-drawer";
+import { FulfillmentPanel } from "@/components/fulfillment/fulfillment-panel";
 import { useLocationStore } from "@/lib/store/location-store";
 import type {
   Drug,
@@ -40,6 +43,7 @@ import type {
   SearchFilters,
   SupplyDays,
 } from "@/lib/types";
+import { formatCurrency } from "@/lib/pricing";
 
 interface PricingMatrixProps {
   drug: Drug;
@@ -323,6 +327,14 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
+          <BenchmarkDrawer
+            drugId={drug.id}
+            genericName={drug.genericName}
+            brandName={drug.brandName}
+            quantity={filters.quantity}
+            supplyDays={filters.supplyDays}
+            rows={rows}
+          />
           <Button
             type="button"
             variant="outline"
@@ -360,9 +372,10 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
         </p>
       )}
 
-      <TrustCallout variant="warning" title="Check your insurance copay first">
-        Trump RX coupons are cash discount prices — not insurance. If your plan
-        copay is lower, use insurance at the pharmacy.
+      <TrustCallout variant="warning" title="Seen price = counter price">
+        The number below is the cash coupon you show at the pharmacy — not a
+        teaser. Trump RX is <strong>not insurance</strong>. If your plan copay is
+        lower, use insurance instead.
       </TrustCallout>
 
       {/* Sticky filters */}
@@ -454,21 +467,13 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
             <Lightbulb className="mt-0.5 size-5 shrink-0 text-savings" aria-hidden />
             <div>
               <p className="font-semibold">
-                Lowest nearby: {lowest.pharmacy.name}
+                Counter price at {lowest.pharmacy.name}
               </p>
               <p className="text-sm text-foreground/80">
-                Generic <strong>{drug.genericName}</strong> is typically filled
-                instead of brand {drug.brandName}.{" "}
-                <button
-                  type="button"
-                  className="font-medium text-primary underline-offset-2 hover:underline"
-                  onClick={() => {
-                    const el = document.getElementById("why-this-price");
-                    el?.scrollIntoView({ behavior: "smooth", block: "start" });
-                  }}
-                >
-                  Why this price?
-                </button>
+                <strong>{formatCurrency(lowest.offer.couponPrice)}</strong> cash
+                with coupon — same number you show the pharmacist. Generic{" "}
+                <strong>{drug.genericName}</strong> is typically filled instead of
+                brand {drug.brandName}.
               </p>
             </div>
           </div>
@@ -493,9 +498,9 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
             {showAll ? `All ${rows.length} pharmacies` : "Top 3 lowest prices"}
           </p>
           <p className="text-xs text-muted-foreground sm:text-sm">
-            Network cash prices
+            Counter prices · Smart Switch ready
             {quotedAt
-              ? ` · quoted ${new Date(quotedAt).toLocaleTimeString()}`
+              ? ` · ${new Date(quotedAt).toLocaleTimeString()}`
               : ""}
           </p>
         </div>
@@ -524,6 +529,24 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
         )}
       </div>
 
+      {lowest && (
+        <InsuranceVsCashMatrix
+          cashPrice={lowest.offer.couponPrice}
+          retailPrice={lowest.offer.retailPrice}
+        />
+      )}
+
+      {strength && (
+        <FulfillmentPanel
+          drugId={drug.id}
+          strengthId={strength.id}
+          quantity={filters.quantity}
+          supplyDays={filters.supplyDays}
+          pharmacyId={lowest?.pharmacy.id}
+          zip={location.zip}
+        />
+      )}
+
       {/* Trust / clarity modules */}
       <div className="grid gap-3 md:grid-cols-2">
         <TrustCallout title="Generic vs brand">
@@ -532,9 +555,9 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
           ingredient at a lower coupon price.
         </TrustCallout>
         <TrustCallout title="Price types you’ll see">
-          <strong>Coupon</strong> = discount card at the counter.{" "}
-          <strong>Retail</strong> = estimated cash without discount. Membership
-          tiers can be lower still.
+          <strong>Coupon</strong> = the counter price with your discount card.{" "}
+          <strong>Retail</strong> = estimated cash without discount. What you see
+          is what you show.
         </TrustCallout>
       </div>
 
