@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import PageHero from "../components/PageHero";
+import NotFound from "./NotFound";
 import { focusAreas, programs } from "../data/programs";
 import {
   APPLY_URL,
@@ -13,15 +14,10 @@ function ProgramDetail() {
 
   if (!program) {
     return (
-      <section className="section">
-        <div className="container program-empty">
-          <h1>Program not found</h1>
-          <p>That program isn’t in our catalog. Browse all programs instead.</p>
-          <Link className="btn btn-primary" to="/academics">
-            Back to Academics
-          </Link>
-        </div>
-      </section>
+      <NotFound
+        title="Program not found"
+        copy="That program isn’t in the WMCC catalog on this site. Browse academic programs or try a different search."
+      />
     );
   }
 
@@ -166,7 +162,7 @@ function ProgramDetail() {
           <div className="cta-actions">
             <Link
               className="btn btn-primary"
-              to={areas[0] ? `/academics?focus=${areas[0].id}` : "/academics"}
+              to={areas[0] ? `/academics?category=${areas[0].id}` : "/academics"}
             >
               Related Programs
             </Link>

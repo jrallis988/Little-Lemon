@@ -1,5 +1,5 @@
 import { Link, useSearchParams } from "react-router-dom";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import PageHero from "../components/PageHero";
 import { APPLY_URL, REQUEST_INFO_URL } from "../data/links";
 import {
@@ -16,19 +16,81 @@ const emptyFilters = {
   location: "all",
 };
 
-function Academics() {
-  const [searchParams] = useSearchParams();
-  const [filters, setFilters] = useState(() => ({
-    ...emptyFilters,
-    focus: searchParams.get("focus") || "all",
-  }));
+/** Short aliases for shareable category query values */
+const categoryAliases = {
+  "health-sciences": "health-sciences-and-services",
+  health: "health-sciences-and-services",
+  business: "business",
+  culinary: "hospitality-and-culinary",
+  hospitality: "hospitality-and-culinary",
+  industry: "industry-and-transportation",
+  trades: "industry-and-transportation",
+  stem: "stem-and-advanced-manufacturing",
+  education: "social-educational-and-behavioral-science",
+  arts: "arts-humanities-communication-and-design",
+};
 
-  useEffect(() => {
-    const focus = searchParams.get("focus");
-    if (focus) {
-      setFilters((current) => ({ ...current, focus }));
-    }
-  }, [searchParams]);
+const validFocusIds = new Set(focusAreas.map((area) => area.id));
+const validLocations = new Set(
+  locations.map((location) => location.id).filter((id) => id !== "all")
+);
+
+function campusFromParam(value) {
+  if (!value) return "all";
+  const normalized = value.trim().toLowerCase().replace(/\s+/g, "-");
+  const map = {
+    berlin: "Berlin",
+    littleton: "Littleton",
+    "north-conway": "North Conway",
+    northconway: "North Conway",
+    online: "Online",
+    hybrid: "Online",
+  };
+  return map[normalized] || (validLocations.has(value) ? value : "all");
+}
+
+function campusToParam(location) {
+  if (!location || location === "all") return null;
+  return location.toLowerCase().replace(/\s+/g, "-");
+}
+
+function categoryFromParam(value) {
+  if (!value) return "all";
+  const normalized = value.trim().toLowerCase();
+  if (normalized === "all") return "all";
+  if (categoryAliases[normalized]) return categoryAliases[normalized];
+  if (validFocusIds.has(value)) return value;
+  if (validFocusIds.has(normalized)) return normalized;
+  return "all";
+}
+
+function filtersFromSearchParams(params) {
+  const type = params.get("type");
+  return {
+    query: params.get("q") || "",
+    type: type === "Degree" || type === "Certificate" ? type : "all",
+    focus: categoryFromParam(params.get("category") || params.get("focus")),
+    location: campusFromParam(params.get("campus") || params.get("location")),
+  };
+}
+
+function searchParamsFromFilters(filters) {
+  const params = new URLSearchParams();
+  if (filters.query.trim()) params.set("q", filters.query.trim());
+  if (filters.type !== "all") params.set("type", filters.type);
+  if (filters.focus !== "all") params.set("category", filters.focus);
+  if (filters.location !== "all") {
+    params.set("campus", campusToParam(filters.location));
+  }
+  return params;
+}
+
+function Academics() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const filters = useMemo(
+    () => filtersFromSearchParams(searchParams),
+    [searchParams]
+  );
 
   const focusLabels = useMemo(
     () => Object.fromEntries(focusAreas.map((area) => [area.id, area.title])),
@@ -61,11 +123,17 @@ function Academics() {
     });
   }, [filters, focusLabels]);
 
-  const updateFilter = (key, value) => {
-    setFilters((current) => ({ ...current, [key]: value }));
+  const writeFilters = (nextFilters) => {
+    setSearchParams(searchParamsFromFilters(nextFilters), { replace: true });
   };
 
-  const clearFilters = () => setFilters(emptyFilters);
+  const updateFilter = (key, value) => {
+    writeFilters({ ...filters, [key]: value });
+  };
+
+  const clearFilters = () => {
+    setSearchParams({}, { replace: true });
+  };
 
   return (
     <>
@@ -245,7 +313,7 @@ function Academics() {
                     type="button"
                     className="text-link button-link"
                     onClick={() => {
-                      setFilters({
+                      writeFilters({
                         ...emptyFilters,
                         focus: area.id,
                       });

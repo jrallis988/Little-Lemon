@@ -83,7 +83,7 @@ function Home() {
               <article key={area.id} className="area-item">
                 <h3>{area.title}</h3>
                 <p>{area.description}</p>
-                <Link className="text-link" to={`/academics?focus=${area.id}`}>
+                <Link className="text-link" to={`/academics?category=${area.id}`}>
                   View programs
                 </Link>
               </article>

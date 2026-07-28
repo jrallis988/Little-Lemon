@@ -14,6 +14,7 @@ import About from "./pages/About";
 import News from "./pages/News";
 import Contact from "./pages/Contact";
 import Sitemap from "./pages/Sitemap";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -33,6 +34,8 @@ function App() {
         <Route path="news" element={<News />} />
         <Route path="contact" element={<Contact />} />
         <Route path="sitemap" element={<Sitemap />} />
+        <Route path="404" element={<NotFound />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );

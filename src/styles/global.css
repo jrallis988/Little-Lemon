@@ -1731,6 +1731,10 @@ main {
   gap: 0.4rem 1.5rem;
 }
 
+.not-found-panel .section-cta {
+  margin-top: 2rem;
+}
+
 @media (max-width: 800px) {
   .sitemap-layout,
   .sitemap-program-list {

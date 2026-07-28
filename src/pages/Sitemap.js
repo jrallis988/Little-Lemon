@@ -17,7 +17,7 @@ const siteSections = [
       { label: "Our Programs", to: "/academics" },
       ...focusAreas.map((area) => ({
         label: area.title,
-        to: `/academics?focus=${area.id}`,
+        to: `/academics?category=${area.id}`,
       })),
     ],
   },
