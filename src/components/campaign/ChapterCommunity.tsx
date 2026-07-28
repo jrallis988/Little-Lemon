@@ -39,13 +39,13 @@ export function ChapterCommunity() {
           <div className="grid gap-4 sm:grid-cols-2">
             <img
               src="/images/campaign/meeting.jpg"
-              alt="Friends laughing together around a table"
+              alt="Members cooking a healthy meal together—community around real food"
               className="h-56 w-full rounded-[1.5rem] object-cover sm:h-72"
               loading="lazy"
             />
             <img
               src="/images/campaign/coaching.jpg"
-              alt="A coach and member talking with warmth and encouragement"
+              alt="A movement class with members practicing together on mats"
               className="h-56 w-full rounded-[1.5rem] object-cover sm:mt-10 sm:h-72"
               loading="lazy"
             />
