@@ -12,20 +12,23 @@ const map = {
   },
 };
 
-const leaflet = {
-  map: () => map,
-  tileLayer: () => ({ addTo() {} }),
-  marker: () => ({
-    addTo() {
-      return this;
-    },
-    bindPopup() {
-      return this;
-    },
-  }),
-  icon: () => ({}),
-  Marker: { prototype: { options: {} } },
-};
+  const leaflet = {
+    map: () => map,
+    tileLayer: () => ({ addTo() {} }),
+    marker: () => ({
+      addTo() {
+        return this;
+      },
+      bindPopup() {
+        return this;
+      },
+      openPopup() {
+        return this;
+      },
+    }),
+    icon: () => ({}),
+    Marker: { prototype: { options: {} } },
+  };
 
 module.exports = leaflet;
 module.exports.default = leaflet;
