@@ -117,7 +117,7 @@ export function InnovationPage() {
         {[
           ["Paper journals", "Mobile apps & dashboards", "/images/campaign/journal.jpg", "/images/campaign/phone.jpg"],
           ["Printed guides", "Personalized recommendations", "/images/archive/cookbook.jpg", "/images/food.jpg"],
-          ["Meeting rooms only", "Hybrid workshops + wearables", "/images/archive/living-room.jpg", "/images/campaign/walk-together.jpg"],
+          ["Meeting rooms only", "Hybrid workshops + wearables", "/images/archive/living-room.jpg", "/images/campaign/coaching.jpg"],
         ].map(([then, now, thenImg, nowImg]) => (
           <div key={then} className="grid gap-4 md:grid-cols-2">
             <div>

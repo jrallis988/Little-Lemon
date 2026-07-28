@@ -39,8 +39,8 @@ export function Community() {
         <figure className="relative mx-auto mt-12 max-w-4xl overflow-hidden rounded-[1.75rem]">
           <img
             src="/images/community.jpg"
-            alt="A close-knit group of friends outdoors, mid-laughter"
-            className="h-[22rem] w-full object-cover grayscale sm:h-[28rem]"
+            alt="Friends laughing together indoors"
+            className="h-[22rem] w-full object-cover sm:h-[28rem]"
             loading="lazy"
           />
           <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/80 via-ink/40 to-transparent px-6 pb-6 pt-20 text-left text-white sm:px-10 sm:pb-8">

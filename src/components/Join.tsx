@@ -4,7 +4,7 @@ export function Join() {
       <div className="section-shell">
         <div className="relative overflow-hidden rounded-[2rem]">
           <img
-            src="/images/gather.jpg"
+            src="/images/campaign/celebrate.jpg"
             alt=""
             className="absolute inset-0 h-full w-full object-cover"
             aria-hidden="true"

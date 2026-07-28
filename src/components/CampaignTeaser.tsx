@@ -38,12 +38,12 @@ export function CampaignTeaser() {
         </div>
 
         <div className="relative hidden overflow-hidden rounded-[1.5rem] sm:block">
-          <img
-            src="/images/gather.jpg"
-            alt="Friends gathered together outdoors"
-            className="aspect-[4/5] h-full max-h-72 w-full object-cover"
-            loading="lazy"
-          />
+            <img
+              src="/images/campaign/family-cook.jpg"
+              alt="Family cooking together in a bright kitchen"
+              className="aspect-[4/5] h-full max-h-72 w-full object-cover"
+              loading="lazy"
+            />
         </div>
       </div>
     </section>

@@ -56,7 +56,7 @@ export function ChapterSince() {
               {
                 title: "Hope",
                 copy: "400 people lined up above a Queens theater—because someone finally listened.",
-                image: "/images/campaign/celebrate.jpg",
+                image: "/images/campaign/coaching.jpg",
               },
             ].map((item, index) => (
               <article
