@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import HeroCarousel from "../components/HeroCarousel";
 import { focusAreas, highlights } from "../data/programs";
-import { APPLY_URL } from "../data/links";
+import { APPLY_URL, REQUEST_INFO_URL } from "../data/links";
 
 function Home() {
   return (
@@ -15,7 +15,9 @@ function Home() {
             Apply
           </a>
           <Link to="/academics">Explore</Link>
-          <Link to="/contact">Request Info</Link>
+          <a href={REQUEST_INFO_URL} target="_blank" rel="noreferrer">
+            Request Info
+          </a>
         </div>
       </section>
 

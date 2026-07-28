@@ -1,7 +1,7 @@
 import { Link, useSearchParams } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import PageHero from "../components/PageHero";
-import { APPLY_URL } from "../data/links";
+import { APPLY_URL, REQUEST_INFO_URL } from "../data/links";
 import {
   focusAreas,
   locations,
@@ -83,7 +83,8 @@ function Academics() {
           },
           {
             label: "Request Info",
-            to: "/contact",
+            to: REQUEST_INFO_URL,
+            external: true,
             className: "btn btn-ghost-light",
           },
         ]}

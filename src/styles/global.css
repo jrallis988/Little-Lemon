@@ -453,6 +453,13 @@ main {
   animation: panelIn 0.55s ease;
 }
 
+.hero-panel.brand-first .hero-brand-logo {
+  width: clamp(150px, 18vw, 200px);
+  height: auto;
+  margin-bottom: 0.85rem;
+  filter: brightness(0) invert(1);
+}
+
 .hero-panel.brand-first .hero-brand-mark {
   color: var(--gold);
   font-family: var(--font-display);

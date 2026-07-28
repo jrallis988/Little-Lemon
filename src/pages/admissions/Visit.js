@@ -1,8 +1,7 @@
-import { Link } from "react-router-dom";
 import PageHero from "../../components/PageHero";
 import SectionNav from "../../components/SectionNav";
 import { visitEvents } from "../../data/siteContent";
-import { APPLY_URL } from "../../data/links";
+import { APPLY_URL, REQUEST_INFO_URL } from "../../data/links";
 import { admissionsNav } from "./admissionsNav";
 
 function Visit() {
@@ -16,7 +15,8 @@ function Visit() {
         actions={[
           {
             label: "Request Info",
-            to: "/contact",
+            to: REQUEST_INFO_URL,
+            external: true,
             className: "btn btn-gold",
           },
           {
@@ -97,12 +97,20 @@ function Visit() {
                 <a href="tel:6034441326">Littleton: (603) 444-1326</a>
               </li>
               <li>
+                <a href="tel:6034473282">North Conway: (603) 447-3282</a>
+              </li>
+              <li>
                 <a href="mailto:wmcc@ccsnh.edu">wmcc@ccsnh.edu</a>
               </li>
             </ul>
-            <Link className="btn btn-gold" to="/contact">
+            <a
+              className="btn btn-gold"
+              href={REQUEST_INFO_URL}
+              target="_blank"
+              rel="noreferrer"
+            >
               Request Info
-            </Link>
+            </a>
           </div>
         </div>
       </section>

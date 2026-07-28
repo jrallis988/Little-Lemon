@@ -1,3 +1,5 @@
+import { APPLY_URL, REQUEST_INFO_URL } from "./links";
+
 export const heroSlides = [
   {
     id: "welcome",
@@ -8,7 +10,7 @@ export const heroSlides = [
     cta: { label: "Explore Programs", to: "/academics" },
     secondaryCta: {
       label: "Apply Now",
-      to: "https://ccsnh.my.site.com/apply/",
+      to: APPLY_URL,
       external: true,
     },
   },
@@ -19,6 +21,11 @@ export const heroSlides = [
     headline: "Career and transfer pathways that fit your life.",
     line: "Study nursing, trades, culinary, business, education, and more — with day, evening, and online options.",
     cta: { label: "View Programs", to: "/academics" },
+    secondaryCta: {
+      label: "Request Info",
+      to: REQUEST_INFO_URL,
+      external: true,
+    },
   },
   {
     id: "apply",
@@ -28,7 +35,7 @@ export const heroSlides = [
     line: "Apply through the official CCSNH admissions portal, then connect with WMCC advising and financial aid.",
     cta: {
       label: "Apply Now",
-      to: "https://ccsnh.my.site.com/apply/",
+      to: APPLY_URL,
       external: true,
     },
     secondaryCta: {

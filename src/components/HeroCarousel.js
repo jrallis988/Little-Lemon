@@ -91,6 +91,13 @@ function HeroCarousel() {
 
       <div className="hero-carousel-inner">
         <div className="hero-panel brand-first" key={slide.id}>
+          <img
+            className="hero-brand-logo"
+            src="/images/wmcc-mark.svg"
+            alt=""
+            width="220"
+            height="56"
+          />
           <p className="hero-brand-mark">White Mountains</p>
           <h1>{BRAND}</h1>
           <p className="hero-headline">{slide.headline}</p>

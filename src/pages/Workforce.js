@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
 import PageHero from "../components/PageHero";
 import { workforceTracks } from "../data/siteContent";
+import { REQUEST_INFO_URL } from "../data/links";
 
 function Workforce() {
   return (
@@ -12,8 +12,9 @@ function Workforce() {
         image="/images/welding.jpg"
         actions={[
           {
-            label: "Contact Training Team",
-            to: "/contact",
+            label: "Request Training Info",
+            to: REQUEST_INFO_URL,
+            external: true,
             className: "btn btn-gold",
           },
           {
@@ -83,9 +84,14 @@ function Workforce() {
                 <a href="mailto:wmcc@ccsnh.edu">wmcc@ccsnh.edu</a>
               </li>
             </ul>
-            <Link className="btn btn-gold" to="/contact">
+            <a
+              className="btn btn-gold"
+              href={REQUEST_INFO_URL}
+              target="_blank"
+              rel="noreferrer"
+            >
               Request Training Info
-            </Link>
+            </a>
           </div>
         </div>
       </section>

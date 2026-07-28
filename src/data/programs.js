@@ -139,26 +139,41 @@ const focusDefaults = {
 const programOverrides = {
   nursing: {
     summary:
-      "Prepare for RN practice through classroom instruction, simulation, and clinical experiences at area healthcare facilities. The program is ACEN-accredited and NH Board of Nursing approved.",
+      "The Associate in Science in Nursing prepares students for RN practice through classroom instruction, simulation, and clinical rotations. The program is ACEN-accredited, NH Board of Nursing approved, and based on the Berlin campus.",
     outcomes: [
-      "Provide safe, culturally appropriate, patient-centered care using the nursing process",
-      "Practice collaboratively with multi-professional healthcare providers",
+      "Achieve a minimum ATI TEAS total score of 60% (up to three attempts; scores valid three years)",
+      "Complete science prerequisites within five years for transfer credit (A&P I/II and Microbiology at C+ or better)",
+      "Gain clinical experience with partners including Androscoggin Valley Hospital and Weeks Medical Center",
       "Qualify to sit for the NCLEX-RN after successful program completion",
     ],
     format:
-      "Berlin campus nursing courses with concurrent clinicals; full-time or part-time pathways",
+      "Berlin campus nursing courses with concurrent clinicals at area healthcare facilities; full-time or part-time pathways",
     locations: ["Berlin"],
+    details: [
+      "Credential: Associate in Science (Registered Nursing pathway)",
+      "Campus: Berlin Main Campus",
+      "Admissions: complete application by February 1 for fall entry; selection uses the Nursing Admission Rubric",
+      "Clinical partners include Androscoggin Valley Hospital and Weeks Medical Center, plus other regional sites",
+      "Science courses used for transfer must be completed within five years of the first Nursing course",
+    ],
   },
   "advanced-welding-technology": {
     summary:
-      "Build advanced welding skills for fabrication and manufacturing careers through shop-intensive practice on the Berlin campus.",
+      "The Advanced Welding Technology certificate prepares students for AWS industry-recognized certifications through classroom theory and shop labs covering SMAW, GMAW, FCAW, SAW, and GTAW processes on the Berlin campus.",
     outcomes: [
-      "Demonstrate advanced welding processes and fabrication techniques",
-      "Apply safety and quality standards in shop environments",
-      "Prepare for regional welding and manufacturing employment",
+      "Apply Shielded Metal Arc Welding (SMAW), Gas Metal Arc Welding (GMAW), Flux Core Arc Welding (FCAW), and Gas Tungsten Arc Welding (GTAW)",
+      "Prepare for D1.5 and D1.1 Structural Steel Unlimited Certifications in FCAW and SMAW positions",
+      "Build blueprint reading, safety, and fabrication skills for today’s welding industry",
+      "Transfer credits into the Associate in Science in Trades Management and meet Pipe Welding prerequisites",
     ],
-    format: "Hands-on welding labs on the Berlin campus",
+    format: "Hands-on welding labs and theory on the Berlin campus",
     locations: ["Berlin"],
+    details: [
+      "Credential: Certificate (pathway into Trades Management A.S.)",
+      "Campus: Berlin Main Campus",
+      "Processes: SMAW, GMAW, FCAW, SAW, and GTAW",
+      "Catalog: catalog.wmcc.edu welding certificate page",
+    ],
   },
   "pipe-welding": {
     summary:
@@ -709,6 +724,7 @@ export const programs = rawPrograms.map((program) => {
     summary: override.summary || defaults.summary,
     outcomes: override.outcomes || defaults.outcomes,
     format: override.format || defaults.format,
+    details: override.details || null,
   };
 });
 

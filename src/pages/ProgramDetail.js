@@ -1,7 +1,11 @@
 import { Link, useParams } from "react-router-dom";
 import PageHero from "../components/PageHero";
 import { focusAreas, programs } from "../data/programs";
-import { APPLY_URL, CATALOG_DEGREES_URL } from "../data/links";
+import {
+  APPLY_URL,
+  CATALOG_DEGREES_URL,
+  REQUEST_INFO_URL,
+} from "../data/links";
 
 function ProgramDetail() {
   const { programId } = useParams();
@@ -30,7 +34,9 @@ function ProgramDetail() {
       <PageHero
         brand={program.kind}
         title={program.title}
-        copy={`${program.credential} · ${(program.locations || [program.location]).join(" · ")}`}
+        copy={`${program.credential} · ${(
+          program.locations || [program.location]
+        ).join(" · ")}`}
         image={program.image || "/images/students.jpg"}
         compact
         actions={[
@@ -41,8 +47,9 @@ function ProgramDetail() {
             className: "btn btn-gold",
           },
           {
-            label: "Browse Programs",
-            to: "/academics",
+            label: "Request Info",
+            to: REQUEST_INFO_URL,
+            external: true,
             className: "btn btn-ghost-light",
           },
         ]}
@@ -54,15 +61,28 @@ function ProgramDetail() {
             <p className="eyebrow">Program overview</p>
             <h2>What you’ll study</h2>
             <p>{program.summary}</p>
-            <p>
-              The {program.title} {program.credential.toLowerCase()} at White
-              Mountains Community College is a {program.kind.toLowerCase()} pathway
-              grounded in{" "}
-              {areas.map((area) => area.title).join(" and ").toLowerCase() ||
-                "career and transfer readiness"}
-              . Faculty combine academic rigor with practical learning so you can
-              move into the workforce or continue to a four-year institution.
-            </p>
+
+            {program.details?.length ? (
+              <>
+                <h3>Program specifics</h3>
+                <ul className="check-list">
+                  {program.details.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </>
+            ) : (
+              <p>
+                The {program.title} {program.credential.toLowerCase()} at White
+                Mountains Community College is a {program.kind.toLowerCase()}{" "}
+                pathway grounded in{" "}
+                {areas.map((area) => area.title).join(" and ").toLowerCase() ||
+                  "career and transfer readiness"}
+                . Faculty combine academic rigor with practical learning so you
+                can move into the workforce or continue to a four-year
+                institution.
+              </p>
+            )}
 
             <h3>What you can expect</h3>
             <ul className="check-list">
@@ -88,7 +108,7 @@ function ProgramDetail() {
 
             <h3>Next steps</h3>
             <ol className="numbered-list">
-              <li>Review admissions requirements and apply to WMCC.</li>
+              <li>Review admissions requirements and apply through CCSNH.</li>
               <li>Complete placement (if required) and meet with an advisor.</li>
               <li>File the FAFSA using school code 005291.</li>
               <li>Register for courses and begin your first semester.</li>
@@ -110,22 +130,25 @@ function ProgramDetail() {
               >
                 Apply Now
               </a>
+              <a
+                className="btn btn-ghost"
+                href={REQUEST_INFO_URL}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Request Info
+              </a>
               <Link className="btn btn-ghost" to="/admissions/how-to-apply">
                 How to Apply
               </Link>
-              <Link className="btn btn-ghost" to="/admissions/visit">
-                Visit Campus
-              </Link>
-              {program.url ? (
-                <a
-                  className="btn btn-ghost"
-                  href={program.url}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Official Catalog Page
-                </a>
-              ) : null}
+              <a
+                className="btn btn-ghost"
+                href={program.url || CATALOG_DEGREES_URL}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Official Catalog Page
+              </a>
             </div>
           </aside>
         </div>
