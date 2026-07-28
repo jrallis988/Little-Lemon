@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Social media strategy, content design, and campaigns — Artistic Fountain.">
+    <meta name="description" content="When to refresh a brand and when to reinvent it — Artistic Fountain.">
     <meta name="theme-color" content="#FF6B35">
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-    <title>Social Media Marketing — Artistic Fountain</title>
+    <title>Brand Redesign: Evolve or Revolution — Artistic Fountain</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -26,7 +26,7 @@
                 <li><a href="../index.html#about">The Designer</a></li>
                 <li><a href="../index.html#services">Services</a></li>
                 <li><a href="../index.html#portfolio">Portfolio</a></li>
-                <li><a href="../blog/index.html">Blog</a></li>
+                <li><a href="index.html">Blog</a></li>
                 <li><a href="../resume.pdf" download>Resume</a></li>
             </ul>
         </nav>
@@ -39,45 +39,46 @@
         </div>
     </header>
 
-    <main id="main" class="service-page">
-        <div class="service-page-inner">
-            <a href="../index.html#services" class="service-back">← All Services</a>
-            <p class="service-kicker">Service</p>
-            <h1>Social Media Marketing</h1>
-            <p class="service-lead">Content strategy, campaign design, and community-facing visuals that turn attention into customers — built for the platforms your audience actually uses.</p>
-
-            <section class="service-block">
-                <h2>What’s included</h2>
-                <ul class="service-list">
-                    <li>Social content strategy and planning</li>
-                    <li>Campaign creative and templates</li>
-                    <li>Platform-native design (feed, stories, ads)</li>
-                    <li>Visual systems for consistent posting</li>
-                    <li>Ad creative support</li>
-                    <li>Brand voice alignment across channels</li>
-                </ul>
-            </section>
-
-            <section class="service-block">
-                <h2>How it works</h2>
-                <p>We define goals and channels, build a visual and content system, then produce campaign assets you can scale. Design and messaging stay tied to the brand strategy.</p>
-            </section>
-
-            <div class="service-page-cta">
-                <a href="../index.html#contact-form" class="cta-btn" id="services-btn">Discuss a Project</a>
+    <main id="main" class="blog-post-page">
+        <article class="blog-post-inner">
+            <a href="index.html" class="service-back">← All Posts</a>
+            <header class="blog-post-header">
+                <p class="service-kicker">Strategy</p>
+                <h1>Brand Redesign: Evolve or Revolution</h1>
+                <p class="blog-post-meta"><time>May 2026</time></p>
+                <p class="service-lead">Not every brand needs a complete overhaul. Sometimes a refresh wins. Sometimes a revolution.</p>
+            </header>
+            <div class="blog-post-body">
+                
+            <p>Not every brand needs a complete overhaul. Sometimes a refresh wins. Sometimes a revolution. The key is reading the signals that tell you which path your brand needs—and the risks of choosing wrong.</p>
+            <h2>Signals for evolution</h2>
+            <ul>
+                <li>The brand still fits the audience, but visuals feel dated.</li>
+                <li>Recognition is strong; you need polish, not a new personality.</li>
+                <li>Systems exist, but they’re inconsistent across channels.</li>
+            </ul>
+            <h2>Signals for revolution</h2>
+            <ul>
+                <li>The offer, audience, or category position has fundamentally changed.</li>
+                <li>The current identity actively confuses or undercuts trust.</li>
+                <li>You’re entering a market where the old look can’t compete.</li>
+            </ul>
+            <h2>Choose with strategy, not taste alone</h2>
+            <p>A redesign should start with the problem, not the palette. Map what must stay for equity, what must change for clarity, and what success looks like after launch—then design the system that supports that outcome.</p>
+            <p class="blog-note">Draft starter copy — refine or replace with Blaze AI content as posts are finalized.</p>
+        
             </div>
-
-            <nav class="service-other" aria-label="Other services">
-                <h2>Other services</h2>
-                                <div class="service-other-links">
-                <a href="brand-strategy.html">Brand &amp; Graphic Design</a>
-                <a href="digital-design.html">UI/UX Design</a>
-                <a href="web-design.html">Web Design</a>
-                <a href="motion-design.html">Motion Design</a>
-                <a href="package-design.html">Package Design</a>
+            <div class="service-page-cta">
+                <a href="../index.html#contact-form" class="cta-btn" id="services-btn">Start a Project</a>
+            </div>
+            <nav class="service-other" aria-label="More posts">
+                <h2>More posts</h2>
+                <div class="service-other-links">
+                <a href="negative-space.html">The Silent Power of Negative Space</a>
+                <a href="video-design-canvas.html">Video as the New Design Canvas</a>
                 </div>
             </nav>
-        </div>
+        </article>
     </main>
 
     <footer class="footer">
@@ -86,7 +87,7 @@
                 <a href="../index.html#about">About</a>
                 <a href="../index.html#services">Services</a>
                 <a href="../index.html#portfolio">Portfolio</a>
-                <a href="../blog/index.html">Blog</a>
+                <a href="index.html">Blog</a>
                 <a href="../index.html#faq">FAQ</a>
                 <a href="../index.html#contact">Contact</a>
             </nav>
@@ -97,22 +98,22 @@
     </footer>
 
     <script>
-        function toggleNav() {
+        function toggleNav() {{
             const nav = document.querySelector('.nav');
             const toggle = document.querySelector('.nav-toggle');
             const isOpen = nav.classList.toggle('active');
             toggle.classList.toggle('active', isOpen);
             toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        }
-        document.querySelectorAll('.nav a').forEach(link => {
-            link.addEventListener('click', () => {
+        }}
+        document.querySelectorAll('.nav a').forEach(link => {{
+            link.addEventListener('click', () => {{
                 const nav = document.querySelector('.nav');
                 const toggle = document.querySelector('.nav-toggle');
                 nav.classList.remove('active');
                 toggle.classList.remove('active');
                 toggle.setAttribute('aria-expanded', 'false');
-            });
-        });
+            }});
+        }});
     </script>
 </body>
 </html>

@@ -19,6 +19,7 @@ Static site: HTML, CSS, and vanilla JS (built in Cursor). Custom typefaces (Arca
 
 - `index.html` — home (hero, designer, services, portfolio, blog, contact)
 - `services/` — detail pages for each service offering
+- `blog/` — blog index and post pages (content can be drafted in Blaze AI)
 - `privacy.html` — privacy policy
 - `terms.html` — terms & conditions
 - `resume.pdf` — downloadable resume
@@ -45,6 +46,7 @@ Or open `index.html` directly in a browser.
 ├── favicon.svg
 ├── resume.pdf
 ├── services/
+├── blog/
 ├── images/
 └── *.otf          # brand fonts
 ```

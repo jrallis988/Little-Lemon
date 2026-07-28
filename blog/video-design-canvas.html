@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Social media strategy, content design, and campaigns — Artistic Fountain.">
+    <meta name="description" content="How motion graphics and video elevate digital experiences in 2026 — Artistic Fountain.">
     <meta name="theme-color" content="#FF6B35">
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-    <title>Social Media Marketing — Artistic Fountain</title>
+    <title>Video as the New Design Canvas — Artistic Fountain</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -26,7 +26,7 @@
                 <li><a href="../index.html#about">The Designer</a></li>
                 <li><a href="../index.html#services">Services</a></li>
                 <li><a href="../index.html#portfolio">Portfolio</a></li>
-                <li><a href="../blog/index.html">Blog</a></li>
+                <li><a href="index.html">Blog</a></li>
                 <li><a href="../resume.pdf" download>Resume</a></li>
             </ul>
         </nav>
@@ -39,45 +39,42 @@
         </div>
     </header>
 
-    <main id="main" class="service-page">
-        <div class="service-page-inner">
-            <a href="../index.html#services" class="service-back">← All Services</a>
-            <p class="service-kicker">Service</p>
-            <h1>Social Media Marketing</h1>
-            <p class="service-lead">Content strategy, campaign design, and community-facing visuals that turn attention into customers — built for the platforms your audience actually uses.</p>
-
-            <section class="service-block">
-                <h2>What’s included</h2>
-                <ul class="service-list">
-                    <li>Social content strategy and planning</li>
-                    <li>Campaign creative and templates</li>
-                    <li>Platform-native design (feed, stories, ads)</li>
-                    <li>Visual systems for consistent posting</li>
-                    <li>Ad creative support</li>
-                    <li>Brand voice alignment across channels</li>
-                </ul>
-            </section>
-
-            <section class="service-block">
-                <h2>How it works</h2>
-                <p>We define goals and channels, build a visual and content system, then produce campaign assets you can scale. Design and messaging stay tied to the brand strategy.</p>
-            </section>
-
-            <div class="service-page-cta">
-                <a href="../index.html#contact-form" class="cta-btn" id="services-btn">Discuss a Project</a>
+    <main id="main" class="blog-post-page">
+        <article class="blog-post-inner">
+            <a href="index.html" class="service-back">← All Posts</a>
+            <header class="blog-post-header">
+                <p class="service-kicker">Digital Media</p>
+                <h1>Video as the New Design Canvas</h1>
+                <p class="blog-post-meta"><time>June 2026</time></p>
+                <p class="service-lead">Motion graphics and animated design aren’t extras anymore—they’re essential.</p>
+            </header>
+            <div class="blog-post-body">
+                
+            <p>Motion graphics and animated design aren’t extras anymore—they’re essential. From micro-interactions to full animated explainers, video elevates digital experiences and drives engagement.</p>
+            <h2>Design that moves</h2>
+            <p>Static layouts still matter, but attention often lands on what moves. Motion can explain a product faster than a paragraph, guide a user through a flow, or give a brand a living personality.</p>
+            <h2>Where it belongs</h2>
+            <ul>
+                <li><strong>Product UI:</strong> subtle states and feedback that make interactions feel clear.</li>
+                <li><strong>Brand films &amp; explainers:</strong> After Effects-led storytelling for campaigns and launches.</li>
+                <li><strong>Social:</strong> short loops and templates built for the platforms your audience actually uses.</li>
+            </ul>
+            <h2>Keep craft in the loop</h2>
+            <p>AI can help explore variants quickly. Finishing still happens in tools like After Effects, Premiere, and your brand system—so motion stays on-brand, not generic.</p>
+            <p class="blog-note">Draft starter copy — refine or replace with Blaze AI content as posts are finalized.</p>
+        
             </div>
-
-            <nav class="service-other" aria-label="Other services">
-                <h2>Other services</h2>
-                                <div class="service-other-links">
-                <a href="brand-strategy.html">Brand &amp; Graphic Design</a>
-                <a href="digital-design.html">UI/UX Design</a>
-                <a href="web-design.html">Web Design</a>
-                <a href="motion-design.html">Motion Design</a>
-                <a href="package-design.html">Package Design</a>
+            <div class="service-page-cta">
+                <a href="../index.html#contact-form" class="cta-btn" id="services-btn">Start a Project</a>
+            </div>
+            <nav class="service-other" aria-label="More posts">
+                <h2>More posts</h2>
+                <div class="service-other-links">
+                <a href="negative-space.html">The Silent Power of Negative Space</a>
+                <a href="brand-redesign.html">Brand Redesign: Evolve or Revolution</a>
                 </div>
             </nav>
-        </div>
+        </article>
     </main>
 
     <footer class="footer">
@@ -86,7 +83,7 @@
                 <a href="../index.html#about">About</a>
                 <a href="../index.html#services">Services</a>
                 <a href="../index.html#portfolio">Portfolio</a>
-                <a href="../blog/index.html">Blog</a>
+                <a href="index.html">Blog</a>
                 <a href="../index.html#faq">FAQ</a>
                 <a href="../index.html#contact">Contact</a>
             </nav>
@@ -97,22 +94,22 @@
     </footer>
 
     <script>
-        function toggleNav() {
+        function toggleNav() {{
             const nav = document.querySelector('.nav');
             const toggle = document.querySelector('.nav-toggle');
             const isOpen = nav.classList.toggle('active');
             toggle.classList.toggle('active', isOpen);
             toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        }
-        document.querySelectorAll('.nav a').forEach(link => {
-            link.addEventListener('click', () => {
+        }}
+        document.querySelectorAll('.nav a').forEach(link => {{
+            link.addEventListener('click', () => {{
                 const nav = document.querySelector('.nav');
                 const toggle = document.querySelector('.nav-toggle');
                 nav.classList.remove('active');
                 toggle.classList.remove('active');
                 toggle.setAttribute('aria-expanded', 'false');
-            });
-        });
+            }});
+        }});
     </script>
 </body>
 </html>

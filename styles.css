@@ -926,6 +926,93 @@ a:hover { opacity: 0.8; }
     line-height: 1.4;
 }
 
+.blog-card h3 a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.blog-card h3 a:hover {
+    color: var(--yellow);
+}
+
+.blog-section-cta {
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.blog-section-cta .view-btn {
+    text-decoration: none;
+}
+
+/* BLOG PAGES */
+.blog-post-page,
+.blog-index-page {
+    padding: 8rem 2rem 5rem;
+    min-height: 70vh;
+}
+
+.blog-post-inner,
+.blog-index-inner {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.blog-index-inner {
+    max-width: 1100px;
+}
+
+.blog-index-inner h1 {
+    margin-bottom: 1rem;
+    color: var(--cream);
+}
+
+.blog-post-header {
+    margin-bottom: 2.5rem;
+}
+
+.blog-post-meta {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin: -0.5rem 0 1.25rem;
+}
+
+.blog-post-body {
+    color: var(--text-muted);
+    line-height: 1.75;
+}
+
+.blog-post-body h2 {
+    color: var(--cream);
+    font-size: 1.4rem;
+    margin: 2.25rem 0 1rem;
+}
+
+.blog-post-body p {
+    margin-bottom: 1.15rem;
+}
+
+.blog-post-body ul {
+    padding-left: 1.35rem;
+    margin: 0 0 1.25rem;
+}
+
+.blog-post-body li {
+    margin-bottom: 0.55rem;
+}
+
+.blog-post-body strong {
+    color: var(--cream);
+}
+
+.blog-note {
+    margin-top: 2.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.85rem;
+    color: rgba(212, 212, 212, 0.75);
+    font-style: italic;
+}
+
 .blog-card p {
     color: var(--text-muted);
     margin-bottom: 1.5rem;
