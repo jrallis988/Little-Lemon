@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { mapPharmacy } from "@/lib/pricing-service";
 import { runSwitchPrecheck } from "@/lib/switch/adjudication";
+import { logSwitchEvent } from "@/lib/switch/events";
 
 const schema = z.object({
   pharmacyId: z.string(),
@@ -39,6 +41,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Pharmacy not found" }, { status: 404 });
   }
 
+  const session = await auth();
   const result = await runSwitchPrecheck({
     pharmacy: mapPharmacy(pharmacyRow),
     drugId: parsed.data.drugId,
@@ -47,6 +50,16 @@ export async function POST(req: Request) {
     supplyDays: parsed.data.supplyDays,
     couponPrice: parsed.data.couponPrice,
     coupon: parsed.data.coupon,
+  });
+
+  await logSwitchEvent({
+    userId: session?.user?.id,
+    pharmacyId: pharmacyRow.id,
+    drugId: parsed.data.drugId,
+    status: result.status,
+    confidence: result.confidence,
+    liveSwitch: result.liveSwitch,
+    detail: { source: "precheck", checks: result.checks },
   });
 
   return NextResponse.json({ precheck: result });
