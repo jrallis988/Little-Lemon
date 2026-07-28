@@ -3,6 +3,7 @@ import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
 import { FindYourYearPage } from "./pages/FindYourYearPage";
 import { HomePage } from "./pages/HomePage";
+import { WhatsNextPage } from "./pages/WhatsNextPage";
 import {
   AboutPage,
   InnovationPage,
@@ -26,6 +27,7 @@ export default function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/63" element={<HomePage />} />
           <Route path="/find-your-year" element={<FindYourYearPage />} />
+          <Route path="/whats-next" element={<WhatsNextPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/programs" element={<ProgramsPage />} />
           <Route path="/stories" element={<StoriesPage />} />

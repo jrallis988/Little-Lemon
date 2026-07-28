@@ -45,12 +45,12 @@ export function CampaignFinale() {
               >
                 Start with your priorities
               </Link>
-              <a
-                href="#join-next"
+              <Link
+                to="/whats-next"
                 className="rounded-2xl border border-white/35 px-6 py-3.5 font-sans text-sm font-semibold text-white transition hover:bg-white/10"
               >
-                Join what’s next
-              </a>
+                Meet the next Weight Watchers
+              </Link>
             </div>
           </div>
         </div>

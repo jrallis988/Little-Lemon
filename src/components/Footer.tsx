@@ -17,6 +17,7 @@ const siteColumns = [
     title: "Explore",
     links: [
       { label: "Programs", to: "/programs" },
+      { label: "What’s Next", to: "/whats-next" },
       { label: "Stories", to: "/stories" },
       { label: "Innovation", to: "/innovation" },
       { label: "Research", to: "/research" },

@@ -83,6 +83,12 @@ export function ChapterPurpose() {
               >
                 Where we’re going
               </a>
+              <Link
+                to="/whats-next"
+                className="rounded-2xl border border-white/30 px-5 py-3 font-sans text-sm font-semibold text-white"
+              >
+                Meet the next WW
+              </Link>
             </div>
           </article>
         </div>

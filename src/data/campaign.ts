@@ -23,6 +23,7 @@ export const campaignPurpose = {
     "Coaching and community that travel with you across screens and rooms",
     "Connected insights that reduce friction instead of adding noise",
     "Educational pathways into clinician-supported care when that is the right fit",
+    "WW Life, Pathways, Team, and Kitchen as one ecosystem—not twelve disconnected apps",
   ],
 } as const;
 
