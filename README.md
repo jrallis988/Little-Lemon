@@ -12,16 +12,24 @@ A modern marketing site for [River Valley Community College](https://www.riverva
 
 - `/` — brand-forward home with happening strip
 - `/programs` — filterable catalog (area, credential, campus, search)
-- `/programs/:slug` — pathway details
-- `/admissions` — steps + inquiry form
-- `/financial-aid` — tuition rates + estimate calculator
-- `/student-life` — supports and belonging
+- `/programs/:slug` — pathway details + official catalog links
+- `/admissions` — steps, inquiry form, team, and portal links
+- `/financial-aid` — FAFSA code, aid steps, tuition rates + calculator
+- `/student-life` — supports, success resources, and CCSNH portals
 - `/about` — history, campuses, and maps
 
-## Admissions form
+## Admissions form (Formspree)
 
 1. Copy `.env.example` to `.env`
-2. Set `REACT_APP_FORMSPREE_ID` to your Formspree form id
+2. Create a form at [formspree.io](https://formspree.io) and set `REACT_APP_FORMSPREE_ID` to the form id
 3. Restart `npm start`
 
 Without Formspree, submissions open a mailto draft to admissions and save a local copy in the browser.
+
+## Official links used on the site
+
+- Apply: https://www.rivervalley.edu/admissions/welcome/
+- My RVCC: https://myrvcc.rivervalley.edu
+- CCSNH Online Resources: https://www.ccsnh.edu/online-resources/
+- Catalog: https://catalog.rivervalley.edu/
+- FAFSA school code: **007560**

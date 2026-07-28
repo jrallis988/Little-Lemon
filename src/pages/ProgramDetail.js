@@ -81,6 +81,17 @@ export default function ProgramDetail() {
             </div>
           ))}
         </div>
+        {program.selective ? (
+          <div className="section-shell border-t border-river/10 pb-5 pt-4">
+            <p className="text-sm text-granite-muted">
+              <span className="font-semibold text-river-deep">
+                Selective admission:
+              </span>{" "}
+              This pathway may require additional application materials,
+              advising, or clinical readiness beyond general college admission.
+            </p>
+          </div>
+        ) : null}
       </section>
 
       <section className="section-shell grid gap-12 py-12 sm:py-16 lg:grid-cols-[1.15fr_0.85fr]">
@@ -163,6 +174,16 @@ export default function ProgramDetail() {
             <Link to="/financial-aid" className="btn-ghost w-full text-center">
               Review financial aid
             </Link>
+            <a
+              href={
+                program.catalogUrl || "https://catalog.rivervalley.edu/degrees"
+              }
+              target="_blank"
+              rel="noreferrer"
+              className="text-center text-sm font-semibold text-river underline-offset-2 hover:underline"
+            >
+              Official catalog entry →
+            </a>
             <Link to="/programs" className="text-center text-sm font-semibold text-river underline-offset-2 hover:underline">
               Back to all programs
             </Link>

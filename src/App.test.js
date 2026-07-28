@@ -54,5 +54,32 @@ test("renders tuition estimate tools", () => {
   );
 
   expect(screen.getByText(/rough annual tuition calculator/i)).toBeInTheDocument();
+  expect(screen.getByText(/school code 007560/i)).toBeInTheDocument();
   expect(screen.getAllByText(/new hampshire resident/i).length).toBeGreaterThan(0);
+});
+
+test("renders expanded catalog pathways", () => {
+  render(
+    <MemoryRouter initialEntries={["/programs/medical-laboratory-technician"]}>
+      <App />
+    </MemoryRouter>
+  );
+
+  expect(
+    screen.getByRole("heading", { name: /medical laboratory technician/i })
+  ).toBeInTheDocument();
+  expect(screen.getByText(/selective admission/i)).toBeInTheDocument();
+});
+
+test("renders CCSNH portal links on student life", () => {
+  render(
+    <MemoryRouter initialEntries={["/student-life"]}>
+      <App />
+    </MemoryRouter>
+  );
+
+  expect(screen.getByRole("link", { name: /my rvcc/i })).toBeInTheDocument();
+  expect(
+    screen.getByRole("link", { name: /ccsnh online resources/i })
+  ).toBeInTheDocument();
 });

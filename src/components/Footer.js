@@ -1,5 +1,11 @@
 import { Link } from "react-router-dom";
-import { campuses, contact, navLinks, utilityLinks } from "../data/content";
+import {
+  campuses,
+  contact,
+  navLinks,
+  portalLinks,
+  utilityLinks,
+} from "../data/content";
 import Logo from "./Logo";
 
 export default function Footer() {
@@ -34,36 +40,33 @@ export default function Footer() {
 
         <div>
           <p className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-sunrise">
-            Quick links
+            Portals & tools
           </p>
           <ul className="mt-4 space-y-3">
-            {utilityLinks.map((link) => (
+            {portalLinks.slice(0, 4).map((link) => (
               <li key={link.label}>
-                {link.external ? (
-                  <a
-                    href={link.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-white/80 transition hover:text-white"
-                  >
-                    {link.label}
-                  </a>
-                ) : (
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-white/80 transition hover:text-white"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+            {utilityLinks.map((link) =>
+              link.external ? null : (
+                <li key={link.label}>
                   <Link
                     to={link.to}
                     className="text-white/80 transition hover:text-white"
                   >
                     {link.label}
                   </Link>
-                )}
-              </li>
-            ))}
-            {campuses.map((campus) => (
-              <li key={campus.name} className="text-white/80">
-                {campus.name}
-                <span className="text-white/45"> — {campus.role}</span>
-              </li>
-            ))}
+                </li>
+              )
+            )}
           </ul>
         </div>
 
@@ -81,6 +84,16 @@ export default function Footer() {
                 {contact.phone}
               </a>
             </li>
+            {contact.tollFree ? (
+              <li>
+                <a
+                  href={`tel:${contact.tollFree.replace(/[^\d+]/g, "")}`}
+                  className="transition hover:text-white"
+                >
+                  Toll-free {contact.tollFree}
+                </a>
+              </li>
+            ) : null}
             <li>
               <a
                 href={`mailto:${contact.email}`}
@@ -88,6 +101,9 @@ export default function Footer() {
               >
                 {contact.email}
               </a>
+            </li>
+            <li className="pt-2 text-sm text-white/55">
+              Campuses: {campuses.map((campus) => campus.name).join(" · ")}
             </li>
           </ul>
         </div>

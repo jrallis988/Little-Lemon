@@ -148,10 +148,20 @@ export default function Programs() {
         )}
 
         <div className="mt-16 flex flex-col gap-4 bg-river-mist px-6 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-8">
-          <p className="max-w-xl text-lg text-river-deep">
-            Not sure which path fits? Admissions can help you map courses,
-            transfer options, and financial aid.
-          </p>
+          <div className="max-w-xl">
+            <p className="text-lg text-river-deep">
+              Not sure which path fits? Admissions can help you map courses,
+              transfer options, and financial aid.
+            </p>
+            <a
+              href="https://catalog.rivervalley.edu/degrees"
+              target="_blank"
+              rel="noreferrer"
+              className="mt-3 inline-flex text-sm font-semibold text-river underline-offset-2 hover:underline"
+            >
+              Browse the official college catalog →
+            </a>
+          </div>
           <Link to="/admissions" className="btn-primary w-fit shrink-0">
             Talk with admissions
           </Link>

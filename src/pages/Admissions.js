@@ -1,8 +1,14 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import { Link } from "react-router-dom";
 import PageHero from "../components/PageHero";
 import useReveal from "../hooks/useReveal";
-import { contact, images } from "../data/content";
+import {
+  admissionsTeam,
+  contact,
+  filterOptions,
+  images,
+  portalLinks,
+} from "../data/content";
 
 const steps = [
   {
@@ -11,30 +17,34 @@ const steps = [
   },
   {
     title: "Apply online",
-    copy: "Complete the RVCC application and share your goals so we can connect you with the right advisors.",
+    copy: "Complete the free RVCC application and send official transcripts to Admissions (mail or admissions@rivervalley.edu).",
   },
   {
     title: "Secure your funding",
-    copy: "Nearly 89% of students receive grants, scholarships, or loans. Start with the FAFSA and RVCC aid options.",
+    copy: "Nearly 89% of students receive grants, scholarships, or loans. Start with FAFSA school code 007560.",
   },
   {
     title: "Get ready to start",
-    copy: "Attend orientation, meet your support team, and register for courses that fit your schedule.",
+    copy: "Set up EasyLogin, meet advising, register for courses, and attend orientation.",
   },
 ];
 
 const initialForm = {
   name: "",
   email: "",
+  phone: "",
   interest: "Health Sciences",
   campus: "Claremont",
+  startTerm: "Fall",
   message: "",
+  company: "",
 };
 
 const FORMSPREE_ID = process.env.REACT_APP_FORMSPREE_ID;
 
 export default function Admissions() {
   const revealRef = useReveal();
+  const statusId = useId();
   const [form, setForm] = useState(initialForm);
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState("");
@@ -51,8 +61,21 @@ export default function Admissions() {
     setError("");
     setDelivery("");
 
+    if (form.company) {
+      setStatus("success");
+      setDelivery("spam");
+      setForm(initialForm);
+      return;
+    }
+
     const payload = {
-      ...form,
+      name: form.name,
+      email: form.email,
+      phone: form.phone,
+      interest: form.interest,
+      campus: form.campus,
+      startTerm: form.startTerm,
+      message: form.message,
       _subject: `RVCC admissions inquiry from ${form.name}`,
       submittedAt: new Date().toISOString(),
     };
@@ -85,8 +108,10 @@ export default function Admissions() {
         const body = [
           `Name: ${form.name}`,
           `Email: ${form.email}`,
+          `Phone: ${form.phone || "(not provided)"}`,
           `Interest: ${form.interest}`,
           `Campus: ${form.campus}`,
+          `Preferred start: ${form.startTerm}`,
           "",
           form.message || "(No additional message)",
         ].join("\n");
@@ -107,6 +132,8 @@ export default function Admissions() {
     }
   }
 
+  const applyLink = portalLinks.find((link) => link.label === "Apply online");
+
   return (
     <div ref={revealRef}>
       <PageHero
@@ -115,7 +142,21 @@ export default function Admissions() {
         summary="Whether you are returning to school, changing careers, or starting fresh, admissions will help you map a clear, affordable path."
         image={images.campus}
         imageAlt="River Valley Community College campus entrance area"
-      />
+      >
+        <div className="flex flex-wrap gap-3">
+          <a
+            href={applyLink.href}
+            target="_blank"
+            rel="noreferrer"
+            className="btn-primary"
+          >
+            Start free application
+          </a>
+          <a href="#request-info" className="btn-secondary">
+            Request information
+          </a>
+        </div>
+      </PageHero>
 
       <section className="section-shell grid gap-14 py-16 sm:py-20 lg:grid-cols-[1fr_1fr]">
         <div>
@@ -159,13 +200,16 @@ export default function Admissions() {
               {contact.email}
             </a>{" "}
             · {contact.phone}
+            {contact.tollFree ? ` · Toll-free ${contact.tollFree}` : null}
           </p>
         </div>
 
-        <div className="reveal" data-reveal>
+        <div className="reveal" data-reveal id="request-info">
           <form
             onSubmit={handleSubmit}
             className="border border-river/15 bg-white/80 p-6 backdrop-blur sm:p-8"
+            noValidate={false}
+            aria-describedby={statusId}
           >
             <h2 className="font-display text-2xl font-semibold text-river-deep">
               Request information
@@ -186,25 +230,44 @@ export default function Admissions() {
                 <input
                   required
                   name="name"
+                  autoComplete="name"
                   value={form.name}
                   onChange={handleChange}
                   className="w-full rounded-md border border-river/20 bg-white px-3 py-2.5 outline-none ring-sunrise/40 focus:ring-2"
                 />
               </label>
 
-              <label className="block">
-                <span className="mb-2 block text-sm font-semibold text-river-deep">
-                  Email
-                </span>
-                <input
-                  required
-                  type="email"
-                  name="email"
-                  value={form.email}
-                  onChange={handleChange}
-                  className="w-full rounded-md border border-river/20 bg-white px-3 py-2.5 outline-none ring-sunrise/40 focus:ring-2"
-                />
-              </label>
+              <div className="grid gap-5 sm:grid-cols-2">
+                <label className="block">
+                  <span className="mb-2 block text-sm font-semibold text-river-deep">
+                    Email
+                  </span>
+                  <input
+                    required
+                    type="email"
+                    name="email"
+                    autoComplete="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    className="w-full rounded-md border border-river/20 bg-white px-3 py-2.5 outline-none ring-sunrise/40 focus:ring-2"
+                  />
+                </label>
+
+                <label className="block">
+                  <span className="mb-2 block text-sm font-semibold text-river-deep">
+                    Phone{" "}
+                    <span className="font-normal text-granite-muted">(optional)</span>
+                  </span>
+                  <input
+                    type="tel"
+                    name="phone"
+                    autoComplete="tel"
+                    value={form.phone}
+                    onChange={handleChange}
+                    className="w-full rounded-md border border-river/20 bg-white px-3 py-2.5 outline-none ring-sunrise/40 focus:ring-2"
+                  />
+                </label>
+              </div>
 
               <div className="grid gap-5 sm:grid-cols-2">
                 <label className="block">
@@ -217,10 +280,9 @@ export default function Admissions() {
                     onChange={handleChange}
                     className="w-full rounded-md border border-river/20 bg-white px-3 py-2.5 outline-none ring-sunrise/40 focus:ring-2"
                   >
-                    <option>Health Sciences</option>
-                    <option>STEM & Technology</option>
-                    <option>Business & Accounting</option>
-                    <option>Education & Human Services</option>
+                    {filterOptions.areas.map((area) => (
+                      <option key={area}>{area}</option>
+                    ))}
                     <option>Not sure yet</option>
                   </select>
                 </label>
@@ -245,6 +307,23 @@ export default function Admissions() {
 
               <label className="block">
                 <span className="mb-2 block text-sm font-semibold text-river-deep">
+                  Preferred start term
+                </span>
+                <select
+                  name="startTerm"
+                  value={form.startTerm}
+                  onChange={handleChange}
+                  className="w-full rounded-md border border-river/20 bg-white px-3 py-2.5 outline-none ring-sunrise/40 focus:ring-2"
+                >
+                  <option>Fall</option>
+                  <option>Spring</option>
+                  <option>Summer</option>
+                  <option>Not sure yet</option>
+                </select>
+              </label>
+
+              <label className="block">
+                <span className="mb-2 block text-sm font-semibold text-river-deep">
                   Anything else we should know?
                 </span>
                 <textarea
@@ -255,6 +334,19 @@ export default function Admissions() {
                   className="w-full rounded-md border border-river/20 bg-white px-3 py-2.5 outline-none ring-sunrise/40 focus:ring-2"
                 />
               </label>
+
+              <div className="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden="true">
+                <label>
+                  Company
+                  <input
+                    tabIndex={-1}
+                    autoComplete="off"
+                    name="company"
+                    value={form.company}
+                    onChange={handleChange}
+                  />
+                </label>
+              </div>
             </div>
 
             <button
@@ -265,21 +357,78 @@ export default function Admissions() {
               {status === "submitting" ? "Sending…" : "Send request"}
             </button>
 
-            {status === "success" ? (
-              <p className="mt-4 text-sm font-medium text-valley" role="status">
-                {delivery === "formspree"
-                  ? "Thanks — your inquiry was sent to admissions."
-                  : "Thanks — your email draft should be open, and a local copy was saved in this browser."}
-              </p>
-            ) : null}
+            <div id={statusId} aria-live="polite" className="mt-4 min-h-[1.25rem]">
+              {status === "success" ? (
+                <p className="text-sm font-medium text-valley" role="status">
+                  {delivery === "formspree"
+                    ? "Thanks — your inquiry was sent to admissions."
+                    : delivery === "spam"
+                      ? "Thanks — we received your request."
+                      : "Thanks — your email draft should be open, and a local copy was saved in this browser."}
+                </p>
+              ) : null}
 
-            {status === "error" ? (
-              <p className="mt-4 text-sm font-medium text-red-700" role="alert">
-                {error}
-              </p>
-            ) : null}
+              {status === "error" ? (
+                <p className="text-sm font-medium text-red-700" role="alert">
+                  {error}
+                </p>
+              ) : null}
+            </div>
           </form>
         </div>
+      </section>
+
+      <section className="bg-[linear-gradient(180deg,rgba(231,242,245,0.85),rgba(246,251,252,0.25))] py-16 sm:py-20">
+        <div className="section-shell">
+          <div className="reveal max-w-2xl" data-reveal>
+            <p className="eyebrow">Admissions team</p>
+            <h2 className="display-title mt-3">People ready to help you start</h2>
+          </div>
+          <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {admissionsTeam.map((person) => (
+              <li
+                key={person.name}
+                className="reveal border-t border-river/15 pt-5"
+                data-reveal
+              >
+                <h3 className="font-display text-lg font-semibold text-river-deep">
+                  {person.name}
+                </h3>
+                <p className="mt-2 text-sm text-granite-muted">{person.role}</p>
+                <a
+                  href={`tel:${person.phone.replace(/[^\d+]/g, "")}`}
+                  className="mt-3 inline-flex text-sm font-semibold text-river underline-offset-2 hover:underline"
+                >
+                  {person.phone}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="section-shell py-16 sm:py-20">
+        <div className="reveal max-w-2xl" data-reveal>
+          <p className="eyebrow">Official next steps</p>
+          <h2 className="display-title mt-3">Apply, log in, and register</h2>
+        </div>
+        <ul className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {portalLinks.slice(0, 6).map((link) => (
+            <li key={link.label} className="reveal border-t border-river/15 pt-5" data-reveal>
+              <a
+                href={link.href}
+                target="_blank"
+                rel="noreferrer"
+                className="font-display text-lg font-semibold text-river-deep transition hover:text-river"
+              >
+                {link.label} →
+              </a>
+              <p className="mt-2 text-sm leading-relaxed text-granite-muted">
+                {link.detail}
+              </p>
+            </li>
+          ))}
+        </ul>
       </section>
     </div>
   );

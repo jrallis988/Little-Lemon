@@ -8,15 +8,81 @@ export const navLinks = [
 
 export const utilityLinks = [
   { to: "/student-life", label: "Current Students" },
-  { to: "/about", label: "Faculty & Staff" },
-  { href: "https://www.rivervalley.edu", label: "CCSNH Portal", external: true },
+  { href: "https://myrvcc.rivervalley.edu", label: "My RVCC", external: true },
+  { href: "https://www.ccsnh.edu/online-resources/", label: "CCSNH Login", external: true },
+];
+
+export const portalLinks = [
+  {
+    label: "My RVCC",
+    href: "https://myrvcc.rivervalley.edu",
+    detail: "Campus hub for news, resources, and quick links",
+  },
+  {
+    label: "CCSNH Online Resources",
+    href: "https://www.ccsnh.edu/online-resources/",
+    detail: "Canvas, SIS, student email, and EasyLogin tools",
+  },
+  {
+    label: "Apps Portal",
+    href: "https://portal.ccsnh.edu/",
+    detail: "Sign in once for CCSNH apps and MFA setup",
+  },
+  {
+    label: "College Catalog",
+    href: "https://catalog.rivervalley.edu/",
+    detail: "Official degrees, certificates, and student handbook",
+  },
+  {
+    label: "Course Schedules",
+    href: "https://www.rivervalley.edu/admissions/course-schedules/",
+    detail: "Browse upcoming semester offerings",
+  },
+  {
+    label: "Apply online",
+    href: "https://www.rivervalley.edu/admissions/welcome/",
+    detail: "Free RVCC application and transcript instructions",
+  },
 ];
 
 export const contact = {
   phone: "(603) 542-7744",
+  tollFree: "(800) 837-0658",
   email: "admissions@rivervalley.edu",
   address: "1 College Place, Claremont, NH 03743",
+  itHelp: {
+    phone: "(603) 542-7744 ext. 5360",
+    email: "RVCCITSupport@ccsnh.edu",
+  },
 };
+
+export const admissionsTeam = [
+  {
+    name: "Suzanne Groenewold",
+    role: "Director of Enrollment and Marketing",
+    phone: "(603) 542-7744 x5326",
+  },
+  {
+    name: "Courtney Prentiss",
+    role: "Enrollment Specialist",
+    phone: "(603) 542-7744 x5311",
+  },
+  {
+    name: "Leah Rothenberg",
+    role: "Allied Health Program Assistant",
+    phone: "(603) 542-7744 x5332",
+  },
+  {
+    name: "Judy Hoffman",
+    role: "Academic Center Supervisor — Keene",
+    phone: "(603) 542-7744 x5725",
+  },
+  {
+    name: "Charlene Ashey",
+    role: "Academic Center Supervisor — Lebanon",
+    phone: "(603) 542-7744 x5825",
+  },
+];
 
 export const images = {
   hero: "/images/hero-claremont.jpg",
@@ -45,14 +111,14 @@ export const happening = [
     to: "/admissions",
   },
   {
-    title: "Walk-In Week",
-    detail: "July 20–24 · 8 AM–4 PM · Claremont, Keene & Lebanon · free T-shirt",
-    cta: "Plan your visit",
+    title: "A&P I Prep Course",
+    detail: "Non-credit prep to get ready for Anatomy & Physiology I",
+    cta: "Ask admissions",
     to: "/admissions",
   },
   {
     title: "Scholarships & Aid",
-    detail: "Grants and scholarships are available — start with FAFSA and RVCC awards",
+    detail: "Grants and scholarships are available — FAFSA school code 007560",
     cta: "Explore financial aid",
     to: "/financial-aid",
   },
@@ -68,10 +134,12 @@ export const programs = [
     duration: "1–2 years depending on pathway",
     campuses: ["Claremont"],
     startTerms: ["Fall", "Spring"],
+    catalogUrl: "https://catalog.rivervalley.edu/degrees",
+    selective: true,
     prerequisites: [
       "High school diploma or equivalent",
-      "Placement or prerequisite coursework as advised",
-      "Clinical clearance requirements before rotations",
+      "Program-specific application materials and advising",
+      "Prerequisite coursework and clinical clearance before rotations",
     ],
     careers: [
       "Registered Nurse",
@@ -81,11 +149,11 @@ export const programs = [
     summary:
       "Prepare for bedside care through rigorous classroom learning and supervised clinical experience across the river valley.",
     highlights: [
-      "RN and LPN pathways",
-      "Clinical placements with regional partners",
-      "Strong NCLEX preparation culture",
+      "Registered Nursing (RN) and Practical Nursing (LPN) pathways",
+      "LPN-to-RN bridge and direct-entry options, including accelerated tracks",
+      "Clinical placements with regional partners and NCLEX-focused preparation",
     ],
-    nextStep: "Talk with admissions about prerequisites and start terms.",
+    nextStep: "Talk with admissions about prerequisites, selective admission, and start terms.",
   },
   {
     slug: "radiologic-technology",
@@ -96,6 +164,7 @@ export const programs = [
     duration: "About 2 years",
     campuses: ["Claremont"],
     startTerms: ["Fall"],
+    selective: true,
     prerequisites: [
       "Program application and advising review",
       "Science and math readiness",
@@ -124,6 +193,7 @@ export const programs = [
     duration: "About 2 years",
     campuses: ["Claremont"],
     startTerms: ["Fall"],
+    selective: true,
     prerequisites: [
       "Advising appointment recommended",
       "Science readiness for clinical coursework",
@@ -299,9 +369,9 @@ export const programs = [
     summary:
       "A flexible foundation for transfer, exploration, and communication-heavy careers.",
     highlights: [
-      "Transfer-friendly core",
-      "Room to explore interests",
-      "Strong writing and critical thinking",
+      "Concentrations in English, mathematics, psychology, science, or an open pathway",
+      "Online accelerated open pathway option",
+      "Transfer-friendly core with strong writing and critical thinking",
     ],
     nextStep: "Plan a transfer map with advising early.",
   },
@@ -368,6 +438,7 @@ export const programs = [
     duration: "About 2 years",
     campuses: ["Claremont"],
     startTerms: ["Fall"],
+    selective: true,
     prerequisites: [
       "Program advising and application review",
       "Clinical clearance requirements",
@@ -395,6 +466,7 @@ export const programs = [
     duration: "About 2 years",
     campuses: ["Claremont"],
     startTerms: ["Fall"],
+    selective: true,
     prerequisites: [
       "Program advising and application review",
       "Science readiness and clinical clearance",
@@ -476,6 +548,7 @@ export const programs = [
     duration: "Short-term certificate",
     campuses: ["Claremont", "Lebanon"],
     startTerms: ["Fall", "Spring"],
+    selective: true,
     prerequisites: [
       "High school diploma or equivalent",
       "Clinical readiness as required",
@@ -494,6 +567,171 @@ export const programs = [
     ],
     nextStep: "Check upcoming certificate start dates.",
   },
+  {
+    slug: "medical-laboratory-technician",
+    name: "Medical Laboratory Technician",
+    area: "Health Sciences",
+    credential: "Associate in Science",
+    format: "In-person with clinicals",
+    duration: "About 2 years",
+    campuses: ["Claremont"],
+    startTerms: ["Fall"],
+    selective: true,
+    catalogUrl: "https://catalog.rivervalley.edu/degrees",
+    prerequisites: [
+      "Program advising and selective admission review",
+      "Science readiness for clinical lab coursework",
+      "Clinical clearance before practicum",
+    ],
+    careers: [
+      "Medical laboratory technician",
+      "Hospital and reference lab roles",
+      "Diagnostic testing support",
+    ],
+    summary:
+      "Train to run clinical laboratory tests that help physicians diagnose and monitor patient care.",
+    highlights: [
+      "Clinical chemistry, hematology, and microbiology foundations",
+      "Hands-on lab technique and quality practices",
+      "Selective allied health pathway with clinical placements",
+    ],
+    nextStep: "Ask admissions about MLT prerequisites and application timing.",
+  },
+  {
+    slug: "healthcare-applications",
+    name: "Healthcare Applications (Pre-Professional)",
+    area: "Health Sciences",
+    credential: "Certificate",
+    format: "Flexible formats",
+    duration: "Stackable certificate pathway",
+    campuses: ["Claremont", "Keene", "Lebanon", "Online / hybrid"],
+    startTerms: ["Fall", "Spring"],
+    prerequisites: [
+      "High school diploma or equivalent",
+      "Advising to choose the right pre-professional track",
+    ],
+    careers: [
+      "Preparation for competitive health programs",
+      "Entry healthcare support roles while you build prerequisites",
+      "Transfer into RN, Rad Tech, OTA, PTA, and related pathways",
+    ],
+    summary:
+      "Build the science and healthcare foundations used for pre-RN, pre-LPN, pre-Rad Tech, pre-OTA/PTA, pre-Respiratory, and related tracks.",
+    highlights: [
+      "Pre-professional options aligned to selective health programs",
+      "Stackable coursework while you prepare to apply",
+      "Advising support to choose the right sequence",
+    ],
+    nextStep: "Map your target program with an allied health advisor.",
+  },
+  {
+    slug: "licensed-nursing-assistant",
+    name: "Licensed Nursing Assistant (LNA)",
+    area: "Health Sciences",
+    credential: "Certificate",
+    format: "In-person with clinical practice",
+    duration: "Short-term certificate",
+    campuses: ["Claremont", "Lebanon"],
+    startTerms: ["Fall", "Spring"],
+    prerequisites: [
+      "Interest in direct patient care",
+      "Clinical readiness and background requirements as advised",
+    ],
+    careers: [
+      "Licensed nursing assistant",
+      "Long-term care and hospital support roles",
+      "Stepping stone into LPN or RN pathways",
+    ],
+    summary:
+      "Enter patient care quickly with skills for bedside support in hospitals, clinics, and long-term care settings.",
+    highlights: [
+      "Fast workforce entry into healthcare",
+      "Hands-on clinical skill practice",
+      "Natural ladder into nursing programs",
+    ],
+    nextStep: "Ask admissions about upcoming LNA cohorts and clinical sites.",
+  },
+  {
+    slug: "general-studies",
+    name: "General Studies",
+    area: "Education & Human Services",
+    credential: "Associate of Science",
+    format: "In-person, online, and hybrid",
+    duration: "About 2 years",
+    campuses: ["Claremont", "Keene", "Lebanon", "Online / hybrid"],
+    startTerms: ["Fall", "Spring", "Summer"],
+    prerequisites: [
+      "High school diploma or equivalent",
+      "Advising to design a goal-aligned course plan",
+    ],
+    careers: [
+      "Flexible transfer exploration",
+      "Workplace advancement with a degree credential",
+      "Custom pathway before specializing",
+    ],
+    summary:
+      "Design a flexible associate degree around your transfer goals, career interests, and schedule.",
+    highlights: [
+      "Customizable course planning",
+      "Room to explore before committing to a major",
+      "Works well for working adults balancing school and life",
+    ],
+    nextStep: "Meet advising to sketch a transfer or career-focused plan.",
+  },
+  {
+    slug: "advanced-machine-tool",
+    name: "Advanced Machine Tool Technology",
+    area: "STEM & Technology",
+    credential: "Certificate",
+    format: "In-person labs",
+    duration: "Certificate pathway",
+    campuses: ["Claremont"],
+    startTerms: ["Fall", "Spring"],
+    prerequisites: [
+      "Comfort with hands-on technical work",
+      "Advising for shop safety and tool readiness",
+    ],
+    careers: [
+      "CNC / machine tool support roles",
+      "Precision manufacturing pathways",
+      "Advanced manufacturing entry points",
+    ],
+    summary:
+      "Build precision machining skills for advanced manufacturing employers in the region.",
+    highlights: [
+      "Hands-on machine tool practice",
+      "Manufacturing-ready technical skills",
+      "Certificate focused on workplace readiness",
+    ],
+    nextStep: "Ask about lab schedules and certificate start terms.",
+  },
+  {
+    slug: "peer-support",
+    name: "Peer Support",
+    area: "Education & Human Services",
+    credential: "Certificate",
+    format: "Flexible formats",
+    duration: "Short-term certificate",
+    campuses: ["Claremont", "Keene", "Lebanon"],
+    startTerms: ["Fall", "Spring"],
+    prerequisites: [
+      "Interest in recovery-oriented and helping roles",
+      "Advising for certificate requirements",
+    ],
+    careers: [
+      "Peer support specialist pathways",
+      "Behavioral health and recovery support roles",
+      "Community and nonprofit helping professions",
+    ],
+    summary:
+      "Prepare to support others through lived-experience informed, recovery-oriented helping skills.",
+    highlights: [
+      "Community mental health and recovery focus",
+      "Practical helping and communication skills",
+      "Pathway into human services settings",
+    ],
+    nextStep: "Talk with admissions about peer support certificate timing.",
+  },
 ];
 
 export const programAreas = [
@@ -501,16 +739,19 @@ export const programAreas = [
     slug: "health-sciences",
     name: "Health Sciences",
     summary:
-      "Nursing, radiologic technology, respiratory therapy, and allied health pathways built for clinical careers.",
+      "Nursing, imaging, therapy, lab science, and allied health pathways built for clinical careers.",
     image: images.healthcare,
     programSlugs: [
       "nursing",
       "radiologic-technology",
       "respiratory-therapy",
-      "medical-assistant",
+      "medical-laboratory-technician",
       "occupational-therapy-assistant",
       "physical-therapist-assistant",
+      "medical-assistant",
       "massage-therapy",
+      "healthcare-applications",
+      "licensed-nursing-assistant",
       "phlebotomy",
     ],
   },
@@ -520,7 +761,11 @@ export const programAreas = [
     summary:
       "Hands-on preparation for cybersecurity, networks, science, and advanced manufacturing roles.",
     image: images.science,
-    programSlugs: ["cybersecurity", "information-technology"],
+    programSlugs: [
+      "cybersecurity",
+      "information-technology",
+      "advanced-machine-tool",
+    ],
   },
   {
     slug: "business-accounting",
@@ -534,13 +779,15 @@ export const programAreas = [
     slug: "education-human-services",
     name: "Education & Human Services",
     summary:
-      "Programs for educators, caregivers, and community-centered professionals.",
+      "Programs for educators, caregivers, transfer explorers, and community-centered professionals.",
     image: images.ece,
     programSlugs: [
       "early-childhood-education",
       "liberal-arts",
-      "social-services",
       "psychology",
+      "social-services",
+      "general-studies",
+      "peer-support",
     ],
   },
 ];
@@ -589,6 +836,7 @@ export const campuses = [
 
 export const tuition = {
   yearLabel: "2026–2027 academic year",
+  fafsaCode: "007560",
   rates: [
     { label: "New Hampshire resident", amount: 238, unit: "per credit" },
     { label: "New England regional", amount: 357, unit: "per credit" },
@@ -603,6 +851,12 @@ export const tuition = {
     "Students living within a 50-mile radius may qualify for in-state day-course rates.",
     "All students are charged in-state rates for evening, weekend, and online courses.",
     "Tuition and fees are set by the CCSNH Board and can change.",
+    "Use FAFSA school code 007560 for River Valley Community College.",
+  ],
+  enrollment: [
+    { label: "Full time", detail: "12 or more credits per semester" },
+    { label: "¾ time", detail: "9–11 credits per semester" },
+    { label: "Part time", detail: "6–8 credits per semester" },
   ],
 };
 
@@ -642,15 +896,15 @@ export const outcomes = [
 export const aidSteps = [
   {
     title: "Complete the FAFSA",
-    copy: "Use RVCC’s school code and submit early so grants and loans can be packaged on time.",
+    copy: "Use RVCC school code 007560 and submit early so grants and loans can be packaged on time. Preferred filing date is April 1 for the upcoming aid year.",
   },
   {
     title: "Review your award",
-    copy: "Compare grants, scholarships, and loan options with Financial Aid before you accept anything.",
+    copy: "Compare grants, scholarships, and loan options with Financial Aid before you accept anything in SIS.",
   },
   {
     title: "Apply for scholarships",
-    copy: "Local and college scholarships can stack with federal aid and lower what you borrow.",
+    copy: "Local and Foundation for NH Community Colleges scholarships can stack with federal aid and lower what you borrow.",
   },
   {
     title: "Ask before you stall",
@@ -674,6 +928,25 @@ export const lifeSupports = [
   {
     title: "Advising that knows you",
     copy: "With a 7:1 student-to-faculty ratio, support is personal — not a ticket queue.",
+  },
+];
+
+export const studentResources = [
+  {
+    title: "Accessibility services",
+    copy: "Request accommodations and learning supports so coursework fits how you learn best.",
+  },
+  {
+    title: "Advising, career & transfer",
+    copy: "Map courses, careers, and bachelor’s pathways with people who know CCSNH transfer options.",
+  },
+  {
+    title: "IT & EasyLogin help",
+    copy: "Get Canvas, SIS, email, and password support from the Claremont help desk and CCSNH portals.",
+  },
+  {
+    title: "Orientation",
+    copy: "Join in-person or online new-student orientation before your first semester starts.",
   },
 ];
 

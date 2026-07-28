@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import PageHero from "../components/PageHero";
 import useReveal from "../hooks/useReveal";
 import {
+  aidSteps,
   estimateTuition,
   images,
   outcomes,
@@ -34,6 +35,64 @@ export default function FinancialAid() {
       />
 
       <section className="section-shell py-14 sm:py-16">
+        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
+          <div>
+            <p className="eyebrow">FAFSA first</p>
+            <h2 className="display-title mt-3">School code {tuition.fafsaCode}</h2>
+            <p className="body-copy mt-4">
+              Complete the FAFSA each aid year and list River Valley Community
+              College with code <strong>{tuition.fafsaCode}</strong>. The
+              preferred filing date is April 1 for the upcoming year.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <a
+              href="https://studentaid.gov/h/apply-for-aid/fafsa"
+              target="_blank"
+              rel="noreferrer"
+              className="btn-primary"
+            >
+              Start the FAFSA
+            </a>
+            <a
+              href="https://www.ccsnh.edu/online-resources/"
+              target="_blank"
+              rel="noreferrer"
+              className="btn-ghost"
+            >
+              Accept aid in SIS
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-river/10 bg-white/70 py-14 sm:py-16">
+        <div className="section-shell">
+          <div className="max-w-3xl">
+            <p className="eyebrow">How aid works</p>
+            <h2 className="display-title mt-3">Four moves that unlock funding</h2>
+          </div>
+          <ol className="mt-10 grid gap-8 md:grid-cols-2">
+            {aidSteps.map((step, index) => (
+              <li key={step.title} className="reveal flex gap-4" data-reveal>
+                <span className="font-display text-sm font-semibold text-sunrise">
+                  0{index + 1}
+                </span>
+                <div>
+                  <h3 className="font-display text-xl font-semibold text-river-deep">
+                    {step.title}
+                  </h3>
+                  <p className="mt-2 leading-relaxed text-granite-muted">
+                    {step.copy}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className="section-shell py-14 sm:py-16">
         <div className="max-w-3xl">
           <p className="eyebrow">Tuition snapshot · {tuition.yearLabel}</p>
           <h2 className="display-title mt-3">Know the per-credit rates</h2>
@@ -41,10 +100,17 @@ export default function FinancialAid() {
 
         <div className="mt-8 overflow-x-auto border border-river/10 bg-white/80">
           <table className="min-w-full text-left text-sm">
+            <caption className="sr-only">
+              Published per-credit tuition rates for {tuition.yearLabel}
+            </caption>
             <thead className="bg-river-mist/80 text-xs uppercase tracking-[0.14em] text-valley">
               <tr>
-                <th className="px-4 py-3 font-semibold">Residency</th>
-                <th className="px-4 py-3 font-semibold">Rate</th>
+                <th scope="col" className="px-4 py-3 font-semibold">
+                  Residency
+                </th>
+                <th scope="col" className="px-4 py-3 font-semibold">
+                  Rate
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -65,6 +131,17 @@ export default function FinancialAid() {
             <li key={note}>• {note}</li>
           ))}
         </ul>
+
+        <div className="mt-8 grid gap-4 sm:grid-cols-3">
+          {tuition.enrollment.map((item) => (
+            <div key={item.label} className="border-t border-river/15 pt-4">
+              <p className="font-display text-sm font-semibold uppercase tracking-[0.14em] text-valley">
+                {item.label}
+              </p>
+              <p className="mt-2 text-sm text-granite">{item.detail}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
       <section className="bg-[linear-gradient(180deg,rgba(231,242,245,0.9),rgba(246,251,252,0.3))] py-14 sm:py-16">
@@ -114,7 +191,10 @@ export default function FinancialAid() {
             </div>
           </div>
 
-          <div className="border border-river/15 bg-white/85 p-6 sm:p-8">
+          <div
+            className="border border-river/15 bg-white/85 p-6 sm:p-8"
+            aria-live="polite"
+          >
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-valley">
               Estimated total
             </p>

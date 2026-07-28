@@ -182,9 +182,13 @@ export default function Header() {
               />
             </label>
             {results.length > 0 ? (
-              <ul className="mt-3 divide-y divide-river/10 border border-river/10 bg-white">
+              <ul
+                className="mt-3 divide-y divide-river/10 border border-river/10 bg-white"
+                role="listbox"
+                aria-label="Program search results"
+              >
                 {results.map((program) => (
-                  <li key={program.slug}>
+                  <li key={program.slug} role="option">
                     <Link
                       to={`/programs/${program.slug}`}
                       className="block px-4 py-3 transition hover:bg-river-mist"
@@ -203,6 +207,10 @@ export default function Header() {
                   </li>
                 ))}
               </ul>
+            ) : query.trim() ? (
+              <p className="mt-3 text-sm text-granite-muted" role="status">
+                No programs match “{query.trim()}”.
+              </p>
             ) : null}
           </form>
         </div>

@@ -173,7 +173,7 @@ export default function Home() {
                       {area.summary}
                     </p>
                     <ul className="mt-5 space-y-2 text-sm text-granite">
-                      {areaPrograms.map((program) => (
+                      {areaPrograms.slice(0, 5).map((program) => (
                         <li key={program.slug}>
                           <Link
                             to={`/programs/${program.slug}`}
@@ -184,6 +184,16 @@ export default function Home() {
                           </Link>
                         </li>
                       ))}
+                      {areaPrograms.length > 5 ? (
+                        <li>
+                          <Link
+                            to="/programs"
+                            className="inline-flex items-center gap-2 font-medium text-sunrise transition hover:text-river-deep"
+                          >
+                            + {areaPrograms.length - 5} more pathways
+                          </Link>
+                        </li>
+                      ) : null}
                     </ul>
                   </div>
                 </article>

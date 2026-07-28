@@ -1,7 +1,14 @@
 import { Link } from "react-router-dom";
 import PageHero from "../components/PageHero";
 import useReveal from "../hooks/useReveal";
-import { campuses, images, lifeSupports } from "../data/content";
+import {
+  campuses,
+  contact,
+  images,
+  lifeSupports,
+  portalLinks,
+  studentResources,
+} from "../data/content";
 
 export default function StudentLife() {
   const revealRef = useReveal();
@@ -44,6 +51,66 @@ export default function StudentLife() {
         </div>
       </section>
 
+      <section className="bg-[linear-gradient(180deg,rgba(231,242,245,0.85),rgba(246,251,252,0.2))] py-16 sm:py-20">
+        <div className="section-shell">
+          <div className="reveal max-w-2xl" data-reveal>
+            <p className="eyebrow">Student success</p>
+            <h2 className="display-title mt-3">Resources beyond the classroom</h2>
+          </div>
+          <div className="mt-10 grid gap-8 md:grid-cols-2">
+            {studentResources.map((item) => (
+              <article
+                key={item.title}
+                className="reveal border-t border-river/15 pt-5"
+                data-reveal
+              >
+                <h3 className="font-display text-xl font-semibold text-river-deep">
+                  {item.title}
+                </h3>
+                <p className="mt-3 leading-relaxed text-granite-muted">
+                  {item.copy}
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section-shell py-16 sm:py-20">
+        <div className="reveal max-w-2xl" data-reveal>
+          <p className="eyebrow">My RVCC & CCSNH</p>
+          <h2 className="display-title mt-3">Tools current students use daily</h2>
+          <p className="body-copy mt-4">
+            Sign in for Canvas, SIS, email, course schedules, and campus
+            resources. Need help? Call {contact.itHelp.phone} or email{" "}
+            <a
+              href={`mailto:${contact.itHelp.email}`}
+              className="font-semibold text-river underline-offset-2 hover:underline"
+            >
+              {contact.itHelp.email}
+            </a>
+            .
+          </p>
+        </div>
+        <ul className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {portalLinks.map((link) => (
+            <li key={link.label} className="reveal border-t border-river/15 pt-5" data-reveal>
+              <a
+                href={link.href}
+                target="_blank"
+                rel="noreferrer"
+                className="font-display text-lg font-semibold text-river-deep transition hover:text-river"
+              >
+                {link.label} →
+              </a>
+              <p className="mt-2 text-sm leading-relaxed text-granite-muted">
+                {link.detail}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
       <section className="relative overflow-hidden py-16 sm:py-20">
         <img
           src={images.campus}
@@ -68,6 +135,7 @@ export default function StudentLife() {
                   {campus.name}
                 </h3>
                 <p className="mt-3 text-white/75">{campus.detail}</p>
+                <p className="mt-3 text-sm text-white/60">{campus.hours}</p>
               </article>
             ))}
           </div>
