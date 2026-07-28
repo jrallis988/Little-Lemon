@@ -28,7 +28,7 @@ export const SITE = {
     facebook: "https://www.facebook.com/seascape.inn.1",
   },
   checkIn: "3:00 PM",
-  checkOut: "10:00 AM",
+  checkOut: "11:00 AM",
   hours: "Front desk 8:30 AM – 10:00 PM",
   typicalRateNote:
     "Use the live calendar below for exact pricing — seasonal ranges are a guide only.",
@@ -359,7 +359,7 @@ export const POLICIES = [
   {
     id: "pets",
     title: "Pets",
-    body: "Dogs only — one dog up to 40 lbs. Pet park on site; beach walks across the street.",
+    body: "Dogs only — one dog up to 40 lbs. Pet park on site; beach walks across the street. Prior registration required.",
   },
   {
     id: "checkin",
@@ -369,7 +369,179 @@ export const POLICIES = [
   {
     id: "payment",
     title: "Payment & smoking",
-    body: "Major credit cards accepted. Room charges are typically charged in full (no deposit). Non-smoking property with one designated outdoor smoking area.",
+    body: "Major credit cards accepted. A deposit or full payment is due at booking as shown at checkout. Non-smoking indoors with a designated outdoor smoking area.",
+  },
+];
+
+export const FAQ_SECTIONS = [
+  {
+    id: "reservations",
+    title: "Reservations",
+    items: [
+      {
+        question: "How can I make a reservation?",
+        answer:
+          "Click Book a stay on this site, enter your dates, choose a room, and follow the prompts on our RezStream booking calendar. You can also reserve by calling the front desk at (603) 926-1750.",
+      },
+      {
+        question: "What is your cancellation policy?",
+        answer:
+          "Cancellations must be made within the time frame on your booking confirmation to qualify for a refund. Late cancellations or no-shows forfeit the deposit or the full charge of the reservation.",
+      },
+      {
+        question: "Is a deposit required to reserve a room?",
+        answer:
+          "Yes. A designated deposit or full payment is due at booking as outlined during online checkout to secure your reservation.",
+      },
+      {
+        question: "What forms of payment do you accept?",
+        answer:
+          "We accept all major credit cards and approved digital payment methods securely through our booking platform.",
+      },
+      {
+        question: "Is there a minimum stay requirement?",
+        answer:
+          "Minimum stay requirements may apply during peak seasons, holidays, or weekends. Check your dates in the booking calendar for any active requirements.",
+      },
+    ],
+  },
+  {
+    id: "policies",
+    title: "Hotel policies",
+    items: [
+      {
+        question: "What are your check-in and check-out times?",
+        answer: `Check-in begins at ${SITE.checkIn}, and check-out is by ${SITE.checkOut}.`,
+      },
+      {
+        question: "What is the minimum age to check in?",
+        answer:
+          "Guests must be at least 18 years of age with a valid government-issued photo ID to check in and reserve a room.",
+      },
+      {
+        question: "Does the hotel allow pets?",
+        answer:
+          "Yes — dogs only, one dog up to 40 lbs. Prior registration is required, and guests must follow our pet guidelines. Use the on-site pet park or walk about 300 feet to the beach.",
+      },
+      {
+        question: "Can I check in early and check out late?",
+        answer:
+          "Early check-ins and late check-outs are subject to availability and must be requested in advance. Additional fees may apply for late departures.",
+      },
+      {
+        question: "What is your smoking policy?",
+        answer:
+          "Seascape Inn is strictly non-smoking indoors. Tobacco, cannabis, and e-cigarettes are prohibited in rooms and common areas. A designated outdoor smoking area is provided.",
+      },
+      {
+        question: "Are children allowed?",
+        answer:
+          "Yes, families are welcome. Minors must be accompanied by an adult parent or guardian at all times.",
+      },
+    ],
+  },
+  {
+    id: "amenities",
+    title: "Amenities",
+    items: [
+      {
+        question: "What amenities are available during my stay?",
+        answer:
+          "Comfortable rooms with free Wi‑Fi, parking, in-room fridge and microwave, cable TV, a gazebo lawn with guest BBQ, and a small pet park—plus North Beach across the street.",
+      },
+      {
+        question: "Is parking free?",
+        answer: "Yes. Complimentary on-site parking is available for registered guests.",
+      },
+      {
+        question: "Do you have a pool?",
+        answer:
+          "No pool on site — but North Beach at Plaice Cove is just across Ocean Boulevard.",
+      },
+      {
+        question: "Do you serve breakfast?",
+        answer:
+          "Yes. We offer a complimentary continental breakfast to start your morning before you head out to explore the coast.",
+      },
+      {
+        question: "Is there Wi‑Fi available? Is it free?",
+        answer:
+          "Yes. High-speed wireless internet is available throughout the property and is free for all registered guests.",
+      },
+    ],
+  },
+  {
+    id: "direct-booking",
+    title: "Direct booking benefits",
+    items: [
+      {
+        question: "Does booking directly on your website ensure I get the best rate?",
+        answer:
+          "Yes. Booking directly through Seascape Inn gives you our best available rate and direct customer support—without third-party booking friction.",
+      },
+      {
+        question: "What are the benefits of booking direct?",
+        answer:
+          "Transparent pricing, direct communication with our front desk for special requests, and access to the best available rates.",
+      },
+      {
+        question: "Is it easier to change or cancel when booking direct?",
+        answer:
+          "Yes. Managing your reservation with us is usually smoother for modifications or cancellations than booking through a third-party travel site.",
+      },
+      {
+        question: "How do I make sure I book direct?",
+        answer:
+          "Use this website’s Book a stay / Rates calendar, or call the front desk at (603) 926-1750.",
+      },
+    ],
+  },
+  {
+    id: "location-faq",
+    title: "Location",
+    items: [
+      {
+        question: "What’s the closest airport?",
+        answer:
+          "The closest regional option is Portsmouth International Airport at Pease (PSM). Boston Logan (BOS) and Manchester-Boston Regional (MHT) are also within a convenient drive.",
+      },
+      {
+        question: "How close is the hotel to the beach?",
+        answer:
+          "North Beach at Plaice Cove is right across Ocean Boulevard—steps from your door at 955 Ocean Blvd.",
+      },
+      {
+        question: "Are there activities within walking distance?",
+        answer:
+          "Yes. Guests can walk to the beach, coastal paths, and nearby stretches of Ocean Boulevard for dining and scenic walks.",
+      },
+      {
+        question: "What is there to do in the area?",
+        answer:
+          "Coastal exploration, the Hampton Beach boardwalk and Casino Ballroom, seasonal events, restaurants, Portsmouth day trips, Rye Harbor, and outdoor recreation—see our Things to do list above.",
+      },
+      {
+        question: "Is there public transportation nearby?",
+        answer:
+          "Local transit options and ride services are available in the area to help you get around the Seacoast.",
+      },
+    ],
+  },
+  {
+    id: "vouchers",
+    title: "Vouchers & future credits",
+    items: [
+      {
+        question: "Do you offer physical or digital gift cards?",
+        answer:
+          "We do not currently offer traditional gift cards for purchase. We can provide custom digital stay vouchers and promotional resort credits for returning guests or special packages—contact our team to learn more about gifting a stay.",
+      },
+      {
+        question: "How can a stay credit or future voucher be redeemed?",
+        answer:
+          "Apply vouchers and stay credits toward room reservations by referencing your unique voucher code when booking with our front desk team.",
+      },
+    ],
   },
 ];
 

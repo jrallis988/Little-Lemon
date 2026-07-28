@@ -22,6 +22,10 @@ test("renders about, reviews, and location sections", () => {
   ).toBeInTheDocument();
   expect(screen.getByText(/portsmouth market square/i)).toBeInTheDocument();
   expect(
+    screen.getByRole("heading", { name: /questions before you book/i })
+  ).toBeInTheDocument();
+  expect(screen.getByText(/how can i make a reservation/i)).toBeInTheDocument();
+  expect(
     screen.getByRole("region", {
       name: /interactive map of seascape inn in hampton, new hampshire/i,
     })
