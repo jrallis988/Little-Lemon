@@ -116,7 +116,7 @@ export function FilterPanel({
             <FilterOption
               key={dept}
               id={`${idPrefix}-dept-${dept}`}
-              label={dept}
+              label={dept === "Juniors" ? "Jr's" : dept === "Pets" ? "Pet" : dept}
               checked={departments.includes(dept)}
               onCheckedChange={() => toggleDepartment(dept as Department)}
             />

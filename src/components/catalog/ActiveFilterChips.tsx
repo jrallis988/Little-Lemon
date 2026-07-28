@@ -15,7 +15,7 @@ export function ActiveFilterChips() {
   const chips: Chip[] = [
     ...filters.departments.map((value) => ({
       id: `department-${value}`,
-      label: value,
+      label: value === "Juniors" ? "Jr's" : value === "Pets" ? "Pet" : value,
       dismiss: () => filters.toggleDepartment(value),
     })),
     ...filters.categories.map((value) => ({
