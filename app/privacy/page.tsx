@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { candidate } from "@/lib/candidate";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { LegalReviewBanner } from "@/components/LegalReviewBanner";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -25,7 +26,11 @@ export default function PrivacyPage() {
       </h1>
       <p className="mt-4 text-slate-muted">Last Updated: July 28, 2026</p>
 
-      <div className="mt-10 space-y-6 text-base leading-relaxed text-slate-text">
+      <div className="mt-8">
+        <LegalReviewBanner />
+      </div>
+
+      <div className="mt-6 space-y-6 text-base leading-relaxed text-slate-text">
         <p>
           Welcome to the official campaign website for {candidate.fullName}.{" "}
           {candidate.committee} (“we,” “us,” or “the campaign”) respects your
@@ -159,6 +164,13 @@ export default function PrivacyPage() {
           cookies only. You can also control cookies through your browser
           settings, though disabling them may impact certain functional areas of
           the site.
+        </p>
+        <p>
+          If you use Live Campaign Support or leave a chat message, we may store
+          your name, email, and message content to respond. Do not submit Social
+          Security numbers, passwords, or payment card details through chat.
+          Human live chat may use third-party tools when enabled; those providers
+          will be disclosed here when connected.
         </p>
 
         <h2 className="font-display text-2xl font-bold text-ink">

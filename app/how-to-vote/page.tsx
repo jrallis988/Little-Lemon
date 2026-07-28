@@ -74,12 +74,16 @@ export default function HowToVotePage() {
 
         <CtaRow
           primary={{ href: "/#join", label: "Join Team Varga" }}
-          secondary={{ href: "/volunteer", label: "Volunteer" }}
+          secondary={{ href: "/write-in-faq", label: "Write-In FAQ" }}
         />
         <p className="mt-6 text-sm text-slate-muted">
           Questions?{" "}
           <Link href="/contact" className="font-semibold text-red underline-offset-2 hover:underline">
             Contact the campaign
+          </Link>
+          {" · "}
+          <Link href="/volunteer" className="font-semibold text-red underline-offset-2 hover:underline">
+            Volunteer
           </Link>
           .
         </p>

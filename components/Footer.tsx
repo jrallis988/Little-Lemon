@@ -2,17 +2,23 @@ import Link from "next/link";
 import Image from "next/image";
 import { Facebook, Instagram, Twitter, Youtube } from "lucide-react";
 import { candidate } from "@/lib/candidate";
+import { NH_ELECTIONS_URL } from "@/lib/faq";
 
 const quickLinks = [
   { href: "/meet-nick", label: "Meet Nick" },
   { href: "/issues", label: "Issues" },
   { href: "/how-to-vote", label: "How to Vote" },
+  { href: "/write-in-faq", label: "Write-In FAQ" },
   { href: "/violet-party", label: "Violet Party" },
-  { href: "/contact", label: "Contact" },
-  { href: "/accessibility", label: "Accessibility" },
+  { href: "/volunteer", label: "Volunteer" },
+];
+
+const trustLinks = [
   { href: "/privacy", label: "Privacy" },
-  { href: "/terms", label: "Terms & Conditions" },
-  { href: "/transparency", label: "Transparency" },
+  { href: "/terms", label: "Terms" },
+  { href: "/accessibility", label: "Accessibility" },
+  { href: "/write-in-faq", label: "Write-In FAQ" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export function Footer() {
@@ -68,23 +74,55 @@ export function Footer() {
             </ul>
           </div>
 
-          <nav aria-label="Footer">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/80">
-              Quick links
-            </p>
-            <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2">
-              {quickLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-white/80 underline-offset-2 hover:text-white hover:underline"
+          <div className="space-y-8">
+            <nav aria-label="Footer">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/80">
+                Quick links
+              </p>
+              <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2">
+                {quickLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-white/80 underline-offset-2 hover:text-white hover:underline"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            <nav aria-label="Legal and trust">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/80">
+                Legal &amp; trust
+              </p>
+              <ul className="mt-3 flex flex-wrap gap-x-3 gap-y-2 text-sm text-white/85">
+                {trustLinks.map((link, i) => (
+                  <li key={link.href} className="inline-flex items-center gap-3">
+                    {i > 0 && <span aria-hidden className="text-white/40">|</span>}
+                    <Link
+                      href={link.href}
+                      className="underline-offset-2 hover:text-white hover:underline"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+                <li className="inline-flex items-center gap-3">
+                  <span aria-hidden className="text-white/40">|</span>
+                  <a
+                    href={NH_ELECTIONS_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline-offset-2 hover:text-white hover:underline"
                   >
-                    {link.label}
-                  </Link>
+                    Official Election Resources
+                  </a>
                 </li>
-              ))}
-            </ul>
-          </nav>
+              </ul>
+            </nav>
+          </div>
         </div>
 
         <div className="mt-10 space-y-3 border-t border-white/15 pt-8 text-xs leading-relaxed text-white/80">
@@ -93,19 +131,7 @@ export function Footer() {
             reserved.
           </p>
           <p>
-            Paid for by {candidate.committee} | Independent Write-In Candidate |{" "}
-            <Link href="/accessibility" className="underline underline-offset-2 hover:text-white">
-              Accessibility
-            </Link>
-          </p>
-          <p>
-            <Link href="/privacy" className="underline underline-offset-2 hover:text-white">
-              Privacy Policy
-            </Link>
-            {" | "}
-            <Link href="/terms" className="underline underline-offset-2 hover:text-white">
-              Terms &amp; Conditions
-            </Link>
+            Paid for by {candidate.committee} | Independent Write-In Candidate
           </p>
           <p className="text-white/70">Powered by Artistic Fountain</p>
         </div>
