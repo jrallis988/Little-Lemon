@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { MessageCircle, Send, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { useAccountStore } from "@/stores/accountStore"
 import { cn } from "@/lib/utils"
 
 type ChatRole = "agent" | "user"
@@ -19,7 +20,7 @@ const QUICK_PROMPTS = [
   "Free shipping?",
   "Return policy",
   "Find a store",
-  "Size help",
+  "Talk to a person",
 ] as const
 
 const STARTER: ChatMessage = {
@@ -98,12 +99,16 @@ function replyFor(input: string): ChatMessage {
     }
   }
 
-  if (/(human|real person|agent|manager|speak)/.test(q)) {
+  if (/(human|real person|agent|manager|speak|talk to a person|representative)/.test(q)) {
+    const ticketId = useAccountStore.getState().requestHumanHandoff(input)
     return {
       id,
       role: "agent",
-      text: "I’m a digital assistant for this Marshalls prototype. For account-specific help in a live store, a team member at your local Marshalls is your best bet — I can get you the locator.",
-      links: [{ label: "Find a store", to: "/stores" }],
+      text: `I’ve opened handoff ticket ${ticketId}. A specialist will follow up by email in this prototype queue. Meanwhile I can still help with shipping, returns, or store pickup.`,
+      links: [
+        { label: "Find a store", to: "/stores" },
+        { label: "Account / orders", to: "/account" },
+      ],
     }
   }
 

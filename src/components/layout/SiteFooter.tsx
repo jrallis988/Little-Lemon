@@ -11,6 +11,7 @@ import {
   Youtube,
 } from "lucide-react"
 import { navHref, SHOP_NAV } from "@/data/navigation"
+import { useAccountStore } from "@/stores/accountStore"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -36,15 +37,12 @@ const UTILITY_TILES = [
   {
     title: "Gift cards",
     body: "In case you wanna let them pick.",
-    links: [
-      { label: "Shop Gift Cards", to: "/catalog" },
-      { label: "Check Your Balance", to: "/catalog" },
-    ],
+    links: [{ label: "Shop Gift Cards", to: "/gift-cards" }, { label: "Check Your Balance", to: "/gift-cards" }],
   },
   {
     title: "Need to make a return?",
     body: "Bring your shipping confirmation email to store for free returns. Some exclusions apply.",
-    links: [{ label: "Learn More", to: "/catalog" }],
+    links: [{ label: "Learn More", to: "/shipping-returns" }],
   },
 ] as const
 
@@ -123,10 +121,10 @@ const FOOTER_ACCORDIONS: {
     id: "support",
     title: "Support",
     links: [
-      { label: "Help center", to: "/catalog" },
-      { label: "Order status", to: "/order-confirmation" },
-      { label: "Shipping & returns", to: "/catalog" },
-      { label: "Gift cards", to: "/catalog" },
+      { label: "Help center", to: "/shipping-returns" },
+      { label: "Order status", to: "/order-status" },
+      { label: "Shipping & returns", to: "/shipping-returns" },
+      { label: "Gift cards", to: "/gift-cards" },
       { label: "Find a store", to: "/stores" },
     ],
   },
@@ -134,16 +132,18 @@ const FOOTER_ACCORDIONS: {
     id: "rewards",
     title: "TJX Rewards® Credit Card",
     links: [
-      { label: "Learn more & apply", to: "/catalog" },
-      { label: "Manage your account", to: "/catalog" },
-      { label: "Cardmember benefits", to: "/catalog" },
+      { label: "Learn more & apply", to: "/account" },
+      { label: "Manage your account", to: "/account" },
+      { label: "Cardmember benefits", to: "/account" },
     ],
   },
   {
     id: "shopping",
     title: "Shopping & App",
     links: [
-      { label: "Download the app", to: "/catalog" },
+      { label: "Designer Shop", to: "/shop/designer" },
+      { label: "Under $50", to: "/shop/under-50" },
+      { label: "Clearance", to: "/shop/clearance" },
       { label: "Email sign up", to: "#email-signup" },
       { label: "Store mode tips", to: "/stores" },
     ],
@@ -153,19 +153,19 @@ const FOOTER_ACCORDIONS: {
     title: "Our Company",
     links: [
       { label: "About Marshalls", to: "/" },
-      { label: "Careers", to: "/catalog" },
+      { label: "Careers", to: "/account" },
       { label: "TJX Companies", to: "https://www.tjx.com", external: true },
-      { label: "Accessibility", to: "/catalog" },
+      { label: "Accessibility", to: "/shipping-returns" },
     ],
   },
   {
     id: "privacy",
     title: "Privacy & Terms",
     links: [
-      { label: "Privacy statement", to: "/catalog" },
-      { label: "Terms of use", to: "/catalog" },
-      { label: "CA supply chains act", to: "/catalog" },
-      { label: "Do not sell my info", to: "/catalog" },
+      { label: "Privacy statement", to: "/shipping-returns" },
+      { label: "Terms of use", to: "/shipping-returns" },
+      { label: "CA supply chains act", to: "/shipping-returns" },
+      { label: "Do not sell my info", to: "/account" },
     ],
   },
 ]
@@ -244,10 +244,16 @@ function EmailSignupDialog({
 }) {
   const [email, setEmail] = useState("")
   const [submitted, setSubmitted] = useState(false)
+  const [already, setAlready] = useState(false)
+  const subscribeEmail = useAccountStore((s) => s.subscribeEmail)
+  const isEmailSubscribed = useAccountStore((s) => s.isEmailSubscribed)
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
     if (!email.trim()) return
+    const existed = isEmailSubscribed(email)
+    subscribeEmail(email)
+    setAlready(existed)
     setSubmitted(true)
   }
 
@@ -258,6 +264,7 @@ function EmailSignupDialog({
         onOpenChange(next)
         if (!next) {
           setSubmitted(false)
+          setAlready(false)
           setEmail("")
         }
       }}
@@ -275,7 +282,9 @@ function EmailSignupDialog({
         {submitted ? (
           <div className="space-y-4 py-2">
             <p className="text-sm text-foreground">
-              You&apos;re in — watch your inbox for finds and free-shipping details.
+              {already
+                ? "You’re already on the list — we’ll keep the finds coming."
+                : "You’re in — we saved your email on this device. Watch your inbox for finds and free-shipping details."}
             </p>
             <Button className="w-full bg-navy text-navy-foreground hover:bg-navy/90" onClick={() => onOpenChange(false)}>
               Keep shopping

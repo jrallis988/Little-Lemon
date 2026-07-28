@@ -99,9 +99,9 @@ export function BagDrawer() {
                       className="h-28 w-[5.5rem] shrink-0 overflow-hidden rounded-md bg-surface-muted shadow-soft"
                     >
                       <img
-                        src={product.images[0]}
+                        src={colorway?.image ?? product.images[0]}
                         alt=""
-                        className="h-full w-full object-cover"
+                        className="h-full w-full object-contain p-1.5"
                       />
                     </Link>
                     <div className="min-w-0 flex-1">
@@ -268,6 +268,11 @@ export function BagDrawer() {
                 </Link>
               </Button>
               <Button variant="outline" className="w-full" asChild>
+                <Link to="/bag" onClick={closeBag}>
+                  View full bag
+                </Link>
+              </Button>
+              <Button variant="ghost" className="w-full" asChild>
                 <Link to="/catalog" onClick={closeBag}>
                   Keep shopping
                 </Link>

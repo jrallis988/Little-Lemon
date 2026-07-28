@@ -254,8 +254,6 @@ export function HomePage() {
   })
 
   const toggleBrand = useFilterStore((s) => s.toggleBrand)
-  const toggleBrandTier = useFilterStore((s) => s.toggleBrandTier)
-  const setPriceRange = useFilterStore((s) => s.setPriceRange)
   const clearFilters = useFilterStore((s) => s.clearFilters)
 
   const featured = useMemo(
@@ -382,12 +380,8 @@ export function HomePage() {
               variant="outline"
               size="sm"
               asChild
-              onClick={() => {
-                clearFilters()
-                toggleBrandTier("Designer")
-              }}
             >
-              <Link to="/catalog">Shop</Link>
+              <Link to="/shop/designer">Shop</Link>
             </Button>
           </div>
           <div className="grid grid-cols-2 gap-3">
@@ -412,12 +406,8 @@ export function HomePage() {
               variant="outline"
               size="sm"
               asChild
-              onClick={() => {
-                clearFilters()
-                setPriceRange([0, 50])
-              }}
             >
-              <Link to="/catalog">Shop</Link>
+              <Link to="/shop/under-50">Shop</Link>
             </Button>
           </div>
           <div className="grid grid-cols-2 gap-3">

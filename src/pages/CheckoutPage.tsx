@@ -7,6 +7,7 @@ import {
   useCheckoutStore,
   type CheckoutStep,
 } from "@/stores/checkoutStore"
+import { useAccountStore } from "@/stores/accountStore"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { formatCurrency } from "@/lib/utils"
@@ -154,6 +155,7 @@ export function CheckoutPage() {
       total,
     }
     completeOrder(order)
+    useAccountStore.getState().addOrder(order)
     clearCart()
     navigate("/order-confirmation")
   }

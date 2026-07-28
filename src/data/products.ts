@@ -483,8 +483,24 @@ type ProductSeed = {
   isNew?: boolean
 }
 
-const unsplash = (id: string) =>
-  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=900&q=80`
+const unsplash = (id: string, variant = 0) => {
+  const crops = ["entropy", "edges", "center"] as const
+  const sats = [0, -12, 8] as const
+  const crop = crops[variant % crops.length]
+  const sat = sats[variant % sats.length]
+  return `https://images.unsplash.com/${id}?auto=format&fit=crop&w=900&h=1200&q=80&crop=${crop}&sat=${sat}`
+}
+
+const colorwayGallery = (imageIds: string[], colorIndex: number) => {
+  const primaryId = imageIds[colorIndex % imageIds.length]!
+  const secondaryId = imageIds[(colorIndex + 1) % imageIds.length]!
+  const detailId = imageIds[(colorIndex + 2) % imageIds.length] ?? primaryId
+  return [
+    unsplash(primaryId, colorIndex),
+    unsplash(secondaryId, colorIndex + 1),
+    unsplash(detailId, colorIndex + 2),
+  ]
+}
 
 const ADDITIONAL_PRODUCT_SEEDS: ProductSeed[] = [
   {
@@ -1406,19 +1422,16 @@ const ADDITIONAL_PRODUCTS: Product[] = ADDITIONAL_PRODUCT_SEEDS.map(
     category: seed.category,
     price: seed.price,
     compareAt: seed.compareAt,
-    images: seed.imageIds.map(unsplash),
+    images: seed.imageIds.map((id, i) => unsplash(id, i)),
     colorways: seed.colors.map(([id, name, hex], colorIndex) => {
-      const primary = unsplash(seed.imageIds[colorIndex % seed.imageIds.length]!)
-      const secondary = unsplash(
-        seed.imageIds[(colorIndex + 1) % seed.imageIds.length]!,
-      )
+      const images = colorwayGallery(seed.imageIds, colorIndex)
       return {
         id,
         name,
         hex,
         imageIndex: colorIndex % seed.imageIds.length,
-        image: primary,
-        images: primary === secondary ? [primary] : [primary, secondary],
+        image: images[0],
+        images,
       }
     }),
     sizes: seed.sizes.map((label, sizeIndex) => ({
@@ -1448,19 +1461,26 @@ function withColorwayGalleries(product: Product): Product {
   return {
     ...product,
     colorways: product.colorways.map((colorway, index) => {
-      if (colorway.images && colorway.images.length > 0) return colorway
-      const primary =
+      if (colorway.images && colorway.images.length >= 2) return colorway
+      const base =
         colorway.image ??
         (typeof colorway.imageIndex === "number"
           ? product.images[colorway.imageIndex]
           : undefined) ??
         product.images[index % product.images.length]
-      if (!primary) return colorway
-      const rest = product.images.filter((src) => src !== primary)
+      if (!base) return colorway
+      const rest = product.images.filter((src) => src !== base)
+      const variants = [base, ...rest].slice(0, 3).map((src, variantIndex) => {
+        if (!src.includes("images.unsplash.com")) return src
+        const joiner = src.includes("?") ? "&" : "?"
+        const crops = ["entropy", "edges", "center"]
+        const sats = [0, -12, 8]
+        return `${src}${joiner}h=1200&crop=${crops[(index + variantIndex) % 3]}&sat=${sats[(index + variantIndex) % 3]}`
+      })
       return {
         ...colorway,
-        image: primary,
-        images: [primary, ...rest],
+        image: variants[0],
+        images: variants,
       }
     }),
   }

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import {
   Check,
+  Heart,
   MapPin,
   MessageCircle,
   Ruler,
@@ -18,6 +19,7 @@ import {
 import { getProductBySlug } from "@/lib/catalog"
 import { discountPercent, formatCurrency } from "@/lib/utils"
 import { useCartStore } from "@/stores/cartStore"
+import { useWishlistStore } from "@/stores/wishlistStore"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
@@ -462,14 +464,14 @@ function ProductRail({
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
         {products.map((item) => (
           <Link key={item.id} to={`/product/${item.slug}`} className="group block">
-            <div className="aspect-[3/4] overflow-hidden rounded-md bg-surface-muted shadow-soft">
-              <img
-                src={item.images[0]}
-                alt={`${item.brand} ${item.name}`}
-                loading="lazy"
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-              />
-            </div>
+                <div className="aspect-[3/4] overflow-hidden rounded-md bg-[#f5f5f5] shadow-soft">
+                  <img
+                    src={item.images[0]}
+                    alt={`${item.brand} ${item.name}`}
+                    loading="lazy"
+                    className="h-full w-full object-contain p-3 transition-transform duration-500 group-hover:scale-[1.02]"
+                  />
+                </div>
             <p className="mt-3 text-2xs font-semibold uppercase tracking-[0.08em] text-muted-foreground">
               {item.brand}
             </p>
@@ -525,6 +527,8 @@ export function ProductDetailPage() {
   const addItem = useCartStore((s) => s.addItem)
   const lastError = useCartStore((s) => s.lastError)
   const clearError = useCartStore((s) => s.clearError)
+  const wished = useWishlistStore((s) => (product ? s.has(product.id) : false))
+  const toggleWish = useWishlistStore((s) => s.toggle)
   const [imageIndex, setImageIndex] = useState(0)
   const [size, setSize] = useState<string | null>(null)
   const [colorwayId, setColorwayId] = useState<string | null>(null)
@@ -602,16 +606,16 @@ export function ProductDetailPage() {
                       : "aspect-square w-16 overflow-hidden rounded-md border border-border opacity-80 hover:opacity-100 sm:w-full"
                   }
                 >
-                  <img src={src} alt="" className="h-full w-full object-cover" />
+                  <img src={src} alt="" className="h-full w-full object-contain p-1" />
                 </button>
               ))}
             </div>
-            <div className="order-1 aspect-[3/4] overflow-hidden rounded-lg bg-surface-muted shadow-soft sm:order-2">
+            <div className="product-gallery-frame order-1 aspect-[3/4] sm:order-2">
               <img
                 key={`${activeColor}-${gallery[imageIndex] ?? gallery[0]}`}
                 src={gallery[imageIndex] ?? gallery[0]}
                 alt={`${product.brand} ${product.name} — ${activeColorName}`}
-                className="h-full w-full object-cover animate-fade-in"
+                className="animate-fade-in"
               />
             </div>
           </div>
@@ -720,27 +724,39 @@ export function ProductDetailPage() {
             </div>
 
             <div className="sticky-purchase mt-8 -mx-gutter px-gutter py-4 lg:static lg:mx-0 lg:mt-8 lg:rounded-lg lg:border lg:border-border lg:bg-surface lg:px-4 lg:shadow-soft">
-              <Button
-                size="lg"
-                className="w-full"
-                disabled={isSoldOut}
-                onClick={() => {
-                  if (!selectedSize) {
-                    setSizeError(true)
-                    return
-                  }
-                  if (!activeColor) return
-                  addItem({
-                    productId: product.id,
-                    size: selectedSize,
-                    colorwayId: activeColor,
-                  })
-                }}
-              >
-                {isSoldOut
-                  ? "Sold through online"
-                  : `Add to bag — ${formatCurrency(product.price)}`}
-              </Button>
+              <div className="flex gap-2">
+                <Button
+                  size="lg"
+                  className="flex-1"
+                  disabled={isSoldOut}
+                  onClick={() => {
+                    if (!selectedSize) {
+                      setSizeError(true)
+                      return
+                    }
+                    if (!activeColor) return
+                    addItem({
+                      productId: product.id,
+                      size: selectedSize,
+                      colorwayId: activeColor,
+                    })
+                  }}
+                >
+                  {isSoldOut
+                    ? "Sold through online"
+                    : `Add to bag — ${formatCurrency(product.price)}`}
+                </Button>
+                <Button
+                  type="button"
+                  size="lg"
+                  variant="outline"
+                  aria-label={wished ? "Remove from wishlist" : "Add to wishlist"}
+                  aria-pressed={wished}
+                  onClick={() => toggleWish(product.id)}
+                >
+                  <Heart className={cn("h-5 w-5", wished && "fill-current text-primary")} />
+                </Button>
+              </div>
               {lastError && (
                 <p className="mt-2 text-center text-xs text-destructive">{lastError}</p>
               )}

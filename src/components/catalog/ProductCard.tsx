@@ -7,8 +7,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { cn, discountPercent, formatCurrency } from "@/lib/utils"
-import { Eye } from "lucide-react"
+import { Eye, Heart } from "lucide-react"
 import { Link } from "react-router-dom"
+import { useWishlistStore } from "@/stores/wishlistStore"
 
 const INVENTORY_COPY: Record<
   InventoryStatus,
@@ -44,6 +45,8 @@ type ProductCardProps = {
 export function ProductCard({ product, onQuickView }: ProductCardProps) {
   const pct = discountPercent(product.compareAt, product.price)
   const inventory = INVENTORY_COPY[product.inventory]
+  const wished = useWishlistStore((s) => s.has(product.id))
+  const toggleWish = useWishlistStore((s) => s.toggle)
 
   return (
     <article className="product-tile group animate-slide-up">
@@ -70,6 +73,23 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
               </Badge>
             )}
           </div>
+
+          <button
+            type="button"
+            className={cn(
+              "absolute right-2.5 top-2.5 z-10 rounded-full bg-surface/95 p-2 shadow-soft transition-colors",
+              wished ? "text-primary" : "text-foreground/70 hover:text-primary",
+            )}
+            aria-label={wished ? "Remove from wishlist" : "Add to wishlist"}
+            aria-pressed={wished}
+            onClick={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              toggleWish(product.id)
+            }}
+          >
+            <Heart className={cn("h-4 w-4", wished && "fill-current")} />
+          </button>
 
           <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-end justify-between gap-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
             <Tooltip>
