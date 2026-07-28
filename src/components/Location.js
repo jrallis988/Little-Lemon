@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { NEARBY, SITE } from "../data";
+import { NEARBY, SITE, THINGS_TO_DO } from "../data";
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
@@ -27,7 +27,7 @@ export default function Location() {
 
     const map = L.map(mapRef.current, {
       scrollWheelZoom: false,
-    }).setView([SITE.lat, SITE.lon], 15);
+    }).setView([SITE.lat, SITE.lon], 14);
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
@@ -39,7 +39,8 @@ export default function Location() {
       .addTo(map)
       .bindPopup(
         `<strong>${SITE.name}</strong><br/>${SITE.addressShort}<br/>North Beach · Plaice Cove`
-      );
+      )
+      .openPopup();
 
     mapInstance.current = map;
 
@@ -78,7 +79,7 @@ export default function Location() {
             <li>Park on site, then walk straight across to the beach path.</li>
           </ol>
 
-          <ul className="shore__list">
+          <ul className="location__nearby">
             {NEARBY.map((spot) => (
               <li key={spot.title}>
                 <strong>{spot.title}</strong>
@@ -102,12 +103,34 @@ export default function Location() {
           </div>
         </div>
 
-        <div
-          className="location__map"
-          ref={mapRef}
-          role="region"
-          aria-label="Interactive map of Seascape Inn in Hampton, New Hampshire"
-        />
+        <div className="location__map-panel">
+          <p className="location__map-label">Find us on the map</p>
+          <div
+            className="location__map"
+            ref={mapRef}
+            role="region"
+            aria-label="Interactive map of Seascape Inn in Hampton, New Hampshire"
+          />
+        </div>
+      </div>
+
+      <div className="section__inner location__explore" id="explore">
+        <p className="section__eyebrow">Around Hampton</p>
+        <h3 className="location__explore-title">Fun things to do nearby.</h3>
+        <p className="section__copy">
+          From the beach across the street to Portsmouth evenings and Rye Harbor
+          days—easy outings from Plaice Cove.
+        </p>
+
+        <ul className="things-list">
+          {THINGS_TO_DO.map((item) => (
+            <li key={item.title}>
+              <span className="things-list__when">{item.when}</span>
+              <strong>{item.title}</strong>
+              <span className="things-list__detail">{item.detail}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

@@ -35,7 +35,8 @@ export default function Footer() {
             <a href="#rates">Rates</a>
             <a href="#shore">Plaice Cove</a>
             <a href="#reviews">Guest notes</a>
-            <a href="#location">Location</a>
+            <a href="#location">Find us</a>
+            <a href="#explore">Things to do</a>
             <a href="#booking">Book</a>
             <a href="#policies">Policies</a>
           </nav>

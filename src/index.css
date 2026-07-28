@@ -813,11 +813,49 @@ p {
   gap: 0.55rem;
 }
 
+.location__nearby {
+  list-style: none;
+  margin: 1.35rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.location__nearby li {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.location__nearby strong {
+  color: var(--ocean-deep);
+  font-weight: 700;
+}
+
+.location__nearby span {
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+}
+
 .location__actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.7rem;
   margin-top: 1.5rem;
+}
+
+.location__map-panel {
+  display: grid;
+  gap: 0.65rem;
+  align-content: start;
+}
+
+.location__map-label {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--seafoam);
 }
 
 .location__map {
@@ -843,6 +881,60 @@ p {
   font-size: 0.7rem;
 }
 
+.location__explore {
+  margin-top: clamp(2.5rem, 5vw, 3.75rem);
+  padding-top: clamp(2rem, 4vw, 2.75rem);
+  border-top: 1px solid var(--line);
+}
+
+.location__explore-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.65rem, 3.2vw, 2.25rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--ocean-deep);
+  max-width: 18ch;
+}
+
+.things-list {
+  list-style: none;
+  margin: 1.75rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+
+.things-list li {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1.15rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.things-list__when {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--seafoam);
+}
+
+.things-list strong {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--ocean-deep);
+}
+
+.things-list__detail {
+  color: var(--ink-soft);
+  max-width: 54ch;
+  font-size: 0.98rem;
+}
+
 @media (min-width: 900px) {
   .location__grid {
     grid-template-columns: 1fr 1.05fr;
@@ -853,6 +945,15 @@ p {
   .location__map,
   .location__map .leaflet-container {
     min-height: 460px;
+  }
+
+  .things-list {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2.5rem;
+  }
+
+  .things-list li:nth-child(odd) {
+    padding-right: 1rem;
   }
 }
 

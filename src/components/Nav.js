@@ -6,7 +6,7 @@ const LINKS = [
   { href: "#rooms", label: "Rooms" },
   { href: "#rates", label: "Rates" },
   { href: "#reviews", label: "Reviews" },
-  { href: "#location", label: "Location" },
+  { href: "#location", label: "Explore" },
   { href: "#booking", label: "Book" },
 ];
 

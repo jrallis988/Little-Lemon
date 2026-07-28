@@ -298,6 +298,58 @@ export const NEARBY = [
   },
 ];
 
+/** Fun day-trip ideas around Hampton Beach & the NH Seacoast. */
+export const THINGS_TO_DO = [
+  {
+    title: "Walk North Beach at Plaice Cove",
+    detail:
+      "Cross Ocean Boulevard and you’re on the sand—quieter than the main strip, great for sunrise and dog walks.",
+    when: "Steps away",
+  },
+  {
+    title: "Hampton Beach boardwalk & Casino Ballroom",
+    detail:
+      "Arcade lights, shops, and live shows at the historic Casino Ballroom about 3 miles south on Ocean Blvd.",
+    when: "About 3 miles",
+  },
+  {
+    title: "Seashell Stage summer concerts",
+    detail:
+      "Free outdoor music on the Hampton Beach Seashell stage most summer evenings—bring a blanket or grab a bench.",
+    when: "Summer evenings",
+  },
+  {
+    title: "Hampton Beach State Park",
+    detail:
+      "Swim, picnic, and catch the long ocean views at the south end of the beach—easy parking for a full beach day.",
+    when: "About 4 miles",
+  },
+  {
+    title: "Rye Harbor & whale watches",
+    detail:
+      "Head up the coast for harbor views, lobster shacks, and seasonal whale-watching boats out of Rye.",
+    when: "About 10 minutes",
+  },
+  {
+    title: "Odiorne Point & Seacoast Science Center",
+    detail:
+      "Tide pools, rocky shoreline trails, and the Seacoast Science Center—perfect for kids and rainy-day backups.",
+    when: "About 15 minutes",
+  },
+  {
+    title: "Portsmouth Market Square",
+    detail:
+      "Brick sidewalks, waterfront restaurants, breweries, and Prescott Park— an easy evening out about 20 minutes north.",
+    when: "About 20 minutes",
+  },
+  {
+    title: "Water Country",
+    detail:
+      "New England’s largest water park in nearby Rochester—a classic hot-day outing for families.",
+    when: "About 25 minutes · Seasonal",
+  },
+];
+
 export const POLICIES = [
   {
     id: "booking",
