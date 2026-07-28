@@ -5,31 +5,30 @@ import { legalLinks, trademarkNotice, trustBadges } from "../data/social";
 
 const siteColumns = [
   {
-    title: "Programs",
+    title: "Campaign",
     links: [
-      { label: "Core / Points", to: "/#pathways" },
-      { label: "Med+", to: "/#pathways" },
-      { label: "WW 63 Campaign", to: "/63" },
-      { label: "Timeline", to: "/63#timeline" },
+      { label: "Since 1963", to: "/#since-1963" },
+      { label: "Evolution", to: "/#evolution" },
+      { label: "63 Years of You", to: "/#years-of-you" },
+      { label: "Find Your Year", to: "/find-your-year" },
     ],
   },
   {
-    title: "Support",
+    title: "Explore",
     links: [
-      { label: "Find a Coach", to: "/#community" },
-      { label: "Member stories", to: "/#community" },
+      { label: "Programs", to: "/programs" },
+      { label: "Stories", to: "/stories" },
+      { label: "Innovation", to: "/innovation" },
+      { label: "Research", to: "/research" },
+    ],
+  },
+  {
+    title: "Connect",
+    links: [
+      { label: "About", to: "/about" },
       { label: "Social channels", to: "/#connect" },
-      { label: "Archive vault", to: "/63#archive" },
-      { label: "Philosophy", to: "/63#philosophy" },
-    ],
-  },
-  {
-    title: "Company",
-    links: [
-      { label: "About", to: "/63" },
-      { label: "Careers", to: "/#join" },
-      { label: "Press", to: "/63#archive" },
-      { label: "Science", to: "/63#philosophy" },
+      { label: "Start Your Journey", to: "/#finale" },
+      { label: "Community", to: "/#community-63" },
     ],
   },
 ];

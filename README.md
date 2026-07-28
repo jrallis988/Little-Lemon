@@ -1,31 +1,25 @@
-# Weight Watchers — Redesign + WW 63 Campaign
+# Weight Watchers 63 — 63 Years of You
 
-A modern marketing site concept for Weight Watchers, plus a **Weight Watchers 63** digital history campaign.
+Cinematic anniversary campaign site celebrating 63 years of Weight Watchers evolving alongside the people it serves.
 
 ## Routes
 
-- `/` — Brand marketing homepage (programs, Modes, tools, community)
-- `/63` — Campaign ecosystem: interactive timeline, archive vault, philosophy matrix
+- `/` — Documentary homepage (Chapters 1–7 + finale)
+- `/find-your-year` — Personalized era experience
+- `/about` `/programs` `/stories` `/innovation` `/research` — Supporting pages
+- `/63` — Alias to the campaign homepage
 
 ## Stack
 
-- Vite
-- React 18 + TypeScript
-- React Router
-- Tailwind CSS
-
-## Scripts
+Vite · React 18 · TypeScript · React Router · Tailwind CSS
 
 ```bash
 npm install
 npm run dev
-npm run build
 ```
 
-## Design notes
+## Campaign thesis
 
-- Cobalt brand system with progress-bar logo motif
-- Syne / Newsreader / Figtree typography
-- Timeline scrubber from 1961 → today
-- Archive vault for milestone artifacts
-- Philosophy matrix mapping living-room peer support to digital habit loops
+**For 63 years, Weight Watchers has evolved alongside the people it serves.**
+
+Weight Watchers is the guide. The people are the story.
