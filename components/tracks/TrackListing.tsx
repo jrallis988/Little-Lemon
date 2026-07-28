@@ -42,13 +42,25 @@ export function TrackListing({ track, rank }: TrackListingProps) {
           </Text>
         </View>
         <View style={styles.metrics}>
-          <Text style={styles.metricValue}>
-            {track.downloadCount.toLocaleString()}
-          </Text>
-          <Text style={styles.metricLabel}>Downloads</Text>
-          <Text style={styles.metricSecondary}>
-            {track.repostCount.toLocaleString()} reposts
-          </Text>
+          {track.catalogKind === 'catalog' ? (
+            <>
+              <Text style={styles.metricValue}>Spotify</Text>
+              <Text style={styles.metricLabel}>Outbound</Text>
+              {track.releaseYear ? (
+                <Text style={styles.metricSecondary}>{track.releaseYear}</Text>
+              ) : null}
+            </>
+          ) : (
+            <>
+              <Text style={styles.metricValue}>
+                {track.downloadCount.toLocaleString()}
+              </Text>
+              <Text style={styles.metricLabel}>Downloads</Text>
+              <Text style={styles.metricSecondary}>
+                {track.repostCount.toLocaleString()} reposts
+              </Text>
+            </>
+          )}
         </View>
       </Pressable>
     </Link>

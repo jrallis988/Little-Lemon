@@ -20,7 +20,8 @@ Read those before changing layout or product surfaces.
 | **Search** (header) | Facets: All · Artist · Song · Genre |
 | **Artists** | A–Z directory + quick filter; link to full search |
 | **Find** | Brand-new / unsigned stumble-upon lane |
-| **Spotify sync** (stub) | `lib/spotify.ts` + `EXPO_PUBLIC_SPOTIFY_CLIENT_ID` for full catalog ingest |
+| **Open on Spotify** | Catalog artist/track pages hand listening to Spotify (deep links). Add to Spotify = in-Spotify save hand-off until OAuth. |
+| **Spotify sync** (later) | Metadata ingest via `EXPO_PUBLIC_SPOTIFY_CLIENT_ID` + backend token route — no Spotify audio. |
 
 Demo seed includes emerging friend-group acts **and** a slice of recognizable contemporary catalog. Full Spotify-scale sync is the backend follow-up.
 

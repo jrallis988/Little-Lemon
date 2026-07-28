@@ -2,12 +2,14 @@ import { useLocalSearchParams } from 'expo-router';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { ArtistArchiveMeta } from '@/components/artist/ArtistArchiveMeta';
+import { SpotifyOutboundActions } from '@/components/spotify/SpotifyOutboundActions';
 import { ArtworkImage } from '@/components/ui/ArtworkImage';
 import { TrackListing } from '@/components/tracks/TrackListing';
 import { StaticBackground } from '@/components/ui/StaticBackground';
 import { colors, fonts, portalBox, spacing } from '@/constants/theme';
 import { useBottomInset } from '@/hooks/useBottomInset';
 import { DEMO_ARTISTS, DEMO_TRACKS, isBrandNew } from '@/lib/demoData';
+import { artistSpotifyTarget } from '@/lib/spotify';
 
 /**
  * Artist archive page — dossier + track listings (no player).
@@ -32,12 +34,18 @@ export default function ArtistScreen() {
     });
 
   const tracks = DEMO_TRACKS.filter((t) => t.artistId === artist.id);
+  const isCatalog = artist.catalogKind === 'catalog';
   const totalDownloads = tracks.reduce((sum, t) => sum + t.downloadCount, 0);
   const totalReposts = tracks.reduce((sum, t) => sum + t.repostCount, 0);
   const brandNew = isBrandNew(artist);
+  const spotifyTarget = artistSpotifyTarget({
+    spotifyArtistId: artist.spotifyArtistId,
+    displayName: artist.displayName,
+  });
 
-  const statusLabel =
-    artist.status === 'UNSIGNED'
+  const statusLabel = isCatalog
+    ? 'Catalog artist'
+    : artist.status === 'UNSIGNED'
       ? 'Unsigned artist'
       : artist.status === 'INDEPENDENT'
         ? 'Independent artist'
@@ -68,11 +76,24 @@ export default function ArtistScreen() {
               {[artist.scene, artist.geography].filter(Boolean).join(' · ') ||
                 'Scene unlisted'}
             </Text>
-            <Text style={styles.rawStat}>
-              Total downloads: {totalDownloads.toLocaleString()}
-            </Text>
+            {!isCatalog ? (
+              <Text style={styles.rawStat}>
+                Total downloads: {totalDownloads.toLocaleString()}
+              </Text>
+            ) : (
+              <Text style={styles.rawStat}>
+                Metadata for discovery · listen on Spotify
+              </Text>
+            )}
           </View>
         </View>
+
+        {isCatalog ? (
+          <View style={styles.spotifyBox}>
+            <Text style={styles.spotifyLabel}>Listen</Text>
+            <SpotifyOutboundActions target={spotifyTarget} showAdd={false} />
+          </View>
+        ) : null}
 
         <ArtistArchiveMeta
           artist={artist}
@@ -128,6 +149,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: spacing.md,
     padding: spacing.sm,
+  },
+  spotifyBox: {
+    ...portalBox,
+    padding: spacing.sm,
+    gap: 8,
+  },
+  spotifyLabel: {
+    fontFamily: fonts.sansBold,
+    fontSize: 11,
+    letterSpacing: 0.4,
+    color: colors.textDim,
+    textTransform: 'uppercase',
   },
   artwork: {
     width: 88,

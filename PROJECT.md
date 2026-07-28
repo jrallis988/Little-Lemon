@@ -10,39 +10,48 @@ PureVolume (launched Thanksgiving Eve **2003** by Unborn Media / UMass founders)
 
 **StaticVolume** picks up that portal DNA for the present: discover unsigned / brand-new bands *and* look up contemporary catalog artists, then **log · rate · review · list** them socially.
 
+## Product test
+
+Every feature must help someone **discover an artist, understand an artist, support an artist, or express their own music taste.** If it mainly rebuilds a streaming service or engagement-driven social network, do not add it.
+
 ## What we are NOT
 
-- **Not a music player / streaming app.** No sticky Now Playing bar, no waveform transport, no Expo AV queue, no Spotify-green chrome.
-- Engagement for artists is **Downloads + Reposts**. Play counts stay private.
-- No likes-on-tracks algorithmic vanity. No verified-badge arms race.
+- **Not a music player / streaming app.** No sticky Now Playing bar, no waveform transport, no Expo AV queue, no embedded Spotify player, no playback chrome.
+- Engagement for independent artists is **Downloads + Reposts**. No likes-on-tracks. Play counts stay private (artists may see their own analytics later).
+- Catalog music = **metadata + discovery**; listening hands off to outbound services (Spotify).
+- Featured / Just Found = **human editorial curation**, not engagement algorithms.
+- Artist ↔ fan DMs only after meaningful support (download or repost) — enforce in the database when messaging ships.
 
 ## Aesthetic
 
 - **PureVolume portal structure:** black header chrome, light gray/white body (`#F0F0F0` / white), blue links (`#1A6DB5`), featured mosaic, segmented toolbar, bordered dossier boxes, A–Z directory.
 - **Type:** Barlow / Barlow Condensed — clean portal sans (not Space Mono / CRT amber unless explicitly revived).
 - **Layout:** structured early-2000s web utility — clear section dividers, grid/mosaic, high-information rows. Avoid modern “AI SaaS” purple gradients, glassmorphism, and dashboard clutter in the hero.
+- Spotify green is reserved for **outbound** Open/Add on Spotify CTAs only — never paint the whole product like Spotify.
 
 ## Product pillars
 
 1. **Find** — unsigned / brand-new friend-group bands (stumble-upon energy).
-2. **Catalog search** — artist · song · genre; coverage target ≈ Spotify-scale contemporary (~2010–present) plus living catalog acts; demo seed now, Spotify sync later.
-3. **Artists A–Z** — directory + search hybrid (type when you know the name; letters when browsing).
-4. **Letterboxd layer** — diary log, ratings, reviews, lists, chronological activity feed.
-5. **History / Timeline** — interactive page documenting PureVolume’s founding era → operational shifts → shutdown → StaticVolume present. This is first-class product chrome, not a footer footnote.
+2. **Catalog search** — artist · song · genre; coverage target ≈ Spotify-scale contemporary (~2010–present) plus living catalog acts.
+3. **Artists A–Z** — directory + search hybrid (usable at hundreds/thousands of artists).
+4. **Letterboxd layer** — diary log, ratings, reviews, lists, chronological Following activity (no ranking algorithm).
+5. **History / Timeline** — PureVolume founding → StaticVolume present (first-class chrome).
 
-## Timeline feature (required)
+## Development phases (priority order)
 
-Include a dedicated **History** timeline that maps:
+Do **not** build these in parallel. Ship in order:
 
-- Prehistory / Unborn Media
-- 2003 beta launch & PurePicks editorial culture
-- Mid-2000s discovery era (emo / pop-punk / indie breakouts)
-- 2010 SpinMedia acquisition
-- 2016 Hive Media sale
-- 2018 shutdown
-- StaticVolume revival: portal + taste logging + unsigned finds + catalog lookup
+| Phase | Focus |
+| --- | --- |
+| **1 — Spotify outbound** | Open on Spotify (+ Add to Spotify via supported hand-off / later OAuth). Catalog pages hand listening to Spotify. |
+| **2 — Artist uploads** | Supabase Storage + DB for audio, artwork, bios, release metadata; ownership RLS; progress/errors/limits. |
+| **3 — Persist taste** | Logs, ratings, reviews, lists, follows, downloads, reposts → Supabase (Zustand = temp UI only). |
+| **4 — Catalog + search** | Spotify/MusicBrainz **metadata** ingest (no Spotify audio). DB-backed search across catalog + uploads. |
+| **5 — Discovery** | Find filters (Unsigned / New / Recently Joined / Genre) + Featured / Just Found from real DB + editorial tools. |
+| **6 — Profiles & activity** | Artist archive pages, listener profiles/diaries, chronological Following feed. |
+| **7 — Trust & scale** | ToS, privacy, upload/copyright policies, reporting/takedown, admin disable without destroy, loading/empty/error states, large-catalog mobile UX. |
 
-UI: vertical portal timeline with year markers, bordered era cards, clear dividers — tactile archive, not a minimalist scroll joke.
+**Later (after core):** notifications, shows/gigs, artist wall (needs moderation).
 
 ## Tech stack
 
@@ -50,20 +59,10 @@ Expo SDK 57 · Expo Router · TypeScript · Supabase · Zustand · TanStack Quer
 
 ## Demo vs production
 
-Scaffold uses rich demo data. Supabase auth is wired. Spotify catalog sync is stubbed (`lib/spotify.ts`). Prefer extending existing patterns over inventing parallel design systems.
+Scaffold still uses rich demo/seed data for Find + catalog. Supabase auth is wired. Phase 1 outbound Spotify deep links are live on catalog artist/track pages (`lib/spotify.ts`, `components/spotify/SpotifyOutboundActions.tsx`). Prefer extending existing patterns over inventing parallel design systems.
 
+## Artwork & media sources
 
-## Artwork & leaving demo stage
-
-### Legal image sources we use
-- **Catalog artists/songs:** album artwork via **iTunes Search API** (Apple CDN) and **Cover Art Archive** / MusicBrainz (e.g. Brat, Flower Boy, Currents).
-- **Emerging / fictional unsigned acts:** **Unsplash** atmospheric music photos as placeholders — not claimed as press photos of those bands.
-- **Do not** scrape Google Images, Spotify without API terms, or fan-site rips.
-
-### Path off demo stage
-1. **Artist uploads** — Supabase Storage for unsigned press photos + track art (source of truth for Find lane).
-2. **Spotify / MusicBrainz sync** — pull `images` + album art for catalog coverage (~2010–present).
-3. **Persist URLs** on `artists.avatar_url` / `tracks.artwork_url` in Postgres (stop hardcoding seeds).
-4. Wire real **download / repost / log** writes so the UI isn’t demo-only.
-
-Until (1)+(2) ship, seeded CDN artwork is the bridge out of letter-monogram placeholders.
+- **Catalog:** iTunes Search API / Cover Art Archive where terms permit; Spotify IDs for outbound links only.
+- **Emerging:** artist uploads (Phase 2) or Unsplash placeholders — not claimed as press photos.
+- **Do not** scrape Google Images, proxy/host Spotify audio, or rip fan sites.

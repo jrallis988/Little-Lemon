@@ -27,14 +27,27 @@ export function ArtistArchiveMeta({
   const origin = artist.geography ?? 'N/A';
   const scene = artist.sceneDescription ?? artist.bio ?? 'N/A';
 
+  const isCatalog = artist.catalogKind === 'catalog';
   const lines = [
     { key: 'ORIGIN', value: origin },
     { key: 'GENRE', value: tags.toUpperCase() },
     { key: 'ACTIVE YEARS', value: years },
-    { key: 'STATUS', value: status },
+    { key: 'STATUS', value: isCatalog ? 'CATALOG' : status },
     { key: 'SCENE', value: scene.toUpperCase() },
-    { key: 'TOTAL DOWNLOADS', value: totalDownloads.toLocaleString() },
-    { key: 'TOTAL REPOSTS', value: totalReposts.toLocaleString() },
+    ...(isCatalog
+      ? [
+          {
+            key: 'SPOTIFY',
+            value: artist.spotifyArtistId
+              ? `ID ${artist.spotifyArtistId}`
+              : 'SEARCH HAND-OFF',
+          },
+          { key: 'LISTEN', value: 'OPEN ON SPOTIFY (OUTBOUND)' },
+        ]
+      : [
+          { key: 'TOTAL DOWNLOADS', value: totalDownloads.toLocaleString() },
+          { key: 'TOTAL REPOSTS', value: totalReposts.toLocaleString() },
+        ]),
     { key: 'TRACKS INDEXED', value: String(trackCount) },
     { key: 'FOLLOWERS', value: (artist.followerCount ?? 0).toLocaleString() },
   ];

@@ -30,6 +30,10 @@ export type UserProfile = {
   joinedAt?: string | null;
   /** emerging = Just Found lane; catalog = look-up any current artist */
   catalogKind?: CatalogKind | null;
+  /** Spotify artist id for outbound Open on Spotify (catalog). */
+  spotifyArtistId?: string | null;
+  /** MusicBrainz artist MBID when known (catalog sync). */
+  musicBrainzArtistId?: string | null;
 };
 
 export type Track = {
@@ -47,6 +51,10 @@ export type Track = {
   geography?: string | null;
   /** Calendar year for catalog browse (Spotify-era coverage target: 2010–present) */
   releaseYear?: number | null;
+  /** Spotify track id — outbound listening only; never import Spotify audio. */
+  spotifyTrackId?: string | null;
+  /** emerging vs catalog; catalog rows are metadata/discovery, not downloadables. */
+  catalogKind?: CatalogKind | null;
 };
 
 export type TrackComment = {

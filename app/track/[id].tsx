@@ -2,12 +2,14 @@ import { Link, useLocalSearchParams } from 'expo-router';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { RatingStars } from '@/components/social/RatingStars';
+import { SpotifyOutboundActions } from '@/components/spotify/SpotifyOutboundActions';
 import { ArtworkImage } from '@/components/ui/ArtworkImage';
 import { ReviewCard } from '@/components/social/ReviewCard';
 import { StaticBackground } from '@/components/ui/StaticBackground';
 import { colors, fonts, portalBox, spacing } from '@/constants/theme';
 import { useBottomInset } from '@/hooks/useBottomInset';
-import { DEMO_TRACKS, reviewsForTrack } from '@/lib/demoData';
+import { DEMO_ARTISTS, DEMO_TRACKS, reviewsForTrack } from '@/lib/demoData';
+import { trackSpotifyTarget } from '@/lib/spotify';
 import { useTasteStore } from '@/store/useTasteStore';
 import type { RatingValue } from '@/types/models';
 
@@ -21,7 +23,15 @@ export default function TrackScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const bottomInset = useBottomInset();
   const track = DEMO_TRACKS.find((t) => t.id === id) ?? DEMO_TRACKS[0];
+  const artist = DEMO_ARTISTS.find((a) => a.id === track.artistId);
+  const isCatalog =
+    track.catalogKind === 'catalog' || artist?.catalogKind === 'catalog';
   const reviews = reviewsForTrack(track.id);
+  const spotifyTarget = trackSpotifyTarget({
+    spotifyTrackId: track.spotifyTrackId,
+    title: track.title,
+    artistName: track.artistName,
+  });
 
   const logged = useTasteStore((s) => Boolean(s.loggedIds[track.id]));
   const rating = useTasteStore((s) => s.ratings[track.id]);
@@ -51,6 +61,13 @@ export default function TrackScreen() {
             {rating ? <RatingStars value={rating} size="md" /> : null}
           </View>
         </View>
+
+        {isCatalog ? (
+          <View style={styles.spotifyBox}>
+            <Text style={styles.sectionLabel}>Listen on Spotify</Text>
+            <SpotifyOutboundActions target={spotifyTarget} showAdd />
+          </View>
+        ) : null}
 
         <View style={styles.logBox}>
           <Text style={styles.sectionLabel}>Your diary</Text>
@@ -88,33 +105,38 @@ export default function TrackScreen() {
           </View>
         </View>
 
-        <View style={styles.statsBox}>
-          <View style={styles.stat}>
-            <Text style={styles.statValue}>
-              {track.downloadCount.toLocaleString()}
-            </Text>
-            <Text style={styles.statLabel}>Downloads</Text>
-          </View>
-          <View style={styles.stat}>
-            <Text style={styles.statValue}>
-              {track.repostCount.toLocaleString()}
-            </Text>
-            <Text style={styles.statLabel}>Reposts</Text>
-          </View>
-        </View>
+        {!isCatalog ? (
+          <>
+            <View style={styles.statsBox}>
+              <View style={styles.stat}>
+                <Text style={styles.statValue}>
+                  {track.downloadCount.toLocaleString()}
+                </Text>
+                <Text style={styles.statLabel}>Downloads</Text>
+              </View>
+              <View style={styles.stat}>
+                <Text style={styles.statValue}>
+                  {track.repostCount.toLocaleString()}
+                </Text>
+                <Text style={styles.statLabel}>Reposts</Text>
+              </View>
+            </View>
 
-        <View style={styles.actions}>
-          <Pressable style={styles.ctaSecondary}>
-            <Text style={styles.ctaSecondaryText}>Download</Text>
-          </Pressable>
-          <Pressable style={styles.ctaSecondary}>
-            <Text style={styles.ctaSecondaryText}>Repost</Text>
-          </Pressable>
-        </View>
+            <View style={styles.actions}>
+              <Pressable style={styles.ctaSecondary}>
+                <Text style={styles.ctaSecondaryText}>Download</Text>
+              </Pressable>
+              <Pressable style={styles.ctaSecondary}>
+                <Text style={styles.ctaSecondaryText}>Repost</Text>
+              </Pressable>
+            </View>
+          </>
+        ) : null}
 
         <Text style={styles.note}>
-          Log and review like Letterboxd. Download and repost support the
-          artist. Play counts stay private. No in-app player.
+          {isCatalog
+            ? 'Catalog tracks are for discovery, logging, and reviews. Listening opens in Spotify — no in-app player.'
+            : 'Log and review like Letterboxd. Download and repost support the artist. Play counts stay private. No in-app player.'}
         </Text>
 
         <View style={styles.panel}>
@@ -177,6 +199,11 @@ const styles = StyleSheet.create({
     fontFamily: fonts.sans,
     fontSize: 13,
     color: colors.textMuted,
+  },
+  spotifyBox: {
+    ...portalBox,
+    padding: spacing.sm,
+    gap: 8,
   },
   logBox: {
     ...portalBox,
