@@ -1,41 +1,40 @@
-# Trump RX reinvention blueprint
+# Trump RX reinvention blueprint — architecture audit
 
-Product surfaces that close gaps vs a static coupon directory / off-site portal.
+Maps the reinvention brief (Parts 1–2) to what this codebase ships vs what still needs partners.
 
-## 1. Smart Switch (adjudication pre-check)
+## Part 1 — Reinvention blueprint
 
-- `POST /api/switch/precheck` — validates BIN/PCN/Group/Member + pharmacy network
-- UI: `SmartSwitchBadge` on coupon modal
-- Live partner: set `SWITCH_API_URL` (+ optional `SWITCH_API_KEY`)
+| Blueprint item | Status | Implementation |
+|---|---|---|
+| **1. Unified real-time adjudication (Smart Switch)** | Shipped (simulated; live when partner env set) | `src/lib/switch/adjudication.ts`, `POST /api/switch/precheck`, `POST /api/switch/route` (universal router ranks pharmacies by network + BIN/PCN/Group pre-test), `SmartSwitchBadge`, `SmartSwitchRouteHint` |
+| **2. Insurance vs cash decision matrix** | Shipped | `src/lib/insurance/decision-matrix.ts`, `POST /api/decision/insurance-vs-cash`, `InsuranceVsCashMatrix` on search |
+| **3. Telehealth & fulfillment chaining** | Shipped (stubs; live URLs via env) | `src/lib/fulfillment/handoff.ts`, `POST /api/fulfillment/handoff`, `FulfillmentPanel` on search + checkout |
+| **4. Transparent generic price benchmarking** | Shipped | `src/lib/benchmarking.ts`, `BenchmarkDrawer` side-by-side cash comps |
+| **5. Frictionless, distraction-free UI** | Shipped (product UX) | Counter-price messaging, dense matrix, pharmacist mode; privacy policy published. Cookie / analytics posture is documented on `/privacy` — keep third-party trackers off the comparison path. |
 
-## 2. Insurance vs cash decision matrix
+## Part 2 — Gaps vs a static off-site portal
 
-- Client + `POST /api/decision/insurance-vs-cash`
-- UI: `InsuranceVsCashMatrix` on search results
-- Frames today-cost vs deductible progress (not insurance advice)
+| Missing on typical portal | Trump RX response |
+|---|---|
+| **1. Direct-to-consumer digital checkout** | **Shipped:** in-app cart (`checkout-cart-store`) → `/checkout` → `POST /api/checkout/digital-pass` multi-coupon digital pass (barcodes + BIN/PCN). No manufacturer redirect required for cash coupons. Rx payment remains at the pharmacy counter (discount card), not a fake Rx e-commerce charge. |
+| **2. Insurance / deductible intelligence** | **Shipped:** Insurance vs cash widget (today cost vs deductible progress). Not advice; user-entered plan inputs. |
+| **3. Real-time pharmacy adjudication** | **Shipped:** Smart Switch precheck + route ranking. Live terminal verification requires `SWITCH_API_URL`. |
+| **4. Telehealth / prescription routing loop** | **Shipped:** handoff API + UI. Live visit / transfer requires `TELEHEALTH_PARTNER_URL` / `MAIL_ORDER_PARTNER_URL`. |
+| **5. Native price-benchmarking transparency** | **Shipped:** Benchmark drawer on search results. |
 
-## 3. Telehealth & fulfillment chaining
-
-- `POST /api/fulfillment/handoff` — telehealth / mail-order / specialty
-- UI: `FulfillmentPanel`
-- Partners: `TELEHEALTH_PARTNER_URL`, `MAIL_ORDER_PARTNER_URL`
-
-## 4. Transparent generic / cash benchmarks
-
-- `buildBenchmarkDrawer` + `BenchmarkDrawer` sheet
-- Shows lowest, median, peer cash, and estimated retail side-by-side
-
-## 5. Frictionless counter-price UX
-
-- “Seen price = counter price” messaging
-- Coupon modal labels **Counter price (show this)**
-- Minimal chrome on the comparison path
-
-## Still requires partners
+## Partner / production gates (still required for “live network”)
 
 | Capability | Env / partner |
 |---|---|
-| Live claim switch | `SWITCH_API_URL` |
+| Live claim switch | `SWITCH_API_URL` (+ optional `SWITCH_API_KEY`) |
 | Telehealth visit | `TELEHEALTH_PARTNER_URL` |
 | Mail-order transfer | `MAIL_ORDER_PARTNER_URL` |
 | External PBM quotes | `PRICING_PROVIDER=external` + `PRICING_API_URL` |
+| Membership billing | Stripe keys + webhook |
+| Alerts | Resend / Twilio |
+
+## Key product paths
+
+- Compare → coupon → **Add to digital checkout** → `/checkout` → **Issue digital pass**
+- Compare → **Smart Switch pick** → Get coupon (first-pass routing)
+- Compare → Insurance vs cash / Benchmarks / Telehealth or mail-order

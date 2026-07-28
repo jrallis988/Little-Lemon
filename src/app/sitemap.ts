@@ -6,6 +6,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "",
     "/search",
     "/pharmacies",
+    "/checkout",
     "/help",
     "/membership",
     "/privacy",

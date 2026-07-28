@@ -25,8 +25,12 @@ const STEPS = [
     body: "Use pharmacist mode for a large barcode, or have them enter BIN / PCN / Group / Member ID.",
   },
   {
+    title: "Or use digital checkout",
+    body: "Add deals to Checkout, then issue a multi-drug digital pass — barcodes stay on Trump RX without manufacturer redirects.",
+  },
+  {
     title: "Compare with your insurance",
-    body: "Ask which costs less: the Trump RX coupon or your plan copay. Use the lower one.",
+    body: "Ask which costs less: the Trump RX coupon or your plan copay. Use the Insurance vs cash tool on search results for deductible tradeoffs.",
   },
 ] as const;
 

@@ -35,7 +35,9 @@ import { PriceDisplay } from "@/components/design/price-display";
 import { InsuranceVsCashMatrix } from "@/components/pricing/insurance-vs-cash-matrix";
 import { BenchmarkDrawer } from "@/components/pricing/benchmark-drawer";
 import { FulfillmentPanel } from "@/components/fulfillment/fulfillment-panel";
+import { SmartSwitchRouteHint } from "@/components/coupon/smart-switch-route-hint";
 import { useLocationStore } from "@/lib/store/location-store";
+import { useCheckoutCartStore } from "@/lib/store/checkout-cart-store";
 import type {
   Drug,
   PriceComparisonRow,
@@ -177,10 +179,31 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
   const [loading, setLoading] = useState(true);
   const [quotedAt, setQuotedAt] = useState<string | null>(null);
   const [saveMessage, setSaveMessage] = useState<string | null>(null);
+  const addToCheckout = useCheckoutCartStore((s) => s.addItem);
 
   const strength =
     drug.strengths.find((s) => s.id === filters.strengthId) ??
     drug.strengths[0];
+
+  function stageCheckout(row: PriceComparisonRow) {
+    if (!strength) return;
+    addToCheckout({
+      drugId: drug.id,
+      genericName: drug.genericName,
+      brandName: drug.brandName,
+      strengthId: strength.id,
+      strengthLabel: strength.label,
+      quantity: filters.quantity,
+      supplyDays: filters.supplyDays,
+      pharmacyId: row.pharmacy.id,
+      pharmacyName: row.pharmacy.name,
+      pharmacyAddress: `${row.pharmacy.address}, ${row.pharmacy.city}`,
+      couponPrice: row.offer.couponPrice,
+      retailPrice: row.offer.retailPrice,
+      coupon: row.offer.coupon,
+    });
+    setSaveMessage("Added to digital checkout — open Checkout to issue your pass.");
+  }
 
   useEffect(() => {
     if (!filters.strengthId) return;
@@ -364,6 +387,11 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
               Sign in
             </Link>
           )}
+          {saveMessage.includes("digital checkout") && (
+            <Link href="/checkout" className="font-medium text-primary underline-offset-2 hover:underline">
+              Open checkout
+            </Link>
+          )}
         </p>
       )}
       {plusMember && (
@@ -377,6 +405,20 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
         teaser. Trump RX is <strong>not insurance</strong>. If your plan copay is
         lower, use insurance instead.
       </TrustCallout>
+
+      {strength && (
+        <SmartSwitchRouteHint
+          drugId={drug.id}
+          strengthId={strength.id}
+          quantity={filters.quantity}
+          supplyDays={filters.supplyDays}
+          zip={location.zip}
+          onSelectPharmacy={(pharmacyId) => {
+            const match = rows.find((r) => r.pharmacy.id === pharmacyId);
+            if (match) setActiveOffer(match);
+          }}
+        />
+      )}
 
       {/* Sticky filters */}
       <div className="trx-sticky-filters rounded-b-xl">
@@ -484,9 +526,19 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
               savingsPercent={lowest.savingsPercent}
               size="md"
             />
-            <Button className="min-h-11" onClick={() => setActiveOffer(lowest)}>
-              Get coupon
-            </Button>
+            <div className="flex flex-col gap-1.5 sm:flex-row">
+              <Button className="min-h-11" onClick={() => setActiveOffer(lowest)}>
+                Get coupon
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                className="min-h-11"
+                onClick={() => stageCheckout(lowest)}
+              >
+                Add to checkout
+              </Button>
+            </div>
           </div>
         </div>
       )}
@@ -512,6 +564,7 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
               rank={filters.sortBy === "price" ? index + 1 : undefined}
               highlighted={index === 0 && filters.sortBy === "price"}
               onGetCoupon={() => setActiveOffer(row)}
+              onAddToCheckout={() => stageCheckout(row)}
             />
           ))}
         </div>

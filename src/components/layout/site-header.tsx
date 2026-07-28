@@ -15,10 +15,12 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { LocationPicker } from "@/components/pharmacy/location-picker";
+import { CheckoutCartButton } from "@/components/checkout/cart-button";
 
 const NAV = [
   { href: "/search", label: "Compare prices" },
   { href: "/pharmacies", label: "Pharmacies" },
+  { href: "/checkout", label: "Checkout" },
   { href: "/profile", label: "My meds" },
   { href: "/help", label: "Help" },
   { href: "/membership", label: "Membership" },
@@ -78,6 +80,7 @@ export function SiteHeader() {
           <div className="hidden lg:block">
             <LocationPicker compact />
           </div>
+          <CheckoutCartButton />
           {status !== "loading" && (
             <Link
               href={accountLink.href}
@@ -108,6 +111,10 @@ export function SiteHeader() {
             </SheetHeader>
             <div className="mt-4 space-y-4 px-1">
               <LocationPicker />
+              <CheckoutCartButton
+                className="w-full justify-center"
+                onNavigate={() => setOpen(false)}
+              />
               <nav className="flex flex-col gap-1" aria-label="Mobile">
                 {NAV.map((item) => (
                   <Link

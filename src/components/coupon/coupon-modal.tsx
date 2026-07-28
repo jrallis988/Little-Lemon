@@ -9,6 +9,7 @@ import {
   MessageSquare,
   Printer,
   ShieldAlert,
+  ShoppingBag,
   X,
 } from "lucide-react";
 import {
@@ -22,6 +23,7 @@ import { Separator } from "@/components/ui/separator";
 import { TrustCallout } from "@/components/design/trust-callout";
 import { SmartSwitchBadge } from "@/components/coupon/smart-switch-badge";
 import { formatCurrency } from "@/lib/pricing";
+import { useCheckoutCartStore } from "@/lib/store/checkout-cart-store";
 import type {
   CouponBinDetails,
   Drug,
@@ -29,6 +31,7 @@ import type {
   PharmacyPriceOffer,
 } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 interface CouponModalProps {
   open: boolean;
@@ -139,6 +142,8 @@ export function CouponModal({
   const [issueError, setIssueError] = useState<string | null>(null);
   const [pharmacistMode, setPharmacistMode] = useState(false);
   const [sharedMsg, setSharedMsg] = useState<string | null>(null);
+  const [addedToCheckout, setAddedToCheckout] = useState(false);
+  const addItem = useCheckoutCartStore((s) => s.addItem);
 
   useEffect(() => {
     if (!open) {
@@ -146,6 +151,7 @@ export function CouponModal({
       setIssueError(null);
       setPharmacistMode(false);
       setSharedMsg(null);
+      setAddedToCheckout(false);
       return;
     }
 
@@ -230,6 +236,26 @@ export function CouponModal({
     setSharedMsg(
       "Add this screen to your phone wallet favorites, or screenshot for the counter."
     );
+  }
+
+  function onAddToCheckout() {
+    addItem({
+      drugId: drug.id,
+      genericName: drug.genericName,
+      brandName: drug.brandName,
+      strengthId: offer.strengthId,
+      strengthLabel,
+      quantity: offer.quantity,
+      supplyDays: offer.supplyDays,
+      pharmacyId: pharmacy.id,
+      pharmacyName: pharmacy.name,
+      pharmacyAddress: `${pharmacy.address}, ${pharmacy.city}`,
+      couponPrice: offer.couponPrice,
+      retailPrice: offer.retailPrice,
+      coupon: coupon ?? undefined,
+    });
+    setAddedToCheckout(true);
+    setSharedMsg("Added to digital checkout.");
   }
 
   return (
@@ -384,6 +410,23 @@ export function CouponModal({
               </div>
               <Button
                 type="button"
+                variant={addedToCheckout ? "secondary" : "default"}
+                className="no-print min-h-11 w-full"
+                onClick={onAddToCheckout}
+              >
+                <ShoppingBag />
+                {addedToCheckout ? "Updated in checkout" : "Add to digital checkout"}
+              </Button>
+              {addedToCheckout && (
+                <Link
+                  href="/checkout"
+                  className="no-print block text-center text-sm font-medium text-primary underline-offset-2 hover:underline"
+                >
+                  Open checkout →
+                </Link>
+              )}
+              <Button
+                type="button"
                 variant="ghost"
                 className="no-print min-h-10 w-full"
                 onClick={onWalletHint}
@@ -403,6 +446,7 @@ export function CouponModal({
               <Button
                 type="button"
                 className="no-print min-h-12 w-full text-base"
+                variant="outline"
                 onClick={() => onOpenChange(false)}
               >
                 Done

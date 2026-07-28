@@ -16,6 +16,7 @@ interface PharmacyRowProps {
   rank?: number;
   highlighted?: boolean;
   onGetCoupon: () => void;
+  onAddToCheckout?: () => void;
 }
 
 export function PharmacyRow({
@@ -23,6 +24,7 @@ export function PharmacyRow({
   rank,
   highlighted = false,
   onGetCoupon,
+  onAddToCheckout,
 }: PharmacyRowProps) {
   const [open, setOpen] = useState(highlighted);
   const { isPreferred, togglePreferred, message } = usePreferredPharmacy(false);
@@ -82,6 +84,16 @@ export function PharmacyRow({
             <Button className="min-h-11 min-w-[7.5rem]" onClick={onGetCoupon}>
               Get coupon
             </Button>
+            {onAddToCheckout && (
+              <Button
+                type="button"
+                variant="outline"
+                className="min-h-11"
+                onClick={onAddToCheckout}
+              >
+                Checkout
+              </Button>
+            )}
             <Button
               type="button"
               variant="ghost"
