@@ -1,0 +1,234 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@layer base {
+  :root {
+    /* Live Marshalls aesthetic — red wordmark #D71920, white chrome, navy secondary */
+    --background: 0 0% 100%;
+    --foreground: 220 18% 12%;
+
+    --surface: 0 0% 100%;
+    --surface-muted: 210 16% 97%;
+    --surface-elevated: 0 0% 100%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 18% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 18% 12%;
+
+    /* Marshalls Red — CTAs, badges, brand mark */
+    --primary: 358 79% 47%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 14% 95%;
+    --secondary-foreground: 220 18% 16%;
+
+    --muted: 210 12% 94%;
+    --muted-foreground: 215 12% 42%;
+
+    --accent: 218 80% 96%;
+    --accent-foreground: 218 100% 28%;
+
+    --navy: 218 100% 28%;
+    --navy-foreground: 0 0% 100%;
+
+    --sky: 205 85% 55%;
+    --sky-foreground: 0 0% 100%;
+    --sky-soft: 205 90% 96%;
+
+    --destructive: 0 72% 42%;
+    --destructive-foreground: 0 0% 100%;
+
+    --deal: 358 79% 47%;
+    --deal-foreground: 0 0% 100%;
+    --deal-soft: 358 70% 96%;
+
+    --brand-red: 358 79% 47%;
+    --brand-blue: 218 100% 28%;
+
+    --inventory-low: 28 90% 44%;
+    --inventory-in: 152 45% 32%;
+    --inventory-out: 215 10% 52%;
+
+    --border: 214 16% 88%;
+    --input: 214 16% 86%;
+    --ring: 358 79% 47%;
+
+    --radius: 0.25rem;
+
+    --font-display: "Libre Baskerville", Georgia, "Times New Roman", serif;
+    --font-sans: "Source Sans 3", system-ui, sans-serif;
+
+    --layout-max: 1200px;
+    --layout-gutter: clamp(1rem, 2.5vw, 2rem);
+    --layout-rail: 250px;
+    --promo-height: 2.35rem;
+    --utility-height: 2rem;
+    --header-height: 4.25rem;
+    --nav-rail-height: 0px;
+    --chrome-offset: calc(
+      var(--promo-height) + var(--utility-height) + var(--header-height) + var(--nav-rail-height)
+    );
+  }
+
+  @media (min-width: 1024px) {
+    :root {
+      --nav-rail-height: 2.5rem;
+    }
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    min-height: 100dvh;
+  }
+
+  #root {
+    min-height: 100dvh;
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.14);
+    color: hsl(var(--foreground));
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+
+  a,
+  button {
+    @apply transition-colors duration-200 ease-retail;
+  }
+}
+
+@layer components {
+  .shelf-container {
+    @apply mx-auto w-full max-w-shelf px-gutter;
+  }
+
+  .price-compare {
+    @apply text-sm text-muted-foreground line-through decoration-muted-foreground/70;
+  }
+
+  .price-deal {
+    @apply font-bold tabular-nums text-primary;
+  }
+
+  .badge-inventory {
+    @apply inline-flex items-center gap-1 rounded-sm px-1.5 py-0.5 text-2xs font-semibold uppercase tracking-[0.04em];
+  }
+
+  .product-tile {
+    @apply relative flex flex-col text-left transition-transform duration-300 ease-retail;
+  }
+
+  .product-tile:hover {
+    @apply -translate-y-0.5;
+  }
+
+  .product-media {
+    @apply relative aspect-[3/4] overflow-hidden rounded-sm bg-[#f5f5f5];
+  }
+
+  .product-media img {
+    @apply h-full w-full object-contain object-center p-3 transition-transform duration-500 ease-retail sm:p-4;
+  }
+
+  .product-tile:hover .product-media img {
+    @apply scale-[1.02];
+  }
+
+  .product-gallery-frame {
+    @apply overflow-hidden rounded-lg bg-[#f5f5f5] shadow-soft;
+  }
+
+  .product-gallery-frame img {
+    @apply h-full w-full object-contain object-center p-4 sm:p-6;
+  }
+
+  .skeleton-block {
+    @apply relative overflow-hidden rounded-sm bg-muted;
+  }
+
+  .skeleton-block::after {
+    content: "";
+    @apply absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/60 to-transparent;
+    animation: shimmer 1.4s infinite;
+  }
+
+  .filter-section {
+    @apply space-y-3 border-b border-border/70 py-5 last:border-b-0;
+  }
+
+  .sticky-purchase {
+    @apply sticky bottom-0 z-30 border-t border-border bg-surface/95 backdrop-blur-md;
+    box-shadow: 0 -8px 24px hsl(220 20% 10% / 0.06);
+  }
+
+  /* Official-inspired Marshalls wordmark: italic serif, tight tracking, brand red */
+  .marshalls-wordmark {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    font-size: clamp(1.55rem, 2.2vw, 1.85rem);
+    line-height: 1;
+    color: hsl(var(--brand-red));
+    text-rendering: geometricPrecision;
+  }
+
+  .marshalls-wordmark .m-wide {
+    letter-spacing: -0.02em;
+  }
+
+  .section-rule-title {
+    @apply flex items-center gap-4;
+  }
+
+  .section-rule-title::before,
+  .section-rule-title::after {
+    content: "";
+    @apply h-px flex-1 bg-border;
+  }
+
+  .dept-tile-label {
+    @apply absolute inset-x-0 bottom-0 bg-navy/90 px-3 py-2.5 text-sm font-semibold text-white transition-colors;
+  }
+
+  .group:hover .dept-tile-label {
+    @apply bg-primary;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
