@@ -6,7 +6,11 @@ function Footer() {
     <footer className="site-footer">
       <div className="footer-inner">
         <div className="footer-brand">
-          <p className="footer-kicker">White Mountains Community College</p>
+          <img
+            className="footer-logo"
+            src="/images/wmcc-mark.svg"
+            alt="White Mountains Community College"
+          />
           <p className="footer-lead">
             Affordable higher education in northern New Hampshire — pathways to
             careers, transfer, and lifelong opportunity from Berlin and Littleton.

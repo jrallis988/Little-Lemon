@@ -32,6 +32,18 @@ function Visit() {
           <div className="section-intro">
             <p className="eyebrow">Upcoming events</p>
             <h2>Find a day that works for you.</h2>
+            <p>
+              Check the{" "}
+              <a
+                href="https://www.wmcc.edu/events/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                WMCC events calendar
+              </a>{" "}
+              for the latest dates, then join us for Open Houses, info nights, and
+              Express Admissions Days.
+            </p>
           </div>
           <div className="event-list">
             {visitEvents.map((event) => (
@@ -40,6 +52,16 @@ function Visit() {
                 <h3>{event.title}</h3>
                 <p className="event-time">{event.time}</p>
                 <p>{event.copy}</p>
+                {event.href ? (
+                  <a
+                    className="text-link"
+                    href={event.href}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    View calendar
+                  </a>
+                ) : null}
               </article>
             ))}
           </div>

@@ -10,6 +10,19 @@ function News() {
         title="What’s happening at WMCC."
         copy="Student stories, academic honors, campus updates, and community recognition from across northern New Hampshire."
         image="/images/graduation.jpg"
+        actions={[
+          {
+            label: "Visit Events Calendar",
+            to: "https://www.wmcc.edu/events/",
+            external: true,
+            className: "btn btn-gold",
+          },
+          {
+            label: "Plan a Campus Visit",
+            to: "/admissions/visit",
+            className: "btn btn-ghost-light",
+          },
+        ]}
       />
 
       <section className="section">
@@ -21,27 +34,54 @@ function News() {
                   <span>{item.category}</span>
                   <span>{item.date}</span>
                 </p>
-                <h2>{item.title}</h2>
+                <h2>
+                  {item.href ? (
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="news-title-link"
+                    >
+                      {item.title}
+                    </a>
+                  ) : (
+                    item.title
+                  )}
+                </h2>
                 <p>{item.summary}</p>
+                {item.href ? (
+                  <a
+                    className="text-link"
+                    href={item.href}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Read on wmcc.edu
+                  </a>
+                ) : null}
               </article>
             ))}
           </div>
 
-          <div className="section-cta">
+          <div className="section-cta cta-actions">
             <a
               className="btn btn-primary"
-              href="https://www.wmcc.edu/"
+              href="https://www.wmcc.edu/news/"
               target="_blank"
               rel="noreferrer"
             >
-              More on wmcc.edu
+              More news on wmcc.edu
             </a>
-            <Link
+            <a
               className="btn btn-gold"
-              to="/admissions/visit"
-              style={{ marginLeft: "0.75rem" }}
+              href="https://www.wmcc.edu/events/"
+              target="_blank"
+              rel="noreferrer"
             >
-              Upcoming Visit Events
+              Events calendar
+            </a>
+            <Link className="btn btn-primary" to="/admissions/visit">
+              Upcoming visit days
             </Link>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import { Link, useSearchParams } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
+import PageHero from "../components/PageHero";
 import {
   focusAreas,
   locations,
@@ -66,21 +67,24 @@ function Academics() {
 
   return (
     <>
-      <section className="page-hero">
-        <div className="page-hero-media" aria-hidden="true">
-          <img src="/images/students.jpg" alt="" />
-          <div className="hero-veil" />
-        </div>
-        <div className="container page-hero-content">
-          <p className="hero-brand">Academics</p>
-          <h1>Our Programs</h1>
-          <p>
-            Search every degree and certificate at White Mountains Community
-            College — from Arts &amp; Humanities to STEM, Industry, Culinary, and
-            Health Sciences.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        brand="Academics"
+        title="Our Programs"
+        copy="Search every degree and certificate at White Mountains Community College — from Arts & Humanities to STEM, Industry, Culinary, and Health Sciences."
+        image="/images/students.jpg"
+        actions={[
+          {
+            label: "How to Apply",
+            to: "/admissions/how-to-apply",
+            className: "btn btn-gold",
+          },
+          {
+            label: "Request Info",
+            to: "/contact",
+            className: "btn btn-ghost-light",
+          },
+        ]}
+      />
 
       <section className="section programs-section">
         <div className="container">
@@ -191,6 +195,9 @@ function Academics() {
                     <p className="program-kind">{program.kind}</p>
                     <h2>{program.title}</h2>
                     <p className="program-credential">{program.credential}</p>
+                    {program.summary ? (
+                      <p className="program-summary">{program.summary}</p>
+                    ) : null}
                     <p className="program-focus">
                       {program.focusAreas
                         .map((area) => focusLabels[area])

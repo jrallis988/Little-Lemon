@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import PageHero from "../components/PageHero";
 
 const values = [
   {
@@ -22,21 +23,24 @@ const values = [
 function About() {
   return (
     <>
-      <section className="page-hero">
-        <div className="page-hero-media" aria-hidden="true">
-          <img src="/images/mountains.jpg" alt="" />
-          <div className="hero-veil" />
-        </div>
-        <div className="container page-hero-content">
-          <p className="hero-brand">About White Mountains</p>
-          <h1>Opportunity rooted in the North Country.</h1>
-          <p>
-            White Mountains Community College is a comprehensive, student-centered
-            institution providing educational and career mobility while sustaining
-            community development across northern New Hampshire.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        brand="About White Mountains"
+        title="Opportunity rooted in the North Country."
+        copy="White Mountains Community College is a comprehensive, student-centered institution providing educational and career mobility while sustaining community development across northern New Hampshire."
+        image="/images/mountains.jpg"
+        actions={[
+          {
+            label: "Explore Programs",
+            to: "/academics",
+            className: "btn btn-gold",
+          },
+          {
+            label: "Visit Campus",
+            to: "/admissions/visit",
+            className: "btn btn-ghost-light",
+          },
+        ]}
+      />
 
       <section className="section">
         <div className="container mission-grid">

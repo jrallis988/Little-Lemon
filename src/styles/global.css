@@ -4,8 +4,9 @@
   --navy: #004833;
   --navy-deep: #013224;
   --navy-soft: #0d5a42;
-  --gold: #cdd665;
-  --gold-deep: #b8c24f;
+  --gold: #c5d04f;
+  --gold-deep: #a8b33a;
+  --gold-ink: #01291e;
   --sea: #2f7a68;
   --mist: #eef5f1;
   --foam: #f5faf7;
@@ -160,7 +161,7 @@ main {
 
 .utility-portal {
   background: var(--gold);
-  color: var(--navy) !important;
+  color: var(--gold-ink) !important;
   font-weight: 800;
   padding: 0.35rem 0.75rem;
   margin-left: 0.25rem;
@@ -168,7 +169,7 @@ main {
 
 .utility-portal:hover {
   background: var(--gold-deep);
-  color: var(--navy) !important;
+  color: var(--gold-ink) !important;
 }
 
 .header-inner {
@@ -315,11 +316,22 @@ main {
 
 .btn-gold {
   background: var(--gold);
-  color: var(--navy);
+  color: var(--gold-ink);
+  border-color: var(--gold-deep);
+  box-shadow: inset 0 0 0 1px rgba(1, 41, 30, 0.08);
 }
 
 .btn-gold:hover {
   background: var(--gold-deep);
+  color: var(--gold-ink);
+}
+
+.btn-gold:focus-visible,
+.btn-primary:focus-visible,
+.btn-ghost:focus-visible,
+.btn-ghost-light:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
 }
 
 .btn-primary {
@@ -406,9 +418,9 @@ main {
   z-index: 2;
   background: linear-gradient(
     90deg,
-    rgba(0, 72, 51, 0.42) 0%,
-    rgba(0, 72, 51, 0.14) 45%,
-    rgba(0, 0, 0, 0.18) 100%
+    rgba(0, 40, 28, 0.58) 0%,
+    rgba(0, 72, 51, 0.28) 48%,
+    rgba(0, 0, 0, 0.32) 100%
   );
   pointer-events: none;
 }
@@ -532,6 +544,40 @@ main {
   animation-play-state: paused;
 }
 
+.carousel-pause {
+  position: absolute;
+  z-index: 4;
+  right: 1rem;
+  bottom: 1.15rem;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  background: rgba(1, 50, 36, 0.75);
+  color: var(--white);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.7rem;
+  cursor: pointer;
+}
+
+.carousel-pause:hover,
+.carousel-pause:focus-visible {
+  background: var(--gold);
+  color: var(--gold-ink);
+  border-color: var(--gold);
+}
+
+.carousel-pause[aria-pressed="true"] {
+  background: var(--gold);
+  color: var(--gold-ink);
+  border-color: var(--gold);
+}
+
+.hero-carousel:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: -3px;
+}
+
 @keyframes panelIn {
   from {
     opacity: 0;
@@ -555,6 +601,10 @@ main {
 .quick-links {
   background: var(--navy);
   color: var(--white);
+}
+
+.quick-links + .section {
+  padding-top: clamp(3.75rem, 8vw, 5.5rem);
 }
 
 .quick-links-grid {
@@ -623,8 +673,8 @@ main {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(115deg, rgba(1, 50, 36, 0.88) 0%, rgba(0, 72, 51, 0.62) 48%, rgba(47, 122, 104, 0.34) 100%),
-    linear-gradient(0deg, rgba(1, 50, 36, 0.6) 0%, transparent 45%);
+    linear-gradient(115deg, rgba(1, 40, 28, 0.92) 0%, rgba(0, 72, 51, 0.7) 48%, rgba(47, 122, 104, 0.42) 100%),
+    linear-gradient(0deg, rgba(1, 50, 36, 0.68) 0%, transparent 45%);
 }
 
 .page-hero h1 {
@@ -1015,6 +1065,13 @@ main {
   font-size: 0.95rem;
 }
 
+.program-summary {
+  margin: 0.15rem 0 0.35rem;
+  color: var(--ink);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
 .program-result .text-link {
   margin-top: 0.65rem;
   justify-self: start;
@@ -1286,6 +1343,13 @@ main {
   margin-bottom: 0.75rem;
 }
 
+.footer-logo {
+  width: clamp(160px, 22vw, 220px);
+  height: auto;
+  margin-bottom: 1rem;
+  filter: brightness(0) invert(1);
+}
+
 .footer-lead {
   max-width: 28rem;
   color: rgba(255, 255, 255, 0.72);
@@ -1433,6 +1497,18 @@ main {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+}
+
+.news-title-link {
+  color: inherit;
+}
+
+.news-title-link:hover {
+  color: var(--sea);
+}
+
+.news-item .text-link {
+  margin-top: 0.75rem;
 }
 
 .event-time {

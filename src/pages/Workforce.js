@@ -10,6 +10,18 @@ function Workforce() {
         title="Train for the job. Strengthen the North Country."
         copy="WMCC partners with businesses and learners on short-term skills training, professional development, and customized employer programs."
         image="/images/welding.jpg"
+        actions={[
+          {
+            label: "Contact Training Team",
+            to: "/contact",
+            className: "btn btn-gold",
+          },
+          {
+            label: "View Career Programs",
+            to: "/academics",
+            className: "btn btn-ghost-light",
+          },
+        ]}
       />
 
       <section className="section">

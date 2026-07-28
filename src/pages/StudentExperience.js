@@ -10,6 +10,18 @@ function StudentExperience() {
         title="Life beyond the classroom."
         copy="Clubs, wellness resources, advising, and a welcoming North Country campus community — built to help you belong, lead, and thrive at WMCC."
         image="/images/students.jpg"
+        actions={[
+          {
+            label: "Become a Student",
+            to: "/admissions",
+            className: "btn btn-gold",
+          },
+          {
+            label: "Contact Student Life",
+            to: "/contact",
+            className: "btn btn-ghost-light",
+          },
+        ]}
       />
 
       <section className="section">

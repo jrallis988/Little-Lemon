@@ -23,6 +23,16 @@ function HeroCarousel() {
     setIndex((next + heroSlides.length) % heroSlides.length);
   };
 
+  const onKeyDown = (event) => {
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      goTo(index - 1);
+    } else if (event.key === "ArrowRight") {
+      event.preventDefault();
+      goTo(index + 1);
+    }
+  };
+
   const slide = heroSlides[index];
 
   return (
@@ -30,8 +40,16 @@ function HeroCarousel() {
       className="hero-carousel"
       aria-roledescription="carousel"
       aria-label="Featured announcements"
+      tabIndex={0}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) {
+          setPaused(false);
+        }
+      }}
+      onKeyDown={onKeyDown}
     >
       {heroSlides.map((item, itemIndex) => (
         <div
@@ -88,6 +106,16 @@ function HeroCarousel() {
           />
         ))}
       </div>
+
+      <button
+        type="button"
+        className="carousel-pause"
+        aria-pressed={paused}
+        aria-label={paused ? "Play slideshow" : "Pause slideshow"}
+        onClick={() => setPaused((current) => !current)}
+      >
+        {paused ? "Play" : "Pause"}
+      </button>
 
       <div className="carousel-progress" aria-hidden="true">
         <span
