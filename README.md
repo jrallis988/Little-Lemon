@@ -1,10 +1,19 @@
 # Artistic Fountain
 
-Strategic design studio portfolio for **Artistic Fountain** — visual identities and digital experiences for ambitious brands.
+Independent design venture portfolio — digital media, graphic design, visual identity, and creative media projects.
+
+## Dual-track separation
+
+| Track | Home | Houses |
+| --- | --- | --- |
+| **Creative** | Artistic Fountain (this repo) | Visual media, graphic identity, conceptual design, client design services |
+| **Engineering** | Developer portfolio (separate) | Back-end systems, Python/FastAPI, AI/RAG applications |
+
+See `STATUS.md` for the full status report.
 
 ## Stack
 
-Static site: HTML, CSS, and vanilla JS. Custom typefaces (Arcanite Slab, Goudy Heavyface) plus Inter for body copy.
+Static site: HTML, CSS, and vanilla JS (built in Cursor). Custom typefaces (Arcanite Slab, Goudy Heavyface) plus Inter for body copy.
 
 ## Pages
 
@@ -32,8 +41,10 @@ Or open `index.html` directly in a browser.
 ├── privacy.html
 ├── terms.html
 ├── styles.css
+├── STATUS.md
 ├── favicon.svg
 ├── resume.pdf
+├── services/
 ├── images/
 └── *.otf          # brand fonts
 ```
