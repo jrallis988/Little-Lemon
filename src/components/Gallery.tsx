@@ -1,20 +1,21 @@
 import { useInView } from "../hooks/useInView";
+import { asset } from "../lib/asset";
 
 const shots = [
   {
-    src: "/images/campus-silos.jpg",
+    src: asset("images/campus-silos.jpg"),
     alt: "Grain silos outside the Smuttynose brewery building",
   },
   {
-    src: "/images/campus-sign.jpg",
+    src: asset("images/campus-sign.jpg"),
     alt: "Smuttynose Brewing Company stone entrance sign",
   },
   {
-    src: "/images/campus-patio.jpg",
+    src: asset("images/campus-patio.jpg"),
     alt: "Outdoor patio seating at Towle Farm",
   },
   {
-    src: "/images/campus-entrance.jpg",
+    src: asset("images/campus-entrance.jpg"),
     alt: "Campus entrance and lawn at Towle Farm",
   },
 ];

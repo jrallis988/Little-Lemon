@@ -1,3 +1,4 @@
+import { asset } from "../lib/asset";
 import { SealMark } from "./SealMark";
 
 export function Hero() {
@@ -9,7 +10,7 @@ export function Hero() {
     >
       <div className="absolute inset-0">
         <img
-          src="/images/campus-dusk.jpg"
+          src={asset("images/campus-dusk.jpg")}
           alt="Smuttynose Brewing on Towle Farm at golden hour — red brewery building and grain silos"
           className="h-full w-full object-cover animate-ken-burns"
           fetchPriority="high"

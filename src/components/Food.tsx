@@ -1,5 +1,6 @@
 import { links } from "../data/links";
 import { useInView } from "../hooks/useInView";
+import { asset } from "../lib/asset";
 
 export function Food() {
   const { ref, visible } = useInView<HTMLElement>();
@@ -9,7 +10,7 @@ export function Food() {
       <div className="grid lg:grid-cols-2">
         <div className="relative min-h-[18rem] overflow-hidden lg:min-h-[34rem]">
           <img
-            src="/images/hayseed-plate.jpg"
+            src={asset("images/hayseed-plate.jpg")}
             alt="Fried chicken plate and Hayseed glass on the Smuttynose patio"
             className={`h-full w-full object-cover transition-transform duration-[1.4s] ease-out ${
               visible ? "scale-100" : "scale-110"
