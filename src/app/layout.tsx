@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     template: "%s · Trump RX",
   },
   description:
-    "An improved Trump RX experience: search brand and generic meds, compare local pharmacy coupon prices, and show a digital discount at the counter. Discount provider — not insurance.",
+    "Search brand and generic medications, compare local pharmacy coupon prices, and show a digital discount at the counter. Trump RX is a private discount provider — not insurance and not a government service.",
   keywords: [
     "Trump RX",
     "TrumpRx",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Trump RX — Compare pharmacy prices. Keep more of your money.",
     description:
-      "Search medications, compare nearby pharmacies, and show a digital coupon at the counter — brand and generic.",
+      "Search medications, compare nearby pharmacies, and show a digital coupon at the counter. Private discount service — not insurance.",
     type: "website",
   },
 };

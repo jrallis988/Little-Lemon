@@ -323,39 +323,15 @@ async function externalQuotes(params: {
   supplyDays: SupplyDays;
   location: LocationContext;
   plusMember?: boolean;
+  radiusMiles?: number;
 }): Promise<PriceComparisonRow[]> {
-  const env = getEnv();
-  if (!env.PRICING_API_URL) {
+  try {
+    const { fetchExternalQuotes } = await import("@/lib/pricing-provider");
+    return await fetchExternalQuotes(params);
+  } catch (err) {
+    console.error("[pricing] external provider failed; falling back to network", err);
     return networkQuotes(params);
   }
-
-  const res = await fetch(`${env.PRICING_API_URL}/v1/quotes`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      ...(env.PRICING_API_KEY
-        ? { Authorization: `Bearer ${env.PRICING_API_KEY}` }
-        : {}),
-    },
-    body: JSON.stringify({
-      drugId: params.drugId,
-      strengthId: params.strengthId,
-      quantity: params.quantity,
-      supplyDays: params.supplyDays,
-      zip: params.location.zip,
-      latitude: params.location.latitude,
-      longitude: params.location.longitude,
-      plusMember: params.plusMember,
-    }),
-    cache: "no-store",
-  });
-
-  if (!res.ok) {
-    console.error("External pricing failed", res.status);
-    return networkQuotes(params);
-  }
-
-  return (await res.json()) as PriceComparisonRow[];
 }
 
 export async function getPriceQuotes(params: {

@@ -4,6 +4,7 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { getEnv } from "@/lib/env";
 import { DEFAULT_LOCATION } from "@/lib/chains";
+import { dispatchPriceAlert } from "@/lib/alerts/dispatch";
 import { getPriceQuotes, sortComparisonRows } from "@/lib/pricing-service";
 
 const createSchema = z.object({
@@ -85,7 +86,11 @@ export async function DELETE(req: Request) {
   return NextResponse.json({ ok: true });
 }
 
-/** Cron worker: POST with Authorization: Bearer $ALERTS_CRON_SECRET */
+/**
+ * Cron worker: PUT with Authorization: Bearer $ALERTS_CRON_SECRET
+ * Checks active alerts, dispatches Resend/Twilio when prices drop.
+ * Individual send failures are logged and do not abort the job.
+ */
 export async function PUT(req: Request) {
   const env = getEnv();
   const authHeader = req.headers.get("authorization");
@@ -98,54 +103,93 @@ export async function PUT(req: Request) {
     include: { user: true, drug: true },
   });
 
-  const triggered: Array<{ alertId: string; email: string; price: number }> = [];
+  const triggered: Array<{
+    alertId: string;
+    email: string;
+    price: number;
+    delivery: unknown;
+  }> = [];
+  const failures: Array<{ alertId: string; error: string }> = [];
 
   for (const alert of alerts) {
-    const location = DEFAULT_LOCATION;
-    const rows = sortComparisonRows(
-      await getPriceQuotes({
+    try {
+      const location = DEFAULT_LOCATION;
+      const rows = sortComparisonRows(
+        await getPriceQuotes({
+          drugId: alert.drugId,
+          strengthId: alert.strengthId,
+          quantity: alert.quantity,
+          supplyDays: alert.supplyDays as 30 | 90,
+          location,
+          plusMember:
+            alert.user.membershipTier === "plus" &&
+            alert.user.membershipStatus === "active",
+        }),
+        "price"
+      );
+      const lowest = rows[0]?.offer.couponPrice;
+
+      await prisma.priceAlert.update({
+        where: { id: alert.id },
+        data: { lastCheckedAt: new Date() },
+      });
+
+      if (typeof lowest !== "number") continue;
+      const target = alert.targetPrice ?? alert.baselinePrice;
+      if (lowest >= target) continue;
+
+      const delivery = await dispatchPriceAlert({
+        alertId: alert.id,
+        email: alert.user.email,
+        phone: alert.user.phone,
         drugId: alert.drugId,
-        strengthId: alert.strengthId,
+        drugName: alert.drug.genericName,
+        brandName: alert.drug.brandName,
+        price: lowest,
+        baselinePrice: alert.baselinePrice,
+        supplyDays: alert.supplyDays,
         quantity: alert.quantity,
-        supplyDays: alert.supplyDays as 30 | 90,
-        location,
-        plusMember: alert.user.membershipTier === "plus",
-      }),
-      "price"
-    );
-    const lowest = rows[0]?.offer.couponPrice;
-    await prisma.priceAlert.update({
-      where: { id: alert.id },
-      data: { lastCheckedAt: new Date() },
-    });
-    if (typeof lowest !== "number") continue;
-    const target = alert.targetPrice ?? alert.baselinePrice;
-    if (lowest < target) {
+      });
+
+      const anyDelivered = delivery.some((d) => d.ok);
+      // Advance baseline when at least one channel succeeded, or when all
+      // channels were intentionally skipped (providers not configured) so
+      // local/dev cron still progresses.
+      const onlySkipped = delivery.every((d) => d.skipped);
+      if (anyDelivered || onlySkipped) {
+        await prisma.priceAlert.update({
+          where: { id: alert.id },
+          data: { lastNotifiedAt: new Date(), baselinePrice: lowest },
+        });
+      }
+
       triggered.push({
         alertId: alert.id,
         email: alert.user.email,
         price: lowest,
+        delivery,
       });
-      await prisma.priceAlert.update({
-        where: { id: alert.id },
-        data: { lastNotifiedAt: new Date(), baselinePrice: lowest },
-      });
-      // Email/SMS delivery hooks in when SMTP/Twilio envs are configured.
-      console.info(
-        `[price-alert] ${alert.user.email}: ${alert.drug.genericName} now $${lowest.toFixed(2)}`
-      );
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "alert check failed";
+      console.error("[alerts-cron]", alert.id, message);
+      failures.push({ alertId: alert.id, error: message });
     }
   }
 
-  // Mark expired coupons
-  await prisma.coupon.updateMany({
-    where: { status: "issued", expiresAt: { lt: new Date() } },
-    data: { status: "expired" },
-  });
+  try {
+    await prisma.coupon.updateMany({
+      where: { status: "issued", expiresAt: { lt: new Date() } },
+      data: { status: "expired" },
+    });
+  } catch (err) {
+    console.error("[alerts-cron] coupon expiry sweep failed", err);
+  }
 
   return NextResponse.json({
     checked: alerts.length,
     triggered: triggered.length,
+    failed: failures.length,
     triggers: triggered,
+    failures,
   });
 }

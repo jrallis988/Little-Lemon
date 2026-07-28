@@ -4,6 +4,7 @@ import { prisma } from "@/lib/db";
 import { getEnv, isStripeConfigured } from "@/lib/env";
 import { getStripe } from "@/lib/stripe";
 
+/** Create a Stripe Checkout session for Trump RX Plus using STRIPE_PLUS_PRICE_ID. */
 export async function POST() {
   const session = await auth();
   if (!session?.user?.id || !session.user.email) {
@@ -11,7 +12,6 @@ export async function POST() {
   }
 
   if (!isStripeConfigured()) {
-    // Dev / pre-Stripe: activate Plus locally so product flows can be tested.
     const expires = new Date();
     expires.setMonth(expires.getMonth() + 1);
     await prisma.user.update({
@@ -53,9 +53,13 @@ export async function POST() {
     mode: "subscription",
     customer: customerId,
     line_items: [{ price: env.STRIPE_PLUS_PRICE_ID!, quantity: 1 }],
+    allow_promotion_codes: true,
     success_url: `${env.NEXT_PUBLIC_APP_URL}/membership?upgraded=1`,
     cancel_url: `${env.NEXT_PUBLIC_APP_URL}/membership?canceled=1`,
     metadata: { userId: user.id },
+    subscription_data: {
+      metadata: { userId: user.id },
+    },
   });
 
   return NextResponse.json({ mode: "stripe", url: checkout.url });

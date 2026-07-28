@@ -84,6 +84,6 @@ src/
 ## Important disclaimer
 
 Trump RX is a **prescription discount provider, not insurance**. Cash-discount
-prices can change and pharmacy participation varies. It is not affiliated with
-or endorsed by the United States government or TrumpRx.gov unless expressly
-stated under a valid license or authorization.
+prices can change and pharmacy participation varies. Trump RX is a **private
+independent service** — not a government website, agency program, or official
+federal benefit.

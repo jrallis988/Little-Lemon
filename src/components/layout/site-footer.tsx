@@ -13,9 +13,9 @@ export function SiteFooter() {
             <span className="font-display text-lg font-semibold">Trump RX</span>
           </div>
           <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
-            An improved Trump RX experience — transparent pricing, broader
-            brand + generic search, and pharmacist-ready coupons for patients
-            and caregivers.
+            Trump RX helps you compare cash-discount prescription prices at
+            nearby pharmacies and show a pharmacist-ready coupon — brand and
+            generic. A private discount service, not insurance.
           </p>
           <p className="flex items-start gap-2 text-xs text-muted-foreground">
             <ShieldCheck className="mt-0.5 size-3.5 shrink-0 text-primary" aria-hidden />

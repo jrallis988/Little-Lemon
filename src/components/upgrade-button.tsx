@@ -8,9 +8,14 @@ import { Button } from "@/components/ui/button";
 
 export function UpgradeButton() {
   const router = useRouter();
-  const { update } = useSession();
+  const { data: session, update } = useSession();
   const [loading, setLoading] = useState(false);
+  const [portalLoading, setPortalLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+
+  const isPlus =
+    session?.user?.membershipTier === "plus" &&
+    session.user.membershipStatus === "active";
 
   async function upgrade() {
     setLoading(true);
@@ -50,21 +55,58 @@ export function UpgradeButton() {
     }
   }
 
+  async function openPortal() {
+    setPortalLoading(true);
+    setMessage(null);
+    try {
+      const response = await fetch("/api/stripe/portal", { method: "POST" });
+      const data = (await response.json()) as { url?: string; error?: string };
+      if (response.status === 401) {
+        router.push("/login");
+        return;
+      }
+      if (!response.ok || !data.url) {
+        throw new Error(data.error ?? "Could not open billing portal.");
+      }
+      window.location.assign(data.url);
+    } catch (caught) {
+      setMessage(
+        caught instanceof Error ? caught.message : "Could not open billing portal."
+      );
+    } finally {
+      setPortalLoading(false);
+    }
+  }
+
   return (
-    <div className="mt-5">
-      <Button
-        type="button"
-        size="lg"
-        variant="secondary"
-        className="min-h-11 w-full"
-        onClick={upgrade}
-        disabled={loading}
-      >
-        {loading && <Loader2 className="animate-spin" />}
-        Upgrade to Plus
-      </Button>
+    <div className="mt-5 space-y-2">
+      {isPlus ? (
+        <Button
+          type="button"
+          size="lg"
+          variant="outline"
+          className="min-h-11 w-full"
+          onClick={openPortal}
+          disabled={portalLoading}
+        >
+          {portalLoading && <Loader2 className="animate-spin" />}
+          Manage billing
+        </Button>
+      ) : (
+        <Button
+          type="button"
+          size="lg"
+          variant="secondary"
+          className="min-h-11 w-full"
+          onClick={upgrade}
+          disabled={loading}
+        >
+          {loading && <Loader2 className="animate-spin" />}
+          Upgrade to Plus
+        </Button>
+      )}
       {message && (
-        <p className="mt-2 text-center text-xs text-muted-foreground" role="status">
+        <p className="text-center text-xs text-muted-foreground" role="status">
           {message}
         </p>
       )}

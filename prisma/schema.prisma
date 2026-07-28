@@ -14,6 +14,7 @@ model User {
   emailVerified          DateTime?
   image                  String?
   passwordHash           String?
+  phone                  String?
   allowPersonalizedTips  Boolean   @default(false)
   membershipTier         String    @default("free") // free | plus
   stripeCustomerId       String?
