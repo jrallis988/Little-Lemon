@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ROOMS, SITE } from "../data";
+import Picture from "./Picture";
 import RoomModal from "./RoomModal";
 
 export default function Rooms() {
@@ -26,7 +27,7 @@ export default function Rooms() {
               onClick={() => setSelected(room)}
               aria-label={`View details for ${room.name}`}
             >
-              <img src={room.image} alt={room.imageAlt} loading="lazy" />
+              <Picture src={room.image} alt={room.imageAlt} loading="lazy" />
             </button>
             <div className="room__body">
               <h3>{room.name}</h3>

@@ -369,7 +369,7 @@ export const POLICIES = [
   {
     id: "payment",
     title: "Payment & smoking",
-    body: "Major credit cards accepted. A deposit or full payment is due at booking as shown at checkout. Non-smoking indoors with a designated outdoor smoking area.",
+    body: "Major credit cards accepted. Deposit or payment terms appear at checkout and on your confirmation — confirm with the front desk if unsure. Non-smoking indoors with a designated outdoor smoking area.",
   },
 ];
 
@@ -391,7 +391,7 @@ export const FAQ_SECTIONS = [
       {
         question: "Is a deposit required to reserve a room?",
         answer:
-          "Yes. A designated deposit or full payment is due at booking as outlined during online checkout to secure your reservation.",
+          "A deposit or full payment may be due at booking as shown during online checkout. Confirm the exact amount and timing on your reservation confirmation or with the front desk.",
       },
       {
         question: "What forms of payment do you accept?",
@@ -411,7 +411,7 @@ export const FAQ_SECTIONS = [
     items: [
       {
         question: "What are your check-in and check-out times?",
-        answer: `Check-in begins at ${SITE.checkIn}, and check-out is by ${SITE.checkOut}.`,
+        answer: `Check-in begins at ${SITE.checkIn}, and check-out is by ${SITE.checkOut}. Always confirm times on your reservation confirmation.`,
       },
       {
         question: "What is the minimum age to check in?",
@@ -461,7 +461,7 @@ export const FAQ_SECTIONS = [
       {
         question: "Do you serve breakfast?",
         answer:
-          "Yes. We offer a complimentary continental breakfast to start your morning before you head out to explore the coast.",
+          "Complimentary continental breakfast may be offered depending on season and staffing. Please confirm current breakfast details with the front desk when you book or check in.",
       },
       {
         question: "Is there Wi‑Fi available? Is it free?",
@@ -561,12 +561,12 @@ export const COOKIE_POLICY = {
       bullets: [
         "Essential & session cookies — Required to operate our website, maintain your secure session, and process room reservations safely.",
         "Functional cookies — Used to remember your preferences and settings (such as language or check-in details) to enhance your experience.",
-        "Analytical & performance cookies — Help us understand how visitors interact with our website by collecting and reporting information anonymously, so we can improve site performance.",
+        "Analytical & performance cookies — Help us understand how visitors interact with our website by collecting and reporting information anonymously, so we can improve site performance. These load only if you opt in.",
       ],
     },
     {
       title: "Managing or disabling cookies",
-      body: "Most web browsers automatically accept cookies, but you can usually modify your browser settings to decline cookies if you prefer. Please note that disabling essential or session cookies may prevent you from completing a reservation or accessing certain functional areas of the Seascape Inn website.",
+      body: "Most web browsers automatically accept cookies, but you can usually modify your browser settings to decline cookies if you prefer. You can also use the cookie banner on this site to accept essential-only cookies or manage analytics preferences. Disabling essential or session cookies may prevent you from completing a reservation.",
     },
     {
       title: "Updates to this cookie policy",
@@ -575,6 +575,39 @@ export const COOKIE_POLICY = {
     {
       title: "Contact us",
       body: `If you have questions about our use of cookies, please call ${SITE.phone} or email ${SITE.email}.`,
+    },
+  ],
+};
+
+export const PRIVACY_POLICY = {
+  title: "Privacy policy",
+  updated: "July 28, 2026",
+  intro:
+    "This Privacy Policy describes how Seascape Inn collects, uses, and protects information when you visit our website, send an inquiry, or book a stay.",
+  sections: [
+    {
+      title: "Information we collect",
+      body: "We may collect contact details and stay information you provide (such as name, email, phone, preferred dates, room preference, and notes), plus technical data needed to run the site (such as IP address, browser type, and pages visited when analytics are enabled).",
+    },
+    {
+      title: "How we use information",
+      body: "We use your information to respond to inquiries, process and confirm reservations, communicate about your stay, improve the website, and meet legal or operational requirements.",
+    },
+    {
+      title: "Sharing",
+      body: "We share information with service providers needed to operate booking and communications (for example RezStream for reservations and Formsubmit/Formspree for inquiry delivery). We do not sell personal information.",
+    },
+    {
+      title: "Data retention & security",
+      body: "We keep reservation and inquiry information only as long as needed for guest service and business records. We use reasonable safeguards, but no online transmission is fully secure.",
+    },
+    {
+      title: "Your choices",
+      body: "You may request access, correction, or deletion of inquiry details by contacting us. You can also manage analytics cookies through the cookie banner or your browser settings.",
+    },
+    {
+      title: "Contact",
+      body: `Questions about privacy: call ${SITE.phone} or email ${SITE.email}. Seascape Inn, ${SITE.address}.`,
     },
   ],
 };

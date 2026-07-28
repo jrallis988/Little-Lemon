@@ -1,6 +1,49 @@
-import { COOKIE_POLICY, POLICIES, SITE } from "../data";
+import { useEffect } from "react";
+import { COOKIE_POLICY, POLICIES, PRIVACY_POLICY, SITE } from "../data";
+
+function LegalBlock({ id, policy }) {
+  return (
+    <details className="footer__legal" id={id}>
+      <summary>
+        <span>{policy.title}</span>
+        <span className="footer__legal-updated">Updated {policy.updated}</span>
+      </summary>
+      <p className="footer__legal-intro">{policy.intro}</p>
+      <div className="footer__legal-sections">
+        {policy.sections.map((section) => (
+          <article key={section.title}>
+            <h4>{section.title}</h4>
+            <p>{section.body}</p>
+            {section.bullets ? (
+              <ul>
+                {section.bullets.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            ) : null}
+          </article>
+        ))}
+      </div>
+    </details>
+  );
+}
 
 export default function Footer() {
+  useEffect(() => {
+    const openFromHash = () => {
+      const id = window.location.hash.replace("#", "");
+      if (id !== "cookies" && id !== "privacy") return;
+      const el = document.getElementById(id);
+      if (el instanceof HTMLDetailsElement) {
+        el.open = true;
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    };
+    openFromHash();
+    window.addEventListener("hashchange", openFromHash);
+    return () => window.removeEventListener("hashchange", openFromHash);
+  }, []);
+
   return (
     <footer className="footer" id="policies">
       <div className="footer__inner">
@@ -34,6 +77,7 @@ export default function Footer() {
             <a href="#rooms">Rooms</a>
             <a href="#rates">Rates</a>
             <a href="#shore">Plaice Cove</a>
+            <a href="#winter">Winter stays</a>
             <a href="#reviews">Guest notes</a>
             <a href="#location">Find us</a>
             <a href="#explore">Things to do</a>
@@ -41,6 +85,7 @@ export default function Footer() {
             <a href="#booking">Book</a>
             <a href="#policies">Policies</a>
             <a href="#cookies">Cookie policy</a>
+            <a href="#privacy">Privacy policy</a>
           </nav>
         </div>
 
@@ -53,40 +98,18 @@ export default function Footer() {
           ))}
         </div>
 
-        <section
-          className="footer__cookies"
-          id="cookies"
-          aria-labelledby="cookies-title"
-        >
-          <div className="footer__cookies-head">
-            <h3 id="cookies-title">{COOKIE_POLICY.title}</h3>
-            <p className="footer__cookies-updated">
-              Last updated: {COOKIE_POLICY.updated}
-            </p>
-          </div>
-          <p className="footer__cookies-intro">{COOKIE_POLICY.intro}</p>
-          <div className="footer__cookies-sections">
-            {COOKIE_POLICY.sections.map((section) => (
-              <article key={section.title}>
-                <h4>{section.title}</h4>
-                <p>{section.body}</p>
-                {section.bullets ? (
-                  <ul>
-                    {section.bullets.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                ) : null}
-              </article>
-            ))}
-          </div>
-        </section>
+        <div className="footer__legal-stack">
+          <LegalBlock id="cookies" policy={COOKIE_POLICY} />
+          <LegalBlock id="privacy" policy={PRIVACY_POLICY} />
+        </div>
 
         <div className="footer__bottom">
           <p className="footer__copy">
             © {new Date().getFullYear()} {SITE.name}. Family inn since around{" "}
             {SITE.founded}. All rights reserved.{" "}
-            <a href="#cookies">Cookie policy</a>
+            <a href="#cookies">Cookies</a>
+            {" · "}
+            <a href="#privacy">Privacy</a>
           </p>
           <p className="footer__credit">Powered by Artistic Fountain</p>
         </div>

@@ -1,10 +1,11 @@
 import { SITE, asset } from "../data";
+import Picture from "./Picture";
 
 export default function Hero() {
   return (
     <section className="hero" id="top" aria-label={`${SITE.name} welcome`}>
       <div className="hero__media" aria-hidden="true">
-        <img
+        <Picture
           src={asset("/images/seascape-photo2.jpg")}
           alt=""
           width="1600"

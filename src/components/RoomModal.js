@@ -1,17 +1,43 @@
 import { useEffect, useId, useRef } from "react";
 import { SITE } from "../data";
+import Picture from "./Picture";
+
+const FOCUSABLE =
+  'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
 
 export default function RoomModal({ room, onClose }) {
   const titleId = useId();
   const closeRef = useRef(null);
+  const dialogRef = useRef(null);
 
   useEffect(() => {
     if (!room) return undefined;
     const previous = document.activeElement;
+    const dialog = dialogRef.current;
     closeRef.current?.focus();
+
     const onKey = (event) => {
-      if (event.key === "Escape") onClose();
+      if (event.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (event.key !== "Tab" || !dialog) return;
+
+      const nodes = Array.from(dialog.querySelectorAll(FOCUSABLE)).filter(
+        (el) => !el.hasAttribute("disabled") && el.getAttribute("aria-hidden") !== "true"
+      );
+      if (!nodes.length) return;
+      const first = nodes[0];
+      const last = nodes[nodes.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
+
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
     return () => {
@@ -30,6 +56,7 @@ export default function RoomModal({ room, onClose }) {
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
+        ref={dialogRef}
         onClick={(event) => event.stopPropagation()}
       >
         <button
@@ -44,12 +71,11 @@ export default function RoomModal({ room, onClose }) {
 
         <div className="modal__gallery">
           {room.gallery.map((shot, index) => (
-            <img
+            <Picture
               key={shot.src}
               src={shot.src}
               alt={shot.alt}
               loading={index === 0 ? "eager" : "lazy"}
-              decoding="async"
             />
           ))}
         </div>

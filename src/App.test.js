@@ -1,6 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import App from "./App";
 
+beforeEach(() => {
+  window.localStorage.clear();
+});
+
 test("renders motel brand and booking CTA", () => {
   render(<App />);
   expect(screen.getAllByText(/Seascape Inn/i).length).toBeGreaterThan(0);
@@ -8,7 +12,7 @@ test("renders motel brand and booking CTA", () => {
   expect(screen.getByRole("heading", { name: /book your room by the water/i })).toBeInTheDocument();
 });
 
-test("renders about, reviews, and location sections", () => {
+test("renders about, reviews, location, faq, and legal sections", () => {
   render(<App />);
   expect(
     screen.getByRole("heading", { name: /a north beach inn since 1953/i })
@@ -25,8 +29,15 @@ test("renders about, reviews, and location sections", () => {
     screen.getByRole("heading", { name: /questions before you book/i })
   ).toBeInTheDocument();
   expect(screen.getByText(/how can i make a reservation/i)).toBeInTheDocument();
-  expect(screen.getByRole("heading", { level: 3, name: /^cookie policy$/i })).toBeInTheDocument();
-  expect(screen.getByText(/last updated: july 28, 2026/i)).toBeInTheDocument();
+  expect(
+    screen.getByRole("heading", { name: /weekly & monthly winter stays/i })
+  ).toBeInTheDocument();
+  expect(
+    screen.getByRole("link", { name: /read guest reviews on tripadvisor/i })
+  ).toBeInTheDocument();
+  expect(screen.getByText(/^cookie policy$/i)).toBeInTheDocument();
+  expect(screen.getByText(/^privacy policy$/i)).toBeInTheDocument();
+  expect(screen.getByRole("heading", { name: /cookies on this site/i })).toBeInTheDocument();
   expect(
     screen.getByRole("region", {
       name: /interactive map of seascape inn in hampton, new hampshire/i,

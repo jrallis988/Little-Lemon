@@ -1,5 +1,7 @@
 import About from "./components/About";
+import Analytics from "./components/Analytics";
 import BookingForm from "./components/BookingForm";
+import CookieConsent from "./components/CookieConsent";
 import Faq from "./components/Faq";
 import Footer from "./components/Footer";
 import Hero from "./components/Hero";
@@ -9,6 +11,7 @@ import Nav from "./components/Nav";
 import Reviews from "./components/Reviews";
 import Rooms from "./components/Rooms";
 import Shore from "./components/Shore";
+import WinterStay from "./components/WinterStay";
 
 function App() {
   return (
@@ -22,6 +25,7 @@ function App() {
         <About />
         <Rooms />
         <LiveRates />
+        <WinterStay />
         <Shore />
         <Reviews />
         <Location />
@@ -29,6 +33,8 @@ function App() {
         <BookingForm />
       </main>
       <Footer />
+      <CookieConsent />
+      <Analytics />
     </div>
   );
 }

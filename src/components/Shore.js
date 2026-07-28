@@ -1,4 +1,5 @@
 import { AMENITIES, GALLERY, SITE, asset } from "../data";
+import Picture from "./Picture";
 
 export default function Shore() {
   return (
@@ -25,25 +26,23 @@ export default function Shore() {
         </div>
 
         <div className="shore__visual">
-          <img
+          <Picture
             src={asset("/images/nh-north-view.jpg")}
             alt="Hampton Beach shoreline looking south from the north end of the beach"
             width="1280"
             height="822"
             loading="lazy"
-            decoding="async"
           />
         </div>
       </div>
 
       <div className="section__inner shore__gallery" aria-label="Around Seascape Inn">
         {GALLERY.map((shot) => (
-          <img
+          <Picture
             key={shot.src}
             src={shot.src}
             alt={shot.alt}
             loading="lazy"
-            decoding="async"
             sizes="(min-width: 900px) 33vw, 90vw"
           />
         ))}

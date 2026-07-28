@@ -15,6 +15,17 @@ export default function Reviews() {
         —clean rooms, friendly help, and the beach across the street.
       </p>
 
+      <p className="reviews__proof">
+        <a
+          className="reviews__badge"
+          href={SITE.tripadvisorUrl}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Read guest reviews on TripAdvisor
+        </a>
+      </p>
+
       <ul className="reviews__list">
         {REVIEWS.map((review) => (
           <li key={review.id}>
