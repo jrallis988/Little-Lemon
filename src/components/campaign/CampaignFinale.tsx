@@ -1,15 +1,28 @@
+import { FormEvent, useState } from "react";
 import { Link } from "react-router-dom";
 
 export function CampaignFinale() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "invalid" | "demo">("idle");
+
+  const onSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    if (!email.trim() || !email.includes("@")) {
+      setStatus("invalid");
+      return;
+    }
+    // Concept/demo only — no backend handler is wired in this redesign.
+    setStatus("demo");
+  };
+
   return (
     <section id="finale" className="py-20 sm:py-28" aria-labelledby="finale-heading">
       <div className="section-shell">
         <div className="relative overflow-hidden rounded-[2rem]">
           <img
-            src="/images/campaign/celebrate.jpg"
-            alt=""
+            src="/images/campaign/kitchen-cook.jpg"
+            alt="A member cooking at home—an everyday personal milestone"
             className="absolute inset-0 h-full w-full object-cover"
-            aria-hidden="true"
           />
           <div className="absolute inset-0 bg-cobalt-800/80" />
           <div className="relative px-6 py-16 text-center text-white sm:px-12 sm:py-20">
@@ -42,10 +55,7 @@ export function CampaignFinale() {
         </div>
 
         <div id="join-next" className="mx-auto mt-10 max-w-xl text-center">
-          <form
-            className="flex flex-col gap-3 sm:flex-row"
-            onSubmit={(event) => event.preventDefault()}
-          >
+          <form className="flex flex-col gap-3 sm:flex-row" onSubmit={onSubmit} noValidate>
             <label className="sr-only" htmlFor="next-email">
               Email address
             </label>
@@ -53,7 +63,14 @@ export function CampaignFinale() {
               id="next-email"
               type="email"
               required
+              value={email}
+              onChange={(event) => {
+                setEmail(event.target.value);
+                if (status !== "idle") setStatus("idle");
+              }}
               placeholder="Email address"
+              aria-invalid={status === "invalid"}
+              aria-describedby="join-help"
               className="h-12 flex-1 rounded-2xl border border-ink/10 px-5 font-sans text-sm outline-none ring-cobalt-600 focus:ring-2"
             />
             <button
@@ -63,9 +80,20 @@ export function CampaignFinale() {
               Start Your Next Chapter
             </button>
           </form>
-          <p className="mt-3 font-sans text-xs text-ink/45">
-            Demo signup · Cancel anytime · Clinical care availability varies
+          <p id="join-help" className="mt-3 font-sans text-xs text-ink/45">
+            Concept demo only — this form does not submit or store your email. Clinical care
+            availability varies.
           </p>
+          {status === "invalid" && (
+            <p className="mt-2 font-sans text-sm text-red-700" role="alert">
+              Enter a valid email address to preview the demo interaction.
+            </p>
+          )}
+          {status === "demo" && (
+            <p className="mt-2 font-sans text-sm text-ink/70" role="status">
+              Demo interaction complete. No data was sent.
+            </p>
+          )}
         </div>
       </div>
     </section>

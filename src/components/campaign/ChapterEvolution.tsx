@@ -1,18 +1,29 @@
 import { useEffect, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { eras } from "../../data/campaign";
 import { useInView } from "../../hooks/motion";
+import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 
 export function ChapterEvolution() {
   const { ref, visible } = useInView<HTMLElement>(0.15);
+  const reduceMotion = usePrefersReducedMotion();
+  const [searchParams] = useSearchParams();
   const [active, setActive] = useState(0);
 
   useEffect(() => {
-    if (!visible) return;
+    const eraId = searchParams.get("era");
+    if (!eraId) return;
+    const index = eras.findIndex((item) => item.id === eraId);
+    if (index >= 0) setActive(index);
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (!visible || reduceMotion) return;
     const id = window.setInterval(() => {
       setActive((prev) => (prev + 1) % eras.length);
     }, 6000);
     return () => window.clearInterval(id);
-  }, [visible]);
+  }, [visible, reduceMotion, active]);
 
   const era = eras[active];
 
@@ -64,25 +75,16 @@ export function ChapterEvolution() {
         <div className="mt-8 grid gap-8 overflow-hidden rounded-[1.75rem] border border-ink/8 bg-white lg:grid-cols-[0.9fr_1.1fr]">
           <div className="relative min-h-[18rem] bg-ink">
             <img
-              src={
-                active < 2
-                  ? "/images/archive/living-room.jpg"
-                  : active < 4
-                    ? "/images/campaign/journal.jpg"
-                    : active < 6
-                      ? "/images/campaign/phone.jpg"
-                      : "/images/campaign/science.jpg"
-              }
-              alt=""
-              className={`h-full w-full object-cover transition duration-700 ${
-                active < 4 ? "grayscale" : ""
-              }`}
+              src={era.image}
+              alt={era.imageAlt}
+              className={`h-full w-full object-cover ${active < 4 && !reduceMotion ? "grayscale" : ""}`}
             />
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/80 to-transparent p-6 text-white">
               <p className="font-sans text-xs uppercase tracking-[0.18em] text-tide">{era.years}</p>
               <p className="mt-1 font-display text-2xl font-bold" style={{ fontWeight: 700 }}>
                 {era.title}
               </p>
+              <p className="mt-2 font-sans text-xs text-white/70">{era.visualTone}</p>
             </div>
           </div>
 
@@ -105,6 +107,12 @@ export function ChapterEvolution() {
                 Milestone
               </p>
               <p className="mt-2 font-serif text-lg text-ink/80">{era.milestone}</p>
+              <Link
+                to={`/find-your-year?year=${era.years.slice(0, 4)}&mode=journey`}
+                className="mt-4 inline-flex font-sans text-sm font-semibold text-cobalt-700"
+              >
+                Make this your year →
+              </Link>
             </div>
           </div>
         </div>

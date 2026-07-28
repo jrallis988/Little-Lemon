@@ -57,6 +57,11 @@ export type Era = {
   tech: string;
   science: string;
   milestone: string;
+  image: string;
+  imageAlt: string;
+  visualTone: string;
+  thenTools: string;
+  nowTools: string;
 };
 
 export const eras: Era[] = [
@@ -70,6 +75,11 @@ export const eras: Era[] = [
     tech: "Word of mouth, rented lofts, handwritten notes.",
     science: "Clinic-informed food talk translated into everyday language.",
     milestone: "1963 incorporation; 400 people line up for the first public meeting.",
+    image: "/images/archive/living-room.jpg",
+    imageAlt: "A warm living-room setting that evokes the first peer-support gatherings",
+    visualTone: "Warm editorial photography with print-inspired quietness",
+    thenTools: "Handwritten notes, living-room circles, word of mouth",
+    nowTools: "Hybrid workshops, app coaching, and connected community",
   },
   {
     id: "1970s",
@@ -81,6 +91,11 @@ export const eras: Era[] = [
     tech: "Cookbooks, packaged foods, and printed guides enter kitchens.",
     science: "Guidelines refine as medical consensus on nutrition evolves.",
     milestone: "1978 Heinz acquisition expands global reach while Jean remains the face.",
+    image: "/images/archive/cookbook.jpg",
+    imageAlt: "A kitchen cookbook and guides from Weight Watchers' household era",
+    visualTone: "Earthy lifestyle imagery and kitchen staples",
+    thenTools: "Cookbooks, packaged foods, printed meeting guides",
+    nowTools: "Digital recipes, Points tracking, and personalized meal ideas",
   },
   {
     id: "1980s",
@@ -92,6 +107,11 @@ export const eras: Era[] = [
     tech: "Paper journals and Points books become daily companions.",
     science: "Behavioral coaching joins nutrition as a core pillar.",
     milestone: "Program updates mirror evolving medical nutrition guidance.",
+    image: "/images/campaign/journal.jpg",
+    imageAlt: "A paper journal used for daily food and habit tracking",
+    visualTone: "Bright fitness-culture influence used subtly",
+    thenTools: "Paper journals and livable structure",
+    nowTools: "Behavioral coaching, activity tracking, and flexible plans",
   },
   {
     id: "1990s",
@@ -103,6 +123,11 @@ export const eras: Era[] = [
     tech: "Printed trackers, desktop tools, and meeting kits.",
     science: "Fiber, fat, and calories inform smarter scoring.",
     milestone: "1-2-3 Success and Winning Points reshape daily habits.",
+    image: "/images/campaign/journal.jpg",
+    imageAlt: "Printed Points-era tracking materials for busy households",
+    visualTone: "Cleaner consumer editorial styling",
+    thenTools: "Points books, printed trackers, meeting kits",
+    nowTools: "Mobile Points, AI food insights, and coaching in your pocket",
   },
   {
     id: "2000s",
@@ -114,6 +139,11 @@ export const eras: Era[] = [
     tech: "Desktop website, early mobile experiments, searchable recipes.",
     science: "Personalized plans begin to reflect individual preferences.",
     milestone: "Hybrid membership—rooms plus screens—becomes normal.",
+    image: "/images/campaign/family-cook.jpg",
+    imageAlt: "A bright kitchen with fresh ingredients for everyday healthy cooking",
+    visualTone: "Early digital cues beside real kitchens",
+    thenTools: "Desktop website, searchable recipes, early online communities",
+    nowTools: "App-first tracking with rooms and screens working together",
   },
   {
     id: "2010s",
@@ -125,6 +155,11 @@ export const eras: Era[] = [
     tech: "Mobile apps, wearables, virtual workshops.",
     science: "Activity, sleep, and habit loops join food tracking.",
     milestone: "WW rebrand signals a broader health mission.",
+    image: "/images/campaign/phone.jpg",
+    imageAlt: "A smartwatch in everyday use for activity and wellness insights",
+    visualTone: "Mobile-first visual language",
+    thenTools: "Mobile apps, wearables, virtual workshops",
+    nowTools: "Connected devices, personalization, and clinical companionship",
   },
   {
     id: "2020s",
@@ -136,6 +171,11 @@ export const eras: Era[] = [
     tech: "AI insights, body composition tools, connected devices.",
     science: "Evidence-based GLP-1 companionship plus decades of behavior change.",
     milestone: "Integrated platform for the next generation of weight health.",
+    image: "/images/campaign/science.jpg",
+    imageAlt: "A friendly clinician outdoors representing human-centered health support",
+    visualTone: "Clean, modern health and wellness experience",
+    thenTools: "Core program, coaching, and emerging clinical support",
+    nowTools: "Personalized wellness platform with GLP-1 companionship when appropriate",
   },
 ];
 
@@ -148,6 +188,10 @@ export type Story = {
   moment: string;
   image: string;
   tone: "warm" | "quiet" | "bright";
+  decade: string;
+  category: string;
+  lifeStage: string;
+  goal: string;
 };
 
 export const stories: Story[] = [
@@ -160,6 +204,10 @@ export const stories: Story[] = [
     moment: "Cooks with her kids after work, tracks Points between soccer practice.",
     image: "/images/campaign/portrait-a.jpg",
     tone: "warm",
+    decade: "2010s",
+    category: "Family life",
+    lifeStage: "Parenting",
+    goal: "Consistency",
   },
   {
     id: "james",
@@ -170,6 +218,10 @@ export const stories: Story[] = [
     moment: "Morning walks with neighbors; celebrates non-scale wins with his coach.",
     image: "/images/campaign/portrait-b.jpg",
     tone: "quiet",
+    decade: "2000s",
+    category: "Community",
+    lifeStage: "Midlife",
+    goal: "Accountability",
   },
   {
     id: "aisha",
@@ -180,6 +232,10 @@ export const stories: Story[] = [
     moment: "Grocery runs, dance classes, and a phone full of community chats.",
     image: "/images/campaign/portrait-c.jpg",
     tone: "bright",
+    decade: "2020s",
+    category: "Digital native",
+    lifeStage: "Early career",
+    goal: "Flexibility",
   },
   {
     id: "helen",
@@ -190,6 +246,10 @@ export const stories: Story[] = [
     moment: "Virtual workshops from her apartment; still writes notes by hand.",
     image: "/images/campaign/portrait-d.jpg",
     tone: "quiet",
+    decade: "1960s",
+    category: "Legacy member",
+    lifeStage: "Retirement",
+    goal: "Longevity",
   },
 ];
 
@@ -197,22 +257,32 @@ export const sciencePillars = [
   {
     title: "Nutrition that lives with you",
     copy: "From clinic talks to Points®—structure that learns as science does.",
+    image: "/images/campaign/hero-fresh.jpg",
+    imageAlt: "Fresh breakfast ingredients arranged for everyday balanced eating",
   },
   {
     title: "Behavioral coaching",
     copy: "Habits, accountability, and kindness as measurable tools.",
+    image: "/images/campaign/coaching.jpg",
+    imageAlt: "A coach guiding a member through a movement session",
   },
   {
     title: "Movement & recovery",
     copy: "Activity, sleep, and strength woven into everyday progress.",
+    image: "/images/campaign/yoga-class.jpg",
+    imageAlt: "Members practicing movement together in a bright studio",
   },
   {
     title: "Personalized programs",
     copy: "Modes and plans that flex with seasons of life.",
+    image: "/images/campaign/nutrition-plate.jpg",
+    imageAlt: "A thoughtfully plated balanced meal on a wooden table",
   },
   {
     title: "Modern medical support",
-    copy: "GLP-1 care when appropriate—paired with community, not isolation.",
+    copy: "GLP-1 care when appropriate—paired with community, not isolation. Educational framing only; clinical decisions belong with licensed clinicians.",
+    image: "/images/campaign/science.jpg",
+    imageAlt: "A friendly clinician representing human-centered health support",
   },
 ];
 
@@ -223,6 +293,8 @@ export const innovationBeats = [
     detail: "The same daily honesty—now in your pocket.",
     thenImage: "/images/campaign/journal.jpg",
     nowImage: "/images/campaign/phone.jpg",
+    thenAlt: "A paper journal for daily food tracking",
+    nowAlt: "A smartwatch used naturally for everyday wellness insights",
   },
   {
     then: "Printed Points books",
@@ -230,13 +302,106 @@ export const innovationBeats = [
     detail: "Guidance that once lived on a shelf now meets you at mealtime.",
     thenImage: "/images/archive/cookbook.jpg",
     nowImage: "/images/food.jpg",
+    thenAlt: "Printed cookbooks and guides on a kitchen shelf",
+    nowAlt: "Colorful balanced plates ready for a shared meal",
   },
   {
     then: "In-person meetings only",
     now: "Hybrid community",
     detail: "Living rooms became lofts became workshops became screens—still human.",
     thenImage: "/images/archive/living-room.jpg",
-    nowImage: "/images/campaign/meeting.jpg",
+    nowImage: "/images/campaign/coaching.jpg",
+    thenAlt: "A living-room setting recalling early peer meetings",
+    nowAlt: "One-on-one coaching support during an active wellness session",
+  },
+];
+
+export const innovationArc = [
+  { label: "Paper tracker", image: "/images/campaign/journal.jpg", era: "1960s–80s" },
+  { label: "Points booklet", image: "/images/archive/cookbook.jpg", era: "1990s" },
+  { label: "Desktop website", image: "/images/campaign/family-cook.jpg", era: "2000s" },
+  { label: "Mobile application", image: "/images/campaign/phone.jpg", era: "2010s" },
+  { label: "Connected devices", image: "/images/campaign/future.jpg", era: "2020s" },
+  { label: "Personalized platform", image: "/images/campaign/science.jpg", era: "Today" },
+];
+
+export const programPathways = [
+  {
+    id: "nutrition",
+    title: "Nutrition + Lifestyle",
+    summary: "Food tracking, Points, meal planning, recipes, and activity that fit real weeks.",
+    points: ["Food tracking & Points", "Meal planning", "Recipes for real kitchens", "Everyday activity"],
+    image: "/images/campaign/hero-market.jpg",
+    imageAlt: "A colorful produce market stall filled with fresh vegetables and fruit",
+  },
+  {
+    id: "coaching",
+    title: "Coaching + Community",
+    summary: "Coaches, groups, accountability, and member stories that make progress feel shared.",
+    points: ["Coach-led workshops", "Digital circles", "Accountability without shame", "Member stories"],
+    image: "/images/campaign/meeting.jpg",
+    imageAlt: "Two hikers walking together toward a mountain ridge",
+  },
+  {
+    id: "medical",
+    title: "Medical Support",
+    summary: "Modern weight-management options and clinician-supported services where appropriate—always educational, never a substitute for medical advice.",
+    points: ["Clinician-supported pathways", "GLP-1 companionship framing", "Muscle-preserving movement", "Community beside care"],
+    image: "/images/campaign/science.jpg",
+    imageAlt: "A warm, approachable clinician representing supportive health guidance",
+  },
+  {
+    id: "digital",
+    title: "Digital Tools",
+    summary: "App experiences, personalization, connected devices, and progress insights.",
+    points: ["Mobile app", "Personalization", "Connected devices", "Progress insights"],
+    image: "/images/campaign/phone.jpg",
+    imageAlt: "Everyday wearable technology supporting wellness habits",
+  },
+];
+
+export const researchTopics = [
+  {
+    title: "Nutrition",
+    copy: "How food frameworks evolve as evidence evolves—without turning dinner into a test.",
+    image: "/images/campaign/hero-fresh.jpg",
+    imageAlt: "Fresh ingredients prepared for balanced everyday meals",
+  },
+  {
+    title: "Behavior change",
+    copy: "Habits, cues, and accountability designed for imperfect human weeks.",
+    image: "/images/campaign/coaching.jpg",
+    imageAlt: "Coaching support during a focused wellness session",
+  },
+  {
+    title: "Movement",
+    copy: "Activity as a companion to nutrition—not a punishment for eating.",
+    image: "/images/campaign/yoga-class.jpg",
+    imageAlt: "A group movement class practicing together",
+  },
+  {
+    title: "Sleep & recovery",
+    copy: "Rest as part of progress, not an afterthought.",
+    image: "/images/campaign/walk-together.jpg",
+    imageAlt: "Everyday steps as a form of sustainable movement",
+  },
+  {
+    title: "Coaching",
+    copy: "Human guidance that translates science into Tuesday-night decisions.",
+    image: "/images/campaign/kitchen-cook.jpg",
+    imageAlt: "A member cooking at home with fresh ingredients",
+  },
+  {
+    title: "Personalized wellness",
+    copy: "Programs that flex with life stage, culture, and preference.",
+    image: "/images/campaign/nutrition-plate.jpg",
+    imageAlt: "A composed plate showing balanced food choices",
+  },
+  {
+    title: "Modern medical support",
+    copy: "Educational context for clinician-supported care, including GLP-1 conversations—kept separate from lifestyle guidance and never presented as medical advice.",
+    image: "/images/campaign/science.jpg",
+    imageAlt: "Human-centered clinical support without procedure imagery",
   },
 ];
 
@@ -313,14 +478,24 @@ export function snapshotForYear(year: number): YearSnapshot {
   return match ?? yearSnapshots[yearSnapshots.length - 1];
 }
 
-export const navChapters = [
-  { href: "/#hero", label: "Start" },
-  { href: "/#since-1963", label: "1963" },
-  { href: "/#evolution", label: "Evolution" },
-  { href: "/#years-of-you", label: "You" },
-  { href: "/#community-63", label: "Community" },
-  { href: "/#science", label: "Science" },
-  { href: "/#innovation", label: "Innovation" },
-  { href: "/#ahead", label: "Ahead" },
-  { href: "/find-your-year", label: "Find Your Year" },
+export function eraForYear(year: number) {
+  const snapshot = snapshotForYear(year);
+  return eras.find((era) => era.id === snapshot.eraId) ?? eras[eras.length - 1];
+}
+
+export const CAMPAIGN_PRESENT_YEAR = 2026;
+
+export function yearsAlongside(year: number, presentYear = CAMPAIGN_PRESENT_YEAR) {
+  return Math.max(0, presentYear - year);
+}
+
+export const storyDecadeFilters = [
+  "All",
+  "1960s",
+  "1970s",
+  "1980s",
+  "1990s",
+  "2000s",
+  "2010s",
+  "Today",
 ] as const;

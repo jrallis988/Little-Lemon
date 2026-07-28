@@ -4,15 +4,21 @@ type LogoProps = {
   className?: string;
   light?: boolean;
   variant?: "default" | "anniversary";
+  homePath?: string;
 };
 
-export function Logo({ className = "", light = false, variant = "default" }: LogoProps) {
+export function Logo({
+  className = "",
+  light = false,
+  variant = "default",
+  homePath = "/",
+}: LogoProps) {
   const ink = light ? "text-white" : "text-ink";
   const muted = light ? "text-white/70" : "text-ink/50";
 
   return (
     <Link
-      to="/"
+      to={homePath}
       className={`group inline-flex items-center gap-2.5 ${className}`}
       aria-label="Weight Watchers 63 home"
     >

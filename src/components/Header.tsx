@@ -1,27 +1,28 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import { campaignHash, isCampaignHome } from "../lib/routing";
 import { Logo } from "./Logo";
-
-const primaryLinks = [
-  { href: "/#since-1963", label: "Since 1963" },
-  { href: "/#evolution", label: "Evolution" },
-  { href: "/#years-of-you", label: "63 Years of You" },
-  { href: "/find-your-year", label: "Find Your Year" },
-];
-
-const moreLinks = [
-  { href: "/programs", label: "Programs" },
-  { href: "/stories", label: "Stories" },
-  { href: "/innovation", label: "Innovation" },
-  { href: "/research", label: "Research" },
-  { href: "/#connect", label: "Social" },
-];
 
 export function Header() {
   const location = useLocation();
-  const isHome = location.pathname === "/";
+  const home = isCampaignHome(location.pathname);
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+
+  const primaryLinks = [
+    { href: campaignHash("since-1963", location.pathname), label: "Since 1963" },
+    { href: campaignHash("evolution", location.pathname), label: "Evolution" },
+    { href: campaignHash("years-of-you", location.pathname), label: "63 Years of You" },
+    { href: "/find-your-year", label: "Find Your Year" },
+  ];
+
+  const moreLinks = [
+    { href: "/programs", label: "Programs" },
+    { href: "/stories", label: "Stories" },
+    { href: "/innovation", label: "Innovation" },
+    { href: "/research", label: "Research" },
+    { href: campaignHash("connect", location.pathname), label: "Social" },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -33,7 +34,7 @@ export function Header() {
   useEffect(() => {
     setOpen(false);
     if (!location.hash) window.scrollTo(0, 0);
-  }, [location.pathname]);
+  }, [location.pathname, location.hash]);
 
   useEffect(() => {
     if (location.hash) {
@@ -51,18 +52,16 @@ export function Header() {
     };
   }, [open]);
 
-  const overHero = isHome && !scrolled && !open;
+  const overHero = home && !scrolled && !open;
 
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled || open
-          ? "border-b border-ink/5 bg-paper/90 backdrop-blur-md"
-          : "bg-transparent"
+        scrolled || open ? "border-b border-ink/5 bg-paper/90 backdrop-blur-md" : "bg-transparent"
       }`}
     >
-      <div className="section-shell flex h-[4.25rem] items-center justify-between gap-4">
-        <Logo light={overHero} variant="anniversary" />
+      <div className="section-shell flex h-16 items-center justify-between gap-4">
+        <Logo light={overHero} variant="anniversary" homePath={home ? location.pathname : "/"} />
 
         <nav className="hidden items-center gap-5 lg:flex" aria-label="Primary">
           {primaryLinks.map((link) => (
@@ -80,7 +79,7 @@ export function Header() {
 
         <div className="hidden items-center gap-3 md:flex">
           <Link
-            to="/#finale"
+            to={campaignHash("finale", location.pathname)}
             className={`rounded-2xl px-5 py-2.5 font-sans text-sm font-semibold transition ${
               overHero
                 ? "bg-white text-ink hover:bg-cloud"
@@ -102,9 +101,15 @@ export function Header() {
           onClick={() => setOpen((v) => !v)}
         >
           <span className="flex w-4 flex-col gap-1.5">
-            <span className={`h-0.5 w-full ${overHero && !open ? "bg-white" : "bg-ink"} ${open ? "translate-y-2 rotate-45" : ""}`} />
-            <span className={`h-0.5 w-full ${overHero && !open ? "bg-white" : "bg-ink"} ${open ? "opacity-0" : ""}`} />
-            <span className={`h-0.5 w-full ${overHero && !open ? "bg-white" : "bg-ink"} ${open ? "-translate-y-2 -rotate-45" : ""}`} />
+            <span
+              className={`h-0.5 w-full ${overHero && !open ? "bg-white" : "bg-ink"} ${open ? "translate-y-2 rotate-45" : ""}`}
+            />
+            <span
+              className={`h-0.5 w-full ${overHero && !open ? "bg-white" : "bg-ink"} ${open ? "opacity-0" : ""}`}
+            />
+            <span
+              className={`h-0.5 w-full ${overHero && !open ? "bg-white" : "bg-ink"} ${open ? "-translate-y-2 -rotate-45" : ""}`}
+            />
           </span>
         </button>
       </div>
@@ -122,7 +127,7 @@ export function Header() {
             </Link>
           ))}
           <Link
-            to="/#finale"
+            to={campaignHash("finale", location.pathname)}
             className="mt-2 rounded-2xl bg-cobalt-600 px-5 py-3 text-center font-sans text-sm font-semibold text-white"
             onClick={() => setOpen(false)}
           >
@@ -131,9 +136,9 @@ export function Header() {
         </nav>
       </div>
 
-      {(scrolled || !isHome) && !open && (
+      {(scrolled || !home) && !open && (
         <div className="hidden border-t border-ink/5 bg-paper/80 lg:block">
-          <div className="section-shell flex h-10 items-center gap-5 overflow-x-auto">
+          <div className="section-shell flex h-9 items-center gap-5 overflow-x-auto">
             {moreLinks.map((link) => (
               <NavLink
                 key={link.href}

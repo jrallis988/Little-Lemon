@@ -44,7 +44,7 @@ export function ChapterInnovation() {
           <div className="overflow-hidden rounded-[1.5rem]">
             <img
               src={beat.thenImage}
-              alt={beat.then}
+              alt={beat.thenAlt}
               className="aspect-[4/3] w-full object-cover grayscale"
             />
             <p className="mt-3 font-sans text-xs font-semibold uppercase tracking-[0.16em] text-ink/45">
@@ -59,7 +59,7 @@ export function ChapterInnovation() {
           <div className="overflow-hidden rounded-[1.5rem]">
             <img
               src={beat.nowImage}
-              alt={beat.now}
+              alt={beat.nowAlt}
               className="aspect-[4/3] w-full object-cover"
             />
             <p className="mt-3 font-sans text-xs font-semibold uppercase tracking-[0.16em] text-cobalt-600">

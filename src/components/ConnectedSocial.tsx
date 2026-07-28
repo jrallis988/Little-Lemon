@@ -31,7 +31,8 @@ export function ConnectedSocial({ className = "" }: ConnectedSocialProps) {
     if (typeof window === "undefined") return "https://www.weightwatchers.com";
     return window.location.origin + window.location.pathname;
   }, []);
-  const shareText = "Progress that fits real life — exploring Weight Watchers.";
+  const shareText =
+    "63 years of people, progress and change. Explore Weight Watchers 63 — 63 Years of You.";
 
   return (
     <section

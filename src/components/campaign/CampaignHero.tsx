@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { AnniversaryBadge } from "../Logo";
 import { heroSlides } from "../../data/campaign";
 import { useCountUp, useInView } from "../../hooks/motion";
+import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 
 const SLIDE_MS = 5500;
 
@@ -11,16 +12,8 @@ export function CampaignHero() {
   const years = useCountUp(63, visible, 1600);
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
-  const [reduceMotion, setReduceMotion] = useState(false);
+  const reduceMotion = usePrefersReducedMotion();
   const touchX = useRef<number | null>(null);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => setReduceMotion(mq.matches);
-    sync();
-    mq.addEventListener("change", sync);
-    return () => mq.removeEventListener("change", sync);
-  }, []);
 
   useEffect(() => {
     if (paused || reduceMotion || !visible) return;
@@ -84,43 +77,40 @@ export function CampaignHero() {
         <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-ink/35" />
       </div>
 
-      <div className="section-shell relative flex min-h-[100svh] flex-col justify-end pb-16 pt-28 sm:pb-24 sm:pt-32">
+      <div className="section-shell relative flex min-h-[100svh] flex-col justify-end pb-14 pt-28 sm:pb-20 sm:pt-32">
         <AnniversaryBadge light className="animate-rise w-fit" />
-
-        <p
-          className="animate-rise mt-6 font-display text-6xl font-extrabold tracking-tight text-white sm:text-8xl md:text-9xl"
-          style={{ animationDelay: "80ms", fontWeight: 800 }}
-          aria-hidden="true"
-        >
-          {years}
-        </p>
 
         <h1
           id="campaign-hero-heading"
-          className="animate-rise mt-2 font-display text-4xl font-bold tracking-tight text-white sm:text-6xl"
-          style={{ animationDelay: "160ms", fontWeight: 700 }}
+          className="animate-rise mt-6 font-display text-4xl font-bold tracking-tight text-white sm:text-6xl"
+          style={{ animationDelay: "80ms", fontWeight: 700 }}
         >
+          <span
+            className="block font-display text-6xl font-extrabold tracking-tight sm:text-8xl md:text-9xl"
+            style={{ fontWeight: 800 }}
+          >
+            {years}
+          </span>
           Weight Watchers 63
         </h1>
 
         <p
           className="animate-rise mt-3 font-serif text-2xl text-tide sm:text-3xl"
-          style={{ animationDelay: "240ms" }}
+          style={{ animationDelay: "160ms" }}
         >
           63 Years of You
         </p>
 
         <p
-          className="animate-rise mt-5 max-w-xl font-sans text-base leading-relaxed text-white/80 sm:text-lg"
-          style={{ animationDelay: "320ms" }}
+          className="animate-rise mt-4 max-w-lg font-sans text-base leading-relaxed text-white/80 sm:text-lg"
+          style={{ animationDelay: "240ms" }}
         >
-          For 63 years, Weight Watchers has evolved alongside the people it serves—helping every
-          generation build healthier lives in their own way.
+          For 63 years, Weight Watchers has evolved alongside the people it serves.
         </p>
 
         <div
           className="animate-rise mt-8 flex flex-wrap items-end justify-between gap-6"
-          style={{ animationDelay: "420ms" }}
+          style={{ animationDelay: "320ms" }}
         >
           <div className="flex flex-wrap gap-3">
             <a
@@ -130,18 +120,14 @@ export function CampaignHero() {
               Explore 63 Years
             </a>
             <Link
-              to="/#finale"
+              to="/find-your-year"
               className="rounded-2xl border border-white/35 bg-white/5 px-6 py-3.5 font-sans text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/15"
             >
-              Start Your Journey
+              Find Your Year
             </Link>
           </div>
 
-          <div
-            className="flex items-center gap-3"
-            role="group"
-            aria-label="Hero photo slideshow"
-          >
+          <div className="flex items-center gap-3" role="group" aria-label="Hero photo slideshow">
             <button
               type="button"
               onClick={() => goTo(index - 1)}

@@ -5,10 +5,10 @@ export function ChapterAhead() {
         <img
           src="/images/campaign/future.jpg"
           alt=""
-          className="h-full w-full object-cover"
+          className="h-full w-full object-cover object-center"
           aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/70 to-cobalt-900/50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/75 to-cobalt-900/55" />
       </div>
       <div className="section-shell relative text-white">
         <p className="font-sans text-xs font-semibold uppercase tracking-[0.22em] text-tide">
@@ -22,8 +22,8 @@ export function ChapterAhead() {
           Optimism, not nostalgia.
         </h2>
         <p className="mt-4 max-w-2xl font-serif text-lg leading-relaxed text-white/75 sm:text-xl">
-          AI-assisted wellness, personalized nutrition, predictive insights, smarter coaching, and
-          connected devices—still in service of people choosing healthier lives.
+          Wearables, personalized nutrition, smarter coaching, and connected insights that look like
+          2030 wellness—not science fiction.
         </p>
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {[

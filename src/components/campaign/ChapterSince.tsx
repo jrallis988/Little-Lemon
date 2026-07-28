@@ -47,16 +47,19 @@ export function ChapterSince() {
                 title: "Community",
                 copy: "Friends naming cravings without shame—accountability as belonging.",
                 image: "/images/campaign/meeting.jpg",
+                alt: "Hikers supporting each other on a shared trail",
               },
               {
                 title: "Support",
                 copy: "A weekly ritual of showing up, even when the week was messy.",
                 image: "/images/campaign/family-cook.jpg",
+                alt: "A bright kitchen prepared for shared healthy cooking",
               },
               {
                 title: "Hope",
                 copy: "400 people lined up above a Queens theater—because someone finally listened.",
-                image: "/images/campaign/hero-salad.jpg",
+                image: "/images/campaign/hero-fresh.jpg",
+                alt: "Fresh ingredients ready for an everyday balanced meal",
               },
             ].map((item, index) => (
               <article
@@ -66,7 +69,7 @@ export function ChapterSince() {
                 }`}
                 style={{ transitionDelay: `${200 + index * 120}ms` }}
               >
-                <img src={item.image} alt="" className="h-full w-full object-cover" loading="lazy" />
+                <img src={item.image} alt={item.alt} className="h-full w-full object-cover" loading="lazy" />
                 <div className="p-4 sm:p-5">
                   <h3 className="font-display text-xl font-bold" style={{ fontWeight: 700 }}>
                     {item.title}

@@ -42,7 +42,7 @@ export function ChapterYearsOfYou() {
               <img
                 src={story.image}
                 alt={`Portrait representing ${story.name}`}
-                className="aspect-[4/3] w-full object-cover"
+                className="aspect-[4/5] w-full object-cover object-top"
                 loading="lazy"
               />
               <div className="p-6 sm:p-7">
