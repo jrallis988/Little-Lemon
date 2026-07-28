@@ -61,6 +61,16 @@ Typography: Nunito Sans (Museo Sans spirit). Spacing: 8pt scale (`s1`–`s10`).
 | Homepage specialties/programs | `/conditions/…`, `/programs/…` | Deep links |
 | ED wait | header + ED page | `aria-live` status updates |
 
+### Accessibility
+
+- Skip links to `#main` and `#site-nav`
+- Keyboard mega menus (Enter/Space, ArrowDown, Escape + focus restore); hover still works
+- Patient Portal disclosure with `aria-expanded` / dialog semantics
+- Mobile nav focus trap, Escape, body scroll lock
+- Search overlay focus trap + live result status
+- Directory filter count uses `role="status"` / `aria-live`
+- Page heroes use `<section aria-labelledby>`
+
 ## Scripts
 
 ```bash
