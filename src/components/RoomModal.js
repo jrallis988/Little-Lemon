@@ -43,8 +43,14 @@ export default function RoomModal({ room, onClose }) {
         </button>
 
         <div className="modal__gallery">
-          {room.gallery.map((shot) => (
-            <img key={shot.src} src={shot.src} alt={shot.alt} />
+          {room.gallery.map((shot, index) => (
+            <img
+              key={shot.src}
+              src={shot.src}
+              alt={shot.alt}
+              loading={index === 0 ? "eager" : "lazy"}
+              decoding="async"
+            />
           ))}
         </div>
 

@@ -28,14 +28,24 @@ export default function Shore() {
           <img
             src={asset("/images/nh-north-view.jpg")}
             alt="Hampton Beach shoreline looking south from the north end of the beach"
+            width="1280"
+            height="822"
             loading="lazy"
+            decoding="async"
           />
         </div>
       </div>
 
       <div className="section__inner shore__gallery" aria-label="Around Seascape Inn">
         {GALLERY.map((shot) => (
-          <img key={shot.src} src={shot.src} alt={shot.alt} loading="lazy" />
+          <img
+            key={shot.src}
+            src={shot.src}
+            alt={shot.alt}
+            loading="lazy"
+            decoding="async"
+            sizes="(min-width: 900px) 33vw, 90vw"
+          />
         ))}
       </div>
     </section>

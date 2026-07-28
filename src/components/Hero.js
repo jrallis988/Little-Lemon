@@ -4,7 +4,14 @@ export default function Hero() {
   return (
     <section className="hero" id="top" aria-label={`${SITE.name} welcome`}>
       <div className="hero__media" aria-hidden="true">
-        <img src={asset("/images/seascape-photo2.jpg")} alt="" />
+        <img
+          src={asset("/images/seascape-photo2.jpg")}
+          alt=""
+          width="1600"
+          height="900"
+          fetchPriority="high"
+          decoding="async"
+        />
         <div className="hero__shade" />
       </div>
 
