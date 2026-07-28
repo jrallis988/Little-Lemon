@@ -1,4 +1,4 @@
-import { POLICIES, SITE } from "../data";
+import { COOKIE_POLICY, POLICIES, SITE } from "../data";
 
 export default function Footer() {
   return (
@@ -40,6 +40,7 @@ export default function Footer() {
             <a href="#faq">FAQ</a>
             <a href="#booking">Book</a>
             <a href="#policies">Policies</a>
+            <a href="#cookies">Cookie policy</a>
           </nav>
         </div>
 
@@ -52,10 +53,40 @@ export default function Footer() {
           ))}
         </div>
 
+        <section
+          className="footer__cookies"
+          id="cookies"
+          aria-labelledby="cookies-title"
+        >
+          <div className="footer__cookies-head">
+            <h3 id="cookies-title">{COOKIE_POLICY.title}</h3>
+            <p className="footer__cookies-updated">
+              Last updated: {COOKIE_POLICY.updated}
+            </p>
+          </div>
+          <p className="footer__cookies-intro">{COOKIE_POLICY.intro}</p>
+          <div className="footer__cookies-sections">
+            {COOKIE_POLICY.sections.map((section) => (
+              <article key={section.title}>
+                <h4>{section.title}</h4>
+                <p>{section.body}</p>
+                {section.bullets ? (
+                  <ul>
+                    {section.bullets.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                ) : null}
+              </article>
+            ))}
+          </div>
+        </section>
+
         <div className="footer__bottom">
           <p className="footer__copy">
             © {new Date().getFullYear()} {SITE.name}. Family inn since around{" "}
-            {SITE.founded}. All rights reserved.
+            {SITE.founded}. All rights reserved.{" "}
+            <a href="#cookies">Cookie policy</a>
           </p>
           <p className="footer__credit">Powered by Artistic Fountain</p>
         </div>
