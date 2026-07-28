@@ -22,7 +22,7 @@ export function DisclaimerBanner() {
             href="/privacy"
             className="font-medium underline underline-offset-2 hover:text-amber-800"
           >
-            Privacy &amp; how we handle health searches
+            Privacy Policy
           </Link>
         </p>
       </div>
