@@ -1,0 +1,392 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                     String    @id @default(cuid())
+  name                   String?
+  email                  String    @unique
+  emailVerified          DateTime?
+  image                  String?
+  passwordHash           String?
+  phone                  String?
+  allowPersonalizedTips  Boolean   @default(false)
+  membershipTier         String    @default("free") // free | plus
+  stripeCustomerId       String?
+  stripeSubscriptionId   String?
+  membershipStatus       String? // active | canceled | past_due
+  membershipExpiresAt    DateTime?
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
+
+  accounts               Account[]
+  sessions               Session[]
+  savedMedications       SavedMedication[]
+  preferredPharmacies    PreferredPharmacy[]
+  coupons                Coupon[]
+  digitalPasses          DigitalPass[]
+  priceAlerts            PriceAlert[]
+  familyMembers          FamilyMember[]
+  switchEvents           SwitchEvent[]
+  checkoutCart           CheckoutCart?
+  conversations          Conversation[]
+  supportMessages        Message[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Drug {
+  id                 String   @id
+  brandName          String
+  genericName        String
+  therapeuticClass   String
+  rxnormId           String?
+  isControlled       Boolean  @default(false)
+  retailCashPrice30  Float
+  retailCashPrice90  Float
+  searchAliasesJson  String   @default("[]")
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  strengths          DrugStrength[]
+  quantities         DrugQuantity[]
+  contracts          PharmacyContract[]
+  savedMedications   SavedMedication[]
+  coupons            Coupon[]
+  priceAlerts        PriceAlert[]
+}
+
+model DrugStrength {
+  id       String @id @default(cuid())
+  drugId   String
+  label    String
+  amountMg Float
+  form     String
+  ndc      String?
+
+  drug Drug @relation(fields: [drugId], references: [id], onDelete: Cascade)
+
+  @@index([drugId])
+}
+
+model DrugQuantity {
+  id       String @id @default(cuid())
+  drugId   String
+  quantity Int
+
+  drug Drug @relation(fields: [drugId], references: [id], onDelete: Cascade)
+
+  @@unique([drugId, quantity])
+}
+
+model Pharmacy {
+  id                    String   @id
+  name                  String
+  chain                 String
+  npi                   String?
+  ncpdpId               String?
+  address               String
+  city                  String
+  state                 String
+  zip                   String
+  phone                 String
+  latitude              Float
+  longitude             Float
+  hoursWeekday          String
+  hoursSaturday         String
+  hoursSunday           String
+  pharmacyDeskNote      String?
+  acceptsTrumpRxCoupon  Boolean  @default(true)
+  driveThru             Boolean  @default(false)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  contracts             PharmacyContract[]
+  preferredBy           PreferredPharmacy[]
+  coupons               Coupon[]
+  switchEvents          SwitchEvent[]
+}
+
+model PharmacyContract {
+  id              String   @id @default(cuid())
+  pharmacyId      String
+  drugId          String
+  /// Multiplier applied to retail cash for cash-discount network price.
+  discountFactor  Float
+  /// Absolute floors for 30-day and 90-day coupon prices.
+  floorPrice30    Float    @default(3.99)
+  floorPrice90    Float    @default(9.99)
+  inNetwork       Boolean  @default(true)
+  updatedAt       DateTime @updatedAt
+
+  pharmacy Pharmacy @relation(fields: [pharmacyId], references: [id], onDelete: Cascade)
+  drug     Drug     @relation(fields: [drugId], references: [id], onDelete: Cascade)
+
+  @@unique([pharmacyId, drugId])
+  @@index([drugId])
+}
+
+model Coupon {
+  id           String   @id @default(cuid())
+  userId       String?
+  pharmacyId   String
+  drugId       String
+  strengthId   String
+  quantity     Int
+  supplyDays   Int
+  couponPrice  Float
+  retailPrice  Float
+  bin          String
+  pcn          String
+  groupCode    String
+  memberId     String
+  barcodeValue String
+  status       String   @default("issued") // issued | redeemed | expired | void
+  issuedAt     DateTime @default(now())
+  expiresAt    DateTime
+  redeemedAt   DateTime?
+
+  user     User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  pharmacy Pharmacy @relation(fields: [pharmacyId], references: [id])
+  drug     Drug     @relation(fields: [drugId], references: [id])
+  passItems DigitalPassItem[]
+
+  @@index([memberId])
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+// Account-saved multi-coupon digital checkout pass.
+model DigitalPass {
+  id                 String   @id @default(cuid())
+  userId             String?
+  passCode           String   @unique
+  totalCounterPrice  Float
+  status             String   @default("active") // active | expired | void
+  note               String?
+  issuedAt           DateTime @default(now())
+  expiresAt          DateTime?
+
+  user  User?             @relation(fields: [userId], references: [id], onDelete: SetNull)
+  items DigitalPassItem[]
+
+  @@index([userId])
+  @@index([issuedAt])
+}
+
+model DigitalPassItem {
+  id           String  @id @default(cuid())
+  passId       String
+  couponId     String
+  cartItemId   String?
+  pharmacyName String?
+  counterPrice Float
+  retailPrice  Float
+  switchStatus String?
+
+  pass   DigitalPass @relation(fields: [passId], references: [id], onDelete: Cascade)
+  coupon Coupon      @relation(fields: [couponId], references: [id], onDelete: Cascade)
+
+  @@index([passId])
+}
+
+// Observability — Smart Switch precheck / reject audit trail.
+model SwitchEvent {
+  id          String   @id @default(cuid())
+  userId      String?
+  pharmacyId  String?
+  drugId      String?
+  status      String
+  confidence  Float?
+  liveSwitch  Boolean  @default(false)
+  detailJson  String   @default("{}")
+  createdAt   DateTime @default(now())
+
+  user     User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  pharmacy Pharmacy? @relation(fields: [pharmacyId], references: [id], onDelete: SetNull)
+
+  @@index([createdAt])
+  @@index([status])
+  @@index([pharmacyId])
+}
+
+model SavedMedication {
+  id                   String   @id @default(cuid())
+  userId               String
+  drugId               String
+  strengthId           String
+  quantity             Int
+  supplyDays           Int
+  preferredPharmacyId  String?
+  savedAt              DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  drug Drug @relation(fields: [drugId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, drugId, strengthId, quantity, supplyDays])
+}
+
+model PreferredPharmacy {
+  id         String   @id @default(cuid())
+  userId     String
+  pharmacyId String
+  createdAt  DateTime @default(now())
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  pharmacy Pharmacy @relation(fields: [pharmacyId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, pharmacyId])
+}
+
+model PriceAlert {
+  id            String    @id @default(cuid())
+  userId        String
+  drugId        String
+  strengthId    String
+  quantity      Int
+  supplyDays    Int
+  baselinePrice Float
+  targetPrice   Float?
+  active        Boolean   @default(true)
+  lastCheckedAt DateTime?
+  lastNotifiedAt DateTime?
+  createdAt     DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  drug Drug @relation(fields: [drugId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, drugId, strengthId, quantity, supplyDays])
+}
+
+model FamilyMember {
+  id        String   @id @default(cuid())
+  userId    String
+  name      String
+  relation  String?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ZipLocation {
+  zip       String @id
+  city      String
+  state     String
+  latitude  Float
+  longitude Float
+  label     String
+}
+
+// Server-backed checkout cart (anonymous session cookie or signed-in user).
+model CheckoutCart {
+  id         String   @id @default(cuid())
+  userId     String?  @unique
+  sessionKey String?  @unique
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  user  User?             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items CheckoutCartItem[]
+
+  @@index([updatedAt])
+}
+
+model CheckoutCartItem {
+  id              String   @id @default(cuid())
+  cartId          String
+  drugId          String
+  genericName     String
+  brandName       String
+  strengthId      String
+  strengthLabel   String
+  quantity        Int
+  supplyDays      Int
+  pharmacyId      String
+  pharmacyName    String
+  pharmacyAddress String
+  couponPrice     Float
+  retailPrice     Float
+  couponJson      String   @default("{}")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  cart CheckoutCart @relation(fields: [cartId], references: [id], onDelete: Cascade)
+
+  @@unique([cartId, pharmacyId, drugId, strengthId, quantity, supplyDays])
+  @@index([cartId])
+}
+
+// In-app support messaging (visitor ↔ Trump RX support).
+model Conversation {
+  id            String   @id @default(cuid())
+  userId        String?
+  sessionKey    String?
+  visitorName   String?
+  visitorEmail  String?
+  topic         String   @default("general") // general | pricing | coupon | membership | pharmacy
+  status        String   @default("open") // open | waiting | closed
+  pagePath      String?
+  lastMessageAt DateTime @default(now())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user     User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  messages Message[]
+
+  @@index([sessionKey])
+  @@index([userId])
+  @@index([status, lastMessageAt])
+}
+
+model Message {
+  id             String   @id @default(cuid())
+  conversationId String
+  sender         String // visitor | support | system
+  body           String
+  authorUserId   String?
+  createdAt      DateTime @default(now())
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  author       User?        @relation(fields: [authorUserId], references: [id], onDelete: SetNull)
+
+  @@index([conversationId, createdAt])
+}
