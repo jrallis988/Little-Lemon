@@ -7,6 +7,7 @@ const homeLinks = [
   { href: "/#modes", label: "Modes" },
   { href: "/#tools", label: "Tools" },
   { href: "/#community", label: "Community" },
+  { href: "/#connect", label: "Social" },
 ];
 
 const campaignLinks = [

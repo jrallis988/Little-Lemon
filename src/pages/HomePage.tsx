@@ -1,5 +1,6 @@
 import { CampaignTeaser } from "../components/CampaignTeaser";
 import { Community } from "../components/Community";
+import { ConnectedSocial } from "../components/ConnectedSocial";
 import { Hero } from "../components/Hero";
 import { Join } from "../components/Join";
 import { Modes } from "../components/Modes";
@@ -15,6 +16,7 @@ export function HomePage() {
       <Modes />
       <Tools />
       <Community />
+      <ConnectedSocial />
       <Join />
     </main>
   );

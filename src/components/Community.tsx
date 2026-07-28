@@ -53,8 +53,24 @@ export function Community() {
           </figcaption>
         </figure>
 
-        <div className="mx-auto mt-12 max-w-4xl rounded-[1.75rem] border border-ink/8 bg-white/70 p-6 sm:p-8">
-          <SocialLinks variant="panel" />
+        <div className="mx-auto mt-10 flex max-w-4xl flex-col items-start justify-between gap-4 rounded-[1.5rem] border border-ink/8 bg-white/70 px-6 py-5 sm:flex-row sm:items-center sm:px-8">
+          <div>
+            <p className="font-sans text-xs font-semibold uppercase tracking-[0.18em] text-cobalt-600">
+              Stay in the loop
+            </p>
+            <p className="mt-1 font-serif text-lg text-ink/70">
+              Official WeightWatchers social is wired into this site—jump in below.
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center gap-3">
+            <SocialLinks />
+            <a
+              href="#connect"
+              className="font-sans text-sm font-semibold text-cobalt-700 transition hover:text-cobalt-800"
+            >
+              See all connections →
+            </a>
+          </div>
         </div>
       </div>
     </section>

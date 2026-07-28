@@ -18,6 +18,7 @@ const siteColumns = [
     links: [
       { label: "Find a Coach", to: "/#community" },
       { label: "Member stories", to: "/#community" },
+      { label: "Social channels", to: "/#connect" },
       { label: "Archive vault", to: "/63#archive" },
       { label: "Philosophy", to: "/63#philosophy" },
     ],
