@@ -184,11 +184,10 @@ export default function Header() {
             {results.length > 0 ? (
               <ul
                 className="mt-3 divide-y divide-river/10 border border-river/10 bg-white"
-                role="listbox"
                 aria-label="Program search results"
               >
                 {results.map((program) => (
-                  <li key={program.slug} role="option">
+                  <li key={program.slug}>
                     <Link
                       to={`/programs/${program.slug}`}
                       className="block px-4 py-3 transition hover:bg-river-mist"

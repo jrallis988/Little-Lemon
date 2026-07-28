@@ -54,7 +54,9 @@ test("renders tuition estimate tools", () => {
   );
 
   expect(screen.getByText(/rough annual tuition calculator/i)).toBeInTheDocument();
-  expect(screen.getByText(/school code 007560/i)).toBeInTheDocument();
+  expect(
+    screen.getByRole("heading", { name: /school code 007560/i })
+  ).toBeInTheDocument();
   expect(screen.getAllByText(/new hampshire resident/i).length).toBeGreaterThan(0);
 });
 
@@ -68,7 +70,7 @@ test("renders expanded catalog pathways", () => {
   expect(
     screen.getByRole("heading", { name: /medical laboratory technician/i })
   ).toBeInTheDocument();
-  expect(screen.getByText(/selective admission/i)).toBeInTheDocument();
+  expect(screen.getByText(/selective admission:/i)).toBeInTheDocument();
 });
 
 test("renders CCSNH portal links on student life", () => {
@@ -78,8 +80,8 @@ test("renders CCSNH portal links on student life", () => {
     </MemoryRouter>
   );
 
-  expect(screen.getByRole("link", { name: /my rvcc/i })).toBeInTheDocument();
+  expect(screen.getAllByRole("link", { name: /my rvcc/i }).length).toBeGreaterThan(0);
   expect(
-    screen.getByRole("link", { name: /ccsnh online resources/i })
-  ).toBeInTheDocument();
+    screen.getAllByRole("link", { name: /ccsnh online resources/i }).length
+  ).toBeGreaterThan(0);
 });
