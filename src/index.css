@@ -10,6 +10,7 @@
   --cloud: #f4f7fc;
   --tide: #1bb8a8;
   --paper: #fafbfd;
+  --periwinkle: #c5c8eb;
   color: var(--ink);
   background: var(--paper);
   font-family: Figtree, system-ui, sans-serif;

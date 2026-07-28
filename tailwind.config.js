@@ -22,6 +22,7 @@ export default {
         cloud: "#f4f7fc",
         paper: "#fafbfd",
         tide: "#1bb8a8",
+        periwinkle: "#c5c8eb",
       },
       fontFamily: {
         display: ["Syne", "system-ui", "sans-serif"],
