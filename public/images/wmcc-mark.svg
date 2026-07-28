@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 72" role="img" aria-label="White Mountains Community College">
+  <g fill="#004833">
+    <path d="M18 48 L34 18 L50 48 Z"/>
+    <path d="M40 48 L58 12 L76 48 Z"/>
+    <path d="M66 48 L82 24 L98 48 Z"/>
+  </g>
+  <g fill="none" stroke="#c5d04f" stroke-width="2">
+    <path d="M18 48 L34 18 L50 48 L58 12 L76 48 L82 24 L98 48"/>
+  </g>
+  <text x="112" y="34" font-family="Georgia, serif" font-size="20" font-weight="700" fill="#004833">White Mountains</text>
+  <text x="112" y="54" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" letter-spacing="0.04em" fill="#2f7a68">COMMUNITY COLLEGE</text>
+</svg>
