@@ -18,17 +18,59 @@ export const STORAGE_KEYS = {
 
 export const DEFAULT_WHITELIST = [
   "kids.nationalgeographic.com",
+  "nationalgeographic.com",
+  "education.nationalgeographic.org",
   "www.si.edu",
   "si.edu",
   "pbskids.org",
   "www.pbskids.org",
+  "pbs.org",
   "spaceplace.nasa.gov",
+  "science.nasa.gov",
+  "nasa.gov",
   "www.loc.gov",
   "kids.britannica.com",
+  "britannica.com",
   "www.amnh.org",
-  "education.nationalgeographic.org",
+  "amnh.org",
+  "usgs.gov",
+  "pubs.usgs.gov",
+  "earthquake.usgs.gov",
+  "noaa.gov",
+  "oceanservice.noaa.gov",
+  "ck12.org",
+  "www.ck12.org",
+  "khanacademy.org",
+  "openstax.org",
   "www.bbc.co.uk",
   "www.dkfindout.com",
+] as const;
+
+/** EBSCO-style academic content tier ids used by search filters */
+export const ACADEMIC_TIERS = [
+  {
+    id: "peer_reviewed_journal",
+    label: "Peer-Reviewed Journal",
+  },
+  {
+    id: "authoritative_research",
+    label: "Authoritative Research",
+  },
+  {
+    id: "educational_magazine",
+    label: "Educational Magazine",
+  },
+  {
+    id: "verified_reference",
+    label: "Verified Reference",
+  },
+] as const;
+
+export const GRADE_BANDS = [
+  { id: "grades_1_2", label: "Grades 1–2" },
+  { id: "grades_3_5", label: "Grades 3–5" },
+  { id: "grades_6_8", label: "Grades 6–8" },
+  { id: "high_school", label: "High School" },
 ] as const;
 
 /** Default daily quota in minutes */

@@ -1,16 +1,18 @@
 import { NavLink, Outlet, useLocation } from "react-router-dom";
-import { Compass, Home, Shield, UserRound } from "lucide-react";
+import { Compass, Home, Shield, Sparkles, UserRound } from "lucide-react";
 import { SurfLogo } from "@/components/brand/SurfLogo";
 import { LearningModeOverlay } from "@/components/learning/LearningModeOverlay";
+import { AskMiloPanel } from "@/components/learning/AskMiloPanel";
 import { Button } from "@/components/ui/button";
 import { useAccessibility } from "@/hooks/useAccessibility";
 import { useSessionTimer } from "@/hooks/useSessionTimer";
 import { useUrlInterceptor } from "@/hooks/useUrlInterceptor";
-import { formatClock } from "@/lib/utils";
+import { formatClock, cn } from "@/lib/utils";
 import { ROUTES } from "@/routes/paths";
 import { useSessionStore } from "@/stores/sessionStore";
 import { useParentStore } from "@/stores/profileStore";
-import { cn } from "@/lib/utils";
+import { useNavigationStore } from "@/stores/navigationStore";
+import { MILO_NAME } from "@/brand/identity";
 
 const NAV = [
   { to: ROUTES.home, label: "Home", icon: Home },
@@ -28,6 +30,9 @@ export function AppShell() {
   const elapsedSeconds = useSessionStore((s) => s.elapsedSeconds);
   const remainingSeconds = Math.max(0, dailyLimitMinutes * 60 - elapsedSeconds);
   const limitReached = useSessionStore((s) => s.limitReached);
+  const miloOpen = useNavigationStore((s) => s.miloOpen);
+  const setMiloOpen = useNavigationStore((s) => s.setMiloOpen);
+  const toggleMilo = useNavigationStore((s) => s.toggleMilo);
   const isImmersive =
     location.pathname === ROUTES.break ||
     location.pathname === ROUTES.blocked;
@@ -59,6 +64,15 @@ export function AppShell() {
               <div className="rounded-2xl bg-white/70 px-3 py-2 text-xs font-medium text-slate-deep shadow-soft">
                 Time left · {formatClock(remainingSeconds)}
               </div>
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={toggleMilo}
+                aria-label={MILO_NAME}
+              >
+                <Sparkles className="mr-1.5 h-3.5 w-3.5" />
+                {MILO_NAME}
+              </Button>
               <Button variant="ghost" size="sm" onClick={goBack}>
                 Back
               </Button>
@@ -101,6 +115,7 @@ export function AppShell() {
       )}
 
       <LearningModeOverlay />
+      <AskMiloPanel open={miloOpen} onClose={() => setMiloOpen(false)} />
     </div>
   );
 }

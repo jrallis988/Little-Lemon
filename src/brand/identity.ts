@@ -31,3 +31,9 @@ export const APP_POSITIONING = [
   "Trusted educational sources only",
   "Built for kids, credible for schools, clear for parents",
 ] as const;
+
+/** In-product AI learning aide — never labeled as a homework machine */
+export const MILO_NAME = "Ask Milo";
+export const MILO_SHORT_NAME = "Milo";
+export const MILO_TAGLINE =
+  "Your learning aide — explains ideas, builds vocabulary, and points to trusted sources.";

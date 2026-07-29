@@ -32,6 +32,8 @@ Surf is not a content feed, launcher, or game hub. Kids search, open curated edu
 
 ## Supporting systems
 
+- Academic search index + EBSCO-style tier filtering (`src-tauri/src/academic` + `src/services/academicSearch.ts`)
+- Ask Milo learning aide (`src/components/learning/AskMiloPanel.tsx`) — explains topics, vocabulary, and citations
 - URL interceptor / whitelist middleware (`src/services/urlFilter.ts` + Rust `check_url`)
 - Background session timer worker (`src/services/sessionTimer.ts`)
 - Cryptographic parent gate (PBKDF2 PIN hashing)
@@ -61,14 +63,16 @@ npm run tauri:dev
 
 ```
 src/
-  brand/          Logo palette + biography
-  components/     UI + shell + Learning Mode overlay
-  data/           Curated explore categories + search stub
+  brand/          Logo palette + biography + Ask Milo identity
+  components/     UI + shell + Learning Mode + Ask Milo panel
+  data/           Explore categories
   hooks/          Session timer, URL interceptor, a11y
   routes/         React Router wiring for all 10 screens
   screens/        One module per core screen
-  services/       Filter, timer, PIN, sanitizer, Tauri bridge
+  services/       Academic search, filter, timer, PIN, sanitizer, Tauri bridge
   stores/         Zustand: profile, parent, session, nav, safety
-  types/          Shared domain types
-src-tauri/        Tauri v2 config, capabilities, Rust commands
+  types/          Shared domain types (including academic search schema)
+src-tauri/
+  src/academic/   EBSCO-style index, allowlist, grade/tier filters, search API
+  src/commands/   Tauri IPC (academic_search, check_url, PIN, store, window)
 ```

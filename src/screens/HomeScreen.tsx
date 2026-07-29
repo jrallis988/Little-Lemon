@@ -1,23 +1,26 @@
 import { FormEvent, useState } from "react";
-import { Search } from "lucide-react";
+import { Search, Sparkles } from "lucide-react";
 import { SurfWordmark } from "@/components/brand/SurfLogo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useUrlInterceptor } from "@/hooks/useUrlInterceptor";
+import { useNavigationStore } from "@/stores/navigationStore";
 import {
   APP_BIOGRAPHY_SHORT,
   APP_NAME_DISPLAY,
   APP_TAGLINE,
+  MILO_NAME,
 } from "@/brand/identity";
 
 /** Screen 1 — Home: search-only view with logo brand hero */
 export function HomeScreen() {
   const { search } = useUrlInterceptor();
+  const setMiloOpen = useNavigationStore((s) => s.setMiloOpen);
   const [value, setValue] = useState("");
 
   const onSubmit = (event: FormEvent) => {
     event.preventDefault();
-    search(value);
+    void search(value);
   };
 
   return (
@@ -58,9 +61,21 @@ export function HomeScreen() {
           </Button>
         </form>
 
-        <p className="mt-6 text-sm text-foam/75">
-          Try: planets, coral reefs, or inventors
-        </p>
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+          <p className="text-sm text-foam/75">
+            Try: Plate Tectonics, coral reefs, or solar system
+          </p>
+          <Button
+            type="button"
+            variant="secondary"
+            size="sm"
+            className="bg-white/90 text-navy hover:bg-white"
+            onClick={() => setMiloOpen(true)}
+          >
+            <Sparkles className="mr-1.5 h-3.5 w-3.5" />
+            {MILO_NAME}
+          </Button>
+        </div>
       </div>
     </section>
   );

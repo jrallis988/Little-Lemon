@@ -2,12 +2,16 @@ import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { sanitizeArticleContent } from "@/services/contentSanitizer";
 import { intentToPath } from "@/services/historyBridge";
-import { runCuratedSearch } from "@/data/curatedContent";
+import {
+  academicHitsToSearchResults,
+  runAcademicSearch,
+} from "@/services/academicSearch";
 import { useNavigationStore } from "@/stores/navigationStore";
 import { useParentStore } from "@/stores/profileStore";
 import { useSafetyStore } from "@/stores/safetyStore";
 import { useProfileStore } from "@/stores/profileStore";
 import { ROUTES } from "@/routes/paths";
+import type { AcademicSearchOptions } from "@/types";
 
 /**
  * Navigation helper that runs the URL filter interceptor before loading content.
@@ -16,6 +20,7 @@ export function useUrlInterceptor() {
   const navigate = useNavigate();
   const intercept = useSafetyStore((s) => s.intercept);
   const setResults = useNavigationStore((s) => s.setResults);
+  const setAcademicResponse = useNavigationStore((s) => s.setAcademicResponse);
   const setQuery = useNavigationStore((s) => s.setQuery);
   const setActiveArticle = useNavigationStore((s) => s.setActiveArticle);
   const setBlocked = useNavigationStore((s) => s.setBlocked);
@@ -30,17 +35,25 @@ export function useUrlInterceptor() {
   }, [navigate, pushIntent]);
 
   const search = useCallback(
-    (query: string) => {
+    async (query: string, options: AcademicSearchOptions = {}) => {
       const trimmed = query.trim();
       if (!trimmed) return;
       setQuery(trimmed);
-      const results = runCuratedSearch(trimmed);
-      setResults(results);
+      const response = await runAcademicSearch(trimmed, options);
+      setAcademicResponse(response);
+      setResults(academicHitsToSearchResults(response.results));
       recordSearch();
       pushIntent({ kind: "search", query: trimmed });
       navigate(`${ROUTES.search}?q=${encodeURIComponent(trimmed)}`);
     },
-    [navigate, pushIntent, recordSearch, setQuery, setResults],
+    [
+      navigate,
+      pushIntent,
+      recordSearch,
+      setAcademicResponse,
+      setQuery,
+      setResults,
+    ],
   );
 
   const openUrl = useCallback(
@@ -104,6 +117,7 @@ export function useUrlInterceptor() {
       title: string;
       description: string;
       sourceBadge: string;
+      citation?: string;
     }) => {
       const check = intercept(result.url);
       if (!check.allowed) {
@@ -114,7 +128,12 @@ export function useUrlInterceptor() {
         return;
       }
 
-      const article = sanitizeArticleContent(result);
+      const article = sanitizeArticleContent({
+        ...result,
+        description: result.citation
+          ? `${result.description}\n\nCitation: ${result.citation}`
+          : result.description,
+      });
       setActiveArticle(article);
       pushIntent({ kind: "article", url: check.url, title: result.title });
       pushHistory({

@@ -25,7 +25,60 @@ export type TrustedSourceBadge =
   | "PBS Kids"
   | "NASA Kids"
   | "Library of Congress"
+  | "USGS"
+  | "NOAA"
+  | "Britannica"
+  | "AMNH"
+  | "CK-12"
   | "Curated";
+
+export type AcademicContentTier =
+  | "peer_reviewed_journal"
+  | "authoritative_research"
+  | "educational_magazine"
+  | "verified_reference";
+
+export type GradeBandId =
+  | "grades_1_2"
+  | "grades_3_5"
+  | "grades_6_8"
+  | "high_school";
+
+export type AcademicSearchHit = {
+  id: string;
+  title: string;
+  url: string;
+  domain: string;
+  publisher: string;
+  contentTier: AcademicContentTier;
+  contentTierLabel: string;
+  gradeMin: number;
+  gradeMax: number;
+  recommendedGrades: string;
+  abstractText: string;
+  vocabulary: string[];
+  citation: string;
+  legitimacyScore: number;
+  matchScore: number;
+  readingMinutes: number;
+};
+
+export type AcademicSearchResponse = {
+  query: string;
+  abstractSummary: string;
+  keyVocabulary: string[];
+  recommendedGradeLevels: string[];
+  availableTiers: string[];
+  filteredOutFarms: number;
+  results: AcademicSearchHit[];
+};
+
+export type AcademicSearchOptions = {
+  grade?: number;
+  gradeBand?: GradeBandId | string;
+  tiers?: AcademicContentTier[];
+  limit?: number;
+};
 
 export type SearchResult = {
   id: string;
@@ -35,6 +88,16 @@ export type SearchResult = {
   sourceBadge: TrustedSourceBadge;
   description: string;
   readingMinutes?: number;
+  /** Academic pipeline fields (optional for legacy curated stubs) */
+  contentTier?: AcademicContentTier;
+  contentTierLabel?: string;
+  gradeMin?: number;
+  gradeMax?: number;
+  recommendedGrades?: string;
+  vocabulary?: string[];
+  citation?: string;
+  legitimacyScore?: number;
+  publisher?: string;
 };
 
 export type ExploreCategory = {

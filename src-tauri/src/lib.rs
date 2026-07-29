@@ -1,8 +1,10 @@
+mod academic;
 mod commands;
 mod state;
 
 use commands::{
-    check_url, close_window, minimize_window, secure_get, secure_set, verify_parent_pin,
+    academic_search, check_url, close_window, minimize_window, secure_get, secure_set,
+    verify_parent_pin,
 };
 use state::AppState;
 use std::sync::Mutex;
@@ -13,6 +15,7 @@ pub fn run() {
         .plugin(tauri_plugin_store::Builder::new().build())
         .manage(Mutex::new(AppState::default()))
         .invoke_handler(tauri::generate_handler![
+            academic_search,
             check_url,
             verify_parent_pin,
             minimize_window,
