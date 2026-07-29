@@ -24,7 +24,7 @@ export default function VioletPartyPage() {
       />
       <div className="border-b border-slate-line bg-charcoal">
         <div className="mx-auto max-w-content px-6 py-8 md:px-8">
-          <p className="font-display text-card-display font-normal text-yellow sm:text-3xl">
+          <p className="font-display text-card-display font-normal text-white sm:text-3xl">
             {violetParty.taglineCompact}
           </p>
         </div>

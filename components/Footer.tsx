@@ -42,7 +42,7 @@ export function Footer() {
             <p className="font-display text-2xl font-normal text-white">
               {candidate.fullName}
             </p>
-            <p className="mt-1 text-xs font-semibold uppercase tracking-[0.14em] text-yellow">
+            <p className="mt-1 text-xs font-semibold uppercase tracking-[0.14em] text-white">
               for {candidate.office} · Independent Write-In
             </p>
             <p className="mt-3 text-sm font-semibold text-white">

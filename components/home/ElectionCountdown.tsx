@@ -64,7 +64,7 @@ export function ElectionCountdown() {
           </Link>
 
           <div className="flex flex-col justify-center border border-white/10 bg-ink/40 p-7 text-white sm:p-10">
-            <p className="font-display text-overline font-normal uppercase text-yellow">
+            <p className="font-display text-overline font-normal uppercase text-white">
               Countdown to Nov 3, 2026
             </p>
             <div
