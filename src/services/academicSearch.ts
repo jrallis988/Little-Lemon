@@ -69,10 +69,10 @@ const CONTENT_FARM_MARKERS = [
 ];
 
 const TIER_LABELS: Record<AcademicContentTier, string> = {
-  peer_reviewed_journal: "Peer-Reviewed Journal Article",
-  authoritative_research: "Authoritative Research Paper",
-  educational_magazine: "Educational Magazine Publication",
-  verified_reference: "Verified Reference / Primary Source",
+  peer_reviewed_journal: "Academic Journals",
+  authoritative_research: "Research Papers",
+  educational_magazine: "Magazines",
+  verified_reference: "Reference Sources",
 };
 
 const GRADE_BANDS: Record<GradeBandId, [number, number]> = {
@@ -84,6 +84,28 @@ const GRADE_BANDS: Record<GradeBandId, [number, number]> = {
 
 /** Web-mode mirror of the Rust academic corpus (same structured sources). */
 const ACADEMIC_CORPUS: IndexedSource[] = [
+  {
+    id: "nature-plate-tectonics-review",
+    title: "Plate Tectonics and Mantle Dynamics — Research Overview",
+    url: "https://www.nature.com/subjects/tectonics",
+    domain: "nature.com",
+    publisher: "Nature",
+    contentTier: "peer_reviewed_journal",
+    gradeMin: 9,
+    gradeMax: 12,
+    abstractText:
+      "Peer-reviewed research on plate tectonics and mantle dynamics examines how convection, slab subduction, and plume activity drive long-term plate motion. Suitable for advanced high-school research with teacher guidance.",
+    vocabulary: [
+      "mantle dynamics",
+      "plume",
+      "subduction zone",
+      "peer review",
+    ],
+    citation: 'Nature. "Tectonics / Earth science subject collection."',
+    topics: ["plate tectonics", "geology", "mantle"],
+    keywords: ["plates", "tectonics", "journal", "peer-reviewed"],
+    baseLegitimacy: 99,
+  },
   {
     id: "usgs-plate-tectonics-intro",
     title: "What is Plate Tectonics?",

@@ -23,10 +23,10 @@ impl AcademicContentTier {
 
     pub fn label(self) -> &'static str {
         match self {
-            Self::PeerReviewedJournal => "Peer-Reviewed Journal Article",
-            Self::AuthoritativeResearch => "Authoritative Research Paper",
-            Self::EducationalMagazine => "Educational Magazine Publication",
-            Self::VerifiedReference => "Verified Reference / Primary Source",
+            Self::PeerReviewedJournal => "Academic Journals",
+            Self::AuthoritativeResearch => "Research Papers",
+            Self::EducationalMagazine => "Magazines",
+            Self::VerifiedReference => "Reference Sources",
         }
     }
 

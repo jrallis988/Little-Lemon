@@ -7,6 +7,32 @@ pub fn academic_corpus() -> Vec<IndexedSource> {
     vec![
         // —— Plate Tectonics ——
         IndexedSource {
+            id: "nature-plate-tectonics-review".into(),
+            title: "Plate Tectonics and Mantle Dynamics — Research Overview".into(),
+            url: "https://www.nature.com/subjects/tectonics".into(),
+            domain: "nature.com".into(),
+            publisher: "Nature".into(),
+            content_tier: AcademicContentTier::PeerReviewedJournal,
+            grade_min: 9,
+            grade_max: 12,
+            abstract_text: "Peer-reviewed research on plate tectonics and mantle dynamics examines how convection, slab subduction, and plume activity drive long-term plate motion. Suitable for advanced high-school research with teacher guidance.".into(),
+            vocabulary: vec![
+                "mantle dynamics".into(),
+                "plume".into(),
+                "subduction zone".into(),
+                "peer review".into(),
+            ],
+            citation: "Nature. \"Tectonics / Earth science subject collection.\"".into(),
+            topics: vec!["plate tectonics".into(), "geology".into(), "mantle".into()],
+            keywords: vec![
+                "plates".into(),
+                "tectonics".into(),
+                "journal".into(),
+                "peer-reviewed".into(),
+            ],
+            base_legitimacy: 99,
+        },
+        IndexedSource {
             id: "usgs-plate-tectonics-intro".into(),
             title: "What is Plate Tectonics?".into(),
             url: "https://www.usgs.gov/faqs/what-plate-tectonics".into(),

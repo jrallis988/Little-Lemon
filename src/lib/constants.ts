@@ -42,27 +42,38 @@ export const DEFAULT_WHITELIST = [
   "www.ck12.org",
   "khanacademy.org",
   "openstax.org",
+  "nature.com",
+  "www.nature.com",
+  "science.org",
   "www.bbc.co.uk",
   "www.dkfindout.com",
 ] as const;
 
-/** EBSCO-style academic content tier ids used by search filters */
+/** EBSCO-style source-type facets shown in Refine Results */
 export const ACADEMIC_TIERS = [
   {
     id: "peer_reviewed_journal",
-    label: "Peer-Reviewed Journal",
+    label: "Academic Journals",
+    shortLabel: "Articles",
+    description: "Peer-reviewed journal articles",
   },
   {
     id: "authoritative_research",
-    label: "Authoritative Research",
+    label: "Research Papers",
+    shortLabel: "Research",
+    description: "Authoritative research reports & papers",
   },
   {
     id: "educational_magazine",
-    label: "Educational Magazine",
+    label: "Magazines",
+    shortLabel: "Magazines",
+    description: "Educational magazine publications",
   },
   {
     id: "verified_reference",
-    label: "Verified Reference",
+    label: "Reference Sources",
+    shortLabel: "Reference",
+    description: "Verified reference & primary sources",
   },
 ] as const;
 
