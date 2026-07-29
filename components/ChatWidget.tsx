@@ -23,7 +23,7 @@ const STARTERS = [
 function assistantReply(input: string): string {
   const q = input.toLowerCase();
   if (q.includes("vote") || q.includes("write") || q.includes("ballot") || q.includes("faq")) {
-    return `On ${candidate.electionLabel}, write in “${candidate.fullName}” on your General Election ballot. For plain-language answers, open the Write-In FAQ. For official rules, use the New Hampshire Secretary of State.`;
+    return `On ${candidate.electionLabel}, write in “${candidate.fullName}” on your General Election ballot. For plain-language answers about Nick and the campaign, open the FAQ. For official election rules, use the New Hampshire Secretary of State.`;
   }
   if (q.includes("volunteer") || q.includes("help") || q.includes("join")) {
     return `Thanks for wanting to help. Visit Volunteer or Join Team Varga on the homepage, or email ${candidate.email}.`;
@@ -37,7 +37,7 @@ function assistantReply(input: string): string {
   if (q.includes("contact") || q.includes("email") || q.includes("phone")) {
     return `Campaign contact: ${candidate.email} · ${candidate.phone}. Or use the Contact page.`;
   }
-  return `I’m an automated website helper — not a person. For write-in steps see How to Vote or the Write-In FAQ. For a human teammate, choose Live Campaign Support (or leave a message if staff are offline).`;
+  return `I’m an automated website helper — not a person. For Nick and the campaign, see the FAQ. For write-in steps, see How to Vote. For a human teammate, choose Live Campaign Support (or leave a message if staff are offline).`;
 }
 
 export function ChatWidget() {
@@ -213,8 +213,8 @@ export function ChatWidget() {
               )}
               <p className="text-xs text-slate-muted">
                 Prefer self-serve?{" "}
-                <Link href="/write-in-faq" className="font-semibold text-red underline-offset-2 hover:underline">
-                  Write-In FAQ
+                <Link href="/faq" className="font-semibold text-red underline-offset-2 hover:underline">
+                  FAQ
                 </Link>
                 {" · "}
                 <Link href="/how-to-vote" className="font-semibold text-red underline-offset-2 hover:underline">

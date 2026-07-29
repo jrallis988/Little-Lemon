@@ -8,7 +8,7 @@ const quickLinks = [
   { href: "/meet-nick", label: "Meet Nick" },
   { href: "/issues", label: "Issues" },
   { href: "/how-to-vote", label: "How to Vote" },
-  { href: "/write-in-faq", label: "Write-In FAQ" },
+  { href: "/faq", label: "FAQ" },
   { href: "/violet-party", label: "Violet Party" },
   { href: "/volunteer", label: "Volunteer" },
 ];
@@ -17,7 +17,7 @@ const trustLinks = [
   { href: "/privacy", label: "Privacy" },
   { href: "/terms", label: "Terms" },
   { href: "/accessibility", label: "Accessibility" },
-  { href: "/write-in-faq", label: "Write-In FAQ" },
+  { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
 ];
 

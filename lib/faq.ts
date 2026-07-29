@@ -1,92 +1,159 @@
+export type FaqLink = {
+  href: string;
+  label: string;
+  external?: boolean;
+};
+
 export type FaqItem = {
   id: string;
   question: string;
   answer: string[];
+  links?: FaqLink[];
 };
 
 export const NH_ELECTIONS_URL = "https://www.sos.nh.gov/elections";
 export const NH_SOS_HOME_URL = "https://www.sos.nh.gov/";
+/** Official ballot-marking guidance used by NH clerks (write-in + fill oval). */
+export const NH_BALLOT_INSTRUCTIONS_NOTE =
+  "New Hampshire ballot instructions tell voters: to vote for a person whose name is not printed on the ballot, write the name in the write-in space and completely fill in the oval to the right of that choice.";
 
-export const writeInFaqs: FaqItem[] = [
+export const faqs: FaqItem[] = [
   {
-    id: "what-is-write-in",
-    question: "What is a write-in candidate?",
+    id: "who-is-nick",
+    question: "Who is Nick Varga?",
     answer: [
-      "A write-in candidate is someone voters can support by writing the candidate’s name on the ballot in the space provided for write-in votes, instead of (or in addition to options for) selecting a name that is already printed on the ballot.",
-      "Exact ballot layout and instructions can vary by locality. Always follow the instructions printed on your ballot and any guidance from your local election officials.",
+      "Nick Varga is an independent write-in candidate for U.S. Senate from New Hampshire. He’s from Newmarket in Rockingham County — a Granite Stater first, not a career politician.",
+      "His campaign is built neighbor by neighbor around a simple idea: People Over Politics.",
+    ],
+    links: [{ href: "/meet-nick", label: "Meet Nick" }],
+  },
+  {
+    id: "why-running",
+    question: "Why is Nick running for U.S. Senate?",
+    answer: [
+      "Nick watched Washington stop listening to everyday New Hampshire families — and decided that if nobody else was going to run without answering to party bosses or big donors, he would.",
+      "He’s running to put New Hampshire families first: good jobs, affordable healthcare, veterans who are taken care of, and a government that works for people, not special interests.",
+    ],
+    links: [{ href: "/meet-nick", label: "Why he’s running" }],
+  },
+  {
+    id: "why-independent",
+    question: "Why is he running as an Independent?",
+    answer: [
+      "Nick believes both major parties spend too much time protecting their own power and not enough time solving problems for the people who live here.",
+      "Running as an independent means this campaign doesn’t answer to party bosses. It answers to New Hampshire voters — and it focuses on the General Election, not party primaries.",
+    ],
+    links: [{ href: "/violet-party", label: "About the Violet Party" }],
+  },
+  {
+    id: "what-he-stands-for",
+    question: "What does Nick stand for?",
+    answer: [
+      "Integrity over insider access. Independence over party loyalty. Neighbors over donors.",
+      "In practice, that means term limits, lower costs for families, stronger support for veterans, practical approaches to healthcare and education, and a refusal to treat public office like a business opportunity.",
+    ],
+    links: [{ href: "/issues", label: "Explore the issues" }],
+  },
+  {
+    id: "priorities",
+    question: "What are his major priorities for New Hampshire?",
+    answer: [
+      "Nick’s platform starts with term limits — ending career politics — and continues through the issues that hit Granite State households hardest: the economy and jobs, healthcare costs, veterans, education, energy and the environment, wildlife, immigration, and infrastructure.",
+      "Each issue page lays out concrete priorities in plain language.",
+    ],
+    links: [{ href: "/issues", label: "Full issues list" }],
+  },
+  {
+    id: "differentiation",
+    question: "How is Nick different from the major-party candidates?",
+    answer: [
+      "He’s not running as a Democrat or a Republican. He isn’t asking voters to pick a team — he’s asking them to pick a neighbor who won’t be bought.",
+      "This campaign doesn’t take corporate PAC money or dark money, doesn’t answer to party machines, and is built to work across party lines for New Hampshire instead of scoring points for Washington.",
+    ],
+    links: [
+      { href: "/transparency", label: "Campaign transparency" },
+      { href: "/meet-nick", label: "Meet Nick" },
     ],
   },
   {
-    id: "how-to-cast",
-    question: "How do I correctly cast a write-in vote?",
+    id: "donations",
+    question: "What is Nick’s position on campaign donations and funding?",
     answer: [
-      "In general, voters look for the write-in line for the office they are voting for and write the candidate’s name clearly in that space, following the ballot’s instructions.",
-      "For this campaign, Nick Varga is asking supporters to write in “Nick Varga” on the General Election ballot on November 3, 2026.",
-      "This website’s guidance is informational. For official casting instructions, use New Hampshire Secretary of State election resources and your local clerks.",
+      "This campaign accepts no corporate PAC money, no dark money, and no lobbyist contributions. Support comes from individuals — mostly Granite Staters.",
+      "This website does not collect online donations. The best ways to help right now are volunteering, sharing Nick’s story, and making sure neighbors know how to vote for him on Election Day.",
+    ],
+    links: [{ href: "/transparency", label: "How the campaign is funded" }],
+  },
+  {
+    id: "qualifications",
+    question: "What are Nick’s qualifications and experience?",
+    answer: [
+      "Nick is a Newmarket native who knows Rockingham County and the day-to-day pressures facing New Hampshire families. He is not a career politician — and that’s intentional.",
+      "He’s the founder of the Violet Party, an independent effort focused on people over party. For the fuller story of who he is and why he’s running, start with Meet Nick.",
+    ],
+    links: [
+      { href: "/meet-nick", label: "Meet Nick" },
+      { href: "/violet-party", label: "Violet Party" },
     ],
   },
   {
-    id: "spelling",
-    question: "Does spelling matter?",
+    id: "across-party-lines",
+    question: "How does Nick intend to work across party lines?",
     answer: [
-      "Clear, legible writing helps election officials determine voter intent. Using the candidate’s full name as commonly listed — “Nick Varga” — is the safest approach.",
-      "Rules about how write-in votes are counted and how close a spelling must be are set by election law and local practice. This site does not provide a definitive legal interpretation. If you have a specific counting question, contact your local election officials or the New Hampshire Secretary of State.",
+      "Independence isn’t about picking fights with everyone — it’s about being free to work with anyone when the idea is good for New Hampshire.",
+      "Nick’s approach is practical: listen first, judge ideas on their merits, and refuse to let party loyalty block common-sense solutions on costs, jobs, veterans, and infrastructure.",
+    ],
+    links: [{ href: "/issues", label: "See where he stands" }],
+  },
+  {
+    id: "meet-him",
+    question: "How can voters meet Nick?",
+    answer: [
+      "Check the Events page for upcoming town halls, meet-and-greets, and kitchen-table conversations across the state.",
+      "If you’d like Nick to visit your community, you can request a stop through Come to My Town.",
+    ],
+    links: [
+      { href: "/events", label: "Upcoming events" },
+      { href: "/come-to-my-town", label: "Request a visit" },
     ],
   },
   {
-    id: "where-on-ballot",
-    question: "Where do I write the candidate’s name on the ballot?",
+    id: "volunteer-support",
+    question: "How can people volunteer or otherwise support the campaign?",
     answer: [
-      "Most ballots include a write-in line for each office. Write the name on the write-in line for U.S. Senate (or the office listed), according to the instructions on your ballot.",
-      "Because ballot designs differ, rely on the instructions printed on your ballot and official election materials for your town or city.",
+      "Volunteers are the backbone of this campaign — door-knocking, phone banking, events, digital help, and neighbor-to-neighbor outreach.",
+      "You can sign up on the Volunteer page, join Team Varga for updates, invite Nick to your town, or simply share how to vote for him with friends and family.",
+    ],
+    links: [
+      { href: "/volunteer", label: "Volunteer" },
+      { href: "/#join", label: "Join Team Varga" },
+      { href: "/come-to-my-town", label: "Come to My Town" },
     ],
   },
   {
-    id: "counts-same",
-    question: "Does a write-in vote count the same as a printed candidate vote?",
+    id: "contact",
+    question: "How can voters contact the campaign?",
     answer: [
-      "A properly cast write-in vote is a vote for that office. How write-ins are tallied and reported is governed by New Hampshire election procedures.",
-      "For authoritative information on counting and canvassing, refer to official New Hampshire election resources rather than campaign materials alone.",
+      "Use the Contact page for questions, press, and general outreach. You can also reach the campaign by email or phone listed there.",
+      "For quick website questions, the chat helper on this site can point you to the right page. For a human teammate, choose Live Campaign Support when available.",
     ],
+    links: [{ href: "/contact", label: "Contact the campaign" }],
   },
   {
-    id: "independent",
-    question: "What happens if the candidate is running as an independent?",
+    id: "how-to-vote",
+    question: "How do I vote for Nick in the General Election?",
     answer: [
-      "Nick Varga is running as an independent write-in candidate for U.S. Senate from New Hampshire. That means his name may not appear pre-printed on the General Election ballot the way a major-party nominee’s name often does.",
-      "Supporters who want to vote for him should follow write-in instructions on the General Election ballot. Confirm ballot details with official sources closer to Election Day.",
+      "On Tuesday, November 3, 2026, vote on your General Election ballot. Find the U.S. Senate race, use the write-in line, and write “Nick Varga” clearly.",
+      "New Hampshire ballot instructions tell voters: to vote for a person whose name is not printed on the ballot, write the name in the write-in space and completely fill in the oval to the right of that choice. Always follow the instructions printed on your ballot.",
+      "For polling places, absentee voting, registration, and other official details, use New Hampshire Secretary of State election resources or your local clerk. This FAQ is campaign information — not a substitute for official guidance.",
     ],
-  },
-  {
-    id: "primary-vs-general",
-    question: "What is the difference between the primary and the general election?",
-    answer: [
-      "A primary election typically nominates party candidates. The general election is the final statewide vote that decides who holds the office.",
-      "For this campaign, the date that matters for voting for Nick Varga is the General Election on November 3, 2026.",
-    ],
-  },
-  {
-    id: "need-primary",
-    question: "Does the candidate need to win a primary?",
-    answer: [
-      "Nick Varga is not asking voters to treat a primary win as the path for this campaign. He is running as an independent write-in focused on the General Election.",
-      "Primary rules and ballot access rules are set by law. For official candidate and ballot-access information, see the New Hampshire Secretary of State.",
-    ],
-  },
-  {
-    id: "qualify",
-    question: "How does a write-in candidate qualify or become recognized?",
-    answer: [
-      "Qualification, filing, and recognition requirements for candidates and write-in results are established by New Hampshire and federal election law.",
-      "This FAQ does not replace official guidance. For authoritative information on running for office, ballot access, and how write-in votes are handled, use the New Hampshire Secretary of State’s election pages.",
-    ],
-  },
-  {
-    id: "official-info",
-    question: "Where can voters find official New Hampshire election information?",
-    answer: [
-      "Start with the New Hampshire Secretary of State Elections page for voter information, election calendars, and official resources.",
-      "You can also contact your local town or city clerk for ballot-specific questions, polling places, and absentee voting details.",
+    links: [
+      { href: "/how-to-vote", label: "How to Vote (step by step)" },
+      {
+        href: NH_ELECTIONS_URL,
+        label: "NH Secretary of State — Elections",
+        external: true,
+      },
     ],
   },
 ];
