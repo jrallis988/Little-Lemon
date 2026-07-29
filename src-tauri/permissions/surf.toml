@@ -1,0 +1,12 @@
+[[permission]]
+identifier = "surf-custom-commands"
+description = "Allows Surf chrome to call academic search, filter, PIN, storage, and window commands."
+commands.allow = [
+  "academic_search",
+  "check_url",
+  "verify_parent_pin",
+  "minimize_window",
+  "close_window",
+  "secure_get",
+  "secure_set",
+]
