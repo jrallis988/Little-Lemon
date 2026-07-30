@@ -2,6 +2,7 @@ import { create } from "zustand"
 import { persist } from "zustand/middleware"
 import type { CartItem } from "@/types"
 import { PRODUCTS } from "@/data/products"
+import { useToastStore } from "@/stores/toastStore"
 
 const MAX_QTY_PER_LINE = 5
 
@@ -101,6 +102,14 @@ export const useCartStore = create<CartState>()(
             lastError: null,
           }
         })
+        if (!get().lastError) {
+          useToastStore.getState().push({
+            title: "Added to bag",
+            description: `${product.brand} ${product.name}`,
+            href: "/bag",
+            hrefLabel: "View bag",
+          })
+        }
       },
       removeItem: (productId, size, colorwayId) =>
         set((state) => ({

@@ -1,8 +1,9 @@
 import { useMemo, useState } from "react"
 import { Link } from "react-router-dom"
-import { Minus, Plus, ShoppingBag, Tag, Trash2 } from "lucide-react"
+import { Minus, Plus, ShoppingBag, Tag, Trash2, Heart } from "lucide-react"
 import { PRODUCTS } from "@/data/products"
 import { useCartStore } from "@/stores/cartStore"
+import { useWishlistStore } from "@/stores/wishlistStore"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useDocumentMeta } from "@/hooks/useDocumentMeta"
@@ -25,6 +26,7 @@ export function BagPage() {
   const promoCode = useCartStore((s) => s.promoCode)
   const applyPromo = useCartStore((s) => s.applyPromo)
   const lastError = useCartStore((s) => s.lastError)
+  const saveForLater = useWishlistStore((s) => s.add)
   const subtotal = useCartStore((s) => s.subtotal())
   const compareAtTotal = useCartStore((s) => s.compareAtTotal())
   const [promoInput, setPromoInput] = useState("")
@@ -153,6 +155,17 @@ export function BagPage() {
                           <Plus className="h-3.5 w-3.5" />
                         </button>
                       </div>
+                      <button
+                        type="button"
+                        className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-navy"
+                        onClick={() => {
+                          saveForLater(item.productId)
+                          removeItem(item.productId, item.size, item.colorwayId)
+                        }}
+                      >
+                        <Heart className="h-3.5 w-3.5" />
+                        Save for later
+                      </button>
                       <button
                         type="button"
                         className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-destructive"

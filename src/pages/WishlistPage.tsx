@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom"
-import { Heart, Trash2 } from "lucide-react"
+import { Heart, ShoppingBag, Trash2 } from "lucide-react"
 import { PRODUCTS } from "@/data/products"
 import { useWishlistStore } from "@/stores/wishlistStore"
+import { useCartStore } from "@/stores/cartStore"
 import { ProductCard } from "@/components/catalog/ProductCard"
 import { Button } from "@/components/ui/button"
 import { useDocumentMeta } from "@/hooks/useDocumentMeta"
 import { formatCurrency } from "@/lib/utils"
+import { useToastStore } from "@/stores/toastStore"
 
 export function WishlistPage() {
   useDocumentMeta({
@@ -16,9 +18,29 @@ export function WishlistPage() {
   const productIds = useWishlistStore((s) => s.productIds)
   const remove = useWishlistStore((s) => s.remove)
   const clear = useWishlistStore((s) => s.clear)
+  const addItem = useCartStore((s) => s.addItem)
+  const pushToast = useToastStore((s) => s.push)
   const products = productIds
     .map((id) => PRODUCTS.find((p) => p.id === id))
     .filter(Boolean)
+
+  function moveToBag(productId: string) {
+    const product = PRODUCTS.find((p) => p.id === productId)
+    if (!product) return
+    const size = product.sizes.find((s) => s.available)?.label
+    const colorwayId = product.colorways[0]?.id
+    if (!size || !colorwayId) {
+      pushToast({
+        title: "Choose options on the product page",
+        description: product.name,
+        href: `/product/${product.slug}`,
+        hrefLabel: "Open product",
+      })
+      return
+    }
+    addItem({ productId: product.id, size, colorwayId })
+    remove(product.id)
+  }
 
   return (
     <div className="shelf-container py-8 md:py-12">
@@ -57,14 +79,24 @@ export function WishlistPage() {
             product ? (
               <div key={product.id} className="relative">
                 <ProductCard product={product} />
-                <button
-                  type="button"
-                  className="absolute right-2 top-2 z-10 rounded-full bg-surface/95 p-2 shadow-soft hover:text-primary"
-                  aria-label={`Remove ${product.name} from wishlist`}
-                  onClick={() => remove(product.id)}
-                >
-                  <Trash2 className="h-4 w-4" />
-                </button>
+                <div className="mt-2 flex gap-2">
+                  <Button
+                    size="sm"
+                    className="flex-1 bg-navy hover:bg-navy/90"
+                    onClick={() => moveToBag(product.id)}
+                  >
+                    <ShoppingBag className="h-3.5 w-3.5" />
+                    Add
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    aria-label={`Remove ${product.name}`}
+                    onClick={() => remove(product.id)}
+                  >
+                    <Trash2 className="h-3.5 w-3.5" />
+                  </Button>
+                </div>
                 <p className="sr-only">{formatCurrency(product.price)}</p>
               </div>
             ) : null,

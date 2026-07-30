@@ -20,6 +20,7 @@ import { getProductBySlug } from "@/lib/catalog"
 import { discountPercent, formatCurrency } from "@/lib/utils"
 import { useCartStore } from "@/stores/cartStore"
 import { useWishlistStore } from "@/stores/wishlistStore"
+import { useRecentStore } from "@/stores/recentStore"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
@@ -529,6 +530,8 @@ export function ProductDetailPage() {
   const clearError = useCartStore((s) => s.clearError)
   const wished = useWishlistStore((s) => (product ? s.has(product.id) : false))
   const toggleWish = useWishlistStore((s) => s.toggle)
+  const trackRecent = useRecentStore((s) => s.track)
+  const recentIds = useRecentStore((s) => s.productIds)
   const [imageIndex, setImageIndex] = useState(0)
   const [size, setSize] = useState<string | null>(null)
   const [colorwayId, setColorwayId] = useState<string | null>(null)
@@ -541,6 +544,20 @@ export function ProductDetailPage() {
     setSizeError(false)
     clearError()
   }, [slug, clearError])
+
+  useEffect(() => {
+    if (product) trackRecent(product.id)
+  }, [product, trackRecent])
+
+  const recentlyViewed = useMemo(
+    () =>
+      recentIds
+        .filter((id) => id !== product?.id)
+        .map((id) => PRODUCTS.find((p) => p.id === id))
+        .filter(Boolean)
+        .slice(0, 4) as typeof PRODUCTS,
+    [recentIds, product?.id],
+  )
 
   if (!product) {
     return (
@@ -797,6 +814,14 @@ export function ProductDetailPage() {
         products={recommendations}
         shopLink={`/catalog?department=${product.department}`}
         shopLabel={`Shop ${product.department}`}
+      />
+
+      <ProductRail
+        title="Recently Viewed"
+        eyebrow="Pick up where you left off"
+        products={recentlyViewed}
+        shopLink="/catalog"
+        shopLabel="Shop all"
       />
 
       <div id="reviews">

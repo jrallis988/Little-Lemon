@@ -1,4 +1,4 @@
-import { useMemo } from "react"
+import { useEffect, useMemo } from "react"
 import { AlertTriangle, Check, CreditCard, PackageCheck, Truck } from "lucide-react"
 import { Navigate, useNavigate } from "react-router-dom"
 import { PRODUCTS } from "@/data/products"
@@ -92,6 +92,16 @@ export function CheckoutPage() {
   const setPaymentField = useCheckoutStore((state) => state.setPaymentField)
   const setStep = useCheckoutStore((state) => state.setStep)
   const completeOrder = useCheckoutStore((state) => state.completeOrder)
+  const user = useAccountStore((state) => state.user)
+
+  useEffect(() => {
+    if (!user) return
+    if (!shipping.name) setShippingField("name", user.name)
+    if (!shipping.email) setShippingField("email", user.email)
+    if (!payment.nameOnCard) setPaymentField("nameOnCard", user.name)
+    // Prefill once from signed-in account when fields are empty
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user])
 
   const lines = useMemo(
     () =>
@@ -165,11 +175,16 @@ export function CheckoutPage() {
       <div className="mx-auto max-w-5xl">
         <div className="mb-7">
           <p className="text-2xs font-bold uppercase tracking-[0.12em] text-primary">
-            Secure guest checkout
+            {user ? "Account checkout" : "Secure guest checkout"}
           </p>
           <h1 className="mt-1 font-display text-3xl font-bold tracking-tight">
             Checkout
           </h1>
+          {user && (
+            <p className="mt-2 text-sm text-muted-foreground">
+              Signed in as {user.email} — shipping details prefilled when available.
+            </p>
+          )}
         </div>
 
         <CheckoutProgress step={step} />

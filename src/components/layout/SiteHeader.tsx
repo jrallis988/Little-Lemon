@@ -105,6 +105,19 @@ export function SiteHeader() {
     <header className="sticky top-0 z-40 shadow-header">
       <PromoTicker />
 
+      {!user && (
+        <div className="border-b border-border bg-surface-muted">
+          <Link
+            to="/account"
+            className="shelf-container flex h-9 items-center justify-center gap-2 text-xs font-medium text-navy no-underline hover:underline sm:justify-start"
+          >
+            <User className="h-3.5 w-3.5" />
+            Sign in or create an account for faster checkout!
+            <span aria-hidden>›</span>
+          </Link>
+        </div>
+      )}
+
       <div className="border-b border-border bg-surface">
         <div className="shelf-container">
           <div className="flex h-[var(--utility-height)] items-center justify-end gap-4 text-xs text-muted-foreground">

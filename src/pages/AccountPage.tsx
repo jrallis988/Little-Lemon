@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react"
 import { Link } from "react-router-dom"
-import { Package, UserRound } from "lucide-react"
+import { MessageCircle, Package, UserRound } from "lucide-react"
 import { useAccountStore } from "@/stores/accountStore"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -15,6 +15,7 @@ export function AccountPage() {
 
   const user = useAccountStore((s) => s.user)
   const orders = useAccountStore((s) => s.orders)
+  const chatTickets = useAccountStore((s) => s.chatTickets)
   const signIn = useAccountStore((s) => s.signIn)
   const signOut = useAccountStore((s) => s.signOut)
   const [name, setName] = useState("")
@@ -153,6 +154,33 @@ export function AccountPage() {
                 >
                   View status
                 </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+
+      <section className="mt-12">
+        <div className="mb-4 flex items-center gap-2">
+          <MessageCircle className="h-4 w-4 text-primary" />
+          <h2 className="font-display text-2xl font-bold">Support tickets</h2>
+        </div>
+        {chatTickets.length === 0 ? (
+          <p className="rounded-md border border-dashed border-border bg-surface-muted/40 px-4 py-8 text-sm text-muted-foreground">
+            No handoff tickets yet. In chat, ask to “Talk to a person” to open one.
+          </p>
+        ) : (
+          <ul className="space-y-3">
+            {chatTickets.map((ticket) => (
+              <li
+                key={ticket.id}
+                className="rounded-md border border-border bg-surface px-4 py-3 text-sm shadow-soft"
+              >
+                <p className="font-semibold">{ticket.id}</p>
+                <p className="mt-1 text-muted-foreground">{ticket.topic}</p>
+                <p className="mt-1 text-2xs text-muted-foreground">
+                  Opened {new Date(ticket.createdAt).toLocaleString()} · Queued for follow-up
+                </p>
               </li>
             ))}
           </ul>
