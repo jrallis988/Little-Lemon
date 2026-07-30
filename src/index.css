@@ -1,6 +1,8 @@
 :root {
   --ocean: #0b4f6c;
   --ocean-deep: #073a50;
+  --nav-teal: #0b4f6c;
+  --nav-teal-rgb: 11, 79, 108;
   --seafoam: #3d8b7a;
   --seafoam-soft: #8ec4b6;
   --mist: #eef6f5;
@@ -170,15 +172,15 @@ p {
   height: var(--nav-h);
   display: flex;
   align-items: center;
-  background: rgba(7, 58, 80, 0.92);
+  background: rgba(var(--nav-teal-rgb), 0.96);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   transition: background-color 280ms var(--ease), backdrop-filter 280ms var(--ease);
 }
 
 .nav.is-scrolled {
-  background: rgba(7, 58, 80, 0.96);
-  border-bottom-color: rgba(255, 255, 255, 0.12);
+  background: rgba(var(--nav-teal-rgb), 0.98);
+  border-bottom-color: rgba(255, 255, 255, 0.14);
 }
 
 .nav__inner {
@@ -1707,9 +1709,9 @@ p {
   padding: 1.15rem 1.2rem;
   border-radius: calc(var(--radius) + 2px);
   border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(7, 58, 80, 0.97);
+  background: rgba(var(--nav-teal-rgb), 0.98);
   color: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 18px 40px rgba(7, 58, 80, 0.32);
+  box-shadow: 0 18px 40px rgba(var(--nav-teal-rgb), 0.32);
 }
 
 .consent__inner {
