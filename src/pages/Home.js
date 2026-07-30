@@ -4,14 +4,14 @@ import {
   reasons,
   newsItems,
   events,
-  programs,
   actionTiles,
 } from "../data/content";
 import { VIRTUAL_TOUR } from "../data/campus";
 import usePageMeta from "../hooks/usePageMeta";
 
 const heroImage = "/media/campus-hero.jpg";
-const campusImage = "/media/campus-hero.jpg";
+const campusImage = "/media/sweeney-hall.jpg";
+const statsImage = "/media/stats-nursing.jpg";
 
 function ActionIcon({ name }) {
   const props = {
@@ -30,15 +30,19 @@ function ActionIcon({ name }) {
     case "library":
       return (
         <svg {...props}>
-          <path d="M10 8h10v32H10zM28 8h10v32H28z" />
-          <path d="M20 12h8M20 24h8M20 36h8" />
+          <path d="M12 10h8a4 4 0 0 1 4 4v24H16a4 4 0 0 1-4-4V10z" />
+          <path d="M24 14h8a4 4 0 0 1 4 4v24h-8" />
+          <path d="M16 18h4M16 24h4M16 30h4" />
+          <path d="M28 20h4M28 26h4" />
         </svg>
       );
     case "bookstore":
       return (
         <svg {...props}>
-          <path d="M12 16h24l-2 22H14z" />
-          <path d="M16 16V12a8 8 0 0 1 16 0v4" />
+          <path d="M14 12h20v28H14z" />
+          <path d="M14 18h20" />
+          <path d="M20 12c0-3 2.5-5 4-5s4 2 4 5" />
+          <path d="M18 24h12M18 30h9" />
         </svg>
       );
     case "map":
@@ -73,16 +77,21 @@ function ActionIcon({ name }) {
     case "athletics":
       return (
         <svg {...props}>
-          <circle cx="24" cy="24" r="12" />
-          <path d="M12 24h24M24 12c4 4 4 20 0 24M24 12c-4 4-4 20 0 24" />
+          <circle cx="24" cy="24" r="14" />
+          <path d="M24 10v28" />
+          <path d="M10 24h28" />
+          <path d="M15 12c5 5 5 19 0 24" />
+          <path d="M33 12c-5 5-5 19 0 24" />
+          <path d="M12 17c8 3 16 3 24 0" />
+          <path d="M12 31c8-3 16-3 24 0" />
         </svg>
       );
     case "early":
       return (
         <svg {...props}>
-          <path d="M24 38V22" />
-          <path d="M24 22c-6-2-10 2-10 8 6 0 10-4 10-8zM24 22c6-2 10 2 10 8-6 0-10-4-10-8z" />
-          <path d="M24 14c0-4 3-6 6-6" />
+          <path d="M8 20 24 12l16 8-16 8z" />
+          <path d="M14 23v8c4 3 12 3 16 0v-8" />
+          <path d="M40 20v10" />
         </svg>
       );
     default:
@@ -128,9 +137,10 @@ function Home() {
   });
 
   const highlights = [
-    { value: `${programs.length}+`, label: "Degree and certificate programs" },
-    { value: "4,600+", label: "Students served annually" },
-    { value: "240", label: "Acre riverside campus" },
+    { value: "70+", label: "Degree and certificate programs" },
+    { value: "4,600", label: "Students served annually" },
+    { value: "60%", label: "of students receive financial aid" },
+    { value: "18", label: "Average class size for day classes" },
   ];
 
   const spotlightEvents = events.slice(0, 3);
@@ -151,8 +161,8 @@ function Home() {
             Learn where New Hampshire works.
           </h1>
           <p className="hero__support reveal reveal--delay-2">
-            Concord&apos;s Community College — {programs.length}+ career and
-            transfer programs on a full riverside campus.
+            Concord&apos;s Community College — 70+ career and transfer programs
+            on a full riverside campus.
           </p>
           <div className="hero__actions reveal reveal--delay-3">
             <Link to="/admissions" className="btn btn--solid">
@@ -172,14 +182,11 @@ function Home() {
 
       <section
         className="section section--tight action-grid-section"
-        aria-label="Student resources"
+        aria-label="Quick links"
       >
         <div className="section-intro">
-          <h2>Campus essentials</h2>
-          <p>
-            Tools students use every week — without repeating Apply, Aid, or Tour
-            from the header above.
-          </p>
+          <h2>Quick links</h2>
+          <p>Jump to the campus tools students reach for every week.</p>
         </div>
         <div className="action-grid">
           {actionTiles.map((tile) => (
@@ -188,13 +195,21 @@ function Home() {
         </div>
       </section>
 
-      <section className="stat-strip" aria-label="NHTI at a glance">
-        {highlights.map((item) => (
-          <div key={item.label} className="stat-strip__item">
-            <p className="stat-strip__value">{item.value}</p>
-            <p className="stat-strip__label">{item.label}</p>
-          </div>
-        ))}
+      <section className="facts-band" aria-label="NHTI at a glance">
+        <div
+          className="facts-band__media"
+          style={{ backgroundImage: `url(${statsImage})` }}
+          role="img"
+          aria-label="NHTI healthcare student practicing clinical skills"
+        />
+        <div className="facts-band__stats">
+          {highlights.map((item) => (
+            <div key={item.label} className="facts-band__item">
+              <p className="facts-band__value">{item.value}</p>
+              <p className="facts-band__label">{item.label}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
       <section className="section section--tight">
@@ -233,7 +248,7 @@ function Home() {
           className="split-band__media"
           style={{ backgroundImage: `url(${campusImage})` }}
           role="img"
-          aria-label="NHTI campus buildings across the quad lawn"
+          aria-label="Sweeney Hall on the NHTI campus with autumn trees and a yellow Lynx banner"
         />
         <div className="split-band__copy">
           <h2>The only NH community college with residence halls</h2>

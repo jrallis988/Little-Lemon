@@ -90,19 +90,32 @@ test("primary nav matches NHTI menu categories", () => {
   expect(screen.getAllByRole("link", { name: "Contact" }).length).toBeGreaterThan(0);
 });
 
-test("homepage shows campus essentials action grid", () => {
+test("homepage shows quick links and official facts", () => {
   render(
     <MemoryRouter>
       <App />
     </MemoryRouter>
   );
 
-  expect(screen.getByRole("heading", { name: /campus essentials/i })).toBeInTheDocument();
+  expect(screen.getByRole("heading", { name: /quick links/i })).toBeInTheDocument();
   expect(screen.getAllByRole("link", { name: /^library$/i }).length).toBeGreaterThan(0);
   expect(screen.getAllByRole("link", { name: /^bookstore$/i }).length).toBeGreaterThan(0);
   expect(screen.getByRole("link", { name: /campus map/i })).toBeInTheDocument();
   expect(screen.getByRole("link", { name: /it helpdesk/i })).toBeInTheDocument();
   expect(screen.getAllByRole("link", { name: /residence life/i }).length).toBeGreaterThan(0);
+  expect(screen.getByText("70+")).toBeInTheDocument();
+  expect(screen.getByText("Degree and certificate programs")).toBeInTheDocument();
+  expect(screen.getByText("4,600")).toBeInTheDocument();
+  expect(screen.getByText("Students served annually")).toBeInTheDocument();
+  expect(screen.getByText("60%")).toBeInTheDocument();
+  expect(screen.getByText(/of students receive financial aid/i)).toBeInTheDocument();
+  expect(screen.getByText("18")).toBeInTheDocument();
+  expect(screen.getByText(/average class size for day classes/i)).toBeInTheDocument();
+  expect(
+    screen.getByRole("img", {
+      name: /sweeney hall on the nhti campus/i,
+    })
+  ).toBeInTheDocument();
   expect(screen.queryByRole("heading", { name: /ready when you are/i })).not.toBeInTheDocument();
   expect(screen.getByRole("heading", { name: /events, workforce trainings/i })).toBeInTheDocument();
 });
@@ -137,6 +150,9 @@ test("footer includes CCSNH, social, and policy links", () => {
   expect(screen.getByRole("link", { name: "TikTok" })).toBeInTheDocument();
   expect(screen.getByRole("link", { name: "Privacy Policy" })).toBeInTheDocument();
   expect(screen.getByRole("link", { name: "SDS" })).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: "Campus Safety" })).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: "Important Forms" })).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: /603-230-4000/ })).toBeInTheDocument();
 });
 
 test("shows student life shirts photo on campus page", () => {

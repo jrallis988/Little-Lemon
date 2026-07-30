@@ -1477,6 +1477,54 @@ button:focus:not(:focus-visible) {
   color: var(--white);
 }
 
+/* Official-style facts band (photo + 4 stats) */
+.facts-band {
+  width: var(--container);
+  margin: 1.5rem auto 0;
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr);
+  min-height: 280px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.facts-band__media {
+  min-height: 280px;
+  background-size: cover;
+  background-position: center;
+}
+
+.facts-band__stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+  align-content: center;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.facts-band__item {
+  text-align: center;
+  padding: 0.35rem 0.25rem;
+}
+
+.facts-band__value {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.85rem, 3.4vw, 2.65rem);
+  font-weight: 800;
+  color: var(--maroon);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.facts-band__label {
+  margin: 0.55rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
 /* Spotlight band (replaces Ready when you are) */
 .spotlight-band {
   width: var(--container);
@@ -1738,6 +1786,11 @@ button:focus:not(:focus-visible) {
   grid-template-columns: 1.45fr 0.9fr 0.9fr 1.15fr;
 }
 
+.footer-grid--official {
+  grid-template-columns: 1.35fr 0.95fr 1fr;
+  align-items: start;
+}
+
 .footer-logo-lockup {
   display: flex;
   align-items: center;
@@ -1750,6 +1803,12 @@ button:focus:not(:focus-visible) {
   width: min(11rem, 45vw);
   height: auto;
   object-fit: contain;
+}
+
+.footer-ccsnh--large {
+  width: min(17.5rem, 72vw);
+  max-width: 100%;
+  margin: 1rem 0 1.15rem;
 }
 
 .footer-social {
@@ -1804,8 +1863,9 @@ button:focus:not(:focus-visible) {
 
 .footer-brand-block {
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
-  gap: 1rem;
+  gap: 0;
 }
 
 .footer-seal {
@@ -1813,6 +1873,56 @@ button:focus:not(:focus-visible) {
   height: 4.5rem;
   flex-shrink: 0;
   object-fit: contain;
+}
+
+.footer-address {
+  margin: 0;
+  font-style: normal;
+  line-height: 1.55;
+  color: rgba(255, 253, 249, 0.86);
+}
+
+.footer-actions {
+  display: grid;
+  gap: 0.7rem;
+  align-content: start;
+}
+
+.footer-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.85rem;
+  padding: 0.7rem 1rem;
+  text-align: center;
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  background: var(--gold);
+  border: 1px solid transparent;
+  transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+
+.footer-action-btn:hover,
+.footer-action-btn:focus-visible {
+  background: var(--gold-soft);
+  color: var(--maroon-ink);
+}
+
+.footer-action-btn--ghost {
+  background: transparent;
+  color: var(--gold);
+  border-color: rgba(242, 202, 54, 0.45);
+}
+
+.footer-action-btn--ghost:hover,
+.footer-action-btn--ghost:focus-visible {
+  background: rgba(242, 202, 54, 0.12);
+  color: var(--gold);
+  border-color: var(--gold);
 }
 
 .footer-brand {
@@ -1898,6 +2008,7 @@ button:focus:not(:focus-visible) {
   .focus-block,
   .fact-strip,
   .stat-strip,
+  .facts-band,
   .footer-grid,
   .gallery,
   .program-grid,
@@ -1919,7 +2030,12 @@ button:focus:not(:focus-visible) {
   .spotlight-band__inner,
   .hall-card,
   .residence-gallery,
-  .footer-grid--overhaul {
+  .footer-grid--overhaul,
+  .footer-grid--official {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .facts-band__stats {
     grid-template-columns: 1fr 1fr;
   }
 
@@ -2075,8 +2191,22 @@ button:focus:not(:focus-visible) {
   .hall-card,
   .residence-gallery,
   .footer-grid--overhaul,
+  .footer-grid--official,
+  .facts-band,
   .spotlight-list li {
     grid-template-columns: 1fr;
+  }
+
+  .facts-band__media {
+    min-height: 220px;
+  }
+
+  .facts-band__stats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer-ccsnh--large {
+    width: min(15rem, 80vw);
   }
 
   .residence-gallery__item img {

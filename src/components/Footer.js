@@ -50,32 +50,73 @@ function SocialIcon({ icon }) {
   }
 }
 
+const footerActions = [
+  {
+    label: "Campus Safety",
+    href: "https://lynx.nhti.edu/student-services/campus-safety/",
+  },
+  {
+    label: "Current Students",
+    href: "https://lynx.nhti.edu/",
+  },
+  {
+    label: "Important Forms",
+    href: "https://lynx.nhti.edu/student-services/important-forms/",
+  },
+];
+
+const footerResources = [
+  { label: "Contact Us", to: "/contact" },
+  {
+    label: "Consumer Information",
+    href: "https://www.nhti.edu/consumer-information/",
+  },
+  {
+    label: "Employment",
+    href: "https://www.nhti.edu/about/presidents-office/career-center/",
+  },
+  {
+    label: "Request Transcripts",
+    href: "https://tsorder.studentclearinghouse.org/school/ficecode/00258100",
+  },
+  {
+    label: "Faculty & Staff Resources",
+    href: "https://lynx.nhti.edu/faculty-staff/",
+  },
+  {
+    label: "Title IX Resources",
+    href: "https://lynx.nhti.edu/student-services/campus-safety/title-ix-resources/",
+  },
+];
+
 function Footer() {
   return (
     <footer className="site-footer">
-      <div className="footer-grid footer-grid--overhaul">
+      <div className="footer-grid footer-grid--official">
         <div className="footer-brand-block">
-          <div className="footer-logo-lockup">
-            <img
-              className="footer-seal"
-              src="/brand/nhti-seal-gold-256.png"
-              alt="NHTI – Concord's Community College seal"
-              width="72"
-              height="72"
-            />
-            <img
-              className="footer-ccsnh"
-              src="/brand/ccsnh-logo-white.png"
-              alt="Community College System of New Hampshire"
-              width="180"
-              height="64"
-            />
-          </div>
           <p className="footer-brand">NHTI</p>
           <p className="footer-lede">
-            Concord&apos;s Community College — pathways for career, transfer, and
-            lifelong learning on the Merrimack River.
+            Concord&apos;s Community College — a CCSNH college on the Merrimack
+            River.
           </p>
+          <img
+            className="footer-ccsnh footer-ccsnh--large"
+            src="/brand/ccsnh-logo-white.png"
+            alt="Community College System of New Hampshire"
+            width="280"
+            height="100"
+          />
+          <address className="footer-address">
+            31 College Drive
+            <br />
+            Concord, NH 03301
+            <br />
+            <a href="tel:6032304000">603-230-4000</a>
+            <br />
+            <a href="tel:8002470179">800-247-0179</a>
+            <br />
+            <a href="mailto:NHTIinfo@ccsnh.edu">Email NHTI</a>
+          </address>
           <div className="footer-social" aria-label="Social media">
             {socialLinks.map((item) => (
               <a
@@ -91,98 +132,44 @@ function Footer() {
           </div>
         </div>
 
-        <div>
-          <p className="footer-label">Quick links</p>
-          <ul className="footer-links">
-            <li>
-              <Link to="/academics">Academics</Link>
-            </li>
-            <li>
-              <Link to="/admissions">Admissions</Link>
-            </li>
-            <li>
-              <Link to="/financial-aid">Financial Aid</Link>
-            </li>
-            <li>
-              <Link to="/campus">Campus Life</Link>
-            </li>
-            <li>
-              <Link to="/residence-life">Residence Life</Link>
-            </li>
-            <li>
-              <Link to="/workforce">Workforce Education</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-            <li>
-              <Link to="/contact">Contact</Link>
-            </li>
-          </ul>
+        <div className="footer-actions">
+          <p className="footer-label">Quick actions</p>
+          {footerActions.map((item) => (
+            <a
+              key={item.label}
+              className="footer-action-btn"
+              href={item.href}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {item.label}
+            </a>
+          ))}
+          <a
+            className="footer-action-btn footer-action-btn--ghost"
+            href={VIRTUAL_TOUR}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Take a Virtual Tour
+          </a>
         </div>
 
         <div>
           <p className="footer-label">Resources</p>
           <ul className="footer-links">
-            <li>
-              <a href="https://library.nhti.edu/" target="_blank" rel="noreferrer">
-                Library
-              </a>
-            </li>
-            <li>
-              <a href="https://nhti.textbookx.com/" target="_blank" rel="noreferrer">
-                Bookstore
-              </a>
-            </li>
-            <li>
-              <a href="https://lynx.nhti.edu/" target="_blank" rel="noreferrer">
-                Current Students
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://givenhcc.org/where-to-give/nhti/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Donate
-              </a>
-            </li>
-            <li>
-              <Link to="/events">Events</Link>
-            </li>
-            <li>
-              <Link to="/news">News</Link>
-            </li>
+            {footerResources.map((item) => (
+              <li key={item.label}>
+                {item.to ? (
+                  <Link to={item.to}>{item.label}</Link>
+                ) : (
+                  <a href={item.href} target="_blank" rel="noreferrer">
+                    {item.label}
+                  </a>
+                )}
+              </li>
+            ))}
           </ul>
-        </div>
-
-        <div>
-          <p className="footer-label">Visit</p>
-          <address className="footer-address">
-            31 College Drive
-            <br />
-            Concord, NH 03301
-            <br />
-            <a href="tel:6032304001">603-230-4001</a>
-          </address>
-          <a
-            className="footer-tour-card"
-            href={VIRTUAL_TOUR}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <img
-              src="/media/actions/visitnew-1.png"
-              alt=""
-              width="40"
-              height="40"
-            />
-            <span>
-              <strong>Take a Virtual Tour</strong>
-              <span>Explore campus from anywhere</span>
-            </span>
-          </a>
         </div>
       </div>
 
@@ -199,11 +186,11 @@ function Footer() {
             </a>
           ))}
         </div>
+        <p>© {new Date().getFullYear()} NHTI – Concord&apos;s Community College</p>
         <p>
           Member of the Community College System of New Hampshire · Accredited by
           NECHE
         </p>
-        <p>© {new Date().getFullYear()} NHTI – Concord&apos;s Community College</p>
       </div>
     </footer>
   );
