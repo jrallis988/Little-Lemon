@@ -32,13 +32,13 @@
         <div class="logo">
             <a href="index.html" class="logo-mark" aria-label="Artistic Fountain &mdash; home"><span class="logo-line-1">Artistic</span><span class="logo-line-2">Fountain</span></a>
         </div>
-        <nav aria-label="Primary">
+                <nav aria-label="Primary">
             <ul class="nav" id="main-nav">
-                <li><a href="index.html#about">The Designer</a></li>
-                <li><a href="index.html#services">Services</a></li>
-                <li><a href="index.html#portfolio">Portfolio</a></li>
+                <li><a href="designer.html">The Designer</a></li>
+                <li><a href="services/index.html">Services</a></li>
+                <li><a href="portfolio.html">Portfolio</a></li>
                 <li><a href="blog/index.html">Blog</a></li>
-                <li><a href="resume.pdf" download>Resume</a></li>
+                <li><a href="resume.pdf" class="nav-resume" download="James-Rallis-Resume.pdf">Resume</a></li>
             </ul>
         </nav>
         <div class="header-right">
@@ -79,13 +79,13 @@
 
     <footer class="footer">
         <div class="footer-content">
-            <nav class="footer-nav">
-                <a href="index.html#about">About</a>
-                <a href="index.html#services">Services</a>
-                <a href="index.html#portfolio">Portfolio</a>
+                        <nav class="footer-nav">
+                <a href="designer.html">The Designer</a>
+                <a href="services/index.html">Services</a>
+                <a href="portfolio.html">Portfolio</a>
                 <a href="blog/index.html">Blog</a>
                 <a href="index.html#faq">FAQ</a>
-                <a href="index.html#contact">Contact</a>
+                <a href="index.html#contact-form">Contact</a>
             </nav>
             <div class="footer-copyright">
                 © 2026 Artistic Fountain™ — All rights reserved. <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms &amp; Conditions</a>
@@ -101,6 +101,15 @@
             toggle.classList.toggle('active', isOpen);
             toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
         }
+        document.querySelectorAll('.nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                const nav = document.querySelector('.nav');
+                const toggle = document.querySelector('.nav-toggle');
+                nav.classList.remove('active');
+                toggle.classList.remove('active');
+                toggle.setAttribute('aria-expanded', 'false');
+            });
+        });
     </script>
 </body>
 </html>

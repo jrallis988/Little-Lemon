@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Web design and front-end development for launch-ready sites — Artistic Fountain.">
+    <meta name="description" content="Web design — project brief, WordPress setup, design & development, testing and launch — Artistic Fountain.">
     <meta name="theme-color" content="#FF6B35">
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
     <title>Web Design — Artistic Fountain</title>
@@ -23,11 +23,11 @@
         </div>
         <nav aria-label="Primary">
             <ul class="nav" id="main-nav">
-                <li><a href="../index.html#about">The Designer</a></li>
-                <li><a href="../index.html#services">Services</a></li>
-                <li><a href="../index.html#portfolio">Portfolio</a></li>
+                <li><a href="../designer.html">The Designer</a></li>
+                <li><a href="index.html">Services</a></li>
+                <li><a href="../portfolio.html">Portfolio</a></li>
                 <li><a href="../blog/index.html">Blog</a></li>
-                <li><a href="../resume.pdf" download>Resume</a></li>
+                <li><a href="../resume.pdf" class="nav-resume" download="James-Rallis-Resume.pdf">Resume</a></li>
             </ul>
         </nav>
         <div class="header-right">
@@ -41,26 +41,59 @@
 
     <main id="main" class="service-page">
         <div class="service-page-inner">
-            <a href="../index.html#services" class="service-back">← All Services</a>
+            <a href="index.html" class="service-back">← All Services</a>
             <p class="service-kicker">Service</p>
             <h1>Web Design</h1>
-            <p class="service-lead">Marketing and brand websites designed and built to ship — strong structure, on-brand visuals, and production-ready front-end code.</p>
-
-            <section class="service-block">
-                <h2>What’s included</h2>
-                <ul class="service-list">
-                    <li>Site architecture and information design</li>
-                    <li>Custom page design (home, landing, about, contact)</li>
-                    <li>Responsive layouts for desktop and mobile</li>
-                    <li>Front-end build (HTML/CSS/JS or modern frameworks)</li>
-                    <li>Performance and accessibility basics</li>
-                    <li>Handoff or full launch support</li>
-                </ul>
-            </section>
+            <p class="service-lead">Launch-ready websites designed and built with clear structure, strong brand presence, and a month of dedicated support after go-live.</p>
 
             <section class="service-block">
                 <h2>How it works</h2>
-                <p>We define structure and content hierarchy, design key templates, then build production pages you can launch. Ideal for studios, institutions, and brands that need a site that looks as sharp as the brand.</p>
+                <div class="service-process">
+                <div class="service-process-step">
+                    <div class="service-process-num">01</div>
+                    <div class="service-process-body">
+                        <h3>Web Project Brief</h3>
+                        <p>We kick off with a specialized design brief outlining your business goals, target audience, and structuring the overall sitemap and page hierarchy for your site.</p>
+                    </div>
+                </div>
+                <div class="service-process-step">
+                    <div class="service-process-num">02</div>
+                    <div class="service-process-body">
+                        <h3>Content &amp; Setup</h3>
+                        <p>Once content is provided, your WordPress site is configured with reliable hosting, domain routing, and essential plugins.</p>
+                    </div>
+                </div>
+                <div class="service-process-step">
+                    <div class="service-process-num">03</div>
+                    <div class="service-process-body">
+                        <h3>Design &amp; Development</h3>
+                        <p>The homepage is designed and approved first, followed by building out the remaining pages with your ongoing feedback.</p>
+                    </div>
+                </div>
+                <div class="service-process-step">
+                    <div class="service-process-num">04</div>
+                    <div class="service-process-body">
+                        <h3>Testing &amp; Launch</h3>
+                        <p>After full mobile and desktop optimization, we test all forms, links, and analytics before taking the site live, backed by a month of dedicated support.</p>
+                    </div>
+                </div>
+                </div>
+            </section>
+
+
+            <section class="service-block service-toolkit" aria-labelledby="toolkit-heading">
+                <h2 id="toolkit-heading">Toolkit</h2>
+                <p class="toolkit-desc">Front-end design is the art and engineering of what users actually see and interact with in their browsers. We focus entirely on the client-facing layer—building responsive, high-performance layouts, interactive UI components, and real code structures that look sharp, load instantly, and translate seamlessly into functional web experiences.</p>
+                <ul class="toolkit-grid">
+                    <li class="toolkit-item">
+                        <img src="../images/tools/cursor.svg" alt="" width="48" height="48" loading="lazy">
+                        <span>Cursor</span>
+                    </li>
+                    <li class="toolkit-item">
+                        <img src="../images/tools/react.svg" alt="" width="48" height="48" loading="lazy">
+                        <span>HTML / CSS / React.js</span>
+                    </li>
+                </ul>
             </section>
 
             <div class="service-page-cta">
@@ -69,7 +102,7 @@
 
             <nav class="service-other" aria-label="Other services">
                 <h2>Other services</h2>
-                                <div class="service-other-links">
+                <div class="service-other-links">
                 <a href="brand-strategy.html">Brand &amp; Graphic Design</a>
                 <a href="digital-design.html">UI/UX Design</a>
                 <a href="animation.html">Animation</a>
@@ -83,12 +116,12 @@
     <footer class="footer">
         <div class="footer-content">
             <nav class="footer-nav">
-                <a href="../index.html#about">About</a>
-                <a href="../index.html#services">Services</a>
-                <a href="../index.html#portfolio">Portfolio</a>
+                <a href="../designer.html">The Designer</a>
+                <a href="index.html">Services</a>
+                <a href="../portfolio.html">Portfolio</a>
                 <a href="../blog/index.html">Blog</a>
                 <a href="../index.html#faq">FAQ</a>
-                <a href="../index.html#contact">Contact</a>
+                <a href="../index.html#contact-form">Contact</a>
             </nav>
             <div class="footer-copyright">
                 © 2026 Artistic Fountain™ — All rights reserved. <a href="../privacy.html">Privacy Policy</a> · <a href="../terms.html">Terms &amp; Conditions</a>
@@ -116,3 +149,4 @@
     </script>
 </body>
 </html>
+

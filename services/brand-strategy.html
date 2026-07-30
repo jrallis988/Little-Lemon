@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Brand and graphic design — identity systems, print, and art direction for ambitious brands — Artistic Fountain.">
+    <meta name="description" content="Brand and graphic design — brief, concept, system build, and asset handoff — Artistic Fountain.">
     <meta name="theme-color" content="#FF6B35">
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
     <title>Brand & Graphic Design — Artistic Fountain</title>
@@ -23,11 +23,11 @@
         </div>
         <nav aria-label="Primary">
             <ul class="nav" id="main-nav">
-                <li><a href="../index.html#about">The Designer</a></li>
-                <li><a href="../index.html#services">Services</a></li>
-                <li><a href="../index.html#portfolio">Portfolio</a></li>
+                <li><a href="../designer.html">The Designer</a></li>
+                <li><a href="index.html">Services</a></li>
+                <li><a href="../portfolio.html">Portfolio</a></li>
                 <li><a href="../blog/index.html">Blog</a></li>
-                <li><a href="../resume.pdf" download>Resume</a></li>
+                <li><a href="../resume.pdf" class="nav-resume" download="James-Rallis-Resume.pdf">Resume</a></li>
             </ul>
         </nav>
         <div class="header-right">
@@ -41,27 +41,63 @@
 
     <main id="main" class="service-page">
         <div class="service-page-inner">
-            <a href="../index.html#services" class="service-back">← All Services</a>
+            <a href="index.html" class="service-back">← All Services</a>
             <p class="service-kicker">Service</p>
-            <h1>Brand & Graphic Design</h1>
-            <p class="service-lead">Graphic design with strategy behind it. This offering covers brand positioning, visual identity, print and digital collateral, and art direction so every touchpoint feels intentional.</p>
-
-            <section class="service-block">
-                <h2>What’s included</h2>
-                <ul class="service-list">
-                    <li>Graphic design for print and digital</li>
-                    <li>Brand positioning and messaging</li>
-                    <li>Logo design and identity systems</li>
-                    <li>Color palettes and typography guidelines</li>
-                    <li>Art direction for campaigns and publications</li>
-                    <li>Print collateral (business cards, letterheads, brand books)</li>
-                    <li>Brand documentation and asset libraries</li>
-                </ul>
-            </section>
+            <h1>Brand &amp; Graphic Design</h1>
+            <p class="service-lead">Identity systems built for print and digital — from the first brief through finalized brand assets ready to deploy.</p>
 
             <section class="service-block">
                 <h2>How it works</h2>
-                <p>We start with discovery — audience, competitors, and goals — then design the graphic system that scales across digital and print. Art direction sits inside this work so campaigns and identity stay aligned.</p>
+                <div class="service-process">
+                <div class="service-process-step">
+                    <div class="service-process-num">01</div>
+                    <div class="service-process-body">
+                        <h3>Brand &amp; Identity Brief</h3>
+                        <p>We start with a targeted design brief to outline your core identity, target audience, aesthetic goals, and whether the deliverables are for digital use, print, or both.</p>
+                    </div>
+                </div>
+                <div class="service-process-step">
+                    <div class="service-process-num">02</div>
+                    <div class="service-process-body">
+                        <h3>Concept Development</h3>
+                        <p>Initial design concepts, logomarks, and color systems are drafted and presented for your direct feedback.</p>
+                    </div>
+                </div>
+                <div class="service-process-step">
+                    <div class="service-process-num">03</div>
+                    <div class="service-process-body">
+                        <h3>Refinement &amp; System Build</h3>
+                        <p>We narrow down the strongest direction, polishing typography, icon sets, and brand assets into a cohesive, versatile system.</p>
+                    </div>
+                </div>
+                <div class="service-process-step">
+                    <div class="service-process-num">04</div>
+                    <div class="service-process-body">
+                        <h3>Asset Handoff</h3>
+                        <p>You receive all finalized vector source files, raster exports, and brand guidelines completely ready for print and digital deployment.</p>
+                    </div>
+                </div>
+                </div>
+            </section>
+
+
+            <section class="service-block service-toolkit" aria-labelledby="toolkit-heading">
+                <h2 id="toolkit-heading">Toolkit</h2>
+                <p class="toolkit-desc">We use the industry-standard Adobe Creative Cloud suite to build bulletproof visual identities. Illustrator handles clean, infinitely scalable vector marks and logos; Photoshop manages rich raster graphics and image composition; and InDesign brings everything together for structured, multi-page brand guidelines and print collateral.</p>
+                <ul class="toolkit-grid">
+                    <li class="toolkit-item">
+                        <img src="../images/tools/photoshop.svg" alt="" width="48" height="48" loading="lazy">
+                        <span>Adobe Photoshop</span>
+                    </li>
+                    <li class="toolkit-item">
+                        <img src="../images/tools/illustrator.svg" alt="" width="48" height="48" loading="lazy">
+                        <span>Adobe Illustrator</span>
+                    </li>
+                    <li class="toolkit-item">
+                        <img src="../images/tools/indesign.svg" alt="" width="48" height="48" loading="lazy">
+                        <span>Adobe InDesign</span>
+                    </li>
+                </ul>
             </section>
 
             <div class="service-page-cta">
@@ -70,7 +106,7 @@
 
             <nav class="service-other" aria-label="Other services">
                 <h2>Other services</h2>
-                                <div class="service-other-links">
+                <div class="service-other-links">
                 <a href="digital-design.html">UI/UX Design</a>
                 <a href="web-design.html">Web Design</a>
                 <a href="animation.html">Animation</a>
@@ -84,12 +120,12 @@
     <footer class="footer">
         <div class="footer-content">
             <nav class="footer-nav">
-                <a href="../index.html#about">About</a>
-                <a href="../index.html#services">Services</a>
-                <a href="../index.html#portfolio">Portfolio</a>
+                <a href="../designer.html">The Designer</a>
+                <a href="index.html">Services</a>
+                <a href="../portfolio.html">Portfolio</a>
                 <a href="../blog/index.html">Blog</a>
                 <a href="../index.html#faq">FAQ</a>
-                <a href="../index.html#contact">Contact</a>
+                <a href="../index.html#contact-form">Contact</a>
             </nav>
             <div class="footer-copyright">
                 © 2026 Artistic Fountain™ — All rights reserved. <a href="../privacy.html">Privacy Policy</a> · <a href="../terms.html">Terms &amp; Conditions</a>
@@ -117,3 +153,4 @@
     </script>
 </body>
 </html>
+
