@@ -66,11 +66,9 @@ function ResourceIcon({ name }) {
   if (name === "library") {
     return (
       <svg {...props}>
-        <path d="M8 8h8a3 3 0 0 1 3 3v19H11a3 3 0 0 1-3-3V8z" />
-        <path d="M19 11h8a3 3 0 0 1 3 3v16h-8" />
-        <path d="M11 14h3M11 19h3M11 24h3" />
-        <path d="M23 16h3M23 21h3" />
-        <path d="M7 33h26" />
+        <rect x="10" y="6" width="20" height="28" rx="1.5" />
+        <path d="M15 6v28" />
+        <path d="M18 13h8M18 18h8M18 23h5" />
       </svg>
     );
   }
