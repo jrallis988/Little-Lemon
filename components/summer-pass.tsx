@@ -1,3 +1,6 @@
+"use client";
+
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { track } from "@/lib/analytics";
 
@@ -6,55 +9,57 @@ export function SummerPass() {
     <section
       id="summer-pass"
       aria-labelledby="summer-pass-heading"
-      className="scroll-mt-14 overflow-hidden bg-pf-purple text-white"
+      className="scroll-mt-14 bg-white"
     >
-      <div className="relative mx-auto grid max-w-5xl gap-6 px-4 py-10 md:grid-cols-[1.2fr_0.8fr] md:items-center md:px-6 md:py-12">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -right-16 -top-20 h-56 w-56 rounded-full bg-pf-yellow/20 blur-3xl"
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -bottom-24 left-1/3 h-48 w-48 rounded-full bg-pf-yellow/10 blur-3xl"
-        />
+      <div className="mx-auto max-w-3xl px-4 py-10 md:px-6 md:py-12">
+        <div className="overflow-hidden rounded-3xl border border-pf-line bg-white shadow-[0_12px_28px_-18px_rgba(61,9,88,0.3)]">
+          <div className="relative aspect-[16/10]">
+            <Image
+              src="/images/cardio-gym.jpg"
+              alt="Teens training during High School Summer Pass at Planet Fitness"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 720px"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-pf-purple-ink/85 via-pf-purple/35 to-transparent" />
+            <div className="absolute inset-x-4 bottom-4 text-white">
+              <p className="font-display text-lg leading-none tracking-tight">
+                planet fitness
+              </p>
+              <p className="mt-1 font-display text-2xl uppercase tracking-tight text-pf-yellow md:text-3xl">
+                High School Summer Pass
+              </p>
+              <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.18em] text-white/85">
+                Powered by Gymshark
+              </p>
+            </div>
+          </div>
 
-        <div className="relative">
-          <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-pf-yellow">
-            High School Summer Pass® is here
-          </p>
-          <h2
-            id="summer-pass-heading"
-            className="mt-2 font-display text-3xl tracking-tight md:text-4xl"
-          >
-            Teens 14–19 work out free through August 31
-          </h2>
-          <p className="mt-2 max-w-xl text-sm text-white/85 md:text-base">
-            Build strength where it counts this summer—with progress that’s all
-            yours. Plus, enjoy 20% off Gymshark when you sign up.
-          </p>
-        </div>
-
-        <div className="relative flex flex-col gap-3 sm:flex-row md:flex-col md:items-end">
-          <Button asChild variant="app" size="lg" className="w-full sm:w-auto">
-            <a
-              href="https://www.planetfitness.com/SummerPass"
-              target="_blank"
-              rel="noreferrer"
-              onClick={() =>
-                track("summer_pass_click", { source: "home_promo" })
-              }
+          <div className="p-5 md:p-6">
+            <h2
+              id="summer-pass-heading"
+              className="font-display text-2xl uppercase tracking-tight text-pf-ink md:text-3xl"
             >
-              Sign Up Now
-            </a>
-          </Button>
-          <Button
-            asChild
-            variant="outline"
-            size="lg"
-            className="w-full border-white/35 bg-transparent text-white hover:bg-white/10 hover:text-white sm:w-auto"
-          >
-            <a href="#clubs">Find a Club Near You</a>
-          </Button>
+              High School Summer Pass® is here
+            </h2>
+            <p className="mt-2 text-sm text-pf-ink/70 md:text-base">
+              NOW – August 31, teens ages 14–19 can work out for FREE. Build
+              strength where it counts this summer – with progress that’s all
+              yours. Plus, enjoy 20% off Gymshark when you sign up.
+            </p>
+            <Button asChild variant="purple" className="mt-4 w-full">
+              <a
+                href="https://www.planetfitness.com/SummerPass"
+                target="_blank"
+                rel="noreferrer"
+                onClick={() =>
+                  track("summer_pass_click", { source: "home_promo" })
+                }
+              >
+                Sign Up Now
+              </a>
+            </Button>
+          </div>
         </div>
       </div>
     </section>

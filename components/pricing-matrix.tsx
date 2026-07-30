@@ -107,27 +107,24 @@ export function PricingMatrix() {
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-pf-purple-deep via-pf-purple/50 to-pf-purple/20" />
         <div className="absolute inset-x-0 bottom-0 px-4 pb-3 md:px-5">
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-pf-yellow">
-              Memberships
-            </p>
             <h2
               id="pricing-heading"
               className="font-display text-2xl tracking-tight text-white sm:text-3xl md:text-4xl"
             >
-              Our Memberships
+              Memberships
             </h2>
             {club ? (
               <p className="mt-1 max-w-2xl text-sm text-white/80">
                 Local rates for{" "}
                 <span className="font-semibold text-white">{club.name}</span>.
-                Both get you The Judgement Free Zone® and tons of cardio &amp;
-                strength equipment.
+                Both get you access to The Judgement Free Zone®, and tons of
+                cardio and strength equipment.
               </p>
             ) : (
               <p className="mt-1 max-w-2xl text-sm text-white/70">
                 We offer the PF Black Card® Membership and Classic Membership.
-                Both get you The Judgement Free Zone® and tons of cardio and
-                strength equipment. Pick a club to lock local dues.
+                Both get you access to The Judgement Free Zone®, and tons of
+                cardio and strength equipment. Pick a club to lock local dues.
               </p>
             )}
           </div>
@@ -186,6 +183,14 @@ export function PricingMatrix() {
                 <div className="mt-4">
                   <div className="flex flex-wrap items-end justify-between gap-3">
                     <div>
+                      <p
+                        className={cn(
+                          "text-xs",
+                          featured ? "text-white/65" : "text-pf-ink/55"
+                        )}
+                      >
+                        Starting at
+                      </p>
                       <p className="flex items-end gap-1">
                         <span
                           className={cn(

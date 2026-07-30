@@ -1,10 +1,11 @@
-import { MapPin, RotateCcw, Tag } from "lucide-react";
+import { RotateCcw, Search, Tag } from "lucide-react";
+import { PricingDisclaimer } from "@/components/pricing-disclaimer";
 
 const ACTIONS = [
   {
     href: "#clubs",
     label: "Find a Club Near You",
-    icon: MapPin,
+    icon: Search,
   },
   {
     href: "#pricing",
@@ -48,6 +49,7 @@ export function GetStarted() {
           ))}
         </ul>
       </div>
+      <PricingDisclaimer />
     </section>
   );
 }

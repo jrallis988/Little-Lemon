@@ -231,11 +231,19 @@ function ClubDetail({ club }: { club: Club }) {
             </ul>
           </div>
 
-          <div className="mt-auto flex flex-col gap-2 pt-1 sm:flex-row">
-            <Button asChild variant="purple" className="flex-1">
+          <div className="mt-auto flex flex-col gap-2 pt-1 sm:flex-row sm:items-center">
+            <a
+              href={`https://www.planetfitness.com/gyms`}
+              target="_blank"
+              rel="noreferrer"
+              className="text-sm font-semibold text-pf-yellow underline underline-offset-2 sm:mr-auto"
+            >
+              Club Details
+            </a>
+            <Button asChild variant="purple" className="flex-1 sm:flex-none">
               <a href="#pricing">Review Plans</a>
             </Button>
-            <Button asChild className="flex-1">
+            <Button asChild className="flex-1 sm:flex-none">
               <Link
                 href={`/join?club=${club.id}&plan=${
                   black.available ? "black-card" : "classic"
@@ -250,21 +258,6 @@ function ClubDetail({ club }: { club: Club }) {
               >
                 Join Now
               </Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              className="border-white/30 bg-transparent text-white hover:bg-white/10 hover:text-white sm:flex-none"
-            >
-              <a
-                href={`https://maps.google.com/?q=${encodeURIComponent(
-                  `${club.address}, ${club.city}, ${club.state} ${club.zip}`
-                )}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Directions
-              </a>
             </Button>
           </div>
         </div>
@@ -399,9 +392,9 @@ export function ClubLocator() {
           </p>
           <h1
             id="club-locator-heading"
-            className="mt-2 max-w-md text-lg font-medium leading-snug text-white sm:text-xl"
+            className="mt-2 max-w-md font-display text-3xl tracking-tight text-white sm:text-4xl"
           >
-            Find a Club Near You
+            Explore Clubs Near You
           </h1>
           <p className="mt-1.5 max-w-md text-sm text-white/80 sm:text-base">
             Clear local membership pricing. The Judgement Free Zone®—a gym where
@@ -422,7 +415,7 @@ export function ClubLocator() {
                   id="club-search"
                   value={query}
                   onChange={(event) => onSearchChange(event.target.value)}
-                  placeholder="Search by address, city, or ZIP…"
+                  placeholder="Search by address, city, or ZIP code…"
                   className="h-11 border-0 bg-white pl-10 text-base shadow-none"
                   autoComplete="postal-code"
                   role="combobox"
