@@ -148,7 +148,7 @@ export function Header() {
                 );
               })}
               <div className="site-header__a11y">
-                <AccessibilityLauncher tone={transparent ? "onDark" : "onLight"} />
+                <AccessibilityLauncher tone="onDark" />
               </div>
               <Link href="/how-to-vote" className="btn-primary site-header__cta">
                 How to Vote
@@ -157,7 +157,7 @@ export function Header() {
 
             <div className="site-header__mobile-actions">
               <div className="site-header__a11y site-header__a11y--compact">
-                <AccessibilityLauncher tone={transparent ? "onDark" : "onLight"} />
+                <AccessibilityLauncher tone="onDark" />
               </div>
               <Link href="/how-to-vote" className="btn-primary site-header__cta-sm">
                 How to Vote
