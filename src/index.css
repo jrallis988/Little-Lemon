@@ -1042,6 +1042,15 @@ address {
   margin-top: 0.5rem;
 }
 
+.cta-band .btn--solid {
+  background: var(--gold);
+  color: var(--maroon-ink);
+}
+
+.cta-band .btn--solid:hover {
+  background: var(--gold-soft);
+}
+
 .cta-band__inner .hero__actions {
   justify-content: center;
 }
