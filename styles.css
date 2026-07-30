@@ -3083,3 +3083,73 @@ button:focus:not(:focus-visible) {
         font-size: 1.25rem;
     }
 }
+
+/* SERVICE TOOLKIT */
+.service-toolkit {
+    margin-top: 0.5rem;
+}
+
+.toolkit-desc {
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin-bottom: 1.75rem;
+}
+
+.toolkit-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+}
+
+.toolkit-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    text-align: center;
+    padding: 1.15rem 0.85rem;
+    border: 1px solid rgba(248, 248, 248, 0.12);
+    background: rgba(248, 248, 248, 0.04);
+    border-radius: 10px;
+    transition: border-color 0.25s, transform 0.25s, background 0.25s;
+}
+
+.toolkit-item:hover {
+    border-color: rgba(255, 0, 128, 0.45);
+    background: rgba(255, 0, 128, 0.08);
+    transform: translateY(-3px);
+}
+
+.toolkit-item img {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: block;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+}
+
+.toolkit-item span {
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--cream);
+    line-height: 1.35;
+}
+
+.anim-toolkit .toolkit-grid {
+    margin-top: 0.5rem;
+}
+
+.toolkit-grid--anim .toolkit-item {
+    background: rgba(10, 10, 15, 0.55);
+    border-color: rgba(255, 0, 128, 0.2);
+}
+
+@media (max-width: 600px) {
+    .toolkit-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
