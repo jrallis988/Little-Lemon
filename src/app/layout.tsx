@@ -22,6 +22,24 @@ export const metadata: Metadata = {
   },
   description:
     "Find doctors, explore conditions and programs, request appointments, and prepare for your visit.",
+  openGraph: {
+    type: "website",
+    siteName: siteConfig.name,
+    title: `${siteConfig.name} — ${siteConfig.tagline}`,
+    description:
+      "Find doctors, explore conditions and programs, request appointments, and prepare for your visit.",
+    url: siteConfig.url,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteConfig.name} — ${siteConfig.tagline}`,
+    description:
+      "Find doctors, explore conditions and programs, request appointments, and prepare for your visit.",
+  },
+  robots:
+    siteConfig.mode === "production"
+      ? { index: true, follow: true }
+      : { index: false, follow: false },
 };
 
 export default function RootLayout({

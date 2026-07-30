@@ -17,7 +17,7 @@ const columns = [
     title: "Patients & Families",
     links: [
       { label: "Patients & Families hub", href: "/patients-families" },
-      { label: "MyChildren's Portal", href: "/portal" },
+      { label: "Portal preview", href: "/portal" },
       { label: "Prepare for Your Visit", href: "/patients-families/prepare-for-your-visit" },
       { label: "Billing & Insurance", href: "/patients-families/billing" },
       { label: "Medical Records", href: "/patients-families/medical-records" },

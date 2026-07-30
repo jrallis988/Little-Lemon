@@ -1,14 +1,30 @@
 import { NextResponse } from "next/server";
 import { processIntake } from "@/lib/intake/deliver";
 import { validateAppointment } from "@/lib/intake/validate";
+import {
+  clientKey,
+  isHoneypotTriggered,
+  rateLimit,
+} from "@/lib/intake/rateLimit";
 import { insuranceCarriers } from "@/content/data/departments";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
-  let body: unknown;
+  const limited = rateLimit(`appointment:${clientKey(request)}`);
+  if (!limited.ok) {
+    return NextResponse.json(
+      { ok: false, errors: ["Too many requests. Please try again shortly."] },
+      {
+        status: 429,
+        headers: { "Retry-After": String(limited.retryAfterSec) },
+      },
+    );
+  }
+
+  let body: Record<string, unknown>;
   try {
-    body = await request.json();
+    body = (await request.json()) as Record<string, unknown>;
   } catch {
     return NextResponse.json(
       { ok: false, errors: ["Invalid JSON body."] },
@@ -16,8 +32,17 @@ export async function POST(request: Request) {
     );
   }
 
+  // Silent success for bots filling honeypot fields
+  if (isHoneypotTriggered(body)) {
+    return NextResponse.json({
+      ok: true,
+      referenceId: `BCH-${Math.floor(100000 + Math.random() * 900000)}`,
+      delivery: { stored: false, emailed: false, webhook: false },
+    });
+  }
+
   const parsed = validateAppointment(
-    (body ?? {}) as Parameters<typeof validateAppointment>[0],
+    body as Parameters<typeof validateAppointment>[0],
   );
   if (!parsed.ok) {
     return NextResponse.json(

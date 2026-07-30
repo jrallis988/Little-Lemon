@@ -34,6 +34,7 @@ export function ProfessionalRequestForm({ mode }: { mode: RequestMode }) {
       specialty: String(form.get("specialty") || ""),
       urgency: String(form.get("urgencyOrRecords") || ""),
       summary: String(form.get("details") || ""),
+      website: String(form.get("website") || ""),
     };
 
     try {
@@ -219,6 +220,18 @@ export function ProfessionalRequestForm({ mode }: { mode: RequestMode }) {
           </div>
         </div>
       </fieldset>
+
+      <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+        <label htmlFor="website">Website</label>
+        <input
+          id="website"
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          defaultValue=""
+        />
+      </div>
 
       <label className="flex items-start gap-s3 text-sm text-text-body">
         <input

@@ -22,6 +22,8 @@ Locally, submissions also write JSON to `.data/intake/` (gitignored).
 
 Health check: `GET /api/health`
 
+Staff inbox (local/staging): set `INTAKE_OPS_SECRET`, then open `/ops/intake`.
+
 ## 3. CMS (optional for v1)
 
 1. Create a Sanity project.
@@ -33,12 +35,13 @@ Health check: `GET /api/health`
 
 - [ ] Legal pages reviewed (`/privacy`, `/terms`, `/accessibility`, `/non-discrimination`)
 - [ ] Intake webhook or Resend verified with a test appointment
+- [ ] Staff inbox secret set (`INTAKE_OPS_SECRET`) if using `/ops/intake`
 - [ ] `NEXT_PUBLIC_SITE_URL` set to the production domain
-- [ ] `NEXT_PUBLIC_SITE_MODE=production` (hides staging banner)
+- [ ] `NEXT_PUBLIC_SITE_MODE=production` (hides staging banner + enables indexing)
 - [ ] Analytics ID set if needed
 - [ ] Confirm branding/authorization status (official vs redesign portfolio)
-- [ ] Portal preview kept non-PHI or removed from primary nav for v1
-- [ ] CI green on the release branch
+- [ ] Portal remains preview-only (not for real PHI)
+- [ ] CI green (`lint`, unit tests, Playwright e2e)
 
 ## 5. Recommended v1 scope
 

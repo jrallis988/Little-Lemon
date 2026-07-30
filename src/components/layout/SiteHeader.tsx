@@ -106,7 +106,7 @@ const navItems: NavItem[] = [
         accent: true,
         links: [
           { label: "Patients & Families hub", href: "/patients-families" },
-          { label: "MyChildren's Portal", href: "/portal" },
+          { label: "Portal preview (not live)", href: "/portal" },
           { label: "Request an Appointment", href: "/appointments/request" },
           { label: "Emergency Department", href: "/emergency" },
         ],
@@ -412,7 +412,7 @@ export function SiteHeader() {
                     "flex h-10 items-center gap-[9px] border-l border-white/[0.07] pl-3.5",
                     headerFocus,
                   )}
-                  aria-label="Patient Portal — your health record and messages"
+                  aria-label="Patient Portal preview — not a live medical record"
                   aria-haspopup="dialog"
                   aria-expanded={portalOpen}
                   aria-controls={`${baseId}-portal`}
@@ -436,10 +436,10 @@ export function SiteHeader() {
                   </span>
                   <span className="leading-tight max-sm:hidden">
                     <span className="block text-xs font-bold text-white">
-                      Patient Portal
+                      Portal preview
                     </span>
                     <span className="block text-[10px] text-white/[0.38]">
-                      Your health record
+                      UX only · not live
                     </span>
                   </span>
                 </button>
@@ -452,7 +452,7 @@ export function SiteHeader() {
                     !portalOpen && "invisible",
                   )}
                   role="dialog"
-                  aria-label="Patient Portal options"
+                  aria-label="Portal preview options"
                 >
                   <div className="p-5">
                     <div className="mb-1.5 flex items-center gap-2">
@@ -506,14 +506,14 @@ export function SiteHeader() {
                       className="mb-2 flex min-h-11 items-center justify-center rounded-sm bg-blue text-center text-base font-bold text-white no-underline hover:bg-ocean"
                       onClick={() => setPortalOpen(false)}
                     >
-                      Sign in to Portal
+                      Open portal preview
                     </Link>
                     <Link
                       href="/patients-families"
                       className="mb-3 block text-center text-sm text-ocean"
                       onClick={() => setPortalOpen(false)}
                     >
-                      New to the portal? Get help setting up
+                      Patients &amp; families resources
                     </Link>
                     <div className="border-t border-border pt-3">
                       <p className="m-0 text-[11px] font-light leading-[1.55] text-text-meta">
@@ -631,23 +631,23 @@ export function SiteHeader() {
               >
                 <IconLock className="text-white/80" />
               </span>
-              <span className="text-sm font-bold text-white">Patient Portal</span>
+              <span className="text-sm font-bold text-white">Portal preview</span>
             </div>
             <p className="pb-3 pl-[27px] text-xs font-light leading-[1.6] text-white/40">
-              Test results, messages, and appointments
+              UX preview only — not a live medical record
             </p>
             <Link
-              href="/find-a-doctor"
+              href="/portal"
               className="mb-[7px] flex min-h-11 items-center justify-center rounded-sm bg-white text-center text-base font-bold text-blue no-underline"
             >
-              Sign in
+              Open preview
             </Link>
           </div>
 
           <div className="px-3 pb-2 pt-1">
             {[
               { label: "Find a Doctor", href: "/find-a-doctor" },
-              { label: "Book an Appointment", href: "/find-a-doctor" },
+              { label: "Book an Appointment", href: "/appointments/request" },
               {
                 label: "Search the site",
                 href: "/search",

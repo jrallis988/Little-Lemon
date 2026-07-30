@@ -25,9 +25,12 @@ npm run dev
 ```
 
 ```bash
-npm run test
+npm run test        # unit + component
+npm run test:e2e    # Playwright smoke (builds + starts server)
 npm run build
 ```
+
+Staff inbox (local/staging): set `INTAKE_OPS_SECRET` and open `/ops/intake`.
 
 ## Production wiring
 

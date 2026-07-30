@@ -127,6 +127,8 @@ export function AppointmentWizard() {
           phone: draft.phone,
           email: draft.email,
           notes: draft.notes,
+          // Honeypot — leave empty
+          website: "",
         }),
       });
       const data = (await res.json()) as {
@@ -427,6 +429,17 @@ export function AppointmentWizard() {
                 onChange={(e) => updateDraft({ notes: e.target.value })}
                 rows={4}
                 className="w-full rounded-sm border-[1.5px] border-border bg-white px-[13px] py-2.5 font-sans text-base font-light text-text outline-none focus:border-ocean"
+              />
+            </div>
+            <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+              <label htmlFor="website">Website</label>
+              <input
+                id="website"
+                name="website"
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                defaultValue=""
               />
             </div>
           </fieldset>
