@@ -144,9 +144,6 @@ export default function Footer() {
               <a href={SITE.tripadvisorUrl} target="_blank" rel="noreferrer">
                 TripAdvisor
               </a>
-              <a href={SITE.website} target="_blank" rel="noreferrer">
-                Official site
-              </a>
             </div>
           </div>
         </div>
