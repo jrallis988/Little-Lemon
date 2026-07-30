@@ -448,16 +448,6 @@ p {
   animation: rise-in 900ms var(--ease) 500ms forwards;
 }
 
-.hero__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-top: 1.75rem;
-  opacity: 0;
-  transform: translateY(18px);
-  animation: rise-in 900ms var(--ease) 560ms forwards;
-}
-
 @keyframes rise-in {
   to {
     opacity: 1;
