@@ -35,8 +35,9 @@ test("renders about, reviews, location, faq, and legal sections", () => {
   expect(
     screen.getByRole("link", { name: /read guest reviews on tripadvisor/i })
   ).toBeInTheDocument();
-  expect(screen.getAllByText(/^cookie policy$/i).length).toBeGreaterThan(0);
-  expect(screen.getAllByText(/^privacy policy$/i).length).toBeGreaterThan(0);
+  expect(screen.getByRole("link", { name: /^cookies$/i })).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: /^privacy$/i })).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: /^policies$/i })).toBeInTheDocument();
   expect(screen.getByRole("heading", { name: /cookies on this site/i })).toBeInTheDocument();
   expect(
     screen.getByRole("region", {

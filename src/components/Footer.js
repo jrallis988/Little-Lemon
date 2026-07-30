@@ -4,25 +4,28 @@ import { COOKIE_POLICY, POLICIES, PRIVACY_POLICY, SITE, asset } from "../data";
 function LegalBlock({ id, policy }) {
   return (
     <details className="footer__legal" id={id}>
-      <summary>
-        <span>{policy.title}</span>
-        <span className="footer__legal-updated">{policy.updated}</span>
-      </summary>
-      <p className="footer__legal-intro">{policy.intro}</p>
-      <div className="footer__legal-sections">
-        {policy.sections.map((section) => (
-          <article key={section.title}>
-            <h4>{section.title}</h4>
-            <p>{section.body}</p>
-            {section.bullets ? (
-              <ul>
-                {section.bullets.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            ) : null}
-          </article>
-        ))}
+      <summary className="footer__legal-summary-sr">{policy.title}</summary>
+      <div className="footer__legal-panel">
+        <h3 className="footer__legal-title">
+          {policy.title}
+          <span className="footer__legal-updated">{policy.updated}</span>
+        </h3>
+        <p className="footer__legal-intro">{policy.intro}</p>
+        <div className="footer__legal-sections">
+          {policy.sections.map((section) => (
+            <article key={section.title}>
+              <h4>{section.title}</h4>
+              <p>{section.body}</p>
+              {section.bullets ? (
+                <ul>
+                  {section.bullets.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              ) : null}
+            </article>
+          ))}
+        </div>
       </div>
     </details>
   );
@@ -35,6 +38,14 @@ export default function Footer() {
       if (!["cookies", "privacy", "policies"].includes(id)) return;
       const el = document.getElementById(id);
       if (el instanceof HTMLDetailsElement) {
+        // Close siblings so only one panel is open
+        document
+          .querySelectorAll(".footer__legal-drawer details")
+          .forEach((node) => {
+            if (node instanceof HTMLDetailsElement && node !== el) {
+              node.open = false;
+            }
+          });
         el.open = true;
         el.scrollIntoView({ behavior: "smooth", block: "start" });
       }
@@ -90,23 +101,6 @@ export default function Footer() {
           </div>
         </div>
 
-        <details className="footer__policies-fold" id="policies">
-          <summary>Stay policies</summary>
-          <div className="footer__policies">
-            {POLICIES.map((policy) => (
-              <article key={policy.id}>
-                <h3>{policy.title}</h3>
-                <p>{policy.body}</p>
-              </article>
-            ))}
-          </div>
-        </details>
-
-        <div className="footer__legal-stack">
-          <LegalBlock id="cookies" policy={COOKIE_POLICY} />
-          <LegalBlock id="privacy" policy={PRIVACY_POLICY} />
-        </div>
-
         <div className="footer__bottom">
           <p className="footer__copy">
             © {new Date().getFullYear()} {SITE.name}. Est. around {SITE.founded}.{" "}
@@ -117,6 +111,27 @@ export default function Footer() {
             <a href="#privacy">Privacy</a>
           </p>
           <p className="footer__credit">Powered by Artistic Fountain</p>
+        </div>
+
+        {/* Legal panels only expand when opened from the compact links above */}
+        <div className="footer__legal-drawer">
+          <details className="footer__legal" id="policies">
+            <summary className="footer__legal-summary-sr">Stay policies</summary>
+            <div className="footer__legal-panel">
+              <h3 className="footer__legal-title">Stay policies</h3>
+              <div className="footer__policies">
+                {POLICIES.map((policy) => (
+                  <article key={policy.id}>
+                    <h4>{policy.title}</h4>
+                    <p>{policy.body}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </details>
+
+          <LegalBlock id="cookies" policy={COOKIE_POLICY} />
+          <LegalBlock id="privacy" policy={PRIVACY_POLICY} />
         </div>
       </div>
     </footer>
