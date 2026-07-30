@@ -36,8 +36,8 @@ export function Footer() {
         <div className="absolute inset-0 bg-gradient-to-t from-footer-navy via-footer-navy/70 to-transparent" />
       </div>
 
-      <div className="mx-auto max-w-content px-6 pb-12 pt-2 md:px-8">
-        <div className="grid gap-10 md:grid-cols-[1.3fr_1fr]">
+      <div className="mx-auto max-w-content px-6 pb-7 pt-2 md:px-8">
+        <div className="grid gap-8 md:grid-cols-[1.3fr_1fr]">
           <div>
             <p className="font-display text-2xl font-normal text-white">
               {candidate.brandName}
@@ -93,46 +93,43 @@ export function Footer() {
           </nav>
         </div>
 
-        <div className="mt-10 grid gap-6 border-t border-white/15 pt-8 md:grid-cols-[1.2fr_1fr] md:items-start">
-          <div className="space-y-3 text-xs leading-relaxed text-white/80">
-            <p>
+        <div className="mt-8 border-t border-white/10 pt-5">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+            <p className="max-w-xl text-[0.7rem] leading-relaxed text-white/60">
               © {year} {candidate.brandName}. All rights reserved.
+              <span className="mx-1.5 text-white/25" aria-hidden>
+                ·
+              </span>
+              Paid for by {candidate.committee}
+              <span className="mx-1.5 text-white/25" aria-hidden>
+                ·
+              </span>
+              Powered by Artistic Fountain
             </p>
-            <p>
-              Paid for by {candidate.committee} | Independent Write-In Candidate
-            </p>
-            <p className="text-white/70">Powered by Artistic Fountain</p>
-          </div>
 
-          <nav aria-label="Legal and trust" className="md:justify-self-end md:text-right">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/80">
-              Legal &amp; trust
-            </p>
-            <ul className="mt-3 flex flex-wrap gap-x-3 gap-y-2 text-sm text-white/85 md:justify-end">
-              {trustLinks.map((link, i) => (
-                <li key={link.href} className="inline-flex items-center gap-3">
-                  {i > 0 && <span aria-hidden className="text-white/40">|</span>}
-                  <Link
-                    href={link.href}
-                    className="underline-offset-2 hover:text-white hover:underline"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-              <li className="inline-flex items-center gap-3">
-                <span aria-hidden className="text-white/40">|</span>
-                <a
-                  href={NH_ELECTIONS_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+            <nav
+              aria-label="Legal and trust"
+              className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[0.7rem] font-medium text-white/70 sm:justify-end"
+            >
+              {trustLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
                   className="underline-offset-2 hover:text-white hover:underline"
                 >
-                  Official Election Resources
-                </a>
-              </li>
-            </ul>
-          </nav>
+                  {link.label}
+                </Link>
+              ))}
+              <a
+                href={NH_ELECTIONS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline-offset-2 hover:text-white hover:underline"
+              >
+                Election Resources
+              </a>
+            </nav>
+          </div>
         </div>
       </div>
     </footer>
