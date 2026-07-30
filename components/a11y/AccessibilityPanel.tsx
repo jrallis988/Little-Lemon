@@ -115,13 +115,21 @@ function Toggle({
   );
 }
 
-export function AccessibilityLauncher() {
+export function AccessibilityLauncher({
+  tone = "onDark",
+}: {
+  tone?: "onDark" | "onLight";
+}) {
   const { openPanel } = useA11y();
   return (
     <button
       type="button"
       onClick={openPanel}
-      className="inline-flex items-center gap-2 rounded-cta border border-white/30 bg-white/10 px-3 py-1.5 text-xs font-semibold text-white hover:bg-white/20"
+      className={
+        tone === "onLight"
+          ? "inline-flex items-center gap-2 rounded-cta border border-slate-line bg-white/80 px-3 py-1.5 text-xs font-semibold text-navy transition-colors duration-300 hover:border-navy hover:bg-white"
+          : "inline-flex items-center gap-2 rounded-cta border border-white/30 bg-white/10 px-3 py-1.5 text-xs font-semibold text-white transition-colors duration-300 hover:bg-white/20"
+      }
       aria-haspopup="dialog"
     >
       <Accessibility className="h-4 w-4" aria-hidden />
