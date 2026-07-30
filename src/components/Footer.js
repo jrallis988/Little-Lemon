@@ -8,8 +8,8 @@ import {
 function SocialIcon({ icon }) {
   const common = {
     viewBox: "0 0 24 24",
-    width: "18",
-    height: "18",
+    width: "15",
+    height: "15",
     "aria-hidden": "true",
     fill: "currentColor",
   };
@@ -63,6 +63,11 @@ const footerActions = [
     label: "Important Forms",
     href: "https://lynx.nhti.edu/student-services/important-forms/",
   },
+  {
+    label: "Take a Virtual Tour",
+    href: VIRTUAL_TOUR,
+    ghost: true,
+  },
 ];
 
 const footerResources = [
@@ -92,7 +97,7 @@ const footerResources = [
 function Footer() {
   return (
     <footer className="site-footer">
-      <div className="footer-grid footer-grid--official">
+      <div className="footer-grid footer-grid--compact">
         <div className="footer-brand-block">
           <p className="footer-brand">NHTI</p>
           <p className="footer-lede">
@@ -100,11 +105,11 @@ function Footer() {
             River.
           </p>
           <img
-            className="footer-ccsnh footer-ccsnh--large"
+            className="footer-ccsnh"
             src="/brand/ccsnh-logo-white.png"
-            alt="Community College System of New Hampshire"
-            width="280"
-            height="100"
+            alt="part of the Community College System of New Hampshire"
+            width="200"
+            height="72"
           />
           <address className="footer-address">
             31 College Drive
@@ -112,50 +117,35 @@ function Footer() {
             Concord, NH 03301
             <br />
             <a href="tel:6032304000">603-230-4000</a>
-            <br />
+            {" · "}
             <a href="tel:8002470179">800-247-0179</a>
             <br />
             <a href="mailto:NHTIinfo@ccsnh.edu">Email NHTI</a>
           </address>
-          <div className="footer-social" aria-label="Social media">
-            {socialLinks.map((item) => (
+        </div>
+
+        <div className="footer-panel">
+          <p className="footer-label">Quick actions</p>
+          <div className="footer-actions">
+            {footerActions.map((item) => (
               <a
                 key={item.label}
+                className={
+                  item.ghost
+                    ? "footer-action-btn footer-action-btn--ghost"
+                    : "footer-action-btn"
+                }
                 href={item.href}
                 target="_blank"
                 rel="noreferrer"
-                aria-label={item.label}
               >
-                <SocialIcon icon={item.icon} />
+                {item.label}
               </a>
             ))}
           </div>
         </div>
 
-        <div className="footer-actions">
-          <p className="footer-label">Quick actions</p>
-          {footerActions.map((item) => (
-            <a
-              key={item.label}
-              className="footer-action-btn"
-              href={item.href}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {item.label}
-            </a>
-          ))}
-          <a
-            className="footer-action-btn footer-action-btn--ghost"
-            href={VIRTUAL_TOUR}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Take a Virtual Tour
-          </a>
-        </div>
-
-        <div>
+        <div className="footer-panel">
           <p className="footer-label">Resources</p>
           <ul className="footer-links">
             {footerResources.map((item) => (
@@ -173,7 +163,20 @@ function Footer() {
         </div>
       </div>
 
-      <div className="footer-meta footer-meta--policies">
+      <div className="footer-meta">
+        <div className="footer-social" aria-label="Social media">
+          {socialLinks.map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={item.label}
+            >
+              <SocialIcon icon={item.icon} />
+            </a>
+          ))}
+        </div>
         <div className="footer-policies">
           {policyLinks.map((item) => (
             <a
@@ -186,8 +189,10 @@ function Footer() {
             </a>
           ))}
         </div>
-        <p>© {new Date().getFullYear()} NHTI – Concord&apos;s Community College</p>
-        <p>
+        <p className="footer-copy">
+          © {new Date().getFullYear()} NHTI – Concord&apos;s Community College
+        </p>
+        <p className="footer-accreditation">
           Member of the Community College System of New Hampshire · Accredited by
           NECHE
         </p>
