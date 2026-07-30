@@ -146,34 +146,14 @@ export const studentQuickLinks = [
 
 export const actionTiles = [
   {
-    label: "Apply and Enroll",
-    icon: "/media/actions/applynew-2.png",
-    to: "/admissions",
-  },
-  {
-    label: "Financial Aid",
-    icon: "/media/actions/payingnew-1.png",
-    to: "/financial-aid",
-  },
-  {
     label: "Request Info",
     icon: "/media/actions/request-icon.png",
     to: "/admissions#inquiry-form",
   },
   {
-    label: "Virtual Tour",
-    icon: "/media/actions/visitnew-1.png",
-    href: "https://ccsnhmaps.college-tour.com/maps/map.php?ID=6",
-  },
-  {
     label: "Event Calendar",
     icon: "/media/actions/calendar-icon.png",
     to: "/events",
-  },
-  {
-    label: "Website Navigation",
-    icon: "/media/actions/website-navigation-icon.png",
-    href: "https://www.nhti.edu/navigating-nhti-online/",
   },
   {
     label: "Workforce Education",
@@ -185,6 +165,95 @@ export const actionTiles = [
     icon: "/media/actions/early-college-icon.png",
     href: "https://www.nhti.edu/academics/early-college/",
   },
+  {
+    label: "Library",
+    icon: "/media/actions/library-icon.svg",
+    href: "https://lynx.nhti.edu/library/",
+  },
+  {
+    label: "Bookstore",
+    icon: "/media/actions/bookstore-icon.svg",
+    href: "https://lynx.nhti.edu/bookstore/",
+  },
+  {
+    label: "Campus Map",
+    icon: "/media/actions/map-icon.svg",
+    href: "https://www.nhti.edu/contact-us/campus-map-virtual-tour/",
+  },
+  {
+    label: "IT Helpdesk",
+    icon: "/media/actions/it-helpdesk-icon.svg",
+    href: "mailto:NHTIhelpdesk@ccsnh.edu",
+  },
+];
+
+export const socialLinks = [
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/nhtilynx",
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/nhtilynx",
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/nhti-concord-community-college",
+  },
+  {
+    label: "X",
+    href: "https://x.com/NHTI",
+  },
+  {
+    label: "TikTok",
+    href: "https://www.tiktok.com/@nhtilynx",
+  },
+];
+
+export const legalLinks = [
+  {
+    label: "Privacy Policy",
+    href: "https://www.ccsnh.edu/ccsnh-privacy-statement/",
+  },
+  {
+    label: "Non-Discrimination Policy",
+    href: "https://www.ccsnh.edu/non-discrimination-policy/",
+  },
+  {
+    label: "Accessibility Policy",
+    href: "https://www.nhti.edu/departments/accessibility-services/accessibility-policy/",
+  },
+  {
+    label: "SDS",
+    href: "https://cloud.chemicalsafety.com/chemsafe3/client/FL353F",
+  },
+];
+
+export const footerQuickLinks = [
+  { label: "Academics", to: "/academics" },
+  { label: "Admissions", to: "/admissions" },
+  { label: "Financial Aid", to: "/financial-aid" },
+  { label: "Campus Life", to: "/campus" },
+  { label: "Events", to: "/events" },
+  { label: "About", to: "/about" },
+];
+
+export const footerDepartmentLinks = [
+  { label: "Workforce Education", to: "/workforce" },
+  { label: "Athletics", to: "/athletics" },
+  {
+    label: "Library",
+    href: "https://lynx.nhti.edu/library/",
+  },
+  {
+    label: "Bookstore",
+    href: "https://lynx.nhti.edu/bookstore/",
+  },
+  {
+    label: "Current Students",
+    href: "https://lynx.nhti.edu/",
+  },
+  { label: "Contact", to: "/contact" },
 ];
 
 export function getProgramById(id) {

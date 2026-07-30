@@ -162,12 +162,30 @@ const navItems = [
       { label: "About NHTI", to: "/about" },
       { label: "News", to: "/news" },
       {
-        label: "President’s Office",
-        href: "https://www.nhti.edu/about/presidents-office/",
-      },
-      {
         label: "Alumni",
         href: "https://www.nhti.edu/about/alumni/",
+      },
+      {
+        label: "Community Resources",
+        href: "https://www.nhti.edu/about/community-resources/",
+      },
+      {
+        type: "group",
+        label: "Leadership & Offices",
+        children: [
+          {
+            label: "President’s Office",
+            href: "https://www.nhti.edu/about/presidents-office/",
+          },
+          {
+            label: "Marketing Office",
+            href: "https://www.nhti.edu/about/marcomm/",
+          },
+          {
+            label: "Student Success Data",
+            href: "https://www.nhti.edu/about/student-success-data-points/",
+          },
+        ],
       },
     ],
   },
@@ -203,6 +221,34 @@ function DropdownLink({ item, onNavigate }) {
       {item.label}
     </a>
   );
+}
+
+function DropdownContent({ items, onNavigate }) {
+  return items.map((child) => {
+    if (child.type === "group") {
+      return (
+        <div
+          key={child.label}
+          className="nav-dropdown__group"
+          role="group"
+          aria-label={child.label}
+        >
+          <p className="nav-dropdown__heading">{child.label}</p>
+          {child.children.map((grouped) => (
+            <DropdownLink
+              key={grouped.label}
+              item={grouped}
+              onNavigate={onNavigate}
+            />
+          ))}
+        </div>
+      );
+    }
+
+    return (
+      <DropdownLink key={child.label} item={child} onNavigate={onNavigate} />
+    );
+  });
 }
 
 function NavItem({ item, mobile, openId, setOpenId, onNavigate }) {
@@ -278,13 +324,7 @@ function NavItem({ item, mobile, openId, setOpenId, onNavigate }) {
           role="region"
           aria-label={`${item.label} submenu`}
         >
-          {item.children.map((child) => (
-            <DropdownLink
-              key={child.label}
-              item={child}
-              onNavigate={onNavigate}
-            />
-          ))}
+          <DropdownContent items={item.children} onNavigate={onNavigate} />
         </div>
       ) : null}
     </div>
