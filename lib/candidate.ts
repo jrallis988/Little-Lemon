@@ -2,6 +2,8 @@ export const candidate = {
   firstName: "Nick",
   lastName: "Varga",
   fullName: "Nick Varga",
+  /** Public campaign brand lockup */
+  brandName: "Varga for Senate",
   office: "U.S. Senate",
   state: "New Hampshire",
   hometown: "Newmarket",
@@ -11,6 +13,9 @@ export const candidate = {
   electionDate: "2026-11-03",
   electionLabel: "November 3, 2026",
   electionWeekday: "Tuesday",
+  primaryDate: "2026-09-08",
+  primaryLabel: "September 8, 2026",
+  primaryWeekday: "Tuesday",
   doNotEmphasizePrimary: "September 8, 2026",
   tagline: "People Over Politics.",
   positioningLong:
@@ -36,6 +41,13 @@ export const candidate = {
 };
 
 export const election = {
+  september: {
+    label: "September Election",
+    dateIso: candidate.primaryDate,
+    dateDisplay: candidate.primaryLabel,
+    weekday: candidate.primaryWeekday,
+    subtext: "New Hampshire state primary election day",
+  },
   general: {
     label: "General Election",
     dateIso: candidate.electionDate,

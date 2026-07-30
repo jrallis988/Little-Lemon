@@ -5,7 +5,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 export const metadata: Metadata = {
   title: "Accessibility Statement",
-  description: `Accessibility commitment for the ${candidate.fullName} for Senate campaign website.`,
+  description: `Accessibility commitment for the ${candidate.brandName} campaign website.`,
 };
 
 export default function AccessibilityPage() {

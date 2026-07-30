@@ -35,12 +35,9 @@ export function Hero() {
         <p className="animate-fade-up animate-delay-2 mt-6 max-w-xl text-lg leading-[1.75] text-white/90 sm:text-xl">
           {candidate.positioningLong}
         </p>
-        <div className="animate-fade-up animate-delay-2 mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+        <div className="animate-fade-up animate-delay-2 mt-8">
           <Link href="/how-to-vote" className="btn-primary">
             How to Vote Write-In →
-          </Link>
-          <Link href="/meet-nick" className="btn-secondary-light">
-            Meet Nick
           </Link>
         </div>
       </div>

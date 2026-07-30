@@ -32,18 +32,18 @@ const lexend = Lexend({
 
 export const metadata: Metadata = {
   title: {
-    default: `${candidate.fullName} for ${candidate.office} | ${candidate.state}`,
-    template: `%s | ${candidate.fullName} for Senate`,
+    default: `${candidate.brandName} | ${candidate.state}`,
+    template: `%s | ${candidate.brandName}`,
   },
   description:
-    "People Over Politics. Nick Varga is an independent write-in candidate for U.S. Senate from New Hampshire — putting families first, not party bosses or donors.",
+    "People Over Politics. Varga for Senate — an independent write-in campaign for U.S. Senate from New Hampshire, putting families first, not party bosses or donors.",
   metadataBase: new URL("https://nickvarga.com"),
   icons: {
-    icon: "/images/logo-mark.svg",
-    apple: "/images/logo-mark.svg",
+    icon: "/images/logo-mark.png",
+    apple: "/images/logo-mark.png",
   },
   openGraph: {
-    title: `${candidate.fullName} for ${candidate.office} — Write-In`,
+    title: `${candidate.brandName} — Independent Write-In`,
     description: candidate.tagline,
     locale: "en_US",
     type: "website",

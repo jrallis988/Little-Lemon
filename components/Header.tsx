@@ -75,13 +75,13 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50">
+    <header className="sticky top-0 z-50 w-full shrink-0">
       <div className="bg-navy text-white/90">
-        <div className="mx-auto flex max-w-content flex-wrap items-center justify-between gap-3 px-6 py-2 md:px-8">
-          <p className="text-xs font-medium tracking-wide">
+        <div className="mx-auto flex h-10 max-w-content items-center justify-between gap-3 px-6 md:px-8">
+          <p className="truncate text-xs font-medium tracking-wide">
             Independent write-in · {candidate.hometown}, NH · Nov 3, 2026
           </p>
-          <div className="flex items-center gap-2">
+          <div className="flex shrink-0 items-center gap-2">
             <AccessibilityLauncher />
             <ul className="flex items-center gap-1" aria-label="Social media">
               {[
@@ -108,22 +108,23 @@ export function Header() {
       </div>
 
       <div className="border-b border-slate-line bg-warm-white/95 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-content items-center justify-between gap-4 px-6 py-3 md:px-8">
+        <div className="mx-auto flex h-[4.5rem] max-w-content items-center justify-between gap-4 px-6 sm:h-[5rem] md:px-8">
           <Link
             href="/"
-            className="relative block h-14 w-[13.5rem] sm:h-16 sm:w-[17.5rem]"
-            aria-label={`${candidate.fullName} for ${candidate.office} — home`}
+            className="relative block h-12 w-[10.5rem] shrink-0 sm:h-[3.75rem] sm:w-[13.5rem]"
+            aria-label={`${candidate.brandName} — home`}
           >
             <Image
-              src="/images/logo.svg"
-              alt=""
+              src="/images/logo.png"
+              alt={candidate.brandName}
               fill
+              sizes="(max-width: 640px) 168px, 216px"
               className="object-contain object-left"
               priority
             />
           </Link>
 
-          <nav className="hidden items-center gap-0.5 xl:flex" aria-label="Primary">
+          <nav className="hidden min-w-0 items-center gap-0.5 xl:flex" aria-label="Primary">
             {navLinks.map((link) => {
               const current = isCurrent(link.href);
               return (
@@ -139,12 +140,12 @@ export function Header() {
                 </Link>
               );
             })}
-            <Link href="/how-to-vote" className="btn-primary ml-2 !px-5 !py-3 text-[0.75rem]">
+            <Link href="/how-to-vote" className="btn-primary ml-2 shrink-0 !px-5 !py-3 text-[0.75rem]">
               How to Vote Write-In →
             </Link>
           </nav>
 
-          <div className="flex items-center gap-2 xl:hidden">
+          <div className="flex shrink-0 items-center gap-2 xl:hidden">
             <Link href="/how-to-vote" className="btn-primary !px-3 !py-2.5 text-[0.7rem]">
               How to Vote
             </Link>

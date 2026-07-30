@@ -1,4 +1,4 @@
-# Nick Varga for U.S. Senate
+# Varga for Senate
 
 Independent write-in campaign site — **People Over Politics.**
 
@@ -14,7 +14,7 @@ Home · Meet Nick · Violet Party · Issues (+ subpages) · How to Vote · Endor
 
 ## Secondary
 
-Contact · Press · Transparency · Privacy · Terms · Come to My Town · Events · Accessibility
+Contact · Press · Transparency · Privacy · Terms · Come to My Town · Events · Accessibility · FAQ
 
 ## Develop
 

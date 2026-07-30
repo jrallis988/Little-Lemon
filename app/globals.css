@@ -148,6 +148,8 @@ html[data-big-targets="true"] {
     @apply bg-warm-white font-sans text-body-lg text-slate-text antialiased;
     line-height: var(--line-space);
     letter-spacing: var(--letter-space);
+    /* Keep sticky header anchored; avoid overflow breaking sticky positioning */
+    overflow-x: clip;
   }
 
   html[data-font="dyslexia"] body {

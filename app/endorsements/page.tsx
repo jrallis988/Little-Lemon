@@ -5,7 +5,7 @@ import { endorsements } from "@/lib/endorsements";
 export const metadata: Metadata = {
   title: "Endorsements",
   description:
-    "Supporters and endorsers standing with Nick Varga for U.S. Senate.",
+    "Supporters and endorsers standing with Varga for Senate.",
 };
 
 export default function EndorsementsPage() {

@@ -6,85 +6,138 @@ import { ArrowRight } from "lucide-react";
 import { candidate, election } from "@/lib/candidate";
 import { SectionIntro } from "@/components/SectionIntro";
 
-type Remaining = { days: number; hours: number };
+type Remaining = {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+  totalMs: number;
+};
 
 function getRemaining(targetIso: string): Remaining {
-  const target = new Date(`${targetIso}T00:00:00-05:00`).getTime();
+  const target = new Date(`${targetIso}T00:00:00-04:00`).getTime();
   const now = Date.now();
-  const diff = Math.max(0, target - now);
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  return { days, hours };
+  const totalMs = Math.max(0, target - now);
+  const days = Math.floor(totalMs / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((totalMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((totalMs % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((totalMs % (1000 * 60)) / 1000);
+  return { days, hours, minutes, seconds, totalMs };
+}
+
+function CountdownBlock({
+  label,
+  remaining,
+}: {
+  label: string;
+  remaining: Remaining;
+}) {
+  const units = [
+    { value: remaining.days, name: "Days" },
+    { value: remaining.hours, name: "Hours" },
+    { value: remaining.minutes, name: "Minutes" },
+    { value: remaining.seconds, name: "Seconds" },
+  ];
+
+  return (
+    <div
+      className="border border-white/10 bg-ink/40 p-6 text-white sm:p-8"
+      aria-label={`${label}: ${remaining.days} days, ${remaining.hours} hours, ${remaining.minutes} minutes, and ${remaining.seconds} seconds remaining`}
+    >
+      <p className="font-display text-overline font-normal uppercase text-white/85">
+        {label}
+      </p>
+      <div className="mt-4 grid grid-cols-4 gap-3 sm:gap-4">
+        {units.map((unit) => (
+          <div key={unit.name} className="text-center sm:text-left">
+            <p
+              className="font-display text-2xl font-normal tabular-nums text-white sm:text-3xl md:text-4xl"
+              aria-hidden
+            >
+              {String(unit.value).padStart(2, "0")}
+            </p>
+            <p className="mt-1 text-[0.7rem] uppercase tracking-wide text-white/80 sm:text-sm">
+              {unit.name}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export function ElectionCountdown() {
-  const [remaining, setRemaining] = useState<Remaining>(() =>
-    getRemaining(election.general.dateIso)
+  const [september, setSeptember] = useState<Remaining>(() =>
+    getRemaining(election.september.dateIso),
+  );
+  const [general, setGeneral] = useState<Remaining>(() =>
+    getRemaining(election.general.dateIso),
   );
 
   useEffect(() => {
-    const id = window.setInterval(() => {
-      setRemaining(getRemaining(election.general.dateIso));
-    }, 60_000);
+    const tick = () => {
+      setSeptember(getRemaining(election.september.dateIso));
+      setGeneral(getRemaining(election.general.dateIso));
+    };
+    tick();
+    const id = window.setInterval(tick, 1000);
     return () => window.clearInterval(id);
   }, []);
 
   return (
-    <section
-      aria-labelledby="election-heading"
-      className="bg-navy"
-    >
+    <section aria-labelledby="election-heading" className="bg-navy">
       <div className="mx-auto max-w-content section-pad">
         <SectionIntro
           overline="2026 New Hampshire U.S. Senate Election"
-          title="Your vote for Nick happens on November 3."
-          lead="Nick is an independent write-in candidate. Your vote for him happens on the General Election — the final vote that decides who holds the seat."
+          title="Two election dates. One General Election that decides the seat."
+          lead="Track the September election and the November 3 General Election. Nick is an independent write-in — your vote for him is on the General Election ballot."
           tone="dark"
           titleId="election-heading"
         />
 
-        <div className="mt-10 grid gap-5 md:grid-cols-[1.2fr_0.8fr]">
-          <Link
-            href="/how-to-vote"
-            className="group border border-white/15 bg-white/5 p-7 transition-colors hover:border-red sm:p-10"
-          >
-            <p className="font-display text-overline font-normal uppercase text-red">
-              {election.general.label}
-            </p>
-            <p className="mt-4 font-display text-card-display font-normal text-white">
-              {election.general.dateDisplay}
-            </p>
-            <p className="mt-2 text-body-lg text-white/70">
-              {election.general.weekday} · {election.general.subtext}
-            </p>
-            <p className="mt-6 inline-flex items-center gap-1 font-display text-cta font-normal uppercase text-red">
-              Learn how to vote
-              <ArrowRight className="h-4 w-4" aria-hidden />
-            </p>
-          </Link>
-
-          <div className="flex flex-col justify-center border border-white/10 bg-ink/40 p-7 text-white sm:p-10">
-            <p className="font-display text-overline font-normal uppercase text-white">
-              Countdown to Nov 3, 2026
-            </p>
-            <div
-              className="mt-4 flex gap-8"
-              aria-label={`${remaining.days} days and ${remaining.hours} hours until Election Day`}
-            >
-              <div>
-                <p className="font-display text-4xl font-normal tabular-nums text-white" aria-hidden>
-                  {remaining.days}
-                </p>
-                <p className="text-sm text-white/85">Days</p>
-              </div>
-              <div>
-                <p className="font-display text-4xl font-normal tabular-nums text-white" aria-hidden>
-                  {remaining.hours}
-                </p>
-                <p className="text-sm text-white/85">Hours</p>
-              </div>
+        <div className="mt-10 grid gap-5 lg:grid-cols-2">
+          <div className="space-y-4">
+            <div className="border border-white/15 bg-white/5 p-6 sm:p-8">
+              <p className="font-display text-overline font-normal uppercase text-red">
+                {election.september.label}
+              </p>
+              <p className="mt-3 font-display text-3xl font-normal text-white sm:text-4xl">
+                {election.september.dateDisplay}
+              </p>
+              <p className="mt-2 text-body-lg text-white/70">
+                {election.september.weekday} · {election.september.subtext}
+              </p>
             </div>
-            <p className="mt-4 text-sm text-white/85">
+            <CountdownBlock
+              label="Countdown to September election"
+              remaining={september}
+            />
+          </div>
+
+          <div className="space-y-4">
+            <Link
+              href="/how-to-vote"
+              className="group block border border-white/15 bg-white/5 p-6 transition-colors hover:border-red sm:p-8"
+            >
+              <p className="font-display text-overline font-normal uppercase text-red">
+                {election.general.label}
+              </p>
+              <p className="mt-3 font-display text-3xl font-normal text-white sm:text-4xl">
+                {election.general.dateDisplay}
+              </p>
+              <p className="mt-2 text-body-lg text-white/70">
+                {election.general.weekday} · {election.general.subtext}
+              </p>
+              <p className="mt-5 inline-flex items-center gap-1 font-display text-cta font-normal uppercase text-red">
+                Learn how to vote write-in
+                <ArrowRight className="h-4 w-4" aria-hidden />
+              </p>
+            </Link>
+            <CountdownBlock
+              label="Countdown to November 3 General Election"
+              remaining={general}
+            />
+            <p className="text-sm text-white/80">
               Write in “{candidate.fullName}” on the General Election ballot.
             </p>
           </div>

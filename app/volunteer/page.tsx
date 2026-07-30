@@ -6,7 +6,7 @@ import { volunteerRoles } from "@/lib/volunteers";
 export const metadata: Metadata = {
   title: "Volunteer",
   description:
-    "Phone banking, canvassing, events, and more — volunteer with Nick Varga for U.S. Senate.",
+    "Phone banking, canvassing, events, and more — volunteer with Varga for Senate.",
 };
 
 export default function VolunteerPage() {

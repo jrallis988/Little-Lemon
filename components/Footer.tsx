@@ -40,10 +40,10 @@ export function Footer() {
         <div className="grid gap-10 md:grid-cols-[1.3fr_1fr]">
           <div>
             <p className="font-display text-2xl font-normal text-white">
-              {candidate.fullName}
+              {candidate.brandName}
             </p>
             <p className="mt-1 text-xs font-semibold uppercase tracking-[0.14em] text-white">
-              for {candidate.office} · Independent Write-In
+              Independent Write-In · {candidate.state}
             </p>
             <p className="mt-3 text-sm font-semibold text-white">
               For New Hampshire
@@ -74,66 +74,65 @@ export function Footer() {
             </ul>
           </div>
 
-          <div className="space-y-8">
-            <nav aria-label="Footer">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/80">
-                Quick links
-              </p>
-              <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2">
-                {quickLinks.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="text-sm text-white/80 underline-offset-2 hover:text-white hover:underline"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-
-            <nav aria-label="Legal and trust">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/80">
-                Legal &amp; trust
-              </p>
-              <ul className="mt-3 flex flex-wrap gap-x-3 gap-y-2 text-sm text-white/85">
-                {trustLinks.map((link, i) => (
-                  <li key={link.href} className="inline-flex items-center gap-3">
-                    {i > 0 && <span aria-hidden className="text-white/40">|</span>}
-                    <Link
-                      href={link.href}
-                      className="underline-offset-2 hover:text-white hover:underline"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-                <li className="inline-flex items-center gap-3">
-                  <span aria-hidden className="text-white/40">|</span>
-                  <a
-                    href={NH_ELECTIONS_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline-offset-2 hover:text-white hover:underline"
+          <nav aria-label="Footer">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/80">
+              Quick links
+            </p>
+            <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2">
+              {quickLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-white/80 underline-offset-2 hover:text-white hover:underline"
                   >
-                    Official Election Resources
-                  </a>
+                    {link.label}
+                  </Link>
                 </li>
-              </ul>
-            </nav>
-          </div>
+              ))}
+            </ul>
+          </nav>
         </div>
 
-        <div className="mt-10 space-y-3 border-t border-white/15 pt-8 text-xs leading-relaxed text-white/80">
-          <p>
-            © {year} {candidate.fullName} for {candidate.office}. All rights
-            reserved.
-          </p>
-          <p>
-            Paid for by {candidate.committee} | Independent Write-In Candidate
-          </p>
-          <p className="text-white/70">Powered by Artistic Fountain</p>
+        <div className="mt-10 grid gap-6 border-t border-white/15 pt-8 md:grid-cols-[1.2fr_1fr] md:items-start">
+          <div className="space-y-3 text-xs leading-relaxed text-white/80">
+            <p>
+              © {year} {candidate.brandName}. All rights reserved.
+            </p>
+            <p>
+              Paid for by {candidate.committee} | Independent Write-In Candidate
+            </p>
+            <p className="text-white/70">Powered by Artistic Fountain</p>
+          </div>
+
+          <nav aria-label="Legal and trust" className="md:justify-self-end md:text-right">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/80">
+              Legal &amp; trust
+            </p>
+            <ul className="mt-3 flex flex-wrap gap-x-3 gap-y-2 text-sm text-white/85 md:justify-end">
+              {trustLinks.map((link, i) => (
+                <li key={link.href} className="inline-flex items-center gap-3">
+                  {i > 0 && <span aria-hidden className="text-white/40">|</span>}
+                  <Link
+                    href={link.href}
+                    className="underline-offset-2 hover:text-white hover:underline"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+              <li className="inline-flex items-center gap-3">
+                <span aria-hidden className="text-white/40">|</span>
+                <a
+                  href={NH_ELECTIONS_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline-offset-2 hover:text-white hover:underline"
+                >
+                  Official Election Resources
+                </a>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
     </footer>
