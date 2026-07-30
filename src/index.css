@@ -191,16 +191,12 @@ p {
   min-height: var(--nav-h);
 }
 
-.nav__left,
-.nav__right {
+.nav__left {
   display: flex;
   align-items: center;
   gap: 0.85rem 1.35rem;
   min-width: 0;
-}
-
-.nav__right {
-  margin-left: auto;
+  flex: 1;
 }
 
 .nav__brand {
