@@ -101,8 +101,9 @@ export const documentChecklist = [
 export const campusHighlights = [
   {
     title: "Residence halls",
-    text: "Live on campus and stay close to classes, clubs, and Concord’s capital-city energy.",
+    text: "Live on campus in Langley Hall and South Hall — close to classes, clubs, and Concord.",
     image: "/media/residence.jpg",
+    to: "/residence-life",
   },
   {
     title: "Student life",
@@ -146,43 +147,43 @@ export const studentQuickLinks = [
 
 export const actionTiles = [
   {
-    label: "Apply and Enroll",
-    icon: "/media/actions/applynew-2.png",
-    to: "/admissions",
+    label: "Library",
+    icon: "library",
+    href: "https://library.nhti.edu/",
   },
   {
-    label: "Financial Aid",
-    icon: "/media/actions/payingnew-1.png",
-    to: "/financial-aid",
+    label: "Bookstore",
+    icon: "bookstore",
+    href: "https://nhti.textbookx.com/",
   },
   {
-    label: "Request Info",
-    icon: "/media/actions/request-icon.png",
-    to: "/admissions#inquiry-form",
-  },
-  {
-    label: "Virtual Tour",
-    icon: "/media/actions/visitnew-1.png",
+    label: "Campus Map",
+    icon: "map",
     href: "https://ccsnhmaps.college-tour.com/maps/map.php?ID=6",
   },
   {
+    label: "IT Helpdesk",
+    icon: "it",
+    href: "https://lynx.nhti.edu/",
+  },
+  {
     label: "Event Calendar",
-    icon: "/media/actions/calendar-icon.png",
+    icon: "events",
     to: "/events",
   },
   {
-    label: "Website Navigation",
-    icon: "/media/actions/website-navigation-icon.png",
-    href: "https://www.nhti.edu/navigating-nhti-online/",
+    label: "Residence Life",
+    icon: "residence",
+    to: "/residence-life",
   },
   {
-    label: "Workforce Education",
-    icon: "/media/actions/workforce-icon.png",
-    to: "/workforce",
+    label: "Athletics",
+    icon: "athletics",
+    to: "/athletics",
   },
   {
     label: "Early College",
-    icon: "/media/actions/early-college-icon.png",
+    icon: "early",
     href: "https://www.nhti.edu/academics/early-college/",
   },
 ];

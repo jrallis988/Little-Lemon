@@ -6,6 +6,7 @@ import ProgramDetail from "./pages/ProgramDetail";
 import Admissions from "./pages/Admissions";
 import FinancialAid from "./pages/FinancialAid";
 import Campus from "./pages/Campus";
+import ResidenceLife from "./pages/ResidenceLife";
 import Athletics from "./pages/Athletics";
 import Workforce from "./pages/Workforce";
 import Events from "./pages/Events";
@@ -24,6 +25,7 @@ function App() {
         <Route path="admissions" element={<Admissions />} />
         <Route path="financial-aid" element={<FinancialAid />} />
         <Route path="campus" element={<Campus />} />
+        <Route path="residence-life" element={<ResidenceLife />} />
         <Route path="athletics" element={<Athletics />} />
         <Route path="workforce" element={<Workforce />} />
         <Route path="events" element={<Events />} />

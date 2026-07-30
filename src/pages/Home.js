@@ -7,16 +7,96 @@ import {
   programs,
   actionTiles,
 } from "../data/content";
+import { VIRTUAL_TOUR } from "../data/campus";
 import usePageMeta from "../hooks/usePageMeta";
 
 const heroImage = "/media/campus-hero.jpg";
 const campusImage = "/media/campus-hero.jpg";
 
+function ActionIcon({ name }) {
+  const props = {
+    viewBox: "0 0 48 48",
+    width: "40",
+    height: "40",
+    "aria-hidden": "true",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+  };
+
+  switch (name) {
+    case "library":
+      return (
+        <svg {...props}>
+          <path d="M10 8h10v32H10zM28 8h10v32H28z" />
+          <path d="M20 12h8M20 24h8M20 36h8" />
+        </svg>
+      );
+    case "bookstore":
+      return (
+        <svg {...props}>
+          <path d="M12 16h24l-2 22H14z" />
+          <path d="M16 16V12a8 8 0 0 1 16 0v4" />
+        </svg>
+      );
+    case "map":
+      return (
+        <svg {...props}>
+          <path d="M24 8c-6 0-10 4.5-10 10 0 8 10 20 10 20s10-12 10-20c0-5.5-4-10-10-10z" />
+          <circle cx="24" cy="18" r="3.5" />
+        </svg>
+      );
+    case "it":
+      return (
+        <svg {...props}>
+          <rect x="8" y="12" width="32" height="20" rx="2" />
+          <path d="M18 40h12M24 32v8" />
+          <path d="M16 20h4M22 20h10" />
+        </svg>
+      );
+    case "events":
+      return (
+        <svg {...props}>
+          <rect x="10" y="12" width="28" height="26" rx="2" />
+          <path d="M10 20h28M18 8v8M30 8v8M18 28h4M26 28h8" />
+        </svg>
+      );
+    case "residence":
+      return (
+        <svg {...props}>
+          <path d="M8 22 24 10l16 12v16H8z" />
+          <path d="M20 38V26h8v12" />
+        </svg>
+      );
+    case "athletics":
+      return (
+        <svg {...props}>
+          <circle cx="24" cy="24" r="12" />
+          <path d="M12 24h24M24 12c4 4 4 20 0 24M24 12c-4 4-4 20 0 24" />
+        </svg>
+      );
+    case "early":
+      return (
+        <svg {...props}>
+          <path d="M24 38V22" />
+          <path d="M24 22c-6-2-10 2-10 8 6 0 10-4 10-8zM24 22c6-2 10 2 10 8-6 0-10-4-10-8z" />
+          <path d="M24 14c0-4 3-6 6-6" />
+        </svg>
+      );
+    default:
+      return null;
+  }
+}
+
 function ActionTile({ tile }) {
   const content = (
     <>
-      <img src={tile.icon} alt="" width="48" height="48" loading="lazy" />
-      <span>{tile.label}</span>
+      <span className="action-tile__icon">
+        <ActionIcon name={tile.icon} />
+      </span>
+      <span className="action-tile__label">{tile.label}</span>
     </>
   );
 
@@ -53,6 +133,8 @@ function Home() {
     { value: "240", label: "Acre riverside campus" },
   ];
 
+  const spotlightEvents = events.slice(0, 3);
+
   return (
     <>
       <section className="hero">
@@ -78,7 +160,7 @@ function Home() {
             </Link>
             <a
               className="btn btn--ghost"
-              href="https://ccsnhmaps.college-tour.com/maps/map.php?ID=6"
+              href={VIRTUAL_TOUR}
               target="_blank"
               rel="noreferrer"
             >
@@ -88,10 +170,16 @@ function Home() {
         </div>
       </section>
 
-      <section className="section section--tight action-grid-section" aria-label="Quick actions">
+      <section
+        className="section section--tight action-grid-section"
+        aria-label="Student resources"
+      >
         <div className="section-intro">
-          <h2>Start here</h2>
-          <p>Eight quick paths for applying, visiting, and finding your next step.</p>
+          <h2>Campus essentials</h2>
+          <p>
+            Tools students use every week — without repeating Apply, Aid, or Tour
+            from the header above.
+          </p>
         </div>
         <div className="action-grid">
           {actionTiles.map((tile) => (
@@ -154,8 +242,8 @@ function Home() {
             athletics, and housing in one place — without the private-college
             price tag.
           </p>
-          <Link to="/campus" className="text-link">
-            See campus life
+          <Link to="/residence-life" className="text-link">
+            Explore residence life
           </Link>
         </div>
       </section>
@@ -216,21 +304,35 @@ function Home() {
         </div>
       </section>
 
-      <section className="cta-band">
-        <div className="cta-band__inner">
-          <h2>Ready when you are</h2>
-          <p>
-            $0 application fee. Day, evening, hybrid, and online options —
-            including accelerated 8-week courses.
-          </p>
-          <div className="hero__actions">
-            <Link to="/admissions" className="btn btn--solid">
-              Start your application
-            </Link>
-            <Link to="/academics" className="btn btn--ghost-dark">
-              Browse programs
-            </Link>
+      <section className="spotlight-band">
+        <div className="spotlight-band__inner">
+          <div className="spotlight-band__copy">
+            <p className="eyebrow">This season on campus</p>
+            <h2>Events, workforce trainings, and open houses</h2>
+            <p>
+              Skip another Apply button — jump into what&apos;s happening next,
+              from admissions visits to short-term workforce programs.
+            </p>
+            <div className="hero__actions">
+              <Link to="/events" className="btn btn--solid">
+                View events
+              </Link>
+              <Link to="/workforce" className="btn btn--ghost-dark">
+                Workforce education
+              </Link>
+            </div>
           </div>
+          <ul className="spotlight-list">
+            {spotlightEvents.map((event) => (
+              <li key={event.id}>
+                <time dateTime={event.date}>{event.displayDate}</time>
+                <div>
+                  <h3>{event.title}</h3>
+                  <p>{event.summary}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
     </>

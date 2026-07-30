@@ -1,5 +1,5 @@
 import usePageMeta from "../hooks/usePageMeta";
-import { VIRTUAL_TOUR } from "../components/Header";
+import { VIRTUAL_TOUR } from "../data/campus";
 
 function Contact() {
   usePageMeta({

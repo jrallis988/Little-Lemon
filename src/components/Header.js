@@ -1,8 +1,6 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { NavLink, Link, useNavigate, useLocation } from "react-router-dom";
-
-const VIRTUAL_TOUR =
-  "https://ccsnhmaps.college-tour.com/maps/map.php?ID=6";
+import { VIRTUAL_TOUR } from "../data/campus";
 
 const navItems = [
   {
@@ -93,10 +91,6 @@ const navItems = [
         label: "Departments",
         href: "https://www.nhti.edu/contact-us/departments/",
       },
-      {
-        label: "Donate",
-        href: "https://givenhcc.org/where-to-give/nhti/",
-      },
     ],
   },
   {
@@ -105,12 +99,9 @@ const navItems = [
     to: "/campus",
     children: [
       { label: "Campus Life Overview", to: "/campus" },
+      { label: "Residence Life", to: "/residence-life" },
       { label: "Athletics", to: "/athletics" },
       { label: "Events", to: "/events" },
-      {
-        label: "Residence Life",
-        href: "https://www.nhti.edu/campus-life/residential-life/",
-      },
       {
         label: "Student Life",
         href: "https://www.nhti.edu/campus-life/student-life/",
@@ -162,8 +153,16 @@ const navItems = [
       { label: "About NHTI", to: "/about" },
       { label: "News", to: "/news" },
       {
-        label: "President’s Office",
+        label: "Administration & Leadership",
         href: "https://www.nhti.edu/about/presidents-office/",
+      },
+      {
+        label: "Offices & Campus Services",
+        href: "https://www.nhti.edu/contact-us/departments/",
+      },
+      {
+        label: "Student Success Data",
+        href: "https://www.nhti.edu/about/student-success-data-points/",
       },
       {
         label: "Alumni",
@@ -445,4 +444,3 @@ function Header() {
 }
 
 export default Header;
-export { VIRTUAL_TOUR };

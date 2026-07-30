@@ -79,15 +79,34 @@ function Campus() {
 
       <section className="section">
         <div className="highlight-media-grid">
-          {campusHighlights.map((item) => (
-            <article key={item.title} className="highlight-media">
-              <img src={item.image} alt="" loading="lazy" />
-              <div>
-                <h2>{item.title}</h2>
-                <p>{item.text}</p>
-              </div>
-            </article>
-          ))}
+          {campusHighlights.map((item) => {
+            const body = (
+              <>
+                <img src={item.image} alt="" loading="lazy" />
+                <div>
+                  <h2>{item.title}</h2>
+                  <p>{item.text}</p>
+                  {item.to ? (
+                    <span className="text-link">Learn more</span>
+                  ) : null}
+                </div>
+              </>
+            );
+
+            return item.to ? (
+              <Link
+                key={item.title}
+                to={item.to}
+                className="highlight-media highlight-media--link"
+              >
+                {body}
+              </Link>
+            ) : (
+              <article key={item.title} className="highlight-media">
+                {body}
+              </article>
+            );
+          })}
         </div>
       </section>
 
