@@ -1,54 +1,332 @@
-import { useEffect, useState } from "react";
-import { NavLink, Link, useNavigate } from "react-router-dom";
+import { useEffect, useId, useRef, useState } from "react";
+import { NavLink, Link, useNavigate, useLocation } from "react-router-dom";
 
-const primaryLinks = [
-  { to: "/academics", label: "Academics" },
-  { to: "/admissions", label: "Admissions" },
-  { to: "/financial-aid", label: "Financial Aid" },
-  { to: "/campus", label: "Campus Life" },
-  { to: "/workforce", label: "Workforce Education" },
-  { to: "/about", label: "About" },
+const VIRTUAL_TOUR =
+  "https://ccsnhmaps.college-tour.com/maps/map.php?ID=6";
+
+const navItems = [
+  {
+    id: "academics",
+    label: "Academics",
+    to: "/academics",
+    children: [
+      { label: "Departments & Programs", to: "/academics" },
+      {
+        label: "Academic Programs",
+        href: "https://www.nhti.edu/academics/academic-programs/",
+      },
+      {
+        label: "Online Academic Programs",
+        href: "https://www.nhti.edu/programs/?wpv-wpcf-online=yes",
+      },
+      {
+        label: "Early College",
+        href: "https://www.nhti.edu/academics/early-college/",
+      },
+      {
+        label: "Academic Calendar",
+        href: "https://www.nhti.edu/academics/academic-calendar/",
+      },
+      {
+        label: "College Catalog",
+        href: "https://catalog.nhti.edu/",
+      },
+      {
+        label: "Transfer Opportunities",
+        href: "https://lynx.nhti.edu/academics/transfer-opportunities/",
+      },
+    ],
+  },
+  {
+    id: "admissions",
+    label: "Admissions",
+    to: "/admissions",
+    children: [
+      { label: "How to Apply", to: "/admissions" },
+      {
+        label: "Admissions Events",
+        href: "https://www.nhti.edu/admissions/events/",
+      },
+      {
+        label: "Admissions Requirements",
+        href: "https://www.nhti.edu/admissions/requirements/",
+      },
+      {
+        label: "Next Steps for New Students",
+        href: "https://www.nhti.edu/admissions/next-steps-for-new-students/",
+      },
+      { label: "Request Info", to: "/admissions#inquiry-form" },
+      { label: "Take a Virtual Tour", href: VIRTUAL_TOUR },
+    ],
+  },
+  {
+    id: "financial-aid",
+    label: "Financial Aid",
+    to: "/financial-aid",
+    children: [
+      { label: "Financial Aid Overview", to: "/financial-aid" },
+      {
+        label: "Tuition Rates",
+        href: "https://www.nhti.edu/financial-aid/tuition-rates/",
+      },
+      {
+        label: "Scholarships & Grants",
+        href: "https://www.nhti.edu/financial-aid/scholarship-grants/",
+      },
+      {
+        label: "Bursar’s Office",
+        href: "https://lynx.nhti.edu/financial-aid/bursar/",
+      },
+    ],
+  },
+  {
+    id: "current-students",
+    label: "Current Students",
+    href: "https://lynx.nhti.edu/",
+    children: [
+      { label: "Lynx Den / Student Portal", href: "https://lynx.nhti.edu/" },
+      {
+        label: "Directory",
+        href: "https://www.nhti.edu/directory/",
+      },
+      {
+        label: "Departments",
+        href: "https://www.nhti.edu/contact-us/departments/",
+      },
+      {
+        label: "Donate",
+        href: "https://givenhcc.org/where-to-give/nhti/",
+      },
+    ],
+  },
+  {
+    id: "campus-life",
+    label: "Campus Life",
+    to: "/campus",
+    children: [
+      { label: "Campus Life Overview", to: "/campus" },
+      { label: "Athletics", to: "/athletics" },
+      { label: "Events", to: "/events" },
+      {
+        label: "Residence Life",
+        href: "https://www.nhti.edu/campus-life/residential-life/",
+      },
+      {
+        label: "Student Life",
+        href: "https://www.nhti.edu/campus-life/student-life/",
+      },
+      { label: "Take a Virtual Tour", href: VIRTUAL_TOUR },
+    ],
+  },
+  {
+    id: "workforce",
+    label: "Workforce Education",
+    to: "/workforce",
+    children: [
+      { label: "Overview of Short-Term Trainings", to: "/workforce" },
+      {
+        label: "Online Career Trainings",
+        href: "https://www.nhti.edu/workforce/career-training-programs/",
+      },
+      {
+        label: "Corporate and Customized Trainings",
+        href: "https://www.nhti.edu/workforce/corporate-and-customized-training/",
+      },
+      {
+        label: "Education Trainings",
+        href: "https://www.nhti.edu/workforce/education-training-programs/",
+      },
+      {
+        label: "Healthcare Trainings",
+        href: "https://www.nhti.edu/workforce/healthcare-training-programs/",
+      },
+      {
+        label: "Dental Continuing Education",
+        href: "https://www.nhti.edu/workforce/dental-continuing-education/",
+      },
+      {
+        label: "Expanded Function Dental Auxiliary",
+        href: "https://www.nhti.edu/workforce/efda/",
+      },
+      {
+        label: "WorkReadyNH",
+        href: "https://www.nhti.edu/workforce-development/workreadynh-program/",
+      },
+    ],
+  },
+  {
+    id: "about",
+    label: "About",
+    to: "/about",
+    children: [
+      { label: "About NHTI", to: "/about" },
+      { label: "News", to: "/news" },
+      {
+        label: "President’s Office",
+        href: "https://www.nhti.edu/about/presidents-office/",
+      },
+      {
+        label: "Alumni",
+        href: "https://www.nhti.edu/about/alumni/",
+      },
+    ],
+  },
+  {
+    id: "contact",
+    label: "Contact",
+    to: "/contact",
+    children: [
+      { label: "Contact Us", to: "/contact" },
+      {
+        label: "Departments",
+        href: "https://www.nhti.edu/contact-us/departments/",
+      },
+      {
+        label: "Directory",
+        href: "https://www.nhti.edu/directory/",
+      },
+      { label: "Take a Virtual Tour", href: VIRTUAL_TOUR },
+    ],
+  },
 ];
 
-const utilityLinks = [
-  { href: "https://lynx.nhti.edu/", label: "Current Students", external: true },
-  {
-    href: "https://www.nhti.edu/contact-us/departments/",
-    label: "Departments",
-    external: true,
-  },
-  {
-    href: "https://www.nhti.edu/directory/",
-    label: "Directory",
-    external: true,
-  },
-  {
-    href: "https://givenhcc.org/where-to-give/nhti/",
-    label: "Donate",
-    external: true,
-  },
-  {
-    href: "https://www.nhti.edu/contact-us/",
-    label: "Contact Us",
-    external: true,
-  },
-];
+function DropdownLink({ item, onNavigate }) {
+  if (item.to) {
+    return (
+      <Link to={item.to} onClick={onNavigate}>
+        {item.label}
+      </Link>
+    );
+  }
+  return (
+    <a href={item.href} target="_blank" rel="noreferrer" onClick={onNavigate}>
+      {item.label}
+    </a>
+  );
+}
+
+function NavItem({ item, mobile, openId, setOpenId, onNavigate }) {
+  const panelId = useId();
+  const isOpen = openId === item.id;
+  const location = useLocation();
+  const isActive = item.to
+    ? location.pathname === item.to ||
+      (item.to !== "/" && location.pathname.startsWith(`${item.to}/`))
+    : false;
+
+  function open() {
+    setOpenId(item.id);
+  }
+
+  function close() {
+    setOpenId((current) => (current === item.id ? null : current));
+  }
+
+  const triggerClass = [
+    "nav-link",
+    isActive ? "is-active" : "",
+    isOpen ? "is-open" : "",
+    item.children?.length ? "has-submenu" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  return (
+    <div
+      className={`nav-item ${isOpen ? "is-open" : ""}`}
+      onMouseEnter={!mobile ? open : undefined}
+      onMouseLeave={!mobile ? close : undefined}
+      onFocus={!mobile ? open : undefined}
+    >
+      <div className="nav-item__trigger">
+        {item.to ? (
+          <NavLink
+            to={item.to}
+            className={triggerClass}
+            onClick={onNavigate}
+          >
+            {item.label}
+          </NavLink>
+        ) : (
+          <a
+            href={item.href}
+            className={triggerClass}
+            target="_blank"
+            rel="noreferrer"
+            onClick={onNavigate}
+          >
+            {item.label}
+          </a>
+        )}
+        {item.children?.length ? (
+          <button
+            type="button"
+            className="nav-item__chevron"
+            aria-expanded={isOpen}
+            aria-controls={panelId}
+            onClick={() => setOpenId(isOpen ? null : item.id)}
+          >
+            <span className="sr-only">{item.label} submenu</span>
+          </button>
+        ) : null}
+      </div>
+
+      {item.children?.length ? (
+        <div
+          id={panelId}
+          className={`nav-dropdown ${isOpen ? "is-open" : ""}`}
+          role="region"
+          aria-label={`${item.label} submenu`}
+        >
+          {item.children.map((child) => (
+            <DropdownLink
+              key={child.label}
+              item={child}
+              onNavigate={onNavigate}
+            />
+          ))}
+        </div>
+      ) : null}
+    </div>
+  );
+}
 
 function Header() {
-  const [open, setOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [openId, setOpenId] = useState(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [isMobile, setIsMobile] = useState(false);
   const navigate = useNavigate();
+  const searchRef = useRef(null);
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
+    if (typeof window.matchMedia !== "function") return undefined;
+    const media = window.matchMedia("(max-width: 980px)");
+    const sync = () => setIsMobile(media.matches);
+    sync();
+    if (media.addEventListener) {
+      media.addEventListener("change", sync);
+      return () => media.removeEventListener("change", sync);
+    }
+    media.addListener(sync);
+    return () => media.removeListener(sync);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
-  }, [open]);
+  }, [menuOpen]);
 
-  function closeMenu() {
-    setOpen(false);
+  useEffect(() => {
+    if (searchOpen && searchRef.current) searchRef.current.focus();
+  }, [searchOpen]);
+
+  function closeAll() {
+    setMenuOpen(false);
+    setOpenId(null);
     setSearchOpen(false);
   }
 
@@ -56,30 +334,15 @@ function Header() {
     event.preventDefault();
     const trimmed = query.trim();
     if (!trimmed) return;
-    closeMenu();
+    closeAll();
     navigate(`/academics?q=${encodeURIComponent(trimmed)}`);
     setQuery("");
   }
 
   return (
     <header className="site-header">
-      <div className="utility-bar" aria-label="Quick links">
-        <div className="utility-bar__inner">
-          {utilityLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {link.label}
-            </a>
-          ))}
-        </div>
-      </div>
-
       <div className="header-inner">
-        <Link to="/" className="brand-mark" onClick={closeMenu}>
+        <Link to="/" className="brand-mark" onClick={closeAll}>
           <img
             className="brand-mark__seal"
             src="/brand/nhti-seal-256.png"
@@ -96,9 +359,9 @@ function Header() {
         <button
           className="nav-toggle"
           type="button"
-          aria-expanded={open}
+          aria-expanded={menuOpen}
           aria-controls="primary-nav"
-          onClick={() => setOpen((value) => !value)}
+          onClick={() => setMenuOpen((value) => !value)}
         >
           <span className="sr-only">Menu</span>
           <span aria-hidden="true" />
@@ -107,35 +370,19 @@ function Header() {
 
         <nav
           id="primary-nav"
-          className={`primary-nav ${open ? "is-open" : ""}`}
+          className={`primary-nav ${menuOpen ? "is-open" : ""}`}
           aria-label="Primary"
         >
           <div className="primary-nav__main">
-            {primaryLinks.map((link) => (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                onClick={closeMenu}
-                className={({ isActive }) =>
-                  isActive ? "nav-link is-active" : "nav-link"
-                }
-              >
-                {link.label}
-              </NavLink>
-            ))}
-          </div>
-
-          <div className="primary-nav__utility" aria-label="More links">
-            {utilityLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                target="_blank"
-                rel="noreferrer"
-                onClick={closeMenu}
-              >
-                {link.label}
-              </a>
+            {navItems.map((item) => (
+              <NavItem
+                key={item.id}
+                item={item}
+                mobile={isMobile}
+                openId={openId}
+                setOpenId={setOpenId}
+                onNavigate={closeAll}
+              />
             ))}
           </div>
 
@@ -166,13 +413,6 @@ function Header() {
                 />
               </svg>
             </button>
-            <Link
-              to="/admissions"
-              className="btn btn--solid btn--compact"
-              onClick={closeMenu}
-            >
-              Apply
-            </Link>
           </div>
 
           {searchOpen ? (
@@ -187,11 +427,11 @@ function Header() {
               </label>
               <input
                 id="nav-search-input"
+                ref={searchRef}
                 type="search"
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder="Search programs…"
-                autoFocus
               />
               <button type="submit" className="btn btn--solid btn--compact">
                 Search
@@ -205,3 +445,4 @@ function Header() {
 }
 
 export default Header;
+export { VIRTUAL_TOUR };

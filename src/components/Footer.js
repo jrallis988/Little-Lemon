@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { VIRTUAL_TOUR } from "./Header";
 
 function Footer() {
   return (
@@ -33,10 +34,12 @@ function Footer() {
               <Link to="/financial-aid">Financial Aid</Link>
             </li>
             <li>
-              <Link to="/campus">Campus Life</Link>
+              <a href="https://lynx.nhti.edu/" target="_blank" rel="noreferrer">
+                Current Students
+              </a>
             </li>
             <li>
-              <Link to="/athletics">Athletics</Link>
+              <Link to="/campus">Campus Life</Link>
             </li>
             <li>
               <Link to="/workforce">Workforce Education</Link>
@@ -45,10 +48,7 @@ function Footer() {
               <Link to="/about">About</Link>
             </li>
             <li>
-              <Link to="/events">Events</Link>
-            </li>
-            <li>
-              <Link to="/news">News</Link>
+              <Link to="/contact">Contact</Link>
             </li>
           </ul>
         </div>
@@ -61,15 +61,23 @@ function Footer() {
             <br />
             <a href="tel:6032304001">603-230-4001</a>
           </address>
-          <p className="footer-tour">
-            <a
-              href="https://ccsnhmaps.college-tour.com/maps/map.php?ID=6"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Take the virtual tour
-            </a>
-          </p>
+          <a
+            className="footer-tour-card"
+            href={VIRTUAL_TOUR}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img
+              src="/media/actions/visitnew-1.png"
+              alt=""
+              width="40"
+              height="40"
+            />
+            <span>
+              <strong>Take a Virtual Tour</strong>
+              <span>Explore campus from anywhere</span>
+            </span>
+          </a>
         </div>
       </div>
       <div className="footer-meta">

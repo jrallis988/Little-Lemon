@@ -1,9 +1,44 @@
 import { Link } from "react-router-dom";
-import { focusAreas, reasons, newsItems, events, programs } from "../data/content";
+import {
+  focusAreas,
+  reasons,
+  newsItems,
+  events,
+  programs,
+  actionTiles,
+} from "../data/content";
 import usePageMeta from "../hooks/usePageMeta";
 
 const heroImage = "/media/campus-hero.jpg";
 const campusImage = "/media/campus-hero.jpg";
+
+function ActionTile({ tile }) {
+  const content = (
+    <>
+      <img src={tile.icon} alt="" width="48" height="48" loading="lazy" />
+      <span>{tile.label}</span>
+    </>
+  );
+
+  if (tile.to) {
+    return (
+      <Link to={tile.to} className="action-tile">
+        {content}
+      </Link>
+    );
+  }
+
+  return (
+    <a
+      href={tile.href}
+      className="action-tile"
+      target="_blank"
+      rel="noreferrer"
+    >
+      {content}
+    </a>
+  );
+}
 
 function Home() {
   usePageMeta({
@@ -41,10 +76,27 @@ function Home() {
             <Link to="/admissions" className="btn btn--solid">
               Apply now
             </Link>
-            <Link to="/campus" className="btn btn--ghost">
-              Visit campus
-            </Link>
+            <a
+              className="btn btn--ghost"
+              href="https://ccsnhmaps.college-tour.com/maps/map.php?ID=6"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Take a Virtual Tour
+            </a>
           </div>
+        </div>
+      </section>
+
+      <section className="section section--tight action-grid-section" aria-label="Quick actions">
+        <div className="section-intro">
+          <h2>Start here</h2>
+          <p>Eight quick paths for applying, visiting, and finding your next step.</p>
+        </div>
+        <div className="action-grid">
+          {actionTiles.map((tile) => (
+            <ActionTile key={tile.label} tile={tile} />
+          ))}
         </div>
       </section>
 

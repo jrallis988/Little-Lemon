@@ -144,6 +144,49 @@ export const studentQuickLinks = [
   },
 ];
 
+export const actionTiles = [
+  {
+    label: "Apply and Enroll",
+    icon: "/media/actions/applynew-2.png",
+    to: "/admissions",
+  },
+  {
+    label: "Financial Aid",
+    icon: "/media/actions/payingnew-1.png",
+    to: "/financial-aid",
+  },
+  {
+    label: "Request Info",
+    icon: "/media/actions/request-icon.png",
+    to: "/admissions#inquiry-form",
+  },
+  {
+    label: "Virtual Tour",
+    icon: "/media/actions/visitnew-1.png",
+    href: "https://ccsnhmaps.college-tour.com/maps/map.php?ID=6",
+  },
+  {
+    label: "Event Calendar",
+    icon: "/media/actions/calendar-icon.png",
+    to: "/events",
+  },
+  {
+    label: "Website Navigation",
+    icon: "/media/actions/website-navigation-icon.png",
+    href: "https://www.nhti.edu/navigating-nhti-online/",
+  },
+  {
+    label: "Workforce Education",
+    icon: "/media/actions/workforce-icon.png",
+    to: "/workforce",
+  },
+  {
+    label: "Early College",
+    icon: "/media/actions/early-college-icon.png",
+    href: "https://www.nhti.edu/academics/early-college/",
+  },
+];
+
 export function getProgramById(id) {
   return programs.find((program) => program.id === id);
 }

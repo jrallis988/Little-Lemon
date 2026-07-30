@@ -80,13 +80,31 @@ test("primary nav matches NHTI menu categories", () => {
     </MemoryRouter>
   );
 
+  expect(screen.getAllByRole("link", { name: "Academics" }).length).toBeGreaterThan(0);
   expect(screen.getAllByRole("link", { name: "Financial Aid" }).length).toBeGreaterThan(0);
   expect(
     screen.getAllByRole("link", { name: "Workforce Education" }).length
   ).toBeGreaterThan(0);
   expect(screen.getAllByRole("link", { name: "Campus Life" }).length).toBeGreaterThan(0);
   expect(screen.getAllByRole("link", { name: "Current Students" }).length).toBeGreaterThan(0);
-  expect(screen.getAllByRole("link", { name: "Contact Us" }).length).toBeGreaterThan(0);
+  expect(screen.getAllByRole("link", { name: "Contact" }).length).toBeGreaterThan(0);
+});
+
+test("homepage shows eight action tiles and virtual tour", () => {
+  render(
+    <MemoryRouter>
+      <App />
+    </MemoryRouter>
+  );
+
+  expect(screen.getByRole("link", { name: /apply and enroll/i })).toBeInTheDocument();
+  expect(screen.getAllByRole("link", { name: /^financial aid$/i }).length).toBeGreaterThan(0);
+  expect(screen.getAllByRole("link", { name: /request info/i }).length).toBeGreaterThan(0);
+  expect(screen.getAllByRole("link", { name: /virtual tour/i }).length).toBeGreaterThan(0);
+  expect(screen.getByRole("link", { name: /event calendar/i })).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: /website navigation/i })).toBeInTheDocument();
+  expect(screen.getAllByRole("link", { name: /workforce education/i }).length).toBeGreaterThan(0);
+  expect(screen.getAllByRole("link", { name: /early college/i }).length).toBeGreaterThan(0);
 });
 
 test("shows student life shirts photo on campus page", () => {
