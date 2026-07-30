@@ -8,6 +8,7 @@ const projects = [
     summary:
       "An embedded catch-the-foam demo with delta-timed updates, pointer/keyboard control, and a short technical writeup.",
     href: "#play",
+    cta: "Open demo →",
   },
   {
     id: "little-lemon",
@@ -17,7 +18,8 @@ const projects = [
     stack: "React · Routing · Formik",
     summary:
       "A restaurant booking experience with accessible forms, clear hierarchy, and a warm Mediterranean-inspired UI.",
-    href: "#contact",
+    href: "#case",
+    cta: "Read case study →",
   },
   {
     id: "atlas-rag",
@@ -28,6 +30,7 @@ const projects = [
     summary:
       "A document Q&A product with a calm Next.js UI, FastAPI retrieval endpoints, and local vector persistence.",
     href: "#contact",
+    cta: "Discuss project →",
   },
   {
     id: "tide-pocket",
@@ -38,6 +41,7 @@ const projects = [
     summary:
       "A 2D exploration sketch pairing Phaser scenes with digital-media assets—world mood first, then tight web performance.",
     href: "#play",
+    cta: "Open demo →",
   },
 ];
 

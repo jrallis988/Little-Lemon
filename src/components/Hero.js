@@ -48,8 +48,8 @@ export default function Hero() {
             <a href="#work" className="btn-primary">
               View selected work
             </a>
-            <a href="#play" className="btn-ghost">
-              Try a live demo
+            <a href={`${process.env.PUBLIC_URL}/resume.html`} className="btn-ghost">
+              View resume
             </a>
           </div>
         </div>

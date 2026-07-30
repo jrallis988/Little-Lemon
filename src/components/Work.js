@@ -39,7 +39,7 @@ export default function Work() {
                 <div className="md:text-right">
                   <p className="text-sm text-foam-soft">{project.stack}</p>
                   <p className="mt-2 text-sm font-semibold text-chalk transition-transform group-hover:translate-x-1">
-                    {project.href === "#play" ? "Open demo →" : "Discuss project →"}
+                    {project.cta}
                   </p>
                 </div>
               </a>
