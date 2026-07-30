@@ -57,6 +57,36 @@ test("validates admissions inquiry form", () => {
   expect(screen.getByText(/email is required/i)).toBeInTheDocument();
 });
 
+test("renders athletics page with Lynx branding", () => {
+  render(
+    <MemoryRouter initialEntries={["/athletics"]}>
+      <App />
+    </MemoryRouter>
+  );
+
+  expect(screen.getByText("NHTI Lynx")).toBeInTheDocument();
+  expect(
+    screen.getByRole("heading", { name: /always lynx season/i })
+  ).toBeInTheDocument();
+  expect(
+    screen.getByRole("img", { name: /leroy the lynx mascot logo/i })
+  ).toBeInTheDocument();
+});
+
+test("shows student life shirts photo on campus page", () => {
+  render(
+    <MemoryRouter initialEntries={["/campus"]}>
+      <App />
+    </MemoryRouter>
+  );
+
+  expect(
+    screen.getByRole("img", {
+      name: /holding navy lynx spirit shirts/i,
+    })
+  ).toBeInTheDocument();
+});
+
 test("submits a valid admissions inquiry", async () => {
   render(
     <MemoryRouter initialEntries={["/admissions"]}>

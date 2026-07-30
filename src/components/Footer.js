@@ -33,6 +33,9 @@ function Footer() {
               <Link to="/campus">Campus Life</Link>
             </li>
             <li>
+              <Link to="/athletics">Athletics</Link>
+            </li>
+            <li>
               <Link to="/events">Events</Link>
             </li>
             <li>

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { campusHighlights, events } from "../data/content";
+import usePageMeta from "../hooks/usePageMeta";
 
 const gallery = [
   {
@@ -7,16 +8,22 @@ const gallery = [
     alt: "NHTI campus quad with Student Center rotunda",
   },
   {
-    src: "/media/residence.jpg",
-    alt: "Langley Hall arcade on the NHTI campus",
+    src: "/media/student-life-shirts.jpg",
+    alt: "NHTI students holding Lynx spirit shirts in the campus gymnasium",
   },
   {
-    src: "/media/athletics.jpg",
-    alt: "NHTI Lynx athletics",
+    src: "/media/residence.jpg",
+    alt: "Langley Hall arcade on the NHTI campus",
   },
 ];
 
 function Campus() {
+  usePageMeta({
+    title: "Campus Life",
+    description:
+      "Residence halls, student life, clubs, and Lynx athletics on NHTI's 240-acre Concord campus.",
+  });
+
   return (
     <>
       <section className="page-hero">
@@ -27,6 +34,27 @@ function Campus() {
           capital city — complete with residence halls, lynx athletics, and a
           lively student community.
         </p>
+      </section>
+
+      <section className="section student-life-feature" aria-label="Student life">
+        <div className="student-life-feature__copy">
+          <p className="eyebrow">Student life</p>
+          <h2>Show up. Make friends. Wear the Lynx.</h2>
+          <p>
+            Orientation, clubs, spirit nights, and everyday hangouts in the
+            Student Center — campus life at NHTI is built for belonging.
+          </p>
+          <Link to="/athletics" className="text-link">
+            Explore Lynx athletics
+          </Link>
+        </div>
+        <figure className="student-life-feature__media">
+          <img
+            src="/media/student-life-shirts.jpg"
+            alt="Three NHTI students in the gymnasium holding navy Lynx spirit shirts"
+            loading="lazy"
+          />
+        </figure>
       </section>
 
       <section className="campus-feature" aria-label="NHTI campus film">

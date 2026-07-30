@@ -107,12 +107,12 @@ export const campusHighlights = [
   {
     title: "Student life",
     text: "20+ clubs and organizations, a full student center, and spaces to study, gather, and recharge.",
-    image: "/media/lounge.jpg",
+    image: "/media/student-life-shirts.jpg",
   },
   {
     title: "Lynx athletics",
     text: "Cheer on competitive teams and join intramurals at the Dr. Goldie Crocker Wellness Center.",
-    image: "/media/athletics.jpg",
+    image: "/media/lynx-athletics-logo.png",
   },
   {
     title: "Riverfront setting",

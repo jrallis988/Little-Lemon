@@ -5,6 +5,7 @@ import Academics from "./pages/Academics";
 import ProgramDetail from "./pages/ProgramDetail";
 import Admissions from "./pages/Admissions";
 import Campus from "./pages/Campus";
+import Athletics from "./pages/Athletics";
 import Events from "./pages/Events";
 import News from "./pages/News";
 import NewsDetail from "./pages/NewsDetail";
@@ -19,6 +20,7 @@ function App() {
         <Route path="academics/:programId" element={<ProgramDetail />} />
         <Route path="admissions" element={<Admissions />} />
         <Route path="campus" element={<Campus />} />
+        <Route path="athletics" element={<Athletics />} />
         <Route path="events" element={<Events />} />
         <Route path="news" element={<News />} />
         <Route path="news/:newsId" element={<NewsDetail />} />
