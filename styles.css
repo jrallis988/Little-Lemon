@@ -1308,6 +1308,46 @@ a:hover { opacity: 0.8; }
     background: var(--magenta);
 }
 
+.service-process {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.service-process-step {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    gap: 1.25rem;
+    align-items: start;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.service-process-step:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.service-process-num {
+    font-family: 'Arcanite Slab', serif;
+    font-size: 1.5rem;
+    color: var(--magenta);
+    line-height: 1.2;
+}
+
+.service-process-body h3 {
+    font-size: 1.15rem;
+    color: var(--cream);
+    margin-bottom: 0.5rem;
+}
+
+.service-process-body p {
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin: 0;
+}
+
 .service-page-cta {
     margin: 2.5rem 0 3.5rem;
 }
@@ -2541,7 +2581,7 @@ button:focus:not(:focus-visible) {
     padding: 0;
     margin: 0 0 2.5rem;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
 }
 
@@ -3030,5 +3070,16 @@ button:focus:not(:focus-visible) {
     .designer-page .about-grid {
         grid-template-columns: 1fr;
         gap: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .service-process-step {
+        grid-template-columns: 2.75rem 1fr;
+        gap: 0.85rem;
+    }
+
+    .service-process-num {
+        font-size: 1.25rem;
     }
 }
