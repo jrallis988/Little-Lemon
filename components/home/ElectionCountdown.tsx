@@ -11,26 +11,29 @@ type Remaining = {
   hours: number;
   minutes: number;
   seconds: number;
-  totalMs: number;
 };
+
+const EMPTY: Remaining = { days: 0, hours: 0, minutes: 0, seconds: 0 };
 
 function getRemaining(targetIso: string): Remaining {
   const target = new Date(`${targetIso}T00:00:00-04:00`).getTime();
-  const now = Date.now();
-  const totalMs = Math.max(0, target - now);
-  const days = Math.floor(totalMs / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((totalMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((totalMs % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((totalMs % (1000 * 60)) / 1000);
-  return { days, hours, minutes, seconds, totalMs };
+  const totalMs = Math.max(0, target - Date.now());
+  return {
+    days: Math.floor(totalMs / (1000 * 60 * 60 * 24)),
+    hours: Math.floor((totalMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+    minutes: Math.floor((totalMs % (1000 * 60 * 60)) / (1000 * 60)),
+    seconds: Math.floor((totalMs % (1000 * 60)) / 1000),
+  };
 }
 
 function CountdownBlock({
   label,
   remaining,
+  ready,
 }: {
   label: string;
   remaining: Remaining;
+  ready: boolean;
 }) {
   const units = [
     { value: remaining.days, name: "Days" },
@@ -42,7 +45,11 @@ function CountdownBlock({
   return (
     <div
       className="border border-white/10 bg-ink/40 p-6 text-white sm:p-8"
-      aria-label={`${label}: ${remaining.days} days, ${remaining.hours} hours, ${remaining.minutes} minutes, and ${remaining.seconds} seconds remaining`}
+      aria-label={
+        ready
+          ? `${label}: ${remaining.days} days, ${remaining.hours} hours, ${remaining.minutes} minutes, and ${remaining.seconds} seconds remaining`
+          : `${label}: loading countdown`
+      }
     >
       <p className="font-display text-overline font-normal uppercase text-white/85">
         {label}
@@ -54,7 +61,7 @@ function CountdownBlock({
               className="font-display text-2xl font-normal tabular-nums text-white sm:text-3xl md:text-4xl"
               aria-hidden
             >
-              {String(unit.value).padStart(2, "0")}
+              {ready ? String(unit.value).padStart(2, "0") : "--"}
             </p>
             <p className="mt-1 text-[0.7rem] uppercase tracking-wide text-white/80 sm:text-sm">
               {unit.name}
@@ -67,17 +74,17 @@ function CountdownBlock({
 }
 
 export function ElectionCountdown() {
-  const [september, setSeptember] = useState<Remaining>(() =>
-    getRemaining(election.september.dateIso),
-  );
-  const [general, setGeneral] = useState<Remaining>(() =>
-    getRemaining(election.general.dateIso),
-  );
+  // Defer live clock until after mount to avoid SSR/client hydration mismatch
+  // (React #418 / #423 / #425) when seconds differ between server and browser.
+  const [ready, setReady] = useState(false);
+  const [september, setSeptember] = useState<Remaining>(EMPTY);
+  const [general, setGeneral] = useState<Remaining>(EMPTY);
 
   useEffect(() => {
     const tick = () => {
       setSeptember(getRemaining(election.september.dateIso));
       setGeneral(getRemaining(election.general.dateIso));
+      setReady(true);
     };
     tick();
     const id = window.setInterval(tick, 1000);
@@ -111,6 +118,7 @@ export function ElectionCountdown() {
             <CountdownBlock
               label="Countdown to September election"
               remaining={september}
+              ready={ready}
             />
           </div>
 
@@ -136,6 +144,7 @@ export function ElectionCountdown() {
             <CountdownBlock
               label="Countdown to November 3 General Election"
               remaining={general}
+              ready={ready}
             />
             <p className="text-sm text-white/80">
               Write in “{candidate.fullName}” on the General Election ballot.
