@@ -24,16 +24,16 @@ function Athletics() {
         <div className="athletics-hero__content">
           <p className="athletics-hero__brand reveal">NHTI Lynx</p>
           <img
-            className="athletics-hero__logo reveal reveal--delay-1"
+            className="athletics-hero__logo"
             src="/media/lynx-athletics-logo.png"
             alt="NHTI Athletics — Leroy the Lynx mascot logo"
             width="640"
             height="640"
           />
-          <h1 className="athletics-hero__headline reveal reveal--delay-2">
+          <h1 className="athletics-hero__headline reveal reveal--delay-1">
             Always Lynx season.
           </h1>
-          <p className="athletics-hero__support reveal reveal--delay-3">
+          <p className="athletics-hero__support reveal reveal--delay-2">
             Compete, cheer, and belong at the Dr. Goldie Crocker Wellness Center.
           </p>
           <div className="hero__actions reveal reveal--delay-3">
