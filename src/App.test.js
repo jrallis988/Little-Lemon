@@ -153,6 +153,8 @@ test("footer includes CCSNH, social, and policy links", () => {
   expect(screen.getByRole("link", { name: "Campus Safety" })).toBeInTheDocument();
   expect(screen.getByRole("link", { name: "Important Forms" })).toBeInTheDocument();
   expect(screen.getByRole("link", { name: /603-230-4000/ })).toBeInTheDocument();
+  expect(screen.getAllByRole("link", { name: /^library$/i }).length).toBeGreaterThan(0);
+  expect(screen.getAllByRole("link", { name: /^bookstore$/i }).length).toBeGreaterThan(0);
 });
 
 test("shows student life shirts photo on campus page", () => {

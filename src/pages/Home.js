@@ -30,19 +30,22 @@ function ActionIcon({ name }) {
     case "library":
       return (
         <svg {...props}>
-          <path d="M12 10h8a4 4 0 0 1 4 4v24H16a4 4 0 0 1-4-4V10z" />
-          <path d="M24 14h8a4 4 0 0 1 4 4v24h-8" />
-          <path d="M16 18h4M16 24h4M16 30h4" />
-          <path d="M28 20h4M28 26h4" />
+          <path d="M9 9h9a3.5 3.5 0 0 1 3.5 3.5V36H12.5A3.5 3.5 0 0 1 9 32.5V9z" />
+          <path d="M21.5 12H31a3.5 3.5 0 0 1 3.5 3.5V36H25" />
+          <path d="M13 15h4M13 21h4M13 27h4" />
+          <path d="M26 18h4M26 24h4" />
+          <path d="M8 38h32" />
         </svg>
       );
     case "bookstore":
       return (
         <svg {...props}>
-          <path d="M14 12h20v28H14z" />
-          <path d="M14 18h20" />
-          <path d="M20 12c0-3 2.5-5 4-5s4 2 4 5" />
-          <path d="M18 24h12M18 30h9" />
+          <path d="M6 20h36v20H6z" />
+          <path d="M4 20l6-10h28l6 10" />
+          <path d="M12 20v-6h5v6M21.5 20v-6h5v6M31 20v-6h5v6" />
+          <path d="M20 40V28h8v12" />
+          <path d="M10 26h6M10 31h5" />
+          <path d="M32 26h5M32 31h4" />
         </svg>
       );
     case "map":

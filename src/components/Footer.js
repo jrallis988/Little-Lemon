@@ -8,8 +8,8 @@ import {
 function SocialIcon({ icon }) {
   const common = {
     viewBox: "0 0 24 24",
-    width: "15",
-    height: "15",
+    width: "14",
+    height: "14",
     "aria-hidden": "true",
     fill: "currentColor",
   };
@@ -48,6 +48,42 @@ function SocialIcon({ icon }) {
     default:
       return null;
   }
+}
+
+function ResourceIcon({ name }) {
+  const props = {
+    viewBox: "0 0 40 40",
+    width: "22",
+    height: "22",
+    "aria-hidden": "true",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+  };
+
+  if (name === "library") {
+    return (
+      <svg {...props}>
+        <path d="M8 8h8a3 3 0 0 1 3 3v19H11a3 3 0 0 1-3-3V8z" />
+        <path d="M19 11h8a3 3 0 0 1 3 3v16h-8" />
+        <path d="M11 14h3M11 19h3M11 24h3" />
+        <path d="M23 16h3M23 21h3" />
+        <path d="M7 33h26" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg {...props}>
+      <path d="M6 17h28v14H6z" />
+      <path d="M4 17l5-7h22l5 7" />
+      <path d="M10 17v-4h4v4M18 17v-4h4v4M26 17v-4h4v4" />
+      <path d="M17 31v-8h6v8" />
+      <path d="M9 22h5M9 26h4" />
+    </svg>
+  );
 }
 
 const footerActions = [
@@ -94,6 +130,19 @@ const footerResources = [
   },
 ];
 
+const footerResourceBoxes = [
+  {
+    label: "Library",
+    icon: "library",
+    href: "https://library.nhti.edu/",
+  },
+  {
+    label: "Bookstore",
+    icon: "bookstore",
+    href: "https://nhti.textbookx.com/",
+  },
+];
+
 function Footer() {
   return (
     <footer className="site-footer">
@@ -108,8 +157,8 @@ function Footer() {
             className="footer-ccsnh"
             src="/brand/ccsnh-logo-white.png"
             alt="part of the Community College System of New Hampshire"
-            width="200"
-            height="72"
+            width="180"
+            height="64"
           />
           <address className="footer-address">
             31 College Drive
@@ -119,7 +168,7 @@ function Footer() {
             <a href="tel:6032304000">603-230-4000</a>
             {" · "}
             <a href="tel:8002470179">800-247-0179</a>
-            <br />
+            {" · "}
             <a href="mailto:NHTIinfo@ccsnh.edu">Email NHTI</a>
           </address>
         </div>
@@ -160,6 +209,22 @@ function Footer() {
               </li>
             ))}
           </ul>
+          <div className="footer-resource-boxes">
+            {footerResourceBoxes.map((item) => (
+              <a
+                key={item.label}
+                className="footer-resource-box"
+                href={item.href}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span className="footer-resource-box__icon">
+                  <ResourceIcon name={item.icon} />
+                </span>
+                <span className="footer-resource-box__label">{item.label}</span>
+              </a>
+            ))}
+          </div>
         </div>
       </div>
 
