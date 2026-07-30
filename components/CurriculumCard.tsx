@@ -22,7 +22,7 @@ export function CurriculumCard({
   description,
   kind,
   items = [],
-  href = "#features",
+  href = "/features",
   imageSrc,
   imageAlt = "",
   ctaLabel = "Learn more",

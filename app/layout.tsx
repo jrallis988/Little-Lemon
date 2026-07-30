@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { site } from "@/lib/site";
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -11,12 +12,12 @@ const plusJakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(site.url),
   title: {
     default: "Morgan Bright | Academic Software for Schools",
     template: "%s | Morgan Bright",
   },
-  description:
-    "Buy Morgan Bright academic software for classrooms, schools, and districts. Diagnose learning hurdles, adapt instruction, and track progress.",
+  description: site.description,
   keywords: [
     "Morgan Bright",
     "academic software",
@@ -25,6 +26,16 @@ export const metadata: Metadata = {
     "adaptive instruction",
     "school software sales",
   ],
+  openGraph: {
+    title: "Morgan Bright | Academic Software for Schools",
+    description: site.description,
+    url: site.url,
+    siteName: site.name,
+    type: "website",
+  },
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

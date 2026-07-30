@@ -1,16 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-
-const links = [
-  { href: "#features", label: "Features" },
-  { href: "#plans", label: "Plans" },
-  { href: "#approach", label: "Approach" },
-  { href: "#buy", label: "Buy" },
-];
+import { navLinks } from "@/lib/site";
 
 export function Navbar() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -28,6 +24,10 @@ export function Navbar() {
     };
   }, [open]);
 
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 bg-white transition-shadow duration-300 ${
@@ -36,12 +36,12 @@ export function Navbar() {
     >
       <div className="border-b border-navy bg-navy text-white">
         <div className="mx-auto flex h-9 max-w-site items-center justify-end gap-5 px-5 text-xs font-medium sm:px-8">
-          <a href="#buy" className="transition-opacity hover:opacity-80">
+          <Link href="/contact" className="transition-opacity hover:opacity-80">
             Sales support
-          </a>
-          <a href="#buy" className="transition-opacity hover:opacity-80">
+          </Link>
+          <Link href="/demo" className="transition-opacity hover:opacity-80">
             Request demo
-          </a>
+          </Link>
         </div>
       </div>
 
@@ -52,7 +52,6 @@ export function Navbar() {
         <Link
           href="/"
           className="flex items-center gap-2.5 text-navy transition-opacity hover:opacity-80"
-          onClick={() => setOpen(false)}
         >
           <span
             aria-hidden
@@ -62,25 +61,30 @@ export function Navbar() {
         </Link>
 
         <ul className="hidden items-center gap-1 lg:flex">
-          {links.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className="px-3 py-2 text-sm font-semibold text-ink-soft transition-colors hover:text-accent"
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
+          {navLinks.map((link) => {
+            const active = pathname === link.href;
+            return (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className={`px-3 py-2 text-sm font-semibold transition-colors ${
+                    active ? "text-accent" : "text-ink-soft hover:text-accent"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <a href="#plans" className="btn-outline !py-2">
+          <Link href="/plans" className="btn-outline !py-2">
             Compare plans
-          </a>
-          <a href="#buy" className="btn-primary !py-2">
+          </Link>
+          <Link href="/demo" className="btn-primary !py-2">
             Get pricing
-          </a>
+          </Link>
         </div>
 
         <button
@@ -112,30 +116,26 @@ export function Navbar() {
       </nav>
 
       {open ? (
-        <div
-          id="mobile-nav"
-          className="border-t border-line bg-white lg:hidden"
-        >
+        <div id="mobile-nav" className="border-t border-line bg-white lg:hidden">
           <ul className="mx-auto flex max-w-site flex-col px-5 py-4 sm:px-8">
-            {links.map((link) => (
+            {navLinks.map((link) => (
               <li key={link.href}>
-                <a
+                <Link
                   href={link.href}
                   className="block border-b border-line py-3.5 text-base font-semibold text-ink"
-                  onClick={() => setOpen(false)}
                 >
                   {link.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
           <div className="flex flex-col gap-3 px-5 pb-6 sm:px-8">
-            <a href="#plans" className="btn-outline" onClick={() => setOpen(false)}>
+            <Link href="/plans" className="btn-outline">
               Compare plans
-            </a>
-            <a href="#buy" className="btn-primary" onClick={() => setOpen(false)}>
+            </Link>
+            <Link href="/demo" className="btn-primary">
               Get pricing
-            </a>
+            </Link>
           </div>
         </div>
       ) : null}

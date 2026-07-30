@@ -30,6 +30,10 @@ yarn-error.log*
 
 # env files
 .env*.local
+.env
+
+# lead capture storage
+/data
 
 # typescript
 *.tsbuildinfo

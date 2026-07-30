@@ -1,6 +1,6 @@
 # Morgan Bright
 
-Educational platform that diagnoses individual learning hurdles and shapes instruction around diverse learning styles.
+Academic software sales website for classrooms, schools, and districts.
 
 ## Stack
 
@@ -8,25 +8,41 @@ Educational platform that diagnoses individual learning hurdles and shapes instr
 - TypeScript
 - Tailwind CSS
 
-## Structure
+## Pages
 
-- `app/layout.tsx` — global metadata, typography, color system
-- `app/page.tsx` — landing portal
-- `components/Navbar.tsx` — fixed minimal navigation
-- `components/Hero.tsx` — philosophy introduction
-- `components/CurriculumCard.tsx` — reusable module / diagnostic / structure card
-- `components/Footer.tsx` — minimal footer
+- `/` — sales homepage
+- `/features` — platform features
+- `/plans` — Classroom / School / District plans
+- `/demo` — demo and pricing request forms
+- `/about` — company positioning
+- `/contact` — sales contact form
+- `/privacy` — privacy policy
+- `/terms` — terms of use
 
 ## Develop
 
 ```bash
 npm install
+cp .env.example .env.local
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
 
-## Build
+## Lead capture
+
+Demo, pricing, and contact forms POST to `/api/leads`.
+
+- Leads are saved locally to `data/leads.jsonl`
+- Optional: set `FORM_WEBHOOK_URL` to forward submissions to Zapier, Make, a CRM, or email automation
+
+## Production deploy
+
+1. Set environment variables from `.env.example`
+2. Deploy to Vercel (or similar)
+3. Point your domain DNS to the host
+4. Update `NEXT_PUBLIC_SITE_URL` to the live domain
+5. Configure `FORM_WEBHOOK_URL` for real sales notifications
 
 ```bash
 npm run build

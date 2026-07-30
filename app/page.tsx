@@ -1,55 +1,9 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Hero } from "@/components/Hero";
 import { AudiencePathways } from "@/components/AudiencePathways";
 import { CurriculumCard } from "@/components/CurriculumCard";
-
-const features = [
-  {
-    title: "Learning profile diagnostics",
-    description:
-      "Identify skill gaps and learning-style mismatches so teachers know where each student is getting stuck.",
-    kind: "feature" as const,
-    items: [
-      "Placement screener",
-      "Learning-style inventory",
-      "Baseline comprehension check",
-    ],
-    href: "#buy",
-    imageSrc: "/images/card-diagnostic.jpg",
-    imageAlt: "Educator reviewing diagnostic insights in academic software",
-    ctaLabel: "Request a demo",
-  },
-  {
-    title: "Adaptive instruction modules",
-    description:
-      "Assign digital lessons that reteach the same concept through multiple modalities without rebuilding the unit by hand.",
-    kind: "feature" as const,
-    items: [
-      "Multi-pathway lesson tracks",
-      "Practice with feedback",
-      "Reteach and extension options",
-    ],
-    href: "#plans",
-    imageSrc: "/images/card-modules.jpg",
-    imageAlt: "Students engaging with digital learning modules",
-    ctaLabel: "Compare plans",
-  },
-  {
-    title: "Progress monitoring dashboards",
-    description:
-      "Track mastery, regroup students, and share clear summaries with families and support teams.",
-    kind: "feature" as const,
-    items: [
-      "Weekly mastery checks",
-      "Intervention regrouping cues",
-      "Exportable reports",
-    ],
-    href: "#buy",
-    imageSrc: "/images/card-path.jpg",
-    imageAlt: "Teacher reviewing student progress dashboard",
-    ctaLabel: "Talk to sales",
-  },
-];
+import { features as siteFeatures } from "@/lib/site";
 
 const buyingSteps = [
   {
@@ -107,10 +61,7 @@ export default function HomePage() {
                   "Use clear dashboards and reports to decide who needs reteaching, regrouping, or advancement.",
               },
             ].map((item) => (
-              <div
-                key={item.term}
-                className="rounded bg-white p-6 shadow-card"
-              >
+              <div key={item.term} className="rounded bg-white p-6 shadow-card">
                 <div className="mb-4 h-1 w-10 bg-accent" />
                 <h3 className="text-xl font-bold text-navy">{item.term}</h3>
                 <p className="mt-2 text-base leading-relaxed text-mute">
@@ -135,20 +86,30 @@ export default function HomePage() {
                 in one platform teachers can buy, launch, and use.
               </p>
             </div>
-            <a href="#plans" className="btn-outline shrink-0 self-start">
+            <Link href="/plans" className="btn-outline shrink-0 self-start">
               Compare plans
-            </a>
+            </Link>
           </div>
 
           <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {features.map((card) => (
-              <CurriculumCard key={card.title} {...card} />
+            {siteFeatures.map((card) => (
+              <CurriculumCard
+                key={card.title}
+                title={card.title}
+                description={card.description}
+                kind="feature"
+                items={[...card.items]}
+                imageSrc={card.imageSrc}
+                imageAlt={card.imageAlt}
+                href="/demo"
+                ctaLabel="Request a demo"
+              />
             ))}
           </div>
         </div>
       </section>
 
-      <section id="about" className="bg-navy text-white">
+      <section className="bg-navy text-white">
         <div className="mx-auto grid max-w-site items-center gap-10 px-5 py-16 sm:px-8 sm:py-24 lg:grid-cols-2 lg:gap-14">
           <div>
             <p className="text-sm font-bold uppercase tracking-[0.08em] text-white/70">
@@ -163,9 +124,9 @@ export default function HomePage() {
               personalize instruction, and prove progress — then buy the plan
               that fits their setting.
             </p>
-            <a href="#buy" className="btn-primary mt-8">
-              Request a demo
-            </a>
+            <Link href="/about" className="btn-primary mt-8">
+              About Morgan Bright
+            </Link>
           </div>
           <div className="relative aspect-[4/3] overflow-hidden rounded">
             <Image
@@ -211,18 +172,12 @@ export default function HomePage() {
               guidance, and demo options.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <a
-                href="mailto:hello@morganbright.learn?subject=Request%20Morgan%20Bright%20pricing"
-                className="btn-primary"
-              >
+              <Link href="/demo?type=pricing" className="btn-primary">
                 Get pricing
-              </a>
-              <a
-                href="mailto:hello@morganbright.learn?subject=Request%20Morgan%20Bright%20demo"
-                className="btn-outline"
-              >
+              </Link>
+              <Link href="/demo" className="btn-outline">
                 Request a demo
-              </a>
+              </Link>
             </div>
           </div>
         </div>

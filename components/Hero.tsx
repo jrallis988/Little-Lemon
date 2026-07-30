@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export function Hero() {
   return (
@@ -39,12 +40,12 @@ export function Hero() {
             className="mt-8 flex animate-fade-up flex-wrap gap-3"
             style={{ animationDelay: "0.24s" }}
           >
-            <a href="#plans" className="btn-primary">
+            <Link href="/plans" className="btn-primary">
               Compare plans
-            </a>
-            <a href="#features" className="btn-secondary">
+            </Link>
+            <Link href="/features" className="btn-secondary">
               See platform features
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -30,7 +30,7 @@ const plans: Plan[] = [
     title: "A classroom license for teachers who need flexible intervention tools now.",
     description:
       "Give one teacher a full software workspace: learner diagnostics, adaptive lesson paths, and progress tracking for their own students.",
-    cta: { href: "#buy", label: "Get classroom pricing" },
+    cta: { href: "/demo?type=pricing&plan=Classroom", label: "Get classroom pricing" },
     cards: [
       {
         title: "Teacher workspace",
@@ -42,7 +42,7 @@ const plans: Plan[] = [
           "Up to 35 student profiles",
           "Class-level reporting",
         ],
-        href: "#buy",
+        href: "/plans",
         imageSrc: "/images/card-diagnostic.jpg",
         imageAlt: "Teacher reviewing student progress on academic software",
         ctaLabel: "See classroom plan",
@@ -57,7 +57,7 @@ const plans: Plan[] = [
           "Built-in practice checks",
           "Reteach options by learning style",
         ],
-        href: "#features",
+        href: "/features",
         imageSrc: "/images/card-modules.jpg",
         imageAlt: "Students learning with digital classroom tools",
         ctaLabel: "Explore features",
@@ -72,7 +72,7 @@ const plans: Plan[] = [
           "Barrier tags",
           "Family-ready summaries",
         ],
-        href: "#features",
+        href: "/features",
         imageSrc: "/images/card-path.jpg",
         imageAlt: "Teacher monitoring classroom learning outcomes",
         ctaLabel: "See how tracking works",
@@ -86,7 +86,7 @@ const plans: Plan[] = [
     title: "A school license for shared use across teachers, grades, and support staff.",
     description:
       "Standardize diagnostics and intervention workflows across a campus while giving leaders visibility into student progress.",
-    cta: { href: "#buy", label: "Get school pricing" },
+    cta: { href: "/demo?type=pricing&plan=School", label: "Get school pricing" },
     cards: [
       {
         title: "Multi-teacher access",
@@ -98,7 +98,7 @@ const plans: Plan[] = [
           "Shared student records",
           "Campus implementation guide",
         ],
-        href: "#buy",
+        href: "/plans",
         imageSrc: "/images/card-diagnostic.jpg",
         imageAlt: "School staff collaborating around instructional software",
         ctaLabel: "See school plan",
@@ -113,7 +113,7 @@ const plans: Plan[] = [
           "Regrouping recommendations",
           "Shared notes across staff",
         ],
-        href: "#features",
+        href: "/features",
         imageSrc: "/images/card-modules.jpg",
         imageAlt: "Intervention team planning with digital tools",
         ctaLabel: "Explore workflows",
@@ -128,7 +128,7 @@ const plans: Plan[] = [
           "Teacher activity overview",
           "Exportable progress reports",
         ],
-        href: "#features",
+        href: "/features",
         imageSrc: "/images/card-path.jpg",
         imageAlt: "School leaders reviewing academic progress data",
         ctaLabel: "See reporting tools",
@@ -142,7 +142,7 @@ const plans: Plan[] = [
     title: "A district license for consistent academic support software across schools.",
     description:
       "Deploy Morgan Bright with centralized administration, implementation support, and reporting built for district decision-makers.",
-    cta: { href: "#buy", label: "Talk to district sales" },
+    cta: { href: "/demo?type=pricing&plan=District", label: "Talk to district sales" },
     cards: [
       {
         title: "Centralized administration",
@@ -154,7 +154,7 @@ const plans: Plan[] = [
           "Role-based access",
           "District onboarding support",
         ],
-        href: "#buy",
+        href: "/plans",
         imageSrc: "/images/card-diagnostic.jpg",
         imageAlt: "District team reviewing academic software rollout",
         ctaLabel: "See district plan",
@@ -169,7 +169,7 @@ const plans: Plan[] = [
           "Rollout timeline guidance",
           "Ongoing success check-ins",
         ],
-        href: "#buy",
+        href: "/plans",
         imageSrc: "/images/card-modules.jpg",
         imageAlt: "Educators in software training session",
         ctaLabel: "Ask about rollout",
@@ -184,7 +184,7 @@ const plans: Plan[] = [
           "Adoption and usage metrics",
           "Leadership summary views",
         ],
-        href: "#features",
+        href: "/features",
         imageSrc: "/images/card-path.jpg",
         imageAlt: "Leaders reviewing district learning outcomes",
         ctaLabel: "See district insights",
