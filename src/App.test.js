@@ -69,8 +69,24 @@ test("renders athletics page with Lynx branding", () => {
     screen.getByRole("heading", { name: /always lynx season/i })
   ).toBeInTheDocument();
   expect(
-    screen.getByRole("img", { name: /leroy the lynx mascot logo/i })
+    screen.getByRole("img", { name: /lynx athletics logo with snarling lynx head/i })
   ).toBeInTheDocument();
+});
+
+test("primary nav matches NHTI menu categories", () => {
+  render(
+    <MemoryRouter>
+      <App />
+    </MemoryRouter>
+  );
+
+  expect(screen.getAllByRole("link", { name: "Financial Aid" }).length).toBeGreaterThan(0);
+  expect(
+    screen.getAllByRole("link", { name: "Workforce Education" }).length
+  ).toBeGreaterThan(0);
+  expect(screen.getAllByRole("link", { name: "Campus Life" }).length).toBeGreaterThan(0);
+  expect(screen.getAllByRole("link", { name: "Current Students" }).length).toBeGreaterThan(0);
+  expect(screen.getAllByRole("link", { name: "Contact Us" }).length).toBeGreaterThan(0);
 });
 
 test("shows student life shirts photo on campus page", () => {

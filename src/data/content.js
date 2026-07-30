@@ -112,7 +112,7 @@ export const campusHighlights = [
   {
     title: "Lynx athletics",
     text: "Cheer on competitive teams and join intramurals at the Dr. Goldie Crocker Wellness Center.",
-    image: "/media/lynx-athletics-logo.png",
+    image: "/media/lynx-head-logo.png",
   },
   {
     title: "Riverfront setting",

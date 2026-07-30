@@ -30,19 +30,25 @@ function Footer() {
               <Link to="/admissions">Admissions</Link>
             </li>
             <li>
+              <Link to="/financial-aid">Financial Aid</Link>
+            </li>
+            <li>
               <Link to="/campus">Campus Life</Link>
             </li>
             <li>
               <Link to="/athletics">Athletics</Link>
             </li>
             <li>
+              <Link to="/workforce">Workforce Education</Link>
+            </li>
+            <li>
+              <Link to="/about">About</Link>
+            </li>
+            <li>
               <Link to="/events">Events</Link>
             </li>
             <li>
               <Link to="/news">News</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
             </li>
           </ul>
         </div>

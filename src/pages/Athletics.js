@@ -25,8 +25,8 @@ function Athletics() {
           <p className="athletics-hero__brand reveal">NHTI Lynx</p>
           <img
             className="athletics-hero__logo"
-            src="/media/lynx-athletics-logo.png"
-            alt="NHTI Athletics — Leroy the Lynx mascot logo"
+            src="/media/lynx-head-logo.png"
+            alt="NHTI Lynx athletics logo with snarling lynx head"
             width="640"
             height="640"
           />

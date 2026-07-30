@@ -1,5 +1,5 @@
 import { useDeferredValue, useMemo, useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { focusAreas, programs, getFocusTitle } from "../data/content";
 import usePageMeta from "../hooks/usePageMeta";
 
@@ -11,7 +11,8 @@ function Academics() {
   });
 
   const location = useLocation();
-  const [query, setQuery] = useState("");
+  const [searchParams] = useSearchParams();
+  const [query, setQuery] = useState(searchParams.get("q") || "");
   const [focus, setFocus] = useState(location.state?.focus || "all");
   const [type, setType] = useState("all");
   const [onlineOnly, setOnlineOnly] = useState(false);
@@ -22,6 +23,11 @@ function Academics() {
       setFocus(location.state.focus);
     }
   }, [location.state]);
+
+  useEffect(() => {
+    const next = searchParams.get("q");
+    if (next != null) setQuery(next);
+  }, [searchParams]);
 
   const filtered = useMemo(() => {
     const q = deferredQuery.trim().toLowerCase();
