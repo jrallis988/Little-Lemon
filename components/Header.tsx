@@ -27,7 +27,6 @@ export function Header() {
 
   /** Home at top of hero: fully transparent. Frosted when scrolled or menu open. */
   const overlay = isHome && !scrolled && !open;
-  const frosted = !overlay;
 
   useEffect(() => {
     setOpen(false);
