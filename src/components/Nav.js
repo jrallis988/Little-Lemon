@@ -1,15 +1,20 @@
 import { useEffect, useState } from "react";
 import { SITE, asset } from "../data";
 
-const LINKS = [
+const LEFT_LINKS = [
   { href: "#about", label: "About" },
   { href: "#rooms", label: "Rooms" },
   { href: "#rates", label: "Rates" },
+];
+
+const RIGHT_LINKS = [
   { href: "#reviews", label: "Reviews" },
   { href: "#location", label: "Explore" },
   { href: "#faq", label: "FAQ" },
   { href: "#booking", label: "Book" },
 ];
+
+const ALL_LINKS = [...LEFT_LINKS, ...RIGHT_LINKS];
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -35,27 +40,44 @@ export default function Nav() {
     <>
       <header className={`nav${scrolled || open ? " is-scrolled" : ""}`}>
         <div className="nav__inner">
-          <a className="nav__brand" href="#top" onClick={close}>
-            <img className="nav__mark" src={asset("/icon.svg")} alt="" width="36" height="36" />
-            <span>{SITE.name}</span>
-          </a>
+          <div className="nav__left">
+            <a className="nav__brand" href="#top" onClick={close} aria-label={`${SITE.name} home`}>
+              <img
+                className="nav__logo"
+                src={asset("/seascape-inn-logo.png")}
+                alt={SITE.name}
+                width="180"
+                height="48"
+              />
+            </a>
 
-          <ul className="nav__links">
-            {LINKS.map((link) => (
-              <li key={link.href}>
-                <a href={link.href}>{link.label}</a>
-              </li>
-            ))}
-          </ul>
+            <ul className="nav__links nav__links--left">
+              {LEFT_LINKS.map((link) => (
+                <li key={link.href}>
+                  <a href={link.href}>{link.label}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-          <a
-            className="btn btn-primary nav__cta"
-            href={SITE.bookingUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Book a stay
-          </a>
+          <div className="nav__right">
+            <ul className="nav__links nav__links--right">
+              {RIGHT_LINKS.map((link) => (
+                <li key={link.href}>
+                  <a href={link.href}>{link.label}</a>
+                </li>
+              ))}
+            </ul>
+
+            <a
+              className="btn btn-primary nav__cta"
+              href={SITE.bookingUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Book a stay
+            </a>
+          </div>
 
           <button
             className="nav__menu-btn"
@@ -75,7 +97,7 @@ export default function Nav() {
         className={`nav__drawer${open ? " is-open" : ""}`}
         aria-label="Mobile"
       >
-        {LINKS.map((link) => (
+        {ALL_LINKS.map((link) => (
           <a key={link.href} href={link.href} onClick={close}>
             {link.label}
           </a>
