@@ -1182,6 +1182,22 @@ a:hover { opacity: 0.8; }
     transition: all 0.25s;
 }
 
+.service-card-tools {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0 1.25rem;
+}
+
+.service-card-tools img {
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+}
+
 .service-learn-more:hover {
     background: var(--cream);
     color: var(--dark);
