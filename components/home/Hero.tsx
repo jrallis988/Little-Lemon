@@ -23,12 +23,9 @@ export function Hero() {
       </div>
 
       <div className="mx-auto flex min-h-[78vh] max-w-content flex-col justify-end px-6 pb-16 pt-28 md:min-h-[86vh] md:px-8 md:pb-24 md:pt-32">
-        <p className="animate-fade-up font-display text-overline font-normal uppercase tracking-[0.14em] text-white">
-          Independent Write-In · Newmarket, NH
-        </p>
         <h1
           id="hero-heading"
-          className="animate-fade-up animate-delay-1 mt-5 max-w-4xl font-display text-hero-display font-normal uppercase text-white drop-shadow-[0_2px_18px_rgba(0,0,0,0.45)]"
+          className="animate-fade-up max-w-4xl font-display text-hero-display font-normal uppercase text-white drop-shadow-[0_2px_18px_rgba(0,0,0,0.45)]"
         >
           {candidate.tagline}
         </h1>
