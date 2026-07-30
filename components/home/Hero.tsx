@@ -1,34 +1,21 @@
 import Link from "next/link";
-import Image from "next/image";
 import { candidate } from "@/lib/candidate";
 
 export function Hero() {
   return (
     <section
       aria-labelledby="hero-heading"
-      className="relative isolate min-h-[78vh] overflow-hidden bg-ink md:min-h-[86vh]"
+      className="relative isolate overflow-hidden bg-navy"
     >
-      <div className="absolute inset-0 -z-10" aria-hidden="true">
-        <Image
-          src="/images/newmarket-hero.jpg"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-[50%_35%]"
-        />
-        {/* Scrim keeps white headline readable over downtown Newmarket aerial */}
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/55 to-ink/25" />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/75 via-transparent to-ink/35" />
-      </div>
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-navy via-ink to-footer-navy" aria-hidden />
 
-      <div className="mx-auto flex min-h-[78vh] max-w-content flex-col justify-end px-6 pb-16 pt-28 md:min-h-[86vh] md:px-8 md:pb-24 md:pt-32">
+      <div className="mx-auto flex min-h-[70vh] max-w-content flex-col justify-center px-6 py-20 md:min-h-[78vh] md:px-8 md:py-28">
         <p className="animate-fade-up font-display text-overline font-normal uppercase tracking-[0.14em] text-white">
           Independent Write-In · Newmarket, NH
         </p>
         <h1
           id="hero-heading"
-          className="animate-fade-up animate-delay-1 mt-5 max-w-4xl font-display text-hero-display font-normal uppercase text-white drop-shadow-[0_2px_18px_rgba(0,0,0,0.45)]"
+          className="animate-fade-up animate-delay-1 mt-5 max-w-4xl font-display text-hero-display font-normal uppercase text-white"
         >
           {candidate.tagline}
         </h1>
