@@ -24,6 +24,9 @@
   --letter-space: 0;
   --target-pad-y: 0px;
   --target-pad-x: 0px;
+  --max-content: 1240px;
+  --radius-cta: 0.35rem;
+  --site-header-h: 5rem;
 }
 
 html[data-theme="dark"] {
@@ -286,6 +289,238 @@ html[data-big-targets="true"] {
 
   .nav-link-current {
     @apply text-navy underline decoration-red decoration-2 underline-offset-4;
+    background-color: color-mix(in srgb, var(--granite) 60%, transparent);
+  }
+
+  /* —— Site header (fixed overlay → frosted glass) —— */
+  .site-header {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 50;
+    width: 100%;
+  }
+
+  .site-header__spacer {
+    height: var(--site-header-h);
+    width: 100%;
+    flex-shrink: 0;
+  }
+
+  .site-header__surface {
+    border-bottom: 1px solid transparent;
+    background-color: transparent;
+    box-shadow: none;
+    -webkit-backdrop-filter: blur(0);
+    backdrop-filter: blur(0);
+    transition:
+      background-color 0.35s ease,
+      border-color 0.35s ease,
+      box-shadow 0.35s ease,
+      backdrop-filter 0.35s ease,
+      -webkit-backdrop-filter 0.35s ease;
+  }
+
+  .site-header[data-elevated="true"] .site-header__surface {
+    border-bottom-color: color-mix(in srgb, var(--slate-line) 85%, transparent);
+    background-color: color-mix(in srgb, var(--warm-white) 80%, transparent);
+    box-shadow: 0 10px 30px rgba(17, 24, 39, 0.08);
+    -webkit-backdrop-filter: blur(16px) saturate(1.15);
+    backdrop-filter: blur(16px) saturate(1.15);
+  }
+
+  .site-header__inner {
+    margin-inline: auto;
+    display: flex;
+    height: var(--site-header-h);
+    max-width: var(--max-content);
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-inline: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .site-header__inner {
+      padding-inline: 2rem;
+    }
+  }
+
+  .site-header__logo {
+    position: relative;
+    display: block;
+    height: 3rem;
+    width: 10.5rem;
+    flex-shrink: 0;
+    filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.35));
+    transition: filter 0.35s ease;
+  }
+
+  @media (min-width: 640px) {
+    .site-header__logo {
+      height: 3.75rem;
+      width: 13.5rem;
+    }
+  }
+
+  .site-header[data-elevated="true"] .site-header__logo {
+    filter: none;
+  }
+
+  .site-header__desktop {
+    display: none;
+    min-width: 0;
+    align-items: center;
+    gap: 0.15rem;
+  }
+
+  @media (min-width: 1280px) {
+    .site-header__desktop {
+      display: flex;
+    }
+  }
+
+  .site-header__link {
+    border-radius: var(--radius-cta, 0.35rem);
+    padding: 0.5rem 0.65rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.92);
+    transition: color 0.3s ease, background-color 0.3s ease;
+  }
+
+  .site-header__link:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+    color: #fff;
+  }
+
+  .site-header__link.is-current {
+    background-color: rgba(255, 255, 255, 0.16);
+    color: #fff;
+  }
+
+  .site-header[data-elevated="true"] .site-header__link {
+    color: var(--slate-text);
+  }
+
+  .site-header[data-elevated="true"] .site-header__link:hover {
+    background-color: color-mix(in srgb, var(--granite) 55%, transparent);
+    color: var(--navy);
+  }
+
+  .site-header[data-elevated="true"] .site-header__link.is-current {
+    color: var(--navy);
+    text-decoration: underline;
+    text-decoration-color: var(--red);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+    background-color: color-mix(in srgb, var(--granite) 60%, transparent);
+  }
+
+  .site-header__cta {
+    margin-left: 0.5rem;
+    flex-shrink: 0;
+    padding: 0.7rem 1.15rem !important;
+    font-size: 0.75rem !important;
+  }
+
+  .site-header__cta-sm {
+    padding: 0.55rem 0.8rem !important;
+    font-size: 0.7rem !important;
+  }
+
+  .site-header__a11y {
+    margin-inline: 0.25rem;
+  }
+
+  .site-header__a11y--compact :is(button) {
+    padding-inline: 0.55rem;
+  }
+
+  @media (max-width: 639px) {
+    .site-header__a11y--compact :is(button) {
+      font-size: 0;
+      gap: 0;
+      padding: 0.55rem;
+    }
+
+    .site-header__a11y--compact :is(button) svg {
+      margin: 0;
+    }
+  }
+
+  .site-header__mobile-actions {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  @media (min-width: 1280px) {
+    .site-header__mobile-actions {
+      display: none;
+    }
+  }
+
+  .site-header__menu-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-cta, 0.35rem);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 0.55rem 0.75rem;
+    color: #fff;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  }
+
+  .site-header__menu-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .site-header[data-elevated="true"] .site-header__menu-btn {
+    border-color: var(--slate-line);
+    background-color: var(--warm-white);
+    color: var(--navy);
+  }
+
+  .site-header[data-elevated="true"] .site-header__menu-btn:hover {
+    border-color: var(--red);
+    color: var(--red);
+  }
+
+  .site-header__drawer {
+    border-top: 1px solid var(--slate-line);
+    background-color: color-mix(in srgb, var(--warm-white) 94%, transparent);
+    padding: 1rem 1.5rem 1.25rem;
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+  }
+
+  .site-header__drawer ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .site-header__drawer-link {
+    display: block;
+    border-radius: var(--radius-cta, 0.35rem);
+    padding: 0.75rem 0.85rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--slate-text);
+  }
+
+  .site-header__drawer-link:hover {
+    background-color: var(--paper);
+  }
+
+  .site-header__drawer-link.is-current {
+    color: var(--navy);
+    text-decoration: underline;
+    text-decoration-color: var(--red);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
     background-color: color-mix(in srgb, var(--granite) 60%, transparent);
   }
 }

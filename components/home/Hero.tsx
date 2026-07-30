@@ -5,6 +5,7 @@ import { candidate } from "@/lib/candidate";
 export function Hero() {
   return (
     <section
+      id="home-hero"
       aria-labelledby="hero-heading"
       className="relative isolate min-h-[100svh] overflow-hidden bg-ink"
     >
