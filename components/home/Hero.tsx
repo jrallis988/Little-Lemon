@@ -29,7 +29,7 @@ export function Hero() {
         >
           {candidate.tagline}
         </h1>
-        <p className="animate-fade-up animate-delay-2 mt-6 max-w-xl text-lg leading-[1.75] text-white/90 sm:text-xl">
+        <p className="animate-fade-up animate-delay-1 mt-6 max-w-xl text-lg leading-[1.75] text-white/90 sm:text-xl">
           {candidate.positioningLong}
         </p>
         <div className="animate-fade-up animate-delay-2 mt-8">
