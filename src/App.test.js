@@ -81,13 +81,112 @@ test("primary nav matches NHTI menu categories", () => {
   );
 
   expect(screen.getAllByRole("link", { name: "Academics" }).length).toBeGreaterThan(0);
+  expect(screen.getAllByRole("link", { name: "Admissions" }).length).toBeGreaterThan(0);
   expect(screen.getAllByRole("link", { name: "Financial Aid" }).length).toBeGreaterThan(0);
   expect(
     screen.getAllByRole("link", { name: "Workforce Education" }).length
   ).toBeGreaterThan(0);
   expect(screen.getAllByRole("link", { name: "Campus Life" }).length).toBeGreaterThan(0);
+  expect(screen.getAllByRole("link", { name: "About" }).length).toBeGreaterThan(0);
   expect(screen.getAllByRole("link", { name: "Current Students" }).length).toBeGreaterThan(0);
   expect(screen.getAllByRole("link", { name: "Contact" }).length).toBeGreaterThan(0);
+  expect(screen.getByRole("button", { name: /^search$/i })).toBeInTheDocument();
+});
+
+test("primary nav tabs route to their pages", () => {
+  const routes = [
+    {
+      name: "Academics",
+      path: "/academics",
+      heading: /programs built for work and transfer/i,
+    },
+    {
+      name: "Admissions",
+      path: "/admissions",
+      heading: /a clear path from curious to enrolled/i,
+    },
+    {
+      name: "Financial Aid",
+      path: "/financial-aid",
+      heading: /make college affordable/i,
+    },
+    {
+      name: "Campus Life",
+      path: "/campus",
+      heading: /a full college experience on the merrimack/i,
+    },
+    {
+      name: "Workforce Education",
+      path: "/workforce",
+      heading: /train for the job new hampshire needs/i,
+    },
+    {
+      name: "About",
+      path: "/about",
+      heading: /cultivating potential in every learner/i,
+    },
+    {
+      name: "Contact",
+      path: "/contact",
+      heading: /we.?re here to help/i,
+    },
+  ];
+
+  routes.forEach(({ name, path, heading }) => {
+    const { unmount } = render(
+      <MemoryRouter initialEntries={[path]}>
+        <App />
+      </MemoryRouter>
+    );
+
+    expect(screen.getAllByRole("link", { name }).length).toBeGreaterThan(0);
+    expect(screen.getByRole("heading", { name: heading })).toBeInTheDocument();
+    unmount();
+  });
+});
+
+test("about dropdown groups leadership and office links", () => {
+  render(
+    <MemoryRouter>
+      <App />
+    </MemoryRouter>
+  );
+
+  fireEvent.click(screen.getByRole("button", { name: /about submenu/i }));
+
+  expect(
+    screen.getByRole("group", { name: /leadership & offices/i })
+  ).toBeInTheDocument();
+  expect(screen.getByText(/leadership & offices/i)).toBeInTheDocument();
+  expect(
+    screen.getByRole("link", { name: /president.?s office/i })
+  ).toBeInTheDocument();
+  expect(
+    screen.getByRole("link", { name: /marketing office/i })
+  ).toBeInTheDocument();
+  expect(
+    screen.getByRole("link", { name: /student success data/i })
+  ).toBeInTheDocument();
+  expect(
+    screen.getByRole("link", { name: /community resources/i })
+  ).toBeInTheDocument();
+});
+
+test("search routes to academics with the query", () => {
+  render(
+    <MemoryRouter>
+      <App />
+    </MemoryRouter>
+  );
+
+  fireEvent.click(screen.getByRole("button", { name: /^search$/i }));
+  const input = screen.getByLabelText(/search programs/i);
+  fireEvent.change(input, {
+    target: { value: "Nursing" },
+  });
+  fireEvent.submit(input.closest("form"));
+
+  expect(screen.getByRole("heading", { name: /^Nursing$/i })).toBeInTheDocument();
 });
 
 test("homepage shows eight campus resource tiles without hero duplicates", () => {
