@@ -19,13 +19,29 @@ const navLinks = [
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const isHome = pathname === "/";
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const mobileNavRef = useRef<HTMLElement>(null);
+
+  /** Home hero: transparent bar over the Newmarket photo until the user scrolls */
+  const overlay = isHome && !scrolled && !open;
 
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    if (!isHome) {
+      setScrolled(false);
+      return;
+    }
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [isHome]);
 
   useEffect(() => {
     if (!open) return;
@@ -75,43 +91,57 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full shrink-0">
-      <div className="bg-navy text-white/90">
-        <div className="mx-auto flex h-10 max-w-content items-center justify-between gap-3 px-6 md:px-8">
-          <p className="truncate text-xs font-medium tracking-wide">
-            Independent write-in · {candidate.hometown}, NH · Nov 3, 2026
-          </p>
-          <div className="flex shrink-0 items-center gap-2">
-            <AccessibilityLauncher />
-            <ul className="flex items-center gap-1" aria-label="Social media">
-              {[
-                { href: candidate.social.facebook, label: "Facebook", Icon: Facebook },
-                { href: candidate.social.x, label: "X", Icon: Twitter },
-                { href: candidate.social.instagram, label: "Instagram", Icon: Instagram },
-                { href: candidate.social.youtube, label: "YouTube", Icon: Youtube },
-              ].map(({ href, label, Icon }) => (
-                <li key={label}>
-                  <a
-                    href={href}
-                    className="inline-flex rounded-cta p-1.5 hover:bg-white/10 hover:text-white"
-                    aria-label={`${label} (opens in a new window)`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Icon className="h-4 w-4" aria-hidden />
-                  </a>
-                </li>
-              ))}
-            </ul>
+    <header
+      className={`z-50 w-full shrink-0 ${
+        isHome ? "fixed left-0 right-0 top-0" : "sticky top-0"
+      }`}
+    >
+      {!overlay && (
+        <div className="bg-navy text-white/90">
+          <div className="mx-auto flex h-10 max-w-content items-center justify-between gap-3 px-6 md:px-8">
+            <p className="truncate text-xs font-medium tracking-wide">
+              Independent write-in · {candidate.hometown}, NH · Nov 3, 2026
+            </p>
+            <div className="flex shrink-0 items-center gap-2">
+              <AccessibilityLauncher />
+              <ul className="flex items-center gap-1" aria-label="Social media">
+                {[
+                  { href: candidate.social.facebook, label: "Facebook", Icon: Facebook },
+                  { href: candidate.social.x, label: "X", Icon: Twitter },
+                  { href: candidate.social.instagram, label: "Instagram", Icon: Instagram },
+                  { href: candidate.social.youtube, label: "YouTube", Icon: Youtube },
+                ].map(({ href, label, Icon }) => (
+                  <li key={label}>
+                    <a
+                      href={href}
+                      className="inline-flex rounded-cta p-1.5 hover:bg-white/10 hover:text-white"
+                      aria-label={`${label} (opens in a new window)`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Icon className="h-4 w-4" aria-hidden />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
-      <div className="border-b border-slate-line bg-warm-white/95 backdrop-blur-sm">
+      <div
+        className={
+          overlay
+            ? "border-b border-transparent bg-transparent"
+            : "border-b border-slate-line bg-warm-white/95 backdrop-blur-sm"
+        }
+      >
         <div className="mx-auto flex h-[4.5rem] max-w-content items-center justify-between gap-4 px-6 sm:h-[5rem] md:px-8">
           <Link
             href="/"
-            className="relative block h-12 w-[10.5rem] shrink-0 sm:h-[3.75rem] sm:w-[13.5rem]"
+            className={`relative block h-12 w-[10.5rem] shrink-0 sm:h-[3.75rem] sm:w-[13.5rem] ${
+              overlay ? "drop-shadow-[0_2px_10px_rgba(0,0,0,0.35)]" : ""
+            }`}
             aria-label={`${candidate.brandName} — home`}
           >
             <Image
@@ -132,27 +162,39 @@ export function Header() {
                   key={link.href}
                   href={link.href}
                   aria-current={current ? "page" : undefined}
-                  className={`rounded-cta px-2.5 py-2 text-sm font-semibold transition-colors hover:bg-granite/50 hover:text-navy ${
-                    current ? "nav-link-current" : "text-slate-text"
+                  className={`rounded-cta px-2.5 py-2 text-sm font-semibold transition-colors ${
+                    overlay
+                      ? current
+                        ? "bg-white/15 text-white"
+                        : "text-white/90 hover:bg-white/10 hover:text-white"
+                      : current
+                        ? "nav-link-current"
+                        : "text-slate-text hover:bg-granite/50 hover:text-navy"
                   }`}
                 >
                   {link.label}
                 </Link>
               );
             })}
+            {overlay && <AccessibilityLauncher />}
             <Link href="/how-to-vote" className="btn-primary ml-2 shrink-0 !px-5 !py-3 text-[0.75rem]">
               How to Vote Write-In →
             </Link>
           </nav>
 
           <div className="flex shrink-0 items-center gap-2 xl:hidden">
+            {overlay && <AccessibilityLauncher />}
             <Link href="/how-to-vote" className="btn-primary !px-3 !py-2.5 text-[0.7rem]">
               How to Vote
             </Link>
             <button
               ref={menuButtonRef}
               type="button"
-              className="btn-ghost !px-3 !py-2.5"
+              className={
+                overlay
+                  ? "inline-flex items-center justify-center rounded-cta border border-white/70 bg-white/10 px-3 py-2.5 text-white backdrop-blur-sm hover:bg-white/20"
+                  : "btn-ghost !px-3 !py-2.5"
+              }
               aria-expanded={open}
               aria-controls="mobile-nav"
               aria-label={open ? "Close menu" : "Open menu"}
