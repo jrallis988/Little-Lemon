@@ -29,11 +29,27 @@ function isValidName(value: string) {
   return value.trim().length >= 2;
 }
 
+function isValidEmail(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+}
+
 export function AppointmentWizard() {
-  const { step, draft, setStep, updateDraft, complete, reset } =
-    useAppointmentStore();
+  const {
+    step,
+    draft,
+    submitting,
+    submitError: storeSubmitError,
+    setStep,
+    updateDraft,
+    reset,
+    completeWithReference,
+    setSubmitting,
+    setSubmitError: setStoreSubmitError,
+  } = useAppointmentStore();
   const [touched, setTouched] = useState<Record<string, boolean>>({});
-  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [localError, setLocalError] = useState<string | null>(null);
+
+  const submitError = localError || storeSubmitError;
 
   const conditionOptions = useMemo(
     () => [
@@ -66,6 +82,10 @@ export function AppointmentWizard() {
     touched.phone && !isValidPhone(draft.phone)
       ? "Enter a valid phone number with at least 10 digits."
       : null;
+  const emailError =
+    touched.email && !isValidEmail(draft.email)
+      ? "Enter a valid email address."
+      : null;
 
   const canNext =
     (step === 0 && Boolean(draft.conditionOrDepartment)) ||
@@ -74,23 +94,72 @@ export function AppointmentWizard() {
     (step === 3 &&
       isValidName(draft.patientName) &&
       isValidPhone(draft.phone) &&
+      isValidEmail(draft.email) &&
       !nameError &&
-      !phoneError);
+      !phoneError &&
+      !emailError);
+
+  async function submitRequest() {
+    setTouched({ patientName: true, phone: true, email: true });
+    setLocalError(null);
+    setStoreSubmitError(null);
+
+    if (
+      !isValidName(draft.patientName) ||
+      !isValidPhone(draft.phone) ||
+      !isValidEmail(draft.email)
+    ) {
+      setLocalError("Please fix the highlighted fields before submitting.");
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      const res = await fetch("/api/appointments/request", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          conditionOrDepartment: draft.conditionOrDepartment,
+          insuranceCarrierId: draft.insuranceCarrierId,
+          locationSlug: draft.locationSlug,
+          telehealth: draft.telehealth,
+          patientName: draft.patientName,
+          phone: draft.phone,
+          email: draft.email,
+          notes: draft.notes,
+        }),
+      });
+      const data = (await res.json()) as {
+        ok: boolean;
+        referenceId?: string;
+        errors?: string[];
+      };
+      if (!res.ok || !data.ok || !data.referenceId) {
+        throw new Error(
+          data.errors?.join(" ") || "Unable to submit your request.",
+        );
+      }
+      completeWithReference(data.referenceId);
+      trackEvent("appointment_request_submitted", {
+        referenceId: data.referenceId,
+      });
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "Unable to submit your request.";
+      setStoreSubmitError(message);
+      setSubmitting(false);
+    }
+  }
 
   function goNext() {
-    setSubmitError(null);
+    setLocalError(null);
+    setStoreSubmitError(null);
     if (step === 3) {
-      setTouched({ patientName: true, phone: true });
-      if (!isValidName(draft.patientName) || !isValidPhone(draft.phone)) {
-        setSubmitError("Please fix the highlighted fields before submitting.");
-        return;
-      }
-      const ref = complete();
-      trackEvent("appointment_request_submitted", { referenceId: ref });
+      void submitRequest();
       return;
     }
     if (!canNext) {
-      setSubmitError("Complete the required fields to continue.");
+      setLocalError("Complete the required fields to continue.");
       return;
     }
     setStep(step + 1);
@@ -135,20 +204,15 @@ export function AppointmentWizard() {
               value={draft.conditionOrDepartment || undefined}
               onValueChange={(value) => {
                 updateDraft({ conditionOrDepartment: value });
-                setSubmitError(null);
+                setLocalError(null);
               }}
               placeholder="Select one…"
               options={conditionOptions}
             />
-            {!draft.conditionOrDepartment && submitError ? (
-              <p className="mt-2 text-sm text-emergency" role="alert">
-                Choose a condition or department.
-              </p>
-            ) : null}
             <Notice className="mt-s4">
               <p>
-                This is a prototype request flow. No appointment is actually
-                scheduled.
+                This request is reviewed by scheduling staff. It does not create
+                a confirmed visit time until you are contacted.
               </p>
             </Notice>
           </fieldset>
@@ -171,14 +235,14 @@ export function AppointmentWizard() {
               value={draft.insuranceCarrierId || undefined}
               onValueChange={(value) => {
                 updateDraft({ insuranceCarrierId: value });
-                setSubmitError(null);
+                setLocalError(null);
               }}
               placeholder="Select carrier…"
               options={insuranceOptions}
             />
             <p className="mt-s3 text-sm font-light text-text-meta">
-              In production this step would check network participation and
-              referral requirements. Self-pay and “Not sure” are available.
+              Self-pay and “not sure” are available. Network checks are completed
+              during scheduling follow-up.
             </p>
           </fieldset>
         ) : null}
@@ -215,7 +279,7 @@ export function AppointmentWizard() {
                         locationSlug: loc.slug,
                         telehealth: false,
                       });
-                      setSubmitError(null);
+                      setLocalError(null);
                     }}
                   />
                   <span>
@@ -244,7 +308,7 @@ export function AppointmentWizard() {
                   checked={draft.telehealth}
                   onChange={() => {
                     updateDraft({ telehealth: true, locationSlug: "" });
-                    setSubmitError(null);
+                    setLocalError(null);
                   }}
                 />
                 <span>
@@ -257,11 +321,6 @@ export function AppointmentWizard() {
                 </span>
               </label>
             </div>
-            {!draft.locationSlug && !draft.telehealth && submitError ? (
-              <p className="text-sm text-emergency" role="alert">
-                Select a campus or telehealth.
-              </p>
-            ) : null}
           </fieldset>
         ) : null}
 
@@ -295,6 +354,34 @@ export function AppointmentWizard() {
                   role="alert"
                 >
                   {nameError}
+                </p>
+              ) : null}
+            </div>
+            <div className="mb-s4">
+              <label
+                htmlFor="patient-email"
+                className="mb-[5px] block text-sm font-bold text-text"
+              >
+                Email <span className="text-emergency">*</span>
+              </label>
+              <Input
+                id="patient-email"
+                type="email"
+                value={draft.email}
+                onChange={(e) => updateDraft({ email: e.target.value })}
+                onBlur={() => setTouched((t) => ({ ...t, email: true }))}
+                autoComplete="email"
+                aria-invalid={Boolean(emailError)}
+                aria-describedby={emailError ? "patient-email-error" : undefined}
+                required
+              />
+              {emailError ? (
+                <p
+                  id="patient-email-error"
+                  className="mt-1 text-sm text-emergency"
+                  role="alert"
+                >
+                  {emailError}
                 </p>
               ) : null}
             </div>
@@ -352,8 +439,9 @@ export function AppointmentWizard() {
             </h2>
             <p className="mb-s4 text-md font-light text-text-body">
               Thanks{draft.patientName ? `, ${draft.patientName}` : ""}. Your
-              mock appointment request is confirmed. Save your reference ticket
-              — scheduling staff would use it in a production system.
+              appointment request was submitted to our intake queue. A
+              scheduler will follow up using {draft.email || "your email"} or{" "}
+              {draft.phone}.
             </p>
             <div className="mb-s5 rounded-md bg-surface p-s5">
               <div className="text-xs font-extrabold uppercase tracking-[0.08em] text-text-meta">
@@ -366,7 +454,7 @@ export function AppointmentWizard() {
                 {draft.referenceId}
               </div>
               <p className="mt-2 text-sm font-light text-text-meta">
-                Format: BCH-###### · generated for this demo session
+                Keep this ID for your records and any follow-up calls.
               </p>
               <ul className="mt-s4 flex flex-col gap-1 text-sm font-light text-text-body">
                 <li>Care need: {draft.conditionOrDepartment}</li>
@@ -382,12 +470,13 @@ export function AppointmentWizard() {
                     ? "Telehealth"
                     : contentApi.getLocation(draft.locationSlug)?.name ?? "—"}
                 </li>
+                <li>Email: {draft.email}</li>
                 <li>Callback phone: {draft.phone}</li>
               </ul>
             </div>
             <div className="flex flex-wrap gap-s3">
-              <Button href="/portal" variant="ocean">
-                Open MyChildren&apos;s sandbox
+              <Button href="/patients-families/prepare-for-your-visit" variant="ocean">
+                Prepare for your visit
               </Button>
               <Button type="button" variant="outline" onClick={() => reset()}>
                 Start another request
@@ -414,8 +503,10 @@ export function AppointmentWizard() {
               <Button
                 type="button"
                 variant="outline"
+                disabled={submitting}
                 onClick={() => {
-                  setSubmitError(null);
+                  setLocalError(null);
+                  setStoreSubmitError(null);
                   setStep(step - 1);
                 }}
               >
@@ -425,10 +516,14 @@ export function AppointmentWizard() {
             <Button
               type="button"
               variant="ocean"
-              disabled={!canNext}
+              disabled={!canNext || submitting}
               onClick={goNext}
             >
-              {step < 3 ? "Continue" : "Submit request"}
+              {step < 3
+                ? "Continue"
+                : submitting
+                  ? "Submitting…"
+                  : "Submit request"}
             </Button>
           </div>
         ) : null}

@@ -7,10 +7,15 @@ import type { AppointmentDraft } from "@/content/types";
 type AppointmentState = {
   step: number;
   draft: AppointmentDraft;
+  submitting: boolean;
+  submitError: string | null;
   setStep: (step: number) => void;
   updateDraft: (partial: Partial<AppointmentDraft>) => void;
   reset: () => void;
-  complete: () => string;
+  /** Persist confirmation after API success */
+  completeWithReference: (referenceId: string) => void;
+  setSubmitting: (submitting: boolean) => void;
+  setSubmitError: (error: string | null) => void;
 };
 
 const emptyDraft: AppointmentDraft = {
@@ -20,33 +25,42 @@ const emptyDraft: AppointmentDraft = {
   telehealth: false,
   patientName: "",
   phone: "",
+  email: "",
   notes: "",
 };
-
-function makeReferenceId() {
-  const n = Math.floor(100000 + Math.random() * 900000);
-  return `BCH-${n}`;
-}
 
 export const useAppointmentStore = create<AppointmentState>()(
   persist(
     (set, get) => ({
       step: 0,
       draft: emptyDraft,
+      submitting: false,
+      submitError: null,
       setStep: (step) => set({ step: Math.max(0, Math.min(4, step)) }),
       updateDraft: (partial) =>
         set({ draft: { ...get().draft, ...partial } }),
-      reset: () => set({ step: 0, draft: emptyDraft }),
-      complete: () => {
-        const referenceId = makeReferenceId();
+      reset: () =>
+        set({
+          step: 0,
+          draft: emptyDraft,
+          submitting: false,
+          submitError: null,
+        }),
+      completeWithReference: (referenceId) => {
         set({
           step: 4,
           draft: { ...get().draft, referenceId },
+          submitting: false,
+          submitError: null,
         });
-        return referenceId;
       },
+      setSubmitting: (submitting) => set({ submitting }),
+      setSubmitError: (submitError) => set({ submitError }),
     }),
-    { name: "bch-appointment-draft" },
+    {
+      name: "bch-appointment-draft",
+      partialize: (state) => ({ step: state.step, draft: state.draft }),
+    },
   ),
 );
 

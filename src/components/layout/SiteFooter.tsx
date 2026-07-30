@@ -39,6 +39,7 @@ const columns = [
       { label: "Mission & Values", href: "/about" },
       { label: "Design System", href: "/design-system" },
       { label: "Contact / ED", href: "/emergency" },
+      { label: "Site Map", href: "/sitemap" },
     ],
   },
 ];
@@ -117,23 +118,24 @@ export function SiteFooter() {
 
       <div className="wrap flex flex-wrap items-center justify-between gap-s4 border-t border-white/[0.07] py-s5">
         <span className="text-[11px] font-light text-white/18">
-          © 2025 Boston Children&apos;s Hospital. All rights reserved.
+          © {new Date().getFullYear()} Boston Children&apos;s Hospital redesign
+          platform. All rights reserved.
         </span>
         <div className="flex flex-wrap gap-s5" role="list">
           {[
-            "Privacy Policy",
-            "Terms of Use",
-            "Accessibility",
-            "Non-Discrimination Notice",
-            "Site Map",
+            { label: "Privacy Policy", href: "/privacy" },
+            { label: "Terms of Use", href: "/terms" },
+            { label: "Accessibility", href: "/accessibility" },
+            { label: "Non-Discrimination Notice", href: "/non-discrimination" },
+            { label: "Site Map", href: "/sitemap" },
           ].map((item) => (
             <Link
-              key={item}
-              href="#"
+              key={item.href}
+              href={item.href}
               role="listitem"
               className="text-[11px] text-white/20 no-underline hover:text-white/60"
             >
-              {item}
+              {item.label}
             </Link>
           ))}
         </div>

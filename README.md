@@ -1,45 +1,56 @@
-# Boston Children's Hospital — Redesign Architecture
+# Boston Children's Hospital — Care Platform
 
-Production-oriented **Next.js (App Router) + Tailwind CSS + Radix UI + Zustand** platform with CMS-shaped content (Sanity-ready) evolving from the BCH redesign prototype.
+Production-oriented **Next.js (App Router) + Tailwind + Radix UI + Zustand** care-discovery and intake website.
 
-## Source of truth
+> Staging by default. See [DEPLOY.md](./DEPLOY.md) to go live. This redesign is not an official Boston Children's Hospital production property unless separately authorized.
 
-Prototype archived at `prototypes/bch-redesign-v5.html`.
+## What ships in v1
 
-## Stack
+- Public catalog: doctors, conditions, programs, locations
+- Appointment request intake (`POST /api/appointments/request`)
+- Professional referral / second-opinion intake
+- Patients & families operational pages
+- Legal pages + staging banner
+- Sanity-ready CMS client (local content fallback)
+- Vitest + CI
 
-| Layer | Choice |
-|-------|--------|
-| Frontend | Next.js App Router |
-| UI / a11y | Tailwind + Radix (NavigationMenu, Dialog, Select, Tabs) |
-| Content | Local catalog + Sanity client scaffolding (`src/lib/cms`) |
-| State | Zustand (appointment wizard + portal) |
-| Quality | Vitest, jest-axe, Lighthouse CI workflow |
+**Deferred:** authenticated patient portal (preview only at `/portal`).
 
-## Catalog scale (local content)
-
-~17 providers · ~14 conditions · ~8 programs · ~7 locations · ~8 trials
-
-## Key routes
-
-- Care: `/find-a-doctor`, `/conditions`, `/programs`, `/locations/[slug]`, `/appointments/request`, `/emergency`
-- Portal: `/portal`
-- Patients: `/patients-families/*` (billing, visit prep, medical records)
-- Professionals: `/professionals/refer`, `/professionals/second-opinion`
-- Research: `/research` (searchable trials)
-
-## Scripts
+## Quick start
 
 ```bash
 npm install
+cp .env.example .env.local
 npm run dev
-npm run build
-npm run test
-npm run lint
 ```
 
-Copy `.env.example` for Sanity + analytics env vars (optional; local content is the default).
+```bash
+npm run test
+npm run build
+```
+
+## Production wiring
+
+| Concern | How |
+|---------|-----|
+| Hosting | Vercel (`vercel.json` security headers included) |
+| Intake | `INTAKE_WEBHOOK_URL` and/or `RESEND_API_KEY` |
+| CMS | Sanity env vars → `src/lib/cms` |
+| Mode | `NEXT_PUBLIC_SITE_MODE=staging\|production` |
+| Health | `GET /api/health` |
+
+## Architecture
+
+```
+src/
+  app/                 # Routes + API intake endpoints
+  components/          # UI, layout, domain screens
+  content/             # Local CMS-shaped catalog
+  lib/cms/             # Sanity client + schemas
+  lib/intake/          # Validation + delivery
+  store/               # Client draft/portal preview state
+```
 
 ## Note
 
-Portfolio redesign prototype — not an official Boston Children's Hospital website.
+Portfolio / staging redesign platform. Confirm branding/authorization before presenting as an official hospital website.

@@ -31,16 +31,17 @@ export function PortalSandbox() {
       <div className="wrap py-s7 pb-s10">
         <div className="mx-auto max-w-[520px] rounded-md border border-border bg-white p-s6">
           <h2 className="mb-s2 text-xl font-bold text-ocean">
-            MyChildren&apos;s sandbox
+            Patient portal preview
           </h2>
           <p className="mb-s5 text-md font-light text-text-body">
-            Demo patient portal inspired by MyChildren&apos;s — results,
-            messaging threads, visits, and refill requests. No real PHI is
-            stored.
+            UX preview for results, messaging, visits, and refills. This is not
+            connected to a real medical record system.
           </p>
           <Notice className="mb-s5">
             <p>
-              Sign in uses local mock state only (Zustand + browser storage).
+              Preview only — local browser state. Do not enter real patient
+              information. Production portal requires SSO and HIPAA-capable
+              vendors.
             </p>
           </Notice>
           <Button type="button" variant="ocean" fullWidth onClick={signIn}>

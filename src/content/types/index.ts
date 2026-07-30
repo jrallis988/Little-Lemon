@@ -129,6 +129,7 @@ export type AppointmentDraft = {
   telehealth: boolean;
   patientName: string;
   phone: string;
+  email: string;
   notes: string;
   referenceId?: string;
 };

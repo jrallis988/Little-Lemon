@@ -13,20 +13,54 @@ const textareaClass =
 
 export function ProfessionalRequestForm({ mode }: { mode: RequestMode }) {
   const [referenceId, setReferenceId] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const isReferral = mode === "referral";
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const prefix = isReferral ? "REF" : "SO";
-    const reference = `${prefix}-${new Date().getFullYear()}-${Math.random()
-      .toString(36)
-      .slice(2, 8)
-      .toUpperCase()}`;
-    setReferenceId(reference);
-    trackEvent(isReferral ? "referral_mock_submitted" : "second_opinion_mock_submitted", {
-      referenceId: reference,
-    });
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    setError(null);
+    setSubmitting(true);
+
+    const form = new FormData(event.currentTarget);
+    const payload = {
+      channel: mode,
+      requesterName: String(form.get("requesterName") || ""),
+      practiceOrRelationship: String(form.get("practiceOrRelationship") || ""),
+      email: String(form.get("email") || ""),
+      phone: String(form.get("phone") || ""),
+      patientName: String(form.get("patientName") || ""),
+      patientDob: String(form.get("patientDob") || ""),
+      specialty: String(form.get("specialty") || ""),
+      urgency: String(form.get("urgencyOrRecords") || ""),
+      summary: String(form.get("details") || ""),
+    };
+
+    try {
+      const res = await fetch("/api/professionals/request", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = (await res.json()) as {
+        ok: boolean;
+        referenceId?: string;
+        errors?: string[];
+      };
+      if (!res.ok || !data.ok || !data.referenceId) {
+        throw new Error(data.errors?.join(" ") || "Unable to submit request.");
+      }
+      setReferenceId(data.referenceId);
+      trackEvent(
+        isReferral ? "referral_submitted" : "second_opinion_submitted",
+        { referenceId: data.referenceId },
+      );
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unable to submit request.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   if (referenceId) {
@@ -41,9 +75,8 @@ export function ProfessionalRequestForm({ mode }: { mode: RequestMode }) {
           Thank you. Your reference ID is {referenceId}.
         </h2>
         <p className="mb-s4 max-w-[680px] text-base font-light text-text-body">
-          This prototype did not transmit patient information. In a connected
-          service, our access team would review the request and contact you using
-          the information supplied.
+          Your request was submitted to the care access intake queue. Our team
+          will review it and contact you using the information you provided.
         </p>
         <Button onClick={() => setReferenceId("")} variant="outline-ocean">
           Start another request
@@ -56,8 +89,9 @@ export function ProfessionalRequestForm({ mode }: { mode: RequestMode }) {
     <form onSubmit={handleSubmit} className="space-y-s7">
       <Notice>
         <p>
-          Prototype form: submissions are confirmed on this page but are not
-          sent or stored. Do not enter real patient information.
+          Submissions are stored in the intake queue and optionally emailed or
+          forwarded to your configured webhook. Do not include unnecessary PHI
+          beyond what is needed for triage.
         </p>
       </Notice>
 
@@ -70,21 +104,40 @@ export function ProfessionalRequestForm({ mode }: { mode: RequestMode }) {
             <Label htmlFor="requester-name">
               {isReferral ? "Clinician name" : "Full name"}
             </Label>
-            <Input id="requester-name" name="requesterName" autoComplete="name" required />
+            <Input
+              id="requester-name"
+              name="requesterName"
+              autoComplete="name"
+              required
+            />
           </div>
           <div>
             <Label htmlFor="practice">
-              {isReferral ? "Practice or organization" : "Relationship to patient"}
+              {isReferral
+                ? "Practice or organization"
+                : "Relationship to patient"}
             </Label>
             <Input id="practice" name="practiceOrRelationship" required />
           </div>
           <div>
             <Label htmlFor="email">Email</Label>
-            <Input id="email" name="email" type="email" autoComplete="email" required />
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              required
+            />
           </div>
           <div>
             <Label htmlFor="phone">Phone</Label>
-            <Input id="phone" name="phone" type="tel" autoComplete="tel" required />
+            <Input
+              id="phone"
+              name="phone"
+              type="tel"
+              autoComplete="tel"
+              required
+            />
           </div>
         </div>
       </fieldset>
@@ -104,10 +157,14 @@ export function ProfessionalRequestForm({ mode }: { mode: RequestMode }) {
           </div>
           <div>
             <Label htmlFor="specialty">
-              {isReferral ? "Requested specialty" : "Primary diagnosis or specialty"}
+              {isReferral
+                ? "Requested specialty"
+                : "Primary diagnosis or specialty"}
             </Label>
             <Select id="specialty" name="specialty" required defaultValue="">
-              <option value="" disabled>Select one</option>
+              <option value="" disabled>
+                Select one
+              </option>
               <option>Cardiology</option>
               <option>Genetics</option>
               <option>Neurology</option>
@@ -120,8 +177,15 @@ export function ProfessionalRequestForm({ mode }: { mode: RequestMode }) {
             <Label htmlFor="urgency">
               {isReferral ? "Clinical urgency" : "Records available"}
             </Label>
-            <Select id="urgency" name="urgencyOrRecords" required defaultValue="">
-              <option value="" disabled>Select one</option>
+            <Select
+              id="urgency"
+              name="urgencyOrRecords"
+              required
+              defaultValue=""
+            >
+              <option value="" disabled>
+                Select one
+              </option>
               {isReferral ? (
                 <>
                   <option>Routine</option>
@@ -145,7 +209,13 @@ export function ProfessionalRequestForm({ mode }: { mode: RequestMode }) {
                 ? "Clinical question and reason for referral"
                 : "What question would you like the reviewing team to address?"}
             </Label>
-            <textarea id="details" name="details" className={textareaClass} required />
+            <textarea
+              id="details"
+              name="details"
+              className={textareaClass}
+              required
+              minLength={20}
+            />
           </div>
         </div>
       </fieldset>
@@ -158,13 +228,23 @@ export function ProfessionalRequestForm({ mode }: { mode: RequestMode }) {
           className="mt-1 h-4 w-4 accent-ocean"
         />
         <span>
-          I confirm that I am authorized to make this request and may be contacted
-          about the information provided.
+          I confirm that I am authorized to make this request and may be
+          contacted about the information provided.
         </span>
       </label>
 
-      <Button type="submit" variant="ocean" size="lg">
-        {isReferral ? "Submit referral request" : "Submit second opinion request"}
+      {error ? (
+        <p className="text-sm text-emergency" role="alert">
+          {error}
+        </p>
+      ) : null}
+
+      <Button type="submit" variant="ocean" size="lg" disabled={submitting}>
+        {submitting
+          ? "Submitting…"
+          : isReferral
+            ? "Submit referral request"
+            : "Submit second opinion request"}
       </Button>
     </form>
   );

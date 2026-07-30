@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Nunito_Sans } from "next/font/google";
 import { SkipNav } from "@/components/layout/SkipNav";
+import { StagingBanner } from "@/components/layout/StagingBanner";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
+import { siteConfig } from "@/lib/site";
 import "./globals.css";
 
 const nunito = Nunito_Sans({
@@ -13,12 +15,13 @@ const nunito = Nunito_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: {
-    default: "Boston Children's Hospital — Where the world comes for answers",
-    template: "%s · Boston Children's Hospital",
+    default: `${siteConfig.name} — ${siteConfig.tagline}`,
+    template: `%s · ${siteConfig.name}`,
   },
   description:
-    "Boston Children's Hospital redesign prototype — modular Next.js architecture from the BCH design system.",
+    "Find doctors, explore conditions and programs, request appointments, and prepare for your visit.",
 };
 
 export default function RootLayout({
@@ -30,6 +33,7 @@ export default function RootLayout({
     <html lang="en" className={nunito.variable}>
       <body className="pb-[68px] font-sans lg:pb-0">
         <SkipNav />
+        <StagingBanner />
         <SiteHeader />
         <main id="main" tabIndex={-1} className="outline-none">
           {children}
