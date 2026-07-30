@@ -15,8 +15,10 @@ const campusImage = "/media/campus-hero.jpg";
 function ActionTile({ tile }) {
   const content = (
     <>
-      <img src={tile.icon} alt="" width="48" height="48" loading="lazy" />
-      <span>{tile.label}</span>
+      <span className="action-tile__icon" aria-hidden="true">
+        <img src={tile.icon} alt="" width="48" height="48" loading="lazy" />
+      </span>
+      <span className="action-tile__label">{tile.label}</span>
     </>
   );
 
@@ -28,12 +30,15 @@ function ActionTile({ tile }) {
     );
   }
 
+  const isMail = tile.href?.startsWith("mailto:");
+
   return (
     <a
       href={tile.href}
       className="action-tile"
-      target="_blank"
-      rel="noreferrer"
+      {...(isMail
+        ? {}
+        : { target: "_blank", rel: "noreferrer" })}
     >
       {content}
     </a>
@@ -88,10 +93,13 @@ function Home() {
         </div>
       </section>
 
-      <section className="section section--tight action-grid-section" aria-label="Quick actions">
+      <section className="section section--tight action-grid-section" aria-label="Campus resources">
         <div className="section-intro">
-          <h2>Start here</h2>
-          <p>Eight quick paths for applying, visiting, and finding your next step.</p>
+          <h2>Campus essentials</h2>
+          <p>
+            Eight everyday resources — from the library and bookstore to events,
+            workforce training, and IT support.
+          </p>
         </div>
         <div className="action-grid">
           {actionTiles.map((tile) => (
@@ -216,21 +224,34 @@ function Home() {
         </div>
       </section>
 
-      <section className="cta-band">
-        <div className="cta-band__inner">
-          <h2>Ready when you are</h2>
-          <p>
-            $0 application fee. Day, evening, hybrid, and online options —
-            including accelerated 8-week courses.
-          </p>
-          <div className="hero__actions">
-            <Link to="/admissions" className="btn btn--solid">
-              Start your application
-            </Link>
-            <Link to="/academics" className="btn btn--ghost-dark">
-              Browse programs
-            </Link>
+      <section className="cta-band cta-band--community" aria-label="Community learning">
+        <div className="cta-band__layout">
+          <div className="cta-band__copy">
+            <p className="cta-band__eyebrow">Community &amp; continuing education</p>
+            <h2>Keep learning on the Merrimack</h2>
+            <p>
+              Short-term workforce training, open campus events, and Early College
+              opportunities keep Concord connected — whether you&apos;re starting,
+              returning, or upskilling.
+            </p>
+            <div className="hero__actions">
+              <Link to="/workforce" className="btn btn--solid">
+                Explore workforce training
+              </Link>
+              <Link to="/events" className="btn btn--ghost">
+                See campus events
+              </Link>
+            </div>
           </div>
+          <ul className="cta-spotlight">
+            {events.slice(0, 3).map((event) => (
+              <li key={event.id}>
+                <time dateTime={event.date}>{event.displayDate}</time>
+                <p>{event.title}</p>
+                <span>{event.location}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
     </>

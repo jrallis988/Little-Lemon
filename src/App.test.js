@@ -90,21 +90,65 @@ test("primary nav matches NHTI menu categories", () => {
   expect(screen.getAllByRole("link", { name: "Contact" }).length).toBeGreaterThan(0);
 });
 
-test("homepage shows eight action tiles and virtual tour", () => {
+test("homepage shows eight campus resource tiles without hero duplicates", () => {
   render(
     <MemoryRouter>
       <App />
     </MemoryRouter>
   );
 
-  expect(screen.getByRole("link", { name: /apply and enroll/i })).toBeInTheDocument();
-  expect(screen.getAllByRole("link", { name: /^financial aid$/i }).length).toBeGreaterThan(0);
   expect(screen.getAllByRole("link", { name: /request info/i }).length).toBeGreaterThan(0);
-  expect(screen.getAllByRole("link", { name: /virtual tour/i }).length).toBeGreaterThan(0);
   expect(screen.getByRole("link", { name: /event calendar/i })).toBeInTheDocument();
-  expect(screen.getByRole("link", { name: /website navigation/i })).toBeInTheDocument();
   expect(screen.getAllByRole("link", { name: /workforce education/i }).length).toBeGreaterThan(0);
   expect(screen.getAllByRole("link", { name: /early college/i }).length).toBeGreaterThan(0);
+  expect(screen.getAllByRole("link", { name: /^library$/i }).length).toBeGreaterThan(0);
+  expect(screen.getAllByRole("link", { name: /^bookstore$/i }).length).toBeGreaterThan(0);
+  expect(screen.getByRole("link", { name: /campus map/i })).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: /it helpdesk/i })).toBeInTheDocument();
+  expect(screen.queryByRole("link", { name: /apply and enroll/i })).not.toBeInTheDocument();
+});
+
+test("homepage community band highlights events instead of duplicate apply CTAs", () => {
+  render(
+    <MemoryRouter>
+      <App />
+    </MemoryRouter>
+  );
+
+  expect(
+    screen.getByRole("heading", { name: /keep learning on the merrimack/i })
+  ).toBeInTheDocument();
+  expect(
+    screen.getByRole("link", { name: /explore workforce training/i })
+  ).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: /see campus events/i })).toBeInTheDocument();
+  expect(screen.queryByRole("link", { name: /start your application/i })).not.toBeInTheDocument();
+  expect(screen.queryByRole("link", { name: /browse programs/i })).not.toBeInTheDocument();
+});
+
+test("footer includes CCSNH lockup, social icons, and policy links", () => {
+  render(
+    <MemoryRouter>
+      <App />
+    </MemoryRouter>
+  );
+
+  expect(
+    screen.getByRole("img", {
+      name: /community college system of new hampshire/i,
+    })
+  ).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: /^facebook$/i })).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: /^instagram$/i })).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: /^linkedin$/i })).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: /^x$/i })).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: /^tiktok$/i })).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: /privacy policy/i })).toBeInTheDocument();
+  expect(
+    screen.getByRole("link", { name: /non-discrimination policy/i })
+  ).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: /accessibility policy/i })).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: /^sds$/i })).toBeInTheDocument();
 });
 
 test("shows student life shirts photo on campus page", () => {
