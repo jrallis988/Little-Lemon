@@ -1,10 +1,24 @@
 {
-  "name": "artistic-fountain-portfolio",
-  "version": "1.0.0",
+  "name": "nickelodeon-web",
   "private": true,
-  "description": "Artistic Fountain — strategic design studio portfolio",
+  "version": "1.0.0",
+  "type": "module",
   "scripts": {
-    "start": "npx --yes serve -l 3000",
-    "dev": "npx --yes serve -l 3000"
+    "dev": "vite --port 8081",
+    "build": "vite build",
+    "lint": "oxlint",
+    "preview": "vite preview --port 8081"
+  },
+  "dependencies": {
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-router-dom": "^7.18.2"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.4",
+    "oxlint": "^1.75.0",
+    "vite": "^8.2.0"
   }
 }

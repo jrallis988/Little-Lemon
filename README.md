@@ -1,52 +1,33 @@
-# Artistic Fountain
+# Nickelodeon Web App
 
-Independent design venture portfolio — digital media, graphic design, visual identity, and creative media projects.
+Mobile-first fan redesign of a Nickelodeon streaming portal — rebuilt from the July 25 local prototype (`localhost:8081`).
 
-## Dual-track separation
+## Run locally
 
-| Track | Home | Houses |
-| --- | --- | --- |
-| **Creative** | Artistic Fountain (this repo) | Visual media, graphic identity, conceptual design, client design services |
-| **Engineering** | Developer portfolio (separate) | Back-end systems, Python/FastAPI, AI/RAG applications |
+```bash
+npm install
+npm run dev
+```
 
-See `STATUS.md` for the full status report.
-
-## Stack
-
-Static site: HTML, CSS, and vanilla JS (built in Cursor). Custom typefaces (Arcanite Slab, Goudy Heavyface) plus Inter for body copy.
+Opens at [http://localhost:8081](http://localhost:8081).
 
 ## Pages
 
-- `index.html` — home (hero, designer, services, portfolio, blog, contact)
-- `services/` — detail pages for each service offering
-- `blog/` — blog index and post pages (content can be drafted in Blaze AI)
-- `privacy.html` — privacy policy
-- `terms.html` — terms & conditions
-- `resume.pdf` — downloadable resume
+| Route | Purpose |
+| --- | --- |
+| `/` or `/home` | Network showcase (Nick, Nick Jr., Orbitz, News) |
+| `/schedule` | Air-time grid + live premieres |
+| `/shows` | Show catalog |
+| `/stream` | Continue watching + premiere rails |
+| `/arcade` | Quick-play games |
+| `/vault` | Classic archive |
 
-## Develop
+## Stack
 
-```bash
-npm start
-```
+- React 19 + Vite
+- React Router
+- Custom CSS (Nick orange, slime green, deep purple night sky)
 
-Opens a local static server at [http://localhost:3000](http://localhost:3000).
+## Brand note
 
-Or open `index.html` directly in a browser.
-
-## Structure
-
-```
-.
-├── index.html
-├── privacy.html
-├── terms.html
-├── styles.css
-├── STATUS.md
-├── favicon.svg
-├── resume.pdf
-├── services/
-├── blog/
-├── images/
-└── *.otf          # brand fonts
-```
+This is an unofficial design exercise / portfolio piece — not affiliated with Paramount or Nickelodeon.
