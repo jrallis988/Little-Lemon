@@ -90,18 +90,18 @@ test("primary nav matches NHTI menu categories", () => {
   expect(screen.getAllByRole("link", { name: "Contact" }).length).toBeGreaterThan(0);
 });
 
-test("homepage shows quick links and official facts", () => {
+test("homepage shows student essentials and official facts", () => {
   render(
     <MemoryRouter>
       <App />
     </MemoryRouter>
   );
 
-  expect(screen.getByRole("heading", { name: /quick links/i })).toBeInTheDocument();
+  expect(screen.getByRole("heading", { name: /student essentials/i })).toBeInTheDocument();
   expect(screen.getAllByRole("link", { name: /^library$/i }).length).toBeGreaterThan(0);
   expect(screen.getAllByRole("link", { name: /^bookstore$/i }).length).toBeGreaterThan(0);
   expect(screen.getByRole("link", { name: /campus map/i })).toBeInTheDocument();
-  expect(screen.getByRole("link", { name: /it helpdesk/i })).toBeInTheDocument();
+  expect(screen.getAllByRole("link", { name: /student portal/i }).length).toBeGreaterThan(0);
   expect(screen.getAllByRole("link", { name: /residence life/i }).length).toBeGreaterThan(0);
   expect(screen.getByText("70+")).toBeInTheDocument();
   expect(screen.getByText("Degree and certificate programs")).toBeInTheDocument();
@@ -117,7 +117,9 @@ test("homepage shows quick links and official facts", () => {
     })
   ).toBeInTheDocument();
   expect(screen.queryByRole("heading", { name: /ready when you are/i })).not.toBeInTheDocument();
-  expect(screen.getByRole("heading", { name: /events, workforce trainings/i })).toBeInTheDocument();
+  expect(screen.queryByRole("heading", { name: /events, workforce trainings/i })).not.toBeInTheDocument();
+  expect(screen.getByRole("heading", { name: /ready to start at nhti/i })).toBeInTheDocument();
+  expect(screen.getAllByRole("link", { name: /^apply$/i }).length).toBeGreaterThan(0);
 });
 
 test("residence life page lists all three halls", () => {
@@ -155,6 +157,7 @@ test("footer includes CCSNH, social, and policy links", () => {
   expect(screen.getByRole("link", { name: /603-230-4000/ })).toBeInTheDocument();
   expect(screen.getAllByRole("link", { name: /^library$/i }).length).toBeGreaterThan(0);
   expect(screen.getAllByRole("link", { name: /^bookstore$/i }).length).toBeGreaterThan(0);
+  expect(screen.getAllByRole("link", { name: /apply now/i }).length).toBeGreaterThan(0);
 });
 
 test("shows student life shirts photo on campus page", () => {

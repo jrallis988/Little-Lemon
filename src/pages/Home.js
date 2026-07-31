@@ -145,8 +145,6 @@ function Home() {
     { value: "18", label: "Average class size for day classes" },
   ];
 
-  const spotlightEvents = events.slice(0, 3);
-
   return (
     <>
       <section className="hero">
@@ -182,22 +180,7 @@ function Home() {
         </div>
       </section>
 
-      <section
-        className="section section--tight action-grid-section"
-        aria-label="Quick links"
-      >
-        <div className="section-intro">
-          <h2>Quick links</h2>
-          <p>Jump to the campus tools students reach for every week.</p>
-        </div>
-        <div className="action-grid">
-          {actionTiles.map((tile) => (
-            <ActionTile key={tile.label} tile={tile} />
-          ))}
-        </div>
-      </section>
-
-      <section className="facts-band" aria-label="NHTI at a glance">
+      <section className="facts-band facts-band--bleed" aria-label="NHTI at a glance">
         <div
           className="facts-band__media"
           style={{ backgroundImage: `url(${statsImage})` }}
@@ -211,6 +194,11 @@ function Home() {
               <p className="facts-band__label">{item.label}</p>
             </div>
           ))}
+          <div className="facts-band__follow">
+            <Link to="/academics" className="text-link">
+              Explore academics
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -268,7 +256,10 @@ function Home() {
       <section className="section">
         <div className="section-intro">
           <h2>Why students choose NHTI</h2>
-          <p>Accessible education with a complete collegiate experience.</p>
+          <p>
+            Low tuition, a real campus, and programs built for New Hampshire
+            careers and transfer.
+          </p>
         </div>
         <div className="reason-grid">
           {reasons.map((reason) => (
@@ -276,6 +267,21 @@ function Home() {
               <h3>{reason.title}</h3>
               <p>{reason.text}</p>
             </article>
+          ))}
+        </div>
+      </section>
+
+      <section
+        className="section section--tight action-grid-section"
+        aria-label="Student essentials"
+      >
+        <div className="section-intro">
+          <h2>Student essentials</h2>
+          <p>Library, housing, athletics, and the campus tools you&apos;ll use often.</p>
+        </div>
+        <div className="action-grid">
+          {actionTiles.map((tile) => (
+            <ActionTile key={tile.label} tile={tile} />
           ))}
         </div>
       </section>
@@ -321,35 +327,29 @@ function Home() {
         </div>
       </section>
 
-      <section className="spotlight-band">
-        <div className="spotlight-band__inner">
-          <div className="spotlight-band__copy">
-            <p className="eyebrow">This season on campus</p>
-            <h2>Events, workforce trainings, and open houses</h2>
-            <p>
-              Skip another Apply button — jump into what&apos;s happening next,
-              from admissions visits to short-term workforce programs.
-            </p>
-            <div className="hero__actions">
-              <Link to="/events" className="btn btn--solid">
-                View events
-              </Link>
-              <Link to="/workforce" className="btn btn--ghost-dark">
-                Workforce education
-              </Link>
-            </div>
+      <section className="cta-band cta-band--compact">
+        <div className="cta-band__inner">
+          <h2>Ready to start at NHTI?</h2>
+          <p>
+            Apply with no fee, request info from Admissions, or tour campus from
+            anywhere.
+          </p>
+          <div className="hero__actions">
+            <Link to="/admissions" className="btn btn--solid">
+              Apply now
+            </Link>
+            <Link to="/admissions#inquiry-form" className="btn btn--ghost">
+              Request info
+            </Link>
+            <a
+              className="btn btn--ghost"
+              href={VIRTUAL_TOUR}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Virtual tour
+            </a>
           </div>
-          <ul className="spotlight-list">
-            {spotlightEvents.map((event) => (
-              <li key={event.id}>
-                <time dateTime={event.date}>{event.displayDate}</time>
-                <div>
-                  <h3>{event.title}</h3>
-                  <p>{event.summary}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
         </div>
       </section>
     </>

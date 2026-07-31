@@ -151,6 +151,24 @@ function Academics() {
           </div>
         ) : null}
       </section>
+
+      <section className="cta-band cta-band--compact">
+        <div className="cta-band__inner">
+          <h2>Found your program?</h2>
+          <p>
+            Apply with no fee, or request info and an Admissions counselor will
+            help you plan next steps.
+          </p>
+          <div className="hero__actions">
+            <Link to="/admissions" className="btn btn--solid">
+              Apply now
+            </Link>
+            <Link to="/admissions#inquiry-form" className="btn btn--ghost">
+              Request info
+            </Link>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

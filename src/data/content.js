@@ -50,7 +50,7 @@ export const reasons = [
   },
   {
     title: "Career-ready programs",
-    text: "80+ degrees and certificates shaped around NH’s workforce needs in healthcare, IT, engineering, and education.",
+    text: "70+ degrees and certificates shaped around NH’s workforce needs in healthcare, IT, engineering, and education.",
   },
 ];
 
@@ -109,16 +109,19 @@ export const campusHighlights = [
     title: "Student life",
     text: "20+ clubs and organizations, a full student center, and spaces to study, gather, and recharge.",
     image: "/media/student-life-shirts.jpg",
+    href: "https://www.nhti.edu/campus-life/student-life/",
   },
   {
     title: "Lynx athletics",
     text: "Cheer on competitive teams and join intramurals at the Dr. Goldie Crocker Wellness Center.",
     image: "/media/lynx-head-logo.png",
+    to: "/athletics",
   },
   {
     title: "Riverfront setting",
     text: "A picturesque Merrimack River campus with room to move, learn, and belong.",
     image: "/media/campus-hero.jpg",
+    href: "https://ccsnhmaps.college-tour.com/maps/map.php?ID=6",
   },
 ];
 
@@ -162,7 +165,7 @@ export const actionTiles = [
     href: "https://ccsnhmaps.college-tour.com/maps/map.php?ID=6",
   },
   {
-    label: "IT Helpdesk",
+    label: "Student Portal",
     icon: "it",
     href: "https://lynx.nhti.edu/",
   },

@@ -386,6 +386,9 @@ function Header() {
           </div>
 
           <div className="primary-nav__actions">
+            <Link to="/admissions" className="btn btn--solid btn--compact nav-apply">
+              Apply
+            </Link>
             <button
               type="button"
               className="nav-search-toggle"

@@ -86,12 +86,12 @@ function ResourceIcon({ name }) {
 
 const footerActions = [
   {
-    label: "Campus Safety",
-    href: "https://lynx.nhti.edu/student-services/campus-safety/",
+    label: "Apply now",
+    to: "/admissions",
   },
   {
-    label: "Current Students",
-    href: "https://lynx.nhti.edu/",
+    label: "Campus Safety",
+    href: "https://lynx.nhti.edu/student-services/campus-safety/",
   },
   {
     label: "Important Forms",
@@ -174,21 +174,31 @@ function Footer() {
         <div className="footer-panel">
           <p className="footer-label">Quick actions</p>
           <div className="footer-actions">
-            {footerActions.map((item) => (
-              <a
-                key={item.label}
-                className={
-                  item.ghost
-                    ? "footer-action-btn footer-action-btn--ghost"
-                    : "footer-action-btn"
-                }
-                href={item.href}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {item.label}
-              </a>
-            ))}
+            {footerActions.map((item) => {
+              const className = item.ghost
+                ? "footer-action-btn footer-action-btn--ghost"
+                : "footer-action-btn";
+
+              if (item.to) {
+                return (
+                  <Link key={item.label} className={className} to={item.to}>
+                    {item.label}
+                  </Link>
+                );
+              }
+
+              return (
+                <a
+                  key={item.label}
+                  className={className}
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {item.label}
+                </a>
+              );
+            })}
           </div>
         </div>
 

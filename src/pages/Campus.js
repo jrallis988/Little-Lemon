@@ -44,9 +44,14 @@ function Campus() {
             Orientation, clubs, spirit nights, and everyday hangouts in the
             Student Center — campus life at NHTI is built for belonging.
           </p>
-          <Link to="/athletics" className="text-link">
-            Explore Lynx athletics
-          </Link>
+          <a
+            href="https://www.nhti.edu/campus-life/student-life/"
+            className="text-link"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Explore student life
+          </a>
         </div>
         <figure className="student-life-feature__media">
           <img
@@ -86,22 +91,40 @@ function Campus() {
                 <div>
                   <h2>{item.title}</h2>
                   <p>{item.text}</p>
-                  {item.to ? (
+                  {item.to || item.href ? (
                     <span className="text-link">Learn more</span>
                   ) : null}
                 </div>
               </>
             );
 
-            return item.to ? (
-              <Link
-                key={item.title}
-                to={item.to}
-                className="highlight-media highlight-media--link"
-              >
-                {body}
-              </Link>
-            ) : (
+            if (item.to) {
+              return (
+                <Link
+                  key={item.title}
+                  to={item.to}
+                  className="highlight-media highlight-media--link"
+                >
+                  {body}
+                </Link>
+              );
+            }
+
+            if (item.href) {
+              return (
+                <a
+                  key={item.title}
+                  href={item.href}
+                  className="highlight-media highlight-media--link"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {body}
+                </a>
+              );
+            }
+
+            return (
               <article key={item.title} className="highlight-media">
                 {body}
               </article>
