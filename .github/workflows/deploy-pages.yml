@@ -2,7 +2,8 @@ name: CI and GitHub Pages
 
 on:
   push:
-    branches: ["cursor/beach-motel-website-1cb8", "main"]
+    # Motel site only — do not deploy from main (Artistic Fountain portfolio).
+    branches: ["cursor/beach-motel-website-1cb8", "seascape"]
   pull_request:
   workflow_dispatch:
 
@@ -27,15 +28,14 @@ jobs:
       - run: npm ci
       - run: CI=true npm test -- --watchAll=false
       - run: npm run build
-      - if: github.ref == 'refs/heads/main'
+      # Deploy Seascape from the motel branch (main is the Artistic Fountain portfolio).
+      - if: github.ref == 'refs/heads/cursor/beach-motel-website-1cb8' || github.ref == 'refs/heads/seascape'
         uses: actions/upload-pages-artifact@v3
         with:
           path: build
 
-  # Only deploy from main after GitHub Pages is enabled:
-  # Settings → Pages → Source: GitHub Actions
   deploy:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/cursor/beach-motel-website-1cb8' || github.ref == 'refs/heads/seascape'
     needs: build
     runs-on: ubuntu-latest
     environment:

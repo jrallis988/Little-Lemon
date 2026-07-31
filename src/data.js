@@ -30,6 +30,7 @@ export const SITE = {
   checkIn: "3:00 PM",
   checkOut: "11:00 AM",
   hours: "Front desk 8:30 AM – 10:00 PM",
+  /** Times above are typical; guests should confirm on their reservation. */
   typicalRateNote:
     "Use the live calendar below for exact pricing — seasonal ranges are a guide only.",
   trustLine: [
@@ -95,21 +96,21 @@ export const ROOMS = [
     sleeps: 2,
     size: "Standard room",
     description:
-      "A clean queen room with the essentials for a North Beach stay—air-conditioning, fridge, microwave, cable TV, and free Wi‑Fi.",
+      "A clean coastal queen room with the essentials for a North Beach stay—air-conditioning, fridge, microwave, cable TV, and free Wi‑Fi. Layouts vary; confirm bedding on your confirmation.",
     image: asset("/images/room-queen.jpg"),
-    imageAlt: "Seascape Inn queen guest room with coastal bedding",
+    imageAlt: "Seascape Inn guest room with white bedding and beach wall art",
     gallery: [
       {
         src: asset("/images/room-queen.jpg"),
-        alt: "Queen room with beach-themed wall art",
+        alt: "Bright guest room with white quilted bedding and BEACH wall letters",
       },
       {
-        src: asset("/images/seascape-vacancy.jpg"),
-        alt: "Seascape Inn roadside sign",
+        src: asset("/images/room-amenities.jpg"),
+        alt: "In-room fridge, microwave, desk, and flat-screen TV",
       },
       {
         src: asset("/images/exterior-courtyard.jpg"),
-        alt: "Courtyard outside guest rooms",
+        alt: "Courtyard seating outside guest rooms",
       },
     ],
     amenities: [
@@ -133,19 +134,19 @@ export const ROOMS = [
     description:
       "Two double beds for friends or family—steps from North Beach and a quieter stretch of Ocean Boulevard than the main Hampton strip.",
     image: asset("/images/room-doubles.jpg"),
-    imageAlt: "Guest room with two double beds at Seascape Inn",
+    imageAlt: "Guest room with two double beds and lattice quilts",
     gallery: [
       {
         src: asset("/images/room-doubles.jpg"),
-        alt: "Two-bed guest room with matching quilts",
+        alt: "Two-bed guest room with matching lattice quilts",
       },
       {
-        src: asset("/images/view-from-inn.jpg"),
-        alt: "Ocean view near the inn property",
+        src: asset("/images/room-amenities.jpg"),
+        alt: "Desk, dresser, fridge, and microwave in a guest room",
       },
       {
-        src: asset("/images/exterior-courtyard.jpg"),
-        alt: "Room balconies and courtyard seating",
+        src: asset("/images/exterior-courtyard-wide.jpg"),
+        alt: "Seascape Inn courtyard with lattice walkways",
       },
     ],
     amenities: [
@@ -169,19 +170,19 @@ export const ROOMS = [
     description:
       "A practical layout with a double and a single bed—good value for a short Hampton getaway near the sand.",
     image: asset("/images/room-economy.jpg"),
-    imageAlt: "Economy room with double and twin beds",
+    imageAlt: "Economy room with double and twin beds and colorful quilts",
     gallery: [
       {
         src: asset("/images/room-economy.jpg"),
-        alt: "Economy room with colorful quilts",
+        alt: "Economy room with striped quilts and teal pillows",
       },
       {
-        src: asset("/images/seascape-exterior.jpg"),
-        alt: "Seascape Inn exterior along Ocean Boulevard",
+        src: asset("/images/room-queen.jpg"),
+        alt: "Alternate double-and-twin layout with white coastal bedding",
       },
       {
-        src: asset("/images/seascape-hampton-beach.jpg"),
-        alt: "North Beach / Hampton Beach area signage",
+        src: asset("/images/exterior-courtyard.jpg"),
+        alt: "Ground-floor rooms opening to the courtyard",
       },
     ],
     amenities: [
@@ -202,24 +203,24 @@ export const ROOMS = [
     sleeps: 4,
     size: "Junior suite",
     description:
-      "Extra space with two queen beds for a longer stay—still across from the beach with gazebo and BBQ access on the lawn.",
-    image: asset("/images/gazebo-bbq.jpg"),
-    imageAlt: "Gazebo and BBQ lawn for suite guests",
+      "Extra living space for a longer stay—room for a small table, desk, and full in-room amenities, plus gazebo and BBQ access on the lawn. Confirm suite bedding when you book.",
+    image: asset("/images/room-amenities.jpg"),
+    imageAlt: "Spacious guest room with seating, desk, fridge, and TV",
     gallery: [
       {
-        src: asset("/images/gazebo-bbq.jpg"),
-        alt: "Gazebo and barbecue area at Seascape Inn",
+        src: asset("/images/room-amenities.jpg"),
+        alt: "Suite-style room with table, chairs, dresser, fridge, and TV",
       },
       {
         src: asset("/images/room-doubles.jpg"),
         alt: "Spacious two-bed room layout",
       },
       {
-        src: asset("/images/view-from-inn.jpg"),
-        alt: "Water view near Plaice Cove",
+        src: asset("/images/gazebo-bbq.jpg"),
+        alt: "Gazebo and barbecue lawn for guests",
       },
       {
-        src: asset("/images/exterior-courtyard.jpg"),
+        src: asset("/images/exterior-courtyard-wide.jpg"),
         alt: "Inn courtyard and guest walkways",
       },
     ],
@@ -364,12 +365,12 @@ export const POLICIES = [
   {
     id: "checkin",
     title: "Check-in & out",
-    body: `Check-in from ${SITE.checkIn}. Check-out by ${SITE.checkOut} EST. Front desk ${SITE.hours.replace("Front desk ", "")}.`,
+    body: `Typical check-in from ${SITE.checkIn}; typical check-out by ${SITE.checkOut} EST — always match your confirmation. Front desk ${SITE.hours.replace("Front desk ", "")}.`,
   },
   {
     id: "payment",
     title: "Payment & smoking",
-    body: "Major credit cards accepted. Deposit or payment terms appear at checkout and on your confirmation — confirm with the front desk if unsure. Non-smoking indoors with a designated outdoor smoking area.",
+    body: "Major credit cards accepted. Any deposit or payment schedule is shown at online checkout and on your confirmation — ask the front desk if you need clarity. Non-smoking indoors with a designated outdoor smoking area.",
   },
 ];
 
@@ -386,22 +387,22 @@ export const FAQ_SECTIONS = [
       {
         question: "What is your cancellation policy?",
         answer:
-          "Cancellations must be made within the time frame on your booking confirmation to qualify for a refund. Late cancellations or no-shows forfeit the deposit or the full charge of the reservation.",
+          "Cancellation windows and any fees are listed on your booking confirmation and in the RezStream checkout flow. If you need to change or cancel, call the front desk as early as you can so we can walk through your options.",
       },
       {
         question: "Is a deposit required to reserve a room?",
         answer:
-          "A deposit or full payment may be due at booking as shown during online checkout. Confirm the exact amount and timing on your reservation confirmation or with the front desk.",
+          "Payment or deposit terms (if any) appear during online checkout and on your confirmation. Amounts and timing can vary by dates and rate—confirm with the front desk if you are unsure.",
       },
       {
         question: "What forms of payment do you accept?",
         answer:
-          "We accept all major credit cards and approved digital payment methods securely through our booking platform.",
+          "Major credit cards are accepted through our booking platform. Ask the front desk about any other payment options for your stay.",
       },
       {
         question: "Is there a minimum stay requirement?",
         answer:
-          "Minimum stay requirements may apply during peak seasons, holidays, or weekends. Check your dates in the booking calendar for any active requirements.",
+          "Minimum stays may apply on peak weekends, holidays, or busy beach weeks. Your dates in the live booking calendar will show any active minimum.",
       },
     ],
   },
@@ -411,12 +412,12 @@ export const FAQ_SECTIONS = [
     items: [
       {
         question: "What are your check-in and check-out times?",
-        answer: `Check-in begins at ${SITE.checkIn}, and check-out is by ${SITE.checkOut}. Always confirm times on your reservation confirmation.`,
+        answer: `Typical check-in is from ${SITE.checkIn}, and typical check-out is by ${SITE.checkOut}. Your confirmation is the source of truth if times differ for your reservation.`,
       },
       {
         question: "What is the minimum age to check in?",
         answer:
-          "Guests must be at least 18 years of age with a valid government-issued photo ID to check in and reserve a room.",
+          "An adult with a valid government-issued photo ID is required to check in. Ask the front desk about the current minimum age if you are booking for a younger guest.",
       },
       {
         question: "Does the hotel allow pets?",
@@ -426,17 +427,17 @@ export const FAQ_SECTIONS = [
       {
         question: "Can I check in early and check out late?",
         answer:
-          "Early check-ins and late check-outs are subject to availability and must be requested in advance. Additional fees may apply for late departures.",
+          "Early arrivals and late departures depend on availability and should be requested ahead of time. Fees may apply—ask when you book or call before your stay.",
       },
       {
         question: "What is your smoking policy?",
         answer:
-          "Seascape Inn is strictly non-smoking indoors. Tobacco, cannabis, and e-cigarettes are prohibited in rooms and common areas. A designated outdoor smoking area is provided.",
+          "Seascape Inn is non-smoking indoors. Tobacco, cannabis, and e-cigarettes are not allowed in rooms or indoor common areas. A designated outdoor smoking area is provided.",
       },
       {
         question: "Are children allowed?",
         answer:
-          "Yes, families are welcome. Minors must be accompanied by an adult parent or guardian at all times.",
+          "Yes, families are welcome. Minors should be accompanied by a parent or guardian.",
       },
     ],
   },
@@ -461,12 +462,12 @@ export const FAQ_SECTIONS = [
       {
         question: "Do you serve breakfast?",
         answer:
-          "Complimentary continental breakfast may be offered depending on season and staffing. Please confirm current breakfast details with the front desk when you book or check in.",
+          "Breakfast is not guaranteed. A small complimentary coffee or light breakfast setup may be available depending on season and staffing—please ask the front desk when you book or check in for what is offered during your dates.",
       },
       {
         question: "Is there Wi‑Fi available? Is it free?",
         answer:
-          "Yes. High-speed wireless internet is available throughout the property and is free for all registered guests.",
+          "Yes. Wireless internet is available for registered guests at no extra charge.",
       },
     ],
   },
@@ -477,17 +478,17 @@ export const FAQ_SECTIONS = [
       {
         question: "Does booking directly on your website ensure I get the best rate?",
         answer:
-          "Yes. Booking directly through Seascape Inn gives you our best available rate and direct customer support—without third-party booking friction.",
+          "Booking direct through our RezStream calendar keeps you in touch with the front desk and shows our current published rates for your dates. Compare options if you are shopping around—live prices are always on the calendar.",
       },
       {
         question: "What are the benefits of booking direct?",
         answer:
-          "Transparent pricing, direct communication with our front desk for special requests, and access to the best available rates.",
+          "Clear published pricing, direct communication for special requests, and easier help from the front desk if plans change.",
       },
       {
         question: "Is it easier to change or cancel when booking direct?",
         answer:
-          "Yes. Managing your reservation with us is usually smoother for modifications or cancellations than booking through a third-party travel site.",
+          "In most cases yes—calling or emailing the inn is usually simpler than working through a third-party travel site. Follow the terms on your confirmation either way.",
       },
       {
         question: "How do I make sure I book direct?",
