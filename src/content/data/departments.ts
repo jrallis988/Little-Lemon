@@ -53,7 +53,7 @@ export const departments: DepartmentDoc[] = [
     name: "Pulmonary Medicine",
     summary:
       "Comprehensive respiratory care for cystic fibrosis, asthma, sleep, and complex lung disease.",
-    programSlugs: ["cystic-fibrosis-center"],
+    programSlugs: ["cystic-fibrosis-center", "asthma-center"],
   },
   {
     _type: "department",
@@ -80,7 +80,7 @@ export const departments: DepartmentDoc[] = [
     name: "Nephrology",
     summary:
       "Kidney disease, hypertension, dialysis, and transplant care for children of all ages.",
-    programSlugs: [],
+    programSlugs: ["kidney-transplant-program"],
   },
   {
     _type: "department",
@@ -98,6 +98,51 @@ export const departments: DepartmentDoc[] = [
     name: "Adolescent and Young Adult Medicine",
     summary:
       "Developmentally informed medical, nutrition, reproductive, and behavioral health care.",
+    programSlugs: [],
+  },
+  {
+    _type: "department",
+    _id: "dept-allergy-immunology",
+    slug: "allergy-immunology",
+    name: "Allergy and Immunology",
+    summary:
+      "Diagnosis and treatment for food allergy, asthma, immune disorders, and other allergic conditions.",
+    programSlugs: ["food-allergy-program"],
+  },
+  {
+    _type: "department",
+    _id: "dept-dermatology",
+    slug: "dermatology",
+    name: "Dermatology",
+    summary:
+      "Medical and surgical care for common, complex, and rare skin conditions in children and adolescents.",
+    programSlugs: [],
+  },
+  {
+    _type: "department",
+    _id: "dept-psychiatry",
+    slug: "psychiatry",
+    name: "Psychiatry and Behavioral Sciences",
+    summary:
+      "Developmentally informed mental and behavioral health assessment, therapy, and medication care.",
+    programSlugs: ["behavioral-health-program"],
+  },
+  {
+    _type: "department",
+    _id: "dept-otolaryngology",
+    slug: "otolaryngology",
+    name: "Otolaryngology and Communication Enhancement",
+    summary:
+      "Ear, nose, throat, hearing, balance, speech, and communication care for children of all ages.",
+    programSlugs: [],
+  },
+  {
+    _type: "department",
+    _id: "dept-rheumatology",
+    slug: "rheumatology",
+    name: "Rheumatology",
+    summary:
+      "Multidisciplinary care for arthritis, autoinflammatory disease, and systemic autoimmune conditions.",
     programSlugs: [],
   },
 ];
@@ -214,6 +259,90 @@ export const clinicalTrials: ClinicalTrialDoc[] = [
     phase: "Prospective cohort",
     principalInvestigator: "Omar Ahmed, MD",
     enrollmentTarget: 150,
+  },
+  {
+    _type: "clinicalTrial",
+    _id: "trial-severe-asthma-biologic",
+    slug: "severe-asthma-biologic-study",
+    title: "Biologic therapy for severe pediatric asthma",
+    status: "recruiting",
+    summary:
+      "Comparing biomarker-guided biologic treatment with standard escalation for children whose asthma remains uncontrolled.",
+    conditionSlugs: ["pediatric-asthma"],
+    programSlugs: ["asthma-center"],
+    phase: "Phase 3",
+    principalInvestigator: "Emily Zhang, MD",
+    enrollmentTarget: 108,
+  },
+  {
+    _type: "clinicalTrial",
+    _id: "trial-nephrotic-precision",
+    slug: "nephrotic-syndrome-precision-study",
+    title: "Precision treatment study for childhood nephrotic syndrome",
+    status: "recruiting",
+    summary:
+      "Using clinical and molecular markers to match children with frequently relapsing nephrotic syndrome to steroid-sparing therapies.",
+    conditionSlugs: ["nephrotic-syndrome"],
+    programSlugs: ["kidney-transplant-program"],
+    phase: "Phase 2",
+    principalInvestigator: "Samuel Adeyemi, MD",
+    enrollmentTarget: 84,
+  },
+  {
+    _type: "clinicalTrial",
+    _id: "trial-peanut-oit",
+    slug: "peanut-oral-immunotherapy-trial",
+    title: "Early peanut oral immunotherapy trial",
+    status: "recruiting",
+    summary:
+      "Studying the safety and effectiveness of a lower-dose oral immunotherapy protocol for young children with peanut allergy.",
+    conditionSlugs: ["food-allergy"],
+    programSlugs: ["food-allergy-program"],
+    phase: "Phase 3",
+    principalInvestigator: "Mateo Alvarez, MD",
+    enrollmentTarget: 140,
+  },
+  {
+    _type: "clinicalTrial",
+    _id: "trial-digital-cbt-anxiety",
+    slug: "digital-cbt-pediatric-anxiety-study",
+    title: "Blended digital CBT for pediatric anxiety",
+    status: "active",
+    summary:
+      "Evaluating therapist-supported digital cognitive behavioral therapy for school-age children with anxiety disorders.",
+    conditionSlugs: ["pediatric-anxiety"],
+    programSlugs: ["behavioral-health-program"],
+    phase: "Randomized controlled trial",
+    principalInvestigator: "Rachel Levine, MD",
+    enrollmentTarget: 180,
+  },
+  {
+    _type: "clinicalTrial",
+    _id: "trial-jia-tapering",
+    slug: "jia-biologic-tapering-study",
+    title: "Biologic tapering in juvenile idiopathic arthritis",
+    status: "active",
+    summary:
+      "Following clinical and imaging markers to identify when children in sustained arthritis remission can safely reduce biologic therapy.",
+    conditionSlugs: ["juvenile-idiopathic-arthritis"],
+    programSlugs: [],
+    phase: "Prospective cohort",
+    principalInvestigator: "Fatima Rahman, MD",
+    enrollmentTarget: 200,
+  },
+  {
+    _type: "clinicalTrial",
+    _id: "trial-sickle-gene-therapy",
+    slug: "sickle-cell-gene-therapy-trial",
+    title: "Gene therapy for severe sickle cell disease",
+    status: "recruiting",
+    summary:
+      "Evaluating a gene-modified stem cell treatment for adolescents with severe sickle cell complications.",
+    conditionSlugs: ["sickle-cell-disease"],
+    programSlugs: ["cancer-blood-disorders"],
+    phase: "Phase 1/2",
+    principalInvestigator: "Kwame Mensah, MD",
+    enrollmentTarget: 36,
   },
 ];
 

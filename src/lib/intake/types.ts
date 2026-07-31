@@ -44,6 +44,7 @@ export type IntakeRecord = {
     stored: boolean;
     emailed: boolean;
     webhook: boolean;
+    durable?: boolean;
     errors: string[];
   };
 };

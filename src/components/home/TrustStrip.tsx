@@ -21,7 +21,7 @@ export function TrustStrip() {
               <span className="mb-2 block text-[clamp(36px,5vw,58px)] font-black leading-none tracking-[-0.03em] text-white">
                 {item.num}
               </span>
-              <span className="whitespace-pre-line text-sm font-light leading-[1.5] text-white/50">
+              <span className="whitespace-pre-line text-sm font-light leading-[1.5] text-white/85">
                 {item.label}
               </span>
             </div>

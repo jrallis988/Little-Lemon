@@ -2,11 +2,11 @@ import { cn } from "@/lib/cn";
 import type { ReactNode } from "react";
 
 const variants = {
-  ocean: "bg-ocean/10 text-ocean",
+  ocean: "bg-ocean/10 text-blue",
   blue: "bg-blue/10 text-blue",
-  pink: "bg-pink/10 text-pink",
+  pink: "bg-pink/10 text-[#9a2f6e]",
   green: "bg-green/12 text-success-text",
-  gray: "bg-surface-2 text-text-meta",
+  gray: "bg-surface-2 text-text",
 } as const;
 
 export function Badge({

@@ -14,6 +14,7 @@ type InboxRecord = {
     stored: boolean;
     emailed: boolean;
     webhook: boolean;
+    durable?: boolean;
     errors: string[];
   };
   payload: Record<string, unknown>;
@@ -113,6 +114,9 @@ export function IntakeInbox() {
               <div className="mb-s3 flex flex-wrap gap-s2 text-xs">
                 <Badge variant={record.delivery.stored ? "green" : "gray"}>
                   stored
+                </Badge>
+                <Badge variant={record.delivery.durable ? "green" : "gray"}>
+                  durable
                 </Badge>
                 <Badge variant={record.delivery.emailed ? "green" : "gray"}>
                   emailed

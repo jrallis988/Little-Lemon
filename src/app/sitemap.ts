@@ -28,6 +28,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/terms",
     "/accessibility",
     "/non-discrimination",
+    "/media-policy",
     "/sitemap",
   ].map((path) => ({
     url: `${base}${path || "/"}`,

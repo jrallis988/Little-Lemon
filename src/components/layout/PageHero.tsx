@@ -23,7 +23,7 @@ export function PageHero({
       <div className="wrap">
         <div className="max-w-[700px]">
           {eyebrow ? (
-            <span className="eyebrow text-white/50">{eyebrow}</span>
+            <span className="eyebrow text-white/85">{eyebrow}</span>
           ) : null}
           <h1
             id={id}
@@ -32,7 +32,7 @@ export function PageHero({
             {title}
           </h1>
           {lead ? (
-            <p className="lead text-white/[0.72]">{lead}</p>
+            <p className="lead text-white/90">{lead}</p>
           ) : null}
           {actions ? (
             <div className="mt-s5 flex flex-wrap gap-s3">{actions}</div>

@@ -1,8 +1,6 @@
 /**
- * Site identity and production configuration.
- * Override via env for staging/production deployments.
+ * Runtime site configuration for branding, compliance posture, and ops.
  */
-
 export const siteConfig = {
   name:
     process.env.NEXT_PUBLIC_SITE_NAME ||
@@ -19,7 +17,11 @@ export const siteConfig = {
   supportEmail:
     process.env.NEXT_PUBLIC_SUPPORT_EMAIL || "care-intake@example.com",
   intakeEmail: process.env.INTAKE_TO_EMAIL || "intake@example.com",
-  /** When true, show staging banner and non-clinical disclaimers */
+  /**
+   * Set NEXT_PUBLIC_SITE_OFFICIAL=true only with authorization to present as
+   * an official Boston Children's Hospital property.
+   */
+  isOfficial: process.env.NEXT_PUBLIC_SITE_OFFICIAL === "true",
   showStagingBanner:
     (process.env.NEXT_PUBLIC_SITE_MODE || "staging") !== "production",
 };

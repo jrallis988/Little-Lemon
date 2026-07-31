@@ -20,9 +20,9 @@ const config: Config = {
         "nav-dark": "#002060",
         text: {
           DEFAULT: "#1a1d2e",
-          body: "#5a5c61",
-          meta: "#74767B",
-          ghost: "#9a9ca2",
+          body: "#4a4c52",
+          meta: "#56585e",
+          ghost: "#5c5e66",
         },
         surface: {
           DEFAULT: "#F5F6F8",

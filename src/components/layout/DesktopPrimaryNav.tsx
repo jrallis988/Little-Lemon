@@ -51,7 +51,7 @@ export function DesktopPrimaryNav({ items }: { items: NavItem[] }) {
           <NavigationMenuItem key={item.label} className="relative">
             <NavigationMenuTrigger
               className={cn(
-                "flex h-[68px] items-center gap-1 border-b-[3px] border-transparent px-3.5 text-sm font-bold text-white/65 transition-all hover:border-sky hover:text-white data-[state=open]:border-sky data-[state=open]:text-white",
+                "flex h-[68px] items-center gap-1 border-b-[3px] border-transparent px-3.5 text-sm font-bold text-white/90 transition-all hover:border-sky hover:text-white data-[state=open]:border-sky data-[state=open]:text-white",
                 isActive(item) && "border-sky text-white",
               )}
             >

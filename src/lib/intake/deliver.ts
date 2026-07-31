@@ -1,6 +1,7 @@
 import { mkdir, writeFile, appendFile } from "fs/promises";
 import path from "path";
 import { siteConfig } from "@/lib/site";
+import { captureException, trackMetric } from "@/lib/monitoring";
 import type { IntakeRecord } from "./types";
 
 function makeReferenceId(channel: IntakeRecord["channel"]) {
@@ -15,10 +16,11 @@ function makeId() {
 }
 
 async function persistLocal(record: IntakeRecord) {
-  // Durable on local/dev; on Vercel use /tmp (ephemeral) + webhook/email.
   const root =
     process.env.INTAKE_STORE_DIR ||
-    (process.env.VERCEL ? "/tmp/bch-intake" : path.join(process.cwd(), ".data/intake"));
+    (process.env.VERCEL
+      ? "/tmp/bch-intake"
+      : path.join(process.cwd(), ".data/intake"));
   await mkdir(root, { recursive: true });
   const file = path.join(root, `${record.referenceId}.json`);
   await writeFile(file, JSON.stringify(record, null, 2), "utf8");
@@ -33,22 +35,45 @@ async function persistLocal(record: IntakeRecord) {
   );
 }
 
+async function withRetries<T>(
+  label: string,
+  fn: () => Promise<T>,
+  attempts = 3,
+): Promise<T> {
+  let lastError: unknown;
+  for (let i = 0; i < attempts; i += 1) {
+    try {
+      return await fn();
+    } catch (err) {
+      lastError = err;
+      if (i < attempts - 1) {
+        await new Promise((r) => setTimeout(r, 250 * (i + 1)));
+      }
+    }
+  }
+  throw lastError instanceof Error
+    ? lastError
+    : new Error(`${label} failed after retries`);
+}
+
 async function deliverWebhook(record: IntakeRecord) {
   const url = process.env.INTAKE_WEBHOOK_URL;
   if (!url) return false;
-  const res = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      ...(process.env.INTAKE_WEBHOOK_SECRET
-        ? { "X-Intake-Secret": process.env.INTAKE_WEBHOOK_SECRET }
-        : {}),
-    },
-    body: JSON.stringify(record),
+  await withRetries("webhook", async () => {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(process.env.INTAKE_WEBHOOK_SECRET
+          ? { "X-Intake-Secret": process.env.INTAKE_WEBHOOK_SECRET }
+          : {}),
+      },
+      body: JSON.stringify(record),
+    });
+    if (!res.ok) {
+      throw new Error(`Webhook failed (${res.status})`);
+    }
   });
-  if (!res.ok) {
-    throw new Error(`Webhook failed (${res.status})`);
-  }
   return true;
 }
 
@@ -60,24 +85,51 @@ async function deliverEmail(record: IntakeRecord) {
   const from =
     process.env.INTAKE_FROM_EMAIL || "Care Intake <onboarding@resend.dev>";
 
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from,
-      to: [to],
-      subject: `[${record.channel}] ${record.referenceId}`,
-      text: JSON.stringify(record, null, 2),
-    }),
+  await withRetries("email", async () => {
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from,
+        to: [to],
+        subject: `[${record.channel}] ${record.referenceId}`,
+        text: JSON.stringify(record, null, 2),
+      }),
+    });
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(`Resend failed (${res.status}): ${text}`);
+    }
   });
+  return true;
+}
 
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`Resend failed (${res.status}): ${text}`);
-  }
+/** Optional durable store via Upstash Redis REST. */
+async function persistUpstash(record: IntakeRecord) {
+  const url = process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+  if (!url || !token) return false;
+
+  await withRetries("upstash", async () => {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify([
+        "SET",
+        `intake:${record.referenceId}`,
+        JSON.stringify(record),
+      ]),
+    });
+    if (!res.ok) {
+      throw new Error(`Upstash failed (${res.status})`);
+    }
+  });
   return true;
 }
 
@@ -95,6 +147,7 @@ export async function processIntake(
       stored: false,
       emailed: false,
       webhook: false,
+      durable: false,
       errors: [],
     },
   };
@@ -106,6 +159,16 @@ export async function processIntake(
     record.delivery.errors.push(
       err instanceof Error ? err.message : "Failed to store intake",
     );
+    captureException(err, { channel, step: "persistLocal" });
+  }
+
+  try {
+    record.delivery.durable = await persistUpstash(record);
+  } catch (err) {
+    record.delivery.errors.push(
+      err instanceof Error ? err.message : "Durable store failed",
+    );
+    captureException(err, { channel, step: "upstash" });
   }
 
   try {
@@ -114,6 +177,7 @@ export async function processIntake(
     record.delivery.errors.push(
       err instanceof Error ? err.message : "Webhook delivery failed",
     );
+    captureException(err, { channel, step: "webhook" });
   }
 
   try {
@@ -122,19 +186,23 @@ export async function processIntake(
     record.delivery.errors.push(
       err instanceof Error ? err.message : "Email delivery failed",
     );
+    captureException(err, { channel, step: "email" });
   }
 
-  // Local/staging without providers still succeeds if stored.
   const delivered =
     record.delivery.stored ||
+    record.delivery.durable ||
     record.delivery.webhook ||
     record.delivery.emailed;
 
   if (!delivered) {
-    throw new Error(
-      "Intake could not be delivered. Configure INTAKE_WEBHOOK_URL or RESEND_API_KEY, or ensure local disk is writable.",
+    const error = new Error(
+      "Intake could not be delivered. Configure INTAKE_WEBHOOK_URL, RESEND_API_KEY, or UPSTASH_REDIS_REST_URL, or ensure local disk is writable.",
     );
+    captureException(error, { channel });
+    throw error;
   }
 
+  trackMetric("intake_submitted", 1, { channel });
   return record;
 }

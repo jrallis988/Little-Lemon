@@ -364,7 +364,7 @@ export function SiteHeader() {
                   key={link.label}
                   href={link.href}
                   className={cn(
-                    "flex h-10 items-center border-r border-white/[0.07] px-3.5 text-xs font-semibold text-white/45 no-underline transition-colors hover:text-white/85",
+                    "flex h-10 items-center border-r border-white/[0.07] px-3.5 text-xs font-semibold text-white/80 no-underline transition-colors hover:text-white/85",
                     headerFocus,
                     i === 0 && "pl-0",
                   )}
@@ -379,7 +379,7 @@ export function SiteHeader() {
                   className="h-1.5 w-1.5 shrink-0 animate-pulse-dot rounded-full bg-[#4caf50]"
                   aria-hidden="true"
                 />
-                <span className="text-xs text-white/50">ED wait:</span>
+                <span className="text-xs text-white/80">ED wait:</span>
                 <span
                   className="text-xs font-bold text-[#7dd87f]"
                   role="status"
@@ -395,7 +395,7 @@ export function SiteHeader() {
                 <Link
                   href="/emergency"
                   className={cn(
-                    "ml-[5px] text-xs text-white/40 no-underline hover:text-white/75",
+                    "ml-[5px] text-xs text-white/75 no-underline hover:text-white",
                     headerFocus,
                   )}
                 >
@@ -438,7 +438,7 @@ export function SiteHeader() {
                     <span className="block text-xs font-bold text-white">
                       Portal preview
                     </span>
-                    <span className="block text-[10px] text-white/[0.38]">
+                    <span className="block text-[10px] text-white/80">
                       UX only · not live
                     </span>
                   </span>
@@ -552,7 +552,7 @@ export function SiteHeader() {
                 <span className="text-[15px] font-bold leading-tight tracking-[-0.01em] text-white">
                   Boston Children&apos;s Hospital
                 </span>
-                <span className="mt-px text-[10px] font-bold tracking-[0.01em] text-pink">
+                <span className="mt-px text-[10px] font-bold tracking-[0.01em] text-[#f7c6df]">
                   Where the world comes for answers
                 </span>
               </span>
@@ -565,7 +565,7 @@ export function SiteHeader() {
                 ref={searchButtonRef}
                 type="button"
                 className={cn(
-                  "flex h-9 w-9 items-center justify-center rounded-sm text-white/50 transition-all hover:bg-white/10 hover:text-white",
+                  "flex h-9 w-9 items-center justify-center rounded-sm text-white/80 transition-all hover:bg-white/10 hover:text-white",
                   headerFocus,
                 )}
                 aria-label="Search the site"
@@ -633,7 +633,7 @@ export function SiteHeader() {
               </span>
               <span className="text-sm font-bold text-white">Portal preview</span>
             </div>
-            <p className="pb-3 pl-[27px] text-xs font-light leading-[1.6] text-white/40">
+            <p className="pb-3 pl-[27px] text-xs font-light leading-[1.6] text-white/80">
               UX preview only — not a live medical record
             </p>
             <Link
@@ -696,7 +696,7 @@ export function SiteHeader() {
                   <button
                     type="button"
                     className={cn(
-                      "flex w-full items-center justify-between border-b border-white/[0.05] px-1 py-2.5 text-base font-semibold text-white/40",
+                      "flex w-full items-center justify-between border-b border-white/[0.05] px-1 py-2.5 text-base font-semibold text-white/85",
                       headerFocus,
                     )}
                     aria-expanded={open}
@@ -728,7 +728,7 @@ export function SiteHeader() {
                         key={link.label}
                         href={link.href}
                         className={cn(
-                          "py-1 text-sm font-light text-white/40 no-underline hover:text-white/80",
+                          "py-1 text-sm font-light text-white/80 no-underline hover:text-white",
                           headerFocus,
                         )}
                       >
@@ -752,7 +752,7 @@ export function SiteHeader() {
               Book an Appointment
             </Link>
             <div className="flex items-center justify-between py-2">
-              <span className="text-xs text-white/40">Need emergency care?</span>
+              <span className="text-xs text-white/80">Need emergency care?</span>
               <Link
                 href="/emergency"
                 className={cn(

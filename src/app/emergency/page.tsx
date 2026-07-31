@@ -19,14 +19,14 @@ export default function EmergencyPage() {
       >
         <div className="wrap">
           <div className="max-w-[700px]">
-            <span className="eyebrow text-white/50">Emergency Care</span>
+            <span className="eyebrow text-white/85">Emergency Care</span>
             <h1
               id="ed-page-heading"
               className="mb-s2 mt-s2 text-[clamp(24px,4vw,40px)] font-medium text-white"
             >
               Emergency Department
             </h1>
-            <p className="mb-s5 text-md font-light text-white/[0.68]">
+            <p className="mb-s5 text-md font-light text-white/90">
               Our ED is open 24 hours a day, 7 days a week. We are a Level 1
               pediatric trauma center.
             </p>

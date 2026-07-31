@@ -17,6 +17,7 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run test
+      - run: npm run build
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
       - name: Accessibility score (Lighthouse)
@@ -24,7 +25,8 @@ jobs:
         with:
           urls: |
             http://localhost:3000
+            http://localhost:3000/find-a-doctor
+            http://localhost:3000/appointments/request
           uploadArtifacts: true
           temporaryPublicStorage: true
           configPath: ./.lighthouserc.json
-        continue-on-error: true

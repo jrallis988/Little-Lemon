@@ -100,7 +100,7 @@
   }
 
   .eyebrow {
-    @apply mb-s2 inline-block text-xs font-extrabold uppercase tracking-[0.1em] text-ocean;
+    @apply mb-s2 inline-block text-xs font-extrabold uppercase tracking-[0.1em] text-blue;
   }
 
   .tagline {

@@ -46,6 +46,7 @@ const sections = [
       { href: "/terms", label: "Terms of Use" },
       { href: "/accessibility", label: "Accessibility" },
       { href: "/non-discrimination", label: "Non-Discrimination" },
+      { href: "/media-policy", label: "Media Policy" },
     ],
   },
 ];

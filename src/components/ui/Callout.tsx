@@ -111,7 +111,7 @@ export function Notice({
         className,
       )}
     >
-      <InfoIcon className="mt-0.5 h-4 w-4 shrink-0 text-ocean" />
+      <InfoIcon className="mt-0.5 h-4 w-4 shrink-0 text-blue" />
       <div className="m-0 text-base text-blue">{children}</div>
     </div>
   );
