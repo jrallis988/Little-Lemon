@@ -8,7 +8,7 @@ Inspired by [Marshalls.com](https://www.marshalls.com/) — brand names for less
 
 - **React 18 + TypeScript** — modular component architecture
 - **Vite** — fast local dev and production builds
-- **Tailwind CSS** — Marshalls brand tokens (red `#D71920`, blue `#003DA5`)
+- **Tailwind CSS** — Marshalls brand tokens (blue `#003DA5`)
 - **Zustand + localStorage** — persistent bag and filter state
 - **React Router** — home, catalog, PDP, and shell navigation
 
@@ -28,9 +28,8 @@ npm run preview
 
 ## Brand direction
 
-- **Primary:** Marshalls Red (`#D71920`) for logo, promo bar, and CTAs
-- **Accent:** Marshalls Blue (`#003DA5`) for secondary emphasis
-- **Typography:** Montserrat (wordmark) + Source Sans 3 (UI)
+- **Primary:** Marshalls Blue (`#003DA5`) for logo, promo accents, and CTAs
+- **Typography:** Libre Baskerville (wordmark) + Source Sans 3 (UI)
 - **Voice:** Brand names for less · Never the same store twice · Thrill of the find
 
 ## Surfaces

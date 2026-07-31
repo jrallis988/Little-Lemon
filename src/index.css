@@ -14,7 +14,7 @@
 
 @layer base {
   :root {
-    /* Live Marshalls aesthetic — red wordmark #D71920, white chrome, navy secondary */
+    /* Marshalls blue chrome — wordmark, CTAs, and accents */
     --background: 0 0% 100%;
     --foreground: 220 18% 12%;
 
@@ -28,8 +28,8 @@
     --popover: 0 0% 100%;
     --popover-foreground: 220 18% 12%;
 
-    /* Marshalls Red — CTAs, badges, brand mark */
-    --primary: 358 79% 47%;
+    /* Marshalls Blue — CTAs, badges, brand mark (#003DA5) */
+    --primary: 218 100% 32%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 210 14% 95%;
@@ -39,9 +39,9 @@
     --muted-foreground: 215 12% 42%;
 
     --accent: 218 80% 96%;
-    --accent-foreground: 218 100% 28%;
+    --accent-foreground: 218 100% 32%;
 
-    --navy: 218 100% 28%;
+    --navy: 218 100% 32%;
     --navy-foreground: 0 0% 100%;
 
     --sky: 205 85% 55%;
@@ -51,12 +51,12 @@
     --destructive: 0 72% 42%;
     --destructive-foreground: 0 0% 100%;
 
-    --deal: 358 79% 47%;
+    --deal: 218 100% 32%;
     --deal-foreground: 0 0% 100%;
-    --deal-soft: 358 70% 96%;
+    --deal-soft: 218 80% 96%;
 
     --brand-red: 358 79% 47%;
-    --brand-blue: 218 100% 28%;
+    --brand-blue: 218 100% 32%;
 
     --inventory-low: 28 90% 44%;
     --inventory-in: 152 45% 32%;
@@ -64,7 +64,7 @@
 
     --border: 214 16% 88%;
     --input: 214 16% 86%;
-    --ring: 358 79% 47%;
+    --ring: 218 100% 32%;
 
     --radius: 0.25rem;
 
@@ -188,7 +188,7 @@
     box-shadow: 0 -8px 24px hsl(220 20% 10% / 0.06);
   }
 
-  /* Official-inspired Marshalls wordmark: italic serif, tight tracking, brand red */
+  /* Official-inspired Marshalls wordmark: italic serif, tight tracking, brand blue */
   .marshalls-wordmark {
     font-family: var(--font-display);
     font-style: italic;
@@ -196,7 +196,7 @@
     letter-spacing: -0.045em;
     font-size: clamp(1.55rem, 2.2vw, 1.85rem);
     line-height: 1;
-    color: hsl(var(--brand-red));
+    color: hsl(var(--brand-blue));
     text-rendering: geometricPrecision;
   }
 
