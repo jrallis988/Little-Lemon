@@ -4,7 +4,6 @@ import Hero from "./components/Hero";
 import Work from "./components/Work";
 import Playground from "./components/Playground";
 import CaseStudy from "./components/CaseStudy";
-import Focus from "./components/Focus";
 import About from "./components/About";
 import Bring from "./components/Bring";
 import Skills from "./components/Skills";
@@ -27,7 +26,6 @@ function App() {
         <Work />
         <CaseStudy />
         <Playground />
-        <Focus />
         <About />
         <Bring />
         <Skills />

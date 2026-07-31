@@ -27,7 +27,7 @@ export default function Playground() {
             A playable prototype in the portfolio.
           </h2>
           <p className="reveal mt-4 text-base leading-relaxed text-sand/85 md:text-lg">
-            Engineering-track game work lives here as web prototypes—not trailers.
+            Game work shows up here as playable web prototypes—not trailers.
             Foam Drift is a lightweight canvas demo; larger builds lean on Phaser.js
             and Three.js with a custom asset pipeline.
           </p>
