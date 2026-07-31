@@ -7,13 +7,14 @@ import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { candidate } from "@/lib/candidate";
 import { AccessibilityLauncher } from "@/components/a11y/AccessibilityPanel";
+import { CartNavLink } from "@/components/store/CartNavLink";
 
 const NAV_LINKS = [
   { href: "/meet-nick", label: "Meet Nick" },
   { href: "/violet-party", label: "Violet Party" },
   { href: "/issues", label: "Issues" },
   { href: "/how-to-vote", label: "How to Vote" },
-  { href: "/endorsements", label: "Endorsements" },
+  { href: "/shop", label: "Store" },
   { href: "/volunteer", label: "Volunteer" },
 ] as const;
 
@@ -150,12 +151,14 @@ export function Header() {
               <div className="site-header__a11y">
                 <AccessibilityLauncher tone="onDark" />
               </div>
+              <CartNavLink tone="onDark" />
               <Link href="/how-to-vote" className="btn-primary site-header__cta">
                 How to Vote
               </Link>
             </nav>
 
             <div className="site-header__mobile-actions">
+              <CartNavLink tone="onDark" />
               <div className="site-header__a11y site-header__a11y--compact">
                 <AccessibilityLauncher tone="onDark" />
               </div>
@@ -203,6 +206,15 @@ export function Header() {
                     </li>
                   );
                 })}
+                <li>
+                  <Link
+                    href="/shop/cart"
+                    className="site-header__drawer-link"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Cart
+                  </Link>
+                </li>
               </ul>
             </nav>
           )}

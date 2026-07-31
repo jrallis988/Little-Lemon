@@ -8,7 +8,7 @@ const quickLinks = [
   { href: "/meet-nick", label: "Meet Nick" },
   { href: "/issues", label: "Issues" },
   { href: "/how-to-vote", label: "How to Vote" },
-  { href: "/faq", label: "FAQ" },
+  { href: "/shop", label: "Store" },
   { href: "/violet-party", label: "Violet Party" },
   { href: "/volunteer", label: "Volunteer" },
 ];
