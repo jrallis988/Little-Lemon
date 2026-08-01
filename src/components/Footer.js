@@ -1,48 +1,109 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { COOKIE_POLICY, POLICIES, PRIVACY_POLICY, SITE, asset } from "../data";
 
-function LegalBlock({ id, policy }) {
-  return (
-    <details className="footer__legal" id={id}>
-      <summary>
-        <span>{policy.title}</span>
-        <span className="footer__legal-updated">{policy.updated}</span>
-      </summary>
-      <p className="footer__legal-intro">{policy.intro}</p>
-      <div className="footer__legal-sections">
-        {policy.sections.map((section) => (
-          <article key={section.title}>
-            <h4>{section.title}</h4>
-            <p>{section.body}</p>
-            {section.bullets ? (
-              <ul>
-                {section.bullets.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            ) : null}
+const PANELS = {
+  policies: {
+    title: "Stay policies",
+    render: () => (
+      <div className="footer__policies">
+        {POLICIES.map((policy) => (
+          <article key={policy.id}>
+            <h4>{policy.title}</h4>
+            <p>{policy.body}</p>
           </article>
         ))}
       </div>
-    </details>
-  );
-}
+    ),
+  },
+  cookies: {
+    title: COOKIE_POLICY.title,
+    updated: COOKIE_POLICY.updated,
+    render: () => (
+      <>
+        <p className="footer__legal-intro">{COOKIE_POLICY.intro}</p>
+        <div className="footer__legal-sections">
+          {COOKIE_POLICY.sections.map((section) => (
+            <article key={section.title}>
+              <h4>{section.title}</h4>
+              <p>{section.body}</p>
+              {section.bullets ? (
+                <ul>
+                  {section.bullets.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              ) : null}
+            </article>
+          ))}
+        </div>
+      </>
+    ),
+  },
+  privacy: {
+    title: PRIVACY_POLICY.title,
+    updated: PRIVACY_POLICY.updated,
+    render: () => (
+      <>
+        <p className="footer__legal-intro">{PRIVACY_POLICY.intro}</p>
+        <div className="footer__legal-sections">
+          {PRIVACY_POLICY.sections.map((section) => (
+            <article key={section.title}>
+              <h4>{section.title}</h4>
+              <p>{section.body}</p>
+              {section.bullets ? (
+                <ul>
+                  {section.bullets.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              ) : null}
+            </article>
+          ))}
+        </div>
+      </>
+    ),
+  },
+};
 
 export default function Footer() {
+  const [active, setActive] = useState(null);
+
   useEffect(() => {
-    const openFromHash = () => {
+    const syncFromHash = () => {
       const id = window.location.hash.replace("#", "");
-      if (!["cookies", "privacy", "policies"].includes(id)) return;
-      const el = document.getElementById(id);
-      if (el instanceof HTMLDetailsElement) {
-        el.open = true;
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      setActive(PANELS[id] ? id : null);
+    };
+    syncFromHash();
+    window.addEventListener("hashchange", syncFromHash);
+    return () => window.removeEventListener("hashchange", syncFromHash);
+  }, []);
+
+  useEffect(() => {
+    if (!active) return undefined;
+    const onKey = (event) => {
+      if (event.key === "Escape") {
+        setActive(null);
+        if (["policies", "cookies", "privacy"].includes(window.location.hash.slice(1))) {
+          window.history.replaceState(null, "", window.location.pathname + window.location.search);
+        }
       }
     };
-    openFromHash();
-    window.addEventListener("hashchange", openFromHash);
-    return () => window.removeEventListener("hashchange", openFromHash);
-  }, []);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [active]);
+
+  function openPanel(id) {
+    setActive(id);
+  }
+
+  function closePanel() {
+    setActive(null);
+    if (["policies", "cookies", "privacy"].includes(window.location.hash.slice(1))) {
+      window.history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
+  }
+
+  const panel = active ? PANELS[active] : null;
 
   return (
     <footer className="footer" id="site-footer">
@@ -83,42 +144,69 @@ export default function Footer() {
               <a href={SITE.tripadvisorUrl} target="_blank" rel="noreferrer">
                 TripAdvisor
               </a>
-              <a href={SITE.website} target="_blank" rel="noreferrer">
-                Official site
-              </a>
             </div>
           </div>
-        </div>
-
-        <details className="footer__policies-fold" id="policies">
-          <summary>Stay policies</summary>
-          <div className="footer__policies">
-            {POLICIES.map((policy) => (
-              <article key={policy.id}>
-                <h3>{policy.title}</h3>
-                <p>{policy.body}</p>
-              </article>
-            ))}
-          </div>
-        </details>
-
-        <div className="footer__legal-stack">
-          <LegalBlock id="cookies" policy={COOKIE_POLICY} />
-          <LegalBlock id="privacy" policy={PRIVACY_POLICY} />
         </div>
 
         <div className="footer__bottom">
           <p className="footer__copy">
             © {new Date().getFullYear()} {SITE.name}. Est. around {SITE.founded}.{" "}
-            <a href="#policies">Policies</a>
+            <a
+              href="#policies"
+              onClick={(event) => {
+                event.preventDefault();
+                openPanel("policies");
+                window.history.replaceState(null, "", "#policies");
+              }}
+            >
+              Policies
+            </a>
             {" · "}
-            <a href="#cookies">Cookies</a>
+            <a
+              href="#cookies"
+              onClick={(event) => {
+                event.preventDefault();
+                openPanel("cookies");
+                window.history.replaceState(null, "", "#cookies");
+              }}
+            >
+              Cookies
+            </a>
             {" · "}
-            <a href="#privacy">Privacy</a>
+            <a
+              href="#privacy"
+              onClick={(event) => {
+                event.preventDefault();
+                openPanel("privacy");
+                window.history.replaceState(null, "", "#privacy");
+              }}
+            >
+              Privacy
+            </a>
           </p>
           <p className="footer__credit">Powered by Artistic Fountain</p>
         </div>
       </div>
+
+      {panel ? (
+        <div className="footer__legal-modal" role="dialog" aria-modal="true" aria-labelledby="footer-legal-title">
+          <div className="footer__legal-modal-backdrop" onClick={closePanel} aria-hidden="true" />
+          <div className="footer__legal-modal-card">
+            <div className="footer__legal-modal-head">
+              <h2 id="footer-legal-title" className="footer__legal-title">
+                {panel.title}
+                {panel.updated ? (
+                  <span className="footer__legal-updated">{panel.updated}</span>
+                ) : null}
+              </h2>
+              <button type="button" className="footer__legal-close" onClick={closePanel} aria-label="Close">
+                Close
+              </button>
+            </div>
+            <div className="footer__legal-modal-body">{panel.render()}</div>
+          </div>
+        </div>
+      ) : null}
     </footer>
   );
 }
