@@ -1,44 +1,75 @@
 const groups = [
   {
-    title: "Core languages & environment",
+    title: "Programming languages",
     items: [
       "JavaScript (ES6+)",
       "TypeScript",
       "Python",
-      "VS Code / Cursor",
-      "Git & GitHub",
-      "iTerm2 / Warp · Homebrew",
+      "Java",
+      "Swift",
+      "HTML5",
+      "CSS3",
+      "SCSS",
+      "JSON",
     ],
   },
   {
-    title: "Front-end web & mobile",
+    title: "Front-end development",
     items: [
-      "HTML5",
-      "Modern CSS / SCSS",
-      "React & Next.js",
+      "React",
+      "Next.js",
       "Tailwind CSS",
+      "Responsive web design",
       "Cross-platform mobile UI",
       "Touch-optimized interfaces",
+      "Web accessibility (WCAG)",
+      "Modern CSS architecture",
     ],
   },
   {
-    title: "Data science & backend",
+    title: "Back-end development",
     items: [
-      "Pandas & NumPy",
-      "Data cleaning",
-      "Structured data pipelines",
       "FastAPI",
+      "REST APIs",
       "Serverless architecture",
-      "REST APIs & JSON",
+      "Data pipelines",
+      "Authentication systems",
+      "API integration",
     ],
   },
   {
-    title: "Cloud & hosting",
+    title: "Data science & analytics",
     items: [
-      "AWS Amplify, Lambda, S3, CloudFront",
-      "Azure Static Web Apps & App Service",
+      "Pandas",
+      "NumPy",
+      "Data cleaning",
+      "Structured data processing",
+      "Data visualization",
+    ],
+  },
+  {
+    title: "Cloud & deployment",
+    items: [
+      "AWS Amplify",
+      "AWS Lambda",
+      "AWS S3",
+      "AWS CloudFront",
+      "Azure Static Web Apps",
+      "Azure App Service",
       "Vercel",
       "GitHub Pages",
+    ],
+  },
+  {
+    title: "Development tools",
+    items: [
+      "Cursor",
+      "Visual Studio Code",
+      "Git",
+      "GitHub",
+      "Homebrew",
+      "Warp",
+      "iTerm2",
     ],
   },
 ];
@@ -59,13 +90,14 @@ export default function Skills() {
             The essential developer toolkit.
           </h2>
           <p className="reveal mt-4 text-base leading-relaxed text-sand/85 md:text-lg">
-            Languages, product UI, data/backends, and cloud hosting—the stack I use
-            to ship from idea to production. Interactive prototypes (Phaser, Three.js,
-            canvas) live in the Play section when the work calls for them.
+            Languages, product UI, backends, data, cloud, and day-to-day tools—the
+            stack I use to ship from idea to production. Interactive prototypes
+            (Phaser, Three.js, canvas) live in the Play section when the work calls
+            for them.
           </p>
         </div>
 
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 stagger">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3 stagger">
           {groups.map((group) => (
             <div key={group.title} className="reveal">
               <h3 className="font-display text-lg font-bold text-foam-soft md:text-xl">
