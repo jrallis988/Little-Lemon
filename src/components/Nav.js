@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 const links = [
-  { href: "#work", label: "Work" },
-  { href: "#play", label: "Play" },
-  { href: "#about", label: "About" },
-  { href: "#bring", label: "Bring" },
-  { href: "#skills", label: "Toolkit" },
-  { href: "#contact", label: "Contact" },
+  { to: "/#work", label: "Work" },
+  { to: "/#play", label: "Play" },
+  { to: "/#about", label: "About" },
+  { to: "/#bring", label: "Bring" },
+  { to: "/#skills", label: "Toolkit" },
+  { to: "/#contact", label: "Contact" },
 ];
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -27,6 +29,10 @@ export default function Nav() {
     };
   }, [open]);
 
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname, location.hash]);
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
@@ -34,19 +40,19 @@ export default function Nav() {
       }`}
     >
       <div className="container flex h-16 items-center justify-between lg:h-20">
-        <a
-          href="#top"
+        <Link
+          to="/"
           className="font-display text-lg font-bold tracking-brand text-chalk transition-colors hover:text-foam-soft"
           onClick={() => setOpen(false)}
         >
           James Rallis
-        </a>
+        </Link>
 
         <nav className="hidden items-center gap-4 lg:gap-6 md:flex" aria-label="Primary">
           {links.map((link) => (
-            <a key={link.href} href={link.href} className="nav-link text-sm font-medium text-sand">
+            <Link key={link.to} to={link.to} className="nav-link text-sm font-medium text-sand">
               {link.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -85,15 +91,22 @@ export default function Nav() {
       >
         <nav className="container flex flex-col gap-1 py-4" aria-label="Mobile">
           {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
+            <Link
+              key={link.to}
+              to={link.to}
               className="py-3 font-display text-2xl font-semibold text-chalk"
               onClick={() => setOpen(false)}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
+          <Link
+            to="/about"
+            className="py-3 font-display text-2xl font-semibold text-foam-soft"
+            onClick={() => setOpen(false)}
+          >
+            About (full)
+          </Link>
         </nav>
       </div>
     </header>

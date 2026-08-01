@@ -1,38 +1,15 @@
-import { useEffect } from "react";
-import Nav from "./components/Nav";
-import Hero from "./components/Hero";
-import Work from "./components/Work";
-import Playground from "./components/Playground";
-import CaseStudy from "./components/CaseStudy";
-import About from "./components/About";
-import Bring from "./components/Bring";
-import Skills from "./components/Skills";
-import Contact from "./components/Contact";
-import Footer from "./components/Footer";
-import useReveal from "./hooks/useReveal";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import AboutPage from "./pages/AboutPage";
 
 function App() {
-  const revealRef = useReveal();
-
-  useEffect(() => {
-    document.documentElement.style.scrollPaddingTop = "5rem";
-  }, []);
-
   return (
-    <div ref={revealRef} className="min-h-screen bg-ink font-body">
-      <Nav />
-      <main>
-        <Hero />
-        <Work />
-        <CaseStudy />
-        <Playground />
-        <About />
-        <Bring />
-        <Skills />
-        <Contact />
-      </main>
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<AboutPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

@@ -40,6 +40,8 @@ Object.defineProperty(window, "ResizeObserver", {
   value: MockResizeObserver,
 });
 
+window.scrollTo = () => {};
+
 HTMLCanvasElement.prototype.getContext = () => ({
   setTransform: () => {},
   fillRect: () => {},

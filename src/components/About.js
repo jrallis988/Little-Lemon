@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function About() {
   return (
     <section id="about" className="relative overflow-hidden bg-ink-soft py-24 md:py-32">
@@ -33,6 +35,11 @@ export default function About() {
             or building a data pipeline, I care about performance, precision, and
             building things that actually last.
           </p>
+          <div className="reveal mt-8">
+            <Link to="/about" className="btn-primary">
+              Learn more about me
+            </Link>
+          </div>
         </div>
 
         <aside className="reveal border-l border-foam/40 pl-6 md:pl-8 lg:mt-14">
@@ -41,6 +48,9 @@ export default function About() {
           </p>
           <p className="mt-4 text-sm uppercase tracking-[0.16em] text-sand/65">
             Available for new work
+          </p>
+          <p className="mt-6 text-sm leading-relaxed text-sand/70">
+            Path, working style, and certifications live on the full about page.
           </p>
         </aside>
       </div>

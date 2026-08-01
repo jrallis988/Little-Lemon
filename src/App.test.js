@@ -1,5 +1,7 @@
 import { render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import App from "./App";
+import AboutPage from "./pages/AboutPage";
 
 test("renders brand name in the hero", () => {
   render(<App />);
@@ -16,4 +18,14 @@ test("renders contact form fields", () => {
 test("renders Little Lemon case study", () => {
   render(<App />);
   expect(screen.getByText(/Little Lemon — booking without the clutter/i)).toBeInTheDocument();
+});
+
+test("about page shows certifications", () => {
+  render(
+    <MemoryRouter>
+      <AboutPage />
+    </MemoryRouter>
+  );
+  expect(screen.getByText(/Credentials that back the craft/i)).toBeInTheDocument();
+  expect(screen.getByText(/Meta Front-End Developer Professional Certificate/i)).toBeInTheDocument();
 });

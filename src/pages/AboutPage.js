@@ -1,0 +1,127 @@
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import Nav from "../components/Nav";
+import Footer from "../components/Footer";
+import certifications from "../data/certifications";
+import useReveal from "../hooks/useReveal";
+
+const chapters = [
+  {
+    title: "Design roots, developer craft",
+    body: "I started in digital design and UX—learning how hierarchy, typography, and flow shape trust. That foundation still drives how I write interfaces: fewer obstacles, clearer paths, and components that feel intentional instead of decorative.",
+  },
+  {
+    title: "Beyond the UI",
+    body: "Front-end is home base, but I don’t stop at the browser chrome. I wire Python/FastAPI services, shape data with Pandas, and deploy on AWS and Azure so what users see is backed by systems that are just as deliberate.",
+  },
+  {
+    title: "How I like to work",
+    body: "I prefer shipping thin vertical slices: a clear interaction, a maintainable component, a deploy path that doesn’t fight you. Good development, for me, is removing friction—not stacking features or cleverness for its own sake.",
+  },
+];
+
+export default function AboutPage() {
+  const revealRef = useReveal();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.title = "About James Rallis — Developer";
+    return () => {
+      document.title = "James Rallis — Product & AI Developer";
+    };
+  }, []);
+
+  return (
+    <div ref={revealRef} className="min-h-screen bg-ink font-body">
+      <Nav />
+      <main>
+        <section className="relative overflow-hidden bg-ink-soft pb-20 pt-28 md:pb-28 md:pt-36">
+          <div className="absolute inset-0 hero-wash opacity-50" aria-hidden="true" />
+          <div className="grain" aria-hidden="true" />
+          <div className="container relative max-w-3xl stagger">
+            <p className="reveal mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-foam">
+              About the developer
+            </p>
+            <h1 className="reveal font-display text-4xl font-bold text-chalk md:text-6xl">
+              More about how I build.
+            </h1>
+            <p className="reveal mt-5 text-base leading-relaxed text-sand/85 md:text-lg">
+              A closer look at my path from design into full product development—
+              the principles I ship with, and the certifications that mark the work
+              along the way.
+            </p>
+            <div className="reveal mt-8 flex flex-wrap gap-3">
+              <Link to="/#contact" className="btn-primary">
+                Get in touch
+              </Link>
+              <a href={`${process.env.PUBLIC_URL}/resume.html`} className="btn-ghost">
+                View resume
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-ink py-20 md:py-28">
+          <div className="container max-w-3xl space-y-12 stagger">
+            {chapters.map((chapter) => (
+              <article key={chapter.title} className="reveal border-t border-foam/35 pt-6">
+                <h2 className="font-display text-2xl font-bold text-foam-soft md:text-3xl">
+                  {chapter.title}
+                </h2>
+                <p className="mt-4 text-base leading-relaxed text-sand/85 md:text-lg">
+                  {chapter.body}
+                </p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section id="certifications" className="relative overflow-hidden bg-ink-soft py-20 md:py-28">
+          <div
+            className="pointer-events-none absolute -left-16 bottom-0 h-64 w-64 rounded-full bg-foam/10 blur-3xl"
+            aria-hidden="true"
+          />
+          <div className="container relative">
+            <div className="mb-12 max-w-2xl stagger">
+              <p className="reveal mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-foam">
+                Certifications
+              </p>
+              <h2 className="reveal font-display text-3xl font-bold text-chalk md:text-5xl">
+                Credentials that back the craft.
+              </h2>
+              <p className="reveal mt-4 text-base leading-relaxed text-sand/85 md:text-lg">
+                Formal coursework and certificates that shaped how I approach
+                front-end systems, accessibility, and product delivery.
+              </p>
+            </div>
+
+            <ul className="stagger max-w-3xl space-y-0">
+              {certifications.map((cert) => (
+                <li key={cert.id} className="reveal border-t border-sand/14 py-7">
+                  <div className="flex flex-wrap items-baseline justify-between gap-3">
+                    <h3 className="font-display text-xl font-bold text-chalk md:text-2xl">
+                      {cert.name}
+                    </h3>
+                    <span className="text-sm text-sand/60">{cert.year}</span>
+                  </div>
+                  <p className="mt-2 text-sm font-semibold text-foam-soft">{cert.issuer}</p>
+                  <p className="mt-3 max-w-2xl text-base leading-relaxed text-sand/85">
+                    {cert.summary}
+                  </p>
+                </li>
+              ))}
+              <li className="border-t border-sand/14" aria-hidden="true" />
+            </ul>
+
+            <div className="reveal mt-12">
+              <Link to="/#about" className="btn-ghost">
+                ← Back to portfolio
+              </Link>
+            </div>
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </div>
+  );
+}
