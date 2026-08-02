@@ -14,6 +14,8 @@ const nunito = Nunito_Sans({
   variable: "--font-nunito",
   display: "swap",
   weight: ["300", "400", "500", "600", "700", "800", "900"],
+  // Next.js has no Capsize metrics for Nunito Sans; skip to avoid console errors.
+  adjustFontFallback: false,
 });
 
 export const metadata: Metadata = {
