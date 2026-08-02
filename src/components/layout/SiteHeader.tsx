@@ -11,7 +11,6 @@ import {
 } from "react";
 import {
   IconChevronDown,
-  IconChevronRight,
   IconClose,
   IconGlobe,
   IconLock,
