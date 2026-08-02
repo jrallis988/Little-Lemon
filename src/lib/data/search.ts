@@ -141,7 +141,8 @@ const staticPages: SearchResult[] = [
     id: "page-history",
     type: "page",
     title: "Our History",
-    description: "More than 150 years of advancing pediatric care since 1869",
+    description:
+      "Media-integrated archive from 1869–2025, including Longwood, anesthesia milestones, and Boston City Hospital / BMC pediatric legacy",
     href: "/about/history",
   },
   {
