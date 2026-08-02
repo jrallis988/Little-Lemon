@@ -7,7 +7,7 @@ import { historyMilestones } from "@/content/data/history";
 export const metadata: Metadata = {
   title: "Our History",
   description:
-    "A media-integrated historical archive of Boston Children’s Hospital from 1869 through 2025, alongside the pediatric legacy of Boston City Hospital and Boston Medical Center.",
+    "A media-integrated historical archive of Boston Children’s Hospital from 1869 through 2026, alongside the pediatric legacy of Boston City Hospital and Boston Medical Center.",
 };
 
 const mediaCount = historyMilestones.filter((m) => m.imageUrl).length;
@@ -19,7 +19,7 @@ export default function HistoryPage() {
         id="history-heading"
         eyebrow="About Us · Historical archive"
         title="Our history"
-        lead="A continuous, multi-decade timeline of Boston Children’s Hospital — from the 1869 founding through Longwood, anesthesia breakthroughs, and 2025 — woven with the pediatric service legacy of Boston City Hospital and Boston Medical Center."
+        lead="A continuous, multi-decade timeline of Boston Children’s Hospital — from the 1869 founding through Longwood, anesthesia breakthroughs, and 2026 — woven with the pediatric service legacy of Boston City Hospital and Boston Medical Center."
         actions={
           <>
             <Button href="/about" variant="ghost-white">
@@ -35,7 +35,7 @@ export default function HistoryPage() {
       <section className="border-b border-border bg-surface py-s6">
         <div className="wrap grid grid-cols-1 gap-s4 sm:grid-cols-3">
           <div>
-            <div className="text-2xl font-black text-blue">1864–2025</div>
+            <div className="text-2xl font-black text-blue">1864–2026</div>
             <p className="mt-1 text-sm font-light text-text-body">
               Chronological span across BCH and Boston City Hospital / BMC
               pediatric milestones
@@ -68,7 +68,7 @@ export default function HistoryPage() {
             This archive follows Boston Children’s Hospital from its 1869
             founding, the 1882 Huntington Avenue relocation, the 1914 Longwood
             Avenue campus, and 1935 pediatric anesthesia innovations through
-            2025. It also records the pediatric service story of Boston City
+            2026. It also records the pediatric service story of Boston City
             Hospital / Boston Medical Center — including the 1864 founding, Dr.
             Martin J. English’s 1923 pediatric service, the 1932 Mary E. Curley
             Pavilion, Reach Out and Read, and the 1996 BMC merger — so visitors

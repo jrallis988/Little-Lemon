@@ -32,7 +32,7 @@ export const historyMilestones: HistoryMilestone[] = [
     year: "1869",
     decade: "1860s",
     title: "Boston Children’s Hospital opens",
-    body: "Boston Children’s Hospital is founded with a lasting mission: care for children, advance pediatric medicine, educate future clinicians, and strengthen community health. The hospital begins a continuous lineage of pediatric innovation that continues through 2025.",
+    body: "Boston Children’s Hospital is founded with a lasting mission: care for children, advance pediatric medicine, educate future clinicians, and strengthen community health. The hospital begins a continuous lineage of pediatric innovation that continues through 2026.",
     institution: "bch",
     imageUrl:
       "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80",
@@ -240,8 +240,8 @@ export const historyMilestones: HistoryMilestone[] = [
     institution: "bch",
   },
   {
-    id: "bch-2025",
-    year: "2025",
+    id: "bch-2026",
+    year: "2026",
     decade: "2020s",
     title: "150+ years — still here for every child",
     body: "More than a century and a half after its founding, Boston Children’s Hospital continues advancing pediatric care worldwide — with Longwood as home base, a growing regional presence, and an unbroken commitment to compassion, discovery, teaching, and community.",

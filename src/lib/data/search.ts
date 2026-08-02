@@ -142,7 +142,7 @@ const staticPages: SearchResult[] = [
     type: "page",
     title: "Our History",
     description:
-      "Media-integrated archive from 1869–2025, including Longwood, anesthesia milestones, and Boston City Hospital / BMC pediatric legacy",
+      "Media-integrated archive from 1869–2026, including Longwood, anesthesia milestones, and Boston City Hospital / BMC pediatric legacy",
     href: "/about/history",
   },
   {
