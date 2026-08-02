@@ -3,10 +3,10 @@ import { IconChevronRight } from "@/components/ui/Icons";
 
 const links = [
   { label: "Find a Doctor", href: "/find-a-doctor" },
-  { label: "Book Appointment", href: "/find-a-doctor" },
-  { label: "Epilepsy Program", href: "/programs/epilepsy-program" },
+  { label: "Book Appointment", href: "/appointments/request" },
+  { label: "About Us", href: "/about" },
+  { label: "Locations", href: "/locations" },
   { label: "Emergency Dept", href: "/emergency" },
-  { label: "Search the site", href: "/search" },
 ];
 
 export function QuickLinks() {

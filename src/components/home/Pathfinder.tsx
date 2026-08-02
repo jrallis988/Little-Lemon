@@ -10,21 +10,21 @@ const paths = [
   },
   {
     title: "Clinicians",
-    desc: "Refer a patient, access the Physician Access Line, or explore CME.",
-    href: "/emergency",
+    desc: "Refer a patient, request a second opinion, or explore clinical programs.",
+    href: "/professionals",
     cta: "Refer a patient",
   },
   {
     title: "Researchers",
     desc: "Explore our labs, clinical trials, publications, and research programs.",
-    href: "/search?q=research",
+    href: "/research",
     cta: "Access research tools",
   },
   {
-    title: "International families",
-    desc: "Coordinate care across borders with our International Health Services team.",
-    href: "/about",
-    cta: "Plan your visit",
+    title: "Our community",
+    desc: "Learn how Boston Children’s works as an anchor institution for local families.",
+    href: "/about/community",
+    cta: "Community health",
   },
 ];
 

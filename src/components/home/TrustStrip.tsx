@@ -1,7 +1,7 @@
 const items = [
-  { num: "#1", label: "Children's hospital\nin New England" },
-  { num: "400+", label: "Specialties\nand programs" },
-  { num: "$400M+", label: "Invested in research\neach year" },
+  { num: "1869", label: "Year founded" },
+  { num: "150+", label: "Years advancing\npediatric care" },
+  { num: "4", label: "Mission pillars:\ncare, research,\neducation, community" },
 ];
 
 export function TrustStrip() {
