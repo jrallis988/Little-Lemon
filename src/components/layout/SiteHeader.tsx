@@ -24,10 +24,10 @@ import { focusFirst, getFocusableElements } from "@/lib/a11y";
 import { cn } from "@/lib/cn";
 
 const utilLinks = [
-  { label: "Español", href: "/search?q=espanol" },
+  { label: "Español", href: "/patients-families" },
   { label: "For Clinicians", href: "/professionals" },
-  { label: "Research", href: "/research" },
-  { label: "Give to Boston Children's", href: "/about" },
+  { label: "Give", href: "/#giving" },
+  { label: "Emergency", href: "/emergency" },
 ];
 
 type MegaZone = {
@@ -373,32 +373,35 @@ export function SiteHeader() {
   return (
     <>
       <header className="sticky top-0 z-[500]" role="banner">
-        <div className="border-b border-white/[0.07] bg-nav-dark">
-          <div className="wrap flex h-10 items-center justify-between gap-s2">
-            <div className="flex items-center" aria-label="Utility links">
-              {utilLinks.map((link, i) => (
+        {/* Global utility bar — secondary high-intent actions */}
+        <div className="border-b border-white/[0.06] bg-nav-dark">
+          <div className="wrap flex h-9 items-center justify-between gap-s4">
+            <nav
+              className="flex min-w-0 items-center gap-1 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              aria-label="Utility links"
+            >
+              {utilLinks.map((link) => (
                 <Link
                   key={link.label}
                   href={link.href}
                   className={cn(
-                    "flex h-10 items-center border-r border-white/[0.07] px-3.5 text-xs font-semibold text-white/80 no-underline transition-colors hover:text-white/85",
+                    "flex h-9 shrink-0 items-center px-3 text-[11px] font-semibold tracking-[0.01em] text-white/65 no-underline transition-colors hover:text-white",
                     headerFocus,
-                    i === 0 && "pl-0",
                   )}
                 >
                   {link.label}
                 </Link>
               ))}
-            </div>
-            <div className="flex items-center">
-              <div className="hidden items-center gap-[7px] border-r border-white/[0.07] px-3.5 lg:flex">
+            </nav>
+            <div className="flex shrink-0 items-center gap-s1">
+              <div className="hidden items-center gap-2 px-2 lg:flex">
                 <span
                   className="h-1.5 w-1.5 shrink-0 animate-pulse-dot rounded-full bg-green-bright"
                   aria-hidden="true"
                 />
-                <span className="text-xs text-white/80">ED wait:</span>
+                <span className="text-[11px] text-white/60">ED wait</span>
                 <span
-                  className="text-xs font-bold text-green-bright"
+                  className="text-[11px] font-bold text-green-bright"
                   role="status"
                   aria-live="polite"
                   aria-atomic="true"
@@ -412,7 +415,7 @@ export function SiteHeader() {
                 <Link
                   href="/emergency"
                   className={cn(
-                    "ml-[5px] text-xs text-white/75 no-underline hover:text-white",
+                    "text-[11px] text-white/55 no-underline hover:text-white",
                     headerFocus,
                   )}
                 >
@@ -426,7 +429,7 @@ export function SiteHeader() {
                   ref={portalButtonRef}
                   type="button"
                   className={cn(
-                    "flex h-10 items-center gap-[9px] border-l border-white/[0.07] pl-3.5",
+                    "flex h-9 items-center gap-2 rounded-sm px-2.5 transition-colors hover:bg-white/[0.06]",
                     headerFocus,
                   )}
                   aria-label="Patient Portal preview — not a live medical record"
@@ -446,17 +449,14 @@ export function SiteHeader() {
                   }}
                 >
                   <span
-                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/10"
+                    className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/[0.08]"
                     aria-hidden="true"
                   >
-                    <IconLock className="text-white/75" />
+                    <IconLock className="text-white/70" />
                   </span>
                   <span className="leading-tight max-sm:hidden">
-                    <span className="block text-xs font-bold text-white">
-                      Portal preview
-                    </span>
-                    <span className="block text-[10px] text-white/80">
-                      UX only · not live
+                    <span className="block text-[11px] font-bold text-white/90">
+                      Portal
                     </span>
                   </span>
                 </button>
@@ -545,6 +545,7 @@ export function SiteHeader() {
           </div>
         </div>
 
+        {/* Primary navigation — logo, mega menus, search, primary CTA */}
         <div
           id="site-nav"
           tabIndex={-1}
@@ -553,11 +554,11 @@ export function SiteHeader() {
             boxShadow: scrolled ? "0 2px 16px rgba(0,0,0,.18)" : undefined,
           }}
         >
-          <div className="wrap flex h-[68px] items-center justify-between gap-s4">
+          <div className="wrap flex h-[72px] items-center justify-between gap-s5">
             <Link
               href="/"
               className={cn(
-                "flex shrink-0 items-center gap-3 no-underline",
+                "flex shrink-0 items-center gap-3.5 no-underline",
                 headerFocus,
               )}
               aria-label="Boston Children's Hospital — home"
@@ -569,7 +570,7 @@ export function SiteHeader() {
                 <span className="text-[15px] font-bold leading-tight tracking-[-0.01em] text-white">
                   Boston Children&apos;s Hospital
                 </span>
-                <span className="mt-px text-[10px] font-bold tracking-[0.01em] text-pink">
+                <span className="mt-0.5 text-[10px] font-bold tracking-[0.01em] text-pink">
                   Where the world comes for answers
                 </span>
               </span>
@@ -577,12 +578,12 @@ export function SiteHeader() {
 
             <DesktopPrimaryNav items={navItems} />
 
-            <div className="flex shrink-0 items-center gap-s2">
+            <div className="flex shrink-0 items-center gap-s3">
               <button
                 ref={searchButtonRef}
                 type="button"
                 className={cn(
-                  "flex h-9 w-9 items-center justify-center rounded-sm text-white/80 transition-all hover:bg-white/10 hover:text-white",
+                  "flex h-10 w-10 items-center justify-center rounded-sm text-white/75 transition-all hover:bg-white/10 hover:text-white",
                   headerFocus,
                 )}
                 aria-label="Search the site"
@@ -595,7 +596,7 @@ export function SiteHeader() {
               <Link
                 href="/find-a-doctor"
                 className={cn(
-                  "hidden h-9 items-center whitespace-nowrap rounded-sm border-[1.5px] border-white/25 px-3.5 text-sm font-bold text-white/80 no-underline transition-all hover:border-white/60 hover:bg-white/[0.08] hover:text-white lg:flex",
+                  "hidden h-10 items-center whitespace-nowrap px-1 text-sm font-bold text-white/80 no-underline transition-colors hover:text-white lg:flex",
                   headerFocus,
                 )}
               >
@@ -604,7 +605,7 @@ export function SiteHeader() {
               <Link
                 href="/appointments/request"
                 className={cn(
-                  "hidden h-9 items-center whitespace-nowrap rounded-sm bg-ocean px-4 text-sm font-bold text-white no-underline transition-all hover:bg-ocean-dark lg:flex",
+                  "hidden h-10 items-center whitespace-nowrap rounded-sm bg-pink px-5 text-sm font-bold text-white no-underline transition-all hover:bg-pink-text lg:flex",
                   headerFocus,
                 )}
               >
@@ -615,7 +616,7 @@ export function SiteHeader() {
                 id="mob-toggle"
                 type="button"
                 className={cn(
-                  "flex h-11 w-11 items-center justify-center rounded-sm text-white/60 transition-all hover:bg-white/10 hover:text-white lg:hidden",
+                  "flex h-11 w-11 items-center justify-center rounded-sm text-white/70 transition-all hover:bg-white/10 hover:text-white lg:hidden",
                   headerFocus,
                 )}
                 aria-label={

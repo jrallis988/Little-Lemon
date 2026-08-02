@@ -55,7 +55,7 @@
   --max-w: 1200px;
   --px: 48px;
   --ease: all 0.18s ease;
-  --header-offset: 108px;
+  --header-offset: 108px; /* utility 36px + primary 72px */
 }
 
 @media (max-width: 768px) {

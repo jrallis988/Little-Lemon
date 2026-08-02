@@ -46,17 +46,17 @@ export function DesktopPrimaryNav({ items }: { items: NavItem[] }) {
 
   return (
     <NavigationMenu className="relative hidden flex-1 justify-center lg:flex">
-      <NavigationMenuList className="flex items-center">
+      <NavigationMenuList className="flex items-center gap-1 xl:gap-2">
         {items.map((item) => (
           <NavigationMenuItem key={item.label} className="relative">
             <NavigationMenuTrigger
               className={cn(
-                "flex h-[68px] items-center gap-1 border-b-[3px] border-transparent px-3.5 text-sm font-bold text-white/90 transition-all hover:border-sky hover:text-white data-[state=open]:border-sky data-[state=open]:text-white",
+                "flex h-[72px] items-center gap-1.5 border-b-[3px] border-transparent px-4 text-[13px] font-bold tracking-[0.01em] text-white/85 transition-all hover:border-sky hover:text-white data-[state=open]:border-sky data-[state=open]:text-white xl:px-5",
                 isActive(item) && "border-sky text-white",
               )}
             >
               {item.label}
-              <IconChevronDown className="opacity-50 transition-transform group-data-[state=open]:rotate-180" />
+              <IconChevronDown className="opacity-45 transition-transform group-data-[state=open]:rotate-180" />
             </NavigationMenuTrigger>
             <NavigationMenuContent>
               <div
