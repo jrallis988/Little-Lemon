@@ -387,49 +387,40 @@ export function SiteHeader() {
               </span>
             </Link>
 
-            <div className="hidden min-w-0 items-center xl:flex">
+            <div className="hidden min-w-0 items-center gap-s3 xl:flex">
               <DesktopPrimaryNav items={navItems} />
               <HeaderMenu
                 label="I Need To"
                 items={intentLinks}
-                triggerClassName="ml-1 h-16 rounded-none border-b-[3px] border-transparent px-2.5 hover:border-sky data-[state=open]:border-sky data-[state=open]:bg-transparent"
+                triggerClassName="h-16 rounded-none border-b-[3px] border-transparent px-3 hover:border-sky data-[state=open]:border-sky data-[state=open]:bg-transparent"
                 menuClassName="min-w-[280px]"
               />
             </div>
 
             <div className="ml-auto flex shrink-0 items-center gap-1">
-              <Link
-                href="/international"
-                className={cn(
-                  "hidden h-10 items-center rounded-sm px-2.5 text-[12.5px] font-bold text-white/85 no-underline transition-colors hover:bg-white/10 hover:text-white lg:inline-flex",
-                  (pathname === "/international" ||
-                    pathname.startsWith("/international/")) &&
-                    "bg-white/10 text-white",
-                  headerFocus,
-                )}
-              >
-                International
-              </Link>
-
               <HeaderMenu
-                label={language.native}
+                label="International"
                 align="right"
                 icon={<IconGlobe className="text-white/85" />}
-                items={languageOptions.map((option) => ({
-                  label: `${option.native}`,
-                  href: option.href,
-                  description: option.label,
-                }))}
-                footer={
-                  <Link
-                    href="/international"
-                    className="inline-flex items-center gap-1 text-sm font-bold text-ocean no-underline hover:underline"
-                  >
-                    International patients
-                    <IconChevronRight className="text-ocean" />
-                  </Link>
-                }
-                triggerClassName="max-sm:px-2"
+                items={[
+                  {
+                    label: "International patients",
+                    href: "/international",
+                    description: "Global care and destination medicine",
+                  },
+                  ...languageOptions.map((option) => ({
+                    label: option.native,
+                    href: option.href,
+                    description: option.label,
+                  })),
+                ]}
+                triggerClassName={cn(
+                  "max-sm:px-2",
+                  (pathname === "/international" ||
+                    pathname.startsWith("/international/") ||
+                    language.code !== "en") &&
+                    "bg-white/10 text-white",
+                )}
               />
 
               <div className="relative" ref={portalWrapRef}>
