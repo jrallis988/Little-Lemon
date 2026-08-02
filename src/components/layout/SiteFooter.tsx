@@ -43,7 +43,7 @@ function FooterLinkColumn({
           <li key={link.label}>
             <Link
               href={link.href}
-              className="text-[11px] font-light leading-snug text-white/90 no-underline hover:text-white hover:underline"
+              className="text-[11px] font-light leading-snug text-white no-underline hover:underline"
             >
               {link.label}
             </Link>
@@ -154,12 +154,12 @@ export function SiteFooter() {
         </div>
 
         <div className="wrap border-t border-white/25 py-2">
-          <div className="flex flex-wrap items-center gap-x-s3 gap-y-1 text-[10px] text-white/85">
+          <div className="flex flex-wrap items-center gap-x-s3 gap-y-1 text-[10px] text-white">
             <p className="m-0 font-light">
               © 2005 - {new Date().getFullYear()} Boston Children&apos;s
               Hospital. All rights reserved.
             </p>
-            <span className="hidden text-white/40 sm:inline" aria-hidden="true">
+            <span className="hidden text-white/50 sm:inline" aria-hidden="true">
               |
             </span>
             <span className="font-bold text-white">Also of Interest</span>
@@ -174,13 +174,13 @@ export function SiteFooter() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-white/90 no-underline hover:underline"
+                className="text-white no-underline hover:underline"
               >
                 {item.label}
               </Link>
             ))}
           </div>
-          <div className="mt-1 flex flex-wrap gap-x-s3 gap-y-0.5 text-[10px] text-white/75">
+          <div className="mt-1 flex flex-wrap gap-x-s3 gap-y-0.5 text-[10px] text-white">
             {[
               { label: "Privacy", href: "/privacy" },
               { label: "Terms", href: "/terms" },
@@ -191,7 +191,7 @@ export function SiteFooter() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-white/75 no-underline hover:text-white"
+                className="text-white no-underline hover:underline"
               >
                 {item.label}
               </Link>

@@ -54,15 +54,15 @@ export function RankingsTicker() {
             className="min-h-[48px] max-w-[720px] flex-1 text-center text-lg font-bold leading-snug text-blue sm:text-xl"
             aria-live="polite"
           >
-            <span className="font-semibold uppercase tracking-wide text-sky">
+            <span className="font-semibold uppercase tracking-wide text-ocean">
               {item.lead}{" "}
             </span>
             <span
               className={
                 item.tone === "pink"
-                  ? "text-pink"
+                  ? "text-pink-text"
                   : item.tone === "ocean"
-                    ? "text-ocean"
+                    ? "text-ocean-dark"
                     : "text-blue"
               }
             >

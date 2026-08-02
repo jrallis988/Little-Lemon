@@ -62,6 +62,8 @@ export function BchLogo({
   showTagline = false,
 }: LogoProps) {
   const title = variant === "onDark" ? "text-white" : "text-blue";
+  const tagline =
+    variant === "onDark" ? "text-pink-onDark" : "text-pink-text";
 
   return (
     <span className={cn("inline-flex items-center gap-3", className)}>
@@ -79,7 +81,12 @@ export function BchLogo({
             Hospital
           </span>
           {showTagline ? (
-            <span className="mt-1 text-[10px] font-bold tracking-[0.01em] text-pink">
+            <span
+              className={cn(
+                "mt-1 text-[10px] font-bold tracking-[0.01em]",
+                tagline,
+              )}
+            >
               Where the world comes for answers
             </span>
           ) : null}

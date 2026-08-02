@@ -14,8 +14,9 @@
   --ocean: #007dba; /* Boston Ocean: links, h2/h3, interactive */
   --ocean-dark: #005f9e; /* Ocean hover / pressed */
   --white: #ffffff;
-  --pink: #c14991; /* Boston Pink: tagline ONLY */
-  --pink-text: #9a2f6e; /* Accessible pink on light tint */
+  --pink: #c14991; /* Boston Pink: brand accent */
+  --pink-text: #9a2f6e; /* Accessible pink on light surfaces (WCAG AA) */
+  --pink-on-dark: #f7c4df; /* Accessible pink on Boston Blue nav */
   --sky: #41b6e6; /* Boston Sky: decorative accent, never text on white */
   --bay: #68759c; /* Boston Bay: secondary accent */
   --green: #628000; /* Boston Green: success, status on light */

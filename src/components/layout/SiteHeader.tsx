@@ -381,7 +381,7 @@ export function SiteHeader() {
                   <br />
                   Hospital
                 </span>
-                <span className="mt-1 text-[10px] font-bold tracking-[0.01em] text-pink">
+                <span className="mt-1 text-[10px] font-bold tracking-[0.01em] text-pink-onDark">
                   Where the world comes for answers
                 </span>
               </span>

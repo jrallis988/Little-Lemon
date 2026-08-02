@@ -18,6 +18,7 @@ const config: Config = {
         pink: {
           DEFAULT: "var(--pink)",
           text: "var(--pink-text)",
+          onDark: "var(--pink-on-dark)",
         },
         sky: "var(--sky)",
         bay: "var(--bay)",
