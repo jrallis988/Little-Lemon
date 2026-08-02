@@ -17,9 +17,9 @@ export default function HistoryPage() {
     <>
       <PageHero
         id="history-heading"
-        eyebrow="About Us · Historical archive"
+        eyebrow="About Us · Museum archive"
         title="Our history"
-        lead="A continuous, multi-decade timeline of Boston Children’s Hospital — from the 1869 founding through Longwood, anesthesia breakthroughs, and 2026 — woven with the pediatric service legacy of Boston City Hospital and Boston Medical Center."
+        lead="An immersive chronological exhibit — from the 1869 founding through Huntington Avenue, Longwood, pediatric anesthesia, and today’s care — told alongside Boston City Hospital’s pediatric legacy."
         actions={
           <>
             <Button href="/about" variant="ghost-white">

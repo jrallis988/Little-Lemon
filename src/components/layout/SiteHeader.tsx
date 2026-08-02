@@ -62,8 +62,9 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   {
-    label: "Care",
-    href: "/find-a-doctor",
+    label: "Programs & Services",
+    shortLabel: "Programs",
+    href: "/programs",
     match: ["/find-a-doctor", "/conditions", "/programs", "/emergency", "/locations", "/appointments"],
     zones: [
       {
@@ -133,7 +134,8 @@ const navItems: NavItem[] = [
     ],
   },
   {
-    label: "Professionals",
+    label: "Healthcare Professionals",
+    shortLabel: "Professionals",
     href: "/professionals",
     match: ["/professionals"],
     zones: [
@@ -207,11 +209,11 @@ const navItems: NavItem[] = [
 const mobileGroups = [
   {
     id: "care",
-    label: "Care",
+    label: "Programs & Services",
     links: [
       { label: "Find a Doctor", href: "/find-a-doctor" },
-      { label: "Epilepsy Program", href: "/programs/epilepsy-program" },
-      { label: "Conditions", href: "/conditions/epilepsy-in-children" },
+      { label: "Programs & Services", href: "/programs" },
+      { label: "Conditions A–Z", href: "/conditions" },
       { label: "Emergency", href: "/emergency" },
     ],
   },
@@ -219,18 +221,28 @@ const mobileGroups = [
     id: "pf",
     label: "Patients & Families",
     links: [
-      { label: "About", href: "/about" },
-      { label: "Health Library", href: "/search?q=health" },
+      { label: "Patients & Families hub", href: "/patients-families" },
+      { label: "Prepare for your visit", href: "/patients-families/prepare-for-your-visit" },
+      { label: "Portal preview", href: "/portal" },
       { label: "Emergency Department", href: "/emergency" },
     ],
   },
   {
-    id: "res",
-    label: "Research & Careers",
+    id: "pro",
+    label: "Healthcare Professionals",
     links: [
-      { label: "Search research", href: "/search?q=research" },
-      { label: "About", href: "/about" },
-      { label: "Design system", href: "/design-system" },
+      { label: "Professionals hub", href: "/professionals" },
+      { label: "Refer a patient", href: "/professionals/refer" },
+      { label: "Second opinion", href: "/professionals/second-opinion" },
+    ],
+  },
+  {
+    id: "res",
+    label: "Research & About",
+    links: [
+      { label: "Research", href: "/research" },
+      { label: "Our History", href: "/about/history" },
+      { label: "About Us", href: "/about" },
     ],
   },
 ];

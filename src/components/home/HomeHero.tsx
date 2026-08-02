@@ -1,11 +1,33 @@
+"use client";
+
 import Image from "next/image";
-import { Button } from "@/components/ui/Button";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState, type FormEvent } from "react";
+import { IconSearch } from "@/components/ui/Icons";
 import { AwardBadgeRow } from "@/components/brand/AwardBadges";
+import { Button } from "@/components/ui/Button";
+
+const intentPills = [
+  { label: "Find a Doctor", href: "/find-a-doctor" },
+  { label: "Emergency Care", href: "/emergency" },
+  { label: "Locations", href: "/locations" },
+  { label: "Patient Portal", href: "/portal" },
+];
 
 export function HomeHero() {
+  const router = useRouter();
+  const [query, setQuery] = useState("");
+
+  function onSearch(event: FormEvent) {
+    event.preventDefault();
+    const q = query.trim();
+    router.push(q ? `/search?q=${encodeURIComponent(q)}` : "/search");
+  }
+
   return (
     <section
-      className="relative min-h-[560px] overflow-hidden max-md:min-h-[480px]"
+      className="relative min-h-[620px] overflow-hidden max-md:min-h-[540px]"
       aria-labelledby="hero-heading"
     >
       <Image
@@ -13,36 +35,81 @@ export function HomeHero() {
         alt="A young child outdoors near a hospital campus"
         fill
         priority
-        className="object-cover object-[center_30%]"
+        className="object-cover object-[center_28%] saturate-[.92]"
         sizes="100vw"
       />
       <div
-        className="absolute inset-0 bg-gradient-to-r from-nav-dark/75 via-blue/45 to-transparent"
+        className="absolute inset-0 bg-gradient-to-r from-nav-dark/80 via-blue/50 to-blue/15"
         aria-hidden="true"
       />
       <div
-        className="absolute inset-0 bg-gradient-to-t from-nav-dark/50 via-transparent to-nav-dark/35"
+        className="absolute inset-0 bg-gradient-to-t from-nav-dark/55 via-transparent to-nav-dark/25"
         aria-hidden="true"
       />
 
-      <div className="wrap relative z-[2] flex min-h-[560px] flex-col justify-end pb-s9 pt-s10 max-md:min-h-[480px] max-md:pb-s7 max-md:pt-s8">
-        <p className="mb-s3 text-xs font-extrabold uppercase tracking-[0.12em] text-white">
-          Top ranked pediatric hospital in the nation
-        </p>
+      <div className="wrap relative z-[2] flex min-h-[620px] flex-col justify-center gap-s6 py-s9 max-md:min-h-[540px] max-md:justify-end max-md:pb-s8">
+        <div className="max-w-[640px]">
+          <p className="mb-s3 text-xs font-extrabold uppercase tracking-[0.14em] text-white/80">
+            Boston Children&apos;s Hospital
+          </p>
+          <AwardBadgeRow className="mb-s5 [&_svg]:h-[72px]" />
+          <h1
+            id="hero-heading"
+            className="mb-s4 text-[clamp(32px,4.8vw,52px)] font-medium leading-[1.08] tracking-[-0.03em] text-white"
+          >
+            Trusted by families.
+            <br />
+            <span className="text-sky">Where the world comes for answers.</span>
+          </h1>
+          <p className="mb-s6 max-w-[480px] text-[clamp(15px,1.5vw,18px)] font-light leading-[1.7] text-white/88">
+            Find care, get directions, or reach your care team — start with what
+            you need right now.
+          </p>
+        </div>
 
-        <AwardBadgeRow className="mb-s5" />
+        <div className="max-w-[720px] animate-fade-up">
+          <form
+            onSubmit={onSearch}
+            role="search"
+            aria-label="Search the site"
+            className="flex flex-col gap-s3 rounded-md border border-white/20 bg-white/95 p-s3 shadow-lg backdrop-blur-sm sm:flex-row sm:items-center sm:p-2"
+          >
+            <label className="relative min-w-0 flex-1">
+              <span className="sr-only">Search doctors, conditions, or programs</span>
+              <IconSearch className="pointer-events-none absolute left-3.5 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-text-meta" />
+              <input
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search doctors, conditions, or programs"
+                className="h-12 w-full rounded-sm border-0 bg-transparent py-3 pl-11 pr-3 text-base text-text outline-none placeholder:text-text-ghost"
+              />
+            </label>
+            <Button type="submit" variant="pink" size="lg" className="sm:min-w-[132px]">
+              Search
+            </Button>
+          </form>
 
-        <h1
-          id="hero-heading"
-          className="mb-s5 max-w-[640px] text-[clamp(28px,4.2vw,48px)] font-bold leading-[1.12] tracking-[-0.02em] text-white"
-        >
-          Trusted by families. Where the world comes for answers.
-        </h1>
+          <div
+            className="mt-s4 flex flex-wrap gap-2"
+            aria-label="Quick actions"
+          >
+            {intentPills.map((pill) => (
+              <Link
+                key={pill.label}
+                href={pill.href}
+                className="inline-flex min-h-10 items-center rounded-sm border border-white/35 bg-white/10 px-3.5 text-sm font-bold text-white no-underline backdrop-blur-sm transition-all hover:border-white/70 hover:bg-white/20"
+              >
+                {pill.label}
+              </Link>
+            ))}
+          </div>
 
-        <div>
-          <Button href="/appointments/request" variant="pink" size="lg">
-            Make an Appointment
-          </Button>
+          <div className="mt-s5">
+            <Button href="/appointments/request" variant="ghost-white" size="md">
+              Book Appointment
+            </Button>
+          </div>
         </div>
       </div>
     </section>
