@@ -37,13 +37,13 @@ function FooterLinkColumn({
 }) {
   return (
     <div>
-      <h3 className="mb-2 text-sm font-bold text-white">{title}</h3>
-      <ul className="flex flex-col gap-1.5">
+      <h3 className="mb-1 text-xs font-bold text-white">{title}</h3>
+      <ul className="flex flex-col gap-0.5">
         {links.map((link) => (
           <li key={link.label}>
             <Link
               href={link.href}
-              className="text-xs font-light text-white/90 no-underline hover:text-white hover:underline"
+              className="text-[11px] font-light leading-snug text-white/90 no-underline hover:text-white hover:underline"
             >
               {link.label}
             </Link>
@@ -140,10 +140,10 @@ export function SiteFooter() {
       </div>
 
       <div className="bg-ocean">
-        <div className="wrap grid grid-cols-1 gap-s4 py-s5 lg:grid-cols-[0.9fr_1fr_1fr_1fr] lg:gap-s5">
-          <div className="flex flex-wrap items-end gap-s2">
-            <UsNewsHonorRollBadge className="h-[64px]" />
-            <NewsweekBestBadge className="h-[64px]" />
+        <div className="wrap grid grid-cols-2 gap-x-s3 gap-y-s2 py-s3 sm:grid-cols-3 lg:grid-cols-[auto_1fr_1fr_1fr] lg:items-start lg:gap-s4">
+          <div className="col-span-2 flex flex-wrap items-end gap-1.5 sm:col-span-1">
+            <UsNewsHonorRollBadge className="h-[36px]" />
+            <NewsweekBestBadge className="h-[36px]" />
           </div>
           <FooterLinkColumn title="Get Care" links={getCare} />
           <FooterLinkColumn title="About & Support" links={aboutSupport} />
@@ -153,12 +153,15 @@ export function SiteFooter() {
           />
         </div>
 
-        <div className="wrap border-t border-white/25 py-s3">
-          <p className="mb-2 text-[11px] font-light text-white/85">
-            © 2005 - {new Date().getFullYear()} Boston Children&apos;s Hospital.
-            All rights reserved.
-          </p>
-          <div className="flex flex-wrap items-center gap-x-s3 gap-y-1 text-xs">
+        <div className="wrap border-t border-white/25 py-2">
+          <div className="flex flex-wrap items-center gap-x-s3 gap-y-1 text-[10px] text-white/85">
+            <p className="m-0 font-light">
+              © 2005 - {new Date().getFullYear()} Boston Children&apos;s
+              Hospital. All rights reserved.
+            </p>
+            <span className="hidden text-white/40 sm:inline" aria-hidden="true">
+              |
+            </span>
             <span className="font-bold text-white">Also of Interest</span>
             {[
               { label: "Find a Doctor", href: "/find-a-doctor" },
@@ -177,7 +180,7 @@ export function SiteFooter() {
               </Link>
             ))}
           </div>
-          <div className="mt-2 flex flex-wrap gap-x-s3 gap-y-1 text-[10px] text-white/75">
+          <div className="mt-1 flex flex-wrap gap-x-s3 gap-y-0.5 text-[10px] text-white/75">
             {[
               { label: "Privacy", href: "/privacy" },
               { label: "Terms", href: "/terms" },
