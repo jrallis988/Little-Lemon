@@ -4,6 +4,7 @@ import { SkipNav } from "@/components/layout/SkipNav";
 import { StagingBanner } from "@/components/layout/StagingBanner";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
+import { MessengerButton } from "@/components/layout/MessengerButton";
 import { siteConfig } from "@/lib/site";
 import "./globals.css";
 
@@ -57,6 +58,7 @@ export default function RootLayout({
           {children}
         </main>
         <SiteFooter />
+        <MessengerButton />
       </body>
     </html>
   );
