@@ -6,7 +6,7 @@ const variants = {
   primary:
     "bg-blue text-white border-blue hover:bg-nav-dark hover:border-nav-dark hover:text-white",
   ocean:
-    "bg-ocean text-white border-ocean hover:bg-[#005f9e] hover:border-[#005f9e] hover:text-white",
+    "bg-ocean text-white border-ocean hover:bg-ocean-dark hover:border-ocean-dark hover:text-white",
   outline:
     "bg-transparent text-blue border-blue hover:bg-blue hover:text-white",
   "outline-ocean":
@@ -14,7 +14,7 @@ const variants = {
   "ghost-white":
     "bg-transparent text-white/80 border-white/35 hover:bg-white/10 hover:text-white hover:border-white/60",
   emergency:
-    "bg-emergency text-white border-emergency hover:bg-[#b80000] hover:border-[#b80000] hover:text-white",
+    "bg-emergency text-white border-emergency hover:bg-emergency-dark hover:border-emergency-dark hover:text-white",
 } as const;
 
 const sizes = {

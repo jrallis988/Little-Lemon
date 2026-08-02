@@ -13,10 +13,16 @@ export const metadata: Metadata = {
 const colors = [
   { name: "Boston Blue", hex: "#003087", use: "Nav, primary CTAs, section heads", swatch: "bg-blue" },
   { name: "Boston Ocean", hex: "#007DBA", use: "h2/h3, links, interactive", swatch: "bg-ocean" },
+  { name: "Ocean Dark", hex: "#005F9E", use: "Ocean hover / pressed", swatch: "bg-ocean-dark" },
+  { name: "Nav Dark", hex: "#002060", use: "Utility bar, blue hover", swatch: "bg-nav-dark" },
   { name: "Boston Pink", hex: "#C14991", use: "Tagline ONLY — extreme restraint", swatch: "bg-pink" },
-  { name: "Body Text", hex: "#5a5c61", use: "Adjusted for WCAG AA", swatch: "bg-text-body" },
   { name: "Boston Sky", hex: "#41B6E6", use: "Decorative only — not text on white", swatch: "bg-sky" },
+  { name: "Boston Bay", hex: "#68759C", use: "Secondary accent", swatch: "bg-bay" },
+  { name: "Boston Green", hex: "#628000", use: "Success / status on light", swatch: "bg-green" },
+  { name: "Green Bright", hex: "#9BC23A", use: "Status on dark surfaces", swatch: "bg-green-bright" },
+  { name: "Boston Indigo", hex: "#007396", use: "Secondary brand accent", swatch: "bg-indigo" },
   { name: "Red Alert", hex: "#E30000", use: "EMERGENCY / STOP / BLOOD ONLY", swatch: "bg-emergency" },
+  { name: "Body Text", hex: "#4A4C52", use: "WCAG AA body copy", swatch: "bg-text-body" },
 ];
 
 export default function DesignSystemPage() {
@@ -98,7 +104,7 @@ export default function DesignSystemPage() {
             hero descriptions.
           </p>
           <p className="mb-s4 text-md font-light leading-[1.75] text-text-body">
-            Body copy at 17px — Museo 300. Color #5a5c61 (adjusted from Boston
+            Body copy at 17px — Museo 300. Color #4A4C52 (adjusted from Boston
             Gray for WCAG AA compliance).
           </p>
           <p className="tagline mb-s3">

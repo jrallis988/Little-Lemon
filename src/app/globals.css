@@ -5,29 +5,50 @@
 /* ================================================================
    BCH DESIGN SYSTEM v3 — global base
    Brand Guidelines 2021 · WCAG 2.1 AA intent
+   Source of truth for all color tokens (Tailwind maps to these).
    ================================================================ */
 
 :root {
-  --blue: #003087;
-  --ocean: #007dba;
+  /* Core brand palette — exact HEX per BCH guidelines */
+  --blue: #003087; /* Boston Blue: nav, primary CTAs, section heads */
+  --ocean: #007dba; /* Boston Ocean: links, h2/h3, interactive */
+  --ocean-dark: #005f9e; /* Ocean hover / pressed */
   --white: #ffffff;
-  --pink: #c14991;
-  --sky: #41b6e6;
-  --bay: #68759c;
-  --green: #628000;
-  --indigo: #007396;
-  --emergency: #e30000;
-  --nav-dark: #002060;
+  --pink: #c14991; /* Boston Pink: tagline ONLY */
+  --pink-text: #9a2f6e; /* Accessible pink on light tint */
+  --sky: #41b6e6; /* Boston Sky: decorative accent, never text on white */
+  --bay: #68759c; /* Boston Bay: secondary accent */
+  --green: #628000; /* Boston Green: success, status on light */
+  --green-bright: #9bc23a; /* Boston Green lightened for dark surfaces */
+  --indigo: #007396; /* Boston Indigo */
+  --emergency: #e30000; /* Red Alert: emergency/stop/blood ONLY */
+  --emergency-dark: #b80000; /* Emergency hover */
+  --emergency-bright: #ff8a8a; /* Emergency link/text on dark surfaces */
+  --emergency-bg: #fff5f5;
+  --emergency-text: #6b0000;
+  --nav-dark: #002060; /* Utility bar / blue hover */
+
+  /* Accessible text — adjusted from brand gray for WCAG AA */
   --text: #1a1d2e;
-  --text-body: #5a5c61;
-  --text-meta: #74767b;
-  --text-ghost: #9a9ca2;
+  --text-body: #4a4c52;
+  --text-meta: #56585e;
+  --text-ghost: #5c5e66;
+
+  /* Surfaces */
   --surface: #f5f6f8;
   --surface-2: #edf0f4;
   --border: #dde1e7;
   --border-strong: #c4c9d2;
+
+  /* Functional */
+  --warning: #b85c00;
+  --warning-bg: #fff8f0;
   --warning-text: #7a5800;
+  --warning-text-strong: #7a3800;
+  --warning-body: #5c2800;
   --success-text: #3a5c00;
+
+  /* Layout */
   --max-w: 1200px;
   --px: 48px;
   --ease: all 0.18s ease;
@@ -131,34 +152,122 @@
     @apply mx-auto;
   }
 
-  /* Documentary photo stand-ins (prototype CSS photography) */
+  /* Home hero — brand blues (nav-dark → blue → ocean → indigo) + sky accent */
+  .hero-photo {
+    background:
+      radial-gradient(
+        ellipse 55% 70% at 75% 15%,
+        color-mix(in srgb, var(--sky) 28%, transparent) 0%,
+        transparent 60%
+      ),
+      linear-gradient(
+        105deg,
+        color-mix(in srgb, var(--nav-dark) 96%, black) 0%,
+        color-mix(in srgb, var(--blue) 88%, transparent) 38%,
+        color-mix(in srgb, var(--ocean) 58%, transparent) 58%,
+        color-mix(in srgb, var(--indigo) 40%, transparent) 100%
+      ),
+      linear-gradient(
+        160deg,
+        var(--nav-dark) 0%,
+        var(--blue) 42%,
+        var(--ocean) 72%,
+        var(--indigo) 100%
+      );
+  }
+
+  .hero-photo-veil {
+    background:
+      linear-gradient(
+        to right,
+        color-mix(in srgb, var(--nav-dark) 72%, transparent) 0%,
+        transparent 35%
+      ),
+      linear-gradient(
+        to top,
+        color-mix(in srgb, var(--blue) 45%, transparent) 0%,
+        transparent 30%
+      );
+  }
+
+  /* Documentary photo stand-ins — tinted with brand blues */
   .photo-clinic {
     background:
-      radial-gradient(ellipse 50% 60% at 70% 20%, rgba(220, 200, 155, 0.18) 0%, transparent 55%),
-      linear-gradient(145deg, #1e3d5a 0%, #2e5878 35%, #3a6e8a 60%, #2a5570 100%);
+      radial-gradient(
+        ellipse 50% 60% at 70% 20%,
+        color-mix(in srgb, var(--sky) 20%, transparent) 0%,
+        transparent 55%
+      ),
+      linear-gradient(
+        145deg,
+        var(--nav-dark) 0%,
+        var(--blue) 35%,
+        var(--ocean) 65%,
+        var(--indigo) 100%
+      );
   }
 
   .photo-corridor {
     background:
-      radial-gradient(ellipse 80% 40% at 50% 5%, rgba(255, 248, 220, 0.14) 0%, transparent 50%),
-      linear-gradient(175deg, #1a3050 0%, #243d60 30%, #2e506a 60%, #1e3a55 100%);
+      radial-gradient(
+        ellipse 80% 40% at 50% 5%,
+        color-mix(in srgb, var(--bay) 22%, transparent) 0%,
+        transparent 50%
+      ),
+      linear-gradient(
+        175deg,
+        var(--nav-dark) 0%,
+        color-mix(in srgb, var(--blue) 85%, black) 30%,
+        var(--indigo) 60%,
+        var(--blue) 100%
+      );
   }
 
   .photo-campus {
     background:
-      radial-gradient(ellipse 60% 50% at 60% 0%, rgba(180, 210, 245, 0.22) 0%, transparent 55%),
-      linear-gradient(160deg, #1e3060 0%, #2a4878 40%, #3860a0 70%, #2a4878 100%);
+      radial-gradient(
+        ellipse 60% 50% at 60% 0%,
+        color-mix(in srgb, var(--sky) 25%, transparent) 0%,
+        transparent 55%
+      ),
+      linear-gradient(
+        160deg,
+        var(--blue) 0%,
+        var(--ocean) 45%,
+        color-mix(in srgb, var(--sky) 55%, var(--ocean)) 70%,
+        var(--blue) 100%
+      );
   }
 
   .photo-lab {
     background:
-      radial-gradient(ellipse 70% 40% at 50% 10%, rgba(190, 210, 255, 0.18) 0%, transparent 50%),
-      linear-gradient(165deg, #141e38 0%, #1c2e50 35%, #243860 60%, #1a2e4e 100%);
+      radial-gradient(
+        ellipse 70% 40% at 50% 10%,
+        color-mix(in srgb, var(--indigo) 30%, transparent) 0%,
+        transparent 50%
+      ),
+      linear-gradient(
+        165deg,
+        color-mix(in srgb, var(--nav-dark) 90%, black) 0%,
+        var(--blue) 35%,
+        var(--indigo) 60%,
+        var(--nav-dark) 100%
+      );
   }
 
   .photo-family {
     background:
-      radial-gradient(ellipse 60% 70% at 60% 15%, rgba(200, 185, 150, 0.2) 0%, transparent 55%),
-      linear-gradient(150deg, #1a3055 0%, #284870 35%, #346a8a 62%, #244060 100%);
+      radial-gradient(
+        ellipse 60% 70% at 60% 15%,
+        color-mix(in srgb, var(--pink) 16%, transparent) 0%,
+        transparent 55%
+      ),
+      linear-gradient(
+        150deg,
+        var(--nav-dark) 0%,
+        var(--blue) 35%,
+        var(--ocean) 62%,
+        var(--indigo) 100%
+      );
   }
 }

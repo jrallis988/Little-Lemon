@@ -393,12 +393,12 @@ export function SiteHeader() {
             <div className="flex items-center">
               <div className="hidden items-center gap-[7px] border-r border-white/[0.07] px-3.5 lg:flex">
                 <span
-                  className="h-1.5 w-1.5 shrink-0 animate-pulse-dot rounded-full bg-[#4caf50]"
+                  className="h-1.5 w-1.5 shrink-0 animate-pulse-dot rounded-full bg-green-bright"
                   aria-hidden="true"
                 />
                 <span className="text-xs text-white/80">ED wait:</span>
                 <span
-                  className="text-xs font-bold text-[#7dd87f]"
+                  className="text-xs font-bold text-green-bright"
                   role="status"
                   aria-live="polite"
                   aria-atomic="true"
@@ -569,7 +569,7 @@ export function SiteHeader() {
                 <span className="text-[15px] font-bold leading-tight tracking-[-0.01em] text-white">
                   Boston Children&apos;s Hospital
                 </span>
-                <span className="mt-px text-[10px] font-bold tracking-[0.01em] text-[#f7c6df]">
+                <span className="mt-px text-[10px] font-bold tracking-[0.01em] text-pink">
                   Where the world comes for answers
                 </span>
               </span>
@@ -604,7 +604,7 @@ export function SiteHeader() {
               <Link
                 href="/appointments/request"
                 className={cn(
-                  "hidden h-9 items-center whitespace-nowrap rounded-sm bg-ocean px-4 text-sm font-bold text-white no-underline transition-all hover:bg-[#005f9e] lg:flex",
+                  "hidden h-9 items-center whitespace-nowrap rounded-sm bg-ocean px-4 text-sm font-bold text-white no-underline transition-all hover:bg-ocean-dark lg:flex",
                   headerFocus,
                 )}
               >
@@ -773,7 +773,7 @@ export function SiteHeader() {
               <Link
                 href="/emergency"
                 className={cn(
-                  "text-xs font-bold text-[#ff9999] no-underline",
+                  "text-xs font-bold text-emergency-bright no-underline",
                   headerFocus,
                 )}
               >

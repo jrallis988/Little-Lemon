@@ -45,9 +45,9 @@ export function AboutMission() {
             <Link
               key={pillar.title}
               href={pillar.href}
-              className="group block rounded-md border border-border bg-surface p-s5 no-underline transition-all hover:-translate-y-0.5 hover:border-ocean/40 hover:bg-white hover:shadow-md"
+              className="group block rounded-md border border-border bg-surface p-s5 no-underline transition-all hover:-translate-y-0.5 hover:border-ocean hover:bg-white hover:shadow-md"
             >
-              <div className="mb-s2 text-xs font-extrabold uppercase tracking-[0.08em] text-text-meta">
+              <div className="mb-s2 text-xs font-extrabold uppercase tracking-[0.08em] text-ocean">
                 0{index + 1}
               </div>
               <div className="mb-s2 text-base font-bold text-blue group-hover:text-ocean">

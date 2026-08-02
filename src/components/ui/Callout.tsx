@@ -58,14 +58,14 @@ export function CalloutEmergency({
     <div
       role="alert"
       className={cn(
-        "flex items-start gap-s3 rounded-r-sm border-l-[3px] border-emergency bg-[#fff5f5] px-s5 py-s4",
+        "flex items-start gap-s3 rounded-r-sm border-l-[3px] border-emergency bg-emergency-bg px-s5 py-s4",
         className,
       )}
     >
       <InfoIcon className="mt-0.5 h-[18px] w-[18px] shrink-0 text-emergency" />
       <div>
         <div className="mb-1 text-base font-bold text-emergency">{title}</div>
-        <div className="m-0 text-base text-[#6b0000]">{children}</div>
+        <div className="m-0 text-base text-emergency-text">{children}</div>
       </div>
     </div>
   );
@@ -83,14 +83,14 @@ export function CalloutUrgent({
   return (
     <div
       className={cn(
-        "flex items-start gap-s3 rounded-r-sm border-l-[3px] border-[#b85c00] bg-[#fff8f0] px-s5 py-s4",
+        "flex items-start gap-s3 rounded-r-sm border-l-[3px] border-warning bg-warning-bg px-s5 py-s4",
         className,
       )}
     >
-      <InfoIcon className="mt-0.5 h-[18px] w-[18px] shrink-0 text-[#b85c00]" />
+      <InfoIcon className="mt-0.5 h-[18px] w-[18px] shrink-0 text-warning" />
       <div>
-        <div className="mb-1 text-base font-bold text-[#7a3800]">{title}</div>
-        <div className="m-0 text-base text-[#5c2800]">{children}</div>
+        <div className="mb-1 text-base font-bold text-warning-strong">{title}</div>
+        <div className="m-0 text-base text-warning-body">{children}</div>
       </div>
     </div>
   );

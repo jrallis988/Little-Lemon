@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 const variants = {
   ocean: "bg-ocean/10 text-blue",
   blue: "bg-blue/10 text-blue",
-  pink: "bg-pink/10 text-[#9a2f6e]",
+  pink: "bg-pink/10 text-pink-text",
   green: "bg-green/12 text-success-text",
   gray: "bg-surface-2 text-text",
 } as const;

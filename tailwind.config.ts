@@ -2,41 +2,61 @@ import type { Config } from "tailwindcss";
 
 /**
  * BCH Design System v3 tokens → Tailwind theme.
- * Source of truth: prototypes/bch-redesign-v5.html (Brand Guidelines 2021).
+ * Colors resolve from CSS variables in globals.css (single source of truth).
+ * Brand Guidelines 2021 · prototypes/bch-redesign-v5.html
  */
 const config: Config = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
       colors: {
-        blue: "#003087",
-        ocean: "#007DBA",
-        pink: "#C14991",
-        sky: "#41B6E6",
-        bay: "#68759C",
-        green: "#628000",
-        indigo: "#007396",
-        emergency: "#E30000",
-        "nav-dark": "#002060",
+        blue: "var(--blue)",
+        ocean: {
+          DEFAULT: "var(--ocean)",
+          dark: "var(--ocean-dark)",
+        },
+        pink: {
+          DEFAULT: "var(--pink)",
+          text: "var(--pink-text)",
+        },
+        sky: "var(--sky)",
+        bay: "var(--bay)",
+        green: {
+          DEFAULT: "var(--green)",
+          bright: "var(--green-bright)",
+        },
+        indigo: "var(--indigo)",
+        emergency: {
+          DEFAULT: "var(--emergency)",
+          dark: "var(--emergency-dark)",
+          bright: "var(--emergency-bright)",
+          bg: "var(--emergency-bg)",
+          text: "var(--emergency-text)",
+        },
+        "nav-dark": "var(--nav-dark)",
         text: {
-          DEFAULT: "#1a1d2e",
-          body: "#4a4c52",
-          meta: "#56585e",
-          ghost: "#5c5e66",
+          DEFAULT: "var(--text)",
+          body: "var(--text-body)",
+          meta: "var(--text-meta)",
+          ghost: "var(--text-ghost)",
         },
         surface: {
-          DEFAULT: "#F5F6F8",
-          2: "#EDF0F4",
+          DEFAULT: "var(--surface)",
+          2: "var(--surface-2)",
         },
         border: {
-          DEFAULT: "#DDE1E7",
-          strong: "#c4c9d2",
+          DEFAULT: "var(--border)",
+          strong: "var(--border-strong)",
         },
         warning: {
-          text: "#7a5800",
+          DEFAULT: "var(--warning)",
+          bg: "var(--warning-bg)",
+          text: "var(--warning-text)",
+          strong: "var(--warning-text-strong)",
+          body: "var(--warning-body)",
         },
         success: {
-          text: "#3a5c00",
+          text: "var(--success-text)",
         },
         footer: "#12152a",
       },

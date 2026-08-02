@@ -23,7 +23,7 @@ export function EmergencyStrip() {
               300 Longwood Avenue · Boston, MA 02115
             </p>
             <div className="inline-flex items-center gap-s2 self-start rounded-sm border border-border bg-white px-3.5 py-2">
-              <span className="h-2 w-2 animate-pulse-dot rounded-full bg-[#4caf50]" />
+              <span className="h-2 w-2 animate-pulse-dot rounded-full bg-green" />
               <span className="text-sm font-light text-text-body">
                 Current wait
               </span>

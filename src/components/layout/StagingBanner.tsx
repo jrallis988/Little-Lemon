@@ -6,7 +6,7 @@ export function StagingBanner() {
   if (siteConfig.showStagingBanner) {
     return (
       <div
-        className="border-b border-[#7a5b00]/40 bg-[#fff4cc] text-[#5c4500]"
+        className="border-b border-warning/40 bg-warning-bg text-warning-text"
         role="status"
       >
         <div className="wrap py-2 text-center text-xs font-semibold leading-snug sm:text-sm">

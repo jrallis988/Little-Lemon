@@ -36,8 +36,8 @@ export function TeachingHospital() {
           </div>
         </div>
 
-        <aside className="rounded-md border border-border bg-white p-s6">
-          <h3 className="mb-s3 text-lg font-bold text-blue">Get connected</h3>
+        <aside className="rounded-md border border-border border-t-[3px] border-t-ocean bg-white p-s6">
+          <h3 className="mb-s3 text-lg font-bold text-ocean">Get connected</h3>
           <ul className="mb-s5 flex flex-col gap-2 text-sm font-light text-text-body">
             <li>
               <strong className="font-bold text-text">Main phone:</strong>{" "}

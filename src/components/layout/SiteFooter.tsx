@@ -64,7 +64,7 @@ export function SiteFooter() {
                 <span className="text-[14px] font-bold leading-tight text-white">
                   Boston Children&apos;s Hospital
                 </span>
-                <span className="mt-px text-[10px] font-bold text-[#f2a8d0]">
+                <span className="mt-px text-[10px] font-bold text-pink">
                   Where the world comes for answers
                 </span>
               </span>
