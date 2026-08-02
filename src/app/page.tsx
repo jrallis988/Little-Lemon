@@ -1,25 +1,25 @@
 import { HomeHero } from "@/components/home/HomeHero";
-import { QuickLinks } from "@/components/home/QuickLinks";
-import { TrustStrip } from "@/components/home/TrustStrip";
-import { AboutMission } from "@/components/home/AboutMission";
-import { Pathfinder } from "@/components/home/Pathfinder";
-import { Specialties } from "@/components/home/Specialties";
-import { ProgramsSection } from "@/components/home/ProgramsSection";
-import { TeachingHospital } from "@/components/home/TeachingHospital";
-import { EmergencyStrip } from "@/components/home/EmergencyStrip";
+import { FindDoctorBand } from "@/components/home/FindDoctorBand";
+import { RankingsTicker } from "@/components/home/RankingsTicker";
+import { HomeActionCards } from "@/components/home/HomeActionCards";
+import { FeatureStories } from "@/components/home/FeatureStories";
+import { GivingSection } from "@/components/home/GivingSection";
+import { EspanolBanner } from "@/components/home/EspanolBanner";
+import { LatestFromBch } from "@/components/home/LatestFromBch";
+import { NewsletterSignup } from "@/components/home/NewsletterSignup";
 
 export default function HomePage() {
   return (
     <>
       <HomeHero />
-      <QuickLinks />
-      <TrustStrip />
-      <AboutMission />
-      <Pathfinder />
-      <Specialties />
-      <ProgramsSection />
-      <TeachingHospital />
-      <EmergencyStrip />
+      <FindDoctorBand />
+      <RankingsTicker />
+      <HomeActionCards />
+      <FeatureStories />
+      <GivingSection />
+      <EspanolBanner />
+      <LatestFromBch />
+      <NewsletterSignup />
     </>
   );
 }

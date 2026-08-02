@@ -7,6 +7,8 @@ const variants = {
     "bg-blue text-white border-blue hover:bg-nav-dark hover:border-nav-dark hover:text-white",
   ocean:
     "bg-ocean text-white border-ocean hover:bg-ocean-dark hover:border-ocean-dark hover:text-white",
+  pink:
+    "bg-pink text-white border-pink hover:bg-pink-text hover:border-pink-text hover:text-white",
   outline:
     "bg-transparent text-blue border-blue hover:bg-blue hover:text-white",
   "outline-ocean":

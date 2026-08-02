@@ -25,6 +25,11 @@ const config: Config = {
           DEFAULT: "var(--green)",
           bright: "var(--green-bright)",
         },
+        messenger: {
+          DEFAULT: "var(--messenger)",
+          hover: "var(--messenger-hover)",
+        },
+        "alert-banner": "var(--alert-banner)",
         indigo: "var(--indigo)",
         emergency: {
           DEFAULT: "var(--emergency)",

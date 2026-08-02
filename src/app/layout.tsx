@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Nunito_Sans } from "next/font/google";
 import { SkipNav } from "@/components/layout/SkipNav";
 import { StagingBanner } from "@/components/layout/StagingBanner";
+import { ConstructionAlert } from "@/components/layout/ConstructionAlert";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { MessengerButton } from "@/components/layout/MessengerButton";
@@ -53,6 +54,7 @@ export default function RootLayout({
       <body className="pb-[68px] font-sans lg:pb-0">
         <SkipNav />
         <StagingBanner />
+        <ConstructionAlert />
         <SiteHeader />
         <main id="main" tabIndex={-1} className="outline-none">
           {children}

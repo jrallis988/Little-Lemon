@@ -87,7 +87,7 @@ export function MessengerButton() {
   }
 
   return (
-    <div className="pointer-events-none fixed bottom-[84px] right-4 z-[850] flex flex-col items-end gap-s3 lg:bottom-6 lg:right-6">
+    <div className="pointer-events-none fixed bottom-[84px] right-4 z-[850] flex flex-col items-end gap-s3 lg:bottom-8 lg:right-8">
       {open ? (
         <div
           ref={panelRef}
@@ -214,7 +214,7 @@ export function MessengerButton() {
         ref={buttonRef}
         type="button"
         className={cn(
-          "pointer-events-auto inline-flex h-14 min-w-14 items-center justify-center gap-2 rounded-full bg-ocean px-4 text-white shadow-lg transition-all duration-ease hover:bg-ocean-dark",
+          "pointer-events-auto inline-flex h-14 w-14 items-center justify-center rounded-full bg-messenger text-white shadow-lg transition-all duration-ease hover:bg-messenger-hover",
           open && "bg-blue hover:bg-nav-dark",
         )}
         aria-label={open ? "Close messenger" : "Open messenger"}
@@ -228,12 +228,7 @@ export function MessengerButton() {
         {open ? (
           <IconClose className="h-5 w-5" />
         ) : (
-          <>
-            <IconMessage className="h-5 w-5" />
-            <span className="pr-1 text-sm font-bold max-sm:sr-only">
-              Message us
-            </span>
-          </>
+          <IconMessage className="h-6 w-6" />
         )}
       </button>
     </div>
