@@ -554,11 +554,11 @@ export function SiteHeader() {
             boxShadow: scrolled ? "0 2px 16px rgba(0,0,0,.18)" : undefined,
           }}
         >
-          <div className="wrap flex h-[72px] items-center justify-between gap-s5">
+          <div className="wrap flex h-[72px] items-center justify-between gap-s3 xl:gap-s5">
             <Link
               href="/"
               className={cn(
-                "flex shrink-0 items-center gap-3.5 no-underline",
+                "flex shrink-0 items-center gap-3 no-underline xl:gap-3.5",
                 headerFocus,
               )}
               aria-label="Boston Children's Hospital — home"
@@ -566,7 +566,7 @@ export function SiteHeader() {
               <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-[1.5px] border-white/30 bg-white/[0.06]">
                 <LogoSeal />
               </span>
-              <span className="flex flex-col max-[420px]:hidden">
+              <span className="hidden flex-col min-[1100px]:flex">
                 <span className="text-[15px] font-bold leading-tight tracking-[-0.01em] text-white">
                   Boston Children&apos;s Hospital
                 </span>
@@ -578,7 +578,7 @@ export function SiteHeader() {
 
             <DesktopPrimaryNav items={navItems} />
 
-            <div className="flex shrink-0 items-center gap-s3">
+            <div className="flex shrink-0 items-center gap-s2 xl:gap-s3">
               <button
                 ref={searchButtonRef}
                 type="button"
@@ -596,7 +596,7 @@ export function SiteHeader() {
               <Link
                 href="/find-a-doctor"
                 className={cn(
-                  "hidden h-10 items-center whitespace-nowrap px-1 text-sm font-bold text-white/80 no-underline transition-colors hover:text-white lg:flex",
+                  "hidden h-10 items-center whitespace-nowrap px-1 text-sm font-bold text-white/80 no-underline transition-colors hover:text-white xl:flex",
                   headerFocus,
                 )}
               >
@@ -605,7 +605,7 @@ export function SiteHeader() {
               <Link
                 href="/appointments/request"
                 className={cn(
-                  "hidden h-10 items-center whitespace-nowrap rounded-sm bg-pink px-5 text-sm font-bold text-white no-underline transition-all hover:bg-pink-text lg:flex",
+                  "hidden h-10 items-center whitespace-nowrap rounded-sm bg-pink px-3.5 text-sm font-bold text-white no-underline transition-all hover:bg-pink-text lg:flex xl:px-5",
                   headerFocus,
                 )}
               >

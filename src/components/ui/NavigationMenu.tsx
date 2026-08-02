@@ -17,7 +17,7 @@ export const NavigationMenuTrigger = React.forwardRef<
     <Nav.Trigger
       ref={ref}
       className={cn(
-        "group inline-flex items-center gap-1 rounded-sm px-3 py-2 text-sm font-bold text-white outline-none hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-sky data-[state=open]:bg-white/10",
+        "group inline-flex flex-row flex-nowrap items-center gap-1 whitespace-nowrap rounded-sm px-3 py-2 text-sm font-bold text-white outline-none hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-sky data-[state=open]:bg-white/10",
         className,
       )}
       {...props}

@@ -45,18 +45,18 @@ export function DesktopPrimaryNav({ items }: { items: NavItem[] }) {
   }
 
   return (
-    <NavigationMenu className="relative hidden flex-1 justify-center lg:flex">
-      <NavigationMenuList className="flex items-center gap-1 xl:gap-2">
+    <NavigationMenu className="relative hidden min-w-0 flex-1 justify-center lg:flex">
+      <NavigationMenuList className="flex flex-nowrap items-center justify-center gap-0 xl:gap-1">
         {items.map((item) => (
-          <NavigationMenuItem key={item.label} className="relative">
+          <NavigationMenuItem key={item.label} className="relative shrink-0">
             <NavigationMenuTrigger
               className={cn(
-                "flex h-[72px] items-center gap-1.5 border-b-[3px] border-transparent px-4 text-[13px] font-bold tracking-[0.01em] text-white/85 transition-all hover:border-sky hover:text-white data-[state=open]:border-sky data-[state=open]:text-white xl:px-5",
+                "inline-flex h-[72px] flex-row flex-nowrap items-center gap-1 whitespace-nowrap border-b-[3px] border-transparent px-2.5 text-[12px] font-bold tracking-[0.01em] text-white/85 transition-all hover:border-sky hover:text-white data-[state=open]:border-sky data-[state=open]:text-white xl:gap-1.5 xl:px-3.5 xl:text-[13px]",
                 isActive(item) && "border-sky text-white",
               )}
             >
-              {item.label}
-              <IconChevronDown className="opacity-45 transition-transform group-data-[state=open]:rotate-180" />
+              <span className="whitespace-nowrap">{item.label}</span>
+              <IconChevronDown className="shrink-0 opacity-45 transition-transform group-data-[state=open]:rotate-180" />
             </NavigationMenuTrigger>
             <NavigationMenuContent>
               <div
