@@ -36,9 +36,11 @@ const columns = [
   {
     title: "About",
     links: [
-      { label: "Mission & Values", href: "/about" },
+      { label: "About Us", href: "/about" },
+      { label: "Leadership", href: "/about/leadership" },
+      { label: "Our History", href: "/about/history" },
+      { label: "Community Health", href: "/about/community" },
       { label: "Design System", href: "/design-system" },
-      { label: "Contact / ED", href: "/emergency" },
       { label: "Site Map", href: "/sitemap" },
     ],
   },

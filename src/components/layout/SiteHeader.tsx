@@ -167,12 +167,29 @@ const navItems: NavItem[] = [
         title: "Our hospital",
         accent: true,
         links: [
-          { label: "Mission & Values", href: "/about" },
+          { label: "About Us", href: "/about" },
+          { label: "Leadership", href: "/about/leadership" },
+          { label: "Our History", href: "/about/history" },
+          { label: "Community Health", href: "/about/community" },
+        ],
+      },
+      {
+        title: "Also explore",
+        links: [
+          { label: "Locations", href: "/locations" },
+          { label: "Research", href: "/research" },
           { label: "Design System", href: "/design-system" },
           { label: "Emergency Department", href: "/emergency" },
         ],
       },
     ],
+    card: {
+      eyebrow: "About Us",
+      title: "Here for every child.",
+      body: "Mission, leadership, history, and community impact.",
+      cta: "Explore About Us",
+      href: "/about",
+    },
   },
 ];
 

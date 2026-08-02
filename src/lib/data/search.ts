@@ -122,6 +122,35 @@ const staticPages: SearchResult[] = [
     description: "Visit prep, billing, portal, and family resources",
     href: "/patients-families",
   },
+  {
+    id: "page-about",
+    type: "page",
+    title: "About Us",
+    description:
+      "Here for every child — mission, teaching hospital, leadership, history, and community",
+    href: "/about",
+  },
+  {
+    id: "page-leadership",
+    type: "page",
+    title: "Leadership",
+    description: "Boston Children's Hospital leadership and executives",
+    href: "/about/leadership",
+  },
+  {
+    id: "page-history",
+    type: "page",
+    title: "Our History",
+    description: "More than 150 years of advancing pediatric care since 1869",
+    href: "/about/history",
+  },
+  {
+    id: "page-community",
+    type: "page",
+    title: "Community Health",
+    description: "Anchor strategy and community well-being initiatives",
+    href: "/about/community",
+  },
 ];
 
 export function searchAll(query: string): SearchResult[] {

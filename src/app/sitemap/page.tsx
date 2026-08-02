@@ -41,7 +41,10 @@ const sections = [
   {
     title: "About & Legal",
     links: [
-      { href: "/about", label: "About" },
+      { href: "/about", label: "About Us" },
+      { href: "/about/leadership", label: "Leadership" },
+      { href: "/about/history", label: "History" },
+      { href: "/about/community", label: "Community Health" },
       { href: "/privacy", label: "Privacy Policy" },
       { href: "/terms", label: "Terms of Use" },
       { href: "/accessibility", label: "Accessibility" },
