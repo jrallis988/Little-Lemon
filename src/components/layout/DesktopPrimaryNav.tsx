@@ -54,7 +54,7 @@ export function DesktopPrimaryNav({ items }: { items: NavItem[] }) {
             <NavigationMenuTrigger
               aria-label={item.label}
               className={cn(
-                "inline-flex h-[72px] max-w-none flex-row flex-nowrap items-center gap-1 whitespace-nowrap border-b-[3px] border-transparent px-2 text-[12.5px] font-bold tracking-[0.01em] text-white/85 transition-all hover:border-sky hover:bg-transparent hover:text-white data-[state=open]:border-sky data-[state=open]:bg-transparent data-[state=open]:text-white 2xl:gap-1.5 2xl:px-3 2xl:text-[13px]",
+                "inline-flex h-16 max-w-none flex-row flex-nowrap items-center gap-1 whitespace-nowrap border-b-[3px] border-transparent px-2 text-[12.5px] font-bold tracking-[0.01em] text-white/85 transition-all duration-200 hover:border-sky hover:bg-transparent hover:text-white data-[state=open]:border-sky data-[state=open]:bg-transparent data-[state=open]:text-white 2xl:gap-1.5 2xl:px-3 2xl:text-[13px]",
                 isActive(item) && "border-sky text-white",
               )}
             >
@@ -70,7 +70,7 @@ export function DesktopPrimaryNav({ items }: { items: NavItem[] }) {
               ) : (
                 <span className="whitespace-nowrap">{item.label}</span>
               )}
-              <IconChevronDown className="shrink-0 opacity-45 transition-transform group-data-[state=open]:rotate-180" />
+              <IconChevronDown className="shrink-0 opacity-45 transition-transform duration-200 group-data-[state=open]:rotate-180" />
             </NavigationMenuTrigger>
             <NavigationMenuContent>
               <div

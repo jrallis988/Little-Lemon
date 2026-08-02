@@ -6,10 +6,15 @@ import { Button } from "@/components/ui/Button";
 export const metadata: Metadata = {
   title: "International Patients",
   description:
-    "Support for families traveling to Boston Children's Hospital for specialty pediatric care.",
+    "Global pediatric services and destination medicine support for families traveling to Boston Children's Hospital.",
 };
 
 const pathways = [
+  {
+    title: "Destination medicine",
+    body: "Coordinate specialty pediatric care in Boston — travel planning, clinical intake, and visit logistics for families abroad.",
+    href: "/appointments/request",
+  },
   {
     title: "Request an appointment",
     body: "Share your child's clinical needs and preferred timing. Our team helps coordinate next steps.",
@@ -30,6 +35,11 @@ const pathways = [
     body: "Directions, campus guidance, and preparation tips for families traveling for care.",
     href: "/patients-families/prepare-for-your-visit",
   },
+  {
+    title: "Language resources",
+    body: "Explore Spanish and Mandarin resource hubs while care coordination continues in English.",
+    href: "/es",
+  },
 ];
 
 export default function InternationalPage() {
@@ -38,21 +48,21 @@ export default function InternationalPage() {
       <PageHero
         id="international-heading"
         eyebrow="International patients"
-        title="Care for families from around the world"
-        lead="Boston Children's welcomes international families seeking answers, second opinions, and specialty pediatric care."
+        title="Global pediatric care, coordinated for your family"
+        lead="Boston Children's welcomes international families seeking answers through destination medicine, second opinions, and specialty pediatric programs."
         actions={
           <>
             <Button href="/appointments/request" variant="ocean">
               Request an Appointment
             </Button>
-            <Button href="/emergency" variant="ghost-white">
-              Emergency guidance
+            <Button href="/professionals/second-opinion" variant="ghost-white">
+              Second opinion
             </Button>
           </>
         }
       />
       <div className="wrap py-s7 pb-s10">
-        <div className="mb-s7 grid grid-cols-1 gap-s4 md:grid-cols-2">
+        <div className="mb-s7 grid grid-cols-1 gap-s4 md:grid-cols-2 lg:grid-cols-3">
           {pathways.map((item) => (
             <Link
               key={item.title}
@@ -65,9 +75,13 @@ export default function InternationalPage() {
           ))}
         </div>
         <p className="text-sm font-light text-text-meta">
-          Prefer resources in Spanish?{" "}
+          Language hubs:{" "}
           <Link href="/es" className="font-bold text-ocean">
-            Ver recursos en español
+            Español
+          </Link>
+          {" · "}
+          <Link href="/zh" className="font-bold text-ocean">
+            中文
           </Link>
         </p>
       </div>

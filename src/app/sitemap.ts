@@ -20,6 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/patients-families/medical-records",
     "/international",
     "/es",
+    "/zh",
     "/professionals",
     "/professionals/refer",
     "/professionals/second-opinion",

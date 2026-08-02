@@ -13,96 +13,92 @@ import {
   IconChevronDown,
   IconChevronRight,
   IconClose,
+  IconGlobe,
   IconLock,
   IconMenu,
   IconSearch,
 } from "@/components/ui/Icons";
 import { BchMark } from "@/components/brand/BchLogo";
 import { SearchOverlay } from "@/components/search/SearchOverlay";
-import { DesktopPrimaryNav } from "@/components/layout/DesktopPrimaryNav";
+import { DesktopPrimaryNav, type NavItem } from "@/components/layout/DesktopPrimaryNav";
+import { HeaderMenu } from "@/components/layout/HeaderMenu";
 import { focusFirst, getFocusableElements } from "@/lib/a11y";
 import { cn } from "@/lib/cn";
 
-/** Top utility links aligned to childrenshospital.org homepage HTML */
-const utilLinks = [
-  { label: "International", href: "/international" },
-  { label: "Español", href: "/es" },
-  { label: "Donate", href: "/#giving" },
-  { label: "Emergency", href: "/emergency" },
+const intentLinks = [
+  {
+    label: "Find a Doctor",
+    href: "/find-a-doctor",
+    description: "Search specialists by name or specialty",
+  },
+  {
+    label: "Find a Location",
+    href: "/locations",
+    description: "Main campus and community sites",
+  },
+  {
+    label: "Pay My Bill",
+    href: "/patients-families/billing",
+    description: "Billing, insurance, and financial help",
+  },
+  {
+    label: "Request Medical Records",
+    href: "/patients-families/medical-records",
+    description: "Request records for your care team",
+  },
 ];
 
-const iWantToLinks = [
-  { label: "Make an Appointment", href: "/appointments/request" },
-  { label: "Pay My Bill", href: "/patients-families/billing" },
-  { label: "Find a Doctor", href: "/find-a-doctor" },
-  { label: "Find a Location", href: "/locations" },
-  { label: "Get a Second Opinion", href: "/professionals/second-opinion" },
+const languageOptions = [
+  { label: "English", href: "/", code: "en", native: "English" },
+  { label: "Spanish", href: "/es", code: "es", native: "Español" },
+  { label: "Mandarin", href: "/zh", code: "zh", native: "中文" },
 ];
-
-type MegaZone = {
-  title: string;
-  links: { label: string; href: string }[];
-  accent?: boolean;
-};
-
-type NavItem = {
-  label: string;
-  shortLabel?: string;
-  href: string;
-  match?: string[];
-  zones: MegaZone[];
-  card?: {
-    eyebrow: string;
-    title: string;
-    body: string;
-    cta: string;
-    href: string;
-  };
-};
 
 const navItems: NavItem[] = [
   {
     label: "Programs & Services",
     shortLabel: "Programs",
     href: "/programs",
-    match: ["/find-a-doctor", "/conditions", "/programs", "/emergency", "/locations", "/appointments"],
+    match: ["/conditions", "/programs", "/emergency", "/appointments"],
     zones: [
       {
-        title: "Get care",
+        title: "Explore care",
         accent: true,
         links: [
-          { label: "Find a Doctor", href: "/find-a-doctor" },
+          { label: "Programs & Services", href: "/programs" },
+          { label: "Conditions A–Z", href: "/conditions" },
           { label: "Request an Appointment", href: "/appointments/request" },
           { label: "Emergency Department", href: "/emergency" },
-          { label: "Locations", href: "/locations" },
         ],
       },
       {
-        title: "Conditions & programs",
+        title: "Featured programs",
         links: [
-          { label: "Conditions A–Z", href: "/conditions" },
-          { label: "Programs & Services", href: "/programs" },
           {
             label: "Epilepsy in Children",
             href: "/conditions/epilepsy-in-children",
           },
           { label: "Epilepsy Program", href: "/programs/epilepsy-program" },
+          {
+            label: "Cancer & Blood Disorders",
+            href: "/programs/cancer-blood-disorders",
+          },
+          { label: "Heart Center", href: "/programs/heart-center" },
         ],
       },
       {
-        title: "Locations",
+        title: "Visit support",
         links: [
-          { label: "Main Campus — Longwood", href: "/locations#longwood" },
-          { label: "Waltham", href: "/locations#waltham" },
-          { label: "Needham", href: "/locations#needham" },
-          { label: "Lexington", href: "/locations#lexington" },
+          { label: "Prepare for your visit", href: "/patients-families/prepare-for-your-visit" },
+          { label: "Patients & Families", href: "/patients-families" },
+          { label: "International patients", href: "/international" },
         ],
       },
     ],
     card: {
       eyebrow: "Start here",
       title: "Need care for your child?",
-      body: "Search specialists by name, specialty, or language.",
+      body: "Use I Need To for doctor and location search, then book an appointment.",
       cta: "Find a Doctor",
       href: "/find-a-doctor",
     },
@@ -111,23 +107,24 @@ const navItems: NavItem[] = [
     label: "Patients & Families",
     shortLabel: "Patients",
     href: "/patients-families",
-    match: ["/patients-families", "/portal", "/appointments"],
+    match: ["/patients-families", "/portal"],
     zones: [
       {
         title: "Your visit",
         accent: true,
         links: [
           { label: "Patients & Families hub", href: "/patients-families" },
-          { label: "Portal preview (not live)", href: "/portal" },
-          { label: "Request an Appointment", href: "/appointments/request" },
+          { label: "Prepare for your visit", href: "/patients-families/prepare-for-your-visit" },
+          { label: "Portal preview", href: "/portal" },
           { label: "Emergency Department", href: "/emergency" },
         ],
       },
       {
         title: "Support",
         links: [
+          { label: "Billing & insurance", href: "/patients-families/billing" },
+          { label: "Medical records", href: "/patients-families/medical-records" },
           { label: "Health Library / Search", href: "/search?q=health" },
-          { label: "Locations", href: "/locations" },
           { label: "About Boston Children's", href: "/about" },
         ],
       },
@@ -144,8 +141,8 @@ const navItems: NavItem[] = [
         accent: true,
         links: [
           { label: "Professionals hub", href: "/professionals" },
-          { label: "Physician Access Line", href: "/emergency" },
-          { label: "Find a specialist", href: "/find-a-doctor" },
+          { label: "Refer a patient", href: "/professionals/refer" },
+          { label: "Second opinion", href: "/professionals/second-opinion" },
           { label: "Clinical programs", href: "/programs" },
         ],
       },
@@ -174,7 +171,7 @@ const navItems: NavItem[] = [
   {
     label: "About",
     href: "/about",
-    match: ["/about", "/design-system"],
+    match: ["/about", "/design-system", "/international"],
     zones: [
       {
         title: "Our hospital",
@@ -189,10 +186,9 @@ const navItems: NavItem[] = [
       {
         title: "Also explore",
         links: [
-          { label: "Locations", href: "/locations" },
+          { label: "International patients", href: "/international" },
           { label: "Research", href: "/research" },
           { label: "Design System", href: "/design-system" },
-          { label: "Emergency Department", href: "/emergency" },
         ],
       },
     ],
@@ -208,13 +204,18 @@ const navItems: NavItem[] = [
 
 const mobileGroups = [
   {
+    id: "intent",
+    label: "I Need To",
+    links: intentLinks.map(({ label, href }) => ({ label, href })),
+  },
+  {
     id: "care",
     label: "Programs & Services",
     links: [
-      { label: "Find a Doctor", href: "/find-a-doctor" },
       { label: "Programs & Services", href: "/programs" },
       { label: "Conditions A–Z", href: "/conditions" },
-      { label: "Emergency", href: "/emergency" },
+      { label: "Request an Appointment", href: "/appointments/request" },
+      { label: "Emergency Department", href: "/emergency" },
     ],
   },
   {
@@ -224,7 +225,6 @@ const mobileGroups = [
       { label: "Patients & Families hub", href: "/patients-families" },
       { label: "Prepare for your visit", href: "/patients-families/prepare-for-your-visit" },
       { label: "Portal preview", href: "/portal" },
-      { label: "Emergency Department", href: "/emergency" },
     ],
   },
   {
@@ -241,8 +241,9 @@ const mobileGroups = [
     label: "Research & About",
     links: [
       { label: "Research", href: "/research" },
-      { label: "Our History", href: "/about/history" },
       { label: "About Us", href: "/about" },
+      { label: "Our History", href: "/about/history" },
+      { label: "International patients", href: "/international" },
     ],
   },
 ];
@@ -250,31 +251,30 @@ const mobileGroups = [
 const headerFocus =
   "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
 
+function currentLanguage(pathname: string) {
+  if (pathname === "/es" || pathname.startsWith("/es/")) return languageOptions[1];
+  if (pathname === "/zh" || pathname.startsWith("/zh/")) return languageOptions[2];
+  return languageOptions[0];
+}
+
 export function SiteHeader() {
   const pathname = usePathname();
   const baseId = useId();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
-  const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [portalOpen, setPortalOpen] = useState(false);
-  const [iWantToOpen, setIWantToOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [edWait, setEdWait] = useState(22);
-  const iWantToRef = useRef<HTMLDivElement>(null);
+  const language = currentLanguage(pathname);
 
   const searchButtonRef = useRef<HTMLButtonElement>(null);
   const portalWrapRef = useRef<HTMLDivElement>(null);
   const portalButtonRef = useRef<HTMLButtonElement>(null);
   const portalPanelRef = useRef<HTMLDivElement>(null);
-  const menuItemRefs = useRef<Record<string, HTMLButtonElement | null>>({});
-  const menuPanelRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const mobileToggleRef = useRef<HTMLButtonElement>(null);
 
   const closeMenus = useCallback(() => {
-    setOpenMenu(null);
     setPortalOpen(false);
-    setIWantToOpen(false);
   }, []);
 
   useEffect(() => {
@@ -284,69 +284,36 @@ export function SiteHeader() {
   }, []);
 
   useEffect(() => {
-    const t = window.setTimeout(() => setEdWait(19), 4000);
-    return () => window.clearTimeout(t);
-  }, []);
-
-  useEffect(() => {
     setMobileOpen(false);
     setOpenGroup(null);
     closeMenus();
   }, [pathname, closeMenus]);
 
-  // Close mega/portal/I Want To on outside click
   useEffect(() => {
-    if (!openMenu && !portalOpen && !iWantToOpen) return;
+    if (!portalOpen) return;
     const onPointer = (e: MouseEvent) => {
-      const target = e.target as Node;
-      if (openMenu) {
-        const btn = menuItemRefs.current[openMenu];
-        const panel = menuPanelRefs.current[openMenu];
-        if (btn?.contains(target) || panel?.contains(target)) return;
-        setOpenMenu(null);
-      }
-      if (portalOpen && portalWrapRef.current && !portalWrapRef.current.contains(target)) {
+      if (portalWrapRef.current && !portalWrapRef.current.contains(e.target as Node)) {
         setPortalOpen(false);
       }
-      if (iWantToOpen && iWantToRef.current && !iWantToRef.current.contains(target)) {
-        setIWantToOpen(false);
-      }
     };
-    document.addEventListener("mousedown", onPointer);
-    return () => document.removeEventListener("mousedown", onPointer);
-  }, [openMenu, portalOpen, iWantToOpen]);
-
-  // Global Escape for mega + portal + I Want To
-  useEffect(() => {
-    if (!openMenu && !portalOpen && !iWantToOpen) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== "Escape") return;
-      if (openMenu) {
-        const label = openMenu;
-        setOpenMenu(null);
-        menuItemRefs.current[label]?.focus();
-      }
-      if (portalOpen) {
-        setPortalOpen(false);
-        portalButtonRef.current?.focus();
-      }
-      if (iWantToOpen) {
-        setIWantToOpen(false);
-        document.getElementById(`${baseId}-iwantto-btn`)?.focus();
-      }
+      setPortalOpen(false);
+      portalButtonRef.current?.focus();
     };
+    document.addEventListener("mousedown", onPointer);
     document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
-  }, [openMenu, portalOpen, iWantToOpen, baseId]);
+    return () => {
+      document.removeEventListener("mousedown", onPointer);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [portalOpen]);
 
-  // Mobile nav: body lock, Escape, focus trap including toggle
   useEffect(() => {
     if (!mobileOpen) return;
     document.body.style.overflow = "hidden";
     const nav = document.getElementById("mob-nav");
-    if (nav) {
-      window.setTimeout(() => focusFirst(nav), 30);
-    }
+    if (nav) window.setTimeout(() => focusFirst(nav), 30);
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -381,262 +348,15 @@ export function SiteHeader() {
     };
   }, [mobileOpen]);
 
-  // When portal opens via keyboard, move focus into panel
   useEffect(() => {
     if (!portalOpen) return;
     const panel = portalPanelRef.current;
     if (panel) window.setTimeout(() => focusFirst(panel), 20);
   }, [portalOpen]);
 
-  // When mega opens via keyboard toggle, focus first link
-  const openMega = useCallback((label: string, focusPanel: boolean) => {
-    setPortalOpen(false);
-    setOpenMenu(label);
-    if (focusPanel) {
-      window.setTimeout(() => {
-        const panel = menuPanelRefs.current[label];
-        if (panel) focusFirst(panel);
-      }, 20);
-    }
-  }, []);
-
-  const isActive = (item: NavItem) =>
-    item.match?.some((m) => pathname === m || pathname.startsWith(`${m}/`));
-
   return (
     <>
       <header className="sticky top-0 z-[500]" role="banner">
-        {/* Global utility bar — secondary high-intent actions */}
-        <div className="border-b border-white/[0.06] bg-nav-dark">
-          <div className="wrap flex h-9 items-center justify-between gap-s4">
-            <nav
-              className="flex min-w-0 items-center gap-1 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-              aria-label="Utility links"
-            >
-              {utilLinks.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  className={cn(
-                    "flex h-9 shrink-0 items-center px-3 text-[11px] font-semibold tracking-[0.01em] text-white/80 no-underline transition-colors hover:text-white",
-                    headerFocus,
-                  )}
-                >
-                  {link.label}
-                </Link>
-              ))}
-              <div className="relative" ref={iWantToRef}>
-                <button
-                  type="button"
-                  id={`${baseId}-iwantto-btn`}
-                  className={cn(
-                    "flex h-9 items-center gap-1.5 px-3 text-[11px] font-semibold tracking-[0.01em] transition-colors",
-                    iWantToOpen
-                      ? "bg-white/[0.08] text-white"
-                      : "text-white/80 hover:text-white",
-                    headerFocus,
-                  )}
-                  aria-expanded={iWantToOpen}
-                  aria-haspopup="menu"
-                  aria-controls={`${baseId}-iwantto-menu`}
-                  onClick={() => {
-                    setPortalOpen(false);
-                    setOpenMenu(null);
-                    setIWantToOpen((v) => !v);
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === "ArrowDown") {
-                      e.preventDefault();
-                      setPortalOpen(false);
-                      setOpenMenu(null);
-                      setIWantToOpen(true);
-                    }
-                  }}
-                >
-                  I Want To...
-                  <IconChevronDown
-                    className={cn(
-                      "h-3 w-3 text-white transition-transform",
-                      iWantToOpen && "rotate-180",
-                    )}
-                  />
-                </button>
-                {iWantToOpen ? (
-                  <ul
-                    id={`${baseId}-iwantto-menu`}
-                    role="menu"
-                    aria-labelledby={`${baseId}-iwantto-btn`}
-                    className="absolute left-0 top-full z-[620] mt-0.5 min-w-[240px] rounded-md border border-border bg-white py-2 shadow-lg"
-                  >
-                    {iWantToLinks.map((link) => (
-                      <li key={link.label} role="none">
-                        <Link
-                          role="menuitem"
-                          href={link.href}
-                          className="block px-4 py-2.5 text-sm font-bold text-blue no-underline hover:bg-surface"
-                          onClick={() => setIWantToOpen(false)}
-                        >
-                          {link.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                ) : null}
-              </div>
-            </nav>
-            <div className="flex shrink-0 items-center gap-s1">
-              <div className="hidden items-center gap-2 px-2 lg:flex">
-                <span
-                  className="h-1.5 w-1.5 shrink-0 animate-pulse-dot rounded-full bg-green-bright"
-                  aria-hidden="true"
-                />
-                <span className="text-[11px] text-white/60">ED wait</span>
-                <span
-                  className="text-[11px] font-bold text-green-bright"
-                  role="status"
-                  aria-live="polite"
-                  aria-atomic="true"
-                >
-                  <span className="sr-only">
-                    Current Emergency Department wait time: approximately{" "}
-                    {edWait} minutes.{" "}
-                  </span>
-                  ~{edWait} min
-                </span>
-                <Link
-                  href="/emergency"
-                  className={cn(
-                    "text-[11px] text-white/55 no-underline hover:text-white",
-                    headerFocus,
-                  )}
-                >
-                  View ED
-                  <span className="sr-only"> information</span>
-                </Link>
-              </div>
-
-              <div className="relative" ref={portalWrapRef}>
-                <button
-                  ref={portalButtonRef}
-                  type="button"
-                  className={cn(
-                    "flex h-9 items-center gap-2 rounded-sm px-2.5 transition-colors hover:bg-white/[0.06]",
-                    headerFocus,
-                  )}
-                  aria-label="Patient Portal preview — not a live medical record"
-                  aria-haspopup="dialog"
-                  aria-expanded={portalOpen}
-                  aria-controls={`${baseId}-portal`}
-                  onClick={() => {
-                    setOpenMenu(null);
-                    setPortalOpen((v) => !v);
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === "ArrowDown") {
-                      e.preventDefault();
-                      setOpenMenu(null);
-                      setPortalOpen(true);
-                    }
-                  }}
-                >
-                  <span
-                    className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/[0.08]"
-                    aria-hidden="true"
-                  >
-                    <IconLock className="text-white/70" />
-                  </span>
-                  <span className="leading-tight max-sm:hidden">
-                    <span className="block text-[11px] font-bold text-white/90">
-                      Portal
-                    </span>
-                  </span>
-                </button>
-                <div
-                  id={`${baseId}-portal`}
-                  ref={portalPanelRef}
-                  hidden={!portalOpen}
-                  className={cn(
-                    "absolute right-0 top-[calc(100%+10px)] z-[600] w-[300px] animate-fade-down rounded-lg border border-border bg-white shadow-lg",
-                    !portalOpen && "invisible",
-                  )}
-                  role="dialog"
-                  aria-label="Portal preview options"
-                >
-                  <div className="p-5">
-                    <div className="mb-1.5 flex items-center gap-2">
-                      <IconLock className="h-3.5 w-3.5 text-blue" />
-                      <strong className="text-base font-bold text-blue">
-                        Your secure health record
-                      </strong>
-                    </div>
-                    <p className="mb-3.5 text-sm font-light leading-[1.6] text-text-body">
-                      Sign in to view test results, message your care team, and
-                      manage appointments.
-                    </p>
-                    <div className="mb-3.5 flex flex-col gap-1.5">
-                      {[
-                        {
-                          label: "View test results",
-                          desc: "Lab results, imaging, and reports",
-                          href: "/portal",
-                        },
-                        {
-                          label: "Message your care team",
-                          desc: "Non-urgent questions and follow-up",
-                          href: "/portal",
-                        },
-                        {
-                          label: "Manage appointments",
-                          desc: "Upcoming visits, referrals, scheduling",
-                          href: "/appointments/request",
-                        },
-                      ].map((action) => (
-                        <Link
-                          key={action.label}
-                          href={action.href}
-                          className="flex min-h-11 items-center justify-between rounded-sm border border-border bg-surface px-3 py-[9px] no-underline transition-all hover:border-border-strong hover:bg-surface-2"
-                          onClick={() => setPortalOpen(false)}
-                        >
-                          <div>
-                            <div className="text-sm font-bold text-blue">
-                              {action.label}
-                            </div>
-                            <div className="mt-px text-[11px] text-text-meta">
-                              {action.desc}
-                            </div>
-                          </div>
-                          <IconChevronRight className="text-text-meta" />
-                        </Link>
-                      ))}
-                    </div>
-                    <Link
-                      href="/portal"
-                      className="mb-2 flex min-h-11 items-center justify-center rounded-sm bg-blue text-center text-base font-bold text-white no-underline hover:bg-ocean"
-                      onClick={() => setPortalOpen(false)}
-                    >
-                      Open portal preview
-                    </Link>
-                    <Link
-                      href="/patients-families"
-                      className="mb-3 block text-center text-sm text-ocean"
-                      onClick={() => setPortalOpen(false)}
-                    >
-                      Patients &amp; families resources
-                    </Link>
-                    <div className="border-t border-border pt-3">
-                      <p className="m-0 text-[11px] font-light leading-[1.55] text-text-meta">
-                        Secured with two-factor authentication. Your information
-                        is never shared without your permission.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Primary navigation — logo, mega menus, search, primary CTA */}
         <div
           id="site-nav"
           tabIndex={-1}
@@ -645,7 +365,7 @@ export function SiteHeader() {
             boxShadow: scrolled ? "0 2px 16px rgba(0,0,0,.18)" : undefined,
           }}
         >
-          <div className="wrap flex h-[72px] items-center gap-s2 xl:gap-s3">
+          <div className="wrap flex h-16 items-center gap-s2 xl:gap-s3">
             <Link
               href="/"
               className={cn(
@@ -667,9 +387,117 @@ export function SiteHeader() {
               </span>
             </Link>
 
-            <DesktopPrimaryNav items={navItems} />
+            <div className="hidden min-w-0 items-center xl:flex">
+              <DesktopPrimaryNav items={navItems} />
+              <HeaderMenu
+                label="I Need To"
+                items={intentLinks}
+                triggerClassName="ml-1 h-16 rounded-none border-b-[3px] border-transparent px-2.5 hover:border-sky data-[state=open]:border-sky data-[state=open]:bg-transparent"
+                menuClassName="min-w-[280px]"
+              />
+            </div>
 
             <div className="ml-auto flex shrink-0 items-center gap-1">
+              <Link
+                href="/international"
+                className={cn(
+                  "hidden h-10 items-center rounded-sm px-2.5 text-[12.5px] font-bold text-white/85 no-underline transition-colors hover:bg-white/10 hover:text-white lg:inline-flex",
+                  (pathname === "/international" ||
+                    pathname.startsWith("/international/")) &&
+                    "bg-white/10 text-white",
+                  headerFocus,
+                )}
+              >
+                International
+              </Link>
+
+              <HeaderMenu
+                label={language.native}
+                align="right"
+                icon={<IconGlobe className="text-white/85" />}
+                items={languageOptions.map((option) => ({
+                  label: `${option.native}`,
+                  href: option.href,
+                  description: option.label,
+                }))}
+                footer={
+                  <Link
+                    href="/international"
+                    className="inline-flex items-center gap-1 text-sm font-bold text-ocean no-underline hover:underline"
+                  >
+                    International patients
+                    <IconChevronRight className="text-ocean" />
+                  </Link>
+                }
+                triggerClassName="max-sm:px-2"
+              />
+
+              <div className="relative" ref={portalWrapRef}>
+                <button
+                  ref={portalButtonRef}
+                  type="button"
+                  className={cn(
+                    "flex h-10 items-center gap-2 rounded-sm px-2.5 transition-colors hover:bg-white/10",
+                    headerFocus,
+                  )}
+                  aria-label="Patient Portal preview — not a live medical record"
+                  aria-haspopup="dialog"
+                  aria-expanded={portalOpen}
+                  aria-controls={`${baseId}-portal`}
+                  onClick={() => setPortalOpen((v) => !v)}
+                  onKeyDown={(e) => {
+                    if (e.key === "ArrowDown") {
+                      e.preventDefault();
+                      setPortalOpen(true);
+                    }
+                  }}
+                >
+                  <span
+                    className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/[0.08]"
+                    aria-hidden="true"
+                  >
+                    <IconLock className="text-white/70" />
+                  </span>
+                  <span className="hidden text-[12.5px] font-bold text-white/90 sm:block">
+                    Portal
+                  </span>
+                </button>
+                <div
+                  id={`${baseId}-portal`}
+                  ref={portalPanelRef}
+                  hidden={!portalOpen}
+                  className={cn(
+                    "absolute right-0 top-[calc(100%+10px)] z-[700] w-[300px] animate-fade-down rounded-lg border border-border bg-white shadow-lg",
+                    !portalOpen && "invisible",
+                  )}
+                  role="dialog"
+                  aria-label="Portal preview options"
+                >
+                  <div className="p-5">
+                    <div className="mb-1.5 flex items-center gap-2">
+                      <IconLock className="h-3.5 w-3.5 text-blue" />
+                      <strong className="text-base font-bold text-blue">
+                        Your secure health record
+                      </strong>
+                    </div>
+                    <p className="mb-3.5 text-sm font-light leading-[1.6] text-text-body">
+                      Sign in to view test results, message your care team, and
+                      manage appointments.
+                    </p>
+                    <Link
+                      href="/portal"
+                      className="mb-2 flex min-h-11 items-center justify-center rounded-sm bg-blue text-center text-base font-bold text-white no-underline hover:bg-ocean"
+                      onClick={() => setPortalOpen(false)}
+                    >
+                      Open portal preview
+                    </Link>
+                    <p className="m-0 text-[11px] font-light leading-[1.55] text-text-meta">
+                      Preview only — not a live medical record.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               <button
                 ref={searchButtonRef}
                 type="button"
@@ -684,6 +512,7 @@ export function SiteHeader() {
               >
                 <IconSearch />
               </button>
+
               <button
                 ref={mobileToggleRef}
                 id="mob-toggle"
@@ -714,6 +543,35 @@ export function SiteHeader() {
           aria-label="Mobile navigation"
           aria-hidden={!mobileOpen}
         >
+          <div className="flex flex-wrap gap-2 border-b border-white/[0.07] p-3">
+            {languageOptions.map((option) => (
+              <Link
+                key={option.code}
+                href={option.href}
+                className={cn(
+                  "inline-flex min-h-10 items-center rounded-sm border px-3 text-sm font-bold no-underline",
+                  language.code === option.code
+                    ? "border-white bg-white text-blue"
+                    : "border-white/25 text-white/85 hover:border-white/55",
+                  headerFocus,
+                )}
+                onClick={() => setMobileOpen(false)}
+              >
+                {option.native}
+              </Link>
+            ))}
+            <Link
+              href="/international"
+              className={cn(
+                "inline-flex min-h-10 items-center rounded-sm border border-sky/50 px-3 text-sm font-bold text-sky no-underline",
+                headerFocus,
+              )}
+              onClick={() => setMobileOpen(false)}
+            >
+              International
+            </Link>
+          </div>
+
           <div className="m-3 mb-2 rounded-md border border-white/12 bg-white/[0.06] p-4">
             <div className="mb-1 flex items-center gap-[7px]">
               <span
@@ -729,53 +587,11 @@ export function SiteHeader() {
             </p>
             <Link
               href="/portal"
-              className="mb-[7px] flex min-h-11 items-center justify-center rounded-sm bg-white text-center text-base font-bold text-blue no-underline"
+              className="flex min-h-11 items-center justify-center rounded-sm bg-white text-center text-base font-bold text-blue no-underline"
+              onClick={() => setMobileOpen(false)}
             >
               Open preview
             </Link>
-          </div>
-
-          <div className="px-3 pb-2 pt-1">
-            {[
-              { label: "Find a Doctor", href: "/find-a-doctor" },
-              { label: "Book an Appointment", href: "/appointments/request" },
-              {
-                label: "Search the site",
-                href: "/search",
-                action: () => setSearchOpen(true),
-              },
-              { label: "Emergency Department", href: "/emergency" },
-            ].map((task) =>
-              task.action ? (
-                <button
-                  key={task.label}
-                  type="button"
-                  onClick={() => {
-                    setMobileOpen(false);
-                    task.action();
-                  }}
-                  className={cn(
-                    "flex min-h-11 w-full items-center justify-between border-b border-white/[0.06] px-1 py-[11px] text-left text-base font-bold text-white/70",
-                    headerFocus,
-                  )}
-                >
-                  {task.label}
-                  <IconChevronRight className="opacity-30" />
-                </button>
-              ) : (
-                <Link
-                  key={task.label}
-                  href={task.href}
-                  className={cn(
-                    "flex min-h-11 items-center justify-between border-b border-white/[0.06] px-1 py-[11px] text-base font-bold text-white/70 no-underline",
-                    headerFocus,
-                  )}
-                >
-                  {task.label}
-                  <IconChevronRight className="opacity-30" />
-                </Link>
-              ),
-            )}
           </div>
 
           <div className="px-3 pb-2">
@@ -801,7 +617,7 @@ export function SiteHeader() {
                     {group.label}
                     <IconChevronDown
                       className={cn(
-                        "opacity-30 transition-transform",
+                        "opacity-30 transition-transform duration-200",
                         open && "rotate-180",
                       )}
                     />
@@ -819,9 +635,10 @@ export function SiteHeader() {
                         key={link.label}
                         href={link.href}
                         className={cn(
-                          "py-1 text-sm font-light text-white/80 no-underline hover:text-white",
+                          "py-1.5 text-sm font-light text-white/80 no-underline hover:text-white",
                           headerFocus,
                         )}
+                        onClick={() => setMobileOpen(false)}
                       >
                         {link.label}
                       </Link>
@@ -834,26 +651,25 @@ export function SiteHeader() {
 
           <div className="flex flex-col gap-2 border-t border-white/[0.07] p-3">
             <Link
-              href="/find-a-doctor"
+              href="/appointments/request"
               className={cn(
                 "block rounded-sm bg-ocean py-3 text-center text-base font-bold text-white no-underline",
                 headerFocus,
               )}
+              onClick={() => setMobileOpen(false)}
             >
-              Book an Appointment
+              Request an Appointment
             </Link>
-            <div className="flex items-center justify-between py-2">
-              <span className="text-xs text-white/80">Need emergency care?</span>
-              <Link
-                href="/emergency"
-                className={cn(
-                  "text-xs font-bold text-emergency-bright no-underline",
-                  headerFocus,
-                )}
-              >
-                View ED
-              </Link>
-            </div>
+            <Link
+              href="/emergency"
+              className={cn(
+                "block rounded-sm border border-emergency-bright/50 py-3 text-center text-base font-bold text-emergency-bright no-underline",
+                headerFocus,
+              )}
+              onClick={() => setMobileOpen(false)}
+            >
+              Emergency Department
+            </Link>
           </div>
         </nav>
       </header>
@@ -866,13 +682,13 @@ export function SiteHeader() {
           href="/find-a-doctor"
           className="flex min-h-11 flex-1 items-center justify-center rounded-sm bg-ocean text-sm font-bold text-white no-underline"
         >
-          Book
+          Find a Doctor
         </Link>
         <Link
-          href="/emergency"
+          href="/locations"
           className="flex min-h-11 flex-1 items-center justify-center rounded-sm border-2 border-blue text-sm font-bold text-blue no-underline"
         >
-          Contact
+          Locations
         </Link>
       </nav>
 

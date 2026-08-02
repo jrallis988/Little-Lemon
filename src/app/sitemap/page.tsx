@@ -29,6 +29,7 @@ const sections = [
       { href: "/portal", label: "Portal preview" },
       { href: "/international", label: "International Patients" },
       { href: "/es", label: "Recursos en español" },
+      { href: "/zh", label: "中文资源" },
     ],
   },
   {
