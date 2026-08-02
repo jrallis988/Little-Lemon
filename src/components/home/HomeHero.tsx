@@ -51,7 +51,7 @@ export function HomeHero() {
             <span className="text-[8px] font-bold leading-tight text-text">
               Specialized Hospitals
             </span>
-            <span className="text-[8px] text-text-meta">Newsweek 2024</span>
+            <span className="text-[8px] text-text-meta">Newsweek 2026</span>
           </div>
         </div>
 

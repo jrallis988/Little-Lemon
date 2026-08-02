@@ -23,11 +23,20 @@ import { DesktopPrimaryNav } from "@/components/layout/DesktopPrimaryNav";
 import { focusFirst, getFocusableElements } from "@/lib/a11y";
 import { cn } from "@/lib/cn";
 
+/** Top utility links aligned to childrenshospital.org homepage HTML */
 const utilLinks = [
+  { label: "International", href: "/patients-families" },
   { label: "Español", href: "/patients-families" },
-  { label: "For Clinicians", href: "/professionals" },
-  { label: "Give", href: "/#giving" },
+  { label: "Donate", href: "/#giving" },
   { label: "Emergency", href: "/emergency" },
+];
+
+const iWantToLinks = [
+  { label: "Make an Appointment", href: "/appointments/request" },
+  { label: "Pay My Bill", href: "/patients-families/billing" },
+  { label: "Find a Doctor", href: "/find-a-doctor" },
+  { label: "Find a Location", href: "/locations" },
+  { label: "Get a Second Opinion", href: "/professionals/second-opinion" },
 ];
 
 type MegaZone = {
@@ -236,9 +245,11 @@ export function SiteHeader() {
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [portalOpen, setPortalOpen] = useState(false);
+  const [iWantToOpen, setIWantToOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [edWait, setEdWait] = useState(22);
+  const iWantToRef = useRef<HTMLDivElement>(null);
 
   const searchButtonRef = useRef<HTMLButtonElement>(null);
   const portalWrapRef = useRef<HTMLDivElement>(null);
@@ -251,6 +262,7 @@ export function SiteHeader() {
   const closeMenus = useCallback(() => {
     setOpenMenu(null);
     setPortalOpen(false);
+    setIWantToOpen(false);
   }, []);
 
   useEffect(() => {
@@ -270,9 +282,9 @@ export function SiteHeader() {
     closeMenus();
   }, [pathname, closeMenus]);
 
-  // Close mega/portal on outside click
+  // Close mega/portal/I Want To on outside click
   useEffect(() => {
-    if (!openMenu && !portalOpen) return;
+    if (!openMenu && !portalOpen && !iWantToOpen) return;
     const onPointer = (e: MouseEvent) => {
       const target = e.target as Node;
       if (openMenu) {
@@ -284,14 +296,17 @@ export function SiteHeader() {
       if (portalOpen && portalWrapRef.current && !portalWrapRef.current.contains(target)) {
         setPortalOpen(false);
       }
+      if (iWantToOpen && iWantToRef.current && !iWantToRef.current.contains(target)) {
+        setIWantToOpen(false);
+      }
     };
     document.addEventListener("mousedown", onPointer);
     return () => document.removeEventListener("mousedown", onPointer);
-  }, [openMenu, portalOpen]);
+  }, [openMenu, portalOpen, iWantToOpen]);
 
-  // Global Escape for mega + portal
+  // Global Escape for mega + portal + I Want To
   useEffect(() => {
-    if (!openMenu && !portalOpen) return;
+    if (!openMenu && !portalOpen && !iWantToOpen) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== "Escape") return;
       if (openMenu) {
@@ -303,10 +318,13 @@ export function SiteHeader() {
         setPortalOpen(false);
         portalButtonRef.current?.focus();
       }
+      if (iWantToOpen) {
+        setIWantToOpen(false);
+      }
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [openMenu, portalOpen]);
+  }, [openMenu, portalOpen, iWantToOpen]);
 
   // Mobile nav: body lock, Escape, focus trap including toggle
   useEffect(() => {
@@ -394,6 +412,44 @@ export function SiteHeader() {
                   {link.label}
                 </Link>
               ))}
+              <div className="relative hidden sm:block" ref={iWantToRef}>
+                <button
+                  type="button"
+                  className={cn(
+                    "flex h-9 items-center gap-1 px-3 text-[11px] font-semibold tracking-[0.01em] text-white/65 transition-colors hover:text-white",
+                    headerFocus,
+                  )}
+                  aria-expanded={iWantToOpen}
+                  aria-haspopup="menu"
+                  onClick={() => {
+                    setPortalOpen(false);
+                    setOpenMenu(null);
+                    setIWantToOpen((v) => !v);
+                  }}
+                >
+                  I Want To...
+                  <IconChevronDown className="opacity-50" />
+                </button>
+                {iWantToOpen ? (
+                  <ul
+                    role="menu"
+                    className="absolute left-0 top-full z-[620] mt-1 min-w-[220px] rounded-md border border-border bg-white py-2 shadow-lg"
+                  >
+                    {iWantToLinks.map((link) => (
+                      <li key={link.label} role="none">
+                        <Link
+                          role="menuitem"
+                          href={link.href}
+                          className="block px-4 py-2 text-sm font-bold text-blue no-underline hover:bg-surface"
+                          onClick={() => setIWantToOpen(false)}
+                        >
+                          {link.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+              </div>
             </nav>
             <div className="flex shrink-0 items-center gap-s1">
               <div className="hidden items-center gap-2 px-2 lg:flex">

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { CircleLink } from "@/components/home/CircleLink";
 
+/** Rankings marquee copy aligned to childrenshospital.org homepage HTML */
 const rankings = [
   {
     lead: "Ranked among the",
@@ -21,13 +22,8 @@ const rankings = [
   },
   {
     lead: "#1 in the nation",
-    emphasis: "Neurology & Neurosurgery",
+    emphasis: "Urology",
     tone: "blue" as const,
-  },
-  {
-    lead: "#1 in the nation",
-    emphasis: "Orthopedics",
-    tone: "pink" as const,
   },
 ];
 

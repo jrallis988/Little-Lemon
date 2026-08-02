@@ -19,7 +19,7 @@ export function ConstructionAlert() {
           <strong className="font-bold">Important construction closures.</strong>{" "}
           Work will affect Sky Bridge, parts of main lobby.{" "}
           <Link
-            href="/locations/longwood"
+            href="/patients-families/prepare-for-your-visit#construction"
             className="font-bold text-text underline decoration-text/40 underline-offset-2 hover:decoration-text"
           >
             Learn more &gt;&gt;

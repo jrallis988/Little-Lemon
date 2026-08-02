@@ -48,6 +48,30 @@ export default function PrepareForVisitPage() {
           </p>
         </Notice>
 
+        <section
+          id="construction"
+          className="mt-s6 scroll-mt-36 rounded-md border border-alert-banner/50 bg-alert-banner/20 p-s5"
+          aria-labelledby="construction-heading"
+        >
+          <h2
+            id="construction-heading"
+            className="mb-s2 text-lg font-bold text-text"
+          >
+            Important construction closures
+          </h2>
+          <p className="text-base font-light leading-relaxed text-text-body">
+            Work will affect the Sky Bridge and parts of the main lobby at our
+            Longwood campus. Allow extra time for arrival, follow posted
+            wayfinding, and ask security or information desk staff if you need
+            help finding your clinic.
+          </p>
+          <div className="mt-s3">
+            <Button href="/locations/longwood" variant="outline" size="sm">
+              Longwood campus details
+            </Button>
+          </div>
+        </section>
+
         <div className="mt-s7 grid grid-cols-1 gap-s7 lg:grid-cols-[1.25fr_.75fr]">
           <section aria-labelledby="bring-heading">
             <h2 id="bring-heading" className="mb-s4 text-2xl font-bold text-ocean">
