@@ -61,7 +61,7 @@ export function HomeHero() {
             <br />
             <span className="text-sky">Where the world comes for answers.</span>
           </h1>
-          <p className="mb-s6 max-w-[480px] text-[clamp(15px,1.5vw,18px)] font-light leading-[1.7] text-white/88">
+          <p className="mb-s6 max-w-[480px] text-[clamp(15px,1.5vw,18px)] font-light leading-[1.7] text-white">
             Find care, get directions, or reach your care team — start with what
             you need right now.
           </p>

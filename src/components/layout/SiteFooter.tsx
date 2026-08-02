@@ -37,13 +37,13 @@ function FooterLinkColumn({
 }) {
   return (
     <div>
-      <h3 className="mb-s4 text-base font-bold text-white">{title}</h3>
-      <ul className="flex flex-col gap-2">
+      <h3 className="mb-2 text-sm font-bold text-white">{title}</h3>
+      <ul className="flex flex-col gap-1.5">
         {links.map((link) => (
           <li key={link.label}>
             <Link
               href={link.href}
-              className="text-sm font-light text-white/90 no-underline hover:text-white hover:underline"
+              className="text-xs font-light text-white/90 no-underline hover:text-white hover:underline"
             >
               {link.label}
             </Link>
@@ -58,49 +58,76 @@ export function SiteFooter() {
   return (
     <footer role="contentinfo">
       <div className="bg-blue">
-        <div className="wrap grid grid-cols-1 gap-s5 py-s6 text-white sm:grid-cols-2 lg:grid-cols-4 lg:gap-0">
-          <div className="flex items-center gap-s3 lg:border-r lg:border-white/25 lg:pr-s5">
-            <svg viewBox="0 0 24 24" className="h-8 w-8 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+        <div className="wrap grid grid-cols-1 gap-s3 py-s3 text-white sm:grid-cols-2 lg:grid-cols-4 lg:gap-0">
+          <div className="flex items-center gap-s2 lg:border-r lg:border-white/25 lg:pr-s4">
+            <svg
+              viewBox="0 0 24 24"
+              className="h-5 w-5 shrink-0"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              aria-hidden="true"
+            >
               <path d="M3 21V9l6-5h6l6 5v12" />
               <path d="M9 21v-8h6v8" />
               <path d="M16 8c0-2.5 1.5-4 3-4s3 1.5 3 4-3 6-3 6-3-3.5-3-6z" />
             </svg>
-            <p className="m-0 text-sm font-light leading-snug">
+            <p className="m-0 text-xs font-light leading-snug">
               300 Longwood Ave
               <br />
               Boston, MA 02115
             </p>
           </div>
-          <div className="flex items-center gap-s3 lg:border-r lg:border-white/25 lg:px-s5">
-            <svg viewBox="0 0 24 24" className="h-8 w-8 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+          <div className="flex items-center gap-s2 lg:border-r lg:border-white/25 lg:px-s4">
+            <svg
+              viewBox="0 0 24 24"
+              className="h-5 w-5 shrink-0"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              aria-hidden="true"
+            >
               <rect x="3" y="5" width="18" height="14" rx="2" />
               <circle cx="9" cy="12" r="2.5" />
               <path d="M14 10h4M14 14h3" />
             </svg>
-            <Link href="/portal" className="text-sm font-bold text-white no-underline hover:underline">
+            <Link
+              href="/portal"
+              className="text-xs font-bold text-white no-underline hover:underline"
+            >
               MyChildren&apos;s Patient Portal
             </Link>
           </div>
-          <div className="flex items-center gap-s3 lg:border-r lg:border-white/25 lg:px-s5">
-            <svg viewBox="0 0 24 24" className="h-8 w-8 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+          <div className="flex items-center gap-s2 lg:border-r lg:border-white/25 lg:px-s4">
+            <svg
+              viewBox="0 0 24 24"
+              className="h-5 w-5 shrink-0"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              aria-hidden="true"
+            >
               <rect x="7" y="2" width="10" height="20" rx="2" />
               <circle cx="12" cy="18" r="1" fill="currentColor" stroke="none" />
             </svg>
             <a
               href="tel:16173556000"
-              className="text-sm font-bold text-white no-underline hover:underline"
+              className="text-xs font-bold text-white no-underline hover:underline"
             >
               617.355.6000
             </a>
           </div>
-          <div className="flex flex-col justify-center gap-s2 lg:pl-s5">
-            <p className="m-0 text-sm font-bold">Follow Us</p>
-            <div className="flex flex-wrap gap-s3 text-white/90" aria-label="Social media">
+          <div className="flex flex-col justify-center gap-1.5 lg:pl-s4">
+            <p className="m-0 text-xs font-bold">Follow Us</p>
+            <div
+              className="flex flex-wrap gap-2 text-white/90"
+              aria-label="Social media"
+            >
               {["Facebook", "Instagram", "LinkedIn", "Pinterest", "YouTube"].map(
                 (name) => (
                   <span
                     key={name}
-                    className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/40 text-[10px] font-bold"
+                    className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/40 text-[9px] font-bold"
                     title={name}
                   >
                     {name.slice(0, 1)}
@@ -113,10 +140,10 @@ export function SiteFooter() {
       </div>
 
       <div className="bg-ocean">
-        <div className="wrap grid grid-cols-1 gap-s7 py-s8 lg:grid-cols-[1.1fr_1fr_1fr_1fr]">
-          <div className="flex flex-wrap items-end gap-s3">
-            <UsNewsHonorRollBadge className="h-[96px]" />
-            <NewsweekBestBadge className="h-[96px]" />
+        <div className="wrap grid grid-cols-1 gap-s4 py-s5 lg:grid-cols-[0.9fr_1fr_1fr_1fr] lg:gap-s5">
+          <div className="flex flex-wrap items-end gap-s2">
+            <UsNewsHonorRollBadge className="h-[64px]" />
+            <NewsweekBestBadge className="h-[64px]" />
           </div>
           <FooterLinkColumn title="Get Care" links={getCare} />
           <FooterLinkColumn title="About & Support" links={aboutSupport} />
@@ -126,17 +153,20 @@ export function SiteFooter() {
           />
         </div>
 
-        <div className="wrap border-t border-white/25 py-s5">
-          <p className="mb-s3 text-xs font-light text-white/85">
+        <div className="wrap border-t border-white/25 py-s3">
+          <p className="mb-2 text-[11px] font-light text-white/85">
             © 2005 - {new Date().getFullYear()} Boston Children&apos;s Hospital.
             All rights reserved.
           </p>
-          <div className="flex flex-wrap gap-s4 text-sm">
+          <div className="flex flex-wrap items-center gap-x-s3 gap-y-1 text-xs">
             <span className="font-bold text-white">Also of Interest</span>
             {[
               { label: "Find a Doctor", href: "/find-a-doctor" },
               { label: "Video Library", href: "/programs" },
-              { label: "Online Second Opinions", href: "/professionals/second-opinion" },
+              {
+                label: "Online Second Opinions",
+                href: "/professionals/second-opinion",
+              },
             ].map((item) => (
               <Link
                 key={item.href}
@@ -147,7 +177,7 @@ export function SiteFooter() {
               </Link>
             ))}
           </div>
-          <div className="mt-s4 flex flex-wrap gap-s4 text-[11px] text-white/75">
+          <div className="mt-2 flex flex-wrap gap-x-s3 gap-y-1 text-[10px] text-white/75">
             {[
               { label: "Privacy", href: "/privacy" },
               { label: "Terms", href: "/terms" },
