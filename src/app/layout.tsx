@@ -51,7 +51,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={nunito.variable}>
-      <body className="pb-[68px] font-sans lg:pb-0">
+      <body className="pb-[68px] font-sans xl:pb-0">
         <SkipNav />
         <StagingBanner />
         <ConstructionAlert />

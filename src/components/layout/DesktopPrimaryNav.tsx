@@ -22,6 +22,8 @@ export type MegaZone = {
 
 export type NavItem = {
   label: string;
+  /** Optional shorter label for mid-width desktop before full copy fits */
+  shortLabel?: string;
   href: string;
   match?: string[];
   zones: MegaZone[];
@@ -45,17 +47,29 @@ export function DesktopPrimaryNav({ items }: { items: NavItem[] }) {
   }
 
   return (
-    <NavigationMenu className="relative hidden min-w-0 flex-1 justify-center lg:flex">
-      <NavigationMenuList className="flex flex-nowrap items-center justify-center gap-0 xl:gap-1">
+    <NavigationMenu className="relative hidden min-w-0 flex-1 justify-center xl:flex">
+      <NavigationMenuList className="flex flex-nowrap items-center justify-center gap-0.5 2xl:gap-1.5">
         {items.map((item) => (
           <NavigationMenuItem key={item.label} className="relative shrink-0">
             <NavigationMenuTrigger
+              aria-label={item.label}
               className={cn(
-                "inline-flex h-[72px] flex-row flex-nowrap items-center gap-1 whitespace-nowrap border-b-[3px] border-transparent px-2.5 text-[12px] font-bold tracking-[0.01em] text-white/85 transition-all hover:border-sky hover:text-white data-[state=open]:border-sky data-[state=open]:text-white xl:gap-1.5 xl:px-3.5 xl:text-[13px]",
+                "inline-flex h-[72px] flex-row flex-nowrap items-center gap-1 whitespace-nowrap border-b-[3px] border-transparent px-3 text-[13px] font-bold tracking-[0.01em] text-white/85 transition-all hover:border-sky hover:text-white data-[state=open]:border-sky data-[state=open]:text-white 2xl:gap-1.5 2xl:px-4",
                 isActive(item) && "border-sky text-white",
               )}
             >
-              <span className="whitespace-nowrap">{item.label}</span>
+              {item.shortLabel ? (
+                <>
+                  <span className="whitespace-nowrap 2xl:hidden">
+                    {item.shortLabel}
+                  </span>
+                  <span className="hidden whitespace-nowrap 2xl:inline">
+                    {item.label}
+                  </span>
+                </>
+              ) : (
+                <span className="whitespace-nowrap">{item.label}</span>
+              )}
               <IconChevronDown className="shrink-0 opacity-45 transition-transform group-data-[state=open]:rotate-180" />
             </NavigationMenuTrigger>
             <NavigationMenuContent>

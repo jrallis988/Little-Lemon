@@ -38,6 +38,7 @@ type MegaZone = {
 
 type NavItem = {
   label: string;
+  shortLabel?: string;
   href: string;
   match?: string[];
   zones: MegaZone[];
@@ -98,6 +99,7 @@ const navItems: NavItem[] = [
   },
   {
     label: "Patients & Families",
+    shortLabel: "Patients",
     href: "/patients-families",
     match: ["/patients-families", "/portal", "/appointments"],
     zones: [
@@ -596,7 +598,7 @@ export function SiteHeader() {
               <Link
                 href="/find-a-doctor"
                 className={cn(
-                  "hidden h-10 items-center whitespace-nowrap px-1 text-sm font-bold text-white/80 no-underline transition-colors hover:text-white xl:flex",
+                  "hidden h-10 items-center whitespace-nowrap px-1 text-sm font-bold text-white/80 no-underline transition-colors hover:text-white 2xl:flex",
                   headerFocus,
                 )}
               >
@@ -605,18 +607,19 @@ export function SiteHeader() {
               <Link
                 href="/appointments/request"
                 className={cn(
-                  "hidden h-10 items-center whitespace-nowrap rounded-sm bg-pink px-3.5 text-sm font-bold text-white no-underline transition-all hover:bg-pink-text lg:flex xl:px-5",
+                  "hidden h-10 items-center whitespace-nowrap rounded-sm bg-pink px-4 text-sm font-bold text-white no-underline transition-all hover:bg-pink-text xl:flex 2xl:px-5",
                   headerFocus,
                 )}
               >
-                Book Appointment
+                <span className="2xl:hidden">Book</span>
+                <span className="hidden 2xl:inline">Book Appointment</span>
               </Link>
               <button
                 ref={mobileToggleRef}
                 id="mob-toggle"
                 type="button"
                 className={cn(
-                  "flex h-11 w-11 items-center justify-center rounded-sm text-white/70 transition-all hover:bg-white/10 hover:text-white lg:hidden",
+                  "flex h-11 w-11 items-center justify-center rounded-sm text-white/70 transition-all hover:bg-white/10 hover:text-white xl:hidden",
                   headerFocus,
                 )}
                 aria-label={
@@ -635,7 +638,7 @@ export function SiteHeader() {
         <nav
           id="mob-nav"
           className={cn(
-            "max-h-[82vh] overflow-y-auto border-t border-white/[0.07] bg-nav-dark lg:hidden",
+            "max-h-[82vh] overflow-y-auto border-t border-white/[0.07] bg-nav-dark xl:hidden",
             mobileOpen ? "block animate-fade-down" : "hidden",
           )}
           aria-label="Mobile navigation"
@@ -786,7 +789,7 @@ export function SiteHeader() {
       </header>
 
       <nav
-        className="fixed bottom-0 left-0 right-0 z-[800] flex gap-2 border-t border-border bg-white px-5 py-2.5 shadow-[0_-4px_20px_rgba(0,0,0,.12)] lg:hidden"
+        className="fixed bottom-0 left-0 right-0 z-[800] flex gap-2 border-t border-border bg-white px-5 py-2.5 shadow-[0_-4px_20px_rgba(0,0,0,.12)] xl:hidden"
         aria-label="Quick actions"
       >
         <Link
