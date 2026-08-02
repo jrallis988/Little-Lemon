@@ -16,8 +16,8 @@ import {
   IconLock,
   IconMenu,
   IconSearch,
-  LogoSeal,
 } from "@/components/ui/Icons";
+import { BchMark } from "@/components/brand/BchLogo";
 import { SearchOverlay } from "@/components/search/SearchOverlay";
 import { DesktopPrimaryNav } from "@/components/layout/DesktopPrimaryNav";
 import { focusFirst, getFocusableElements } from "@/lib/a11y";
@@ -616,19 +616,19 @@ export function SiteHeader() {
             <Link
               href="/"
               className={cn(
-                "flex shrink-0 items-center gap-3 no-underline xl:gap-3.5",
+                "flex shrink-0 items-center gap-3 no-underline",
                 headerFocus,
               )}
               aria-label="Boston Children's Hospital — home"
             >
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-[1.5px] border-white/30 bg-white/[0.06]">
-                <LogoSeal />
-              </span>
+              <BchMark variant="onDark" />
               <span className="hidden flex-col min-[1100px]:flex">
-                <span className="text-[15px] font-bold leading-tight tracking-[-0.01em] text-white">
-                  Boston Children&apos;s Hospital
+                <span className="text-[15px] font-bold leading-[1.15] tracking-[-0.01em] text-white">
+                  Boston Children&apos;s
+                  <br />
+                  Hospital
                 </span>
-                <span className="mt-0.5 text-[10px] font-bold tracking-[0.01em] text-pink">
+                <span className="mt-1 text-[10px] font-bold tracking-[0.01em] text-pink">
                   Where the world comes for answers
                 </span>
               </span>

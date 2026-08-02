@@ -1,4 +1,8 @@
 import Link from "next/link";
+import {
+  NewsweekBestBadge,
+  UsNewsHonorRollBadge,
+} from "@/components/brand/AwardBadges";
 
 const getCare = [
   { label: "Make an Appointment", href: "/appointments/request" },
@@ -110,23 +114,9 @@ export function SiteFooter() {
 
       <div className="bg-ocean">
         <div className="wrap grid grid-cols-1 gap-s7 py-s8 lg:grid-cols-[1.1fr_1fr_1fr_1fr]">
-          <div className="flex flex-wrap items-center gap-s4">
-            <div className="flex h-20 w-20 flex-col items-center justify-center rounded-full border-2 border-[#c9a227] bg-blue text-center">
-              <span className="text-[8px] font-extrabold uppercase text-[#c9a227]">
-                U.S. News
-              </span>
-              <span className="px-1 text-[9px] font-bold leading-tight text-white">
-                Honor Roll
-              </span>
-              <span className="text-[8px] text-white/85">2025–26</span>
-            </div>
-            <div className="flex h-20 min-w-[110px] flex-col items-center justify-center rounded-sm bg-white px-s3 text-center">
-              <span className="text-[9px] font-extrabold text-emergency">★★★★★</span>
-              <span className="text-[8px] font-extrabold uppercase leading-tight text-blue">
-                World&apos;s Best
-              </span>
-              <span className="text-[8px] font-bold text-text">2026</span>
-            </div>
+          <div className="flex flex-wrap items-end gap-s3">
+            <UsNewsHonorRollBadge className="h-[96px]" />
+            <NewsweekBestBadge className="h-[96px]" />
           </div>
           <FooterLinkColumn title="Get Care" links={getCare} />
           <FooterLinkColumn title="About & Support" links={aboutSupport} />

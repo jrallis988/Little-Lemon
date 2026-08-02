@@ -174,53 +174,40 @@ export function IconMessage({ className }: IconProps) {
   );
 }
 
+/** @deprecated Prefer BchMark from @/components/brand/BchLogo */
 export function LogoSeal({ className }: IconProps) {
   return (
     <svg
-      viewBox="0 0 60 60"
+      viewBox="0 0 56 72"
       fill="none"
       aria-hidden="true"
-      className={cn("h-[26px] w-[26px]", className)}
+      className={cn("h-[34px] w-[26px]", className)}
     >
-      <circle
-        cx="30"
-        cy="30"
-        r="28"
-        fill="rgba(255,255,255,.06)"
-        stroke="rgba(255,255,255,.3)"
-        strokeWidth="1.5"
+      <ellipse cx="28" cy="36" rx="26" ry="34" fill="#002060" />
+      <ellipse
+        cx="28"
+        cy="36"
+        rx="26"
+        ry="34"
+        stroke="rgba(255,255,255,0.35)"
+        strokeWidth="1.25"
       />
-      <text
-        x="30"
-        y="22"
-        textAnchor="middle"
-        fill="rgba(255,255,255,.85)"
-        fontSize="7.5"
-        fontFamily="sans-serif"
-        fontWeight="700"
+      <g
+        stroke="#ffffff"
+        strokeWidth="1.55"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
       >
-        BOSTON
-      </text>
-      <text
-        x="30"
-        y="31"
-        textAnchor="middle"
-        fill="rgba(255,255,255,.65)"
-        fontSize="5.5"
-        fontFamily="sans-serif"
-      >
-        CHILDREN&apos;S
-      </text>
-      <text
-        x="30"
-        y="39"
-        textAnchor="middle"
-        fill="rgba(255,255,255,.65)"
-        fontSize="5.5"
-        fontFamily="sans-serif"
-      >
-        HOSPITAL
-      </text>
+        <path d="M20 18h16" />
+        <path d="M24 14c0-2.5 1.8-4.2 4-4.2s4 1.7 4 4.2" />
+        <circle cx="28" cy="24" r="4.2" />
+        <path d="M18 44c2-8 5.5-13 10-13s8 5 10 13" />
+        <path d="M22 40c3 4 5.5 7 6 10" />
+        <circle cx="36" cy="38" r="3" />
+        <path d="M30 42c2.2-1.2 4.5-1.4 7 0 1.4.8 2.2 2.6 2.2 4.6" />
+        <path d="M17 54c2.5-5 6-8.5 11-8.5 3.2 0 6 1.2 8.2 3.4" />
+      </g>
     </svg>
   );
 }

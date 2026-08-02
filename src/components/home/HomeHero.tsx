@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
+import { AwardBadgeRow } from "@/components/brand/AwardBadges";
 
 export function HomeHero() {
   return (
@@ -29,31 +30,7 @@ export function HomeHero() {
           Top ranked pediatric hospital in the nation
         </p>
 
-        <div className="mb-s5 flex flex-wrap items-center gap-s3">
-          <div className="flex h-[72px] w-[72px] flex-col items-center justify-center rounded-full border-2 border-[#c9a227] bg-gradient-to-b from-[#1a3a7a] to-blue text-center shadow-md">
-            <span className="text-[8px] font-extrabold uppercase leading-tight tracking-wide text-[#c9a227]">
-              U.S. News
-            </span>
-            <span className="px-1 text-[9px] font-bold leading-tight text-white">
-              Honor Roll
-            </span>
-            <span className="text-[8px] font-semibold text-white/85">
-              2025–26
-            </span>
-          </div>
-          <div className="flex h-[72px] min-w-[120px] flex-col items-center justify-center rounded-sm border border-white/80 bg-white px-s3 text-center shadow-md">
-            <span className="text-[9px] font-extrabold uppercase tracking-wide text-emergency">
-              ★★★★★
-            </span>
-            <span className="text-[9px] font-extrabold uppercase leading-tight text-blue">
-              World&apos;s Best
-            </span>
-            <span className="text-[8px] font-bold leading-tight text-text">
-              Specialized Hospitals
-            </span>
-            <span className="text-[8px] text-text-meta">Newsweek 2026</span>
-          </div>
-        </div>
+        <AwardBadgeRow className="mb-s5" />
 
         <h1
           id="hero-heading"
