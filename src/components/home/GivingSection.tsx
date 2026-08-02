@@ -49,9 +49,9 @@ export function GivingSection() {
           {cards.map((card) => (
             <article
               key={card.title}
-              className="overflow-hidden rounded-lg border border-border bg-white text-center shadow-sm"
+              className="flex flex-col overflow-hidden rounded-lg border border-border bg-white text-center shadow-sm"
             >
-              <div className="relative aspect-[16/10]">
+              <div className="relative aspect-[16/10] shrink-0">
                 <Image
                   src={card.image}
                   alt={card.alt}
@@ -60,19 +60,17 @@ export function GivingSection() {
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
               </div>
-              <div className="flex flex-col gap-s3 px-s5 py-s5">
+              <div className="flex flex-1 flex-col gap-s3 px-s5 py-s5">
                 <h3 className="text-lg font-bold text-blue">{card.title}</h3>
-                <p className="text-sm font-light leading-relaxed text-blue/90">
+                <p className="flex-1 text-sm font-light leading-relaxed text-blue/90">
                   {card.body}
                 </p>
-                <div className="pt-s2">
-                  <Link
-                    href={card.href}
-                    className="inline-flex min-h-11 items-center justify-center rounded-sm bg-blue px-s5 text-sm font-bold text-white no-underline hover:bg-nav-dark"
-                  >
-                    {card.cta}
-                  </Link>
-                </div>
+                <Link
+                  href={card.href}
+                  className="mt-s2 inline-flex h-11 w-full items-center justify-center rounded-sm bg-blue px-s4 text-sm font-bold text-white no-underline hover:bg-nav-dark"
+                >
+                  {card.cta}
+                </Link>
               </div>
             </article>
           ))}
