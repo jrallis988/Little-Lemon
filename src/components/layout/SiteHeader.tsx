@@ -25,8 +25,8 @@ import { cn } from "@/lib/cn";
 
 /** Top utility links aligned to childrenshospital.org homepage HTML */
 const utilLinks = [
-  { label: "International", href: "/patients-families" },
-  { label: "Español", href: "/patients-families" },
+  { label: "International", href: "/international" },
+  { label: "Español", href: "/es" },
   { label: "Donate", href: "/#giving" },
   { label: "Emergency", href: "/emergency" },
 ];
@@ -332,11 +332,12 @@ export function SiteHeader() {
       }
       if (iWantToOpen) {
         setIWantToOpen(false);
+        document.getElementById(`${baseId}-iwantto-btn`)?.focus();
       }
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [openMenu, portalOpen, iWantToOpen]);
+  }, [openMenu, portalOpen, iWantToOpen, baseId]);
 
   // Mobile nav: body lock, Escape, focus trap including toggle
   useEffect(() => {
@@ -417,42 +418,62 @@ export function SiteHeader() {
                   key={link.label}
                   href={link.href}
                   className={cn(
-                    "flex h-9 shrink-0 items-center px-3 text-[11px] font-semibold tracking-[0.01em] text-white/65 no-underline transition-colors hover:text-white",
+                    "flex h-9 shrink-0 items-center px-3 text-[11px] font-semibold tracking-[0.01em] text-white/80 no-underline transition-colors hover:text-white",
                     headerFocus,
                   )}
                 >
                   {link.label}
                 </Link>
               ))}
-              <div className="relative hidden sm:block" ref={iWantToRef}>
+              <div className="relative" ref={iWantToRef}>
                 <button
                   type="button"
+                  id={`${baseId}-iwantto-btn`}
                   className={cn(
-                    "flex h-9 items-center gap-1 px-3 text-[11px] font-semibold tracking-[0.01em] text-white/65 transition-colors hover:text-white",
+                    "flex h-9 items-center gap-1.5 px-3 text-[11px] font-semibold tracking-[0.01em] transition-colors",
+                    iWantToOpen
+                      ? "bg-white/[0.08] text-white"
+                      : "text-white/80 hover:text-white",
                     headerFocus,
                   )}
                   aria-expanded={iWantToOpen}
                   aria-haspopup="menu"
+                  aria-controls={`${baseId}-iwantto-menu`}
                   onClick={() => {
                     setPortalOpen(false);
                     setOpenMenu(null);
                     setIWantToOpen((v) => !v);
                   }}
+                  onKeyDown={(e) => {
+                    if (e.key === "ArrowDown") {
+                      e.preventDefault();
+                      setPortalOpen(false);
+                      setOpenMenu(null);
+                      setIWantToOpen(true);
+                    }
+                  }}
                 >
                   I Want To...
-                  <IconChevronDown className="opacity-50" />
+                  <IconChevronDown
+                    className={cn(
+                      "h-3 w-3 text-white transition-transform",
+                      iWantToOpen && "rotate-180",
+                    )}
+                  />
                 </button>
                 {iWantToOpen ? (
                   <ul
+                    id={`${baseId}-iwantto-menu`}
                     role="menu"
-                    className="absolute left-0 top-full z-[620] mt-1 min-w-[220px] rounded-md border border-border bg-white py-2 shadow-lg"
+                    aria-labelledby={`${baseId}-iwantto-btn`}
+                    className="absolute left-0 top-full z-[620] mt-0.5 min-w-[240px] rounded-md border border-border bg-white py-2 shadow-lg"
                   >
                     {iWantToLinks.map((link) => (
                       <li key={link.label} role="none">
                         <Link
                           role="menuitem"
                           href={link.href}
-                          className="block px-4 py-2 text-sm font-bold text-blue no-underline hover:bg-surface"
+                          className="block px-4 py-2.5 text-sm font-bold text-blue no-underline hover:bg-surface"
                           onClick={() => setIWantToOpen(false)}
                         >
                           {link.label}
@@ -624,7 +645,7 @@ export function SiteHeader() {
             boxShadow: scrolled ? "0 2px 16px rgba(0,0,0,.18)" : undefined,
           }}
         >
-          <div className="wrap flex h-[72px] items-center justify-between gap-s3 xl:gap-s5">
+          <div className="wrap flex h-[72px] items-center gap-s2 xl:gap-s3">
             <Link
               href="/"
               className={cn(
@@ -648,7 +669,7 @@ export function SiteHeader() {
 
             <DesktopPrimaryNav items={navItems} />
 
-            <div className="flex shrink-0 items-center gap-s2 xl:gap-s3">
+            <div className="ml-auto flex shrink-0 items-center gap-1">
               <button
                 ref={searchButtonRef}
                 type="button"
@@ -663,25 +684,6 @@ export function SiteHeader() {
               >
                 <IconSearch />
               </button>
-              <Link
-                href="/find-a-doctor"
-                className={cn(
-                  "hidden h-10 items-center whitespace-nowrap px-1 text-sm font-bold text-white/80 no-underline transition-colors hover:text-white 2xl:flex",
-                  headerFocus,
-                )}
-              >
-                Find a Doctor
-              </Link>
-              <Link
-                href="/appointments/request"
-                className={cn(
-                  "hidden h-10 items-center whitespace-nowrap rounded-sm bg-pink px-4 text-sm font-bold text-white no-underline transition-all hover:bg-pink-text xl:flex 2xl:px-5",
-                  headerFocus,
-                )}
-              >
-                <span className="2xl:hidden">Book</span>
-                <span className="hidden 2xl:inline">Book Appointment</span>
-              </Link>
               <button
                 ref={mobileToggleRef}
                 id="mob-toggle"

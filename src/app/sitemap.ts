@@ -18,6 +18,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/patients-families/prepare-for-your-visit",
     "/patients-families/billing",
     "/patients-families/medical-records",
+    "/international",
+    "/es",
     "/professionals",
     "/professionals/refer",
     "/professionals/second-opinion",

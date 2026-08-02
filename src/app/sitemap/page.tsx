@@ -27,6 +27,8 @@ const sections = [
       { href: "/patients-families/billing", label: "Billing & Insurance" },
       { href: "/patients-families/medical-records", label: "Medical Records" },
       { href: "/portal", label: "Portal preview" },
+      { href: "/international", label: "International Patients" },
+      { href: "/es", label: "Recursos en español" },
     ],
   },
   {

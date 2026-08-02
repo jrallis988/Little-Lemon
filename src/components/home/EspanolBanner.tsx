@@ -3,6 +3,7 @@ import { CircleLink } from "@/components/home/CircleLink";
 export function EspanolBanner() {
   return (
     <section
+      id="espanol"
       className="bg-pink py-s6"
       aria-label="Recursos en español"
       lang="es"
@@ -11,7 +12,7 @@ export function EspanolBanner() {
         <h2 className="text-2xl font-bold text-white sm:text-3xl">
           Atendemos en español
         </h2>
-        <CircleLink href="/patients-families" light>
+        <CircleLink href="/es" light>
           Explora nuestros recursos en español
         </CircleLink>
       </div>

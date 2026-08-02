@@ -47,14 +47,14 @@ export function DesktopPrimaryNav({ items }: { items: NavItem[] }) {
   }
 
   return (
-    <NavigationMenu className="relative hidden min-w-0 flex-1 justify-center overflow-visible xl:flex">
-      <NavigationMenuList className="flex w-full flex-nowrap items-center justify-center gap-0 2xl:gap-1">
+    <NavigationMenu className="relative hidden min-w-0 overflow-visible xl:flex">
+      <NavigationMenuList className="flex flex-nowrap items-center gap-0">
         {items.map((item) => (
           <NavigationMenuItem key={item.label} className="relative shrink-0">
             <NavigationMenuTrigger
               aria-label={item.label}
               className={cn(
-                "inline-flex h-[72px] max-w-none flex-row flex-nowrap items-center gap-1 whitespace-nowrap border-b-[3px] border-transparent px-2.5 text-[12.5px] font-bold tracking-[0.01em] text-white/85 transition-all hover:border-sky hover:bg-transparent hover:text-white data-[state=open]:border-sky data-[state=open]:bg-transparent data-[state=open]:text-white 2xl:gap-1.5 2xl:px-3.5 2xl:text-[13px]",
+                "inline-flex h-[72px] max-w-none flex-row flex-nowrap items-center gap-1 whitespace-nowrap border-b-[3px] border-transparent px-2 text-[12.5px] font-bold tracking-[0.01em] text-white/85 transition-all hover:border-sky hover:bg-transparent hover:text-white data-[state=open]:border-sky data-[state=open]:bg-transparent data-[state=open]:text-white 2xl:gap-1.5 2xl:px-3 2xl:text-[13px]",
                 isActive(item) && "border-sky text-white",
               )}
             >
