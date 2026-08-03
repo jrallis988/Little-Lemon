@@ -188,7 +188,9 @@ const mobileGroups = [
         href: "/conditions/epilepsy-in-children",
       },
       { label: "Find a Doctor", href: "/find-a-doctor" },
-      { label: "Get a Second Opinion", href: "/professionals/second-opinion" },
+      { label: "Request an Appointment", href: "/appointments/request" },
+      { label: "Epilepsy Program", href: "/programs/epilepsy-program" },
+      { label: "All programs", href: "/programs" },
     ],
   },
   {
@@ -226,6 +228,7 @@ const mobileGroups = [
     label: "Research & About",
     links: [
       { label: "Research", href: "/research" },
+      { label: "Health Library / Search", href: "/search?q=health" },
       { label: "About Us", href: "/about" },
       { label: "Our History", href: "/about/history" },
       { label: "Donate", href: "/#giving" },
