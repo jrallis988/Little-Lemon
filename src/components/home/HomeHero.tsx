@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/Button";
 export function HomeHero() {
   return (
     <section
-      className="relative min-h-[620px] overflow-hidden max-md:min-h-[540px]"
+      className="relative min-h-[640px] overflow-hidden max-md:min-h-[560px]"
       aria-labelledby="hero-heading"
     >
       <Image
@@ -27,20 +27,24 @@ export function HomeHero() {
         aria-hidden="true"
       />
 
-      <div className="wrap relative z-[2] flex min-h-[620px] flex-col justify-center gap-s6 py-s9 max-md:min-h-[540px] max-md:justify-end max-md:pb-s8">
-        <div className="max-w-[640px]">
-          <p className="mb-s3 font-sans text-[15px] font-extrabold uppercase tracking-[0.14em] text-white/90 sm:text-base">
+      <div className="wrap relative z-[2] flex min-h-[640px] flex-col justify-center py-s8 pt-s9 max-md:min-h-[560px] max-md:justify-end max-md:pb-s8 max-md:pt-s7 sm:pt-[88px] lg:pt-s9">
+        <div className="max-w-[720px]">
+          <p className="mb-s4 font-sans text-sm font-extrabold uppercase tracking-[0.16em] text-white sm:text-base sm:tracking-[0.18em]">
             Top ranked pediatric hospital in the nation
           </p>
-          <AwardBadgeRow className="mb-s5 [&_svg]:h-[72px]" />
+
+          <AwardBadgeRow className="mb-s5 gap-s4 [&_svg]:h-[70px] [&_svg]:w-auto sm:[&_svg]:h-[78px]" />
+
           <h1
             id="hero-heading"
-            className="mb-s5 font-sans text-[clamp(36px,4.5vw,48px)] font-semibold leading-[1.08] tracking-[-0.02em] text-white"
+            className="mb-s6 font-sans text-4xl font-bold leading-[1.08] tracking-[-0.02em] text-white sm:text-5xl sm:leading-[1.06] lg:text-[3.25rem]"
           >
             Trusted by families.
-            <br />
-            <span className="text-sky">Where the world comes for answers.</span>
+            <span className="mt-1 block text-sky">
+              Where the world comes for answers.
+            </span>
           </h1>
+
           <Button href="/appointments/request" variant="pink" size="md">
             Make an Appointment
           </Button>
