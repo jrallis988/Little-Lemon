@@ -48,10 +48,10 @@ export function FeatureStories() {
           </div>
           <div className="relative order-1 aspect-[4/3] overflow-hidden rounded-md lg:order-2">
             <Image
-              src="https://images.unsplash.com/photo-1555252333-9f8e92e65df9?auto=format&fit=crop&w=1200&q=80"
-              alt="A caregiver holding a smiling baby"
+              src="/images/stories/leading-programs-family.jpg"
+              alt="A smiling Black woman affectionately holds a joyful Black infant wearing a yellow shirt and colorful hair clips"
               fill
-              className="object-cover"
+              className="object-cover object-center"
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
           </div>
