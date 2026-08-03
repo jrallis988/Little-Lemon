@@ -106,11 +106,6 @@ const navItems: NavItem[] = [
       },
     ],
   },
-  {
-    label: "International",
-    href: "/international",
-    match: ["/international", "/es", "/zh"],
-  },
 ];
 
 const mobileGroups = [
@@ -161,12 +156,6 @@ const mobileGroups = [
       { label: "Our History", href: "/about/history" },
       { label: "Community Health", href: "/about/community" },
     ],
-  },
-  {
-    id: "intl",
-    label: "International",
-    href: "/international",
-    links: [{ label: "International", href: "/international" }],
   },
 ];
 
