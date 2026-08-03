@@ -255,12 +255,13 @@ export function SiteHeader() {
             </Link>
 
             <div className="pointer-events-none absolute inset-0 hidden items-center justify-center xl:flex">
-              <div className="pointer-events-auto">
+              <div className="pointer-events-auto flex items-center gap-0.5 xl:gap-1">
                 <DesktopPrimaryNav items={navItems} />
+                <HeaderSearch />
               </div>
             </div>
 
-            <div className="relative z-[1] ml-auto flex shrink-0 items-center gap-1 sm:gap-1.5">
+            <div className="relative z-[1] ml-auto flex shrink-0 items-center gap-1 sm:gap-1.5 xl:hidden">
               <HeaderSearch />
 
               <button
@@ -268,7 +269,7 @@ export function SiteHeader() {
                 id="mob-toggle"
                 type="button"
                 className={cn(
-                  "ml-0.5 flex h-11 w-11 items-center justify-center rounded-sm text-white/70 transition-all hover:bg-white/10 hover:text-white xl:hidden",
+                  "ml-0.5 flex h-11 w-11 items-center justify-center rounded-sm text-white/70 transition-all hover:bg-white/10 hover:text-white",
                   headerFocus,
                 )}
                 aria-label={
