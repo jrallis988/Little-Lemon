@@ -7,27 +7,24 @@ const cards = [
     body: "As a monthly partner, you are always there for patients and families. Your gift supports kids with chronic illnesses who need ongoing care.",
     cta: "Give monthly",
     href: "/about/community",
-    image:
-      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=900&q=80",
-    alt: "Hands holding a phone with a donate screen",
+    image: "/images/giving/help-children-year-round.jpg",
+    alt: "Hands holding a smartphone with a pink Donate speech bubble",
   },
   {
     title: "Fundraise your way",
     body: "Create an online fundraising page or turn your favorite activity into a fundraising event.",
     cta: "Fundraise your way",
     href: "/about/community",
-    image:
-      "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?auto=format&fit=crop&w=900&q=80",
-    alt: "Hands holding fundraise cards under a blue sky",
+    image: "/images/giving/fundraise-your-way.jpg",
+    alt: "Three diverse hands holding cards that read fundraise your way against a blue sky",
   },
   {
     title: "Walk to save kids' lives",
     body: "The path to healthy futures starts with you. Register now for the Eversource Walk for Boston Children’s Hospital on June 14.",
     cta: "Join us",
     href: "/about/community",
-    image:
-      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80",
-    alt: "Community walk participants outdoors",
+    image: "/images/giving/walk-for-kids.jpg",
+    alt: "A diverse group in blue Boston Children’s shirts cheering with pom-poms at a community walk",
   },
 ];
 
