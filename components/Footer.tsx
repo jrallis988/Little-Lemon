@@ -26,14 +26,16 @@ export function Footer() {
 
   return (
     <footer className="bg-footer-navy text-white/75">
-      <div className="relative h-44 overflow-hidden sm:h-56" aria-hidden>
+      <div className="relative h-48 overflow-hidden sm:h-64" aria-hidden>
         <Image
-          src="/images/nh-landscape.svg"
+          src="/images/footer-mountains.jpg"
           alt=""
           fill
-          className="object-cover object-bottom opacity-80"
+          sizes="100vw"
+          className="object-cover object-[center_65%]"
+          priority={false}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-footer-navy via-footer-navy/70 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-footer-navy via-footer-navy/75 to-footer-navy/25" />
       </div>
 
       <div className="mx-auto max-w-content px-6 pb-7 pt-2 md:px-8">
