@@ -125,7 +125,7 @@ function MegaItem({
         aria-controls={`${id}-panel`}
         data-state={open ? "open" : "closed"}
         className={cn(
-          "group inline-flex h-16 max-w-none flex-row flex-nowrap items-center gap-0.5 whitespace-nowrap border-b-[3px] border-transparent px-1 text-[11px] font-bold tracking-[0.01em] text-white/85 transition-all duration-200 hover:border-sky hover:text-white data-[state=open]:border-sky data-[state=open]:text-white 2xl:gap-1 2xl:px-2 2xl:text-[12.5px]",
+          "group inline-flex h-16 max-w-none flex-row flex-nowrap items-center gap-1 whitespace-nowrap border-b-[3px] border-transparent px-2 text-[14px] font-semibold tracking-[0.01em] text-white/90 transition-all duration-200 hover:border-sky hover:text-white data-[state=open]:border-sky data-[state=open]:text-white xl:px-2.5 2xl:gap-1.5 2xl:px-3 2xl:text-[15px] 2xl:font-bold",
           active && "border-sky text-white",
         )}
         onClick={() => setOpen((value) => !value)}
@@ -142,7 +142,7 @@ function MegaItem({
         )}
         <IconChevronDown
           className={cn(
-            "shrink-0 opacity-45 transition-transform duration-200",
+            "h-3 w-3 shrink-0 opacity-55 transition-transform duration-200",
             open && "rotate-180",
           )}
         />
@@ -229,7 +229,7 @@ export function DesktopPrimaryNav({ items }: { items: NavItem[] }) {
 
   return (
     <nav aria-label="Primary" className="relative flex min-w-0 overflow-visible">
-      <ul className="m-0 flex list-none flex-nowrap items-center justify-center gap-0 p-0">
+      <ul className="m-0 flex list-none flex-nowrap items-center justify-center gap-0.5 p-0 xl:gap-1">
         {items.map((item, index) => (
           <MegaItem
             key={item.label}
