@@ -73,6 +73,30 @@ function CountdownBlock({
   );
 }
 
+function ElectionDateCard({
+  label,
+  dateDisplay,
+  weekday,
+  subtext,
+}: {
+  label: string;
+  dateDisplay: string;
+  weekday: string;
+  subtext: string;
+}) {
+  return (
+    <div className="flex min-h-[11.5rem] flex-col border border-white/15 bg-white/5 p-6 sm:min-h-[12.5rem] sm:p-8">
+      <p className="font-display text-overline font-normal uppercase text-red">{label}</p>
+      <p className="mt-3 font-display text-3xl font-normal text-white sm:text-4xl">
+        {dateDisplay}
+      </p>
+      <p className="mt-2 text-body-lg text-white/70">
+        {weekday} · {subtext}
+      </p>
+    </div>
+  );
+}
+
 export function ElectionCountdown() {
   // Defer live clock until after mount to avoid SSR/client hydration mismatch
   // (React #418 / #423 / #425) when seconds differ between server and browser.
@@ -102,19 +126,14 @@ export function ElectionCountdown() {
           titleId="election-heading"
         />
 
-        <div className="mt-10 grid gap-5 lg:grid-cols-2">
-          <div className="space-y-4">
-            <div className="border border-white/15 bg-white/5 p-6 sm:p-8">
-              <p className="font-display text-overline font-normal uppercase text-red">
-                {election.september.label}
-              </p>
-              <p className="mt-3 font-display text-3xl font-normal text-white sm:text-4xl">
-                {election.september.dateDisplay}
-              </p>
-              <p className="mt-2 text-body-lg text-white/70">
-                {election.september.weekday} · {election.september.subtext}
-              </p>
-            </div>
+        <div className="mt-10 grid items-stretch gap-5 lg:grid-cols-2">
+          <div className="flex h-full flex-col gap-4">
+            <ElectionDateCard
+              label={election.september.label}
+              dateDisplay={election.september.dateDisplay}
+              weekday={election.september.weekday}
+              subtext={election.september.subtext}
+            />
             <CountdownBlock
               label="Countdown to September election"
               remaining={september}
@@ -122,34 +141,32 @@ export function ElectionCountdown() {
             />
           </div>
 
-          <div className="space-y-4">
-            <Link
-              href="/how-to-vote"
-              className="group block border border-white/15 bg-white/5 p-6 transition-colors hover:border-red sm:p-8"
-            >
-              <p className="font-display text-overline font-normal uppercase text-red">
-                {election.general.label}
-              </p>
-              <p className="mt-3 font-display text-3xl font-normal text-white sm:text-4xl">
-                {election.general.dateDisplay}
-              </p>
-              <p className="mt-2 text-body-lg text-white/70">
-                {election.general.weekday} · {election.general.subtext}
-              </p>
-              <p className="mt-5 inline-flex items-center gap-1 font-display text-cta font-normal uppercase text-red">
-                Learn how to vote write-in
-                <ArrowRight className="h-4 w-4" aria-hidden />
-              </p>
-            </Link>
+          <div className="flex h-full flex-col gap-4">
+            <ElectionDateCard
+              label={election.general.label}
+              dateDisplay={election.general.dateDisplay}
+              weekday={election.general.weekday}
+              subtext={election.general.subtext}
+            />
             <CountdownBlock
               label="Countdown to November 3 General Election"
               remaining={general}
               ready={ready}
             />
-            <p className="text-sm text-white/80">
-              Write in “{candidate.fullName}” on the General Election ballot.
-            </p>
           </div>
+        </div>
+
+        <div className="mt-6 flex flex-col gap-3 border border-white/10 bg-white/5 px-6 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+          <p className="text-sm text-white/85 sm:text-base">
+            Write in “{candidate.fullName}” on the General Election ballot.
+          </p>
+          <Link
+            href="/how-to-vote"
+            className="inline-flex shrink-0 items-center gap-1 font-display text-cta font-normal uppercase text-red hover:text-white"
+          >
+            Learn how to vote write-in
+            <ArrowRight className="h-4 w-4" aria-hidden />
+          </Link>
         </div>
       </div>
     </section>

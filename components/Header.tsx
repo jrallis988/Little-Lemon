@@ -7,7 +7,6 @@ import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { candidate } from "@/lib/candidate";
 import { AccessibilityLauncher } from "@/components/a11y/AccessibilityPanel";
-import { CartNavLink } from "@/components/store/CartNavLink";
 
 const NAV_LINKS = [
   { href: "/meet-nick", label: "Meet Nick" },
@@ -151,20 +150,12 @@ export function Header() {
               <div className="site-header__a11y">
                 <AccessibilityLauncher tone="onDark" />
               </div>
-              <CartNavLink tone="onDark" />
-              <Link href="/how-to-vote" className="btn-primary site-header__cta">
-                How to Vote
-              </Link>
             </nav>
 
             <div className="site-header__mobile-actions">
-              <CartNavLink tone="onDark" />
               <div className="site-header__a11y site-header__a11y--compact">
                 <AccessibilityLauncher tone="onDark" />
               </div>
-              <Link href="/how-to-vote" className="btn-primary site-header__cta-sm">
-                How to Vote
-              </Link>
               <button
                 ref={menuButtonRef}
                 type="button"
@@ -206,15 +197,6 @@ export function Header() {
                     </li>
                   );
                 })}
-                <li>
-                  <Link
-                    href="/shop/cart"
-                    className="site-header__drawer-link"
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    Cart
-                  </Link>
-                </li>
               </ul>
             </nav>
           )}
