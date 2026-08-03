@@ -205,8 +205,8 @@ export function MessengerButton() {
         ref={buttonRef}
         type="button"
         className={cn(
-          "pointer-events-auto inline-flex h-14 w-14 items-center justify-center rounded-full bg-messenger text-white shadow-lg transition-all duration-ease hover:bg-messenger-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ocean",
-          open && "bg-blue hover:bg-nav-dark",
+          "pointer-events-auto inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-messenger text-white shadow-[0_6px_16px_rgba(0,0,0,0.18)] transition-all duration-ease hover:bg-messenger-hover hover:shadow-[0_8px_20px_rgba(0,0,0,0.22)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ocean",
+          open && "bg-blue shadow-[0_6px_16px_rgba(0,32,96,0.28)] hover:bg-nav-dark",
         )}
         aria-label={open ? "Close chat with Lesley" : "Talk to Lesley"}
         aria-expanded={open}
@@ -216,7 +216,7 @@ export function MessengerButton() {
         {open ? (
           <IconClose className="h-5 w-5" />
         ) : (
-          <IconMessage className="h-6 w-6" />
+          <IconMessage className="h-7 w-7" />
         )}
       </button>
     </div>
