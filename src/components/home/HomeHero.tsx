@@ -9,7 +9,6 @@ import { AwardBadgeRow } from "@/components/brand/AwardBadges";
 import { Button } from "@/components/ui/Button";
 
 const intentPills = [
-  { label: "Find a Doctor", href: "/find-a-doctor" },
   { label: "Find a Location", href: "/locations" },
   { label: "Emergency Care", href: "/emergency" },
   { label: "Patient Portal", href: "/portal" },
