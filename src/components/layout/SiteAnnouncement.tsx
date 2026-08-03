@@ -69,24 +69,20 @@ export function SiteAnnouncement() {
         role="dialog"
         aria-modal="false"
         aria-labelledby={titleId}
-        className="overflow-hidden rounded-lg border border-border bg-white shadow-lg"
+        className="overflow-hidden rounded-lg border border-black/15 bg-alert-banner text-black shadow-lg"
       >
-        <div className="flex items-start gap-3 border-b border-border bg-surface px-s4 py-s3">
-          <span
-            className="mt-1 inline-flex h-2.5 w-2.5 shrink-0 rounded-full bg-alert-banner"
-            aria-hidden="true"
-          />
+        <div className="flex items-start gap-3 border-b border-black/15 px-s4 py-s3">
           <div className="min-w-0 flex-1">
-            <p className="m-0 text-[11px] font-extrabold uppercase tracking-[0.08em] text-text-meta">
+            <p className="m-0 text-[11px] font-extrabold uppercase tracking-[0.08em] text-black">
               Site update
             </p>
-            <h2 id={titleId} className="m-0 text-base font-bold text-blue">
+            <h2 id={titleId} className="m-0 text-base font-bold text-black">
               Construction closures
             </h2>
           </div>
           <button
             type="button"
-            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-sm text-text-meta hover:bg-white hover:text-text"
+            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-sm text-black hover:bg-black/10"
             aria-label="Dismiss site update"
             onClick={dismiss}
           >
@@ -95,28 +91,33 @@ export function SiteAnnouncement() {
         </div>
 
         <div className="px-s4 py-s4">
-          <p className="m-0 text-sm font-light leading-relaxed text-text-body">
+          <p className="m-0 text-sm font-normal leading-relaxed text-black">
             Work will affect Sky Bridge and parts of the main lobby. Plan a few
             extra minutes for arrival and follow campus wayfinding signs.
           </p>
           <div className="mt-s4 flex flex-wrap gap-2">
             <Button
               href="/patients-families/prepare-for-your-visit#construction"
-              variant="ocean"
               size="sm"
+              className="border-black bg-black text-white hover:border-black/80 hover:bg-black/85 hover:text-white"
               onClick={dismiss}
             >
               Learn more
             </Button>
-            <Button type="button" variant="outline" size="sm" onClick={dismiss}>
+            <Button
+              type="button"
+              size="sm"
+              className="border-black bg-transparent text-black hover:bg-black/10 hover:text-black"
+              onClick={dismiss}
+            >
               Dismiss
             </Button>
           </div>
-          <p className="mt-s3 m-0 text-[11px] font-light text-text-meta">
+          <p className="mt-s3 m-0 text-[11px] font-normal text-black">
             This notice stays out of the header so navigation stays clear.{" "}
             <Link
               href="/patients-families/prepare-for-your-visit#construction"
-              className="font-semibold text-ocean no-underline hover:underline"
+              className="font-bold text-black underline underline-offset-2"
               onClick={dismiss}
             >
               Visit details

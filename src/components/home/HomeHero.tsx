@@ -106,7 +106,7 @@ export function HomeHero() {
           </div>
 
           <div className="mt-s5">
-            <Button href="/appointments/request" variant="ghost-white" size="md">
+            <Button href="/appointments/request" variant="pink" size="md">
               Make an Appointment
             </Button>
           </div>
