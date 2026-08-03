@@ -27,6 +27,10 @@ export const NavigationMenuTrigger = React.forwardRef<
   );
 });
 
+/**
+ * Positioned under each trigger (not inside a shared centered viewport),
+ * so mega menus line up with the active nav item.
+ */
 export const NavigationMenuContent = React.forwardRef<
   React.ElementRef<typeof Nav.Content>,
   React.ComponentPropsWithoutRef<typeof Nav.Content>
@@ -35,7 +39,7 @@ export const NavigationMenuContent = React.forwardRef<
     <Nav.Content
       ref={ref}
       className={cn(
-        "absolute left-0 top-0 w-full data-[motion=from-end]:animate-fade-down data-[motion=from-start]:animate-fade-down md:w-auto",
+        "absolute left-0 top-full z-[650] w-max animate-fade-down data-[motion=from-end]:animate-fade-down data-[motion=from-start]:animate-fade-down",
         className,
       )}
       {...props}
@@ -43,12 +47,13 @@ export const NavigationMenuContent = React.forwardRef<
   );
 });
 
+/** @deprecated Prefer per-item Content positioning for aligned mega menus. */
 export const NavigationMenuViewport = React.forwardRef<
   React.ElementRef<typeof Nav.Viewport>,
   React.ComponentPropsWithoutRef<typeof Nav.Viewport>
 >(function NavigationMenuViewport({ className, ...props }, ref) {
   return (
-    <div className="absolute left-0 top-full z-[650] flex w-full justify-center">
+    <div className="absolute left-0 top-full z-[650] flex w-full justify-start">
       <Nav.Viewport
         ref={ref}
         className={cn(
