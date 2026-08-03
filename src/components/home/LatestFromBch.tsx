@@ -5,9 +5,8 @@ import { CircleLink } from "@/components/home/CircleLink";
 const columns = [
   {
     heading: "News Stories",
-    image:
-      "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=900&q=80",
-    alt: "Children raising hands in a classroom",
+    image: "/images/latest/back-to-school-classroom.jpg",
+    alt: "Children sit at desks in a classroom with several students raising their hands while a teacher stands at the front",
     tag: "In the News",
     date: "July 27, 2026",
     title: "Watch: Tips to ease back-to-school stress for kids",
@@ -17,21 +16,19 @@ const columns = [
   },
   {
     heading: "Latest Videos",
-    image:
-      "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=900&q=80",
-    alt: "Clinical care team webinar visual",
+    image: "/images/latest/isabella-family.jpg",
+    alt: "A smiling young patient in red glasses and a red dress with her parents in a bright hospital atrium",
     tag: "Programs & Services",
     date: null,
-    title: "Cuatro preguntas para mejores visitas médicas",
-    body: "Únase a la Dra. Eva Gómez y a la Especialista Certificada en Vida Infantil, Fiorella Downey, para un seminario web sobre cómo comunicarse con los proveedores de salud.",
+    title: "Isabella’s journey with bronchopulmonary dysplasia",
+    body: "Meet Isabella and her family as they share how specialized lung care at Boston Children’s helped her thrive.",
     href: "/programs",
     cta: "See All Videos",
   },
   {
     heading: "Podcasts",
-    image:
-      "https://images.unsplash.com/photo-1478737270239-2f02b77fc618?auto=format&fit=crop&w=900&q=80",
-    alt: "Parent podcast episode artwork",
+    image: "/images/latest/parentcast-ai-episode.jpg",
+    alt: "Parent podcast artwork: My child is using AI a lot. Should I be worried?",
     tag: null,
     date: null,
     title: "My child is using AI a lot. Should I be worried?",
