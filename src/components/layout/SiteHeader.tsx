@@ -352,16 +352,16 @@ export function SiteHeader() {
 
   return (
     <>
-      <header className="sticky top-0 z-[500]" role="banner">
+      <header className="sticky top-0 z-[500] overflow-visible" role="banner">
         <div
           id="site-nav"
           tabIndex={-1}
-          className="bg-blue transition-shadow duration-ease outline-none"
+          className="overflow-visible bg-blue transition-shadow duration-ease outline-none"
           style={{
             boxShadow: scrolled ? "0 2px 16px rgba(0,0,0,.18)" : undefined,
           }}
         >
-          <div className="wrap relative flex h-16 items-center">
+          <div className="wrap relative flex h-16 items-center overflow-visible">
             <Link href="/" className={cn("sr-only", headerFocus)}>
               Boston Children&apos;s Hospital — home
             </Link>

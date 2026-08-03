@@ -36,8 +36,6 @@ describe("DesktopPrimaryNav keyboard access", () => {
     render(<DesktopPrimaryNav items={sampleNav} />);
 
     const trigger = screen.getByRole("button", { name: /care/i });
-    await user.tab();
-    // Focus may land elsewhere; click via keyboard activation
     trigger.focus();
     await user.keyboard("{Enter}");
 
