@@ -24,7 +24,8 @@ export type NavItem = {
   shortLabel?: string;
   href: string;
   match?: string[];
-  zones: MegaZone[];
+  /** When omitted or empty, the item renders as a direct page link (no dropdown). */
+  zones?: MegaZone[];
   card?: {
     eyebrow: string;
     title: string;
@@ -34,8 +35,11 @@ export type NavItem = {
   };
 };
 
+const triggerClass =
+  "group inline-flex h-16 max-w-none flex-row flex-nowrap items-center gap-1 whitespace-nowrap border-b-[3px] border-transparent px-2 text-[14px] font-semibold tracking-[0.01em] text-white/90 no-underline transition-all duration-200 hover:border-sky hover:text-white xl:px-2.5 2xl:gap-1.5 2xl:px-3 2xl:text-[15px] 2xl:font-bold";
+
 function megaPanelClass(item: NavItem) {
-  const columns = item.zones.length + (item.card ? 1 : 0);
+  const columns = (item.zones?.length ?? 0) + (item.card ? 1 : 0);
   return cn(
     "border-t-[3px] border-ocean bg-white shadow-lg grid gap-0",
     columns <= 1 && "min-w-[260px] grid-cols-1",
@@ -45,6 +49,39 @@ function megaPanelClass(item: NavItem) {
       item.card &&
       "min-w-[560px] grid-cols-[1.2fr_1fr_200px]",
     columns >= 4 && "min-w-[680px] grid-cols-[1.2fr_1fr_1fr_200px]",
+  );
+}
+
+function isActiveItem(item: NavItem, pathname: string) {
+  if (item.match?.some((m) => pathname === m || pathname.startsWith(`${m}/`))) {
+    return true;
+  }
+  return pathname === item.href || pathname.startsWith(`${item.href}/`);
+}
+
+function NavLabel({ item }: { item: NavItem }) {
+  if (item.shortLabel) {
+    return (
+      <>
+        <span className="whitespace-nowrap 2xl:hidden">{item.shortLabel}</span>
+        <span className="hidden whitespace-nowrap 2xl:inline">{item.label}</span>
+      </>
+    );
+  }
+  return <span className="whitespace-nowrap">{item.label}</span>;
+}
+
+function LinkItem({ item, active }: { item: NavItem; active: boolean }) {
+  return (
+    <li className="relative shrink-0">
+      <Link
+        href={item.href}
+        aria-label={item.label}
+        className={cn(triggerClass, active && "border-sky text-white")}
+      >
+        <NavLabel item={item} />
+      </Link>
+    </li>
   );
 }
 
@@ -61,6 +98,7 @@ function MegaItem({
   const rootRef = useRef<HTMLLIElement>(null);
   const closeTimerRef = useRef<number | null>(null);
   const [open, setOpen] = useState(false);
+  const zones = item.zones ?? [];
 
   function clearCloseTimer() {
     if (closeTimerRef.current !== null) {
@@ -125,21 +163,15 @@ function MegaItem({
         aria-controls={`${id}-panel`}
         data-state={open ? "open" : "closed"}
         className={cn(
-          "group inline-flex h-16 max-w-none flex-row flex-nowrap items-center gap-1 whitespace-nowrap border-b-[3px] border-transparent px-2 text-[14px] font-semibold tracking-[0.01em] text-white/90 transition-all duration-200 hover:border-sky hover:text-white data-[state=open]:border-sky data-[state=open]:text-white xl:px-2.5 2xl:gap-1.5 2xl:px-3 2xl:text-[15px] 2xl:font-bold",
+          triggerClass,
+          "data-[state=open]:border-sky data-[state=open]:text-white",
           active && "border-sky text-white",
         )}
         onClick={() => setOpen((value) => !value)}
         onFocus={openMenu}
         onKeyDown={onTriggerKeyDown}
       >
-        {item.shortLabel ? (
-          <>
-            <span className="whitespace-nowrap 2xl:hidden">{item.shortLabel}</span>
-            <span className="hidden whitespace-nowrap 2xl:inline">{item.label}</span>
-          </>
-        ) : (
-          <span className="whitespace-nowrap">{item.label}</span>
-        )}
+        <NavLabel item={item} />
         <IconChevronDown
           className={cn(
             "h-3 w-3 shrink-0 opacity-55 transition-transform duration-200",
@@ -161,7 +193,7 @@ function MegaItem({
           onMouseLeave={scheduleClose}
         >
           <div className={megaPanelClass(item)}>
-            {item.zones.map((zone) => (
+            {zones.map((zone) => (
               <div
                 key={zone.title}
                 className={cn(
@@ -220,24 +252,24 @@ function MegaItem({
 export function DesktopPrimaryNav({ items }: { items: NavItem[] }) {
   const pathname = usePathname();
 
-  function isActive(item: NavItem) {
-    if (item.match?.some((m) => pathname === m || pathname.startsWith(`${m}/`))) {
-      return true;
-    }
-    return pathname === item.href || pathname.startsWith(`${item.href}/`);
-  }
-
   return (
     <nav aria-label="Primary" className="relative flex min-w-0 overflow-visible">
       <ul className="m-0 flex list-none flex-nowrap items-center justify-center gap-0.5 p-0 xl:gap-1">
-        {items.map((item, index) => (
-          <MegaItem
-            key={item.label}
-            item={item}
-            active={isActive(item)}
-            alignEnd={index >= items.length - 2}
-          />
-        ))}
+        {items.map((item, index) => {
+          const active = isActiveItem(item, pathname);
+          const isLinkOnly = !item.zones?.length;
+          if (isLinkOnly) {
+            return <LinkItem key={item.label} item={item} active={active} />;
+          }
+          return (
+            <MegaItem
+              key={item.label}
+              item={item}
+              active={active}
+              alignEnd={index >= items.length - 2}
+            />
+          );
+        })}
       </ul>
     </nav>
   );

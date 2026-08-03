@@ -29,54 +29,12 @@ const navItems: NavItem[] = [
     label: "Conditions & Treatments",
     href: "/conditions",
     match: ["/conditions"],
-    zones: [
-      {
-        title: "Browse conditions",
-        accent: true,
-        links: [
-          { label: "Conditions A–Z", href: "/conditions" },
-          {
-            label: "Epilepsy in Children",
-            href: "/conditions/epilepsy-in-children",
-          },
-        ],
-      },
-    ],
   },
   {
     label: "Programs & Services",
     shortLabel: "Programs",
     href: "/programs",
     match: ["/programs", "/emergency"],
-    zones: [
-      {
-        title: "Explore care",
-        accent: true,
-        links: [
-          { label: "Programs & Services", href: "/programs" },
-          { label: "All programs A–Z", href: "/programs" },
-          { label: "Emergency Department", href: "/emergency" },
-        ],
-      },
-      {
-        title: "Featured programs",
-        links: [
-          { label: "Epilepsy Program", href: "/programs/epilepsy-program" },
-          {
-            label: "Cancer & Blood Disorders",
-            href: "/programs/cancer-blood-disorders",
-          },
-          { label: "Heart Center", href: "/programs/heart-center" },
-        ],
-      },
-    ],
-    card: {
-      eyebrow: "Start here",
-      title: "Need care for your child?",
-      body: "Search specialists by name or specialty, then book an appointment.",
-      cta: "Find a Doctor",
-      href: "/find-a-doctor",
-    },
   },
   {
     label: "Patients & Families",
@@ -134,7 +92,7 @@ const navItems: NavItem[] = [
   {
     label: "About",
     href: "/about",
-    match: ["/about", "/international", "/design-system"],
+    match: ["/about", "/design-system"],
     zones: [
       {
         title: "Our hospital",
@@ -146,15 +104,12 @@ const navItems: NavItem[] = [
           { label: "Community Health", href: "/about/community" },
         ],
       },
-      {
-        title: "International",
-        links: [
-          { label: "International patients", href: "/international" },
-          { label: "Español site language", href: "/es" },
-          { label: "中文 site language", href: "/zh" },
-        ],
-      },
     ],
+  },
+  {
+    label: "International",
+    href: "/international",
+    match: ["/international", "/es", "/zh"],
   },
 ];
 
@@ -162,25 +117,14 @@ const mobileGroups = [
   {
     id: "conditions",
     label: "Conditions & Treatments",
-    links: [
-      { label: "Conditions A–Z", href: "/conditions" },
-      {
-        label: "Epilepsy in Children",
-        href: "/conditions/epilepsy-in-children",
-      },
-    ],
+    href: "/conditions",
+    links: [{ label: "Conditions & Treatments", href: "/conditions" }],
   },
   {
     id: "care",
     label: "Programs & Services",
-    links: [
-      { label: "Programs & Services", href: "/programs" },
-      { label: "All programs A–Z", href: "/programs" },
-      { label: "Epilepsy Program", href: "/programs/epilepsy-program" },
-      { label: "Cancer & Blood Disorders", href: "/programs/cancer-blood-disorders" },
-      { label: "Heart Center", href: "/programs/heart-center" },
-      { label: "Emergency Department", href: "/emergency" },
-    ],
+    href: "/programs",
+    links: [{ label: "Programs & Services", href: "/programs" }],
   },
   {
     id: "pf",
@@ -216,10 +160,13 @@ const mobileGroups = [
       { label: "About Us", href: "/about" },
       { label: "Our History", href: "/about/history" },
       { label: "Community Health", href: "/about/community" },
-      { label: "International patients", href: "/international" },
-      { label: "Español site language", href: "/es" },
-      { label: "中文 site language", href: "/zh" },
     ],
+  },
+  {
+    id: "intl",
+    label: "International",
+    href: "/international",
+    links: [{ label: "International", href: "/international" }],
   },
 ];
 
@@ -367,20 +314,31 @@ export function SiteHeader() {
                 {option.native}
               </Link>
             ))}
-            <Link
-              href="/international"
-              className={cn(
-                "inline-flex min-h-10 items-center rounded-sm border border-sky/50 px-3 text-sm font-bold text-sky no-underline",
-                headerFocus,
-              )}
-              onClick={() => setMobileOpen(false)}
-            >
-              Intl. patients
-            </Link>
           </div>
 
           <div className="px-3 pb-2">
             {mobileGroups.map((group) => {
+              const directHref =
+                "href" in group && typeof group.href === "string"
+                  ? group.href
+                  : null;
+
+              if (directHref) {
+                return (
+                  <Link
+                    key={group.id}
+                    href={directHref}
+                    className={cn(
+                      "flex w-full items-center border-b border-white/[0.05] px-1 py-2.5 text-base font-semibold text-white/85 no-underline hover:text-white",
+                      headerFocus,
+                    )}
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    {group.label}
+                  </Link>
+                );
+              }
+
               const open = openGroup === group.id;
               const panelId = `${baseId}-mob-${group.id}`;
               return (

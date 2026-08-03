@@ -111,18 +111,10 @@ export function MessengerButton() {
           aria-labelledby={titleId}
           className="pointer-events-auto flex h-[min(70vh,520px)] w-[min(100vw-1.5rem,360px)] flex-col overflow-hidden rounded-t-xl rounded-b-md border border-black/5 bg-white shadow-[0_12px_40px_rgba(0,32,96,0.22)] animate-fade-up"
         >
-          <div className="flex shrink-0 items-center justify-between gap-3 bg-blue px-4 py-3.5">
+          <div className="flex shrink-0 items-center bg-blue px-4 py-3.5">
             <h2 id={titleId} className="text-base font-bold text-white">
               Talk to Lesley
             </h2>
-            <button
-              type="button"
-              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-sm text-white/85 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-              aria-label="Close chat"
-              onClick={closePanel}
-            >
-              <IconClose className="h-5 w-5" />
-            </button>
           </div>
 
           <div
