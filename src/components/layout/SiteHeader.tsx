@@ -15,6 +15,11 @@ import {
 } from "@/components/ui/Icons";
 import { DesktopPrimaryNav, type NavItem } from "@/components/layout/DesktopPrimaryNav";
 import { HeaderSearch } from "@/components/layout/HeaderSearch";
+import {
+  IconGivingBack,
+  IconHospitalLocation,
+  IconSecondOpinion,
+} from "@/components/icons/HeaderUtilityIcons";
 import { focusFirst, getFocusableElements } from "@/lib/a11y";
 import { cn } from "@/lib/cn";
 
@@ -262,6 +267,24 @@ const mobileGroups = [
 const headerFocus =
   "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
 
+const utilityLinks = [
+  {
+    label: "Find a Location",
+    href: "/locations",
+    Icon: IconHospitalLocation,
+  },
+  {
+    label: "Second Opinion",
+    href: "/professionals/second-opinion",
+    Icon: IconSecondOpinion,
+  },
+  {
+    label: "Giving Back",
+    href: "/#giving",
+    Icon: IconGivingBack,
+  },
+] as const;
+
 function currentLanguage(pathname: string) {
   if (pathname === "/es" || pathname.startsWith("/es/")) return languageOptions[1];
   if (pathname === "/zh" || pathname.startsWith("/zh/")) return languageOptions[2];
@@ -343,23 +366,40 @@ export function SiteHeader() {
               Boston Children&apos;s Hospital — home
             </Link>
 
-            <div className="hidden min-w-0 flex-1 xl:flex xl:justify-center">
+            <div className="hidden min-w-0 flex-1 justify-end xl:flex">
               <DesktopPrimaryNav items={navItems} />
             </div>
 
-            <div className="relative z-[1] ml-auto flex shrink-0 items-center gap-0.5">
-              <Link
-                href="/portal"
-                className={cn(
-                  "hidden h-10 items-center rounded-sm px-2.5 text-[12.5px] font-bold tracking-[0.01em] text-white/90 no-underline transition-colors hover:bg-white/10 hover:text-white sm:inline-flex",
-                  pathname === "/portal" && "bg-white/10 text-white",
-                  headerFocus,
-                )}
-              >
-                MyChildren&apos;s
-              </Link>
-
+            <div className="relative z-[1] ml-auto flex shrink-0 items-center gap-1.5 px-1 sm:gap-2 sm:px-2 xl:ml-0">
               <HeaderSearch />
+
+              <div
+                className="hidden items-center gap-1 border-l border-white/20 pl-2 sm:flex sm:gap-1.5 sm:pl-2.5"
+                aria-label="Quick links"
+              >
+                {utilityLinks.map(({ label, href, Icon }) => {
+                  const pathOnly = href.split("#")[0] || href;
+                  const active =
+                    pathOnly !== "/" &&
+                    (pathname === pathOnly ||
+                      pathname.startsWith(`${pathOnly}/`));
+                  return (
+                    <Link
+                      key={href}
+                      href={href}
+                      className={cn(
+                        "inline-flex h-10 w-10 items-center justify-center rounded-sm text-white/90 transition-colors hover:bg-white/10 hover:text-white",
+                        active && "bg-white/10 text-white",
+                        headerFocus,
+                      )}
+                      aria-label={label}
+                      title={label}
+                    >
+                      <Icon className="h-[22px] w-[22px]" />
+                    </Link>
+                  );
+                })}
+              </div>
 
               <button
                 ref={mobileToggleRef}
@@ -379,6 +419,8 @@ export function SiteHeader() {
                 {mobileOpen ? <IconClose /> : <IconMenu />}
               </button>
             </div>
+
+            <div className="hidden flex-1 xl:block" aria-hidden="true" />
           </div>
         </div>
 
@@ -422,16 +464,19 @@ export function SiteHeader() {
             >
               International
             </Link>
-            <Link
-              href="/portal"
-              className={cn(
-                "inline-flex min-h-10 items-center rounded-sm border border-white/25 px-3 text-sm font-bold text-white/85 no-underline hover:border-white/55 sm:hidden",
-                headerFocus,
-              )}
-              onClick={() => setMobileOpen(false)}
-            >
-              MyChildren&apos;s
-            </Link>
+            {utilityLinks.map(({ label, href }) => (
+              <Link
+                key={href}
+                href={href}
+                className={cn(
+                  "inline-flex min-h-10 items-center rounded-sm border border-white/25 px-3 text-sm font-bold text-white/85 no-underline hover:border-white/55 sm:hidden",
+                  headerFocus,
+                )}
+                onClick={() => setMobileOpen(false)}
+              >
+                {label}
+              </Link>
+            ))}
           </div>
 
           <div className="px-3 pb-2">
