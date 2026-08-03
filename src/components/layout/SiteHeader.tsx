@@ -27,31 +27,79 @@ const languageOptions = [
 
 const navItems: NavItem[] = [
   {
-    label: "Programs & Services",
-    shortLabel: "Programs",
-    href: "/programs",
-    match: ["/conditions", "/programs", "/emergency", "/appointments", "/find-a-doctor", "/locations"],
+    label: "Conditions & Treatments",
+    shortLabel: "Conditions",
+    href: "/conditions",
+    match: ["/conditions"],
     zones: [
       {
-        title: "Explore care",
+        title: "Browse conditions",
         accent: true,
         links: [
-          { label: "Find a Doctor", href: "/find-a-doctor" },
-          { label: "Find a Location", href: "/locations" },
-          { label: "Request an Appointment", href: "/appointments/request" },
-          { label: "Emergency Department", href: "/emergency" },
-        ],
-      },
-      {
-        title: "Programs & conditions",
-        links: [
-          { label: "Programs & Services", href: "/programs" },
           { label: "Conditions A–Z", href: "/conditions" },
           {
             label: "Epilepsy in Children",
             href: "/conditions/epilepsy-in-children",
           },
+          { label: "Find a Doctor", href: "/find-a-doctor" },
+          { label: "Request an Appointment", href: "/appointments/request" },
+        ],
+      },
+      {
+        title: "Related programs",
+        links: [
+          { label: "Epilepsy Program", href: "/programs/epilepsy-program" },
+          {
+            label: "Cancer & Blood Disorders",
+            href: "/programs/cancer-blood-disorders",
+          },
           { label: "Heart Center", href: "/programs/heart-center" },
+          { label: "All programs", href: "/programs" },
+        ],
+      },
+      {
+        title: "Clinical support",
+        links: [
+          { label: "Get a Second Opinion", href: "/professionals/second-opinion" },
+          { label: "Emergency Department", href: "/emergency" },
+          { label: "Prepare for your visit", href: "/patients-families/prepare-for-your-visit" },
+        ],
+      },
+    ],
+    card: {
+      eyebrow: "Start here",
+      title: "Looking for a diagnosis or treatment?",
+      body: "Browse conditions A–Z or connect with a specialist care team.",
+      cta: "Conditions A–Z",
+      href: "/conditions",
+    },
+  },
+  {
+    label: "Programs & Services",
+    shortLabel: "Programs",
+    href: "/programs",
+    match: ["/programs", "/emergency", "/appointments", "/find-a-doctor", "/locations"],
+    zones: [
+      {
+        title: "Explore care",
+        accent: true,
+        links: [
+          { label: "Programs & Services", href: "/programs" },
+          { label: "Find a Doctor", href: "/find-a-doctor" },
+          { label: "Find a Location", href: "/locations" },
+          { label: "Request an Appointment", href: "/appointments/request" },
+        ],
+      },
+      {
+        title: "Featured programs",
+        links: [
+          { label: "Epilepsy Program", href: "/programs/epilepsy-program" },
+          {
+            label: "Cancer & Blood Disorders",
+            href: "/programs/cancer-blood-disorders",
+          },
+          { label: "Heart Center", href: "/programs/heart-center" },
+          { label: "Emergency Department", href: "/emergency" },
         ],
       },
       {
@@ -139,7 +187,7 @@ const navItems: NavItem[] = [
   {
     label: "About",
     href: "/about",
-    match: ["/about", "/design-system", "/international"],
+    match: ["/about", "/design-system"],
     zones: [
       {
         title: "Our hospital",
@@ -173,13 +221,24 @@ const navItems: NavItem[] = [
 
 const mobileGroups = [
   {
+    id: "conditions",
+    label: "Conditions & Treatments",
+    links: [
+      { label: "Conditions A–Z", href: "/conditions" },
+      {
+        label: "Epilepsy in Children",
+        href: "/conditions/epilepsy-in-children",
+      },
+      { label: "Find a Doctor", href: "/find-a-doctor" },
+      { label: "Get a Second Opinion", href: "/professionals/second-opinion" },
+    ],
+  },
+  {
     id: "care",
     label: "Programs & Services",
     links: [
-      { label: "Find a Doctor", href: "/find-a-doctor" },
-      { label: "Find a Location", href: "/locations" },
       { label: "Programs & Services", href: "/programs" },
-      { label: "Conditions A–Z", href: "/conditions" },
+      { label: "Find a Location", href: "/locations" },
       { label: "Request an Appointment", href: "/appointments/request" },
       { label: "Emergency Department", href: "/emergency" },
     ],
@@ -336,6 +395,17 @@ export function SiteHeader() {
                     "bg-white/10 text-white",
                 )}
               />
+
+              <Link
+                href="/portal"
+                className={cn(
+                  "hidden h-10 items-center rounded-sm px-2.5 text-[12.5px] font-bold tracking-[0.01em] text-white/90 no-underline transition-colors hover:bg-white/10 hover:text-white sm:inline-flex",
+                  pathname === "/portal" && "bg-white/10 text-white",
+                  headerFocus,
+                )}
+              >
+                Patient Portal
+              </Link>
 
               <Link
                 href="/#giving"
