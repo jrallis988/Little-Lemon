@@ -56,16 +56,13 @@ const navItems: NavItem[] = [
     label: "Programs & Services",
     shortLabel: "Programs",
     href: "/programs",
-    match: ["/programs", "/emergency", "/appointments", "/find-a-doctor", "/locations"],
+    match: ["/programs", "/emergency"],
     zones: [
       {
         title: "Explore care",
         accent: true,
         links: [
           { label: "Programs & Services", href: "/programs" },
-          { label: "Find a Doctor", href: "/find-a-doctor" },
-          { label: "Find a Location", href: "/locations" },
-          { label: "Request an Appointment", href: "/appointments/request" },
         ],
       },
       {
@@ -102,7 +99,6 @@ const navItems: NavItem[] = [
           { label: "Patients & Families hub", href: "/patients-families" },
           { label: "Prepare for your visit", href: "/patients-families/prepare-for-your-visit" },
           { label: "MyChildren's", href: "/portal" },
-          { label: "Pay My Bill", href: "/patients-families/billing" },
           { label: "Medical records", href: "/patients-families/medical-records" },
           { label: "Emergency Department", href: "/emergency" },
         ],
@@ -205,8 +201,9 @@ const mobileGroups = [
     label: "Programs & Services",
     links: [
       { label: "Programs & Services", href: "/programs" },
-      { label: "Find a Location", href: "/locations" },
-      { label: "Request an Appointment", href: "/appointments/request" },
+      { label: "Epilepsy Program", href: "/programs/epilepsy-program" },
+      { label: "Cancer & Blood Disorders", href: "/programs/cancer-blood-disorders" },
+      { label: "Heart Center", href: "/programs/heart-center" },
       { label: "Emergency Department", href: "/emergency" },
     ],
   },
@@ -217,7 +214,6 @@ const mobileGroups = [
       { label: "Patients & Families hub", href: "/patients-families" },
       { label: "Prepare for your visit", href: "/patients-families/prepare-for-your-visit" },
       { label: "MyChildren's", href: "/portal" },
-      { label: "Pay My Bill", href: "/patients-families/billing" },
       { label: "Medical records", href: "/patients-families/medical-records" },
     ],
   },
