@@ -52,6 +52,11 @@ const exploreLinks = [
     href: "/about/community",
   },
   {
+    title: "International patients",
+    body: "Destination medicine, visit coordination, and language support for families traveling for care.",
+    href: "/international",
+  },
+  {
     title: "Research hub",
     body: "Clinical trials, labs, and discovery programs.",
     href: "/research",
@@ -260,6 +265,62 @@ export default function AboutPage() {
                 </Button>
               </div>
             </div>
+          </div>
+        </section>
+
+        <section
+          id="international"
+          className="mb-s10 scroll-mt-28"
+          aria-labelledby="intl-about-heading"
+        >
+          <span className="eyebrow">International</span>
+          <h2
+            id="intl-about-heading"
+            className="mb-s3 mt-s2 max-w-[720px] text-2xl font-bold text-ocean"
+          >
+            Supporting families who travel for pediatric care.
+          </h2>
+          <p className="mb-s4 max-w-[720px] text-md font-light leading-[1.75] text-text-body">
+            Boston Children&apos;s welcomes international families through
+            destination medicine, visit coordination, and specialty programs.
+            Use our site language hubs for general reading, and request a
+            medical interpreter when you need live clinical support during
+            appointments.
+          </p>
+          <div className="mb-s5 grid grid-cols-1 gap-s4 md:grid-cols-2">
+            <article className="rounded-md border border-border bg-white p-s5">
+              <h3 className="mb-s2 text-lg font-bold text-blue">
+                Site language &amp; translation
+              </h3>
+              <p className="mb-s3 text-sm font-light leading-relaxed text-text-body">
+                Choose Español or 中文 resource hubs—or your browser&apos;s
+                built-in translation—for everyday website reading. These options
+                help families browse programs, locations, and visit tips in a
+                preferred language.
+              </p>
+              <div className="flex flex-wrap gap-s2">
+                <Button href="/es" variant="outline" size="sm">
+                  Español
+                </Button>
+                <Button href="/zh" variant="outline" size="sm">
+                  中文
+                </Button>
+              </div>
+            </article>
+            <article className="rounded-md border border-border bg-white p-s5">
+              <h3 className="mb-s2 text-lg font-bold text-blue">
+                Medical interpreters
+              </h3>
+              <p className="mb-s3 text-sm font-light leading-relaxed text-text-body">
+                Human interpreters support live clinical conversations—
+                appointments, care planning, and medical coordination—so
+                families and clinicians share accurate information in the
+                moment.
+              </p>
+              <Button href="/international" variant="ocean" size="sm">
+                International patient services
+              </Button>
+            </article>
           </div>
         </section>
 

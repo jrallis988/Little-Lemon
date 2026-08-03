@@ -39,15 +39,6 @@ const navItems: NavItem[] = [
             label: "Epilepsy in Children",
             href: "/conditions/epilepsy-in-children",
           },
-          { label: "Find a Doctor", href: "/find-a-doctor" },
-          { label: "Request an Appointment", href: "/appointments/request" },
-          { label: "Epilepsy Program", href: "/programs/epilepsy-program" },
-          {
-            label: "Cancer & Blood Disorders",
-            href: "/programs/cancer-blood-disorders",
-          },
-          { label: "Heart Center", href: "/programs/heart-center" },
-          { label: "All programs", href: "/programs" },
         ],
       },
     ],
@@ -63,6 +54,8 @@ const navItems: NavItem[] = [
         accent: true,
         links: [
           { label: "Programs & Services", href: "/programs" },
+          { label: "All programs A–Z", href: "/programs" },
+          { label: "Emergency Department", href: "/emergency" },
         ],
       },
       {
@@ -74,7 +67,6 @@ const navItems: NavItem[] = [
             href: "/programs/cancer-blood-disorders",
           },
           { label: "Heart Center", href: "/programs/heart-center" },
-          { label: "Emergency Department", href: "/emergency" },
         ],
       },
     ],
@@ -135,11 +127,6 @@ const navItems: NavItem[] = [
           { label: "Research hub", href: "/research" },
           { label: "Clinical trials", href: "/research" },
           { label: "Health Library / Search", href: "/search?q=health" },
-          { label: "Epilepsy Program", href: "/programs/epilepsy-program" },
-          {
-            label: "Cancer & Blood Disorders",
-            href: "/programs/cancer-blood-disorders",
-          },
         ],
       },
     ],
@@ -147,7 +134,7 @@ const navItems: NavItem[] = [
   {
     label: "About",
     href: "/about",
-    match: ["/about", "/design-system"],
+    match: ["/about", "/international", "/design-system"],
     zones: [
       {
         title: "Our hospital",
@@ -159,21 +146,12 @@ const navItems: NavItem[] = [
           { label: "Community Health", href: "/about/community" },
         ],
       },
-    ],
-  },
-  {
-    label: "International",
-    href: "/international",
-    match: ["/international", "/es", "/zh"],
-    zones: [
       {
-        title: "Languages",
-        accent: true,
+        title: "International",
         links: [
           { label: "International patients", href: "/international" },
-          { label: "English", href: "/" },
-          { label: "Español", href: "/es" },
-          { label: "中文", href: "/zh" },
+          { label: "Español site language", href: "/es" },
+          { label: "中文 site language", href: "/zh" },
         ],
       },
     ],
@@ -190,10 +168,6 @@ const mobileGroups = [
         label: "Epilepsy in Children",
         href: "/conditions/epilepsy-in-children",
       },
-      { label: "Find a Doctor", href: "/find-a-doctor" },
-      { label: "Request an Appointment", href: "/appointments/request" },
-      { label: "Epilepsy Program", href: "/programs/epilepsy-program" },
-      { label: "All programs", href: "/programs" },
     ],
   },
   {
@@ -201,6 +175,7 @@ const mobileGroups = [
     label: "Programs & Services",
     links: [
       { label: "Programs & Services", href: "/programs" },
+      { label: "All programs A–Z", href: "/programs" },
       { label: "Epilepsy Program", href: "/programs/epilepsy-program" },
       { label: "Cancer & Blood Disorders", href: "/programs/cancer-blood-disorders" },
       { label: "Heart Center", href: "/programs/heart-center" },
@@ -240,17 +215,10 @@ const mobileGroups = [
     links: [
       { label: "About Us", href: "/about" },
       { label: "Our History", href: "/about/history" },
-      { label: "Work Here", href: "/about" },
-    ],
-  },
-  {
-    id: "intl",
-    label: "International",
-    links: [
+      { label: "Community Health", href: "/about/community" },
       { label: "International patients", href: "/international" },
-      { label: "English", href: "/" },
-      { label: "Español", href: "/es" },
-      { label: "中文", href: "/zh" },
+      { label: "Español site language", href: "/es" },
+      { label: "中文 site language", href: "/zh" },
     ],
   },
 ];
@@ -407,7 +375,7 @@ export function SiteHeader() {
               )}
               onClick={() => setMobileOpen(false)}
             >
-              International
+              Intl. patients
             </Link>
           </div>
 
