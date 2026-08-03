@@ -47,7 +47,11 @@ export function DesktopPrimaryNav({ items }: { items: NavItem[] }) {
   }
 
   return (
-    <NavigationMenu className="relative hidden min-w-0 overflow-visible xl:flex">
+    <NavigationMenu
+      delayDuration={0}
+      skipDelayDuration={0}
+      className="relative hidden min-w-0 overflow-visible xl:flex"
+    >
       <NavigationMenuList className="flex flex-nowrap items-center gap-0">
         {items.map((item) => (
           <NavigationMenuItem key={item.label} className="relative shrink-0">

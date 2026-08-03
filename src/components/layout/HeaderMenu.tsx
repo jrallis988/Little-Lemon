@@ -38,7 +38,29 @@ export function HeaderMenu({
 }: HeaderMenuProps) {
   const id = useId();
   const rootRef = useRef<HTMLDivElement>(null);
+  const closeTimerRef = useRef<number | null>(null);
   const [open, setOpen] = useState(false);
+
+  function clearCloseTimer() {
+    if (closeTimerRef.current !== null) {
+      window.clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+  }
+
+  function openMenu() {
+    clearCloseTimer();
+    setOpen(true);
+  }
+
+  function scheduleClose() {
+    clearCloseTimer();
+    closeTimerRef.current = window.setTimeout(() => setOpen(false), 160);
+  }
+
+  useEffect(() => {
+    return () => clearCloseTimer();
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -62,7 +84,12 @@ export function HeaderMenu({
   }, [open, id]);
 
   return (
-    <div className="relative" ref={rootRef}>
+    <div
+      className="relative"
+      ref={rootRef}
+      onMouseEnter={openMenu}
+      onMouseLeave={scheduleClose}
+    >
       <button
         id={`${id}-trigger`}
         type="button"
@@ -75,10 +102,11 @@ export function HeaderMenu({
         aria-haspopup="menu"
         aria-controls={`${id}-menu`}
         onClick={() => setOpen((value) => !value)}
+        onFocus={openMenu}
         onKeyDown={(event) => {
           if (event.key === "ArrowDown") {
             event.preventDefault();
-            setOpen(true);
+            openMenu();
           }
         }}
       >

@@ -10,8 +10,8 @@ import { Button } from "@/components/ui/Button";
 
 const intentPills = [
   { label: "Find a Doctor", href: "/find-a-doctor" },
+  { label: "Find a Location", href: "/locations" },
   { label: "Emergency Care", href: "/emergency" },
-  { label: "Locations", href: "/locations" },
   { label: "Patient Portal", href: "/portal" },
 ];
 
@@ -49,19 +49,19 @@ export function HomeHero() {
 
       <div className="wrap relative z-[2] flex min-h-[620px] flex-col justify-center gap-s6 py-s9 max-md:min-h-[540px] max-md:justify-end max-md:pb-s8">
         <div className="max-w-[640px]">
-          <p className="mb-s3 text-xs font-extrabold uppercase tracking-[0.14em] text-white/80">
-            Boston Children&apos;s Hospital
+          <p className="mb-s3 font-sans text-[15px] font-extrabold uppercase tracking-[0.14em] text-white/90 sm:text-base">
+            Top ranked pediatric hospital in the nation
           </p>
           <AwardBadgeRow className="mb-s5 [&_svg]:h-[72px]" />
           <h1
             id="hero-heading"
-            className="mb-s4 text-[clamp(32px,4.8vw,52px)] font-medium leading-[1.08] tracking-[-0.03em] text-white"
+            className="mb-s4 font-sans text-[clamp(36px,4.5vw,48px)] font-semibold leading-[1.08] tracking-[-0.02em] text-white"
           >
             Trusted by families.
             <br />
             <span className="text-sky">Where the world comes for answers.</span>
           </h1>
-          <p className="mb-s6 max-w-[480px] text-[clamp(15px,1.5vw,18px)] font-light leading-[1.7] text-white">
+          <p className="mb-s6 max-w-[480px] font-sans text-[clamp(15px,1.5vw,18px)] font-light leading-[1.7] text-white">
             Find care, get directions, or reach your care team — start with what
             you need right now.
           </p>
@@ -107,7 +107,7 @@ export function HomeHero() {
 
           <div className="mt-s5">
             <Button href="/appointments/request" variant="ghost-white" size="md">
-              Book Appointment
+              Make an Appointment
             </Button>
           </div>
         </div>

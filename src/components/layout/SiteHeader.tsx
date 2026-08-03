@@ -24,29 +24,6 @@ import { HeaderMenu } from "@/components/layout/HeaderMenu";
 import { focusFirst, getFocusableElements } from "@/lib/a11y";
 import { cn } from "@/lib/cn";
 
-const intentLinks = [
-  {
-    label: "Find a Doctor",
-    href: "/find-a-doctor",
-    description: "Search specialists by name or specialty",
-  },
-  {
-    label: "Find a Location",
-    href: "/locations",
-    description: "Main campus and community sites",
-  },
-  {
-    label: "Pay My Bill",
-    href: "/patients-families/billing",
-    description: "Billing, insurance, and financial help",
-  },
-  {
-    label: "Request Medical Records",
-    href: "/patients-families/medical-records",
-    description: "Request records for your care team",
-  },
-];
-
 const languageOptions = [
   { label: "English", href: "/", code: "en", native: "English" },
   { label: "Spanish", href: "/es", code: "es", native: "Español" },
@@ -58,29 +35,26 @@ const navItems: NavItem[] = [
     label: "Programs & Services",
     shortLabel: "Programs",
     href: "/programs",
-    match: ["/conditions", "/programs", "/emergency", "/appointments"],
+    match: ["/conditions", "/programs", "/emergency", "/appointments", "/find-a-doctor", "/locations"],
     zones: [
       {
         title: "Explore care",
         accent: true,
         links: [
-          { label: "Programs & Services", href: "/programs" },
-          { label: "Conditions A–Z", href: "/conditions" },
+          { label: "Find a Doctor", href: "/find-a-doctor" },
+          { label: "Find a Location", href: "/locations" },
           { label: "Request an Appointment", href: "/appointments/request" },
           { label: "Emergency Department", href: "/emergency" },
         ],
       },
       {
-        title: "Featured programs",
+        title: "Programs & conditions",
         links: [
+          { label: "Programs & Services", href: "/programs" },
+          { label: "Conditions A–Z", href: "/conditions" },
           {
             label: "Epilepsy in Children",
             href: "/conditions/epilepsy-in-children",
-          },
-          { label: "Epilepsy Program", href: "/programs/epilepsy-program" },
-          {
-            label: "Cancer & Blood Disorders",
-            href: "/programs/cancer-blood-disorders",
           },
           { label: "Heart Center", href: "/programs/heart-center" },
         ],
@@ -97,7 +71,7 @@ const navItems: NavItem[] = [
     card: {
       eyebrow: "Start here",
       title: "Need care for your child?",
-      body: "Use I Need To for doctor and location search, then book an appointment.",
+      body: "Search specialists by name or specialty, then book an appointment.",
       cta: "Find a Doctor",
       href: "/find-a-doctor",
     },
@@ -114,14 +88,14 @@ const navItems: NavItem[] = [
         links: [
           { label: "Patients & Families hub", href: "/patients-families" },
           { label: "Prepare for your visit", href: "/patients-families/prepare-for-your-visit" },
-          { label: "Portal preview", href: "/portal" },
+          { label: "Patient Portal", href: "/portal" },
           { label: "Emergency Department", href: "/emergency" },
         ],
       },
       {
         title: "Support",
         links: [
-          { label: "Billing & insurance", href: "/patients-families/billing" },
+          { label: "Pay My Bill", href: "/patients-families/billing" },
           { label: "Medical records", href: "/patients-families/medical-records" },
           { label: "Health Library / Search", href: "/search?q=health" },
           { label: "About Boston Children's", href: "/about" },
@@ -141,7 +115,7 @@ const navItems: NavItem[] = [
         links: [
           { label: "Professionals hub", href: "/professionals" },
           { label: "Refer a patient", href: "/professionals/refer" },
-          { label: "Second opinion", href: "/professionals/second-opinion" },
+          { label: "Get a Second Opinion", href: "/professionals/second-opinion" },
           { label: "Clinical programs", href: "/programs" },
         ],
       },
@@ -185,8 +159,9 @@ const navItems: NavItem[] = [
       {
         title: "Also explore",
         links: [
+          { label: "Work Here", href: "/about" },
+          { label: "Donate", href: "/#giving" },
           { label: "International patients", href: "/international" },
-          { label: "Research", href: "/research" },
           { label: "Design System", href: "/design-system" },
         ],
       },
@@ -203,14 +178,11 @@ const navItems: NavItem[] = [
 
 const mobileGroups = [
   {
-    id: "intent",
-    label: "I Need To",
-    links: intentLinks.map(({ label, href }) => ({ label, href })),
-  },
-  {
     id: "care",
     label: "Programs & Services",
     links: [
+      { label: "Find a Doctor", href: "/find-a-doctor" },
+      { label: "Find a Location", href: "/locations" },
       { label: "Programs & Services", href: "/programs" },
       { label: "Conditions A–Z", href: "/conditions" },
       { label: "Request an Appointment", href: "/appointments/request" },
@@ -223,7 +195,9 @@ const mobileGroups = [
     links: [
       { label: "Patients & Families hub", href: "/patients-families" },
       { label: "Prepare for your visit", href: "/patients-families/prepare-for-your-visit" },
-      { label: "Portal preview", href: "/portal" },
+      { label: "Patient Portal", href: "/portal" },
+      { label: "Pay My Bill", href: "/patients-families/billing" },
+      { label: "Medical records", href: "/patients-families/medical-records" },
     ],
   },
   {
@@ -232,7 +206,7 @@ const mobileGroups = [
     links: [
       { label: "Professionals hub", href: "/professionals" },
       { label: "Refer a patient", href: "/professionals/refer" },
-      { label: "Second opinion", href: "/professionals/second-opinion" },
+      { label: "Get a Second Opinion", href: "/professionals/second-opinion" },
     ],
   },
   {
@@ -242,6 +216,8 @@ const mobileGroups = [
       { label: "Research", href: "/research" },
       { label: "About Us", href: "/about" },
       { label: "Our History", href: "/about/history" },
+      { label: "Donate", href: "/#giving" },
+      { label: "Work Here", href: "/about" },
       { label: "International patients", href: "/international" },
     ],
   },
@@ -386,14 +362,8 @@ export function SiteHeader() {
               </span>
             </Link>
 
-            <div className="hidden min-w-0 items-center gap-s3 xl:flex">
+            <div className="hidden min-w-0 items-center xl:flex">
               <DesktopPrimaryNav items={navItems} />
-              <HeaderMenu
-                label="I Need To"
-                items={intentLinks}
-                triggerClassName="h-16 rounded-none border-b-[3px] border-transparent px-3 hover:border-sky data-[state=open]:border-sky data-[state=open]:bg-transparent"
-                menuClassName="min-w-[280px]"
-              />
             </div>
 
             <div className="ml-auto flex shrink-0 items-center gap-1">
@@ -449,7 +419,7 @@ export function SiteHeader() {
                     <IconLock className="text-white/70" />
                   </span>
                   <span className="hidden text-[12.5px] font-bold text-white/90 sm:block">
-                    Portal
+                    Patient Portal
                   </span>
                 </button>
                 <div
@@ -570,7 +540,7 @@ export function SiteHeader() {
               >
                 <IconLock className="text-white/80" />
               </span>
-              <span className="text-sm font-bold text-white">Portal preview</span>
+              <span className="text-sm font-bold text-white">Patient Portal</span>
             </div>
             <p className="pb-3 pl-[27px] text-xs font-light leading-[1.6] text-white/80">
               UX preview only — not a live medical record

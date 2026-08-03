@@ -15,6 +15,7 @@ const aboutSupport = [
   { label: "About Boston Children's", href: "/about" },
   { label: "Career Opportunities", href: "/about" },
   { label: "Newsroom", href: "/about" },
+  { label: "Donate", href: "/#giving" },
   { label: "Ways to Help", href: "/#giving" },
   { label: "Contact Us", href: "/emergency" },
 ];
