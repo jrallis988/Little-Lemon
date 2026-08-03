@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/Button";
 export function HomeHero() {
   return (
     <section
-      className="relative min-h-[640px] overflow-hidden max-md:min-h-[560px]"
+      className="relative min-h-[min(78vh,720px)] overflow-hidden max-md:min-h-[580px]"
       aria-labelledby="hero-heading"
     >
       <Image
@@ -15,7 +15,7 @@ export function HomeHero() {
         alt="A young child outdoors near a hospital campus"
         fill
         priority
-        className="object-cover object-[center_28%] saturate-[.92]"
+        className="object-cover object-[center_32%] saturate-[.92]"
         sizes="100vw"
       />
       <div
@@ -27,7 +27,7 @@ export function HomeHero() {
         aria-hidden="true"
       />
 
-      <div className="wrap relative z-[2] flex min-h-[640px] flex-col justify-center py-s8 pt-s9 max-md:min-h-[560px] max-md:justify-end max-md:pb-s8 max-md:pt-s7 sm:pt-[88px] lg:pt-s9">
+      <div className="wrap relative z-[2] flex min-h-[min(78vh,720px)] flex-col justify-center py-s8 pt-s9 max-md:min-h-[580px] max-md:justify-end max-md:pb-s8 max-md:pt-s7 sm:pt-[88px] lg:pt-s9">
         <div className="max-w-[720px]">
           <p className="mb-s4 font-sans text-sm font-extrabold uppercase tracking-[0.16em] text-white sm:text-base sm:tracking-[0.18em]">
             Top ranked pediatric hospital in the nation
