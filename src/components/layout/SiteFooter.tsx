@@ -3,6 +3,11 @@ import {
   NewsweekBestBadge,
   UsNewsHonorRollBadge,
 } from "@/components/brand/AwardBadges";
+import {
+  IconPhoneDevice,
+  IconPortalDevice,
+  socialLinks,
+} from "@/components/icons/SocialIcons";
 
 const getCare = [
   { label: "Make an Appointment", href: "/appointments/request" },
@@ -80,18 +85,7 @@ export function SiteFooter() {
             </p>
           </div>
           <div className="flex items-center gap-s2 lg:border-r lg:border-white/25 lg:px-s4">
-            <svg
-              viewBox="0 0 24 24"
-              className="h-5 w-5 shrink-0"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              aria-hidden="true"
-            >
-              <rect x="3" y="5" width="18" height="14" rx="2" />
-              <circle cx="9" cy="12" r="2.5" />
-              <path d="M14 10h4M14 14h3" />
-            </svg>
+            <IconPortalDevice className="h-5 w-5 shrink-0 text-white" />
             <Link
               href="/portal"
               className="text-xs font-bold text-white no-underline hover:underline"
@@ -100,17 +94,7 @@ export function SiteFooter() {
             </Link>
           </div>
           <div className="flex items-center gap-s2 lg:border-r lg:border-white/25 lg:px-s4">
-            <svg
-              viewBox="0 0 24 24"
-              className="h-5 w-5 shrink-0"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              aria-hidden="true"
-            >
-              <rect x="7" y="2" width="10" height="20" rx="2" />
-              <circle cx="12" cy="18" r="1" fill="currentColor" stroke="none" />
-            </svg>
+            <IconPhoneDevice className="h-5 w-5 shrink-0 text-white" />
             <a
               href="tel:16173556000"
               className="text-xs font-bold text-white no-underline hover:underline"
@@ -121,20 +105,21 @@ export function SiteFooter() {
           <div className="flex flex-col justify-center gap-1.5 lg:pl-s4">
             <p className="m-0 text-xs font-bold">Follow Us</p>
             <div
-              className="flex flex-wrap gap-2 text-white/90"
+              className="flex flex-wrap items-center gap-2.5 text-white"
               aria-label="Social media"
             >
-              {["Facebook", "Instagram", "LinkedIn", "Pinterest", "YouTube"].map(
-                (name) => (
-                  <span
-                    key={name}
-                    className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/40 text-[9px] font-bold"
-                    title={name}
-                  >
-                    {name.slice(0, 1)}
-                  </span>
-                ),
-              )}
+              {socialLinks.map(({ name, href, Icon }) => (
+                <a
+                  key={name}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex text-white transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  aria-label={`Boston Children's Hospital on ${name}`}
+                >
+                  <Icon className="h-5 w-5" />
+                </a>
+              ))}
             </div>
           </div>
         </div>
