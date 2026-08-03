@@ -337,6 +337,16 @@ export function SiteHeader() {
                 )}
               />
 
+              <Link
+                href="/#giving"
+                className={cn(
+                  "inline-flex h-10 items-center rounded-sm bg-pink px-3.5 text-[12.5px] font-bold tracking-[0.01em] text-white no-underline transition-colors hover:bg-pink-text hover:text-white",
+                  headerFocus,
+                )}
+              >
+                Donate
+              </Link>
+
               <button
                 ref={mobileToggleRef}
                 id="mob-toggle"
