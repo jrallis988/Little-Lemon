@@ -349,16 +349,13 @@ export function SiteHeader() {
               )}
               aria-label="Boston Children's Hospital — home"
             >
-              <BchMark variant="onDark" />
-              <span className="hidden flex-col min-[1100px]:flex">
-                <span className="text-[15px] font-bold leading-[1.15] tracking-[-0.01em] text-white">
-                  Boston Children&apos;s
-                  <br />
-                  Hospital
-                </span>
-                <span className="mt-1 text-[10px] font-bold tracking-[0.01em] text-pink-onDark">
-                  Where the world comes for answers
-                </span>
+              <BchMark variant="onDark" className="h-12 w-12" />
+              <span className="hidden font-sans text-[15px] font-bold leading-[1.12] tracking-[-0.01em] text-white min-[1100px]:block">
+                Boston
+                <br />
+                Children&apos;s
+                <br />
+                Hospital
               </span>
             </Link>
 

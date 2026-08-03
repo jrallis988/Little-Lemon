@@ -4,107 +4,135 @@ type BadgeProps = {
   className?: string;
 };
 
-/** Placeholder U.S. News Best Children's Hospitals Honor Roll 2025–2026 badge */
+/**
+ * U.S. News & World Report Best Children's Hospitals Honor Roll 2025–2026.
+ * Brand-faithful SVG recreation for layout use pending authorized artwork.
+ */
 export function UsNewsHonorRollBadge({ className }: BadgeProps) {
   return (
     <svg
-      viewBox="0 0 120 150"
+      viewBox="0 0 140 180"
       role="img"
       aria-label="U.S. News Best Children's Hospitals Honor Roll 2025-2026"
       className={cn("h-[88px] w-auto drop-shadow-md", className)}
     >
       <defs>
-        <linearGradient id="usn-gold" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#f0d48a" />
-          <stop offset="45%" stopColor="#d4a83a" />
-          <stop offset="100%" stopColor="#b8891f" />
+        <linearGradient id="usn-gold" x1="0.15" y1="0" x2="0.85" y2="1">
+          <stop offset="0%" stopColor="#f6e7b2" />
+          <stop offset="38%" stopColor="#e2c56a" />
+          <stop offset="72%" stopColor="#c9a43a" />
+          <stop offset="100%" stopColor="#b48b24" />
+        </linearGradient>
+        <linearGradient id="usn-blue" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#1a4fa0" />
+          <stop offset="100%" stopColor="#0f3a7a" />
         </linearGradient>
       </defs>
+
+      {/* Shield */}
       <path
-        d="M8 4h104c2 0 4 2 4 4v108c0 18-22 30-56 34C26 146 4 134 4 116V8c0-2 2-4 4-4z"
+        d="M12 6h116c3.2 0 6 2.6 6 6v118c0 22-28 36-64 42C34 166 6 152 6 130V12c0-3.4 2.8-6 6-6z"
         fill="url(#usn-gold)"
-        stroke="#fff"
-        strokeWidth="2"
+        stroke="#ffffff"
+        strokeWidth="3.5"
       />
+
       <text
-        x="60"
-        y="34"
+        x="70"
+        y="36"
         textAnchor="middle"
-        fill="#1a1d2e"
-        fontFamily="var(--font-nunito), sans-serif"
+        fill="#2b2f38"
+        fontFamily="var(--font-nunito), Arial, sans-serif"
         fontWeight="900"
-        fontSize="18"
+        fontSize="22"
+        letterSpacing="0.04em"
       >
         BEST
       </text>
       <text
-        x="60"
-        y="50"
+        x="70"
+        y="54"
         textAnchor="middle"
-        fill="#1a1d2e"
-        fontFamily="var(--font-nunito), sans-serif"
+        fill="#2b2f38"
+        fontFamily="var(--font-nunito), Arial, sans-serif"
         fontWeight="800"
-        fontSize="11"
+        fontSize="13"
+        letterSpacing="0.02em"
       >
         CHILDREN&apos;S
       </text>
       <text
-        x="60"
-        y="64"
+        x="70"
+        y="70"
         textAnchor="middle"
-        fill="#1a1d2e"
-        fontFamily="var(--font-nunito), sans-serif"
+        fill="#2b2f38"
+        fontFamily="var(--font-nunito), Arial, sans-serif"
         fontWeight="800"
-        fontSize="11"
+        fontSize="13"
+        letterSpacing="0.02em"
       >
         HOSPITALS
       </text>
-      <rect x="6" y="72" width="108" height="28" fill="#003087" />
+
+      {/* Blue ribbon extending past shield edges */}
+      <path
+        d="M0 78h140v34H0z"
+        fill="url(#usn-blue)"
+      />
       <text
-        x="60"
-        y="85"
+        x="70"
+        y="93"
         textAnchor="middle"
         fill="#ffffff"
-        fontFamily="var(--font-nunito), sans-serif"
+        fontFamily="var(--font-nunito), Arial, sans-serif"
         fontWeight="800"
-        fontSize="9"
+        fontSize="11"
+        letterSpacing="0.01em"
       >
         U.S. NEWS
       </text>
+      <line
+        x1="38"
+        y1="98"
+        x2="102"
+        y2="98"
+        stroke="#e30000"
+        strokeWidth="2"
+      />
       <text
-        x="60"
-        y="95"
+        x="70"
+        y="108"
         textAnchor="middle"
         fill="#ffffff"
-        fontFamily="var(--font-nunito), sans-serif"
+        fontFamily="var(--font-nunito), Arial, sans-serif"
         fontWeight="600"
-        fontSize="6"
-        letterSpacing="0.06em"
+        fontSize="7"
+        letterSpacing="0.08em"
       >
         &amp; WORLD REPORT
       </text>
-      <rect x="6" y="100" width="108" height="3" fill="#ffffff" />
-      <rect x="6" y="103" width="108" height="4" fill="#e30000" />
+
       <text
-        x="60"
-        y="122"
+        x="70"
+        y="138"
         textAnchor="middle"
-        fill="#1a1d2e"
-        fontFamily="var(--font-nunito), sans-serif"
+        fill="#2b2f38"
+        fontFamily="var(--font-nunito), Arial, sans-serif"
         fontWeight="800"
-        fontSize="10"
-        letterSpacing="0.04em"
+        fontSize="12"
+        letterSpacing="0.06em"
       >
         HONOR ROLL
       </text>
       <text
-        x="60"
-        y="138"
+        x="70"
+        y="158"
         textAnchor="middle"
         fill="#ffffff"
-        fontFamily="var(--font-nunito), sans-serif"
+        fontFamily="var(--font-nunito), Arial, sans-serif"
         fontWeight="900"
-        fontSize="12"
+        fontSize="14"
+        letterSpacing="0.04em"
       >
         2025-2026
       </text>
@@ -112,100 +140,140 @@ export function UsNewsHonorRollBadge({ className }: BadgeProps) {
   );
 }
 
-/** Placeholder Newsweek World's Best Hospitals badge */
+/**
+ * Newsweek / Statista World's Best Specialized Hospitals 2026.
+ * Brand-faithful SVG recreation for layout use pending authorized artwork.
+ */
 export function NewsweekBestBadge({ className }: BadgeProps) {
   return (
     <svg
-      viewBox="0 0 110 150"
+      viewBox="0 0 130 180"
       role="img"
       aria-label="Newsweek World's Best Specialized Hospitals 2026"
       className={cn("h-[88px] w-auto drop-shadow-md", className)}
     >
+      {/* Card with clipped bottom-right corner */}
       <path
-        d="M4 4h94c4 0 8 4 8 8v118c0 2-1 4-3 5l-10 7H12c-4 0-8-4-8-8V12c0-4 4-8 8-8z"
+        d="M6 6h118c3 0 6 3 6 6v128l-22 28H12c-3.3 0-6-2.7-6-6V12c0-3.3 2.7-6 6-6z"
         fill="#ffffff"
-        stroke="#d0d4db"
+        stroke="#cfd3da"
         strokeWidth="2"
       />
-      <rect x="4" y="4" width="102" height="24" fill="#e30000" />
+
+      {/* Red star header */}
+      <rect x="6" y="6" width="118" height="26" fill="#e10600" />
       <text
-        x="55"
-        y="21"
+        x="65"
+        y="24"
         textAnchor="middle"
         fill="#ffffff"
-        fontSize="12"
-        letterSpacing="0.12em"
+        fontSize="14"
+        letterSpacing="0.22em"
       >
         ★ ★ ★ ★ ★
       </text>
+
       <text
-        x="55"
-        y="50"
+        x="65"
+        y="52"
         textAnchor="middle"
-        fill="#1a1d2e"
-        fontFamily="var(--font-nunito), sans-serif"
+        fill="#111111"
+        fontFamily="var(--font-nunito), Arial, sans-serif"
         fontWeight="900"
-        fontSize="13"
+        fontSize="15"
+        letterSpacing="0.02em"
       >
-        WORLD&apos;S
+        WORLD&apos;S BEST
       </text>
       <text
-        x="55"
-        y="66"
+        x="65"
+        y="70"
         textAnchor="middle"
-        fill="#1a1d2e"
-        fontFamily="var(--font-nunito), sans-serif"
+        fill="#111111"
+        fontFamily="var(--font-nunito), Arial, sans-serif"
         fontWeight="900"
-        fontSize="13"
+        fontSize="14"
+        letterSpacing="0.04em"
       >
-        BEST
+        SPECIALIZED
       </text>
       <text
-        x="55"
-        y="82"
+        x="65"
+        y="88"
         textAnchor="middle"
-        fill="#1a1d2e"
-        fontFamily="var(--font-nunito), sans-serif"
+        fill="#111111"
+        fontFamily="var(--font-nunito), Arial, sans-serif"
         fontWeight="900"
-        fontSize="12"
+        fontSize="14"
+        letterSpacing="0.04em"
       >
         HOSPITALS
       </text>
-      <rect x="4" y="92" width="102" height="24" fill="#e30000" />
       <text
-        x="55"
-        y="108"
+        x="65"
+        y="106"
+        textAnchor="middle"
+        fill="#222222"
+        fontFamily="var(--font-nunito), Arial, sans-serif"
+        fontWeight="600"
+        fontSize="13"
+      >
+        2026
+      </text>
+
+      <rect x="6" y="116" width="118" height="28" fill="#e10600" />
+      <text
+        x="65"
+        y="135"
         textAnchor="middle"
         fill="#ffffff"
-        fontFamily="Georgia, 'Times New Roman', serif"
+        fontFamily="Georgia, 'Times New Roman', Times, serif"
         fontWeight="700"
-        fontSize="14"
+        fontSize="16"
       >
         Newsweek
       </text>
       <text
-        x="55"
+        x="102"
         y="128"
+        fill="#ffffff"
+        fontSize="7"
+      >
+        ®
+      </text>
+
+      <text
+        x="65"
+        y="158"
         textAnchor="middle"
-        fill="#1a1d2e"
-        fontFamily="var(--font-nunito), sans-serif"
+        fill="#222222"
+        fontFamily="var(--font-nunito), Arial, sans-serif"
         fontWeight="600"
         fontSize="7"
-        letterSpacing="0.08em"
+        letterSpacing="0.1em"
       >
         POWERED BY
       </text>
       <text
-        x="55"
-        y="142"
+        x="54"
+        y="172"
         textAnchor="middle"
-        fill="#1a1d2e"
-        fontFamily="var(--font-nunito), sans-serif"
+        fill="#111111"
+        fontFamily="var(--font-nunito), Arial, sans-serif"
         fontWeight="800"
         fontSize="12"
       >
         statista
       </text>
+      {/* Statista mark */}
+      <rect x="88" y="161" width="14" height="14" rx="1.5" fill="#111111" />
+      <path
+        d="M91 171c3-4 6-6 9-7"
+        fill="none"
+        stroke="#ffffff"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
