@@ -43,11 +43,6 @@ const navItems: NavItem[] = [
           },
           { label: "Find a Doctor", href: "/find-a-doctor" },
           { label: "Request an Appointment", href: "/appointments/request" },
-        ],
-      },
-      {
-        title: "Related programs",
-        links: [
           { label: "Epilepsy Program", href: "/programs/epilepsy-program" },
           {
             label: "Cancer & Blood Disorders",
@@ -58,13 +53,6 @@ const navItems: NavItem[] = [
         ],
       },
     ],
-    card: {
-      eyebrow: "Start here",
-      title: "Looking for a diagnosis or treatment?",
-      body: "Browse conditions A–Z or connect with a specialist care team.",
-      cta: "Conditions A–Z",
-      href: "/conditions",
-    },
   },
   {
     label: "Programs & Services",
@@ -124,16 +112,9 @@ const navItems: NavItem[] = [
           { label: "Patients & Families hub", href: "/patients-families" },
           { label: "Prepare for your visit", href: "/patients-families/prepare-for-your-visit" },
           { label: "Patient Portal", href: "/portal" },
-          { label: "Emergency Department", href: "/emergency" },
-        ],
-      },
-      {
-        title: "Support",
-        links: [
           { label: "Pay My Bill", href: "/patients-families/billing" },
           { label: "Medical records", href: "/patients-families/medical-records" },
-          { label: "Health Library / Search", href: "/search?q=health" },
-          { label: "About Boston Children's", href: "/about" },
+          { label: "Emergency Department", href: "/emergency" },
         ],
       },
     ],
@@ -167,6 +148,7 @@ const navItems: NavItem[] = [
         links: [
           { label: "Research hub", href: "/research" },
           { label: "Clinical trials", href: "/research" },
+          { label: "Health Library / Search", href: "/search?q=health" },
           { label: "Epilepsy Program", href: "/programs/epilepsy-program" },
           {
             label: "Cancer & Blood Disorders",
