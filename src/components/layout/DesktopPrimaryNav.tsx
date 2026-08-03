@@ -46,6 +46,22 @@ export function DesktopPrimaryNav({ items }: { items: NavItem[] }) {
     return pathname === item.href || pathname.startsWith(`${item.href}/`);
   }
 
+  function megaPanelClass(item: NavItem) {
+    const columns = item.zones.length + (item.card ? 1 : 0);
+    return cn(
+      "border-t-[3px] border-ocean bg-white shadow-lg grid gap-0",
+      columns <= 1 && "min-w-[260px] grid-cols-1",
+      columns === 2 && "min-w-[440px] grid-cols-2",
+      columns === 3 &&
+        !item.card &&
+        "min-w-[560px] grid-cols-3",
+      columns === 3 &&
+        item.card &&
+        "min-w-[560px] grid-cols-[1.2fr_1fr_200px]",
+      columns >= 4 && "min-w-[680px] grid-cols-[1.2fr_1fr_1fr_200px]",
+    );
+  }
+
   return (
     <NavigationMenu
       delayDuration={0}
@@ -77,15 +93,7 @@ export function DesktopPrimaryNav({ items }: { items: NavItem[] }) {
               <IconChevronDown className="shrink-0 opacity-45 transition-transform duration-200 group-data-[state=open]:rotate-180" />
             </NavigationMenuTrigger>
             <NavigationMenuContent>
-              <div
-                className={cn(
-                  "min-w-[680px] border-t-[3px] border-ocean bg-white shadow-lg",
-                  "grid gap-0",
-                  item.card
-                    ? "grid-cols-[1.2fr_1fr_1fr_200px]"
-                    : "grid-cols-[1.2fr_1fr_1fr]",
-                )}
-              >
+              <div className={megaPanelClass(item)}>
                 {item.zones.map((zone) => (
                   <div
                     key={zone.title}

@@ -57,14 +57,6 @@ const navItems: NavItem[] = [
           { label: "All programs", href: "/programs" },
         ],
       },
-      {
-        title: "Clinical support",
-        links: [
-          { label: "Get a Second Opinion", href: "/professionals/second-opinion" },
-          { label: "Emergency Department", href: "/emergency" },
-          { label: "Prepare for your visit", href: "/patients-families/prepare-for-your-visit" },
-        ],
-      },
     ],
     card: {
       eyebrow: "Start here",
@@ -199,23 +191,7 @@ const navItems: NavItem[] = [
           { label: "Community Health", href: "/about/community" },
         ],
       },
-      {
-        title: "Also explore",
-        links: [
-          { label: "Work Here", href: "/about" },
-          { label: "Donate", href: "/#giving" },
-          { label: "International patients", href: "/international" },
-          { label: "Design System", href: "/design-system" },
-        ],
-      },
     ],
-    card: {
-      eyebrow: "About Us",
-      title: "Here for every child.",
-      body: "Mission, leadership, history, and community impact.",
-      cta: "Explore About Us",
-      href: "/about",
-    },
   },
 ];
 
