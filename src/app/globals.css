@@ -21,8 +21,8 @@
   --bay: #68759c; /* Boston Bay: secondary accent */
   --green: #628000; /* Boston Green: success, status on light */
   --green-bright: #9bc23a; /* Boston Green lightened for dark surfaces */
-  --messenger: #8ab88c; /* Live-site chat FAB */
-  --messenger-hover: #739f76;
+  --messenger: #5ab989; /* Live-site chat FAB */
+  --messenger-hover: #4ea57a;
   --alert-banner: #f2a900; /* Construction / site alert bar */
   --indigo: #007396; /* Boston Indigo */
   --emergency: #e30000; /* Red Alert: emergency/stop/blood ONLY */
