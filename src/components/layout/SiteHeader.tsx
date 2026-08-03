@@ -13,11 +13,8 @@ import {
   IconChevronDown,
   IconClose,
   IconGlobe,
-  IconLock,
   IconMenu,
-  IconSearch,
 } from "@/components/ui/Icons";
-import { SearchOverlay } from "@/components/search/SearchOverlay";
 import { DesktopPrimaryNav, type NavItem } from "@/components/layout/DesktopPrimaryNav";
 import { HeaderMenu } from "@/components/layout/HeaderMenu";
 import { focusFirst, getFocusableElements } from "@/lib/a11y";
@@ -236,20 +233,9 @@ export function SiteHeader() {
   const baseId = useId();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
-  const [portalOpen, setPortalOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const language = currentLanguage(pathname);
-
-  const searchButtonRef = useRef<HTMLButtonElement>(null);
-  const portalWrapRef = useRef<HTMLDivElement>(null);
-  const portalButtonRef = useRef<HTMLButtonElement>(null);
-  const portalPanelRef = useRef<HTMLDivElement>(null);
   const mobileToggleRef = useRef<HTMLButtonElement>(null);
-
-  const closeMenus = useCallback(() => {
-    setPortalOpen(false);
-  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80);
@@ -260,28 +246,7 @@ export function SiteHeader() {
   useEffect(() => {
     setMobileOpen(false);
     setOpenGroup(null);
-    closeMenus();
-  }, [pathname, closeMenus]);
-
-  useEffect(() => {
-    if (!portalOpen) return;
-    const onPointer = (e: MouseEvent) => {
-      if (portalWrapRef.current && !portalWrapRef.current.contains(e.target as Node)) {
-        setPortalOpen(false);
-      }
-    };
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key !== "Escape") return;
-      setPortalOpen(false);
-      portalButtonRef.current?.focus();
-    };
-    document.addEventListener("mousedown", onPointer);
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.removeEventListener("mousedown", onPointer);
-      document.removeEventListener("keydown", onKey);
-    };
-  }, [portalOpen]);
+  }, [pathname]);
 
   useEffect(() => {
     if (!mobileOpen) return;
@@ -321,12 +286,6 @@ export function SiteHeader() {
       document.removeEventListener("keydown", onKey);
     };
   }, [mobileOpen]);
-
-  useEffect(() => {
-    if (!portalOpen) return;
-    const panel = portalPanelRef.current;
-    if (panel) window.setTimeout(() => focusFirst(panel), 20);
-  }, [portalOpen]);
 
   return (
     <>
@@ -387,87 +346,6 @@ export function SiteHeader() {
                 )}
               />
 
-              <div className="relative" ref={portalWrapRef}>
-                <button
-                  ref={portalButtonRef}
-                  type="button"
-                  className={cn(
-                    "flex h-10 items-center gap-2 rounded-sm px-2.5 transition-colors hover:bg-white/10",
-                    headerFocus,
-                  )}
-                  aria-label="Patient Portal preview — not a live medical record"
-                  aria-haspopup="dialog"
-                  aria-expanded={portalOpen}
-                  aria-controls={`${baseId}-portal`}
-                  onClick={() => setPortalOpen((v) => !v)}
-                  onKeyDown={(e) => {
-                    if (e.key === "ArrowDown") {
-                      e.preventDefault();
-                      setPortalOpen(true);
-                    }
-                  }}
-                >
-                  <span
-                    className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/[0.08]"
-                    aria-hidden="true"
-                  >
-                    <IconLock className="text-white/70" />
-                  </span>
-                  <span className="hidden text-[12.5px] font-bold text-white/90 sm:block">
-                    Patient Portal
-                  </span>
-                </button>
-                <div
-                  id={`${baseId}-portal`}
-                  ref={portalPanelRef}
-                  hidden={!portalOpen}
-                  className={cn(
-                    "absolute right-0 top-[calc(100%+10px)] z-[700] w-[300px] animate-fade-down rounded-lg border border-border bg-white shadow-lg",
-                    !portalOpen && "invisible",
-                  )}
-                  role="dialog"
-                  aria-label="Portal preview options"
-                >
-                  <div className="p-5">
-                    <div className="mb-1.5 flex items-center gap-2">
-                      <IconLock className="h-3.5 w-3.5 text-blue" />
-                      <strong className="text-base font-bold text-blue">
-                        Your secure health record
-                      </strong>
-                    </div>
-                    <p className="mb-3.5 text-sm font-light leading-[1.6] text-text-body">
-                      Sign in to view test results, message your care team, and
-                      manage appointments.
-                    </p>
-                    <Link
-                      href="/portal"
-                      className="mb-2 flex min-h-11 items-center justify-center rounded-sm bg-blue text-center text-base font-bold text-white no-underline hover:bg-ocean"
-                      onClick={() => setPortalOpen(false)}
-                    >
-                      Open portal preview
-                    </Link>
-                    <p className="m-0 text-[11px] font-light leading-[1.55] text-text-meta">
-                      Preview only — not a live medical record.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <button
-                ref={searchButtonRef}
-                type="button"
-                className={cn(
-                  "flex h-10 w-10 items-center justify-center rounded-sm text-white/75 transition-all hover:bg-white/10 hover:text-white",
-                  headerFocus,
-                )}
-                aria-label="Search the site"
-                aria-haspopup="dialog"
-                aria-expanded={searchOpen}
-                onClick={() => setSearchOpen(true)}
-              >
-                <IconSearch />
-              </button>
-
               <button
                 ref={mobileToggleRef}
                 id="mob-toggle"
@@ -524,28 +402,6 @@ export function SiteHeader() {
               onClick={() => setMobileOpen(false)}
             >
               International
-            </Link>
-          </div>
-
-          <div className="m-3 mb-2 rounded-md border border-white/12 bg-white/[0.06] p-4">
-            <div className="mb-1 flex items-center gap-[7px]">
-              <span
-                className="flex h-5 w-5 items-center justify-center rounded-full bg-white/15"
-                aria-hidden="true"
-              >
-                <IconLock className="text-white/80" />
-              </span>
-              <span className="text-sm font-bold text-white">Patient Portal</span>
-            </div>
-            <p className="pb-3 pl-[27px] text-xs font-light leading-[1.6] text-white/80">
-              UX preview only — not a live medical record
-            </p>
-            <Link
-              href="/portal"
-              className="flex min-h-11 items-center justify-center rounded-sm bg-white text-center text-base font-bold text-blue no-underline"
-              onClick={() => setMobileOpen(false)}
-            >
-              Open preview
             </Link>
           </div>
 
@@ -646,14 +502,6 @@ export function SiteHeader() {
           Locations
         </Link>
       </nav>
-
-      <SearchOverlay
-        open={searchOpen}
-        onClose={() => {
-          setSearchOpen(false);
-          window.setTimeout(() => searchButtonRef.current?.focus(), 0);
-        }}
-      />
     </>
   );
 }
