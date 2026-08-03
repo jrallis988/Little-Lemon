@@ -15,11 +15,6 @@ import {
 } from "@/components/ui/Icons";
 import { DesktopPrimaryNav, type NavItem } from "@/components/layout/DesktopPrimaryNav";
 import { HeaderSearch } from "@/components/layout/HeaderSearch";
-import {
-  IconGivingBack,
-  IconHospitalLocation,
-  IconSecondOpinion,
-} from "@/components/icons/HeaderUtilityIcons";
 import { focusFirst, getFocusableElements } from "@/lib/a11y";
 import { cn } from "@/lib/cn";
 
@@ -267,24 +262,6 @@ const mobileGroups = [
 const headerFocus =
   "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
 
-const utilityLinks = [
-  {
-    label: "Locations",
-    href: "/locations",
-    Icon: IconHospitalLocation,
-  },
-  {
-    label: "Second Opinion",
-    href: "/professionals/second-opinion",
-    Icon: IconSecondOpinion,
-  },
-  {
-    label: "Giving Back",
-    href: "/#giving",
-    Icon: IconGivingBack,
-  },
-] as const;
-
 function currentLanguage(pathname: string) {
   if (pathname === "/es" || pathname.startsWith("/es/")) return languageOptions[1];
   if (pathname === "/zh" || pathname.startsWith("/zh/")) return languageOptions[2];
@@ -375,37 +352,6 @@ export function SiteHeader() {
             <div className="relative z-[1] ml-auto flex shrink-0 items-center gap-1 sm:gap-1.5">
               <HeaderSearch />
 
-              <div
-                className="ml-1 hidden items-center gap-1 border-l border-white/25 pl-2.5 sm:flex sm:gap-1.5 sm:pl-3"
-                aria-label="Quick links"
-              >
-                {utilityLinks.map(({ label, href, Icon }) => {
-                  const pathOnly = href.split("#")[0] || href;
-                  const active =
-                    pathOnly !== "/" &&
-                    (pathname === pathOnly ||
-                      pathname.startsWith(`${pathOnly}/`));
-                  return (
-                    <Link
-                      key={href}
-                      href={href}
-                      className={cn(
-                        "inline-flex h-10 items-center gap-1.5 rounded-sm px-2 text-white/90 transition-colors hover:bg-white/10 hover:text-white",
-                        active && "bg-white/10 text-white",
-                        headerFocus,
-                      )}
-                      aria-label={label}
-                      title={label}
-                    >
-                      <Icon className="h-5 w-5 shrink-0" />
-                      <span className="hidden text-[11px] font-bold tracking-[0.01em] 2xl:inline">
-                        {label}
-                      </span>
-                    </Link>
-                  );
-                })}
-              </div>
-
               <button
                 ref={mobileToggleRef}
                 id="mob-toggle"
@@ -467,19 +413,6 @@ export function SiteHeader() {
             >
               International
             </Link>
-            {utilityLinks.map(({ label, href }) => (
-              <Link
-                key={href}
-                href={href}
-                className={cn(
-                  "inline-flex min-h-10 items-center rounded-sm border border-white/25 px-3 text-sm font-bold text-white/85 no-underline hover:border-white/55 sm:hidden",
-                  headerFocus,
-                )}
-                onClick={() => setMobileOpen(false)}
-              >
-                {label}
-              </Link>
-            ))}
           </div>
 
           <div className="px-3 pb-2">
