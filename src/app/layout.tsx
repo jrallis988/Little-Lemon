@@ -57,13 +57,13 @@ export default function RootLayout({
       <body className="pb-[68px] font-sans xl:pb-0">
         <SkipNav />
         <StagingBanner />
+        <SiteAnnouncement />
         <SiteHeader />
         <main id="main" tabIndex={-1} className="outline-none">
           {children}
         </main>
         <SiteFooter />
         <MessengerButton />
-        <SiteAnnouncement />
         <CookieConsent />
       </body>
     </html>

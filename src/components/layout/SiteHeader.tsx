@@ -338,18 +338,16 @@ export function SiteHeader() {
             boxShadow: scrolled ? "0 2px 16px rgba(0,0,0,.18)" : undefined,
           }}
         >
-          <div className="wrap relative flex h-16 items-center gap-3">
+          <div className="wrap relative flex h-16 items-center gap-2">
             <Link href="/" className={cn("sr-only", headerFocus)}>
               Boston Children&apos;s Hospital — home
             </Link>
 
-            <div className="hidden min-w-0 flex-1 xl:block">
+            <div className="hidden min-w-0 flex-1 xl:flex xl:justify-center">
               <DesktopPrimaryNav items={navItems} />
             </div>
 
-            <HeaderSearch />
-
-            <div className="relative z-[1] ml-auto flex shrink-0 items-center gap-1 xl:ml-0">
+            <div className="relative z-[1] ml-auto flex shrink-0 items-center gap-0.5">
               <Link
                 href="/portal"
                 className={cn(
@@ -360,6 +358,8 @@ export function SiteHeader() {
               >
                 MyChildren&apos;s
               </Link>
+
+              <HeaderSearch />
 
               <button
                 ref={mobileToggleRef}

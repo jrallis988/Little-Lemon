@@ -35,16 +35,12 @@ export function HomeHero() {
           <AwardBadgeRow className="mb-s5 [&_svg]:h-[72px]" />
           <h1
             id="hero-heading"
-            className="mb-s4 font-sans text-[clamp(36px,4.5vw,48px)] font-semibold leading-[1.08] tracking-[-0.02em] text-white"
+            className="mb-s5 font-sans text-[clamp(36px,4.5vw,48px)] font-semibold leading-[1.08] tracking-[-0.02em] text-white"
           >
             Trusted by families.
             <br />
             <span className="text-sky">Where the world comes for answers.</span>
           </h1>
-          <p className="mb-s5 max-w-[480px] font-sans text-[clamp(15px,1.5vw,18px)] font-light leading-[1.7] text-white">
-            Find care, get directions, or reach your care team — start with what
-            you need right now.
-          </p>
           <Button href="/appointments/request" variant="pink" size="md">
             Make an Appointment
           </Button>
