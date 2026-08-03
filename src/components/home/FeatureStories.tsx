@@ -8,11 +8,12 @@ export function FeatureStories() {
         <div className="grid grid-cols-1 items-center gap-s7 lg:grid-cols-2">
           <div className="relative aspect-[4/3] overflow-hidden rounded-md">
             <Image
-              src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80"
-              alt="A child with family in a bright hospital hallway"
+              src="/images/stories/worlds-best-pediatric-family.jpg"
+              alt="A smiling young patient with her parents in a bright hospital atrium"
               fill
-              className="object-cover"
+              className="object-cover object-center"
               sizes="(max-width: 1024px) 100vw, 50vw"
+              priority={false}
             />
           </div>
           <div>
