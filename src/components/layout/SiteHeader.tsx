@@ -11,11 +11,10 @@ import {
 import {
   IconChevronDown,
   IconClose,
-  IconGlobe,
   IconMenu,
 } from "@/components/ui/Icons";
 import { DesktopPrimaryNav, type NavItem } from "@/components/layout/DesktopPrimaryNav";
-import { HeaderMenu } from "@/components/layout/HeaderMenu";
+import { HeaderSearch } from "@/components/layout/HeaderSearch";
 import { focusFirst, getFocusableElements } from "@/lib/a11y";
 import { cn } from "@/lib/cn";
 
@@ -28,7 +27,6 @@ const languageOptions = [
 const navItems: NavItem[] = [
   {
     label: "Conditions & Treatments",
-    shortLabel: "Conditions",
     href: "/conditions",
     match: ["/conditions"],
     zones: [
@@ -82,14 +80,6 @@ const navItems: NavItem[] = [
           { label: "Emergency Department", href: "/emergency" },
         ],
       },
-      {
-        title: "Visit support",
-        links: [
-          { label: "Prepare for your visit", href: "/patients-families/prepare-for-your-visit" },
-          { label: "Patients & Families", href: "/patients-families" },
-          { label: "International patients", href: "/international" },
-        ],
-      },
     ],
     card: {
       eyebrow: "Start here",
@@ -111,7 +101,7 @@ const navItems: NavItem[] = [
         links: [
           { label: "Patients & Families hub", href: "/patients-families" },
           { label: "Prepare for your visit", href: "/patients-families/prepare-for-your-visit" },
-          { label: "Patient Portal", href: "/portal" },
+          { label: "MyChildren's", href: "/portal" },
           { label: "Pay My Bill", href: "/patients-families/billing" },
           { label: "Medical records", href: "/patients-families/medical-records" },
           { label: "Emergency Department", href: "/emergency" },
@@ -175,6 +165,23 @@ const navItems: NavItem[] = [
       },
     ],
   },
+  {
+    label: "International",
+    href: "/international",
+    match: ["/international", "/es", "/zh"],
+    zones: [
+      {
+        title: "Languages",
+        accent: true,
+        links: [
+          { label: "International patients", href: "/international" },
+          { label: "English", href: "/" },
+          { label: "Español", href: "/es" },
+          { label: "中文", href: "/zh" },
+        ],
+      },
+    ],
+  },
 ];
 
 const mobileGroups = [
@@ -209,7 +216,7 @@ const mobileGroups = [
     links: [
       { label: "Patients & Families hub", href: "/patients-families" },
       { label: "Prepare for your visit", href: "/patients-families/prepare-for-your-visit" },
-      { label: "Patient Portal", href: "/portal" },
+      { label: "MyChildren's", href: "/portal" },
       { label: "Pay My Bill", href: "/patients-families/billing" },
       { label: "Medical records", href: "/patients-families/medical-records" },
     ],
@@ -225,15 +232,29 @@ const mobileGroups = [
   },
   {
     id: "res",
-    label: "Research & About",
+    label: "Research",
     links: [
       { label: "Research", href: "/research" },
       { label: "Health Library / Search", href: "/search?q=health" },
+    ],
+  },
+  {
+    id: "about",
+    label: "About",
+    links: [
       { label: "About Us", href: "/about" },
       { label: "Our History", href: "/about/history" },
-      { label: "Donate", href: "/#giving" },
       { label: "Work Here", href: "/about" },
+    ],
+  },
+  {
+    id: "intl",
+    label: "International",
+    links: [
       { label: "International patients", href: "/international" },
+      { label: "English", href: "/" },
+      { label: "Español", href: "/es" },
+      { label: "中文", href: "/zh" },
     ],
   },
 ];
@@ -317,46 +338,18 @@ export function SiteHeader() {
             boxShadow: scrolled ? "0 2px 16px rgba(0,0,0,.18)" : undefined,
           }}
         >
-          <div className="wrap relative flex h-16 items-center">
-            <Link
-              href="/"
-              className={cn("sr-only", headerFocus)}
-            >
+          <div className="wrap relative flex h-16 items-center gap-3">
+            <Link href="/" className={cn("sr-only", headerFocus)}>
               Boston Children&apos;s Hospital — home
             </Link>
 
-            <div className="pointer-events-none absolute inset-0 hidden items-center justify-center xl:flex">
-              <div className="pointer-events-auto">
-                <DesktopPrimaryNav items={navItems} />
-              </div>
+            <div className="hidden min-w-0 flex-1 xl:block">
+              <DesktopPrimaryNav items={navItems} />
             </div>
 
-            <div className="relative z-[1] ml-auto flex shrink-0 items-center gap-1">
-              <HeaderMenu
-                label="International"
-                align="right"
-                icon={<IconGlobe className="text-white/85" />}
-                items={[
-                  {
-                    label: "International patients",
-                    href: "/international",
-                    description: "Global care and destination medicine",
-                  },
-                  ...languageOptions.map((option) => ({
-                    label: option.native,
-                    href: option.href,
-                    description: option.label,
-                  })),
-                ]}
-                triggerClassName={cn(
-                  "max-sm:px-2",
-                  (pathname === "/international" ||
-                    pathname.startsWith("/international/") ||
-                    language.code !== "en") &&
-                    "bg-white/10 text-white",
-                )}
-              />
+            <HeaderSearch />
 
+            <div className="relative z-[1] ml-auto flex shrink-0 items-center gap-1 xl:ml-0">
               <Link
                 href="/portal"
                 className={cn(
@@ -365,17 +358,7 @@ export function SiteHeader() {
                   headerFocus,
                 )}
               >
-                Patient Portal
-              </Link>
-
-              <Link
-                href="/#giving"
-                className={cn(
-                  "inline-flex h-10 items-center rounded-sm bg-pink px-3.5 text-[12.5px] font-bold tracking-[0.01em] text-white no-underline transition-colors hover:bg-pink-text hover:text-white",
-                  headerFocus,
-                )}
-              >
-                Donate
+                MyChildren&apos;s
               </Link>
 
               <button
@@ -408,6 +391,10 @@ export function SiteHeader() {
           aria-label="Mobile navigation"
           aria-hidden={!mobileOpen}
         >
+          <div className="border-b border-white/[0.07] p-3">
+            <HeaderSearch variant="mobile" />
+          </div>
+
           <div className="flex flex-wrap gap-2 border-b border-white/[0.07] p-3">
             {languageOptions.map((option) => (
               <Link
@@ -434,6 +421,16 @@ export function SiteHeader() {
               onClick={() => setMobileOpen(false)}
             >
               International
+            </Link>
+            <Link
+              href="/portal"
+              className={cn(
+                "inline-flex min-h-10 items-center rounded-sm border border-white/25 px-3 text-sm font-bold text-white/85 no-underline hover:border-white/55 sm:hidden",
+                headerFocus,
+              )}
+              onClick={() => setMobileOpen(false)}
+            >
+              MyChildren&apos;s
             </Link>
           </div>
 

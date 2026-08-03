@@ -74,7 +74,7 @@ export function DesktopPrimaryNav({ items }: { items: NavItem[] }) {
             <NavigationMenuTrigger
               aria-label={item.label}
               className={cn(
-                "inline-flex h-16 max-w-none flex-row flex-nowrap items-center gap-1 whitespace-nowrap border-b-[3px] border-transparent px-1.5 text-[12px] font-bold tracking-[0.01em] text-white/85 transition-all duration-200 hover:border-sky hover:bg-transparent hover:text-white data-[state=open]:border-sky data-[state=open]:bg-transparent data-[state=open]:text-white 2xl:gap-1.5 2xl:px-2.5 2xl:text-[13px]",
+                "inline-flex h-16 max-w-none flex-row flex-nowrap items-center gap-0.5 whitespace-nowrap border-b-[3px] border-transparent px-1 text-[11px] font-bold tracking-[0.01em] text-white/85 transition-all duration-200 hover:border-sky hover:bg-transparent hover:text-white data-[state=open]:border-sky data-[state=open]:bg-transparent data-[state=open]:text-white 2xl:gap-1 2xl:px-2 2xl:text-[12.5px]",
                 isActive(item) && "border-sky text-white",
               )}
             >
