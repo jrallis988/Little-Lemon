@@ -297,29 +297,21 @@ export function SiteHeader() {
             boxShadow: scrolled ? "0 2px 16px rgba(0,0,0,.18)" : undefined,
           }}
         >
-          <div className="wrap flex h-16 items-center gap-s2 xl:gap-s3">
+          <div className="wrap relative flex h-16 items-center">
             <Link
               href="/"
-              className={cn(
-                "flex shrink-0 items-center no-underline",
-                headerFocus,
-              )}
-              aria-label="Boston Children's Hospital — home"
+              className={cn("sr-only", headerFocus)}
             >
-              <span className="font-sans text-[15px] font-bold leading-[1.12] tracking-[-0.01em] text-white">
-                Boston
-                <br />
-                Children&apos;s
-                <br />
-                Hospital
-              </span>
+              Boston Children&apos;s Hospital — home
             </Link>
 
-            <div className="hidden min-w-0 items-center xl:flex">
-              <DesktopPrimaryNav items={navItems} />
+            <div className="pointer-events-none absolute inset-0 hidden items-center justify-center xl:flex">
+              <div className="pointer-events-auto">
+                <DesktopPrimaryNav items={navItems} />
+              </div>
             </div>
 
-            <div className="ml-auto flex shrink-0 items-center gap-1">
+            <div className="relative z-[1] ml-auto flex shrink-0 items-center gap-1">
               <HeaderMenu
                 label="International"
                 align="right"

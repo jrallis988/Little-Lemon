@@ -50,9 +50,9 @@ export function DesktopPrimaryNav({ items }: { items: NavItem[] }) {
     <NavigationMenu
       delayDuration={0}
       skipDelayDuration={0}
-      className="relative hidden min-w-0 overflow-visible xl:flex"
+      className="relative flex min-w-0 overflow-visible"
     >
-      <NavigationMenuList className="flex flex-nowrap items-center gap-0">
+      <NavigationMenuList className="flex flex-nowrap items-center justify-center gap-0">
         {items.map((item) => (
           <NavigationMenuItem key={item.label} className="relative shrink-0">
             <NavigationMenuTrigger
