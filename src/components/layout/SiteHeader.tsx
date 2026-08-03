@@ -269,7 +269,7 @@ const headerFocus =
 
 const utilityLinks = [
   {
-    label: "Find a Location",
+    label: "Locations",
     href: "/locations",
     Icon: IconHospitalLocation,
   },
@@ -361,20 +361,22 @@ export function SiteHeader() {
             boxShadow: scrolled ? "0 2px 16px rgba(0,0,0,.18)" : undefined,
           }}
         >
-          <div className="wrap relative flex h-16 items-center gap-2">
+          <div className="wrap relative flex h-16 items-center">
             <Link href="/" className={cn("sr-only", headerFocus)}>
               Boston Children&apos;s Hospital — home
             </Link>
 
-            <div className="hidden min-w-0 flex-1 justify-end xl:flex">
-              <DesktopPrimaryNav items={navItems} />
+            <div className="pointer-events-none absolute inset-0 hidden items-center justify-center xl:flex">
+              <div className="pointer-events-auto">
+                <DesktopPrimaryNav items={navItems} />
+              </div>
             </div>
 
-            <div className="relative z-[1] ml-auto flex shrink-0 items-center gap-1.5 px-1 sm:gap-2 sm:px-2 xl:ml-0">
+            <div className="relative z-[1] ml-auto flex shrink-0 items-center gap-1 sm:gap-1.5">
               <HeaderSearch />
 
               <div
-                className="hidden items-center gap-1 border-l border-white/20 pl-2 sm:flex sm:gap-1.5 sm:pl-2.5"
+                className="ml-1 hidden items-center gap-1 border-l border-white/25 pl-2.5 sm:flex sm:gap-1.5 sm:pl-3"
                 aria-label="Quick links"
               >
                 {utilityLinks.map(({ label, href, Icon }) => {
@@ -388,14 +390,17 @@ export function SiteHeader() {
                       key={href}
                       href={href}
                       className={cn(
-                        "inline-flex h-10 w-10 items-center justify-center rounded-sm text-white/90 transition-colors hover:bg-white/10 hover:text-white",
+                        "inline-flex h-10 items-center gap-1.5 rounded-sm px-2 text-white/90 transition-colors hover:bg-white/10 hover:text-white",
                         active && "bg-white/10 text-white",
                         headerFocus,
                       )}
                       aria-label={label}
                       title={label}
                     >
-                      <Icon className="h-[22px] w-[22px]" />
+                      <Icon className="h-5 w-5 shrink-0" />
+                      <span className="hidden text-[11px] font-bold tracking-[0.01em] 2xl:inline">
+                        {label}
+                      </span>
                     </Link>
                   );
                 })}
@@ -406,7 +411,7 @@ export function SiteHeader() {
                 id="mob-toggle"
                 type="button"
                 className={cn(
-                  "flex h-11 w-11 items-center justify-center rounded-sm text-white/70 transition-all hover:bg-white/10 hover:text-white xl:hidden",
+                  "ml-0.5 flex h-11 w-11 items-center justify-center rounded-sm text-white/70 transition-all hover:bg-white/10 hover:text-white xl:hidden",
                   headerFocus,
                 )}
                 aria-label={
@@ -419,8 +424,6 @@ export function SiteHeader() {
                 {mobileOpen ? <IconClose /> : <IconMenu />}
               </button>
             </div>
-
-            <div className="hidden flex-1 xl:block" aria-hidden="true" />
           </div>
         </div>
 
