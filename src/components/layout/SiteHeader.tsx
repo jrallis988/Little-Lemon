@@ -17,7 +17,6 @@ import {
   IconMenu,
   IconSearch,
 } from "@/components/ui/Icons";
-import { BchMark } from "@/components/brand/BchLogo";
 import { SearchOverlay } from "@/components/search/SearchOverlay";
 import { DesktopPrimaryNav, type NavItem } from "@/components/layout/DesktopPrimaryNav";
 import { HeaderMenu } from "@/components/layout/HeaderMenu";
@@ -344,13 +343,12 @@ export function SiteHeader() {
             <Link
               href="/"
               className={cn(
-                "flex shrink-0 items-center gap-3 no-underline",
+                "flex shrink-0 items-center no-underline",
                 headerFocus,
               )}
               aria-label="Boston Children's Hospital — home"
             >
-              <BchMark variant="onDark" className="h-12 w-12" />
-              <span className="hidden font-sans text-[15px] font-bold leading-[1.12] tracking-[-0.01em] text-white min-[1100px]:block">
+              <span className="font-sans text-[15px] font-bold leading-[1.12] tracking-[-0.01em] text-white">
                 Boston
                 <br />
                 Children&apos;s
