@@ -36,12 +36,12 @@ export type NavItem = {
 };
 
 const triggerClass =
-  "group inline-flex h-16 max-w-none flex-row flex-nowrap items-center gap-1 whitespace-nowrap border-b-[3px] border-transparent px-2 text-[14px] font-semibold tracking-[0.01em] text-white/90 no-underline transition-all duration-200 hover:border-sky hover:text-white xl:px-2.5 2xl:gap-1.5 2xl:px-3 2xl:text-[15px] 2xl:font-bold";
+  "group inline-flex h-16 max-w-none flex-row flex-nowrap items-center gap-1 whitespace-nowrap px-2 text-[14px] font-semibold tracking-[0.01em] text-white/90 no-underline transition-colors duration-150 hover:text-white xl:px-2.5 2xl:gap-1.5 2xl:px-3 2xl:text-[15px] 2xl:font-bold";
 
 function megaPanelClass(item: NavItem) {
   const columns = (item.zones?.length ?? 0) + (item.card ? 1 : 0);
   return cn(
-    "border-t-[3px] border-ocean bg-white shadow-lg grid gap-0",
+    "bg-white shadow-lg grid gap-0",
     columns <= 1 && "min-w-[260px] grid-cols-1",
     columns === 2 && "min-w-[440px] grid-cols-2",
     columns === 3 && !item.card && "min-w-[560px] grid-cols-3",
@@ -77,7 +77,7 @@ function LinkItem({ item, active }: { item: NavItem; active: boolean }) {
       <Link
         href={item.href}
         aria-label={item.label}
-        className={cn(triggerClass, active && "border-sky text-white")}
+        className={cn(triggerClass, active && "text-white")}
       >
         <NavLabel item={item} />
       </Link>
@@ -89,46 +89,33 @@ function MegaItem({
   item,
   active,
   alignEnd,
+  open,
+  onOpen,
+  onClose,
+  onScheduleClose,
 }: {
   item: NavItem;
   active: boolean;
   alignEnd: boolean;
+  open: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+  onScheduleClose: () => void;
 }) {
   const id = useId();
   const rootRef = useRef<HTMLLIElement>(null);
-  const closeTimerRef = useRef<number | null>(null);
-  const [open, setOpen] = useState(false);
   const zones = item.zones ?? [];
-
-  function clearCloseTimer() {
-    if (closeTimerRef.current !== null) {
-      window.clearTimeout(closeTimerRef.current);
-      closeTimerRef.current = null;
-    }
-  }
-
-  function openMenu() {
-    clearCloseTimer();
-    setOpen(true);
-  }
-
-  function scheduleClose() {
-    clearCloseTimer();
-    closeTimerRef.current = window.setTimeout(() => setOpen(false), 120);
-  }
-
-  useEffect(() => () => clearCloseTimer(), []);
 
   useEffect(() => {
     if (!open) return;
     const onPointer = (event: MouseEvent) => {
       if (!rootRef.current?.contains(event.target as Node)) {
-        setOpen(false);
+        onClose();
       }
     };
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setOpen(false);
+        onClose();
         document.getElementById(`${id}-trigger`)?.focus();
       }
     };
@@ -138,12 +125,12 @@ function MegaItem({
       document.removeEventListener("mousedown", onPointer);
       document.removeEventListener("keydown", onKey);
     };
-  }, [open, id]);
+  }, [open, id, onClose]);
 
   function onTriggerKeyDown(event: ReactKeyboardEvent<HTMLButtonElement>) {
     if (event.key === "Enter" || event.key === " " || event.key === "ArrowDown") {
       event.preventDefault();
-      openMenu();
+      onOpen();
     }
   }
 
@@ -151,8 +138,8 @@ function MegaItem({
     <li
       ref={rootRef}
       className="relative shrink-0"
-      onMouseEnter={openMenu}
-      onMouseLeave={scheduleClose}
+      onMouseEnter={onOpen}
+      onMouseLeave={onScheduleClose}
     >
       <button
         id={`${id}-trigger`}
@@ -164,17 +151,17 @@ function MegaItem({
         data-state={open ? "open" : "closed"}
         className={cn(
           triggerClass,
-          "data-[state=open]:border-sky data-[state=open]:text-white",
-          active && "border-sky text-white",
+          "data-[state=open]:text-white",
+          active && "text-white",
         )}
-        onClick={() => setOpen((value) => !value)}
-        onFocus={openMenu}
+        onClick={() => (open ? onClose() : onOpen())}
+        onFocus={onOpen}
         onKeyDown={onTriggerKeyDown}
       >
         <NavLabel item={item} />
         <IconChevronDown
           className={cn(
-            "h-3 w-3 shrink-0 opacity-55 transition-transform duration-200",
+            "h-3 w-3 shrink-0 opacity-55 transition-transform duration-150 ease-out",
             open && "rotate-180",
           )}
         />
@@ -186,11 +173,11 @@ function MegaItem({
           role="group"
           aria-label={item.label}
           className={cn(
-            "absolute top-full z-[650] w-max animate-fade-down",
+            "absolute top-full z-[650] w-max",
             alignEnd ? "right-0 left-auto" : "left-0",
           )}
-          onMouseEnter={openMenu}
-          onMouseLeave={scheduleClose}
+          onMouseEnter={onOpen}
+          onMouseLeave={onScheduleClose}
         >
           <div className={megaPanelClass(item)}>
             {zones.map((zone) => (
@@ -215,7 +202,7 @@ function MegaItem({
                             ? "rounded-sm px-2.5 py-[7px] text-base font-bold text-blue hover:bg-blue/[0.07]"
                             : "py-0.5 text-sm font-light text-text-body hover:text-ocean",
                         )}
-                        onClick={() => setOpen(false)}
+                        onClick={onClose}
                       >
                         {link.label}
                       </Link>
@@ -236,7 +223,7 @@ function MegaItem({
                 <Link
                   href={item.card.href}
                   className="inline-flex rounded-sm bg-white px-3 py-2 text-sm font-bold text-blue no-underline hover:bg-sky/20 hover:text-white"
-                  onClick={() => setOpen(false)}
+                  onClick={onClose}
                 >
                   {item.card.cta}
                 </Link>
@@ -251,6 +238,41 @@ function MegaItem({
 
 export function DesktopPrimaryNav({ items }: { items: NavItem[] }) {
   const pathname = usePathname();
+  const [openLabel, setOpenLabel] = useState<string | null>(null);
+  const closeTimerRef = useRef<number | null>(null);
+
+  function clearCloseTimer() {
+    if (closeTimerRef.current !== null) {
+      window.clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+  }
+
+  function openItem(label: string) {
+    clearCloseTimer();
+    setOpenLabel(label);
+  }
+
+  function scheduleClose() {
+    clearCloseTimer();
+    closeTimerRef.current = window.setTimeout(() => {
+      setOpenLabel(null);
+      closeTimerRef.current = null;
+    }, 60);
+  }
+
+  function closeNow() {
+    clearCloseTimer();
+    setOpenLabel(null);
+  }
+
+  useEffect(() => () => clearCloseTimer(), []);
+
+  useEffect(() => {
+    closeNow();
+    // Close any open mega menu when the route changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
 
   return (
     <nav aria-label="Primary" className="relative flex min-w-0 overflow-visible">
@@ -259,7 +281,13 @@ export function DesktopPrimaryNav({ items }: { items: NavItem[] }) {
           const active = isActiveItem(item, pathname);
           const isLinkOnly = !item.zones?.length;
           if (isLinkOnly) {
-            return <LinkItem key={item.label} item={item} active={active} />;
+            return (
+              <LinkItem
+                key={item.label}
+                item={item}
+                active={active}
+              />
+            );
           }
           return (
             <MegaItem
@@ -267,6 +295,10 @@ export function DesktopPrimaryNav({ items }: { items: NavItem[] }) {
               item={item}
               active={active}
               alignEnd={index >= items.length - 2}
+              open={openLabel === item.label}
+              onOpen={() => openItem(item.label)}
+              onClose={closeNow}
+              onScheduleClose={scheduleClose}
             />
           );
         })}
