@@ -36,7 +36,7 @@ export type NavItem = {
 };
 
 const triggerClass =
-  "group inline-flex h-16 max-w-none flex-row flex-nowrap items-center gap-1 whitespace-nowrap px-2 text-[14px] font-semibold tracking-[0.01em] text-white/90 no-underline transition-colors duration-150 hover:text-white xl:px-2.5 2xl:gap-1.5 2xl:px-3 2xl:text-[15px] 2xl:font-bold";
+  "group inline-flex h-16 max-w-none flex-row flex-nowrap items-center gap-1 whitespace-nowrap px-2 text-[14px] font-semibold tracking-[0.01em] text-white/90 no-underline transition-colors duration-150 hover:text-white hover:no-underline focus:no-underline xl:px-2.5 2xl:gap-1.5 2xl:px-3 2xl:text-[15px] 2xl:font-bold";
 
 function megaPanelClass(item: NavItem) {
   const columns = (item.zones?.length ?? 0) + (item.card ? 1 : 0);
