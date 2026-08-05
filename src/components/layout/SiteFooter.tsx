@@ -4,6 +4,7 @@ import {
   UsNewsHonorRollBadge,
 } from "@/components/brand/AwardBadges";
 import {
+  IconLocationHospital,
   IconPhoneDevice,
   IconPortalDevice,
   socialLinks,
@@ -66,18 +67,7 @@ export function SiteFooter() {
       <div className="bg-blue">
         <div className="wrap grid grid-cols-1 gap-s3 py-s3 text-white sm:grid-cols-2 lg:grid-cols-4 lg:gap-0">
           <div className="flex items-center gap-s2 lg:border-r lg:border-white/25 lg:pr-s4">
-            <svg
-              viewBox="0 0 24 24"
-              className="h-5 w-5 shrink-0"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              aria-hidden="true"
-            >
-              <path d="M3 21V9l6-5h6l6 5v12" />
-              <path d="M9 21v-8h6v8" />
-              <path d="M16 8c0-2.5 1.5-4 3-4s3 1.5 3 4-3 6-3 6-3-3.5-3-6z" />
-            </svg>
+            <IconLocationHospital className="h-5 w-5 shrink-0 text-white" />
             <p className="m-0 text-xs font-light leading-snug">
               300 Longwood Ave
               <br />

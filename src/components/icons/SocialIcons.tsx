@@ -63,16 +63,41 @@ export function IconYouTube({ className }: IconProps) {
   );
 }
 
+/** Hospital building + map pin (footer address) */
+export function IconLocationHospital({ className }: IconProps) {
+  return (
+    <svg {...socialSvgProps} className={cn("h-5 w-5", className)}>
+      {/* Taller left tower with rounded top */}
+      <path d="M3.5 21V7.2c0-1.2.7-2.2 1.8-2.55L8 3.5c.55-.2 1.15-.2 1.7 0l1.2.45c.7.25 1.15 1 1.15 1.8V21" />
+      {/* Medical cross in circle */}
+      <circle cx="9.5" cy="7.6" r="1.55" />
+      <path d="M9.5 6.55v2.1M8.45 7.6h2.1" />
+      {/* Three tower windows */}
+      <path d="M7.4 10.6h4.2M7.4 12.7h4.2M7.4 14.8h4.2" />
+      {/* Shorter right wing */}
+      <path d="M12.05 21V11.2c0-.66.54-1.2 1.2-1.2h5.05c.66 0 1.2.54 1.2 1.2V21" />
+      <path d="M14.3 13.1h3.5M14.3 15.4h3.5" />
+      {/* Location pin above right wing */}
+      <path d="M16.75 2.4c-1.55 0-2.8 1.2-2.8 2.7 0 1.85 2.8 4.4 2.8 4.4s2.8-2.55 2.8-4.4c0-1.5-1.25-2.7-2.8-2.7z" />
+      <circle cx="16.75" cy="5.05" r="0.95" />
+    </svg>
+  );
+}
+
 /** Outline laptop + profile (MyChildren's / portal) */
 export function IconPortalDevice({ className }: IconProps) {
   return (
     <svg {...socialSvgProps} className={cn("h-5 w-5", className)}>
-      <rect x="3" y="4" width="18" height="12.5" rx="1.75" />
-      <circle cx="8.2" cy="9" r="1.7" />
-      <path d="M5.8 13.2c.55-1.4 1.45-2.1 2.4-2.1s1.85.7 2.4 2.1" />
-      <path d="M13.2 8.2h4.5M13.2 10.4h3.6M13.2 12.6h2.8" />
-      <path d="M2.5 18.5h19" />
-      <path d="M5 18.5c.4-1 1.2-1.5 2.2-1.5h9.6c1 0 1.8.5 2.2 1.5" />
+      {/* Screen */}
+      <rect x="2.75" y="3.5" width="18.5" height="13" rx="1.75" />
+      {/* Profile avatar */}
+      <circle cx="8" cy="8.2" r="1.85" />
+      <path d="M5.2 14.2c.6-1.7 1.7-2.55 2.8-2.55s2.2.85 2.8 2.55" />
+      {/* Text lines */}
+      <path d="M12.6 7.1h5.2M12.6 9.35h5.2M12.6 11.6h4.2M12.6 13.85h3.4" />
+      {/* Laptop base */}
+      <path d="M4.2 19.4h15.6" />
+      <path d="M2.8 19.4c.35-.85 1.15-1.35 2.15-1.35h14.1c1 0 1.8.5 2.15 1.35" />
     </svg>
   );
 }
@@ -82,9 +107,12 @@ export function IconPhoneDevice({ className }: IconProps) {
   return (
     <svg {...socialSvgProps} className={cn("h-5 w-5", className)}>
       <rect x="7" y="2" width="10" height="20" rx="2.25" />
-      <path d="M10.2 3.6h3.6" />
-      <path d="M10 20.2h4" />
-      <path d="M10.2 14.8c1.2 1.1 2.8 1.5 4.2.4M9.8 10.4c.15-.95.95-1.55 1.85-1.5.45 0 .85.2 1.1.5l.45.45c.2.2.2.5 0 .7l-.85.85c.7 1.15 1.7 1.95 2.95 2.4l.85-.85c.2-.2.5-.2.7 0l.45.45c.3.25.5.65.5 1.1.05.9-.55 1.7-1.5 1.85-2.45.35-4.65-1.35-5.55-3.65-.25-.65-.35-1.35-.25-2.05.05-.4.25-.8.55-1.05z" />
+      {/* Earpiece / speaker */}
+      <path d="M10.4 3.7h3.2" />
+      {/* Home indicator */}
+      <path d="M10 20.15h4" />
+      {/* Classic handset, tilted diagonally */}
+      <path d="M10.1 9.4c-.55.55-.7 1.35-.4 2.05.85 1.95 2.5 3.45 4.55 4.1.7.25 1.5 0 1.95-.55l.55-.65c.25-.3.2-.75-.1-.95l-1.45-.85c-.3-.18-.7-.1-.9.2l-.25.35c-1.05-.35-1.95-1.1-2.45-2.1l.35-.25c.3-.2.38-.6.2-.9l-.85-1.45c-.2-.3-.65-.35-.95-.1l-.65.55z" />
     </svg>
   );
 }
