@@ -16,13 +16,13 @@ const columns = [
   },
   {
     heading: "Latest Videos",
-    image: "/images/latest/isabella-family.jpg",
-    alt: "A smiling young patient in red glasses and a red dress with her parents in a bright hospital atrium",
+    image: "/images/latest/cuatro-preguntas-visitas-medicas.jpg",
+    alt: "Seminario web: Cuatro preguntas para guiar su visita médica, con retratos de las presentadoras",
     tag: "Programs & Services",
     date: null,
-    title: "Isabella’s journey with bronchopulmonary dysplasia",
-    body: "Meet Isabella and her family as they share how specialized lung care at Boston Children’s helped her thrive.",
-    href: "/programs",
+    title: "Cuatro preguntas para mejores visitas médicas",
+    body: "Únase a la Dra. Eva Gómez y a la Especialista Certificada en Vida Infantil, Fiorella Downey, para un seminario web sobre cómo comunicarse con los proveedores de salud. Aprenda a...",
+    href: "/es",
     cta: "See All Videos",
   },
   {
