@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import {
   COOKIE_CONSENT_KEY,
@@ -10,15 +10,44 @@ import {
   type CookieConsentValue,
 } from "@/lib/preferences";
 
+const COOKIE_OFFSET_VAR = "--cookie-drawer-offset";
+
 export function CookieConsent() {
   const [ready, setReady] = useState(false);
   const [visible, setVisible] = useState(false);
+  const drawerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const stored = readLocalPreference(COOKIE_CONSENT_KEY);
     setVisible(!stored);
     setReady(true);
   }, []);
+
+  useEffect(() => {
+    if (!visible) {
+      document.documentElement.style.removeProperty(COOKIE_OFFSET_VAR);
+      return;
+    }
+
+    const el = drawerRef.current;
+    if (!el) return;
+
+    const syncOffset = () => {
+      document.documentElement.style.setProperty(
+        COOKIE_OFFSET_VAR,
+        `${el.offsetHeight}px`,
+      );
+    };
+
+    syncOffset();
+    const observer = new ResizeObserver(syncOffset);
+    observer.observe(el);
+
+    return () => {
+      observer.disconnect();
+      document.documentElement.style.removeProperty(COOKIE_OFFSET_VAR);
+    };
+  }, [visible, ready]);
 
   function decide(value: CookieConsentValue) {
     writeLocalPreference(COOKIE_CONSENT_KEY, value);
@@ -29,13 +58,14 @@ export function CookieConsent() {
 
   return (
     <div
-      className="fixed inset-x-0 bottom-[68px] z-[860] border-t border-border bg-white/95 p-s4 shadow-[0_-8px_28px_rgba(0,20,60,.12)] backdrop-blur-md xl:bottom-0"
+      ref={drawerRef}
+      className="fixed inset-x-0 bottom-0 z-[860] border-t border-border bg-white shadow-[0_-8px_28px_rgba(0,20,60,.14)]"
       role="dialog"
       aria-modal="false"
       aria-labelledby="cookie-consent-title"
       aria-describedby="cookie-consent-desc"
     >
-      <div className="wrap flex flex-col gap-s4 sm:flex-row sm:items-end sm:justify-between">
+      <div className="wrap flex flex-col gap-s4 py-s4 sm:flex-row sm:items-end sm:justify-between">
         <div className="max-w-[640px]">
           <p
             id="cookie-consent-title"

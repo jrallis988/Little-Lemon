@@ -54,7 +54,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={nunito.variable}>
-      <body className="pb-[68px] font-sans xl:pb-0">
+      <body className="pb-[calc(68px+var(--cookie-drawer-offset,0px))] font-sans xl:pb-[var(--cookie-drawer-offset,0px)]">
         <SkipNav />
         <StagingBanner />
         <SiteAnnouncement />

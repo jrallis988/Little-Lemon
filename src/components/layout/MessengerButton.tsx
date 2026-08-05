@@ -101,7 +101,7 @@ export function MessengerButton() {
   }
 
   return (
-    <div className="pointer-events-none fixed bottom-[84px] right-4 z-[850] flex flex-col items-end gap-3 xl:bottom-8 xl:right-8">
+    <div className="pointer-events-none fixed bottom-[calc(84px+var(--cookie-drawer-offset,0px))] right-4 z-[850] flex flex-col items-end gap-3 xl:bottom-[calc(2rem+var(--cookie-drawer-offset,0px))] xl:right-8">
       {open ? (
         <div
           ref={panelRef}

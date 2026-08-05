@@ -408,7 +408,7 @@ export function SiteHeader() {
       </header>
 
       <nav
-        className="fixed bottom-0 left-0 right-0 z-[800] flex gap-2 border-t border-border bg-white px-5 py-2.5 shadow-[0_-4px_20px_rgba(0,0,0,.12)] xl:hidden"
+        className="fixed bottom-[var(--cookie-drawer-offset,0px)] left-0 right-0 z-[800] flex gap-2 border-t border-border bg-white px-5 py-2.5 shadow-[0_-4px_20px_rgba(0,0,0,.12)] xl:hidden"
         aria-label="Quick actions"
       >
         <Link
