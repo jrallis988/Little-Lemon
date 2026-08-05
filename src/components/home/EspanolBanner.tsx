@@ -4,7 +4,7 @@ export function EspanolBanner() {
   return (
     <section
       id="espanol"
-      className="bg-pink py-s6"
+      className="bg-[#68759C] py-s6"
       aria-label="Recursos en español"
       lang="es"
     >
