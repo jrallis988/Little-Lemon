@@ -24,10 +24,15 @@ export const candidate = {
     "Nick Varga isn’t a career politician. He’s a Granite Stater who watched Washington stop listening a long time ago and decided that if nobody else was going to run, he would. This campaign doesn’t take corporate money. It doesn’t answer to party bosses. It’s built neighbor by neighbor — the only way a campaign for New Hampshire should be.",
   committee: "Nick Varga Campaign Committee",
   email: "hello@nickvarga.com",
+  /** Demo placeholder phone — replace with verified campaign number before launch */
   phone: "(603) 555-0142",
   mailAddress: "PO Box 1842, Newmarket, NH 03857",
   townsCommitment: 234,
   veteransCount: "90,000",
+  /**
+   * Demo placeholders: generic platform homepages only — not live campaign profiles.
+   * Replace with real profile URLs before public launch.
+   */
   social: {
     facebook: "https://www.facebook.com/",
     x: "https://x.com/",

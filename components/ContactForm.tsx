@@ -1,6 +1,8 @@
 "use client";
 
 import { RequiredLegend, RequiredMark, useAccessibleForm } from "@/components/a11y/FormFeedback";
+import { DemoFormNote } from "@/components/DemoFormNote";
+import { demoFormSuccess } from "@/lib/demo";
 
 export function ContactForm() {
   const { statusId, status, fieldProps, FieldError, StatusRegion, reportErrors, reportSuccess } =
@@ -25,7 +27,8 @@ export function ContactForm() {
       return;
     }
 
-    reportSuccess("Message received — we’ll follow up.");
+    // Demo mode: front-end success only — no email/CRM/API
+    reportSuccess(demoFormSuccess.contact);
     e.currentTarget.reset();
   }
 
@@ -36,6 +39,7 @@ export function ContactForm() {
       className="space-y-4 border border-slate-line bg-white p-6"
       aria-describedby={status !== "idle" ? statusId : undefined}
     >
+      <DemoFormNote />
       <RequiredLegend />
       <div>
         <label htmlFor="contact-name" className="label-field">
@@ -87,7 +91,7 @@ export function ContactForm() {
       <button type="submit" className="btn-primary">
         Send message
       </button>
-      <StatusRegion successMessage="Message received — we’ll follow up." />
+      <StatusRegion successMessage={demoFormSuccess.contact} />
     </form>
   );
 }

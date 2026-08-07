@@ -23,6 +23,10 @@ export default function TermsPage() {
       <article className="mx-auto max-w-3xl section-pad">
         <p className="text-sm text-slate-muted">Last Updated: July 28, 2026</p>
         <LegalReviewBanner />
+        <p className="mb-6 border border-slate-line bg-paper px-4 py-3 text-sm text-slate-muted">
+          Demo status: these Terms are draft display copy for layout review. Form
+          submissions on this preview do not create binding service records.
+        </p>
         <Prose>
           <p>
             Welcome to the official campaign website for {candidate.fullName}. By

@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { volunteerRoles } from "@/lib/volunteers";
 import { RequiredLegend, RequiredMark, useAccessibleForm } from "@/components/a11y/FormFeedback";
+import { DemoFormNote } from "@/components/DemoFormNote";
+import { demoFormSuccess } from "@/lib/demo";
 
 export function VolunteerSignup() {
   const { statusId, status, fieldProps, FieldError, StatusRegion, reportErrors, reportSuccess } =
@@ -25,7 +27,8 @@ export function VolunteerSignup() {
       return;
     }
 
-    reportSuccess("Volunteer sign-up received — thank you.");
+    // Demo mode: front-end success only — no email/CRM/API
+    reportSuccess(demoFormSuccess.volunteer);
     e.currentTarget.reset();
   }
 
@@ -38,6 +41,7 @@ export function VolunteerSignup() {
       aria-describedby={status !== "idle" ? statusId : undefined}
     >
       <h2 className="font-display text-2xl font-bold text-ink">Sign up to volunteer</h2>
+      <DemoFormNote />
       <RequiredLegend />
       <div>
         <label htmlFor="vol-role" className="label-field">
@@ -106,7 +110,7 @@ export function VolunteerSignup() {
         </Link>
         .
       </p>
-      <StatusRegion successMessage="Volunteer sign-up received — thank you." />
+      <StatusRegion successMessage={demoFormSuccess.volunteer} />
     </form>
   );
 }

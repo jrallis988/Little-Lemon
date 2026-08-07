@@ -1,6 +1,8 @@
 "use client";
 
 import { RequiredLegend, RequiredMark, useAccessibleForm } from "@/components/a11y/FormFeedback";
+import { DemoFormNote } from "@/components/DemoFormNote";
+import { demoFormSuccess } from "@/lib/demo";
 
 export function TownRequestForm() {
   const { statusId, status, fieldProps, FieldError, StatusRegion, reportErrors, reportSuccess } =
@@ -25,7 +27,8 @@ export function TownRequestForm() {
       return;
     }
 
-    reportSuccess("Visit request received — we’ll be in touch.");
+    // Demo mode: front-end success only — no email/CRM/API
+    reportSuccess(demoFormSuccess.townRequest);
     e.currentTarget.reset();
   }
 
@@ -36,6 +39,7 @@ export function TownRequestForm() {
       className="space-y-4 border border-slate-line bg-white p-6 sm:p-8"
       aria-describedby={status !== "idle" ? statusId : undefined}
     >
+      <DemoFormNote />
       <RequiredLegend />
       <div>
         <label htmlFor="town-name" className="label-field">
@@ -94,7 +98,7 @@ export function TownRequestForm() {
       <button type="submit" className="btn-primary w-full sm:w-auto">
         Request a Visit
       </button>
-      <StatusRegion successMessage="Visit request received — we’ll be in touch." />
+      <StatusRegion successMessage={demoFormSuccess.townRequest} />
     </form>
   );
 }

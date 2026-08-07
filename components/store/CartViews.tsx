@@ -11,7 +11,9 @@ import {
   RequiredMark,
   useAccessibleForm,
 } from "@/components/a11y/FormFeedback";
+import { DemoFormNote } from "@/components/DemoFormNote";
 import { candidate } from "@/lib/candidate";
+import { demoFormSuccess } from "@/lib/demo";
 
 export function CartView() {
   const { lines, ready, subtotalCents, setQty, removeItem, lineProduct, lineKey } = useStore();
@@ -150,7 +152,6 @@ export function CheckoutForm() {
     const data = new FormData(e.currentTarget);
     const name = String(data.get("name") || "").trim();
     const email = String(data.get("email") || "").trim();
-    const phone = String(data.get("phone") || "").trim();
     const address = String(data.get("address") || "").trim();
     const city = String(data.get("city") || "").trim();
     const state = String(data.get("state") || "").trim();
@@ -171,21 +172,19 @@ export function CheckoutForm() {
       return;
     }
 
-    // Demo checkout — payment processor not wired yet
+    // Demo checkout: interactive cart + mock submit only — no payment gateway or order DB
     clearCart();
-    reportSuccess(
-      `Order request received. ${candidate.brandName} will follow up at ${email} to confirm payment and shipping.`
-    );
-    window.setTimeout(() => router.push("/shop"), 4000);
+    reportSuccess(demoFormSuccess.checkout);
+    window.setTimeout(() => router.push("/shop"), 5000);
   }
 
   if (status === "success") {
     return (
       <div className="border border-slate-line bg-white p-8">
-        <StatusRegion successMessage="Order request received." />
+        <StatusRegion successMessage={demoFormSuccess.checkout} />
         <p className="mt-4 text-slate-text">
-          Thanks for backing the campaign. We’ll email payment instructions and a shipping
-          estimate shortly. No charge has been processed yet.
+          This is a non-functional checkout simulation. No card was charged and no order
+          record was saved. The cart remains available for continued demo browsing.
         </p>
         <Link href="/shop" className="btn-primary mt-6 inline-flex">
           Back to store
@@ -201,8 +200,9 @@ export function CheckoutForm() {
         onSubmit={onSubmit}
         className="space-y-5 border border-slate-line bg-white p-6 md:p-8"
       >
+        <DemoFormNote />
         <RequiredLegend />
-        <StatusRegion successMessage="Order request received." />
+        <StatusRegion successMessage={demoFormSuccess.checkout} />
 
         <div>
           <label htmlFor="name" className="label-field">
@@ -278,13 +278,12 @@ export function CheckoutForm() {
         </div>
 
         <p className="text-sm leading-relaxed text-slate-muted">
-          Checkout submits an order request to the campaign. Card payment is not processed on
-          this page yet — we’ll confirm totals (including shipping) before any charge. Paid for by{" "}
-          {candidate.committee}.
+          Demo checkout only: the cart is fully interactive, but this step does not process live
+          payments or save orders. Paid for by {candidate.committee}.
         </p>
 
         <button type="submit" className="btn-primary w-full">
-          Place order request →
+          Place demo order request →
         </button>
       </form>
 

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Bot, MessageCircle, Send, UserRound, X } from "lucide-react";
 import { candidate } from "@/lib/candidate";
 import { chatConfig } from "@/lib/chat";
+import { demoFormSuccess } from "@/lib/demo";
 
 type Mode = "menu" | "helper" | "live";
 
@@ -115,6 +116,7 @@ export function ChatWidget() {
       setLiveError("Enter a valid email so we can reply.");
       return;
     }
+    // Demo mode: front-end acknowledgment only — no staff delivery / CRM
     setLiveStatus("sent");
     setLiveError("");
     setLiveName("");
@@ -384,7 +386,7 @@ export function ChatWidget() {
                 </button>
                 {liveStatus === "sent" && (
                   <p role="status" className="text-sm font-semibold text-navy">
-                    Message received. {chatConfig.expectedResponse}
+                    {demoFormSuccess.chatLive}
                   </p>
                 )}
                 {liveStatus === "error" && (

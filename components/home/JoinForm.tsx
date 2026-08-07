@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { SectionIntro } from "@/components/SectionIntro";
 import { RequiredLegend, RequiredMark, useAccessibleForm } from "@/components/a11y/FormFeedback";
+import { demoFormSuccess } from "@/lib/demo";
 
 export function JoinForm() {
   const {
@@ -38,7 +39,8 @@ export function JoinForm() {
       return;
     }
 
-    reportSuccess("You’re on the list — thank you for joining Team Varga.");
+    // Demo mode: front-end success only — no email/CRM/API
+    reportSuccess(demoFormSuccess.join);
     e.currentTarget.reset();
   }
 
@@ -60,6 +62,13 @@ export function JoinForm() {
             className="mt-8 space-y-4 border border-white/15 bg-ink/30 p-6 sm:p-8"
             aria-describedby={status !== "idle" ? statusId : undefined}
           >
+            <p
+              className="rounded-sm border border-white/20 bg-white/5 px-3 py-2 text-xs leading-relaxed text-white/75"
+              role="note"
+            >
+              Demo mode: this form validates and shows a success message only. It does not send
+              email, sync a CRM, or save data.
+            </p>
             <RequiredLegend />
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
@@ -137,7 +146,7 @@ export function JoinForm() {
               </Link>
               .
             </p>
-            <StatusRegion successMessage="You’re on the list — thank you for joining Team Varga." />
+            <StatusRegion successMessage={demoFormSuccess.join} />
           </form>
         </div>
       </div>

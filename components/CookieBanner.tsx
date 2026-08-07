@@ -4,6 +4,14 @@ import { useEffect, useId, useState } from "react";
 import Link from "next/link";
 import { candidate } from "@/lib/candidate";
 
+/**
+ * Cookie consent UI for demo/display purposes.
+ * Consent is stored in localStorage only.
+ * No live analytics SDKs, pixels, or third-party tracking scripts are loaded
+ * anywhere in this codebase — banner copy may still reference analytics for
+ * Privacy Policy draft / future-state display.
+ */
+
 export const COOKIE_CONSENT_KEY = "varga-cookie-consent";
 
 export type CookieConsent = "accepted" | "essential" | null;
@@ -72,7 +80,7 @@ export function CookieBanner() {
               Notice: The {candidate.fullName} campaign uses cookies and similar
               technologies to keep this site working, remember your accessibility
               preferences, process form submissions, and understand how visitors
-              use the site.
+              use the site through analytics tracking.
             </p>
             <p className="mt-3 text-sm leading-relaxed text-slate-text">
               By choosing <strong className="font-semibold text-ink">Accept</strong>,
@@ -84,7 +92,11 @@ export function CookieBanner() {
                 Privacy Policy
               </Link>
               . If you decline optional tracking, you can still browse with
-              essential cookies only.
+              essential cookies only.{" "}
+              <span className="text-slate-muted">
+                (Demo note: optional analytics scripts are not currently loaded on
+                this site.)
+              </span>
             </p>
             <div className="mt-5 flex flex-col gap-3 sm:flex-row">
               <button type="button" className="btn-primary flex-1" onClick={accept}>
