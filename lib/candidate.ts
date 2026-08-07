@@ -30,11 +30,11 @@ export const candidate = {
   townsCommitment: 234,
   veteransCount: "90,000",
   /**
-   * Demo placeholders: generic platform homepages only — not live campaign profiles.
-   * Replace with real profile URLs before public launch.
+   * Social profiles. Facebook is live; other networks still use generic
+   * platform homepage placeholders until campaign URLs are supplied.
    */
   social: {
-    facebook: "https://www.facebook.com/",
+    facebook: "https://www.facebook.com/Vargraforsenate",
     x: "https://x.com/",
     instagram: "https://www.instagram.com/",
     youtube: "https://www.youtube.com/",
