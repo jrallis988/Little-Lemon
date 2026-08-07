@@ -321,7 +321,7 @@ export function PricingMatrix() {
 
         <div
           id="pricing-compare"
-          className="mx-auto mt-4 max-w-5xl scroll-mt-16 overflow-hidden rounded-2xl pf-grad-footer text-white shadow-[0_8px_24px_-12px_rgba(61,9,88,0.4)]"
+          className="mx-auto mt-4 max-w-5xl scroll-mt-16 overflow-x-auto rounded-2xl pf-grad-footer text-white shadow-[0_8px_24px_-12px_rgba(61,9,88,0.4)]"
         >
           <table className="w-full min-w-[34rem] border-collapse text-left">
             <caption className="sr-only">

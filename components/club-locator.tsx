@@ -232,14 +232,12 @@ function ClubDetail({ club }: { club: Club }) {
           </div>
 
           <div className="mt-auto flex flex-col gap-2 pt-1 sm:flex-row sm:items-center">
-            <a
-              href={`https://www.planetfitness.com/gyms`}
-              target="_blank"
-              rel="noreferrer"
+            <Link
+              href={`/gyms/${club.slug}`}
               className="text-sm font-semibold text-pf-yellow underline underline-offset-2 sm:mr-auto"
             >
               Club Details
-            </a>
+            </Link>
             <Button asChild variant="purple" className="flex-1 sm:flex-none">
               <a href="#pricing">Review Plans</a>
             </Button>
@@ -294,16 +292,43 @@ export function ClubLocator() {
 
   useEffect(() => {
     let cancelled = false;
-    fetch("/api/clubs")
-      .then((res) => res.json())
-      .then((data: { clubs?: Club[] }) => {
-        if (cancelled || !data.clubs?.length) return;
-        setClubs(data.clubs);
-        setSelectedId((prev) => prev ?? data.clubs![0]?.id ?? null);
-      })
-      .catch(() => {
-        /* local getClubs() already seeded state */
-      });
+
+    const loadClubs = (origin?: { latitude: number; longitude: number }) => {
+      const params = new URLSearchParams();
+      if (origin) {
+        params.set("lat", String(origin.latitude));
+        params.set("lng", String(origin.longitude));
+      }
+      const qs = params.toString();
+      return fetch(`/api/clubs${qs ? `?${qs}` : ""}`)
+        .then((res) => res.json())
+        .then((data: { clubs?: Club[] }) => {
+          if (cancelled || !data.clubs?.length) return;
+          setClubs(data.clubs);
+          setSelectedId((prev) => prev ?? data.clubs![0]?.id ?? null);
+        })
+        .catch(() => {
+          /* local getClubs() already seeded state */
+        });
+    };
+
+    loadClubs();
+
+    if (typeof navigator !== "undefined" && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          void loadClubs({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        () => {
+          /* keep seed distances */
+        },
+        { maximumAge: 60_000, timeout: 8_000 }
+      );
+    }
+
     return () => {
       cancelled = true;
     };

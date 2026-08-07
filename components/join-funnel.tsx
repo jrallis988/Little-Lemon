@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { Check, ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -43,6 +44,12 @@ type PaymentForm = {
   expiry: string;
   cvc: string;
   zip: string;
+};
+
+type Consents = {
+  membershipAgreement: boolean;
+  recurringBilling: boolean;
+  ageAttestation: boolean;
 };
 
 function FeeSummary({
@@ -110,7 +117,7 @@ function FeeSummary({
         </div>
       </dl>
       <p className="mt-3 text-[11px] text-white/50">
-        Local club rate—not a national average. No hidden fees on this page.
+        Local club rate—not a national average. Taxes may apply at your club.
       </p>
     </aside>
   );
@@ -136,6 +143,7 @@ function Field({
 }
 
 export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
+  const router = useRouter();
   const club = useMemo(
     () => (initialClubId ? getClubById(initialClubId) : null),
     [initialClubId]
@@ -172,8 +180,15 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
     cvc: "",
     zip: "",
   });
+  const [consents, setConsents] = useState<Consents>({
+    membershipAgreement: false,
+    recurringBilling: false,
+    ageAttestation: false,
+  });
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [membershipId, setMembershipId] = useState<string | null>(null);
+  const [paymentMode, setPaymentMode] = useState<"test" | "stripe">("test");
 
   const pricing = getLocalPricing(club, planId);
   const stepIndex = STEPS.findIndex((item) => item.id === step);
@@ -187,6 +202,54 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
       setPlanId(availablePlans[0]);
     }
   }, [pricing.available, availablePlans]);
+
+  async function submitMembership() {
+    if (!club) return;
+    setSubmitting(true);
+    setError(null);
+    try {
+      const response = await fetch("/api/memberships", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          clubId: club.id,
+          plan: planId,
+          member: identity,
+          consents,
+          payment,
+        }),
+      });
+      const data = (await response.json()) as {
+        error?: string;
+        paymentsMode?: "test" | "stripe";
+        membership?: { id: string };
+      };
+      if (!response.ok || !data.membership?.id) {
+        throw new Error(data.error ?? "Could not start membership.");
+      }
+      setMembershipId(data.membership.id);
+      setPaymentMode(data.paymentsMode ?? "test");
+      track("join_complete", {
+        clubId: club.id,
+        plan: planId,
+        membershipId: data.membership.id,
+        dueToday: dueToday(pricing),
+        paymentsMode: data.paymentsMode ?? "test",
+      });
+      // Clear sensitive card fields from memory after success.
+      setPayment((prev) => ({
+        ...prev,
+        cardNumber: "",
+        cvc: "",
+      }));
+      setStep("done");
+      router.prefetch(`/join/confirmation/${data.membership.id}`);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Join failed.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   function goNext() {
     setError(null);
@@ -223,7 +286,7 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
     if (step === "payment") {
       if (
         !payment.nameOnCard.trim() ||
-        payment.cardNumber.replace(/\s/g, "").length < 12 ||
+        payment.cardNumber.replace(/\s/g, "").length < 13 ||
         payment.expiry.length < 4 ||
         payment.cvc.length < 3 ||
         payment.zip.length < 5
@@ -231,16 +294,15 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
         setError("Check your card details and billing ZIP.");
         return;
       }
-      setSubmitting(true);
-      window.setTimeout(() => {
-        track("join_complete", {
-          clubId: club?.id ?? null,
-          plan: planId,
-          dueToday: dueToday(pricing),
-        });
-        setSubmitting(false);
-        setStep("done");
-      }, 700);
+      if (
+        !consents.membershipAgreement ||
+        !consents.recurringBilling ||
+        !consents.ageAttestation
+      ) {
+        setError("Accept all required agreements to continue.");
+        return;
+      }
+      void submitMembership();
     }
   }
 
@@ -346,7 +408,7 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
                 <div>
                   <h2 className="font-display text-2xl text-pf-ink">About you</h2>
                   <p className="mt-1 text-sm text-pf-ink/65">
-                    We’ll use this for your membership and the PF app invite.
+                    We’ll use this for your membership record and PF app invite.
                   </p>
                 </div>
                 <div className="grid gap-3 sm:grid-cols-2">
@@ -362,6 +424,7 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
                       }
                       className="border-pf-line bg-white text-pf-ink"
                       autoComplete="given-name"
+                      required
                     />
                   </Field>
                   <Field id="lastName" label="Last name">
@@ -376,6 +439,7 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
                       }
                       className="border-pf-line bg-white text-pf-ink"
                       autoComplete="family-name"
+                      required
                     />
                   </Field>
                   <Field id="email" label="Email">
@@ -391,6 +455,7 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
                       }
                       className="border-pf-line bg-white text-pf-ink"
                       autoComplete="email"
+                      required
                     />
                   </Field>
                   <Field id="phone" label="Mobile phone">
@@ -406,6 +471,7 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
                       }
                       className="border-pf-line bg-white text-pf-ink"
                       autoComplete="tel"
+                      required
                     />
                   </Field>
                 </div>
@@ -415,10 +481,13 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
             {step === "payment" && (
               <div className="space-y-4">
                 <div>
-                  <h2 className="font-display text-2xl text-pf-ink">Payment</h2>
+                  <h2 className="font-display text-2xl text-pf-ink">Payment & agreements</h2>
                   <p className="mt-1 text-sm text-pf-ink/65">
-                    Demo checkout only—nothing is charged. Due today stays{" "}
-                    {formatCurrency(dueToday(pricing))}.
+                    Due today: {formatCurrency(dueToday(pricing))}. Card details
+                    are authorized through the server; only brand + last 4 are
+                    stored on your membership. Set{" "}
+                    <code className="rounded bg-pf-mist px-1">STRIPE_SECRET_KEY</code>{" "}
+                    for live Stripe charges—otherwise test authorization is used.
                   </p>
                 </div>
                 <div className="grid gap-3">
@@ -498,6 +567,71 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
                     </Field>
                   </div>
                 </div>
+
+                <fieldset className="space-y-3 rounded-2xl bg-pf-mist/70 p-3">
+                  <legend className="px-1 text-xs font-bold uppercase tracking-wide text-pf-purple">
+                    Required agreements
+                  </legend>
+                  <label className="flex items-start gap-2 text-sm text-pf-ink/80">
+                    <input
+                      type="checkbox"
+                      className="mt-1"
+                      checked={consents.membershipAgreement}
+                      onChange={(e) =>
+                        setConsents((prev) => ({
+                          ...prev,
+                          membershipAgreement: e.target.checked,
+                        }))
+                      }
+                    />
+                    <span>
+                      I agree to the{" "}
+                      <a
+                        href="https://www.planetfitness.com/terms-conditions"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="font-semibold text-pf-purple underline"
+                      >
+                        Membership Agreement / Terms
+                      </a>
+                      .
+                    </span>
+                  </label>
+                  <label className="flex items-start gap-2 text-sm text-pf-ink/80">
+                    <input
+                      type="checkbox"
+                      className="mt-1"
+                      checked={consents.recurringBilling}
+                      onChange={(e) =>
+                        setConsents((prev) => ({
+                          ...prev,
+                          recurringBilling: e.target.checked,
+                        }))
+                      }
+                    />
+                    <span>
+                      I authorize recurring monthly dues of{" "}
+                      {formatCurrency(pricing.monthlyDues)} plus the annual fee
+                      of {formatCurrency(pricing.annualFee)} when billed.
+                    </span>
+                  </label>
+                  <label className="flex items-start gap-2 text-sm text-pf-ink/80">
+                    <input
+                      type="checkbox"
+                      className="mt-1"
+                      checked={consents.ageAttestation}
+                      onChange={(e) =>
+                        setConsents((prev) => ({
+                          ...prev,
+                          ageAttestation: e.target.checked,
+                        }))
+                      }
+                    />
+                    <span>
+                      I confirm I am 18+, or 13–17 joining with a parent/guardian.
+                    </span>
+                  </label>
+                </fieldset>
               </div>
             )}
 
@@ -505,17 +639,34 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
               <div className="space-y-3 py-2 text-center sm:text-left">
                 <p className="inline-flex items-center gap-2 rounded-full bg-emerald-500/15 px-3 py-1 text-sm font-semibold text-emerald-700">
                   <Check className="h-4 w-4" aria-hidden />
-                  Membership started
+                  Membership created
                 </p>
                 <h2 className="font-display text-3xl text-pf-ink">
                   You’re set, {identity.firstName || "member"}.
                 </h2>
                 <p className="text-sm text-pf-ink/70">
-                  {getPlan(planId).name} at {club?.name}. Download the Planet
-                  Fitness app for check-in and your digital keytag—those stay in
-                  the app, not on this site.
+                  {getPlan(planId).name} at {club?.name}. Membership ID{" "}
+                  <span className="font-semibold text-pf-purple">
+                    {membershipId}
+                  </span>
+                  . Payment mode:{" "}
+                  <span className="font-semibold">
+                    {paymentMode === "stripe" ? "Stripe" : "test authorization"}
+                  </span>
+                  .
+                </p>
+                <p className="text-sm text-pf-ink/65">
+                  Download the Planet Fitness app for check-in and your digital
+                  keytag—those stay in the app.
                 </p>
                 <div className="flex flex-wrap justify-center gap-2 pt-2 sm:justify-start">
+                  {membershipId ? (
+                    <Button asChild variant="purple">
+                      <Link href={`/join/confirmation/${membershipId}`}>
+                        View confirmation
+                      </Link>
+                    </Button>
+                  ) : null}
                   <Button asChild variant="app" className="bg-pf-btn text-white hover:brightness-110">
                     <a
                       href="https://www.planetfitness.com/mobileapp"
@@ -553,9 +704,10 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
                   className="flex-1"
                   onClick={goNext}
                   disabled={submitting || (step === "confirm" && !club)}
+                  aria-busy={submitting}
                 >
                   {submitting
-                    ? "Starting membership…"
+                    ? "Creating membership…"
                     : step === "payment"
                       ? `Pay ${formatCurrency(dueToday(pricing))} & join`
                       : "Continue"}

@@ -1,6 +1,6 @@
 # Planet Fitness — Acquisition Website
 
-Minimalist public site focused on **club discovery**, **transparent local pricing**, and a **frictionless join funnel**. Member utilities (check-in, crowd meter, workouts, digital keytag) belong in the mobile app.
+Public site focused on **club discovery**, **transparent local pricing**, and a **join funnel**. Member utilities (check-in, Crowd Meter, workouts, digital keytag) belong in the mobile app.
 
 ## Stack
 
@@ -12,6 +12,7 @@ Minimalist public site focused on **club discovery**, **transparent local pricin
 
 ```bash
 npm install
+cp .env.example .env.local
 npm run dev
 ```
 
@@ -19,9 +20,25 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## What’s in place
 
-1. **Club finder** — full-viewport search with live open/closed from weekly schedules, amenities, and keyboard listbox nav
-2. **Local pricing** — Classic vs Black Card dues vary by club; national matrix + confirmed local rates
-3. **Join funnel** — `/join` multi-step (club/plan → identity → payment → done) with fees visible every step
-4. **App hand-off banner** — existing members → PF app
-5. **Club feed API** — `GET /api/clubs?q=` (swap for CMS later)
-6. **Funnel analytics** — `club_search`, `club_select`, `plan_select`, `join_step`, `join_complete` via `window.dataLayer`
+1. **Club finder** — search, geolocation distance sorting, open/closed hours, amenities
+2. **Club pages** — `/gyms/[slug]` with local rates + JSON-LD
+3. **Memberships** — Classic vs Black Card matrix + local dues
+4. **Join funnel** — `/join` with legal consents, payment authorize, persisted membership IDs
+5. **Membership API** — `POST /api/memberships`, `GET /api/memberships/:id` (stored in `.data/`)
+6. **Payments** — Stripe when `STRIPE_SECRET_KEY` is set; otherwise test authorization (Luhn-validated). Full PAN is never stored—only brand + last4.
+7. **SEO** — Open Graph, sitemap, robots, metadataBase
+8. **Consent + analytics** — cookie banner; GTM loads after Accept when `NEXT_PUBLIC_GTM_ID` is set
+9. **Error states** — `error.tsx`, `not-found.tsx`, `loading.tsx`, security headers
+
+## Payments
+
+| Mode | When | Behavior |
+|------|------|----------|
+| Test | No `STRIPE_SECRET_KEY` | Authorizes locally, creates membership, no processor charge |
+| Stripe | `STRIPE_SECRET_KEY` set | Creates a Stripe PaymentIntent and stores membership |
+
+Use Stripe test card `4242 4242 4242 4242` for local QA.
+
+## Clubs inventory
+
+Seed clubs live in `lib/clubs.ts` (multi-city). Swap for a live CMS/API via `CLUBS_API_URL` / feed adapter when ready. Phones use `555` exchange numbers for demo safety.

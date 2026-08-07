@@ -4,6 +4,7 @@ export type AnalyticsPayload = Record<
 >;
 
 export type FunnelEvent =
+  | "page_view"
   | "club_search"
   | "club_select"
   | "plan_select"
