@@ -5,7 +5,7 @@ const beats = [
   },
   {
     label: "Role",
-    body: "I owned the front-end design and build in React: information hierarchy, routing between views, and form validation for a reliable reservation path.",
+    body: "I owned the front-end UI and responsive layout—information hierarchy, clear booking flow, and ongoing work in React and component-based systems.",
   },
   {
     label: "Constraints",

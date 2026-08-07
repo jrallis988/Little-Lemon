@@ -3,20 +3,21 @@ import { Link } from "react-router-dom";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import certifications from "../data/certifications";
+import experience from "../data/experience";
 import useReveal from "../hooks/useReveal";
 
 const chapters = [
   {
-    title: "Design roots, developer craft",
-    body: "I started in digital design and UX—learning how hierarchy, typography, and flow shape trust. That foundation still drives how I write interfaces: fewer obstacles, clearer paths, and components that feel intentional instead of decorative.",
+    title: "Design roots, front-end craft",
+    body: "I come from digital media and professional communication—learning how hierarchy, typography, and flow shape trust. That foundation drives how I build interfaces: fewer obstacles, clearer paths, and components that feel intentional.",
   },
   {
-    title: "Beyond the UI",
-    body: "Front-end is home base, but I don’t stop at the browser chrome. I wire Python/FastAPI services, shape data with Pandas, and deploy on AWS and Azure so what users see is backed by systems that are just as deliberate.",
+    title: "Studio practice",
+    body: "Through Artistic Fountain, my independent multimedia and design studio, I explore visual systems and brand storytelling that translate into clean, component-driven UI.",
   },
   {
     title: "How I like to work",
-    body: "I prefer shipping thin vertical slices: a clear interaction, a maintainable component, a deploy path that doesn’t fight you. Good development, for me, is removing friction—not stacking features or cleverness for its own sake.",
+    body: "I prefer shipping clear vertical slices: a solid layout, accessible interaction, and a design system that teams can extend. Good front-end work, for me, is removing friction—not stacking features for their own sake.",
   },
 ];
 
@@ -25,9 +26,9 @@ export default function AboutPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "About James Rallis — Developer";
+    document.title = "About James Rallis — Front-End Engineer";
     return () => {
-      document.title = "James Rallis — Product & AI Developer";
+      document.title = "James Rallis — Front-End Engineer & Multimedia Designer";
     };
   }, []);
 
@@ -46,9 +47,8 @@ export default function AboutPage() {
               More about how I build.
             </h1>
             <p className="reveal mt-5 text-base leading-relaxed text-sand/85 md:text-lg">
-              A closer look at my path from design into full product development—
-              the principles I ship with, and the certifications that mark the work
-              along the way.
+              Front-end engineering with a multimedia design foundation—accessible
+              UI, responsive layouts, and UX-driven systems.
             </p>
             <div className="reveal mt-8 flex flex-wrap gap-3">
               <Link to="/#contact" className="btn-primary">
@@ -76,7 +76,30 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section id="certifications" className="relative overflow-hidden bg-ink-soft py-20 md:py-28">
+        <section className="bg-ink-soft py-20 md:py-28">
+          <div className="container">
+            <div className="mb-12 max-w-2xl stagger">
+              <p className="reveal mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-foam">
+                Experience & education
+              </p>
+              <h2 className="reveal font-display text-3xl font-bold text-chalk md:text-5xl">
+                Path so far.
+              </h2>
+            </div>
+            <ul className="stagger max-w-3xl">
+              {experience.map((item) => (
+                <li key={item.id} className="reveal border-t border-sand/14 py-7">
+                  <p className="text-sm uppercase tracking-[0.16em] text-foam">{item.kind}</p>
+                  <h3 className="mt-2 font-display text-2xl font-bold text-chalk">{item.org}</h3>
+                  <p className="mt-2 text-base text-sand/85">{item.role}</p>
+                </li>
+              ))}
+              <li className="border-t border-sand/14" aria-hidden="true" />
+            </ul>
+          </div>
+        </section>
+
+        <section id="certifications" className="relative overflow-hidden bg-ink py-20 md:py-28">
           <div
             className="pointer-events-none absolute -left-16 bottom-0 h-64 w-64 rounded-full bg-foam/10 blur-3xl"
             aria-hidden="true"
@@ -90,8 +113,7 @@ export default function AboutPage() {
                 Credentials that back the craft.
               </h2>
               <p className="reveal mt-4 text-base leading-relaxed text-sand/85 md:text-lg">
-                Formal coursework and certificates that shaped how I approach
-                front-end systems, accessibility, and product delivery.
+                Update these with your verified certificates and links as you finalize them.
               </p>
             </div>
 

@@ -6,6 +6,7 @@ import Work from "../components/Work";
 import CaseStudy from "../components/CaseStudy";
 import Playground from "../components/Playground";
 import About from "../components/About";
+import Experience from "../components/Experience";
 import Bring from "../components/Bring";
 import Skills from "../components/Skills";
 import Contact from "../components/Contact";
@@ -40,6 +41,7 @@ export default function Home() {
         <CaseStudy />
         <Playground />
         <About />
+        <Experience />
         <Bring />
         <Skills />
         <Contact />

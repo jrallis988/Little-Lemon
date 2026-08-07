@@ -12,8 +12,8 @@ export default function Work() {
             Projects that put clarity first.
           </h2>
           <p className="reveal mt-4 text-base leading-relaxed text-sand/85 md:text-lg">
-            Selected builds across product UI, FastAPI services, RAG apps, and
-            playable web prototypes—kept clear, shippable, and easy to extend.
+            Front-end UI work focused on responsive layouts, accessible interaction,
+            and clean component systems—plus a live interactive prototype on this site.
           </p>
         </div>
 

@@ -1,5 +1,6 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import profile from "../data/profile";
 
 const schema = Yup.object({
   name: Yup.string().trim().required("Name is required"),
@@ -21,24 +22,21 @@ export default function Contact() {
             Let&apos;s build something people enjoy using.
           </h2>
           <p className="reveal mt-5 text-base leading-relaxed text-sand/85 md:text-lg">
-            Tell me about your product, site, mobile app, or data/cloud challenge.
-            I&apos;m especially interested in React/Next frontends, Python backends,
-            and shipping clean systems on AWS or Azure.
+            Tell me about your product, site, or team. I&apos;m especially interested in
+            front-end engineering roles focused on accessible UI and design systems.
           </p>
           <div className="reveal mt-8 flex flex-wrap gap-3">
-            <a href={`${process.env.PUBLIC_URL}/resume.html`} className="btn-primary">
-              View resume
+            <a href={`mailto:${profile.email}`} className="btn-primary">
+              Email James
             </a>
-            <a
-              href="https://github.com/jrallis988"
-              target="_blank"
-              rel="noreferrer"
-              className="btn-ghost"
-            >
+            <a href={profile.linkedin} target="_blank" rel="noreferrer" className="btn-ghost">
+              LinkedIn
+            </a>
+            <a href={profile.github} target="_blank" rel="noreferrer" className="btn-ghost">
               GitHub
             </a>
-            <a href="mailto:jjrallis@unh.edu" className="btn-ghost">
-              Email directly
+            <a href={`${process.env.PUBLIC_URL}/resume.html`} className="btn-ghost">
+              Resume
             </a>
           </div>
         </div>
@@ -52,7 +50,7 @@ export default function Contact() {
               const body = encodeURIComponent(
                 `${values.message}\n\n— ${values.name}\n${values.email}`
               );
-              window.location.href = `mailto:jjrallis@unh.edu?subject=${subject}&body=${body}`;
+              window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
               setStatus("Opening your email client…");
               resetForm();
               setSubmitting(false);
