@@ -1,5 +1,5 @@
-import { Link } from 'expo-router';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { averageReviews } from '../lib/averages';
 import type { Company, Review } from '../types';
@@ -9,31 +9,33 @@ import { StarRating } from './StarRating';
 type Props = {
   company: Company;
   reviews: Review[];
-  index?: number;
 };
 
 export function CompanyCard({ company, reviews }: Props) {
+  const router = useRouter();
   const averages = averageReviews(reviews);
 
   return (
-    <Link href={`/company/${company.id}`} asChild>
-      <Pressable style={({ pressed }) => [styles.card, pressed && styles.pressed]}>
-        <View style={styles.top}>
-          <Text style={styles.name}>{company.name}</Text>
-          <Text style={styles.meta}>
-            {company.industry} · {company.location}
-          </Text>
-        </View>
-        <View style={styles.bottom}>
-          <StarRating value={averages.overall} size="sm" />
-          <Text style={styles.count}>
-            {averages.reviewCount === 0
-              ? 'No reviews yet'
-              : `${averages.reviewCount} review${averages.reviewCount === 1 ? '' : 's'}`}
-          </Text>
-        </View>
-      </Pressable>
-    </Link>
+    <Pressable
+      accessibilityRole="link"
+      onPress={() => router.push(`/company/${company.id}`)}
+      style={({ pressed }) => [styles.card, pressed && styles.pressed]}
+    >
+      <View style={styles.top}>
+        <Text style={styles.name}>{company.name}</Text>
+        <Text style={styles.meta}>
+          {company.industry} · {company.location}
+        </Text>
+      </View>
+      <View style={styles.bottom}>
+        <StarRating value={averages.overall} size="sm" />
+        <Text style={styles.count}>
+          {averages.reviewCount === 0
+            ? 'No reviews yet'
+            : `${averages.reviewCount} review${averages.reviewCount === 1 ? '' : 's'}`}
+        </Text>
+      </View>
+    </Pressable>
   );
 }
 
@@ -45,6 +47,7 @@ const styles = StyleSheet.create({
     borderColor: colors.border,
     padding: spacing.md,
     gap: spacing.md,
+    ...(Platform.OS === 'web' ? ({ cursor: 'pointer' } as object) : null),
   },
   pressed: {
     transform: [{ scale: 0.985 }],
