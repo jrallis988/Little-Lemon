@@ -14,10 +14,11 @@ function Mission() {
         </div>
         <div className="lg:col-span-7">
           <p className="font-body text-lg leading-relaxed text-violet-mist md:text-xl">
-            Civic Bound is a community-embedded social and developmental support
-            network for youth moving through critical life stages. We focus on
-            community re-entry, life direction, and stability—centering youth
-            themselves, not parent-teacher politics or administrative boards.
+            Civic Bound is a nonprofit community-embedded social and
+            developmental support network for youth moving through critical life
+            stages. We focus on community re-entry, life direction, and
+            stability—centering youth themselves, not parent-teacher politics or
+            administrative boards.
           </p>
           <div className="mt-10 grid gap-8 sm:grid-cols-2">
             <div className="border-l-2 border-chartreuse pl-5">

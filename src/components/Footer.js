@@ -7,8 +7,8 @@ function Footer() {
             Civic <span className="text-chartreuse">Bound</span>
           </p>
           <p className="mt-3 max-w-sm font-body text-sm text-violet-mist">
-            Community youth support networks for life direction, stability, and
-            positive community re-entry.
+            A nonprofit community youth support network for life direction,
+            stability, and positive community re-entry.
           </p>
         </div>
         <div className="flex flex-wrap gap-6 font-body text-sm uppercase tracking-[0.12em] text-violet-mist">
@@ -28,7 +28,9 @@ function Footer() {
       </div>
       <div className="border-t border-violet-bright/15">
         <div className="container flex flex-col gap-2 py-5 font-body text-xs text-violet-mist/80 md:flex-row md:justify-between">
-          <p>© {new Date().getFullYear()} Civic Bound. All rights reserved.</p>
+          <p>
+            © {new Date().getFullYear()} Civic Bound. A nonprofit organization.
+          </p>
           <p>Youth-centered. Community-rooted. Dignity first.</p>
         </div>
       </div>

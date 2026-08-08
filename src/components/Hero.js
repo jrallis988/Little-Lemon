@@ -19,15 +19,16 @@ function Hero() {
 
       <div className="container relative pb-16 pt-32 md:pb-24 md:pt-40">
         <p className="eyebrow opacity-0 animate-rise">
-          Community youth support networks
+          A nonprofit youth support network
         </p>
         <h1 className="display mt-4 max-w-4xl text-4xl leading-[1.05] opacity-0 animate-rise-delay sm:text-5xl md:text-6xl lg:text-7xl">
           Civic <span className="text-chartreuse">Bound</span>
         </h1>
         <div className="mt-5 h-px w-24 origin-left scale-x-0 bg-chartreuse animate-draw" />
         <p className="mt-6 max-w-xl font-body text-lg text-violet-mist opacity-0 animate-rise-delay-2 md:text-xl">
-          A youth-centered network for life direction, stability, and positive
-          community re-entry—built around young people, not adult bureaucracy.
+          A nonprofit, youth-centered network for life direction, stability, and
+          positive community re-entry—built around young people, not adult
+          bureaucracy.
         </p>
         <div className="mt-10 flex flex-wrap gap-4 opacity-0 animate-rise-delay-3">
           <a href="#join" className="btn-primary">

@@ -1,6 +1,6 @@
 # Civic Bound
 
-A marketing website for Civic Bound — a youth-centered community support network.
+A marketing website for Civic Bound — a nonprofit, youth-centered community support network.
 
 ## Positioning
 
