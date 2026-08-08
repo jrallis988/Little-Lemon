@@ -1,23 +1,23 @@
 const stats = [
   {
     value: "12K+",
-    label: "Participants supported each year",
-    note: "Steady guidance helps more people move forward with confidence.",
+    label: "Youth supported each year",
+    note: "Guidance rooted in dignity, safety, and practical next steps.",
   },
   {
     value: "48",
-    label: "Community campuses and hubs",
-    note: "Open spaces designed for learning, belonging, and practical growth.",
+    label: "Neighborhood resource hubs",
+    note: "Local places for mentorship, family connection, and steady support.",
   },
   {
     value: "92%",
-    label: "Report stronger life direction",
-    note: "When skills and relationships grow together, momentum follows.",
+    label: "Report clearer life direction",
+    note: "When young people feel supported, stability becomes possible.",
   },
   {
     value: "310+",
-    label: "Local partners and mentors",
-    note: "Neighborhood collaboration turns opportunity into everyday support.",
+    label: "Civic mentors and partners",
+    note: "Community relationships that walk alongside youth through change.",
   },
 ];
 
@@ -31,13 +31,13 @@ function Impact() {
 
       <div className="container relative">
         <div className="max-w-3xl">
-          <p className="eyebrow">Community by the numbers</p>
+          <p className="eyebrow">Youth support by the numbers</p>
           <h2 className="display mt-4 text-4xl md:text-5xl">
-            Growth that shows up in everyday life
+            Progress that belongs to young people
           </h2>
           <p className="mt-5 font-body text-lg text-violet-mist">
-            Civic Bound tracks progress through skills gained, connections made,
-            and the confidence people carry into their next chapter.
+            Civic Bound measures what matters for youth: stronger direction,
+            safer connections, and the resources that help them move forward.
           </p>
         </div>
 

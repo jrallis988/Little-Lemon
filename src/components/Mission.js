@@ -7,35 +7,35 @@ function Mission() {
       <div className="pointer-events-none absolute inset-0 bg-section-glow" />
       <div className="container relative grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-5">
-          <p className="eyebrow">This is what change looks like</p>
+          <p className="eyebrow">Child & student centered</p>
           <h2 className="display mt-4 text-4xl md:text-5xl">
-            This is Civic Bound
+            Built for young people—not committees
           </h2>
         </div>
         <div className="lg:col-span-7">
           <p className="font-body text-lg leading-relaxed text-violet-mist md:text-xl">
-            You see people with talent, potential, and drive—who need stronger
-            access to learning environments and resources. So you join peers who
-            share that commitment. Together you get stronger, learn from each
-            other, and build each other up.
+            Civic Bound is a community-embedded social and developmental support
+            network for youth moving through critical life stages. We focus on
+            community re-entry, life direction, and stability—centering youth
+            themselves, not parent-teacher politics or administrative boards.
           </p>
           <div className="mt-10 grid gap-8 sm:grid-cols-2">
             <div className="border-l-2 border-chartreuse pl-5">
               <h3 className="font-display text-xl font-bold text-white">
-                For young people
+                For youth
               </h3>
               <p className="mt-3 font-body text-violet-mist">
-                Mentorship, learning labs, and daily routines that help each
-                person build momentum toward school, work, and community life.
+                Mentorship, guidance, and local resource hubs that help each
+                young person find footing, purpose, and a safer path forward.
               </p>
             </div>
             <div className="border-l-2 border-violet-bright pl-5">
               <h3 className="font-display text-xl font-bold text-white">
-                For neighborhoods
+                For families & neighbors
               </h3>
               <p className="mt-3 font-body text-violet-mist">
-                Local partnerships that strengthen belonging, opportunity, and
-                shared spaces where everyone can contribute and thrive.
+                Family resource connections and civic partnerships that support
+                youth without turning the work into adult-led bureaucracy.
               </p>
             </div>
           </div>

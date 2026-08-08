@@ -1,23 +1,23 @@
 const actions = [
   {
-    title: "Join us",
-    copy: "Join a community that helps you grow by helping others grow. Applications are open for the upcoming year.",
-    cta: "Get started",
-    href: "#mission",
+    title: "Find youth support",
+    copy: "Connect with a neighborhood youth development program or guidance resource near you.",
+    cta: "Get support",
+    href: "#approach",
     primary: true,
   },
   {
-    title: "Support Civic Bound",
-    copy: "When we invest in young people, we ensure their talents and contributions are available to our communities.",
-    cta: "Donate",
-    href: "#impact",
+    title: "Become a mentor",
+    copy: "Join a civic partnership and mentorship initiative that puts young people first.",
+    cta: "Mentor with us",
+    href: "#mission",
     primary: false,
   },
   {
-    title: "Partner with us",
-    copy: "Civic Bound partners with schools, neighborhoods, and local organizations to support community success.",
-    cta: "Learn about partnering",
-    href: "#approach",
+    title: "Strengthen a hub",
+    copy: "Support Youth Guidance and Family Resource Centers that make community re-entry safer and more stable.",
+    cta: "Support the work",
+    href: "#impact",
     primary: false,
   },
 ];
@@ -30,12 +30,12 @@ function Join() {
         <div className="mx-auto max-w-3xl text-center">
           <p className="eyebrow">Take part</p>
           <h2 className="display mt-4 text-4xl md:text-6xl">
-            Become the change you want to see
+            Local hubs. Real mentorship.{" "}
+            <span className="text-chartreuse">Forward motion.</span>
           </h2>
           <p className="mx-auto mt-6 max-w-2xl font-body text-lg text-violet-mist">
-            Whether you join a program, support the work, or partner with a
-            campus, you help create places where young people can grow with
-            dignity and direction.
+            Whether you need support, offer guidance, or strengthen a resource
+            hub, you help young people rebuild life direction with dignity.
           </p>
         </div>
 

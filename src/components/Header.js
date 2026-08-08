@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 
 const links = [
   { href: "#mission", label: "About" },
-  { href: "#approach", label: "The Experience" },
-  { href: "#impact", label: "The Impact" },
-  { href: "#join", label: "Join" },
+  { href: "#approach", label: "Programs" },
+  { href: "#impact", label: "Impact" },
+  { href: "#join", label: "Connect" },
 ];
 
 function Header() {
@@ -45,7 +45,7 @@ function Header() {
             </a>
           ))}
           <a href="#join" className="btn-primary !px-5 !py-2.5 text-xs">
-            Apply Now
+            Find Support
           </a>
         </nav>
 
@@ -95,7 +95,7 @@ function Header() {
               className="btn-primary w-fit"
               onClick={() => setOpen(false)}
             >
-              Apply Now
+              Find Support
             </a>
           </nav>
         </div>

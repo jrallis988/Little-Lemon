@@ -1,15 +1,19 @@
 const pillars = [
   {
-    title: "Learning & mentorship",
-    copy: "Small-group coaching and skill-building sessions help participants grow at their own pace—with guides who listen first.",
+    title: "Community Youth Support Networks",
+    copy: "Trusted local networks that walk with young people through transition—focused on stability, belonging, and practical next steps.",
   },
   {
-    title: "Community pathways",
-    copy: "We connect people to education, work, and civic opportunities through partnerships that feel collaborative and clear.",
+    title: "Neighborhood Youth Development",
+    copy: "Programs rooted in the places youth already live, learning life skills and confidence through constructive mentorship.",
   },
   {
-    title: "Open campus culture",
-    copy: "Shared studios, gardens, and gathering spaces invite curiosity, creativity, and everyday belonging.",
+    title: "Youth Guidance & Family Resources",
+    copy: "Guidance centers that connect youth and families to tools for safety, direction, and everyday support—without stigma.",
+  },
+  {
+    title: "Civic Partnership & Mentorship",
+    copy: "Mentors and civic partners who prioritize the young person first—building relationships that restore hope and momentum.",
   },
 ];
 
@@ -18,18 +22,18 @@ function Approach() {
     <section id="approach" className="section-pad relative bg-ink">
       <div className="container">
         <div className="max-w-3xl">
-          <p className="eyebrow">The experience</p>
+          <p className="eyebrow">How Civic Bound works</p>
           <h2 className="display mt-4 text-4xl md:text-5xl">
-            A modern campus for community transition
+            Neighborhood support for critical life stages
           </h2>
           <p className="mt-5 font-body text-lg text-violet-mist">
-            Join a community that helps you grow by helping others grow. Civic
-            Bound brings together mentors, educators, and neighbors in spaces
-            that feel welcoming—not institutional.
+            Unlike school-based academic coaching models, Civic Bound operates
+            in the community—offering developmental support for youth
+            re-entering daily life with dignity, direction, and care.
           </p>
         </div>
 
-        <div className="mt-14 grid gap-10 md:grid-cols-3 md:gap-8">
+        <div className="mt-14 grid gap-10 md:grid-cols-2 md:gap-x-10 md:gap-y-12">
           {pillars.map((pillar, index) => (
             <article key={pillar.title} className="relative pt-2">
               <span className="font-display text-5xl font-extrabold text-violet-deep">
@@ -50,17 +54,17 @@ function Approach() {
         <div className="relative overflow-hidden">
           <img
             src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=2000&q=80"
-            alt="Mentor collaborating with a young learner"
+            alt="Mentor offering guidance to a young person"
             className="h-[48vh] w-full object-cover md:h-[56vh]"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-ink via-violet-deep/55 to-transparent" />
           <div className="absolute inset-0 flex items-end p-8 md:p-12">
             <blockquote className="max-w-lg">
               <p className="font-display text-2xl font-bold text-white md:text-3xl">
-                “They motivate me. They’re always there—pushing me forward.”
+                “I finally have people who see me—and help me move forward.”
               </p>
               <footer className="mt-4 font-body text-sm uppercase tracking-[0.16em] text-chartreuse">
-                Participant reflecting on a Civic Bound mentor
+                Youth reflecting on Civic Bound mentorship
               </footer>
             </blockquote>
           </div>
