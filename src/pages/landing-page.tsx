@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Bot, Layers3, ShieldCheck } from 'lucide-react';
+import { ArrowRight, Bot, Layers3, Link2 } from 'lucide-react';
 import { Logo } from '@/components/brand/logo';
 import { ButtonLink } from '@/components/ui/button';
 import { AI_EMPLOYEES } from '@/data/employees';
@@ -32,26 +32,29 @@ export function LandingPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55 }}
           >
-            <p className="font-display text-[2.75rem] leading-[0.95] font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+            <p className="text-xs font-semibold tracking-[0.18em] text-[var(--color-brand)] uppercase">
+              Shift · powered by Working Intelligence
+            </p>
+            <p className="font-display mt-3 text-[2.75rem] leading-[0.95] font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
               Working
               <br />
               Intelligence
             </p>
             <h1 className="mt-4 max-w-xl text-lg text-[var(--text-secondary)] sm:mt-5 sm:text-xl md:text-2xl">
-              Collaborate with a full team of specialized AI employees inside one professional
-              digital workplace.
+              AI that doesn’t just answer — it participates in the work.
             </h1>
             <p className="mt-3 max-w-lg text-sm text-[var(--text-muted)] sm:mt-4 sm:text-base">
-              HR, marketing, legal, engineering, sales, and operations — each with memory, tools,
-              and department expertise.
+              The intelligence layer that connects the systems you already use, coordinates
+              specialized agents, and figures out what should be automated, assisted, or remain
+              human.
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
               <ButtonLink to="/app" size="lg" className="w-full sm:w-auto">
                 Enter workspace
                 <ArrowRight className="h-4 w-4" />
               </ButtonLink>
-              <ButtonLink to="/auth" size="lg" variant="secondary" className="w-full sm:w-auto">
-                Create account
+              <ButtonLink to="/app/holly" size="lg" variant="secondary" className="w-full sm:w-auto">
+                Meet Holly
               </ButtonLink>
             </div>
           </motion.div>
@@ -90,18 +93,18 @@ export function LandingPage() {
           {[
             {
               icon: <Bot className="h-5 w-5" />,
-              title: 'Specialized AI employees',
-              body: 'Each coworker has a profession, personality, tools, and long-term memory.',
+              title: 'AI that works',
+              body: 'Investigate payroll, retrieve documents, coordinate onboarding, notify customers — inside real workflows.',
+            },
+            {
+              icon: <Link2 className="h-5 w-5" />,
+              title: 'Connect, don’t replace',
+              body: 'Keep ADP, ATS, LMS, POS, CRM, and scheduling. Working Intelligence is the layer that makes them work together.',
             },
             {
               icon: <Layers3 className="h-5 w-5" />,
-              title: 'Unified workspace',
-              body: 'Chat, files, tasks, notes, calendar, posts, and guidelines in one shell.',
-            },
-            {
-              icon: <ShieldCheck className="h-5 w-5" />,
-              title: 'Production-ready foundation',
-              body: 'Supabase auth, multi-provider AI routing, RLS-ready schema, and strict TypeScript.',
+              title: 'Human Necessity Test',
+              body: 'Automate · Assist · Human+AI · Human. Stop making people do work that doesn’t need a human.',
             },
           ].map((item, index) => (
             <motion.article
@@ -120,7 +123,8 @@ export function LandingPage() {
         </section>
 
         <footer className="mt-16 border-t border-[var(--border-subtle)] py-6 text-sm text-[var(--text-muted)]">
-          Working Intelligence — the operating system for an AI-powered workforce.
+          Working Intelligence — the intelligence layer for how work actually gets done. Shift is
+          the product. Agents like Holly and Calvin are how it shows up in each function.
         </footer>
       </div>
     </div>

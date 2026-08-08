@@ -6,13 +6,30 @@ export type WorkspaceRole = 'owner' | 'admin' | 'member' | 'viewer';
 
 export type EmployeeDepartment =
   | 'Human Resources'
-  | 'Marketing'
-  | 'Social Media'
-  | 'Content'
-  | 'Engineering'
-  | 'Legal'
-  | 'Sales'
-  | 'Operations';
+  | 'Recruiting'
+  | 'Operations'
+  | 'Management'
+  | 'Customer Service'
+  | 'Systems'
+  | 'Learning'
+  | 'Scheduling';
+
+export type AutonomyLevel = 1 | 2 | 3;
+
+export type HumanNecessity = 'automate' | 'assist' | 'human_ai' | 'human';
+
+export interface JobBoundary {
+  mayDo: string[];
+  mayNotDo: string[];
+}
+
+export interface ConnectedSystem {
+  id: string;
+  name: string;
+  category: string;
+  status: 'connected' | 'available' | 'pending';
+  description: string;
+}
 
 export interface AiEmployee {
   id: string;
@@ -36,6 +53,14 @@ export interface AiEmployee {
   knowledgeBase: string[];
   guidelines: string[];
   favorite?: boolean;
+  /** 1 Tell me · 2 Help me · 3 Handle it */
+  autonomyLevel: AutonomyLevel;
+  jobBoundary: JobBoundary;
+  connectedSystems: string[];
+  humanNecessityExamples: Array<{
+    task: string;
+    classification: HumanNecessity;
+  }>;
 }
 
 export interface Workspace {
@@ -43,6 +68,7 @@ export interface Workspace {
   name: string;
   slug: string;
   role: WorkspaceRole;
+  tagline?: string;
 }
 
 export interface UserProfile {
@@ -153,11 +179,50 @@ export interface MemoryEntry {
   createdAt: string;
 }
 
+export type AgentActionStatus = 'pending' | 'approved' | 'snoozed' | 'declined' | 'completed';
+
+export interface AgentAction {
+  id: string;
+  employeeId: string;
+  title: string;
+  summary: string;
+  rationale: string;
+  systemsTouched: string[];
+  autonomyLevel: AutonomyLevel;
+  humanNecessity: HumanNecessity;
+  status: AgentActionStatus;
+  createdAt: string;
+}
+
+export interface WorkBadgeSkill {
+  name: string;
+  level: number;
+}
+
+export interface WorkBadge {
+  employeeName: string;
+  role: string;
+  careerScore: number;
+  skills: WorkBadgeSkill[];
+  training: string[];
+  accomplishments: string[];
+  verified: string[];
+}
+
+export interface ManagerInsight {
+  id: string;
+  title: string;
+  body: string;
+  severity: 'info' | 'watch' | 'action';
+}
+
 export type WorkspaceTab =
   | 'chat'
+  | 'actions'
+  | 'systems'
+  | 'badge'
   | 'files'
   | 'tasks'
   | 'notes'
   | 'calendar'
-  | 'posts'
   | 'guidelines';

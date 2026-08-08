@@ -143,7 +143,7 @@ function SidebarBody({
         <Logo />
         <div className="mt-4 flex items-center gap-2 rounded-xl bg-[var(--color-panel)] px-3 py-2 text-xs text-[var(--text-muted)]">
           <Building2 className="h-3.5 w-3.5" />
-          <span className="truncate">{activeWorkspaceName ?? 'Workspace'}</span>
+          <span className="truncate">{activeWorkspaceName ?? 'Shift'}</span>
         </div>
       </div>
 

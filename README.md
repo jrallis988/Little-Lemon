@@ -1,6 +1,15 @@
 # Working Intelligence
 
-AI workforce platform for collaborating with specialized AI employees across HR, marketing, social, content, engineering, legal, sales, and operations.
+**Working Intelligence** is the intelligence layer for how work gets done — not another chatbot.
+
+**Shift** is the product powered by Working Intelligence. Specialized agents (Holly for HR, Calvin for workplace ops, Kate for recruiting, Isa for management, and more) connect the systems companies already use and participate in real workflows with controlled agency.
+
+Core ideas in this build:
+- **AI that works** — investigate, retrieve, coordinate, escalate — not just answer
+- **Connect, don’t replace** — ADP, ATS, LMS, POS, CRM, scheduling, etc.
+- **Human Necessity Test** — Automate · Assist · Human+AI · Human
+- **Controlled agency** — Approve / Snooze / Decline action panels
+- **Work Badge + CareerScore / ManagerScore** — living work intelligence
 
 ## Stack
 

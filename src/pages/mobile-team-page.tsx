@@ -6,7 +6,7 @@ import { useIsMobile } from '@/hooks/use-media-query';
 
 export function MobileTeamPage() {
   const isMobile = useIsMobile();
-  if (!isMobile) return <Navigate to="/app/calvin" replace />;
+  if (!isMobile) return <Navigate to="/app/holly" replace />;
 
   return (
     <div className="flex h-full min-h-0 flex-col bg-[var(--bg-chat)]">

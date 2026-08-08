@@ -2,30 +2,32 @@ import { describe, expect, it } from 'vitest';
 import { AI_EMPLOYEES, getEmployeeBySlug } from '@/data/employees';
 
 describe('AI employees catalog', () => {
-  it('includes the eight core employees', () => {
+  it('includes the eight Working Intelligence agents', () => {
     expect(AI_EMPLOYEES).toHaveLength(8);
     expect(AI_EMPLOYEES.map((employee) => employee.slug)).toEqual([
-      'calvin',
       'holly',
-      'sonny',
-      'penny',
+      'calvin',
+      'kate',
+      'isa',
+      'missy',
       'walter',
-      'linda',
-      'stan',
+      'penny',
       'rachel',
     ]);
   });
 
-  it('resolves employees by slug', () => {
-    expect(getEmployeeBySlug('walter')?.jobTitle).toBe('Website Developer');
+  it('positions Holly as HR workforce intelligence', () => {
+    expect(getEmployeeBySlug('holly')?.jobTitle).toBe('HR Workforce Intelligence');
+    expect(getEmployeeBySlug('holly')?.connectedSystems).toContain('sys-adp');
   });
 
-  it('provides extensible employee metadata', () => {
+  it('gives every agent job boundaries and necessity examples', () => {
     for (const employee of AI_EMPLOYEES) {
       expect(employee.systemPrompt.length).toBeGreaterThan(40);
-      expect(employee.responsibilities.length).toBeGreaterThan(0);
-      expect(employee.tools.length).toBeGreaterThan(0);
-      expect(employee.guidelines.length).toBeGreaterThan(0);
+      expect(employee.jobBoundary.mayDo.length).toBeGreaterThan(0);
+      expect(employee.jobBoundary.mayNotDo.length).toBeGreaterThan(0);
+      expect(employee.humanNecessityExamples.length).toBeGreaterThan(0);
+      expect(employee.autonomyLevel).toBeGreaterThanOrEqual(1);
     }
   });
 });

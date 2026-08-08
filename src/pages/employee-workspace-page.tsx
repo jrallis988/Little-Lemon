@@ -40,7 +40,7 @@ export function EmployeeWorkspacePage() {
   ]);
 
   if (!employee) {
-    return <Navigate to="/app/calvin" replace />;
+    return <Navigate to="/app/holly" replace />;
   }
 
   if (!conversationId) {

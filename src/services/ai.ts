@@ -84,22 +84,24 @@ async function streamDemoCompletion(
 
 function buildDemoReply(employee: AiEmployee, prompt: string): string {
   const focus = employee.responsibilities.slice(0, 3);
+  const necessity = employee.humanNecessityExamples[0];
   return [
-    `Got it — as your **${employee.jobTitle}**, here's how I'd approach that.`,
+    `Got it — as **${employee.name}**, ${employee.jobTitle}, I'll treat this as work to complete, not a FAQ.`,
     '',
     `### Immediate next steps`,
-    `1. Clarify the outcome for **${focus[0]}**.`,
-    `2. Draft a first pass related to **${focus[1] ?? focus[0]}**.`,
-    `3. Check dependencies with **${focus[2] ?? focus[0]}**.`,
+    `1. Investigate the relevant records for **${focus[0]}**.`,
+    `2. Act inside policy on **${focus[1] ?? focus[0]}** using connected systems.`,
+    `3. Document, notify, and escalate only if human judgment is required for **${focus[2] ?? focus[0]}**.`,
     '',
-    `### Notes from my lane`,
-    employee.personality,
+    necessity
+      ? `Human Necessity signal: **${necessity.classification.replace('_', ' + ')}** for “${necessity.task}”.`
+      : employee.personality,
     '',
     prompt
-      ? `Based on your note — “${prompt.slice(0, 160)}${prompt.length > 160 ? '…' : ''}” — I can produce a polished draft, checklist, or briefing next.`
-      : 'Tell me whether you want a draft, checklist, or briefing and I’ll produce it.',
+      ? `Based on your note — “${prompt.slice(0, 160)}${prompt.length > 160 ? '…' : ''}” — I can continue the workflow or prepare an approval action.`
+      : 'Tell me the outcome you need and I’ll run the workflow within my job boundaries.',
     '',
-    `_Provider: demo · ${employee.department}_`,
+    `_Working Intelligence · demo · ${employee.department}_`,
   ].join('\n');
 }
 

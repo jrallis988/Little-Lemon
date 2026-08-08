@@ -2,16 +2,20 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { AI_EMPLOYEES } from '@/data/employees';
 import type {
+  AgentAction,
+  AgentActionStatus,
   CalendarEvent,
   ChatMessage,
   Conversation,
   FileAttachment,
+  ManagerInsight,
   MemoryEntry,
   NoteItem,
   NotificationItem,
   PostItem,
   TaskItem,
   UserProfile,
+  WorkBadge,
   Workspace,
 } from '@/types';
 import { createId } from '@/utils/id';
@@ -30,6 +34,9 @@ interface WorkspaceState {
   notes: NoteItem[];
   events: CalendarEvent[];
   posts: PostItem[];
+  actions: AgentAction[];
+  workBadge: WorkBadge;
+  managerInsights: ManagerInsight[];
   notifications: NotificationItem[];
   memories: MemoryEntry[];
   activeConversationId: string | null;
@@ -52,6 +59,7 @@ interface WorkspaceState {
   upsertTask: (task: TaskItem) => void;
   upsertNote: (note: NoteItem) => void;
   addFile: (file: FileAttachment) => void;
+  setActionStatus: (actionId: string, status: AgentActionStatus) => void;
   resetDemoData: () => void;
 }
 
@@ -289,10 +297,16 @@ export const useWorkspaceStore = create<WorkspaceState>()(
           };
         }),
       addFile: (file) => set((state) => ({ files: [file, ...state.files] })),
+      setActionStatus: (actionId, status) =>
+        set((state) => ({
+          actions: state.actions.map((action) =>
+            action.id === actionId ? { ...action, status } : action,
+          ),
+        })),
       resetDemoData: () => set(seedWorkspaceData()),
     }),
     {
-      name: 'wi-workspace',
+      name: 'wi-workspace-v2',
       partialize: (state) => ({
         user: state.user,
         workspaces: state.workspaces,
@@ -306,6 +320,9 @@ export const useWorkspaceStore = create<WorkspaceState>()(
         notes: state.notes,
         events: state.events,
         posts: state.posts,
+        actions: state.actions,
+        workBadge: state.workBadge,
+        managerInsights: state.managerInsights,
         notifications: state.notifications,
         memories: state.memories,
         activeConversationId: state.activeConversationId,

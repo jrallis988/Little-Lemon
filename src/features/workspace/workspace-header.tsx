@@ -18,12 +18,14 @@ import { useUiStore } from '@/store/ui-store';
 
 const TABS: { id: WorkspaceTab; label: string }[] = [
   { id: 'chat', label: 'Chat' },
+  { id: 'actions', label: 'Actions' },
+  { id: 'systems', label: 'Systems' },
+  { id: 'badge', label: 'Work Badge' },
   { id: 'files', label: 'Files' },
   { id: 'tasks', label: 'Tasks' },
   { id: 'notes', label: 'Notes' },
   { id: 'calendar', label: 'Calendar' },
-  { id: 'posts', label: 'Posts' },
-  { id: 'guidelines', label: 'Guidelines' },
+  { id: 'guidelines', label: 'Job Brief' },
 ];
 
 interface WorkspaceHeaderProps {
@@ -66,7 +68,9 @@ export function WorkspaceHeader({ employee }: WorkspaceHeaderProps) {
             {employee.name}
           </h1>
           <p className="truncate text-xs text-[var(--text-muted)] md:text-sm">
-            {isMobile ? employee.jobTitle : `${employee.jobTitle} · ${employee.department}`}
+            {isMobile
+              ? employee.jobTitle
+              : `${employee.jobTitle} · Level ${employee.autonomyLevel} autonomy`}
           </p>
         </div>
         <div className="flex shrink-0 items-center gap-0.5">
@@ -97,9 +101,12 @@ export function WorkspaceHeader({ employee }: WorkspaceHeaderProps) {
               <Button variant="ghost" size="icon" aria-label="Share">
                 <Share2 className="h-4 w-4" />
               </Button>
+              <Button variant="ghost" size="icon" aria-label="More">
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
             </>
           )}
-          {isMobile ? (
+          {isMobile && (
             <>
               <Button variant="ghost" size="icon" aria-label="Voice call">
                 <Phone className="h-4 w-4" />
@@ -108,10 +115,6 @@ export function WorkspaceHeader({ employee }: WorkspaceHeaderProps) {
                 <Video className="h-4 w-4" />
               </Button>
             </>
-          ) : (
-            <Button variant="ghost" size="icon" aria-label="More">
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
           )}
         </div>
       </div>

@@ -16,7 +16,8 @@ export function SettingsPage() {
     <div className="scrollbar-thin h-full overflow-y-auto px-4 pt-6 pb-28 md:px-8 md:pb-6">
       <h1 className="font-display text-3xl font-semibold">Settings</h1>
       <p className="mt-2 max-w-2xl text-sm text-[var(--text-muted)]">
-        Manage appearance, workspace context, auth mode, and demo data for Working Intelligence.
+        Shift settings — appearance, workspace context, auth mode, and the living Working
+        Intelligence layer behind your agents.
       </p>
 
       <div className="mt-8 grid max-w-3xl gap-4">
