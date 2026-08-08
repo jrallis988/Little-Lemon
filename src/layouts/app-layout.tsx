@@ -20,7 +20,9 @@ export function AppLayout() {
   const setSidebarOpen = useUiStore((state) => state.setSidebarOpen);
 
   const isEmployeeChat =
-    /^\/app\/(?!settings$|team$)[a-z0-9-]+$/i.test(location.pathname);
+    /^\/app\/(?!settings$|team$|intelligence$|tasks$)[a-z0-9-]+$/i.test(
+      location.pathname,
+    );
 
   useEffect(() => {
     const media = window.matchMedia('(min-width: 768px)');

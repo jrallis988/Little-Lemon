@@ -12,27 +12,37 @@ test.use({
 
 test('iPhone inbox opens chat and returns', async ({ page }) => {
   await page.goto('/app');
-  await expect(page.getByRole('heading', { name: 'Chats' })).toBeVisible();
+  await page.evaluate(() => {
+    localStorage.removeItem('wi-workspace');
+    localStorage.removeItem('wi-workspace-v2');
+  });
+  await page.reload();
+  await expect(page.getByRole('heading', { name: 'SHIFT' })).toBeVisible();
   await expect(page.getByRole('navigation', { name: 'Primary' })).toBeVisible();
 
-  await page.getByRole('link', { name: /Holly/i }).first().click();
+  await page.getByRole('link', { name: /HR Intelligence/i }).first().click();
   await expect(page).toHaveURL(/\/app\/holly/);
   await expect(page.getByRole('heading', { name: 'Holly' })).toBeVisible();
   await expect(page.getByRole('navigation', { name: 'Primary' })).toHaveCount(0);
 
   await page.getByRole('button', { name: 'Back to chats' }).click();
   await expect(page).toHaveURL(/\/app\/?$/);
-  await expect(page.getByRole('heading', { name: 'Chats' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'SHIFT' })).toBeVisible();
 });
 
-test('iPhone team and settings tabs work', async ({ page }) => {
+test('iPhone office intelligence tasks and settings tabs work', async ({ page }) => {
   await page.goto('/app');
-  await page.getByRole('navigation', { name: 'Primary' }).getByRole('link', { name: 'Team' }).click();
-  await expect(page.getByRole('heading', { name: 'Your AI team' })).toBeVisible();
+  const nav = page.getByRole('navigation', { name: 'Primary' });
 
-  await page
-    .getByRole('navigation', { name: 'Primary' })
-    .getByRole('link', { name: 'Settings' })
-    .click();
+  await nav.getByRole('link', { name: 'Office' }).click();
+  await expect(page.getByRole('heading', { name: 'Your AI workforce' })).toBeVisible();
+
+  await nav.getByRole('link', { name: 'Intelligence' }).click();
+  await expect(page.getByRole('heading', { name: 'Intelligence layer' })).toBeVisible();
+
+  await nav.getByRole('link', { name: 'Tasks' }).click();
+  await expect(page.getByRole('heading', { name: 'Tasks' })).toBeVisible();
+
+  await nav.getByRole('link', { name: 'Settings' }).click();
   await expect(page.getByRole('heading', { name: 'Settings' })).toBeVisible();
 });

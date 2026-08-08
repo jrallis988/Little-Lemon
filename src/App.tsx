@@ -22,6 +22,14 @@ const AppHomePage = lazy(() =>
 const MobileTeamPage = lazy(() =>
   import('@/pages/mobile-team-page').then((module) => ({ default: module.MobileTeamPage })),
 );
+const MobileIntelligencePage = lazy(() =>
+  import('@/pages/mobile-intelligence-page').then((module) => ({
+    default: module.MobileIntelligencePage,
+  })),
+);
+const MobileTasksPage = lazy(() =>
+  import('@/pages/mobile-tasks-page').then((module) => ({ default: module.MobileTasksPage })),
+);
 const NotFoundPage = lazy(() =>
   import('@/pages/not-found-page').then((module) => ({ default: module.NotFoundPage })),
 );
@@ -43,6 +51,8 @@ export default function App() {
         <Route path="/app" element={<AppLayout />}>
           <Route index element={<AppHomePage />} />
           <Route path="team" element={<MobileTeamPage />} />
+          <Route path="intelligence" element={<MobileIntelligencePage />} />
+          <Route path="tasks" element={<MobileTasksPage />} />
           <Route path="settings" element={<SettingsPage />} />
           <Route path=":employeeSlug" element={<EmployeeWorkspacePage />} />
         </Route>

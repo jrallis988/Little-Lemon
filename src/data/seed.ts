@@ -62,7 +62,7 @@ export function seedWorkspaceData() {
     workspaceId: 'ws-shift',
     title: `Work with ${employee.name}`,
     pinned: index < 2,
-    unreadCount: index === 2 ? 2 : 0,
+    unreadCount: index === 0 ? 1 : index === 1 ? 1 : index === 2 ? 2 : index === 3 ? 1 : 0,
     lastMessagePreview:
       employee.slug === 'holly'
         ? 'I found the payroll discrepancy and started the correction workflow.'

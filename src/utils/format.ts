@@ -11,6 +11,14 @@ export function formatRelativeTime(iso: string): string {
   return formatDistanceToNowStrict(parseISO(iso), { addSuffix: true });
 }
 
+/** Compact inbox timestamp like "9:06 AM" or "27 Jul". */
+export function formatInboxTime(iso: string): string {
+  const date = parseISO(iso);
+  if (isToday(date)) return format(date, 'h:mm a');
+  if (isYesterday(date)) return 'Yesterday';
+  return format(date, 'd MMM');
+}
+
 export function formatDateSeparator(iso: string): string {
   const date = parseISO(iso);
   if (isToday(date)) return 'Today';

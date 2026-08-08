@@ -36,6 +36,8 @@ export interface AiEmployee {
   slug: string;
   name: string;
   jobTitle: string;
+  /** Short role label for inbox list rows (Marblism-style). */
+  shortTitle: string;
   department: EmployeeDepartment;
   personality: string;
   systemPrompt: string;
