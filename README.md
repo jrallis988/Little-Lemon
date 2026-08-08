@@ -1,12 +1,12 @@
-# City Year
+# Civic Bound
 
-A marketing website for City Year, built with React and Tailwind CSS.
+A marketing website for Civic Bound, built with React and Tailwind CSS.
 
 ## Palette
 
-- Black (`#07060A`)
-- Violet (`#6B2FA0`)
-- Gold (`#C9A227`)
+- Violet (`#5B2BB3`)
+- Deep violet (`#2A0F5C`)
+- Chartreuse (`#C8F542`)
 
 ## Scripts
 

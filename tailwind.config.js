@@ -12,20 +12,22 @@ module.exports = {
     extend: {
       colors: {
         ink: {
-          DEFAULT: "#07060A",
-          soft: "#12101A",
-          muted: "#1C1828",
+          DEFAULT: "#12081F",
+          soft: "#1B0F2E",
+          muted: "#2A1745",
         },
         violet: {
-          deep: "#3B1668",
-          DEFAULT: "#6B2FA0",
-          bright: "#8F4DC9",
-          mist: "#C4A1E8",
+          deep: "#2A0F5C",
+          DEFAULT: "#5B2BB3",
+          bright: "#7B45E0",
+          mist: "#C9B4F5",
+          field: "#4A1F9B",
         },
-        gold: {
-          DEFAULT: "#C9A227",
-          light: "#E4C65A",
-          soft: "#F0DC8A",
+        chartreuse: {
+          DEFAULT: "#C8F542",
+          light: "#D9FF6A",
+          soft: "#E8FF9A",
+          ink: "#142006",
         },
       },
       fontFamily: {
@@ -34,9 +36,9 @@ module.exports = {
       },
       backgroundImage: {
         "hero-wash":
-          "linear-gradient(135deg, rgba(7,6,10,0.72) 0%, rgba(59,22,104,0.55) 48%, rgba(7,6,10,0.78) 100%)",
+          "linear-gradient(135deg, rgba(18,8,31,0.68) 0%, rgba(74,31,155,0.62) 46%, rgba(18,8,31,0.78) 100%)",
         "section-glow":
-          "radial-gradient(ellipse at top, rgba(107,47,160,0.28), transparent 55%)",
+          "radial-gradient(ellipse at top, rgba(91,43,179,0.42), transparent 55%)",
       },
       keyframes: {
         rise: {

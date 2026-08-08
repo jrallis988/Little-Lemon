@@ -3,12 +3,13 @@
 @tailwind utilities;
 
 :root {
-  --ink: #07060a;
-  --ink-soft: #12101a;
-  --violet: #6b2fa0;
-  --violet-deep: #3b1668;
-  --gold: #c9a227;
-  --gold-light: #e4c65a;
+  --ink: #12081f;
+  --ink-soft: #1b0f2e;
+  --violet: #5b2bb3;
+  --violet-deep: #2a0f5c;
+  --violet-field: #4a1f9b;
+  --chartreuse: #c8f542;
+  --chartreuse-light: #d9ff6a;
 }
 
 *,
@@ -25,15 +26,15 @@ body {
   margin: 0;
   min-height: 100vh;
   background: var(--ink);
-  color: #f5f0ff;
+  color: #f4efff;
   font-family: "Figtree", sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
 ::selection {
-  background: rgba(201, 162, 39, 0.35);
-  color: #fff;
+  background: rgba(200, 245, 66, 0.35);
+  color: #12081f;
 }
 
 img {
@@ -47,7 +48,7 @@ img {
   }
 
   .eyebrow {
-    @apply font-body text-xs uppercase tracking-[0.28em] text-gold;
+    @apply font-body text-xs uppercase tracking-[0.28em] text-chartreuse;
   }
 
   .display {
@@ -55,11 +56,11 @@ img {
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-sm bg-gold px-6 py-3 font-body text-sm font-semibold uppercase tracking-[0.14em] text-ink transition duration-300 hover:bg-gold-light;
+    @apply inline-flex items-center justify-center rounded-sm bg-chartreuse px-6 py-3 font-body text-sm font-semibold uppercase tracking-[0.14em] text-chartreuse-ink transition duration-300 hover:bg-chartreuse-light;
   }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center rounded-sm border border-violet-mist/40 px-6 py-3 font-body text-sm font-semibold uppercase tracking-[0.14em] text-white transition duration-300 hover:border-gold hover:text-gold;
+    @apply inline-flex items-center justify-center rounded-sm border border-violet-mist/40 px-6 py-3 font-body text-sm font-semibold uppercase tracking-[0.14em] text-white transition duration-300 hover:border-chartreuse hover:text-chartreuse;
   }
 }
 

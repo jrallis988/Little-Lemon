@@ -1,6 +1,6 @@
 {
-  "short_name": "City Year",
-  "name": "City Year",
+  "short_name": "Civic Bound",
+  "name": "Civic Bound",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +20,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#07060A",
-  "background_color": "#07060A"
+  "theme_color": "#5B2BB3",
+  "background_color": "#12081F"
 }

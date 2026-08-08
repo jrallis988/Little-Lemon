@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 const links = [
   { href: "#mission", label: "Mission" },
-  { href: "#approach", label: "Approach" },
+  { href: "#approach", label: "Programs" },
   { href: "#impact", label: "Impact" },
   { href: "#join", label: "Join" },
 ];
@@ -22,7 +22,7 @@ function Header() {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition duration-300 ${
         scrolled
-          ? "border-b border-violet-bright/20 bg-ink/90 backdrop-blur-md"
+          ? "border-b border-violet-bright/25 bg-ink/90 backdrop-blur-md"
           : "bg-transparent"
       }`}
     >
@@ -31,7 +31,7 @@ function Header() {
           href="#top"
           className="font-display text-xl font-extrabold tracking-tight text-white md:text-2xl"
         >
-          City <span className="text-gold">Year</span>
+          Civic <span className="text-chartreuse">Bound</span>
         </a>
 
         <nav className="hidden items-center gap-8 md:flex">
@@ -39,13 +39,13 @@ function Header() {
             <a
               key={link.href}
               href={link.href}
-              className="font-body text-sm font-medium tracking-wide text-violet-mist transition hover:text-gold"
+              className="font-body text-sm font-medium tracking-wide text-violet-mist transition hover:text-chartreuse"
             >
               {link.label}
             </a>
           ))}
           <a href="#join" className="btn-primary !px-5 !py-2.5 text-xs">
-            Serve With Us
+            Get Involved
           </a>
         </nav>
 
@@ -59,17 +59,17 @@ function Header() {
           <span className="sr-only">Menu</span>
           <span className="flex w-5 flex-col gap-1.5">
             <span
-              className={`h-0.5 w-full bg-gold transition ${
+              className={`h-0.5 w-full bg-chartreuse transition ${
                 open ? "translate-y-2 rotate-45" : ""
               }`}
             />
             <span
-              className={`h-0.5 w-full bg-gold transition ${
+              className={`h-0.5 w-full bg-chartreuse transition ${
                 open ? "opacity-0" : ""
               }`}
             />
             <span
-              className={`h-0.5 w-full bg-gold transition ${
+              className={`h-0.5 w-full bg-chartreuse transition ${
                 open ? "-translate-y-2 -rotate-45" : ""
               }`}
             />
@@ -78,7 +78,7 @@ function Header() {
       </div>
 
       {open && (
-        <div className="border-t border-violet-bright/20 bg-ink/95 md:hidden">
+        <div className="border-t border-violet-bright/25 bg-ink/95 md:hidden">
           <nav className="container flex flex-col gap-4 py-6">
             {links.map((link) => (
               <a
@@ -95,7 +95,7 @@ function Header() {
               className="btn-primary w-fit"
               onClick={() => setOpen(false)}
             >
-              Serve With Us
+              Get Involved
             </a>
           </nav>
         </div>
