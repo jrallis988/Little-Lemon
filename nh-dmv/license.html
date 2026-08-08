@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1f6b54">
+  <title>License &amp; ID — NH DMV</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="concept-ribbon">Conceptual redesign by <a href="../index.html">Artistic Fountain</a> — inline workflows only.</div>
+
+  <header class="app-header">
+    <div class="header-top">
+      <a class="brand" href="index.html" aria-label="NH DMV home">
+        <span class="brand-mark">NH</span>
+        <span class="brand-text">
+          <span class="brand-name">New Hampshire DMV</span>
+          <span class="brand-sub">Division of Motor Vehicles</span>
+        </span>
+      </a>
+      <div class="header-tools">
+        <a class="btn btn-secondary btn-sm" href="checklist.html">What to bring</a>
+        <a class="btn btn-primary btn-sm" href="dashboard.html">My dashboard</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="life-nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <nav class="life-nav" id="life-nav" aria-label="Life events">
+      <a href="index.html">Home</a>
+      <a href="license.html" aria-current="page">License &amp; ID</a>
+      <a href="vehicle.html">Vehicle</a>
+      <a href="records.html">Records &amp; tickets</a>
+      <a href="appointments.html">Appointments</a>
+      <a href="branches.html">Branches</a>
+    </nav>
+  </header>
+
+  <main id="main" class="page">
+    <header class="page-intro">
+      <h1>Driver licensing &amp; IDs</h1>
+      <p>Renewals, first-time credentials, testing, and replacements — organized by what you’re trying to finish.</p>
+    </header>
+
+    <div class="intent-panel" style="margin-bottom:1.5rem">
+      <div class="intent-search">
+        <svg class="intent-search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
+          <path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <label class="visually-hidden" for="intent-query" style="position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden">Search</label>
+        <input id="intent-query" type="search" placeholder="Filter licensing services…" autocomplete="off">
+      </div>
+      <div class="chip-row">
+        <button type="button" class="chip" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" class="chip" data-filter="renewals" aria-pressed="false">Renewals &amp; upgrades</button>
+        <button type="button" class="chip" data-filter="first" aria-pressed="false">First-time &amp; transfers</button>
+        <button type="button" class="chip" data-filter="testing" aria-pressed="false">Testing &amp; training</button>
+        <button type="button" class="chip" data-filter="updates" aria-pressed="false">Replacements &amp; updates</button>
+      </div>
+      <div class="service-grid" id="service-grid" data-filter-category="license"></div>
+      <div class="empty-state" id="service-empty">No matching licensing services.</div>
+    </div>
+
+    <div class="taxonomy">
+      <section class="tax-group">
+        <header>
+          <h2>Renewals &amp; upgrades</h2>
+          <p>Keep credentials current — online when eligible, appointment when required.</p>
+        </header>
+        <div class="tax-list">
+          <a class="tax-item" href="renew.html"><div><h3>Driver license renewal</h3><p>Many renewals complete without a counter visit.</p></div><span class="tax-cta">Start →</span></a>
+          <a class="tax-item" href="renew.html?type=non-driver"><div><h3>Non-driver ID renewal</h3><p>Online, drop box, or appointment.</p></div><span class="tax-cta">Start →</span></a>
+          <a class="tax-item" href="real-id.html"><div><h3>REAL ID upgrade</h3><p>Inline eligibility checker + booking.</p></div><span class="tax-cta">Check docs →</span></a>
+        </div>
+      </section>
+
+      <section class="tax-group">
+        <header>
+          <h2>First-time &amp; transfers</h2>
+          <p>New credentials and new-resident transfers with document wizards first.</p>
+        </header>
+        <div class="tax-list">
+          <a class="tax-item" href="checklist.html?intent=first-license"><div><h3>Initial license / permit</h3><p>Checklist, then knowledge test booking.</p></div><span class="tax-cta">Prepare →</span></a>
+          <a class="tax-item" href="checklist.html?intent=transfer"><div><h3>Out-of-state transfer</h3><p>60 days after establishing NH residency.</p></div><span class="tax-cta">Prepare →</span></a>
+          <a class="tax-item" href="checklist.html?intent=non-driver"><div><h3>Non-driver identification</h3><p>Photo ID without driving privileges.</p></div><span class="tax-cta">Prepare →</span></a>
+        </div>
+      </section>
+
+      <section class="tax-group">
+        <header>
+          <h2>Testing &amp; training</h2>
+          <p>Schedule and reschedule without leaving the portal.</p>
+        </header>
+        <div class="tax-list">
+          <a class="tax-item" href="appointments.html?service=knowledge-test"><div><h3>Knowledge test</h3><p>Book or reschedule your written exam.</p></div><span class="tax-cta">Book →</span></a>
+          <a class="tax-item" href="appointments.html?service=road-test"><div><h3>Road skills test</h3><p>Available after passing knowledge.</p></div><span class="tax-cta">Book →</span></a>
+          <a class="tax-item" href="appointments.html?service=motorcycle"><div><h3>Motorcycle rider training</h3><p>Season registration and permit path.</p></div><span class="tax-cta">Register →</span></a>
+        </div>
+      </section>
+
+      <section class="tax-group">
+        <header>
+          <h2>Replacements &amp; updates</h2>
+          <p>Duplicates, address/name changes, CDL medical submissions.</p>
+        </header>
+        <div class="tax-list">
+          <a class="tax-item" href="renew.html?type=duplicate"><div><h3>Duplicate license or ID</h3><p>Replace lost, stolen, or damaged credentials.</p></div><span class="tax-cta">Start →</span></a>
+          <a class="tax-item" href="checklist.html?intent=address"><div><h3>Address update</h3><p>Drop-box friendly change of address.</p></div><span class="tax-cta">Checklist →</span></a>
+          <a class="tax-item" href="checklist.html?intent=name-change"><div><h3>Name or gender change</h3><p>Appointment with supporting records.</p></div><span class="tax-cta">Checklist →</span></a>
+          <a class="tax-item" href="checklist.html?intent=cdl-med"><div><h3>CDL medical card</h3><p>Drop box, email, or mail submission path.</p></div><span class="tax-cta">Checklist →</span></a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <div><div class="footer-brand">New Hampshire DMV</div><p>Licensing hub — concept.</p></div>
+      <div><h3>Related</h3><ul><li><a href="real-id.html">REAL ID</a></li><li><a href="renew.html">Renew</a></li><li><a href="appointments.html">Appointments</a></li></ul></div>
+      <div><h3>Utilities</h3><ul><li><a href="checklist.html">What to bring</a></li><li><a href="dashboard.html">Dashboard</a></li></ul></div>
+      <div><h3>Official</h3><ul><li><a href="https://www.dmv.nh.gov/" rel="noopener">dmv.nh.gov</a></li><li><a href="../index.html">Artistic Fountain</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© Concept redesign</span><a href="index.html">Home</a></div>
+  </footer>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

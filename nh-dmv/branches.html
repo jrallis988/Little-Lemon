@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1f6b54">
+  <title>Branch finder — NH DMV</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="concept-ribbon">Conceptual redesign by <a href="../index.html">Artistic Fountain</a> — live status is simulated for demo.</div>
+
+  <header class="app-header">
+    <div class="header-top">
+      <a class="brand" href="index.html" aria-label="NH DMV home">
+        <span class="brand-mark">NH</span>
+        <span class="brand-text">
+          <span class="brand-name">New Hampshire DMV</span>
+          <span class="brand-sub">Division of Motor Vehicles</span>
+        </span>
+      </a>
+      <div class="header-tools">
+        <a class="btn btn-primary btn-sm" href="appointments.html">Book</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="life-nav"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+    <nav class="life-nav" id="life-nav" aria-label="Life events">
+      <a href="index.html">Home</a>
+      <a href="license.html">License &amp; ID</a>
+      <a href="vehicle.html">Vehicle</a>
+      <a href="records.html">Records &amp; tickets</a>
+      <a href="appointments.html">Appointments</a>
+      <a href="branches.html" aria-current="page">Branches</a>
+    </nav>
+  </header>
+
+  <main id="main" class="page">
+    <header class="page-intro">
+      <h1>Find a branch</h1>
+      <p>Fifteen offices statewide with simulated live operational status and one-click scheduling into the same portal.</p>
+    </header>
+
+    <div class="branch-toolbar">
+      <div class="field">
+        <label for="branch-query">Search</label>
+        <input id="branch-query" type="search" placeholder="City or street…">
+      </div>
+      <div class="field">
+        <label for="branch-region">Region</label>
+        <select id="branch-region">
+          <option value="all">All regions</option>
+          <option value="south">Southern NH</option>
+          <option value="seacoast">Seacoast</option>
+          <option value="central">Central</option>
+          <option value="west">Western</option>
+          <option value="north">North Country</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="branch-status">Status</label>
+        <select id="branch-status">
+          <option value="all">Any status</option>
+          <option value="open">Open · slots available</option>
+          <option value="busy">Busy</option>
+          <option value="limited">Limited hours</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="branch-grid" id="branch-grid"></div>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <div><div class="footer-brand">New Hampshire DMV</div><p>Branch finder concept with live-status simulation.</p></div>
+      <div><h3>Next</h3><ul><li><a href="appointments.html">Book appointment</a></li><li><a href="checklist.html">What to bring</a></li></ul></div>
+      <div><h3>Account</h3><ul><li><a href="dashboard.html">Dashboard</a></li></ul></div>
+      <div><h3>Official</h3><ul><li><a href="https://www.dmv.nh.gov/hours-and-locations" rel="noopener">Official hours</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© Concept redesign</span><a href="index.html">Home</a></div>
+  </footer>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

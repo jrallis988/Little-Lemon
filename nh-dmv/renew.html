@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1f6b54">
+  <title>Renew — NH DMV</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="concept-ribbon">Conceptual redesign by <a href="../index.html">Artistic Fountain</a> — renewal stays in-portal.</div>
+
+  <header class="app-header">
+    <div class="header-top">
+      <a class="brand" href="index.html" aria-label="NH DMV home">
+        <span class="brand-mark">NH</span>
+        <span class="brand-text">
+          <span class="brand-name">New Hampshire DMV</span>
+          <span class="brand-sub">Division of Motor Vehicles</span>
+        </span>
+      </a>
+      <div class="header-tools">
+        <a class="btn btn-primary btn-sm" href="dashboard.html">My dashboard</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="life-nav"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+    <nav class="life-nav" id="life-nav" aria-label="Life events">
+      <a href="index.html">Home</a>
+      <a href="license.html" aria-current="page">License &amp; ID</a>
+      <a href="vehicle.html">Vehicle</a>
+      <a href="records.html">Records &amp; tickets</a>
+      <a href="appointments.html">Appointments</a>
+      <a href="branches.html">Branches</a>
+    </nav>
+  </header>
+
+  <main id="main" class="page page-narrow">
+    <header class="page-intro">
+      <h1 id="renew-title">Renew driver license</h1>
+      <p>Eligible renewals complete here. Need REAL ID at the same time? We’ll route you to the document checker instead of a dead end.</p>
+    </header>
+
+    <form class="panel" id="renew-form">
+      <div class="field">
+        <label for="renew-license">License / ID number</label>
+        <input id="renew-license" required value="NHL482193" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="renew-dob">Date of birth</label>
+        <input id="renew-dob" type="date" required value="1992-06-14">
+      </div>
+      <div class="field">
+        <label for="renew-last">Last name</label>
+        <input id="renew-last" required value="Morgan">
+      </div>
+      <div class="field">
+        <label for="renew-option">Also upgrade to REAL ID?</label>
+        <select id="renew-option">
+          <option value="no">No — standard renewal</option>
+          <option value="yes">Yes — take me to REAL ID checklist</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" type="submit">Continue renewal</button>
+    </form>
+
+    <section class="panel" id="renew-done" hidden>
+      <h2>Renewal path ready (demo)</h2>
+      <p class="panel-lede">In production this would verify eligibility and collect payment inline. If you chose REAL ID, jump to the checker next.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="dashboard.html">Return to dashboard</a>
+        <a class="btn btn-secondary" href="real-id.html">REAL ID checker</a>
+        <a class="btn btn-ghost" href="appointments.html">Book in-person instead</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <div><div class="footer-brand">New Hampshire DMV</div><p>Inline renewal concept.</p></div>
+      <div><h3>Related</h3><ul><li><a href="license.html">License hub</a></li><li><a href="real-id.html">REAL ID</a></li></ul></div>
+      <div><h3>Account</h3><ul><li><a href="dashboard.html">Dashboard</a></li></ul></div>
+      <div><h3>Official</h3><ul><li><a href="../index.html">Artistic Fountain</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© Concept redesign</span><a href="index.html">Home</a></div>
+  </footer>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1f6b54">
+  <title>Records, tickets &amp; safety — NH DMV</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="concept-ribbon">Conceptual redesign by <a href="../index.html">Artistic Fountain</a> — inline demos, no forms.nh.gov hops.</div>
+
+  <header class="app-header">
+    <div class="header-top">
+      <a class="brand" href="index.html" aria-label="NH DMV home">
+        <span class="brand-mark">NH</span>
+        <span class="brand-text">
+          <span class="brand-name">New Hampshire DMV</span>
+          <span class="brand-sub">Division of Motor Vehicles</span>
+        </span>
+      </a>
+      <div class="header-tools">
+        <a class="btn btn-primary btn-sm" href="dashboard.html">My dashboard</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="life-nav"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+    <nav class="life-nav" id="life-nav" aria-label="Life events">
+      <a href="index.html">Home</a>
+      <a href="license.html">License &amp; ID</a>
+      <a href="vehicle.html">Vehicle</a>
+      <a href="records.html" aria-current="page">Records &amp; tickets</a>
+      <a href="appointments.html">Appointments</a>
+      <a href="branches.html">Branches</a>
+    </nav>
+  </header>
+
+  <main id="main" class="page">
+    <header class="page-intro">
+      <h1>Records, tickets &amp; safety</h1>
+      <p>Request your history, respond to tickets, and handle restoration — without bouncing across state subdomains.</p>
+    </header>
+
+    <div class="taxonomy">
+      <section class="tax-group" id="records">
+        <header>
+          <h2>Driving records</h2>
+          <p>Secure requests for your own record. Third-party requests go through Concord.</p>
+        </header>
+        <div class="tax-list">
+          <div class="tax-item" id="mvr">
+            <div>
+              <h3>Request your driving record</h3>
+              <p>Instant online path for your personal MVR.</p>
+            </div>
+            <button type="button" class="btn btn-primary btn-sm" data-inline-action="mvr-panel">Open request</button>
+          </div>
+          <div class="tax-item" id="accident">
+            <div>
+              <h3>Accident report</h3>
+              <p>Drop-box request for crash reports.</p>
+            </div>
+            <button type="button" class="btn btn-secondary btn-sm" data-inline-action="accident-panel">Start</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="mvr-panel" hidden>
+        <h2>Driving record request</h2>
+        <p class="panel-lede">Demo form — stays on this site instead of redirecting to forms.nh.gov.</p>
+        <form data-demo-submit>
+          <div class="field">
+            <label for="mvr-license">NH license / ID number</label>
+            <input id="mvr-license" name="license" required placeholder="e.g. NHL1234567">
+          </div>
+          <div class="field">
+            <label for="mvr-dob">Date of birth</label>
+            <input id="mvr-dob" name="dob" type="date" required>
+          </div>
+          <div class="field">
+            <label for="mvr-type">Record type</label>
+            <select id="mvr-type">
+              <option>Certified official</option>
+              <option>Uncertified / insurance</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" type="submit">Submit request</button>
+          <div class="result-box" data-demo-done hidden style="margin-top:1rem">
+            <h3>Request queued (demo)</h3>
+            <p>In production this would return a downloadable record or mail confirmation — without leaving the DMV portal.</p>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel" id="accident-panel" hidden>
+        <h2>Accident report request</h2>
+        <p class="panel-lede">Provide the incident date and location. Demo only.</p>
+        <form data-demo-submit>
+          <div class="field">
+            <label for="acc-date">Incident date</label>
+            <input id="acc-date" type="date" required>
+          </div>
+          <div class="field">
+            <label for="acc-town">Town / city</label>
+            <input id="acc-town" required placeholder="e.g. Concord">
+          </div>
+          <button class="btn btn-primary" type="submit">Submit drop-box style request</button>
+          <div class="result-box" data-demo-done hidden style="margin-top:1rem">
+            <h3>Request recorded (demo)</h3>
+            <p>Staff would process this like a drop-box submission — still inside one cohesive workflow.</p>
+          </div>
+        </form>
+      </section>
+
+      <section class="tax-group" id="compliance">
+        <header>
+          <h2>Compliance &amp; fines</h2>
+          <p>Tickets, restoration fees, and ignition interlock information.</p>
+        </header>
+        <div class="tax-list">
+          <div class="tax-item" id="ticket">
+            <div>
+              <h3>Respond to a motor vehicle ticket</h3>
+              <p>Pay or respond online when eligible.</p>
+            </div>
+            <button type="button" class="btn btn-primary btn-sm" data-inline-action="ticket-panel">Respond</button>
+          </div>
+          <div class="tax-item" id="restoration">
+            <div>
+              <h3>Pay restoration fee</h3>
+              <p>Reinstate after suspension when eligible.</p>
+            </div>
+            <a class="btn btn-secondary btn-sm" href="appointments.html?service=other">Book / drop box</a>
+          </div>
+          <div class="tax-item" id="interlock">
+            <div>
+              <h3>Ignition interlock</h3>
+              <p>Removal appointments available in Concord only.</p>
+            </div>
+            <a class="btn btn-secondary btn-sm" href="appointments.html?service=other&branch=concord">Book Concord</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="ticket-panel" hidden>
+        <h2>Ticket response</h2>
+        <p class="panel-lede">Inline payment / response demo.</p>
+        <form data-demo-submit>
+          <div class="field">
+            <label for="ticket-num">Ticket / summons number</label>
+            <input id="ticket-num" required placeholder="e.g. NH-2026-004812">
+          </div>
+          <div class="field">
+            <label for="ticket-action">Action</label>
+            <select id="ticket-action">
+              <option>Pay fine</option>
+              <option>Plead not guilty / request hearing</option>
+              <option>Submit documentation</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" type="submit">Continue</button>
+          <div class="result-box" data-demo-done hidden style="margin-top:1rem">
+            <h3>Response captured (demo)</h3>
+            <p>You stayed in the DMV experience — no surprise hop to another government subdomain.</p>
+          </div>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <div><div class="footer-brand">New Hampshire DMV</div><p>Records hub — concept.</p></div>
+      <div><h3>Related</h3><ul><li><a href="dashboard.html">Dashboard</a></li><li><a href="appointments.html">Appointments</a></li></ul></div>
+      <div><h3>Help</h3><ul><li><a href="branches.html">Branches</a></li></ul></div>
+      <div><h3>Official</h3><ul><li><a href="../index.html">Artistic Fountain</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© Concept redesign</span><a href="index.html">Home</a></div>
+  </footer>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

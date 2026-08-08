@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1f6b54">
+  <title>What to bring — NH DMV</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="concept-ribbon">Conceptual redesign by <a href="../index.html">Artistic Fountain</a> — verify documents before you book.</div>
+
+  <header class="app-header">
+    <div class="header-top">
+      <a class="brand" href="index.html" aria-label="NH DMV home">
+        <span class="brand-mark">NH</span>
+        <span class="brand-text">
+          <span class="brand-name">New Hampshire DMV</span>
+          <span class="brand-sub">Division of Motor Vehicles</span>
+        </span>
+      </a>
+      <div class="header-tools">
+        <a class="btn btn-primary btn-sm" href="appointments.html">Book</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="life-nav"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+    <nav class="life-nav" id="life-nav" aria-label="Life events">
+      <a href="index.html">Home</a>
+      <a href="license.html">License &amp; ID</a>
+      <a href="vehicle.html">Vehicle</a>
+      <a href="records.html">Records &amp; tickets</a>
+      <a href="appointments.html">Appointments</a>
+      <a href="branches.html">Branches</a>
+    </nav>
+  </header>
+
+  <main id="main" class="page page-narrow">
+    <header class="page-intro">
+      <h1>What to bring</h1>
+      <p>Interactive checklist for identity, SSN, and residency documents — finish this before you burn an appointment slot.</p>
+    </header>
+
+    <div class="wizard" id="doc-wizard">
+      <div class="wizard-steps" aria-label="Progress">
+        <div class="wizard-step is-active"><span>1</span>Transaction</div>
+        <div class="wizard-step"><span>2</span>Documents</div>
+        <div class="wizard-step"><span>3</span>Ready?</div>
+        <div class="wizard-step"><span>4</span>Book</div>
+      </div>
+
+      <div class="wizard-panel wizard-body" data-step="0">
+        <h2>What are you trying to do?</h2>
+        <p>We’ll tailor the document list to your transaction — no generic PDF scavenger hunt.</p>
+        <div class="option-grid" id="intent-options"></div>
+        <div class="wizard-footer" style="margin:1.25rem -1.35rem -1.5rem;border-radius:0">
+          <span></span>
+          <button type="button" class="btn btn-primary" data-next>Continue</button>
+        </div>
+      </div>
+
+      <div class="wizard-panel wizard-body" data-step="1" hidden>
+        <h2 id="docs-title">Document checklist</h2>
+        <p>Check each item you already have as an original (not a photocopy).</p>
+        <div class="check-list" id="doc-check-list"></div>
+        <div class="wizard-footer" style="margin:1.25rem -1.35rem -1.5rem;border-radius:0">
+          <button type="button" class="btn btn-secondary" data-back>Back</button>
+          <button type="button" class="btn btn-primary" data-next>Check readiness</button>
+        </div>
+      </div>
+
+      <div class="wizard-panel wizard-body" data-step="2" hidden>
+        <h2>Readiness result</h2>
+        <p>Based on your checklist — stay here to book if you’re clear.</p>
+        <div id="wizard-result" class="result-box"></div>
+        <div class="wizard-footer" style="margin:1.25rem -1.35rem -1.5rem;border-radius:0">
+          <button type="button" class="btn btn-secondary" data-back>Back</button>
+          <button type="button" class="btn btn-primary" data-next>Next</button>
+        </div>
+      </div>
+
+      <div class="wizard-panel wizard-body" data-step="3" hidden>
+        <h2>Book without leaving</h2>
+        <p>Your checklist stays linked to the appointment flow — no dead-end redirect.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="appointments.html">Choose branch &amp; time</a>
+          <a class="btn btn-secondary" href="branches.html">Browse branch status</a>
+          <a class="btn btn-ghost" href="dashboard.html">Back to dashboard</a>
+        </div>
+        <div class="wizard-footer" style="margin:1.25rem -1.35rem -1.5rem;border-radius:0">
+          <button type="button" class="btn btn-secondary" data-back>Back</button>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <div><div class="footer-brand">New Hampshire DMV</div><p>Document readiness wizard.</p></div>
+      <div><h3>Next</h3><ul><li><a href="appointments.html">Appointments</a></li><li><a href="real-id.html">REAL ID</a></li></ul></div>
+      <div><h3>Account</h3><ul><li><a href="dashboard.html">Dashboard</a></li></ul></div>
+      <div><h3>Official</h3><ul><li><a href="../index.html">Artistic Fountain</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© Concept redesign</span><a href="index.html">Home</a></div>
+  </footer>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

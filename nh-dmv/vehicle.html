@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1f6b54">
+  <title>Vehicle registrations &amp; titles — NH DMV</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="concept-ribbon">Conceptual redesign by <a href="../index.html">Artistic Fountain</a> — no external form hops.</div>
+
+  <header class="app-header">
+    <div class="header-top">
+      <a class="brand" href="index.html" aria-label="NH DMV home">
+        <span class="brand-mark">NH</span>
+        <span class="brand-text">
+          <span class="brand-name">New Hampshire DMV</span>
+          <span class="brand-sub">Division of Motor Vehicles</span>
+        </span>
+      </a>
+      <div class="header-tools">
+        <a class="btn btn-primary btn-sm" href="dashboard.html">My dashboard</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="life-nav"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+    <nav class="life-nav" id="life-nav" aria-label="Life events">
+      <a href="index.html">Home</a>
+      <a href="license.html">License &amp; ID</a>
+      <a href="vehicle.html" aria-current="page">Vehicle</a>
+      <a href="records.html">Records &amp; tickets</a>
+      <a href="appointments.html">Appointments</a>
+      <a href="branches.html">Branches</a>
+    </nav>
+  </header>
+
+  <main id="main" class="page">
+    <header class="page-intro">
+      <h1>Vehicle registrations &amp; titles</h1>
+      <p>Renewals, new plates, titles, and specialty items — with clear drop-box vs appointment paths.</p>
+    </header>
+
+    <div class="taxonomy">
+      <section class="tax-group" id="registration">
+        <header>
+          <h2>Registrations</h2>
+          <p>State portion transactions. Municipal tax/registration still runs through your city or town clerk.</p>
+        </header>
+        <div class="tax-list">
+          <div class="tax-item" id="reg-renew">
+            <div>
+              <h3>Renew vehicle registration</h3>
+              <p>Drop box or appointment for the state portion.</p>
+              <div class="ways" style="margin-top:0.45rem"><span class="way way-drop">Drop box</span><span class="way way-appt">Appointment</span></div>
+            </div>
+            <a class="btn btn-primary btn-sm" href="appointments.html?service=registration">Continue</a>
+          </div>
+          <div class="tax-item" id="reg-new">
+            <div>
+              <h3>New or transfer registration</h3>
+              <p>Pair with title paperwork when ownership changes.</p>
+              <div class="ways" style="margin-top:0.45rem"><span class="way way-drop">Drop box</span><span class="way way-appt">Appointment</span></div>
+            </div>
+            <a class="btn btn-primary btn-sm" href="checklist.html?intent=transfer">What to bring</a>
+          </div>
+          <div class="tax-item" id="temp-plates">
+            <div>
+              <h3>Temporary plates</h3>
+              <p>Short-term plates while permanent paperwork clears.</p>
+            </div>
+            <a class="btn btn-secondary btn-sm" href="appointments.html?service=registration">Book</a>
+          </div>
+          <div class="tax-item" id="boat">
+            <div>
+              <h3>Boat registration</h3>
+              <p>New, renew, or commercial boat registration.</p>
+            </div>
+            <a class="btn btn-secondary btn-sm" href="appointments.html?service=registration">Book</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="tax-group" id="titles">
+        <header>
+          <h2>Titles &amp; ownership</h2>
+          <p>Certificate of title processing and duplicate title requests.</p>
+        </header>
+        <div class="tax-list">
+          <div class="tax-item" id="title">
+            <div>
+              <h3>Certificate of title</h3>
+              <p>New title processing with ownership documents.</p>
+            </div>
+            <a class="btn btn-primary btn-sm" href="appointments.html?service=registration">Continue</a>
+          </div>
+          <div class="tax-item" id="dup-title">
+            <div>
+              <h3>Duplicate title</h3>
+              <p>Replace a lost or damaged title via drop box or appointment.</p>
+            </div>
+            <a class="btn btn-secondary btn-sm" href="appointments.html?service=registration">Continue</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="tax-group" id="specialty">
+        <header>
+          <h2>Specialty items</h2>
+          <p>Custom plates and accessibility placards.</p>
+        </header>
+        <div class="tax-list">
+          <div class="tax-item" id="vanity">
+            <div>
+              <h3>Vanity / commemorative plates</h3>
+              <p>Including America’s 250th Anniversary plate.</p>
+            </div>
+            <a class="btn btn-secondary btn-sm" href="appointments.html?service=other">Request</a>
+          </div>
+          <div class="tax-item" id="placard">
+            <div>
+              <h3>Walking disability placard</h3>
+              <p>Accessible parking placard applications.</p>
+            </div>
+            <a class="btn btn-secondary btn-sm" href="appointments.html?service=other">Continue</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <div><div class="footer-brand">New Hampshire DMV</div><p>Vehicle hub — concept.</p></div>
+      <div><h3>Related</h3><ul><li><a href="appointments.html">Appointments</a></li><li><a href="branches.html">Branches</a></li></ul></div>
+      <div><h3>Account</h3><ul><li><a href="dashboard.html">Dashboard</a></li></ul></div>
+      <div><h3>Official</h3><ul><li><a href="../index.html">Artistic Fountain</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© Concept redesign</span><a href="index.html">Home</a></div>
+  </footer>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

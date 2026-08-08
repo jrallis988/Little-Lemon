@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1f6b54">
+  <title>My dashboard — NH DMV</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="concept-ribbon">Conceptual redesign by <a href="../index.html">Artistic Fountain</a> — demo account only.</div>
+
+  <header class="app-header">
+    <div class="header-top">
+      <a class="brand" href="index.html" aria-label="NH DMV home">
+        <span class="brand-mark">NH</span>
+        <span class="brand-text">
+          <span class="brand-name">New Hampshire DMV</span>
+          <span class="brand-sub">Division of Motor Vehicles</span>
+        </span>
+      </a>
+      <div class="header-tools">
+        <a class="btn btn-primary btn-sm" href="appointments.html">Book</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="life-nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <nav class="life-nav" id="life-nav" aria-label="Life events">
+      <a href="index.html">Home</a>
+      <a href="license.html">License &amp; ID</a>
+      <a href="vehicle.html">Vehicle</a>
+      <a href="records.html">Records &amp; tickets</a>
+      <a href="appointments.html">Appointments</a>
+      <a href="branches.html">Branches</a>
+    </nav>
+  </header>
+
+  <main id="main" class="page">
+    <header class="page-intro">
+      <h1>Welcome back, <span id="dash-user-name">Alex</span></h1>
+      <p>Your active appointments, renewals, and credentials — one click away. No nested hunting.</p>
+    </header>
+
+    <div class="dash-layout">
+      <aside class="side-nav" aria-label="Dashboard sections">
+        <h2>Quick links</h2>
+        <a href="dashboard.html" aria-current="page">Overview</a>
+        <a href="appointments.html">Appointments</a>
+        <a href="renew.html">Renew license</a>
+        <a href="real-id.html">REAL ID</a>
+        <a href="checklist.html">What to bring</a>
+        <a href="branches.html">Find a branch</a>
+        <a href="records.html">Records</a>
+      </aside>
+
+      <div>
+        <section class="panel">
+          <h2>At a glance</h2>
+          <p class="panel-lede">Live status for the demo resident account.</p>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="stat-label">Next appointment</div>
+              <div class="stat-value">Mar 12</div>
+              <div class="stat-hint">Knowledge test · Concord</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">License expires</div>
+              <div class="stat-value">98d</div>
+              <div class="stat-hint">Class D · REAL ID</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Open tasks</div>
+              <div class="stat-value">2</div>
+              <div class="stat-hint">Reschedule · renew soon</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Active items</h2>
+          <p class="panel-lede">Reschedule, renew, or manage without leaving your dashboard.</p>
+          <div id="dashboard-appts"></div>
+        </section>
+
+        <section class="panel">
+          <h2>Start something new</h2>
+          <p class="panel-lede">Common next steps, kept in-portal.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="appointments.html">Book appointment</a>
+            <a class="btn btn-secondary" href="checklist.html">Document checklist</a>
+            <a class="btn btn-secondary" href="vehicle.html">Vehicle services</a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">New Hampshire DMV</div>
+        <p>Dashboard concept — simulated resident session.</p>
+      </div>
+      <div>
+        <h3>Services</h3>
+        <ul>
+          <li><a href="license.html">License &amp; ID</a></li>
+          <li><a href="vehicle.html">Vehicle</a></li>
+          <li><a href="records.html">Records</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Utilities</h3>
+        <ul>
+          <li><a href="appointments.html">Appointments</a></li>
+          <li><a href="branches.html">Branches</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Official</h3>
+        <ul>
+          <li><a href="https://www.dmv.nh.gov/" rel="noopener">dmv.nh.gov</a></li>
+          <li><a href="../index.html">Artistic Fountain</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© Concept redesign — not affiliated with the State of New Hampshire.</span>
+      <a href="index.html">Home</a>
+    </div>
+  </footer>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
