@@ -554,7 +554,7 @@ select {
 }
 
 .task-name {
-  font-weight: 650;
+  font-weight: 600;
   font-size: 1.05rem;
   color: var(--navy-deep);
   margin-bottom: 0.2rem;
