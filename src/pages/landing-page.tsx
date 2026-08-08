@@ -1,8 +1,7 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Bot, Layers3, ShieldCheck } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { Logo } from '@/components/brand/logo';
-import { Button } from '@/components/ui/button';
+import { ButtonLink } from '@/components/ui/button';
 import { AI_EMPLOYEES } from '@/data/employees';
 import { useTheme } from '@/hooks/use-theme';
 
@@ -15,15 +14,13 @@ export function LandingPage() {
         <header className="flex items-center justify-between gap-4">
           <Logo />
           <div className="flex items-center gap-2">
-            <Link to="/auth">
-              <Button variant="ghost">Sign in</Button>
-            </Link>
-            <Link to="/app">
-              <Button>
-                Open workspace
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-            </Link>
+            <ButtonLink to="/auth" variant="ghost">
+              Sign in
+            </ButtonLink>
+            <ButtonLink to="/app">
+              Open workspace
+              <ArrowRight className="h-4 w-4" />
+            </ButtonLink>
           </div>
         </header>
 
@@ -47,17 +44,13 @@ export function LandingPage() {
               and department expertise.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/app">
-                <Button size="lg">
-                  Enter workspace
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              </Link>
-              <Link to="/auth">
-                <Button size="lg" variant="secondary">
-                  Create account
-                </Button>
-              </Link>
+              <ButtonLink to="/app" size="lg">
+                Enter workspace
+                <ArrowRight className="h-4 w-4" />
+              </ButtonLink>
+              <ButtonLink to="/auth" size="lg" variant="secondary">
+                Create account
+              </ButtonLink>
             </div>
           </motion.div>
 

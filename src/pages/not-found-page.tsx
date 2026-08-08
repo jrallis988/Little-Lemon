@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+import { ButtonLink } from '@/components/ui/button';
 
 export function NotFoundPage() {
   return (
@@ -8,9 +7,7 @@ export function NotFoundPage() {
       <p className="text-sm text-[var(--text-muted)]">
         That route doesn’t exist in the Working Intelligence workspace.
       </p>
-      <Link to="/app">
-        <Button>Back to workspace</Button>
-      </Link>
+      <ButtonLink to="/app">Back to workspace</ButtonLink>
     </div>
   );
 }

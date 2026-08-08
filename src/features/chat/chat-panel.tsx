@@ -16,18 +16,20 @@ interface ChatPanelProps {
   conversationId: string;
 }
 
+const EMPTY_MESSAGES: ChatMessage[] = [];
+
 type Row =
   | { type: 'separator'; id: string; label: string }
   | { type: 'message'; id: string; message: ChatMessage };
 
 export function ChatPanel({ employee, conversationId }: ChatPanelProps) {
-  const messages = useWorkspaceStore(
-    (state) => state.messagesByConversation[conversationId] ?? [],
-  );
+  const messagesByConversation = useWorkspaceStore((state) => state.messagesByConversation);
+  const messages = messagesByConversation[conversationId] ?? EMPTY_MESSAGES;
   const draft = useWorkspaceStore((state) => state.drafts[conversationId] ?? '');
   const setDraft = useWorkspaceStore((state) => state.setDraft);
   const appendMessage = useWorkspaceStore((state) => state.appendMessage);
   const updateMessage = useWorkspaceStore((state) => state.updateMessage);
+  const appendToMessage = useWorkspaceStore((state) => state.appendToMessage);
   const deleteMessage = useWorkspaceStore((state) => state.deleteMessage);
   const addReaction = useWorkspaceStore((state) => state.addReaction);
   const setTyping = useWorkspaceStore((state) => state.setTyping);
@@ -95,19 +97,14 @@ export function ChatPanel({ employee, conversationId }: ChatPanelProps) {
         messages: history,
         signal: controller.signal,
         onToken: (token) => {
-          const current =
-            useWorkspaceStore.getState().messagesByConversation[conversationId] ?? [];
-          const existing = current.find((message) => message.id === assistantId);
-          updateMessage(conversationId, assistantId, {
-            content: `${existing?.content ?? ''}${token}`,
-            streaming: true,
-          });
+          appendToMessage(conversationId, assistantId, token);
         },
       });
 
       updateMessage(conversationId, assistantId, {
         content: full,
         streaming: false,
+        updatedAt: new Date().toISOString(),
       });
 
       addMemory({

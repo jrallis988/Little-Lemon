@@ -6,6 +6,7 @@ import {
 } from '@tanstack/react-table';
 import { CalendarDays, CheckCircle2, Circle, FileText, NotebookPen } from 'lucide-react';
 import { format, parseISO } from 'date-fns';
+import { useMemo } from 'react';
 import type { AiEmployee, FileAttachment, TaskItem } from '@/types';
 import { useUiStore } from '@/store/ui-store';
 import { useWorkspaceStore } from '@/store/workspace-store';
@@ -36,24 +37,29 @@ export function EmployeeTabs({ employee }: { employee: AiEmployee }) {
 }
 
 function FilesTab({ employeeId }: { employeeId: string }) {
-  const files = useWorkspaceStore((state) =>
-    state.files.filter((file) => file.employeeId === employeeId),
+  const allFiles = useWorkspaceStore((state) => state.files);
+  const files = useMemo(
+    () => allFiles.filter((file) => file.employeeId === employeeId),
+    [allFiles, employeeId],
   );
 
-  const columns: ColumnDef<FileAttachment>[] = [
-    { accessorKey: 'name', header: 'Name' },
-    {
-      accessorKey: 'size',
-      header: 'Size',
-      cell: ({ getValue }) => formatFileSize(getValue<number>()),
-    },
-    {
-      accessorKey: 'uploadedAt',
-      header: 'Uploaded',
-      cell: ({ getValue }) => format(parseISO(getValue<string>()), 'MMM d, yyyy'),
-    },
-    { accessorKey: 'mimeType', header: 'Type' },
-  ];
+  const columns = useMemo<ColumnDef<FileAttachment>[]>(
+    () => [
+      { accessorKey: 'name', header: 'Name' },
+      {
+        accessorKey: 'size',
+        header: 'Size',
+        cell: ({ getValue }) => formatFileSize(getValue<number>()),
+      },
+      {
+        accessorKey: 'uploadedAt',
+        header: 'Uploaded',
+        cell: ({ getValue }) => format(parseISO(getValue<string>()), 'MMM d, yyyy'),
+      },
+      { accessorKey: 'mimeType', header: 'Type' },
+    ],
+    [],
+  );
 
   const table = useReactTable({
     data: files,
@@ -99,10 +105,12 @@ function FilesTab({ employeeId }: { employeeId: string }) {
 }
 
 function TasksTab({ employee }: { employee: AiEmployee }) {
-  const tasks = useWorkspaceStore((state) =>
-    state.tasks.filter((task) => task.employeeId === employee.id),
-  );
+  const allTasks = useWorkspaceStore((state) => state.tasks);
   const upsertTask = useWorkspaceStore((state) => state.upsertTask);
+  const tasks = useMemo(
+    () => allTasks.filter((task) => task.employeeId === employee.id),
+    [allTasks, employee.id],
+  );
 
   const cycleStatus = (task: TaskItem) => {
     const next =
@@ -147,7 +155,9 @@ function TasksTab({ employee }: { employee: AiEmployee }) {
             )}
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-2">
-                <span className={cn('font-medium', task.status === 'done' && 'line-through opacity-70')}>
+                <span
+                  className={cn('font-medium', task.status === 'done' && 'line-through opacity-70')}
+                >
                   {task.title}
                 </span>
                 <PriorityBadge priority={task.priority} />
@@ -164,8 +174,10 @@ function TasksTab({ employee }: { employee: AiEmployee }) {
 }
 
 function NotesTab({ employeeId }: { employeeId: string }) {
-  const notes = useWorkspaceStore((state) =>
-    state.notes.filter((note) => note.employeeId === employeeId),
+  const allNotes = useWorkspaceStore((state) => state.notes);
+  const notes = useMemo(
+    () => allNotes.filter((note) => note.employeeId === employeeId),
+    [allNotes, employeeId],
   );
 
   return (
@@ -191,8 +203,10 @@ function NotesTab({ employeeId }: { employeeId: string }) {
 }
 
 function CalendarTab({ employeeId }: { employeeId: string }) {
-  const events = useWorkspaceStore((state) =>
-    state.events.filter((event) => event.employeeId === employeeId),
+  const allEvents = useWorkspaceStore((state) => state.events);
+  const events = useMemo(
+    () => allEvents.filter((event) => event.employeeId === employeeId),
+    [allEvents, employeeId],
   );
 
   return (
@@ -219,8 +233,10 @@ function CalendarTab({ employeeId }: { employeeId: string }) {
 }
 
 function PostsTab({ employeeId }: { employeeId: string }) {
-  const posts = useWorkspaceStore((state) =>
-    state.posts.filter((post) => post.employeeId === employeeId),
+  const allPosts = useWorkspaceStore((state) => state.posts);
+  const posts = useMemo(
+    () => allPosts.filter((post) => post.employeeId === employeeId),
+    [allPosts, employeeId],
   );
 
   return (
@@ -321,11 +337,17 @@ function ListBlock({ title, items }: { title: string; items: string[] }) {
 function PriorityBadge({ priority }: { priority: TaskItem['priority'] }) {
   const styles = {
     low: 'bg-[var(--color-panel)] text-[var(--text-muted)]',
-    medium: 'bg-[color-mix(in_oklab,var(--color-warning)_20%,transparent)] text-[var(--color-warning)]',
+    medium:
+      'bg-[color-mix(in_oklab,var(--color-warning)_20%,transparent)] text-[var(--color-warning)]',
     high: 'bg-[color-mix(in_oklab,var(--color-danger)_18%,transparent)] text-[var(--color-danger)]',
   };
   return (
-    <span className={cn('rounded-full px-2 py-0.5 text-[11px] font-medium capitalize', styles[priority])}>
+    <span
+      className={cn(
+        'rounded-full px-2 py-0.5 text-[11px] font-medium capitalize',
+        styles[priority],
+      )}
+    >
       {priority}
     </span>
   );

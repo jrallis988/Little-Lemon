@@ -39,6 +39,7 @@ interface WorkspaceState {
   createConversation: (employeeId: string) => string;
   appendMessage: (conversationId: string, message: ChatMessage) => void;
   updateMessage: (conversationId: string, messageId: string, patch: Partial<ChatMessage>) => void;
+  appendToMessage: (conversationId: string, messageId: string, token: string) => void;
   deleteMessage: (conversationId: string, messageId: string) => void;
   setDraft: (conversationId: string, value: string) => void;
   setTyping: (conversationId: string, typing: boolean) => void;
@@ -118,28 +119,56 @@ export const useWorkspaceStore = create<WorkspaceState>()(
           };
         }),
       updateMessage: (conversationId, messageId, patch) =>
-        set((state) => ({
-          messagesByConversation: {
-            ...state.messagesByConversation,
-            [conversationId]: (state.messagesByConversation[conversationId] ?? []).map((message) =>
-              message.id === messageId ? { ...message, ...patch } : message,
+        set((state) => {
+          const messages = (state.messagesByConversation[conversationId] ?? []).map((message) =>
+            message.id === messageId ? { ...message, ...patch } : message,
+          );
+          const last = messages[messages.length - 1];
+          return {
+            messagesByConversation: {
+              ...state.messagesByConversation,
+              [conversationId]: messages,
+            },
+            conversations: state.conversations.map((conversation) =>
+              conversation.id === conversationId && last
+                ? {
+                    ...conversation,
+                    lastMessagePreview: last.content.slice(0, 120),
+                    lastMessageAt: last.updatedAt ?? last.createdAt,
+                  }
+                : conversation,
             ),
-          },
-          conversations: state.conversations.map((conversation) => {
-            if (conversation.id !== conversationId) return conversation;
-            const messages = (state.messagesByConversation[conversationId] ?? []).map((message) =>
-              message.id === messageId ? { ...message, ...patch } : message,
-            );
-            const last = messages[messages.length - 1];
-            return last
+          };
+        }),
+      appendToMessage: (conversationId, messageId, token) =>
+        set((state) => {
+          const messages = (state.messagesByConversation[conversationId] ?? []).map((message) =>
+            message.id === messageId
               ? {
-                  ...conversation,
-                  lastMessagePreview: last.content.slice(0, 120),
-                  lastMessageAt: last.createdAt,
+                  ...message,
+                  content: `${message.content}${token}`,
+                  streaming: true,
+                  updatedAt: new Date().toISOString(),
                 }
-              : conversation;
-          }),
-        })),
+              : message,
+          );
+          const last = messages[messages.length - 1];
+          return {
+            messagesByConversation: {
+              ...state.messagesByConversation,
+              [conversationId]: messages,
+            },
+            conversations: state.conversations.map((conversation) =>
+              conversation.id === conversationId && last
+                ? {
+                    ...conversation,
+                    lastMessagePreview: last.content.slice(0, 120),
+                    lastMessageAt: last.updatedAt ?? last.createdAt,
+                  }
+                : conversation,
+            ),
+          };
+        }),
       deleteMessage: (conversationId, messageId) =>
         set((state) => ({
           messagesByConversation: {
