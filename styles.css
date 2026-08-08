@@ -791,6 +791,12 @@ a:hover { opacity: 0.8; }
 }
 
 /* Palette-matched previews per project */
+.portfolio-image--nhdmv {
+    background:
+        linear-gradient(160deg, rgba(0, 38, 58, 0.82) 0%, rgba(31, 92, 69, 0.55) 100%),
+        url('nh-dmv/images/nh-highway-hero.jpg') center / cover;
+}
+
 .portfolio-image--flote {
     background: linear-gradient(135deg, #0B4F5C 0%, #1B7A8B 55%, #3EAEB8 100%);
 }
