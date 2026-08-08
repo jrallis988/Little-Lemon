@@ -3,21 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="New Hampshire DMV concept — task-first licensing, registration, appointments, and your personal dashboard.">
-  <meta name="theme-color" content="#1f6b54">
-  <title>NH DMV — Your services, one place</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f6b54'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-size='22' fill='white' font-family='Georgia,serif'%3ENH%3C/text%3E%3C/svg%3E">
+  <meta name="description" content="New Hampshire DMV concept — book appointments, renew licenses, and manage services in one calm portal.">
+  <meta name="theme-color" content="#1d3557">
+  <title>NH DMV — Master your next visit</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%231d3557'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-size='20' fill='%23fefa07' font-family='Arial,sans-serif' font-weight='700'%3ENH%3C/text%3E%3C/svg%3E">
   <base href="/nh-dmv/">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
-  <div class="concept-ribbon">Conceptual redesign by <a href="../index.html">Artistic Fountain</a> — demo workflows stay in-app; not an official NH.gov site.</div>
+  <div class="concept-ribbon">Conceptual redesign by <a href="../index.html">Artistic Fountain</a> — DriveSkill-inspired layout · not an official NH.gov site.</div>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-meta">
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Mon–Fri · most offices 8:00–4:30
+        </span>
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 6h14v12H5z" stroke="currentColor" stroke-width="2"/><path d="M5 8l7 5 7-5" stroke="currentColor" stroke-width="2"/></svg>
+          603-227-4000
+        </span>
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 10-14 0c0 5.5 7 11 7 11z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="2"/></svg>
+          15 branches statewide
+        </span>
+      </div>
+      <div class="topbar-social" aria-label="Social">
+        <a href="https://www.facebook.com/NHDMV/" rel="noopener" aria-label="Facebook">f</a>
+        <a href="https://x.com/nh_dmv" rel="noopener" aria-label="X">x</a>
+      </div>
+    </div>
+  </div>
 
   <div class="alert-banner" role="status">
     <div class="alert-banner-inner">
       <strong>Scam alert</strong>
-      <span>The NH DMV never texts about payments. Ignore messages demanding fees by link.</span>
+      <span>The NH DMV never texts about payments.</span>
     </div>
   </div>
 
@@ -26,117 +49,206 @@
       <a class="brand" href="index.html" aria-label="NH DMV home">
         <span class="brand-mark">NH</span>
         <span class="brand-text">
-          <span class="brand-name">New Hampshire DMV</span>
+          <span class="brand-name">NH DMV</span>
           <span class="brand-sub">Division of Motor Vehicles</span>
         </span>
       </a>
+      <nav class="life-nav" id="life-nav" aria-label="Primary">
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="license.html">License &amp; ID</a>
+        <a href="vehicle.html">Vehicle</a>
+        <a href="records.html">Records</a>
+        <a href="appointments.html">Appointments</a>
+        <a href="branches.html">Branches</a>
+      </nav>
       <div class="header-tools">
-        <a class="btn btn-secondary btn-sm" href="checklist.html">What to bring</a>
-        <a class="btn btn-primary btn-sm" href="dashboard.html">My dashboard</a>
+        <a class="phone-fab" href="tel:6032274000" aria-label="Call DMV">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 4h3l1 4-2 1a12 12 0 006 6l1-2 4 1v3a2 2 0 01-2 2A14 14 0 015 6a2 2 0 012-2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        </a>
+        <a class="btn btn-primary btn-sm" href="appointments.html">Book appointment</a>
         <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="life-nav">
           <span></span><span></span><span></span>
         </button>
       </div>
     </div>
-    <nav class="life-nav" id="life-nav" aria-label="Life events">
-      <a href="index.html" aria-current="page">Home</a>
-      <a href="license.html">License &amp; ID</a>
-      <a href="vehicle.html">Vehicle</a>
-      <a href="records.html">Records &amp; tickets</a>
-      <a href="appointments.html">Appointments</a>
-      <a href="branches.html">Branches</a>
-    </nav>
   </header>
 
-  <main id="main" class="page">
-    <section class="hero-home" aria-label="Welcome">
-      <div class="hero-copy">
-        <p class="hero-kicker">Live Free or Die</p>
-        <h1 class="hero-title">New Hampshire DMV</h1>
-        <p class="hero-lede">Skip the bureaucratic maze. Start with what you need — renew, book a test, register, or open your dashboard.</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#services">Find a service</a>
-          <a class="btn btn-secondary" href="appointments.html">Book appointment</a>
-        </div>
-      </div>
-
-      <aside class="dash-card" aria-label="Your dashboard preview">
-        <div class="dash-card-head">
-          <div>
-            <h2>Your dashboard</h2>
-            <p class="dash-user">Signed in as <strong>Alex Morgan</strong> · demo</p>
+  <main id="main">
+    <section class="hero-ds" aria-label="Welcome">
+      <div class="hero-ds-shell">
+        <div class="hero-ds-copy">
+          <p class="hero-kicker">Live Free or Die</p>
+          <h1 class="hero-title">Get through the DMV with <span class="mark">confidence</span></h1>
+          <p class="hero-lede">Appointments, renewals, REAL ID, and records — organized around what you need, not the org chart.</p>
+          <div class="hero-actions">
+            <a class="btn btn-secondary" href="appointments.html">Start your visit</a>
+            <a class="btn btn-primary" href="dashboard.html">My dashboard</a>
           </div>
-          <a class="btn btn-ghost btn-sm" href="dashboard.html">Open</a>
+          <div class="hero-proof">
+            <div class="proof-avatars" aria-hidden="true">
+              <span>AM</span><span>JR</span><span>SK</span>
+            </div>
+            <p>Granite Staters book ahead and finish in as little as 10–15 minutes.</p>
+          </div>
         </div>
-        <div class="status-list" id="dash-status-list"></div>
-      </aside>
-    </section>
-
-    <section class="section" id="services">
-      <div class="section-head">
-        <div>
-          <p class="section-kicker">Task-first</p>
-          <h2 class="section-title">What do you need to do?</h2>
-          <p class="section-lede">Search by intent — not by department org chart. Every path stays inside this portal.</p>
+        <div class="hero-ds-media">
+          <div class="hero-photo">
+            <img src="images/nh-highway-hero.jpg" alt="New Hampshire mountain highway" width="900" height="560">
+          </div>
+          <div class="hero-photo offset">
+            <img src="images/nh-dmv-counter.jpg" alt="Resident completing a DMV counter visit" width="800" height="450">
+          </div>
+          <div class="hero-float-card">
+            <strong>Same-day slots</strong>
+            <span>Released daily when available · book in-app</span>
+          </div>
         </div>
-      </div>
-
-      <div class="intent-panel">
-        <div class="intent-search">
-          <svg class="intent-search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
-            <path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-          <label class="visually-hidden" for="intent-query" style="position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden">Search services</label>
-          <input id="intent-query" type="search" placeholder="Try “REAL ID”, “knowledge test”, “title”, “ticket”…" autocomplete="off">
-        </div>
-        <div class="chip-row" role="group" aria-label="Filter">
-          <button type="button" class="chip" data-filter="all" aria-pressed="true">All</button>
-          <button type="button" class="chip" data-filter="renewals" aria-pressed="false">Renewals</button>
-          <button type="button" class="chip" data-filter="testing" aria-pressed="false">Tests</button>
-          <button type="button" class="chip" data-filter="registration" aria-pressed="false">Registration</button>
-          <button type="button" class="chip" data-filter="records" aria-pressed="false">Records</button>
-        </div>
-        <div class="service-grid" id="service-grid" data-filter-category="all"></div>
-        <div class="empty-state" id="service-empty">No matching services. Try another keyword.</div>
       </div>
     </section>
 
     <section class="section">
-      <div class="section-head">
-        <div>
-          <p class="section-kicker">Life events</p>
-          <h2 class="section-title">Browse by what life is asking of you</h2>
+      <div class="section-inner">
+        <div class="feature-row">
+          <div class="feature-card">
+            <p class="section-kicker">Learn with confidence</p>
+            <h2 class="section-title" style="font-size:1.75rem;margin:0">Everything you need before you walk in</h2>
+            <p>Check documents, pick a branch, and hold a time — without hopping across state subdomains.</p>
+            <div class="hub-grid" style="grid-template-columns:1fr 1fr;margin-top:0.5rem">
+              <a class="hub-card" href="checklist.html" style="min-height:0;box-shadow:none;border:1px solid var(--line)">
+                <span class="hub-icon">OK</span>
+                <h3>What to bring</h3>
+                <p>Interactive document checklist</p>
+              </a>
+              <a class="hub-card" href="branches.html" style="min-height:0;box-shadow:none;border:1px solid var(--line)">
+                <span class="hub-icon">BR</span>
+                <h3>Branch status</h3>
+                <p>Live hours and scheduling links</p>
+              </a>
+            </div>
+          </div>
+          <aside class="dash-card" aria-label="Dashboard preview">
+            <div class="dash-card-head">
+              <div>
+                <h2>Your dashboard</h2>
+                <p class="dash-user">Signed in as <strong>Alex Morgan</strong> · demo</p>
+              </div>
+              <a class="btn btn-navy btn-sm" href="dashboard.html">Open</a>
+            </div>
+            <div class="status-list" id="dash-status-list"></div>
+          </aside>
         </div>
-      </div>
-      <div class="hub-grid">
-        <a class="hub-card" href="license.html">
-          <span class="hub-icon" aria-hidden="true">ID</span>
-          <h3>License &amp; ID</h3>
-          <p>Renewals, REAL ID, first-time, transfers, tests, replacements.</p>
-        </a>
-        <a class="hub-card" href="vehicle.html">
-          <span class="hub-icon" aria-hidden="true">VH</span>
-          <h3>Vehicle</h3>
-          <p>Registrations, titles, temp plates, boats, vanity, placards.</p>
-        </a>
-        <a class="hub-card" href="records.html">
-          <span class="hub-icon" aria-hidden="true">RC</span>
-          <h3>Records &amp; tickets</h3>
-          <p>Driving records, tickets, restoration, interlock info.</p>
-        </a>
-        <a class="hub-card" href="checklist.html">
-          <span class="hub-icon" aria-hidden="true">OK</span>
-          <h3>What to bring</h3>
-          <p>Interactive checklist before you book a branch visit.</p>
-        </a>
       </div>
     </section>
 
-    <section class="section">
-      <div class="notice-strip">
-        <p><strong>Head of line:</strong> Most in-person services need an appointment. Same-day slots release daily when available.</p>
-        <p><strong>Fees:</strong> Common fee changes took effect Jan 1, 2026. Inspection &amp; emissions testing programs have ended.</p>
+    <section class="section section-muted" id="services">
+      <div class="section-inner">
+        <p class="section-kicker">Our services</p>
+        <h2 class="section-title">Explore DMV <span class="mark">services</span></h2>
+        <p class="section-lede">Four clear paths — same structure as a modern service kit, built for Granite State errands.</p>
+
+        <div class="course-grid">
+          <a class="course-card" href="license.html">
+            <div class="course-icon y">ID</div>
+            <h3>License &amp; ID</h3>
+            <p>Renewals, REAL ID, first-time, transfers, tests, and replacements.</p>
+            <span class="more">Read more</span>
+          </a>
+          <a class="course-card" href="vehicle.html">
+            <div class="course-icon b">VH</div>
+            <h3>Vehicle</h3>
+            <p>Registrations, titles, temp plates, boats, vanity plates, and placards.</p>
+            <span class="more">Read more</span>
+          </a>
+          <a class="course-card" href="records.html">
+            <div class="course-icon g">RC</div>
+            <h3>Records &amp; tickets</h3>
+            <p>Driving records, ticket response, restoration fees, interlock info.</p>
+            <span class="more">Read more</span>
+          </a>
+          <a class="course-card" href="appointments.html">
+            <div class="course-icon o">AP</div>
+            <h3>Appointments</h3>
+            <p>Book or reschedule knowledge tests, REAL ID, and counter visits.</p>
+            <span class="more">Read more</span>
+          </a>
+        </div>
+
+        <p style="margin-top:1.5rem;color:var(--muted);text-align:center">
+          Tailored paths for every life event — from new resident transfers to renewals.
+          <a href="#finder" style="font-weight:800;color:var(--navy)">Find a service</a>
+        </p>
+      </div>
+    </section>
+
+    <section class="section section-navy">
+      <div class="section-inner">
+        <div class="why-card">
+          <div class="why-copy">
+            <h2>Why this <span class="mark">NH DMV</span> concept?</h2>
+            <p>We replaced carousels and buried dropdowns with a task-first portal — so residents finish faster and stress less.</p>
+            <div class="why-points">
+              <div>
+                <h3>One-click dashboard</h3>
+                <p>Appointments, renewals, and credentials stay visible.</p>
+              </div>
+              <div>
+                <h3>Inline workflows</h3>
+                <p>Checklists and booking stay in one cohesive experience.</p>
+              </div>
+            </div>
+            <a class="btn btn-primary" href="checklist.html">Prepare your visit</a>
+          </div>
+          <div class="why-media" role="img" aria-label="New Hampshire roadway"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="finder">
+      <div class="section-inner">
+        <p class="section-kicker">Task finder</p>
+        <h2 class="section-title">What do you need to <span class="mark">do</span>?</h2>
+        <p class="section-lede">Search by intent. Every result shows Online, Appointment, Drop box, or Mail — and stays in this portal.</p>
+
+        <div class="intent-panel">
+          <div class="intent-search">
+            <svg class="intent-search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
+              <path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <label class="visually-hidden" for="intent-query" style="position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden">Search</label>
+            <input id="intent-query" type="search" placeholder="Try “REAL ID”, “knowledge test”, “title”, “ticket”…" autocomplete="off">
+          </div>
+          <div class="chip-row" role="group" aria-label="Filter">
+            <button type="button" class="chip" data-filter="all" aria-pressed="true">All</button>
+            <button type="button" class="chip" data-filter="renewals" aria-pressed="false">Renewals</button>
+            <button type="button" class="chip" data-filter="testing" aria-pressed="false">Tests</button>
+            <button type="button" class="chip" data-filter="registration" aria-pressed="false">Registration</button>
+            <button type="button" class="chip" data-filter="records" aria-pressed="false">Records</button>
+          </div>
+          <div class="service-grid" id="service-grid" data-filter-category="all"></div>
+          <div class="empty-state" id="service-empty">No matching services. Try another keyword.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-muted">
+      <div class="section-inner">
+        <div class="cta-band">
+          <div class="cta-box">
+            <h2>Ready to master your next <span class="mark">DMV</span> visit?</h2>
+            <p>Hold an appointment, run the document checklist, or open your dashboard — all without leaving this concept portal.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="appointments.html">Get started now</a>
+              <a class="btn btn-navy" href="branches.html">Find a branch</a>
+            </div>
+          </div>
+          <div class="cta-media" role="img" aria-label="Granite texture"></div>
+        </div>
+
+        <div class="notice-strip" style="margin-top:1.5rem">
+          <p><strong>Head of line:</strong> Most in-person services need an appointment. Same-day slots release daily when available.</p>
+          <p><strong>Fees:</strong> Common fee changes took effect Jan 1, 2026. Inspection &amp; emissions testing programs have ended.</p>
+        </div>
       </div>
     </section>
   </main>
@@ -144,8 +256,17 @@
   <footer class="app-footer">
     <div class="footer-inner">
       <div>
-        <div class="footer-brand">New Hampshire DMV</div>
-        <p>Concept portal by Artistic Fountain. Demo account and bookings are simulated.</p>
+        <div class="footer-brand">NH DMV</div>
+        <p>DriveSkill-inspired concept by Artistic Fountain. Demo bookings are simulated.</p>
+      </div>
+      <div>
+        <h3>Pages</h3>
+        <ul>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="checklist.html">What to bring</a></li>
+          <li><a href="real-id.html">REAL ID</a></li>
+          <li><a href="branches.html">Branches</a></li>
+        </ul>
       </div>
       <div>
         <h3>Services</h3>
@@ -153,15 +274,7 @@
           <li><a href="license.html">License &amp; ID</a></li>
           <li><a href="vehicle.html">Vehicle</a></li>
           <li><a href="records.html">Records</a></li>
-        </ul>
-      </div>
-      <div>
-        <h3>Utilities</h3>
-        <ul>
-          <li><a href="dashboard.html">Dashboard</a></li>
           <li><a href="appointments.html">Appointments</a></li>
-          <li><a href="branches.html">Branch finder</a></li>
-          <li><a href="checklist.html">What to bring</a></li>
         </ul>
       </div>
       <div>
@@ -177,6 +290,8 @@
       <a href="../index.html">Back to portfolio</a>
     </div>
   </footer>
+
+  <a class="back-top" href="#main" aria-label="Back to top">↑</a>
 
   <script src="data.js"></script>
   <script src="app.js"></script>
