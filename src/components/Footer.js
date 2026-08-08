@@ -11,18 +11,18 @@ function Footer() {
             belonging.
           </p>
         </div>
-        <div className="flex flex-wrap gap-6 font-body text-sm text-violet-mist">
+        <div className="flex flex-wrap gap-6 font-body text-sm uppercase tracking-[0.12em] text-violet-mist">
           <a href="#mission" className="hover:text-chartreuse">
-            Mission
+            About
           </a>
           <a href="#approach" className="hover:text-chartreuse">
-            Programs
+            Experience
           </a>
           <a href="#impact" className="hover:text-chartreuse">
             Impact
           </a>
           <a href="#join" className="hover:text-chartreuse">
-            Join
+            Apply
           </a>
         </div>
       </div>

@@ -7,17 +7,17 @@ function Mission() {
       <div className="pointer-events-none absolute inset-0 bg-section-glow" />
       <div className="container relative grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-5">
-          <p className="eyebrow">Why we exist</p>
+          <p className="eyebrow">This is what change looks like</p>
           <h2 className="display mt-4 text-4xl md:text-5xl">
-            Spaces where people grow into what comes next
+            This is Civic Bound
           </h2>
         </div>
         <div className="lg:col-span-7">
           <p className="font-body text-lg leading-relaxed text-violet-mist md:text-xl">
-            Civic Bound creates open, campus-inspired environments where young
-            people can learn, reconnect, and move forward with support. We focus
-            on practical skills, steady relationships, and community pathways
-            that feel welcoming—not institutional.
+            You see people with talent, potential, and drive—who need stronger
+            access to learning environments and resources. So you join peers who
+            share that commitment. Together you get stronger, learn from each
+            other, and build each other up.
           </p>
           <div className="mt-10 grid gap-8 sm:grid-cols-2">
             <div className="border-l-2 border-chartreuse pl-5">

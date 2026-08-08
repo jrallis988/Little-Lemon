@@ -1,8 +1,8 @@
 import Header from "./components/Header";
 import Hero from "./components/Hero";
+import Impact from "./components/Impact";
 import Mission from "./components/Mission";
 import Approach from "./components/Approach";
-import Impact from "./components/Impact";
 import Join from "./components/Join";
 import Footer from "./components/Footer";
 
@@ -12,9 +12,9 @@ function App() {
       <Header />
       <main>
         <Hero />
+        <Impact />
         <Mission />
         <Approach />
-        <Impact />
         <Join />
       </main>
       <Footer />

@@ -18,14 +18,14 @@ function Approach() {
     <section id="approach" className="section-pad relative bg-ink">
       <div className="container">
         <div className="max-w-3xl">
-          <p className="eyebrow">How we work</p>
+          <p className="eyebrow">The experience</p>
           <h2 className="display mt-4 text-4xl md:text-5xl">
             A modern campus for community transition
           </h2>
           <p className="mt-5 font-body text-lg text-violet-mist">
-            Civic Bound brings together mentors, educators, and neighbors to
-            design supportive places where growth feels natural, open, and
-            human-centered.
+            Join a community that helps you grow by helping others grow. Civic
+            Bound brings together mentors, educators, and neighbors in spaces
+            that feel welcoming—not institutional.
           </p>
         </div>
 
@@ -55,9 +55,14 @@ function Approach() {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-ink via-violet-deep/55 to-transparent" />
           <div className="absolute inset-0 flex items-end p-8 md:p-12">
-            <p className="max-w-md font-display text-2xl font-bold text-white md:text-3xl">
-              When people feel welcome, progress becomes possible.
-            </p>
+            <blockquote className="max-w-lg">
+              <p className="font-display text-2xl font-bold text-white md:text-3xl">
+                “They motivate me. They’re always there—pushing me forward.”
+              </p>
+              <footer className="mt-4 font-body text-sm uppercase tracking-[0.16em] text-chartreuse">
+                Participant reflecting on a Civic Bound mentor
+              </footer>
+            </blockquote>
           </div>
         </div>
       </div>
