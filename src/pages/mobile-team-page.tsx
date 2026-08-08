@@ -1,5 +1,6 @@
 import { Link, Navigate } from 'react-router-dom';
 import { Avatar } from '@/components/ui/avatar';
+import { MobileScreenHeader } from '@/features/mobile/mobile-screen-header';
 import { AI_EMPLOYEES, DEPARTMENTS } from '@/data/employees';
 import { useIsMobile } from '@/hooks/use-media-query';
 
@@ -8,18 +9,14 @@ export function MobileTeamPage() {
   if (!isMobile) return <Navigate to="/app/holly" replace />;
 
   return (
-    <div className="mobile-dark flex h-full min-h-0 flex-col bg-black text-white">
-      <header className="safe-top px-4 pt-4 pb-3">
-        <p className="text-[10px] font-semibold tracking-[0.18em] text-[var(--color-brand)] uppercase">
-          Office
-        </p>
-        <h1 className="font-display text-2xl font-bold tracking-tight">Your AI workforce</h1>
-        <p className="mt-1 text-sm text-white/45">
-          Specialized agents with job briefs, systems, and controlled autonomy.
-        </p>
-      </header>
+    <div className="flex h-full min-h-0 flex-col">
+      <MobileScreenHeader
+        eyebrow="Office"
+        title="Your AI workforce"
+        subtitle="Specialized agents with job briefs, systems, and controlled autonomy."
+      />
 
-      <div className="scrollbar-thin flex-1 space-y-5 overflow-y-auto px-4 pt-2 pb-24">
+      <div className="scrollbar-thin flex-1 space-y-5 overflow-y-auto px-4 pt-1 pb-24">
         {DEPARTMENTS.map((department) => {
           const employees = AI_EMPLOYEES.filter((employee) => employee.department === department);
           return (
@@ -32,7 +29,7 @@ export function MobileTeamPage() {
                   <Link
                     key={employee.id}
                     to={`/app/${employee.slug}`}
-                    className="flex items-center gap-3 rounded-2xl bg-white/[0.04] px-3 py-3 ring-1 ring-white/10 active:bg-white/[0.08]"
+                    className="mobile-card flex items-center gap-3 px-3 py-3 active:bg-white/[0.08]"
                   >
                     <Avatar
                       initials={employee.avatar.initials}

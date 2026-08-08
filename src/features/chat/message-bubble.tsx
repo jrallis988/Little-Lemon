@@ -49,8 +49,8 @@ export function MessageBubble({
           className={cn(
             'rounded-3xl px-4 py-3 shadow-[var(--shadow-soft)]',
             isUser
-              ? 'rounded-tr-lg bg-[var(--message-user)] text-white'
-              : 'rounded-tl-lg bg-[var(--message-assistant)] text-[var(--text-primary)] ring-1 ring-[var(--border-subtle)]',
+              ? 'msg-user rounded-tr-lg bg-[var(--message-user)] text-white'
+              : 'msg-assistant rounded-tl-lg bg-[var(--message-assistant)] text-[var(--text-primary)] ring-1 ring-[var(--border-subtle)]',
           )}
         >
           {isUser ? (
@@ -65,7 +65,7 @@ export function MessageBubble({
 
         <div
           className={cn(
-            'mt-1 flex flex-wrap items-center gap-2 text-[11px] text-[var(--text-muted)]',
+            'msg-meta mt-1 flex flex-wrap items-center gap-2 text-[11px] text-[var(--text-muted)]',
             isUser && 'justify-end',
           )}
         >

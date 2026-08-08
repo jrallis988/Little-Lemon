@@ -41,18 +41,24 @@ export function WorkspaceHeader({ employee }: WorkspaceHeaderProps) {
   const setNotificationsOpen = useUiStore((state) => state.setNotificationsOpen);
 
   return (
-    <header className="surface-glass safe-top border-b border-[var(--border-subtle)] px-3 py-2.5 md:px-6 md:py-3">
+    <header
+      className={cn(
+        'safe-top border-b px-3 py-2.5 md:px-6 md:py-3',
+        isMobile
+          ? 'border-white/10 bg-black/90 backdrop-blur-xl'
+          : 'surface-glass border-[var(--border-subtle)]',
+      )}
+    >
       <div className="flex items-center gap-2 md:gap-3">
         {isMobile && (
-          <Button
-            variant="ghost"
-            size="icon"
+          <button
+            type="button"
             aria-label="Back to chats"
             onClick={() => navigate('/app')}
-            className="shrink-0"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white/80 active:bg-white/10"
           >
             <ArrowLeft className="h-5 w-5" />
-          </Button>
+          </button>
         )}
         <div className="relative shrink-0">
           <Avatar
@@ -66,12 +72,22 @@ export function WorkspaceHeader({ employee }: WorkspaceHeaderProps) {
           <StatusDot status={employee.status} className="absolute right-0 bottom-0" />
         </div>
         <div className="min-w-0 flex-1">
-          <h1 className="font-display truncate text-lg font-semibold tracking-tight md:text-xl">
-            {employee.name}
+          <h1
+            className={cn(
+              'font-display truncate font-semibold tracking-tight',
+              isMobile ? 'text-lg text-white' : 'text-xl',
+            )}
+          >
+            {isMobile ? employee.shortTitle : employee.name}
           </h1>
-          <p className="truncate text-xs text-[var(--text-muted)] md:text-sm">
+          <p
+            className={cn(
+              'truncate text-xs md:text-sm',
+              isMobile ? 'text-white/45' : 'text-[var(--text-muted)]',
+            )}
+          >
             {isMobile
-              ? employee.jobTitle
+              ? employee.name
               : `${employee.jobTitle} · Level ${employee.autonomyLevel} autonomy`}
           </p>
         </div>
@@ -110,12 +126,20 @@ export function WorkspaceHeader({ employee }: WorkspaceHeaderProps) {
           )}
           {isMobile && (
             <>
-              <Button variant="ghost" size="icon" aria-label="Voice call">
+              <button
+                type="button"
+                aria-label="Voice call"
+                className="flex h-9 w-9 items-center justify-center rounded-full text-white/70 active:bg-white/10"
+              >
                 <Phone className="h-4 w-4" />
-              </Button>
-              <Button variant="ghost" size="icon" aria-label="Video call">
+              </button>
+              <button
+                type="button"
+                aria-label="Video call"
+                className="flex h-9 w-9 items-center justify-center rounded-full text-white/70 active:bg-white/10"
+              >
                 <Video className="h-4 w-4" />
-              </Button>
+              </button>
             </>
           )}
         </div>
@@ -134,7 +158,9 @@ export function WorkspaceHeader({ employee }: WorkspaceHeaderProps) {
               'rounded-full px-3 py-1.5 text-sm whitespace-nowrap transition-colors',
               activeTab === tab.id
                 ? 'bg-[var(--color-brand)] text-white'
-                : 'text-[var(--text-secondary)] hover:bg-[var(--color-panel)]',
+                : isMobile
+                  ? 'text-white/50 active:bg-white/10'
+                  : 'text-[var(--text-secondary)] hover:bg-[var(--color-panel)]',
             )}
             aria-current={activeTab === tab.id ? 'page' : undefined}
           >

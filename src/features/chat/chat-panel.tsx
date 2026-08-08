@@ -179,7 +179,7 @@ export function ChatPanel({ employee, conversationId }: ChatPanelProps) {
             if (row.type === 'separator') {
               return (
                 <div className="flex items-center justify-center py-4">
-                  <span className="rounded-full bg-[var(--color-panel)] px-3 py-1 text-xs text-[var(--text-muted)]">
+                  <span className="date-sep rounded-full bg-[var(--color-panel)] px-3 py-1 text-xs text-[var(--text-muted)]">
                     {row.label}
                   </span>
                 </div>

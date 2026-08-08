@@ -522,7 +522,11 @@ function NecessityBadge({ value }: { value: HumanNecessity }) {
 }
 
 function Panel({ children }: { children: React.ReactNode }) {
-  return <div className="scrollbar-thin h-full overflow-y-auto px-4 py-4 md:px-6">{children}</div>;
+  return (
+    <div className="tab-panel scrollbar-thin h-full overflow-y-auto px-4 py-4 md:px-6">
+      {children}
+    </div>
+  );
 }
 
 function PanelTitle({

@@ -1,4 +1,5 @@
 import { Navigate } from 'react-router-dom';
+import { MobileScreenHeader } from '@/features/mobile/mobile-screen-header';
 import { useIsMobile } from '@/hooks/use-media-query';
 import { useWorkspaceStore } from '@/store/workspace-store';
 
@@ -13,19 +14,15 @@ export function MobileIntelligencePage() {
   const pending = actions.filter((action) => action.status === 'pending').length;
 
   return (
-    <div className="mobile-dark flex h-full min-h-0 flex-col bg-black text-white">
-      <header className="safe-top px-4 pt-4 pb-3">
-        <p className="text-[10px] font-semibold tracking-[0.18em] text-[var(--color-brand)] uppercase">
-          Working Intelligence
-        </p>
-        <h1 className="font-display text-2xl font-bold tracking-tight">Intelligence layer</h1>
-        <p className="mt-1 text-sm text-white/45">
-          Understand work context, surface what matters, and coordinate agent action.
-        </p>
-      </header>
+    <div className="flex h-full min-h-0 flex-col">
+      <MobileScreenHeader
+        eyebrow="Working Intelligence"
+        title="Intelligence layer"
+        subtitle="Understand work context, surface what matters, and coordinate agent action."
+      />
 
-      <div className="scrollbar-thin flex-1 space-y-4 overflow-y-auto px-4 pb-24">
-        <section className="rounded-3xl bg-white/[0.04] p-4 ring-1 ring-white/10">
+      <div className="scrollbar-thin flex-1 space-y-4 overflow-y-auto px-4 pt-1 pb-24">
+        <section className="mobile-card p-4">
           <h2 className="text-sm font-semibold text-white/70">Live signals</h2>
           <div className="mt-3 grid grid-cols-3 gap-3 text-center">
             <Stat label="Pending actions" value={String(pending)} />
@@ -34,7 +31,7 @@ export function MobileIntelligencePage() {
           </div>
         </section>
 
-        <section className="rounded-3xl bg-white/[0.04] p-4 ring-1 ring-white/10">
+        <section className="mobile-card p-4">
           <h2 className="text-sm font-semibold">Human Necessity Test</h2>
           <ul className="mt-3 space-y-2 text-sm">
             <Row tone="automate" label="Automate" body="Retrieve docs, status checks, badge updates" />
@@ -45,12 +42,9 @@ export function MobileIntelligencePage() {
         </section>
 
         <section className="space-y-2">
-          <h2 className="text-sm font-semibold text-white/70">ManagerScore watchlist</h2>
+          <h2 className="px-1 text-sm font-semibold text-white/70">ManagerScore watchlist</h2>
           {insights.map((insight) => (
-            <article
-              key={insight.id}
-              className="rounded-2xl bg-white/[0.04] px-4 py-3 ring-1 ring-white/10"
-            >
+            <article key={insight.id} className="mobile-card px-4 py-3">
               <div className="text-xs tracking-wide text-white/40 uppercase">{insight.severity}</div>
               <h3 className="mt-1 font-medium">{insight.title}</h3>
               <p className="mt-1 text-sm text-white/50">{insight.body}</p>

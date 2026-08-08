@@ -31,14 +31,14 @@ export function MessageComposer({
   }, [value]);
 
   return (
-    <div className="safe-bottom border-t border-[var(--border-subtle)] bg-[color-mix(in_oklab,var(--color-surface-elevated)_88%,transparent)] px-3 py-2.5 backdrop-blur md:px-6 md:py-3">
+    <div className="composer-shell safe-bottom border-t border-[var(--border-subtle)] bg-[color-mix(in_oklab,var(--color-surface-elevated)_88%,transparent)] px-3 py-2.5 backdrop-blur md:px-6 md:py-3">
       {suggestions.length > 0 && !value && (
         <div className="mb-3 flex flex-wrap gap-2">
           {suggestions.map((suggestion) => (
             <button
               key={suggestion}
               type="button"
-              className="rounded-full bg-[var(--color-panel)] px-3 py-1.5 text-xs text-[var(--text-secondary)] transition-colors hover:bg-[var(--color-brand-soft)]"
+              className="composer-chip rounded-full bg-[var(--color-panel)] px-3 py-1.5 text-xs text-[var(--text-secondary)] transition-colors hover:bg-[var(--color-brand-soft)]"
               onClick={() => onChange(suggestion)}
             >
               {suggestion}
@@ -47,7 +47,7 @@ export function MessageComposer({
         </div>
       )}
 
-      <div className="rounded-3xl border border-[var(--border-subtle)] bg-[var(--color-surface-elevated)] p-2 shadow-[var(--shadow-soft)]">
+      <div className="composer-box rounded-3xl border border-[var(--border-subtle)] bg-[var(--color-surface-elevated)] p-2 shadow-[var(--shadow-soft)]">
         <textarea
           ref={ref}
           value={value}
@@ -129,7 +129,7 @@ function IconAction({
       type="button"
       aria-label={label}
       onClick={onClick}
-      className="rounded-xl p-2 text-[var(--text-muted)] transition-colors hover:bg-[var(--color-panel)] hover:text-[var(--text-primary)]"
+      className="composer-icon rounded-xl p-2 text-[var(--text-muted)] transition-colors hover:bg-[var(--color-panel)] hover:text-[var(--text-primary)]"
     >
       {children}
     </button>

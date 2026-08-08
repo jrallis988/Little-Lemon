@@ -11,6 +11,7 @@ import { useIsMobile } from '@/hooks/use-media-query';
 import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts';
 import { useTheme } from '@/hooks/use-theme';
 import { useUiStore } from '@/store/ui-store';
+import { cn } from '@/utils/cn';
 
 export function AppLayout() {
   useTheme();
@@ -33,11 +34,11 @@ export function AppLayout() {
   }, [setSidebarOpen]);
 
   return (
-    <div className="flex h-full min-h-0">
+    <div className={cn('flex h-full min-h-0', isMobile && 'mobile-shell bg-black text-white')}>
       {!isMobile && <Sidebar />}
       {!isMobile && <MobileSidebar />}
       <div className="flex min-w-0 flex-1 flex-col">
-        <OfflineBanner />
+        {!isMobile && <OfflineBanner />}
         <main className="min-h-0 flex-1">
           <ErrorBoundary>
             <Outlet />

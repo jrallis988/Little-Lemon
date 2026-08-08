@@ -4,10 +4,13 @@ import { getEmployeeBySlug } from '@/data/employees';
 import { ChatPanel } from '@/features/chat/chat-panel';
 import { EmployeeTabs } from '@/features/workspace/employee-tabs';
 import { WorkspaceHeader } from '@/features/workspace/workspace-header';
+import { useIsMobile } from '@/hooks/use-media-query';
 import { useUiStore } from '@/store/ui-store';
 import { useWorkspaceStore } from '@/store/workspace-store';
+import { cn } from '@/utils/cn';
 
 export function EmployeeWorkspacePage() {
+  const isMobile = useIsMobile();
   const { employeeSlug } = useParams();
   const employee = employeeSlug ? getEmployeeBySlug(employeeSlug) : undefined;
   const activeTab = useUiStore((state) => state.activeTab);
@@ -52,7 +55,12 @@ export function EmployeeWorkspacePage() {
   }
 
   return (
-    <div className="flex h-full min-h-0 flex-col bg-[var(--bg-chat)]">
+    <div
+      className={cn(
+        'flex h-full min-h-0 flex-col',
+        isMobile ? 'bg-black text-white' : 'bg-[var(--bg-chat)]',
+      )}
+    >
       <WorkspaceHeader employee={employee} />
       <div className="min-h-0 flex-1">
         {activeTab === 'chat' ? (

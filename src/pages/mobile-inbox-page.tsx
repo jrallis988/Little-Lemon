@@ -1,6 +1,6 @@
-import { CircleHelp } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Avatar } from '@/components/ui/avatar';
+import { MobileScreenHeader } from '@/features/mobile/mobile-screen-header';
 import { AI_EMPLOYEES } from '@/data/employees';
 import { useWorkspaceStore } from '@/store/workspace-store';
 import { formatInboxTime } from '@/utils/format';
@@ -24,30 +24,8 @@ export function MobileInboxPage() {
   });
 
   return (
-    <div className="mobile-dark flex h-full min-h-0 flex-col bg-black text-white">
-      <header className="safe-top grid grid-cols-[2.5rem_1fr_2.5rem] items-center px-4 pt-3 pb-2">
-        <div
-          className="flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--color-brand)] font-display text-sm font-bold text-white"
-          aria-hidden
-        >
-          W
-        </div>
-        <div className="text-center">
-          <h1 className="font-display text-[1.35rem] font-bold tracking-[0.04em]">
-            SHIFT
-          </h1>
-          <p className="text-[10px] tracking-[0.18em] text-white/45 uppercase">
-            Working Intelligence
-          </p>
-        </div>
-        <Link
-          to="/app/intelligence"
-          aria-label="Working Intelligence help"
-          className="ml-auto flex h-9 w-9 items-center justify-center rounded-full text-white/55"
-        >
-          <CircleHelp className="h-5 w-5" />
-        </Link>
-      </header>
+    <div className="flex h-full min-h-0 flex-col">
+      <MobileScreenHeader title="SHIFT" centeredBrand />
 
       <ul className="scrollbar-thin flex-1 overflow-y-auto px-1 pb-24">
         {sorted.map((employee) => {

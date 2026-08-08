@@ -22,7 +22,8 @@ test('iPhone inbox opens chat and returns', async ({ page }) => {
 
   await page.getByRole('link', { name: /HR Intelligence/i }).first().click();
   await expect(page).toHaveURL(/\/app\/holly/);
-  await expect(page.getByRole('heading', { name: 'Holly' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'HR Intelligence' })).toBeVisible();
+  await expect(page.getByText('Holly', { exact: true }).first()).toBeVisible();
   await expect(page.getByRole('navigation', { name: 'Primary' })).toHaveCount(0);
 
   await page.getByRole('button', { name: 'Back to chats' }).click();
