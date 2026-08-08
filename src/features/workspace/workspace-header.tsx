@@ -58,8 +58,10 @@ export function WorkspaceHeader({ employee }: WorkspaceHeaderProps) {
           <Avatar
             initials={employee.avatar.initials}
             color={employee.avatar.color}
+            imageUrl={employee.avatar.imageUrl}
             size={isMobile ? 'md' : 'lg'}
             name={employee.name}
+            className="rounded-2xl"
           />
           <StatusDot status={employee.status} className="absolute right-0 bottom-0" />
         </div>
