@@ -29,7 +29,9 @@ export function EmployeeListItem({ employee, conversation }: EmployeeListItemPro
         <Avatar
           initials={employee.avatar.initials}
           color={employee.avatar.color}
+          imageUrl={employee.avatar.imageUrl}
           name={employee.name}
+          className="rounded-2xl"
         />
         <StatusDot status={employee.status} className="absolute -right-0.5 -bottom-0.5" />
       </div>

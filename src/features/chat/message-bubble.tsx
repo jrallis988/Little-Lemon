@@ -38,9 +38,10 @@ export function MessageBubble({
         <Avatar
           initials={employee.avatar.initials}
           color={employee.avatar.color}
+          imageUrl={employee.avatar.imageUrl}
           size="sm"
           name={employee.name}
-          className="mt-1"
+          className="mt-1 rounded-xl"
         />
       )}
       <div className={cn('max-w-[min(720px,85%)]', isUser && 'items-end')}>
