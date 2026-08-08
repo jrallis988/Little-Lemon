@@ -11,10 +11,10 @@ import {
   View,
 } from 'react-native';
 
-import { StarRating } from '../../src/components/StarRating';
+import { StarRating } from '../../src/components';
 import { useApp } from '../../src/context/AppContext';
 import type { ReviewScores } from '../../src/types';
-import { colors, radii, spacing } from '../../src/theme';
+import { colors, radii, spacing, typography } from '../../src/theme';
 
 const defaultScores: ReviewScores = {
   overall: 3,
@@ -135,31 +135,11 @@ export default function ReviewScreen() {
         </View>
 
         <View style={styles.scores}>
-          <StarRating
-            label="Overall"
-            value={scores.overall}
-            onChange={(value) => setScore('overall', value)}
-          />
-          <StarRating
-            label="Culture"
-            value={scores.culture}
-            onChange={(value) => setScore('culture', value)}
-          />
-          <StarRating
-            label="Pay & benefits"
-            value={scores.pay}
-            onChange={(value) => setScore('pay', value)}
-          />
-          <StarRating
-            label="Management"
-            value={scores.management}
-            onChange={(value) => setScore('management', value)}
-          />
-          <StarRating
-            label="Work-life balance"
-            value={scores.workLife}
-            onChange={(value) => setScore('workLife', value)}
-          />
+          <StarRating label="Overall" value={scores.overall} onChange={(v) => setScore('overall', v)} />
+          <StarRating label="Culture" value={scores.culture} onChange={(v) => setScore('culture', v)} />
+          <StarRating label="Pay & benefits" value={scores.pay} onChange={(v) => setScore('pay', v)} />
+          <StarRating label="Management" value={scores.management} onChange={(v) => setScore('management', v)} />
+          <StarRating label="Work-life balance" value={scores.workLife} onChange={(v) => setScore('workLife', v)} />
         </View>
 
         <Pressable
@@ -181,7 +161,7 @@ const styles = StyleSheet.create({
     gap: spacing.md,
   },
   intro: {
-    fontFamily: 'DMSans_400Regular',
+    fontFamily: typography.body,
     fontSize: 15,
     lineHeight: 22,
     color: colors.inkMuted,
@@ -193,13 +173,11 @@ const styles = StyleSheet.create({
     borderRadius: radii.md,
     paddingHorizontal: spacing.md,
     paddingVertical: 14,
-    fontFamily: 'DMSans_400Regular',
+    fontFamily: typography.body,
     fontSize: 16,
     color: colors.ink,
   },
-  textarea: {
-    minHeight: 140,
-  },
+  textarea: { minHeight: 140 },
   toggleRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -208,7 +186,7 @@ const styles = StyleSheet.create({
   },
   toggleLabel: {
     flex: 1,
-    fontFamily: 'DMSans_500Medium',
+    fontFamily: typography.bodyMedium,
     fontSize: 15,
     color: colors.ink,
   },
@@ -227,11 +205,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: spacing.sm,
   },
-  submitDisabled: {
-    opacity: 0.6,
-  },
+  submitDisabled: { opacity: 0.6 },
   submitText: {
-    fontFamily: 'DMSans_700Bold',
+    fontFamily: typography.bodyBold,
     fontSize: 15,
     color: colors.accent,
   },
@@ -243,7 +219,7 @@ const styles = StyleSheet.create({
     padding: spacing.lg,
   },
   missingText: {
-    fontFamily: 'DMSans_500Medium',
+    fontFamily: typography.bodyMedium,
     fontSize: 16,
     color: colors.inkMuted,
   },

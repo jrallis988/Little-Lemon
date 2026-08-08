@@ -18,6 +18,9 @@ const STORAGE_KEYS = {
   reviews: 'rme.reviews',
 };
 
+/** Local auth record — password stays client-side until API auth is wired. */
+type LocalAccount = User & { password: string };
+
 type AuthInput = {
   email: string;
   password: string;
@@ -58,9 +61,14 @@ function normalizeEmail(email: string) {
   return email.trim().toLowerCase();
 }
 
+function toPublicUser(account: LocalAccount): User {
+  const { password: _password, ...user } = account;
+  return user;
+}
+
 export function AppProvider({ children }: { children: ReactNode }) {
   const [ready, setReady] = useState(false);
-  const [users, setUsers] = useState<User[]>([]);
+  const [accounts, setAccounts] = useState<LocalAccount[]>([]);
   const [user, setUser] = useState<User | null>(null);
   const [reviews, setReviews] = useState<Review[]>(seedReviews);
   const companies = seedCompanies;
@@ -78,8 +86,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
         if (!mounted) return;
 
-        const parsedUsers: User[] = usersRaw ? JSON.parse(usersRaw) : [];
-        setUsers(parsedUsers);
+        const parsedUsers: LocalAccount[] = usersRaw ? JSON.parse(usersRaw) : [];
+        setAccounts(parsedUsers);
 
         if (reviewsRaw) {
           setReviews(JSON.parse(reviewsRaw));
@@ -89,7 +97,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
         if (sessionRaw) {
           const sessionUser = parsedUsers.find((item) => item.id === sessionRaw) ?? null;
-          setUser(sessionUser);
+          setUser(sessionUser ? toPublicUser(sessionUser) : null);
         }
       } finally {
         if (mounted) setReady(true);
@@ -101,8 +109,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  const persistUsers = async (next: User[]) => {
-    setUsers(next);
+  const persistAccounts = async (next: LocalAccount[]) => {
+    setAccounts(next);
     await AsyncStorage.setItem(STORAGE_KEYS.users, JSON.stringify(next));
   };
 
@@ -123,7 +131,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       );
     };
 
-    const getCompany = (id: string) => companies.find((company) => company.id === id);
+    const getCompany = (id: string) =>
+      companies.find((company) => company.id === id || company.slug === id);
 
     const getCompanyReviews = (companyId: string) =>
       reviews
@@ -148,33 +157,37 @@ export function AppProvider({ children }: { children: ReactNode }) {
       if (password.length < 6) {
         return 'Password must be at least 6 characters.';
       }
-      if (users.some((item) => item.email === normalized)) {
+      if (accounts.some((item) => item.email === normalized)) {
         return 'An account with that email already exists.';
       }
 
-      const nextUser: User = {
+      const now = new Date().toISOString();
+      const nextUser: LocalAccount = {
         id: `user-${Date.now()}`,
         email: normalized,
         displayName: displayName.trim(),
+        role: 'user',
         password,
+        createdAt: now,
+        updatedAt: now,
       };
 
-      const nextUsers = [...users, nextUser];
-      await persistUsers(nextUsers);
-      setUser(nextUser);
+      const nextAccounts = [...accounts, nextUser];
+      await persistAccounts(nextAccounts);
+      setUser(toPublicUser(nextUser));
       await AsyncStorage.setItem(STORAGE_KEYS.session, nextUser.id);
       return null;
     };
 
     const signIn = async ({ email, password }: AuthInput) => {
       const normalized = normalizeEmail(email);
-      const match = users.find(
+      const match = accounts.find(
         (item) => item.email === normalized && item.password === password,
       );
       if (!match) {
         return 'Invalid email or password.';
       }
-      setUser(match);
+      setUser(toPublicUser(match));
       await AsyncStorage.setItem(STORAGE_KEYS.session, match.id);
       return null;
     };
@@ -241,6 +254,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
               employmentStatus: input.employmentStatus,
               wouldRecommend: input.wouldRecommend,
               scores: input.scores,
+              updatedAt: new Date().toISOString(),
             }
           : review,
       );
@@ -275,7 +289,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       updateReview,
       deleteReview,
     };
-  }, [ready, companies, reviews, user, users]);
+  }, [ready, companies, reviews, user, accounts]);
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }

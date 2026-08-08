@@ -1,10 +1,10 @@
 import { useRouter } from 'expo-router';
 import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { averageReviews } from '../lib/averages';
-import type { Company, Review } from '../types';
-import { colors, radii, spacing } from '../theme';
-import { StarRating } from './StarRating';
+import { averageReviews } from '../../lib/averages';
+import type { Company, Review } from '../../types';
+import { colors, radii, spacing, typography } from '../../theme';
+import { StarRating } from '../ui/StarRating';
 
 type Props = {
   company: Company;
@@ -57,12 +57,12 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   name: {
-    fontFamily: 'Fraunces_600SemiBold',
+    fontFamily: typography.displaySemi,
     fontSize: 22,
     color: colors.ink,
   },
   meta: {
-    fontFamily: 'DMSans_400Regular',
+    fontFamily: typography.body,
     fontSize: 14,
     color: colors.inkSoft,
   },
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   count: {
-    fontFamily: 'DMSans_500Medium',
+    fontFamily: typography.bodyMedium,
     fontSize: 13,
     color: colors.inkMuted,
   },

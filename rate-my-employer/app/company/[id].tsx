@@ -1,21 +1,14 @@
-import { Link, Stack, useLocalSearchParams } from 'expo-router';
-import {
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Animated, { FadeIn, FadeInUp } from 'react-native-reanimated';
 
-import { ReviewCard } from '../../src/components/ReviewCard';
-import { ScoreBars } from '../../src/components/ScoreBars';
-import { StarRating } from '../../src/components/StarRating';
+import { ReviewCard, ScoreBars, StarRating } from '../../src/components';
 import { useApp } from '../../src/context/AppContext';
-import { colors, radii, spacing } from '../../src/theme';
+import { colors, radii, spacing, typography } from '../../src/theme';
 
 export default function CompanyScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
+  const router = useRouter();
   const { getCompany, getCompanyReviews, getCompanyAverages, user } = useApp();
   const company = getCompany(id);
   const reviews = getCompanyReviews(id);
@@ -53,13 +46,14 @@ export default function CompanyScreen() {
             </View>
           </View>
           {averages.reviewCount > 0 ? <ScoreBars scores={averages} /> : null}
-          <Link href={user ? `/review/${company.id}` : '/auth'} asChild>
-            <Pressable style={styles.cta}>
-              <Text style={styles.ctaText}>
-                {user ? 'Write a review' : 'Sign in to write a review'}
-              </Text>
-            </Pressable>
-          </Link>
+          <Pressable
+            style={styles.cta}
+            onPress={() => router.push(user ? `/review/${company.id}` : '/auth')}
+          >
+            <Text style={styles.ctaText}>
+              {user ? 'Write a review' : 'Sign in to write a review'}
+            </Text>
+          </Pressable>
         </Animated.View>
 
         <Text style={styles.section}>Reviews</Text>
@@ -97,18 +91,18 @@ const styles = StyleSheet.create({
     gap: spacing.md,
   },
   name: {
-    fontFamily: 'Fraunces_700Bold',
+    fontFamily: typography.display,
     fontSize: 34,
     lineHeight: 38,
     color: colors.ink,
   },
   meta: {
-    fontFamily: 'DMSans_500Medium',
+    fontFamily: typography.bodyMedium,
     fontSize: 14,
     color: colors.inkSoft,
   },
   summary: {
-    fontFamily: 'DMSans_400Regular',
+    fontFamily: typography.body,
     fontSize: 16,
     lineHeight: 24,
     color: colors.inkMuted,
@@ -120,13 +114,13 @@ const styles = StyleSheet.create({
     gap: spacing.md,
   },
   recommend: {
-    fontFamily: 'DMSans_600SemiBold',
+    fontFamily: typography.bodySemi,
     fontSize: 14,
     color: colors.ink,
     textAlign: 'right',
   },
   count: {
-    fontFamily: 'DMSans_400Regular',
+    fontFamily: typography.body,
     fontSize: 13,
     color: colors.inkSoft,
     textAlign: 'right',
@@ -138,22 +132,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   ctaText: {
-    fontFamily: 'DMSans_700Bold',
+    fontFamily: typography.bodyBold,
     fontSize: 15,
     color: colors.ink,
   },
   section: {
-    fontFamily: 'DMSans_600SemiBold',
-    fontSize: 13,
+    fontFamily: typography.bodySemi,
+    fontSize: 12,
     letterSpacing: 0.4,
     textTransform: 'uppercase',
     color: colors.inkSoft,
   },
-  reviewList: {
-    gap: spacing.md,
-  },
+  reviewList: { gap: spacing.md },
   empty: {
-    fontFamily: 'DMSans_400Regular',
+    fontFamily: typography.body,
     fontSize: 15,
     color: colors.inkSoft,
   },
@@ -164,7 +156,7 @@ const styles = StyleSheet.create({
     padding: spacing.lg,
   },
   missingText: {
-    fontFamily: 'DMSans_500Medium',
+    fontFamily: typography.bodyMedium,
     fontSize: 16,
     color: colors.inkMuted,
   },

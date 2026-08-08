@@ -1,40 +1,60 @@
 # Rate My Employer
 
-Mobile app for rating workplaces — the RateMyProfessors idea, applied to employers.
+Cross-platform mobile app for crowdsourced workplace ratings — RateMyProfessors, for employers.
 
-Built with **Expo (React Native)** so one codebase targets iOS, Android, and web.
+## Stack
 
-## MVP features
+| Layer | Choice |
+| --- | --- |
+| Frontend | React Native + Expo (TypeScript), Expo Router |
+| Styling | Clean `StyleSheet` + shared theme tokens (minimalist, high-contrast) |
+| Backend | Node.js / Express |
+| Database | PostgreSQL (`server/db/schema.sql` — works with Supabase or local Postgres) |
 
-- Search employers by name, industry, or city
-- Company pages with overall score, category bars, and written reviews
-- Email/password accounts (stored locally on device for this MVP)
-- Submit one review per employer; manage/delete your reviews from Profile
+## Project structure
 
-## Run locally
+```
+rate-my-employer/
+├── app/                      # Expo Router entry + screens
+│   ├── (tabs)/               # Bottom tabs: Explore, Search, Contribute, Compare, Profile
+│   ├── company/[id].tsx
+│   ├── review/[id].tsx
+│   └── auth.tsx
+├── src/
+│   ├── components/           # UI, company, review components
+│   ├── context/              # Local session + reviews (dev fallback)
+│   ├── data/                 # Seed data
+│   ├── lib/
+│   ├── navigation/           # Tab definitions
+│   ├── services/             # API client + domain services
+│   ├── theme/
+│   └── types/                # User, Company, Review, Tag, Salary, EmployerResponse
+└── server/                   # Express API + SQL schema
+    ├── db/schema.sql
+    └── src/
+```
+
+## Mobile app
 
 ```bash
 cd rate-my-employer
 npm install
-npm run web      # browser preview
-# npm start     # Expo Go / simulator
+npm run web          # browser preview
+npm start            # Expo Go / simulators
 ```
 
-## Project layout
+Bottom tabs: **Explore · Search · Contribute (+) · Compare · Profile**
 
+## API server
+
+```bash
+cd server
+cp .env.example .env   # set DATABASE_URL
+npm install
+npm run db:migrate     # requires psql + DATABASE_URL
+npm run dev            # http://localhost:4000
 ```
-rate-my-employer/
-├── app/                 # Expo Router screens
-├── src/
-│   ├── components/
-│   ├── context/         # Auth + reviews (AsyncStorage)
-│   ├── data/seed.ts     # Seed companies & reviews
-│   └── theme.ts
-└── package.json
-```
 
-## Notes
+Core tables: `users`, `companies`, `reviews`, `tags`, `review_tags`, `salaries`, `employer_responses`.
 
-- This folder is intentionally separate from the Artistic Fountain marketing site in the parent repo.
-- Data is local-first (AsyncStorage). A shared backend can replace the context layer later without rewriting the screens.
-- Intended to move into its own GitHub repository when ready.
+The mobile `services/` layer calls the API when available and falls back to local seed data for offline/dev browsing.

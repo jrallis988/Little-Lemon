@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-import type { ReviewScores } from '../types';
-import { colors, radii, spacing } from '../theme';
+import type { ReviewScores } from '../../types';
+import { colors, radii, spacing, typography } from '../../theme';
 
 const LABELS: { key: keyof ReviewScores; label: string }[] = [
   { key: 'culture', label: 'Culture' },
@@ -18,7 +18,7 @@ export function ScoreBars({ scores }: Props) {
   return (
     <View style={styles.wrap}>
       {LABELS.map(({ key, label }) => {
-        const value = scores[key];
+        const value = scores[key] ?? 0;
         const pct = Math.max(0, Math.min(5, value)) * 20;
         return (
           <View key={key} style={styles.row}>
@@ -26,7 +26,7 @@ export function ScoreBars({ scores }: Props) {
             <View style={styles.track}>
               <View style={[styles.fill, { width: `${pct}%` }]} />
             </View>
-            <Text style={styles.value}>{value ? value.toFixed(1) : '—'}</Text>
+            <Text style={styles.value}>{value ? Number(value).toFixed(1) : '—'}</Text>
           </View>
         );
       })}
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   },
   label: {
     width: 120,
-    fontFamily: 'DMSans_500Medium',
+    fontFamily: typography.bodyMedium,
     fontSize: 13,
     color: colors.inkMuted,
   },
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   value: {
     width: 32,
     textAlign: 'right',
-    fontFamily: 'DMSans_600SemiBold',
+    fontFamily: typography.bodySemi,
     fontSize: 13,
     color: colors.ink,
   },

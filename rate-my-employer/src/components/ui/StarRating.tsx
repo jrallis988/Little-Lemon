@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { colors, spacing } from '../theme';
+import { colors, spacing, typography } from '../../theme';
 
 type Props = {
   value: number;
@@ -18,16 +18,17 @@ export function StarRating({ value, onChange, size = 'md', label }: Props) {
       <View style={styles.row}>
         {[1, 2, 3, 4, 5].map((star) => {
           const filled = star <= Math.round(value);
-          const content = (
+          const starEl = (
             <Text
-              key={star}
               style={[styles.star, { fontSize, color: filled ? colors.star : colors.border }]}
             >
               ★
             </Text>
           );
 
-          if (!onChange) return content;
+          if (!onChange) {
+            return <View key={star}>{starEl}</View>;
+          }
 
           return (
             <Pressable
@@ -37,7 +38,7 @@ export function StarRating({ value, onChange, size = 'md', label }: Props) {
               accessibilityRole="button"
               accessibilityLabel={`Rate ${star} out of 5`}
             >
-              {content}
+              {starEl}
             </Pressable>
           );
         })}
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
   },
   label: {
     color: colors.inkMuted,
-    fontFamily: 'DMSans_500Medium',
+    fontFamily: typography.bodyMedium,
     fontSize: 13,
   },
   row: {
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
   value: {
     marginLeft: spacing.sm,
     color: colors.ink,
-    fontFamily: 'DMSans_600SemiBold',
+    fontFamily: typography.bodySemi,
     fontSize: 14,
   },
 });

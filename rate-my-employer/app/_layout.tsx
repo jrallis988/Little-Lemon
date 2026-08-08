@@ -15,7 +15,7 @@ import { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 
 import { AppProvider } from '../src/context/AppContext';
-import { colors } from '../src/theme';
+import { colors, typography } from '../src/theme';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -45,18 +45,18 @@ export default function RootLayout() {
           headerStyle: { backgroundColor: colors.ink },
           headerTintColor: colors.surface,
           headerTitleStyle: {
-            fontFamily: 'DMSans_600SemiBold',
+            fontFamily: typography.bodySemi,
             fontSize: 16,
           },
           contentStyle: { backgroundColor: colors.surface },
           animation: 'fade_from_bottom',
         }}
       >
-        <Stack.Screen name="index" options={{ title: 'Rate My Employer' }} />
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="company/[id]" options={{ title: 'Employer' }} />
         <Stack.Screen name="review/[id]" options={{ title: 'Write a review' }} />
         <Stack.Screen name="auth" options={{ title: 'Account', presentation: 'modal' }} />
-        <Stack.Screen name="profile" options={{ title: 'Your reviews' }} />
       </Stack>
     </AppProvider>
   );

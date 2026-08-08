@@ -10,7 +10,7 @@ const emptyScores: ReviewScores = {
 
 export function averageReviews(reviews: Review[]): CompanyAverages {
   if (reviews.length === 0) {
-    return { ...emptyScores, reviewCount: 0, recommendPercent: 0 };
+    return { ...emptyScores, reviewCount: 0, recommendPercent: 0, salaryCount: 0 };
   }
 
   const totals = reviews.reduce(
@@ -34,6 +34,7 @@ export function averageReviews(reviews: Review[]): CompanyAverages {
     workLife: round1(totals.workLife / n),
     reviewCount: n,
     recommendPercent: Math.round((totals.recommend / n) * 100),
+    salaryCount: 0,
   };
 }
 

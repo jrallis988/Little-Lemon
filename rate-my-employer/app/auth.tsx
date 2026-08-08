@@ -11,7 +11,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useApp } from '../src/context/AppContext';
-import { colors, radii, spacing } from '../src/theme';
+import { colors, radii, spacing, typography } from '../src/theme';
 
 export default function AuthScreen() {
   const router = useRouter();
@@ -45,7 +45,7 @@ export default function AuthScreen() {
           {mode === 'signin' ? 'Welcome back' : 'Create your account'}
         </Text>
         <Text style={styles.copy}>
-          Accounts let you post, edit, and delete your employer reviews on this device.
+          Accounts let you post, edit, and delete your employer reviews.
         </Text>
 
         {mode === 'signup' ? (
@@ -103,21 +103,15 @@ export default function AuthScreen() {
 }
 
 const styles = StyleSheet.create({
-  safe: {
-    flex: 1,
-    backgroundColor: colors.surface,
-  },
-  content: {
-    padding: spacing.lg,
-    gap: spacing.md,
-  },
+  safe: { flex: 1, backgroundColor: colors.surface },
+  content: { padding: spacing.lg, gap: spacing.md },
   title: {
-    fontFamily: 'Fraunces_700Bold',
+    fontFamily: typography.display,
     fontSize: 32,
     color: colors.ink,
   },
   copy: {
-    fontFamily: 'DMSans_400Regular',
+    fontFamily: typography.body,
     fontSize: 15,
     lineHeight: 22,
     color: colors.inkMuted,
@@ -130,7 +124,7 @@ const styles = StyleSheet.create({
     borderRadius: radii.md,
     paddingHorizontal: spacing.md,
     paddingVertical: 14,
-    fontFamily: 'DMSans_400Regular',
+    fontFamily: typography.body,
     fontSize: 16,
     color: colors.ink,
   },
@@ -141,18 +135,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: spacing.sm,
   },
-  disabled: {
-    opacity: 0.6,
-  },
+  disabled: { opacity: 0.6 },
   primaryText: {
-    fontFamily: 'DMSans_700Bold',
+    fontFamily: typography.bodyBold,
     fontSize: 15,
     color: colors.ink,
   },
   switch: {
     marginTop: spacing.sm,
     textAlign: 'center',
-    fontFamily: 'DMSans_500Medium',
+    fontFamily: typography.bodyMedium,
     fontSize: 14,
     color: colors.inkMuted,
   },

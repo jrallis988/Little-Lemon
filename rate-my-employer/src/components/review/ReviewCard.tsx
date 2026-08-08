@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-import type { Review } from '../types';
-import { colors, radii, spacing } from '../theme';
-import { StarRating } from './StarRating';
+import type { Review } from '../../types';
+import { colors, radii, spacing, typography } from '../../theme';
+import { StarRating } from '../ui/StarRating';
 
 type Props = {
   review: Review;
@@ -38,17 +38,17 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
   },
   title: {
-    fontFamily: 'Fraunces_600SemiBold',
+    fontFamily: typography.displaySemi,
     fontSize: 18,
     color: colors.ink,
   },
   meta: {
-    fontFamily: 'DMSans_400Regular',
+    fontFamily: typography.body,
     fontSize: 13,
     color: colors.inkSoft,
   },
   body: {
-    fontFamily: 'DMSans_400Regular',
+    fontFamily: typography.body,
     fontSize: 15,
     lineHeight: 22,
     color: colors.inkMuted,

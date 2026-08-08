@@ -1,4 +1,4 @@
-import { Link, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import {
   Alert,
   Pressable,
@@ -8,9 +8,9 @@ import {
   View,
 } from 'react-native';
 
-import { ReviewCard } from '../src/components/ReviewCard';
-import { useApp } from '../src/context/AppContext';
-import { colors, radii, spacing } from '../src/theme';
+import { ReviewCard } from '../../src/components';
+import { useApp } from '../../src/context/AppContext';
+import { colors, radii, spacing, typography } from '../../src/theme';
 
 export default function ProfileScreen() {
   const router = useRouter();
@@ -51,7 +51,6 @@ export default function ProfileScreen() {
           style={styles.secondary}
           onPress={async () => {
             await signOut();
-            router.replace('/');
           }}
         >
           <Text style={styles.secondaryText}>Sign out</Text>
@@ -61,7 +60,7 @@ export default function ProfileScreen() {
       <Text style={styles.section}>Your reviews</Text>
       {myReviews.length === 0 ? (
         <Text style={styles.empty}>
-          You have not posted a review yet. Search an employer to get started.
+          You have not posted a review yet. Use Search or Contribute to get started.
         </Text>
       ) : (
         myReviews.map((review) => {
@@ -71,11 +70,12 @@ export default function ProfileScreen() {
               <Text style={styles.company}>{company?.name ?? 'Employer'}</Text>
               <ReviewCard review={review} />
               <View style={styles.row}>
-                <Link href={`/company/${review.companyId}`} asChild>
-                  <Pressable style={styles.linkBtn}>
-                    <Text style={styles.linkText}>View employer</Text>
-                  </Pressable>
-                </Link>
+                <Pressable
+                  style={styles.linkBtn}
+                  onPress={() => router.push(`/company/${review.companyId}`)}
+                >
+                  <Text style={styles.linkText}>View employer</Text>
+                </Pressable>
                 <Pressable style={styles.dangerBtn} onPress={() => onDelete(review.id)}>
                   <Text style={styles.dangerText}>Delete</Text>
                 </Pressable>
@@ -101,12 +101,12 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
   },
   name: {
-    fontFamily: 'Fraunces_700Bold',
+    fontFamily: typography.display,
     fontSize: 28,
     color: colors.surface,
   },
   email: {
-    fontFamily: 'DMSans_400Regular',
+    fontFamily: typography.body,
     fontSize: 14,
     color: colors.mist,
     marginBottom: spacing.sm,
@@ -119,35 +119,30 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   secondaryText: {
-    fontFamily: 'DMSans_700Bold',
+    fontFamily: typography.bodyBold,
     fontSize: 13,
     color: colors.ink,
   },
   section: {
     marginTop: spacing.sm,
-    fontFamily: 'DMSans_600SemiBold',
-    fontSize: 13,
+    fontFamily: typography.bodySemi,
+    fontSize: 12,
     letterSpacing: 0.4,
     textTransform: 'uppercase',
     color: colors.inkSoft,
   },
   empty: {
-    fontFamily: 'DMSans_400Regular',
+    fontFamily: typography.body,
     fontSize: 15,
     color: colors.inkSoft,
   },
-  block: {
-    gap: spacing.sm,
-  },
+  block: { gap: spacing.sm },
   company: {
-    fontFamily: 'DMSans_600SemiBold',
+    fontFamily: typography.bodySemi,
     fontSize: 14,
     color: colors.inkMuted,
   },
-  row: {
-    flexDirection: 'row',
-    gap: spacing.sm,
-  },
+  row: { flexDirection: 'row', gap: spacing.sm },
   linkBtn: {
     paddingVertical: 8,
     paddingHorizontal: 12,
@@ -155,7 +150,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.mist,
   },
   linkText: {
-    fontFamily: 'DMSans_600SemiBold',
+    fontFamily: typography.bodySemi,
     fontSize: 13,
     color: colors.ink,
   },
@@ -166,7 +161,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F7E4E1',
   },
   dangerText: {
-    fontFamily: 'DMSans_600SemiBold',
+    fontFamily: typography.bodySemi,
     fontSize: 13,
     color: colors.danger,
   },
@@ -176,9 +171,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: spacing.md,
     padding: spacing.lg,
+    backgroundColor: colors.surface,
   },
   missingText: {
-    fontFamily: 'DMSans_500Medium',
+    fontFamily: typography.bodyMedium,
     fontSize: 16,
     color: colors.inkMuted,
   },
@@ -189,7 +185,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   primaryText: {
-    fontFamily: 'DMSans_700Bold',
+    fontFamily: typography.bodyBold,
     fontSize: 14,
     color: colors.ink,
   },
