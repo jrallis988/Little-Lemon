@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { AppLayout } from '@/layouts/app-layout';
 
 const LandingPage = lazy(() =>
@@ -15,6 +15,12 @@ const EmployeeWorkspacePage = lazy(() =>
 );
 const SettingsPage = lazy(() =>
   import('@/pages/settings-page').then((module) => ({ default: module.SettingsPage })),
+);
+const AppHomePage = lazy(() =>
+  import('@/pages/app-home-page').then((module) => ({ default: module.AppHomePage })),
+);
+const MobileTeamPage = lazy(() =>
+  import('@/pages/mobile-team-page').then((module) => ({ default: module.MobileTeamPage })),
 );
 const NotFoundPage = lazy(() =>
   import('@/pages/not-found-page').then((module) => ({ default: module.NotFoundPage })),
@@ -35,7 +41,8 @@ export default function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/app" element={<AppLayout />}>
-          <Route index element={<Navigate to="calvin" replace />} />
+          <Route index element={<AppHomePage />} />
+          <Route path="team" element={<MobileTeamPage />} />
           <Route path="settings" element={<SettingsPage />} />
           <Route path=":employeeSlug" element={<EmployeeWorkspacePage />} />
         </Route>

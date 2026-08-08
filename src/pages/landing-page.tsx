@@ -10,45 +10,47 @@ export function LandingPage() {
 
   return (
     <div className="min-h-full">
-      <div className="mx-auto flex min-h-full max-w-6xl flex-col px-6 py-6">
-        <header className="flex items-center justify-between gap-4">
-          <Logo />
+      <div className="safe-top safe-bottom mx-auto flex min-h-full max-w-6xl flex-col px-5 py-5 md:px-6 md:py-6">
+        <header className="flex items-center justify-between gap-3">
+          <Logo compact className="sm:hidden" />
+          <Logo className="hidden sm:flex" />
           <div className="flex items-center gap-2">
-            <ButtonLink to="/auth" variant="ghost">
+            <ButtonLink to="/auth" variant="ghost" className="hidden sm:inline-flex">
               Sign in
             </ButtonLink>
-            <ButtonLink to="/app">
-              Open workspace
+            <ButtonLink to="/app" size="sm" className="sm:h-10 sm:px-4 sm:text-sm">
+              <span className="sm:hidden">Open</span>
+              <span className="hidden sm:inline">Open workspace</span>
               <ArrowRight className="h-4 w-4" />
             </ButtonLink>
           </div>
         </header>
 
-        <section className="relative mt-10 grid min-h-[70vh] items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
+        <section className="relative mt-8 grid min-h-[70vh] items-center gap-8 md:mt-10 md:gap-10 lg:grid-cols-[1.05fr_0.95fr]">
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55 }}
           >
-            <p className="font-display text-5xl leading-[0.95] font-bold tracking-tight md:text-6xl lg:text-7xl">
+            <p className="font-display text-[2.75rem] leading-[0.95] font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
               Working
               <br />
               Intelligence
             </p>
-            <h1 className="mt-5 max-w-xl text-xl text-[var(--text-secondary)] md:text-2xl">
+            <h1 className="mt-4 max-w-xl text-lg text-[var(--text-secondary)] sm:mt-5 sm:text-xl md:text-2xl">
               Collaborate with a full team of specialized AI employees inside one professional
               digital workplace.
             </h1>
-            <p className="mt-4 max-w-lg text-[var(--text-muted)]">
+            <p className="mt-3 max-w-lg text-sm text-[var(--text-muted)] sm:mt-4 sm:text-base">
               HR, marketing, legal, engineering, sales, and operations — each with memory, tools,
               and department expertise.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <ButtonLink to="/app" size="lg">
+            <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
+              <ButtonLink to="/app" size="lg" className="w-full sm:w-auto">
                 Enter workspace
                 <ArrowRight className="h-4 w-4" />
               </ButtonLink>
-              <ButtonLink to="/auth" size="lg" variant="secondary">
+              <ButtonLink to="/auth" size="lg" variant="secondary" className="w-full sm:w-auto">
                 Create account
               </ButtonLink>
             </div>

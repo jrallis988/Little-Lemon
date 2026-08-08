@@ -31,7 +31,7 @@ export function MessageComposer({
   }, [value]);
 
   return (
-    <div className="border-t border-[var(--border-subtle)] bg-[color-mix(in_oklab,var(--color-surface-elevated)_88%,transparent)] px-4 py-3 backdrop-blur md:px-6">
+    <div className="safe-bottom border-t border-[var(--border-subtle)] bg-[color-mix(in_oklab,var(--color-surface-elevated)_88%,transparent)] px-3 py-2.5 backdrop-blur md:px-6 md:py-3">
       {suggestions.length > 0 && !value && (
         <div className="mb-3 flex flex-wrap gap-2">
           {suggestions.map((suggestion) => (

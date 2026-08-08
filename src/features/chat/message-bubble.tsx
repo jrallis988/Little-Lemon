@@ -31,7 +31,7 @@ export function MessageBubble({
 
   return (
     <article
-      className={cn('group flex gap-3 px-4 md:px-8', isUser ? 'flex-row-reverse' : 'flex-row')}
+      className={cn('group flex gap-2.5 px-3 md:gap-3 md:px-8', isUser ? 'flex-row-reverse' : 'flex-row')}
       aria-label={`${isUser ? 'You' : employee.name} message`}
     >
       {!isUser && (

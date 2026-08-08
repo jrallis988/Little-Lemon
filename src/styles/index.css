@@ -81,6 +81,10 @@
     height: 100%;
   }
 
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
   body {
     margin: 0;
     font-family: var(--font-sans);
@@ -89,6 +93,7 @@
     background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    overscroll-behavior-y: none;
   }
 
   ::selection {
@@ -110,6 +115,14 @@
 @layer utilities {
   .font-display {
     font-family: var(--font-display);
+  }
+
+  .safe-top {
+    padding-top: max(0.5rem, env(safe-area-inset-top));
+  }
+
+  .safe-bottom {
+    padding-bottom: max(0.35rem, env(safe-area-inset-bottom));
   }
 
   .surface-glass {

@@ -151,7 +151,7 @@ export function ChatPanel({ employee, conversationId }: ChatPanelProps) {
 
   return (
     <div className="flex h-full min-h-0 flex-col">
-      <div className="flex items-center justify-between px-4 py-2 md:px-6">
+      <div className="hidden items-center justify-between px-4 py-2 md:flex md:px-6">
         <p className="text-xs text-[var(--text-muted)]">
           Streaming responses · markdown · local draft autosave
         </p>
