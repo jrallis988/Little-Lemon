@@ -4,17 +4,16 @@ import type { ReviewScores } from '../../types';
 import { colors, radii, spacing, typography } from '../../theme';
 
 const LABELS: { key: keyof ReviewScores; label: string }[] = [
-  { key: 'culture', label: 'Culture' },
-  { key: 'pay', label: 'Pay & benefits' },
   { key: 'management', label: 'Management' },
-  { key: 'workLife', label: 'Work-life balance' },
+  { key: 'workLife', label: 'Work-life' },
+  { key: 'pay', label: 'Compensation' },
+  { key: 'careerGrowth', label: 'Career growth' },
+  { key: 'culture', label: 'Culture' },
 ];
 
-type Props = {
-  scores: ReviewScores;
-};
+type Props = { scores: ReviewScores; compact?: boolean };
 
-export function ScoreBars({ scores }: Props) {
+export function ScoreBars({ scores, compact }: Props) {
   return (
     <View style={styles.wrap}>
       {LABELS.map(({ key, label }) => {
@@ -22,7 +21,7 @@ export function ScoreBars({ scores }: Props) {
         const pct = Math.max(0, Math.min(5, value)) * 20;
         return (
           <View key={key} style={styles.row}>
-            <Text style={styles.label}>{label}</Text>
+            <Text style={[styles.label, compact && styles.labelCompact]}>{label}</Text>
             <View style={styles.track}>
               <View style={[styles.fill, { width: `${pct}%` }]} />
             </View>
@@ -35,20 +34,15 @@ export function ScoreBars({ scores }: Props) {
 }
 
 const styles = StyleSheet.create({
-  wrap: {
-    gap: spacing.sm,
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.sm,
-  },
+  wrap: { gap: spacing.sm },
+  row: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
   label: {
-    width: 120,
+    width: 110,
     fontFamily: typography.bodyMedium,
     fontSize: 13,
     color: colors.inkMuted,
   },
+  labelCompact: { width: 96, fontSize: 12 },
   track: {
     flex: 1,
     height: 8,
@@ -56,11 +50,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.mist,
     overflow: 'hidden',
   },
-  fill: {
-    height: '100%',
-    backgroundColor: colors.ink,
-    borderRadius: radii.sm,
-  },
+  fill: { height: '100%', backgroundColor: colors.ink, borderRadius: radii.sm },
   value: {
     width: 32,
     textAlign: 'right',

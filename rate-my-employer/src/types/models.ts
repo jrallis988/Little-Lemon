@@ -2,7 +2,6 @@
 
 export type EmploymentStatus = 'current' | 'former';
 export type EmploymentType = 'full_time' | 'part_time' | 'contract' | 'intern' | 'freelance';
-
 export type UserRole = 'user' | 'employer_admin' | 'moderator' | 'admin';
 
 export interface User {
@@ -11,8 +10,10 @@ export interface User {
   displayName: string;
   avatarUrl?: string | null;
   role: UserRole;
-  /** Optional public headline shown on reviews */
   headline?: string | null;
+  /** Corporate-domain verification badge */
+  isVerifiedEmployee?: boolean;
+  workEmailDomain?: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -23,7 +24,6 @@ export interface Company {
   slug: string;
   industry: string;
   location: string;
-  /** HQ city/region; may differ from work locations */
   headquarters?: string | null;
   size: string;
   website?: string | null;
@@ -40,7 +40,7 @@ export interface ReviewScores {
   pay: number;
   management: number;
   workLife: number;
-  careerGrowth?: number;
+  careerGrowth: number;
 }
 
 export interface Review {
@@ -50,27 +50,27 @@ export interface Review {
   authorName: string;
   title: string;
   body: string;
+  pros?: string;
+  cons?: string;
   role: string;
   department?: string | null;
   employmentStatus: EmploymentStatus;
   employmentType?: EmploymentType;
   wouldRecommend: boolean;
   scores: ReviewScores;
-  /** Associated tag ids or embedded tags depending on API shape */
   tagIds?: string[];
   tags?: Tag[];
   isAnonymous?: boolean;
   helpfulCount?: number;
+  notHelpfulCount?: number;
   createdAt: string;
   updatedAt?: string;
 }
 
 export interface Tag {
   id: string;
-  /** Stable key, e.g. "work-life-balance" */
   key: string;
   label: string;
-  /** positive | neutral | negative — drives chip styling */
   sentiment: 'positive' | 'neutral' | 'negative';
   category?: 'culture' | 'pay' | 'management' | 'process' | 'other';
 }
@@ -82,7 +82,6 @@ export interface Salary {
   role: string;
   department?: string | null;
   employmentType: EmploymentType;
-  /** Annualized base in major units (e.g. USD dollars) */
   baseAnnual: number;
   bonusAnnual?: number | null;
   equityAnnual?: number | null;
@@ -94,7 +93,6 @@ export interface Salary {
   updatedAt?: string;
 }
 
-/** Official reply from a claimed company account */
 export interface EmployerResponse {
   id: string;
   reviewId: string;
@@ -118,3 +116,23 @@ export interface CompanyDetail extends Company {
   reviews: Review[];
   salaries?: Salary[];
 }
+
+export type FeedItem =
+  | { kind: 'review'; id: string; review: Review; company: Company }
+  | { kind: 'salary'; id: string; salary: Salary; company: Company };
+
+export type ExploreFilter = 'trending' | 'tech' | 'retail' | 'remote' | 'all';
+
+export const INDUSTRY_CATEGORIES = [
+  'Technology',
+  'Healthcare',
+  'Hospitality',
+  'Retail',
+  'Finance',
+  'Logistics',
+  'Media',
+  'Food & Bev',
+  'Agency',
+] as const;
+
+export type IndustryCategory = (typeof INDUSTRY_CATEGORIES)[number];

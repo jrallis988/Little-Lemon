@@ -30,9 +30,7 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
+    if (loaded) SplashScreen.hideAsync();
   }, [loaded]);
 
   if (!loaded) return null;
@@ -44,19 +42,24 @@ export default function RootLayout() {
         screenOptions={{
           headerStyle: { backgroundColor: colors.ink },
           headerTintColor: colors.surface,
-          headerTitleStyle: {
-            fontFamily: typography.bodySemi,
-            fontSize: 16,
-          },
+          headerTitleStyle: { fontFamily: typography.bodySemi, fontSize: 16 },
           contentStyle: { backgroundColor: colors.surface },
           animation: 'fade_from_bottom',
         }}
       >
         <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="splash" options={{ headerShown: false }} />
+        <Stack.Screen name="onboarding" options={{ headerShown: false }} />
+        <Stack.Screen name="auth" options={{ headerShown: false }} />
+        <Stack.Screen name="verify-work" options={{ title: 'Work verification' }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="company/[id]" options={{ title: 'Employer' }} />
-        <Stack.Screen name="review/[id]" options={{ title: 'Write a review' }} />
-        <Stack.Screen name="auth" options={{ title: 'Account', presentation: 'modal' }} />
+        <Stack.Screen name="review/[id]" options={{ title: 'Review' }} />
+        <Stack.Screen
+          name="salary/submit"
+          options={{ title: 'Submit salary', presentation: 'modal' }}
+        />
+        <Stack.Screen name="settings" options={{ title: 'Settings' }} />
       </Stack>
     </AppProvider>
   );

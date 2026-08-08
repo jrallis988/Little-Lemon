@@ -1,18 +1,33 @@
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
+import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import Animated, { FadeIn, FadeInUp } from 'react-native-reanimated';
 
-import { ReviewCard, ScoreBars, StarRating } from '../../src/components';
+import { Chip, PrimaryButton, ReviewCard, ScoreBars, StarRating } from '../../src/components';
 import { useApp } from '../../src/context/AppContext';
+import { formatMoney } from '../../src/lib/averages';
 import { colors, radii, spacing, typography } from '../../src/theme';
 
-export default function CompanyScreen() {
+type TabKey = 'reviews' | 'salaries' | 'qa';
+
+export default function CompanyDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
-  const { getCompany, getCompanyReviews, getCompanyAverages, user } = useApp();
+  const {
+    getCompany,
+    getCompanyReviews,
+    getCompanySalaries,
+    getCompanyAverages,
+    getEmployerResponse,
+    savedCompanyIds,
+    toggleSavedCompany,
+    user,
+  } = useApp();
+  const [tab, setTab] = useState<TabKey>('reviews');
   const company = getCompany(id);
   const reviews = getCompanyReviews(id);
+  const salaries = getCompanySalaries(id);
   const averages = getCompanyAverages(id);
+  const saved = savedCompanyIds.includes(id);
 
   if (!company) {
     return (
@@ -25,63 +40,114 @@ export default function CompanyScreen() {
   return (
     <>
       <Stack.Screen options={{ title: company.name }} />
-      <ScrollView contentContainerStyle={styles.content}>
-        <Animated.View entering={FadeIn.duration(350)} style={styles.hero}>
-          <Text style={styles.name}>{company.name}</Text>
-          <Text style={styles.meta}>
-            {company.industry} · {company.location} · {company.size}
-          </Text>
-          <Text style={styles.summary}>{company.summary}</Text>
-          <View style={styles.scoreRow}>
-            <StarRating value={averages.overall} size="lg" />
-            <View>
+      <View style={styles.root}>
+        <ScrollView contentContainerStyle={styles.content}>
+          <View style={styles.hero}>
+            <Text style={styles.name}>{company.name}</Text>
+            <Text style={styles.meta}>
+              {company.industry} · {company.headquarters ?? company.location} · {company.size}
+            </Text>
+            <Text style={styles.summary}>{company.summary}</Text>
+            <View style={styles.scoreRow}>
+              <StarRating value={averages.overall} size="lg" />
               <Text style={styles.recommend}>
                 {averages.reviewCount
-                  ? `${averages.recommendPercent}% would recommend`
-                  : 'Be the first to review'}
-              </Text>
-              <Text style={styles.count}>
-                {averages.reviewCount} review{averages.reviewCount === 1 ? '' : 's'}
+                  ? `${averages.recommendPercent}% recommend · ${averages.reviewCount} reviews`
+                  : 'No reviews yet'}
               </Text>
             </View>
+            <ScoreBars scores={averages} />
+            <View style={styles.row}>
+              <PrimaryButton
+                label={saved ? 'Saved' : 'Save'}
+                variant="ghost"
+                style={{ flex: 1 }}
+                onPress={() => toggleSavedCompany(company.id)}
+              />
+              <PrimaryButton
+                label="Compare"
+                variant="ghost"
+                style={{ flex: 1 }}
+                onPress={() => router.push('/(tabs)/compare')}
+              />
+            </View>
           </View>
-          {averages.reviewCount > 0 ? <ScoreBars scores={averages} /> : null}
-          <Pressable
-            style={styles.cta}
-            onPress={() => router.push(user ? `/review/${company.id}` : '/auth')}
-          >
-            <Text style={styles.ctaText}>
-              {user ? 'Write a review' : 'Sign in to write a review'}
-            </Text>
-          </Pressable>
-        </Animated.View>
 
-        <Text style={styles.section}>Reviews</Text>
-        <View style={styles.reviewList}>
-          {reviews.length === 0 ? (
-            <Text style={styles.empty}>No reviews yet. Share what it was really like.</Text>
-          ) : (
-            reviews.map((review, index) => (
-              <Animated.View
-                key={review.id}
-                entering={FadeInUp.delay(Math.min(index, 5) * 60).springify()}
-              >
-                <ReviewCard review={review} />
-              </Animated.View>
-            ))
-          )}
-        </View>
-      </ScrollView>
+          <View style={styles.tabs}>
+            {(
+              [
+                ['reviews', 'Reviews'],
+                ['salaries', 'Salaries'],
+                ['qa', 'Q&A / Responses'],
+              ] as [TabKey, string][]
+            ).map(([key, label]) => (
+              <Chip key={key} label={label} active={tab === key} onPress={() => setTab(key)} />
+            ))}
+          </View>
+
+          {tab === 'reviews'
+            ? reviews.map((review) => (
+                <Pressable key={review.id} onPress={() => router.push(`/review/${review.id}`)}>
+                  <ReviewCard review={review} />
+                  <View style={{ height: spacing.md }} />
+                </Pressable>
+              ))
+            : null}
+
+          {tab === 'salaries' ? (
+            salaries.length === 0 ? (
+              <Text style={styles.empty}>No salary data yet.</Text>
+            ) : (
+              salaries.map((salary) => (
+                <View key={salary.id} style={styles.salaryCard}>
+                  <Text style={styles.salaryRole}>{salary.role}</Text>
+                  <Text style={styles.salaryAmt}>
+                    {formatMoney(salary.baseAnnual, salary.currency)}
+                  </Text>
+                  <Text style={styles.meta}>
+                    {salary.yearsExperience ?? '—'} yrs · bonus{' '}
+                    {salary.bonusAnnual
+                      ? formatMoney(salary.bonusAnnual, salary.currency)
+                      : '—'}
+                  </Text>
+                </View>
+              ))
+            )
+          ) : null}
+
+          {tab === 'qa' ? (
+            reviews.filter((review) => getEmployerResponse(review.id)).length === 0 ? (
+              <Text style={styles.empty}>No employer responses yet.</Text>
+            ) : (
+              reviews.map((review) => {
+                const response = getEmployerResponse(review.id);
+                if (!response) return null;
+                return (
+                  <View key={review.id} style={styles.qaCard}>
+                    <Text style={styles.qaTitle}>{review.title}</Text>
+                    <Text style={styles.meta}>Employer response · {response.responderName}</Text>
+                    <Text style={styles.qaBody}>{response.body}</Text>
+                  </View>
+                );
+              })
+            )
+          ) : null}
+        </ScrollView>
+
+        <Pressable
+          style={styles.fab}
+          onPress={() => router.push(user ? '/(tabs)/contribute' : '/auth')}
+        >
+          <Text style={styles.fabText}>Rate This Company</Text>
+        </Pressable>
+      </View>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  content: {
-    padding: spacing.lg,
-    paddingBottom: spacing.xxl,
-    gap: spacing.lg,
-  },
+  root: { flex: 1 },
+  content: { padding: spacing.lg, paddingBottom: 120, gap: spacing.md },
   hero: {
     backgroundColor: colors.surfaceRaised,
     borderRadius: radii.lg,
@@ -90,74 +156,45 @@ const styles = StyleSheet.create({
     padding: spacing.lg,
     gap: spacing.md,
   },
-  name: {
-    fontFamily: typography.display,
-    fontSize: 34,
-    lineHeight: 38,
-    color: colors.ink,
+  name: { fontFamily: typography.display, fontSize: 32, color: colors.ink },
+  meta: { fontFamily: typography.bodyMedium, fontSize: 13, color: colors.inkSoft },
+  summary: { fontFamily: typography.body, fontSize: 15, lineHeight: 22, color: colors.inkMuted },
+  scoreRow: { gap: spacing.sm },
+  recommend: { fontFamily: typography.bodySemi, fontSize: 13, color: colors.inkMuted },
+  row: { flexDirection: 'row', gap: spacing.sm },
+  tabs: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
+  empty: { fontFamily: typography.body, fontSize: 14, color: colors.inkSoft },
+  salaryCard: {
+    backgroundColor: colors.surfaceRaised,
+    borderRadius: radii.md,
+    borderWidth: 1,
+    borderColor: colors.border,
+    padding: spacing.md,
+    gap: 4,
   },
-  meta: {
-    fontFamily: typography.bodyMedium,
-    fontSize: 14,
-    color: colors.inkSoft,
+  salaryRole: { fontFamily: typography.bodySemi, fontSize: 15, color: colors.ink },
+  salaryAmt: { fontFamily: typography.displaySemi, fontSize: 22, color: colors.ink },
+  qaCard: {
+    backgroundColor: colors.surfaceRaised,
+    borderRadius: radii.md,
+    borderWidth: 1,
+    borderColor: colors.border,
+    padding: spacing.md,
+    gap: 6,
   },
-  summary: {
-    fontFamily: typography.body,
-    fontSize: 16,
-    lineHeight: 24,
-    color: colors.inkMuted,
-  },
-  scoreRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: spacing.md,
-  },
-  recommend: {
-    fontFamily: typography.bodySemi,
-    fontSize: 14,
-    color: colors.ink,
-    textAlign: 'right',
-  },
-  count: {
-    fontFamily: typography.body,
-    fontSize: 13,
-    color: colors.inkSoft,
-    textAlign: 'right',
-  },
-  cta: {
+  qaTitle: { fontFamily: typography.displaySemi, fontSize: 17, color: colors.ink },
+  qaBody: { fontFamily: typography.body, fontSize: 14, lineHeight: 21, color: colors.inkMuted },
+  fab: {
+    position: 'absolute',
+    left: spacing.lg,
+    right: spacing.lg,
+    bottom: spacing.lg,
     backgroundColor: colors.accent,
-    borderRadius: radii.sm,
-    paddingVertical: 14,
+    borderRadius: radii.pill,
+    paddingVertical: 16,
     alignItems: 'center',
   },
-  ctaText: {
-    fontFamily: typography.bodyBold,
-    fontSize: 15,
-    color: colors.ink,
-  },
-  section: {
-    fontFamily: typography.bodySemi,
-    fontSize: 12,
-    letterSpacing: 0.4,
-    textTransform: 'uppercase',
-    color: colors.inkSoft,
-  },
-  reviewList: { gap: spacing.md },
-  empty: {
-    fontFamily: typography.body,
-    fontSize: 15,
-    color: colors.inkSoft,
-  },
-  missing: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: spacing.lg,
-  },
-  missingText: {
-    fontFamily: typography.bodyMedium,
-    fontSize: 16,
-    color: colors.inkMuted,
-  },
+  fabText: { fontFamily: typography.bodyBold, fontSize: 15, color: colors.ink },
+  missing: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+  missingText: { fontFamily: typography.bodyMedium, color: colors.inkMuted },
 });

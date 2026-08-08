@@ -1,226 +1,129 @@
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import { useState } from 'react';
-import {
-  Alert,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Switch,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
 
-import { StarRating } from '../../src/components';
+import { Chip, PrimaryButton, ScoreBars, StarRating } from '../../src/components';
 import { useApp } from '../../src/context/AppContext';
-import type { ReviewScores } from '../../src/types';
 import { colors, radii, spacing, typography } from '../../src/theme';
 
-const defaultScores: ReviewScores = {
-  overall: 3,
-  culture: 3,
-  pay: 3,
-  management: 3,
-  workLife: 3,
-};
-
-export default function ReviewScreen() {
+export default function ReviewDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
-  const { getCompany, user, submitReview } = useApp();
-  const company = getCompany(id);
+  const { getReview, getCompany, getTagsForReview, getEmployerResponse, voteReview } = useApp();
+  const review = getReview(id);
+  const company = review ? getCompany(review.companyId) : undefined;
+  const tags = review ? getTagsForReview(review) : [];
+  const response = review ? getEmployerResponse(review.id) : undefined;
 
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
-  const [role, setRole] = useState('');
-  const [employmentStatus, setEmploymentStatus] = useState<'current' | 'former'>('former');
-  const [wouldRecommend, setWouldRecommend] = useState(true);
-  const [scores, setScores] = useState<ReviewScores>(defaultScores);
-  const [submitting, setSubmitting] = useState(false);
-
-  if (!company) {
+  if (!review || !company) {
     return (
       <View style={styles.missing}>
-        <Text style={styles.missingText}>Employer not found.</Text>
+        <Text style={styles.missingText}>Review not found.</Text>
       </View>
     );
   }
-
-  if (!user) {
-    return (
-      <View style={styles.missing}>
-        <Text style={styles.missingText}>Sign in to write a review.</Text>
-        <Pressable style={styles.submit} onPress={() => router.push('/auth')}>
-          <Text style={styles.submitText}>Go to sign in</Text>
-        </Pressable>
-      </View>
-    );
-  }
-
-  const setScore = (key: keyof ReviewScores, value: number) => {
-    setScores((prev) => ({ ...prev, [key]: value }));
-  };
-
-  const onSubmit = async () => {
-    setSubmitting(true);
-    const error = await submitReview({
-      companyId: company.id,
-      title,
-      body,
-      role,
-      employmentStatus,
-      wouldRecommend,
-      scores,
-    });
-    setSubmitting(false);
-
-    if (error) {
-      Alert.alert('Could not post review', error);
-      return;
-    }
-
-    router.replace(`/company/${company.id}`);
-  };
 
   return (
     <>
-      <Stack.Screen options={{ title: `Review ${company.name}` }} />
-      <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
-        <Text style={styles.intro}>
-          Rate your experience at {company.name}. Be specific — titles and scores help others
-          decide.
+      <Stack.Screen options={{ title: company.name }} />
+      <ScrollView contentContainerStyle={styles.content}>
+        <Text style={styles.company} onPress={() => router.push(`/company/${company.id}`)}>
+          {company.name}
         </Text>
+        <Text style={styles.title}>{review.title}</Text>
+        <Text style={styles.meta}>
+          {review.authorName} · {review.role} ·{' '}
+          {review.employmentStatus === 'current' ? 'Current' : 'Former'}
+          {review.isAnonymous ? ' · Anonymous' : ''}
+        </Text>
+        <StarRating value={review.scores.overall} size="lg" />
+        <ScoreBars scores={review.scores} />
 
-        <TextInput
-          style={styles.input}
-          placeholder="Review title"
-          placeholderTextColor={colors.inkSoft}
-          value={title}
-          onChangeText={setTitle}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Your role / title"
-          placeholderTextColor={colors.inkSoft}
-          value={role}
-          onChangeText={setRole}
-        />
-        <TextInput
-          style={[styles.input, styles.textarea]}
-          placeholder="What was it really like?"
-          placeholderTextColor={colors.inkSoft}
-          value={body}
-          onChangeText={setBody}
-          multiline
-          textAlignVertical="top"
-        />
+        {review.pros ? (
+          <View style={styles.box}>
+            <Text style={styles.boxLabel}>Pros</Text>
+            <Text style={styles.boxBody}>{review.pros}</Text>
+          </View>
+        ) : null}
+        {review.cons ? (
+          <View style={styles.box}>
+            <Text style={styles.boxLabel}>Cons</Text>
+            <Text style={styles.boxBody}>{review.cons}</Text>
+          </View>
+        ) : null}
 
-        <View style={styles.toggleRow}>
-          <Text style={styles.toggleLabel}>I currently work here</Text>
-          <Switch
-            value={employmentStatus === 'current'}
-            onValueChange={(on) => setEmploymentStatus(on ? 'current' : 'former')}
-            trackColor={{ false: colors.mist, true: colors.accentDeep }}
-            thumbColor={colors.surfaceRaised}
+        <Text style={styles.body}>{review.body}</Text>
+
+        <View style={styles.tags}>
+          {tags.map((tag) => (
+            <Chip
+              key={tag.id}
+              label={tag.label}
+              tone={tag.sentiment === 'negative' ? 'negative' : 'positive'}
+            />
+          ))}
+        </View>
+
+        <View style={styles.voteRow}>
+          <PrimaryButton
+            label={`Upvote (${review.helpfulCount ?? 0})`}
+            variant="ghost"
+            style={{ flex: 1 }}
+            onPress={() => voteReview(review.id, 'up')}
+          />
+          <PrimaryButton
+            label={`Downvote (${review.notHelpfulCount ?? 0})`}
+            variant="ghost"
+            style={{ flex: 1 }}
+            onPress={() => voteReview(review.id, 'down')}
           />
         </View>
-        <View style={styles.toggleRow}>
-          <Text style={styles.toggleLabel}>I would recommend this employer</Text>
-          <Switch
-            value={wouldRecommend}
-            onValueChange={setWouldRecommend}
-            trackColor={{ false: colors.mist, true: colors.accentDeep }}
-            thumbColor={colors.surfaceRaised}
-          />
-        </View>
 
-        <View style={styles.scores}>
-          <StarRating label="Overall" value={scores.overall} onChange={(v) => setScore('overall', v)} />
-          <StarRating label="Culture" value={scores.culture} onChange={(v) => setScore('culture', v)} />
-          <StarRating label="Pay & benefits" value={scores.pay} onChange={(v) => setScore('pay', v)} />
-          <StarRating label="Management" value={scores.management} onChange={(v) => setScore('management', v)} />
-          <StarRating label="Work-life balance" value={scores.workLife} onChange={(v) => setScore('workLife', v)} />
-        </View>
-
-        <Pressable
-          style={[styles.submit, submitting && styles.submitDisabled]}
-          onPress={onSubmit}
-          disabled={submitting}
-        >
-          <Text style={styles.submitText}>{submitting ? 'Posting…' : 'Post review'}</Text>
-        </Pressable>
+        {response ? (
+          <View style={styles.response}>
+            <Text style={styles.boxLabel}>Employer response · {response.responderName}</Text>
+            <Text style={styles.boxBody}>{response.body}</Text>
+          </View>
+        ) : null}
       </ScrollView>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  content: {
-    padding: spacing.lg,
-    paddingBottom: spacing.xxl,
-    gap: spacing.md,
+  content: { padding: spacing.lg, paddingBottom: spacing.xxl, gap: spacing.md },
+  company: {
+    fontFamily: typography.bodySemi,
+    fontSize: 13,
+    color: colors.inkSoft,
+    textTransform: 'uppercase',
+    letterSpacing: 0.4,
   },
-  intro: {
-    fontFamily: typography.body,
-    fontSize: 15,
-    lineHeight: 22,
-    color: colors.inkMuted,
-  },
-  input: {
-    backgroundColor: colors.surfaceRaised,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: radii.md,
-    paddingHorizontal: spacing.md,
-    paddingVertical: 14,
-    fontFamily: typography.body,
-    fontSize: 16,
-    color: colors.ink,
-  },
-  textarea: { minHeight: 140 },
-  toggleRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: spacing.md,
-  },
-  toggleLabel: {
-    flex: 1,
-    fontFamily: typography.bodyMedium,
-    fontSize: 15,
-    color: colors.ink,
-  },
-  scores: {
+  title: { fontFamily: typography.display, fontSize: 30, color: colors.ink },
+  meta: { fontFamily: typography.body, fontSize: 14, color: colors.inkSoft },
+  body: { fontFamily: typography.body, fontSize: 16, lineHeight: 24, color: colors.inkMuted },
+  box: {
     backgroundColor: colors.surfaceRaised,
     borderRadius: radii.md,
     borderWidth: 1,
     borderColor: colors.border,
     padding: spacing.md,
-    gap: spacing.md,
+    gap: 4,
   },
-  submit: {
-    backgroundColor: colors.ink,
-    borderRadius: radii.sm,
-    paddingVertical: 16,
-    alignItems: 'center',
-    marginTop: spacing.sm,
+  boxLabel: {
+    fontFamily: typography.bodySemi,
+    fontSize: 12,
+    textTransform: 'uppercase',
+    color: colors.inkSoft,
   },
-  submitDisabled: { opacity: 0.6 },
-  submitText: {
-    fontFamily: typography.bodyBold,
-    fontSize: 15,
-    color: colors.accent,
+  boxBody: { fontFamily: typography.body, fontSize: 15, lineHeight: 22, color: colors.inkMuted },
+  tags: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
+  voteRow: { flexDirection: 'row', gap: spacing.sm },
+  response: {
+    backgroundColor: colors.mist,
+    borderRadius: radii.md,
+    padding: spacing.md,
+    gap: 6,
   },
-  missing: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: spacing.md,
-    padding: spacing.lg,
-  },
-  missingText: {
-    fontFamily: typography.bodyMedium,
-    fontSize: 16,
-    color: colors.inkMuted,
-  },
+  missing: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+  missingText: { fontFamily: typography.bodyMedium, color: colors.inkMuted },
 });

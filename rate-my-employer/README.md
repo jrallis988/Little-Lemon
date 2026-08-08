@@ -1,60 +1,50 @@
 # Rate My Employer
 
-Cross-platform mobile app for crowdsourced workplace ratings — RateMyProfessors, for employers.
+Cross-platform mobile app for crowdsourced workplace ratings.
 
 ## Stack
 
-| Layer | Choice |
+- **Frontend:** React Native + Expo (TypeScript), Expo Router
+- **Styling:** Clean StyleSheet + theme tokens
+- **Backend:** Node.js / Express + PostgreSQL (`server/db/schema.sql`)
+
+## Screen directory
+
+### Onboarding & authentication
+| Screen | Route |
 | --- | --- |
-| Frontend | React Native + Expo (TypeScript), Expo Router |
-| Styling | Clean `StyleSheet` + shared theme tokens (minimalist, high-contrast) |
-| Backend | Node.js / Express |
-| Database | PostgreSQL (`server/db/schema.sql` — works with Supabase or local Postgres) |
+| SplashScreen | `app/splash.tsx` |
+| ValueCarouselScreen | `app/onboarding.tsx` |
+| AuthScreen | `app/auth.tsx` |
+| WorkVerificationScreen | `app/verify-work.tsx` |
 
-## Project structure
+### Bottom tabs
+| Tab | Screen | Route |
+| --- | --- | --- |
+| Explore | ExploreScreen | `app/(tabs)/explore.tsx` |
+| Search | SearchDirectoryScreen | `app/(tabs)/search.tsx` |
+| Contribute (+) | ContributeScreen (5-step wizard) | `app/(tabs)/contribute.tsx` |
+| Compare | CompareScreen | `app/(tabs)/compare.tsx` |
+| Profile | ProfileScreen | `app/(tabs)/profile.tsx` |
 
-```
-rate-my-employer/
-├── app/                      # Expo Router entry + screens
-│   ├── (tabs)/               # Bottom tabs: Explore, Search, Contribute, Compare, Profile
-│   ├── company/[id].tsx
-│   ├── review/[id].tsx
-│   └── auth.tsx
-├── src/
-│   ├── components/           # UI, company, review components
-│   ├── context/              # Local session + reviews (dev fallback)
-│   ├── data/                 # Seed data
-│   ├── lib/
-│   ├── navigation/           # Tab definitions
-│   ├── services/             # API client + domain services
-│   ├── theme/
-│   └── types/                # User, Company, Review, Tag, Salary, EmployerResponse
-└── server/                   # Express API + SQL schema
-    ├── db/schema.sql
-    └── src/
-```
+### Stack / modals
+| Screen | Route |
+| --- | --- |
+| CompanyDetailScreen | `app/company/[id].tsx` |
+| ReviewDetailScreen | `app/review/[id].tsx` |
+| SubmitSalaryScreen | `app/salary/submit.tsx` |
+| SettingsScreen | `app/settings.tsx` |
 
-## Mobile app
+Contribute wizard steps: SelectCompany → Ratings → WrittenFeedback → Tagging → SalaryOptional.
+
+## Run
 
 ```bash
 cd rate-my-employer
 npm install
-npm run web          # browser preview
-npm start            # Expo Go / simulators
-```
+npm run web
 
-Bottom tabs: **Explore · Search · Contribute (+) · Compare · Profile**
-
-## API server
-
-```bash
 cd server
-cp .env.example .env   # set DATABASE_URL
 npm install
-npm run db:migrate     # requires psql + DATABASE_URL
-npm run dev            # http://localhost:4000
+npm run dev
 ```
-
-Core tables: `users`, `companies`, `reviews`, `tags`, `review_tags`, `salaries`, `employer_responses`.
-
-The mobile `services/` layer calls the API when available and falls back to local seed data for offline/dev browsing.

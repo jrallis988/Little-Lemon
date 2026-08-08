@@ -6,6 +6,7 @@ const emptyScores: ReviewScores = {
   pay: 0,
   management: 0,
   workLife: 0,
+  careerGrowth: 0,
 };
 
 export function averageReviews(reviews: Review[]): CompanyAverages {
@@ -20,6 +21,7 @@ export function averageReviews(reviews: Review[]): CompanyAverages {
       pay: acc.pay + review.scores.pay,
       management: acc.management + review.scores.management,
       workLife: acc.workLife + review.scores.workLife,
+      careerGrowth: acc.careerGrowth + (review.scores.careerGrowth ?? 0),
       recommend: acc.recommend + (review.wouldRecommend ? 1 : 0),
     }),
     { ...emptyScores, recommend: 0 },
@@ -32,6 +34,7 @@ export function averageReviews(reviews: Review[]): CompanyAverages {
     pay: round1(totals.pay / n),
     management: round1(totals.management / n),
     workLife: round1(totals.workLife / n),
+    careerGrowth: round1(totals.careerGrowth / n),
     reviewCount: n,
     recommendPercent: Math.round((totals.recommend / n) * 100),
     salaryCount: 0,
@@ -40,4 +43,16 @@ export function averageReviews(reviews: Review[]): CompanyAverages {
 
 function round1(value: number) {
   return Math.round(value * 10) / 10;
+}
+
+export function formatMoney(amount: number, currency = 'USD') {
+  try {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency,
+      maximumFractionDigits: 0,
+    }).format(amount);
+  } catch {
+    return `$${Math.round(amount).toLocaleString()}`;
+  }
 }
