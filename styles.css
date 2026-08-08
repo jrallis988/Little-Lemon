@@ -700,6 +700,73 @@ a:hover { opacity: 0.8; }
     color: var(--cream);
 }
 
+.about-certifications {
+    margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 1px solid rgba(15, 15, 15, 0.18);
+    max-width: 48rem;
+}
+
+.about-certifications h3 {
+    font-family: 'Arcanite Slab', serif;
+    font-size: 1.75rem;
+    color: var(--dark);
+    margin-bottom: 0.5rem;
+}
+
+.about-certifications-lead {
+    color: rgba(15, 15, 15, 0.7);
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+}
+
+.certifications-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.certifications-list:empty::after {
+    content: "Drop certification names here — name, issuer, and year.";
+    display: block;
+    color: rgba(15, 15, 15, 0.55);
+    font-size: 0.95rem;
+    font-style: italic;
+}
+
+.certifications-list li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.35rem 1.5rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(15, 15, 15, 0.12);
+}
+
+.certifications-list li:first-child {
+    border-top: 1px solid rgba(15, 15, 15, 0.12);
+}
+
+.cert-name {
+    font-weight: 600;
+    color: var(--dark);
+    font-size: 1.05rem;
+}
+
+.cert-meta {
+    color: rgba(15, 15, 15, 0.65);
+    font-size: 0.95rem;
+}
+
+.about-certifications--on-designer {
+    margin-top: 3rem;
+    padding-top: 2.5rem;
+}
+
 /* WORKFLOW */
 
 .workflow h2 {
@@ -3167,5 +3234,120 @@ button:focus:not(:focus-visible) {
 @media (max-width: 600px) {
     .toolkit-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* SKILLS & TOOLKIT */
+.skills {
+    padding: 6rem 2rem;
+    background: linear-gradient(135deg, rgba(0, 201, 168, 0.10) 0%, rgba(0, 102, 255, 0.08) 55%, rgba(255, 0, 128, 0.08) 100%);
+}
+
+.skills-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.skills h2 {
+    margin-bottom: 1rem;
+}
+
+.skills-lead {
+    max-width: 38rem;
+    margin: 0 auto 3rem;
+    color: var(--text-muted);
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    text-align: left;
+}
+
+.skills-card {
+    padding: 1.5rem 1.35rem;
+    border: 1px solid rgba(248, 248, 248, 0.12);
+    background: rgba(15, 15, 15, 0.35);
+    border-radius: 10px;
+}
+
+.skills-card h3 {
+    margin: 0 0 1rem;
+    font-size: 1.2rem;
+    color: var(--cream);
+}
+
+.skills-subgroup + .skills-subgroup {
+    margin-top: 1.15rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(248, 248, 248, 0.08);
+}
+
+.skills-subgroup h4 {
+    margin: 0 0 0.65rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--magenta);
+}
+
+.skills-tags {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+}
+
+.skills-tags li {
+    padding: 0.35rem 0.7rem;
+    border: 1px solid rgba(248, 248, 248, 0.14);
+    border-radius: 999px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    background: rgba(248, 248, 248, 0.04);
+}
+
+.skills-card--on-light {
+    background: rgba(255, 255, 255, 0.55);
+    border-color: rgba(15, 15, 15, 0.12);
+}
+
+.skills-card--on-light h3 {
+    color: var(--dark);
+}
+
+.skills-card--on-light .skills-subgroup h4 {
+    color: #C40066;
+}
+
+.skills-card--on-light .skills-tags li {
+    border-color: rgba(15, 15, 15, 0.14);
+    color: rgba(15, 15, 15, 0.78);
+    background: rgba(255, 255, 255, 0.55);
+}
+
+.skills-grid--designer {
+    margin-top: 1.5rem;
+}
+
+.designer-capabilities .capabilities-lead {
+    color: rgba(15, 15, 15, 0.7);
+}
+
+@media (max-width: 960px) {
+    .skills-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .skills-grid {
+        grid-template-columns: 1fr;
     }
 }
