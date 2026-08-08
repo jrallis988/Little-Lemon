@@ -787,9 +787,6 @@ ul { list-style: none; }
   .footer-inner { grid-template-columns: 1fr 1fr; }
   .wizard-steps { grid-template-columns: 1fr 1fr; }
   .slot-grid { grid-template-columns: 1fr 1fr; }
-}
-
-@media (max-width: 720px) {
   .nav-toggle { display: inline-flex; }
   .life-nav {
     display: none; flex-direction: column; gap: 0;
@@ -800,8 +797,11 @@ ul { list-style: none; }
     border-radius: var(--radius-sm);
     padding: 0.75rem 0.85rem;
   }
-  .service-grid, .branch-grid, .footer-inner { grid-template-columns: 1fr; }
   .header-tools .btn-secondary { display: none; }
+}
+
+@media (max-width: 720px) {
+  .service-grid, .branch-grid, .footer-inner { grid-template-columns: 1fr; }
   .tax-item { grid-template-columns: 1fr; gap: 0.45rem; }
   .appt-row { grid-template-columns: 1fr; }
 }
