@@ -1,22 +1,36 @@
 import { useInView } from "../hooks/useInView";
-import { asset } from "../lib/asset";
+import { CampusImage } from "./CampusImage";
 
 const shots = [
   {
-    src: asset("images/campus-silos.jpg"),
+    name: "campus-day",
+    alt: "Smuttynose brewery and grain silos on Towle Farm in daylight",
+    position: "center",
+  },
+  {
+    name: "campus-silos",
     alt: "Grain silos outside the Smuttynose brewery building",
+    position: "center",
   },
   {
-    src: asset("images/campus-sign.jpg"),
+    name: "campus-sign",
     alt: "Smuttynose Brewing Company stone entrance sign",
+    position: "center",
   },
   {
-    src: asset("images/campus-patio.jpg"),
+    name: "campus-patio",
     alt: "Outdoor patio seating at Towle Farm",
+    position: "center",
   },
   {
-    src: asset("images/campus-entrance.jpg"),
+    name: "campus-entrance",
     alt: "Campus entrance and lawn at Towle Farm",
+    position: "center",
+  },
+  {
+    name: "campus-dusk",
+    alt: "Towle Farm campus at golden hour",
+    position: "70% center",
   },
 ];
 
@@ -39,20 +53,22 @@ export function Gallery() {
           </h2>
         </div>
 
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {shots.map((shot, index) => (
             <figure
-              key={shot.src}
+              key={shot.name}
               className={`overflow-hidden transition-all duration-700 ${
                 visible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
               }`}
-              style={{ transitionDelay: visible ? `${80 + index * 70}ms` : "0ms" }}
+              style={{
+                transitionDelay: visible ? `${80 + index * 70}ms` : "0ms",
+              }}
             >
-              <img
-                src={shot.src}
+              <CampusImage
+                name={shot.name}
                 alt={shot.alt}
-                loading="lazy"
-                className="aspect-[4/5] h-full w-full object-cover"
+                objectPosition={shot.position}
+                className="aspect-[4/5] h-full w-full object-cover transition-transform duration-700 hover:scale-[1.03]"
               />
             </figure>
           ))}

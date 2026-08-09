@@ -1,6 +1,6 @@
 import { links } from "../data/links";
 import { useInView } from "../hooks/useInView";
-import { asset } from "../lib/asset";
+import { CampusImage } from "./CampusImage";
 
 export function Taproom() {
   const { ref, visible } = useInView<HTMLElement>();
@@ -9,8 +9,8 @@ export function Taproom() {
     <section id="visit" ref={ref} className="bg-tide-deep text-foam">
       <div className="grid min-h-[34rem] lg:grid-cols-2">
         <div className="relative min-h-[18rem] overflow-hidden lg:min-h-full">
-          <img
-            src={asset("images/campus-entrance.jpg")}
+          <CampusImage
+            name="campus-entrance"
             alt="Entrance to Smuttynose on Towle Farm with lawn, patio seating, and the red brewery building"
             className={`h-full w-full object-cover transition-transform duration-[1.4s] ease-out ${
               visible ? "scale-100" : "scale-110"
@@ -59,9 +59,7 @@ export function Taproom() {
                 <dt className="font-semibold uppercase tracking-[0.16em] text-salt">
                   Backyard hours
                 </dt>
-                <dd className="mt-1 text-base text-foam/90">
-                  Wed–Thu 3–8 · Fri–Sun 12–8
-                </dd>
+                <dd className="mt-1 text-base text-foam/90">{links.hours}</dd>
               </div>
               <div>
                 <dt className="font-semibold uppercase tracking-[0.16em] text-salt">
@@ -89,6 +87,14 @@ export function Taproom() {
                 className="inline-flex bg-buoy px-5 py-3 text-sm font-semibold tracking-wide text-foam transition-transform duration-300 hover:-translate-y-0.5"
               >
                 Visit the Backyard
+              </a>
+              <a
+                href={links.waitlist}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex border border-foam/50 px-5 py-3 text-sm font-semibold tracking-wide text-foam transition-colors hover:bg-foam/10"
+              >
+                Join the waitlist
               </a>
               <a
                 href={links.maps}

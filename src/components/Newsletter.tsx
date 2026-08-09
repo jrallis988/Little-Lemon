@@ -1,13 +1,25 @@
 import { FormEvent, useState } from "react";
 import { useInView } from "../hooks/useInView";
+import { formsConfigured, submitNewsletter } from "../lib/forms";
+
+type Status = "idle" | "sending" | "joined" | "error";
 
 export function Newsletter() {
   const { ref, visible } = useInView<HTMLElement>();
-  const [joined, setJoined] = useState(false);
+  const [status, setStatus] = useState<Status>("idle");
 
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setJoined(true);
+    const form = e.currentTarget;
+    const email = String(new FormData(form).get("email") || "").trim();
+    setStatus("sending");
+    try {
+      await submitNewsletter(email);
+      setStatus("joined");
+      form.reset();
+    } catch {
+      setStatus("error");
+    }
   }
 
   return (
@@ -33,7 +45,7 @@ export function Newsletter() {
           </p>
         </div>
 
-        {joined ? (
+        {status === "joined" ? (
           <p className="text-sm font-semibold uppercase tracking-[0.14em] text-tide">
             You’re on the list — cheers.
           </p>
@@ -56,10 +68,20 @@ export function Newsletter() {
             />
             <button
               type="submit"
-              className="bg-ink px-5 py-3 text-sm font-semibold tracking-wide text-foam transition-transform duration-300 hover:-translate-y-0.5"
+              disabled={status === "sending"}
+              className="bg-ink px-5 py-3 text-sm font-semibold tracking-wide text-foam transition-transform duration-300 hover:-translate-y-0.5 disabled:opacity-70"
             >
-              Sign up
+              {status === "sending" ? "Joining…" : "Sign up"}
             </button>
+            {status === "error" ? (
+              <p className="basis-full text-xs text-buoy" role="alert">
+                Signup failed — try again in a moment.
+              </p>
+            ) : !formsConfigured() ? (
+              <p className="basis-full text-xs text-steel">
+                Demo mode saves locally until VITE_CONTACT_EMAIL is set.
+              </p>
+            ) : null}
           </form>
         )}
       </div>

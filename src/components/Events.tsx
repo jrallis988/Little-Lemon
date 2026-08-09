@@ -2,13 +2,14 @@ import {
   dateForWeekday,
   formatEventDay,
   thisWeekLabel,
-  weeklyEvents,
 } from "../data/events";
 import { links } from "../data/links";
 import { useInView } from "../hooks/useInView";
+import { useWeeklyEvents } from "../hooks/useWeeklyEvents";
 
 export function Events() {
   const { ref, visible } = useInView<HTMLElement>();
+  const weeklyEvents = useWeeklyEvents();
   const weekLabel = thisWeekLabel();
   const now = new Date();
   now.setHours(0, 0, 0, 0);
@@ -65,7 +66,9 @@ export function Events() {
                 className={`grid gap-2 py-6 transition-all duration-700 md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.7fr)_minmax(0,1.2fr)] md:gap-8 ${
                   visible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
                 } ${isPast && visible ? "!opacity-50" : ""}`}
-                style={{ transitionDelay: visible ? `${100 + index * 80}ms` : "0ms" }}
+                style={{
+                  transitionDelay: visible ? `${100 + index * 80}ms` : "0ms",
+                }}
               >
                 <div>
                   <div className="flex flex-wrap items-center gap-3">
@@ -83,7 +86,9 @@ export function Events() {
                   </p>
                 </div>
                 <div className="md:pt-1">
-                  <p className="font-medium text-ink/90">{formatEventDay(event.date)}</p>
+                  <p className="font-medium text-ink/90">
+                    {formatEventDay(event.date)}
+                  </p>
                   <p className="text-sm text-steel">{event.time}</p>
                 </div>
                 <p className="text-steel md:pt-1">{event.detail}</p>

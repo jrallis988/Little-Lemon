@@ -24,7 +24,10 @@ jobs:
           node-version: "22"
           cache: npm
       - run: npm ci
-      - run: npm run build
+      - name: Build
+        env:
+          VITE_CONTACT_EMAIL: ${{ secrets.VITE_CONTACT_EMAIL }}
+        run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

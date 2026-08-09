@@ -1,6 +1,7 @@
-import { classics, pouringNow, tapListUpdatedLabel } from "../data/beers";
+import { Beer } from "../data/beers";
 import { links } from "../data/links";
 import { useInView } from "../hooks/useInView";
+import { useTapList } from "../hooks/useTapList";
 
 function statusLabel(status?: string) {
   if (status === "limited") return "Limited";
@@ -15,7 +16,7 @@ function BeerRows({
   startDelay = 0,
   showStatus = false,
 }: {
-  items: typeof pouringNow;
+  items: Beer[];
   visible: boolean;
   startDelay?: number;
   showStatus?: boolean;
@@ -26,7 +27,7 @@ function BeerRows({
         const label = statusLabel(beer.status);
         return (
           <li
-            key={beer.name}
+            key={`${beer.name}-${beer.style}`}
             className={`grid gap-3 py-6 transition-all duration-700 md:grid-cols-[minmax(0,1.15fr)_minmax(0,0.95fr)_auto] md:items-end md:gap-8 ${
               visible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
             }`}
@@ -42,9 +43,7 @@ function BeerRows({
                 {showStatus && label ? (
                   <span
                     className={`text-[0.7rem] font-semibold uppercase tracking-[0.14em] ${
-                      beer.status === "limited"
-                        ? "text-buoy"
-                        : "text-tide"
+                      beer.status === "limited" ? "text-buoy" : "text-tide"
                     }`}
                   >
                     {label}
@@ -68,7 +67,7 @@ function BeerRows({
 
 export function Beers() {
   const { ref, visible } = useInView<HTMLElement>();
-  const updated = tapListUpdatedLabel();
+  const { pouringNow, classics, updatedLabel } = useTapList();
 
   return (
     <section id="beers" ref={ref} className="px-5 py-20 md:px-8 md:py-28">
@@ -84,8 +83,11 @@ export function Beers() {
                 What’s pouring
               </p>
               <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-buoy">
-                <span className="h-1.5 w-1.5 rounded-full bg-buoy" aria-hidden="true" />
-                Updated {updated}
+                <span
+                  className="h-1.5 w-1.5 animate-pulse rounded-full bg-buoy"
+                  aria-hidden="true"
+                />
+                Updated {updatedLabel}
               </span>
             </div>
             <h2 className="mt-3 font-display text-4xl font-bold uppercase tracking-wide md:text-5xl">

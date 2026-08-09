@@ -1,0 +1,40 @@
+{
+  "note": "Recurring weekly campus happenings. Update anytime — the site reads this file live.",
+  "weeklyEvents": [
+    {
+      "title": "Trivia Night",
+      "dayOffset": 3,
+      "time": "6:00–8:30 PM",
+      "where": "Restaurant",
+      "detail": "Trivia with DJ Koko. First come, first serve seating."
+    },
+    {
+      "title": "Backyard Club",
+      "dayOffset": 5,
+      "time": "Noon–8 PM",
+      "where": "The Backyard",
+      "detail": "Cold pours, patio hangs, and rotating live music."
+    },
+    {
+      "title": "Food Truck Friday",
+      "dayOffset": 5,
+      "time": "Noon–7 PM",
+      "where": "Campus",
+      "detail": "Rotating local trucks — check Facebook for this week’s vendor."
+    },
+    {
+      "title": "Weekend Backyard",
+      "dayOffset": 6,
+      "time": "Noon–8 PM",
+      "where": "The Backyard",
+      "detail": "All-day patio energy. Dogs welcome. Live sets when scheduled."
+    },
+    {
+      "title": "Sunday Sessions",
+      "dayOffset": 0,
+      "time": "Noon–8 PM",
+      "where": "The Backyard",
+      "detail": "Easy pours, family-friendly hangs, and golden-hour patio seats."
+    }
+  ]
+}

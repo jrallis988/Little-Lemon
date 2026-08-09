@@ -1,26 +1,53 @@
 import { FormEvent, useState } from "react";
-import { useInView } from "../hooks/useInView";
 import { links } from "../data/links";
+import { useInView } from "../hooks/useInView";
+import {
+  formsConfigured,
+  mailtoContact,
+  submitContact,
+} from "../lib/forms";
+
+type Status = "idle" | "sending" | "sent" | "mailto" | "error";
 
 export function Contact() {
   const { ref, visible } = useInView<HTMLElement>();
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<Status>("idle");
 
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    const name = String(data.get("name") || "").trim();
-    const email = String(data.get("email") || "").trim();
-    const topic = String(data.get("topic") || "General");
-    const message = String(data.get("message") || "").trim();
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const payload = {
+      name: String(data.get("name") || "").trim(),
+      email: String(data.get("email") || "").trim(),
+      topic: String(data.get("topic") || "General"),
+      message: String(data.get("message") || "").trim(),
+    };
 
-    const subject = encodeURIComponent(`Smuttynose inquiry — ${topic}`);
-    const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\nTopic: ${topic}\n\n${message}`,
-    );
-    window.location.href = `mailto:hello@smuttynose.com?subject=${subject}&body=${body}`;
-    setSent(true);
+    setStatus("sending");
+    try {
+      const result = await submitContact(payload);
+      if (result === "mailto") {
+        mailtoContact(payload);
+        setStatus("mailto");
+        return;
+      }
+      setStatus("sent");
+      form.reset();
+    } catch {
+      mailtoContact(payload);
+      setStatus("error");
+    }
   }
+
+  const buttonLabel =
+    status === "sending"
+      ? "Sending…"
+      : status === "sent"
+        ? "Sent — thanks"
+        : status === "mailto"
+          ? "Opening email…"
+          : "Send inquiry";
 
   return (
     <section id="contact" ref={ref} className="bg-ink text-foam">
@@ -37,8 +64,8 @@ export function Contact() {
             Parties, rentals & questions
           </h2>
           <p className="mt-4 max-w-md leading-relaxed text-foam/75">
-            Planning a private event on campus, need catering info, or just
-            have a question? Send a note — we’ll get back to you.
+            Planning a private event on campus, need catering info, or just have
+            a question? Send a note — we’ll get back to you.
           </p>
           <dl className="mt-10 space-y-4 text-sm">
             <div>
@@ -46,7 +73,10 @@ export function Contact() {
                 Call
               </dt>
               <dd className="mt-1 text-base">
-                <a href={links.phone} className="underline-offset-2 hover:underline">
+                <a
+                  href={links.phone}
+                  className="underline-offset-2 hover:underline"
+                >
                   {links.phoneDisplay}
                 </a>
               </dd>
@@ -118,12 +148,19 @@ export function Contact() {
           </label>
           <button
             type="submit"
-            className="bg-buoy px-5 py-3 text-sm font-semibold tracking-wide text-foam transition-transform duration-300 hover:-translate-y-0.5"
+            disabled={status === "sending" || status === "sent"}
+            className="bg-buoy px-5 py-3 text-sm font-semibold tracking-wide text-foam transition-transform duration-300 hover:-translate-y-0.5 disabled:opacity-70"
           >
-            {sent ? "Opening email…" : "Send inquiry"}
+            {buttonLabel}
           </button>
-          <p className="text-xs text-foam/55">
-            Opens your email app with the details filled in.
+          <p className="text-xs text-foam/55" role="status">
+            {status === "sent"
+              ? "Message delivered. We’ll follow up soon."
+              : status === "error"
+                ? "Couldn’t reach the form service — opened your email app instead."
+                : formsConfigured()
+                  ? "Sent securely — no email app required."
+                  : "Set VITE_CONTACT_EMAIL to enable inbox delivery (falls back to mailto)."}
           </p>
         </form>
       </div>
