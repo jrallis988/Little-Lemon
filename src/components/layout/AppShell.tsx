@@ -1,5 +1,12 @@
 import { NavLink, Outlet, useLocation } from "react-router-dom";
-import { Compass, Home, Shield, Sparkles, UserRound } from "lucide-react";
+import {
+  BookMarked,
+  Compass,
+  Home,
+  Shield,
+  Sparkles,
+  UserRound,
+} from "lucide-react";
 import { SurfLogo } from "@/components/brand/SurfLogo";
 import { LearningModeOverlay } from "@/components/learning/LearningModeOverlay";
 import { AskMiloPanel } from "@/components/learning/AskMiloPanel";
@@ -17,6 +24,7 @@ import { MILO_NAME } from "@/brand/identity";
 const NAV = [
   { to: ROUTES.home, label: "Home", icon: Home },
   { to: ROUTES.explore, label: "Explore", icon: Compass },
+  { to: ROUTES.projects, label: "Projects", icon: BookMarked },
   { to: ROUTES.profile, label: "Profile", icon: UserRound },
   { to: ROUTES.parent, label: "Parent", icon: Shield },
 ];
@@ -94,7 +102,7 @@ export function AppShell() {
 
       {!isImmersive && (
         <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-white/50 bg-cream/90 backdrop-blur-xl md:hidden">
-          <div className="mx-auto grid max-w-lg grid-cols-4 gap-1 px-3 py-2">
+          <div className="mx-auto grid max-w-lg grid-cols-5 gap-1 px-3 py-2">
             {NAV.map((item) => (
               <NavLink
                 key={item.to}

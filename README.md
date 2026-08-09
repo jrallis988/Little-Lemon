@@ -32,12 +32,23 @@ Surf is not a content feed, launcher, or game hub. Kids search, open curated edu
 
 ## Supporting systems
 
-- Academic search index + EBSCO-style tier filtering (`src-tauri/src/academic` + `src/services/academicSearch.ts`)
-- Ask Milo learning aide (`src/components/learning/AskMiloPanel.tsx`) — explains topics, vocabulary, and citations
-- URL interceptor / whitelist middleware (`src/services/urlFilter.ts` + Rust `check_url`)
-- Background session timer worker (`src/services/sessionTimer.ts`)
-- Cryptographic parent gate (PBKDF2 PIN hashing)
-- Navigation history stack + Tauri IPC bridge
+- Academic search: curated corpus + live OpenAlex merge, EBSCO-style Refine Results
+- Ask Milo learning aide (live via `VITE_SURF_AI_API_KEY`, offline tutor fallback)
+- Reader mode: structured metadata reader + Tauri live `fetch_article` for allowlisted domains
+- Grade-aware student profiles (1–12) drive default search filters
+- Research projects: save sources, notes, MLA/APA citation lists
+- URL interceptor with allowlist + parent blocklist + content-farm blocking
+- Parent dashboard: real usage, history clear, PIN, whitelist/blocklist
+- Background session timer + cryptographic parent gate (PBKDF2)
+
+## Ask Milo setup
+
+Copy `.env.example` to `.env` and set:
+
+```bash
+VITE_SURF_AI_PROVIDER=anthropic
+VITE_SURF_AI_API_KEY=sk-...
+```
 
 ## Develop (web)
 

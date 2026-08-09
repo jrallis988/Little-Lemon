@@ -8,6 +8,7 @@ import type {
   TrustedSourceBadge,
 } from "@/types";
 import { invokeCommand, isTauriRuntime } from "@/services/tauriBridge";
+import { fetchOpenAlexHits } from "@/services/openAlex";
 import { MAX_SEARCH_RESULTS } from "@/lib/constants";
 
 type IndexedSource = {
@@ -647,8 +648,79 @@ function badgeForDomain(domain: string, publisher: string): TrustedSourceBadge {
   if (host.includes("si.edu")) return "Smithsonian";
   if (host.includes("loc.gov")) return "Library of Congress";
   if (host.includes("pbs")) return "PBS Kids";
+  if (host.includes("openalex.org") || publisher.toLowerCase().includes("openalex")) {
+    return "OpenAlex";
+  }
   if (publisher.toLowerCase().includes("usgs")) return "USGS";
+  if (host.includes("doi.org") || host.includes("nature.com") || host.includes("science.org")) {
+    return "OpenAlex";
+  }
   return "Curated";
+}
+
+function mergeHits(
+  curated: AcademicSearchHit[],
+  live: AcademicSearchHit[],
+  options: AcademicSearchOptions,
+): AcademicSearchHit[] {
+  const seen = new Set<string>();
+  const merged: AcademicSearchHit[] = [];
+  for (const hit of [...curated, ...live]) {
+    const key = hit.url.toLowerCase();
+    if (seen.has(key)) continue;
+    if (
+      typeof options.grade === "number" &&
+      (options.grade < hit.gradeMin || options.grade > hit.gradeMax)
+    ) {
+      // Keep high-school OpenAlex for grade 9+; curated still grade-filtered upstream.
+      if (!(hit.id.startsWith("openalex-") && options.grade >= 9)) continue;
+    }
+    if (options.tiers?.length && !options.tiers.includes(hit.contentTier)) {
+      continue;
+    }
+    seen.add(key);
+    merged.push(hit);
+  }
+  merged.sort((a, b) => {
+    if (b.matchScore !== a.matchScore) return b.matchScore - a.matchScore;
+    return b.legitimacyScore - a.legitimacyScore;
+  });
+  return merged.slice(0, options.limit ?? MAX_SEARCH_RESULTS);
+}
+
+function rebuildSummary(
+  query: string,
+  results: AcademicSearchHit[],
+  sourcesUsed: string[],
+): AcademicSearchResponse {
+  const keyVocabulary: string[] = [];
+  const seen = new Set<string>();
+  for (const hit of results) {
+    for (const term of hit.vocabulary) {
+      const key = term.toLowerCase();
+      if (seen.has(key)) continue;
+      seen.add(key);
+      keyVocabulary.push(term);
+      if (keyVocabulary.length >= 10) break;
+    }
+    if (keyVocabulary.length >= 10) break;
+  }
+  const abstractSummary = results.length
+    ? `Research briefing for “${query}”: ${results[0]!.abstractText.slice(0, 280)}${results[0]!.abstractText.length > 280 ? "…" : ""} Surf ranked ${results.length} verified source(s) from ${sourcesUsed.join(" + ")} — not ads or SEO spam.`
+    : `No verified academic sources matched “${query}” after tier, grade, and legitimacy filtering.`;
+
+  return {
+    query,
+    abstractSummary,
+    keyVocabulary,
+    recommendedGradeLevels: Array.from(
+      new Set(results.map((hit) => hit.recommendedGrades)),
+    ),
+    availableTiers: Array.from(new Set(results.map((hit) => hit.contentTier))),
+    filteredOutFarms: 0,
+    results,
+    sourcesUsed: sourcesUsed as AcademicSearchResponse["sourcesUsed"],
+  };
 }
 
 export function academicHitsToSearchResults(
@@ -676,8 +748,8 @@ export function academicHitsToSearchResults(
 
 /**
  * Academic research search API.
- * Prefers the Rust indexing/filter backend in Tauri; falls back to the mirrored
- * TypeScript pipeline for Vite-only development.
+ * Merges curated educational corpus + live OpenAlex peer-reviewed works,
+ * then applies Surf legitimacy / grade / tier filters.
  */
 export async function runAcademicSearch(
   query: string,
@@ -693,19 +765,45 @@ export async function runAcademicSearch(
       availableTiers: [],
       filteredOutFarms: 0,
       results: [],
+      sourcesUsed: [],
     };
   }
+
+  const limit = options.limit ?? MAX_SEARCH_RESULTS;
+  let curated: AcademicSearchHit[] = [];
+  let curatedFarms = 0;
 
   if (await isTauriRuntime()) {
     const raw = await invokeCommand<RustResponse>("academic_search", {
       query: trimmed,
       grade: options.grade ?? null,
       gradeBand: options.gradeBand ?? null,
-      tiers: options.tiers ?? null,
-      limit: options.limit ?? MAX_SEARCH_RESULTS,
+      tiers: null,
+      limit: 12,
     });
-    if (raw) return normalizeRustResponse(raw);
+    if (raw) {
+      const normalized = normalizeRustResponse(raw);
+      curated = normalized.results;
+      curatedFarms = normalized.filteredOutFarms;
+    }
+  }
+  if (!curated.length) {
+    const local = localAcademicSearch(trimmed, {
+      ...options,
+      tiers: undefined,
+      limit: 12,
+    });
+    curated = local.results;
+    curatedFarms = local.filteredOutFarms;
   }
 
-  return localAcademicSearch(trimmed, options);
+  const live = await fetchOpenAlexHits(trimmed, Math.max(6, limit));
+  const merged = mergeHits(curated, live, { ...options, limit });
+  const sourcesUsed: Array<"curated" | "openalex"> = [];
+  if (curated.length) sourcesUsed.push("curated");
+  if (live.length) sourcesUsed.push("openalex");
+
+  const response = rebuildSummary(trimmed, merged, sourcesUsed);
+  response.filteredOutFarms = curatedFarms;
+  return response;
 }

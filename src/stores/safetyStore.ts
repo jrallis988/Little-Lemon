@@ -19,6 +19,7 @@ export const useSafetyStore = create<SafetyState>((set) => ({
     const result = checkUrlAgainstWhitelist(rawUrl, {
       whitelist: controls.whitelist,
       allowlistOnly: controls.allowlistOnly,
+      blocklist: controls.blocklist ?? [],
     });
     set({ lastCheck: result });
     if (!result.allowed) {

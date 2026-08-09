@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   BadgeCheck,
+  BookMarked,
   BookOpen,
   Clock3,
   Quote,
@@ -16,7 +17,9 @@ import {
 } from "@/services/academicSearch";
 import { useUrlInterceptor } from "@/hooks/useUrlInterceptor";
 import { useNavigationStore } from "@/stores/navigationStore";
-import { ACADEMIC_TIERS, GRADE_BANDS } from "@/lib/constants";
+import { useProfileStore } from "@/stores/profileStore";
+import { useProjectsStore } from "@/stores/projectsStore";
+import { ACADEMIC_TIERS, GRADE_BANDS, gradeToBand } from "@/lib/constants";
 import { MILO_NAME } from "@/brand/identity";
 import type {
   AcademicContentTier,
@@ -31,12 +34,19 @@ type SourceTypeId = AcademicContentTier;
 /** Screen 2 — Academic Search Results with EBSCO-style Refine Results facets */
 export function SearchResultsScreen() {
   const [params] = useSearchParams();
+  const navigate = useNavigate();
   const q = params.get("q") ?? "";
   const academic = useNavigationStore((s) => s.academicResponse);
   const setResults = useNavigationStore((s) => s.setResults);
   const setAcademicResponse = useNavigationStore((s) => s.setAcademicResponse);
   const setQuery = useNavigationStore((s) => s.setQuery);
   const setMiloOpen = useNavigationStore((s) => s.setMiloOpen);
+  const profile = useProfileStore((s) => s.getActiveProfile());
+  const projects = useProjectsStore((s) => s.projects);
+  const createProject = useProjectsStore((s) => s.createProject);
+  const addSource = useProjectsStore((s) => s.addSource);
+  const activeProjectId = useProjectsStore((s) => s.activeProjectId);
+  const setActiveProject = useProjectsStore((s) => s.setActiveProject);
   const { openSearchResult, search } = useUrlInterceptor();
 
   /** Multi-select source types — empty means “all types” (EBSCO default) */
@@ -44,8 +54,16 @@ export function SearchResultsScreen() {
   const [band, setBand] = useState<GradeBandId | "all">("all");
   const [peerReviewedOnly, setPeerReviewedOnly] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [saveNotice, setSaveNotice] = useState("");
   /** Unfiltered hit set for stable facet counts (like EBSCO) */
   const [catalog, setCatalog] = useState<AcademicSearchHit[]>([]);
+
+  useEffect(() => {
+    if (!profile?.grade) return;
+    setBand((current) =>
+      current === "all" ? gradeToBand(profile.grade) : current,
+    );
+  }, [profile?.grade]);
 
   useEffect(() => {
     if (!q) return;
@@ -54,6 +72,7 @@ export function SearchResultsScreen() {
       setLoading(true);
       setQuery(q);
       const response = await runAcademicSearch(q, {
+        grade: profile?.grade,
         gradeBand: band === "all" ? undefined : band,
         limit: 12,
       });
@@ -65,7 +84,7 @@ export function SearchResultsScreen() {
     return () => {
       cancelled = true;
     };
-  }, [q, band, setAcademicResponse, setQuery]);
+  }, [q, band, profile?.grade, setAcademicResponse, setQuery]);
 
   const sourceTypeCounts = useMemo(() => {
     const counts = new Map<SourceTypeId, number>();
@@ -107,8 +126,42 @@ export function SearchResultsScreen() {
 
   const clearFilters = () => {
     setSelectedTypes([]);
-    setBand("all");
+    setBand(profile?.grade ? gradeToBand(profile.grade) : "all");
     setPeerReviewedOnly(false);
+  };
+
+  const myProjects = useMemo(
+    () => projects.filter((project) => project.profileId === profile?.id),
+    [projects, profile?.id],
+  );
+
+  const saveResultToProject = (result: SearchResult) => {
+    if (!profile) {
+      setSaveNotice("Choose a student profile first.");
+      return;
+    }
+    let projectId = activeProjectId;
+    const activeMine = myProjects.find((project) => project.id === projectId);
+    if (!activeMine) {
+      projectId = createProject({
+        profileId: profile.id,
+        title: q ? `${q} research` : "Research project",
+        topic: q,
+      });
+      setActiveProject(projectId);
+    }
+    addSource(projectId!, {
+      title: result.title,
+      url: result.url,
+      domain: result.domain,
+      publisher: result.publisher,
+      abstractText: result.description,
+      citation: result.citation ?? result.title,
+      vocabulary: result.vocabulary ?? [],
+      contentTier: result.contentTier,
+    });
+    setSaveNotice(`Saved to project`);
+    window.setTimeout(() => setSaveNotice(""), 2500);
   };
 
   const activeFilterCount =
@@ -131,7 +184,25 @@ export function SearchResultsScreen() {
           Use Refine Results to limit by source type — Academic Journals,
           Magazines, Research Papers, and Reference Sources — just like a
           research database.
+          {profile ? (
+            <>
+              {" "}
+              Matching{" "}
+              <span className="font-semibold text-navy">
+                {profile.displayName}, grade {profile.grade}
+              </span>
+              .
+            </>
+          ) : null}
         </p>
+        {academic?.sourcesUsed?.length ? (
+          <p className="mt-2 text-xs text-slate">
+            Sources: {academic.sourcesUsed.join(" + ")}
+          </p>
+        ) : null}
+        {saveNotice && (
+          <p className="mt-2 text-sm font-medium text-ocean">{saveNotice}</p>
+        )}
       </header>
 
       <div className="grid gap-6 lg:grid-cols-[17.5rem_minmax(0,1fr)]">
@@ -444,16 +515,39 @@ export function SearchResultsScreen() {
                   </p>
                 )}
                 <div className="mt-4 flex flex-wrap gap-2">
-                  <Button onClick={() => openSearchResult(result)}>
+                  <Button onClick={() => void openSearchResult(result)}>
                     Open in reader
                   </Button>
                   <Button variant="secondary" onClick={() => setMiloOpen(true)}>
                     {MILO_NAME}
                   </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => saveResultToProject(result)}
+                  >
+                    <BookMarked className="mr-1.5 h-4 w-4" />
+                    Save to project
+                  </Button>
                 </div>
               </article>
             ))}
           </div>
+          {myProjects.length > 0 && (
+            <div className="mt-6">
+              <Button
+                variant="secondary"
+                onClick={() =>
+                  navigate(
+                    activeProjectId
+                      ? `/projects/${activeProjectId}`
+                      : "/projects",
+                  )
+                }
+              >
+                Open research projects
+              </Button>
+            </div>
+          )}
 
           {!loading && visibleResults.length === 0 && (
             <div className="rounded-3xl bg-white/70 p-8 text-center shadow-soft">

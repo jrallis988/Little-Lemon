@@ -25,6 +25,7 @@ function createDefaultProfiles(): UserProfile[] {
     {
       id: createId("profile"),
       displayName: "Avery",
+      grade: 5,
       avatar: {
         shape: "soft-blob",
         primary: "#F7921E",
@@ -36,6 +37,7 @@ function createDefaultProfiles(): UserProfile[] {
     {
       id: createId("profile"),
       displayName: "Jordan",
+      grade: 8,
       avatar: {
         shape: "hex",
         primary: "#288CC1",
@@ -55,10 +57,15 @@ type ProfileState = {
     profileId: string,
     patch: Partial<AccessibilitySettings>,
   ) => void;
+  setGrade: (profileId: string, grade: number) => void;
   renameProfile: (profileId: string, displayName: string) => void;
-  addProfile: (displayName: string) => void;
+  addProfile: (displayName: string, grade?: number) => void;
   getActiveProfile: () => UserProfile | null;
 };
+
+function clampGrade(grade: number): number {
+  return Math.min(12, Math.max(1, Math.round(grade)));
+}
 
 export const useProfileStore = create<ProfileState>()(
   persist(
@@ -79,19 +86,28 @@ export const useProfileStore = create<ProfileState>()(
                 : profile,
             ),
           })),
+        setGrade: (profileId, grade) =>
+          set((state) => ({
+            profiles: state.profiles.map((profile) =>
+              profile.id === profileId
+                ? { ...profile, grade: clampGrade(grade) }
+                : profile,
+            ),
+          })),
         renameProfile: (profileId, displayName) =>
           set((state) => ({
             profiles: state.profiles.map((profile) =>
               profile.id === profileId ? { ...profile, displayName } : profile,
             ),
           })),
-        addProfile: (displayName) =>
+        addProfile: (displayName, grade = 6) =>
           set((state) => ({
             profiles: [
               ...state.profiles,
               {
                 id: createId("profile"),
                 displayName,
+                grade: clampGrade(grade),
                 avatar: {
                   shape: "circle",
                   primary: "#234197",
@@ -108,7 +124,26 @@ export const useProfileStore = create<ProfileState>()(
         },
       };
     },
-    { name: STORAGE_KEYS.profiles },
+    {
+      name: STORAGE_KEYS.profiles,
+      merge: (persisted, current) => {
+        const raw = (persisted as Partial<ProfileState> | undefined) ?? {};
+        const profiles = (raw.profiles ?? current.profiles).map((profile) => ({
+          ...profile,
+          grade: clampGrade(
+            typeof (profile as UserProfile).grade === "number"
+              ? (profile as UserProfile).grade
+              : 6,
+          ),
+        }));
+        return {
+          ...current,
+          ...raw,
+          profiles,
+          activeProfileId: raw.activeProfileId ?? current.activeProfileId,
+        };
+      },
+    },
   ),
 );
 
@@ -121,6 +156,8 @@ type ParentState = {
   setWhitelist: (domains: string[]) => void;
   addWhitelistDomain: (domain: string) => void;
   removeWhitelistDomain: (domain: string) => void;
+  addBlocklistDomain: (domain: string) => void;
+  removeBlocklistDomain: (domain: string) => void;
   setLearningModeEnabled: (enabled: boolean) => void;
   setAllowlistOnly: (enabled: boolean) => void;
   setPin: (pin: string) => Promise<void>;
@@ -128,6 +165,7 @@ type ParentState = {
   lock: () => void;
   isUnlocked: () => boolean;
   pushHistory: (entry: Omit<HistoryEntry, "id">) => void;
+  clearHistory: () => void;
   recordUsageTick: (profileId: string, seconds: number) => void;
   recordSearch: () => void;
   recordBlockedAttempt: () => void;
@@ -140,6 +178,7 @@ async function createDefaultParentControls(): Promise<ParentControls> {
     pinSalt: seeded.salt,
     dailyLimitMinutes: DEFAULT_DAILY_LIMIT_MINUTES,
     whitelist: [...DEFAULT_WHITELIST],
+    blocklist: [],
     learningModeEnabled: true,
     allowlistOnly: true,
   };
@@ -150,6 +189,7 @@ const initialParentControls: ParentControls = {
   pinSalt: "surf-default-salt",
   dailyLimitMinutes: DEFAULT_DAILY_LIMIT_MINUTES,
   whitelist: [...DEFAULT_WHITELIST],
+  blocklist: [],
   learningModeEnabled: true,
   allowlistOnly: true,
 };
@@ -182,6 +222,9 @@ export const useParentStore = create<ParentState>()(
             controls: {
               ...state.controls,
               whitelist: [...state.controls.whitelist, normalized],
+              blocklist: (state.controls.blocklist ?? []).filter(
+                (d) => d !== normalized,
+              ),
             },
           };
         }),
@@ -190,6 +233,28 @@ export const useParentStore = create<ParentState>()(
           controls: {
             ...state.controls,
             whitelist: state.controls.whitelist.filter((d) => d !== domain),
+          },
+        })),
+      addBlocklistDomain: (domain) =>
+        set((state) => {
+          const normalized = domain.trim().toLowerCase().replace(/^www\./, "");
+          const blocklist = state.controls.blocklist ?? [];
+          if (!normalized || blocklist.includes(normalized)) return state;
+          return {
+            controls: {
+              ...state.controls,
+              blocklist: [...blocklist, normalized],
+              whitelist: state.controls.whitelist.filter((d) => d !== normalized),
+            },
+          };
+        }),
+      removeBlocklistDomain: (domain) =>
+        set((state) => ({
+          controls: {
+            ...state.controls,
+            blocklist: (state.controls.blocklist ?? []).filter(
+              (d) => d !== domain,
+            ),
           },
         })),
       setLearningModeEnabled: (enabled) =>
@@ -229,6 +294,7 @@ export const useParentStore = create<ParentState>()(
             ...state.history,
           ].slice(0, 200),
         })),
+      clearHistory: () => set({ history: [] }),
       recordUsageTick: (_profileId, seconds) => {
         if (seconds < 60) return;
         const date = new Date().toISOString().slice(0, 10);
@@ -306,6 +372,23 @@ export const useParentStore = create<ParentState>()(
         history: state.history,
         usage: state.usage,
       }),
+      merge: (persisted, current) => {
+        const raw = (persisted as Partial<ParentState> | undefined) ?? {};
+        const controls = {
+          ...current.controls,
+          ...raw.controls,
+          blocklist: raw.controls?.blocklist ?? current.controls.blocklist ?? [],
+          whitelist:
+            raw.controls?.whitelist ??
+            current.controls.whitelist ??
+            [...DEFAULT_WHITELIST],
+        };
+        return {
+          ...current,
+          ...raw,
+          controls,
+        };
+      },
       onRehydrateStorage: () => (state) => {
         if (!state) return;
         if (!state.controls.pinHash) {

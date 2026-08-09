@@ -9,6 +9,7 @@ import { BlockedSiteScreen } from "@/screens/BlockedSiteScreen";
 import { BreakScreen } from "@/screens/BreakScreen";
 import { ProfileScreen } from "@/screens/ProfileScreen";
 import { ParentDashboardScreen } from "@/screens/ParentDashboardScreen";
+import { ProjectsScreen } from "@/screens/ProjectsScreen";
 import { ROUTES } from "@/routes/paths";
 
 export function AppRouter() {
@@ -23,6 +24,8 @@ export function AppRouter() {
           path={ROUTES.exploreCategory}
           element={<ExploreCategoryScreen />}
         />
+        <Route path={ROUTES.projects} element={<ProjectsScreen />} />
+        <Route path={ROUTES.project} element={<ProjectsScreen />} />
         <Route path={ROUTES.blocked} element={<BlockedSiteScreen />} />
         <Route path={ROUTES.break} element={<BreakScreen />} />
         <Route path={ROUTES.profile} element={<ProfileScreen />} />

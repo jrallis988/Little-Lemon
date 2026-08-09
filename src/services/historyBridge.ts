@@ -23,6 +23,10 @@ export function intentToPath(intent: NavigationIntent): string {
       return "/profile";
     case "parent":
       return "/parent";
+    case "projects":
+      return "/projects";
+    case "project":
+      return `/projects/${intent.projectId}`;
     default:
       return "/";
   }

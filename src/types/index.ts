@@ -15,6 +15,8 @@ export type UserProfile = {
   id: string;
   displayName: string;
   avatar: ProfileAvatar;
+  /** Exact student grade 1–12; drives default academic filtering */
+  grade: number;
   accessibility: AccessibilitySettings;
   createdAt: string;
 };
@@ -30,6 +32,7 @@ export type TrustedSourceBadge =
   | "Britannica"
   | "AMNH"
   | "CK-12"
+  | "OpenAlex"
   | "Curated";
 
 export type AcademicContentTier =
@@ -71,6 +74,8 @@ export type AcademicSearchResponse = {
   availableTiers: string[];
   filteredOutFarms: number;
   results: AcademicSearchHit[];
+  /** Where results came from for transparency */
+  sourcesUsed?: Array<"curated" | "openalex" | "live">;
 };
 
 export type AcademicSearchOptions = {
@@ -88,7 +93,6 @@ export type SearchResult = {
   sourceBadge: TrustedSourceBadge;
   description: string;
   readingMinutes?: number;
-  /** Academic pipeline fields (optional for legacy curated stubs) */
   contentTier?: AcademicContentTier;
   contentTierLabel?: string;
   gradeMin?: number;
@@ -132,6 +136,8 @@ export type ParentControls = {
   whitelist: string[];
   learningModeEnabled: boolean;
   allowlistOnly: boolean;
+  /** Extra domains parents blocked explicitly */
+  blocklist: string[];
 };
 
 export type SessionSnapshot = {
@@ -153,7 +159,9 @@ export type NavigationIntent =
   | { kind: "blocked"; url: string; reason: string }
   | { kind: "break" }
   | { kind: "profile" }
-  | { kind: "parent" };
+  | { kind: "parent" }
+  | { kind: "projects" }
+  | { kind: "project"; projectId: string };
 
 export type UrlCheckResult = {
   allowed: boolean;
@@ -168,4 +176,41 @@ export type SanitizedArticle = {
   source: string;
   contentHtml: string;
   estimatedMinutes: number;
+  citation?: string;
+  vocabulary?: string[];
+  fetchedLive?: boolean;
+};
+
+export type CitationStyle = "mla" | "apa";
+
+export type ResearchSource = {
+  id: string;
+  title: string;
+  url: string;
+  domain: string;
+  publisher?: string;
+  abstractText: string;
+  citation: string;
+  vocabulary: string[];
+  contentTier?: AcademicContentTier;
+  addedAt: string;
+};
+
+export type ResearchNote = {
+  id: string;
+  body: string;
+  createdAt: string;
+  sourceId?: string;
+};
+
+export type ResearchProject = {
+  id: string;
+  profileId: string;
+  title: string;
+  topic: string;
+  createdAt: string;
+  updatedAt: string;
+  sources: ResearchSource[];
+  notes: ResearchNote[];
+  citationStyle: CitationStyle;
 };

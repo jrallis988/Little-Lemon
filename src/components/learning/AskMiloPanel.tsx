@@ -1,5 +1,5 @@
-import { FormEvent, useMemo, useState } from "react";
-import { Sparkles, X } from "lucide-react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
+import { Loader2, Sparkles, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -7,7 +7,9 @@ import {
   MILO_SHORT_NAME,
   MILO_TAGLINE,
 } from "@/brand/identity";
+import { askMilo, isMiloConfigured } from "@/services/miloAi";
 import { useNavigationStore } from "@/stores/navigationStore";
+import { useProfileStore } from "@/stores/profileStore";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -17,14 +19,17 @@ type Props = {
 };
 
 /**
- * Ask Milo — Surf’s AI learning aide (formerly “AI Tutor”).
- * Helps students understand topics; never presented as a homework machine.
+ * Ask Milo — Surf’s AI learning aide (live model when configured).
  */
 export function AskMiloPanel({ open, onClose, className }: Props) {
   const query = useNavigationStore((s) => s.query);
   const academic = useNavigationStore((s) => s.academicResponse);
+  const article = useNavigationStore((s) => s.activeArticle);
+  const grade = useProfileStore((s) => s.getActiveProfile()?.grade);
   const [prompt, setPrompt] = useState("");
   const [reply, setReply] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [live, setLive] = useState(false);
 
   const starter = useMemo(() => {
     if (academic?.keyVocabulary?.length) {
@@ -34,37 +39,29 @@ export function AskMiloPanel({ open, onClose, className }: Props) {
     return "";
   }, [academic, query]);
 
+  useEffect(() => {
+    if (!open) return;
+    setReply(null);
+    setLive(false);
+  }, [open, query, academic?.query]);
+
   if (!open) return null;
 
-  const onSubmit = (event: FormEvent) => {
+  const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
     const question = (prompt.trim() || starter).trim();
-    if (!question) return;
-
-    const vocab = academic?.keyVocabulary?.slice(0, 5) ?? [];
-    const grades = academic?.recommendedGradeLevels?.join(", ") || "your grade band";
-    const top = academic?.results?.[0];
-
-    const explanation = [
-      `${MILO_SHORT_NAME} here — I’ll help you learn, not just finish the work.`,
-      "",
-      academic?.abstractSummary
-        ? `Here’s the research idea in plain language: ${academic.abstractSummary}`
-        : `You’re asking about “${question}”. Start with one clear question, then check a trusted source.`,
-      vocab.length
-        ? `Key vocabulary to notice: ${vocab.join(", ")}.`
-        : null,
-      top
-        ? `A strong next read is “${top.title}” (${top.recommendedGrades}). Citation: ${top.citation}`
-        : `Recommended level for this topic set: ${grades}.`,
-      "",
-      "Try this: write one sentence in your own words, then list two facts you can cite.",
-    ]
-      .filter(Boolean)
-      .join("\n");
-
-    setReply(explanation);
+    if (!question || loading) return;
+    setLoading(true);
+    const result = await askMilo(question, {
+      query,
+      academic,
+      article,
+      grade,
+    });
+    setReply(result.reply);
+    setLive(result.live);
     setPrompt("");
+    setLoading(false);
   };
 
   return (
@@ -97,22 +94,38 @@ export function AskMiloPanel({ open, onClose, className }: Props) {
         </Button>
       </header>
 
-      <form className="mt-4 space-y-2" onSubmit={onSubmit}>
+      <p className="mt-3 text-[11px] font-medium text-slate">
+        {isMiloConfigured()
+          ? live
+            ? "Live tutor connected"
+            : "Live tutor ready"
+          : "Offline tutor mode — add VITE_SURF_AI_API_KEY for live answers"}
+      </p>
+
+      <form className="mt-2 space-y-2" onSubmit={onSubmit}>
         <Input
           value={prompt}
           onChange={(event) => setPrompt(event.target.value)}
           placeholder={starter || "Ask Milo about this topic…"}
           aria-label={`${MILO_NAME} prompt`}
+          disabled={loading}
         />
-        <Button type="submit" className="w-full">
-          {MILO_NAME}
+        <Button type="submit" className="w-full" disabled={loading}>
+          {loading ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Thinking…
+            </>
+          ) : (
+            MILO_NAME
+          )}
         </Button>
       </form>
 
       <div className="mt-4 flex-1 overflow-auto rounded-2xl bg-cream/70 p-3 text-sm leading-relaxed text-slate whitespace-pre-wrap">
         {reply ??
           (academic
-            ? `I can explain “${academic.query}”, unpack vocabulary, or help you compare the sources on this page.`
+            ? `${MILO_SHORT_NAME} can explain “${academic.query}”, unpack vocabulary, or help you compare the sources on this page.`
             : "Search a topic first, then ask me to explain it, define a word, or point you to the best citation.")}
       </div>
     </aside>

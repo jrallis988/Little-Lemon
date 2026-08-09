@@ -3,23 +3,33 @@ import type { UrlCheckResult } from "@/types";
 
 const ALWAYS_BLOCKED = [
   "tiktok.com",
-  "www.tiktok.com",
   "instagram.com",
-  "www.instagram.com",
   "facebook.com",
-  "www.facebook.com",
   "x.com",
   "twitter.com",
   "reddit.com",
-  "www.reddit.com",
   "youtube.com",
-  "www.youtube.com",
   "youtu.be",
+  "snapchat.com",
+  "twitch.tv",
+  "roblox.com",
+];
+
+const CONTENT_FARM_MARKERS = [
+  "buzzfeed",
+  "clickbait",
+  "listicle",
+  "viralnova",
+  "content-farm",
+  "essay-mill",
+  "homework-help-cheap",
+  "softonic",
 ];
 
 export type FilterOptions = {
   whitelist: string[];
   allowlistOnly: boolean;
+  blocklist?: string[];
 };
 
 function matchesDomain(hostname: string, allowed: string): boolean {
@@ -51,6 +61,28 @@ export function checkUrlAgainstWhitelist(
     };
   }
 
+  if (
+    CONTENT_FARM_MARKERS.some((marker) => domain.toLowerCase().includes(marker))
+  ) {
+    return {
+      allowed: false,
+      url: normalized,
+      domain,
+      reason: "Surf blocked a low-quality content farm.",
+    };
+  }
+
+  if (
+    (options.blocklist ?? []).some((blocked) => matchesDomain(domain, blocked))
+  ) {
+    return {
+      allowed: false,
+      url: normalized,
+      domain,
+      reason: "A parent blocked this domain.",
+    };
+  }
+
   if (!options.allowlistOnly) {
     return { allowed: true, url: normalized, domain };
   }
@@ -75,11 +107,20 @@ export function checkUrlAgainstWhitelist(
 export function isTrustedEducationalDomain(domain: string): boolean {
   const trusted = [
     "kids.nationalgeographic.com",
+    "education.nationalgeographic.org",
     "si.edu",
     "pbskids.org",
     "spaceplace.nasa.gov",
+    "science.nasa.gov",
+    "usgs.gov",
+    "noaa.gov",
     "loc.gov",
     "kids.britannica.com",
+    "britannica.com",
+    "amnh.org",
+    "ck12.org",
+    "nature.com",
+    "openalex.org",
   ];
   return trusted.some((entry) => matchesDomain(domain, entry));
 }

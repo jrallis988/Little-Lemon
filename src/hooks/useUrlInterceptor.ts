@@ -1,17 +1,17 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { sanitizeArticleContent } from "@/services/contentSanitizer";
 import { intentToPath } from "@/services/historyBridge";
 import {
   academicHitsToSearchResults,
   runAcademicSearch,
 } from "@/services/academicSearch";
+import { loadReadableArticle } from "@/services/readerFetch";
+import { gradeToBand } from "@/lib/constants";
 import { useNavigationStore } from "@/stores/navigationStore";
-import { useParentStore } from "@/stores/profileStore";
+import { useParentStore, useProfileStore } from "@/stores/profileStore";
 import { useSafetyStore } from "@/stores/safetyStore";
-import { useProfileStore } from "@/stores/profileStore";
 import { ROUTES } from "@/routes/paths";
-import type { AcademicSearchOptions } from "@/types";
+import type { AcademicSearchOptions, SearchResult } from "@/types";
 
 /**
  * Navigation helper that runs the URL filter interceptor before loading content.
@@ -28,6 +28,7 @@ export function useUrlInterceptor() {
   const pushHistory = useParentStore((s) => s.pushHistory);
   const recordSearch = useParentStore((s) => s.recordSearch);
   const activeProfileId = useProfileStore((s) => s.activeProfileId);
+  const getActiveProfile = useProfileStore((s) => s.getActiveProfile);
 
   const goHome = useCallback(() => {
     pushIntent({ kind: "home" });
@@ -38,8 +39,16 @@ export function useUrlInterceptor() {
     async (query: string, options: AcademicSearchOptions = {}) => {
       const trimmed = query.trim();
       if (!trimmed) return;
+      const profile = getActiveProfile();
+      const grade = options.grade ?? profile?.grade;
+      const gradeBand =
+        options.gradeBand ?? (grade ? gradeToBand(grade) : undefined);
       setQuery(trimmed);
-      const response = await runAcademicSearch(trimmed, options);
+      const response = await runAcademicSearch(trimmed, {
+        ...options,
+        grade,
+        gradeBand,
+      });
       setAcademicResponse(response);
       setResults(academicHitsToSearchResults(response.results));
       recordSearch();
@@ -47,6 +56,7 @@ export function useUrlInterceptor() {
       navigate(`${ROUTES.search}?q=${encodeURIComponent(trimmed)}`);
     },
     [
+      getActiveProfile,
       navigate,
       pushIntent,
       recordSearch,
@@ -57,7 +67,7 @@ export function useUrlInterceptor() {
   );
 
   const openUrl = useCallback(
-    (rawUrl: string, title = "Learning page") => {
+    async (rawUrl: string, title = "Learning page") => {
       const check = intercept(rawUrl);
       if (!check.allowed) {
         setBlocked(check.url, check.reason ?? "This site is restricted.");
@@ -80,11 +90,11 @@ export function useUrlInterceptor() {
         return false;
       }
 
-      const article = sanitizeArticleContent({
+      const article = await loadReadableArticle({
         url: check.url,
         title,
         description:
-          "This page opened through Surf’s safety filter. Reader mode keeps only the main educational content so learning stays calm and focused. Sidebars, ads, and trackers are removed before anything is shown.",
+          "This page opened through Surf’s safety filter. Reader mode keeps only the main educational content so learning stays calm and focused.",
         sourceBadge: "Curated",
       });
       setActiveArticle(article);
@@ -112,13 +122,7 @@ export function useUrlInterceptor() {
   );
 
   const openSearchResult = useCallback(
-    (result: {
-      url: string;
-      title: string;
-      description: string;
-      sourceBadge: string;
-      citation?: string;
-    }) => {
+    async (result: SearchResult) => {
       const check = intercept(result.url);
       if (!check.allowed) {
         setBlocked(check.url, check.reason ?? "This site is restricted.");
@@ -128,11 +132,13 @@ export function useUrlInterceptor() {
         return;
       }
 
-      const article = sanitizeArticleContent({
-        ...result,
-        description: result.citation
-          ? `${result.description}\n\nCitation: ${result.citation}`
-          : result.description,
+      const article = await loadReadableArticle({
+        url: result.url,
+        title: result.title,
+        description: result.description,
+        sourceBadge: result.sourceBadge,
+        citation: result.citation,
+        vocabulary: result.vocabulary,
       });
       setActiveArticle(article);
       pushIntent({ kind: "article", url: check.url, title: result.title });

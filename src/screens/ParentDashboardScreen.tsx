@@ -31,6 +31,9 @@ export function ParentDashboardScreen() {
   const setDailyLimit = useParentStore((s) => s.setDailyLimit);
   const addWhitelistDomain = useParentStore((s) => s.addWhitelistDomain);
   const removeWhitelistDomain = useParentStore((s) => s.removeWhitelistDomain);
+  const addBlocklistDomain = useParentStore((s) => s.addBlocklistDomain);
+  const removeBlocklistDomain = useParentStore((s) => s.removeBlocklistDomain);
+  const clearHistory = useParentStore((s) => s.clearHistory);
   const setLearningModeEnabled = useParentStore((s) => s.setLearningModeEnabled);
   const setAllowlistOnly = useParentStore((s) => s.setAllowlistOnly);
   const setPin = useParentStore((s) => s.setPin);
@@ -39,20 +42,11 @@ export function ParentDashboardScreen() {
   const [pin, setPinInput] = useState("");
   const [newPin, setNewPin] = useState("");
   const [domain, setDomain] = useState("");
+  const [blockedDomain, setBlockedDomain] = useState("");
   const [error, setError] = useState("");
 
-  const chartData = useMemo(() => {
-    if (usage.length > 0) return usage.slice(-7);
-    return [
-      { date: "Mon", minutes: 18, searches: 4, blockedAttempts: 1 },
-      { date: "Tue", minutes: 26, searches: 7, blockedAttempts: 0 },
-      { date: "Wed", minutes: 12, searches: 3, blockedAttempts: 2 },
-      { date: "Thu", minutes: 34, searches: 9, blockedAttempts: 1 },
-      { date: "Fri", minutes: 22, searches: 5, blockedAttempts: 0 },
-      { date: "Sat", minutes: 40, searches: 11, blockedAttempts: 3 },
-      { date: "Sun", minutes: 15, searches: 2, blockedAttempts: 0 },
-    ];
-  }, [usage]);
+  const chartData = useMemo(() => usage.slice(-7), [usage]);
+  const blocklist = controls.blocklist ?? [];
 
   const onUnlock = async (event: FormEvent) => {
     event.preventDefault();
@@ -109,8 +103,8 @@ export function ParentDashboardScreen() {
             Stay in the loop
           </h1>
           <p className="mt-2 max-w-xl text-slate">
-            Usage analytics, domain whitelist, session limits, and recent
-            history — all behind the parent gate.
+            Real usage, allowlist/blocklist, session limits, and history —
+            all behind the parent gate.
           </p>
         </div>
         <Button variant="outline" onClick={lock}>
@@ -238,9 +232,16 @@ export function ParentDashboardScreen() {
         </div>
 
         <div className="rounded-3xl border border-white/60 bg-white/80 p-6 shadow-soft">
-          <h2 className="font-display text-xl font-semibold text-navy">
-            Recent history
-          </h2>
+          <div className="flex items-center justify-between gap-3">
+            <h2 className="font-display text-xl font-semibold text-navy">
+              Recent history
+            </h2>
+            {history.length > 0 && (
+              <Button size="sm" variant="ghost" onClick={clearHistory}>
+                Clear
+              </Button>
+            )}
+          </div>
           <ul className="mt-4 max-h-72 space-y-3 overflow-auto">
             {history.length === 0 && (
               <li className="text-sm text-slate">
@@ -263,6 +264,54 @@ export function ParentDashboardScreen() {
             ))}
           </ul>
         </div>
+      </div>
+
+      <div className="rounded-3xl border border-white/60 bg-white/80 p-6 shadow-soft">
+        <h2 className="font-display text-xl font-semibold text-navy">
+          Blocked domains
+        </h2>
+        <p className="mt-1 text-sm text-slate">
+          Always blocked, even if somehow listed elsewhere.
+        </p>
+        <form
+          className="mt-4 flex gap-2"
+          onSubmit={(event) => {
+            event.preventDefault();
+            if (!blockedDomain.trim()) return;
+            addBlocklistDomain(extractDomain(blockedDomain));
+            setBlockedDomain("");
+          }}
+        >
+          <Input
+            value={blockedDomain}
+            onChange={(e) => setBlockedDomain(e.target.value)}
+            placeholder="example-spam.com"
+          />
+          <Button type="submit" size="icon" aria-label="Block domain">
+            <Plus className="h-4 w-4" />
+          </Button>
+        </form>
+        <ul className="mt-4 max-h-48 space-y-2 overflow-auto">
+          {blocklist.length === 0 && (
+            <li className="text-sm text-slate">No custom blocks yet.</li>
+          )}
+          {blocklist.map((entry) => (
+            <li
+              key={entry}
+              className="flex items-center justify-between gap-3 rounded-2xl bg-cream px-3 py-2 text-sm"
+            >
+              <span className="truncate text-navy">{entry}</span>
+              <button
+                type="button"
+                className="text-slate hover:text-destructive"
+                onClick={() => removeBlocklistDomain(entry)}
+                aria-label={`Unblock ${entry}`}
+              >
+                <Trash2 className="h-4 w-4" />
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
 
       <div className="max-w-md rounded-3xl border border-white/60 bg-white/80 p-6 shadow-soft">

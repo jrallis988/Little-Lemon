@@ -7,6 +7,8 @@ export {
   BRAND_PALETTE,
 } from "@/brand/identity";
 
+import type { GradeBandId } from "@/types";
+
 export const STORAGE_KEYS = {
   profiles: "surf.profiles.v1",
   activeProfileId: "surf.activeProfileId.v1",
@@ -14,6 +16,7 @@ export const STORAGE_KEYS = {
   session: "surf.session.v1",
   history: "surf.history.v1",
   usage: "surf.usage.v1",
+  projects: "surf.projects.v1",
 } as const;
 
 export const DEFAULT_WHITELIST = [
@@ -83,6 +86,19 @@ export const GRADE_BANDS = [
   { id: "grades_6_8", label: "Grades 6–8" },
   { id: "high_school", label: "High School" },
 ] as const;
+
+/** Map exact grade 1–12 → academic band id */
+export function gradeToBand(grade: number): GradeBandId {
+  if (grade <= 2) return "grades_1_2";
+  if (grade <= 5) return "grades_3_5";
+  if (grade <= 8) return "grades_6_8";
+  return "high_school";
+}
+
+export function bandLabelForGrade(grade: number): string {
+  const id = gradeToBand(grade);
+  return GRADE_BANDS.find((band) => band.id === id)?.label ?? `Grade ${grade}`;
+}
 
 /** Default daily quota in minutes */
 export const DEFAULT_DAILY_LIMIT_MINUTES = 60;
