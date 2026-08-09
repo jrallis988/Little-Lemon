@@ -27,7 +27,13 @@ jobs:
           cache: npm
       - run: npm ci
       - run: CI=true npm test -- --watchAll=false
-      - run: npm run build
+      # Optional analytics / Formspree — set as repo Variables (or Secrets for Formspree).
+      - name: Build
+        env:
+          REACT_APP_FORMSPREE_ID: ${{ secrets.REACT_APP_FORMSPREE_ID }}
+          REACT_APP_GA_MEASUREMENT_ID: ${{ vars.REACT_APP_GA_MEASUREMENT_ID }}
+          REACT_APP_PLAUSIBLE_DOMAIN: ${{ vars.REACT_APP_PLAUSIBLE_DOMAIN }}
+        run: npm run build
       # Deploy Seascape from the motel branch (main is the Artistic Fountain portfolio).
       - if: github.ref == 'refs/heads/cursor/beach-motel-website-1cb8' || github.ref == 'refs/heads/seascape'
         uses: actions/upload-pages-artifact@v3

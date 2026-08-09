@@ -12,6 +12,9 @@ export const SITE = {
   phoneHref: "tel:+16039261750",
   email: "seascapeinn@hotmail.com",
   website: "https://seascapeinnhamptonnh.com/",
+  /** Intended public URL once GitHub Pages + custom domain DNS are live. */
+  siteUrl: "https://seascapeinnhamptonnh.com",
+  githubPagesUrl: "https://jrallis988.github.io/Little-Lemon",
   bookingUrl: "https://guest.rezstream.com/search/seascape-inn",
   tripadvisorUrl:
     "https://www.tripadvisor.com/Hotel_Review-g46111-d667889-Reviews-Seascape_Inn_at_Plaice_Cove-Hampton_New_Hampshire.html",
@@ -28,9 +31,9 @@ export const SITE = {
     facebook: "https://www.facebook.com/seascape.inn.1",
   },
   checkIn: "3:00 PM",
-  checkOut: "11:00 AM",
+  checkOut: "10:00 AM",
   hours: "Front desk 8:30 AM – 10:00 PM",
-  /** Times above are typical; guests should confirm on their reservation. */
+  /** Times match the inn’s published policy; still confirm on your reservation. */
   typicalRateNote:
     "Use the live calendar below for exact pricing — seasonal ranges are a guide only.",
   trustLine: [
@@ -282,6 +285,20 @@ export const REVIEWS = [
     name: "Karine L.",
     detail: "TripAdvisor · Friends trip",
   },
+  {
+    id: "r4",
+    quote:
+      "We had our dog with us and most places near Hampton Beach aren’t dog friendly. Luckily we found the Seascape — small and dated, but it did the trick. We would stay here again.",
+    name: "Melissa M.",
+    detail: "TripAdvisor · Couple stay · Pet-friendly",
+  },
+  {
+    id: "r5",
+    quote:
+      "Awesome location, nice and helpful staff, clean rooms, great price. Shout out to Kelly who went above and beyond after we left a stuffed animal behind.",
+    name: "Guest",
+    detail: "Public guest review · Family stay",
+  },
 ];
 
 export const NEARBY = [
@@ -365,12 +382,12 @@ export const POLICIES = [
   {
     id: "checkin",
     title: "Check-in & out",
-    body: `Typical check-in from ${SITE.checkIn}; typical check-out by ${SITE.checkOut} EST — always match your confirmation. Front desk ${SITE.hours.replace("Front desk ", "")}.`,
+    body: `Check-in from ${SITE.checkIn}. Check-out by ${SITE.checkOut} EST (published inn policy — match your confirmation if it differs). Front desk ${SITE.hours.replace("Front desk ", "")}.`,
   },
   {
     id: "payment",
     title: "Payment & smoking",
-    body: "Major credit cards accepted. Any deposit or payment schedule is shown at online checkout and on your confirmation — ask the front desk if you need clarity. Non-smoking indoors with a designated outdoor smoking area.",
+    body: "Major credit cards accepted. Published policy is full charge at booking (no separate deposit) and charges are typically non-refundable — confirm current terms at checkout. Non-smoking indoors with a designated outdoor smoking area.",
   },
 ];
 
@@ -387,12 +404,12 @@ export const FAQ_SECTIONS = [
       {
         question: "What is your cancellation policy?",
         answer:
-          "Cancellation windows and any fees are listed on your booking confirmation and in the RezStream checkout flow. If you need to change or cancel, call the front desk as early as you can so we can walk through your options.",
+          "Published inn policy treats reservation charges as typically non-refundable. Always read the terms shown in RezStream checkout and on your confirmation, and call the front desk as early as you can if plans change.",
       },
       {
         question: "Is a deposit required to reserve a room?",
         answer:
-          "Payment or deposit terms (if any) appear during online checkout and on your confirmation. Amounts and timing can vary by dates and rate—confirm with the front desk if you are unsure.",
+          "Published inn policy is full charge for the reservation at booking (no separate deposit). Exact payment timing still appears at online checkout — confirm with the front desk if you are unsure.",
       },
       {
         question: "What forms of payment do you accept?",
@@ -412,7 +429,7 @@ export const FAQ_SECTIONS = [
     items: [
       {
         question: "What are your check-in and check-out times?",
-        answer: `Typical check-in is from ${SITE.checkIn}, and typical check-out is by ${SITE.checkOut}. Your confirmation is the source of truth if times differ for your reservation.`,
+        answer: `Published check-in is from ${SITE.checkIn}, and check-out is by ${SITE.checkOut} EST. Your confirmation is the source of truth if times differ for your reservation.`,
       },
       {
         question: "What is the minimum age to check in?",
@@ -615,11 +632,15 @@ export const PRIVACY_POLICY = {
 
 export const GALLERY = [
   {
+    src: asset("/images/seascape-aerial.jpg"),
+    alt: "Aerial view of Seascape Inn across from the Plaice Cove shoreline",
+  },
+  {
     src: asset("/images/seascape-photo2.jpg"),
     alt: "Sunrise over North Beach near Seascape Inn",
   },
   {
-    src: asset("/images/exterior-courtyard.jpg"),
+    src: asset("/images/exterior-courtyard-wide.jpg"),
     alt: "Seascape Inn courtyard and guest room balconies",
   },
   {
@@ -633,6 +654,10 @@ export const GALLERY = [
   {
     src: asset("/images/room-doubles.jpg"),
     alt: "Guest room with two beds at Seascape Inn",
+  },
+  {
+    src: asset("/images/room-queen.jpg"),
+    alt: "Bright coastal guest room with white bedding",
   },
   {
     src: asset("/images/nh-boardwalk.jpg"),

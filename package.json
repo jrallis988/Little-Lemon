@@ -2,7 +2,7 @@
   "name": "seascape-inn",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://jrallis988.github.io/Little-Lemon",
+  "homepage": ".",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",

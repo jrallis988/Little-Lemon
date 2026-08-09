@@ -11,53 +11,66 @@ npm start
 
 Open [http://localhost:3000](http://localhost:3000).
 
-## Booking & rates
-
-- Live booking calendar (embedded + new tab): [RezStream](https://guest.rezstream.com/search/seascape-inn)
-- Seasonal ranges on the Rates section are a guide; exact prices come from RezStream
-- Inquiry form posts through [Formsubmit](https://formsubmit.co) to `seascapeinn@hotmail.com`
-  - The first submission may require confirming the email address once
-- Optional Formspree / analytics:
+Optional env (copy and fill what you need):
 
 ```bash
 cp .env.example .env
-# REACT_APP_FORMSPREE_ID=
-# REACT_APP_GA_MEASUREMENT_ID=
-# REACT_APP_PLAUSIBLE_DOMAIN=
+# REACT_APP_FORMSPREE_ID=xxxxxxxx        # optional Formspree instead of Formsubmit
+# REACT_APP_GA_MEASUREMENT_ID=G-XXXX     # optional Google Analytics 4
+# REACT_APP_PLAUSIBLE_DOMAIN=seascapeinnhamptonnh.com
 ```
 
 Analytics scripts load only after the visitor accepts analytics cookies.
+
+## Booking & rates
+
+- Live booking calendar: [RezStream](https://guest.rezstream.com/search/seascape-inn)
+- Seasonal ranges are a guide; exact prices come from RezStream
+- Inquiry form defaults to [Formsubmit](https://formsubmit.co) → `seascapeinn@hotmail.com`
+  - Send one real test inquiry from the live site
+  - Complete Formsubmit’s confirmation email the first time
 
 ## Launch checklist
 
 ### Important: do not overwrite the portfolio on `main`
 
-Repo `main` is the **Artistic Fountain** portfolio site. This motel app lives on `cursor/beach-motel-website-1cb8` (or a dedicated `seascape` branch). Merging this PR into `main` will conflict and would replace the portfolio — **do not merge for publish**.
+Repo `main` is the **Artistic Fountain** portfolio. This motel app lives on `cursor/beach-motel-website-1cb8` (or a dedicated `seascape` branch). **Do not merge this PR into `main` to publish.**
 
-### Must do to go live (GitHub Pages from the motel branch)
+### 1) Enable GitHub Pages
 
-1. Repo **Settings → Pages → Build and deployment → Source: GitHub Actions**
-2. Push (or re-run the workflow) on `cursor/beach-motel-website-1cb8` — CI builds, then deploys Pages from that branch only
-3. Site URL: `https://jrallis988.github.io/Little-Lemon/`
-4. Send one test inquiry and complete any Formsubmit confirmation email to `seascapeinn@hotmail.com`
+1. Open [Settings → Pages](https://github.com/jrallis988/Little-Lemon/settings/pages)
+2. Set **Source: GitHub Actions**
+3. Re-run the **CI and GitHub Pages** workflow on this branch  
+   Preview URL until DNS is cut over: `https://jrallis988.github.io/Little-Lemon/`
 
-Optional later: keep motel code on a long-lived `seascape` branch (workflow already deploys that name too) so you can rename away from the agent branch without touching `main`.
+### 2) Custom domain (optional but wired)
 
-### Optional custom domain
+This repo includes `public/CNAME` for `seascapeinnhamptonnh.com`.
 
-If you control `seascapeinnhamptonnh.com` (or a subdomain):
+1. In Pages settings, enter custom domain `seascapeinnhamptonnh.com` and enable HTTPS
+2. At your DNS host, point the domain at GitHub Pages (A/ALIAS/CNAME records GitHub shows)
+3. Only flip DNS when you are ready to replace the current WordPress site on that hostname
 
-1. Add a `CNAME` file in `public/` with the hostname
-2. In GitHub Pages settings, set the custom domain and enable HTTPS
-3. Add the DNS records GitHub shows
-4. Update canonical / Open Graph URLs in `public/index.html` and `public/sitemap.xml`
+Canonical / Open Graph / sitemap URLs already target `https://seascapeinnhamptonnh.com/`.
 
-### Verify with the inn
+### 3) Confirm inquiry email
 
-FAQ and policy copy uses soft language for breakfast, check-out, deposits, and cancellations. Confirm current front-desk practice and tighten wording once verified.
+Send a test booking inquiry and approve Formsubmit for `seascapeinn@hotmail.com`.
+
+### 4) Optional analytics / Formspree
+
+Add IDs in a local `.env` (or GitHub Actions secrets / repo Variables if you inject them at build time):
+
+| Variable | Purpose |
+| --- | --- |
+| `REACT_APP_GA_MEASUREMENT_ID` | Google Analytics 4 |
+| `REACT_APP_PLAUSIBLE_DOMAIN` | Plausible (example value in `.env.example`) |
+| `REACT_APP_FORMSPREE_ID` | Use Formspree instead of Formsubmit |
 
 ## Build
 
 ```bash
 npm run build
 ```
+
+Asset paths are relative (`homepage: "."`) so the build works on both the GitHub Pages project URL and the custom domain.
