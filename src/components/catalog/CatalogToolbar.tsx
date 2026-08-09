@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import { SlidersHorizontal } from "lucide-react"
 import { useFilterStore } from "@/stores/filterStore"
 import type { CatalogSort } from "@/types"
@@ -31,21 +32,70 @@ type CatalogToolbarProps = {
   visibleCount: number
 }
 
+function catalogHeading(input: {
+  departments: string[]
+  categories: string[]
+  brands: string[]
+  query: string
+  saleOnly: boolean
+  arrivals: string
+}) {
+  if (input.query.trim()) return `Results for “${input.query.trim()}”`
+  if (input.departments.length === 1 && input.categories.length === 0)
+    return input.departments[0]!
+  if (input.categories.length === 1) return input.categories[0]!
+  if (input.brands.length === 1) return input.brands[0]!
+  if (input.saleOnly) return "Clearance & sale"
+  if (input.arrivals === "new") return "New finds"
+  if (input.departments.length > 1) return input.departments.join(" · ")
+  return "Shop Marshalls"
+}
+
 export function CatalogToolbar({ resultCount, visibleCount }: CatalogToolbarProps) {
   const sort = useFilterStore((s) => s.sort)
   const setSort = useFilterStore((s) => s.setSort)
   const activeFilterCount = useFilterStore((s) => s.activeFilterCount())
+  const departments = useFilterStore((s) => s.departments)
+  const categories = useFilterStore((s) => s.categories)
+  const brands = useFilterStore((s) => s.brands)
+  const query = useFilterStore((s) => s.query)
+  const saleOnly = useFilterStore((s) => s.saleOnly)
+  const arrivals = useFilterStore((s) => s.arrivals)
+
+  const heading = catalogHeading({
+    departments,
+    categories,
+    brands,
+    query,
+    saleOnly,
+    arrivals,
+  })
+
+  const crumb =
+    departments[0] ??
+    categories[0] ??
+    brands[0] ??
+    (saleOnly ? "Sale" : query.trim() || "All products")
 
   return (
     <div className="sticky top-[var(--chrome-offset)] z-20 -mx-2 flex flex-col gap-3 border-b border-border/70 bg-background/95 px-2 py-3 backdrop-blur-md sm:flex-row sm:items-end sm:justify-between">
       <div>
-        <nav aria-label="Breadcrumb" className="mb-2 flex items-center gap-1.5 text-2xs text-muted-foreground">
-          <span>Home</span>
+        <nav
+          aria-label="Breadcrumb"
+          className="mb-2 flex items-center gap-1.5 text-2xs text-muted-foreground"
+        >
+          <Link to="/" className="hover:text-foreground">
+            Home
+          </Link>
           <span aria-hidden>/</span>
-          <span className="font-medium text-foreground">All products</span>
+          <Link to="/catalog" className="hover:text-foreground">
+            Shop
+          </Link>
+          <span aria-hidden>/</span>
+          <span className="font-medium text-foreground">{crumb}</span>
         </nav>
         <h1 className="font-display text-display-sm font-bold tracking-tight">
-          Shop Marshalls
+          {heading}
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
           <span className="tabular font-medium text-foreground">

@@ -383,15 +383,11 @@ export function SiteFooter() {
 
       {/* Shop Our Brands */}
       <div className="shelf-container py-10">
-        <div className="flex items-center gap-4">
-          <div className="h-px flex-1 bg-border" />
-          <h2 className="shrink-0 text-sm font-bold uppercase tracking-[0.12em] text-foreground">
-            Shop Our Brands
-          </h2>
-          <div className="h-px flex-1 bg-border" />
-        </div>
+        <h2 className="section-rule-title justify-center text-center text-sm font-bold uppercase tracking-[0.12em] text-foreground">
+          Shop Our Brands
+        </h2>
 
-        <ul className="mt-8 flex flex-col items-center gap-6">
+        <ul className="mt-8 flex flex-col items-center gap-6 md:flex-row md:flex-wrap md:justify-center md:gap-x-10 md:gap-y-6">
           {SISTER_BRANDS.map((brand) => (
             <li key={brand.name} className="text-center">
               {"internal" in brand && brand.internal ? (
@@ -505,14 +501,30 @@ export function SiteFooter() {
         <div className="shelf-container flex flex-col items-center gap-5 py-8">
           <ul className="flex items-center gap-3">
             {[
-              { label: "TikTok", icon: "TT" },
-              { label: "Instagram", Icon: Instagram },
-              { label: "Facebook", Icon: Facebook },
-              { label: "YouTube", Icon: Youtube },
+              {
+                label: "TikTok",
+                href: "https://www.tiktok.com/@marshalls",
+                glyph: "TT",
+              },
+              {
+                label: "Instagram",
+                href: "https://www.instagram.com/marshalls",
+                Icon: Instagram,
+              },
+              {
+                label: "Facebook",
+                href: "https://www.facebook.com/Marshalls",
+                Icon: Facebook,
+              },
+              {
+                label: "YouTube",
+                href: "https://www.youtube.com/@Marshalls",
+                Icon: Youtube,
+              },
             ].map((social) => (
               <li key={social.label}>
                 <a
-                  href={`https://www.${social.label.toLowerCase()}.com`}
+                  href={social.href}
                   target="_blank"
                   rel="noreferrer"
                   aria-label={social.label}
@@ -521,7 +533,9 @@ export function SiteFooter() {
                   {"Icon" in social && social.Icon ? (
                     <social.Icon className="h-4 w-4" />
                   ) : (
-                    <span className="text-[10px] font-bold tracking-tight">TT</span>
+                    <span className="text-[10px] font-bold tracking-tight">
+                      {social.glyph}
+                    </span>
                   )}
                 </a>
               </li>
@@ -533,6 +547,9 @@ export function SiteFooter() {
             <button
               type="button"
               className="inline-flex items-center gap-1 hover:text-navy"
+              onClick={() => {
+                window.dispatchEvent(new CustomEvent("marshalls:open-chat"))
+              }}
             >
               <MessageCircle className="h-3.5 w-3.5" />
               Feedback

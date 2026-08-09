@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { Check } from "lucide-react"
 import { PRODUCTS } from "@/data/products"
 import { ProductCard } from "@/components/catalog/ProductCard"
+import { Button } from "@/components/ui/button"
 import { track } from "@/lib/analytics"
 import { useDocumentMeta } from "@/hooks/useDocumentMeta"
 import type { Department } from "@/types"
@@ -95,23 +96,30 @@ export function FitQuizPage() {
       if (answers.budget === "mid" && (p.price < 50 || p.price > 100)) return false
       if (answers.budget === "splurge" && p.price < 100) return false
       if (answers.vibe === "elevated") {
-        return (
+        const elevated =
           p.brandTier === "Designer" ||
           p.brandTier === "Contemporary" ||
           p.tags.some((t) => /work|linen|leather|tailor|occasion/i.test(t))
-        )
+        if (!elevated) return false
       }
       if (answers.vibe === "athletic") {
-        return (
+        const athletic =
           /shoe|sneaker|active|hoodie|fleece/i.test(p.category) ||
           p.tags.some((t) => /active|sneaker|fleece|sport/i.test(t))
-        )
+        if (!athletic) return false
+      }
+      const notes = `${p.fitNotes ?? ""} ${p.tags.join(" ")} ${p.description}`.toLowerCase()
+      if (answers.fit === "slim") {
+        return /slim|tailor|structured|fitted|narrow/i.test(notes) || p.sizes.some((s) => s.label === "XS" || s.label === "00")
+      }
+      if (answers.fit === "relaxed") {
+        return /relax|oversiz|easy|roomy|loose|wide/i.test(notes) || p.tags.some((t) => /denim|fleece|hoodie/i.test(t))
       }
       return true
     })
       .sort((a, b) => {
-        const aScore = a.isNew ? 1 : 0
-        const bScore = b.isNew ? 1 : 0
+        const aScore = (a.isNew ? 2 : 0) + (a.brandTier === "Designer" ? 1 : 0)
+        const bScore = (b.isNew ? 2 : 0) + (b.brandTier === "Designer" ? 1 : 0)
         return bScore - aScore || a.price - b.price
       })
       .slice(0, 8)
@@ -209,28 +217,29 @@ export function FitQuizPage() {
                 No exact matches — try retaking with a wider budget.
               </p>
             )}
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Link
-                to={
-                  answers.department
-                    ? `/catalog?department=${encodeURIComponent(answers.department)}`
-                    : "/catalog"
-                }
-                className="inline-flex h-10 items-center rounded-full bg-navy px-5 text-sm font-semibold text-navy-foreground no-underline"
-              >
-                Shop full {answers.department || "catalog"}
-              </Link>
-              <button
+            <div className="mt-6 flex flex-wrap gap-3 animate-slide-up">
+              <Button asChild className="bg-navy hover:bg-navy/90">
+                <Link
+                  to={
+                    answers.department
+                      ? `/catalog?department=${encodeURIComponent(answers.department)}`
+                      : "/catalog"
+                  }
+                >
+                  Shop full {answers.department || "catalog"}
+                </Link>
+              </Button>
+              <Button
                 type="button"
+                variant="outline"
                 onClick={() => {
                   setDone(false)
                   setStep(0)
                   setAnswers({ department: "", fit: "", vibe: "", budget: "" })
                 }}
-                className="inline-flex h-10 items-center rounded-full border border-border bg-surface px-5 text-sm font-semibold"
               >
                 Retake quiz
-              </button>
+              </Button>
             </div>
           </div>
         )}

@@ -75,10 +75,10 @@ export function DepartmentLandingPage() {
         <img src={hero} alt="" className="absolute inset-0 h-full w-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/35 to-black/15" />
         <div className="relative shelf-container flex min-h-[42vh] flex-col justify-end py-10 text-white md:min-h-[48vh] md:py-14">
-          <p className="text-2xs font-bold uppercase tracking-[0.16em] text-white/80">
-            Department
+          <p className="marshalls-wordmark text-[clamp(1.75rem,4vw,2.4rem)] text-white">
+            <span className="m-wide">M</span>arshalls
           </p>
-          <h1 className="mt-2 font-display text-4xl font-bold sm:text-5xl">{title}</h1>
+          <h1 className="mt-3 font-display text-4xl font-bold italic sm:text-5xl">{title}</h1>
           <p className="mt-3 max-w-xl text-sm text-white/85 sm:text-base">
             {nav?.description ?? "Designer and brand-name finds, priced for the hunt."}
           </p>
@@ -89,12 +89,21 @@ export function DepartmentLandingPage() {
             >
               Shop all {nav?.label ?? title} <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link
-              to="/fit-quiz"
-              className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-5 py-2.5 text-sm font-semibold text-white no-underline backdrop-blur"
-            >
-              Take the fit quiz
-            </Link>
+            {!(
+              nav?.departments?.every((d) =>
+                ["Home", "Beauty", "Pets"].includes(d),
+              ) ||
+              ["home", "beauty", "kitchen", "gourmet", "stationery", "pet"].includes(
+                slug,
+              )
+            ) && (
+              <Link
+                to="/fit-quiz"
+                className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-5 py-2.5 text-sm font-semibold text-white no-underline backdrop-blur"
+              >
+                Take the fit quiz
+              </Link>
+            )}
           </div>
         </div>
       </section>
@@ -102,8 +111,10 @@ export function DepartmentLandingPage() {
       {shopLinks.length > 0 && (
         <section className="border-b border-border bg-surface">
           <div className="shelf-container py-8">
-            <h2 className="font-display text-2xl font-bold text-navy">Shop by category</h2>
-            <ul className="mt-4 flex flex-wrap gap-2">
+            <h2 className="section-rule-title font-display text-2xl font-bold italic text-navy">
+              Shop by category
+            </h2>
+            <ul className="mt-5 flex flex-wrap gap-2">
               {shopLinks.map((item) => (
                 <li key={item}>
                   <Link
@@ -112,7 +123,7 @@ export function DepartmentLandingPage() {
                         ? `department=${encodeURIComponent(departmentParam)}&`
                         : ""
                     }q=${encodeURIComponent(item)}`}
-                    className="inline-flex rounded-full border border-border bg-surface-muted px-3 py-1.5 text-sm font-medium text-foreground no-underline hover:border-navy/40"
+                    className="inline-flex rounded-sm border border-border bg-surface-muted px-3 py-1.5 text-sm font-semibold text-foreground no-underline transition-colors hover:border-navy/40 hover:bg-sky-soft"
                   >
                     {item}
                   </Link>
@@ -125,7 +136,9 @@ export function DepartmentLandingPage() {
 
       <section className="shelf-container py-10">
         <div className="flex items-end justify-between gap-4">
-          <h2 className="font-display text-2xl font-bold text-navy">Fresh in {title}</h2>
+          <h2 className="font-display text-2xl font-bold italic text-navy">
+            Fresh in {title}
+          </h2>
           <Link
             to={nav ? navHref(nav) : "/catalog"}
             className="text-sm font-semibold text-navy underline-offset-2 hover:underline"

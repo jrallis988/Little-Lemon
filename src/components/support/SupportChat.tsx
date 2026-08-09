@@ -140,6 +140,14 @@ export function SupportChat() {
     }
   }, [open, messages, typing])
 
+  useEffect(() => {
+    function onOpenChat() {
+      setOpen(true)
+    }
+    window.addEventListener("marshalls:open-chat", onOpenChat)
+    return () => window.removeEventListener("marshalls:open-chat", onOpenChat)
+  }, [])
+
   async function completeHandoff(email: string, topic: string) {
     const result = await requestSupportHandoff({ topic, email })
     useAccountStore

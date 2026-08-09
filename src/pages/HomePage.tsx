@@ -4,149 +4,104 @@ import { ArrowRight, ChevronLeft, ChevronRight, Sparkles, Tag } from "lucide-rea
 import { ALL_BRANDS, PRODUCTS } from "@/data/products"
 import { ProductCard } from "@/components/catalog/ProductCard"
 import { Button } from "@/components/ui/button"
-import { discountPercent, formatCurrency } from "@/lib/utils"
+import { discountPercent } from "@/lib/utils"
 import { useFilterStore } from "@/stores/filterStore"
 import { useDocumentMeta } from "@/hooks/useDocumentMeta"
 
 const HERO_SLIDES = [
   {
-    id: "spring",
-    eyebrow: "New season finds",
-    title: "Spring Style Deals",
-    subtitle: "Big Brands. Small Prices.",
-    copy: "Designer and brand-name styles at off-price — never the same store twice.",
+    id: "women",
+    title: "Brand names for less",
+    copy: "Designer and brand-name women’s finds — priced for the hunt.",
     image:
-      "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1400&q=80",
-    primary: { label: "Shop Women", to: "/catalog?department=Women" },
-    secondary: { label: "Shop Men", to: "/catalog?department=Men" },
+      "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1800&q=82",
+    primary: { label: "Shop Women", to: "/department/women" },
+    secondary: { label: "New finds", to: "/catalog?sort=newest" },
   },
   {
     id: "handbags",
-    eyebrow: "Designer handbags",
     title: "Luxe bags. Wow prices.",
-    subtitle: "Coach, Michael Kors & more.",
     copy: "Score the carryall you’ve been hunting — new styles land daily.",
     image:
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=1400&q=80",
-    primary: { label: "Shop Bags", to: "/catalog" },
-    secondary: { label: "Shop Designer", to: "/catalog" },
+      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=1800&q=82",
+    primary: { label: "Shop Handbags", to: "/department/handbags" },
+    secondary: { label: "Designer Shop", to: "/shop/designer" },
   },
   {
     id: "footwear",
-    eyebrow: "Fall footwear",
     title: "Step into the season",
-    subtitle: "Boots, sneakers & heels.",
     copy: "Brand-name shoes at Marshalls prices — sizes go fast.",
     image:
-      "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=1400&q=80",
-    primary: { label: "Shop Shoes", to: "/catalog?category=Shoes" },
-    secondary: { label: "Shop Clearance", to: "/catalog?sort=discount" },
+      "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=1800&q=82",
+    primary: { label: "Shop Footwear", to: "/department/footwear" },
+    secondary: { label: "Clearance", to: "/shop/clearance" },
   },
   {
     id: "home",
-    eyebrow: "Designer home",
     title: "Wow finds for every room",
-    subtitle: "Tabletop, decor & more.",
-    copy: "Refresh your space with brand-name home at off-price.",
+    copy: "Tabletop, decor, and designer home — never the same aisle twice.",
     image:
-      "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1400&q=80",
-    primary: { label: "Shop Home", to: "/catalog?department=Home" },
-    secondary: { label: "Under $50", to: "/catalog" },
+      "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1800&q=82",
+    primary: { label: "Shop Home", to: "/department/home" },
+    secondary: { label: "Under $50", to: "/shop/under-50" },
   },
   {
     id: "clearance",
-    eyebrow: "Clearance rush",
     title: "Up to 70% off",
-    subtitle: "Final markdowns this week.",
-    copy: "Extra savings on already wow prices — while supplies last.",
+    copy: "Final markdowns on already wow prices — while supplies last.",
     image:
-      "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1400&q=80",
-    primary: { label: "Shop Clearance", to: "/catalog?sort=discount" },
+      "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1800&q=82",
+    primary: { label: "Shop Clearance", to: "/shop/clearance" },
     secondary: { label: "Shop All", to: "/catalog" },
-  },
-  {
-    id: "kids",
-    eyebrow: "Boys · Girls · Jr's",
-    title: "Little looks. Big savings.",
-    subtitle: "Clothes, shoes & gear.",
-    copy: "Outfit the whole crew without the department-store ticket.",
-    image:
-      "https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=1400&q=80",
-    primary: { label: "Shop Boys", to: "/catalog?department=Boys" },
-    secondary: { label: "Shop Girls", to: "/catalog?department=Girls" },
   },
 ]
 
 const DEPARTMENTS = [
   {
     label: "Women",
-    to: "/catalog?department=Women",
+    to: "/department/women",
     image:
       "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=800&h=600&q=80",
   },
   {
     label: "Men",
-    to: "/catalog?department=Men",
+    to: "/department/men",
     image:
       "https://images.unsplash.com/photo-1617137968427-85924c800a22?auto=format&fit=crop&w=800&h=600&q=80",
   },
   {
-    label: "Boys",
-    to: "/catalog?department=Boys",
-    image:
-      "https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=800&h=600&q=80",
-  },
-  {
-    label: "Girls",
-    to: "/catalog?department=Girls",
-    image:
-      "https://images.unsplash.com/photo-1518834107812-67b0b7c58434?auto=format&fit=crop&w=800&h=600&q=80",
-  },
-  {
-    label: "Jr's",
-    to: "/catalog?department=Juniors",
-    image:
-      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&h=600&q=80",
-  },
-  {
-    label: "Kids",
-    to: "/catalog?department=Kids",
-    image:
-      "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?auto=format&fit=crop&w=800&h=600&q=80",
-  },
-  {
     label: "Home",
-    to: "/catalog?department=Home",
+    to: "/department/home",
     image:
       "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&h=600&q=80",
   },
   {
-    label: "Beauty",
-    to: "/catalog?department=Beauty",
-    image:
-      "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=800&h=600&q=80",
-  },
-  {
-    label: "Pet",
-    to: "/catalog?department=Pets",
-    image:
-      "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=800&h=600&q=80",
-  },
-  {
     label: "Shoes",
-    to: "/catalog?category=Shoes",
+    to: "/department/footwear",
     image:
       "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=800&h=600&q=80",
   },
   {
-    label: "Accessories",
-    to: "/catalog",
+    label: "Beauty",
+    to: "/department/beauty",
+    image:
+      "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=800&h=600&q=80",
+  },
+  {
+    label: "Kids",
+    to: "/department/boys-girls",
+    image:
+      "https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=800&h=600&q=80",
+  },
+  {
+    label: "Handbags",
+    to: "/department/handbags",
     image:
       "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=800&h=600&q=80",
   },
   {
-    label: "New Finds",
-    to: "/catalog?sort=newest",
+    label: "Clearance",
+    to: "/shop/clearance",
     image:
       "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&h=600&q=80",
   },
@@ -165,28 +120,40 @@ function HeroCarousel() {
   const slide = HERO_SLIDES[index]!
 
   return (
-    <section className="border-b border-border bg-surface-muted/60">
-      <div className="shelf-container relative grid items-center gap-8 py-10 md:grid-cols-2 md:gap-10 md:py-14">
-        <div className="order-2 md:order-1">
-          <p className="text-2xs font-bold uppercase tracking-[0.14em] text-primary">
-            {slide.eyebrow}
+    <section className="relative min-h-[min(78vh,40rem)] overflow-hidden bg-navy text-white">
+      <img
+        key={slide.id}
+        src={slide.image}
+        alt=""
+        className="absolute inset-0 h-full w-full object-cover animate-fade-in"
+      />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-black/20" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10" />
+
+      <div className="relative shelf-container flex min-h-[min(78vh,40rem)] flex-col justify-end pb-16 pt-20 md:justify-center md:pb-20 md:pt-24">
+        <div className="max-w-xl animate-slide-up">
+          <p className="marshalls-wordmark text-[clamp(2.4rem,6vw,3.75rem)] text-white drop-shadow-sm">
+            <span className="m-wide">M</span>arshalls
           </p>
-          <h1 className="mt-2 font-display text-4xl font-bold italic leading-tight tracking-tight text-navy sm:text-5xl">
+          <h1 className="mt-4 font-display text-3xl font-bold italic leading-tight text-balance text-white sm:text-4xl md:text-5xl">
             {slide.title}
           </h1>
-          <p className="mt-3 text-lg font-semibold text-foreground">{slide.subtitle}</p>
-          <p className="mt-2 max-w-md text-sm leading-relaxed text-muted-foreground">
+          <p className="mt-3 max-w-md text-sm leading-relaxed text-white/85 sm:text-base">
             {slide.copy}
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
-            <Button asChild size="lg">
+            <Button
+              asChild
+              size="lg"
+              className="bg-white text-navy hover:bg-white/90"
+            >
               <Link to={slide.primary.to}>{slide.primary.label}</Link>
             </Button>
             <Button
               asChild
               size="lg"
               variant="outline"
-              className="border-navy text-navy hover:bg-navy/5"
+              className="border-white/50 bg-white/10 text-white backdrop-blur hover:bg-white/20 hover:text-white"
             >
               <Link to={slide.secondary.to}>
                 {slide.secondary.label}
@@ -194,52 +161,45 @@ function HeroCarousel() {
               </Link>
             </Button>
           </div>
-
-          <div className="mt-8 flex items-center gap-3">
-            <button
-              type="button"
-              aria-label="Previous slide"
-              className="rounded-full border border-border bg-surface p-2 shadow-soft hover:bg-secondary"
-              onClick={() =>
-                setIndex((i) => (i - 1 + HERO_SLIDES.length) % HERO_SLIDES.length)
-              }
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </button>
-            <div className="flex gap-1.5">
-              {HERO_SLIDES.map((s, i) => (
-                <button
-                  key={s.id}
-                  type="button"
-                  aria-label={`Go to slide ${i + 1}`}
-                  aria-current={i === index}
-                  onClick={() => setIndex(i)}
-                  className={
-                    i === index
-                      ? "h-2 w-6 rounded-full bg-primary"
-                      : "h-2 w-2 rounded-full bg-primary/25 hover:bg-primary/40"
-                  }
-                />
-              ))}
-            </div>
-            <button
-              type="button"
-              aria-label="Next slide"
-              className="rounded-full border border-border bg-surface p-2 shadow-soft hover:bg-secondary"
-              onClick={() => setIndex((i) => (i + 1) % HERO_SLIDES.length)}
-            >
-              <ChevronRight className="h-4 w-4" />
-            </button>
-          </div>
         </div>
+      </div>
 
-        <div className="order-1 overflow-hidden rounded-md shadow-lift md:order-2">
-          <img
-            key={slide.id}
-            src={slide.image}
-            alt=""
-            className="aspect-[4/3] w-full object-cover animate-fade-in md:aspect-[5/4]"
-          />
+      <div className="absolute bottom-5 left-0 right-0">
+        <div className="shelf-container flex items-center gap-3">
+          <button
+            type="button"
+            aria-label="Previous slide"
+            className="rounded-full border border-white/30 bg-black/30 p-2 text-white backdrop-blur hover:bg-black/50"
+            onClick={() =>
+              setIndex((i) => (i - 1 + HERO_SLIDES.length) % HERO_SLIDES.length)
+            }
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </button>
+          <div className="flex gap-1.5">
+            {HERO_SLIDES.map((s, i) => (
+              <button
+                key={s.id}
+                type="button"
+                aria-label={`Go to slide ${i + 1}`}
+                aria-current={i === index}
+                onClick={() => setIndex(i)}
+                className={
+                  i === index
+                    ? "h-2 w-6 rounded-full bg-white"
+                    : "h-2 w-2 rounded-full bg-white/40 hover:bg-white/70"
+                }
+              />
+            ))}
+          </div>
+          <button
+            type="button"
+            aria-label="Next slide"
+            className="rounded-full border border-white/30 bg-black/30 p-2 text-white backdrop-blur hover:bg-black/50"
+            onClick={() => setIndex((i) => (i + 1) % HERO_SLIDES.length)}
+          >
+            <ChevronRight className="h-4 w-4" />
+          </button>
         </div>
       </div>
     </section>
@@ -298,8 +258,14 @@ export function HomePage() {
           <h2 className="font-display text-xl font-bold italic text-navy md:text-2xl">
             Shop by department
           </h2>
+          <Link
+            to="/fit-quiz"
+            className="text-sm font-semibold text-navy underline-offset-2 hover:underline"
+          >
+            Fit quiz
+          </Link>
         </div>
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 md:gap-4">
           {DEPARTMENTS.map((dept) => (
             <Link
               key={dept.label}
@@ -322,39 +288,17 @@ export function HomePage() {
           <h2 className="section-rule-title justify-center text-center font-display text-2xl font-bold italic text-navy md:text-3xl">
             This Week&apos;s Best Finds
           </h2>
+          <p className="mx-auto mt-3 max-w-lg text-center text-sm text-muted-foreground">
+            Compare-at prices already show the wow — these are the deepest cuts right now.
+          </p>
           <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-4">
             {featured.map((product) => (
-              <Link
-                key={product.id}
-                to={`/product/${product.slug}`}
-                className="group text-foreground no-underline"
-              >
-                <div className="overflow-hidden rounded-md bg-white shadow-soft transition-shadow hover:shadow-lift">
-                  <div className="aspect-[3/4] overflow-hidden bg-[#f3f3f3]">
-                    <img
-                      src={product.images[0]}
-                      alt=""
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                    />
-                  </div>
-                  <div className="space-y-1 p-3">
-                    <p className="line-clamp-1 text-sm font-semibold">
-                      {product.brand} {product.name.split(" ").slice(0, 2).join(" ")}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      Compare at {formatCurrency(product.compareAt)}
-                    </p>
-                    <p className="text-sm font-bold text-primary">
-                      Our price {formatCurrency(product.price)}
-                    </p>
-                  </div>
-                </div>
-              </Link>
+              <ProductCard key={product.id} product={product} />
             ))}
           </div>
           <div className="mt-8 flex justify-center">
             <Button asChild>
-              <Link to="/catalog">
+              <Link to="/catalog?sort=discount">
                 Shop All
                 <ArrowRight className="h-4 w-4" />
               </Link>
@@ -451,20 +395,36 @@ export function HomePage() {
       </section>
 
       <section className="shelf-container py-12 md:py-14">
-        <div className="grid gap-6 lg:grid-cols-[1fr_280px] lg:items-stretch">
-          <div className="rounded-md border border-border bg-surface-muted/40 px-4 py-6 sm:px-6">
-            <p className="text-center text-sm text-muted-foreground">
-              Never the same store twice — inventory turns over daily. Find a Marshalls near you
-              for even more brand-name deals.
-            </p>
+        <div className="grid gap-4 md:grid-cols-2 md:gap-6">
+          <div className="flex flex-col justify-between rounded-md border border-border bg-sky-soft/70 px-6 py-8 shadow-soft">
+            <div>
+              <h2 className="font-display text-2xl font-bold italic text-navy">
+                Never the same store twice
+              </h2>
+              <p className="mt-2 max-w-md text-sm text-muted-foreground">
+                Inventory turns over daily online and in store. Score even more brand-name deals
+                near you.
+              </p>
+            </div>
+            <Button asChild className="mt-6 w-fit bg-navy hover:bg-navy/90">
+              <Link to="/stores">
+                Find a store
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
           </div>
           <Link
-            to="/catalog?sort=discount"
-            className="flex flex-col justify-center rounded-md bg-primary px-6 py-8 text-primary-foreground no-underline shadow-lift transition-transform hover:scale-[1.01]"
+            to="/shop/clearance"
+            className="flex flex-col justify-between rounded-md bg-navy px-6 py-8 text-navy-foreground no-underline shadow-lift transition-transform duration-300 ease-retail hover:scale-[1.01]"
           >
-            <p className="font-display text-2xl font-bold italic">Clearance</p>
-            <p className="mt-1 text-lg font-semibold">Up to 70% Off</p>
-            <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold">
+            <div>
+              <p className="text-2xs font-bold uppercase tracking-[0.14em] text-white/70">
+                Extra markdowns
+              </p>
+              <p className="mt-2 font-display text-3xl font-bold italic">Clearance</p>
+              <p className="mt-1 text-lg font-semibold">Up to 70% off</p>
+            </div>
+            <span className="mt-6 inline-flex items-center gap-1 text-sm font-semibold">
               Shop Now
               <ArrowRight className="h-4 w-4" />
             </span>

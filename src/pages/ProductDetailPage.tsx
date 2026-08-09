@@ -37,6 +37,7 @@ import {
 } from "@/components/ui/dialog"
 import type { NearbyStore, Product } from "@/types"
 import { cn } from "@/lib/utils"
+import { ProductCard } from "@/components/catalog/ProductCard"
 
 function galleryForColor(product: Product, colorwayId: string | null) {
   const color = product.colorways.find((c) => c.id === colorwayId)
@@ -466,23 +467,7 @@ function ProductRail({
       </div>
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
         {products.map((item) => (
-          <Link key={item.id} to={`/product/${item.slug}`} className="group block">
-                <div className="aspect-[3/4] overflow-hidden rounded-md bg-[#f5f5f5] shadow-soft">
-                  <img
-                    src={item.images[0]}
-                    alt={`${item.brand} ${item.name}`}
-                    loading="lazy"
-                    className="h-full w-full object-contain p-3 transition-transform duration-500 group-hover:scale-[1.02]"
-                  />
-                </div>
-            <p className="mt-3 text-2xs font-semibold uppercase tracking-[0.08em] text-muted-foreground">
-              {item.brand}
-            </p>
-            <p className="line-clamp-2 text-sm font-medium">{item.name}</p>
-            <p className="mt-1 text-sm font-bold text-primary">
-              {formatCurrency(item.price)}
-            </p>
-          </Link>
+          <ProductCard key={item.id} product={item} />
         ))}
       </div>
     </section>
@@ -653,14 +638,37 @@ export function ProductDetailPage() {
                 </button>
               ))}
             </div>
-            <div className="product-gallery-frame order-1 aspect-[3/4] sm:order-2">
-              <img
-                key={`${activeColor}-${gallery[imageIndex] ?? gallery[0]}`}
-                src={gallery[imageIndex] ?? gallery[0]}
-                alt={`${product.brand} ${product.name} — ${activeColorName}`}
-                className="animate-fade-in"
-              />
-            </div>
+            <Dialog>
+              <DialogTrigger asChild>
+                <button
+                  type="button"
+                  className="product-gallery-frame order-1 aspect-[3/4] w-full cursor-zoom-in sm:order-2"
+                  aria-label="Open larger product image"
+                >
+                  <img
+                    key={`${activeColor}-${gallery[imageIndex] ?? gallery[0]}`}
+                    src={gallery[imageIndex] ?? gallery[0]}
+                    alt={`${product.brand} ${product.name} — ${activeColorName}`}
+                    className="animate-fade-in"
+                  />
+                </button>
+              </DialogTrigger>
+              <DialogContent className="max-w-3xl border-0 bg-transparent p-0 shadow-none">
+                <DialogHeader className="sr-only">
+                  <DialogTitle>
+                    {product.brand} {product.name}
+                  </DialogTitle>
+                  <DialogDescription>Enlarged product photo</DialogDescription>
+                </DialogHeader>
+                <div className="overflow-hidden rounded-lg bg-[#f5f5f5] shadow-drawer">
+                  <img
+                    src={gallery[imageIndex] ?? gallery[0]}
+                    alt={`${product.brand} ${product.name} — ${activeColorName}`}
+                    className="max-h-[85vh] w-full object-contain p-4"
+                  />
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
 
@@ -681,7 +689,9 @@ export function ProductDetailPage() {
             </div>
 
             <div className="mt-4 flex flex-wrap items-baseline gap-2">
-              <span className="price-deal text-2xl">{formatCurrency(product.price)}</span>
+              <span className="price-deal text-2xl">
+                Our price {formatCurrency(product.price)}
+              </span>
               <span className="price-compare text-base">
                 Compare at {formatCurrency(product.compareAt)}
               </span>
@@ -692,6 +702,10 @@ export function ProductDetailPage() {
             </div>
             <p className="mt-1 text-sm text-muted-foreground">
               You save {formatCurrency(product.compareAt - product.price)} vs. compare at
+              {product.inventory === "low_stock" ? " · Going fast" : ""}
+            </p>
+            <p className="mt-2 text-xs text-muted-foreground">
+              Treasure-hunt pricing — styles sell through and may not restock.
             </p>
 
             <Separator className="my-6" />
@@ -778,10 +792,6 @@ export function ProductDetailPage() {
               </Link>
             </div>
 
-            <div className="mt-6">
-              <StoreStockPanel product={product} stores={stores} size={selectedSize} />
-            </div>
-
             <div className="sticky-purchase mt-8 -mx-gutter px-gutter py-4 lg:static lg:mx-0 lg:mt-8 lg:rounded-lg lg:border lg:border-border lg:bg-surface lg:px-4 lg:shadow-soft">
               <div className="flex gap-2">
                 <Button
@@ -823,6 +833,10 @@ export function ProductDetailPage() {
                 <ShieldCheck className="h-3.5 w-3.5" />
                 Free in-store returns · Guest checkout available
               </p>
+            </div>
+
+            <div className="mt-6">
+              <StoreStockPanel product={product} stores={stores} size={selectedSize} />
             </div>
 
             <div className="mt-8 space-y-3 pb-20 lg:pb-0">
