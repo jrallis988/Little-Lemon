@@ -1,18 +1,30 @@
-import { useState, type FormEvent } from "react"
-import { Link } from "react-router-dom"
-import { MessageCircle, Package, UserRound } from "lucide-react"
+import { useEffect, useState, type FormEvent } from "react"
+import { Link, useSearchParams } from "react-router-dom"
+import { Mail, MessageCircle, Package, UserRound } from "lucide-react"
 import { useAccountStore } from "@/stores/accountStore"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useDocumentMeta } from "@/hooks/useDocumentMeta"
 import { formatCurrency } from "@/lib/utils"
+import { track } from "@/lib/analytics"
+
+type AuthPhase = "form" | "sent"
+
+function nameFromEmail(email: string) {
+  const local = email.split("@")[0] ?? "Guest"
+  return local
+    .replace(/[._-]+/g, " ")
+    .replace(/\b\w/g, (c) => c.toUpperCase())
+    .trim() || "Guest"
+}
 
 export function AccountPage() {
   useDocumentMeta({
     title: "Account | Marshalls",
-    description: "Sign in for faster checkout and order history.",
+    description: "Sign in for mailing-list magic links, faster checkout, and order history.",
   })
 
+  const [params, setParams] = useSearchParams()
   const user = useAccountStore((s) => s.user)
   const orders = useAccountStore((s) => s.orders)
   const chatTickets = useAccountStore((s) => s.chatTickets)
@@ -20,11 +32,34 @@ export function AccountPage() {
   const signOut = useAccountStore((s) => s.signOut)
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
+  const [phase, setPhase] = useState<AuthPhase>("form")
+  const [pendingEmail, setPendingEmail] = useState("")
+
+  useEffect(() => {
+    const magic = params.get("magic")
+    const magicEmail = params.get("email")
+    if (!magic || !magicEmail || user) return
+    signIn({
+      name: params.get("name") || nameFromEmail(magicEmail),
+      email: magicEmail,
+    })
+    track("auth_magic_link_used", { email: magicEmail })
+    setParams({}, { replace: true })
+  }, [params, setParams, signIn, user])
 
   function onSubmit(e: FormEvent) {
     e.preventDefault()
-    if (!name.trim() || !email.trim()) return
-    signIn({ name: name.trim(), email: email.trim() })
+    if (!email.trim()) return
+    const normalized = email.trim().toLowerCase()
+    setPendingEmail(normalized)
+    setPhase("sent")
+    track("auth_magic_link_requested", { email: normalized })
+  }
+
+  function completeMagicLink() {
+    const displayName = name.trim() || nameFromEmail(pendingEmail)
+    signIn({ name: displayName, email: pendingEmail })
+    track("auth_signed_in", { method: "magic_link" })
   }
 
   if (!user) {
@@ -35,41 +70,75 @@ export function AccountPage() {
             Account
           </p>
           <h1 className="mt-2 font-display text-3xl font-bold text-navy">
-            Sign in or create an account
+            {phase === "sent" ? "Check your inbox" : "Sign in with a magic link"}
           </h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Prototype account — saved on this device for faster checkout and order history.
+            {phase === "sent"
+              ? `We sent a one-tap sign-in link to ${pendingEmail}. In this prototype, open it below — no password needed.`
+              : "Enter your email and we’ll send a secure sign-in link. Saved on this device for faster checkout."}
           </p>
-          <form className="mt-6 space-y-4" onSubmit={onSubmit}>
-            <div>
-              <label htmlFor="account-name" className="text-sm font-medium">
-                Full name
-              </label>
-              <Input
-                id="account-name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="mt-1.5"
-                required
-              />
+
+          {phase === "form" ? (
+            <form className="mt-6 space-y-4" onSubmit={onSubmit}>
+              <div>
+                <label htmlFor="account-name" className="text-sm font-medium">
+                  Full name <span className="font-normal text-muted-foreground">(optional)</span>
+                </label>
+                <Input
+                  id="account-name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="mt-1.5"
+                  autoComplete="name"
+                />
+              </div>
+              <div>
+                <label htmlFor="account-email" className="text-sm font-medium">
+                  Email
+                </label>
+                <Input
+                  id="account-email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="mt-1.5"
+                  required
+                  autoComplete="email"
+                />
+              </div>
+              <Button type="submit" className="w-full bg-navy hover:bg-navy/90">
+                Email me a sign-in link
+              </Button>
+            </form>
+          ) : (
+            <div className="mt-6 space-y-3">
+              <div className="flex items-start gap-3 rounded-md border border-navy/20 bg-sky-soft px-3 py-3 text-sm">
+                <Mail className="mt-0.5 h-4 w-4 shrink-0 text-navy" />
+                <p>
+                  Link expires in 15 minutes. Demo tip: use card ending in{" "}
+                  <span className="font-semibold">0000</span> at checkout to simulate a decline.
+                </p>
+              </div>
+              <Button
+                type="button"
+                className="w-full bg-navy hover:bg-navy/90"
+                onClick={completeMagicLink}
+              >
+                Open magic link
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full"
+                onClick={() => {
+                  setPhase("form")
+                  setPendingEmail("")
+                }}
+              >
+                Use a different email
+              </Button>
             </div>
-            <div>
-              <label htmlFor="account-email" className="text-sm font-medium">
-                Email
-              </label>
-              <Input
-                id="account-email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="mt-1.5"
-                required
-              />
-            </div>
-            <Button type="submit" className="w-full bg-navy hover:bg-navy/90">
-              Continue
-            </Button>
-          </form>
+          )}
         </div>
       </div>
     )
@@ -87,7 +156,13 @@ export function AccountPage() {
           </h1>
           <p className="mt-1 text-muted-foreground">{user.email}</p>
         </div>
-        <Button variant="outline" onClick={signOut}>
+        <Button
+          variant="outline"
+          onClick={() => {
+            signOut()
+            track("auth_signed_out")
+          }}
+        >
           Sign out
         </Button>
       </div>
@@ -97,6 +172,7 @@ export function AccountPage() {
           { label: "Wishlist", to: "/wishlist" },
           { label: "Track an order", to: "/order-status" },
           { label: "Find a store", to: "/stores" },
+          { label: "Fit quiz", to: "/fit-quiz" },
         ].map((item) => (
           <Link
             key={item.to}

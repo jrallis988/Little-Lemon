@@ -2,8 +2,16 @@
   "name": "Marshalls",
   "short_name": "Marshalls",
   "description": "Brand names for less. Shop designer and brand-name finds at Marshalls.",
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
-  "theme_color": "#003087",
-  "background_color": "#FFFFFF"
+  "theme_color": "#003DA5",
+  "background_color": "#FFFFFF",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
 }

@@ -1,8 +1,9 @@
 import type { NearbyStore, Product } from "@/types"
+import { retailPhotoUrl, uniqueColorwayGallery } from "@/data/images"
 
 /**
  * Curated sample assortment — realistic off-price merchandising data.
- * Images use Unsplash product photography with stable crop params.
+ * Colorway galleries use distinct Unsplash IDs (not recolored crops).
  */
 
 const DEFAULT_STORES: NearbyStore[] = [
@@ -483,24 +484,6 @@ type ProductSeed = {
   isNew?: boolean
 }
 
-const unsplash = (id: string, variant = 0) => {
-  const crops = ["entropy", "edges", "center"] as const
-  const sats = [0, -12, 8] as const
-  const crop = crops[variant % crops.length]
-  const sat = sats[variant % sats.length]
-  return `https://images.unsplash.com/${id}?auto=format&fit=crop&w=900&h=1200&q=80&crop=${crop}&sat=${sat}`
-}
-
-const colorwayGallery = (imageIds: string[], colorIndex: number) => {
-  const primaryId = imageIds[colorIndex % imageIds.length]!
-  const secondaryId = imageIds[(colorIndex + 1) % imageIds.length]!
-  const detailId = imageIds[(colorIndex + 2) % imageIds.length] ?? primaryId
-  return [
-    unsplash(primaryId, colorIndex),
-    unsplash(secondaryId, colorIndex + 1),
-    unsplash(detailId, colorIndex + 2),
-  ]
-}
 
 const ADDITIONAL_PRODUCT_SEEDS: ProductSeed[] = [
   {
@@ -1422,14 +1405,19 @@ const ADDITIONAL_PRODUCTS: Product[] = ADDITIONAL_PRODUCT_SEEDS.map(
     category: seed.category,
     price: seed.price,
     compareAt: seed.compareAt,
-    images: seed.imageIds.map((id, i) => unsplash(id, i)),
-    colorways: seed.colors.map(([id, name, hex], colorIndex) => {
-      const images = colorwayGallery(seed.imageIds, colorIndex)
+    images: seed.imageIds.map((id, i) => retailPhotoUrl(id, i)),
+    colorways: seed.colors.map(([id, name, hex]) => {
+      const images = uniqueColorwayGallery(
+        seed.category,
+        seed.department,
+        `${seed.slug}-${id}`,
+        3,
+      )
       return {
         id,
         name,
         hex,
-        imageIndex: colorIndex % seed.imageIds.length,
+        imageIndex: 0,
         image: images[0],
         images,
       }
@@ -1460,27 +1448,20 @@ const ADDITIONAL_PRODUCTS: Product[] = ADDITIONAL_PRODUCT_SEEDS.map(
 function withColorwayGalleries(product: Product): Product {
   return {
     ...product,
-    colorways: product.colorways.map((colorway, index) => {
-      if (colorway.images && colorway.images.length >= 2) return colorway
-      const base =
-        colorway.image ??
-        (typeof colorway.imageIndex === "number"
-          ? product.images[colorway.imageIndex]
-          : undefined) ??
-        product.images[index % product.images.length]
-      if (!base) return colorway
-      const rest = product.images.filter((src) => src !== base)
-      const variants = [base, ...rest].slice(0, 3).map((src, variantIndex) => {
-        if (!src.includes("images.unsplash.com")) return src
-        const joiner = src.includes("?") ? "&" : "?"
-        const crops = ["entropy", "edges", "center"]
-        const sats = [0, -12, 8]
-        return `${src}${joiner}h=1200&crop=${crops[(index + variantIndex) % 3]}&sat=${sats[(index + variantIndex) % 3]}`
-      })
+    colorways: product.colorways.map((colorway) => {
+      // Seeded products already carry unique multi-image galleries
+      if (colorway.images && colorway.images.length >= 3) return colorway
+      const images = uniqueColorwayGallery(
+        product.category,
+        product.department,
+        `${product.slug}-${colorway.id}`,
+        3,
+      )
       return {
         ...colorway,
-        image: variants[0],
-        images: variants,
+        image: images[0],
+        images,
+        imageIndex: 0,
       }
     }),
   }

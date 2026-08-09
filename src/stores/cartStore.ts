@@ -3,6 +3,7 @@ import { persist } from "zustand/middleware"
 import type { CartItem } from "@/types"
 import { PRODUCTS } from "@/data/products"
 import { useToastStore } from "@/stores/toastStore"
+import { track } from "@/lib/analytics"
 
 const MAX_QTY_PER_LINE = 5
 
@@ -103,6 +104,11 @@ export const useCartStore = create<CartState>()(
           }
         })
         if (!get().lastError) {
+          track("add_to_cart", {
+            productId: item.productId,
+            size: item.size,
+            colorwayId: item.colorwayId,
+          })
           useToastStore.getState().push({
             title: "Added to bag",
             description: `${product.brand} ${product.name}`,

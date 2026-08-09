@@ -15,6 +15,8 @@ export type ShippingFields = {
 export type PaymentPlaceholder = {
   cardNumber: string
   nameOnCard: string
+  expiry: string
+  cvc: string
 }
 
 export type OrderLine = {
@@ -63,8 +65,10 @@ const emptyShipping: ShippingFields = {
 }
 
 const emptyPayment: PaymentPlaceholder = {
-  cardNumber: "•••• •••• •••• 4242",
+  cardNumber: "",
   nameOnCard: "",
+  expiry: "",
+  cvc: "",
 }
 
 export const useCheckoutStore = create<CheckoutState>()(

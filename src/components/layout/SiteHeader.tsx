@@ -1,8 +1,7 @@
-import { useEffect, useState, type FormEvent } from "react"
-import { Link, NavLink, useNavigate, useSearchParams } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { Link, NavLink, useSearchParams } from "react-router-dom"
 import {
   Menu,
-  Search,
   ShoppingBag,
   User,
   MapPin,
@@ -11,18 +10,17 @@ import {
   ChevronRight,
 } from "lucide-react"
 import { useCartStore } from "@/stores/cartStore"
-import { useFilterStore } from "@/stores/filterStore"
 import { useWishlistStore } from "@/stores/wishlistStore"
 import { useAccountStore } from "@/stores/accountStore"
 import { navHref, SHOP_NAV } from "@/data/navigation"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
+import { SearchTypeahead } from "@/components/layout/SearchTypeahead"
 import { cn } from "@/lib/utils"
 
 const PROMO_MESSAGES = [
@@ -76,30 +74,14 @@ function PromoTicker() {
 }
 
 export function SiteHeader() {
-  const navigate = useNavigate()
   const [params] = useSearchParams()
   const activeNav = params.get("nav")
   const openBag = useCartStore((s) => s.openBag)
   const itemCount = useCartStore((s) => s.itemCount())
-  const query = useFilterStore((s) => s.query)
-  const setQuery = useFilterStore((s) => s.setQuery)
   const [menuOpen, setMenuOpen] = useState(false)
   const [megaOpen, setMegaOpen] = useState(false)
-  const [draftQuery, setDraftQuery] = useState(query)
   const wishlistCount = useWishlistStore((s) => s.productIds.length)
   const user = useAccountStore((s) => s.user)
-
-  useEffect(() => {
-    setDraftQuery(query)
-  }, [query])
-
-  function submitSearch(e: FormEvent) {
-    e.preventDefault()
-    const next = draftQuery.trim()
-    setQuery(next)
-    setMenuOpen(false)
-    navigate(next ? `/catalog?q=${encodeURIComponent(next)}` : "/catalog")
-  }
 
   return (
     <header className="sticky top-0 z-40 shadow-header">
@@ -217,6 +199,13 @@ export function SiteHeader() {
                       Clearance
                     </Link>
                     <Link
+                      to="/fit-quiz"
+                      className="text-sm font-semibold text-navy no-underline hover:underline"
+                      onClick={() => setMegaOpen(false)}
+                    >
+                      Fit quiz
+                    </Link>
+                    <Link
                       to="/catalog?department=Pets"
                       className="text-sm font-semibold text-navy no-underline hover:underline"
                       onClick={() => setMegaOpen(false)}
@@ -241,20 +230,7 @@ export function SiteHeader() {
             </NavLink>
 
             <div className="ml-auto flex flex-1 items-center justify-end gap-1 sm:gap-2">
-              <form
-                className="relative hidden max-w-md flex-1 md:block"
-                onSubmit={submitSearch}
-                role="search"
-              >
-                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  value={draftQuery}
-                  onChange={(e) => setDraftQuery(e.target.value)}
-                  placeholder="Search Marshalls"
-                  className="h-10 border-border bg-surface-muted pl-9 shadow-none focus-visible:bg-surface"
-                  aria-label="Search Marshalls"
-                />
-              </form>
+              <SearchTypeahead className="hidden max-w-md flex-1 md:block" />
 
               <Button variant="ghost" size="icon" className="relative hidden sm:inline-flex" asChild>
                 <Link to="/wishlist" aria-label={`Wishlist, ${wishlistCount} items`}>
@@ -289,16 +265,7 @@ export function SiteHeader() {
           </div>
 
           <div className="pb-3 md:hidden">
-            <form onSubmit={submitSearch} role="search" className="relative">
-              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input
-                value={draftQuery}
-                onChange={(e) => setDraftQuery(e.target.value)}
-                placeholder="Search Marshalls"
-                className="h-10 bg-surface-muted pl-9 shadow-none"
-                aria-label="Search Marshalls"
-              />
-            </form>
+            <SearchTypeahead onNavigate={() => setMenuOpen(false)} />
           </div>
         </div>
 
@@ -311,7 +278,7 @@ export function SiteHeader() {
             {SHOP_NAV.map((item) => (
               <Link
                 key={item.id}
-                to={navHref(item)}
+                to={`/department/${item.id}`}
                 className={cn(
                   "shrink-0 rounded-sm px-2.5 py-1.5 text-xs font-semibold no-underline transition-colors hover:bg-secondary hover:text-foreground",
                   activeNav === item.id

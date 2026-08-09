@@ -1,5 +1,5 @@
-import { useEffect, useMemo } from "react"
-import { AlertTriangle, Check, CreditCard, PackageCheck, Truck } from "lucide-react"
+import { useEffect, useMemo, useState } from "react"
+import { AlertTriangle, Check, CreditCard, Lock, PackageCheck, Truck } from "lucide-react"
 import { Navigate, useNavigate } from "react-router-dom"
 import { PRODUCTS } from "@/data/products"
 import { useCartStore } from "@/stores/cartStore"
@@ -12,6 +12,16 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { formatCurrency } from "@/lib/utils"
 import { useDocumentMeta } from "@/hooks/useDocumentMeta"
+import { placeOrderApi } from "@/lib/api"
+import {
+  cardLast4,
+  detectCardBrand,
+  formatCardNumber,
+  formatCvc,
+  formatExpiry,
+  isValidDemoCard,
+} from "@/lib/payment"
+import { track } from "@/lib/analytics"
 
 const PROMOS: Record<string, { label: string; percentOff: number }> = {
   FIND20: { label: "Extra 20% off", percentOff: 20 },
@@ -52,6 +62,9 @@ function Field({
   onChange,
   type = "text",
   autoComplete,
+  inputMode,
+  maxLength,
+  placeholder,
 }: {
   label: string
   name: string
@@ -59,6 +72,9 @@ function Field({
   onChange: (value: string) => void
   type?: string
   autoComplete?: string
+  inputMode?: "numeric" | "text" | "email"
+  maxLength?: number
+  placeholder?: string
 }) {
   return (
     <label className="space-y-1.5 text-sm font-medium">
@@ -69,6 +85,9 @@ function Field({
         value={value}
         onChange={(event) => onChange(event.target.value)}
         autoComplete={autoComplete}
+        inputMode={inputMode}
+        maxLength={maxLength}
+        placeholder={placeholder}
         required
       />
     </label>
@@ -93,6 +112,8 @@ export function CheckoutPage() {
   const setStep = useCheckoutStore((state) => state.setStep)
   const completeOrder = useCheckoutStore((state) => state.completeOrder)
   const user = useAccountStore((state) => state.user)
+  const [placing, setPlacing] = useState(false)
+  const [payError, setPayError] = useState<string | null>(null)
 
   useEffect(() => {
     if (!user) return
@@ -102,6 +123,10 @@ export function CheckoutPage() {
     // Prefill once from signed-in account when fields are empty
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
+
+  useEffect(() => {
+    track("checkout_step", { step })
+  }, [step])
 
   const lines = useMemo(
     () =>
@@ -140,34 +165,47 @@ export function CheckoutPage() {
   const shippingCost = subtotal >= 89 ? 0 : 8.99
   const tax = discountedSubtotal * 0.08875
   const total = discountedSubtotal + shippingCost + tax
+  const brand = detectCardBrand(payment.cardNumber)
+  const paymentReady = isValidDemoCard(
+    payment.cardNumber,
+    payment.expiry,
+    payment.cvc,
+  )
 
-  const placeOrder = () => {
-    if (hasOutOfStock) return
-    const order = {
-      id: `MSH-${Date.now().toString().slice(-8)}`,
-      placedAt: Date.now(),
-      shipping: { ...shipping },
-      lines: lines.map(({ item, product, colorway }) => ({
-        productId: product.id,
-        name: product.name,
-        brand: product.brand,
-        image: product.images[0] ?? "",
-        size: item.size,
-        color: colorway?.name ?? item.colorwayId,
-        quantity: item.quantity,
-        price: product.price,
-      })),
-      subtotal,
-      promoCode: promo ? promoCode : null,
-      promoDiscount,
-      shippingCost,
-      tax,
-      total,
+  const placeOrder = async () => {
+    if (hasOutOfStock || placing) return
+    setPlacing(true)
+    setPayError(null)
+    try {
+      const order = await placeOrderApi({
+        shipping: { ...shipping },
+        lines: lines.map(({ item, product, colorway }) => ({
+          productId: product.id,
+          name: product.name,
+          brand: product.brand,
+          image: product.images[0] ?? "",
+          size: item.size,
+          color: colorway?.name ?? item.colorwayId,
+          quantity: item.quantity,
+          price: product.price,
+        })),
+        subtotal,
+        promoCode: promo ? promoCode : null,
+        promoDiscount,
+        shippingCost,
+        tax,
+        total,
+        paymentLast4: cardLast4(payment.cardNumber),
+      })
+      completeOrder(order)
+      useAccountStore.getState().addOrder(order)
+      clearCart()
+      navigate("/order-confirmation")
+    } catch (error) {
+      setPayError(error instanceof Error ? error.message : "Payment failed.")
+    } finally {
+      setPlacing(false)
     }
-    completeOrder(order)
-    useAccountStore.getState().addOrder(order)
-    clearCart()
-    navigate("/order-confirmation")
   }
 
   return (
@@ -246,6 +284,7 @@ export function CheckoutPage() {
                       value={shipping.email}
                       onChange={(value) => setShippingField("email", value)}
                       autoComplete="email"
+                      inputMode="email"
                     />
                   </div>
                   <div className="sm:col-span-2">
@@ -289,6 +328,11 @@ export function CheckoutPage() {
               <form
                 onSubmit={(event) => {
                   event.preventDefault()
+                  if (!paymentReady) {
+                    setPayError("Enter a valid card number, expiry, and CVC.")
+                    return
+                  }
+                  setPayError(null)
                   setStep(3)
                   window.scrollTo({ top: 0, behavior: "smooth" })
                 }}
@@ -298,22 +342,34 @@ export function CheckoutPage() {
                   <h2 className="font-display text-xl font-bold">Payment</h2>
                 </div>
                 <div className="rounded-md border border-sky-200 bg-sky-soft p-3 text-xs text-navy">
-                  Demo checkout only — no payment is processed or collected.
+                  <span className="inline-flex items-center gap-1 font-semibold">
+                    <Lock className="h-3.5 w-3.5" /> Stripe-style demo vault
+                  </span>
+                  <p className="mt-1">
+                    Cards are validated locally — nothing is charged. Use{" "}
+                    <span className="font-semibold">4242 4242 4242 4242</span> to succeed, or
+                    ending in <span className="font-semibold">0000</span> to simulate a decline.
+                  </p>
                 </div>
                 <div className="mt-5 space-y-4">
                   <label className="block space-y-1.5 text-sm font-medium">
-                    <span>Card number</span>
+                    <span className="flex items-center justify-between gap-2">
+                      Card number
+                      <span className="text-2xs font-bold uppercase tracking-wide text-muted-foreground">
+                        {brand}
+                      </span>
+                    </span>
                     <Input
                       value={payment.cardNumber}
-                      readOnly
-                      aria-describedby="demo-card-help"
+                      onChange={(e) =>
+                        setPaymentField("cardNumber", formatCardNumber(e.target.value))
+                      }
+                      inputMode="numeric"
+                      autoComplete="cc-number"
+                      placeholder="4242 4242 4242 4242"
+                      maxLength={19}
+                      required
                     />
-                    <span
-                      id="demo-card-help"
-                      className="block text-xs font-normal text-muted-foreground"
-                    >
-                      A masked placeholder is used for this demo.
-                    </span>
                   </label>
                   <Field
                     label="Name on card"
@@ -322,7 +378,34 @@ export function CheckoutPage() {
                     onChange={(value) => setPaymentField("nameOnCard", value)}
                     autoComplete="cc-name"
                   />
+                  <div className="grid grid-cols-2 gap-4">
+                    <Field
+                      label="Expiry"
+                      name="expiry"
+                      value={payment.expiry}
+                      onChange={(value) => setPaymentField("expiry", formatExpiry(value))}
+                      autoComplete="cc-exp"
+                      inputMode="numeric"
+                      placeholder="MM/YY"
+                      maxLength={5}
+                    />
+                    <Field
+                      label="CVC"
+                      name="cvc"
+                      value={payment.cvc}
+                      onChange={(value) => setPaymentField("cvc", formatCvc(value))}
+                      autoComplete="cc-csc"
+                      inputMode="numeric"
+                      placeholder="123"
+                      maxLength={4}
+                    />
+                  </div>
                 </div>
+                {payError && (
+                  <p role="alert" className="mt-4 text-sm text-red-700">
+                    {payError}
+                  </p>
+                )}
                 <div className="mt-7 flex flex-wrap gap-3">
                   <Button type="button" variant="outline" onClick={() => setStep(1)}>
                     Back
@@ -372,7 +455,15 @@ export function CheckoutPage() {
                     {shipping.address}, {shipping.city}, {shipping.state} {shipping.zip}
                   </p>
                   <p className="mt-1 text-muted-foreground">{shipping.email}</p>
+                  <p className="mt-3 text-muted-foreground">
+                    {brand} ending in {cardLast4(payment.cardNumber)} · Exp {payment.expiry}
+                  </p>
                 </div>
+                {payError && (
+                  <p role="alert" className="mt-4 text-sm text-red-700">
+                    {payError}
+                  </p>
+                )}
                 <div className="mt-7 flex flex-wrap gap-3">
                   <Button type="button" variant="outline" onClick={() => setStep(2)}>
                     Back
@@ -380,10 +471,10 @@ export function CheckoutPage() {
                   <Button
                     type="button"
                     size="lg"
-                    onClick={placeOrder}
-                    disabled={hasOutOfStock}
+                    onClick={() => void placeOrder()}
+                    disabled={hasOutOfStock || placing}
                   >
-                    Place demo order
+                    {placing ? "Processing payment…" : "Place order"}
                   </Button>
                 </div>
               </div>
@@ -402,7 +493,9 @@ export function CheckoutPage() {
               </div>
               {promo && (
                 <div className="flex justify-between text-primary">
-                  <dt>{promo.label} ({promoCode})</dt>
+                  <dt>
+                    {promo.label} ({promoCode})
+                  </dt>
                   <dd className="tabular">−{formatCurrency(promoDiscount)}</dd>
                 </div>
               )}

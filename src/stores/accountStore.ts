@@ -17,7 +17,7 @@ type AccountState = {
   addOrder: (order: CompletedOrder) => void
   subscribeEmail: (email: string) => boolean
   isEmailSubscribed: (email: string) => boolean
-  requestHumanHandoff: (topic: string) => string
+  requestHumanHandoff: (topic: string, ticketId?: string) => string
 }
 
 export const useAccountStore = create<AccountState>()(
@@ -46,8 +46,8 @@ export const useAccountStore = create<AccountState>()(
       },
       isEmailSubscribed: (email) =>
         get().emailSubscribers.includes(email.trim().toLowerCase()),
-      requestHumanHandoff: (topic) => {
-        const id = `TKT-${Date.now().toString(36).toUpperCase()}`
+      requestHumanHandoff: (topic, ticketId) => {
+        const id = ticketId ?? `TKT-${Date.now().toString(36).toUpperCase()}`
         set((state) => ({
           chatTickets: [
             { id, topic, createdAt: Date.now() },

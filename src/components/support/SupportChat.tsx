@@ -4,6 +4,8 @@ import { MessageCircle, Send, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useAccountStore } from "@/stores/accountStore"
+import { requestSupportHandoff } from "@/lib/api"
+import { track } from "@/lib/analytics"
 import { cn } from "@/lib/utils"
 
 type ChatRole = "agent" | "user"
@@ -29,7 +31,7 @@ const STARTER: ChatMessage = {
   text: "Hi! I’m Maya from Marshalls Support. Ask me about shipping, returns, sizes, stores, or finding a deal — I’m here to help.",
 }
 
-function replyFor(input: string): ChatMessage {
+function syncReply(input: string): ChatMessage | "handoff" {
   const q = input.toLowerCase()
   const id = `agent-${Date.now()}`
 
@@ -37,9 +39,9 @@ function replyFor(input: string): ChatMessage {
     return {
       id,
       role: "agent",
-      text: "You can check recent orders on the confirmation page after checkout. Guest orders use the email on your receipt. Need a store pickup instead? I can point you there.",
+      text: "You can look up any confirmation number on Order status. Guest orders use the email on your receipt.",
       links: [
-        { label: "Order confirmation", to: "/order-confirmation" },
+        { label: "Order status", to: "/order-status" },
         { label: "Find a store", to: "/stores" },
       ],
     }
@@ -59,7 +61,10 @@ function replyFor(input: string): ChatMessage {
       id,
       role: "agent",
       text: "Most online buys can be returned in store with your shipping confirmation email — free and easy. Some exclusions apply on beauty, final sale, and intimate apparel.",
-      links: [{ label: "Find a store for returns", to: "/stores" }],
+      links: [
+        { label: "Shipping & returns", to: "/shipping-returns" },
+        { label: "Find a store", to: "/stores" },
+      ],
     }
   }
 
@@ -72,12 +77,15 @@ function replyFor(input: string): ChatMessage {
     }
   }
 
-  if (/(size|fit|chart|run small|run large)/.test(q)) {
+  if (/(size|fit|chart|run small|run large|quiz)/.test(q)) {
     return {
       id,
       role: "agent",
-      text: "Fit varies by brand. On any product page, open Size & fit guide for apparel, shoes, or kids charts. When you’re between sizes, sizing up is usually the safer call for a relaxed Marshalls find.",
-      links: [{ label: "Browse apparel", to: "/catalog?nav=apparel" }],
+      text: "Fit varies by brand. Open Size & fit guide on any product page, or take our quick fit quiz for a personalized edit.",
+      links: [
+        { label: "Fit quiz", to: "/fit-quiz" },
+        { label: "Browse apparel", to: "/catalog?nav=apparel" },
+      ],
     }
   }
 
@@ -100,16 +108,7 @@ function replyFor(input: string): ChatMessage {
   }
 
   if (/(human|real person|agent|manager|speak|talk to a person|representative)/.test(q)) {
-    const ticketId = useAccountStore.getState().requestHumanHandoff(input)
-    return {
-      id,
-      role: "agent",
-      text: `I’ve opened handoff ticket ${ticketId}. A specialist will follow up by email in this prototype queue. Meanwhile I can still help with shipping, returns, or store pickup.`,
-      links: [
-        { label: "Find a store", to: "/stores" },
-        { label: "Account / orders", to: "/account" },
-      ],
-    }
+    return "handoff"
   }
 
   return {
@@ -128,8 +127,11 @@ export function SupportChat() {
   const [messages, setMessages] = useState<ChatMessage[]>([STARTER])
   const [draft, setDraft] = useState("")
   const [typing, setTyping] = useState(false)
+  const [awaitingEmail, setAwaitingEmail] = useState(false)
+  const [handoffTopic, setHandoffTopic] = useState("Live chat handoff")
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const user = useAccountStore((s) => s.user)
 
   useEffect(() => {
     if (open) {
@@ -138,7 +140,27 @@ export function SupportChat() {
     }
   }, [open, messages, typing])
 
-  function send(text: string) {
+  async function completeHandoff(email: string, topic: string) {
+    const result = await requestSupportHandoff({ topic, email })
+    useAccountStore
+      .getState()
+      .requestHumanHandoff(`${topic} · ${email}`, result.ticketId)
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: `agent-${Date.now()}`,
+        role: "agent",
+        text: `You’re in the live queue as ${result.ticketId}. A specialist will email ${email} in about ${result.etaMinutes} minutes. I’ll stay here if you need shipping, returns, or store help meanwhile.`,
+        links: [
+          { label: "Account / tickets", to: "/account" },
+          { label: "Find a store", to: "/stores" },
+        ],
+      },
+    ])
+    setAwaitingEmail(false)
+  }
+
+  async function send(text: string) {
     const trimmed = text.trim()
     if (!trimmed || typing) return
 
@@ -150,16 +172,66 @@ export function SupportChat() {
     setMessages((prev) => [...prev, userMsg])
     setDraft("")
     setTyping(true)
+    track("chat_message", { text: trimmed.slice(0, 80) })
+
+    if (awaitingEmail) {
+      if (!trimmed.includes("@")) {
+        window.setTimeout(() => {
+          setMessages((prev) => [
+            ...prev,
+            {
+              id: `agent-${Date.now()}`,
+              role: "agent",
+              text: "Please share a valid email so we can route your handoff ticket.",
+            },
+          ])
+          setTyping(false)
+        }, 400)
+        return
+      }
+      try {
+        await completeHandoff(trimmed.toLowerCase(), handoffTopic)
+      } finally {
+        setTyping(false)
+      }
+      return
+    }
+
+    const reply = syncReply(trimmed)
+    if (reply === "handoff") {
+      setHandoffTopic(trimmed)
+      if (user?.email) {
+        try {
+          await completeHandoff(user.email, trimmed)
+        } finally {
+          setTyping(false)
+        }
+        return
+      }
+      window.setTimeout(() => {
+        setAwaitingEmail(true)
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: `agent-${Date.now()}`,
+            role: "agent",
+            text: "Happy to connect you with a person. What’s the best email for follow-up?",
+          },
+        ])
+        setTyping(false)
+      }, 500)
+      return
+    }
 
     window.setTimeout(() => {
-      setMessages((prev) => [...prev, replyFor(trimmed)])
+      setMessages((prev) => [...prev, reply])
       setTyping(false)
     }, 650 + Math.random() * 500)
   }
 
   function onSubmit(e: FormEvent) {
     e.preventDefault()
-    send(draft)
+    void send(draft)
   }
 
   return (
@@ -236,7 +308,7 @@ export function SupportChat() {
                   key={prompt}
                   type="button"
                   className="shrink-0 rounded-full border border-border bg-surface-muted px-2.5 py-1 text-2xs font-semibold text-foreground hover:border-navy/40 hover:bg-sky-soft"
-                  onClick={() => send(prompt)}
+                  onClick={() => void send(prompt)}
                 >
                   {prompt}
                 </button>
@@ -247,9 +319,12 @@ export function SupportChat() {
                 ref={inputRef}
                 value={draft}
                 onChange={(e) => setDraft(e.target.value)}
-                placeholder="Ask about shipping, returns…"
+                placeholder={
+                  awaitingEmail ? "your@email.com" : "Ask about shipping, returns…"
+                }
                 className="h-10"
                 aria-label="Chat message"
+                type={awaitingEmail ? "email" : "text"}
               />
               <Button
                 type="submit"
@@ -274,7 +349,10 @@ export function SupportChat() {
         )}
         aria-expanded={open}
         aria-label={open ? "Close support chat" : "Open support chat"}
-        onClick={() => setOpen((value) => !value)}
+        onClick={() => {
+          setOpen((value) => !value)
+          track("chat_toggle", { open: !open })
+        }}
       >
         {open ? <X className="h-5 w-5" /> : <MessageCircle className="h-5 w-5" />}
         <span className="pr-0.5">{open ? "Close" : "Chat"}</span>

@@ -17,6 +17,8 @@ import {
   getReviewsForProduct,
 } from "@/data/reviews"
 import { getProductBySlug } from "@/lib/catalog"
+import { checkInventory, type InventoryResult } from "@/lib/api"
+import { track } from "@/lib/analytics"
 import { discountPercent, formatCurrency } from "@/lib/utils"
 import { useCartStore } from "@/stores/cartStore"
 import { useWishlistStore } from "@/stores/wishlistStore"
@@ -536,18 +538,42 @@ export function ProductDetailPage() {
   const [size, setSize] = useState<string | null>(null)
   const [colorwayId, setColorwayId] = useState<string | null>(null)
   const [sizeError, setSizeError] = useState(false)
+  const [inventory, setInventory] = useState<InventoryResult | null>(null)
+  const [inventoryLoading, setInventoryLoading] = useState(false)
 
   useEffect(() => {
     setImageIndex(0)
     setSize(null)
     setColorwayId(null)
     setSizeError(false)
+    setInventory(null)
     clearError()
   }, [slug, clearError])
 
   useEffect(() => {
-    if (product) trackRecent(product.id)
+    if (product) {
+      trackRecent(product.id)
+      track("product_view", { productId: product.id, slug: product.slug })
+    }
   }, [product, trackRecent])
+
+  useEffect(() => {
+    if (!product || !size) {
+      setInventory(null)
+      return
+    }
+    let cancelled = false
+    setInventoryLoading(true)
+    void checkInventory(product.id, size).then((result) => {
+      if (!cancelled) {
+        setInventory(result)
+        setInventoryLoading(false)
+      }
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [product, size])
 
   const recentlyViewed = useMemo(
     () =>
@@ -731,9 +757,25 @@ export function ProductDetailPage() {
               {sizeError && (
                 <p className="mt-2 text-xs text-destructive">Please select a size</p>
               )}
+              {selectedSize && (
+                <p className="mt-2 text-xs text-muted-foreground" role="status">
+                  {inventoryLoading && "Checking live inventory…"}
+                  {!inventoryLoading &&
+                    inventory &&
+                    (inventory.available
+                      ? `${inventory.stockCount} online · ${inventory.storesInStock} nearby stores`
+                      : "Size unavailable online — try Reserve in Store")}
+                </p>
+              )}
               {product.fitNotes && (
                 <p className="mt-3 text-sm text-muted-foreground">{product.fitNotes}</p>
               )}
+              <Link
+                to="/fit-quiz"
+                className="mt-3 inline-flex text-xs font-semibold text-navy underline-offset-2 hover:underline"
+              >
+                Not sure? Take the fit quiz
+              </Link>
             </div>
 
             <div className="mt-6">
