@@ -32,8 +32,10 @@ function filterClubs(clubs: Club[], query: string) {
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const q = searchParams.get("q") ?? "";
-  const lat = Number(searchParams.get("lat"));
-  const lng = Number(searchParams.get("lng"));
+  const latRaw = searchParams.get("lat");
+  const lngRaw = searchParams.get("lng");
+  const lat = latRaw == null || latRaw === "" ? NaN : Number(latRaw);
+  const lng = lngRaw == null || lngRaw === "" ? NaN : Number(lngRaw);
   const origin =
     Number.isFinite(lat) && Number.isFinite(lng)
       ? { latitude: lat, longitude: lng }
