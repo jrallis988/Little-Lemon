@@ -47,7 +47,11 @@ export function PharmacyDashboard() {
   }
 
   return (
-    <section aria-labelledby="pharmacy-dashboard-heading" className="space-y-8">
+    <section
+      id="tracker"
+      aria-labelledby="pharmacy-dashboard-heading"
+      className="space-y-8"
+    >
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h1

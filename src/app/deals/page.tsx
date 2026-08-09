@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import { LANDING_DEALS } from "@/lib/data/landing";
+import { CouponClipper } from "@/components/deals/coupon-clipper";
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
@@ -77,6 +78,8 @@ export default function DealsPage() {
       >
         Shop all deals
       </Button>
+
+      <CouponClipper />
     </div>
   );
 }

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { PHOTO_OFFERS } from "@/lib/data/stores";
+import { PhotoOrderForm } from "@/components/photo/photo-order-form";
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
@@ -35,26 +36,32 @@ export default function PhotoPage() {
             <Button
               className="mt-6 bg-brand text-brand-foreground hover:bg-brand/90"
               nativeButton={false}
-              render={<Link href="/stores" />}
+              render={<Link href="#photo-order" />}
             >
-              Find a store for pickup
+              Start a photo order
             </Button>
           </div>
         </div>
       </section>
 
-      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-        <h2 className="font-display text-2xl font-semibold tracking-tight">
-          Photo offers
-        </h2>
-        <ul className="mt-6 grid gap-6 md:grid-cols-3">
-          {PHOTO_OFFERS.map((offer) => (
-            <li key={offer.id} className="border-t border-border pt-4">
-              <h3 className="font-display text-lg font-semibold">{offer.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{offer.detail}</p>
-            </li>
-          ))}
-        </ul>
+      <div className="mx-auto max-w-6xl space-y-12 px-4 py-12 sm:px-6">
+        <div>
+          <h2 className="font-display text-2xl font-semibold tracking-tight">
+            Photo offers
+          </h2>
+          <ul className="mt-6 grid gap-6 md:grid-cols-3">
+            {PHOTO_OFFERS.map((offer) => (
+              <li key={offer.id} className="border-t border-border pt-4">
+                <h3 className="font-display text-lg font-semibold">{offer.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{offer.detail}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div id="photo-order">
+          <PhotoOrderForm />
+        </div>
       </div>
     </div>
   );

@@ -185,3 +185,77 @@ export interface ClinicalService {
   durationMinutes: number;
   availableToday: boolean;
 }
+
+export interface AuthUser {
+  id: string;
+  email: string;
+  displayName: string;
+  memberId: string;
+  savedCardLast4?: string;
+}
+
+export interface PlacedOrderItem {
+  productId: string;
+  name: string;
+  brand: string;
+  quantity: number;
+  unitPrice: number;
+  imageUrl: string;
+}
+
+export interface PlacedOrder {
+  id: string;
+  placedAt: string;
+  mode: CheckoutMode;
+  email: string;
+  itemCount: number;
+  subtotal: number;
+  tax: number;
+  shipping: number;
+  rewardsDiscount: number;
+  couponDiscount: number;
+  couponCode?: string;
+  total: number;
+  points: number;
+  fulfillment: FulfillmentMethod;
+  storeId: string;
+  storeName: string;
+  deliveryAddress?: string;
+  paymentLast4: string;
+  items: PlacedOrderItem[];
+  receiptNote: string;
+}
+
+export interface Coupon {
+  code: string;
+  label: string;
+  description: string;
+  /** Flat dollar off, or percent when `percentOff` is set. */
+  amountOff?: number;
+  percentOff?: number;
+  minSubtotal?: number;
+}
+
+export interface ProductReview {
+  id: string;
+  productId: string;
+  author: string;
+  rating: number;
+  title: string;
+  body: string;
+  postedAt: string;
+}
+
+export interface AppointmentRequest {
+  id: string;
+  serviceId: string;
+  serviceName: string;
+  storeId: string;
+  storeName: string;
+  preferredDate: string;
+  preferredTime: string;
+  contactEmail: string;
+  contactPhone: string;
+  notes?: string;
+  createdAt: string;
+}

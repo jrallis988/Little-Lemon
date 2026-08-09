@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 import { CLINICAL_SERVICES } from "@/lib/data/catalog";
 import { PharmacyDashboard } from "@/components/pharmacy/pharmacy-dashboard";
@@ -13,6 +14,30 @@ export const metadata: Metadata = {
 export default function PharmacyPage() {
   return (
     <div className="mx-auto max-w-6xl space-y-16 px-4 py-10 sm:px-6">
+      <div className="flex flex-wrap gap-3">
+        <Button
+          variant="outline"
+          nativeButton={false}
+          render={<Link href="/pharmacy/transfer" />}
+        >
+          Transfer Rx
+        </Button>
+        <Button
+          variant="outline"
+          nativeButton={false}
+          render={<Link href="/pharmacy/auto-refill" />}
+        >
+          Auto-refill
+        </Button>
+        <Button
+          variant="outline"
+          nativeButton={false}
+          render={<Link href="/pharmacy/schedule" />}
+        >
+          Schedule visit
+        </Button>
+      </div>
+
       <PharmacyDashboard />
 
       <section id="services" aria-labelledby="clinical-heading" className="space-y-6">
@@ -41,7 +66,11 @@ export default function PharmacyPage() {
                 {service.durationMinutes} minutes
                 {service.availableToday ? " · Available today" : ""}
               </p>
-              <Button className="mt-4 bg-health text-health-foreground hover:bg-health/90">
+              <Button
+                className="mt-4 bg-health text-health-foreground hover:bg-health/90"
+                nativeButton={false}
+                render={<Link href={service.href} />}
+              >
                 Schedule
               </Button>
             </li>

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { ArrowLeft, Check, Star } from "lucide-react";
 
+import { getReviewsForProduct } from "@/lib/data/reviews";
 import { formatCurrency } from "@/lib/pharmacy";
 import { useCart } from "@/lib/store/cart";
 import type { Product } from "@/lib/types";
@@ -23,6 +24,7 @@ export function ProductDetail({
   const { addProduct } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [justAdded, setJustAdded] = useState(false);
+  const reviews = getReviewsForProduct(product.id);
 
   function handleAdd() {
     addProduct(product, quantity);
@@ -140,6 +142,38 @@ export function ProductDetail({
           ) : null}
         </div>
       </div>
+
+      <section aria-labelledby="reviews-heading" className="space-y-4">
+        <h2
+          id="reviews-heading"
+          className="font-display text-2xl font-semibold tracking-tight"
+        >
+          Customer reviews
+        </h2>
+        {reviews.length === 0 ? (
+          <p className="text-sm text-muted-foreground">
+            No written reviews yet — be the first after pickup.
+          </p>
+        ) : (
+          <ul className="space-y-4">
+            {reviews.map((review) => (
+              <li
+                key={review.id}
+                className="border-t border-border pt-4 first:border-t-0 first:pt-0"
+              >
+                <p className="flex items-center gap-2 text-sm font-medium">
+                  <Star className="size-3.5 fill-current text-brand" aria-hidden />
+                  {review.rating.toFixed(1)} · {review.title}
+                </p>
+                <p className="mt-1 text-sm text-muted-foreground">{review.body}</p>
+                <p className="mt-2 text-xs text-muted-foreground">
+                  {review.author} · {review.postedAt}
+                </p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
 
       {related.length > 0 ? (
         <section aria-labelledby="related-heading">

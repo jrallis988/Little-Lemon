@@ -338,9 +338,49 @@ export function ProductDiscoveryGrid() {
             ))}
           </div>
           {products.length === 0 ? (
-            <p className="rounded-xl border border-dashed border-border p-8 text-sm text-muted-foreground">
-              No products match these filters. Clear a few to widen results.
-            </p>
+            <div className="space-y-4 rounded-xl border border-dashed border-border p-8">
+              <p className="text-sm text-muted-foreground">
+                No products match these filters
+                {query ? (
+                  <>
+                    {" "}
+                    for <span className="font-medium text-foreground">“{query}”</span>
+                  </>
+                ) : null}
+                . Clear filters or try a broader search.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setCategories([]);
+                    setBrands([]);
+                    setPrices([]);
+                    setFulfillment([]);
+                    router.replace("/shop");
+                  }}
+                >
+                  Clear all filters
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  nativeButton={false}
+                  render={<Link href="/shop?category=skincare" />}
+                >
+                  Browse skincare
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  nativeButton={false}
+                  render={<Link href="/deals" />}
+                >
+                  See weekly deals
+                </Button>
+              </div>
+            </div>
           ) : null}
         </div>
       </div>

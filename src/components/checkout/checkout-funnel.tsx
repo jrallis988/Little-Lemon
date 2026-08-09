@@ -3,12 +3,24 @@
 import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { CheckCircle2, CreditCard, Lock, Minus, Plus, ShoppingBag, Zap } from "lucide-react";
+import {
+  CheckCircle2,
+  CreditCard,
+  Lock,
+  Minus,
+  Plus,
+  ShoppingBag,
+  Zap,
+} from "lucide-react";
 
-import { ACTIVE_STORE, REWARDS } from "@/lib/data/catalog";
+import { REWARDS } from "@/lib/data/catalog";
+import { findCoupon, getCouponDiscount } from "@/lib/data/coupons";
 import { formatCurrency, formatPoints } from "@/lib/pharmacy";
+import { useAuth, DEMO_ACCOUNT } from "@/lib/store/auth";
 import { useCart } from "@/lib/store/cart";
-import type { CheckoutMode } from "@/lib/types";
+import { useOrders } from "@/lib/store/orders";
+import { useSelectedStore } from "@/lib/store/store-selection";
+import type { CheckoutMode, FulfillmentMethod, PlacedOrder } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,49 +28,195 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-interface PlacedOrder {
-  id: string;
-  total: number;
-  itemCount: number;
-  email: string;
-  mode: CheckoutMode;
-  points: number;
+function digitsOnly(value: string) {
+  return value.replace(/\D/g, "");
+}
+
+function isValidEmail(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 }
 
 export function CheckoutFunnel() {
   const { items, itemCount, setQuantity, removeItem, clearCart } = useCart();
-  const [mode, setMode] = useState<CheckoutMode>("guest");
-  const [email, setEmail] = useState("");
+  const { addOrder } = useOrders();
+  const { store } = useSelectedStore();
+  const { user, signIn } = useAuth();
+
+  const [mode, setMode] = useState<CheckoutMode>(user ? "member" : "guest");
+  const [email, setEmail] = useState(user?.email ?? "");
+  const [password, setPassword] = useState("");
+  const [fulfillment, setFulfillment] = useState<FulfillmentMethod>("pickup");
+  const [deliveryAddress, setDeliveryAddress] = useState("");
+  const [cardName, setCardName] = useState(user?.displayName ?? "Jordan Lee");
+  const [cardNumber, setCardNumber] = useState("4242 4242 4242 4242");
+  const [cardExp, setCardExp] = useState("12/30");
+  const [cardCvc, setCardCvc] = useState("123");
+  const [couponInput, setCouponInput] = useState("");
+  const [appliedCouponCode, setAppliedCouponCode] = useState<string | null>(null);
+  const [couponMessage, setCouponMessage] = useState<string | null>(null);
   const [applyRewards, setApplyRewards] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [placedOrder, setPlacedOrder] = useState<PlacedOrder | null>(null);
+
+  const appliedCoupon = appliedCouponCode
+    ? findCoupon(appliedCouponCode)
+    : undefined;
 
   const totals = useMemo(() => {
     const subtotal = items.reduce(
       (sum, item) => sum + item.unitPrice * item.quantity,
       0,
     );
-    const estimatedTax = subtotal * 0.0875;
-    const shipping = 0;
+    const estimatedTax = Math.round(subtotal * 0.0875 * 100) / 100;
+    const shipping =
+      fulfillment === "pickup"
+        ? 0
+        : fulfillment === "same_day"
+          ? subtotal >= 35
+            ? 0
+            : 5.99
+          : subtotal >= 35
+            ? 0
+            : 4.99;
     const rewardsDiscount =
-      applyRewards && subtotal > 0 ? Math.min(5, subtotal * 0.05) : 0;
-    const total = Math.max(0, subtotal + estimatedTax + shipping - rewardsDiscount);
+      applyRewards && (user || mode === "member" || mode === "quick_pay") && subtotal > 0
+        ? Math.min(5, Math.round(subtotal * 0.05 * 100) / 100)
+        : 0;
+    const couponDiscount = appliedCoupon
+      ? getCouponDiscount(appliedCoupon, subtotal)
+      : 0;
+    const total = Math.max(
+      0,
+      Math.round(
+        (subtotal + estimatedTax + shipping - rewardsDiscount - couponDiscount) *
+          100,
+      ) / 100,
+    );
     const points = items.reduce(
       (sum, item) => sum + item.rewardsPointsEarned * item.quantity,
       0,
     );
-    return { subtotal, estimatedTax, shipping, rewardsDiscount, total, points };
-  }, [applyRewards, items]);
+    return {
+      subtotal,
+      estimatedTax,
+      shipping,
+      rewardsDiscount,
+      couponDiscount,
+      total,
+      points,
+    };
+  }, [appliedCoupon, applyRewards, fulfillment, items, mode, user]);
+
+  function applyCoupon() {
+    const coupon = findCoupon(couponInput);
+    if (!coupon) {
+      setAppliedCouponCode(null);
+      setCouponMessage("That code isn’t valid. Try FAST15 or STOCKUP25.");
+      return;
+    }
+    const discount = getCouponDiscount(coupon, totals.subtotal);
+    if (discount <= 0) {
+      setAppliedCouponCode(null);
+      setCouponMessage(
+        `Add more to your cart to use ${coupon.code} (min $${coupon.minSubtotal ?? 0}).`,
+      );
+      return;
+    }
+    setAppliedCouponCode(coupon.code);
+    setCouponMessage(`Applied ${coupon.code}: ${coupon.description}`);
+  }
 
   function placeOrder() {
+    setError(null);
     if (items.length === 0) return;
+
+    let receiptEmail = email.trim();
+
+    if (mode === "member" && !user) {
+      const result = signIn(email, password);
+      if (!result.ok) {
+        setError(result.error);
+        return;
+      }
+      receiptEmail = email.trim().toLowerCase();
+    }
+
+    if (mode === "guest") {
+      if (!receiptEmail) {
+        receiptEmail = DEMO_ACCOUNT.email;
+      } else if (!isValidEmail(receiptEmail)) {
+        setError("Enter a valid email for your receipt.");
+        return;
+      }
+    }
+
+    if (mode === "quick_pay") {
+      if (!user && !signIn(DEMO_ACCOUNT.email, DEMO_ACCOUNT.password).ok) {
+        setError("Quick Pay needs a signed-in member.");
+        return;
+      }
+      receiptEmail = user?.email ?? DEMO_ACCOUNT.email;
+    }
+
+    if (fulfillment !== "pickup" && deliveryAddress.trim().length < 8) {
+      setError("Enter a delivery address (street, city, ZIP).");
+      return;
+    }
+
+    let paymentLast4 = user?.savedCardLast4 ?? "4242";
+    if (mode !== "quick_pay") {
+      const digits = digitsOnly(cardNumber);
+      if (digits.length < 12 || digits.length > 19) {
+        setError("Enter a valid card number (demo: any 16 digits ending in 4242).");
+        return;
+      }
+      if (!cardName.trim()) {
+        setError("Enter the name on the card.");
+        return;
+      }
+      if (!/^\d{2}\/\d{2}$/.test(cardExp.trim())) {
+        setError("Use expiration format MM/YY.");
+        return;
+      }
+      if (digitsOnly(cardCvc).length < 3) {
+        setError("Enter a 3-digit CVC.");
+        return;
+      }
+      paymentLast4 = digits.slice(-4);
+    }
+
     const order: PlacedOrder = {
       id: `WG-${Date.now().toString().slice(-8)}`,
-      total: totals.total,
-      itemCount,
-      email: email || "jordan.lee@email.com",
+      placedAt: new Date().toISOString(),
       mode,
+      email: receiptEmail,
+      itemCount,
+      subtotal: totals.subtotal,
+      tax: totals.estimatedTax,
+      shipping: totals.shipping,
+      rewardsDiscount: totals.rewardsDiscount,
+      couponDiscount: totals.couponDiscount,
+      couponCode: appliedCouponCode ?? undefined,
+      total: totals.total,
       points: totals.points,
+      fulfillment,
+      storeId: store.id,
+      storeName: store.name,
+      deliveryAddress:
+        fulfillment === "pickup" ? undefined : deliveryAddress.trim(),
+      paymentLast4,
+      items: items.map((item) => ({
+        productId: item.productId,
+        name: item.name,
+        brand: item.brand,
+        quantity: item.quantity,
+        unitPrice: item.unitPrice,
+        imageUrl: item.imageUrl,
+      })),
+      receiptNote: `A receipt was sent to ${receiptEmail} (demo — email is not actually delivered).`,
     };
+
+    addOrder(order);
     clearCart();
     setPlacedOrder(order);
   }
@@ -79,7 +237,10 @@ export function CheckoutFunnel() {
               Order placed
             </h1>
             <p className="mt-2 text-muted-foreground">
-              Confirmation #{placedOrder.id} · pickup at {ACTIVE_STORE.name}
+              Confirmation #{placedOrder.id} ·{" "}
+              {placedOrder.fulfillment === "pickup"
+                ? `pickup at ${placedOrder.storeName}`
+                : `${placedOrder.fulfillment.replaceAll("_", " ")} to ${placedOrder.deliveryAddress}`}
             </p>
           </div>
         </div>
@@ -93,6 +254,10 @@ export function CheckoutFunnel() {
             <dd className="font-medium">{formatCurrency(placedOrder.total)}</dd>
           </div>
           <div className="flex justify-between">
+            <dt className="text-muted-foreground">Card</dt>
+            <dd className="font-medium">···· {placedOrder.paymentLast4}</dd>
+          </div>
+          <div className="flex justify-between">
             <dt className="text-muted-foreground">Receipt</dt>
             <dd className="font-medium">{placedOrder.email}</dd>
           </div>
@@ -101,16 +266,21 @@ export function CheckoutFunnel() {
             <dd className="font-medium text-brand">{placedOrder.points} pts</dd>
           </div>
         </dl>
+        <p className="text-xs text-muted-foreground">{placedOrder.receiptNote}</p>
         <div className="flex flex-wrap gap-3 pt-2">
           <Button
             className="bg-brand text-brand-foreground hover:bg-brand/90"
             nativeButton={false}
+            render={<Link href="/account/orders" />}
+          >
+            View order history
+          </Button>
+          <Button
+            variant="outline"
+            nativeButton={false}
             render={<Link href="/shop" />}
           >
             Continue shopping
-          </Button>
-          <Button variant="outline" onClick={() => setPlacedOrder(null)}>
-            View checkout
           </Button>
         </div>
       </section>
@@ -156,7 +326,8 @@ export function CheckoutFunnel() {
           Checkout
         </h1>
         <p className="mt-2 max-w-xl text-muted-foreground">
-          Guest, member, or quick-pay — same clear funnel, fewer steps.
+          Guest, member, or quick-pay — choose pickup or delivery, apply a code,
+          and place your order.
         </p>
       </div>
 
@@ -164,7 +335,10 @@ export function CheckoutFunnel() {
         <div className="space-y-6">
           <Tabs
             value={mode}
-            onValueChange={(value) => setMode(value as CheckoutMode)}
+            onValueChange={(value) => {
+              setMode(value as CheckoutMode);
+              setError(null);
+            }}
           >
             <TabsList className="grid h-auto w-full grid-cols-3 gap-1 bg-muted/70 p-1">
               <TabsTrigger value="guest" className="gap-1.5 py-2.5">
@@ -192,60 +366,132 @@ export function CheckoutFunnel() {
                 />
               </div>
               <p className="text-sm text-muted-foreground">
-                Continue without an account. You can still earn points if you
-                add a myWalgreens number at payment.
+                Continue without an account. Leave blank to use the demo receipt
+                address.
               </p>
             </TabsContent>
 
             <TabsContent value="member" className="mt-5 space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="member-email">myWalgreens email</Label>
-                <Input
-                  id="member-email"
-                  type="email"
-                  autoComplete="email"
-                  defaultValue="jordan.lee@email.com"
-                  onChange={(event) => setEmail(event.target.value)}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="member-password">Password</Label>
-                <Input
-                  id="member-password"
-                  type="password"
-                  autoComplete="current-password"
-                  placeholder="••••••••"
-                />
-              </div>
-              <p className="rounded-lg border border-brand/20 bg-brand/5 px-3 py-2 text-sm text-foreground">
-                Signed-in balance: {formatPoints(REWARDS.pointsBalance)} points
-              </p>
+              {user ? (
+                <p className="rounded-lg border border-brand/20 bg-brand/5 px-3 py-2 text-sm">
+                  Signed in as {user.displayName} ·{" "}
+                  {formatPoints(REWARDS.pointsBalance)} points
+                </p>
+              ) : (
+                <>
+                  <div className="space-y-2">
+                    <Label htmlFor="member-email">myWalgreens email</Label>
+                    <Input
+                      id="member-email"
+                      type="email"
+                      autoComplete="email"
+                      value={email}
+                      onChange={(event) => setEmail(event.target.value)}
+                      placeholder={DEMO_ACCOUNT.email}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="member-password">Password</Label>
+                    <Input
+                      id="member-password"
+                      type="password"
+                      autoComplete="current-password"
+                      placeholder="••••••••"
+                      value={password}
+                      onChange={(event) => setPassword(event.target.value)}
+                    />
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Demo: {DEMO_ACCOUNT.email} / {DEMO_ACCOUNT.password}
+                  </p>
+                </>
+              )}
             </TabsContent>
 
             <TabsContent value="quick_pay" className="mt-5 space-y-4">
               <p className="text-sm text-muted-foreground">
-                Use a saved card and store pickup defaults for a one-tap place
+                Use a saved card and your selected store for a one-tap place
                 order.
               </p>
               <div className="flex items-center gap-3 rounded-xl border border-border bg-surface px-4 py-3">
                 <CreditCard className="size-5 text-brand" aria-hidden />
                 <div>
-                  <p className="text-sm font-medium">Visa ending 4242</p>
+                  <p className="text-sm font-medium">
+                    Visa ending {user?.savedCardLast4 ?? "4242"}
+                  </p>
                   <p className="text-xs text-muted-foreground">
-                    Pickup at Market & 5th
+                    Pickup at {store.name.replace("Walgreens RX — ", "")}
                   </p>
                 </div>
               </div>
             </TabsContent>
           </Tabs>
 
+          <div className="space-y-3">
+            <h2 className="font-display text-lg font-semibold">Fulfillment</h2>
+            <div className="grid gap-2 sm:grid-cols-3">
+              {(
+                [
+                  ["pickup", "Store pickup", "Free · ready ~30 min"],
+                  ["same_day", "Same-day", "From $0 over $35"],
+                  ["delivery", "Ship to home", "From $0 over $35"],
+                ] as const
+              ).map(([value, label, hint]) => (
+                <button
+                  key={value}
+                  type="button"
+                  onClick={() => setFulfillment(value)}
+                  className={cn(
+                    "rounded-xl border px-3 py-3 text-left text-sm transition-colors",
+                    fulfillment === value
+                      ? "border-brand bg-brand/5"
+                      : "border-border hover:border-brand/40",
+                  )}
+                >
+                  <span className="font-medium">{label}</span>
+                  <span className="mt-1 block text-xs text-muted-foreground">
+                    {hint}
+                  </span>
+                </button>
+              ))}
+            </div>
+            {fulfillment === "pickup" ? (
+              <p className="text-sm text-muted-foreground">
+                Pickup at{" "}
+                <Link href="/stores" className="font-medium text-brand underline-offset-2 hover:underline">
+                  {store.name}
+                </Link>
+              </p>
+            ) : (
+              <div className="space-y-2">
+                <Label htmlFor="delivery-address">Delivery address</Label>
+                <Input
+                  id="delivery-address"
+                  value={deliveryAddress}
+                  onChange={(event) => setDeliveryAddress(event.target.value)}
+                  placeholder="123 Main St, San Francisco, CA 94102"
+                  autoComplete="street-address"
+                />
+              </div>
+            )}
+          </div>
+
           {mode !== "quick_pay" ? (
             <div className="space-y-3">
               <h2 className="font-display text-lg font-semibold">Payment</h2>
+              <p className="text-xs text-muted-foreground">
+                Demo checkout — card details stay in your browser and are not
+                sent to a processor. Use any test number ending in 4242.
+              </p>
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="space-y-2 sm:col-span-2">
                   <Label htmlFor="card-name">Name on card</Label>
-                  <Input id="card-name" autoComplete="cc-name" />
+                  <Input
+                    id="card-name"
+                    autoComplete="cc-name"
+                    value={cardName}
+                    onChange={(event) => setCardName(event.target.value)}
+                  />
                 </div>
                 <div className="space-y-2 sm:col-span-2">
                   <Label htmlFor="card-number">Card number</Label>
@@ -253,19 +499,39 @@ export function CheckoutFunnel() {
                     id="card-number"
                     inputMode="numeric"
                     autoComplete="cc-number"
-                    placeholder="1234 5678 9012 3456"
+                    placeholder="4242 4242 4242 4242"
+                    value={cardNumber}
+                    onChange={(event) => setCardNumber(event.target.value)}
                   />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="card-exp">Expiration</Label>
-                  <Input id="card-exp" autoComplete="cc-exp" placeholder="MM/YY" />
+                  <Input
+                    id="card-exp"
+                    autoComplete="cc-exp"
+                    placeholder="MM/YY"
+                    value={cardExp}
+                    onChange={(event) => setCardExp(event.target.value)}
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="card-cvc">CVC</Label>
-                  <Input id="card-cvc" autoComplete="cc-csc" placeholder="123" />
+                  <Input
+                    id="card-cvc"
+                    autoComplete="cc-csc"
+                    placeholder="123"
+                    value={cardCvc}
+                    onChange={(event) => setCardCvc(event.target.value)}
+                  />
                 </div>
               </div>
             </div>
+          ) : null}
+
+          {error ? (
+            <p className="rounded-lg border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive" role="alert">
+              {error}
+            </p>
           ) : null}
         </div>
 
@@ -324,7 +590,26 @@ export function CheckoutFunnel() {
 
           <Separator className="my-4" />
 
-          <label className="flex cursor-pointer items-start gap-3 text-sm">
+          <div className="space-y-2">
+            <Label htmlFor="coupon">Promo code</Label>
+            <div className="flex gap-2">
+              <Input
+                id="coupon"
+                value={couponInput}
+                onChange={(event) => setCouponInput(event.target.value)}
+                placeholder="FAST15"
+                className="uppercase"
+              />
+              <Button type="button" variant="outline" onClick={applyCoupon}>
+                Apply
+              </Button>
+            </div>
+            {couponMessage ? (
+              <p className="text-xs text-muted-foreground">{couponMessage}</p>
+            ) : null}
+          </div>
+
+          <label className="mt-4 flex cursor-pointer items-start gap-3 text-sm">
             <input
               type="checkbox"
               className="mt-1 size-4 accent-[var(--brand)]"
@@ -349,7 +634,9 @@ export function CheckoutFunnel() {
               <dd>{formatCurrency(totals.estimatedTax)}</dd>
             </div>
             <div className="flex justify-between">
-              <dt className="text-muted-foreground">Pickup</dt>
+              <dt className="text-muted-foreground">
+                {fulfillment === "pickup" ? "Pickup" : "Shipping"}
+              </dt>
               <dd>{formatCurrency(totals.shipping)}</dd>
             </div>
             <div
@@ -361,6 +648,12 @@ export function CheckoutFunnel() {
               <dt>Rewards</dt>
               <dd>-{formatCurrency(totals.rewardsDiscount)}</dd>
             </div>
+            {totals.couponDiscount > 0 ? (
+              <div className="flex justify-between text-brand">
+                <dt>Promo ({appliedCouponCode})</dt>
+                <dd>-{formatCurrency(totals.couponDiscount)}</dd>
+              </div>
+            ) : null}
             <div className="flex justify-between border-t border-border pt-3 text-base font-semibold">
               <dt>Total</dt>
               <dd>{formatCurrency(totals.total)}</dd>

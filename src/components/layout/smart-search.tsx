@@ -11,7 +11,7 @@ import {
   Stethoscope,
 } from "lucide-react";
 
-import { SEARCH_SUGGESTIONS } from "@/lib/data/catalog";
+import { PRODUCTS, SEARCH_SUGGESTIONS } from "@/lib/data/catalog";
 import {
   SEARCH_INTENT_DESCRIPTION,
   SEARCH_INTENT_LABEL,
@@ -35,18 +35,47 @@ const INTENT_STYLES: Record<SearchIntent, string> = {
   general: "bg-muted text-muted-foreground border-border",
 };
 
+function productSuggestions(query: string): SearchSuggestion[] {
+  const normalized = query.trim().toLowerCase();
+  if (!normalized) return [];
+  return PRODUCTS.filter((product) => {
+    const haystack =
+      `${product.name} ${product.brand} ${product.tags.join(" ")}`.toLowerCase();
+    return haystack.includes(normalized);
+  })
+    .slice(0, 4)
+    .map((product) => ({
+      id: `product-${product.id}`,
+      query: product.name,
+      label: `${product.brand} ${product.name}`,
+      intent: "retail" as const,
+      href: `/shop/${product.slug}`,
+      meta: product.inStock ? "In stock · view product" : "Currently unavailable",
+    }));
+}
+
 function filterSuggestions(query: string): SearchSuggestion[] {
   const normalized = query.trim().toLowerCase();
   if (!normalized) {
     return SEARCH_SUGGESTIONS.slice(0, 5);
   }
 
-  return SEARCH_SUGGESTIONS.filter(
+  const curated = SEARCH_SUGGESTIONS.filter(
     (item) =>
       item.label.toLowerCase().includes(normalized) ||
       item.query.toLowerCase().includes(normalized) ||
       item.meta?.toLowerCase().includes(normalized),
-  ).slice(0, 6);
+  );
+  const products = productSuggestions(normalized);
+  const merged = [...products, ...curated];
+  const seen = new Set<string>();
+  return merged
+    .filter((item) => {
+      if (seen.has(item.id)) return false;
+      seen.add(item.id);
+      return true;
+    })
+    .slice(0, 8);
 }
 
 export function SmartSearch({ className }: { className?: string }) {
