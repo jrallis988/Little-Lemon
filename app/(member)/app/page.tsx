@@ -3,30 +3,41 @@ import {
   Gift,
   QrCode,
   ScanLine,
+  Sparkles,
   Ticket,
   Users,
   Activity,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
-  ComingSoonNote,
   MemberCard,
   MemberLinkRow,
   MemberScreen,
 } from "@/components/member/member-ui";
+import { getSession } from "@/lib/auth";
 
-export default function MemberHomePage() {
+export default async function MemberHomePage() {
+  const session = await getSession();
+  const firstName = session?.firstName || "Member";
+  const clubName = session?.clubName || "Planet Fitness Midtown";
+  const plan =
+    session?.plan === "classic"
+      ? "Classic"
+      : session?.plan === "black-card"
+        ? "Black Card"
+        : "Member";
+
   return (
     <MemberScreen
       eyebrow="Screen 23 · Home"
-      title="Welcome back"
+      title={`Welcome back, ${firstName}`}
       subtitle="Check in, check Crowd Meter, and jump into workouts — all in the member app."
     >
       <MemberCard className="pf-grad-black-card text-white">
         <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-pf-yellow">
-          Home club
+          Home club · {plan}
         </p>
-        <p className="mt-1 font-display text-2xl">Planet Fitness Midtown</p>
+        <p className="mt-1 font-display text-2xl">{clubName}</p>
         <p className="mt-1 text-sm text-white/70">Crowd Meter · Not too busy</p>
         <div className="mt-4 flex gap-2">
           <Button asChild variant="app" className="flex-1">
@@ -48,6 +59,24 @@ export default function MemberHomePage() {
           label="Crowd Meter"
           description="See how busy your club is right now"
           icon={Activity}
+        />
+        <MemberLinkRow
+          href="/app/streaks"
+          label="Fitness streaks"
+          description="Screens 68–69 — keep the streak going"
+          icon={Sparkles}
+        />
+        <MemberLinkRow
+          href="/app/spa"
+          label="Black Card spa"
+          description="Screen 76 — book HydroMassage & more"
+          icon={Gift}
+        />
+        <MemberLinkRow
+          href="/app/book"
+          label="Classes & training"
+          description="Screen 77 — orientations and PF+ sessions"
+          icon={Ticket}
         />
         <MemberLinkRow
           href="/app/workouts"
@@ -79,10 +108,6 @@ export default function MemberHomePage() {
           description="History, freeze, and cancel guides"
           icon={Ticket}
         />
-      </div>
-
-      <div className="mt-4">
-        <ComingSoonNote screen="21–65 core utility surfaces" />
       </div>
     </MemberScreen>
   );

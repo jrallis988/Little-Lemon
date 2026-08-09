@@ -36,6 +36,14 @@ export function MemberShell({ children }: { children: React.ReactNode }) {
           <PlanetFitnessLogo markClassName="h-8 w-8" />
         </Link>
         <div className="flex items-center gap-2">
+          {!hideTabs ? (
+            <Link
+              href="/app/account"
+              className="text-xs font-semibold text-pf-ink/55 hover:text-pf-purple"
+            >
+              Account
+            </Link>
+          ) : null}
           <Link
             href="/"
             className="text-xs font-semibold text-pf-purple hover:underline"

@@ -16,6 +16,7 @@ import {
   type MembershipTier,
 } from "@/lib/pricing";
 import { cn } from "@/lib/utils";
+import { StripeElementsPay } from "@/components/member/stripe-elements-pay";
 
 const STEPS = [
   { id: "confirm", label: "Club & plan" },
@@ -189,9 +190,18 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
   const [error, setError] = useState<string | null>(null);
   const [membershipId, setMembershipId] = useState<string | null>(null);
   const [paymentMode, setPaymentMode] = useState<"test" | "stripe">("test");
+  const [stripeReady, setStripeReady] = useState(false);
+  const [payPath, setPayPath] = useState<"test" | "checkout" | "elements">(
+    "test"
+  );
+  const [elementsClientSecret, setElementsClientSecret] = useState<string | null>(
+    null
+  );
+  const [elementsPublishableKey, setElementsPublishableKey] = useState("");
 
   const pricing = getLocalPricing(club, planId);
   const stepIndex = STEPS.findIndex((item) => item.id === step);
+  const needsCardFields = payPath === "test";
 
   useEffect(() => {
     track("join_step", { step, clubId: club?.id ?? null, plan: planId });
@@ -203,11 +213,105 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
     }
   }, [pricing.available, availablePlans]);
 
+  useEffect(() => {
+    void fetch("/api/checkout")
+      .then((res) => res.json())
+      .then(
+        (data: {
+          configured?: boolean;
+          preferredMode?: "checkout" | "elements" | "none";
+        }) => {
+          if (!data.configured) return;
+          setStripeReady(true);
+          setPayPath(data.preferredMode === "elements" ? "elements" : "checkout");
+        }
+      )
+      .catch(() => undefined);
+  }, []);
+
+  async function completeElementsPayment(paymentIntentId: string) {
+    if (!membershipId) return;
+    setSubmitting(true);
+    setError(null);
+    try {
+      const response = await fetch("/api/checkout/complete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          membershipId,
+          paymentIntentId,
+          brand: "Card",
+          last4: "****",
+        }),
+      });
+      const data = (await response.json()) as { error?: string };
+      if (!response.ok) {
+        throw new Error(data.error ?? "Could not finalize payment.");
+      }
+      setPaymentMode("stripe");
+      track("join_complete", {
+        clubId: club?.id ?? null,
+        plan: planId,
+        membershipId,
+        dueToday: dueToday(pricing),
+        paymentsMode: "stripe_elements",
+      });
+      setStep("done");
+      router.prefetch(`/join/confirmation/${membershipId}`);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Join failed.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
   async function submitMembership() {
     if (!club) return;
     setSubmitting(true);
     setError(null);
     try {
+      if (payPath === "checkout" || payPath === "elements") {
+        const response = await fetch("/api/checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            mode: payPath,
+            clubId: club.id,
+            plan: planId,
+            member: identity,
+            consents,
+          }),
+        });
+        const data = (await response.json()) as {
+          error?: string;
+          mode?: string;
+          url?: string;
+          membershipId?: string;
+          clientSecret?: string;
+          publishableKey?: string;
+        };
+        if (!response.ok) {
+          throw new Error(data.error ?? "Could not start Stripe payment.");
+        }
+        if (data.membershipId) setMembershipId(data.membershipId);
+        if (payPath === "checkout" && data.url) {
+          track("join_checkout_redirect", {
+            clubId: club.id,
+            plan: planId,
+            membershipId: data.membershipId ?? null,
+          });
+          window.location.href = data.url;
+          return;
+        }
+        if (payPath === "elements" && data.clientSecret) {
+          setElementsClientSecret(data.clientSecret);
+          setElementsPublishableKey(data.publishableKey ?? "");
+          setPaymentMode("stripe");
+          return;
+        }
+        throw new Error("Stripe response was incomplete.");
+      }
+
       const response = await fetch("/api/memberships", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -284,15 +388,17 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
       return;
     }
     if (step === "payment") {
-      if (
-        !payment.nameOnCard.trim() ||
-        payment.cardNumber.replace(/\s/g, "").length < 13 ||
-        payment.expiry.length < 4 ||
-        payment.cvc.length < 3 ||
-        payment.zip.length < 5
-      ) {
-        setError("Check your card details and billing ZIP.");
-        return;
+      if (needsCardFields) {
+        if (
+          !payment.nameOnCard.trim() ||
+          payment.cardNumber.replace(/\s/g, "").length < 13 ||
+          payment.expiry.length < 4 ||
+          payment.cvc.length < 3 ||
+          payment.zip.length < 5
+        ) {
+          setError("Check your card details and billing ZIP.");
+          return;
+        }
       }
       if (
         !consents.membershipAgreement ||
@@ -483,90 +589,139 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
                 <div>
                   <h2 className="font-display text-2xl text-pf-ink">Payment & agreements</h2>
                   <p className="mt-1 text-sm text-pf-ink/65">
-                    Due today: {formatCurrency(dueToday(pricing))}. Card details
-                    are authorized through the server; only brand + last 4 are
-                    stored on your membership. Set{" "}
-                    <code className="rounded bg-pf-mist px-1">STRIPE_SECRET_KEY</code>{" "}
-                    for live Stripe charges—otherwise test authorization is used.
+                    Due today: {formatCurrency(dueToday(pricing))}. Prefer Stripe
+                    Checkout or Elements when configured; otherwise test
+                    authorization stores only brand + last 4.
                   </p>
                 </div>
-                <div className="grid gap-3">
-                  <Field id="nameOnCard" label="Name on card">
-                    <Input
-                      id="nameOnCard"
-                      value={payment.nameOnCard}
-                      onChange={(e) =>
-                        setPayment((prev) => ({
-                          ...prev,
-                          nameOnCard: e.target.value,
-                        }))
-                      }
-                      className="border-pf-line bg-white text-pf-ink"
-                      autoComplete="cc-name"
-                    />
-                  </Field>
-                  <Field id="cardNumber" label="Card number">
-                    <Input
-                      id="cardNumber"
-                      inputMode="numeric"
-                      value={payment.cardNumber}
-                      onChange={(e) =>
-                        setPayment((prev) => ({
-                          ...prev,
-                          cardNumber: e.target.value,
-                        }))
-                      }
-                      className="border-pf-line bg-white text-pf-ink"
-                      placeholder="4242 4242 4242 4242"
-                      autoComplete="cc-number"
-                    />
-                  </Field>
-                  <div className="grid grid-cols-3 gap-3">
-                    <Field id="expiry" label="Expiry">
-                      <Input
-                        id="expiry"
-                        value={payment.expiry}
-                        onChange={(e) =>
-                          setPayment((prev) => ({
-                            ...prev,
-                            expiry: e.target.value,
-                          }))
-                        }
-                        className="border-pf-line bg-white text-pf-ink"
-                        placeholder="MM/YY"
-                        autoComplete="cc-exp"
-                      />
-                    </Field>
-                    <Field id="cvc" label="CVC">
-                      <Input
-                        id="cvc"
-                        value={payment.cvc}
-                        onChange={(e) =>
-                          setPayment((prev) => ({
-                            ...prev,
-                            cvc: e.target.value,
-                          }))
-                        }
-                        className="border-pf-line bg-white text-pf-ink"
-                        autoComplete="cc-csc"
-                      />
-                    </Field>
-                    <Field id="zip" label="ZIP">
-                      <Input
-                        id="zip"
-                        value={payment.zip}
-                        onChange={(e) =>
-                          setPayment((prev) => ({
-                            ...prev,
-                            zip: e.target.value,
-                          }))
-                        }
-                        className="border-pf-line bg-white text-pf-ink"
-                        autoComplete="postal-code"
-                      />
-                    </Field>
+
+                {stripeReady ? (
+                  <div className="flex flex-wrap gap-2">
+                    {(
+                      [
+                        ["checkout", "Stripe Checkout"],
+                        ["elements", "Stripe Elements"],
+                        ["test", "Test card form"],
+                      ] as const
+                    ).map(([id, label]) => (
+                      <button
+                        key={id}
+                        type="button"
+                        onClick={() => {
+                          setPayPath(id);
+                          setElementsClientSecret(null);
+                          setError(null);
+                        }}
+                        className={cn(
+                          "rounded-full px-3 py-1.5 text-xs font-semibold ring-1 transition",
+                          payPath === id
+                            ? "bg-pf-btn text-white ring-pf-btn"
+                            : "bg-white text-pf-ink/70 ring-pf-line"
+                        )}
+                      >
+                        {label}
+                      </button>
+                    ))}
                   </div>
-                </div>
+                ) : null}
+
+                {needsCardFields ? (
+                  <div className="grid gap-3">
+                    <Field id="nameOnCard" label="Name on card">
+                      <Input
+                        id="nameOnCard"
+                        value={payment.nameOnCard}
+                        onChange={(e) =>
+                          setPayment((prev) => ({
+                            ...prev,
+                            nameOnCard: e.target.value,
+                          }))
+                        }
+                        className="border-pf-line bg-white text-pf-ink"
+                        autoComplete="cc-name"
+                      />
+                    </Field>
+                    <Field id="cardNumber" label="Card number">
+                      <Input
+                        id="cardNumber"
+                        inputMode="numeric"
+                        value={payment.cardNumber}
+                        onChange={(e) =>
+                          setPayment((prev) => ({
+                            ...prev,
+                            cardNumber: e.target.value,
+                          }))
+                        }
+                        className="border-pf-line bg-white text-pf-ink"
+                        placeholder="4242 4242 4242 4242"
+                        autoComplete="cc-number"
+                      />
+                    </Field>
+                    <div className="grid grid-cols-3 gap-3">
+                      <Field id="expiry" label="Expiry">
+                        <Input
+                          id="expiry"
+                          value={payment.expiry}
+                          onChange={(e) =>
+                            setPayment((prev) => ({
+                              ...prev,
+                              expiry: e.target.value,
+                            }))
+                          }
+                          className="border-pf-line bg-white text-pf-ink"
+                          placeholder="MM/YY"
+                          autoComplete="cc-exp"
+                        />
+                      </Field>
+                      <Field id="cvc" label="CVC">
+                        <Input
+                          id="cvc"
+                          value={payment.cvc}
+                          onChange={(e) =>
+                            setPayment((prev) => ({
+                              ...prev,
+                              cvc: e.target.value,
+                            }))
+                          }
+                          className="border-pf-line bg-white text-pf-ink"
+                          autoComplete="cc-csc"
+                        />
+                      </Field>
+                      <Field id="zip" label="ZIP">
+                        <Input
+                          id="zip"
+                          value={payment.zip}
+                          onChange={(e) =>
+                            setPayment((prev) => ({
+                              ...prev,
+                              zip: e.target.value,
+                            }))
+                          }
+                          className="border-pf-line bg-white text-pf-ink"
+                          autoComplete="postal-code"
+                        />
+                      </Field>
+                    </div>
+                  </div>
+                ) : (
+                  <p className="rounded-2xl bg-pf-mist/80 px-3 py-2 text-sm text-pf-ink/70">
+                    {payPath === "checkout"
+                      ? "You’ll finish on Stripe-hosted Checkout after accepting agreements."
+                      : "Accept agreements, then we’ll load Stripe Elements for card entry."}
+                  </p>
+                )}
+
+                {elementsClientSecret && membershipId && elementsPublishableKey ? (
+                  <StripeElementsPay
+                    publishableKey={elementsPublishableKey}
+                    clientSecret={elementsClientSecret}
+                    membershipId={membershipId}
+                    onPaid={(paymentIntentId) => {
+                      void completeElementsPayment(paymentIntentId);
+                    }}
+                    onError={(message) => setError(message || null)}
+                  />
+                ) : null}
 
                 <fieldset className="space-y-3 rounded-2xl bg-pf-mist/70 p-3">
                   <legend className="px-1 text-xs font-bold uppercase tracking-wide text-pf-purple">
@@ -703,13 +858,27 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
                   variant="purple"
                   className="flex-1"
                   onClick={goNext}
-                  disabled={submitting || (step === "confirm" && !club)}
+                  disabled={
+                    submitting ||
+                    (step === "confirm" && !club) ||
+                    (step === "payment" &&
+                      payPath === "elements" &&
+                      Boolean(elementsClientSecret))
+                  }
                   aria-busy={submitting}
                 >
                   {submitting
-                    ? "Creating membership…"
+                    ? payPath === "checkout"
+                      ? "Redirecting to Stripe…"
+                      : "Creating membership…"
                     : step === "payment"
-                      ? `Pay ${formatCurrency(dueToday(pricing))} & join`
+                      ? payPath === "checkout"
+                        ? `Continue to Stripe Checkout · ${formatCurrency(dueToday(pricing))}`
+                        : payPath === "elements" && elementsClientSecret
+                          ? "Complete payment above"
+                          : payPath === "elements"
+                            ? `Continue to Stripe Elements · ${formatCurrency(dueToday(pricing))}`
+                            : `Pay ${formatCurrency(dueToday(pricing))} & join`
                       : "Continue"}
                 </Button>
               </div>

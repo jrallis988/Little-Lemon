@@ -413,13 +413,25 @@ function enrichClub(
   };
 }
 
+export function getSeedClubRecords(): ClubRecord[] {
+  return CLUB_RECORDS;
+}
+
+export function enrichClubRecords(
+  records: ClubRecord[],
+  now = new Date(),
+  origin?: { latitude: number; longitude: number } | null
+): Club[] {
+  return records
+    .map((record) => enrichClub(record, now, origin))
+    .sort((a, b) => a.distanceMiles - b.distanceMiles);
+}
+
 export function getClubs(
   now = new Date(),
   origin?: { latitude: number; longitude: number } | null
 ): Club[] {
-  return CLUB_RECORDS.map((record) => enrichClub(record, now, origin)).sort(
-    (a, b) => a.distanceMiles - b.distanceMiles
-  );
+  return enrichClubRecords(CLUB_RECORDS, now, origin);
 }
 
 export function getClubById(

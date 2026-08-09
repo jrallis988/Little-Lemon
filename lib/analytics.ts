@@ -10,6 +10,7 @@ export type FunnelEvent =
   | "plan_select"
   | "join_step"
   | "join_complete"
+  | "join_checkout_redirect"
   | "app_banner_click"
   | "summer_pass_click"
   | "virtual_tour_play";

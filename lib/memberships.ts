@@ -94,6 +94,40 @@ export async function getMembershipById(
   return all.find((item) => item.id === id) ?? null;
 }
 
+export async function getMembershipByEmail(
+  email: string
+): Promise<MembershipRecord | null> {
+  const normalized = email.trim().toLowerCase();
+  if (!normalized) return null;
+  const all = await readAll();
+  return (
+    all.find((item) => item.member.email.toLowerCase() === normalized) ?? null
+  );
+}
+
+export async function updateMembershipPayment(
+  id: string,
+  payment: Partial<MembershipRecord["payment"]> & {
+    paymentStatus?: MembershipRecord["paymentStatus"];
+    status?: MembershipRecord["status"];
+  }
+): Promise<MembershipRecord | null> {
+  const all = await readAll();
+  const index = all.findIndex((item) => item.id === id);
+  if (index < 0) return null;
+  const current = all[index];
+  const { paymentStatus, status, ...paymentFields } = payment;
+  const next: MembershipRecord = {
+    ...current,
+    paymentStatus: paymentStatus ?? current.paymentStatus,
+    status: status ?? current.status,
+    payment: { ...current.payment, ...paymentFields },
+  };
+  all[index] = next;
+  await writeAll(all);
+  return next;
+}
+
 export function detectCardBrand(digits: string): string {
   if (/^4/.test(digits)) return "Visa";
   if (/^5[1-5]/.test(digits) || /^2[2-7]/.test(digits)) return "Mastercard";
