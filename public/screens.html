@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smuttynose — Screen Previews</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Figtree:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #0c1620;
+        --foam: #f1f4f6;
+        --tide: #1a4f5c;
+        --buoy: #d94e1f;
+        --steel: #5c6b75;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        scroll-snap-type: y mandatory;
+      }
+
+      body {
+        margin: 0;
+        font-family: Figtree, system-ui, sans-serif;
+        background: var(--ink);
+        color: var(--foam);
+      }
+
+      .topbar {
+        position: fixed;
+        inset: 0 0 auto;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.85rem 1.25rem;
+        background: rgba(12, 22, 32, 0.92);
+        border-bottom: 1px solid rgba(241, 244, 246, 0.12);
+        backdrop-filter: blur(10px);
+      }
+
+      .topbar h1 {
+        margin: 0;
+        font-family: Oswald, sans-serif;
+        font-size: 1rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .topbar a {
+        color: var(--foam);
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+
+      .topbar a.site {
+        background: var(--buoy);
+        padding: 0.5rem 0.85rem;
+      }
+
+      .nav-dots {
+        position: fixed;
+        right: 1rem;
+        top: 50%;
+        z-index: 20;
+        display: flex;
+        flex-direction: column;
+        gap: 0.55rem;
+        transform: translateY(-50%);
+      }
+
+      .nav-dots a {
+        width: 0.65rem;
+        height: 0.65rem;
+        border-radius: 999px;
+        background: rgba(241, 244, 246, 0.28);
+        text-indent: -9999px;
+        overflow: hidden;
+      }
+
+      .nav-dots a:hover,
+      .nav-dots a:focus-visible {
+        background: var(--buoy);
+      }
+
+      .screen {
+        min-height: 100svh;
+        scroll-snap-align: start;
+        display: grid;
+        grid-template-rows: auto 1fr;
+        padding: 5rem 1.25rem 2rem;
+      }
+
+      .screen-meta {
+        max-width: 72rem;
+        width: 100%;
+        margin: 0 auto 1rem;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 0.5rem 1rem;
+      }
+
+      .screen-meta .label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(241, 244, 246, 0.55);
+      }
+
+      .screen-meta h2 {
+        margin: 0.2rem 0 0;
+        font-family: Oswald, sans-serif;
+        font-size: clamp(1.6rem, 4vw, 2.4rem);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .screen-meta .count {
+        font-size: 0.85rem;
+        color: var(--steel);
+      }
+
+      .frame {
+        max-width: 72rem;
+        width: 100%;
+        margin: 0 auto;
+        border: 1px solid rgba(241, 244, 246, 0.14);
+        background: #060b10;
+        overflow: auto;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+      }
+
+      .frame.mobile {
+        max-width: 28rem;
+      }
+
+      .frame img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .pager {
+        position: fixed;
+        left: 50%;
+        bottom: 1.1rem;
+        z-index: 20;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .pager a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 6.5rem;
+        padding: 0.65rem 1rem;
+        background: rgba(241, 244, 246, 0.1);
+        border: 1px solid rgba(241, 244, 246, 0.25);
+        color: var(--foam);
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+
+      .pager a:hover {
+        background: var(--buoy);
+        border-color: var(--buoy);
+      }
+
+      @media (max-width: 700px) {
+        .nav-dots {
+          display: none;
+        }
+        .screen {
+          padding: 4.5rem 0.75rem 4.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>Smuttynose · Screen Previews</h1>
+      <a class="site" href="./">Open live site</a>
+    </header>
+
+    <nav class="nav-dots" aria-label="Jump to screen">
+      <a href="#age-gate" title="Age gate">1</a>
+      <a href="#hero-desktop" title="Hero desktop">2</a>
+      <a href="#hero-mobile" title="Hero mobile">3</a>
+      <a href="#beers" title="Beers">4</a>
+      <a href="#events" title="Events">5</a>
+      <a href="#food" title="Food">6</a>
+      <a href="#gallery" title="Gallery">7</a>
+      <a href="#visit" title="Visit">8</a>
+      <a href="#shop" title="Shop">9</a>
+      <a href="#contact" title="Contact">10</a>
+      <a href="#newsletter" title="Newsletter">11</a>
+      <a href="#story" title="Story">12</a>
+    </nav>
+
+    <section class="screen" id="age-gate">
+      <div class="screen-meta">
+        <div>
+          <p class="label">Screen 01</p>
+          <h2>Age gate</h2>
+        </div>
+        <p class="count">1 / 12</p>
+      </div>
+      <div class="frame">
+        <img src="./previews/preview-age-gate.png" alt="Age gate screen" />
+      </div>
+    </section>
+
+    <section class="screen" id="hero-desktop">
+      <div class="screen-meta">
+        <div>
+          <p class="label">Screen 02</p>
+          <h2>Hero · Desktop</h2>
+        </div>
+        <p class="count">2 / 12</p>
+      </div>
+      <div class="frame">
+        <img src="./previews/preview-hero-desktop.png" alt="Hero desktop" />
+      </div>
+    </section>
+
+    <section class="screen" id="hero-mobile">
+      <div class="screen-meta">
+        <div>
+          <p class="label">Screen 03</p>
+          <h2>Hero · Mobile</h2>
+        </div>
+        <p class="count">3 / 12</p>
+      </div>
+      <div class="frame mobile">
+        <img src="./previews/preview-hero-mobile.png" alt="Hero mobile" />
+      </div>
+    </section>
+
+    <section class="screen" id="beers">
+      <div class="screen-meta">
+        <div>
+          <p class="label">Screen 04</p>
+          <h2>On tap now</h2>
+        </div>
+        <p class="count">4 / 12</p>
+      </div>
+      <div class="frame">
+        <img src="./previews/preview-beers.png" alt="Beers screen" />
+      </div>
+    </section>
+
+    <section class="screen" id="events">
+      <div class="screen-meta">
+        <div>
+          <p class="label">Screen 05</p>
+          <h2>Events</h2>
+        </div>
+        <p class="count">5 / 12</p>
+      </div>
+      <div class="frame">
+        <img src="./previews/preview-events.png" alt="Events screen" />
+      </div>
+    </section>
+
+    <section class="screen" id="food">
+      <div class="screen-meta">
+        <div>
+          <p class="label">Screen 06</p>
+          <h2>Food</h2>
+        </div>
+        <p class="count">6 / 12</p>
+      </div>
+      <div class="frame">
+        <img src="./previews/preview-food.png" alt="Food screen" />
+      </div>
+    </section>
+
+    <section class="screen" id="gallery">
+      <div class="screen-meta">
+        <div>
+          <p class="label">Screen 07</p>
+          <h2>Campus gallery</h2>
+        </div>
+        <p class="count">7 / 12</p>
+      </div>
+      <div class="frame">
+        <img src="./previews/preview-gallery.png" alt="Gallery screen" />
+      </div>
+    </section>
+
+    <section class="screen" id="visit">
+      <div class="screen-meta">
+        <div>
+          <p class="label">Screen 08</p>
+          <h2>Visit / Towle Farm</h2>
+        </div>
+        <p class="count">8 / 12</p>
+      </div>
+      <div class="frame">
+        <img src="./previews/preview-visit.png" alt="Visit screen" />
+      </div>
+    </section>
+
+    <section class="screen" id="shop">
+      <div class="screen-meta">
+        <div>
+          <p class="label">Screen 09</p>
+          <h2>Shop, loyalty & Suds Club</h2>
+        </div>
+        <p class="count">9 / 12</p>
+      </div>
+      <div class="frame">
+        <img src="./previews/preview-shop.png" alt="Shop screen" />
+      </div>
+    </section>
+
+    <section class="screen" id="contact">
+      <div class="screen-meta">
+        <div>
+          <p class="label">Screen 10</p>
+          <h2>Contact</h2>
+        </div>
+        <p class="count">10 / 12</p>
+      </div>
+      <div class="frame">
+        <img src="./previews/preview-contact.png" alt="Contact screen" />
+      </div>
+    </section>
+
+    <section class="screen" id="newsletter">
+      <div class="screen-meta">
+        <div>
+          <p class="label">Screen 11</p>
+          <h2>Newsletter</h2>
+        </div>
+        <p class="count">11 / 12</p>
+      </div>
+      <div class="frame">
+        <img src="./previews/preview-newsletter.png" alt="Newsletter screen" />
+      </div>
+    </section>
+
+    <section class="screen" id="story">
+      <div class="screen-meta">
+        <div>
+          <p class="label">Screen 12</p>
+          <h2>Story + footer</h2>
+        </div>
+        <p class="count">12 / 12</p>
+      </div>
+      <div class="frame">
+        <img src="./previews/preview-story.png" alt="Story screen" />
+      </div>
+    </section>
+
+    <div class="pager" aria-label="Previous and next screen">
+      <a id="prev" href="#age-gate">← Prev</a>
+      <a id="next" href="#hero-desktop">Next →</a>
+    </div>
+
+    <script>
+      const ids = [
+        "age-gate",
+        "hero-desktop",
+        "hero-mobile",
+        "beers",
+        "events",
+        "food",
+        "gallery",
+        "visit",
+        "shop",
+        "contact",
+        "newsletter",
+        "story",
+      ];
+
+      const prev = document.getElementById("prev");
+      const next = document.getElementById("next");
+
+      function currentIndex() {
+        const y = window.scrollY + window.innerHeight * 0.35;
+        let idx = 0;
+        for (let i = 0; i < ids.length; i++) {
+          const el = document.getElementById(ids[i]);
+          if (el && el.offsetTop <= y) idx = i;
+        }
+        return idx;
+      }
+
+      function syncPager() {
+        const i = currentIndex();
+        prev.href = `#${ids[Math.max(0, i - 1)]}`;
+        next.href = `#${ids[Math.min(ids.length - 1, i + 1)]}`;
+      }
+
+      window.addEventListener("scroll", syncPager, { passive: true });
+      syncPager();
+    </script>
+  </body>
+</html>
