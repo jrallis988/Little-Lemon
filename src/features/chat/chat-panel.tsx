@@ -48,17 +48,23 @@ export function ChatPanel({ employee, conversationId }: ChatPanelProps) {
   const rows = useMemo(() => buildRows(messages), [messages]);
 
   const suggestions =
-    employee.slug === 'holly'
+    employee.slug === 'mia'
       ? [
           'Payroll looks short — investigate it',
           'Retrieve the missing W-2',
-          'Coordinate onboarding for a new hire',
+          'Reconcile last Friday’s timekeeping punches',
         ]
-      : [
-          `Handle ${employee.responsibilities[0].toLowerCase()} end-to-end`,
-          `Which systems should you connect for ${employee.department}?`,
-          `Apply the Human Necessity Test to ${employee.responsibilities[1]?.toLowerCase() ?? 'this work'}`,
-        ];
+      : employee.slug === 'calvin'
+        ? [
+            'Document an employee relations intake',
+            'Coordinate onboarding for a new hire',
+            'What compliance deadlines are coming up?',
+          ]
+        : [
+            `Handle ${employee.responsibilities[0].toLowerCase()} end-to-end`,
+            `Which systems should you connect for ${employee.department}?`,
+            `Apply the Human Necessity Test to ${employee.responsibilities[1]?.toLowerCase() ?? 'this work'}`,
+          ];
 
   const sendMessage = async (content: string, regenerateFrom?: ChatMessage) => {
     const trimmed = content.trim();

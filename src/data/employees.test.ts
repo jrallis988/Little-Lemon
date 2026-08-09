@@ -2,23 +2,31 @@ import { describe, expect, it } from 'vitest';
 import { AI_EMPLOYEES, getEmployeeBySlug } from '@/data/employees';
 
 describe('AI employees catalog', () => {
-  it('includes the eight Working Intelligence agents', () => {
-    expect(AI_EMPLOYEES).toHaveLength(8);
+  it('includes the nine Working Intelligence agents', () => {
+    expect(AI_EMPLOYEES).toHaveLength(9);
     expect(AI_EMPLOYEES.map((employee) => employee.slug)).toEqual([
-      'holly',
+      'nate',
+      'isa',
       'calvin',
       'kate',
-      'isa',
+      'holly',
+      'mia',
+      'david',
+      'robert',
       'missy',
-      'walter',
-      'penny',
-      'rachel',
     ]);
   });
 
-  it('positions Holly as HR workforce intelligence', () => {
-    expect(getEmployeeBySlug('holly')?.jobTitle).toBe('HR Workforce Intelligence');
-    expect(getEmployeeBySlug('holly')?.connectedSystems).toContain('sys-adp');
+  it('maps each agent to the updated role titles', () => {
+    expect(getEmployeeBySlug('nate')?.jobTitle).toBe('Manager');
+    expect(getEmployeeBySlug('isa')?.jobTitle).toBe('Assistant Manager');
+    expect(getEmployeeBySlug('calvin')?.jobTitle).toBe('Human Resources Manager');
+    expect(getEmployeeBySlug('kate')?.jobTitle).toBe('Job Recruiter');
+    expect(getEmployeeBySlug('holly')?.jobTitle).toBe('Marketing Director');
+    expect(getEmployeeBySlug('mia')?.jobTitle).toBe('Payroll Manager');
+    expect(getEmployeeBySlug('david')?.jobTitle).toBe('IT');
+    expect(getEmployeeBySlug('robert')?.jobTitle).toBe('Administrative Assistant');
+    expect(getEmployeeBySlug('missy')?.jobTitle).toBe('Customer Service');
   });
 
   it('gives every agent job boundaries and necessity examples', () => {
@@ -28,6 +36,7 @@ describe('AI employees catalog', () => {
       expect(employee.jobBoundary.mayNotDo.length).toBeGreaterThan(0);
       expect(employee.humanNecessityExamples.length).toBeGreaterThan(0);
       expect(employee.autonomyLevel).toBeGreaterThanOrEqual(1);
+      expect(employee.avatar.imageUrl).toBeTruthy();
     }
   });
 });

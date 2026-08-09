@@ -5,14 +5,14 @@ export type AiProviderId = 'openai' | 'anthropic' | 'gemini' | 'grok' | 'ollama'
 export type WorkspaceRole = 'owner' | 'admin' | 'member' | 'viewer';
 
 export type EmployeeDepartment =
+  | 'Management'
   | 'Human Resources'
   | 'Recruiting'
-  | 'Operations'
-  | 'Management'
-  | 'Customer Service'
-  | 'Systems'
-  | 'Learning'
-  | 'Scheduling';
+  | 'Marketing'
+  | 'Payroll'
+  | 'IT'
+  | 'Administration'
+  | 'Customer Service';
 
 export type AutonomyLevel = 1 | 2 | 3;
 

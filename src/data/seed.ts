@@ -62,13 +62,15 @@ export function seedWorkspaceData() {
     workspaceId: 'ws-shift',
     title: `Work with ${employee.name}`,
     pinned: index < 2,
-    unreadCount: index === 0 ? 1 : index === 1 ? 1 : index === 2 ? 2 : index === 3 ? 1 : 0,
+    unreadCount: index === 0 ? 1 : index === 1 ? 1 : index === 2 ? 2 : index === 5 ? 1 : 0,
     lastMessagePreview:
-      employee.slug === 'holly'
+      employee.slug === 'mia'
         ? 'I found the payroll discrepancy and started the correction workflow.'
-        : employee.slug === 'calvin'
-          ? 'Six orders risk missing pickup — notifying customers now.'
-          : `Ready to ${employee.responsibilities[0].toLowerCase()} inside your existing systems.`,
+        : employee.slug === 'nate'
+          ? 'Priorities locked for the week — Isa has coverage watchouts.'
+          : employee.slug === 'calvin'
+            ? 'ER intake documented; ready for your review.'
+            : `Ready to ${employee.responsibilities[0].toLowerCase()} inside your existing systems.`,
     lastMessageAt: hoursAgo(index + 1),
     createdAt: hoursAgo(24 + index),
   }));
@@ -91,10 +93,10 @@ export function seedWorkspaceData() {
         conversationId: conversation.id,
         role: 'user',
         content:
-          employee.slug === 'holly'
+          employee.slug === 'mia'
             ? 'An employee says last Friday’s paycheck is short. Can you handle it?'
             : `What should we prioritize this week in ${employee.department}?`,
-        createdAt: hoursAgo(employee.slug === 'holly' ? 2 : 5),
+        createdAt: hoursAgo(employee.slug === 'mia' ? 2 : 5),
         reactions: [],
       },
       {
@@ -102,7 +104,7 @@ export function seedWorkspaceData() {
         conversationId: conversation.id,
         role: 'assistant',
         content:
-          employee.slug === 'holly'
+          employee.slug === 'mia'
             ? [
                 'I treated this as **work to complete**, not a FAQ:',
                 '',
@@ -113,10 +115,10 @@ export function seedWorkspaceData() {
                 '',
                 'Human Necessity: **Assist** — I can run the investigation; a human should confirm the payout exception if it exceeds policy.',
                 '',
-                '— Holly',
+                '— Mia',
               ].join('\n')
             : buildSeedReply(employee.name, employee.department, employee.responsibilities),
-        createdAt: hoursAgo(employee.slug === 'holly' ? 1 : 4),
+        createdAt: hoursAgo(employee.slug === 'mia' ? 1 : 4),
         reactions: [{ emoji: '👍', userIds: ['user-demo'] }],
       },
     ];
@@ -130,8 +132,8 @@ export function seedWorkspaceData() {
       mimeType: 'text/markdown',
       url: '#',
       uploadedAt: hoursAgo(2),
-      employeeId: 'emp-holly',
-      conversationId: 'conv-holly',
+      employeeId: 'emp-mia',
+      conversationId: 'conv-mia',
     },
     {
       id: 'file-2',
@@ -140,8 +142,8 @@ export function seedWorkspaceData() {
       mimeType: 'application/pdf',
       url: '#',
       uploadedAt: hoursAgo(12),
-      employeeId: 'emp-holly',
-      conversationId: 'conv-holly',
+      employeeId: 'emp-calvin',
+      conversationId: 'conv-calvin',
     },
     {
       id: 'file-3',
@@ -150,15 +152,15 @@ export function seedWorkspaceData() {
       mimeType: 'text/markdown',
       url: '#',
       uploadedAt: hoursAgo(20),
-      employeeId: 'emp-walter',
-      conversationId: 'conv-walter',
+      employeeId: 'emp-david',
+      conversationId: 'conv-david',
     },
   ];
 
   const tasks: TaskItem[] = [
     {
       id: 'task-1',
-      employeeId: 'emp-holly',
+      employeeId: 'emp-mia',
       title: 'Complete payroll correction #4821',
       description: 'Confirm overtime adjustment and notify employee when ADP posts.',
       status: 'in_progress',
@@ -168,7 +170,7 @@ export function seedWorkspaceData() {
     },
     {
       id: 'task-2',
-      employeeId: 'emp-holly',
+      employeeId: 'emp-calvin',
       title: 'Coordinate new-hire onboarding — Jordan Lee',
       description: 'ID verify, benefits enrollment, manager 1:1, LMS day-1 modules.',
       status: 'todo',
@@ -178,9 +180,9 @@ export function seedWorkspaceData() {
     },
     {
       id: 'task-3',
-      employeeId: 'emp-calvin',
-      title: 'Watch Saturday pickup SLA risk',
-      description: 'Handle-it mode: notify customers if six orders slip past window.',
+      employeeId: 'emp-nate',
+      title: 'Lock weekly priorities with Isa',
+      description: 'Coverage watchouts and coaching follow-ups for the night shift.',
       status: 'in_progress',
       priority: 'medium',
       createdAt: hoursAgo(6),
@@ -199,10 +201,10 @@ export function seedWorkspaceData() {
   const notes: NoteItem[] = [
     {
       id: 'note-1',
-      employeeId: 'emp-holly',
+      employeeId: 'emp-mia',
       title: 'Human Necessity — payroll',
       content:
-        'Retrieve docs = Automate. Investigate discrepancy = Assist. Sensitive ER = Human+AI. Termination = Human.',
+        'Retrieve docs = Automate. Investigate discrepancy = Assist. Sensitive exception = Human+AI. Final dispute = Human.',
       updatedAt: hoursAgo(6),
     },
     {
@@ -217,9 +219,9 @@ export function seedWorkspaceData() {
   const events: CalendarEvent[] = [
     {
       id: 'evt-1',
-      employeeId: 'emp-rachel',
-      title: 'Coverage review — weekend',
-      description: 'Rachel proposes swaps; Isa reviews exceptions.',
+      employeeId: 'emp-robert',
+      title: 'Leadership huddle prep',
+      description: 'Robert assembles the pack; Nate and Isa review exceptions.',
       startsAt: hoursAgo(-26),
       endsAt: hoursAgo(-25),
     },
@@ -227,7 +229,7 @@ export function seedWorkspaceData() {
       id: 'evt-2',
       employeeId: 'emp-kate',
       title: 'Interview panel — Product Designer',
-      description: 'Kate coordinated; Holly prepared to onboard on accept.',
+      description: 'Kate coordinated; Calvin prepared to onboard on accept.',
       startsAt: hoursAgo(-50),
       endsAt: hoursAgo(-49),
     },
@@ -236,7 +238,7 @@ export function seedWorkspaceData() {
   const actions: AgentAction[] = [
     {
       id: 'action-1',
-      employeeId: 'emp-holly',
+      employeeId: 'emp-mia',
       title: 'Initiate payroll correction in ADP',
       summary:
         'Missing overtime on pay run 2026-08-01 for employee #18422. Correction package prepared.',
@@ -250,7 +252,7 @@ export function seedWorkspaceData() {
     },
     {
       id: 'action-2',
-      employeeId: 'emp-holly',
+      employeeId: 'emp-mia',
       title: 'Retrieve W-2 for employee self-service request',
       summary: 'Document located in payroll archive; ready to deliver via secure link.',
       rationale: 'Routine document retrieval — Automate under policy.',
@@ -263,11 +265,11 @@ export function seedWorkspaceData() {
     {
       id: 'action-3',
       employeeId: 'emp-calvin',
-      title: 'Notify customers of delayed pickups',
-      summary: 'Six orders will miss the 3 PM carrier cutoff. Approved template ready.',
-      rationale: 'Handle-it within notification policy; escalate only if customers reject new ETA.',
-      systemsTouched: ['POS', 'SAP'],
-      autonomyLevel: 3,
+      title: 'Document ER intake for floor complaint',
+      summary: 'Intake form drafted from employee report; ready for manager review.',
+      rationale: 'Assist — Calvin documents; Nate confirms next step.',
+      systemsTouched: ['HRIS'],
+      autonomyLevel: 2,
       humanNecessity: 'assist',
       status: 'pending',
       createdAt: hoursAgo(2),
@@ -286,13 +288,13 @@ export function seedWorkspaceData() {
     },
     {
       id: 'action-5',
-      employeeId: 'emp-penny',
-      title: 'Update Work Badge after training completion',
-      summary: 'Jordan Lee completed Food Safety Level 1 — badge + CareerScore evidence ready.',
-      rationale: 'Conditional autonomy: verified LMS completion updates living identity.',
-      systemsTouched: ['LMS'],
-      autonomyLevel: 3,
-      humanNecessity: 'automate',
+      employeeId: 'emp-holly',
+      title: 'Publish spring campaign calendar draft',
+      summary: 'Channel plan drafted across email + social; waiting on brand review.',
+      rationale: 'Assist — Holly prepares; humans approve public launch.',
+      systemsTouched: ['CRM', 'Email'],
+      autonomyLevel: 2,
+      humanNecessity: 'assist',
       status: 'approved',
       createdAt: hoursAgo(8),
     },
@@ -332,7 +334,7 @@ export function seedWorkspaceData() {
     {
       id: 'insight-3',
       title: 'Coverage pattern',
-      body: 'Friday evenings repeatedly thin after 7 PM — Rachel has two swap options.',
+      body: 'Friday evenings repeatedly thin after 7 PM — Robert has two calendar options for a huddle.',
       severity: 'watch',
     },
   ];
@@ -340,37 +342,37 @@ export function seedWorkspaceData() {
   const notifications: NotificationItem[] = [
     {
       id: 'notif-1',
-      title: 'Holly needs approval',
+      title: 'Mia needs approval',
       body: 'Payroll correction #4821 is ready in ADP.',
       read: false,
       createdAt: hoursAgo(1),
-      href: '/app/holly',
+      href: '/app/mia',
     },
     {
       id: 'notif-2',
-      title: 'Calvin is handling delays',
-      body: 'Customer notifications queued for 6 at-risk orders.',
+      title: 'Calvin documented an ER intake',
+      body: 'Case notes ready for your review.',
       read: false,
       createdAt: hoursAgo(2),
       href: '/app/calvin',
     },
     {
       id: 'notif-3',
-      title: 'Work Badge updated',
-      body: 'Jordan Lee — Food Safety Level 1 verified.',
+      title: 'Holly’s campaign draft is ready',
+      body: 'Spring channel calendar awaiting brand review.',
       read: true,
       createdAt: hoursAgo(8),
-      href: '/app/penny',
+      href: '/app/holly',
     },
   ];
 
   const memories: MemoryEntry[] = [
     {
       id: 'mem-1',
-      employeeId: 'emp-holly',
+      employeeId: 'emp-mia',
       kind: 'long_term',
       content:
-        'Company keeps ADP + existing benefits admin. Holly integrates; does not replace payroll.',
+        'Company keeps ADP + existing benefits admin. Mia integrates payroll; does not replace it.',
       createdAt: hoursAgo(80),
     },
     {
@@ -378,7 +380,7 @@ export function seedWorkspaceData() {
       employeeId: 'emp-calvin',
       kind: 'long_term',
       content:
-        'Handle-it autonomy allowed for approved delay notifications; refunds remain human-gated.',
+        'Sensitive ER cases require Nate review before any outbound communication.',
       createdAt: hoursAgo(90),
     },
   ];
@@ -403,6 +405,6 @@ export function seedWorkspaceData() {
     managerInsights,
     notifications,
     memories,
-    activeConversationId: 'conv-holly',
+    activeConversationId: 'conv-nate',
   };
 }

@@ -6,7 +6,7 @@ import { useIsMobile } from '@/hooks/use-media-query';
 
 export function MobileTeamPage() {
   const isMobile = useIsMobile();
-  if (!isMobile) return <Navigate to="/app/holly" replace />;
+  if (!isMobile) return <Navigate to="/app/nate" replace />;
 
   return (
     <MobileScreenShell

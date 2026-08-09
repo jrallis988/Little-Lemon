@@ -9,7 +9,7 @@ export function MobileIntelligencePage() {
   const insights = useWorkspaceStore((state) => state.managerInsights);
   const actions = useWorkspaceStore((state) => state.actions);
 
-  if (!isMobile) return <Navigate to="/app/holly" replace />;
+  if (!isMobile) return <Navigate to="/app/nate" replace />;
 
   const pending = actions.filter((action) => action.status === 'pending').length;
 

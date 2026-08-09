@@ -9,5 +9,5 @@ export function AppHomePage() {
     return <MobileInboxPage />;
   }
 
-  return <Navigate to="holly" replace />;
+  return <Navigate to="nate" replace />;
 }

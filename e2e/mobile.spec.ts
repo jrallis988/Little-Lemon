@@ -15,19 +15,20 @@ test('iPhone inbox opens chat and returns', async ({ page }) => {
   await page.evaluate(() => {
     localStorage.removeItem('wi-workspace');
     localStorage.removeItem('wi-workspace-v2');
+    localStorage.removeItem('wi-workspace-v3');
   });
   await page.reload();
   await expect(page.getByRole('heading', { name: 'Chats' })).toBeVisible();
   await expect(page.getByRole('navigation', { name: 'Primary' })).toBeVisible();
 
-  await page.getByRole('link', { name: /HR Intelligence/i }).first().click();
-  await expect(page).toHaveURL(/\/app\/holly/);
-  await expect(page.getByRole('heading', { name: 'HR Intelligence' })).toBeVisible();
-  await expect(page.getByText('Holly', { exact: true }).first()).toBeVisible();
+  await page.getByRole('link', { name: /Nate Manager/i }).click();
+  await page.waitForURL(/\/app\/nate$/);
+  await expect(page.getByRole('button', { name: 'Back to chats' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Manager', exact: true })).toBeVisible();
   await expect(page.getByRole('navigation', { name: 'Primary' })).toHaveCount(0);
 
   await page.getByRole('button', { name: 'Back to chats' }).click();
-  await expect(page).toHaveURL(/\/app\/?$/);
+  await page.waitForURL(/\/app\/?$/);
   await expect(page.getByRole('heading', { name: 'Chats' })).toBeVisible();
 });
 
@@ -37,6 +38,8 @@ test('iPhone office intelligence tasks and settings tabs work', async ({ page })
 
   await nav.getByRole('link', { name: 'Office' }).click();
   await expect(page.getByRole('heading', { name: 'Your AI workforce' })).toBeVisible();
+  await expect(page.getByText('Nate').first()).toBeVisible();
+  await expect(page.getByText('Mia').first()).toBeVisible();
 
   await nav.getByRole('link', { name: 'Intelligence' }).click();
   await expect(page.getByRole('heading', { name: 'Intelligence layer' })).toBeVisible();

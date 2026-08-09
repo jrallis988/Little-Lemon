@@ -182,7 +182,7 @@ function WorkBadgeTab({ employee }: { employee: AiEmployee }) {
       <PanelTitle icon={<BadgeCheck className="h-4 w-4" />} title="Work Badge" />
       <p className="mb-4 max-w-2xl text-sm text-[var(--text-muted)]">
         A living professional identity — skills, training, accomplishments, and explainable
-        CareerScore signals — maintained by Working Intelligence{employee.slug === 'penny' ? '' : ` and coordinated with ${employee.name}`}.
+        CareerScore signals — maintained by Working Intelligence and coordinated with {employee.name}.
       </p>
 
       <div className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">

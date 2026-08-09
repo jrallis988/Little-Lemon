@@ -11,7 +11,7 @@ export function MobileTasksPage() {
   const tasks = useWorkspaceStore((state) => state.tasks);
   const upsertTask = useWorkspaceStore((state) => state.upsertTask);
 
-  if (!isMobile) return <Navigate to="/app/holly" replace />;
+  if (!isMobile) return <Navigate to="/app/nate" replace />;
 
   return (
     <MobileScreenShell

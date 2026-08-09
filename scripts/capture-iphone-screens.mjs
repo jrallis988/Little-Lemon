@@ -16,10 +16,10 @@ const shots = [
   { name: '04-intelligence', label: 'Intelligence', path: '/app/intelligence' },
   { name: '05-tasks', label: 'Tasks', path: '/app/tasks' },
   { name: '06-settings', label: 'Settings', path: '/app/settings' },
-  { name: '07-chat-holly', label: 'Chat · Holly', path: '/app/holly', tab: 'Chat' },
-  { name: '08-actions-holly', label: 'Actions · Holly', path: '/app/holly', tab: 'Actions' },
-  { name: '09-systems-holly', label: 'Systems · Holly', path: '/app/holly', tab: 'Systems' },
-  { name: '10-badge-holly', label: 'Work Badge · Holly', path: '/app/holly', tab: 'Work Badge' },
+  { name: '07-chat-mia', label: 'Chat · Mia', path: '/app/mia', tab: 'Chat' },
+  { name: '08-actions-mia', label: 'Actions · Mia', path: '/app/mia', tab: 'Actions' },
+  { name: '09-office-roster', label: 'Office roster', path: '/app/team' },
+  { name: '10-chat-nate', label: 'Chat · Nate', path: '/app/nate', tab: 'Chat' },
 ];
 
 const browser = await chromium.launch();
@@ -33,6 +33,7 @@ await page.goto('/app');
 await page.evaluate(() => {
   localStorage.removeItem('wi-workspace');
   localStorage.removeItem('wi-workspace-v2');
+  localStorage.removeItem('wi-workspace-v3');
   localStorage.setItem('wi-theme', 'dark');
 });
 

@@ -306,7 +306,7 @@ export const useWorkspaceStore = create<WorkspaceState>()(
       resetDemoData: () => set(seedWorkspaceData()),
     }),
     {
-      name: 'wi-workspace-v2',
+      name: 'wi-workspace-v3',
       partialize: (state) => ({
         user: state.user,
         workspaces: state.workspaces,

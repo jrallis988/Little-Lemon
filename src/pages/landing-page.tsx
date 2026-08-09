@@ -62,8 +62,8 @@ export function LandingPage() {
                   Enter workspace
                   <ArrowRight className="h-4 w-4" />
                 </ButtonLink>
-                <ButtonLink to="/app/holly" size="lg" variant="secondary" className="w-full">
-                  Meet Holly
+                <ButtonLink to="/app/nate" size="lg" variant="secondary" className="w-full">
+                  Meet Nate
                 </ButtonLink>
               </div>
             </motion.div>
@@ -145,8 +145,8 @@ export function LandingPage() {
                 Enter workspace
                 <ArrowRight className="h-4 w-4" />
               </ButtonLink>
-              <ButtonLink to="/app/holly" size="lg" variant="secondary" className="w-full sm:w-auto">
-                Meet Holly
+              <ButtonLink to="/app/nate" size="lg" variant="secondary" className="w-full sm:w-auto">
+                Meet Nate
               </ButtonLink>
             </div>
           </motion.div>
