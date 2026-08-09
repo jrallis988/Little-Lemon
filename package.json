@@ -12,7 +12,9 @@
     "db:reset": "prisma migrate reset --force",
     "postinstall": "prisma generate",
     "test:smoke": "node scripts/smoke.mjs",
-    "test:e2e": "node scripts/e2e-smoke.mjs"
+    "test:e2e": "node scripts/e2e-smoke.mjs",
+    "setup:env": "node scripts/setup-env.mjs",
+    "db:use-postgres": "node scripts/use-postgres.mjs"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

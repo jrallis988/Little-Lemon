@@ -50,6 +50,8 @@ const envSchema = z
     NEXT_PUBLIC_APP_URL: z.string().default("http://127.0.0.1:3000"),
     NEXT_PUBLIC_APP_NAME: z.string().default("Trump RX"),
     ADMIN_EMAILS: z.string().optional(),
+    ADMIN_SMS_TO: z.string().optional(),
+    SENTRY_DSN: z.string().optional(),
   })
   .superRefine((val, ctx) => {
     if (val.PRICING_PROVIDER === "external" && !val.PRICING_API_URL) {

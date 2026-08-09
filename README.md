@@ -32,12 +32,18 @@ password bypass.
 
 ## Production requirements
 
-- `DATABASE_URL=postgresql://…`
+- `DATABASE_URL=postgresql://…` (`npm run db:use-postgres`)
 - `AUTH_SECRET` (≥32 chars) and absolute `AUTH_URL` / `NEXT_PUBLIC_APP_URL` (HTTPS)
 - Stripe: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `STRIPE_PLUS_PRICE_ID`
-- Optional: external pricing, Smart Switch, telehealth/mail-order, Resend, Twilio
+- Chat staffing: `ADMIN_EMAILS` + Resend
+- Optional: external pricing, Smart Switch, telehealth/mail-order, Twilio, Sentry
 
-See `docs/LAUNCH.md` for the full launch checklist.
+Track everything in-app at **`/admin/launch`**. See `docs/DEPLOY.md` and
+`docs/PARTNERS.md`.
+
+```bash
+npm run setup:env
+```
 
 ## Checks
 

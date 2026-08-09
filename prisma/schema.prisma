@@ -390,3 +390,14 @@ model Message {
 
   @@index([conversationId, createdAt])
 }
+
+// Manual launch checklist (legal / brand) toggled from /admin/launch
+model LaunchChecklistItem {
+  id        String   @id
+  title     String
+  completed Boolean  @default(false)
+  note      String?
+  updatedBy String?
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}

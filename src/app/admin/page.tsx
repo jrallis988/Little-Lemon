@@ -74,9 +74,15 @@ export default function AdminPage() {
         </p>
         <Link
           href="/admin/messages"
-          className="mt-3 inline-flex text-sm font-medium text-primary underline-offset-2 hover:underline"
+          className="mt-3 mr-4 inline-flex text-sm font-medium text-primary underline-offset-2 hover:underline"
         >
           Open support inbox →
+        </Link>
+        <Link
+          href="/admin/launch"
+          className="mt-3 inline-flex text-sm font-medium text-primary underline-offset-2 hover:underline"
+        >
+          Launch Control →
         </Link>
       </div>
 
