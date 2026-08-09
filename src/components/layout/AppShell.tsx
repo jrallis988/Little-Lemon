@@ -10,6 +10,7 @@ import {
 import { SurfLogo } from "@/components/brand/SurfLogo";
 import { LearningModeOverlay } from "@/components/learning/LearningModeOverlay";
 import { AskMiloPanel } from "@/components/learning/AskMiloPanel";
+import { BrowserTabStrip } from "@/components/browser/BrowserTabStrip";
 import { Button } from "@/components/ui/button";
 import { useAccessibility } from "@/hooks/useAccessibility";
 import { useSessionTimer } from "@/hooks/useSessionTimer";
@@ -86,6 +87,7 @@ export function AppShell() {
               </Button>
             </div>
           </div>
+          <BrowserTabStrip />
         </header>
       )}
 

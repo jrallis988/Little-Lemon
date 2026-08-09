@@ -32,14 +32,16 @@ Surf is not a content feed, launcher, or game hub. Kids search, open curated edu
 
 ## Supporting systems
 
-- Academic search: curated corpus + live OpenAlex merge, EBSCO-style Refine Results
-- Ask Milo learning aide (live via `VITE_SURF_AI_API_KEY`, offline tutor fallback)
-- Reader mode: structured metadata reader + Tauri live `fetch_article` for allowlisted domains
-- Grade-aware student profiles (1–12) drive default search filters
-- Research projects: save sources, notes, MLA/APA citation lists
-- URL interceptor with allowlist + parent blocklist + content-farm blocking
-- Parent dashboard: real usage, history clear, PIN, whitelist/blocklist
-- Background session timer + cryptographic parent gate (PBKDF2)
+- Academic search: shared grades 1–8+ corpus + OpenAlex merge + EBSCO Refine Results
+- Classroom topic packs on Explore (weather, fractions, civil rights, reefs, etc.)
+- Ask Milo with conversation memory + tutor quick actions
+- Always-on reader: Tauri fetch → Jina live reader → structured fallback
+- Research projects: compare sources, outline builder, export bibliography
+- Grade-aware student profiles (1–12)
+- Family/school ops: class codes, roster join, printable child reports
+- Browser tab strip scaffolding (toward native tabs)
+- URL interceptor: allowlist + blocklist + expanded content-farm blocking
+- Parent dashboard + session timer + PBKDF2 PIN gate
 
 ## Ask Milo setup
 

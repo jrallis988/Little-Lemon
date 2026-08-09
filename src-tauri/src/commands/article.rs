@@ -121,6 +121,11 @@ fn is_fetch_allowed(host: &str) -> bool {
         "doi.org",
         "pbskids.org",
         "pbs.org",
+        "pbslearningmedia.org",
+        "nps.gov",
+        "climatekids.nasa.gov",
+        "ocean.si.edu",
+        "khanacademy.org",
     ];
     ALLOWED
         .iter()

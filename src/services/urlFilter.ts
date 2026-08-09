@@ -24,6 +24,10 @@ const CONTENT_FARM_MARKERS = [
   "essay-mill",
   "homework-help-cheap",
   "softonic",
+  "ranker.com",
+  "boredpanda",
+  "shareably",
+  "providr",
 ];
 
 export type FilterOptions = {
@@ -121,6 +125,12 @@ export function isTrustedEducationalDomain(domain: string): boolean {
     "ck12.org",
     "nature.com",
     "openalex.org",
+    "nps.gov",
+    "climatekids.nasa.gov",
+    "pbslearningmedia.org",
+    "ocean.si.edu",
+    "khanacademy.org",
+    "ck12.org",
   ];
   return trusted.some((entry) => matchesDomain(domain, entry));
 }

@@ -16,8 +16,7 @@ type FetchArticleResponse = {
 };
 
 /**
- * Build a reader-mode article: prefer live fetch of allowlisted pages (Tauri),
- * otherwise assemble a structured educational reader from search metadata.
+ * Always-on reader: Tauri native fetch → Jina reader proxy → structured fallback.
  */
 export async function loadReadableArticle(input: {
   url: string;
@@ -32,22 +31,86 @@ export async function loadReadableArticle(input: {
       url: input.url,
     });
     if (raw?.contentHtml || raw?.content_html) {
-      return {
-        url: raw.url || input.url,
-        title: raw.title || input.title,
-        source: raw.source || extractDomain(input.url),
-        contentHtml: raw.contentHtml ?? raw.content_html ?? "",
-        estimatedMinutes:
-          raw.estimatedMinutes ?? raw.estimated_minutes ?? 4,
-        citation: input.citation,
-        vocabulary: input.vocabulary,
-        fetchedLive: raw.fetchedLive ?? raw.fetched_live ?? true,
-      };
+      return decorate(
+        {
+          url: raw.url || input.url,
+          title: raw.title || input.title,
+          source: raw.source || extractDomain(input.url),
+          contentHtml: raw.contentHtml ?? raw.content_html ?? "",
+          estimatedMinutes:
+            raw.estimatedMinutes ?? raw.estimated_minutes ?? 4,
+          fetchedLive: true,
+        },
+        input,
+      );
     }
   }
 
-  // Web / fallback: structured reader from trusted metadata (no CORS scrape).
-  return buildStructuredReader(input);
+  const jina = await fetchViaJina(input.url, input.title);
+  if (jina) return decorate(jina, input);
+
+  return decorate(buildStructuredReader(input), input);
+}
+
+async function fetchViaJina(
+  url: string,
+  fallbackTitle: string,
+): Promise<SanitizedArticle | null> {
+  try {
+    const controller = new AbortController();
+    const timer = window.setTimeout(() => controller.abort(), 12000);
+    const response = await fetch(`https://r.jina.ai/${url}`, {
+      headers: { Accept: "text/plain" },
+      signal: controller.signal,
+    });
+    window.clearTimeout(timer);
+    if (!response.ok) return null;
+    const markdown = (await response.text()).trim();
+    if (markdown.length < 80) return null;
+
+    const titleMatch = markdown.match(/^Title:\s*(.+)$/m);
+    const title = titleMatch?.[1]?.trim() || fallbackTitle;
+    const body = markdown
+      .replace(/^Title:.*$/m, "")
+      .replace(/^URL Source:.*$/m, "")
+      .replace(/^Published Time:.*$/m, "")
+      .replace(/^Markdown Content:\s*/m, "")
+      .trim();
+
+    const paragraphs = body
+      .split(/\n{2,}/)
+      .map((part) => part.trim())
+      .filter((part) => part.length > 40)
+      .slice(0, 20)
+      .map((part) => `<p>${escapeHtml(part.replace(/\n/g, " "))}</p>`)
+      .join("");
+
+    if (!paragraphs) return null;
+
+    const contentHtml = `
+    <article class="surf-reader">
+      <header>
+        <p class="source">${escapeHtml(extractDomain(url))}</p>
+        <h1>${escapeHtml(title)}</h1>
+      </header>
+      ${paragraphs}
+      <p class="calm-note">Fetched live through Surf reader mode. Ads and side chrome were removed.</p>
+    </article>`;
+
+    return {
+      url,
+      title,
+      source: extractDomain(url),
+      contentHtml,
+      estimatedMinutes: Math.min(
+        20,
+        Math.max(2, Math.ceil(body.split(/\s+/).length / 160)),
+      ),
+      fetchedLive: true,
+    };
+  } catch {
+    return null;
+  }
 }
 
 export function buildStructuredReader(input: {
@@ -76,11 +139,10 @@ export function buildStructuredReader(input: {
     : "";
   const linkBlock = `<p class="source-link"><a href="${escapeHtml(input.url)}" rel="noreferrer">Open original source</a> (parent-approved domains only)</p>`;
 
-  const contentHtml = base.contentHtml
-    .replace(
-      '<p class="calm-note">',
-      `${vocabBlock}${citationBlock}${linkBlock}<p class="calm-note">`,
-    );
+  const contentHtml = base.contentHtml.replace(
+    '<p class="calm-note">',
+    `${vocabBlock}${citationBlock}${linkBlock}<p class="calm-note">`,
+  );
 
   return {
     ...base,
@@ -88,6 +150,20 @@ export function buildStructuredReader(input: {
     citation: input.citation,
     vocabulary: input.vocabulary,
     fetchedLive: false,
+  };
+}
+
+function decorate(
+  article: SanitizedArticle,
+  input: {
+    citation?: string;
+    vocabulary?: string[];
+  },
+): SanitizedArticle {
+  return {
+    ...article,
+    citation: article.citation ?? input.citation,
+    vocabulary: article.vocabulary ?? input.vocabulary,
   };
 }
 

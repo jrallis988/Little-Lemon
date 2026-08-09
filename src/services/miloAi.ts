@@ -11,6 +11,7 @@ type MiloContext = {
   academic?: AcademicSearchResponse | null;
   article?: SanitizedArticle | null;
   grade?: number;
+  history?: MiloMessage[];
 };
 
 const TUTOR_SYSTEM = `You are Milo, Surf’s AI learning aide for students (grades 1–12).
@@ -21,6 +22,7 @@ Rules:
 - When sources are provided, cite them by title/publisher — do not invent URLs.
 - Match the student’s grade level when given.
 - Keep replies concise (under ~180 words) unless asked for more.
+- If the student asks you to do their assignment for them, refuse kindly and offer a learning scaffold instead.
 - Tone: calm, encouraging, academic — never cartoonish or condescending.`;
 
 function providerConfig() {
@@ -109,12 +111,23 @@ function contextBlock(context: MiloContext): string {
   return parts.join("\n\n");
 }
 
+function historyMessages(context: MiloContext): MiloMessage[] {
+  return (context.history ?? []).slice(-8);
+}
+
 async function callAnthropic(
   key: string,
   model: string,
   question: string,
   context: MiloContext,
 ): Promise<string> {
+  const messages = [
+    ...historyMessages(context).map((message) => ({
+      role: message.role,
+      content: message.content,
+    })),
+    { role: "user" as const, content: question },
+  ];
   const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
@@ -127,7 +140,7 @@ async function callAnthropic(
       model,
       max_tokens: 500,
       system: `${TUTOR_SYSTEM}\n\n${contextBlock(context)}`,
-      messages: [{ role: "user", content: question }],
+      messages,
     }),
   });
   if (!response.ok) {
@@ -161,6 +174,7 @@ async function callOpenAI(
           role: "system",
           content: `${TUTOR_SYSTEM}\n\n${contextBlock(context)}`,
         },
+        ...historyMessages(context),
         { role: "user", content: question },
       ],
     }),
@@ -180,9 +194,49 @@ function buildLocalTutorReply(question: string, context: MiloContext): string {
   const academic = context.academic;
   const vocab = academic?.keyVocabulary?.slice(0, 5) ?? [];
   const top = academic?.results?.[0];
+  const second = academic?.results?.[1];
   const gradeHint = context.grade
     ? `I’ll keep this around grade ${context.grade}.`
     : "I’ll keep this age-appropriate.";
+
+  const lower = question.toLowerCase();
+  if (
+    lower.includes("write my essay") ||
+    lower.includes("do my homework") ||
+    lower.includes("just give me the answer")
+  ) {
+    return [
+      `${MILO_SHORT_NAME} here — I won’t write the assignment for you.`,
+      "I can help you outline ideas, define vocabulary, and cite trusted sources.",
+      "Try asking: “Help me outline three evidence points for this topic.”",
+    ].join("\n");
+  }
+
+  if (lower.includes("quiz") || lower.includes("vocab check")) {
+    const words = vocab.length ? vocab : ["evidence", "source", "abstract"];
+    return [
+      `${MILO_SHORT_NAME} vocab check — ${gradeHint}`,
+      "",
+      `1) What does “${words[0]}” mean in your own words?`,
+      words[1] ? `2) Use “${words[1]}” in a sentence about this topic.` : null,
+      words[2] ? `3) How is “${words[2]}” different from everyday language?` : null,
+      "",
+      "Answer one at a time and I’ll coach you.",
+    ]
+      .filter(Boolean)
+      .join("\n");
+  }
+
+  if (lower.includes("compare") && top && second) {
+    return [
+      `${MILO_SHORT_NAME} here — ${gradeHint}`,
+      "",
+      `“${top.title}” emphasizes: ${top.abstractText.slice(0, 160)}…`,
+      `“${second.title}” emphasizes: ${second.abstractText.slice(0, 160)}…`,
+      "",
+      "They agree that the topic is grounded in verified educational sources. What’s one difference you notice?",
+    ].join("\n");
+  }
 
   return [
     `${MILO_SHORT_NAME} here — ${gradeHint} I’ll help you learn, not just finish the work.`,

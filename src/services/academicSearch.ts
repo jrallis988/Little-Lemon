@@ -10,6 +10,7 @@ import type {
 import { invokeCommand, isTauriRuntime } from "@/services/tauriBridge";
 import { fetchOpenAlexHits } from "@/services/openAlex";
 import { MAX_SEARCH_RESULTS } from "@/lib/constants";
+import { EDUCATIONAL_CORPUS } from "@/data/educationalCorpus";
 
 type IndexedSource = {
   id: string;
@@ -59,6 +60,10 @@ const TRUSTED_DOMAINS: TrustedDomain[] = [
   { host: "khanacademy.org", score: 89, label: "Khan Academy" },
   { host: "ck12.org", score: 87, label: "CK-12" },
   { host: "openstax.org", score: 93, label: "OpenStax" },
+  { host: "nps.gov", score: 95, label: "National Park Service" },
+  { host: "climatekids.nasa.gov", score: 93, label: "NASA Climate Kids" },
+  { host: "pbslearningmedia.org", score: 90, label: "PBS LearningMedia" },
+  { host: "ocean.si.edu", score: 94, label: "Smithsonian Ocean" },
 ];
 
 const CONTENT_FARM_MARKERS = [
@@ -67,6 +72,10 @@ const CONTENT_FARM_MARKERS = [
   "listicle",
   "viralnova",
   "content-farm",
+  "ranker.com",
+  "boredpanda",
+  "shareably",
+  "providr",
 ];
 
 const TIER_LABELS: Record<AcademicContentTier, string> = {
@@ -83,281 +92,8 @@ const GRADE_BANDS: Record<GradeBandId, [number, number]> = {
   high_school: [9, 12],
 };
 
-/** Web-mode mirror of the Rust academic corpus (same structured sources). */
-const ACADEMIC_CORPUS: IndexedSource[] = [
-  {
-    id: "nature-plate-tectonics-review",
-    title: "Plate Tectonics and Mantle Dynamics — Research Overview",
-    url: "https://www.nature.com/subjects/tectonics",
-    domain: "nature.com",
-    publisher: "Nature",
-    contentTier: "peer_reviewed_journal",
-    gradeMin: 9,
-    gradeMax: 12,
-    abstractText:
-      "Peer-reviewed research on plate tectonics and mantle dynamics examines how convection, slab subduction, and plume activity drive long-term plate motion. Suitable for advanced high-school research with teacher guidance.",
-    vocabulary: [
-      "mantle dynamics",
-      "plume",
-      "subduction zone",
-      "peer review",
-    ],
-    citation: 'Nature. "Tectonics / Earth science subject collection."',
-    topics: ["plate tectonics", "geology", "mantle"],
-    keywords: ["plates", "tectonics", "journal", "peer-reviewed"],
-    baseLegitimacy: 99,
-  },
-  {
-    id: "usgs-plate-tectonics-intro",
-    title: "What is Plate Tectonics?",
-    url: "https://www.usgs.gov/faqs/what-plate-tectonics",
-    domain: "usgs.gov",
-    publisher: "U.S. Geological Survey",
-    contentTier: "verified_reference",
-    gradeMin: 6,
-    gradeMax: 12,
-    abstractText:
-      "Plate tectonics is the unifying theory that Earth’s outer shell is divided into several plates that glide over the mantle. Plate motion explains earthquakes, volcanoes, mountain building, and the slow reshaping of continents and ocean basins over geologic time.",
-    vocabulary: [
-      "lithosphere",
-      "asthenosphere",
-      "mantle",
-      "convergent boundary",
-      "divergent boundary",
-      "transform boundary",
-    ],
-    citation: 'U.S. Geological Survey. "What is Plate Tectonics?" USGS FAQs.',
-    topics: ["plate tectonics", "earth science", "geology"],
-    keywords: ["plates", "earthquakes", "volcanoes", "continental drift"],
-    baseLegitimacy: 96,
-  },
-  {
-    id: "usgs-how-plates-move",
-    title: "How Do Plates Move?",
-    url: "https://www.usgs.gov/faqs/how-do-plates-move",
-    domain: "usgs.gov",
-    publisher: "U.S. Geological Survey",
-    contentTier: "authoritative_research",
-    gradeMin: 7,
-    gradeMax: 12,
-    abstractText:
-      "Earth’s tectonic plates are driven by heat from the planet’s interior. Convection in the mantle, slab pull at subduction zones, and ridge push at mid-ocean ridges work together so plates creep a few centimeters each year—about as fast as fingernails grow.",
-    vocabulary: [
-      "convection",
-      "subduction",
-      "mid-ocean ridge",
-      "slab pull",
-      "ridge push",
-    ],
-    citation: 'U.S. Geological Survey. "How Do Plates Move?" USGS FAQs.',
-    topics: ["plate tectonics", "mantle convection"],
-    keywords: ["plates", "move", "convection", "subduction"],
-    baseLegitimacy: 96,
-  },
-  {
-    id: "natgeo-edu-plate-tectonics",
-    title: "Plate Tectonics — National Geographic Education",
-    url: "https://education.nationalgeographic.org/resource/plate-tectonics/",
-    domain: "education.nationalgeographic.org",
-    publisher: "National Geographic Society",
-    contentTier: "educational_magazine",
-    gradeMin: 5,
-    gradeMax: 10,
-    abstractText:
-      "A classroom-ready overview of plate tectonics: how Earth’s crust is broken into plates, what happens at plate boundaries, and why the theory replaced earlier ideas about fixed continents. Includes maps and vocabulary suited for middle grades upward.",
-    vocabulary: ["crust", "plate boundary", "Pangaea", "seafloor spreading"],
-    citation:
-      'National Geographic Society. "Plate Tectonics." National Geographic Education.',
-    topics: ["plate tectonics", "earth science"],
-    keywords: ["plates", "boundaries", "pangaea", "geology"],
-    baseLegitimacy: 92,
-  },
-  {
-    id: "britannica-plate-tectonics",
-    title: "Plate Tectonics — Encyclopædia Britannica",
-    url: "https://www.britannica.com/science/plate-tectonics",
-    domain: "britannica.com",
-    publisher: "Encyclopædia Britannica",
-    contentTier: "verified_reference",
-    gradeMin: 8,
-    gradeMax: 12,
-    abstractText:
-      "Britannica’s reference article on plate tectonics covers the historical development of the theory, types of plate margins, and evidence from paleomagnetism, fossil distributions, and ocean-floor mapping that confirmed continental drift and seafloor spreading.",
-    vocabulary: [
-      "paleomagnetism",
-      "continental drift",
-      "Wilson cycle",
-      "orogeny",
-    ],
-    citation: 'Encyclopædia Britannica. "Plate tectonics."',
-    topics: ["plate tectonics", "geology"],
-    keywords: [
-      "plates",
-      "continental drift",
-      "seafloor spreading",
-      "evidence",
-    ],
-    baseLegitimacy: 94,
-  },
-  {
-    id: "amnh-plate-tectonics",
-    title: "Plate Tectonics — American Museum of Natural History",
-    url: "https://www.amnh.org/exhibitions/permanent/planet-earth/plate-tectonics",
-    domain: "amnh.org",
-    publisher: "American Museum of Natural History",
-    contentTier: "educational_magazine",
-    gradeMin: 4,
-    gradeMax: 9,
-    abstractText:
-      "Museum educators explain how Earth’s plates collide, pull apart, and slide past each other—and how those motions build mountains, open oceans, and trigger earthquakes students can feel in science class.",
-    vocabulary: ["collision", "rift", "fault", "earthquake"],
-    citation: 'American Museum of Natural History. "Plate Tectonics."',
-    topics: ["plate tectonics", "earthquakes"],
-    keywords: ["plates", "mountains", "earthquakes", "museum"],
-    baseLegitimacy: 93,
-  },
-  {
-    id: "nasa-earth-dynamic",
-    title: "Earth’s Dynamic Surface — NASA Science",
-    url: "https://science.nasa.gov/earth/earth-observatory/",
-    domain: "science.nasa.gov",
-    publisher: "NASA",
-    contentTier: "authoritative_research",
-    gradeMin: 6,
-    gradeMax: 12,
-    abstractText:
-      "NASA Earth science resources show how satellite observations track plate motion, volcanic ash, and crustal deformation—connecting classroom plate tectonics to real measurements of a living planet.",
-    vocabulary: [
-      "remote sensing",
-      "deformation",
-      "volcanic ash",
-      "crustal motion",
-    ],
-    citation: 'NASA. "Earth Observatory / Earth Science."',
-    topics: ["plate tectonics", "earth observation", "earth science"],
-    keywords: ["earth", "plates", "satellite", "volcano"],
-    baseLegitimacy: 95,
-  },
-  {
-    id: "noaa-ocean-floor",
-    title: "Exploring the Ocean Floor — NOAA",
-    url: "https://oceanservice.noaa.gov/facts/plate-boundaries.html",
-    domain: "oceanservice.noaa.gov",
-    publisher: "NOAA Ocean Service",
-    contentTier: "verified_reference",
-    gradeMin: 5,
-    gradeMax: 11,
-    abstractText:
-      "NOAA explains how mapping the ocean floor revealed mid-ocean ridges and trenches—key evidence that plates diverge and converge beneath the sea, powering much of Earth’s tectonic activity.",
-    vocabulary: ["trench", "mid-ocean ridge", "bathymetry", "divergent"],
-    citation: 'NOAA Ocean Service. "Plate Boundaries."',
-    topics: ["plate tectonics", "oceanography"],
-    keywords: ["ocean", "ridges", "trenches", "plates"],
-    baseLegitimacy: 95,
-  },
-  {
-    id: "ck12-plate-tectonics",
-    title: "Plate Tectonics — CK-12 Earth Science",
-    url: "https://www.ck12.org/earth-science/plate-tectonics/",
-    domain: "ck12.org",
-    publisher: "CK-12 Foundation",
-    contentTier: "educational_magazine",
-    gradeMin: 6,
-    gradeMax: 10,
-    abstractText:
-      "A structured lesson on plate tectonics with diagrams of boundary types, practice questions, and vocabulary checks designed for middle and early high school earth science.",
-    vocabulary: ["convergent", "divergent", "transform", "theory"],
-    citation: 'CK-12 Foundation. "Plate Tectonics."',
-    topics: ["plate tectonics", "earth science"],
-    keywords: ["plates", "lesson", "boundaries", "classroom"],
-    baseLegitimacy: 86,
-  },
-  {
-    id: "noaa-coral-reefs",
-    title: "Coral Reefs — NOAA Ocean Service",
-    url: "https://oceanservice.noaa.gov/facts/coralreef.html",
-    domain: "oceanservice.noaa.gov",
-    publisher: "NOAA Ocean Service",
-    contentTier: "verified_reference",
-    gradeMin: 3,
-    gradeMax: 10,
-    abstractText:
-      "Coral reefs are underwater ecosystems built by colonies of tiny animals. NOAA describes how reefs form, why they matter for biodiversity and coastal protection, and what threatens them today.",
-    vocabulary: ["polyp", "symbiosis", "biodiversity", "bleaching"],
-    citation: 'NOAA Ocean Service. "What is a Coral Reef?"',
-    topics: ["coral reefs", "ocean", "ecology"],
-    keywords: ["coral", "reef", "ocean", "habitat"],
-    baseLegitimacy: 95,
-  },
-  {
-    id: "natgeo-kids-coral",
-    title: "Coral Reefs — Nat Geo Kids",
-    url: "https://kids.nationalgeographic.com/nature/article/coral-reef",
-    domain: "kids.nationalgeographic.com",
-    publisher: "National Geographic Kids",
-    contentTier: "educational_magazine",
-    gradeMin: 2,
-    gradeMax: 6,
-    abstractText:
-      "A kid-friendly tour of coral reef habitats: colorful fish, how polyps build reefs, and why scientists work hard to protect these underwater cities.",
-    vocabulary: ["coral", "reef", "habitat", "protect"],
-    citation: 'National Geographic Kids. "Coral Reef."',
-    topics: ["coral reefs", "animals", "ocean"],
-    keywords: ["coral", "reef", "fish", "kids"],
-    baseLegitimacy: 90,
-  },
-  {
-    id: "nasa-spaceplace-solar",
-    title: "Our Solar System — NASA Space Place",
-    url: "https://spaceplace.nasa.gov/menu/solar-system/",
-    domain: "spaceplace.nasa.gov",
-    publisher: "NASA Space Place",
-    contentTier: "educational_magazine",
-    gradeMin: 1,
-    gradeMax: 8,
-    abstractText:
-      "NASA Space Place introduces the Sun, planets, moons, and small bodies with age-appropriate explanations so elementary and middle-grade students can explore astronomy without watered-down dead ends.",
-    vocabulary: ["planet", "orbit", "moon", "asteroid", "gravity"],
-    citation: 'NASA Space Place. "Solar System."',
-    topics: ["solar system", "planets", "space"],
-    keywords: ["planets", "sun", "space", "orbit"],
-    baseLegitimacy: 94,
-  },
-  {
-    id: "nasa-science-solar",
-    title: "Solar System Exploration — NASA Science",
-    url: "https://science.nasa.gov/solar-system/",
-    domain: "science.nasa.gov",
-    publisher: "NASA",
-    contentTier: "authoritative_research",
-    gradeMin: 6,
-    gradeMax: 12,
-    abstractText:
-      "NASA’s solar system science portal summarizes missions, planetary geology, and current research questions for students ready for deeper space science reading.",
-    vocabulary: ["heliosphere", "terrestrial planet", "gas giant", "mission"],
-    citation: 'NASA Science. "Solar System Exploration."',
-    topics: ["solar system", "planets", "space"],
-    keywords: ["planets", "nasa", "exploration", "space"],
-    baseLegitimacy: 97,
-  },
-  {
-    id: "farm-tectonics-spam",
-    title: "10 Crazy Plate Tectonics Facts That Will Shock You",
-    url: "https://viralnova-clickbait.example/plate-tectonics",
-    domain: "viralnova-clickbait.example",
-    publisher: "Content Farm Demo",
-    contentTier: "educational_magazine",
-    gradeMin: 1,
-    gradeMax: 12,
-    abstractText:
-      "Sensationalized non-academic filler designed to be rejected by Surf’s legitimacy filter.",
-    vocabulary: ["shock"],
-    citation: "Content Farm Demo.",
-    topics: ["plate tectonics"],
-    keywords: ["plate", "tectonics", "crazy"],
-    baseLegitimacy: 10,
-  },
-];
+/** Curated grades 1–8+ educational corpus (JSON-backed). */
+const ACADEMIC_CORPUS: IndexedSource[] = EDUCATIONAL_CORPUS;
 
 type RustHit = {
   id: string;

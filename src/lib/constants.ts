@@ -49,6 +49,10 @@ export const DEFAULT_WHITELIST = [
   "www.nature.com",
   "science.org",
   "www.bbc.co.uk",
+  "nps.gov",
+  "climatekids.nasa.gov",
+  "pbslearningmedia.org",
+  "ocean.si.edu",
   "www.dkfindout.com",
 ] as const;
 

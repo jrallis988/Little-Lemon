@@ -1,6 +1,6 @@
 import { FormEvent, useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { BookMarked, Plus, Trash2 } from "lucide-react";
+import { BookMarked, Download, GitCompare, ListTree, Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,7 +10,7 @@ import {
 } from "@/stores/projectsStore";
 import { useProfileStore } from "@/stores/profileStore";
 import { ROUTES } from "@/routes/paths";
-import type { CitationStyle } from "@/types";
+import type { CitationStyle, ResearchSource } from "@/types";
 
 /** Research projects list + active project workspace */
 export function ProjectsScreen() {
@@ -27,6 +27,8 @@ export function ProjectsScreen() {
   const removeNote = useProjectsStore((s) => s.removeNote);
   const [title, setTitle] = useState("");
   const [note, setNote] = useState("");
+  const [compareA, setCompareA] = useState("");
+  const [compareB, setCompareB] = useState("");
 
   const mine = useMemo(
     () =>
@@ -59,6 +61,10 @@ export function ProjectsScreen() {
   }
 
   if (active) {
+    const sourceA = active.sources.find((source) => source.id === compareA);
+    const sourceB = active.sources.find((source) => source.id === compareB);
+    const outline = buildOutline(active.topic, active.sources, active.notes.map((n) => n.body));
+
     return (
       <section className="animate-fade-in pb-20">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
@@ -75,9 +81,27 @@ export function ProjectsScreen() {
               note{active.notes.length === 1 ? "" : "s"}
             </p>
           </div>
-          <Button variant="secondary" onClick={() => navigate(ROUTES.projects)}>
-            All projects
-          </Button>
+          <div className="flex flex-wrap gap-2">
+            <Button
+              variant="secondary"
+              onClick={() =>
+                downloadText(
+                  `${slug(active.title)}-bibliography.txt`,
+                  active.sources
+                    .map((source, index) =>
+                      `${index + 1}. ${formatCitation(source, active.citationStyle)}`,
+                    )
+                    .join("\n"),
+                )
+              }
+            >
+              <Download className="mr-1.5 h-4 w-4" />
+              Export bibliography
+            </Button>
+            <Button variant="secondary" onClick={() => navigate(ROUTES.projects)}>
+              All projects
+            </Button>
+          </div>
         </div>
 
         <div className="mb-6 grid gap-4 md:grid-cols-2">
@@ -105,6 +129,80 @@ export function ProjectsScreen() {
               ))}
             </div>
           </div>
+        </div>
+
+        <div className="mb-6 grid gap-4 lg:grid-cols-2">
+          <article className="rounded-3xl border border-white/60 bg-white/80 p-5 shadow-soft">
+            <div className="mb-3 flex items-center gap-2 text-navy">
+              <GitCompare className="h-4 w-4 text-ocean" />
+              <h2 className="font-display text-lg font-semibold">
+                Compare sources
+              </h2>
+            </div>
+            {active.sources.length < 2 ? (
+              <p className="text-sm text-slate">
+                Save at least two sources from search to compare them.
+              </p>
+            ) : (
+              <>
+                <div className="grid gap-2 sm:grid-cols-2">
+                  <select
+                    className="rounded-xl border border-border bg-white px-3 py-2 text-sm"
+                    value={compareA}
+                    onChange={(event) => setCompareA(event.target.value)}
+                  >
+                    <option value="">Source A</option>
+                    {active.sources.map((source) => (
+                      <option key={source.id} value={source.id}>
+                        {source.title}
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    className="rounded-xl border border-border bg-white px-3 py-2 text-sm"
+                    value={compareB}
+                    onChange={(event) => setCompareB(event.target.value)}
+                  >
+                    <option value="">Source B</option>
+                    {active.sources.map((source) => (
+                      <option key={source.id} value={source.id}>
+                        {source.title}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                {sourceA && sourceB && (
+                  <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                    <CompareCard source={sourceA} />
+                    <CompareCard source={sourceB} />
+                  </div>
+                )}
+              </>
+            )}
+          </article>
+
+          <article className="rounded-3xl border border-white/60 bg-white/80 p-5 shadow-soft">
+            <div className="mb-3 flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2 text-navy">
+                <ListTree className="h-4 w-4 text-ocean" />
+                <h2 className="font-display text-lg font-semibold">
+                  Outline builder
+                </h2>
+              </div>
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() =>
+                  downloadText(`${slug(active.title)}-outline.txt`, outline)
+                }
+              >
+                Export
+              </Button>
+            </div>
+            <pre className="whitespace-pre-wrap text-sm leading-relaxed text-slate">
+              {outline}
+            </pre>
+          </article>
         </div>
 
         <div className="grid gap-6 lg:grid-cols-2">
@@ -224,8 +322,8 @@ export function ProjectsScreen() {
           Projects
         </h1>
         <p className="mt-3 text-slate">
-          Collect trusted sources, take notes, and build a citation list for{" "}
-          {profile.displayName}.
+          Collect trusted sources, compare evidence, build an outline, and export
+          a citation list for {profile.displayName}.
         </p>
       </header>
 
@@ -293,4 +391,67 @@ export function ProjectsScreen() {
       )}
     </section>
   );
+}
+
+function CompareCard({ source }: { source: ResearchSource }) {
+  return (
+    <div className="rounded-2xl bg-cream/80 p-3 text-sm">
+      <p className="font-semibold text-navy">{source.title}</p>
+      <p className="mt-1 text-xs text-slate">{source.publisher || source.domain}</p>
+      <p className="mt-2 text-slate">{source.abstractText.slice(0, 180)}…</p>
+      {source.vocabulary.length > 0 && (
+        <p className="mt-2 text-xs text-slate-deep">
+          Vocab: {source.vocabulary.slice(0, 4).join(", ")}
+        </p>
+      )}
+    </div>
+  );
+}
+
+function buildOutline(
+  topic: string,
+  sources: ResearchSource[],
+  notes: string[],
+): string {
+  const evidence = sources.slice(0, 3).map((source, index) => {
+    return `   ${String.fromCharCode(97 + index)}. ${source.title} — ${source.abstractText.slice(0, 110)}…`;
+  });
+  return [
+    `Outline: ${topic || "Research topic"}`,
+    "",
+    "I. Introduction",
+    "   A. Hook / why this topic matters",
+    "   B. Research question in your own words",
+    "",
+    "II. Evidence from trusted sources",
+    ...(evidence.length ? evidence : ["   a. (save sources to fill this section)"]),
+    "",
+    "III. Your analysis",
+    ...(notes.length
+      ? notes
+          .slice(0, 3)
+          .map((note, index) => `   ${String.fromCharCode(97 + index)}. ${note}`)
+      : ["   a. (add notes to fill this section)"]),
+    "",
+    "IV. Conclusion",
+    "   A. Answer the research question",
+    "   B. One new question you’d explore next",
+    "",
+    "V. Works cited",
+    "   (use Export bibliography)",
+  ].join("\n");
+}
+
+function downloadText(filename: string, body: string) {
+  const blob = new Blob([body], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = filename;
+  anchor.click();
+  URL.revokeObjectURL(url);
+}
+
+function slug(value: string): string {
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") || "surf-project";
 }

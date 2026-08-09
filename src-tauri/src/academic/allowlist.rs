@@ -146,6 +146,26 @@ pub const TRUSTED_DOMAINS: &[TrustedDomain] = &[
         score: 93,
         label: "Nat Geo Edu",
     },
+    TrustedDomain {
+        host: "nps.gov",
+        score: 95,
+        label: "National Park Service",
+    },
+    TrustedDomain {
+        host: "climatekids.nasa.gov",
+        score: 93,
+        label: "NASA Climate Kids",
+    },
+    TrustedDomain {
+        host: "pbslearningmedia.org",
+        score: 90,
+        label: "PBS LearningMedia",
+    },
+    TrustedDomain {
+        host: "ocean.si.edu",
+        score: 94,
+        label: "Smithsonian Ocean",
+    },
 ];
 
 /// Known low-quality / content-farm patterns rejected by the legitimacy layer.
@@ -159,6 +179,11 @@ const CONTENT_FARM_MARKERS: &[&str] = &[
     "homework-help-cheap",
     "softonic",
     "wikihow-spam",
+    "ranker.com",
+    "boredpanda",
+    "shareably",
+    "providr",
+    "answerbag",
 ];
 
 const MIN_PASSING_SCORE: u8 = 55;

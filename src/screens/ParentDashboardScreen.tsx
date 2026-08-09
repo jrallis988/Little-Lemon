@@ -15,8 +15,12 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { isValidPinFormat } from "@/services/parentGate";
-import { useParentStore } from "@/stores/profileStore";
+import { useParentStore, useProfileStore } from "@/stores/profileStore";
 import { useSessionStore } from "@/stores/sessionStore";
+import {
+  buildUsageReport,
+  useSchoolStore,
+} from "@/stores/schoolStore";
 import { extractDomain, formatMinutes } from "@/lib/utils";
 
 /** Screen 10 — Parent Control Dashboard (PIN-protected) */
@@ -38,12 +42,22 @@ export function ParentDashboardScreen() {
   const setAllowlistOnly = useParentStore((s) => s.setAllowlistOnly);
   const setPin = useParentStore((s) => s.setPin);
   const resetForNewDay = useSessionStore((s) => s.resetForNewDay);
+  const profiles = useProfileStore((s) => s.profiles);
+  const classes = useSchoolStore((s) => s.classes);
+  const createClass = useSchoolStore((s) => s.createClass);
+  const joinClass = useSchoolStore((s) => s.joinClass);
+  const removeClass = useSchoolStore((s) => s.removeClass);
 
   const [pin, setPinInput] = useState("");
   const [newPin, setNewPin] = useState("");
   const [domain, setDomain] = useState("");
   const [blockedDomain, setBlockedDomain] = useState("");
   const [error, setError] = useState("");
+  const [className, setClassName] = useState("");
+  const [teacherName, setTeacherName] = useState("");
+  const [joinCode, setJoinCode] = useState("");
+  const [joinProfileId, setJoinProfileId] = useState("");
+  const [schoolMessage, setSchoolMessage] = useState("");
 
   const chartData = useMemo(() => usage.slice(-7), [usage]);
   const blocklist = controls.blocklist ?? [];
@@ -314,34 +328,190 @@ export function ParentDashboardScreen() {
         </ul>
       </div>
 
-      <div className="max-w-md rounded-3xl border border-white/60 bg-white/80 p-6 shadow-soft">
+      <div className="grid gap-6 lg:grid-cols-2">
+        <div className="rounded-3xl border border-white/60 bg-white/80 p-6 shadow-soft">
+          <h2 className="font-display text-xl font-semibold text-navy">
+            Change PIN
+          </h2>
+          <form
+            className="mt-4 space-y-3"
+            onSubmit={async (event) => {
+              event.preventDefault();
+              if (!isValidPinFormat(newPin)) {
+                setError("PIN must be 4–8 digits.");
+                return;
+              }
+              await setPin(newPin);
+              setNewPin("");
+              setError("");
+            }}
+          >
+            <Label htmlFor="new-pin">New PIN</Label>
+            <Input
+              id="new-pin"
+              type="password"
+              inputMode="numeric"
+              value={newPin}
+              onChange={(e) => setNewPin(e.target.value)}
+            />
+            {error && <p className="text-sm text-destructive">{error}</p>}
+            <Button type="submit">Update PIN</Button>
+          </form>
+        </div>
+
+        <div className="rounded-3xl border border-white/60 bg-white/80 p-6 shadow-soft">
+          <h2 className="font-display text-xl font-semibold text-navy">
+            Printable child reports
+          </h2>
+          <p className="mt-1 text-sm text-slate">
+            Download a simple usage summary per student profile.
+          </p>
+          <ul className="mt-4 space-y-2">
+            {profiles.map((profile) => {
+              const today = usage[usage.length - 1];
+              return (
+                <li
+                  key={profile.id}
+                  className="flex items-center justify-between gap-3 rounded-2xl bg-cream px-3 py-2"
+                >
+                  <span className="text-sm font-medium text-navy">
+                    {profile.displayName} · Grade {profile.grade}
+                  </span>
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    onClick={() => {
+                      const body = buildUsageReport({
+                        childName: profile.displayName,
+                        grade: profile.grade,
+                        searches: today?.searches ?? 0,
+                        minutes: today?.minutes ?? 0,
+                        blockedAttempts: today?.blockedAttempts ?? 0,
+                        recentTitles: history
+                          .filter((entry) => entry.profileId === profile.id)
+                          .slice(0, 8)
+                          .map((entry) => entry.title),
+                      });
+                      const blob = new Blob([body], {
+                        type: "text/plain;charset=utf-8",
+                      });
+                      const url = URL.createObjectURL(blob);
+                      const anchor = document.createElement("a");
+                      anchor.href = url;
+                      anchor.download = `${profile.displayName.toLowerCase()}-surf-report.txt`;
+                      anchor.click();
+                      URL.revokeObjectURL(url);
+                    }}
+                  >
+                    Download
+                  </Button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
+
+      <div className="rounded-3xl border border-white/60 bg-white/80 p-6 shadow-soft">
         <h2 className="font-display text-xl font-semibold text-navy">
-          Change PIN
+          Classroom codes
         </h2>
+        <p className="mt-1 text-sm text-slate">
+          Create a class code teachers/families can share, then join a child
+          profile to the roster.
+        </p>
         <form
-          className="mt-4 space-y-3"
-          onSubmit={async (event) => {
+          className="mt-4 grid gap-2 md:grid-cols-[1fr_1fr_auto]"
+          onSubmit={(event) => {
             event.preventDefault();
-            if (!isValidPinFormat(newPin)) {
-              setError("PIN must be 4–8 digits.");
-              return;
-            }
-            await setPin(newPin);
-            setNewPin("");
-            setError("");
+            const roster = createClass({
+              name: className,
+              teacherName,
+              sharedAllowlist: controls.whitelist.slice(0, 12),
+            });
+            setClassName("");
+            setTeacherName("");
+            setSchoolMessage(`Created class code ${roster.code}`);
           }}
         >
-          <Label htmlFor="new-pin">New PIN</Label>
           <Input
-            id="new-pin"
-            type="password"
-            inputMode="numeric"
-            value={newPin}
-            onChange={(e) => setNewPin(e.target.value)}
+            value={className}
+            onChange={(e) => setClassName(e.target.value)}
+            placeholder="Class name"
           />
-          {error && <p className="text-sm text-destructive">{error}</p>}
-          <Button type="submit">Update PIN</Button>
+          <Input
+            value={teacherName}
+            onChange={(e) => setTeacherName(e.target.value)}
+            placeholder="Teacher / adult name"
+          />
+          <Button type="submit">Create</Button>
         </form>
+
+        <form
+          className="mt-4 grid gap-2 md:grid-cols-[1fr_1fr_auto]"
+          onSubmit={(event) => {
+            event.preventDefault();
+            if (!joinProfileId) {
+              setSchoolMessage("Choose a student profile to join.");
+              return;
+            }
+            const ok = joinClass(joinCode, joinProfileId);
+            setSchoolMessage(
+              ok
+                ? `Joined profile to class ${joinCode.toUpperCase()}`
+                : "Class code not found.",
+            );
+          }}
+        >
+          <Input
+            value={joinCode}
+            onChange={(e) => setJoinCode(e.target.value)}
+            placeholder="Class code"
+          />
+          <select
+            className="rounded-xl border border-border bg-white px-3 py-2 text-sm"
+            value={joinProfileId}
+            onChange={(e) => setJoinProfileId(e.target.value)}
+          >
+            <option value="">Student profile</option>
+            {profiles.map((profile) => (
+              <option key={profile.id} value={profile.id}>
+                {profile.displayName}
+              </option>
+            ))}
+          </select>
+          <Button type="submit" variant="secondary">
+            Join
+          </Button>
+        </form>
+        {schoolMessage && (
+          <p className="mt-3 text-sm font-medium text-ocean">{schoolMessage}</p>
+        )}
+        <ul className="mt-4 space-y-2">
+          {classes.map((roster) => (
+            <li
+              key={roster.id}
+              className="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-cream px-3 py-3 text-sm"
+            >
+              <div>
+                <p className="font-semibold text-navy">
+                  {roster.name} · code {roster.code}
+                </p>
+                <p className="text-xs text-slate">
+                  {roster.teacherName} · {roster.memberProfileIds.length}{" "}
+                  student(s)
+                </p>
+              </div>
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => removeClass(roster.id)}
+              >
+                Remove
+              </Button>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
