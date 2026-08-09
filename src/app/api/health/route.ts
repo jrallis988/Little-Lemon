@@ -16,6 +16,10 @@ export async function GET() {
   const envPeek = peekEnv();
   const db = await checkDatabase();
   const url = process.env.DATABASE_URL ?? "";
+  const adminEmails = (process.env.ADMIN_EMAILS ?? "")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
 
   const ready = envPeek.ok && db.ok;
   const body = {
@@ -41,8 +45,12 @@ export async function GET() {
         liveSwitch: Boolean(process.env.SWITCH_API_URL),
         telehealth: Boolean(process.env.TELEHEALTH_PARTNER_URL),
         mailOrder: Boolean(process.env.MAIL_ORDER_PARTNER_URL),
+        chatAdminNotify:
+          adminEmails.length > 0 &&
+          (envPeek.ok ? isResendConfigured() : false),
+        sentry: Boolean(process.env.SENTRY_DSN),
       },
-      launchChecklist: "See docs/LAUNCH.md",
+      launchChecklist: "See docs/LAUNCH.md and docs/DEPLOY.md",
     },
   };
 

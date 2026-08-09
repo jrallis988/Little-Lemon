@@ -108,6 +108,26 @@ export async function POST(req: Request) {
       },
     });
 
+    // Fire-and-forget admin notify (email/SMS) — never block the visitor.
+    void import("@/lib/alerts/dispatch").then(({ notifyAdminsOfChatMessage }) =>
+      notifyAdminsOfChatMessage({
+        conversationId: conversation.id,
+        preview: parsed.data.body,
+        topic: parsed.data.topic ?? conversation.topic,
+        pagePath: parsed.data.pagePath ?? conversation.pagePath,
+        visitorName:
+          parsed.data.visitorName ||
+          conversation.visitorName ||
+          session?.user?.name ||
+          null,
+        visitorEmail:
+          parsed.data.visitorEmail ||
+          conversation.visitorEmail ||
+          session?.user?.email ||
+          null,
+      })
+    );
+
     const messages = await prisma.message.findMany({
       where: { conversationId: conversation.id },
       orderBy: { createdAt: "asc" },
@@ -129,6 +149,9 @@ export async function POST(req: Request) {
     logger.error("chat_post_failed", {
       error: err instanceof Error ? err.message : String(err),
     });
+    void import("@/lib/observability").then(({ captureException }) =>
+      captureException(err, { route: "POST /api/chat" })
+    );
     return NextResponse.json(
       { error: "Could not send message. Please try again." },
       { status: 500 }

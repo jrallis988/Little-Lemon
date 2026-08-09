@@ -470,7 +470,28 @@ export function CouponModal({
           )}
 
           {pharmacistMode && (
-            <div className="no-print mt-auto pt-2">
+            <div className="no-print mt-auto space-y-3 pt-2">
+              <div className="rounded-xl border border-amber-300/70 bg-amber-50 px-3 py-3 text-sm text-foreground">
+                <p className="font-semibold">If the claim rejects</p>
+                <ul className="mt-1.5 list-disc space-y-1 pl-4 text-foreground/90">
+                  <li>
+                    Ask them to process as a <strong>commercial discount card</strong>{" "}
+                    — not primary insurance.
+                  </li>
+                  <li>
+                    Re-enter BIN / PCN / Group / Member ID from this screen (or
+                    rescan the barcode).
+                  </li>
+                  <li>
+                    Confirm the pharmacy is in-network. If not, try another store
+                    nearby or Chat with us.
+                  </li>
+                  <li>
+                    Coupons generally cannot combine with insurance — pick the
+                    lower of coupon vs plan copay.
+                  </li>
+                </ul>
+              </div>
               <Button
                 type="button"
                 className="min-h-12 w-full text-base"

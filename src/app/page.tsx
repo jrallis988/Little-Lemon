@@ -4,6 +4,7 @@ import { ArrowRight, MapPin } from "lucide-react";
 import { DrugSearch } from "@/components/search/drug-search";
 import { buttonVariants } from "@/components/ui/button";
 import { prisma } from "@/lib/db";
+import { FIRST_WIN_DRUGS } from "@/lib/first-win-drugs";
 import { mapDrug } from "@/lib/pricing-service";
 import { cn } from "@/lib/utils";
 
@@ -100,8 +101,26 @@ export default async function HomePage() {
 
           <div className="animate-trx-fade-up-delay mt-6 max-w-2xl">
             <DrugSearch size="hero" autoFocus />
-            <p className="mt-2.5 text-sm text-trust-foreground/85">
-              Popular:{" "}
+            <div className="mt-4">
+              <p className="text-sm font-medium text-trust-foreground/90">
+                Start in one tap — common fills
+              </p>
+              <ul className="mt-2 flex flex-wrap gap-2">
+                {FIRST_WIN_DRUGS.map((d) => (
+                  <li key={d.id}>
+                    <Link
+                      href={`/search?drug=${d.id}`}
+                      className="inline-flex min-h-10 items-center gap-1.5 rounded-lg bg-trust-foreground/12 px-3 text-sm font-semibold text-trust-foreground ring-1 ring-trust-foreground/25 backdrop-blur-sm transition hover:bg-trust-foreground/20"
+                    >
+                      {d.label}
+                      <span className="font-normal opacity-80">{d.hint}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <p className="mt-3 text-sm text-trust-foreground/85">
+              Also popular:{" "}
               {popular.slice(0, 4).map((d, i) => (
                 <span key={d.id}>
                   {i > 0 && " · "}

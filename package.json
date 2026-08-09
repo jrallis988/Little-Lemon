@@ -11,7 +11,8 @@
     "db:seed": "tsx prisma/seed.ts",
     "db:reset": "prisma migrate reset --force",
     "postinstall": "prisma generate",
-    "test:smoke": "node scripts/smoke.mjs"
+    "test:smoke": "node scripts/smoke.mjs",
+    "test:e2e": "node scripts/e2e-smoke.mjs"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

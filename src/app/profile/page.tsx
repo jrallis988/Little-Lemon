@@ -3,10 +3,11 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Bell, BookmarkX, Loader2, MapPin } from "lucide-react";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { EmptyState } from "@/components/design/empty-state";
 import { TrustCallout } from "@/components/design/trust-callout";
+import { SavedPassViewer } from "@/components/checkout/saved-pass-viewer";
 import { formatCurrency } from "@/lib/pricing";
 import { cn } from "@/lib/utils";
 
@@ -352,13 +353,24 @@ function SavedPassesSection() {
       status: string;
       issuedAt: string;
       items: Array<{
+        id: string;
         pharmacyName: string | null;
         counterPrice: number;
-        coupon: { drugName: string; memberId: string; expiresAt: string };
+        coupon: {
+          drugName: string;
+          memberId: string;
+          expiresAt: string;
+          bin: string;
+          pcn: string;
+          group: string;
+          barcodeValue: string;
+          pharmacyName?: string;
+        };
       }>;
     }>
   >([]);
   const [loaded, setLoaded] = useState(false);
+  const [activePassId, setActivePassId] = useState<string | null>(null);
 
   useEffect(() => {
     fetch("/api/me/passes")
@@ -369,6 +381,8 @@ function SavedPassesSection() {
       .then((data) => setPasses(data.passes ?? []))
       .finally(() => setLoaded(true));
   }, []);
+
+  const active = passes.find((p) => p.id === activePassId) ?? null;
 
   return (
     <section className="space-y-3">
@@ -406,17 +420,36 @@ function SavedPassesSection() {
                 {pass.items.length} item{pass.items.length === 1 ? "" : "s"}
               </p>
               <ul className="mt-2 space-y-1 text-sm">
-                {pass.items.map((item, idx) => (
-                  <li key={`${pass.id}-${idx}`} className="text-muted-foreground">
+                {pass.items.map((item) => (
+                  <li key={item.id} className="text-muted-foreground">
                     {item.coupon.drugName}
                     {item.pharmacyName ? ` @ ${item.pharmacyName}` : ""} ·{" "}
                     {formatCurrency(item.counterPrice)}
                   </li>
                 ))}
               </ul>
+              {pass.status === "active" && (
+                <Button
+                  type="button"
+                  className="mt-3 min-h-10"
+                  onClick={() => setActivePassId(pass.id)}
+                >
+                  Show at counter
+                </Button>
+              )}
             </li>
           ))}
         </ul>
+      )}
+
+      {active && (
+        <SavedPassViewer
+          open={!!active}
+          onOpenChange={(o) => !o && setActivePassId(null)}
+          passCode={active.passCode}
+          status={active.status}
+          items={active.items}
+        />
       )}
     </section>
   );

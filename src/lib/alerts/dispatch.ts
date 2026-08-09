@@ -2,6 +2,7 @@ import { Resend } from "resend";
 import twilio from "twilio";
 import { getEnv, isResendConfigured, isTwilioConfigured } from "@/lib/env";
 import { formatCurrency } from "@/lib/pricing";
+import { logger } from "@/lib/logger";
 
 export type AlertDispatchPayload = {
   alertId: string;
@@ -33,6 +34,13 @@ function getTwilio() {
   if (!isTwilioConfigured()) return null;
   const env = getEnv();
   return twilio(env.TWILIO_ACCOUNT_SID!, env.TWILIO_AUTH_TOKEN!);
+}
+
+function adminEmails(): string[] {
+  return (process.env.ADMIN_EMAILS ?? "")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
 }
 
 export async function sendAlertEmail(
@@ -129,7 +137,7 @@ export async function sendAlertSms(
   }
 }
 
-/** Dispatch email + optional SMS; never throws — logs each channel result. */
+/** Dispatch email + optional SMS; never throws. */
 export async function dispatchPriceAlert(
   payload: AlertDispatchPayload
 ): Promise<DispatchResult[]> {
@@ -137,11 +145,105 @@ export async function dispatchPriceAlert(
 
   const email = await sendAlertEmail(payload);
   results.push(email);
-  console.info("[alert-dispatch]", payload.alertId, email);
+  logger.info("alert_dispatch_email", { alertId: payload.alertId, ...email });
 
   const sms = await sendAlertSms(payload);
   results.push(sms);
-  console.info("[alert-dispatch]", payload.alertId, sms);
+  logger.info("alert_dispatch_sms", { alertId: payload.alertId, ...sms });
 
+  return results;
+}
+
+export type ChatNotifyPayload = {
+  conversationId: string;
+  preview: string;
+  topic?: string | null;
+  pagePath?: string | null;
+  visitorName?: string | null;
+  visitorEmail?: string | null;
+};
+
+/** Email (and optional SMS) ADMIN_EMAILS when a visitor sends a chat message. */
+export async function notifyAdminsOfChatMessage(
+  payload: ChatNotifyPayload
+): Promise<DispatchResult[]> {
+  const env = getEnv();
+  const emails = adminEmails();
+  const results: DispatchResult[] = [];
+  const inboxUrl = `${env.NEXT_PUBLIC_APP_URL}/admin/messages`;
+  const who =
+    payload.visitorName ||
+    payload.visitorEmail ||
+    "A visitor";
+  const preview = payload.preview.slice(0, 280);
+
+  const resend = getResend();
+  if (resend && env.RESEND_FROM_EMAIL && emails.length > 0) {
+    try {
+      const result = await resend.emails.send({
+        from: env.RESEND_FROM_EMAIL,
+        to: emails,
+        subject: `Trump RX chat: ${who} needs help`,
+        html: `
+          <div style="font-family: system-ui, sans-serif; line-height: 1.5; color: #111;">
+            <h1 style="font-size: 18px;">New support message</h1>
+            <p><strong>${who}</strong>${payload.visitorEmail ? ` · ${payload.visitorEmail}` : ""}</p>
+            <p>Topic: ${payload.topic ?? "general"}${payload.pagePath ? ` · Page: ${payload.pagePath}` : ""}</p>
+            <blockquote style="border-left: 3px solid #e24a2e; margin: 12px 0; padding-left: 12px;">
+              ${preview.replace(/</g, "&lt;")}
+            </blockquote>
+            <p><a href="${inboxUrl}">Open support inbox</a></p>
+          </div>
+        `,
+      });
+      results.push(
+        result.error
+          ? { channel: "email", ok: false, error: result.error.message }
+          : { channel: "email", ok: true, providerId: result.data?.id }
+      );
+    } catch (err) {
+      results.push({
+        channel: "email",
+        ok: false,
+        error: err instanceof Error ? err.message : "Chat email failed",
+      });
+    }
+  } else {
+    results.push({
+      channel: "email",
+      ok: false,
+      skipped: true,
+      error:
+        emails.length === 0
+          ? "ADMIN_EMAILS not set"
+          : "Resend not configured",
+    });
+  }
+
+  const smsTo = process.env.ADMIN_SMS_TO?.trim();
+  const client = getTwilio();
+  if (client && env.TWILIO_FROM_NUMBER && smsTo) {
+    try {
+      const msg = await client.messages.create({
+        from: env.TWILIO_FROM_NUMBER,
+        to: smsTo,
+        body: `Trump RX chat from ${who}: ${preview.slice(0, 120)}… ${inboxUrl}`,
+      });
+      results.push({ channel: "sms", ok: true, providerId: msg.sid });
+    } catch (err) {
+      results.push({
+        channel: "sms",
+        ok: false,
+        error: err instanceof Error ? err.message : "Chat SMS failed",
+      });
+    }
+  }
+
+  for (const r of results) {
+    logger.info("chat_admin_notify", {
+      conversationId: payload.conversationId,
+      ...r,
+    });
+  }
   return results;
 }

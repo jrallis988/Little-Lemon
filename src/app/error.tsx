@@ -14,15 +14,8 @@ export default function Error({
 }) {
   useEffect(() => {
     // Client-visible failures — digest ties to server logs when present.
-    console.error(
-      JSON.stringify({
-        ts: new Date().toISOString(),
-        level: "error",
-        message: "app_error_boundary",
-        digest: error.digest,
-        name: error.name,
-        detail: error.message,
-      })
+    void import("@/lib/observability").then(({ captureException }) =>
+      captureException(error, { digest: error.digest, boundary: "app" })
     );
   }, [error]);
 

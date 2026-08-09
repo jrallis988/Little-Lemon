@@ -23,12 +23,16 @@ Operational checklist for going live. Product blueprint surfaces are already shi
 
 | Addition | Status in repo |
 |---|---|
-| Saved digital passes on account | Shipped — `DigitalPass` + `/api/me/passes` + profile |
-| True insurance plan import | Stub API `POST /api/insurance/plan-import` (manual until PBM) |
-| NCPDP / pharmacy ID enrichment | `Pharmacy.ncpdpId` / `npi` mapped + seed + switch payload |
-| Admin tools | `/admin` + `/api/admin/overview` (email allowlist) |
-| Observability | Health integrations + `SwitchEvent` audit log on prechecks |
-| E2E / smoke | `npm run test:smoke` (matrix + switch unit smoke) |
+| Saved digital passes on account | Shipped — reopen barcodes from Profile |
+| Chat + admin inbox + notify | Shipped — `/admin/messages`, email/SMS on new chats |
+| Counter reject guidance | Shipped — coupon pharmacist mode + help |
+| First-win homepage CTAs | Shipped — curated common fills |
+| True insurance plan import | Stub API `POST /api/insurance/plan-import` |
+| NCPDP / pharmacy ID enrichment | Mapped + seeded |
+| Admin tools | `/admin` + messages inbox |
+| Observability | Health + optional `SENTRY_DSN` |
+| Deploy scaffolding | `Dockerfile`, `docker-compose.yml`, `vercel.json`, CI |
+| E2E / smoke | `npm run test:smoke`, `npm run test:e2e` (needs running server) |
 
 ---
 
