@@ -154,7 +154,7 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
 
         <div className="mt-auto flex flex-wrap items-baseline gap-x-2 gap-y-0.5 pt-1">
           <span className="price-deal text-[0.95rem]">
-            {formatCurrency(product.price)}
+            Our price {formatCurrency(product.price)}
           </span>
           <span className="price-compare text-xs">
             Compare at {formatCurrency(product.compareAt)}
