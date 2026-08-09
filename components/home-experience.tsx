@@ -8,7 +8,6 @@ import { ClubLocator } from "@/components/club-locator";
 import { GetStarted } from "@/components/get-started";
 import { JoinOffer } from "@/components/join-offer";
 import { SelectedClubProvider } from "@/components/selected-club-context";
-import { SiteFooter } from "@/components/site-footer";
 import { SummerPass } from "@/components/summer-pass";
 import { VirtualTour } from "@/components/virtual-tour";
 
@@ -21,6 +20,7 @@ const PricingMatrix = dynamic(
   }
 );
 
+/** Public web acquisition composition (Screens 01–20). */
 export function HomeExperience() {
   return (
     <SelectedClubProvider>
@@ -33,7 +33,6 @@ export function HomeExperience() {
       <AppHighlights />
       <VirtualTour />
       <GetStarted />
-      <SiteFooter />
     </SelectedClubProvider>
   );
 }

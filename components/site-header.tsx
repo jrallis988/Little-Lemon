@@ -7,10 +7,10 @@ import { PlanetFitnessLogo } from "@/components/brand-logo";
 import { Button } from "@/components/ui/button";
 
 const NAV = [
-  { href: "#clubs", label: "Find a Club" },
-  { href: "#pricing", label: "Memberships" },
-  { href: "#summer-pass", label: "Summer Pass" },
-  { href: "#tour", label: "Virtual Tour" },
+  { href: "/#clubs", label: "Find a Club" },
+  { href: "/#pricing", label: "Memberships" },
+  { href: "/#summer-pass", label: "Summer Pass" },
+  { href: "/#tour", label: "Virtual Tour" },
   { href: "/join", label: "Join Now" },
 ];
 
@@ -30,7 +30,7 @@ export function SiteHeader() {
             size="sm"
             className="hidden text-pf-ink hover:bg-pf-mist hover:text-pf-purple md:inline-flex"
           >
-            <a href="#clubs">Find a Club</a>
+            <Link href="/#clubs">Find a Club</Link>
           </Button>
           <Button
             asChild
@@ -38,10 +38,18 @@ export function SiteHeader() {
             size="sm"
             className="hidden text-pf-ink hover:bg-pf-mist hover:text-pf-purple sm:inline-flex"
           >
-            <a href="#pricing">Memberships</a>
+            <Link href="/#pricing">Memberships</Link>
           </Button>
           <Button asChild variant="purple" size="sm">
             <Link href="/join">Join Now</Link>
+          </Button>
+          <Button
+            asChild
+            variant="ghost"
+            size="sm"
+            className="hidden text-pf-ink hover:bg-pf-mist hover:text-pf-purple lg:inline-flex"
+          >
+            <Link href="/app">Member App</Link>
           </Button>
           <button
             type="button"
@@ -63,15 +71,15 @@ export function SiteHeader() {
           className="border-t border-pf-line bg-white px-4 py-3 md:hidden"
         >
           <ul className="space-y-1">
-            {NAV.map((item) => (
+            {[...NAV, { href: "/app", label: "Member App" }].map((item) => (
               <li key={item.href}>
-                <a
+                <Link
                   href={item.href}
                   className="block rounded-xl px-3 py-2.5 text-sm font-semibold text-pf-ink hover:bg-pf-mist hover:text-pf-purple"
                   onClick={() => setOpen(false)}
                 >
                   {item.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

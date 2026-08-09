@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
 import { Barlow_Condensed, Source_Sans_3 } from "next/font/google";
-import { AppHandoffBanner } from "@/components/app-handoff-banner";
-import { CookieConsent } from "@/components/cookie-consent";
-import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
 
 const display = Barlow_Condensed({
@@ -29,7 +26,7 @@ export const metadata: Metadata = {
     template: "%s · Planet Fitness",
   },
   description:
-    "Find a nearby Planet Fitness, compare Classic and Black Card membership pricing, and join online. Check-in and your digital keytag live in the app.",
+    "Find a nearby Planet Fitness, compare Classic and Black Card membership pricing, and join online. Day-to-day member tools live in the PF app experience.",
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -54,13 +51,11 @@ export const metadata: Metadata = {
       "Explore clubs near you, compare memberships, and join with transparent local pricing.",
     images: ["/images/hero-gym.jpg"],
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: { index: true, follow: true },
   manifest: "/manifest.json",
 };
 
+/** Root shell: fonts + global styles only. Segment layouts own chrome. */
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -68,18 +63,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${display.variable} ${body.variable}`}>
-      <body className="pb-12 font-sans antialiased">
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-pf-yellow focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-pf-ink"
-        >
-          Skip to content
-        </a>
-        <SiteHeader />
-        <main id="main">{children}</main>
-        <AppHandoffBanner />
-        <CookieConsent />
-      </body>
+      <body className="min-h-dvh font-sans antialiased">{children}</body>
     </html>
   );
 }

@@ -7,8 +7,9 @@ import { track } from "@/lib/analytics";
 export function JoinOffer() {
   return (
     <section
+      id="offer"
       aria-labelledby="join-offer-heading"
-      className="overflow-hidden bg-gradient-to-br from-pf-purple via-pf-purple to-[#7a3bb8] text-white"
+      className="scroll-mt-14 overflow-hidden bg-gradient-to-br from-pf-purple via-pf-purple to-[#7a3bb8] text-white"
     >
       <div className="mx-auto grid max-w-5xl gap-6 px-4 py-8 md:grid-cols-[1.15fr_0.85fr] md:items-center md:px-6 md:py-10">
         <div>
