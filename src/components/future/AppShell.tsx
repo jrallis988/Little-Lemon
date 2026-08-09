@@ -7,6 +7,8 @@ type AppShellProps = {
   activeNav?: (typeof appNavItems)[number]["id"];
   onNav?: (id: (typeof appNavItems)[number]["id"]) => void;
   footer?: ReactNode;
+  banner?: ReactNode;
+  overlay?: ReactNode;
   className?: string;
 };
 
@@ -16,11 +18,13 @@ export function AppShell({
   activeNav = "today",
   onNav,
   footer,
+  banner,
+  overlay,
   className = "",
 }: AppShellProps) {
   return (
     <div
-      className={`mx-auto flex w-full max-w-[22rem] flex-col overflow-hidden rounded-[2rem] border border-ink/10 bg-[#f7f8fb] shadow-glow ${className}`}
+      className={`relative mx-auto flex w-full max-w-[22rem] flex-col overflow-hidden rounded-[2rem] border border-ink/10 bg-[#f7f8fb] shadow-glow ${className}`}
     >
       <div className="flex items-center justify-between bg-ink px-5 pb-3 pt-3 text-white">
         <p className="font-sans text-[0.65rem] font-semibold tracking-wide">9:41</p>
@@ -44,7 +48,11 @@ export function AppShell({
           </span>
         </div>
       </div>
-      <div className="min-h-[28rem] flex-1 overflow-y-auto px-4 py-4">{children}</div>
+      {banner}
+      <div className="relative min-h-[28rem] flex-1 overflow-y-auto px-4 py-4">
+        {children}
+        {overlay}
+      </div>
       {footer}
       <nav
         className="grid grid-cols-5 border-t border-ink/8 bg-white px-1 py-2"

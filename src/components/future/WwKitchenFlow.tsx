@@ -7,6 +7,8 @@ import {
   StepDots,
   TextButton,
 } from "./AppShell";
+import { EmptyState, ErrorBanner } from "./PrototypePolish";
+import { useToast } from "./useToast";
 
 type Meal = {
   id: string;
@@ -39,12 +41,26 @@ const days = [
 
 type Step = "home" | "planner" | "swap" | "grocery" | "cook";
 
-export function WwKitchenFlow() {
-  const [step, setStep] = useState<Step>("home");
+type WwKitchenFlowProps = {
+  initialStep?: Step;
+  pathwayLabel?: string;
+  onJourneyComplete?: () => void;
+  completeLabel?: string;
+};
+
+export function WwKitchenFlow({
+  initialStep = "home",
+  pathwayLabel,
+  onJourneyComplete,
+  completeLabel = "Finish journey",
+}: WwKitchenFlowProps = {}) {
+  const [step, setStep] = useState<Step>(initialStep);
   const [plan, setPlan] = useState(basePlan);
   const [swapDay, setSwapDay] = useState<keyof typeof basePlan>("mon");
   const [checked, setChecked] = useState<string[]>(["Spinach", "Rice"]);
   const [ingredients, setIngredients] = useState("chicken, spinach, rice, tomatoes");
+  const [cookError, setCookError] = useState<string | null>(null);
+  const { showToast, toastNode } = useToast();
 
   const grocery = useMemo(
     () => [
@@ -57,12 +73,15 @@ export function WwKitchenFlow() {
     []
   );
 
+  const allItems = useMemo(() => grocery.flatMap((group) => group.items), [grocery]);
+  const remaining = allItems.filter((item) => !checked.includes(item));
+
   const cookIdeas = [
     {
       name: "Skillet chicken with spinach rice",
       time: "25 min",
       missing: "None",
-      fit: "Build Strength",
+      fit: pathwayLabel ?? "Build Strength",
     },
     {
       name: "Tomato-spinach chicken bowls",
@@ -79,9 +98,15 @@ export function WwKitchenFlow() {
   ];
 
   const toggleChecked = (item: string) => {
-    setChecked((current) =>
-      current.includes(item) ? current.filter((value) => value !== item) : [...current, item]
-    );
+    setChecked((current) => {
+      const next = current.includes(item)
+        ? current.filter((value) => value !== item)
+        : [...current, item];
+      if (next.length === allItems.length) {
+        showToast("List complete — ready to cook");
+      }
+      return next;
+    });
   };
 
   const stepIndex = ["home", "planner", "swap", "grocery", "cook"].indexOf(step);
@@ -90,6 +115,16 @@ export function WwKitchenFlow() {
     <AppShell
       title="WW Kitchen"
       activeNav="kitchen"
+      overlay={toastNode}
+      banner={
+        pathwayLabel ? (
+          <div className="border-b border-ink/5 bg-mist px-4 py-2">
+            <p className="font-sans text-[0.65rem] font-semibold text-cobalt-700">
+              Meals tuned to {pathwayLabel}
+            </p>
+          </div>
+        ) : null
+      }
       onNav={(id) => {
         if (id === "kitchen") setStep("home");
         if (id === "today") setStep("planner");
@@ -98,7 +133,7 @@ export function WwKitchenFlow() {
       <StepDots step={Math.max(0, stepIndex)} total={5} />
 
       {step === "home" && (
-        <div className="space-y-4">
+        <div className="space-y-4 animate-rise">
           <SoftCard className="bg-ink text-white">
             <p className="font-sans text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-tide">
               Kitchen Home
@@ -118,7 +153,7 @@ export function WwKitchenFlow() {
                 key={label}
                 type="button"
                 onClick={() => setStep(next as Step)}
-                className="rounded-2xl border border-ink/10 bg-white px-3 py-4 text-left font-sans text-sm font-semibold text-ink"
+                className="rounded-2xl border border-ink/10 bg-white px-3 py-4 text-left font-sans text-sm font-semibold text-ink transition hover:border-cobalt-300 hover:-translate-y-0.5"
               >
                 {label}
               </button>
@@ -128,14 +163,14 @@ export function WwKitchenFlow() {
       )}
 
       {step === "planner" && (
-        <div className="space-y-3">
+        <div className="space-y-3 animate-rise">
           <h3 className="font-display text-xl font-bold text-ink" style={{ fontWeight: 700 }}>
             Weekly Planner
           </h3>
           {days.map(([key, label]) => {
             const meal = plan[key];
             return (
-              <SoftCard key={key}>
+              <SoftCard key={key} className="transition hover:-translate-y-0.5">
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <p className="font-sans text-[0.65rem] uppercase tracking-[0.14em] text-ink/40">
@@ -154,7 +189,7 @@ export function WwKitchenFlow() {
                       setSwapDay(key);
                       setStep("swap");
                     }}
-                    className="rounded-full bg-mist px-3 py-1.5 font-sans text-[0.65rem] font-semibold text-cobalt-700"
+                    className="rounded-full bg-mist px-3 py-1.5 font-sans text-[0.65rem] font-semibold text-cobalt-700 transition hover:bg-cobalt-100"
                   >
                     Swap
                   </button>
@@ -163,12 +198,23 @@ export function WwKitchenFlow() {
             );
           })}
           <PrimaryButton onClick={() => setStep("grocery")}>Build Grocery List</PrimaryButton>
-          <SecondaryButton onClick={() => setStep("home")}>Kitchen Home</SecondaryButton>
+          {onJourneyComplete ? (
+            <SecondaryButton
+              onClick={() => {
+                showToast("Week plan locked in");
+                onJourneyComplete();
+              }}
+            >
+              {completeLabel}
+            </SecondaryButton>
+          ) : (
+            <SecondaryButton onClick={() => setStep("home")}>Kitchen Home</SecondaryButton>
+          )}
         </div>
       )}
 
       {step === "swap" && (
-        <div className="space-y-4">
+        <div className="space-y-4 animate-rise">
           <div>
             <h3 className="font-display text-xl font-bold text-ink" style={{ fontWeight: 700 }}>
               Smart Swap
@@ -184,9 +230,10 @@ export function WwKitchenFlow() {
                 type="button"
                 onClick={() => {
                   setPlan((current) => ({ ...current, [swapDay]: meal }));
+                  showToast(`Swapped in ${meal.name}`);
                   setStep("planner");
                 }}
-                className="w-full rounded-2xl border border-ink/10 bg-white px-4 py-3 text-left"
+                className="w-full rounded-2xl border border-ink/10 bg-white px-4 py-3 text-left transition hover:border-cobalt-300"
               >
                 <span className="block font-display text-base font-bold text-ink" style={{ fontWeight: 700 }}>
                   {meal.name}
@@ -202,10 +249,17 @@ export function WwKitchenFlow() {
       )}
 
       {step === "grocery" && (
-        <div className="space-y-4">
+        <div className="space-y-4 animate-rise">
           <h3 className="font-display text-xl font-bold text-ink" style={{ fontWeight: 700 }}>
             Grocery List
           </h3>
+          {remaining.length === 0 ? (
+            <EmptyState
+              title="Everything’s checked off"
+              copy="Your cart is clear. Cook with what you have, or uncheck items you still need."
+              action={<TextButton onClick={() => setStep("cook")}>Cook now</TextButton>}
+            />
+          ) : null}
           {grocery.map((group) => (
             <div key={group.aisle}>
               <p className="mb-2 font-sans text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-cobalt-600">
@@ -217,7 +271,7 @@ export function WwKitchenFlow() {
                   return (
                     <label
                       key={item}
-                      className={`flex items-center justify-between rounded-2xl border px-4 py-3 ${
+                      className={`flex items-center justify-between rounded-2xl border px-4 py-3 transition ${
                         on ? "border-tide/40 bg-tide/10" : "border-ink/8 bg-white"
                       }`}
                     >
@@ -245,25 +299,32 @@ export function WwKitchenFlow() {
       )}
 
       {step === "cook" && (
-        <div className="space-y-4">
+        <div className="space-y-4 animate-rise">
           <div>
             <h3 className="font-display text-xl font-bold text-ink" style={{ fontWeight: 700 }}>
               Cook with what you have
             </h3>
-            <label htmlFor="have" className="mt-3 block font-sans text-xs font-semibold uppercase tracking-[0.14em] text-ink/45">
+            <label
+              htmlFor="have"
+              className="mt-3 block font-sans text-xs font-semibold uppercase tracking-[0.14em] text-ink/45"
+            >
               Ingredients
             </label>
             <input
               id="have"
               value={ingredients}
-              onChange={(event) => setIngredients(event.target.value)}
+              onChange={(event) => {
+                setIngredients(event.target.value);
+                setCookError(null);
+              }}
               className="mt-2 h-11 w-full rounded-2xl border border-ink/10 px-4 font-sans text-sm outline-none ring-cobalt-600 focus:ring-2"
             />
           </div>
+          {cookError ? <ErrorBanner message={cookError} /> : null}
           <p className="font-sans text-sm font-semibold text-ink">3 meals you can make tonight</p>
           <div className="space-y-2">
             {cookIdeas.map((idea) => (
-              <SoftCard key={idea.name}>
+              <SoftCard key={idea.name} className="transition hover:-translate-y-0.5">
                 <p className="font-display text-base font-bold text-ink" style={{ fontWeight: 700 }}>
                   {idea.name}
                 </p>
@@ -273,7 +334,22 @@ export function WwKitchenFlow() {
               </SoftCard>
             ))}
           </div>
-          <PrimaryButton onClick={() => setStep("home")}>Start Cooking</PrimaryButton>
+          <PrimaryButton
+            onClick={() => {
+              if (!ingredients.trim()) {
+                setCookError("Add a few ingredients so we can suggest a meal.");
+                return;
+              }
+              showToast("Cooking mode started");
+              if (onJourneyComplete) {
+                onJourneyComplete();
+                return;
+              }
+              setStep("home");
+            }}
+          >
+            {onJourneyComplete ? completeLabel : "Start Cooking"}
+          </PrimaryButton>
           <TextButton onClick={() => setStep("grocery")}>Update grocery list</TextButton>
         </div>
       )}

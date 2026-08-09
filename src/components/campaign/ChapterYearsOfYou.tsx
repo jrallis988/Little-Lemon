@@ -31,7 +31,7 @@ export function ChapterYearsOfYou() {
         </div>
 
         <div className="mt-12 grid gap-6 md:grid-cols-2">
-          {stories.map((story, index) => (
+          {stories.slice(0, 2).map((story, index) => (
             <article
               key={story.id}
               className={`overflow-hidden rounded-[1.75rem] bg-white transition duration-700 ${
@@ -42,7 +42,7 @@ export function ChapterYearsOfYou() {
               <img
                 src={story.image}
                 alt={`Portrait representing ${story.name}`}
-                className="aspect-[4/5] w-full object-cover object-top"
+                className="campaign-photo aspect-[4/5] w-full object-top"
                 loading="lazy"
               />
               <div className="p-6 sm:p-7">

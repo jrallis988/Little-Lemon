@@ -8,6 +8,8 @@ import {
   StepDots,
   TextButton,
 } from "./AppShell";
+import { EmptyState, ErrorBanner } from "./PrototypePolish";
+import { useToast } from "./useToast";
 
 const priorities = [
   "More energy",
@@ -34,42 +36,84 @@ const pathwayFocus: Record<string, string[]> = {
   living: ["Energy", "Movement", "Sleep", "Community"],
 };
 
+const focusLabels: Record<string, string[]> = {
+  lose: ["Lose weight", "Eat better", "Build healthier habits"],
+  maintain: ["Maintain weight", "Build healthier habits", "Improve energy"],
+  eat: ["Eat better", "Improve energy", "Build healthier habits"],
+  strength: ["Build strength", "Eat better", "Improve energy"],
+  glp1: ["GLP-1 support", "Build strength", "Eat better"],
+  living: ["General wellness", "Improve energy", "Build healthier habits"],
+};
+
 type Step = 0 | 1 | 2 | 3;
 
-export function WwPathwaysFlow() {
+export type PathwaySummary = {
+  pathwayId: (typeof pathwayOptions)[number]["id"];
+  pathway: string;
+  matters: string[];
+  structure: string | undefined;
+  focus: string[];
+  lifeFocus: string[];
+};
+
+type WwPathwaysFlowProps = {
+  onComplete?: (summary: PathwaySummary) => void;
+  completeLabel?: string;
+};
+
+export function WwPathwaysFlow({
+  onComplete,
+  completeLabel = "Start My Pathway",
+}: WwPathwaysFlowProps = {}) {
   const [step, setStep] = useState<Step>(0);
   const [pathway, setPathway] = useState<(typeof pathwayOptions)[number]["id"]>("strength");
   const [matters, setMatters] = useState<string[]>(["Strength", "Consistency"]);
   const [structure, setStructure] =
     useState<(typeof structureOptions)[number]["id"]>("balanced");
+  const [priorityError, setPriorityError] = useState<string | null>(null);
+  const { showToast, toastNode } = useToast();
 
   const selected = pathwayOptions.find((item) => item.id === pathway)!;
   const focus = pathwayFocus[pathway] ?? pathwayFocus.living;
 
-  const summary = useMemo(
+  const summary = useMemo<PathwaySummary>(
     () => ({
+      pathwayId: pathway,
       pathway: selected.name,
       matters,
       structure: structureOptions.find((item) => item.id === structure)?.label,
       focus,
+      lifeFocus: focusLabels[pathway] ?? focusLabels.living,
     }),
-    [focus, matters, selected.name, structure]
+    [focus, matters, pathway, selected.name, structure]
   );
 
   const toggleMatter = (item: string) => {
+    setPriorityError(null);
     setMatters((current) => {
       if (current.includes(item)) return current.filter((value) => value !== item);
-      if (current.length >= 3) return current;
+      if (current.length >= 3) {
+        showToast("Pick up to 3 priorities", "info");
+        return current;
+      }
       return [...current, item];
     });
   };
 
+  const continueFromPriorities = () => {
+    if (matters.length === 0) {
+      setPriorityError("Choose at least one priority to continue.");
+      return;
+    }
+    setStep(2);
+  };
+
   return (
-    <AppShell title="WW Pathways" activeNav="profile">
+    <AppShell title="WW Pathways" activeNav="profile" overlay={toastNode}>
       <StepDots step={step} total={4} />
 
       {step === 0 && (
-        <div className="space-y-4">
+        <div className="space-y-4 animate-rise">
           <div>
             <h3 className="font-display text-xl font-bold text-ink" style={{ fontWeight: 700 }}>
               What are you working toward?
@@ -84,9 +128,10 @@ export function WwPathwaysFlow() {
                 onClick={() => setPathway(option.id)}
                 className={`w-full rounded-2xl border px-4 py-3 text-left transition ${
                   pathway === option.id
-                    ? "border-cobalt-500 bg-cobalt-600 text-white"
-                    : "border-ink/10 bg-white"
+                    ? "border-cobalt-500 bg-cobalt-600 text-white scale-[1.01]"
+                    : "border-ink/10 bg-white hover:border-cobalt-300"
                 }`}
+                aria-pressed={pathway === option.id}
               >
                 <span className="block font-display text-base font-bold" style={{ fontWeight: 700 }}>
                   {option.name}
@@ -106,10 +151,17 @@ export function WwPathwaysFlow() {
       )}
 
       {step === 1 && (
-        <div className="space-y-4">
+        <div className="space-y-4 animate-rise">
           <h3 className="font-display text-xl font-bold text-ink" style={{ fontWeight: 700 }}>
             What matters most right now?
           </h3>
+          {matters.length === 0 ? (
+            <EmptyState
+              title="No priorities selected"
+              copy="Tap up to three priorities so your pathway can personalize around you."
+            />
+          ) : null}
+          {priorityError ? <ErrorBanner message={priorityError} /> : null}
           <div className="flex flex-wrap gap-2">
             {priorities.map((item) => {
               const on = matters.includes(item);
@@ -118,16 +170,17 @@ export function WwPathwaysFlow() {
                   key={item}
                   type="button"
                   onClick={() => toggleMatter(item)}
-                  className={`rounded-full px-3 py-2 font-sans text-xs font-semibold ${
+                  className={`rounded-full px-3 py-2 font-sans text-xs font-semibold transition ${
                     on ? "bg-cobalt-600 text-white" : "border border-ink/10 bg-white text-ink/70"
                   }`}
+                  aria-pressed={on}
                 >
                   {item}
                 </button>
               );
             })}
           </div>
-          <PrimaryButton disabled={matters.length === 0} onClick={() => setStep(2)}>
+          <PrimaryButton disabled={matters.length === 0} onClick={continueFromPriorities}>
             Continue
           </PrimaryButton>
           <SecondaryButton onClick={() => setStep(0)}>Back</SecondaryButton>
@@ -135,7 +188,7 @@ export function WwPathwaysFlow() {
       )}
 
       {step === 2 && (
-        <div className="space-y-4">
+        <div className="space-y-4 animate-rise">
           <h3 className="font-display text-xl font-bold text-ink" style={{ fontWeight: 700 }}>
             How much structure do you want?
           </h3>
@@ -145,11 +198,12 @@ export function WwPathwaysFlow() {
                 key={option.id}
                 type="button"
                 onClick={() => setStructure(option.id)}
-                className={`w-full rounded-2xl border px-4 py-3 text-left ${
+                className={`w-full rounded-2xl border px-4 py-3 text-left transition ${
                   structure === option.id
                     ? "border-cobalt-500 bg-mist"
-                    : "border-ink/10 bg-white"
+                    : "border-ink/10 bg-white hover:border-cobalt-300"
                 }`}
+                aria-pressed={structure === option.id}
               >
                 <span className="block font-display text-base font-bold text-ink" style={{ fontWeight: 700 }}>
                   {option.label}
@@ -164,7 +218,7 @@ export function WwPathwaysFlow() {
       )}
 
       {step === 3 && (
-        <div className="space-y-4">
+        <div className="space-y-4 animate-rise">
           <SoftCard className="bg-ink text-white">
             <p className="font-sans text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-tide">
               Your Pathway
@@ -182,13 +236,27 @@ export function WwPathwaysFlow() {
             </p>
             <ul className="mt-2 space-y-2">
               {summary.focus.map((item) => (
-                <li key={item} className="rounded-2xl bg-white px-4 py-3 font-sans text-sm text-ink/75 border border-ink/8">
+                <li
+                  key={item}
+                  className="rounded-2xl border border-ink/8 bg-white px-4 py-3 font-sans text-sm text-ink/75"
+                >
                   {item}
                 </li>
               ))}
             </ul>
           </div>
-          <PrimaryButton onClick={() => setStep(0)}>Start My Pathway</PrimaryButton>
+          <PrimaryButton
+            onClick={() => {
+              if (onComplete) {
+                onComplete(summary);
+                return;
+              }
+              showToast("Pathway saved for this demo");
+              setStep(0);
+            }}
+          >
+            {completeLabel}
+          </PrimaryButton>
           <TextButton onClick={() => setStep(0)}>Change Pathway</TextButton>
         </div>
       )}

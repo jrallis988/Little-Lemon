@@ -15,29 +15,7 @@ import {
   WwMomentumMock,
   WwPathwaysMock,
 } from "../components/future/ProductMocks";
-
-const journey = [
-  {
-    title: "Choose a Pathway",
-    copy: "Start with Build Strength—or Lose Weight, Maintain, Eat Better, GLP-1 Support, or Healthy Living.",
-  },
-  {
-    title: "WW Life adapts",
-    copy: "Your dashboard prioritizes strength, protein, movement, and recovery first.",
-  },
-  {
-    title: "Kitchen + Grocery connect",
-    copy: "Meals and shopping support those preferences without moralizing food.",
-  },
-  {
-    title: "Momentum + Team stay with you",
-    copy: "Consistency signals and human support keep the journey personal.",
-  },
-  {
-    title: "Ask WW handles the busywork",
-    copy: "AI helps plan meals and lists. People handle care.",
-  },
-];
+import { GuidedWalkthrough } from "../components/future/GuidedWalkthrough";
 
 export function WhatsNextPage() {
   return (
@@ -64,9 +42,15 @@ export function WhatsNextPage() {
           {futureVision.body}
         </p>
         <p className="mt-4 max-w-2xl font-sans text-base text-ink/60">
-          Interactive product prototypes—not concept cards. Click through WW Life, Pathways, Kitchen,
-          Team, and Life After GLP-1 inside one shared app shell. Future Vision · Portfolio exploration.
+          Interactive product prototypes—not concept cards. Start with the guided journey, then click
+          through WW Life, Pathways, Kitchen, Team, and Life After GLP-1 inside one shared app shell.
         </p>
+        <a
+          href="#guided-journey"
+          className="mt-6 inline-flex rounded-2xl bg-cobalt-600 px-6 py-3.5 font-sans text-sm font-semibold text-white"
+        >
+          Start guided journey
+        </a>
       </div>
 
       <div className="section-shell mt-14">
@@ -85,6 +69,10 @@ export function WhatsNextPage() {
         </ol>
       </div>
 
+      <div className="section-shell mt-16">
+        <GuidedWalkthrough />
+      </div>
+
       <section className="section-shell mt-20" aria-labelledby="flagships-heading">
         <h2
           id="flagships-heading"
@@ -100,7 +88,11 @@ export function WhatsNextPage() {
 
         <div className="mt-12 space-y-20">
           {flagshipProducts.map((product, index) => (
-            <article key={product.id} className="grid items-start gap-8 lg:grid-cols-2 lg:gap-12">
+            <article
+              key={product.id}
+              id={product.id}
+              className="scroll-mt-28 grid items-start gap-8 lg:grid-cols-2 lg:gap-12"
+            >
               <div>
                 <p className="font-sans text-xs font-semibold uppercase tracking-[0.18em] text-cobalt-600">
                   0{index + 1} · {product.name}
@@ -117,7 +109,7 @@ export function WhatsNextPage() {
                 <img
                   src={product.image}
                   alt={product.imageAlt}
-                  className="mt-6 aspect-[16/10] w-full rounded-[1.5rem] object-cover"
+                  className="campaign-photo mt-6 aspect-[16/10] w-full rounded-[1.5rem]"
                   loading="lazy"
                 />
               </div>
@@ -146,19 +138,24 @@ export function WhatsNextPage() {
         </p>
 
         <div className="mt-10 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-          <ol className="space-y-4">
-            {journey.map((step, index) => (
-              <li key={step.title} className="rounded-2xl border border-ink/8 bg-white px-5 py-4">
-                <p className="font-sans text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-tide">
-                  Step {index + 1}
-                </p>
-                <p className="mt-1 font-display text-xl font-bold text-ink" style={{ fontWeight: 700 }}>
-                  {step.title}
-                </p>
-                <p className="mt-2 font-sans text-sm text-ink/65">{step.copy}</p>
-              </li>
-            ))}
-          </ol>
+          <div className="rounded-[1.5rem] border border-ink/8 bg-white px-5 py-6">
+            <p className="font-sans text-xs font-semibold uppercase tracking-[0.16em] text-tide">
+              How the system connects
+            </p>
+            <p className="mt-3 font-display text-2xl font-bold text-ink" style={{ fontWeight: 700 }}>
+              Pathway → Today → Kitchen → Momentum + Team
+            </p>
+            <p className="mt-3 font-sans text-sm leading-relaxed text-ink/65">
+              The guided journey above proves the spine. Momentum and Ask WW extend it—AI for
+              busywork, people for care.
+            </p>
+            <a
+              href="#guided-journey"
+              className="mt-5 inline-flex font-sans text-sm font-semibold text-cobalt-700"
+            >
+              Replay the guided journey →
+            </a>
+          </div>
           <WwMomentumMock />
         </div>
 

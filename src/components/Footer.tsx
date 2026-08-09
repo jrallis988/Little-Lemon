@@ -30,7 +30,7 @@ const siteColumns = [
       { label: "Case Study", to: "/case-study" },
       { label: "Social channels", to: "/#connect" },
       { label: "Start Your Journey", to: "/#finale" },
-      { label: "Community", to: "/#community-63" },
+      { label: "Community", to: "/#present-63" },
     ],
   },
 ];

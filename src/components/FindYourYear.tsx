@@ -27,7 +27,13 @@ export function FindYourYear() {
   );
   const [error, setError] = useState<string | null>(null);
   const [copyState, setCopyState] = useState<"idle" | "copied" | "failed">("idle");
+  const [toast, setToast] = useState<string | null>(null);
   const cardRef = useRef<HTMLDivElement | null>(null);
+
+  const flashToast = (message: string) => {
+    setToast(message);
+    window.setTimeout(() => setToast(null), 2200);
+  };
 
   useEffect(() => {
     const paramYear = searchParams.get("year");
@@ -86,9 +92,11 @@ export function FindYourYear() {
     try {
       await navigator.clipboard.writeText(shareUrl);
       setCopyState("copied");
+      flashToast("Link copied — share your WW Year");
       window.setTimeout(() => setCopyState("idle"), 2000);
     } catch {
       setCopyState("failed");
+      flashToast("Couldn’t copy link");
     }
   };
 
@@ -99,6 +107,7 @@ export function FindYourYear() {
     }
     try {
       await navigator.share({ title: "My WW Year", text: shareText, url: shareUrl });
+      flashToast("Shared your WW Year");
     } catch {
       /* cancelled */
     }
@@ -133,6 +142,7 @@ export function FindYourYear() {
     anchor.download = `my-ww-year-${submitted}.png`;
     anchor.href = canvas.toDataURL("image/png");
     anchor.click();
+    flashToast("Card downloaded");
   };
 
   return (
@@ -346,10 +356,10 @@ export function FindYourYear() {
 
             <div
               ref={cardRef}
-              className="overflow-hidden rounded-[1.75rem] border border-ink/8 bg-ink p-6 text-white sm:p-8"
+              className="relative overflow-hidden rounded-[1.75rem] border border-ink/8 bg-ink p-6 text-white sm:p-8"
             >
               <p className="font-sans text-xs font-semibold uppercase tracking-[0.18em] text-tide">
-                My WW Year
+                Signature moment · My WW Year
               </p>
               <p className="mt-3 font-display text-6xl font-extrabold tracking-tight" style={{ fontWeight: 800 }}>
                 {submitted}
@@ -362,25 +372,34 @@ export function FindYourYear() {
                 <button
                   type="button"
                   onClick={copyLink}
-                  className="rounded-2xl bg-white px-5 py-3 font-sans text-sm font-semibold text-ink"
+                  className="rounded-2xl bg-white px-5 py-3 font-sans text-sm font-semibold text-ink transition hover:bg-mist"
                 >
                   {copyState === "copied" ? "Link copied" : copyState === "failed" ? "Copy failed" : "Copy link"}
                 </button>
                 <button
                   type="button"
                   onClick={nativeShare}
-                  className="rounded-2xl border border-white/30 px-5 py-3 font-sans text-sm font-semibold text-white"
+                  className="rounded-2xl border border-white/30 px-5 py-3 font-sans text-sm font-semibold text-white transition hover:bg-white/10"
                 >
                   Share
                 </button>
                 <button
                   type="button"
                   onClick={downloadCard}
-                  className="rounded-2xl border border-white/30 px-5 py-3 font-sans text-sm font-semibold text-white"
+                  className="rounded-2xl border border-white/30 px-5 py-3 font-sans text-sm font-semibold text-white transition hover:bg-white/10"
                 >
                   Download Card
                 </button>
               </div>
+              {toast ? (
+                <p
+                  role="status"
+                  aria-live="polite"
+                  className="mt-4 rounded-2xl bg-tide px-4 py-2 font-sans text-xs font-semibold text-ink animate-rise"
+                >
+                  {toast}
+                </p>
+              ) : null}
             </div>
           </div>
         )}

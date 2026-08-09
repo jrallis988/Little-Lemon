@@ -2,23 +2,62 @@ import { Link } from "react-router-dom";
 import { AnniversaryBadge } from "../components/Logo";
 import { PageMeta } from "../components/PageMeta";
 import { futureVision } from "../data/futureProducts";
+import { WwLifeFlow } from "../components/future/WwLifeFlow";
+import { WwPathwaysFlow } from "../components/future/WwPathwaysFlow";
+import { WwKitchenFlow } from "../components/future/WwKitchenFlow";
 
-const flows = [
+const decisions = [
   {
-    title: "WW Life",
-    steps: ["Onboarding", "Pathway focus", "Personalization", "Today", "Daily Check-In", "Weekly Reflection"],
+    title: "Anniversary is not the product",
+    detail:
+      "The campaign answers customer needs first, then where Weight Watchers goes next. 63 is proof of learning, not a birthday badge.",
   },
+  {
+    title: "Pathways before Life on the guided path",
+    detail:
+      "Data lists Life first as the system hub, but the signature walkthrough starts with Pathways so personalization feels earned before Today appears.",
+  },
+  {
+    title: "One phone shell, many products",
+    detail:
+      "Shared AppShell chrome keeps five flagships feeling like one app—not a collage of unrelated concept cards.",
+  },
+  {
+    title: "Homepage carries the spine",
+    detail:
+      "Community, science, and innovation collapse into one Present bridge; full chapters live on dedicated routes. Ahead shows the guided journey plus flagship teasers.",
+  },
+];
+
+const cuts = [
+  "Twelve ecosystem feature cards as equal peers → five flagships + supporting Momentum/Ask WW.",
+  "Five full interactive mocks on the homepage → one guided journey + teaser grid linking to What’s Next.",
+  "Beach-silhouette and laptop-meeting stock → health-forward cooking, movement, grocery, and coaching imagery.",
+  "Medication-change advice in Life After GLP-1 → educational maintenance framing only.",
+  "Dense Science/Innovation homepage chapters → compact Present bridge with deeper pages.",
+];
+
+const annotated = [
   {
     title: "WW Pathways",
-    steps: ["Goal", "Priorities", "Structure", "Personalized Pathway", "Change anytime"],
+    note: "Goal → priorities → structure → personalized pathway. “Start” hands state into WW Life.",
+    node: <WwPathwaysFlow />,
   },
   {
-    title: "WW Kitchen",
-    steps: ["Kitchen Home", "Weekly Plan", "Smart Swap", "Grocery List", "Cook Mode"],
+    title: "WW Life · Today",
+    note: "Mid-journey destination. Pathway banner + focus chips prove the handoff is real.",
+    node: (
+      <WwLifeFlow
+        initialStep={3}
+        pathwayLabel="Build Strength"
+        focusPreset={["Build strength", "Eat better", "Improve energy"]}
+      />
+    ),
   },
   {
-    title: "Find Your Year",
-    steps: ["Choose Mode", "Select Year", "Personalized Era", "Explore Timeline", "Share Result"],
+    title: "WW Kitchen · Planner",
+    note: "Food support without moralizing. Smart Swap and grocery empty states add prototype polish.",
+    node: <WwKitchenFlow initialStep="planner" pathwayLabel="Build Strength" />,
   },
 ];
 
@@ -85,41 +124,79 @@ export function CaseStudyPage() {
 
         <section>
           <h2 className="font-display text-2xl font-bold text-ink" style={{ fontWeight: 700 }}>
-            The Website
+            Key decisions
           </h2>
-          <p className="mt-3 font-sans text-base leading-relaxed text-ink/70">
-            History, community, science, innovation, stories, Find Your Year—and a purpose section
-            that answers why the anniversary matters.
-          </p>
-        </section>
-
-        <section>
-          <h2 className="font-display text-2xl font-bold text-ink" style={{ fontWeight: 700 }}>
-            The Future
-          </h2>
-          <p className="mt-3 font-sans text-base leading-relaxed text-ink/70">
-            Flagship product explorations: WW Life, WW Pathways, WW Kitchen, My WW Team, and Life
-            After GLP-1—designed as one connected experience, not twelve disconnected feature cards.
-          </p>
-          <p className="mt-3 font-serif text-lg text-tide">{futureVision.thesis}</p>
-        </section>
-
-        <section>
-          <h2 className="font-display text-2xl font-bold text-ink" style={{ fontWeight: 700 }}>
-            Product journeys
-          </h2>
-          <div className="mt-6 space-y-6">
-            {flows.map((flow) => (
-              <div key={flow.title} className="rounded-[1.25rem] border border-ink/8 bg-white p-5">
-                <p className="font-display text-xl font-bold text-ink" style={{ fontWeight: 700 }}>
-                  {flow.title}
+          <div className="mt-5 space-y-4">
+            {decisions.map((item) => (
+              <div key={item.title} className="rounded-[1.25rem] border border-ink/8 bg-white p-5">
+                <p className="font-display text-lg font-bold text-ink" style={{ fontWeight: 700 }}>
+                  {item.title}
                 </p>
-                <p className="mt-3 font-sans text-sm leading-relaxed text-ink/65">
-                  {flow.steps.join(" → ")}
-                </p>
+                <p className="mt-2 font-sans text-sm leading-relaxed text-ink/65">{item.detail}</p>
               </div>
             ))}
           </div>
+        </section>
+
+        <section>
+          <h2 className="font-display text-2xl font-bold text-ink" style={{ fontWeight: 700 }}>
+            What we cut
+          </h2>
+          <ul className="mt-4 space-y-3">
+            {cuts.map((item) => (
+              <li key={item} className="flex gap-3 font-sans text-sm leading-relaxed text-ink/70">
+                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-tide" aria-hidden="true" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </section>
+      </div>
+
+      <section className="section-shell mt-16" aria-labelledby="annotated-heading">
+        <div className="max-w-3xl">
+          <h2
+            id="annotated-heading"
+            className="font-display text-3xl font-bold text-ink"
+            style={{ fontWeight: 700 }}
+          >
+            Annotated product screens
+          </h2>
+          <p className="mt-3 font-serif text-lg text-ink/65">
+            Live prototypes with design notes—the same interactive flows reviewers can click on What’s
+            Next.
+          </p>
+        </div>
+        <div className="mt-10 space-y-16">
+          {annotated.map((item, index) => (
+            <article
+              key={item.title}
+              className="grid items-start gap-8 lg:grid-cols-[1fr_22rem] lg:gap-12"
+            >
+              <div>
+                <p className="font-sans text-xs font-semibold uppercase tracking-[0.16em] text-cobalt-600">
+                  Screen 0{index + 1}
+                </p>
+                <h3 className="mt-2 font-display text-2xl font-bold text-ink" style={{ fontWeight: 700 }}>
+                  {item.title}
+                </h3>
+                <p className="mt-3 font-sans text-base leading-relaxed text-ink/65">{item.note}</p>
+              </div>
+              <div className="flex justify-center lg:justify-end">{item.node}</div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <div className="section-shell mt-16 max-w-3xl space-y-14">
+        <section>
+          <h2 className="font-display text-2xl font-bold text-ink" style={{ fontWeight: 700 }}>
+            Signature moments
+          </h2>
+          <p className="mt-3 font-sans text-base leading-relaxed text-ink/70">
+            Find Your Year share/download card, and WW Life weekly reflection share card—portable
+            proof that the concept is personal, not just browsable.
+          </p>
         </section>
 
         <section>
@@ -131,14 +208,15 @@ export function CaseStudyPage() {
             personalization, food in real kitchens, human support, and long-term care beyond any
             single number or medication chapter.
           </p>
+          <p className="mt-3 font-serif text-lg text-tide">{futureVision.thesis}</p>
         </section>
 
         <div className="flex flex-wrap gap-3 pt-4">
           <Link
-            to="/whats-next"
+            to="/whats-next#guided-journey"
             className="rounded-2xl bg-cobalt-600 px-6 py-3.5 font-sans text-sm font-semibold text-white"
           >
-            Explore What’s Next
+            Try the guided journey
           </Link>
           <Link
             to="/"

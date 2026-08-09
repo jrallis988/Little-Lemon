@@ -3,9 +3,7 @@ import { ChapterPurpose } from "../components/campaign/ChapterPurpose";
 import { ChapterSince } from "../components/campaign/ChapterSince";
 import { ChapterEvolution } from "../components/campaign/ChapterEvolution";
 import { ChapterYearsOfYou } from "../components/campaign/ChapterYearsOfYou";
-import { ChapterCommunity } from "../components/campaign/ChapterCommunity";
-import { ChapterScience } from "../components/campaign/ChapterScience";
-import { ChapterInnovation } from "../components/campaign/ChapterInnovation";
+import { ChapterPresent } from "../components/campaign/ChapterPresent";
 import { ChapterAhead } from "../components/campaign/ChapterAhead";
 import { CampaignFinale } from "../components/campaign/CampaignFinale";
 import { ConnectedSocial } from "../components/ConnectedSocial";
@@ -26,9 +24,7 @@ export function HomePage() {
       <ChapterSince />
       <ChapterEvolution />
       <ChapterYearsOfYou />
-      <ChapterCommunity />
-      <ChapterScience />
-      <ChapterInnovation />
+      <ChapterPresent />
       <ChapterAhead />
       <ConnectedSocial />
       <CampaignFinale />
