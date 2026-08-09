@@ -5,11 +5,14 @@ export type ContactPayload = {
   message: string;
 };
 
-const contactEmail = import.meta.env.VITE_CONTACT_EMAIL as string | undefined;
+/** Inbox for FormSubmit — override with VITE_CONTACT_EMAIL if needed. */
+const contactEmail =
+  (import.meta.env.VITE_CONTACT_EMAIL as string | undefined)?.trim() ||
+  "jjrallis@unh.edu";
 
 /** True when FormSubmit can deliver to a configured inbox. */
 export function formsConfigured() {
-  return Boolean(contactEmail && contactEmail.includes("@"));
+  return Boolean(contactEmail.includes("@"));
 }
 
 /**

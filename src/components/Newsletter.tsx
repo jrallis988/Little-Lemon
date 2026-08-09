@@ -1,6 +1,6 @@
 import { FormEvent, useState } from "react";
 import { useInView } from "../hooks/useInView";
-import { formsConfigured, submitNewsletter } from "../lib/forms";
+import { submitNewsletter } from "../lib/forms";
 
 type Status = "idle" | "sending" | "joined" | "error";
 
@@ -76,10 +76,6 @@ export function Newsletter() {
             {status === "error" ? (
               <p className="basis-full text-xs text-buoy" role="alert">
                 Signup failed — try again in a moment.
-              </p>
-            ) : !formsConfigured() ? (
-              <p className="basis-full text-xs text-steel">
-                Demo mode saves locally until VITE_CONTACT_EMAIL is set.
               </p>
             ) : null}
           </form>

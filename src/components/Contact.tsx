@@ -1,11 +1,7 @@
 import { FormEvent, useState } from "react";
 import { links } from "../data/links";
 import { useInView } from "../hooks/useInView";
-import {
-  formsConfigured,
-  mailtoContact,
-  submitContact,
-} from "../lib/forms";
+import { mailtoContact, submitContact } from "../lib/forms";
 
 type Status = "idle" | "sending" | "sent" | "mailto" | "error";
 
@@ -158,9 +154,7 @@ export function Contact() {
               ? "Message delivered. We’ll follow up soon."
               : status === "error"
                 ? "Couldn’t reach the form service — opened your email app instead."
-                : formsConfigured()
-                  ? "Sent securely — no email app required."
-                  : "Set VITE_CONTACT_EMAIL to enable inbox delivery (falls back to mailto)."}
+                : "Sent securely to the project inbox — no email app required."}
           </p>
         </form>
       </div>

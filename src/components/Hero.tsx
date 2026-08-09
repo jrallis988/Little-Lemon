@@ -10,12 +10,11 @@ export function Hero() {
     >
       <div className="absolute inset-0">
         <CampusImage
-          name="campus-dusk"
-          alt="Smuttynose Brewing on Towle Farm at golden hour — red brewery building and grain silos"
-          className="h-full w-full object-cover animate-ken-burns"
+          name="campus-sunset"
+          alt="Smuttynose Brewing on Towle Farm at sunset — red brewery, lawn, and campus lights"
+          className="h-full w-full object-cover animate-ken-burns max-md:[object-position:72%_center] md:[object-position:65%_center]"
           loading="eager"
           fetchPriority="high"
-          objectPosition="68% center"
         />
         {/* Sunset mood overlays */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#1a0e08]/90 via-[#3a1d10]/35 to-[#1b3a55]/45" />

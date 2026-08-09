@@ -30,18 +30,14 @@ Edit those JSON files and push — the site loads them at runtime.
 
 ## Working contact & newsletter
 
-1. Copy `.env.example` → `.env`
-2. Set `VITE_CONTACT_EMAIL` to your inbox
-3. For GitHub Pages: add repo secret `VITE_CONTACT_EMAIL`, then redeploy
-4. Confirm the first FormSubmit email once
-
-Without that env var, contact falls back to mailto and newsletter saves locally.
+Forms send to **jjrallis@unh.edu** by default (FormSubmit.co).  
+Confirm the first FormSubmit email once. Override with `VITE_CONTACT_EMAIL` / repo secret.
 
 ## Launch checklist
 
-1. Merge PR into `main`
-2. Settings → Pages → Source: **GitHub Actions**
-3. Optional: drop your sunset + seal photo at `public/images/campus-sunset.jpg` (+ `.webp`) and point the hero at `campus-sunset`
+See **[LAUNCH.md](./LAUNCH.md)** — merge PR → enable Pages → open the live URL.
+
+Hero image path: `public/images/campus-sunset.jpg` (+ `.webp`). Replace those files with your sunset + seal photo anytime.
 
 ## Notes
 
