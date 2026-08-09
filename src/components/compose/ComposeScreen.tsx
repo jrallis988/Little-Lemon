@@ -1,35 +1,157 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  createAttachmentMeta,
+  validateAttachment,
+} from "@/data/seed";
+import { promptsForGrade } from "@/data/prompts";
+import { formatBytes, replySubject, wrapSelection } from "@/lib/compose";
 import { copyForGrade } from "@/lib/stageCopy";
 import { cn } from "@/lib/utils";
 import { useMailStore } from "@/store/mailStore";
-import { Bold, Italic, Paperclip, Send, Underline, X } from "lucide-react";
-import { useState, type FormEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import type { AttachmentMeta } from "@/types/mail";
+import {
+  Bold,
+  Italic,
+  Paperclip,
+  Send,
+  Underline,
+  X,
+} from "lucide-react";
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type FormEvent,
+} from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 export function ComposeScreen() {
   const navigate = useNavigate();
+  const [params] = useSearchParams();
   const saveDraft = useMailStore((s) => s.saveDraft);
-  const sendDraft = useMailStore((s) => s.sendDraft);
+  const sendMessage = useMailStore((s) => s.sendMessage);
   const grade = useMailStore((s) => s.grade);
   const learningStage = useMailStore((s) => s.learningStage);
+  const messages = useMailStore((s) => s.messages);
+  const drafts = useMailStore((s) => s.drafts);
+  const contacts = useMailStore((s) => s.contacts);
+  const requireApproval = useMailStore((s) => s.settings.requireSendApproval);
   const copy = copyForGrade(grade);
+  const prompts = useMemo(() => promptsForGrade(grade), [grade]);
 
+  const replyToId = params.get("replyTo") ?? undefined;
+  const draftIdParam = params.get("draft") ?? undefined;
+
+  const [draftId, setDraftId] = useState<string | undefined>(draftIdParam);
   const [to, setTo] = useState("");
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
+  const [attachments, setAttachments] = useState<AttachmentMeta[]>([]);
   const [status, setStatus] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const bodyRef = useRef<HTMLTextAreaElement>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (draftIdParam) {
+      const draft = drafts.find((d) => d.id === draftIdParam);
+      if (draft) {
+        setDraftId(draft.id);
+        setTo(draft.to);
+        setSubject(draft.subject);
+        setBody(draft.body);
+        setAttachments(draft.attachments ?? []);
+        return;
+      }
+    }
+
+    if (replyToId) {
+      const original = messages.find((m) => m.id === replyToId);
+      if (original) {
+        const contact = contacts.find((c) => c.id === original.fromContactId);
+        setTo(
+          original.folder === "sent"
+            ? original.toLabel
+            : contact?.email || contact?.name || "",
+        );
+        setSubject(replySubject(original.subject));
+        setBody(
+          `\n\n---\nOn ${new Date(original.sentAt).toLocaleString()}, ${
+            contact?.name ?? "sender"
+          } wrote:\n${original.body}`,
+        );
+      }
+    }
+  }, [draftIdParam, replyToId, drafts, messages, contacts]);
+
+  function applyPrompt(promptId: string) {
+    const prompt = prompts.find((p) => p.id === promptId);
+    if (!prompt) return;
+    setSubject((current) => current || prompt.subject);
+    setBody(prompt.body);
+    setStatus(`Prompt applied: ${prompt.title}`);
+  }
+
+  function applyFormat(before: string, after: string) {
+    const el = bodyRef.current;
+    if (!el) return;
+    const start = el.selectionStart ?? 0;
+    const end = el.selectionEnd ?? 0;
+    const next = wrapSelection(body, start, end, before, after);
+    setBody(next.value);
+    requestAnimationFrame(() => {
+      el.focus();
+      el.setSelectionRange(next.selectionStart, next.selectionEnd);
+    });
+  }
+
+  function handleFiles(fileList: FileList | null) {
+    if (!fileList?.length) return;
+    const next = [...attachments];
+    for (const file of Array.from(fileList)) {
+      const problem = validateAttachment(file);
+      if (problem) {
+        setError(problem);
+        continue;
+      }
+      next.push(createAttachmentMeta(file));
+      setError(null);
+    }
+    setAttachments(next);
+    if (fileRef.current) fileRef.current.value = "";
+  }
 
   async function handleSave() {
-    await saveDraft({ to, subject, body });
+    const id = await saveDraft({
+      id: draftId,
+      to,
+      subject,
+      body,
+      attachments,
+      replyToId,
+    });
+    setDraftId(id);
     setStatus("Draft saved on this device.");
   }
 
   async function handleSend(event: FormEvent) {
     event.preventDefault();
-    await sendDraft({ to, subject, body });
-    navigate("/");
+    if (!to.trim()) {
+      setError("Add a recipient before sending.");
+      return;
+    }
+    const result = await sendMessage({
+      id: draftId,
+      to,
+      subject,
+      body,
+      attachments,
+      replyToId,
+    });
+    navigate(result === "pending" ? "/?folder=pending" : "/?folder=sent");
   }
 
   return (
@@ -47,7 +169,7 @@ export function ComposeScreen() {
             Mailbox
           </p>
           <h1 className="mt-1 font-display text-xl font-extrabold text-foreground">
-            {copy.composeTitle}
+            {replyToId ? "Reply" : copy.composeTitle}
           </h1>
           {copy.composeHint && (
             <p className="text-sm font-medium text-muted-foreground">
@@ -66,14 +188,45 @@ export function ComposeScreen() {
         onSubmit={handleSend}
         className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-4 px-6 py-6 animate-fade-up"
       >
+        {prompts.length > 0 && (
+          <div className="space-y-2">
+            <p className="text-sm font-bold text-foreground">Writing prompts</p>
+            <div className="flex flex-wrap gap-2">
+              {prompts.map((prompt) => (
+                <button
+                  key={prompt.id}
+                  type="button"
+                  onClick={() => applyPrompt(prompt.id)}
+                  className="rounded-2xl border border-border bg-card px-3 py-2 text-left transition hover:border-primary/40"
+                >
+                  <span className="block text-sm font-bold">{prompt.title}</span>
+                  <span className="block text-xs font-medium text-muted-foreground">
+                    {prompt.description}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         <label className="space-y-2">
           <span className="text-sm font-bold text-foreground">To</span>
           <Input
             value={to}
             onChange={(e) => setTo(e.target.value)}
             placeholder={copy.toPlaceholder}
+            list="safe-contact-emails"
             autoComplete="off"
           />
+          <datalist id="safe-contact-emails">
+            {contacts
+              .filter((c) => c.safety !== "unknown")
+              .map((c) => (
+                <option key={c.id} value={c.email}>
+                  {c.name}
+                </option>
+              ))}
+          </datalist>
         </label>
 
         <label className="space-y-2">
@@ -89,15 +242,45 @@ export function ComposeScreen() {
         <label className="flex min-h-0 flex-1 flex-col space-y-2">
           <span className="text-sm font-bold text-foreground">Message</span>
           <Textarea
+            ref={bodyRef}
             value={body}
             onChange={(e) => setBody(e.target.value)}
             placeholder={copy.bodyPlaceholder}
             className={cn(
-              "min-h-[280px] flex-1 resize-none leading-8",
+              "min-h-[240px] flex-1 resize-none leading-8",
               learningStage === "elementary" ? "text-lg" : "text-base",
             )}
           />
         </label>
+
+        {attachments.length > 0 && (
+          <ul className="flex flex-wrap gap-2">
+            {attachments.map((file) => (
+              <li
+                key={file.id}
+                className="inline-flex items-center gap-2 rounded-full bg-muted px-3 py-1.5 text-xs font-bold"
+              >
+                <Paperclip className="size-3.5" />
+                {file.name}
+                <span className="text-muted-foreground">
+                  {formatBytes(file.size)}
+                </span>
+                <button
+                  type="button"
+                  className="text-muted-foreground hover:text-foreground"
+                  onClick={() =>
+                    setAttachments((current) =>
+                      current.filter((item) => item.id !== file.id),
+                    )
+                  }
+                  aria-label={`Remove ${file.name}`}
+                >
+                  <X className="size-3.5" />
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
 
         <div className="flex flex-wrap items-center gap-3 rounded-3xl bg-card/90 p-3 shadow-panel">
           <Button
@@ -106,21 +289,42 @@ export function ComposeScreen() {
             size={learningStage === "elementary" ? "lg" : "default"}
           >
             <Send className="size-5" />
-            Send
+            {requireApproval ? "Send for approval" : "Send"}
           </Button>
           <Button
             type="button"
             variant="outline"
             size={learningStage === "elementary" ? "lg" : "default"}
+            onClick={() => fileRef.current?.click()}
           >
             <Paperclip className="size-5" />
             Attach
           </Button>
+          <input
+            ref={fileRef}
+            type="file"
+            className="hidden"
+            accept=".pdf,.png,.jpg,.jpeg,.txt,.docx,application/pdf,image/png,image/jpeg,text/plain"
+            multiple
+            onChange={(e) => handleFiles(e.target.files)}
+          />
           <div className="flex items-center gap-1 rounded-2xl bg-muted/80 p-1">
-            <Button type="button" variant="ghost" size="icon" aria-label="Bold">
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              aria-label="Bold"
+              onClick={() => applyFormat("**", "**")}
+            >
               <Bold className="size-4" />
             </Button>
-            <Button type="button" variant="ghost" size="icon" aria-label="Italic">
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              aria-label="Italic"
+              onClick={() => applyFormat("_", "_")}
+            >
               <Italic className="size-4" />
             </Button>
             <Button
@@ -128,6 +332,7 @@ export function ComposeScreen() {
               variant="ghost"
               size="icon"
               aria-label="Underline"
+              onClick={() => applyFormat("__", "__")}
             >
               <Underline className="size-4" />
             </Button>
@@ -143,6 +348,16 @@ export function ComposeScreen() {
           </Button>
         </div>
 
+        {requireApproval && (
+          <p className="text-sm font-medium text-muted-foreground">
+            Sends go to Waiting for approval until a teacher approves them.
+          </p>
+        )}
+        {error && (
+          <p className="text-sm font-semibold text-destructive" role="alert">
+            {error}
+          </p>
+        )}
         {status && (
           <p className="text-sm font-semibold text-safe" role="status">
             {status}

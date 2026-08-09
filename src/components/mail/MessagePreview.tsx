@@ -2,11 +2,19 @@ import { ContactAvatar } from "@/components/mail/ContactAvatar";
 import { SafetyBadge } from "@/components/mail/SafetyBadge";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { formatBytes } from "@/lib/compose";
 import { copyForGrade } from "@/lib/stageCopy";
 import { cn, formatMessageTime } from "@/lib/utils";
 import { getContact, useMailStore } from "@/store/mailStore";
-import { Reply, Share2 } from "lucide-react";
+import { Flag, Paperclip, PenLine, Reply, Share2 } from "lucide-react";
 import { Link } from "react-router-dom";
+
+function draftIdFromMessage(messageId: string): string | null {
+  if (messageId.startsWith("draft-msg-")) {
+    return messageId.replace("draft-msg-", "");
+  }
+  return null;
+}
 
 export function MessagePreview() {
   const messages = useMailStore((s) => s.messages);
@@ -15,6 +23,10 @@ export function MessagePreview() {
   const folder = useMailStore((s) => s.folder);
   const grade = useMailStore((s) => s.grade);
   const learningStage = useMailStore((s) => s.learningStage);
+  const teacherUnlocked = useMailStore((s) => s.teacherUnlocked);
+  const approveMessage = useMailStore((s) => s.approveMessage);
+  const rejectMessage = useMailStore((s) => s.rejectMessage);
+  const reportUnknownSender = useMailStore((s) => s.reportUnknownSender);
   const copy = copyForGrade(grade);
 
   const message = messages.find((m) => m.id === selectedMessageId);
@@ -41,6 +53,10 @@ export function MessagePreview() {
     );
   }
 
+  const linkedDraftId = draftIdFromMessage(message.id);
+  const showApprovalActions =
+    message.folder === "pending" && teacherUnlocked;
+
   return (
     <section
       className={cn(
@@ -58,10 +74,18 @@ export function MessagePreview() {
               <h2 className="font-display text-2xl font-extrabold tracking-tight text-foreground">
                 {message.subject}
               </h2>
-              <SafetyBadge level={contact.safety} />
+              {message.folder === "pending" ? (
+                <span className="rounded-full bg-amber-100 px-2.5 py-1 text-xs font-bold text-amber-800">
+                  Waiting for approval
+                </span>
+              ) : (
+                <SafetyBadge level={contact.safety} />
+              )}
             </div>
             <p className="mt-1 text-sm font-semibold text-foreground/85">
-              {message.folder === "sent" ? (
+              {message.folder === "sent" ||
+              message.folder === "pending" ||
+              message.folder === "drafts" ? (
                 <>
                   To <span className="text-primary">{message.toLabel}</span>
                 </>
@@ -78,31 +102,84 @@ export function MessagePreview() {
               )}
             </p>
             <p className="text-xs font-semibold text-muted-foreground">
-              {formatMessageTime(message.sentAt)} · {contact.email}
+              {formatMessageTime(message.sentAt)}
+              {contact.email ? ` · ${contact.email}` : ""}
             </p>
           </div>
-          <div className="flex gap-2">
-            <Button variant="outline" size="sm" asChild>
-              <Link to="/compose">
-                <Reply className="size-4" />
-                Reply
+          <div className="flex flex-wrap gap-2">
+            {linkedDraftId ? (
+              <Button variant="coral" size="sm" asChild>
+                <Link to={`/compose?draft=${linkedDraftId}`}>
+                  <PenLine className="size-4" />
+                  Continue editing
+                </Link>
+              </Button>
+            ) : (
+              <Button variant="outline" size="sm" asChild>
+                <Link to={`/compose?replyTo=${message.id}`}>
+                  <Reply className="size-4" />
+                  Reply
+                </Link>
+              </Button>
+            )}
+            <Button variant="ghost" size="icon" aria-label="Forward" asChild>
+              <Link
+                to={`/compose?replyTo=${message.id}`}
+                aria-label="Forward"
+              >
+                <Share2 className="size-4" />
               </Link>
-            </Button>
-            <Button variant="ghost" size="icon" aria-label="Forward">
-              <Share2 className="size-4" />
             </Button>
           </div>
         </div>
 
-        {contact.safety === "unknown" && (
-          <div className="mt-4 rounded-3xl border-2 border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-900 animate-fade-up">
-            {copy.unknownSenderHint}
+        {contact.safety === "unknown" && message.folder === "inbox" && (
+          <div className="mt-4 space-y-3 rounded-3xl border-2 border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-900 animate-fade-up">
+            <p>{copy.unknownSenderHint}</p>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => void reportUnknownSender(message.id)}
+            >
+              <Flag className="size-4" />
+              Mark as reported
+            </Button>
+          </div>
+        )}
+
+        {showApprovalActions && (
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Button onClick={() => void approveMessage(message.id)}>
+              Approve & send
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => void rejectMessage(message.id)}
+            >
+              Return to drafts
+            </Button>
           </div>
         )}
       </header>
 
       <ScrollArea className="flex-1">
-        <article className="px-6 py-6">
+        <article className="space-y-4 px-6 py-6">
+          {(message.attachments?.length ?? 0) > 0 && (
+            <ul className="flex flex-wrap gap-2">
+              {message.attachments?.map((file) => (
+                <li
+                  key={file.id}
+                  className="inline-flex items-center gap-2 rounded-full bg-muted px-3 py-1.5 text-xs font-bold"
+                >
+                  <Paperclip className="size-3.5" />
+                  {file.name}
+                  <span className="text-muted-foreground">
+                    {formatBytes(file.size)}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
           <div
             className={cn(
               "bg-card p-6 animate-fade-up",
@@ -130,6 +207,7 @@ function SafeContactsPane() {
   const contacts = useMailStore((s) => s.contacts);
   const grade = useMailStore((s) => s.grade);
   const learningStage = useMailStore((s) => s.learningStage);
+  const teacherUnlocked = useMailStore((s) => s.teacherUnlocked);
   const copy = copyForGrade(grade);
   const safe = contacts.filter((c) => c.safety !== "unknown");
 
@@ -151,6 +229,9 @@ function SafeContactsPane() {
         </div>
         <p className="mt-1 text-sm font-medium text-muted-foreground">
           {copy.safeContactsHint}
+          {teacherUnlocked
+            ? " Teachers can add or update contacts in Teacher controls."
+            : " Ask a teacher to unlock controls if someone should be added."}
         </p>
       </header>
       <ScrollArea className="flex-1">

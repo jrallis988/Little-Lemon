@@ -1,4 +1,5 @@
 import { SafetyBadge } from "@/components/mail/SafetyBadge";
+import { TeacherPanel } from "@/components/teacher/TeacherPanel";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { FOLDERS } from "@/data/seed";
@@ -8,17 +9,21 @@ import { useMailStore } from "@/store/mailStore";
 import type { FolderId, GradeLevel } from "@/types/mail";
 import { bandLabelForGrade } from "@/types/mail";
 import {
+  Clock3,
   FileText,
   Inbox,
   PenSquare,
   Send,
   ShieldCheck,
+  GraduationCap,
 } from "lucide-react";
+import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const icons: Record<FolderId, typeof Inbox> = {
   inbox: Inbox,
   drafts: FileText,
+  pending: Clock3,
   sent: Send,
   "safe-contacts": ShieldCheck,
 };
@@ -39,182 +44,206 @@ export function Sidebar() {
   const grade = useMailStore((s) => s.grade);
   const learningStage = useMailStore((s) => s.learningStage);
   const setGrade = useMailStore((s) => s.setGrade);
+  const teacherUnlocked = useMailStore((s) => s.teacherUnlocked);
   const copy = copyForGrade(grade);
+  const [teacherOpen, setTeacherOpen] = useState(false);
 
   const unreadInbox = messages.filter(
     (m) => m.folder === "inbox" && m.unread,
   ).length;
   const draftCount = messages.filter((m) => m.folder === "drafts").length;
+  const pendingCount = messages.filter((m) => m.folder === "pending").length;
   const safeCount = contacts.filter((c) => c.safety !== "unknown").length;
 
   const counts: Partial<Record<FolderId, number>> = {
     inbox: unreadInbox,
     drafts: draftCount,
+    pending: pendingCount,
     "safe-contacts": safeCount,
   };
 
   return (
-    <aside
-      className={cn(
-        "flex h-full w-[280px] shrink-0 flex-col border-r border-border/70 bg-white/70 backdrop-blur-sm",
-        learningStage === "high" && "w-[252px]",
-      )}
-    >
-      <div className="px-5 pb-2 pt-6">
-        <Link to="/" className="group block" onClick={() => setFolder("inbox")}>
-          <p
-            className={cn(
-              "font-display font-extrabold tracking-tight text-primary transition-transform group-hover:translate-x-0.5",
-              learningStage === "high" ? "text-2xl" : "text-3xl",
-            )}
+    <>
+      <aside
+        className={cn(
+          "flex h-full w-[280px] shrink-0 flex-col border-r border-border/70 bg-white/70 backdrop-blur-sm",
+          learningStage === "high" && "w-[252px]",
+        )}
+      >
+        <div className="px-5 pb-2 pt-6">
+          <Link
+            to="/"
+            className="group block"
+            onClick={() => setFolder("inbox")}
           >
-            Mailbox
-          </p>
-          <p className="mt-1 text-sm font-semibold text-muted-foreground">
-            {copy.tagline}
-          </p>
-        </Link>
-      </div>
-
-      <div className="px-4 py-4">
-        <Button
-          asChild
-          variant={learningStage === "high" ? "default" : "coral"}
-          size={learningStage === "elementary" ? "lg" : "default"}
-          className="w-full justify-start gap-3"
-        >
-          <Link to="/compose">
-            <PenSquare className="size-5" />
-            {copy.composeCta}
-          </Link>
-        </Button>
-      </div>
-
-      <nav className="flex-1 space-y-1 overflow-y-auto px-3" aria-label="Mail folders">
-        {FOLDERS.map((item) => {
-          const Icon = icons[item.id];
-          const active = location.pathname === "/" && folder === item.id;
-          const count = counts[item.id];
-
-          return (
-            <button
-              key={item.id}
-              type="button"
-              onClick={() => {
-                setFolder(item.id);
-                if (location.pathname !== "/") navigate("/");
-              }}
+            <p
               className={cn(
-                "flex w-full items-center gap-3 rounded-2xl px-3 text-left transition-all",
-                learningStage === "elementary" ? "py-3" : "py-2.5",
-                active
-                  ? "bg-primary text-primary-foreground shadow-soft"
-                  : "text-foreground/90 hover:bg-white/80",
+                "font-display font-extrabold tracking-tight text-primary transition-transform group-hover:translate-x-0.5",
+                learningStage === "high" ? "text-2xl" : "text-3xl",
               )}
             >
-              <Icon className="size-5 shrink-0" />
-              <span className="min-w-0 flex-1">
-                <span className="block text-sm font-bold">{item.label}</span>
-                {copy.showFolderDescriptions && (
+              Mailbox
+            </p>
+            <p className="mt-1 text-sm font-semibold text-muted-foreground">
+              {copy.tagline}
+            </p>
+          </Link>
+        </div>
+
+        <div className="space-y-2 px-4 py-4">
+          <Button
+            asChild
+            variant={learningStage === "high" ? "default" : "coral"}
+            size={learningStage === "elementary" ? "lg" : "default"}
+            className="w-full justify-start gap-3"
+          >
+            <Link to="/compose">
+              <PenSquare className="size-5" />
+              {copy.composeCta}
+            </Link>
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full justify-start gap-3"
+            onClick={() => setTeacherOpen(true)}
+          >
+            <GraduationCap className="size-5" />
+            {teacherUnlocked ? "Teacher controls" : "Teacher unlock"}
+          </Button>
+        </div>
+
+        <nav
+          className="flex-1 space-y-1 overflow-y-auto px-3"
+          aria-label="Mail folders"
+        >
+          {FOLDERS.map((item) => {
+            const Icon = icons[item.id];
+            const active = location.pathname === "/" && folder === item.id;
+            const count = counts[item.id];
+
+            return (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => {
+                  setFolder(item.id);
+                  if (location.pathname !== "/") navigate("/");
+                }}
+                className={cn(
+                  "flex w-full items-center gap-3 rounded-2xl px-3 text-left transition-all",
+                  learningStage === "elementary" ? "py-3" : "py-2.5",
+                  active
+                    ? "bg-primary text-primary-foreground shadow-soft"
+                    : "text-foreground/90 hover:bg-white/80",
+                )}
+              >
+                <Icon className="size-5 shrink-0" />
+                <span className="min-w-0 flex-1">
+                  <span className="block text-sm font-bold">{item.label}</span>
+                  {copy.showFolderDescriptions && (
+                    <span
+                      className={cn(
+                        "block truncate text-xs font-medium",
+                        active
+                          ? "text-primary-foreground/80"
+                          : "text-muted-foreground",
+                      )}
+                    >
+                      {item.description}
+                    </span>
+                  )}
+                </span>
+                {typeof count === "number" && count > 0 && (
                   <span
                     className={cn(
-                      "block truncate text-xs font-medium",
+                      "rounded-full px-2 py-0.5 text-xs font-bold",
                       active
-                        ? "text-primary-foreground/80"
-                        : "text-muted-foreground",
+                        ? "bg-white/20 text-primary-foreground"
+                        : "bg-muted text-muted-foreground",
                     )}
                   >
-                    {item.description}
+                    {count}
                   </span>
                 )}
-              </span>
-              {typeof count === "number" && count > 0 && (
-                <span
-                  className={cn(
-                    "rounded-full px-2 py-0.5 text-xs font-bold",
-                    active
-                      ? "bg-white/20 text-primary-foreground"
-                      : "bg-muted text-muted-foreground",
-                  )}
-                >
-                  {count}
-                </span>
-              )}
-            </button>
-          );
-        })}
-      </nav>
+              </button>
+            );
+          })}
+        </nav>
 
-      <div className="mt-auto space-y-3 p-4">
-        <div className="space-y-2">
-          <div className="flex items-baseline justify-between px-1">
-            <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
-              Grade
-            </p>
-            <p className="text-xs font-semibold text-foreground">
-              Grade {grade} · {bandLabelForGrade(grade)}
-            </p>
-          </div>
+        <div className="mt-auto space-y-3 p-4">
+          <div className="space-y-2">
+            <div className="flex items-baseline justify-between px-1">
+              <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
+                Grade
+              </p>
+              <p className="text-xs font-semibold text-foreground">
+                Grade {grade} · {bandLabelForGrade(grade)}
+              </p>
+            </div>
 
-          <div className="space-y-2 rounded-2xl bg-muted/80 p-2">
-            {GRADE_GROUPS.map((group) => (
-              <div key={group.label} className="space-y-1">
-                <p className="px-1 text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
-                  {group.label}
-                </p>
-                <div
-                  className={cn(
-                    "grid gap-1",
-                    group.grades.length === 3
-                      ? "grid-cols-3"
-                      : group.grades.length === 4
-                        ? "grid-cols-4"
-                        : "grid-cols-5",
-                  )}
-                >
-                  {group.grades.map((value) => (
-                    <button
-                      key={value}
-                      type="button"
-                      onClick={() => setGrade(value)}
-                      className={cn(
-                        "rounded-xl py-2 text-xs font-bold transition-colors",
-                        grade === value
-                          ? "bg-card text-foreground shadow-sm ring-1 ring-primary/25"
-                          : "text-muted-foreground hover:bg-card/70 hover:text-foreground",
-                      )}
-                      aria-pressed={grade === value}
-                      aria-label={`Grade ${value}`}
-                      title={`Grade ${value}`}
-                    >
-                      {value}
-                    </button>
-                  ))}
+            <div className="space-y-2 rounded-2xl bg-muted/80 p-2">
+              {GRADE_GROUPS.map((group) => (
+                <div key={group.label} className="space-y-1">
+                  <p className="px-1 text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
+                    {group.label}
+                  </p>
+                  <div
+                    className={cn(
+                      "grid gap-1",
+                      group.grades.length === 3
+                        ? "grid-cols-3"
+                        : group.grades.length === 4
+                          ? "grid-cols-4"
+                          : "grid-cols-5",
+                    )}
+                  >
+                    {group.grades.map((value) => (
+                      <button
+                        key={value}
+                        type="button"
+                        onClick={() => setGrade(value)}
+                        className={cn(
+                          "rounded-xl py-2 text-xs font-bold transition-colors",
+                          grade === value
+                            ? "bg-card text-foreground shadow-sm ring-1 ring-primary/25"
+                            : "text-muted-foreground hover:bg-card/70 hover:text-foreground",
+                        )}
+                        aria-pressed={grade === value}
+                        aria-label={`Grade ${value}`}
+                        title={`Grade ${value}`}
+                      >
+                        {value}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-        <Separator />
-        <div
-          className={cn(
-            "rounded-3xl p-4",
-            learningStage === "high" ? "bg-muted/70" : "bg-safe-soft/80",
-          )}
-        >
-          <div className="flex items-center gap-2">
-            <SafetyBadge level="verified" />
-          </div>
-          <p
+          <Separator />
+          <div
             className={cn(
-              "mt-2 text-sm font-semibold leading-snug",
-              learningStage === "high" ? "text-foreground/80" : "text-safe",
+              "rounded-3xl p-4",
+              learningStage === "high" ? "bg-muted/70" : "bg-safe-soft/80",
             )}
           >
-            {copy.safetyFooter}
-          </p>
+            <div className="flex items-center gap-2">
+              <SafetyBadge level="verified" />
+            </div>
+            <p
+              className={cn(
+                "mt-2 text-sm font-semibold leading-snug",
+                learningStage === "high" ? "text-foreground/80" : "text-safe",
+              )}
+            >
+              {copy.safetyFooter}
+            </p>
+          </div>
         </div>
-      </div>
-    </aside>
+      </aside>
+
+      {teacherOpen && <TeacherPanel onClose={() => setTeacherOpen(false)} />}
+    </>
   );
 }

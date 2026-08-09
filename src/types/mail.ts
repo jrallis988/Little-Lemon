@@ -1,4 +1,9 @@
-export type FolderId = "inbox" | "drafts" | "sent" | "safe-contacts";
+export type FolderId =
+  | "inbox"
+  | "drafts"
+  | "sent"
+  | "pending"
+  | "safe-contacts";
 
 export type SafetyLevel = "verified" | "trusted" | "unknown";
 
@@ -7,6 +12,8 @@ export type LearningStage = "elementary" | "middle" | "high";
 
 /** Individual grade levels across K–12. */
 export type GradeLevel = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+
+export type ApprovalStatus = "none" | "pending" | "approved" | "rejected";
 
 export const ALL_GRADES: GradeLevel[] = [
   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
@@ -23,6 +30,13 @@ export function bandLabelForGrade(grade: GradeLevel): string {
   if (stage === "elementary") return "Elementary";
   if (stage === "middle") return "Middle school";
   return "High school";
+}
+
+export interface AttachmentMeta {
+  id: string;
+  name: string;
+  size: number;
+  type: string;
 }
 
 export interface Contact {
@@ -46,6 +60,9 @@ export interface Message {
   sentAt: string;
   unread: boolean;
   hasAttachment?: boolean;
+  attachments?: AttachmentMeta[];
+  approvalStatus?: ApprovalStatus;
+  replyToId?: string;
 }
 
 export interface Draft {
@@ -54,6 +71,8 @@ export interface Draft {
   subject: string;
   body: string;
   updatedAt: string;
+  attachments?: AttachmentMeta[];
+  replyToId?: string;
 }
 
 export interface FolderMeta {
@@ -61,4 +80,23 @@ export interface FolderMeta {
   label: string;
   description: string;
   verified?: boolean;
+}
+
+export interface AppSettings {
+  id: "app";
+  onboardingComplete: boolean;
+  requireSendApproval: boolean;
+  /** Demo PIN for teacher unlock — replace with real auth later. */
+  teacherPin: string;
+  defaultGrade: GradeLevel;
+}
+
+export interface WritingPrompt {
+  id: string;
+  title: string;
+  description: string;
+  subject: string;
+  body: string;
+  minGrade: GradeLevel;
+  maxGrade: GradeLevel;
 }
