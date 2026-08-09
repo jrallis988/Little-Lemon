@@ -6,6 +6,7 @@ import { SignOutButton } from "@/components/member/sign-out-button";
 import { getSession } from "@/lib/auth";
 import {
   Accessibility,
+  Bell,
   Globe2,
   HeartPulse,
   Languages,
@@ -32,6 +33,12 @@ export default async function AccountPage() {
           label="Edit profile"
           description="Screen 64 — name, phone, and contact email"
           icon={UserRound}
+        />
+        <MemberLinkRow
+          href="/app/notifications"
+          label="Notifications & prefs"
+          description="Screens 25 & 65 — inbox + alert toggles"
+          icon={Bell}
         />
         <MemberLinkRow
           href="/app/account/transfer"

@@ -14,25 +14,54 @@ export function LoginForm() {
   const next = searchParams.get("next") || "/app";
   const reason = searchParams.get("reason");
 
+  const [mode, setMode] = useState<"login" | "register" | "forgot">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [info, setInfo] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
   async function onSubmit(event: React.FormEvent) {
     event.preventDefault();
     setSubmitting(true);
     setError(null);
+    setInfo(null);
     try {
-      const response = await fetch("/api/auth/login", {
+      if (mode === "forgot") {
+        const response = await fetch("/api/auth/forgot-password", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        });
+        const data = (await response.json()) as {
+          error?: string;
+          message?: string;
+          resetUrl?: string | null;
+        };
+        if (!response.ok) throw new Error(data.error ?? "Request failed.");
+        setInfo(
+          data.resetUrl
+            ? `${data.message} Open: ${data.resetUrl}`
+            : data.message ?? "Check your email."
+        );
+        return;
+      }
+
+      const endpoint =
+        mode === "register" ? "/api/auth/register" : "/api/auth/login";
+      const response = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify(
+          mode === "register"
+            ? { email, password, firstName, lastName }
+            : { email, password }
+        ),
       });
       const data = (await response.json()) as { error?: string };
-      if (!response.ok) {
-        throw new Error(data.error ?? "Sign-in failed.");
-      }
+      if (!response.ok) throw new Error(data.error ?? "Sign-in failed.");
       router.replace(next.startsWith("/app") ? next : "/app");
       router.refresh();
     } catch (err) {
@@ -50,25 +79,50 @@ export function LoginForm() {
           ? "Session expired"
           : reason === "update"
             ? "Update required"
-            : "Sign in"
+            : mode === "register"
+              ? "Create account"
+              : mode === "forgot"
+                ? "Reset password"
+                : "Sign in"
       }
       subtitle={
         reason === "expired"
           ? "Screen 84 — sign in again to keep using check-in and your keytag."
           : reason === "update"
             ? "Screen 85 — this build needs a refresh before member tools unlock."
-            : "Member utility login. Acquisition and join stay on the public website."
+            : "Hashed local accounts + session cookies. Demo password still works for quick QA."
       }
     >
-      {reason === "update" ? (
-        <MemberCard className="mb-3 border-amber-200 bg-amber-50 text-sm text-amber-900">
-          A newer app build is available. Refresh, then sign in with your member
-          email.
-        </MemberCard>
-      ) : null}
-
       <MemberCard>
         <form className="space-y-3" onSubmit={onSubmit}>
+          {mode === "register" ? (
+            <div className="grid grid-cols-2 gap-2">
+              <div>
+                <label className="text-xs font-semibold text-pf-ink/65" htmlFor="fn">
+                  First name
+                </label>
+                <Input
+                  id="fn"
+                  className="mt-1 border-pf-line"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  required
+                />
+              </div>
+              <div>
+                <label className="text-xs font-semibold text-pf-ink/65" htmlFor="ln">
+                  Last name
+                </label>
+                <Input
+                  id="ln"
+                  className="mt-1 border-pf-line"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
+          ) : null}
           <div>
             <label htmlFor="email" className="text-xs font-semibold text-pf-ink/65">
               Email
@@ -77,33 +131,38 @@ export function LoginForm() {
               id="email"
               type="email"
               className="mt-1 border-pf-line"
-              placeholder="you@email.com"
-              autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
-          <div>
-            <label
-              htmlFor="password"
-              className="text-xs font-semibold text-pf-ink/65"
-            >
-              Password
-            </label>
-            <Input
-              id="password"
-              type="password"
-              className="mt-1 border-pf-line"
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
+          {mode !== "forgot" ? (
+            <div>
+              <label
+                htmlFor="password"
+                className="text-xs font-semibold text-pf-ink/65"
+              >
+                Password
+              </label>
+              <Input
+                id="password"
+                type="password"
+                className="mt-1 border-pf-line"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                minLength={mode === "register" ? 8 : 1}
+              />
+            </div>
+          ) : null}
           {error ? (
             <p className="text-sm text-red-600" role="alert">
               {error}
+            </p>
+          ) : null}
+          {info ? (
+            <p className="break-all text-xs text-emerald-700" role="status">
+              {info}
             </p>
           ) : null}
           <Button
@@ -111,38 +170,43 @@ export function LoginForm() {
             variant="purple"
             className="w-full"
             disabled={submitting}
-            aria-busy={submitting}
           >
-            {submitting ? "Signing in…" : "Continue to app"}
+            {submitting
+              ? "Working…"
+              : mode === "register"
+                ? "Create account"
+                : mode === "forgot"
+                  ? "Email reset link"
+                  : "Continue to app"}
           </Button>
+          <div className="flex flex-wrap justify-center gap-3 text-xs">
+            <button
+              type="button"
+              className="font-semibold text-pf-purple"
+              onClick={() => setMode(mode === "register" ? "login" : "register")}
+            >
+              {mode === "register" ? "Have an account? Sign in" : "Create account"}
+            </button>
+            <button
+              type="button"
+              className="font-semibold text-pf-ink/55"
+              onClick={() => setMode(mode === "forgot" ? "login" : "forgot")}
+            >
+              {mode === "forgot" ? "Back to sign in" : "Forgot password"}
+            </button>
+          </div>
           <p className="text-center text-xs text-pf-ink/55">
-            Demo password:{" "}
+            QA shortcut password:{" "}
             <code className="rounded bg-pf-mist px-1">{DEMO_MEMBER_PASSWORD}</code>
-            . Uses a join membership when the email matches.
           </p>
           <p className="text-center text-xs text-pf-ink/55">
-            New here?{" "}
+            New member?{" "}
             <Link href="/join" className="font-semibold text-pf-purple underline">
               Join on the website
             </Link>
           </p>
         </form>
       </MemberCard>
-
-      <div className="mt-3 flex gap-2 text-center text-[11px]">
-        <Link
-          href="/app/login?reason=expired"
-          className="flex-1 rounded-xl border border-pf-line bg-white px-2 py-2 font-semibold text-pf-ink/60"
-        >
-          Preview expired
-        </Link>
-        <Link
-          href="/app/login?reason=update"
-          className="flex-1 rounded-xl border border-pf-line bg-white px-2 py-2 font-semibold text-pf-ink/60"
-        >
-          Preview force update
-        </Link>
-      </div>
     </MemberScreen>
   );
 }

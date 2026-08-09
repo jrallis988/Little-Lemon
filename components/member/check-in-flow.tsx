@@ -18,7 +18,8 @@ export type CheckInState =
   | "scanning"
   | "success"
   | "offline"
-  | "club_full";
+  | "club_full"
+  | "denied";
 
 const STATE_META: Record<
   CheckInState,
@@ -26,28 +27,33 @@ const STATE_META: Record<
 > = {
   idle: {
     title: "Ready to check in",
-    detail: "Hold your phone near the scanner or tap Start scan.",
+    detail: "We’ll issue a signed door token, then validate it with access control.",
     screen: "28 · Idle",
   },
   scanning: {
-    title: "Scanning…",
-    detail: "Keep the QR in frame until the club reader confirms.",
+    title: "Validating with club reader…",
+    detail: "Talking to the access-control service.",
     screen: "29 · Scanning",
   },
   success: {
     title: "You’re checked in",
-    detail: "Have a great workout. Judgement Free Zone® awaits.",
+    detail: "Door token accepted. Have a Judgement Free workout.",
     screen: "30 · Success",
   },
   offline: {
     title: "You’re offline",
-    detail: "Show your digital keytag at the desk — it’s cached on this device.",
+    detail: "Showing your cached keytag token — staff can scan this at the desk.",
     screen: "31 · Offline",
   },
   club_full: {
     title: "Club at capacity",
-    detail: "Try again in a bit, or check Crowd Meter for a quieter time.",
+    detail: "Access control rejected entry for capacity. Check Crowd Meter.",
     screen: "32 · Club full",
+  },
+  denied: {
+    title: "Access denied",
+    detail: "Token invalid or expired. Refresh and try again.",
+    screen: "28 · Denied",
   },
 };
 
@@ -60,9 +66,12 @@ export function CheckInFlow({
 }) {
   const [state, setState] = useState<CheckInState>("idle");
   const [online, setOnline] = useState(true);
+  const [code, setCode] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    const sync = () => setOnline(typeof navigator !== "undefined" ? navigator.onLine : true);
+    const sync = () =>
+      setOnline(typeof navigator !== "undefined" ? navigator.onLine : true);
     sync();
     window.addEventListener("online", sync);
     window.addEventListener("offline", sync);
@@ -75,18 +84,70 @@ export function CheckInFlow({
   useEffect(() => {
     if (!online && state !== "offline" && state !== "success") {
       setState("offline");
+      try {
+        const cached = localStorage.getItem("pf_keytag_cache");
+        if (cached) {
+          const parsed = JSON.parse(cached) as { code?: string };
+          setCode(parsed.code ?? null);
+        }
+      } catch {
+        /* ignore */
+      }
     }
   }, [online, state]);
 
-  useEffect(() => {
-    if (state !== "scanning") return;
-    const timer = window.setTimeout(() => {
-      // Demo outcomes: mostly success, occasional capacity.
-      const roll = Math.random();
-      setState(roll < 0.15 ? "club_full" : "success");
-    }, 1600);
-    return () => window.clearTimeout(timer);
-  }, [state]);
+  async function startCheckIn() {
+    if (!online) {
+      setState("offline");
+      return;
+    }
+    setState("scanning");
+    setMessage(null);
+    try {
+      const tokenRes = await fetch("/api/access/token", { method: "POST" });
+      const tokenData = (await tokenRes.json()) as {
+        error?: string;
+        token?: { code: string; expiresAt: string };
+        offline?: Record<string, unknown>;
+      };
+      if (!tokenRes.ok || !tokenData.token?.code) {
+        throw new Error(tokenData.error ?? "Could not issue door token.");
+      }
+      setCode(tokenData.token.code);
+      if (tokenData.offline) {
+        localStorage.setItem(
+          "pf_keytag_cache",
+          JSON.stringify(tokenData.offline)
+        );
+      }
+
+      const validateRes = await fetch("/api/access/validate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code: tokenData.token.code }),
+      });
+      const validateData = (await validateRes.json()) as {
+        ok?: boolean;
+        result?: string;
+        message?: string;
+      };
+
+      if (validateData.result === "club_full") {
+        setState("club_full");
+        setMessage(validateData.message ?? null);
+        return;
+      }
+      if (!validateRes.ok || !validateData.ok) {
+        setState("denied");
+        setMessage(validateData.message ?? "Access denied.");
+        return;
+      }
+      setState("success");
+    } catch (err) {
+      setState("denied");
+      setMessage(err instanceof Error ? err.message : "Check-in failed.");
+    }
+  }
 
   const meta = STATE_META[state];
 
@@ -101,7 +162,8 @@ export function CheckInFlow({
           "text-center transition",
           state === "success" && "border-emerald-300 bg-emerald-50/60",
           state === "club_full" && "border-amber-300 bg-amber-50/70",
-          state === "offline" && "border-slate-300 bg-slate-50"
+          (state === "offline" || state === "denied") &&
+            "border-slate-300 bg-slate-50"
         )}
       >
         <div
@@ -135,17 +197,28 @@ export function CheckInFlow({
           {state === "club_full" ? (
             <Users className="h-16 w-16 text-amber-600" aria-hidden />
           ) : null}
+          {state === "denied" ? (
+            <SignalZero className="h-16 w-16 text-slate-500" aria-hidden />
+          ) : null}
         </div>
 
         <p className="mt-4 text-sm font-semibold text-pf-ink">{meta.title}</p>
         <p className="mt-1 text-xs text-pf-ink/55">{meta.detail}</p>
+        {message ? (
+          <p className="mt-2 text-xs font-semibold text-pf-purple">{message}</p>
+        ) : null}
+        {code ? (
+          <p className="mt-3 break-all font-mono text-[10px] text-pf-ink/45">
+            {code.slice(0, 48)}…
+          </p>
+        ) : null}
         <p className="mt-3 text-xs text-pf-ink/45">
           {memberName} · {clubName}
         </p>
         {!online ? (
           <p className="mt-2 inline-flex items-center gap-1 text-[11px] font-semibold text-slate-600">
             <SignalZero className="h-3.5 w-3.5" aria-hidden />
-            Device offline
+            Device offline · cached token
           </p>
         ) : null}
       </MemberCard>
@@ -154,31 +227,13 @@ export function CheckInFlow({
         <Button
           type="button"
           variant="purple"
-          disabled={state === "scanning" || !online}
-          onClick={() => setState("scanning")}
+          disabled={state === "scanning"}
+          onClick={() => void startCheckIn()}
         >
-          {state === "scanning" ? "Scanning…" : "Start scan"}
+          {state === "scanning" ? "Validating…" : "Check in"}
         </Button>
-        <Button
-          type="button"
-          variant="outline"
-          onClick={() => setState("idle")}
-        >
+        <Button type="button" variant="outline" onClick={() => setState("idle")}>
           Reset
-        </Button>
-        <Button
-          type="button"
-          variant="outline"
-          onClick={() => setState("offline")}
-        >
-          Simulate offline
-        </Button>
-        <Button
-          type="button"
-          variant="outline"
-          onClick={() => setState("club_full")}
-        >
-          Simulate full
         </Button>
       </div>
     </div>

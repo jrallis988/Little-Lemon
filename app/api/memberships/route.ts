@@ -146,6 +146,7 @@ export async function POST(request: Request) {
       recurringBilling: true,
       ageAttestation: true,
       acceptedAt: new Date().toISOString(),
+      agreementVersion: "2026-08-01",
     },
     payment: {
       nameOnCard: payment.nameOnCard.trim(),
@@ -158,6 +159,30 @@ export async function POST(request: Request) {
       processorReference: auth.reference,
     },
   });
+
+  // Provision a member-app login (demo password) so join → app is seamless.
+  let appLoginHint: string | null = null;
+  try {
+    const { createUser, getUserByEmail, updateUser } = await import("@/lib/users");
+    const { DEMO_MEMBER_PASSWORD } = await import("@/lib/auth-shared");
+    const email = record.member.email;
+    const existing = await getUserByEmail(email);
+    if (existing) {
+      await updateUser(existing.id, { membershipId: record.id });
+    } else {
+      await createUser({
+        email,
+        password: DEMO_MEMBER_PASSWORD,
+        firstName: record.member.firstName,
+        lastName: record.member.lastName,
+        phone: record.member.phone,
+        membershipId: record.id,
+      });
+      appLoginHint = DEMO_MEMBER_PASSWORD;
+    }
+  } catch {
+    /* non-fatal */
+  }
 
   return NextResponse.json(
     {
@@ -183,6 +208,9 @@ export async function POST(request: Request) {
         createdAt: record.createdAt,
       },
       paymentsMode: paymentsConfigured() ? "stripe" : "test",
+      appLogin: appLoginHint
+        ? { email: record.member.email, demoPassword: appLoginHint }
+        : null,
     },
     { status: 201 }
   );

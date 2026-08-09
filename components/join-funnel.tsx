@@ -742,7 +742,7 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
                     <span>
                       I agree to the{" "}
                       <a
-                        href="https://www.planetfitness.com/terms-conditions"
+                        href="/legal/membership"
                         target="_blank"
                         rel="noreferrer"
                         className="font-semibold text-pf-purple underline"

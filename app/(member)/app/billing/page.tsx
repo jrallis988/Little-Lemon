@@ -1,66 +1,140 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { AlertTriangle, Ban, Snowflake } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   MemberCard,
   MemberLinkRow,
   MemberScreen,
 } from "@/components/member/member-ui";
-import { getSession } from "@/lib/auth";
-import { getMembershipById } from "@/lib/memberships";
-import { AlertTriangle, Ban, Snowflake } from "lucide-react";
 
-export default async function BillingPage() {
-  const session = await getSession();
-  const membership = session?.membershipId
-    ? await getMembershipById(session.membershipId)
-    : null;
+type Membership = {
+  id: string;
+  status: string;
+  plan: string;
+  monthlyDues: number;
+  nextBillAt: string | null;
+  payment: { brand: string; last4: string };
+};
+
+type Invoice = {
+  id: string;
+  description: string;
+  amountCents: number;
+  status: string;
+  createdAt: string;
+};
+
+export default function BillingPage() {
+  const [membership, setMembership] = useState<Membership | null>(null);
+  const [invoices, setInvoices] = useState<Invoice[]>([]);
+
+  useEffect(() => {
+    void fetch("/api/billing")
+      .then((r) => r.json())
+      .then((data: { membership?: Membership | null; invoices?: Invoice[] }) => {
+        setMembership(data.membership ?? null);
+        setInvoices(data.invoices ?? []);
+      });
+  }, []);
 
   const planLabel =
     membership?.plan === "classic"
       ? "Classic"
       : membership?.plan === "black-card"
         ? "Black Card"
-        : session?.plan === "classic"
-          ? "Classic"
-          : "Black Card";
-  const monthly = membership?.monthlyDues ?? 24.99;
-  const last4 = membership?.payment.last4 ?? "4242";
-  const brand = membership?.payment.brand ?? "Visa";
+        : "Member";
 
   return (
     <MemberScreen
       eyebrow="Screen 53–58 · Billing"
       title="Billing & membership"
-      subtitle="Payment history, failed-payment retry, freeze, and cancel guides."
+      subtitle="History, failed-payment retry, freeze, and cancel guides."
     >
       <MemberCard className="space-y-3">
         <div className="flex justify-between text-sm">
           <span className="text-pf-ink/60">Plan</span>
           <span className="font-semibold">
-            {planLabel} · ${monthly.toFixed(2)}/mo
+            {planLabel}
+            {membership ? ` · $${membership.monthlyDues.toFixed(2)}/mo` : ""}
           </span>
         </div>
         <div className="flex justify-between text-sm">
           <span className="text-pf-ink/60">Status</span>
           <span className="font-semibold capitalize">
-            {membership?.status ?? "active"}
+            {membership?.status ?? "—"}
           </span>
         </div>
         <div className="flex justify-between text-sm">
           <span className="text-pf-ink/60">Card</span>
           <span className="font-semibold">
-            {brand} •••• {last4}
+            {membership
+              ? `${membership.payment.brand} •••• ${membership.payment.last4}`
+              : "Not on file"}
+          </span>
+        </div>
+        <div className="flex justify-between text-sm">
+          <span className="text-pf-ink/60">Next bill</span>
+          <span className="font-semibold">
+            {membership?.nextBillAt
+              ? new Date(membership.nextBillAt).toLocaleDateString()
+              : "—"}
           </span>
         </div>
         <div className="flex gap-2 pt-1">
           <Button asChild variant="purple" className="flex-1">
-            <Link href="/app/billing/retry">Retry payment</Link>
+            <Link href="/app/billing/retry">Retry / update card</Link>
           </Button>
-          <Button asChild variant="outline" className="flex-1">
-            <Link href="/app/account">Manage</Link>
+          <Button
+            type="button"
+            variant="outline"
+            className="flex-1"
+            onClick={() => {
+              void fetch("/api/billing", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ action: "simulate_failure" }),
+              }).then(() => window.location.reload());
+            }}
+          >
+            Simulate fail
           </Button>
         </div>
       </MemberCard>
+
+      <div className="mt-4 space-y-2">
+        <p className="text-[10px] font-bold uppercase tracking-wide text-pf-purple">
+          Screen 54 · History
+        </p>
+        {invoices.length === 0 ? (
+          <MemberCard>
+            <p className="text-sm text-pf-ink/55">No invoices yet.</p>
+          </MemberCard>
+        ) : (
+          invoices.map((invoice) => (
+            <MemberCard key={invoice.id}>
+              <div className="flex items-center justify-between gap-2 text-sm">
+                <div>
+                  <p className="font-semibold text-pf-ink">{invoice.description}</p>
+                  <p className="text-xs text-pf-ink/55">
+                    {new Date(invoice.createdAt).toLocaleDateString()}
+                  </p>
+                </div>
+                <div className="text-right">
+                  <p className="font-semibold">
+                    ${(invoice.amountCents / 100).toFixed(2)}
+                  </p>
+                  <p className="text-xs capitalize text-pf-purple">
+                    {invoice.status}
+                  </p>
+                </div>
+              </div>
+            </MemberCard>
+          ))
+        )}
+      </div>
 
       <div className="mt-4 space-y-2">
         <MemberLinkRow

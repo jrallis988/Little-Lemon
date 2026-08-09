@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { SESSION_COOKIE } from "@/lib/auth-shared";
 
 /** Public member-app routes that skip the session gate. */
-const PUBLIC_APP_PATHS = ["/app/login"];
+const PUBLIC_APP_PATHS = ["/app/login", "/app/login/reset"];
 
 function isPublicAppPath(pathname: string) {
   return PUBLIC_APP_PATHS.some(

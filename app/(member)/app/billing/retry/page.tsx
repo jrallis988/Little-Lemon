@@ -3,21 +3,39 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  MemberCard,
-  MemberScreen,
-} from "@/components/member/member-ui";
+import { MemberCard, MemberScreen } from "@/components/member/member-ui";
 
 export default function FailedPaymentRetryPage() {
   const [done, setDone] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [nameOnCard, setNameOnCard] = useState("");
+  const [cardNumber, setCardNumber] = useState("4242424242424242");
+  const [expiry, setExpiry] = useState("12/30");
+  const [cvc, setCvc] = useState("123");
+  const [zip, setZip] = useState("30308");
 
   async function retry(event: React.FormEvent) {
     event.preventDefault();
     setSubmitting(true);
-    await new Promise((r) => setTimeout(r, 900));
-    setDone(true);
-    setSubmitting(false);
+    setError(null);
+    try {
+      const response = await fetch("/api/billing", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "retry",
+          payment: { nameOnCard, cardNumber, expiry, cvc, zip },
+        }),
+      });
+      const data = (await response.json()) as { error?: string };
+      if (!response.ok) throw new Error(data.error ?? "Retry failed.");
+      setDone(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Retry failed.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -31,7 +49,7 @@ export default function FailedPaymentRetryPage() {
           <div className="space-y-2 text-center">
             <p className="font-display text-2xl text-emerald-700">Payment cleared</p>
             <p className="text-sm text-pf-ink/65">
-              Your membership is active again. Check-in and keytag are unlocked.
+              Dunning cleared and membership set back to active.
             </p>
             <Button asChild variant="purple" className="mt-2 w-full">
               <a href="/app/billing">Back to billing</a>
@@ -40,36 +58,48 @@ export default function FailedPaymentRetryPage() {
         ) : (
           <form className="space-y-3" onSubmit={retry}>
             <p className="rounded-2xl bg-amber-50 px-3 py-2 text-xs text-amber-900">
-              Past due: <span className="font-semibold">$24.99</span> monthly dues
-              failed on the last attempt.
+              Retries authorize through the payment adapter and clear open/failed invoices.
             </p>
-            <div>
-              <label className="text-xs font-semibold text-pf-ink/65" htmlFor="card">
-                Card number
-              </label>
+            <Input
+              className="border-pf-line"
+              placeholder="Name on card"
+              value={nameOnCard}
+              onChange={(e) => setNameOnCard(e.target.value)}
+              required
+            />
+            <Input
+              className="border-pf-line"
+              placeholder="Card number"
+              value={cardNumber}
+              onChange={(e) => setCardNumber(e.target.value)}
+              required
+            />
+            <div className="grid grid-cols-3 gap-2">
               <Input
-                id="card"
-                className="mt-1 border-pf-line"
-                placeholder="4242 4242 4242 4242"
+                className="border-pf-line"
+                placeholder="MM/YY"
+                value={expiry}
+                onChange={(e) => setExpiry(e.target.value)}
+                required
+              />
+              <Input
+                className="border-pf-line"
+                placeholder="CVC"
+                value={cvc}
+                onChange={(e) => setCvc(e.target.value)}
+                required
+              />
+              <Input
+                className="border-pf-line"
+                placeholder="ZIP"
+                value={zip}
+                onChange={(e) => setZip(e.target.value)}
                 required
               />
             </div>
-            <div className="grid grid-cols-2 gap-2">
-              <div>
-                <label className="text-xs font-semibold text-pf-ink/65" htmlFor="exp">
-                  Expiry
-                </label>
-                <Input id="exp" className="mt-1 border-pf-line" placeholder="MM/YY" required />
-              </div>
-              <div>
-                <label className="text-xs font-semibold text-pf-ink/65" htmlFor="cvc">
-                  CVC
-                </label>
-                <Input id="cvc" className="mt-1 border-pf-line" required />
-              </div>
-            </div>
+            {error ? <p className="text-sm text-red-600">{error}</p> : null}
             <Button type="submit" variant="purple" className="w-full" disabled={submitting}>
-              {submitting ? "Retrying…" : "Retry $24.99"}
+              {submitting ? "Retrying…" : "Retry & update card"}
             </Button>
           </form>
         )}

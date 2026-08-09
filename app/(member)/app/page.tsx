@@ -1,5 +1,6 @@
 import Link from "next/link";
 import {
+  Bell,
   Gift,
   QrCode,
   ScanLine,
@@ -54,6 +55,12 @@ export default async function MemberHomePage() {
       </MemberCard>
 
       <div className="mt-4 space-y-2">
+        <MemberLinkRow
+          href="/app/notifications"
+          label="Notifications"
+          description="Screens 25 & 65 — inbox and alert prefs"
+          icon={Bell}
+        />
         <MemberLinkRow
           href="/app/crowd"
           label="Crowd Meter"

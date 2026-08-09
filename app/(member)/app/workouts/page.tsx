@@ -1,14 +1,6 @@
-import {
-  ComingSoonNote,
-  MemberCard,
-  MemberScreen,
-} from "@/components/member/member-ui";
-
-const GUIDES = [
-  "Beginner Lower Body Strength",
-  "30-Minute Full Body Circuit",
-  "Cardio Endurance Starter",
-];
+import Link from "next/link";
+import { MemberCard, MemberScreen } from "@/components/member/member-ui";
+import { WORKOUTS } from "@/lib/workouts";
 
 export default function WorkoutsPage() {
   return (
@@ -18,20 +10,17 @@ export default function WorkoutsPage() {
       subtitle="On-demand guides and video hubs live in the member app — not the acquisition site."
     >
       <div className="space-y-2">
-        {GUIDES.map((guide) => (
-          <MemberCard key={guide}>
-            <p className="text-[10px] font-bold uppercase tracking-wide text-pf-purple">
-              PF+ Guide
-            </p>
-            <p className="mt-1 font-semibold text-pf-ink">{guide}</p>
-            <p className="mt-1 text-xs text-pf-ink/55">
-              Reps, sets, and form tutorials
-            </p>
-          </MemberCard>
+        {WORKOUTS.map((guide) => (
+          <Link key={guide.id} href={`/app/workouts/${guide.id}`}>
+            <MemberCard className="mb-2 transition hover:border-pf-purple">
+              <p className="text-[10px] font-bold uppercase tracking-wide text-pf-purple">
+                {guide.collection} · {guide.minutes} min
+              </p>
+              <p className="mt-1 font-semibold text-pf-ink">{guide.title}</p>
+              <p className="mt-1 text-xs text-pf-ink/55">{guide.summary}</p>
+            </MemberCard>
+          </Link>
         ))}
-      </div>
-      <div className="mt-4">
-        <ComingSoonNote screen="video hub + favorites + history" />
       </div>
     </MemberScreen>
   );

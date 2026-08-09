@@ -137,6 +137,7 @@ export async function POST(request: Request) {
       recurringBilling: true,
       ageAttestation: true,
       acceptedAt: new Date().toISOString(),
+      agreementVersion: "2026-08-01",
     },
     payment: {
       nameOnCard: fullName,

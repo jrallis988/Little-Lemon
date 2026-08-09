@@ -28,21 +28,16 @@ const PARTNERS = [
 ];
 
 const LEGAL = [
+  { label: "Privacy Policy (demo)", href: "/legal/privacy" },
+  { label: "Terms of Use (demo)", href: "/legal/terms" },
+  { label: "Membership Agreement (demo)", href: "/legal/membership" },
   {
-    label: "Privacy Policy",
+    label: "Official Privacy Policy",
     href: "https://www.planetfitness.com/privacy-policy",
   },
   {
-    label: "Terms and Conditions of Use",
+    label: "Official Terms",
     href: "https://www.planetfitness.com/terms-conditions",
-  },
-  {
-    label: "Do Not Sell or Share My Personal Information",
-    href: "https://www.planetfitness.com/do-not-sell",
-  },
-  {
-    label: "Your State and EU Privacy Rights",
-    href: "https://www.planetfitness.com/privacy-rights",
   },
   {
     label: "Accessibility",

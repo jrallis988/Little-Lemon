@@ -8,6 +8,7 @@ export { DEMO_MEMBER_PASSWORD, SESSION_COOKIE, verifyDemoPassword } from "@/lib/
 const SESSION_TTL_SECONDS = 60 * 60 * 24 * 14; // 14 days
 
 export type SessionUser = {
+  userId: string | null;
   email: string;
   firstName: string;
   lastName: string;
@@ -71,6 +72,7 @@ export function readSessionToken(token: string | undefined | null): SessionUser 
   const payload = decode(token);
   if (!payload) return null;
   return {
+    userId: payload.userId ?? null,
     email: payload.email,
     firstName: payload.firstName,
     lastName: payload.lastName,

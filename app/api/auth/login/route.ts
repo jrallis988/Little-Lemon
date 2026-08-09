@@ -8,6 +8,8 @@ import {
   type SessionUser,
 } from "@/lib/auth";
 import { getMembershipByEmail } from "@/lib/memberships";
+import { ensureWelcomeNotifications } from "@/lib/notifications";
+import { authenticateUser, createUser, getUserByEmail } from "@/lib/users";
 
 export const dynamic = "force-dynamic";
 
@@ -34,38 +36,54 @@ export async function POST(request: Request) {
     );
   }
 
-  if (!verifyDemoPassword(password)) {
+  let user = await authenticateUser(email, password);
+  const membership = await getMembershipByEmail(email);
+
+  // Demo fallback: password pfmember provisions/upgrades a local account.
+  if (!user && verifyDemoPassword(password)) {
+    const existing = await getUserByEmail(email);
+    if (existing) {
+      user = existing;
+    } else {
+      user = await createUser({
+        email,
+        password: DEMO_MEMBER_PASSWORD,
+        firstName: membership?.member.firstName || email.split("@")[0] || "Member",
+        lastName: membership?.member.lastName || "",
+        phone: membership?.member.phone,
+        membershipId: membership?.id ?? null,
+      });
+    }
+  }
+
+  if (!user) {
     return NextResponse.json(
-      {
-        error: `Invalid credentials. Demo password is “${DEMO_MEMBER_PASSWORD}”.`,
-      },
+      { error: "Invalid email or password." },
       { status: 401 }
     );
   }
 
-  const membership = await getMembershipByEmail(email);
-  const user: SessionUser = membership
-    ? {
-        email: membership.member.email,
-        firstName: membership.member.firstName,
-        lastName: membership.member.lastName,
-        membershipId: membership.id,
-        clubId: membership.clubId,
-        clubName: membership.clubName,
-        plan: membership.plan,
-      }
-    : {
-        email,
-        firstName: email.split("@")[0] || "Member",
-        lastName: "",
-        membershipId: null,
-        clubId: "pf-midtown",
-        clubName: "Planet Fitness Midtown",
-        plan: "black-card",
-      };
+  if (membership && user.membershipId !== membership.id) {
+    const { updateUser } = await import("@/lib/users");
+    user =
+      (await updateUser(user.id, { membershipId: membership.id })) ?? user;
+  }
 
-  const token = createSessionToken(user);
-  const response = NextResponse.json({ user });
+  await ensureWelcomeNotifications(user.id);
+
+  const sessionUser: SessionUser = {
+    userId: user.id,
+    email: user.email,
+    firstName: user.firstName || membership?.member.firstName || "Member",
+    lastName: user.lastName || membership?.member.lastName || "",
+    membershipId: user.membershipId ?? membership?.id ?? null,
+    clubId: membership?.clubId ?? "pf-midtown",
+    clubName: membership?.clubName ?? "Planet Fitness Midtown",
+    plan: membership?.plan ?? "black-card",
+  };
+
+  const token = createSessionToken(sessionUser);
+  const response = NextResponse.json({ user: sessionUser });
   response.cookies.set(SESSION_COOKIE, token, sessionCookieOptions());
   return response;
 }
