@@ -4,17 +4,28 @@
 
   // Mobile nav
   const toggle = document.querySelector(".nav-toggle");
-  const nav = document.querySelector(".nav");
+  const nav = document.getElementById("site-nav");
   if (toggle && nav) {
-    toggle.addEventListener("click", () => {
-      const open = nav.classList.toggle("is-open");
+    const setOpen = (open) => {
+      nav.classList.toggle("is-open", open);
       toggle.setAttribute("aria-expanded", String(open));
+    };
+
+    toggle.addEventListener("click", (event) => {
+      event.stopPropagation();
+      setOpen(!nav.classList.contains("is-open"));
     });
+
     nav.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => {
-        nav.classList.remove("is-open");
-        toggle.setAttribute("aria-expanded", "false");
-      });
+      link.addEventListener("click", () => setOpen(false));
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!nav.classList.contains("is-open")) return;
+      const target = event.target;
+      if (target instanceof Node && !nav.contains(target) && !toggle.contains(target)) {
+        setOpen(false);
+      }
     });
   }
 
