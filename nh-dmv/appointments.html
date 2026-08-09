@@ -74,20 +74,13 @@
         </div>
 
         <div class="field">
-          <label>Available times</label>
-          <div class="slot-grid" id="slot-grid" role="group" aria-label="Time slots"></div>
+          <label id="slot-label">Available times</label>
+          <div class="slot-grid" id="slot-grid" role="group" aria-labelledby="slot-label"></div>
+          <div class="empty-state" id="slot-empty" hidden role="status" style="margin-top:0.75rem"></div>
         </div>
 
         <button class="btn btn-primary" type="submit">Hold appointment</button>
-
-        <div class="result-box" id="appt-confirm" hidden style="margin-top:1.15rem">
-          <h3>Appointment held (demo)</h3>
-          <p data-confirm-detail></p>
-          <div style="margin-top:0.85rem;display:flex;gap:0.5rem;flex-wrap:wrap">
-            <a class="btn btn-primary btn-sm" href="dashboard.html">View on dashboard</a>
-            <a class="btn btn-secondary btn-sm" href="checklist.html">What to bring</a>
-          </div>
-        </div>
+        <p class="field-hint">You’ll get a printable confirmation receipt on the next screen (demo).</p>
       </form>
 
       <aside class="summary-card" aria-label="Booking summary">

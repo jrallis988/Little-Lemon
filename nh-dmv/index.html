@@ -80,8 +80,12 @@
           <p class="hero-kicker">Live Free or Die</p>
           <h1 class="hero-title">Get through the DMV with <span class="mark">confidence</span></h1>
           <p class="hero-lede">Appointments, renewals, REAL ID, and records — organized around what you need, not the org chart.</p>
-          <div class="hero-actions">
+          <div class="hero-actions" data-home-guest>
             <a class="btn btn-secondary" href="appointments.html">Start your visit</a>
+            <button type="button" class="btn btn-primary" data-sign-in-hero>Sign in</button>
+          </div>
+          <div class="hero-actions" data-home-member hidden>
+            <a class="btn btn-secondary" href="appointments.html">Book appointment</a>
             <a class="btn btn-primary" href="dashboard.html">My dashboard</a>
           </div>
           <div class="hero-proof">
@@ -126,15 +130,29 @@
               </a>
             </div>
           </div>
-          <aside class="dash-card" aria-label="Dashboard preview">
-            <div class="dash-card-head">
-              <div>
-                <h2>Your dashboard</h2>
-                <p class="dash-user">Signed in as <strong>Alex Morgan</strong> · demo</p>
+          <aside class="dash-card" aria-label="Account panel">
+            <div data-home-guest>
+              <div class="dash-card-head">
+                <div>
+                  <h2>Guest mode</h2>
+                  <p class="dash-user">Browse services without an account — sign in to track appointments and renewals.</p>
+                </div>
               </div>
-              <a class="btn btn-navy btn-sm" href="dashboard.html">Open</a>
+              <div class="hero-actions" style="margin-top:0.5rem">
+                <button type="button" class="btn btn-navy btn-sm" data-sign-in-hero>Sign in (demo)</button>
+                <a class="btn btn-secondary btn-sm" href="fees.html">View fees</a>
+              </div>
             </div>
-            <div class="status-list" id="dash-status-list"></div>
+            <div data-home-member hidden>
+              <div class="dash-card-head">
+                <div>
+                  <h2>Your dashboard</h2>
+                  <p class="dash-user">Signed in as <strong>Alex Morgan</strong> · demo</p>
+                </div>
+                <a class="btn btn-navy btn-sm" href="dashboard.html">Open</a>
+              </div>
+              <div class="status-list" id="dash-status-list"></div>
+            </div>
           </aside>
         </div>
       </div>
@@ -245,10 +263,7 @@
           <div class="cta-media" role="img" aria-label="Granite texture"></div>
         </div>
 
-        <div class="notice-strip" style="margin-top:1.5rem">
-          <p><strong>Head of line:</strong> Most in-person services need an appointment. Same-day slots release daily when available.</p>
-          <p><strong>Fees:</strong> Common fee changes took effect Jan 1, 2026. Inspection &amp; emissions testing programs have ended.</p>
-        </div>
+        <div class="notice-strip" id="official-notices" style="margin-top:1.5rem"></div>
       </div>
     </section>
   </main>
@@ -265,6 +280,7 @@
           <li><a href="dashboard.html">Dashboard</a></li>
           <li><a href="checklist.html">What to bring</a></li>
           <li><a href="real-id.html">REAL ID</a></li>
+          <li><a href="fees.html">Fees</a></li>
           <li><a href="branches.html">Branches</a></li>
         </ul>
       </div>

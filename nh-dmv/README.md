@@ -1,29 +1,26 @@
 # NH DMV Redesign (Concept)
 
-Task-first rebuild of [dmv.nh.gov](https://www.dmv.nh.gov) as a calm utility portal — Artistic Fountain concept.
+Task-first rebuild of [dmv.nh.gov](https://www.dmv.nh.gov) as a DriveSkill-inspired service portal — Artistic Fountain concept.
 
-**Not an official State of New Hampshire site.** Demo account, appointments, and form submits are simulated in-app (no `forms.nh.gov` hops).
+**Not an official State of New Hampshire site.** Demo account, appointments, and form submits are simulated in-app.
 
-## Principles
+## Data sources (public)
 
-1. **Task-first IA** — life-event nav (License, Vehicle, Records, Appointments, Branches)
-2. **Warm civic UI** — spruce + soft canvas, not waiting-room gray
-3. **One-click dashboard** — active appointments, renewals, credentials
-4. **Zero dead-end redirects** — checklists, booking, renewals, records stay inline
+Mirrored for the demo from official pages:
 
-## Pages
+- Hours & locations — [dmv.nh.gov/hours-and-locations](https://www.dmv.nh.gov/hours-and-locations)
+- Licensing fees — [dmv.nh.gov/.../licensing-fees](https://www.dmv.nh.gov/drivers-licensenon-driver-ids/licensing-fees)
+- Notices / REAL ID / new-resident rules — [dmv.nh.gov](https://www.dmv.nh.gov/)
 
-| Page | Role |
-| --- | --- |
-| `index.html` | Home + intent search + dashboard teaser |
-| `dashboard.html` | Resident dashboard |
-| `license.html` | Licensing & ID taxonomy |
-| `vehicle.html` | Registrations, titles, specialty |
-| `records.html` | MVR, tickets, restoration (inline demos) |
-| `appointments.html` | In-app scheduling |
-| `checklist.html` | What-to-bring wizard |
-| `branches.html` | Branch finder + live status |
-| `renew.html` / `real-id.html` | Renewal + REAL ID checker |
+## Product features
+
+1. Guest vs signed-in home (demo Sign in)
+2. Dashboard with active appointments / renewals
+3. Inline booking → printable confirmation receipt
+4. Document checklist wizard
+5. Branch finder with live-status simulation + empty states
+6. Fees page with official schedule figures
+7. Empty / error states (no slots, no branch matches, incomplete docs)
 
 ## Preview
 
