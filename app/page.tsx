@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Hero } from "@/components/Hero";
 import { AudiencePathways } from "@/components/AudiencePathways";
 import { CurriculumCard } from "@/components/CurriculumCard";
+import { SocialProof } from "@/components/SocialProof";
 import { features as siteFeatures } from "@/lib/site";
 
 const buyingSteps = [
@@ -29,6 +30,8 @@ export default function HomePage() {
       <Hero />
 
       <AudiencePathways />
+
+      <SocialProof />
 
       <section id="approach" className="bg-paper-warm">
         <div className="mx-auto max-w-site px-5 py-16 sm:px-8 sm:py-24">

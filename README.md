@@ -12,9 +12,9 @@ Academic software sales website for classrooms, schools, and districts.
 
 - `/` — sales homepage
 - `/features` — platform features
-- `/plans` — Classroom / School / District plans
+- `/plans` — Classroom / School / District pricing
 - `/demo` — demo and pricing request forms
-- `/about` — company positioning
+- `/about` — company positioning + social proof
 - `/contact` — sales contact form
 - `/privacy` — privacy policy
 - `/terms` — terms of use
@@ -31,20 +31,39 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Lead capture
 
-Demo, pricing, and contact forms POST to `/api/leads`.
+Forms POST to `/api/leads`.
 
-- Leads are saved locally to `data/leads.jsonl`
-- Optional: set `FORM_WEBHOOK_URL` to forward submissions to Zapier, Make, a CRM, or email automation
+Delivery options:
 
-## Production deploy
+1. Local file: `data/leads.jsonl`
+2. `FORM_WEBHOOK_URL` → Zapier / Make / CRM
+3. `RESEND_API_KEY` → email to `NEXT_PUBLIC_SALES_EMAIL`
 
-1. Set environment variables from `.env.example`
-2. Deploy to Vercel (or similar)
-3. Point your domain DNS to the host
-4. Update `NEXT_PUBLIC_SITE_URL` to the live domain
-5. Configure `FORM_WEBHOOK_URL` for real sales notifications
+## Analytics
+
+Set either:
+
+- `NEXT_PUBLIC_GA_MEASUREMENT_ID` for Google Analytics
+- `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` for Plausible
+
+## Production deploy (Vercel)
+
+1. Push this repo and import it in Vercel
+2. Add env vars from `.env.example`
+3. Set `NEXT_PUBLIC_SITE_URL` to your live domain
+4. Deploy
+5. Point your domain DNS to Vercel
 
 ```bash
 npm run build
 npm start
 ```
+
+## Launch checklist
+
+- [ ] Buy/connect real domain
+- [ ] Set production env vars (email, phone, site URL)
+- [ ] Configure Resend and/or webhook for lead delivery
+- [ ] Enable analytics
+- [ ] Replace sample testimonials if you have real customer quotes
+- [ ] Legal review of privacy/terms

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { BrandMark } from "@/components/BrandMark";
 import { navLinks } from "@/lib/site";
 
 export function Navbar() {
@@ -53,10 +54,7 @@ export function Navbar() {
           href="/"
           className="flex items-center gap-2.5 text-navy transition-opacity hover:opacity-80"
         >
-          <span
-            aria-hidden
-            className="inline-block h-8 w-8 rounded-sm bg-accent shadow-[2px_2px_0_0_#06235b]"
-          />
+          <BrandMark className="h-8 w-8 shadow-[2px_2px_0_0_#06235b]" />
           <span className="text-xl font-bold tracking-tight">Morgan Bright</span>
         </Link>
 

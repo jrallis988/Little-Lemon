@@ -6,6 +6,9 @@ export const site = {
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://morganbright.learn",
   email: process.env.NEXT_PUBLIC_SALES_EMAIL ?? "sales@morganbright.learn",
   phone: process.env.NEXT_PUBLIC_SALES_PHONE ?? "(603) 555-0148",
+  address:
+    process.env.NEXT_PUBLIC_BUSINESS_ADDRESS ??
+    "Portsmouth, NH · Serving schools nationwide",
 };
 
 export const navLinks = [
@@ -19,7 +22,9 @@ export const plans = [
   {
     id: "classroom",
     name: "Classroom",
-    price: "From $49 / teacher / month",
+    price: "$49",
+    priceSuffix: "/ teacher / month",
+    billingNote: "Billed annually at $490 (2 months free)",
     summary:
       "For individual teachers who need diagnostics, adaptive lessons, and class-level reporting.",
     highlights: [
@@ -29,11 +34,14 @@ export const plans = [
       "Email support",
     ],
     bestFor: "Individual teachers and tutors",
+    featured: false,
   },
   {
     id: "school",
     name: "School",
-    price: "Custom school pricing",
+    price: "From $2,400",
+    priceSuffix: "/ school / year",
+    billingNote: "Typical campus range: $2,400–$6,000 based on seats",
     summary:
       "For campuses and intervention teams that need shared workflows and campus reporting.",
     highlights: [
@@ -43,11 +51,14 @@ export const plans = [
       "Implementation guide",
     ],
     bestFor: "Schools and intervention teams",
+    featured: true,
   },
   {
     id: "district",
     name: "District",
-    price: "Custom district pricing",
+    price: "Custom",
+    priceSuffix: "district pricing",
+    billingNote: "Volume licensing + onboarding included",
     summary:
       "For multi-school rollouts with centralized administration and leadership reporting.",
     highlights: [
@@ -57,6 +68,7 @@ export const plans = [
       "Onboarding support",
     ],
     bestFor: "Districts and multi-campus systems",
+    featured: false,
   },
 ] as const;
 
@@ -96,5 +108,35 @@ export const features = [
     ],
     imageSrc: "/images/card-path.jpg",
     imageAlt: "Teacher reviewing student progress dashboard",
+  },
+] as const;
+
+export const trustStats = [
+  { label: "Teacher setup time", value: "< 30 min" },
+  { label: "Learning pathways", value: "4 styles" },
+  { label: "Support response", value: "1 business day" },
+] as const;
+
+export const testimonials = [
+  {
+    name: "Maya Ortiz",
+    role: "Grade 4 Teacher",
+    org: "Harborview Elementary",
+    quote:
+      "I finally have a clear next step when a student stalls. The diagnostic tells me why, and the modules give me another way in.",
+  },
+  {
+    name: "James Keller",
+    role: "Intervention Coordinator",
+    org: "North River School District",
+    quote:
+      "We needed one shared process across pull-out groups. Morgan Bright made regrouping and progress checks consistent campus-wide.",
+  },
+  {
+    name: "Priya Shah",
+    role: "Curriculum Director",
+    org: "Lakeside Charter Network",
+    quote:
+      "The purchasing path was simple: classroom pilot first, then school rollout. Sales understood our timeline and seat counts.",
   },
 ] as const;

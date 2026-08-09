@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { Analytics } from "@/components/Analytics";
 import { site } from "@/lib/site";
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -32,6 +33,12 @@ export const metadata: Metadata = {
     url: site.url,
     siteName: site.name,
     type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Morgan Bright | Academic Software for Schools",
+    description: site.description,
   },
   icons: {
     icon: "/favicon.svg",
@@ -49,6 +56,7 @@ export default function RootLayout({
         <Navbar />
         <main id="main-content">{children}</main>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );

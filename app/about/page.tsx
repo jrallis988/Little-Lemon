@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { PageHero } from "@/components/PageHero";
+import { SocialProof } from "@/components/SocialProof";
 
 export const metadata: Metadata = {
   title: "About",
@@ -56,6 +57,8 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      <SocialProof />
     </>
   );
 }

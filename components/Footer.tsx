@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandMark } from "@/components/BrandMark";
 import { site } from "@/lib/site";
 
 const columns = [
@@ -38,10 +39,7 @@ export function Footer() {
       <div className="mx-auto grid max-w-site gap-10 px-5 py-14 sm:px-8 lg:grid-cols-[1.4fr_repeat(3,1fr)] lg:gap-8 lg:py-16">
         <div>
           <Link href="/" className="inline-flex items-center gap-2.5">
-            <span
-              aria-hidden
-              className="inline-block h-7 w-7 rounded-sm bg-accent"
-            />
+            <BrandMark className="h-7 w-7" />
             <span className="text-xl font-bold tracking-tight">{site.name}</span>
           </Link>
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/70">
@@ -49,6 +47,7 @@ export function Footer() {
             adapt instruction, and track progress across classroom, school, and
             district plans.
           </p>
+          <p className="mt-4 text-sm text-white/55">{site.address}</p>
         </div>
 
         {columns.map((column) => (

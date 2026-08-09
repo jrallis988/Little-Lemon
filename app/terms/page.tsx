@@ -23,21 +23,40 @@ export default function TermsPage() {
             <p className="mt-3">
               This website provides product information and sales pathways for
               Morgan Bright academic software. Submitting a form does not create
-              a purchase contract.
+              a purchase contract. Final pricing, licensing, and service terms
+              are confirmed in a separate agreement.
             </p>
           </div>
           <div>
             <h2 className="text-xl font-bold text-navy">Acceptable use</h2>
             <p className="mt-3">
               Do not misuse the site, attempt unauthorized access, submit abusive
-              content, or use automated systems to spam inquiry forms.
+              content, scrape content at scale, or use automated systems to spam
+              inquiry forms.
+            </p>
+          </div>
+          <div>
+            <h2 className="text-xl font-bold text-navy">Intellectual property</h2>
+            <p className="mt-3">
+              Site content, branding, and materials are owned by Morgan Bright or
+              its licensors and may not be reused for commercial purposes without
+              permission.
             </p>
           </div>
           <div>
             <h2 className="text-xl font-bold text-navy">No warranties</h2>
             <p className="mt-3">
               Website content is provided for general informational and sales
-              purposes. Product availability, pricing, and features may change.
+              purposes. Product availability, pricing, and features may change
+              without notice.
+            </p>
+          </div>
+          <div>
+            <h2 className="text-xl font-bold text-navy">Limitation of liability</h2>
+            <p className="mt-3">
+              To the fullest extent permitted by law, Morgan Bright is not liable
+              for damages arising from use of this marketing website or reliance
+              on preliminary pricing information.
             </p>
           </div>
           <div>

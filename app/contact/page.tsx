@@ -32,7 +32,16 @@ export default function ContactPage() {
             </div>
             <div>
               <h2 className="text-xl font-bold text-navy">Phone</h2>
-              <p className="mt-2 text-mute">{site.phone}</p>
+              <a
+                href={`tel:${site.phone.replace(/[^\d+]/g, "")}`}
+                className="mt-2 inline-block text-mute hover:text-navy"
+              >
+                {site.phone}
+              </a>
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-navy">Location</h2>
+              <p className="mt-2 text-mute">{site.address}</p>
             </div>
             <div>
               <h2 className="text-xl font-bold text-navy">Hours</h2>
