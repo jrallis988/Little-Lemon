@@ -2,25 +2,117 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Bot, Layers3, Link2 } from 'lucide-react';
 import { Logo } from '@/components/brand/logo';
 import { ButtonLink } from '@/components/ui/button';
+import { Avatar } from '@/components/ui/avatar';
 import { AI_EMPLOYEES } from '@/data/employees';
+import { useIsMobile } from '@/hooks/use-media-query';
 import { useTheme } from '@/hooks/use-theme';
 
 export function LandingPage() {
   useTheme();
+  const isMobile = useIsMobile();
+
+  if (isMobile) {
+    return (
+      <div className="mobile-shell min-h-full bg-black text-white">
+        <div className="safe-top safe-bottom mx-auto flex min-h-full max-w-lg flex-col px-5 py-5">
+          <header className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2.5">
+              <div
+                className="flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--color-brand)] font-display text-sm font-bold text-white"
+                aria-hidden
+              >
+                W
+              </div>
+              <div>
+                <div className="font-display text-lg font-bold tracking-tight">SHIFT</div>
+                <div className="text-[10px] tracking-[0.16em] text-white/40 uppercase">
+                  Working Intelligence
+                </div>
+              </div>
+            </div>
+            <ButtonLink to="/app" size="sm">
+              Open
+              <ArrowRight className="h-4 w-4" />
+            </ButtonLink>
+          </header>
+
+          <section className="mt-10 flex flex-1 flex-col">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <p className="text-[10px] font-semibold tracking-[0.18em] text-[var(--color-brand)] uppercase">
+                Shift · powered by Working Intelligence
+              </p>
+              <p className="font-display mt-3 text-[2.6rem] leading-[0.95] font-bold tracking-tight">
+                Working
+                <br />
+                Intelligence
+              </p>
+              <h1 className="mt-4 text-lg text-white/70">
+                AI that doesn’t just answer — it participates in the work.
+              </h1>
+              <p className="mt-3 text-sm text-white/45">
+                Connect the systems you already use. Coordinate specialized agents. Decide what
+                should be automated, assisted, or remain human.
+              </p>
+              <div className="mt-7 flex flex-col gap-3">
+                <ButtonLink to="/app" size="lg" className="w-full">
+                  Enter workspace
+                  <ArrowRight className="h-4 w-4" />
+                </ButtonLink>
+                <ButtonLink to="/app/holly" size="lg" variant="secondary" className="w-full">
+                  Meet Holly
+                </ButtonLink>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, delay: 0.1 }}
+              className="mt-10"
+            >
+              <h2 className="mb-3 text-[11px] font-semibold tracking-wide text-white/35 uppercase">
+                Your AI workforce
+              </h2>
+              <div className="space-y-2">
+                {AI_EMPLOYEES.slice(0, 4).map((employee) => (
+                  <div key={employee.id} className="mobile-card flex items-center gap-3 px-3 py-3">
+                    <Avatar
+                      initials={employee.avatar.initials}
+                      color={employee.avatar.color}
+                      imageUrl={employee.avatar.imageUrl}
+                      name={employee.name}
+                      size="md"
+                      className="rounded-2xl"
+                    />
+                    <div className="min-w-0">
+                      <div className="truncate font-semibold">{employee.shortTitle}</div>
+                      <div className="truncate text-xs text-white/45">{employee.name}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </section>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-full">
       <div className="safe-top safe-bottom mx-auto flex min-h-full max-w-6xl flex-col px-5 py-5 md:px-6 md:py-6">
         <header className="flex items-center justify-between gap-3">
-          <Logo compact className="sm:hidden" />
-          <Logo className="hidden sm:flex" />
+          <Logo />
           <div className="flex items-center gap-2">
-            <ButtonLink to="/auth" variant="ghost" className="hidden sm:inline-flex">
+            <ButtonLink to="/auth" variant="ghost">
               Sign in
             </ButtonLink>
-            <ButtonLink to="/app" size="sm" className="sm:h-10 sm:px-4 sm:text-sm">
-              <span className="sm:hidden">Open</span>
-              <span className="hidden sm:inline">Open workspace</span>
+            <ButtonLink to="/app">
+              Open workspace
               <ArrowRight className="h-4 w-4" />
             </ButtonLink>
           </div>

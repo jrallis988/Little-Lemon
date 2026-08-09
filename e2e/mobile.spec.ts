@@ -17,7 +17,7 @@ test('iPhone inbox opens chat and returns', async ({ page }) => {
     localStorage.removeItem('wi-workspace-v2');
   });
   await page.reload();
-  await expect(page.getByRole('heading', { name: 'SHIFT' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Chats' })).toBeVisible();
   await expect(page.getByRole('navigation', { name: 'Primary' })).toBeVisible();
 
   await page.getByRole('link', { name: /HR Intelligence/i }).first().click();
@@ -28,7 +28,7 @@ test('iPhone inbox opens chat and returns', async ({ page }) => {
 
   await page.getByRole('button', { name: 'Back to chats' }).click();
   await expect(page).toHaveURL(/\/app\/?$/);
-  await expect(page.getByRole('heading', { name: 'SHIFT' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Chats' })).toBeVisible();
 });
 
 test('iPhone office intelligence tasks and settings tabs work', async ({ page }) => {

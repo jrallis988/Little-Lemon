@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import { MobileScreenHeader } from '@/features/mobile/mobile-screen-header';
+import { MobileScreenShell } from '@/features/mobile/mobile-screen-shell';
 import { useIsMobile } from '@/hooks/use-media-query';
 import { useWorkspaceStore } from '@/store/workspace-store';
 
@@ -14,45 +14,42 @@ export function MobileIntelligencePage() {
   const pending = actions.filter((action) => action.status === 'pending').length;
 
   return (
-    <div className="flex h-full min-h-0 flex-col">
-      <MobileScreenHeader
-        eyebrow="Working Intelligence"
-        title="Intelligence layer"
-        subtitle="Understand work context, surface what matters, and coordinate agent action."
-      />
+    <MobileScreenShell
+      eyebrow="Working Intelligence"
+      title="Intelligence layer"
+      subtitle="Understand work context, surface what matters, and coordinate agent action."
+      contentClassName="space-y-4"
+    >
+      <section className="mobile-card p-4">
+        <h2 className="text-sm font-semibold text-white/70">Live signals</h2>
+        <div className="mt-3 grid grid-cols-3 gap-3 text-center">
+          <Stat label="Pending actions" value={String(pending)} />
+          <Stat label="CareerScore" value={String(badge.careerScore)} />
+          <Stat label="Insights" value={String(insights.length)} />
+        </div>
+      </section>
 
-      <div className="scrollbar-thin flex-1 space-y-4 overflow-y-auto px-4 pt-1 pb-24">
-        <section className="mobile-card p-4">
-          <h2 className="text-sm font-semibold text-white/70">Live signals</h2>
-          <div className="mt-3 grid grid-cols-3 gap-3 text-center">
-            <Stat label="Pending actions" value={String(pending)} />
-            <Stat label="CareerScore" value={String(badge.careerScore)} />
-            <Stat label="Insights" value={String(insights.length)} />
-          </div>
-        </section>
+      <section className="mobile-card p-4">
+        <h2 className="text-sm font-semibold">Human Necessity Test</h2>
+        <ul className="mt-3 space-y-2 text-sm">
+          <Row tone="automate" label="Automate" body="Retrieve docs, status checks, badge updates" />
+          <Row tone="assist" label="Assist" body="Payroll investigation, delay notifications" />
+          <Row tone="human_ai" label="Human + AI" body="Sensitive ER, coaching conversations" />
+          <Row tone="human" label="Human" body="Final judgment, negotiation, presence" />
+        </ul>
+      </section>
 
-        <section className="mobile-card p-4">
-          <h2 className="text-sm font-semibold">Human Necessity Test</h2>
-          <ul className="mt-3 space-y-2 text-sm">
-            <Row tone="automate" label="Automate" body="Retrieve docs, status checks, badge updates" />
-            <Row tone="assist" label="Assist" body="Payroll investigation, delay notifications" />
-            <Row tone="human_ai" label="Human + AI" body="Sensitive ER, coaching conversations" />
-            <Row tone="human" label="Human" body="Final judgment, negotiation, presence" />
-          </ul>
-        </section>
-
-        <section className="space-y-2">
-          <h2 className="px-1 text-sm font-semibold text-white/70">ManagerScore watchlist</h2>
-          {insights.map((insight) => (
-            <article key={insight.id} className="mobile-card px-4 py-3">
-              <div className="text-xs tracking-wide text-white/40 uppercase">{insight.severity}</div>
-              <h3 className="mt-1 font-medium">{insight.title}</h3>
-              <p className="mt-1 text-sm text-white/50">{insight.body}</p>
-            </article>
-          ))}
-        </section>
-      </div>
-    </div>
+      <section className="space-y-2">
+        <h2 className="px-1 text-sm font-semibold text-white/70">ManagerScore watchlist</h2>
+        {insights.map((insight) => (
+          <article key={insight.id} className="mobile-card px-4 py-3">
+            <div className="text-xs tracking-wide text-white/40 uppercase">{insight.severity}</div>
+            <h3 className="mt-1 font-medium">{insight.title}</h3>
+            <p className="mt-1 text-sm text-white/50">{insight.body}</p>
+          </article>
+        ))}
+      </section>
+    </MobileScreenShell>
   );
 }
 

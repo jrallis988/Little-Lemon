@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Avatar } from '@/components/ui/avatar';
-import { MobileScreenHeader } from '@/features/mobile/mobile-screen-header';
+import { MobileScreenShell } from '@/features/mobile/mobile-screen-shell';
 import { AI_EMPLOYEES } from '@/data/employees';
 import { useWorkspaceStore } from '@/store/workspace-store';
 import { formatInboxTime } from '@/utils/format';
@@ -24,10 +24,13 @@ export function MobileInboxPage() {
   });
 
   return (
-    <div className="flex h-full min-h-0 flex-col">
-      <MobileScreenHeader title="SHIFT" centeredBrand />
-
-      <ul className="scrollbar-thin flex-1 overflow-y-auto px-1 pb-24">
+    <MobileScreenShell
+      eyebrow="Shift"
+      title="Chats"
+      subtitle="Conversations with your AI workforce."
+      contentClassName="-mx-1 px-1"
+    >
+      <ul>
         {sorted.map((employee) => {
           const conversation = conversationByEmployee.get(employee.id);
           const preview = conversation?.typing
@@ -78,6 +81,6 @@ export function MobileInboxPage() {
           );
         })}
       </ul>
-    </div>
+    </MobileScreenShell>
   );
 }

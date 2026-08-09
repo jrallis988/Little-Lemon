@@ -134,6 +134,20 @@
     --mobile-text: #ffffff;
     --mobile-muted: rgba(255, 255, 255, 0.45);
     --mobile-faint: rgba(255, 255, 255, 0.35);
+    /* Remap app tokens so shared components stay on-brand in the shell */
+    --color-surface: #000000;
+    --color-surface-elevated: rgba(255, 255, 255, 0.08);
+    --color-panel: rgba(255, 255, 255, 0.1);
+    --color-ink: #ffffff;
+    --color-ink-soft: rgba(255, 255, 255, 0.7);
+    --color-muted: rgba(255, 255, 255, 0.45);
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-muted: rgba(255, 255, 255, 0.45);
+    --border-subtle: rgba(255, 255, 255, 0.12);
+    --message-user: #1f9b92;
+    --message-assistant: rgba(255, 255, 255, 0.08);
+    --shadow-soft: none;
     background: var(--mobile-bg);
     color: var(--mobile-text);
   }
@@ -224,6 +238,16 @@
   .mobile-shell .date-sep {
     background: rgba(255, 255, 255, 0.08);
     color: rgba(255, 255, 255, 0.45);
+  }
+
+  .mobile-shell input,
+  .mobile-shell textarea {
+    color: white;
+  }
+
+  .mobile-shell input::placeholder,
+  .mobile-shell textarea::placeholder {
+    color: rgba(255, 255, 255, 0.35);
   }
 
   .surface-glass {
