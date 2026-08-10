@@ -10,7 +10,6 @@ import {
   Plus,
   Youtube,
 } from "lucide-react"
-import { navHref, SHOP_NAV } from "@/data/navigation"
 import { useAccountStore } from "@/stores/accountStore"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -26,23 +25,23 @@ import { cn } from "@/lib/utils"
 const UTILITY_TILES = [
   {
     title: "Shop IRL, too",
-    body: "Every store is different, but they all have the good stuff.",
-    links: [{ label: "Find Your Store", to: "/stores" }],
+    body: "Every store is different — that’s the hunt.",
+    links: [{ label: "Find a store", to: "/stores" }],
   },
   {
     title: "TJX Rewards",
-    body: "Enjoy 10% off your first purchase when you open a TJX Rewards credit card today.",
-    links: [{ label: "Learn More & Apply", to: "/catalog" }],
+    body: "10% off your first purchase when you open a TJX Rewards® card.",
+    links: [{ label: "Learn more", to: "/account" }],
   },
   {
     title: "Gift cards",
     body: "In case you wanna let them pick.",
-    links: [{ label: "Shop Gift Cards", to: "/gift-cards" }, { label: "Check Your Balance", to: "/gift-cards" }],
+    links: [{ label: "Shop gift cards", to: "/gift-cards" }],
   },
   {
-    title: "Need to make a return?",
-    body: "Bring your shipping confirmation email to store for free returns. Some exclusions apply.",
-    links: [{ label: "Learn More", to: "/shipping-returns" }],
+    title: "Returns",
+    body: "Free in-store returns with your shipping confirmation email.",
+    links: [{ label: "Shipping & returns", to: "/shipping-returns" }],
   },
 ] as const
 
@@ -55,29 +54,29 @@ const SISTER_BRANDS: {
   {
     name: "T.J.Maxx",
     href: "https://tjmaxx.tjx.com",
-    className: "font-sans text-[1.65rem] font-black tracking-tight text-[#C8102E]",
+    className: "font-sans text-[1.35rem] font-black tracking-tight text-[#C8102E]",
   },
   {
     name: "Marshalls",
     href: "/",
-    className: "marshalls-wordmark text-[1.75rem]",
+    className: "marshalls-wordmark text-[1.45rem]",
     internal: true,
   },
   {
     name: "HomeGoods",
     href: "https://www.homegoods.com",
-    className: "font-display text-[1.55rem] font-bold italic tracking-tight text-[#C8102E]",
+    className: "font-display text-[1.3rem] font-bold italic tracking-tight text-[#C8102E]",
   },
   {
     name: "Sierra",
     href: "https://www.sierra.com",
-    className: "font-sans text-[1.45rem] font-bold tracking-[0.04em] text-[#C47A2C]",
+    className: "font-sans text-[1.2rem] font-bold tracking-[0.04em] text-[#C47A2C]",
   },
   {
     name: "Homesense",
     href: "https://www.homesense.com",
     className:
-      "inline-block bg-[#2F6B3A] px-3 py-1 font-sans text-[1.15rem] font-bold tracking-wide text-white",
+      "inline-block bg-[#2F6B3A] px-2.5 py-0.5 font-sans text-[1rem] font-bold tracking-wide text-white",
   },
 ]
 
@@ -87,7 +86,8 @@ type FooterLink = {
   external?: boolean
 }
 
-const FOOTER_ACCORDIONS: {
+/** Four short columns — no full taxonomy dump */
+const FOOTER_COLUMNS: {
   id: string
   title: string
   links: FooterLink[]
@@ -96,77 +96,44 @@ const FOOTER_ACCORDIONS: {
     id: "shop",
     title: "Shop",
     links: [
-      ...SHOP_NAV.map((item) => ({
-        label: item.menuLabel,
-        to: navHref(item),
-      })),
-      { label: "Pet", to: "/catalog?department=Pets" },
-      { label: "Clearance", to: "/catalog?sort=discount" },
+      { label: "Women", to: "/department/women" },
+      { label: "Men", to: "/department/men" },
+      { label: "Kids", to: "/department/boys-girls" },
+      { label: "Home", to: "/department/home" },
+      { label: "Shoes", to: "/department/footwear" },
+      { label: "Clearance", to: "/shop/clearance" },
     ],
   },
   {
-    id: "brands",
-    title: "Brands",
-    links: [
-      { label: "Designer Shop", to: "/catalog?sort=price_desc" },
-      { label: "Under $50", to: "/catalog" },
-      { label: "New Finds", to: "/catalog?sort=newest" },
-      { label: "T.J.Maxx", to: "https://tjmaxx.tjx.com", external: true },
-      { label: "HomeGoods", to: "https://www.homegoods.com", external: true },
-      { label: "Sierra", to: "https://www.sierra.com", external: true },
-      { label: "Homesense", to: "https://www.homesense.com", external: true },
-    ],
-  },
-  {
-    id: "support",
-    title: "Support",
-    links: [
-      { label: "Help center", to: "/shipping-returns" },
-      { label: "Order status", to: "/order-status" },
-      { label: "Shipping & returns", to: "/shipping-returns" },
-      { label: "Gift cards", to: "/gift-cards" },
-      { label: "Find a store", to: "/stores" },
-      { label: "Fit quiz", to: "/fit-quiz" },
-      { label: "Design system", to: "/design-system" },
-    ],
-  },
-  {
-    id: "rewards",
-    title: "TJX Rewards® Credit Card",
-    links: [
-      { label: "Learn more & apply", to: "/account" },
-      { label: "Manage your account", to: "/account" },
-      { label: "Cardmember benefits", to: "/account" },
-    ],
-  },
-  {
-    id: "shopping",
-    title: "Shopping & App",
+    id: "discover",
+    title: "Discover",
     links: [
       { label: "Designer Shop", to: "/shop/designer" },
       { label: "Under $50", to: "/shop/under-50" },
-      { label: "Clearance", to: "/shop/clearance" },
+      { label: "New finds", to: "/catalog?sort=newest" },
+      { label: "Fit quiz", to: "/fit-quiz" },
+      { label: "Gift cards", to: "/gift-cards" },
+    ],
+  },
+  {
+    id: "help",
+    title: "Help",
+    links: [
+      { label: "Order status", to: "/order-status" },
+      { label: "Shipping & returns", to: "/shipping-returns" },
+      { label: "Account", to: "/account" },
+      { label: "TJX Rewards®", to: "/account" },
       { label: "Email sign up", to: "#email-signup" },
-      { label: "Store mode tips", to: "/stores" },
     ],
   },
   {
     id: "company",
-    title: "Our Company",
+    title: "Company",
     links: [
       { label: "About Marshalls", to: "/" },
       { label: "Careers", to: "/account" },
-      { label: "TJX Companies", to: "https://www.tjx.com", external: true },
-      { label: "Accessibility", to: "/shipping-returns" },
-    ],
-  },
-  {
-    id: "privacy",
-    title: "Privacy & Terms",
-    links: [
-      { label: "Privacy statement", to: "/shipping-returns" },
-      { label: "Terms of use", to: "/shipping-returns" },
-      { label: "CA supply chains act", to: "/shipping-returns" },
+      { label: "Privacy", to: "/shipping-returns" },
+      { label: "Terms", to: "/shipping-returns" },
       { label: "Do not sell my info", to: "/account" },
     ],
   },
@@ -189,7 +156,7 @@ function FooterAccordion({
     <div className="border-b border-border">
       <button
         type="button"
-        className="flex w-full items-center justify-between gap-3 py-4 text-left"
+        className="flex w-full items-center justify-between gap-3 py-3.5 text-left"
         aria-expanded={open}
         onClick={onToggle}
       >
@@ -201,39 +168,55 @@ function FooterAccordion({
         )}
       </button>
       {open && (
-        <ul className="space-y-2.5 pb-4">
+        <ul className="space-y-2 pb-3.5">
           {links.map((link) => (
             <li key={link.label}>
-              {link.external ? (
-                <a
-                  href={link.to}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-sm text-muted-foreground no-underline hover:text-navy hover:underline"
-                >
-                  {link.label}
-                </a>
-              ) : link.to === "#email-signup" ? (
-                <button
-                  type="button"
-                  className="text-sm text-muted-foreground hover:text-navy hover:underline"
-                  onClick={onEmailSignup}
-                >
-                  {link.label}
-                </button>
-              ) : (
-                <Link
-                  to={link.to}
-                  className="text-sm text-muted-foreground no-underline hover:text-navy hover:underline"
-                >
-                  {link.label}
-                </Link>
-              )}
+              <FooterLinkItem link={link} onEmailSignup={onEmailSignup} />
             </li>
           ))}
         </ul>
       )}
     </div>
+  )
+}
+
+function FooterLinkItem({
+  link,
+  onEmailSignup,
+}: {
+  link: FooterLink
+  onEmailSignup?: () => void
+}) {
+  if (link.external) {
+    return (
+      <a
+        href={link.to}
+        target="_blank"
+        rel="noreferrer"
+        className="text-sm text-muted-foreground no-underline hover:text-navy hover:underline"
+      >
+        {link.label}
+      </a>
+    )
+  }
+  if (link.to === "#email-signup") {
+    return (
+      <button
+        type="button"
+        className="text-sm text-muted-foreground hover:text-navy hover:underline"
+        onClick={onEmailSignup}
+      >
+        {link.label}
+      </button>
+    )
+  }
+  return (
+    <Link
+      to={link.to}
+      className="text-sm text-muted-foreground no-underline hover:text-navy hover:underline"
+    >
+      {link.label}
+    </Link>
   )
 }
 
@@ -286,9 +269,12 @@ function EmailSignupDialog({
             <p className="text-sm text-foreground">
               {already
                 ? "You’re already on the list — we’ll keep the finds coming."
-                : "You’re in — we saved your email on this device. Watch your inbox for finds and free-shipping details."}
+                : "You’re in — watch your inbox for finds and free-shipping details."}
             </p>
-            <Button className="w-full bg-navy text-navy-foreground hover:bg-navy/90" onClick={() => onOpenChange(false)}>
+            <Button
+              className="w-full bg-navy text-navy-foreground hover:bg-navy/90"
+              onClick={() => onOpenChange(false)}
+            >
               Keep shopping
             </Button>
           </div>
@@ -324,7 +310,7 @@ function EmailSignupDialog({
             <p className="text-2xs leading-relaxed text-muted-foreground">
               By signing up you agree to our Terms of Use and Privacy Statement. Free
               shipping offer applies to your first online order of $25+; exclusions may
-              apply. Offer details subject to change.
+              apply.
             </p>
           </form>
         )}
@@ -334,7 +320,7 @@ function EmailSignupDialog({
 }
 
 export function SiteFooter() {
-  const [openSections, setOpenSections] = useState<string[]>(["shop"])
+  const [openSections, setOpenSections] = useState<string[]>([])
   const [emailOpen, setEmailOpen] = useState(false)
 
   function toggleSection(id: string) {
@@ -345,18 +331,18 @@ export function SiteFooter() {
 
   return (
     <footer className="mt-auto border-t border-border bg-surface">
-      {/* Utility grid — Shop IRL / Rewards / Gifts / Returns */}
-      <div className="border-b border-border bg-surface-muted/60">
-        <div className="shelf-container grid gap-8 py-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+      {/* Utility strip — compact */}
+      <div className="border-b border-border bg-surface-muted/50">
+        <div className="shelf-container grid gap-6 py-7 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
           {UTILITY_TILES.map((tile) => (
             <div key={tile.title}>
-              <h3 className="font-display text-lg font-bold italic text-navy">
+              <h3 className="font-display text-base font-bold italic text-navy">
                 {tile.title}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              <p className="mt-1.5 text-sm leading-snug text-muted-foreground">
                 {tile.body}
               </p>
-              <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
+              <div className="mt-2 flex flex-wrap gap-x-3">
                 {tile.links.map((link) => (
                   <Link
                     key={link.label}
@@ -372,24 +358,12 @@ export function SiteFooter() {
         </div>
       </div>
 
-      {/* Legal fine print */}
-      <div className="shelf-container border-b border-border py-6">
-        <p className="mx-auto max-w-3xl text-center text-2xs leading-relaxed text-muted-foreground">
-          Savings percentages are based on our research of comparable goods or original
-          ticketed prices. Free shipping offers and TJX Rewards® credit card benefits are
-          subject to terms and exclusions. Selection varies by store and online inventory
-          turns over daily — never the same store twice. Compare-at prices may not
-          represent prices charged in all markets.
-        </p>
-      </div>
-
-      {/* Shop Our Brands */}
-      <div className="shelf-container py-10">
-        <h2 className="section-rule-title justify-center text-center text-sm font-bold uppercase tracking-[0.12em] text-foreground">
+      {/* Sister brands + CTAs in one band */}
+      <div className="shelf-container py-7">
+        <h2 className="section-rule-title justify-center text-center text-2xs font-bold uppercase tracking-[0.14em] text-foreground">
           Shop Our Brands
         </h2>
-
-        <ul className="mt-8 flex flex-col items-center gap-6 md:flex-row md:flex-wrap md:justify-center md:gap-x-10 md:gap-y-6">
+        <ul className="mt-5 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
           {SISTER_BRANDS.map((brand) => (
             <li key={brand.name} className="text-center">
               {"internal" in brand && brand.internal ? (
@@ -412,42 +386,37 @@ export function SiteFooter() {
                   {brand.name}
                 </a>
               )}
-              <p className="mt-1 text-xs font-medium text-navy">Visit</p>
             </li>
           ))}
         </ul>
-      </div>
 
-      {/* Primary CTAs */}
-      <div className="border-t border-navy/80">
-        <div className="shelf-container flex flex-col gap-3 py-6 sm:mx-auto sm:max-w-md">
+        <div className="mx-auto mt-7 flex max-w-xl flex-col gap-2.5 sm:flex-row">
           <Button
             asChild
-            className="h-12 w-full rounded-full bg-navy text-base font-semibold text-navy-foreground hover:bg-navy/90"
+            className="h-11 flex-1 rounded-full bg-navy text-sm font-semibold text-navy-foreground hover:bg-navy/90"
           >
             <Link to="/stores">
-              <MapPin className="mr-2 h-4 w-4" />
-              Find A Store Near You
+              <MapPin className="mr-1.5 h-4 w-4" />
+              Find a store
             </Link>
           </Button>
           <Button
             type="button"
-            className="h-12 w-full rounded-full bg-navy text-base font-semibold text-navy-foreground hover:bg-navy/90"
+            className="h-11 flex-1 rounded-full bg-navy text-sm font-semibold text-navy-foreground hover:bg-navy/90"
             onClick={() => setEmailOpen(true)}
           >
-            <Mail className="mr-2 h-4 w-4" />
-            Email Sign Up
+            <Mail className="mr-1.5 h-4 w-4" />
+            Email sign up
           </Button>
         </div>
       </div>
 
-      {/* Accordion nav — Shop, Brands, Support, etc. */}
+      {/* Link columns — 4 short lists */}
       <div className="border-t border-border bg-surface">
-        <div className="shelf-container max-w-xl py-2 lg:max-w-none">
-          <div className="lg:grid lg:grid-cols-3 lg:gap-x-10 lg:gap-y-0 xl:grid-cols-4">
-            {FOOTER_ACCORDIONS.map((section) => (
-              <div key={section.id} className="lg:border-0">
-                {/* Mobile accordion */}
+        <div className="shelf-container max-w-xl py-1 lg:max-w-none lg:py-0">
+          <div className="lg:grid lg:grid-cols-4 lg:gap-8">
+            {FOOTER_COLUMNS.map((section) => (
+              <div key={section.id}>
                 <div className="lg:hidden">
                   <FooterAccordion
                     title={section.title}
@@ -457,37 +426,15 @@ export function SiteFooter() {
                     onEmailSignup={() => setEmailOpen(true)}
                   />
                 </div>
-                {/* Desktop columns */}
                 <div className="hidden py-6 lg:block">
-                  <p className="mb-3 text-sm font-bold text-foreground">{section.title}</p>
-                  <ul className="space-y-2">
+                  <p className="mb-2.5 text-sm font-bold text-foreground">{section.title}</p>
+                  <ul className="space-y-1.5">
                     {section.links.map((link) => (
                       <li key={link.label}>
-                        {link.external ? (
-                          <a
-                            href={link.to}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="text-sm text-muted-foreground no-underline hover:text-navy hover:underline"
-                          >
-                            {link.label}
-                          </a>
-                        ) : link.to === "#email-signup" ? (
-                          <button
-                            type="button"
-                            className="text-sm text-muted-foreground hover:text-navy hover:underline"
-                            onClick={() => setEmailOpen(true)}
-                          >
-                            {link.label}
-                          </button>
-                        ) : (
-                          <Link
-                            to={link.to}
-                            className="text-sm text-muted-foreground no-underline hover:text-navy hover:underline"
-                          >
-                            {link.label}
-                          </Link>
-                        )}
+                        <FooterLinkItem
+                          link={link}
+                          onEmailSignup={() => setEmailOpen(true)}
+                        />
                       </li>
                     ))}
                   </ul>
@@ -498,10 +445,10 @@ export function SiteFooter() {
         </div>
       </div>
 
-      {/* Social + copyright */}
+      {/* Social + legal */}
       <div className="border-t border-border bg-surface">
-        <div className="shelf-container flex flex-col items-center gap-5 py-8">
-          <ul className="flex items-center gap-3">
+        <div className="shelf-container flex flex-col items-center gap-3 py-6">
+          <ul className="flex items-center gap-2.5">
             {[
               {
                 label: "TikTok",
@@ -530,10 +477,10 @@ export function SiteFooter() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={social.label}
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-navy text-navy-foreground transition-opacity hover:opacity-90"
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-navy text-navy-foreground transition-opacity hover:opacity-90"
                 >
                   {"Icon" in social && social.Icon ? (
-                    <social.Icon className="h-4 w-4" />
+                    <social.Icon className="h-3.5 w-3.5" />
                   ) : (
                     <span className="text-[10px] font-bold tracking-tight">
                       {social.glyph}
@@ -543,8 +490,12 @@ export function SiteFooter() {
               </li>
             ))}
           </ul>
-          <p className="flex items-center gap-2 text-xs text-muted-foreground">
+          <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
             <span>© {new Date().getFullYear()} Marshalls</span>
+            <span aria-hidden>|</span>
+            <Link to="/design-system" className="hover:text-navy hover:underline">
+              Design system
+            </Link>
             <span aria-hidden>|</span>
             <button
               type="button"
@@ -556,6 +507,10 @@ export function SiteFooter() {
               <MessageCircle className="h-3.5 w-3.5" />
               Feedback
             </button>
+          </p>
+          <p className="max-w-2xl text-center text-[10px] leading-relaxed text-muted-foreground">
+            Savings based on comparable goods or original ticketed prices. Selection varies
+            by store — never the same store twice.
           </p>
         </div>
       </div>
