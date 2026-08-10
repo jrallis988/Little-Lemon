@@ -1,29 +1,33 @@
-# Artistic Fountain
+# Little Lemon
 
-Independent design venture portfolio — digital media, graphic design, visual identity, and creative media projects.
+Mediterranean restaurant website for **Little Lemon** (Chicago) with **eight homepage layout demos**, adapted from the uploaded Weiboo eCommerce index variants and rebranded for dining, ordering, and reservations.
 
-## Dual-track separation
+## Homepage layouts
 
-| Track | Home | Houses |
-| --- | --- | --- |
-| **Creative** | Artistic Fountain (this repo) | Visual media, graphic identity, conceptual design, client design services |
-| **Engineering** | Developer portfolio (separate) | Back-end systems, Python/FastAPI, AI/RAG applications |
+| File | Layout inspiration |
+| --- | --- |
+| `index.html` | Classic hero + hand-picked specials |
+| `index-two.html` | Featured promos + testimonials |
+| `index-three.html` | Split hero + course collections |
+| `index-four.html` | Craft / handmade categories |
+| `index-five.html` | Promo banners + lunch callouts |
+| `index-six.html` | Floating “today’s deal” card |
+| `index-seven.html` | Seasonal arrivals + blog teasers |
+| `index-eight.html` | Events / community nights |
 
-See `STATUS.md` for the full status report.
+A layout switcher sits under the header on every homepage demo.
+
+## Other pages
+
+- `menu.html` — starters, mains, desserts with add-to-order
+- `about.html` — Mario & Adrian story
+- `reserve.html` — table reservation form
+- `order.html` — cart / pickup checkout (localStorage)
+- `privacy.html` / `terms.html`
 
 ## Stack
 
-Static site: HTML, CSS, and vanilla JS (built in Cursor). Custom typefaces (Arcanite Slab, Goudy Heavyface) plus Inter for body copy.
-
-## Pages
-
-- `index.html` — home (hero, designer, services, portfolio, blog, contact)
-- `nh-dmv/` — conceptual redesign of the New Hampshire DMV website (civic UX case study)
-- `services/` — detail pages for each service offering
-- `blog/` — blog index and post pages (content can be drafted in Blaze AI)
-- `privacy.html` — privacy policy
-- `terms.html` — terms & conditions
-- `resume.pdf` — downloadable resume
+Static HTML, CSS, and vanilla JS. Brand fonts: **Markazi Text** + **Karla**. Palette from the Meta Little Lemon design system (`#495E57`, `#F4CE14`, `#EE9972`).
 
 ## Develop
 
@@ -31,23 +35,8 @@ Static site: HTML, CSS, and vanilla JS (built in Cursor). Custom typefaces (Arca
 npm start
 ```
 
-Opens a local static server at [http://localhost:3000](http://localhost:3000).
+Opens [http://localhost:3000](http://localhost:3000).
 
-Or open `index.html` directly in a browser.
+## References
 
-## Structure
-
-```
-.
-├── index.html
-├── privacy.html
-├── terms.html
-├── styles.css
-├── STATUS.md
-├── favicon.svg
-├── resume.pdf
-├── services/
-├── blog/
-├── images/
-└── *.otf          # brand fonts
-```
+Original uploaded Weiboo PHP homepage demos (incomplete without theme assets) are kept in `references/weiboo-homepages/` for layout provenance.
