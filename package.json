@@ -1,8 +1,8 @@
 {
-  "name": "artistic-fountain-portfolio",
+  "name": "little-lemon",
   "version": "1.0.0",
   "private": true,
-  "description": "Artistic Fountain — strategic design studio portfolio",
+  "description": "Little Lemon — Mediterranean restaurant with eight homepage layout demos",
   "scripts": {
     "start": "npx --yes serve -l 3000",
     "dev": "npx --yes serve -l 3000"

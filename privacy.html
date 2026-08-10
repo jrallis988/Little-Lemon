@@ -1,106 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Artistic Fountain — Privacy Policy">
-    <title>Privacy Policy — Artistic Fountain</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        .legal-page {
-            max-width: 780px;
-            margin: 0 auto;
-            padding: 8rem 2rem 5rem;
-            color: var(--text);
-        }
-        .legal-page h1 { margin-bottom: 1rem; color: var(--cream); }
-        .legal-page h2 { font-size: 1.4rem; margin-top: 2.5rem; margin-bottom: 1rem; }
-        .legal-page p, .legal-page li { color: var(--text-muted); line-height: 1.7; margin-bottom: 1rem; }
-        .legal-page ul { padding-left: 1.5rem; margin-bottom: 1rem; }
-        .legal-back { display: inline-block; margin-top: 2rem; color: var(--light-purple); text-decoration: none; }
-        .legal-back:hover { text-decoration: underline; }
-        .legal-updated { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 2rem; }
-        .legal-nav { margin-bottom: 2rem; font-size: 0.9rem; }
-        .legal-nav a { color: var(--light-purple); text-decoration: none; }
-        .legal-nav a:hover { text-decoration: underline; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Little Lemon — authentic Mediterranean dining in Chicago.">
+  <meta name="theme-color" content="#495E57">
+  <title>Privacy — Little Lemon</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600;700&family=Markazi+Text:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header class="header">
-        <div class="logo">
-            <a href="index.html" class="logo-mark" aria-label="Artistic Fountain &mdash; home"><span class="logo-line-1">Artistic</span><span class="logo-line-2">Fountain</span></a>
-        </div>
-        <nav aria-label="Primary">
-            <ul class="nav" id="main-nav">
-                <li><a href="index.html#about">The Designer</a></li>
-                <li><a href="index.html#services">Services</a></li>
-                <li><a href="index.html#portfolio">Portfolio</a></li>
-                <li><a href="blog/index.html">Blog</a></li>
-                <li><a href="resume.pdf" download>Resume</a></li>
-            </ul>
-        </nav>
-        <div class="header-right">
-            <button class="nav-toggle" onclick="toggleNav()" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="main-nav"><span></span><span></span><span></span></button>
-        </div>
-    </header>
-
-    <main class="legal-page">
-        <h1>Privacy Policy</h1>
-        <p class="legal-updated">Last Updated: July 2026</p>
-        <p class="legal-nav"><a href="terms.html">View Terms &amp; Conditions →</a></p>
-
-        <p>Your privacy is important. This Privacy Policy outlines how your information is handled when you visit this website or work together on a design project.</p>
-
-        <h2>1. Information Collected</h2>
-        <p>When you reach out for a project or fill out a contact form, you may provide basic contact details such as your name, email address, project details, and business information. This data is used solely to communicate with you, scope projects, and deliver design services.</p>
-
-        <h2>2. Use of Information</h2>
-        <p>Your information is strictly used for:</p>
-        <ul>
-            <li>Communicating regarding active or prospective projects.</li>
-            <li>Fulfilling contractual agreements and delivering agreed-upon design assets.</li>
-            <li>Maintaining internal business and tax records.</li>
-        </ul>
-        <p>Your information is never sold, rented, or shared with third-party marketers or data brokers.</p>
-
-        <h2>3. Analytics and Cookies</h2>
-        <p>This website may utilize lightweight, privacy-focused analytics to understand general traffic patterns and site performance without tracking your personal identity across the broader web.</p>
-
-        <h2>4. Data Security</h2>
-        <p>Appropriate administrative and technical measures are taken to protect your personal information and project files from unauthorized access, loss, or misuse.</p>
-
-        <h2>5. Your Rights</h2>
-        <p>You have the right to request access to, correction of, or deletion of any personal information held. To make a request, simply reach out via the <a href="index.html#contact-form" style="color: var(--light-purple);">contact form</a>.</p>
-
-        <a href="index.html" class="legal-back">← Back to home</a>
-    </main>
-
-    <footer class="footer">
-        <div class="footer-content">
-            <nav class="footer-nav">
-                <a href="index.html#about">About</a>
-                <a href="index.html#services">Services</a>
-                <a href="index.html#portfolio">Portfolio</a>
-                <a href="blog/index.html">Blog</a>
-                <a href="index.html#faq">FAQ</a>
-                <a href="index.html#contact">Contact</a>
-            </nav>
-            <div class="footer-copyright">
-                © 2026 Artistic Fountain™ — All rights reserved. <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms &amp; Conditions</a>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        function toggleNav() {
-            const nav = document.querySelector('.nav');
-            const toggle = document.querySelector('.nav-toggle');
-            const isOpen = nav.classList.toggle('active');
-            toggle.classList.toggle('active', isOpen);
-            toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        }
-    </script>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  
+<header class="site-header">
+  
+  <div class="container header-inner">
+    <a class="logo" href="index.html"><span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="12" cy="13" rx="7" ry="8" fill="#E4B800"/><ellipse cx="12" cy="13" rx="4.5" ry="5.5" fill="#F4CE14"/><path d="M12 4c1 2 1.4 3.5 1 5" stroke="#495E57" stroke-width="1.6" stroke-linecap="round"/><ellipse cx="14.5" cy="5" rx="2.4" ry="1.2" fill="#495E57" transform="rotate(20 14.5 5)"/></svg></span>Little Lemon</a>
+    <nav class="primary-nav" id="primary-nav" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="about.html">About</a>
+      <a href="reserve.html">Reserve</a>
+      <a href="order.html">Order</a>
+    </nav>
+    <div class="header-actions">
+      <a class="cart-link" href="order.html">Order <span class="cart-badge" data-cart-count hidden>0</span></a>
+      <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-nav"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+  <main id="main">
+  
+<section class="page-hero"><div class="container"><h1>Privacy</h1>
+<p class="muted">Little Lemon collects reservation and order details only to serve your visit. We do not sell personal information. Contact (312) 555-0199 with questions.</p>
+</div></section>
+  </main>
+  
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <h3>Little Lemon</h3>
+      <p>Chicago’s neighborhood Mediterranean kitchen — family recipes, bright citrus, and a table for everyone.</p>
+    </div>
+    <div>
+      <h3>Visit</h3>
+      <p>123 Lemon Street<br>Chicago, IL 60601</p>
+      <p>(312) 555-0199</p>
+    </div>
+    <div>
+      <h3>Explore</h3>
+      <a href="menu.html">Menu</a>
+      <a href="reserve.html">Reservations</a>
+      <a href="about.html">Our story</a>
+      <a href="order.html">Online order</a>
+    </div>
+    <div>
+      <h3>Hours</h3>
+      <p>Tue–Thu 5–10pm<br>Fri–Sat 5–11pm<br>Sun 4–9pm</p>
+    </div>
+  </div>
+  <div class="container footer-bottom">© Little Lemon · Mario &amp; Adrian · Mediterranean since forever</div>
+</footer>
+  <script src="app.js"></script>
 </body>
 </html>

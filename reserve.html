@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Little Lemon — authentic Mediterranean dining in Chicago.">
   <meta name="theme-color" content="#495E57">
-  <title>Terms — Little Lemon</title>
+  <title>Reserve — Little Lemon</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,7 +23,7 @@
       <a href="index.html">Home</a>
       <a href="menu.html">Menu</a>
       <a href="about.html">About</a>
-      <a href="reserve.html">Reserve</a>
+      <a href="reserve.html" aria-current="page">Reserve</a>
       <a href="order.html">Order</a>
     </nav>
     <div class="header-actions">
@@ -34,9 +34,33 @@
 </header>
   <main id="main">
   
-<section class="page-hero"><div class="container"><h1>Terms</h1>
-<p class="muted">Reservations may be held for 15 minutes. Online orders are for pickup. Prices subject to change. © Little Lemon.</p>
-</div></section>
+<section class="page-hero"><div class="container"><h1>Reserve</h1><p class="muted">Book a table at Little Lemon, Chicago.</p></div></section>
+<section class="section">
+  <div class="container">
+    <form id="reserve-form" class="form-grid" novalidate>
+      <label>Name<input name="name" required placeholder="Your name"></label>
+      <label>Email<input type="email" name="email" required placeholder="you@email.com"></label>
+      <label>Date<input type="date" name="date" required></label>
+      <label>Time
+        <select name="time" required>
+          <option value="">Select a time</option>
+          <option>5:00 PM</option><option>5:30 PM</option><option>6:00 PM</option>
+          <option>6:30 PM</option><option>7:00 PM</option><option>7:30 PM</option>
+          <option>8:00 PM</option><option>8:30 PM</option>
+        </select>
+      </label>
+      <label>Guests
+        <select name="guests" required>
+          <option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option>
+        </select>
+      </label>
+      <label>Occasion / notes<textarea name="notes" placeholder="Anniversary, allergies, high chair…"></textarea></label>
+      <button class="btn btn-primary" type="submit">Confirm reservation</button>
+      <p id="reserve-success" class="muted" hidden></p>
+    </form>
+  </div>
+</section>
+
   </main>
   
 <footer class="site-footer">

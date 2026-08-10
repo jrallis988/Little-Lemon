@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Little Lemon — authentic Mediterranean dining in Chicago.">
   <meta name="theme-color" content="#495E57">
-  <title>Little Lemon — Mediterranean restaurant in Chicago</title>
+  <title>Little Lemon — Lunch specials & promos</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,7 +20,7 @@
 <div class="demo-bar" role="navigation" aria-label="Homepage layout demos">
   <div class="container demo-bar-inner">
     <span>Layouts</span>
-    <a href="index.html" class="is-active">1 · Classic</a><a href="index-two.html">2 · Featured</a><a href="index-three.html">3 · Collections</a><a href="index-four.html">4 · Craft</a><a href="index-five.html">5 · Promos</a><a href="index-six.html">6 · Today's Deal</a><a href="index-seven.html">7 · Seasonal</a><a href="index-eight.html">8 · Events</a>
+    <a href="index.html">1 · Classic</a><a href="index-two.html">2 · Featured</a><a href="index-three.html">3 · Collections</a><a href="index-four.html">4 · Craft</a><a href="index-five.html" class="is-active">5 · Promos</a><a href="index-six.html">6 · Today's Deal</a><a href="index-seven.html">7 · Seasonal</a><a href="index-eight.html">8 · Events</a>
   </div>
 </div>
   <div class="container header-inner">
@@ -40,34 +40,43 @@
 </header>
   <main id="main">
   
-<section class="hero">
-  <div class="hero-media" style="background-image:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1600&q=80')" role="img" aria-label="Mediterranean dishes on a shared table"></div>
-  <div class="hero-content">
+<section class="hero-split">
+  <div class="hero-split-copy">
     <h1 class="hero-brand">Little Lemon</h1>
-    <p class="hero-title">Mediterranean flavor, Chicago warmth</p>
-    <p class="hero-lead">Family recipes brightened with lemon, herbs, and hospitality. Dine in or order ahead.</p>
-    <div class="hero-actions">
-      <a class="btn btn-primary" href="menu.html">View menu</a>
-      <a class="btn btn-ghost" href="reserve.html">Reserve a table</a>
-    </div>
+    <p class="hero-title">Last call for 20% off lunch meze</p>
+    <p class="hero-lead">Weekday lunch specials until 3pm — Greek salad, bruschetta, and hummus plates.</p>
+    <div class="hero-actions"><a class="btn btn-primary" href="order.html">Order lunch</a></div>
+  </div>
+  <div class="hero-split-media" style="background-image:url('https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=900&q=80')"></div>
+</section>
+<section class="section">
+  <div class="container promo-row">
+    <article class="promo reveal" style="min-height:280px">
+      <div class="promo-bg" style="background-image:url('https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=900&q=80')"></div>
+      <h3>Weekend branzino</h3>
+      <p>Whole fish, citrus, herbs.</p>
+      <a class="btn btn-primary btn-sm" href="menu.html">See mains</a>
+    </article>
+    <article class="promo reveal" style="min-height:280px">
+      <div class="promo-bg" style="background-image:url('https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?auto=format&fit=crop&w=900&q=80')"></div>
+      <h3>Bruschetta board</h3>
+      <p>Shareable and bright.</p>
+    </article>
+    <article class="promo reveal" style="min-height:280px">
+      <div class="promo-bg" style="background-image:url('https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=900&q=80')"></div>
+      <h3>Citrus affogato</h3>
+      <p>Espresso + lemon oil.</p>
+    </article>
   </div>
 </section>
 <section class="section">
   <div class="container">
-    <div class="section-head">
-      <div>
-        <span class="eyebrow">This week</span>
-        <h2>Hand-picked specials</h2>
-        <p>Chef Adrian’s citrus-forward plates — limited and worth the trip.</p>
-      </div>
-      <a class="btn btn-outline" href="menu.html">Full menu</a>
-    </div>
+    <div class="section-head"><div><span class="eyebrow">Featured products</span><h2>Menu highlights</h2></div></div>
     <div class="dish-grid">
-      
 <article class="dish-card reveal">
   <figure><img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=900&q=80" alt="Greek Salad" loading="lazy" width="600" height="450"></figure>
   <div class="dish-body">
-    <span class="tag">Special</span>
+    <span class="tag">Featured</span>
     <h3>Greek Salad</h3>
     <p class="muted">Crisp romaine, olives, feta, and house lemon-oregano dressing.</p>
     <div class="dish-meta">
@@ -77,50 +86,29 @@
   </div>
 </article>
 <article class="dish-card reveal">
-  <figure><img src="https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?auto=format&fit=crop&w=900&q=80" alt="Bruschetta" loading="lazy" width="600" height="450"></figure>
+  <figure><img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=900&q=80" alt="Lemon Herb Chicken" loading="lazy" width="600" height="450"></figure>
   <div class="dish-body">
-    <span class="tag">Special</span>
-    <h3>Bruschetta</h3>
-    <p class="muted">Grilled sourdough topped with ripe tomatoes, garlic, and basil.</p>
+    <span class="tag">Featured</span>
+    <h3>Lemon Herb Chicken</h3>
+    <p class="muted">Wood-roasted chicken with lemon, thyme, and pan juices.</p>
     <div class="dish-meta">
-      <span class="price">$8.50</span>
-      <button class="btn btn-secondary btn-sm" type="button" data-add-cart data-id="bruschetta" data-name="Bruschetta" data-price="8.5">Add</button>
+      <span class="price">$18.75</span>
+      <button class="btn btn-secondary btn-sm" type="button" data-add-cart data-id="lemon-chicken" data-name="Lemon Herb Chicken" data-price="18.75">Add</button>
     </div>
   </div>
 </article>
 <article class="dish-card reveal">
-  <figure><img src="https://images.unsplash.com/photo-1577805947697-89e18249d767?auto=format&fit=crop&w=900&q=80" alt="Hummus Plate" loading="lazy" width="600" height="450"></figure>
+  <figure><img src="https://images.unsplash.com/photo-1519914219767-dd6474110f2e?auto=format&fit=crop&w=900&q=80" alt="Lemon Dessert" loading="lazy" width="600" height="450"></figure>
   <div class="dish-body">
-    <span class="tag">Special</span>
-    <h3>Hummus Plate</h3>
-    <p class="muted">Silky chickpea hummus with warm pita and olive oil.</p>
+    <span class="tag">Featured</span>
+    <h3>Lemon Dessert</h3>
+    <p class="muted">Silky lemon cake with whipped cream and zest.</p>
     <div class="dish-meta">
-      <span class="price">$9.25</span>
-      <button class="btn btn-secondary btn-sm" type="button" data-add-cart data-id="hummus" data-name="Hummus Plate" data-price="9.25">Add</button>
+      <span class="price">$7.50</span>
+      <button class="btn btn-secondary btn-sm" type="button" data-add-cart data-id="lemon-dessert" data-name="Lemon Dessert" data-price="7.5">Add</button>
     </div>
   </div>
-</article>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container features">
-    <div class="feature reveal"><h3>Farm to table</h3><p class="muted">Seasonal produce from Midwest growers and Mediterranean imports.</p></div>
-    <div class="feature reveal"><h3>Family recipes</h3><p class="muted">Mario &amp; Adrian’s kitchen — citrus, olive oil, and slow hospitality.</p></div>
-    <div class="feature reveal"><h3>Reserve anytime</h3><p class="muted">Book a table online or walk in for the bar and meze.</p></div>
-    <div class="feature reveal"><h3>Order ahead</h3><p class="muted">Pickup ready when you are — still hot, still bright.</p></div>
-  </div>
-</section>
-<section class="section">
-  <div class="container about-band">
-    <img class="reveal" src="https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?auto=format&fit=crop&w=1200&q=80" alt="Chefs plating Mediterranean food" width="800" height="600">
-    <div class="reveal">
-      <span class="eyebrow">Our story</span>
-      <h2>Two brothers, one lemon tree</h2>
-      <p>Mario and Adrian brought their Mediterranean kitchen to Chicago — bright, generous plates meant for sharing.</p>
-      <a class="btn btn-secondary" href="about.html">Meet the chefs</a>
-    </div>
+</article></div>
   </div>
 </section>
 
