@@ -8,12 +8,12 @@ beforeEach(() => {
 test("renders motel brand and booking CTA", () => {
   render(<App />);
   expect(screen.getAllByText(/Seascape Inn/i).length).toBeGreaterThan(0);
-  expect(screen.getAllByRole("link", { name: /book a stay/i }).length).toBeGreaterThan(0);
   expect(screen.getByRole("heading", { name: /book your room by the water/i })).toBeInTheDocument();
   expect(
     screen.getByRole("button", { name: /check availability/i })
   ).toBeInTheDocument();
   expect(screen.getByLabelText(/quick booking/i)).toBeInTheDocument();
+  expect(screen.getAllByRole("link", { name: /live rates/i }).length).toBeGreaterThan(0);
 });
 
 test("renders about, reviews, location, faq, and legal sections", () => {

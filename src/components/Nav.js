@@ -54,15 +54,6 @@ export default function Nav() {
             </ul>
           </div>
 
-          <a
-            className="btn btn-primary nav__cta"
-            href={SITE.bookingUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Book a stay
-          </a>
-
           <button
             className="nav__menu-btn"
             type="button"
@@ -86,14 +77,8 @@ export default function Nav() {
             {link.label}
           </a>
         ))}
-        <a
-          className="btn btn-ocean"
-          href={SITE.bookingUrl}
-          target="_blank"
-          rel="noreferrer"
-          onClick={close}
-        >
-          Book a stay
+        <a className="btn btn-ocean" href="#rates" onClick={close}>
+          See rates & book
         </a>
       </nav>
     </>

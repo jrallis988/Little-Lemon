@@ -7,10 +7,10 @@ import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import LiveRates from "./components/LiveRates";
 import Location from "./components/Location";
-import Nav from "./components/Nav";
 import Reviews from "./components/Reviews";
 import Rooms from "./components/Rooms";
 import Shore from "./components/Shore";
+import SiteChrome from "./components/SiteChrome";
 import WinterStay from "./components/WinterStay";
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
       <a className="skip-link" href="#main">
         Skip to content
       </a>
-      <Nav />
+      <SiteChrome />
       <main id="main">
         <Hero />
         <About />

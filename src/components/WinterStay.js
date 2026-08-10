@@ -1,8 +1,19 @@
-import { SITE } from "../data";
+import { SITE, asset } from "../data";
+import Picture from "./Picture";
 
 export default function WinterStay() {
   return (
     <section className="winter section--wide" id="winter" aria-labelledby="winter-title">
+      <div className="winter__media" aria-hidden="true">
+        <Picture
+          src={asset("/images/seascape-aerial.jpg")}
+          alt=""
+          width="1200"
+          height="675"
+          loading="lazy"
+        />
+        <div className="winter__shade" />
+      </div>
       <div className="section__inner winter__inner">
         <div>
           <p className="section__eyebrow">Off-season</p>

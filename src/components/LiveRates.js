@@ -141,11 +141,11 @@ export default function LiveRates() {
             />
           </div>
           <p className="rates__embed-note">
-            If the calendar is blank, your browser may block embeds — use{" "}
+            If the calendar looks blank,{" "}
             <a href={bookingHref} target="_blank" rel="noreferrer">
-              Open booking in new tab
+              open booking in a new tab
             </a>
-            . Online reservations must still be confirmed with the office.
+            . Confirm online reservations with the office.
           </p>
         </div>
       ) : null}

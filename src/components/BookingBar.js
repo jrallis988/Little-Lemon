@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { SITE, buildBookingUrl } from "../data";
+import { buildBookingUrl } from "../data";
 
 const today = () => new Date().toISOString().slice(0, 10);
 
@@ -93,7 +93,7 @@ export default function BookingBar() {
         </p>
       ) : (
         <p className="booking-bar__hint">
-          Opens the RezStream calendar for {SITE.shortName}.
+          Opens the live booking calendar with your dates.
         </p>
       )}
     </div>

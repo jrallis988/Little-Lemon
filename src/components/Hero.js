@@ -1,6 +1,5 @@
 import { SITE, asset } from "../data";
 import Picture from "./Picture";
-import BookingBar from "./BookingBar";
 
 export default function Hero() {
   return (
@@ -26,8 +25,6 @@ export default function Hero() {
         </p>
         <p className="hero__trust">{SITE.trustLine.join(" · ")}</p>
       </div>
-
-      <BookingBar />
     </section>
   );
 }
