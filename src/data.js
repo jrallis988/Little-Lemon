@@ -35,7 +35,7 @@ export const SITE = {
   hours: "Front desk 8:30 AM – 10:00 PM",
   /** Times match the inn’s published policy; still confirm on your reservation. */
   typicalRateNote:
-    "Use the live calendar below for exact pricing — seasonal ranges are a guide only.",
+    "Use Open live calendar for exact pricing — seasonal ranges are a guide only.",
   trustLine: [
     "Beach across the street",
     "Pet-friendly",

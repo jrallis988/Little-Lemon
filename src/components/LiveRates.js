@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   SITE,
   SEASONAL_RATES,
@@ -19,7 +19,6 @@ export default function LiveRates() {
   const [checkIn, setCheckIn] = useState(today());
   const [checkOut, setCheckOut] = useState(addDays(today(), 2));
   const [guests, setGuests] = useState(2);
-  const [embedReady, setEmbedReady] = useState(false);
 
   const nights = nightsBetween(checkIn, checkOut);
   const sample = estimateTotal("queen", checkIn, checkOut);
@@ -29,18 +28,6 @@ export default function LiveRates() {
   );
   const invalid = !checkIn || !checkOut || checkOut <= checkIn;
 
-  useEffect(() => {
-    if (invalid) {
-      setEmbedReady(false);
-      return undefined;
-    }
-    setEmbedReady(false);
-    // RezStream paints a short page (with footer high) while loading; after the
-    // calendar expands, the footer drops below our clip. Flip to the ready crop.
-    const timer = window.setTimeout(() => setEmbedReady(true), 5000);
-    return () => window.clearTimeout(timer);
-  }, [bookingHref, invalid]);
-
   return (
     <section className="section rates" id="rates" aria-labelledby="rates-title">
       <p className="section__eyebrow">Live rates</p>
@@ -48,8 +35,8 @@ export default function LiveRates() {
         Check exact prices for your dates.
       </h2>
       <p className="section__copy">
-        Seasonal ranges below are a guide. The calendar shows live availability and
-        final pricing. {SITE.typicalRateNote}
+        Seasonal ranges below are a guide. Open the live calendar for unit-by-unit
+        availability and final pricing. {SITE.typicalRateNote}
       </p>
 
       <ul className="season-list">
@@ -107,33 +94,24 @@ export default function LiveRates() {
             ? "Choose a check-out date after check-in."
             : sample
               ? `${nights} night${nights === 1 ? "" : "s"} · rough estimate from ~$${sample.rate}/night ≈ $${sample.total} before taxes.`
-              : "Pick dates to see live rates in the calendar."}
+              : "Pick dates to check live rates."}
         </p>
-      </div>
 
-      {!invalid ? (
-        <div className="rates__embed-wrap">
-          <div
-            className={`rates__embed-frame${embedReady ? " is-ready" : ""}`}
+        <div className="rates__actions">
+          <a
+            className="btn btn-primary"
+            href={invalid ? undefined : bookingHref}
+            target="_blank"
+            rel="noreferrer"
+            aria-disabled={invalid}
+            onClick={(event) => {
+              if (invalid) event.preventDefault();
+            }}
           >
-            <iframe
-              id="rezstream-embed"
-              className="rates__embed"
-              title="Seascape Inn live booking calendar"
-              src={bookingHref}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-          </div>
-          <p className="rates__embed-note">
-            Live availability grid — open{" "}
-            <a href={bookingHref} target="_blank" rel="noreferrer">
-              full booking
-            </a>{" "}
-            to finish a reservation.
-          </p>
+            Open live calendar
+          </a>
         </div>
-      ) : null}
+      </div>
     </section>
   );
 }

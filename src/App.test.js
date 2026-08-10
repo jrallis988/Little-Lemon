@@ -64,10 +64,11 @@ test("renders live rates, rooms, seasonal guide, and contact details", () => {
     screen.getByRole("link", { name: /check winter dates/i })
   ).toBeInTheDocument();
   expect(
-    screen.getByTitle(/seascape inn live booking calendar/i)
+    screen.getByRole("link", { name: /open live calendar/i })
   ).toBeInTheDocument();
   expect(screen.getByRole("heading", { name: /send a message/i })).toBeInTheDocument();
   expect(screen.queryByRole("link", { name: /see live rates & book/i })).not.toBeInTheDocument();
   expect(screen.queryByRole("button", { name: /update calendar/i })).not.toBeInTheDocument();
+  expect(screen.queryByTitle(/seascape inn live booking calendar/i)).not.toBeInTheDocument();
   expect(screen.getAllByText(/beach across the street/i).length).toBeGreaterThan(0);
 });
