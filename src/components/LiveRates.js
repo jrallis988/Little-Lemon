@@ -98,18 +98,20 @@ export default function LiveRates() {
         </p>
 
         <div className="rates__actions">
-          <a
-            className="btn btn-primary"
-            href={invalid ? undefined : bookingHref}
-            target="_blank"
-            rel="noreferrer"
-            aria-disabled={invalid}
-            onClick={(event) => {
-              if (invalid) event.preventDefault();
-            }}
-          >
-            Open live calendar
-          </a>
+          {invalid ? (
+            <button className="btn btn-primary" type="button" disabled>
+              Open live calendar
+            </button>
+          ) : (
+            <a
+              className="btn btn-primary"
+              href={bookingHref}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Open live calendar
+            </a>
+          )}
         </div>
       </div>
     </section>
