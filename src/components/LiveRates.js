@@ -130,14 +130,16 @@ export default function LiveRates() {
 
       {showEmbed ? (
         <div className="rates__embed-wrap">
-          <iframe
-            id="rezstream-embed"
-            className="rates__embed"
-            title="Seascape Inn live booking calendar"
-            src={bookingHref}
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
+          <div className="rates__embed-frame">
+            <iframe
+              id="rezstream-embed"
+              className="rates__embed"
+              title="Seascape Inn live booking calendar"
+              src={bookingHref}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
           <p className="rates__embed-note">
             If the calendar is blank, your browser may block embeds — use{" "}
             <a href={bookingHref} target="_blank" rel="noreferrer">
