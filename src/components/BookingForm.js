@@ -179,8 +179,8 @@ export default function BookingForm() {
                       will reply to {status.summary.email}.
                     </p>
                     <p>
-                      For the fastest confirmation, also book online or call{" "}
-                      {SITE.phone}.
+                      For the fastest confirmation, also book online in Rates &amp;
+                      availability.
                     </p>
                     <button
                       className="btn btn-ghost"

@@ -77,7 +77,7 @@ export const SEASONAL_RATES = [
     name: "Winter",
     when: "November – March",
     range: "About $90–$150 / night",
-    note: "Weekly and monthly winter rentals available — call the office for longer stays.",
+    note: "Weekly and monthly winter rentals available — ask about longer stays.",
   },
 ];
 

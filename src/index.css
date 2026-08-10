@@ -1291,9 +1291,27 @@ p {
   margin-top: 1.5rem;
 }
 
-/* Hide RezStream footer chrome (policies, accessibility, powered-by, property contact). */
+.rates__embed-note {
+  margin: 0.65rem 0 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.rates__embed-note a {
+  color: var(--ocean);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/*
+  Clip RezStream chrome we cannot edit cross-origin:
+  - top: logo + “Online Reservations” + office phone confirmation line
+  - bottom: Policies / Accessibility / Powered by + gray property contact bar
+  While loading, the page is short and the footer sits high — use a tall mask.
+  After .is-ready, shift the crop onto the availability grid with a light mask.
+*/
 .rates__embed-frame {
-  height: 300px;
+  height: 480px;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: calc(var(--radius) + 2px);
@@ -1301,31 +1319,61 @@ p {
   position: relative;
 }
 
+.rates__embed-frame::before,
 .rates__embed-frame::after {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
-  height: 28px;
-  background: linear-gradient(180deg, transparent, var(--foam));
+  z-index: 2;
   pointer-events: none;
+  background: var(--foam);
+}
+
+.rates__embed-frame::before {
+  top: 0;
+  height: 10px;
+}
+
+.rates__embed-frame::after {
+  bottom: 0;
+  height: 260px;
 }
 
 .rates__embed {
   display: block;
-  width: 140%;
-  height: 1200px;
-  min-height: 1200px;
+  width: 100%;
+  height: 1900px;
+  min-height: 1900px;
   border: 0;
   background: var(--foam);
-  transform: scale(0.72);
-  transform-origin: top left;
+  margin-top: -200px;
+}
+
+.rates__embed-frame.is-ready {
+  height: 640px;
+}
+
+.rates__embed-frame.is-ready::after {
+  height: 72px;
+}
+
+.rates__embed-frame.is-ready .rates__embed {
+  /* Skip RezStream header + search chrome; land on the availability grid. */
+  margin-top: -520px;
 }
 
 @media (min-width: 900px) {
   .rates__embed-frame {
-    height: 340px;
+    height: 520px;
+  }
+
+  .rates__embed-frame.is-ready {
+    height: 780px;
+  }
+
+  .rates__embed-frame.is-ready .rates__embed {
+    margin-top: -500px;
   }
 }
 

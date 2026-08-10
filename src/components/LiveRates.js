@@ -19,6 +19,7 @@ export default function LiveRates() {
   const [checkIn, setCheckIn] = useState(today());
   const [checkOut, setCheckOut] = useState(addDays(today(), 2));
   const [guests, setGuests] = useState(2);
+  const [embedReady, setEmbedReady] = useState(false);
 
   const nights = nightsBetween(checkIn, checkOut);
   const sample = estimateTotal("queen", checkIn, checkOut);
@@ -29,11 +30,15 @@ export default function LiveRates() {
   const invalid = !checkIn || !checkOut || checkOut <= checkIn;
 
   useEffect(() => {
-    if (invalid) return;
-    const frame = document.getElementById("rezstream-embed");
-    if (frame && frame.src !== bookingHref) {
-      frame.src = bookingHref;
+    if (invalid) {
+      setEmbedReady(false);
+      return undefined;
     }
+    setEmbedReady(false);
+    // RezStream paints a short page (with footer high) while loading; after the
+    // calendar expands, the footer drops below our clip. Flip to the ready crop.
+    const timer = window.setTimeout(() => setEmbedReady(true), 5000);
+    return () => window.clearTimeout(timer);
   }, [bookingHref, invalid]);
 
   return (
@@ -108,7 +113,9 @@ export default function LiveRates() {
 
       {!invalid ? (
         <div className="rates__embed-wrap">
-          <div className="rates__embed-frame">
+          <div
+            className={`rates__embed-frame${embedReady ? " is-ready" : ""}`}
+          >
             <iframe
               id="rezstream-embed"
               className="rates__embed"
@@ -118,6 +125,13 @@ export default function LiveRates() {
               referrerPolicy="no-referrer-when-downgrade"
             />
           </div>
+          <p className="rates__embed-note">
+            Live availability grid — open{" "}
+            <a href={bookingHref} target="_blank" rel="noreferrer">
+              full booking
+            </a>{" "}
+            to finish a reservation.
+          </p>
         </div>
       ) : null}
     </section>
