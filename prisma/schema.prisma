@@ -36,6 +36,8 @@ model User {
   checkoutCart           CheckoutCart?
   conversations          Conversation[]
   supportMessages        Message[]
+  prescriptionTransfers  PrescriptionTransfer[]
+  supportTickets         SupportTicket[]
 }
 
 model Account {
@@ -136,6 +138,11 @@ model Pharmacy {
   pharmacyDeskNote      String?
   acceptsTrumpRxCoupon  Boolean  @default(true)
   driveThru             Boolean  @default(false)
+  /// Partner ops: active | pending | suspended
+  partnerStatus         String   @default("active")
+  /// Pricing tier label used by partner ops (standard | preferred | select)
+  discountTier          String   @default("standard")
+  adminNotes            String?
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
 
@@ -143,6 +150,7 @@ model Pharmacy {
   preferredBy           PreferredPharmacy[]
   coupons               Coupon[]
   switchEvents          SwitchEvent[]
+  transferTargets       PrescriptionTransfer[]
 }
 
 model PharmacyContract {
@@ -249,15 +257,21 @@ model SwitchEvent {
 }
 
 model SavedMedication {
-  id                   String   @id @default(cuid())
+  id                   String    @id @default(cuid())
   userId               String
   drugId               String
   strengthId           String
   quantity             Int
   supplyDays           Int
   preferredPharmacyId  String?
-  savedAt              DateTime @default(now())
-  updatedAt            DateTime @updatedAt
+  /// active | paused | completed
+  rxStatus             String    @default("active")
+  lastFilledAt         DateTime?
+  nextRefillAt         DateTime?
+  refillsRemaining     Int?
+  notes                String?
+  savedAt              DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   drug Drug @relation(fields: [drugId], references: [id], onDelete: Cascade)
@@ -298,13 +312,88 @@ model PriceAlert {
 }
 
 model FamilyMember {
-  id        String   @id @default(cuid())
-  userId    String
-  name      String
-  relation  String?
-  createdAt DateTime @default(now())
+  id          String   @id @default(cuid())
+  userId      String
+  name        String
+  relation    String?
+  dateOfBirth String?
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+/// Patient request to move an existing Rx to a Trump RX–compatible pharmacy.
+model PrescriptionTransfer {
+  id               String   @id @default(cuid())
+  userId           String?
+  patientName      String
+  contactEmail     String?
+  contactPhone     String?
+  drugName         String
+  strength         String?
+  quantity         String?
+  fromPharmacyName String
+  fromPharmacyPhone String?
+  toPharmacyId     String?
+  toPharmacyName   String?
+  notes            String?
+  /// submitted | in_review | completed | canceled
+  status           String   @default("submitted")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  user       User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  toPharmacy Pharmacy? @relation(fields: [toPharmacyId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([status, createdAt])
+}
+
+/// Structured support tickets (counter issues, billing, pharmacy complaints).
+model SupportTicket {
+  id           String   @id @default(cuid())
+  userId       String?
+  email        String
+  name         String?
+  subject      String
+  /// counter_price | out_of_stock | pharmacy | billing | account | other
+  category     String   @default("other")
+  /// open | in_progress | resolved | closed
+  status       String   @default("open")
+  /// low | normal | high
+  priority     String   @default("normal")
+  body         String
+  pharmacyName String?
+  drugName     String?
+  expectedPrice Float?
+  chargedPrice  Float?
+  resolution   String?
+  assignedTo   String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user  User?               @relation(fields: [userId], references: [id], onDelete: SetNull)
+  notes SupportTicketNote[]
+
+  @@index([status, priority, createdAt])
+  @@index([email])
+  @@index([userId])
+}
+
+model SupportTicketNote {
+  id          String   @id @default(cuid())
+  ticketId    String
+  authorEmail String
+  body        String
+  createdAt   DateTime @default(now())
+
+  ticket SupportTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+
+  @@index([ticketId, createdAt])
 }
 
 model ZipLocation {

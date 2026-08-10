@@ -148,6 +148,40 @@ export default function ProfilePage() {
           .
         </TrustCallout>
 
+        <nav className="grid gap-2 sm:grid-cols-2">
+          {[
+            {
+              href: "/profile/prescriptions",
+              title: "Refill tracker",
+              body: "Active prescriptions and coupon history",
+            },
+            {
+              href: "/profile/family",
+              title: "Family & dependents",
+              body: "Plus household profiles",
+            },
+            {
+              href: "/profile/billing",
+              title: "Subscription & billing",
+              body: "Upgrade, invoices, or cancel Plus",
+            },
+            {
+              href: "/transfer",
+              title: "Transfer a prescription",
+              body: "Move an Rx to a network pharmacy",
+            },
+          ].map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="rounded-2xl border border-border bg-card p-4 transition-colors hover:bg-muted/40"
+            >
+              <p className="font-semibold">{item.title}</p>
+              <p className="mt-1 text-sm text-muted-foreground">{item.body}</p>
+            </Link>
+          ))}
+        </nav>
+
         <section className="space-y-4 rounded-2xl border border-border bg-card p-4 sm:p-5">
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div>

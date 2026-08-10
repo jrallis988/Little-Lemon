@@ -72,18 +72,32 @@ export default function AdminPage() {
           Inventory counts, coupon volume, and Smart Switch analytics. Extend
           with full CRUD when ops needs it.
         </p>
-        <Link
-          href="/admin/messages"
-          className="mt-3 mr-4 inline-flex text-sm font-medium text-primary underline-offset-2 hover:underline"
-        >
-          Open support inbox →
-        </Link>
-        <Link
-          href="/admin/launch"
-          className="mt-3 inline-flex text-sm font-medium text-primary underline-offset-2 hover:underline"
-        >
-          Launch Control →
-        </Link>
+        <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2">
+          <Link
+            href="/admin/messages"
+            className="inline-flex text-sm font-medium text-primary underline-offset-2 hover:underline"
+          >
+            Chat inbox →
+          </Link>
+          <Link
+            href="/admin/tickets"
+            className="inline-flex text-sm font-medium text-primary underline-offset-2 hover:underline"
+          >
+            Support tickets →
+          </Link>
+          <Link
+            href="/admin/pharmacies"
+            className="inline-flex text-sm font-medium text-primary underline-offset-2 hover:underline"
+          >
+            Pharmacy partners →
+          </Link>
+          <Link
+            href="/admin/launch"
+            className="inline-flex text-sm font-medium text-primary underline-offset-2 hover:underline"
+          >
+            Launch Control →
+          </Link>
+        </div>
       </div>
 
       <section className="grid gap-3 sm:grid-cols-3">

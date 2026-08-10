@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Clock, MapPin, Phone } from "lucide-react";
+import { Clock, MapPin, Navigation, Phone, Printer } from "lucide-react";
 import { CHAIN_LABELS } from "@/lib/chains";
 import { getPharmacyById } from "@/lib/pricing-service";
 import { ChainMark } from "@/components/pharmacy/chain-mark";
@@ -25,6 +25,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function PharmacyDetailPage({ params }: PageProps) {
   const pharmacy = await getPharmacyById((await params).id);
   if (!pharmacy) notFound();
+
+  const mapsQuery = encodeURIComponent(
+    `${pharmacy.address}, ${pharmacy.city}, ${pharmacy.state} ${pharmacy.zip}`
+  );
+  const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${mapsQuery}`;
 
   return (
     <div className="min-h-[70dvh] bg-background">
@@ -56,12 +61,26 @@ export default async function PharmacyDetailPage({ params }: PageProps) {
               </p>
             </div>
           </div>
-          <Link
-            href="/search"
-            className={cn(buttonVariants({ size: "lg" }), "min-h-11")}
-          >
-            Compare prices here
-          </Link>
+          <div className="flex flex-wrap gap-2">
+            <Link
+              href="/search"
+              className={cn(buttonVariants({ size: "lg" }), "min-h-11")}
+            >
+              Compare prices here
+            </Link>
+            <a
+              href={directionsUrl}
+              target="_blank"
+              rel="noreferrer"
+              className={cn(
+                buttonVariants({ variant: "outline", size: "lg" }),
+                "min-h-11"
+              )}
+            >
+              <Navigation className="size-4" />
+              Directions
+            </a>
+          </div>
         </div>
       </div>
 
@@ -112,6 +131,36 @@ export default async function PharmacyDetailPage({ params }: PageProps) {
             )}
           </section>
 
+          <section className="rounded-2xl border border-border bg-card p-4">
+            <h2 className="font-display text-xl font-semibold">At the counter</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Open your digital coupon, compare with insurance, and show BIN /
+              PCN / Group / Member ID. Hand the pharmacist guide to the desk if
+              needed.
+            </p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <Link
+                href="/help/pharmacist"
+                className={cn(buttonVariants({ variant: "secondary" }), "min-h-10")}
+              >
+                <Printer className="size-4" />
+                Pharmacist guide
+              </Link>
+              <Link
+                href="/help/counter-issue"
+                className={cn(buttonVariants({ variant: "outline" }), "min-h-10")}
+              >
+                Price mismatch help
+              </Link>
+              <Link
+                href="/transfer"
+                className={cn(buttonVariants({ variant: "outline" }), "min-h-10")}
+              >
+                Transfer Rx here
+              </Link>
+            </div>
+          </section>
+
           <TrustCallout title="Prices depend on your prescription">
             Search your exact medication, strength, quantity, and supply length
             to see current network cash-discount pricing at nearby pharmacies.
@@ -145,7 +194,6 @@ export default async function PharmacyDetailPage({ params }: PageProps) {
           </Link>
         </aside>
       </div>
-
     </div>
   );
 }

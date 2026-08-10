@@ -8,11 +8,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/pharmacies",
     "/checkout",
     "/help",
+    "/help/pharmacist",
+    "/help/counter-issue",
+    "/transfer",
     "/membership",
     "/privacy",
     "/terms",
     "/login",
     "/signup",
+    "/forgot-password",
   ];
   return paths.map((path) => ({
     url: `${base}${path}`,

@@ -18,6 +18,7 @@ export async function GET() {
     alertCount,
     passCount,
     openChats,
+    openTickets,
     recentSwitch,
     switchByStatus,
   ] = await Promise.all([
@@ -29,6 +30,9 @@ export async function GET() {
     prisma.digitalPass.count(),
     prisma.conversation.count({
       where: { status: { in: ["open", "waiting"] } },
+    }),
+    prisma.supportTicket.count({
+      where: { status: { in: ["open", "in_progress"] } },
     }),
     prisma.switchEvent.findMany({
       orderBy: { createdAt: "desc" },
@@ -52,6 +56,7 @@ export async function GET() {
       activeAlerts: alertCount,
       digitalPasses: passCount,
       openChats,
+      openTickets,
     },
     switchAnalytics: {
       byStatus: switchByStatus.map((row) => ({

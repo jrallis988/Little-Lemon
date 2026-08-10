@@ -114,19 +114,37 @@ export default function HelpPage() {
             </ul>
             <div className="flex flex-wrap gap-2 pt-1">
               <Link
-                href="/search"
+                href="/help/pharmacist"
                 className={cn(buttonVariants({ size: "lg" }), "min-h-11")}
               >
-                Compare prices
+                Pharmacist guide
               </Link>
               <Link
-                href="/membership"
+                href="/help/counter-issue"
                 className={cn(
                   buttonVariants({ variant: "outline", size: "lg" }),
                   "min-h-11"
                 )}
               >
-                Free vs membership
+                Report counter issue
+              </Link>
+              <Link
+                href="/transfer"
+                className={cn(
+                  buttonVariants({ variant: "outline", size: "lg" }),
+                  "min-h-11"
+                )}
+              >
+                Transfer prescription
+              </Link>
+              <Link
+                href="/search"
+                className={cn(
+                  buttonVariants({ variant: "ghost", size: "lg" }),
+                  "min-h-11"
+                )}
+              >
+                Compare prices
               </Link>
             </div>
           </div>

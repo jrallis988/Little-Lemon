@@ -47,6 +47,21 @@ export function SiteFooter() {
               </Link>
             </li>
             <li>
+              <Link href="/help/pharmacist" className="hover:text-foreground">
+                Pharmacist guide
+              </Link>
+            </li>
+            <li>
+              <Link href="/transfer" className="hover:text-foreground">
+                Transfer a prescription
+              </Link>
+            </li>
+            <li>
+              <Link href="/help/counter-issue" className="hover:text-foreground">
+                Counter issue help
+              </Link>
+            </li>
+            <li>
               <span className="text-foreground/80">
                 Chat with us — use the Messages button
               </span>

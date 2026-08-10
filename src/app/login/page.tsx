@@ -90,7 +90,15 @@ export default function LoginPage() {
           </Button>
         </form>
 
-        <p className="mt-5 text-center text-sm text-muted-foreground">
+        <p className="mt-4 text-center text-sm">
+          <Link
+            href="/forgot-password"
+            className="font-medium text-primary hover:underline"
+          >
+            Forgot password?
+          </Link>
+        </p>
+        <p className="mt-3 text-center text-sm text-muted-foreground">
           New to Trump RX?{" "}
           <Link href="/signup" className="font-semibold text-primary hover:underline">
             Create an account
