@@ -1,41 +1,26 @@
-import { AgeGate } from "./components/AgeGate";
-import { Beers } from "./components/Beers";
-import { Contact } from "./components/Contact";
-import { Events } from "./components/Events";
-import { Food } from "./components/Food";
-import { Footer } from "./components/Footer";
-import { Gallery } from "./components/Gallery";
-import { Header } from "./components/Header";
-import { Hero } from "./components/Hero";
-import { Newsletter } from "./components/Newsletter";
-import { ShopLoyalty } from "./components/ShopLoyalty";
-import { Story } from "./components/Story";
-import { Taproom } from "./components/Taproom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { CartProvider } from "./context/CartContext";
+import { BeerDetailPage } from "./pages/BeerDetailPage";
+import { FinderPage } from "./pages/FinderPage";
+import { HomePage } from "./pages/HomePage";
+import { PrivateEventsPage } from "./pages/PrivateEventsPage";
+import { ShopPage } from "./pages/ShopPage";
+
+const basename = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 export default function App() {
   return (
-    <div className="min-h-screen">
-      <a
-        href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[80] focus:bg-buoy focus:px-3 focus:py-2 focus:text-foam"
-      >
-        Skip to content
-      </a>
-      <AgeGate />
-      <Header />
-      <main id="main">
-        <Hero />
-        <Beers />
-        <Events />
-        <Food />
-        <Gallery />
-        <Taproom />
-        <ShopLoyalty />
-        <Contact />
-        <Newsletter />
-        <Story />
-      </main>
-      <Footer />
-    </div>
+    <BrowserRouter basename={basename || undefined}>
+      <CartProvider>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/beers/:slug" element={<BeerDetailPage />} />
+          <Route path="/shop" element={<ShopPage />} />
+          <Route path="/finder" element={<FinderPage />} />
+          <Route path="/events/private" element={<PrivateEventsPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </CartProvider>
+    </BrowserRouter>
   );
 }

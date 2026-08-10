@@ -1,4 +1,5 @@
 import { FormEvent, useState } from "react";
+import { Link } from "react-router-dom";
 import { links } from "../data/links";
 import { useInView } from "../hooks/useInView";
 import { mailtoContact, submitContact } from "../lib/forms";
@@ -61,7 +62,14 @@ export function Contact() {
           </h2>
           <p className="mt-4 max-w-md leading-relaxed text-foam/75">
             Planning a private event on campus, need catering info, or just have
-            a question? Send a note — we’ll get back to you.
+            a question? Send a note — or explore{" "}
+            <Link
+              to="/events/private"
+              className="underline underline-offset-2"
+            >
+              Heritage Room & Field bookings
+            </Link>
+            .
           </p>
           <dl className="mt-10 space-y-4 text-sm">
             <div>

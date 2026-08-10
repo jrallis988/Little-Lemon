@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { links } from "../data/links";
 import { SealMark } from "./SealMark";
 
@@ -30,22 +31,25 @@ export function Footer() {
           </p>
         </div>
         <div className="flex flex-wrap gap-6 text-sm text-foam/80">
-          <a href="#beers" className="transition-colors hover:text-foam">
+          <a href="/#beers" className="transition-colors hover:text-foam">
             Beers
           </a>
-          <a href="#events" className="transition-colors hover:text-foam">
-            Events
-          </a>
-          <a href="#food" className="transition-colors hover:text-foam">
-            Food
-          </a>
-          <a href="#visit" className="transition-colors hover:text-foam">
+          <Link to="/shop" className="transition-colors hover:text-foam">
+            Shop
+          </Link>
+          <Link to="/finder" className="transition-colors hover:text-foam">
+            Finder
+          </Link>
+          <Link
+            to="/events/private"
+            className="transition-colors hover:text-foam"
+          >
+            Private events
+          </Link>
+          <a href="/#visit" className="transition-colors hover:text-foam">
             Visit
           </a>
-          <a href="#shop" className="transition-colors hover:text-foam">
-            Shop
-          </a>
-          <a href="#contact" className="transition-colors hover:text-foam">
+          <a href="/#contact" className="transition-colors hover:text-foam">
             Contact
           </a>
           <a

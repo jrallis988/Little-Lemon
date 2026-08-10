@@ -1,4 +1,6 @@
+import { Link } from "react-router-dom";
 import { Beer } from "../data/beers";
+import { beerSlugFromName, getBeerBySlug } from "../data/beerDetails";
 import { links } from "../data/links";
 import { useInView } from "../hooks/useInView";
 import { useTapList } from "../hooks/useTapList";
@@ -38,7 +40,16 @@ function BeerRows({
             <div>
               <div className="flex flex-wrap items-center gap-3">
                 <h3 className="font-display text-3xl font-bold uppercase tracking-wide md:text-4xl">
-                  {beer.name}
+                  {getBeerBySlug(beerSlugFromName(beer.name)) ? (
+                    <Link
+                      to={`/beers/${beerSlugFromName(beer.name)}`}
+                      className="transition-colors hover:text-tide"
+                    >
+                      {beer.name}
+                    </Link>
+                  ) : (
+                    beer.name
+                  )}
                 </h3>
                 {showStatus && label ? (
                   <span

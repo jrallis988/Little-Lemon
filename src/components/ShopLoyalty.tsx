@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { links } from "../data/links";
 import { useInView } from "../hooks/useInView";
 
@@ -31,17 +32,15 @@ export function ShopLoyalty() {
               Merch & growlers
             </h3>
             <p className="mt-3 text-steel">
-              Stock up on beer, glassware, and Smuttynose gear from the online
-              shop — or fill a growler on campus.
+              Stock up on beer, glassware, and Smuttynose gear from the campus
+              shop — or fill a growler on site.
             </p>
-            <a
-              href={links.shop}
-              target="_blank"
-              rel="noreferrer"
+            <Link
+              to="/shop"
               className="mt-6 inline-flex bg-ink px-5 py-3 text-sm font-semibold tracking-wide text-foam transition-transform duration-300 hover:-translate-y-0.5"
             >
-              Visit the shop
-            </a>
+              Browse the shop
+            </Link>
           </div>
 
           <div
