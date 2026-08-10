@@ -129,36 +129,18 @@ export default function BookingForm() {
 
   return (
     <section className="section booking" id="booking" aria-labelledby="booking-title">
-      <p className="section__eyebrow">Reservations</p>
+      <p className="section__eyebrow">Contact</p>
       <h2 className="section__title" id="booking-title">
-        Book your room by the water.
+        Got a question?
       </h2>
       <p className="section__copy">
-        Prefer a human reply? Send dates here and the inn will follow up. For
-        instant confirmation, use the live calendar in Rates &amp; availability,
-        then call {SITE.phone} to verify.
+        Need more information about a stay, pets, or dates? Send a quick note and
+        the front desk will follow up. For live pricing, use the Rates calendar above.
       </p>
-
-      <div className="booking__live">
-        <a className="btn btn-primary" href="#rates">
-          See live rates & book
-        </a>
-        <a
-          className="btn btn-ghost"
-          href={SITE.bookingUrl}
-          target="_blank"
-          rel="noreferrer"
-        >
-          Check availability & book
-        </a>
-        <a className="btn btn-ghost" href={SITE.phoneHref}>
-          Call {SITE.phone}
-        </a>
-      </div>
 
       <div className="booking__layout">
         <div className="booking__panel">
-          <h3 className="booking__panel-title">Or send a quick inquiry</h3>
+          <h3 className="booking__panel-title">Send a message</h3>
           <Formik
             enableReinitialize
             initialValues={initialValues}
@@ -314,7 +296,7 @@ export default function BookingForm() {
                   </div>
 
                   <button className="btn btn-ocean" type="submit" disabled={isSubmitting}>
-                    {isSubmitting ? "Sending…" : "Send inquiry"}
+                    {isSubmitting ? "Sending…" : "Send message"}
                   </button>
                 </Form>
               );
@@ -324,22 +306,14 @@ export default function BookingForm() {
 
         <aside className="booking__aside">
           <p className="booking__note">
-            Check-in from {SITE.checkIn} · Check-out by {SITE.checkOut} EST ·
+            Check-in from {SITE.checkIn} · Check-out by {SITE.checkOut} EST.
             Online bookings must be confirmed with the office.
           </p>
           <div className="booking__contact">
-            <strong>Prefer to call?</strong>
+            <strong>Reach the front desk</strong>
             <a href={SITE.phoneHref}>{SITE.phone}</a>
             <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
             <span>{SITE.addressShort}</span>
-            <a
-              className="text-link"
-              href={SITE.bookingUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Open RezStream booking
-            </a>
           </div>
         </aside>
       </div>

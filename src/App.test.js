@@ -8,7 +8,7 @@ beforeEach(() => {
 test("renders motel brand and booking CTA", () => {
   render(<App />);
   expect(screen.getAllByText(/Seascape Inn/i).length).toBeGreaterThan(0);
-  expect(screen.getByRole("heading", { name: /book your room by the water/i })).toBeInTheDocument();
+  expect(screen.getByRole("heading", { name: /got a question/i })).toBeInTheDocument();
   expect(
     screen.getByRole("button", { name: /check availability/i })
   ).toBeInTheDocument();
@@ -55,7 +55,7 @@ test("renders live rates, rooms, seasonal guide, and contact details", () => {
   expect(screen.getByRole("link", { name: /skip to content/i })).toBeInTheDocument();
   expect(screen.getAllByRole("link", { name: /tripadvisor/i }).length).toBeGreaterThan(0);
   expect(
-    screen.getByRole("link", { name: /check availability & book/i })
+    screen.getByRole("link", { name: /open booking in new tab/i })
   ).toHaveAttribute("href", expect.stringContaining("rezstream.com"));
   expect(screen.getAllByText(/seascapeinn@hotmail.com/i).length).toBeGreaterThan(0);
   expect(screen.getByRole("heading", { name: /standard queen/i })).toBeInTheDocument();
@@ -64,7 +64,7 @@ test("renders live rates, rooms, seasonal guide, and contact details", () => {
   ).toBeInTheDocument();
   expect(screen.getByText(/about \$165–\$240 \/ night/i)).toBeInTheDocument();
   expect(
-    screen.getByRole("link", { name: /see live rates & book/i })
+    screen.getByRole("link", { name: /check winter dates/i })
   ).toBeInTheDocument();
   expect(
     screen.getByTitle(/seascape inn live booking calendar/i)

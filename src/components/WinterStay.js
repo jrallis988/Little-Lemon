@@ -6,10 +6,10 @@ export default function WinterStay() {
     <section className="winter section--wide" id="winter" aria-labelledby="winter-title">
       <div className="winter__media" aria-hidden="true">
         <Picture
-          src={asset("/images/seascape-aerial.jpg")}
+          src={asset("/images/winter-beach.jpg")}
           alt=""
-          width="1200"
-          height="675"
+          width="1600"
+          height="1067"
           loading="lazy"
         />
         <div className="winter__shade" />
@@ -22,15 +22,11 @@ export default function WinterStay() {
           </h2>
           <p className="section__copy">
             Seascape Inn stays open year-round. Quieter North Beach weeks and longer
-            winter visits are often available—call the front desk for current weekly
-            and monthly options.
+            winter visits are often available—ask about current weekly and monthly options.
           </p>
         </div>
         <div className="winter__actions">
-          <a className="btn btn-primary" href={SITE.phoneHref}>
-            Call {SITE.phone}
-          </a>
-          <a className="btn btn-ghost winter__ghost" href="#rates">
+          <a className="btn btn-primary" href="#rates">
             Check winter dates
           </a>
         </div>

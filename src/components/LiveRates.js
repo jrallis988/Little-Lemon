@@ -140,13 +140,6 @@ export default function LiveRates() {
               referrerPolicy="no-referrer-when-downgrade"
             />
           </div>
-          <p className="rates__embed-note">
-            If the calendar looks blank,{" "}
-            <a href={bookingHref} target="_blank" rel="noreferrer">
-              open booking in a new tab
-            </a>
-            . Confirm online reservations with the office.
-          </p>
         </div>
       ) : null}
     </section>

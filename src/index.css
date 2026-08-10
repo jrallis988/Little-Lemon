@@ -1291,10 +1291,10 @@ p {
   margin-top: 1.5rem;
 }
 
-/* Crop the redundant property contact footer RezStream appends under the calendar.
-   Scale the embed slightly so the calendar reads less zoomed-in. */
+/* Crop RezStream chrome: policies / accessibility / powered-by / property contact footer.
+   Scale slightly so the calendar reads less zoomed-in. */
 .rates__embed-frame {
-  height: 460px;
+  height: 390px;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: calc(var(--radius) + 2px);
@@ -1303,25 +1303,19 @@ p {
 
 .rates__embed {
   display: block;
-  width: 118%;
-  height: 620px;
-  min-height: 620px;
+  width: 128%;
+  height: 920px;
+  min-height: 920px;
   border: 0;
   background: var(--foam);
-  transform: scale(0.85);
+  transform: scale(0.78);
   transform-origin: top left;
 }
 
-.rates__embed-note {
-  margin: 0.65rem 0 0;
-  color: var(--ink-soft);
-  font-size: 0.85rem;
-  max-width: 62ch;
-}
-
-.rates__embed-note a {
-  color: var(--ocean);
-  font-weight: 600;
+@media (min-width: 900px) {
+  .rates__embed-frame {
+    height: 430px;
+  }
 }
 
 /* About */
@@ -1430,14 +1424,7 @@ p {
   }
 }
 
-/* Booking */
-.booking__live {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin: 1.5rem 0 2rem;
-}
-
+/* Booking / contact */
 .booking__panel-title {
   margin: 0 0 1rem;
   font-family: var(--font-display);
@@ -1860,21 +1847,22 @@ p {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(115deg, rgba(7, 42, 58, 0.88) 0%, rgba(11, 79, 108, 0.72) 48%, rgba(7, 58, 80, 0.55) 100%),
-    linear-gradient(180deg, rgba(7, 42, 58, 0.35), rgba(7, 42, 58, 0.72));
+    linear-gradient(110deg, rgba(18, 22, 28, 0.62) 0%, rgba(18, 22, 28, 0.28) 52%, rgba(18, 22, 28, 0.48) 100%),
+    linear-gradient(180deg, rgba(18, 22, 28, 0.2), rgba(18, 22, 28, 0.55));
 }
 
 .winter .section__eyebrow {
-  color: var(--seafoam-soft);
+  color: rgba(255, 255, 255, 0.78);
 }
 
-.winter .section__title,
-.winter .section__copy {
-  color: rgba(255, 255, 255, 0.94);
+.winter .section__title {
+  color: #fff;
+  text-shadow: 0 1px 18px rgba(0, 0, 0, 0.35);
 }
 
 .winter .section__copy {
-  color: rgba(255, 255, 255, 0.82);
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.28);
 }
 
 .winter__inner {
