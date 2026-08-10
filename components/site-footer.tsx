@@ -3,6 +3,7 @@ import {
   Instagram,
   Youtube,
   ChevronDown,
+  Globe2,
 } from "lucide-react";
 import { PlanetFitnessLogo } from "@/components/brand-logo";
 
@@ -27,7 +28,6 @@ const PARTNERS = [
   },
 ];
 
-/** Matches planetfitness.com mobile Legal list. */
 const LEGAL = [
   {
     label: "Privacy Policy",
@@ -49,7 +49,7 @@ const LEGAL = [
     label: "Accessibility",
     href: "https://www.planetfitness.com/accessibility",
   },
-  { label: "Demo membership agreement", href: "/legal/membership" },
+  { label: "Brand colors & type", href: "/brand" },
 ];
 
 function TikTokIcon({ className }: { className?: string }) {
@@ -62,142 +62,154 @@ function TikTokIcon({ className }: { className?: string }) {
 
 export function SiteFooter() {
   return (
-    <footer className="bg-pf-purple text-white">
-      <div className="mx-auto max-w-5xl px-4 py-10 md:px-6 md:py-12">
-        <div className="flex flex-col gap-5">
-          <a href="#clubs" className="inline-flex w-fit">
-            <PlanetFitnessLogo
-              className="[&_span]:text-white"
-              markClassName="h-9 w-9"
-            />
-          </a>
+    <footer className="bg-white text-pf-ink">
+      <div className="border-t border-pf-line px-4 py-6 md:px-6">
+        <p className="mx-auto max-w-5xl text-xs leading-relaxed text-pf-ink/60">
+          Membership dues, enrollment, and annual fees vary by club and are
+          confirmed before you join. Classic and PF Black Card® starting rates
+          shown on this site are national starting ranges. Check-in, digital
+          keytag, Crowd Meter, and workout guides live in the Planet Fitness
+          app. © 2026 Planet Fitness Franchising, LLC.
+        </p>
+      </div>
 
-          <a
-            href="https://www.planetfitness.com/mobileapp"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex h-12 w-full items-center justify-center rounded-full bg-white px-5 text-sm font-semibold text-pf-purple transition hover:bg-white/90 sm:w-auto sm:self-start"
-          >
-            Download the PF App
-          </a>
-
-          <button
-            type="button"
-            className="inline-flex w-fit items-center gap-2 text-sm text-white/90"
-            aria-label="Region: US (English)"
-          >
-            <span aria-hidden className="text-base leading-none">
-              🇺🇸
-            </span>
-            <span>Region: US (English)</span>
-            <ChevronDown className="h-4 w-4 opacity-80" aria-hidden />
-          </button>
-        </div>
-
-        <div className="mt-8 grid gap-8 border-t border-white/20 pt-8 text-sm sm:grid-cols-3">
-          <div>
-            <p className="mb-3 font-bold text-white">Info</p>
-            <ul className="space-y-2.5 text-white/90">
-              {INFO.map((item) => (
-                <li key={item.label}>
-                  <a
-                    className="hover:underline"
-                    href={item.href}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
+      <div className="rounded-t-[2rem] bg-pf-purple px-4 pb-10 pt-8 text-white md:px-6 md:pb-12 md:pt-10">
+        <div className="mx-auto max-w-5xl">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <a href="#clubs" className="inline-flex w-fit">
+              <PlanetFitnessLogo
+                className="[&_span]:text-white"
+                markClassName="h-9 w-9"
+              />
+            </a>
+            <div className="flex flex-wrap items-center gap-3">
+              <a
+                href="https://www.planetfitness.com/mobileapp"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex h-11 items-center justify-center rounded-full bg-white px-5 text-sm font-semibold text-pf-purple transition hover:bg-white/90"
+              >
+                Download App
+              </a>
+              <button
+                type="button"
+                className="inline-flex items-center gap-2 text-sm text-white/90"
+                aria-label="Region: English (United States)"
+              >
+                <Globe2 className="h-4 w-4" aria-hidden />
+                <span>English (United States)</span>
+                <ChevronDown className="h-4 w-4 opacity-80" aria-hidden />
+              </button>
+            </div>
           </div>
-          <div>
-            <p className="mb-3 font-bold text-white">Partners</p>
-            <ul className="space-y-2.5 text-white/90">
-              {PARTNERS.map((item) => (
-                <li key={item.label}>
-                  <a
-                    className="hover:underline"
-                    href={item.href}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <p className="mb-3 font-bold text-white">Legal</p>
-            <ul className="space-y-2.5 text-white/90">
-              {LEGAL.map((item) => (
-                <li key={item.label}>
-                  <a
-                    className="hover:underline"
-                    href={item.href}
-                    target={item.href.startsWith("http") ? "_blank" : undefined}
-                    rel={item.href.startsWith("http") ? "noreferrer" : undefined}
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
 
-        <div className="mt-8 flex flex-col items-center gap-4 border-t border-white/20 pt-8">
-          <ul className="flex items-center gap-5">
-            <li>
-              <a
-                href="https://www.facebook.com/planetfitness"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Planet Fitness on Facebook"
-                className="inline-flex text-white transition hover:text-pf-yellow"
-              >
-                <Facebook className="h-5 w-5" />
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://www.instagram.com/planetfitness"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Planet Fitness on Instagram"
-                className="inline-flex text-white transition hover:text-pf-yellow"
-              >
-                <Instagram className="h-5 w-5" />
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://www.tiktok.com/@planetfitness"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Planet Fitness on TikTok"
-                className="inline-flex text-white transition hover:text-pf-yellow"
-              >
-                <TikTokIcon className="h-5 w-5" />
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://www.youtube.com/planetfitness"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Planet Fitness on YouTube"
-                className="inline-flex text-white transition hover:text-pf-yellow"
-              >
-                <Youtube className="h-5 w-5" />
-              </a>
-            </li>
-          </ul>
-          <p className="text-center text-xs text-white/70">
-            © 2026 Planet Fitness Franchising, LLC.
-          </p>
+          <div className="mt-8 grid gap-8 border-t border-white/20 pt-8 text-sm sm:grid-cols-3">
+            <div>
+              <p className="mb-3 font-bold text-white">Info</p>
+              <ul className="space-y-2.5 text-white/90">
+                {INFO.map((item) => (
+                  <li key={item.label}>
+                    <a
+                      className="hover:underline"
+                      href={item.href}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <p className="mb-3 font-bold text-white">Partners</p>
+              <ul className="space-y-2.5 text-white/90">
+                {PARTNERS.map((item) => (
+                  <li key={item.label}>
+                    <a
+                      className="hover:underline"
+                      href={item.href}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <p className="mb-3 font-bold text-white">Legal</p>
+              <ul className="space-y-2.5 text-white/90">
+                {LEGAL.map((item) => (
+                  <li key={item.label}>
+                    <a
+                      className="hover:underline"
+                      href={item.href}
+                      target={item.href.startsWith("http") ? "_blank" : undefined}
+                      rel={
+                        item.href.startsWith("http") ? "noreferrer" : undefined
+                      }
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-8 flex flex-col items-center gap-4 border-t border-white/20 pt-8">
+            <ul className="flex items-center gap-5">
+              <li>
+                <a
+                  href="https://www.facebook.com/planetfitness"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Planet Fitness on Facebook"
+                  className="inline-flex text-white transition hover:text-pf-yellow"
+                >
+                  <Facebook className="h-5 w-5" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.instagram.com/planetfitness"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Planet Fitness on Instagram"
+                  className="inline-flex text-white transition hover:text-pf-yellow"
+                >
+                  <Instagram className="h-5 w-5" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.tiktok.com/@planetfitness"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Planet Fitness on TikTok"
+                  className="inline-flex text-white transition hover:text-pf-yellow"
+                >
+                  <TikTokIcon className="h-5 w-5" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.youtube.com/planetfitness"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Planet Fitness on YouTube"
+                  className="inline-flex text-white transition hover:text-pf-yellow"
+                >
+                  <Youtube className="h-5 w-5" />
+                </a>
+              </li>
+            </ul>
+            <p className="text-center text-xs text-white/70">
+              © 2026 Planet Fitness Franchising, LLC.
+            </p>
+          </div>
         </div>
       </div>
     </footer>

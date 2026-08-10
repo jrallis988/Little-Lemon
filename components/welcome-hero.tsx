@@ -14,8 +14,8 @@ const HERO_SLIDES = [
     imageAlt: "Members training together in a Planet Fitness club",
     kicker: null as string | null,
     titleBefore: "A PLACE WHERE ",
-    titleAccent: "EVERYONE FEELS",
-    titleAfter: " WELCOME",
+    titleAccent: "EVERYONE",
+    titleAfter: " FEELS WELCOME",
   },
   {
     id: "equipment",

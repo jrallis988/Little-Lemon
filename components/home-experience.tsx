@@ -14,6 +14,7 @@ import { SpaAmenities } from "@/components/spa-amenities";
 import { SummerPass } from "@/components/summer-pass";
 import { VirtualTour } from "@/components/virtual-tour";
 import { WelcomeHero } from "@/components/welcome-hero";
+import { WorkoutGuidesPromo } from "@/components/workout-guides-promo";
 
 const PricingMatrix = dynamic(
   () =>
@@ -25,9 +26,10 @@ const PricingMatrix = dynamic(
 );
 
 /**
- * Public web acquisition composition aligned to planetfitness.com mobile:
- * welcome hero → clubs → memberships → summer pass → value props →
- * locations → app promo → highlights → spa → gear → tour → get started.
+ * Public web screens from PF mobile + desktop references:
+ * hero → clubs → memberships → summer pass → offer → welcome/perks →
+ * locations → app promo → workout guides → highlights → spa → gear →
+ * tour → get started.
  */
 export function HomeExperience() {
   return (
@@ -40,6 +42,7 @@ export function HomeExperience() {
       <BrandPerks />
       <LocationsSpotlight />
       <AppPromo />
+      <WorkoutGuidesPromo />
       <AppHighlights />
       <SpaAmenities />
       <ClubGear />

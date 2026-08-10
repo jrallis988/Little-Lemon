@@ -10,9 +10,9 @@ const NAV = [
   { href: "/#clubs", label: "Find a Club" },
   { href: "/#pricing", label: "Memberships" },
   { href: "/#summer-pass", label: "Summer Pass" },
-  { href: "/#amenities", label: "Black Card Spa" },
-  { href: "/#gear", label: "Club Gear" },
-  { href: "/#tour", label: "Virtual Tour" },
+  { href: "/#app-promo", label: "PF App" },
+  { href: "/#workout-guides", label: "Workout Guides" },
+  { href: "/brand", label: "Brand" },
   { href: "/join", label: "Join Now" },
 ];
 
