@@ -135,7 +135,7 @@ export default function BookingForm() {
       </h2>
       <p className="section__copy">
         Need more information about a stay, pets, or dates? Send a quick note and
-        the front desk will follow up. For live pricing, use the Rates calendar above.
+        the front desk will follow up.
       </p>
 
       <div className="booking__layout">

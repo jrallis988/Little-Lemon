@@ -54,9 +54,6 @@ test("renders live rates, rooms, seasonal guide, and contact details", () => {
   expect(screen.getAllByRole("button", { name: /view details/i }).length).toBeGreaterThan(0);
   expect(screen.getByRole("link", { name: /skip to content/i })).toBeInTheDocument();
   expect(screen.getAllByRole("link", { name: /tripadvisor/i }).length).toBeGreaterThan(0);
-  expect(
-    screen.getByRole("link", { name: /open booking in new tab/i })
-  ).toHaveAttribute("href", expect.stringContaining("rezstream.com"));
   expect(screen.getAllByText(/seascapeinn@hotmail.com/i).length).toBeGreaterThan(0);
   expect(screen.getByRole("heading", { name: /standard queen/i })).toBeInTheDocument();
   expect(
@@ -69,5 +66,8 @@ test("renders live rates, rooms, seasonal guide, and contact details", () => {
   expect(
     screen.getByTitle(/seascape inn live booking calendar/i)
   ).toBeInTheDocument();
+  expect(screen.getByRole("heading", { name: /send a message/i })).toBeInTheDocument();
+  expect(screen.queryByRole("link", { name: /see live rates & book/i })).not.toBeInTheDocument();
+  expect(screen.queryByRole("button", { name: /update calendar/i })).not.toBeInTheDocument();
   expect(screen.getAllByText(/beach across the street/i).length).toBeGreaterThan(0);
 });

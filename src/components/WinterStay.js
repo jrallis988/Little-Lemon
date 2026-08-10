@@ -1,4 +1,4 @@
-import { SITE, asset } from "../data";
+import { asset } from "../data";
 import Picture from "./Picture";
 
 export default function WinterStay() {

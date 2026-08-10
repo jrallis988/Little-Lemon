@@ -1291,30 +1291,41 @@ p {
   margin-top: 1.5rem;
 }
 
-/* Crop RezStream chrome: policies / accessibility / powered-by / property contact footer.
-   Scale slightly so the calendar reads less zoomed-in. */
+/* Hide RezStream footer chrome (policies, accessibility, powered-by, property contact). */
 .rates__embed-frame {
-  height: 390px;
+  height: 300px;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: calc(var(--radius) + 2px);
   background: var(--foam);
+  position: relative;
+}
+
+.rates__embed-frame::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 28px;
+  background: linear-gradient(180deg, transparent, var(--foam));
+  pointer-events: none;
 }
 
 .rates__embed {
   display: block;
-  width: 128%;
-  height: 920px;
-  min-height: 920px;
+  width: 140%;
+  height: 1200px;
+  min-height: 1200px;
   border: 0;
   background: var(--foam);
-  transform: scale(0.78);
+  transform: scale(0.72);
   transform-origin: top left;
 }
 
 @media (min-width: 900px) {
   .rates__embed-frame {
-    height: 430px;
+    height: 340px;
   }
 }
 
@@ -1847,8 +1858,7 @@ p {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(110deg, rgba(18, 22, 28, 0.62) 0%, rgba(18, 22, 28, 0.28) 52%, rgba(18, 22, 28, 0.48) 100%),
-    linear-gradient(180deg, rgba(18, 22, 28, 0.2), rgba(18, 22, 28, 0.55));
+    linear-gradient(105deg, rgba(12, 14, 18, 0.45) 0%, rgba(12, 14, 18, 0.18) 55%, rgba(12, 14, 18, 0.4) 100%);
 }
 
 .winter .section__eyebrow {

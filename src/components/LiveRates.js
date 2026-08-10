@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   SITE,
   SEASONAL_RATES,
@@ -19,7 +19,6 @@ export default function LiveRates() {
   const [checkIn, setCheckIn] = useState(today());
   const [checkOut, setCheckOut] = useState(addDays(today(), 2));
   const [guests, setGuests] = useState(2);
-  const [showEmbed, setShowEmbed] = useState(true);
 
   const nights = nightsBetween(checkIn, checkOut);
   const sample = estimateTotal("queen", checkIn, checkOut);
@@ -29,6 +28,14 @@ export default function LiveRates() {
   );
   const invalid = !checkIn || !checkOut || checkOut <= checkIn;
 
+  useEffect(() => {
+    if (invalid) return;
+    const frame = document.getElementById("rezstream-embed");
+    if (frame && frame.src !== bookingHref) {
+      frame.src = bookingHref;
+    }
+  }, [bookingHref, invalid]);
+
   return (
     <section className="section rates" id="rates" aria-labelledby="rates-title">
       <p className="section__eyebrow">Live rates</p>
@@ -36,8 +43,8 @@ export default function LiveRates() {
         Check exact prices for your dates.
       </h2>
       <p className="section__copy">
-        Seasonal ranges below are a guide. The embedded RezStream calendar shows
-        live availability and final pricing. {SITE.typicalRateNote}
+        Seasonal ranges below are a guide. The calendar shows live availability and
+        final pricing. {SITE.typicalRateNote}
       </p>
 
       <ul className="season-list">
@@ -51,16 +58,7 @@ export default function LiveRates() {
         ))}
       </ul>
 
-      <form
-        className="rates__form"
-        onSubmit={(event) => {
-          event.preventDefault();
-          if (invalid) return;
-          setShowEmbed(true);
-          const frame = document.getElementById("rezstream-embed");
-          if (frame) frame.src = bookingHref;
-        }}
-      >
+      <div className="rates__form">
         <div className="form-row">
           <div className="field">
             <label htmlFor="rates-checkIn">Check-in</label>
@@ -74,7 +72,6 @@ export default function LiveRates() {
                 setCheckIn(next);
                 if (checkOut <= next) setCheckOut(addDays(next, 1));
               }}
-              required
             />
           </div>
           <div className="field">
@@ -85,7 +82,6 @@ export default function LiveRates() {
               min={addDays(checkIn || today(), 1)}
               value={checkOut}
               onChange={(event) => setCheckOut(event.target.value)}
-              required
             />
           </div>
           <div className="field">
@@ -97,7 +93,6 @@ export default function LiveRates() {
               max="6"
               value={guests}
               onChange={(event) => setGuests(Number(event.target.value) || 1)}
-              required
             />
           </div>
         </div>
@@ -106,29 +101,12 @@ export default function LiveRates() {
           {invalid
             ? "Choose a check-out date after check-in."
             : sample
-              ? `${nights} night${nights === 1 ? "" : "s"} · rough estimate from ~$${sample.rate}/night ≈ $${sample.total} before taxes. Confirm exact rates in the calendar.`
-              : "Load the calendar to see live rates for these dates."}
+              ? `${nights} night${nights === 1 ? "" : "s"} · rough estimate from ~$${sample.rate}/night ≈ $${sample.total} before taxes.`
+              : "Pick dates to see live rates in the calendar."}
         </p>
+      </div>
 
-        <div className="rates__actions">
-          <button className="btn btn-primary" type="submit" disabled={invalid}>
-            Update calendar
-          </button>
-          <a
-            className="btn btn-ghost"
-            href={bookingHref}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Open booking in new tab
-          </a>
-          <a className="btn btn-ghost" href={SITE.phoneHref}>
-            Call {SITE.phone}
-          </a>
-        </div>
-      </form>
-
-      {showEmbed ? (
+      {!invalid ? (
         <div className="rates__embed-wrap">
           <div className="rates__embed-frame">
             <iframe
