@@ -301,10 +301,10 @@ export function ProductDiscoveryGrid() {
           id="shop-heading"
           className="font-display text-3xl font-semibold tracking-tight sm:text-4xl"
         >
-          Health & beauty
+          Shop the drugstore
         </h1>
         <p className="mt-2 max-w-xl text-muted-foreground">
-          Clean filters, clear rewards, and pickup-ready essentials.
+          Beauty, OTC, household, baby, snacks — plus pickup-ready essentials.
           {query ? (
             <>
               {" "}

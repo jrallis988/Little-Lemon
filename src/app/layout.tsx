@@ -22,13 +22,13 @@ const sourceSans = Source_Sans_3({
 
 export const metadata: Metadata = {
   title: {
-    default: `${SITE_NAME} | Pharmacy, Health & Beauty`,
+    default: `${SITE_NAME} | Drugstore, Pharmacy & Everyday Essentials`,
     template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
   metadataBase: new URL("https://walgreensrx.demo"),
   openGraph: {
-    title: `${SITE_NAME} | Pharmacy, Health & Beauty`,
+    title: `${SITE_NAME} | Drugstore, Pharmacy & Everyday Essentials`,
     description: SITE_DESCRIPTION,
     siteName: SITE_NAME,
     type: "website",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} | Pharmacy, Health & Beauty`,
+    title: `${SITE_NAME} | Drugstore, Pharmacy & Everyday Essentials`,
     description: SITE_DESCRIPTION,
   },
   icons: {

@@ -19,7 +19,8 @@ export function SiteFooter() {
         <div className="lg:col-span-2">
           <p className="font-display text-2xl font-bold text-brand">{SITE_NAME}</p>
           <p className="mt-2 max-w-md text-sm text-muted-foreground">
-            {SITE_TAGLINE} — redesigned for clarity, speed, and accessibility.
+            {SITE_TAGLINE} — shop the aisles, clip deals, pick up photo, and use
+            a pharmacy that actually works.
           </p>
           <div className="mt-6">
             <p className="text-sm font-semibold text-foreground">Follow us</p>

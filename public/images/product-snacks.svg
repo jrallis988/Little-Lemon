@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400" role="img">
+  <rect width="400" height="400" fill="#FFF4E0"/>
+  <rect x="120" y="110" width="160" height="160" rx="20" fill="#E4572E"/>
+  <circle cx="170" cy="170" r="18" fill="#FFD166"/>
+  <circle cx="230" cy="200" r="14" fill="#06D6A0"/>
+  <circle cx="190" cy="230" r="16" fill="#118AB2"/>
+  <text x="200" y="320" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" fill="#5C3A1A">Snacks</text>
+</svg>

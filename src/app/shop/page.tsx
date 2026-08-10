@@ -4,9 +4,9 @@ import type { Metadata } from "next";
 import { ProductDiscoveryGrid } from "@/components/shop/product-discovery";
 
 export const metadata: Metadata = {
-  title: "Shop Health & Beauty",
+  title: "Shop the drugstore",
   description:
-    "Browse health and beauty with clear filters and myWalgreens rewards.",
+    "Browse beauty, OTC, household, baby, snacks, and more — with pickup and myWalgreens rewards.",
 };
 
 function ShopFallback() {

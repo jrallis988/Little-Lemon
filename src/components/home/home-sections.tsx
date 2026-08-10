@@ -2,10 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
+  Camera,
   MapPin,
   Pill,
-  Smartphone,
-  Syringe,
+  ShoppingBag,
+  Tag,
   Truck,
 } from "lucide-react";
 
@@ -28,15 +29,15 @@ export function HomeHero() {
     <section className="relative isolate min-h-[min(78vh,640px)] overflow-hidden">
       <div className="absolute inset-0 -z-10">
         <Image
-          src="/images/hero-pharmacist.jpg"
-          alt="Pharmacist helping a customer at the prescription counter"
+          src="/images/beauty-shop.jpg"
+          alt="Shopper browsing everyday essentials in a drugstore aisle"
           fill
           priority
           className="object-cover object-center"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/50 to-black/25" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/25" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/20" />
       </div>
 
       <div className="mx-auto flex min-h-[min(78vh,640px)] max-w-6xl items-center px-4 py-16 sm:px-6 sm:py-20">
@@ -45,20 +46,20 @@ export function HomeHero() {
             Walgreens RX
           </p>
           <h1 className="animate-rise-delay mt-4 font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-            Pharmacy, health & everyday essentials
+            The drugstore for everyday life — pharmacy included
           </h1>
           <p className="animate-rise-delay-2 mt-4 max-w-md text-base text-white/85 sm:text-lg">
-            Refill at your store, schedule vaccines, and shop beauty & wellness
-            with myWalgreens rewards built in.
+            Beauty, snacks, household, photo, and weekly deals up front. Refills,
+            vaccines, and caregiver tools when you need the pharmacy bay.
           </p>
           <div className="animate-rise-delay-2 mt-8 flex flex-wrap gap-3">
             <Button
               size="lg"
               className="bg-brand text-brand-foreground hover:bg-brand/90"
               nativeButton={false}
-              render={<Link href="/pharmacy" />}
+              render={<Link href="/shop" />}
             >
-              Refill prescriptions
+              Shop the store
               <ArrowRight className="size-4" aria-hidden />
             </Button>
             <Button
@@ -66,9 +67,9 @@ export function HomeHero() {
               variant="outline"
               className="border-white/50 bg-white/10 text-white hover:bg-white/20 hover:text-white"
               nativeButton={false}
-              render={<Link href="/shop" />}
+              render={<Link href="/pharmacy" />}
             >
-              Shop now
+              Pharmacy & refills
             </Button>
           </div>
         </div>
@@ -80,28 +81,28 @@ export function HomeHero() {
 export function HomeQuickPaths() {
   const paths = [
     {
+      href: "/shop",
+      label: "Shop aisles",
+      detail: "Beauty to household",
+      icon: ShoppingBag,
+    },
+    {
+      href: "/deals",
+      label: "Weekly deals",
+      detail: "Save in store",
+      icon: Tag,
+    },
+    {
       href: "/pharmacy",
-      label: "Refill Rx",
-      detail: "Track & refill",
+      label: "Pharmacy",
+      detail: "Refill & track",
       icon: Pill,
     },
     {
-      href: "/pharmacy#services",
-      label: "Flu shots",
-      detail: "Book today",
-      icon: Syringe,
-    },
-    {
-            href: "/deals",
-      label: "Weekly deals",
-      detail: "Save in store",
-      icon: Smartphone,
-    },
-    {
-      href: "/stores",
-      label: "Find a store",
-      detail: "Hours & pickup",
-      icon: MapPin,
+      href: "/photo",
+      label: "Photo",
+      detail: "Same-day prints",
+      icon: Camera,
     },
   ] as const;
 
@@ -227,8 +228,8 @@ export function HomeHealthMatters() {
             Because your health matters
           </h2>
           <p className="mt-3 max-w-md text-muted-foreground">
-            Same neighborhood care you know from Walgreens RX — vaccines, Rx
-            tracking, and clinical services in one place.
+            Pharmacy stays the heart of Walgreens RX — vaccines, Rx tracking, and
+            clinical services right beside the aisles you already shop.
           </p>
           <ul className="mt-8 space-y-6">
             {LANDING_HEALTH.map((story) => (
@@ -267,10 +268,10 @@ export function HomeCategories() {
             id="categories-heading"
             className="font-display text-3xl font-semibold tracking-tight"
           >
-            Featured categories
+            Featured aisles
           </h2>
           <p className="mt-2 text-muted-foreground">
-            Jump into the aisles people visit most.
+            Same stop for what you came to buy — and the pharmacy when you need it.
           </p>
         </div>
         <Button variant="outline" nativeButton={false} render={<Link href="/shop" />}>
@@ -278,7 +279,7 @@ export function HomeCategories() {
         </Button>
       </div>
 
-      <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {LANDING_CATEGORIES.map((category) => (
           <li key={category.id}>
             <Link
@@ -492,7 +493,7 @@ export function HomeShopPreview() {
             Popular right now
           </h3>
           <p className="mt-1 text-muted-foreground">
-            Health & beauty picks with points on every eligible item.
+            Drugstore staples with points on every eligible item.
           </p>
         </div>
         <Button variant="outline" nativeButton={false} render={<Link href="/shop" />}>

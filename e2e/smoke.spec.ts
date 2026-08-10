@@ -5,7 +5,7 @@ test.describe("Walgreens RX smoke flows", () => {
     await page.goto("/");
     await expect(page.getByRole("link", { name: "Walgreens RX home" })).toBeVisible();
     await expect(page.getByRole("heading", { level: 1 })).toContainText(
-      "Pharmacy, health",
+      "drugstore",
     );
   });
 

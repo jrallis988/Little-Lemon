@@ -36,16 +36,22 @@ export const LANDING_DEALS: LandingDeal[] = [
     href: "/shop?category=skincare",
   },
   {
+    id: "household",
+    title: "BOGO household favorites",
+    detail: "Paper, laundry, and cleaning essentials for the week.",
+    href: "/shop?category=household",
+  },
+  {
     id: "vitamins",
     title: "Buy 1, get 1 free vitamins",
     detail: "Select same-brand vitamins & supplements.",
     href: "/shop?category=vitamins",
   },
   {
-    id: "wellness",
-    title: "BOGO 50% off Walgreens health",
-    detail: "Select Walgreens branded health & wellness items.",
-    href: "/shop",
+    id: "snacks",
+    title: "2 for $5 candy & snacks",
+    detail: "Checkout-aisle picks for the ride home.",
+    href: "/shop?category=snacks",
   },
 ];
 
@@ -54,7 +60,7 @@ export const LANDING_HEALTH: LandingHealthStory[] = [
     id: "flu",
     title: "Plan ahead for flu season",
     description: "Flu shot appointments are available at your neighborhood pharmacy.",
-    href: "/pharmacy#services",
+    href: "/pharmacy/schedule?service=svc-flu",
     cta: "Schedule a flu shot",
   },
   {
@@ -68,7 +74,7 @@ export const LANDING_HEALTH: LandingHealthStory[] = [
     id: "testing",
     title: "Testing & clinical care",
     description: "Strep, flu testing, and pharmacist-led care when you need answers fast.",
-    href: "/pharmacy#services",
+    href: "/pharmacy/schedule?service=svc-test",
     cta: "Explore services",
   },
 ];
@@ -76,17 +82,24 @@ export const LANDING_HEALTH: LandingHealthStory[] = [
 export const LANDING_CATEGORIES: LandingCategory[] = [
   {
     id: "skincare",
-    name: "Skincare",
+    name: "Beauty & skincare",
     href: "/shop?category=skincare",
     imageUrl: "/images/beauty-shop.jpg",
     imageAlt: "Shopper browsing skincare bottles in a drugstore aisle",
   },
   {
     id: "vitamins",
-    name: "Vitamins",
+    name: "Vitamins & OTC",
     href: "/shop?category=vitamins",
     imageUrl: "/images/vitamins-aisle.jpg",
     imageAlt: "Hand selecting vitamins from a drugstore shelf",
+  },
+  {
+    id: "household",
+    name: "Household",
+    href: "/shop?category=household",
+    imageUrl: "/images/pickup-order.jpg",
+    imageAlt: "Customer picking up everyday drugstore essentials",
   },
   {
     id: "pharmacy",
@@ -96,10 +109,17 @@ export const LANDING_CATEGORIES: LandingCategory[] = [
     imageAlt: "Pharmacist helping a customer at the prescription counter",
   },
   {
-    id: "care",
-    name: "Family care",
-    href: "/pharmacy",
+    id: "baby",
+    name: "Baby & family",
+    href: "/shop?category=baby",
     imageUrl: "/images/family-care.jpg",
     imageAlt: "Family walking together outdoors",
+  },
+  {
+    id: "photo",
+    name: "Photo",
+    href: "/photo",
+    imageUrl: "/images/health-flu.jpg",
+    imageAlt: "Neighborhood drugstore services including photo and care",
   },
 ];
