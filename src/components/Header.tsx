@@ -248,12 +248,20 @@ export function Header({ solid = false, defaultMenuOpen = false }: HeaderProps) 
                 Facebook
               </a>
               <a
-                href={links.home}
+                href={links.instagram}
                 target="_blank"
                 rel="noreferrer"
                 className="underline-offset-2 hover:text-foam hover:underline"
               >
-                smuttynose.com
+                Instagram
+              </a>
+              <a
+                href={links.untappd}
+                target="_blank"
+                rel="noreferrer"
+                className="underline-offset-2 hover:text-foam hover:underline"
+              >
+                Untappd
               </a>
               <a
                 href={links.phone}
@@ -263,6 +271,7 @@ export function Header({ solid = false, defaultMenuOpen = false }: HeaderProps) 
               </a>
             </div>
             <p className="text-xs text-foam/45">{links.address}</p>
+            <p className="text-xs text-foam/45">{links.hours}</p>
           </div>
         </div>
       </div>

@@ -57,9 +57,20 @@ export function Taproom() {
               </div>
               <div>
                 <dt className="font-semibold uppercase tracking-[0.16em] text-salt">
-                  Backyard hours
+                  Backyard Club hours
                 </dt>
-                <dd className="mt-1 text-base text-foam/90">{links.hours}</dd>
+                <dd className="mt-2 space-y-1 text-base text-foam/90">
+                  {links.hoursRows.map((row) => (
+                    <div
+                      key={row.days}
+                      className="flex justify-between gap-6 border-b border-foam/10 py-1.5 last:border-0"
+                    >
+                      <span>{row.days}</span>
+                      <span className="text-foam/75">{row.time}</span>
+                    </div>
+                  ))}
+                  <p className="pt-2 text-sm text-foam/65">{links.hoursKitchen}</p>
+                </dd>
               </div>
               <div>
                 <dt className="font-semibold uppercase tracking-[0.16em] text-salt">
@@ -71,10 +82,25 @@ export function Taproom() {
                 <dt className="font-semibold uppercase tracking-[0.16em] text-salt">
                   Call
                 </dt>
-                <dd className="mt-1 text-base text-foam/90">
-                  <a href={links.phone} className="underline-offset-2 hover:underline">
-                    {links.phoneDisplay}
-                  </a>
+                <dd className="mt-1 space-y-1 text-base text-foam/90">
+                  <p>
+                    Backyard Club ·{" "}
+                    <a
+                      href={links.phone}
+                      className="underline-offset-2 hover:underline"
+                    >
+                      {links.phoneDisplay}
+                    </a>
+                  </p>
+                  <p>
+                    Brewery ·{" "}
+                    <a
+                      href={links.phoneBrewery}
+                      className="underline-offset-2 hover:underline"
+                    >
+                      {links.phoneBreweryDisplay}
+                    </a>
+                  </p>
                 </dd>
               </div>
             </dl>

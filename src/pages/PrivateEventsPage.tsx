@@ -4,6 +4,7 @@ import { CampusImage } from "../components/CampusImage";
 import { CartDrawer } from "../components/CartDrawer";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
+import { links } from "../data/links";
 import { venues } from "../data/venues";
 import { mailtoContact, submitContact } from "../lib/forms";
 
@@ -55,9 +56,22 @@ export function PrivateEventsPage() {
               Book a space on Towle Farm
             </h1>
             <p className="mt-4 max-w-2xl text-foam/75">
-              From intimate dinners in the Heritage Room to tented celebrations
-              on the Field — host your next gathering where the beer is brewed.
+              Heritage Room for up to 30 guests indoors, or the two-acre Field
+              for up to 200 under tent — host your next gathering where the beer
+              is brewed. Call{" "}
+              <a href={links.phone} className="underline underline-offset-2">
+                {links.phoneDisplay}
+              </a>{" "}
+              or use the official Tripleseat form on smuttynose.com.
             </p>
+            <a
+              href={links.privateEvent}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-6 inline-flex bg-buoy px-5 py-3 text-sm font-semibold tracking-wide text-foam"
+            >
+              Official private event form
+            </a>
           </div>
         </section>
 
@@ -115,14 +129,33 @@ export function PrivateEventsPage() {
               </h2>
               <p className="mt-4 text-foam/75">
                 Share a few details and we’ll follow up with availability,
-                catering options, and next steps.
+                catering options, and next steps — or book through the official{" "}
+                <a
+                  href={links.privateEvent}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="underline underline-offset-2"
+                >
+                  Tripleseat private event form
+                </a>
+                .
               </p>
-              <Link
-                to="/#contact"
-                className="mt-6 inline-flex border border-foam/40 px-5 py-3 text-sm font-semibold"
-              >
-                General contact
-              </Link>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <a
+                  href={links.privateEvent}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex bg-foam px-5 py-3 text-sm font-semibold text-ink"
+                >
+                  Tripleseat form
+                </a>
+                <Link
+                  to="/#contact"
+                  className="inline-flex border border-foam/40 px-5 py-3 text-sm font-semibold"
+                >
+                  General contact
+                </Link>
+              </div>
             </div>
 
             <form onSubmit={onSubmit} className="space-y-4">

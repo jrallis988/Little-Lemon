@@ -127,13 +127,19 @@ export function BeerDetailPage() {
 
             <div className="mt-10 flex flex-wrap gap-3">
               <a
-                href={links.restaurant}
+                href={links.beers}
                 target="_blank"
                 rel="noreferrer"
                 className="bg-buoy px-5 py-3 text-sm font-semibold tracking-wide text-foam"
               >
-                See if it’s pouring
+                Full official lineup
               </a>
+              <Link
+                to="/finder"
+                className="border border-ink/25 px-5 py-3 text-sm font-semibold tracking-wide"
+              >
+                Find near you
+              </Link>
               <Link
                 to="/#beers"
                 className="border border-ink/25 px-5 py-3 text-sm font-semibold tracking-wide"

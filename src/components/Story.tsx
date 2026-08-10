@@ -1,3 +1,4 @@
+import { links } from "../data/links";
 import { useInView } from "../hooks/useInView";
 import { CampusImage } from "./CampusImage";
 
@@ -17,23 +18,31 @@ export function Story() {
               Our story
             </p>
             <h2 className="mt-3 font-display text-4xl font-bold uppercase tracking-wide md:text-5xl">
-              Named for an island.
-              <br />
-              Brewed for New Hampshire.
+              New Hampshire’s original brewery since ’94
             </h2>
             <div className="mt-6 space-y-5 text-lg leading-relaxed text-steel">
               <p>
-                Smuttynose takes its name from Smuttynose Island in the Isles of
-                Shoals — a rocky outpost off the New Hampshire coast. Founded in
-                1994, the brewery grew from Portsmouth roots to a LEED Gold campus
-                on historic Towle Farm in Hampton.
+                Smuttynose Brewing Co. is New Hampshire’s original craft brewery.
+                From the iconic Finestkind IPA and Old Brown Dog Ale to newer
+                classics like Whole Lotta Haze NEIPA, we’ve been brewing
+                high-quality, high-flavor beer since 1994 — the only way we know
+                how.
               </p>
               <p>
-                Today the farm hosts production, pours, food, and events — still
-                shipping unfiltered New England beer with the same irreverent
-                spirit that started it all.
+                Named for Smuttynose Island in the Isles of Shoals, the brewery
+                grew from Portsmouth roots to a LEED Gold campus on historic
+                Towle Farm in Hampton — still shipping unfiltered New England
+                beer with dirt under its fingernails.
               </p>
             </div>
+            <a
+              href={links.ourStory}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-8 inline-flex border border-ink/25 px-5 py-3 text-sm font-semibold tracking-wide text-ink transition-colors hover:border-ink hover:bg-ink hover:text-foam"
+            >
+              Read our story
+            </a>
           </div>
         </div>
 

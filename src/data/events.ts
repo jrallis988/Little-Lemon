@@ -16,6 +16,14 @@ export const weeklyEvents: EventItem[] = [
     detail: "Trivia with DJ Koko. First come, first serve seating.",
   },
   {
+    title: "Live Music on the Patio",
+    dayOffset: 4, // Thursday
+    time: "Afternoon–evening",
+    where: "Patio / Backyard",
+    detail:
+      "Live sets when scheduled — check Campus Events or Facebook for this week’s lineup.",
+  },
+  {
     title: "Backyard Club",
     dayOffset: 5, // Friday
     time: "Noon–8 PM",
@@ -39,9 +47,9 @@ export const weeklyEvents: EventItem[] = [
   {
     title: "Sunday Sessions",
     dayOffset: 0, // Sunday
-    time: "Noon–8 PM",
+    time: "11 AM–7 PM",
     where: "The Backyard",
-    detail: "Easy pours, family-friendly hangs, and golden-hour patio seats.",
+    detail: "Sunday hours open at 11 AM. Easy pours and family-friendly hangs.",
   },
 ];
 

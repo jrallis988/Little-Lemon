@@ -46,7 +46,7 @@ export function CartDrawer() {
         <div className="flex-1 overflow-y-auto px-5 py-4">
           {lines.length === 0 ? (
             <p className="text-steel">
-              Ohh no — your crate is empty. Why overthink when you can over drink.
+              Ohh no! Your crate is empty! Why overthink when you can over drink.
             </p>
           ) : (
             <ul className="divide-y divide-ink/10">

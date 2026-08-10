@@ -24,7 +24,7 @@ export const venues: Venue[] = [
     capacity: "Up to 200 guests",
     setting: "Outdoor · tented",
     bestFor: ["Weddings", "Corporate outings", "Large celebrations"],
-    note: "Open lawn energy with tented coverage options — string lights, trucks, and room to roam.",
+    note: "Two-acre outdoor tented Field on Towle Farm — string lights, trucks, and room to roam.",
     image: "campus-day",
   },
   {

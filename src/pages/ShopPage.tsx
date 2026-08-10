@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { CartDrawer } from "../components/CartDrawer";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { useCart } from "../context/CartContext";
+import { links } from "../data/links";
 import { merch, MerchItem } from "../data/merch";
 
 const filters = ["All", "Apparel", "Glassware", "Accessories"] as const;
@@ -31,17 +31,27 @@ export function ShopPage() {
                 Apparel, glassware & gear
               </h1>
               <p className="mt-3 max-w-xl text-steel">
-                Take Towle Farm home. Add to your crate — demo cart, ready for a
-                live checkout hookup.
+                Take Towle Farm home. Demo crate here — or shop the official
+                merch storefront on smuttynose.com.
               </p>
             </div>
-            <button
-              type="button"
-              onClick={() => setOpen(true)}
-              className="inline-flex self-start bg-ink px-5 py-3 text-sm font-semibold tracking-wide text-foam"
-            >
-              Open cart{count > 0 ? ` (${count})` : ""}
-            </button>
+            <div className="flex flex-wrap gap-3 self-start">
+              <a
+                href={links.shopOfficial}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex bg-buoy px-5 py-3 text-sm font-semibold tracking-wide text-foam"
+              >
+                Official shop
+              </a>
+              <button
+                type="button"
+                onClick={() => setOpen(true)}
+                className="inline-flex bg-ink px-5 py-3 text-sm font-semibold tracking-wide text-foam"
+              >
+                Open cart{count > 0 ? ` (${count})` : ""}
+              </button>
+            </div>
           </div>
 
           <div className="mt-8 flex flex-wrap gap-2">
@@ -68,14 +78,25 @@ export function ShopPage() {
           </div>
 
           <p className="mt-12 text-sm text-steel">
-            Prefer the official storefront?{" "}
-            <Link
-              to="/"
+            Also available:{" "}
+            <a
+              href={links.giftCards}
+              target="_blank"
+              rel="noreferrer"
               className="font-semibold text-tide underline-offset-2 hover:underline"
             >
-              Back home
-            </Link>{" "}
-            or shop on smuttynose.com.
+              e-gift cards
+            </a>{" "}
+            and{" "}
+            <a
+              href={links.giftCardBalance}
+              target="_blank"
+              rel="noreferrer"
+              className="font-semibold text-tide underline-offset-2 hover:underline"
+            >
+              balance check
+            </a>
+            .
           </p>
         </div>
       </main>

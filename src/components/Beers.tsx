@@ -109,14 +109,24 @@ export function Beers() {
               live board before you head over.
             </p>
           </div>
-          <a
-            href={links.restaurant}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex self-start bg-buoy px-5 py-3 text-sm font-semibold tracking-wide text-foam transition-transform duration-300 hover:-translate-y-0.5"
-          >
-            See live tap list
-          </a>
+          <div className="flex flex-wrap gap-3 self-start">
+            <a
+              href={links.beers}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex bg-buoy px-5 py-3 text-sm font-semibold tracking-wide text-foam transition-transform duration-300 hover:-translate-y-0.5"
+            >
+              Full beer lineup
+            </a>
+            <a
+              href={links.releaseCalendar}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex border border-ink/20 px-5 py-3 text-sm font-semibold tracking-wide text-ink transition-colors hover:border-ink hover:bg-ink hover:text-foam"
+            >
+              Release calendar
+            </a>
+          </div>
         </div>
 
         <div className="mt-12">

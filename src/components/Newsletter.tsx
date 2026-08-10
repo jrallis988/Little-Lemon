@@ -35,13 +35,14 @@ export function Newsletter() {
       >
         <div className="max-w-xl">
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-tide">
-            Stay in the know
+            Be the first to know
           </p>
           <h2 className="mt-3 font-display text-3xl font-bold uppercase tracking-wide md:text-4xl">
-            Events, releases & merch drops
+            Events, new releases & merch drops
           </h2>
           <p className="mt-3 text-steel">
-            No spam. Just the good stuff from Towle Farm.
+            No spam. Just the good stuff — brewery updates from Towle Farm.
+            Unsubscribe anytime.
           </p>
         </div>
 

@@ -34,6 +34,7 @@ export function Food() {
             <p className="mt-4 leading-relaxed text-foam/80">
               Grab a bite at the Smuttynose Restaurant, or catch the rotating
               local food-truck lineup that keeps campus menus fresh week to week.
+              Kitchen closes 30 minutes before closing every night.
             </p>
 
             <div className="mt-10 flex flex-wrap gap-3">
@@ -46,12 +47,12 @@ export function Food() {
                 View restaurant menu
               </a>
               <a
-                href={links.facebook}
+                href={links.facebookRestaurant}
                 target="_blank"
                 rel="noreferrer"
                 className="border border-foam/50 px-5 py-3 text-sm font-semibold tracking-wide text-foam transition-colors hover:bg-foam/10"
               >
-                Truck schedule
+                Truck & music updates
               </a>
             </div>
           </div>

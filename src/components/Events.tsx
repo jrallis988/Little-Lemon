@@ -42,18 +42,29 @@ export function Events() {
               What’s on at Towle Farm
             </h2>
             <p className="mt-4 max-w-lg text-steel">
-              This week’s campus calendar — trivia, trucks, and Backyard hangs.
-              Schedules can shift; Facebook has the latest.
+              This week’s campus calendar — trivia, patio music, trucks, and
+              Backyard hangs. Schedules can shift; Campus Events and Facebook
+              have the latest.
             </p>
           </div>
-          <a
-            href={links.facebook}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex self-start border border-ink/20 px-5 py-3 text-sm font-semibold tracking-wide text-ink transition-colors hover:border-ink hover:bg-ink hover:text-foam"
-          >
-            See live lineup
-          </a>
+          <div className="flex flex-wrap gap-3 self-start">
+            <a
+              href={links.campusEvents}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex bg-ink px-5 py-3 text-sm font-semibold tracking-wide text-foam transition-colors hover:bg-tide-deep"
+            >
+              Campus events
+            </a>
+            <a
+              href={links.facebook}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex border border-ink/20 px-5 py-3 text-sm font-semibold tracking-wide text-ink transition-colors hover:border-ink hover:bg-ink hover:text-foam"
+            >
+              Facebook lineup
+            </a>
+          </div>
         </div>
 
         <ul className="mt-12 divide-y divide-ink/10 border-y border-ink/10">

@@ -69,12 +69,21 @@ export function Contact() {
             >
               Heritage Room & Field bookings
             </Link>
+            . Official Tripleseat intake also lives on{" "}
+            <a
+              href={links.privateEvent}
+              target="_blank"
+              rel="noreferrer"
+              className="underline underline-offset-2"
+            >
+              smuttynose.com
+            </a>
             .
           </p>
           <dl className="mt-10 space-y-4 text-sm">
             <div>
               <dt className="font-semibold uppercase tracking-[0.16em] text-salt">
-                Call
+                Backyard Club
               </dt>
               <dd className="mt-1 text-base">
                 <a
@@ -87,9 +96,37 @@ export function Contact() {
             </div>
             <div>
               <dt className="font-semibold uppercase tracking-[0.16em] text-salt">
+                Brewery
+              </dt>
+              <dd className="mt-1 text-base">
+                <a
+                  href={links.phoneBrewery}
+                  className="underline-offset-2 hover:underline"
+                >
+                  {links.phoneBreweryDisplay}
+                </a>
+              </dd>
+            </div>
+            <div>
+              <dt className="font-semibold uppercase tracking-[0.16em] text-salt">
                 Visit
               </dt>
               <dd className="mt-1 text-base text-foam/85">{links.address}</dd>
+            </div>
+            <div>
+              <dt className="font-semibold uppercase tracking-[0.16em] text-salt">
+                Careers
+              </dt>
+              <dd className="mt-1 text-base text-foam/85">
+                <a
+                  href={links.careers}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="underline-offset-2 hover:underline"
+                >
+                  Join Team Smutty
+                </a>
+              </dd>
             </div>
           </dl>
         </div>
@@ -136,6 +173,8 @@ export function Contact() {
               <option>Private event</option>
               <option>Catering</option>
               <option>Suds Club</option>
+              <option>Be KIND donation</option>
+              <option>Live music booking</option>
               <option>General</option>
             </select>
           </label>
