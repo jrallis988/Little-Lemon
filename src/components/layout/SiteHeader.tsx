@@ -117,6 +117,12 @@ export function SiteHeader() {
               Gift cards
             </Link>
             <Link
+              to="/design-system"
+              className="hidden text-muted-foreground no-underline hover:text-foreground md:inline"
+            >
+              Design system
+            </Link>
+            <Link
               to="/account"
               className="text-muted-foreground no-underline hover:text-foreground"
             >

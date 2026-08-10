@@ -126,6 +126,8 @@ const FOOTER_ACCORDIONS: {
       { label: "Shipping & returns", to: "/shipping-returns" },
       { label: "Gift cards", to: "/gift-cards" },
       { label: "Find a store", to: "/stores" },
+      { label: "Fit quiz", to: "/fit-quiz" },
+      { label: "Design system", to: "/design-system" },
     ],
   },
   {

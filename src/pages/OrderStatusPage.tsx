@@ -18,9 +18,12 @@ export function OrderStatusPage() {
   const orders = useAccountStore((s) => s.orders)
   const completedOrder = useCheckoutStore((s) => s.completedOrder)
   const [lookup, setLookup] = useState(params.get("id") ?? "")
+  const [emailOrZip, setEmailOrZip] = useState(params.get("email") ?? "")
   const [query, setQuery] = useState(params.get("id") ?? "")
+  const [verify, setVerify] = useState(params.get("email") ?? "")
   const [tracking, setTracking] = useState<OrderTracking | null>(null)
   const [loading, setLoading] = useState(false)
+  const [verifyError, setVerifyError] = useState<string | null>(null)
 
   const allOrders = useMemo(() => {
     const map = new Map(orders.map((o) => [o.id, o]))
@@ -50,28 +53,72 @@ export function OrderStatusPage() {
 
   function onSubmit(e: FormEvent) {
     e.preventDefault()
-    setQuery(lookup.trim())
+    const id = lookup.trim()
+    const proof = emailOrZip.trim()
+    if (!id || !proof) {
+      setVerifyError("Enter both your order number and the email or ZIP on the order.")
+      return
+    }
+    if (proof.length < 3) {
+      setVerifyError("Email or ZIP looks incomplete.")
+      return
+    }
+    // Soft verify: if we have a local order, match email or shipping ZIP
+    const local = allOrders.get(id)
+    if (local) {
+      const emailOk = local.shipping.email.toLowerCase() === proof.toLowerCase()
+      const zipOk = local.shipping.zip.replace(/\s/g, "") === proof.replace(/\s/g, "")
+      if (!emailOk && !zipOk) {
+        setVerifyError("That email or ZIP doesn’t match this order on this device.")
+        setQuery("")
+        setVerify("")
+        return
+      }
+    }
+    setVerifyError(null)
+    setVerify(proof)
+    setQuery(id)
   }
 
   return (
     <div className="shelf-container py-8 md:py-12">
       <h1 className="font-display text-3xl font-bold text-navy">Order status</h1>
       <p className="mt-2 max-w-xl text-muted-foreground">
-        Enter your confirmation number (example: MSH-12345678) to see live shipping progress.
+        Enter your confirmation number and the email or ZIP from checkout to see live shipping
+        progress.
       </p>
 
-      <form className="mt-6 flex max-w-lg gap-2" onSubmit={onSubmit}>
+      <form className="mt-6 grid max-w-lg gap-3" onSubmit={onSubmit}>
         <Input
           value={lookup}
           onChange={(e) => setLookup(e.target.value)}
-          placeholder="Order number"
+          placeholder="Order number (MSH-12345678)"
           className="h-11"
           aria-label="Order number"
+          required
         />
-        <Button type="submit" className="bg-navy hover:bg-navy/90">
+        <Input
+          value={emailOrZip}
+          onChange={(e) => setEmailOrZip(e.target.value)}
+          placeholder="Email or ZIP on the order"
+          className="h-11"
+          aria-label="Email or ZIP"
+          required
+        />
+        <Button type="submit" className="h-11 bg-navy hover:bg-navy/90 sm:w-fit">
           Look up
         </Button>
       </form>
+      {verifyError && (
+        <p role="alert" className="mt-3 max-w-lg text-sm text-red-700">
+          {verifyError}
+        </p>
+      )}
+      {verify && query && !verifyError && (
+        <p className="mt-3 text-xs text-muted-foreground">
+          Verified with {verify.includes("@") ? "email" : "ZIP"} · {verify}
+        </p>
+      )}
 
       {query && loading && (
         <p className="mt-6 text-sm text-muted-foreground" role="status">

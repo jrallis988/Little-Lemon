@@ -34,6 +34,12 @@ export function NotFoundPage() {
             Shop the catalog
           </Link>
         </Button>
+        <Button asChild variant="outline">
+          <Link to="/department/women">Women</Link>
+        </Button>
+        <Button asChild variant="ghost">
+          <Link to="/design-system">All screens</Link>
+        </Button>
       </div>
     </div>
   )
