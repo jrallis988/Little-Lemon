@@ -12,7 +12,16 @@ export function SummerPass() {
       className="scroll-mt-14 bg-white"
     >
       <div className="mx-auto max-w-3xl px-4 py-10 md:px-6 md:py-12">
-        <div className="overflow-hidden rounded-3xl border border-pf-line bg-white shadow-[0_12px_28px_-18px_rgba(61,9,88,0.3)]">
+        <div className="mb-4 flex justify-center">
+          <a
+            href="#pricing"
+            className="inline-flex h-11 items-center justify-center rounded-full border border-pf-purple bg-white px-5 text-sm font-semibold text-pf-purple"
+          >
+            Compare Memberships
+          </a>
+        </div>
+
+        <div className="overflow-hidden rounded-3xl border border-pf-purple/30 bg-white shadow-[0_12px_28px_-18px_rgba(61,9,88,0.3)]">
           <div className="relative aspect-[16/10]">
             <Image
               src="/images/cardio-gym.jpg"

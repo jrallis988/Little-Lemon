@@ -10,6 +10,8 @@ const NAV = [
   { href: "/#clubs", label: "Find a Club" },
   { href: "/#pricing", label: "Memberships" },
   { href: "/#summer-pass", label: "Summer Pass" },
+  { href: "/#amenities", label: "Black Card Spa" },
+  { href: "/#gear", label: "Club Gear" },
   { href: "/#tour", label: "Virtual Tour" },
   { href: "/join", label: "Join Now" },
 ];

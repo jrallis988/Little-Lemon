@@ -26,7 +26,7 @@ export const MEMBERSHIP_PLANS: MembershipPlan[] = [
   {
     id: "classic",
     name: "Classic",
-    tagline: "Your home club—cardio, free weights, and a no-pressure floor.",
+    tagline: "Our standard membership with unlimited access to your home club.",
     monthlyDues: 15,
     enrollmentFee: 0,
     annualFee: 49,
@@ -43,7 +43,8 @@ export const MEMBERSHIP_PLANS: MembershipPlan[] = [
   {
     id: "black-card",
     name: "Black Card",
-    tagline: "More clubs, spa perks, and a guest whenever you train.",
+    tagline:
+      "Access to any club, bring a guest anytime, PF+ premium digital workouts, and so much more!",
     monthlyDues: 24.99,
     enrollmentFee: 0,
     annualFee: 49,
@@ -53,8 +54,8 @@ export const MEMBERSHIP_PLANS: MembershipPlan[] = [
     highlights: [
       "Work out at any Planet Fitness nationwide",
       "Bring one guest with you each visit",
-      "Black Card Spa: massage chairs, tanning & more",
-      "Digital keytag & check-in in the PF app",
+      "Black Card Spa®: Polar Dry Plunge, red light sauna, Total Body Enhancement & more",
+      "PF+ premium digital workouts in the app",
     ],
   },
 ];
@@ -63,7 +64,7 @@ export const PRICING_MATRIX: PricingLine[] = [
   {
     label: "Monthly dues",
     classic: "From $15 / month",
-    blackCard: "From $22.99 / month",
+    blackCard: "From $24.99 / month",
     note: "Starting national rates. Your club confirms the local price before you pay.",
   },
   {

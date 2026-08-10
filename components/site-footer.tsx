@@ -27,22 +27,29 @@ const PARTNERS = [
   },
 ];
 
+/** Matches planetfitness.com mobile Legal list. */
 const LEGAL = [
-  { label: "Privacy Policy (demo)", href: "/legal/privacy" },
-  { label: "Terms of Use (demo)", href: "/legal/terms" },
-  { label: "Membership Agreement (demo)", href: "/legal/membership" },
   {
-    label: "Official Privacy Policy",
+    label: "Privacy Policy",
     href: "https://www.planetfitness.com/privacy-policy",
   },
   {
-    label: "Official Terms",
+    label: "Terms and Conditions of Use",
     href: "https://www.planetfitness.com/terms-conditions",
+  },
+  {
+    label: "Do Not Sell or Share My Personal Information",
+    href: "https://www.planetfitness.com/do-not-sell",
+  },
+  {
+    label: "Your State and EU Privacy Rights",
+    href: "https://www.planetfitness.com/privacy-rights",
   },
   {
     label: "Accessibility",
     href: "https://www.planetfitness.com/accessibility",
   },
+  { label: "Demo membership agreement", href: "/legal/membership" },
 ];
 
 function TikTokIcon({ className }: { className?: string }) {
@@ -130,8 +137,8 @@ export function SiteFooter() {
                   <a
                     className="hover:underline"
                     href={item.href}
-                    target="_blank"
-                    rel="noreferrer"
+                    target={item.href.startsWith("http") ? "_blank" : undefined}
+                    rel={item.href.startsWith("http") ? "noreferrer" : undefined}
                   >
                     {item.label}
                   </a>

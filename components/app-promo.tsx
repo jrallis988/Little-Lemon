@@ -10,8 +10,8 @@ export function AppPromo() {
       aria-labelledby="app-promo-heading"
       className="overflow-hidden pf-grad-app text-white"
     >
-      <div className="mx-auto grid max-w-5xl gap-8 px-4 py-10 md:grid-cols-[1.1fr_0.9fr] md:items-end md:px-6 md:py-12">
-        <div className="max-w-xl pb-2">
+      <div className="mx-auto grid max-w-5xl gap-8 px-4 py-10 md:grid-cols-[1.05fr_0.95fr] md:items-end md:px-6 md:py-12">
+        <div className="max-w-xl pb-2 text-center md:text-left">
           <h2
             id="app-promo-heading"
             className="font-display text-3xl tracking-tight md:text-5xl"
@@ -37,32 +37,41 @@ export function AppPromo() {
           </Button>
         </div>
 
-        <div className="relative mx-auto w-full max-w-[16rem] md:max-w-[18rem]">
-          <div className="relative aspect-[9/16] overflow-hidden rounded-[2rem] border-[6px] border-white/90 bg-pf-purple-ink shadow-[0_20px_40px_-20px_rgba(0,0,0,0.55)]">
+        <div className="relative mx-auto w-full max-w-[15.5rem] rotate-[-6deg] md:max-w-[17rem] md:justify-self-end">
+          <div className="relative aspect-[9/17] overflow-hidden rounded-[2.1rem] border-[7px] border-white/95 bg-pf-purple-ink shadow-[0_24px_48px_-22px_rgba(0,0,0,0.6)]">
             <Image
               src="/images/cardio-gym.jpg"
-              alt="Planet Fitness app preview showing club activity"
+              alt="Planet Fitness app preview with Crowd Meter and workouts"
               fill
               className="object-cover opacity-90"
-              sizes="288px"
+              sizes="280px"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-pf-purple-ink via-pf-purple/40 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-pf-purple-ink via-pf-purple/45 to-pf-purple/20" />
+            <div className="absolute inset-x-0 top-0 flex items-center justify-between px-3 py-3">
+              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-white/20 text-xs font-bold">
+                PF
+              </span>
+              <span className="h-7 w-7 rounded-full bg-white/25" aria-hidden />
+            </div>
             <div className="absolute inset-x-3 bottom-3 space-y-2">
-              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-pf-yellow">
+              <p className="text-[11px] font-black uppercase leading-tight tracking-[0.08em] text-pf-yellow">
                 On demand workouts for all levels
               </p>
-              <div className="rounded-xl bg-white/95 p-2.5 text-pf-ink shadow">
-                <p className="text-[10px] font-bold uppercase tracking-wide text-pf-purple">
-                  Crowd Meter
-                </p>
-                <p className="mt-0.5 text-sm font-semibold">
-                  Manhattan (27th St.)
-                </p>
-                <p className="text-xs text-pf-ink/60">Not too busy · Open now</p>
-              </div>
-              <span className="inline-flex rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-pf-purple">
+              <button
+                type="button"
+                className="w-full rounded-full border border-white/80 px-3 py-2 text-xs font-semibold text-white"
+              >
                 Explore Workouts
-              </span>
+              </button>
+              <div className="rounded-2xl bg-white p-3 text-left text-pf-ink shadow">
+                <p className="text-sm font-semibold">Manhattan (27th St.)</p>
+                <p className="mt-1 text-[10px] font-bold uppercase tracking-wide text-pf-purple">
+                  Crowd Meter · Not too busy
+                </p>
+                <span className="mt-2 inline-flex rounded-full bg-pf-btn px-3 py-1.5 text-[11px] font-semibold text-white">
+                  Check-in
+                </span>
+              </div>
             </div>
           </div>
         </div>

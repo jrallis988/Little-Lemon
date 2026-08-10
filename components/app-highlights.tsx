@@ -13,39 +13,47 @@ const SLIDES = [
     title: "NEW! Workout Guides in the PF App",
     body: "Want a guide to easily follow that walks you through reps and sets in step-by-step routines? We got you! Bonus: each exercise includes a visual tutorial to guide you on proper form.",
     cta: "Check Out Guides",
-    href: "https://www.planetfitness.com/mobileapp",
+    href: "/app/workouts",
     image: "/images/floor-gym.jpg",
-    imageAlt: "Phone mockup style preview of PF App workout guides",
+    imageAlt: "PF App workout guide preview for Beginner Lower Body Strength",
+    overlayTitle: "Beginner Lower Body Strength",
+    overlayMeta: "30 min · Beginner · Machines",
   },
   {
-    id: "perks",
-    eyebrow: "Member perks",
-    title: "Get energized with exclusive perks",
-    body: "Save big on your favorite brands with exclusive discounts and special offers in the PF App.",
-    cta: "Explore Perks",
-    href: "https://www.planetfitness.com/mobileapp",
+    id: "summer",
+    eyebrow: "High School Summer Pass®",
+    title: "High School Summer Pass® is here",
+    body: "NOW – August 31, teens ages 14–19 can work out for FREE. Build strength where it counts this summer – with progress that’s all yours. Plus, enjoy 20% off Gymshark when you sign up.",
+    cta: "Sign Up Now",
+    href: "https://www.planetfitness.com/SummerPass",
     image: "/images/cardio-gym.jpg",
-    imageAlt: "Gym floor representing member perk offers",
+    imageAlt: "Teens training during High School Summer Pass",
+    overlayTitle: "HIGH SCHOOL SUMMER PASS",
+    overlayMeta: "Powered by Gymshark",
   },
   {
-    id: "refer",
-    eyebrow: "Refer a friend",
-    title: "Earn free months by referring your friends",
-    body: "Every friend you refer that joins can earn you a free month (up to 3 months/year). Head to the PF App to start referring today.",
-    cta: "Refer a Friend",
-    href: "https://www.planetfitness.com/mobileapp",
+    id: "plunge",
+    eyebrow: "Black Card Spa®",
+    title: "NEW Polar Dry Plunge",
+    body: "Now in the Black Card Spa®. Recover with a cold experience designed for comfort — ask your club what’s available on Black Card.",
+    cta: "Explore Black Card",
+    href: "/#pricing",
     image: "/images/hero-gym.jpg",
-    imageAlt: "Members training together in a Planet Fitness club",
+    imageAlt: "Black Card Spa Polar Dry Plunge promo",
+    overlayTitle: "NEW POLAR DRY PLUNGE",
+    overlayMeta: "Now in the Black Card Spa®",
   },
   {
     id: "gear",
     eyebrow: "PF store",
     title: "Get your gear",
-    body: "Bags, outfits, locker room essentials, and more—everything you need to start your fitness journey.",
-    cta: "Shop Gear",
-    href: "https://www.planetfitness.com/",
+    body: "Bags from $38.99, tees $11.95, caps $10, towels $4.95, bottles $5, locks $5 — plus spa lotions from $7.99. Shop the counter at your club.",
+    cta: "See Club Gear",
+    href: "/#gear",
     image: "/images/floor-gym.jpg",
-    imageAlt: "Planet Fitness club gear and floor atmosphere",
+    imageAlt: "Planet Fitness club gear wall",
+    overlayTitle: "CLUB GEAR",
+    overlayMeta: "Bags · Apparel · Essentials",
   },
 ];
 
@@ -57,13 +65,19 @@ export function AppHighlights() {
   const next = () => setIndex((i) => (i === SLIDES.length - 1 ? 0 : i + 1));
 
   return (
-    <section
-      aria-labelledby="app-highlights-heading"
-      className="bg-white"
-    >
+    <section aria-labelledby="app-highlights-heading" className="bg-white">
       <div className="mx-auto max-w-3xl px-4 py-10 md:px-6 md:py-12">
+        <div className="mb-4 flex justify-center">
+          <a
+            href="#pricing"
+            className="inline-flex h-11 items-center justify-center rounded-full border border-pf-purple bg-white px-5 text-sm font-semibold text-pf-purple"
+          >
+            Compare Memberships
+          </a>
+        </div>
+
         <article className="overflow-hidden rounded-3xl border border-pf-line bg-white shadow-[0_12px_28px_-18px_rgba(61,9,88,0.35)]">
-          <div className="relative aspect-[16/10] bg-pf-mist">
+          <div className="relative aspect-[16/10] bg-pf-purple">
             <Image
               key={slide.id}
               src={slide.image}
@@ -72,23 +86,33 @@ export function AppHighlights() {
               className="object-cover"
               sizes="(max-width: 768px) 100vw, 720px"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-pf-purple/55 via-transparent to-transparent" />
-            <p className="absolute bottom-3 left-4 text-[10px] font-bold uppercase tracking-[0.18em] text-pf-yellow">
-              {slide.eyebrow}
-            </p>
+            <div className="absolute inset-0 bg-gradient-to-t from-pf-purple-ink/90 via-pf-purple/35 to-transparent" />
+            <div className="absolute inset-x-4 bottom-4 text-white">
+              <p className="font-display text-lg uppercase leading-none tracking-tight text-pf-yellow md:text-2xl">
+                {slide.overlayTitle}
+              </p>
+              <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.16em] text-white/85">
+                {slide.overlayMeta}
+              </p>
+            </div>
           </div>
           <div className="p-5 md:p-6">
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-pf-purple">
+              {slide.eyebrow}
+            </p>
             <h2
               id="app-highlights-heading"
-              className="font-display text-2xl uppercase tracking-tight text-pf-ink md:text-3xl"
+              className="mt-1 font-display text-2xl uppercase tracking-tight text-pf-ink md:text-3xl"
             >
               {slide.title}
             </h2>
-            <p className="mt-2 text-sm text-pf-ink/65 md:text-base">
-              {slide.body}
-            </p>
+            <p className="mt-2 text-sm text-pf-ink/65 md:text-base">{slide.body}</p>
             <Button asChild variant="purple" className="mt-4 w-full">
-              <a href={slide.href} target="_blank" rel="noreferrer">
+              <a
+                href={slide.href}
+                target={slide.href.startsWith("http") ? "_blank" : undefined}
+                rel={slide.href.startsWith("http") ? "noreferrer" : undefined}
+              >
                 {slide.cta}
               </a>
             </Button>

@@ -109,7 +109,7 @@ export function PricingMatrix() {
           <div>
             <h2
               id="pricing-heading"
-              className="font-display text-2xl tracking-tight text-white sm:text-3xl md:text-4xl"
+              className="font-display text-3xl tracking-tight text-white sm:text-4xl"
             >
               Memberships
             </h2>
@@ -117,14 +117,15 @@ export function PricingMatrix() {
               <p className="mt-1 max-w-2xl text-sm text-white/80">
                 Local rates for{" "}
                 <span className="font-semibold text-white">{club.name}</span>.
+                We offer the PF Black Card® Membership and Classic Membership.
                 Both get you access to The Judgement Free Zone®, and tons of
                 cardio and strength equipment.
               </p>
             ) : (
-              <p className="mt-1 max-w-2xl text-sm text-white/70">
+              <p className="mt-1 max-w-2xl text-sm text-white/80">
                 We offer the PF Black Card® Membership and Classic Membership.
                 Both get you access to The Judgement Free Zone®, and tons of
-                cardio and strength equipment. Pick a club to lock local dues.
+                cardio and strength equipment.
               </p>
             )}
           </div>
