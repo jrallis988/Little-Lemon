@@ -364,8 +364,9 @@ p {
 .hero {
   position: relative;
   min-height: 100svh;
-  display: grid;
-  align-items: end;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
   color: var(--foam);
   overflow: hidden;
 }
@@ -398,7 +399,7 @@ p {
   z-index: 1;
   width: min(100% - 2rem, var(--max));
   margin: 0 auto;
-  padding: calc(var(--nav-h) + 2rem) 0 4.5rem;
+  padding: calc(var(--nav-h) + 2rem) 0 2rem;
 }
 
 .hero__brand {
@@ -444,6 +445,152 @@ p {
   opacity: 0;
   transform: translateY(18px);
   animation: rise-in 900ms var(--ease) 500ms forwards;
+}
+
+/* ——— Booking bar (hero strip) ——— */
+.booking-bar {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  margin-top: auto;
+  padding: 0.85rem 1rem 1.1rem;
+  background: rgba(7, 42, 58, 0.92);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  transform: translateY(16px);
+  animation: rise-in 800ms var(--ease) 560ms forwards;
+}
+
+.booking-bar__form {
+  width: min(100%, var(--max));
+  margin: 0 auto;
+  display: grid;
+  gap: 0.85rem;
+  align-items: end;
+}
+
+.booking-bar__label {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.25;
+}
+
+.booking-bar__label span {
+  display: block;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.booking-bar__label strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--foam);
+}
+
+.booking-bar__fields {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+.booking-bar__field {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.booking-bar__field label {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.booking-bar__field input {
+  width: 100%;
+  min-height: 2.6rem;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--foam);
+  font: inherit;
+}
+
+.booking-bar__field input:focus {
+  outline: 2px solid var(--sun);
+  outline-offset: 1px;
+  border-color: transparent;
+}
+
+.booking-bar__field input::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  opacity: 0.85;
+}
+
+.booking-bar__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.booking-bar__actions .btn[disabled] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.booking-bar__rates {
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.booking-bar__rates:hover,
+.booking-bar__rates:focus-visible {
+  color: var(--sun);
+}
+
+.booking-bar__hint {
+  width: min(100%, var(--max));
+  margin: 0.55rem auto 0;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.8rem;
+}
+
+@media (min-width: 900px) {
+  .booking-bar {
+    padding: 0.95rem 1.25rem 1.15rem;
+  }
+
+  .booking-bar__form {
+    grid-template-columns: auto 1fr auto;
+    gap: 1.25rem;
+    align-items: end;
+  }
+
+  .booking-bar__fields {
+    grid-template-columns: 1.2fr 1.2fr 0.7fr;
+    gap: 0.85rem;
+  }
+
+  .booking-bar__actions {
+    justify-content: flex-end;
+  }
+
+  .booking-bar__hint {
+    margin-top: 0.45rem;
+  }
 }
 
 @keyframes rise-in {
@@ -1837,6 +1984,7 @@ p {
   .hero__headline,
   .hero__lede,
   .hero__trust,
+  .booking-bar,
   .room__media img,
   .btn {
     animation: none !important;

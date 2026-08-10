@@ -10,6 +10,10 @@ test("renders motel brand and booking CTA", () => {
   expect(screen.getAllByText(/Seascape Inn/i).length).toBeGreaterThan(0);
   expect(screen.getAllByRole("link", { name: /book a stay/i }).length).toBeGreaterThan(0);
   expect(screen.getByRole("heading", { name: /book your room by the water/i })).toBeInTheDocument();
+  expect(
+    screen.getByRole("button", { name: /check availability/i })
+  ).toBeInTheDocument();
+  expect(screen.getByLabelText(/quick booking/i)).toBeInTheDocument();
 });
 
 test("renders about, reviews, location, faq, and legal sections", () => {
