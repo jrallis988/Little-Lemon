@@ -12,6 +12,12 @@ const nextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      { source: "/neta", destination: "/neta/index.html" },
+      { source: "/neta/", destination: "/neta/index.html" },
+    ];
+  },
 };
 
 module.exports = nextConfig;
