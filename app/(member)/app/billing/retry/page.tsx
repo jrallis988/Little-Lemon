@@ -13,7 +13,7 @@ export default function FailedPaymentRetryPage() {
   const [cardNumber, setCardNumber] = useState("4242424242424242");
   const [expiry, setExpiry] = useState("12/30");
   const [cvc, setCvc] = useState("123");
-  const [zip, setZip] = useState("30308");
+  const [zip, setZip] = useState("03885");
 
   async function retry(event: React.FormEvent) {
     event.preventDefault();

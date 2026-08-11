@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { JoinFunnel } from "@/components/join-funnel";
+import { HOME_CLUB } from "@/lib/home-club";
 
 export const metadata: Metadata = {
-  title: "Join",
+  title: "Join Stratham",
   description:
-    "Start a Planet Fitness membership in a few steps. Local club pricing stays visible the whole way.",
+    "Start a Planet Fitness Stratham membership in a few steps. Local club pricing stays visible the whole way.",
 };
 
 type JoinPageProps = {
@@ -14,6 +15,9 @@ type JoinPageProps = {
 export default async function JoinPage({ searchParams }: JoinPageProps) {
   const params = await searchParams;
   return (
-    <JoinFunnel initialClubId={params.club} initialPlan={params.plan} />
+    <JoinFunnel
+      initialClubId={params.club ?? HOME_CLUB.id}
+      initialPlan={params.plan}
+    />
   );
 }

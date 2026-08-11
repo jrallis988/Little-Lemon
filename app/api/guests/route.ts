@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getSession } from "@/lib/auth";
 import { createGuestPass, listGuestPasses } from "@/lib/guests";
+import { HOME_CLUB } from "@/lib/home-club";
 
 export const dynamic = "force-dynamic";
 
@@ -36,8 +37,8 @@ export async function POST(request: Request) {
   const pass = await createGuestPass({
     membershipId,
     guestName: body.guestName ?? "Guest",
-    clubId: session.clubId ?? "pf-midtown",
-    clubName: session.clubName ?? "Planet Fitness",
+    clubId: session.clubId ?? HOME_CLUB.id,
+    clubName: session.clubName ?? HOME_CLUB.name,
   });
 
   return NextResponse.json({ pass }, { status: 201 });

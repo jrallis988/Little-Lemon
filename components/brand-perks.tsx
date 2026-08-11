@@ -16,10 +16,10 @@ const PERKS = [
     icon: Dumbbell,
   },
   {
-    title: "2,700+ locations",
-    body: "More than 2,700 Planet Fitness locations worldwide.",
+    title: "Seacoast access",
+    body: "Black Card members can train at Stratham and visit nearby Portsmouth, Exeter, Seabrook, Dover, and more.",
     href: "#locations",
-    cta: "See Plan",
+    cta: "See Clubs",
     icon: Globe2,
   },
 ];

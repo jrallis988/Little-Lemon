@@ -31,7 +31,7 @@ export default function Error({
           Try again
         </Button>
         <Button asChild variant="outline">
-          <Link href="/#clubs">Find a Club</Link>
+          <Link href="/#clubs">Our Club</Link>
         </Button>
       </div>
     </div>

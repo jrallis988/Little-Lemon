@@ -16,11 +16,12 @@ import {
   MemberScreen,
 } from "@/components/member/member-ui";
 import { getSession } from "@/lib/auth";
+import { HOME_CLUB } from "@/lib/home-club";
 
 export default async function MemberHomePage() {
   const session = await getSession();
   const firstName = session?.firstName || "Member";
-  const clubName = session?.clubName || "Planet Fitness Midtown";
+  const clubName = session?.clubName || HOME_CLUB.name;
   const plan =
     session?.plan === "classic"
       ? "Classic"

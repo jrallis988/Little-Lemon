@@ -11,11 +11,11 @@ export default function NotFound() {
         Club or page not found
       </h1>
       <p className="mt-2 text-sm text-pf-ink/65">
-        Check the link, or search for a club near you.
+        Check the link, or head back to Planet Fitness Stratham.
       </p>
       <div className="mt-5 flex gap-2">
         <Button asChild variant="purple">
-          <Link href="/#clubs">Find a Club</Link>
+          <Link href="/#clubs">Our Club</Link>
         </Button>
         <Button asChild variant="outline">
           <Link href="/">Home</Link>

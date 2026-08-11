@@ -419,11 +419,11 @@ export function ClubLocator() {
             id="club-locator-heading"
             className="mt-2 max-w-md font-display text-3xl tracking-tight text-white sm:text-4xl"
           >
-            Explore Clubs Near You
+            Stratham, NH &amp; the Seacoast
           </h1>
           <p className="mt-1.5 max-w-md text-sm text-white/80 sm:text-base">
-            Clear local membership pricing. The Judgement Free Zone®—a gym where
-            everyone feels welcome.
+            Home club at 20 Portsmouth Ave — Open &amp; Staffed 24/7. Clear
+            local rates for Stratham and nearby clubs.
           </p>
 
           <div className="mt-4 max-w-md">
@@ -440,7 +440,7 @@ export function ClubLocator() {
                   id="club-search"
                   value={query}
                   onChange={(event) => onSearchChange(event.target.value)}
-                  placeholder="Search by address, city, or ZIP code…"
+                  placeholder="Search Stratham, Portsmouth, 03885…"
                   className="h-11 border-0 bg-white pl-10 text-base shadow-none"
                   autoComplete="postal-code"
                   role="combobox"
@@ -474,7 +474,7 @@ export function ClubLocator() {
             <p className="mt-1.5 text-xs text-white/70" aria-live="polite">
               {isPending
                 ? "Searching…"
-                : `${results.length} club${results.length === 1 ? "" : "s"} nearby · 2,700+ worldwide`}
+                : `${results.length} Seacoast club${results.length === 1 ? "" : "s"} · home: Stratham, NH`}
             </p>
           </div>
         </div>

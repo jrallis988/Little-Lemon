@@ -55,11 +55,11 @@ export function GetStarted() {
         </ul>
 
         <p className="mt-8 text-sm leading-relaxed text-pf-ink/70 md:text-[15px]">
-          Ready to join the Judgement Free Zone®? Find a club near you, compare
-          Classic and PF Black Card® memberships, then join online in a few
-          short steps. Use the Planet Fitness app for Crowd Meter, digital
-          keytag, check-in, and on-demand workout guides — those stay in the
-          member app, not on this acquisition site.
+          Ready to join Planet Fitness Stratham? Compare Classic and PF Black
+          Card® memberships for our Open &amp; Staffed 24/7 club at 20 Portsmouth
+          Ave, then join online in a few short steps. Use the Planet Fitness app
+          for Crowd Meter, digital keytag, check-in, and on-demand workout
+          guides — those stay in the member app, not on this site.
         </p>
       </div>
 

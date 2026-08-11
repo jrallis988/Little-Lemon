@@ -22,33 +22,33 @@ const siteUrl =
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Planet Fitness — Find a Club & Join",
-    template: "%s · Planet Fitness",
+    default: "Planet Fitness Stratham, NH — Join Online",
+    template: "%s · Planet Fitness Stratham",
   },
   description:
-    "Find a nearby Planet Fitness, compare Classic and Black Card membership pricing, and join online. Day-to-day member tools live in the PF app experience.",
+    "Join Planet Fitness Stratham at 20 Portsmouth Ave — Open & Staffed 24/7. Compare Classic and Black Card rates for the Seacoast NH Judgement Free Zone®.",
   openGraph: {
     type: "website",
     locale: "en_US",
     url: siteUrl,
-    siteName: "Planet Fitness",
-    title: "Planet Fitness — Find a Club & Join",
+    siteName: "Planet Fitness Stratham",
+    title: "Planet Fitness Stratham, NH — Join Online",
     description:
-      "Explore clubs near you, compare memberships, and join with transparent local pricing.",
+      "Your home club in Stratham, NH. Compare memberships, explore Seacoast clubs, and join with transparent local pricing.",
     images: [
       {
         url: "/images/hero-gym.jpg",
         width: 1200,
         height: 630,
-        alt: "Planet Fitness gym floor",
+        alt: "Planet Fitness Stratham gym floor",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Planet Fitness — Find a Club & Join",
+    title: "Planet Fitness Stratham, NH — Join Online",
     description:
-      "Explore clubs near you, compare memberships, and join with transparent local pricing.",
+      "Your home club in Stratham, NH. Compare memberships and join with transparent local pricing.",
     images: ["/images/hero-gym.jpg"],
   },
   robots: { index: true, follow: true },

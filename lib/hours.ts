@@ -140,3 +140,16 @@ export function scheduleWeekday24(options: {
     },
   };
 }
+
+/** Open & staffed 24/7 (e.g. Planet Fitness Stratham, NH). */
+export function scheduleOpen247(): WeeklySchedule {
+  return {
+    sun: { kind: "open24" },
+    mon: { kind: "open24" },
+    tue: { kind: "open24" },
+    wed: { kind: "open24" },
+    thu: { kind: "open24" },
+    fri: { kind: "open24" },
+    sat: { kind: "open24" },
+  };
+}

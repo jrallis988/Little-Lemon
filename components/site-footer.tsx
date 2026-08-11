@@ -65,11 +65,12 @@ export function SiteFooter() {
     <footer className="bg-white text-pf-ink">
       <div className="border-t border-pf-line px-4 py-6 md:px-6">
         <p className="mx-auto max-w-5xl text-xs leading-relaxed text-pf-ink/60">
-          Membership dues, enrollment, and annual fees vary by club and are
-          confirmed before you join. Classic and PF Black Card® starting rates
-          shown on this site are national starting ranges. Check-in, digital
-          keytag, Crowd Meter, and workout guides live in the Planet Fitness
-          app. © 2026 Planet Fitness Franchising, LLC.
+          This site highlights Planet Fitness Stratham (20 Portsmouth Ave,
+          Stratham, NH 03885 · (603) 772-4777). Membership dues, enrollment, and
+          annual fees vary by club and are confirmed before you join. Classic
+          and PF Black Card® starting rates shown are starting ranges. Check-in,
+          digital keytag, Crowd Meter, and workout guides live in the Planet
+          Fitness app. © 2026 Planet Fitness Franchising, LLC.
         </p>
       </div>
 

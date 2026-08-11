@@ -21,7 +21,7 @@ const HERO_SLIDES = [
     id: "equipment",
     image: "/images/floor-gym.jpg",
     imageAlt: "Planet Fitness strength floor with purple equipment",
-    kicker: "OPEN 24/7 · YOU BELONG!",
+    kicker: "STRATHAM, NH · OPEN & STAFFED 24/7",
     titleBefore: "TONS OF ",
     titleAccent: "CARDIO & STRENGTH",
     titleAfter: " EQUIPMENT",

@@ -5,6 +5,7 @@ import {
   sessionCookieOptions,
   type SessionUser,
 } from "@/lib/auth";
+import { HOME_CLUB } from "@/lib/home-club";
 import { getMembershipByEmail } from "@/lib/memberships";
 import { ensureWelcomeNotifications } from "@/lib/notifications";
 import { createUser } from "@/lib/users";
@@ -60,8 +61,8 @@ export async function POST(request: Request) {
       firstName: user.firstName,
       lastName: user.lastName,
       membershipId: user.membershipId,
-      clubId: membership?.clubId ?? "pf-midtown",
-      clubName: membership?.clubName ?? "Planet Fitness Midtown",
+      clubId: membership?.clubId ?? HOME_CLUB.id,
+      clubName: membership?.clubName ?? HOME_CLUB.name,
       plan: membership?.plan ?? "black-card",
     };
 

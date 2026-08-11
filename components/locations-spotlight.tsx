@@ -1,3 +1,5 @@
+import { HOME_CLUB } from "@/lib/home-club";
+
 export function LocationsSpotlight() {
   return (
     <section
@@ -10,16 +12,18 @@ export function LocationsSpotlight() {
           id="locations-heading"
           className="font-display text-3xl tracking-tight text-pf-ink md:text-4xl"
         >
-          2,700+ locations
+          Stratham &amp; the Seacoast
         </h2>
         <p className="mt-2 text-sm text-pf-ink/65 md:text-base">
-          More than 2,700 Planet Fitness locations worldwide.
+          Your home club is {HOME_CLUB.name} at {HOME_CLUB.address}. Black Card
+          members can also visit nearby Portsmouth, Exeter, Seabrook, Dover, and
+          more.
         </p>
         <a
           href="#clubs"
           className="mt-3 inline-block text-sm font-semibold text-pf-purple underline underline-offset-2"
         >
-          Learn More
+          See club hours &amp; rates
         </a>
       </div>
     </section>

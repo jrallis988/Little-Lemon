@@ -7,7 +7,7 @@ import { PlanetFitnessLogo } from "@/components/brand-logo";
 import { Button } from "@/components/ui/button";
 
 const NAV = [
-  { href: "/#clubs", label: "Find a Club" },
+  { href: "/#clubs", label: "Our Club" },
   { href: "/#pricing", label: "Memberships" },
   { href: "/#summer-pass", label: "Summer Pass" },
   { href: "/#app-promo", label: "PF App" },
@@ -32,7 +32,7 @@ export function SiteHeader() {
             size="sm"
             className="hidden text-pf-ink hover:bg-pf-mist hover:text-pf-purple md:inline-flex"
           >
-            <Link href="/#clubs">Find a Club</Link>
+            <Link href="/#clubs">Our Club</Link>
           </Button>
           <Button
             asChild

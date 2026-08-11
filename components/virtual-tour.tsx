@@ -51,7 +51,7 @@ export function VirtualTour() {
               Watch the Club Tour
             </Button>
             <Button asChild variant="outline">
-              <a href="#clubs">Find a Club Near You</a>
+              <a href="#clubs">Visit Stratham, NH</a>
             </Button>
           </div>
         </div>

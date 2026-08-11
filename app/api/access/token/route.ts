@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { issueAccessToken, offlineKeytagPayload } from "@/lib/access";
 import { getSession } from "@/lib/auth";
+import { HOME_CLUB } from "@/lib/home-club";
 
 export const dynamic = "force-dynamic";
 
@@ -11,7 +12,7 @@ export async function POST() {
   }
 
   const membershipId = session.membershipId ?? `GUEST-${session.email}`;
-  const clubId = session.clubId ?? "pf-midtown";
+  const clubId = session.clubId ?? HOME_CLUB.id;
   const token = await issueAccessToken({ membershipId, clubId, ttlSeconds: 90 });
 
   return NextResponse.json({
