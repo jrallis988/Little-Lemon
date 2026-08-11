@@ -180,8 +180,8 @@ export const ROOMS = [
         alt: "Economy room with striped quilts and teal pillows",
       },
       {
-        src: asset("/images/room-queen.jpg"),
-        alt: "Alternate double-and-twin layout with white coastal bedding",
+        src: asset("/images/room-amenities.jpg"),
+        alt: "In-room fridge, microwave, desk, and flat-screen TV",
       },
       {
         src: asset("/images/exterior-courtyard.jpg"),
@@ -215,16 +215,16 @@ export const ROOMS = [
         alt: "Suite-style room with table, chairs, dresser, fridge, and TV",
       },
       {
-        src: asset("/images/room-doubles.jpg"),
-        alt: "Spacious two-bed room layout",
-      },
-      {
         src: asset("/images/gazebo-bbq.jpg"),
         alt: "Gazebo and barbecue lawn for guests",
       },
       {
         src: asset("/images/exterior-courtyard-wide.jpg"),
         alt: "Inn courtyard and guest walkways",
+      },
+      {
+        src: asset("/images/view-from-inn.jpg"),
+        alt: "View from the inn toward the shore",
       },
     ],
     amenities: [

@@ -83,11 +83,11 @@ export default function CookieConsent() {
             </button>
           ) : (
             <button className="btn btn-primary" type="button" onClick={acceptAll}>
-              Accept all
+              Accept
             </button>
           )}
           <button className="btn btn-ghost consent__ghost" type="button" onClick={rejectOptional}>
-            Essential only
+            Decline
           </button>
           {!manage ? (
             <button
