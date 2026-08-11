@@ -14,7 +14,6 @@ const NAV_LINKS = [
   { href: "/how-to-vote", label: "How to Vote" },
   { href: "/shop", label: "Store" },
   { href: "/volunteer", label: "Volunteer" },
-  { href: "/contact", label: "Contact" },
 ] as const;
 
 function linkActive(pathname: string, href: string, exact?: boolean) {

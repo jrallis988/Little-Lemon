@@ -7,7 +7,8 @@ const ACTIONS = [
     detail: "Across New Hampshire",
     icon: "fa-map-marker",
     cta: "Sign Up",
-    thumb: "/theme/assets/images/homepage1/campaign/01.jpg",
+    thumb: "/images/get-involved/volunteer.jpg",
+    alt: "Campaign volunteers with clipboards and materials at a community table",
   },
   {
     href: "/shop",
@@ -15,7 +16,8 @@ const ACTIONS = [
     detail: "Campaign store (demo checkout)",
     icon: "fa-shopping-bag",
     cta: "Shop",
-    thumb: "/theme/assets/images/homepage1/campaign/02.jpg",
+    thumb: "/images/get-involved/apparel.jpg",
+    alt: "Campaign t-shirts, cap, and printed marketing materials",
   },
   {
     href: "/events",
@@ -24,6 +26,7 @@ const ACTIONS = [
     icon: "fa-calendar",
     cta: "See Events",
     thumb: "/theme/assets/images/homepage1/campaign/03.jpg",
+    alt: "",
   },
   {
     href: "/come-to-my-town",
@@ -32,6 +35,7 @@ const ACTIONS = [
     icon: "fa-map-marker",
     cta: "Request a Visit",
     thumb: "/theme/assets/images/homepage1/campaign/04.jpg",
+    alt: "",
   },
 ] as const;
 
@@ -54,7 +58,7 @@ export function TownEvents() {
                   <div className="campaign-thumb">
                     <Link href={item.href}>
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={item.thumb} alt="" />
+                      <img src={item.thumb} alt={item.alt} />
                     </Link>
                   </div>
                   <div className="campaign-content">

@@ -13,6 +13,25 @@
   );
 }
 
+/* Larger hero tagline — closer to the earlier full-bleed treatment */
+.banner .banner-content .banner-content-text h1.hero-tagline {
+  font-size: clamp(3.25rem, 8vw, 6rem);
+  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 1rem;
+  max-width: 14ch;
+}
+@media (max-width: 575px) {
+  .banner .banner-content .banner-content-text h1.hero-tagline {
+    font-size: clamp(2.5rem, 12vw, 3.5rem);
+  }
+}
+.banner .banner-content .banner-content-text h6 {
+  font-size: clamp(1.05rem, 2.2vw, 1.5rem);
+  max-width: 36rem;
+}
+
 .header .logo img,
 .footer-section .logo img {
   max-height: 52px;
