@@ -1,11 +1,3 @@
-@import url("/theme/assets/css/bootstrap.min.css");
-@import url("/theme/assets/css/animate.css");
-@import url("/theme/assets/css/font-awesome.min.css");
-@import url("/theme/assets/css/swiper.min.css");
-@import url("/theme/assets/css/lightcase.css");
-@import url("/theme/assets/css/style.css");
-@import url("/theme/varga-theme.css");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

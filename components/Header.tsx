@@ -67,7 +67,7 @@ export function Header() {
           </button>
 
           <div
-            className={`collapse navbar-collapse${open ? " show" : ""}`}
+            className={`navbar-collapse neta-nav-collapse${open ? " is-open" : ""}`}
             id={menuId}
           >
             <ul className="nav navbar-nav ml-auto">

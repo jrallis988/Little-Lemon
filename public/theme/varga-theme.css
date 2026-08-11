@@ -19,13 +19,93 @@
   width: auto;
 }
 
-/* React-controlled Bootstrap collapse (no jQuery) */
-.navbar-collapse.collapse:not(.show) {
+/* React-controlled mobile nav (avoids Bootstrap/Tailwind `.collapse` clash) */
+.navbar-collapse.neta-nav-collapse:not(.is-open) {
   display: none;
 }
 @media (min-width: 992px) {
-  .navbar-collapse.collapse {
+  .navbar-collapse.neta-nav-collapse {
     display: flex !important;
+    flex-basis: auto;
+  }
+}
+
+/* Prefer Bootstrap container widths over any utility leftovers */
+.header .container,
+.banner .container,
+.about-section .container,
+.footer-section .container,
+.page-header .container,
+.theme-page-body .container,
+.latest-news-section .container,
+.campaign-program-section .container,
+.become-member-section .container,
+.newsletter-section .container,
+.quick-donation-section .container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+@media (min-width: 576px) {
+  .header .container,
+  .banner .container,
+  .about-section .container,
+  .footer-section .container,
+  .page-header .container,
+  .theme-page-body .container,
+  .latest-news-section .container,
+  .campaign-program-section .container,
+  .become-member-section .container,
+  .newsletter-section .container,
+  .quick-donation-section .container {
+    max-width: 540px;
+  }
+}
+@media (min-width: 768px) {
+  .header .container,
+  .banner .container,
+  .about-section .container,
+  .footer-section .container,
+  .page-header .container,
+  .theme-page-body .container,
+  .latest-news-section .container,
+  .campaign-program-section .container,
+  .become-member-section .container,
+  .newsletter-section .container,
+  .quick-donation-section .container {
+    max-width: 720px;
+  }
+}
+@media (min-width: 992px) {
+  .header .container,
+  .banner .container,
+  .about-section .container,
+  .footer-section .container,
+  .page-header .container,
+  .theme-page-body .container,
+  .latest-news-section .container,
+  .campaign-program-section .container,
+  .become-member-section .container,
+  .newsletter-section .container,
+  .quick-donation-section .container {
+    max-width: 960px;
+  }
+}
+@media (min-width: 1200px) {
+  .header .container,
+  .banner .container,
+  .about-section .container,
+  .footer-section .container,
+  .page-header .container,
+  .theme-page-body .container,
+  .latest-news-section .container,
+  .campaign-program-section .container,
+  .become-member-section .container,
+  .newsletter-section .container,
+  .quick-donation-section .container {
+    max-width: 1140px;
   }
 }
 

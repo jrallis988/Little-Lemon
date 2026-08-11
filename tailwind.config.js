@@ -4,6 +4,12 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  // Neta/Bootstrap owns the base reset + .container; Tailwind preflight
+  // otherwise sets .collapse { visibility: collapse } and breaks the navbar.
+  corePlugins: {
+    preflight: false,
+    container: false,
+  },
   theme: {
     extend: {
       colors: {
