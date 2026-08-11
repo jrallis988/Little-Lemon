@@ -113,7 +113,7 @@ export function LandingHero() {
                 className="inline-flex h-full shrink-0 items-center justify-center gap-2 rounded-full bg-pf-purple px-4 text-sm font-semibold text-white transition hover:bg-pf-purple-bright sm:px-5"
               >
                 <Search className="h-4 w-4" aria-hidden />
-                <span className="hidden xs:inline sm:inline">Find a Club</span>
+                <span className="hidden sm:inline">Find a Club</span>
               </button>
             </div>
           </form>
