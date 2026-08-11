@@ -15,16 +15,16 @@ function ClubCard({ club }: { club: Club }) {
   return (
     <article className="flex h-full flex-col rounded-2xl bg-white p-5 text-pf-ink shadow-[0_12px_32px_-18px_rgba(20,0,36,0.45)]">
       <div className="flex items-start justify-between gap-3">
-        <h3 className="font-display text-xl tracking-tight text-pf-ink">
+        <h3 className="font-display text-[1.375rem] font-extrabold tracking-tight text-pf-ink">
           {club.city}, {club.state}
         </h3>
-        <span className="shrink-0 text-sm font-medium text-pf-ink/55">
+        <span className="shrink-0 font-sans text-sm font-medium text-pf-ink/55">
           {club.distanceMiles < 0.1
             ? "Home"
             : `${club.distanceMiles.toFixed(0)} mi`}
         </span>
       </div>
-      <p className="mt-2 flex items-start gap-1.5 text-sm text-pf-ink/65">
+      <p className="mt-2 flex items-start gap-1.5 font-sans text-sm text-pf-ink/65">
         <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-pf-purple" aria-hidden />
         <span>
           {club.address}, {club.city}, {club.state} {club.zip}
@@ -110,11 +110,11 @@ export function ExploreClubsNearYou() {
       <div className="mx-auto max-w-5xl">
         <h2
           id="explore-clubs-heading"
-          className="text-center font-display text-3xl tracking-tight sm:text-4xl md:text-5xl"
+          className="pf-type-section text-center text-white"
         >
           Explore Clubs Near You
         </h2>
-        <p className="mx-auto mt-2 max-w-xl text-center text-sm text-white/80">
+        <p className="mx-auto mt-3 max-w-xl text-center font-sans text-base text-white/85">
           Start with Planet Fitness Stratham, then browse Seacoast clubs nearby.
         </p>
 

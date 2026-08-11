@@ -18,6 +18,14 @@
   --pf-mist: #f7f4fb;
   --pf-line: #e4d9f0;
 
+  /* PF homepage type scale (desktop reference ~1440px) */
+  --pf-hero-line: 4.5rem; /* 72px — WE'RE ALL / ON THIS PLANET™ */
+  --pf-hero-strong: 7.5rem; /* 120px — STRONG */
+  --pf-hero-sub: 1.75rem; /* 28px — JOIN THE CLUB TODAY! */
+  --pf-section-title: 2.75rem; /* 44px — Explore Clubs / Memberships */
+  --pf-body: 1rem;
+  --pf-body-lg: 1.125rem;
+
   /* Gradients matching live PF surfaces */
   --pf-grad-footer: linear-gradient(180deg, #5f1092 0%, #3d0958 100%);
   --pf-grad-clubs: linear-gradient(180deg, #6d20ab 0%, #4a148c 55%, #3d0958 100%);
@@ -77,6 +85,43 @@ body {
       radial-gradient(circle at 80% 0%, rgba(255, 206, 8, 0.08), transparent 30%),
       linear-gradient(0deg, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.12)),
       var(--pf-grad-clubs);
+  }
+
+  .pf-type-hero-line {
+    font-family: var(--font-display), sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.25rem, 5.2vw, var(--pf-hero-line));
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+
+  .pf-type-hero-strong {
+    font-family: var(--font-display), sans-serif;
+    font-weight: 900;
+    font-size: clamp(3.5rem, 9vw, var(--pf-hero-strong));
+    line-height: 0.85;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    color: var(--pf-yellow);
+  }
+
+  .pf-type-hero-sub {
+    font-family: var(--font-display), sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.25rem, 2.2vw, var(--pf-hero-sub));
+    line-height: 1.15;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--pf-yellow);
+  }
+
+  .pf-type-section {
+    font-family: var(--font-display), sans-serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 4vw, var(--pf-section-title));
+    line-height: 1.05;
+    letter-spacing: -0.01em;
   }
 }
 

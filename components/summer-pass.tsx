@@ -43,11 +43,11 @@ export function SummerPass() {
         <div className="mx-auto max-w-3xl text-center">
           <h2
             id="summer-pass-heading"
-            className="font-display text-3xl font-black uppercase leading-[1.05] tracking-tight text-pf-ink sm:text-4xl md:text-5xl"
+            className="pf-type-section uppercase text-pf-ink"
           >
             High School Summer Pass® is here
           </h2>
-          <p className="mt-4 text-sm leading-relaxed text-pf-ink/75 md:text-base">
+          <p className="mt-4 font-sans text-base leading-relaxed text-pf-ink/75">
             NOW – August 31, teens ages 14-19 can work out for FREE. Build
             strength where it counts this summer – with progress that&apos;s all
             yours. Plus, enjoy 20% off Gymshark when you sign up.

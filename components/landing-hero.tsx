@@ -7,9 +7,10 @@ import { Search } from "lucide-react";
 import { track } from "@/lib/analytics";
 
 /**
- * PF homepage hero clone — solid purple, stacked WE'RE ALL / STRONG /
- * ON THIS PLANET™, yellow JOIN THE CLUB TODAY!, nested Find a Club pill,
- * single top-right gym photo with bottom-left diagonal cut.
+ * Planet Fitness homepage hero clone — same info, typography, and sizes:
+ * WE'RE ALL (72px) / STRONG (120px yellow) / ON THIS PLANET™ (72px)
+ * JOIN THE CLUB TODAY! (28px yellow)
+ * nested Find a Club search pill + diagonal top-right photo.
  */
 export function LandingHero() {
   const router = useRouter();
@@ -31,23 +32,20 @@ export function LandingHero() {
       aria-labelledby="landing-hero-heading"
       className="relative overflow-hidden bg-[#5f259f] text-white"
     >
-      {/* Soft glow behind headline copy */}
       <div
         aria-hidden
-        className="pointer-events-none absolute left-[-10%] top-1/4 h-[28rem] w-[36rem] rounded-full bg-[#7a3bb8]/35 blur-3xl"
+        className="pointer-events-none absolute left-[-8%] top-[18%] h-[30rem] w-[38rem] rounded-full bg-[#7a3bb8]/40 blur-3xl"
       />
 
-      {/* Single photo — top right, diagonal cutting bottom-left corner */}
+      {/* Top-right photo with bottom-left diagonal cut */}
       <div
-        className="pointer-events-none absolute inset-y-0 right-0 hidden w-[min(58%,44rem)] lg:block"
+        className="pointer-events-none absolute inset-y-0 right-0 hidden w-[54%] xl:w-[52%] lg:block"
         aria-hidden
       >
         <div
           className="relative h-full w-full"
           style={{
-            // Bottom-left of the photo is clipped; diagonal runs
-            // from near top-center of the hero down toward the right.
-            clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 32% 100%)",
+            clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 28% 100%)",
           }}
         >
           <Image
@@ -55,70 +53,60 @@ export function LandingHero() {
             alt="Members training together at Planet Fitness"
             fill
             priority
-            className="object-cover object-[62%_center]"
-            sizes="(max-width: 1280px) 55vw, 700px"
+            className="object-cover object-[60%_center]"
+            sizes="54vw"
           />
         </div>
       </div>
 
-      {/* Mobile photo band */}
       <div className="relative lg:hidden">
-        <div className="relative h-48 w-full sm:h-56">
+        <div className="relative h-44 w-full sm:h-52">
           <Image
             src="/images/strong-hero.jpg"
             alt="Members training together at Planet Fitness"
             fill
             priority
-            className="object-cover object-[center_25%]"
+            className="object-cover object-[center_28%]"
             sizes="100vw"
           />
           <div
             aria-hidden
-            className="absolute inset-0 bg-gradient-to-t from-[#5f259f] via-[#5f259f]/55 to-transparent"
+            className="absolute inset-0 bg-gradient-to-t from-[#5f259f] via-[#5f259f]/60 to-transparent"
           />
         </div>
       </div>
 
-      <div className="relative z-10 mx-auto flex min-h-[min(72vh,38rem)] max-w-6xl items-center px-4 pb-16 pt-4 sm:px-6 md:px-10 lg:py-24">
-        <div className="w-full max-w-lg">
-          <h1
-            id="landing-hero-heading"
-            className="font-display font-black uppercase leading-[0.88] tracking-[-0.02em]"
-          >
-            <span className="block text-[clamp(2.4rem,6vw,4.25rem)] text-white">
-              We&apos;re all
-            </span>
-            <span className="mt-1 block text-[clamp(3.4rem,9vw,6.5rem)] text-[#ffce08]">
-              Strong
-            </span>
-            <span className="mt-1 block text-[clamp(2.4rem,6vw,4.25rem)] text-white">
+      <div className="relative z-10 mx-auto flex min-h-[min(74vh,40rem)] max-w-[1200px] items-center px-5 pb-16 pt-6 sm:px-8 lg:px-12 lg:py-24">
+        <div className="w-full max-w-[34rem]">
+          <h1 id="landing-hero-heading" className="text-white">
+            <span className="pf-type-hero-line block">We&apos;re all</span>
+            <span className="pf-type-hero-strong mt-0.5 block">Strong</span>
+            <span className="pf-type-hero-line mt-0.5 block">
               On this planet
-              <sup className="ml-0.5 text-[0.32em] font-bold tracking-normal">
+              <sup className="ml-0.5 text-[0.28em] font-bold tracking-normal">
                 ™
               </sup>
             </span>
           </h1>
 
-          <p className="mt-6 font-display text-[clamp(1.15rem,2.4vw,1.65rem)] font-bold uppercase tracking-[0.04em] text-[#ffce08]">
-            Join the club today!
-          </p>
+          <p className="pf-type-hero-sub mt-6">Join the club today!</p>
 
-          <form onSubmit={goToClubs} className="mt-8 w-full max-w-[26rem]">
+          <form onSubmit={goToClubs} className="mt-8 w-full max-w-[28rem]">
             <label htmlFor="landing-club-search" className="sr-only">
               Search clubs by address, city, or ZIP
             </label>
-            <div className="flex h-[3.25rem] items-stretch rounded-full bg-white p-1 shadow-[0_10px_28px_-14px_rgba(20,0,36,0.5)]">
+            <div className="flex h-14 items-stretch rounded-full bg-white p-1.5 shadow-[0_10px_28px_-14px_rgba(20,0,36,0.5)]">
               <input
                 id="landing-club-search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search by address, city, or ZIP…"
-                className="h-full min-w-0 flex-1 rounded-full border-0 bg-transparent px-4 text-[15px] text-[#000521] outline-none placeholder:text-[#000521]/40"
+                className="h-full min-w-0 flex-1 rounded-full border-0 bg-transparent px-4 font-sans text-base text-[#000521] outline-none placeholder:text-[#000521]/40"
                 autoComplete="postal-code"
               />
               <button
                 type="submit"
-                className="inline-flex h-full shrink-0 items-center justify-center gap-2 rounded-full bg-[#5f259f] px-4 text-sm font-semibold text-white transition hover:bg-[#6d20ab] sm:px-5"
+                className="inline-flex h-full shrink-0 items-center justify-center gap-2 rounded-full bg-[#5f259f] px-4 font-sans text-[15px] font-semibold text-white transition hover:bg-[#6d20ab] sm:px-5"
               >
                 <Search className="h-4 w-4 shrink-0" aria-hidden />
                 <span className="hidden sm:inline">Find a Club</span>

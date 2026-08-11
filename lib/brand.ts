@@ -77,18 +77,18 @@ export const TYPE_BIBLIOGRAPHY = [
     name: "Barlow Condensed",
     role: "Display / headlines",
     css: "font-display",
-    weights: "500 · 600 · 700",
+    weights: "600 · 700 · 800 · 900",
     usage:
-      "Hero taglines, section titles, membership plan names, uppercase marketing headlines (e.g. A PLACE WHERE EVERYONE FEELS WELCOME).",
-    sample: "A PLACE WHERE EVERYONE FEELS WELCOME",
+      "Hero (WE'RE ALL / STRONG / ON THIS PLANET™), section titles, membership plan names, uppercase marketing headlines.",
+    sample: "WE'RE ALL STRONG ON THIS PLANET™",
   },
   {
-    name: "Source Sans 3",
+    name: "Open Sans",
     role: "Body / UI",
     css: "font-sans",
     weights: "400 · 500 · 600 · 700",
     usage:
-      "Navigation, paragraphs, buttons, legal copy, card body text, and member-app chrome.",
+      "Navigation, paragraphs, buttons, legal copy, card body text, and member-app chrome — matching PF digital body face.",
     sample:
       "The PF App has it all — Crowd Meter, on-demand workouts, and more. Ready to get movin’?",
   },
@@ -121,5 +121,11 @@ GRADIENTS
   Buttons                       #4a148c → #6d20ab
 
 TYPE BIBLIOGRAPHY
-  Display   Barlow Condensed  (font-display)  weights 500–700
-  Body/UI   Source Sans 3     (font-sans)     weights 400–700`;
+  Display   Barlow Condensed  (font-display)  weights 600–900
+  Body/UI   Open Sans         (font-sans)     weights 400–700
+
+HERO TYPE SCALE (desktop)
+  WE'RE ALL / ON THIS PLANET™   72px  (--pf-hero-line)
+  STRONG                        120px (--pf-hero-strong)
+  JOIN THE CLUB TODAY!          28px  (--pf-hero-sub)
+  Section titles                44px  (--pf-section-title)`;

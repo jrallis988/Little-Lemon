@@ -45,11 +45,11 @@ export function MembershipsOverview() {
       <div className="mx-auto max-w-5xl">
         <h2
           id="memberships-heading"
-          className="text-center font-display text-4xl tracking-tight md:text-5xl"
+          className="pf-type-section text-center text-pf-ink"
         >
           Memberships
         </h2>
-        <p className="mx-auto mt-3 max-w-2xl text-center text-sm leading-relaxed text-pf-ink/70 md:text-base">
+        <p className="mx-auto mt-4 max-w-2xl text-center font-sans text-base leading-relaxed text-pf-ink/70">
           We offer the PF Black Card® Membership and Classic Membership. Both
           get you access to The Judgement Free Zone®, and tons of cardio and
           strength equipment.

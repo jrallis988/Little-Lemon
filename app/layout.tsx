@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
-import { Barlow_Condensed, Source_Sans_3 } from "next/font/google";
+import { Barlow_Condensed, Open_Sans } from "next/font/google";
 import "./globals.css";
 
+/** PF-style condensed black for hero / section headlines */
 const display = Barlow_Condensed({
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: ["600", "700", "800", "900"],
   variable: "--font-display",
   display: "swap",
 });
 
-const body = Source_Sans_3({
+/** PF body / UI face (Open Sans) */
+const body = Open_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-body",
