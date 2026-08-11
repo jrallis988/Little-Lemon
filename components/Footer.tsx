@@ -3,6 +3,7 @@ import { candidate } from "@/lib/candidate";
 
 const QUICK_LINKS = [
   { href: "/meet-nick", label: "Meet Nick" },
+  { href: "/violet-party", label: "Violet Party" },
   { href: "/issues", label: "Issues" },
   { href: "/how-to-vote", label: "How to Vote" },
   { href: "/shop", label: "Store" },
@@ -20,8 +21,6 @@ const LEGAL_LINKS = [
 ] as const;
 
 export function Footer() {
-  const year = new Date().getFullYear();
-
   return (
     <footer className="footer-section">
       <div className="footer-top section-padding-100">
@@ -41,14 +40,6 @@ export function Footer() {
                 </p>
                 <ul className="contact-info">
                   <li>
-                    <i className="fa fa-map-marker" aria-hidden />
-                    {candidate.mailAddress}
-                  </li>
-                  <li>
-                    <i className="fa fa-phone" aria-hidden />
-                    {candidate.phone}
-                  </li>
-                  <li>
                     <i className="fa fa-envelope" aria-hidden />
                     <a href={`mailto:${candidate.email}`}>{candidate.email}</a>
                   </li>
@@ -63,17 +54,6 @@ export function Footer() {
                       aria-label="Facebook"
                     >
                       <i className="fa fa-facebook" aria-hidden />
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="twitter"
-                      href={candidate.social.x}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="X (Twitter)"
-                    >
-                      <i className="fa fa-twitter" aria-hidden />
                     </a>
                   </li>
                   <li>
@@ -131,19 +111,6 @@ export function Footer() {
             </div>
           </div>
         </div>
-      </div>
-      <div className="footer-bottom">
-        <p>
-          &copy; {year} {candidate.brandName}. Design based on{" "}
-          <a
-            href="https://themeforest.net/user/Labartisan/portfolio"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Neta by Labartisan
-          </a>
-          .
-        </p>
       </div>
     </footer>
   );

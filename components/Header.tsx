@@ -9,6 +9,7 @@ import { AccessibilityLauncher } from "@/components/a11y/AccessibilityPanel";
 const NAV_LINKS = [
   { href: "/", label: "Home", exact: true },
   { href: "/meet-nick", label: "Meet Nick" },
+  { href: "/violet-party", label: "Violet Party" },
   { href: "/issues", label: "Issues" },
   { href: "/how-to-vote", label: "How to Vote" },
   { href: "/shop", label: "Store" },
@@ -86,9 +87,6 @@ export function Header() {
                 );
               })}
             </ul>
-            <Link href="/how-to-vote" className="custom-btn donate" onClick={() => setOpen(false)}>
-              How to Vote
-            </Link>
             <div className="a11y-nav-slot d-none d-lg-flex">
               <AccessibilityLauncher />
             </div>

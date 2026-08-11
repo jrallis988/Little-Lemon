@@ -141,6 +141,85 @@
   letter-spacing: 0;
 }
 
+/* Circular countdown units in one horizontal row */
+.election-campaign-section .countdown {
+  display: flex !important;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  float: none;
+  width: 100%;
+}
+.election-campaign-section .countdown .countdown-item {
+  float: none !important;
+  width: 88px;
+  height: 88px;
+  margin: 6px;
+  border-radius: 50% !important;
+  transform: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.election-campaign-section .countdown .countdown-item .countdown-item-inner {
+  transform: none !important;
+  text-align: center;
+  line-height: 1.15;
+}
+.election-campaign-section .countdown .countdown-item .countdown-item-inner .count-number {
+  font-size: 28px;
+  display: block;
+}
+.election-campaign-section .countdown .countdown-item .countdown-item-inner .count-text {
+  font-size: 12px;
+  margin: 0;
+}
+@media (max-width: 640px) {
+  .election-campaign-section .countdown .countdown-item {
+    width: 68px;
+    height: 68px;
+    margin: 4px;
+  }
+  .election-campaign-section .countdown .countdown-item .countdown-item-inner .count-number {
+    font-size: 20px;
+  }
+  .election-campaign-section .countdown .countdown-item .countdown-item-inner .count-text {
+    font-size: 10px;
+  }
+}
+
+/* Meet Nick preview (replaces red card + collage) */
+.meet-nick-preview .meet-nick-lead {
+  font-size: 1.125rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+.meet-nick-preview .meet-nick-quote {
+  border: none;
+  margin: 0 auto 1.5rem;
+  max-width: 36rem;
+  padding: 0;
+}
+.meet-nick-preview .meet-nick-quote p {
+  font-size: 1.35rem;
+  font-style: italic;
+  color: #1a2a4e;
+  margin: 0;
+  line-height: 1.45;
+}
+.meet-nick-preview .meet-nick-body {
+  max-width: 40rem;
+  margin: 0 auto 2rem;
+  color: #555;
+}
+
+/* Hide Neta footer copyright strip */
+.footer-section .footer-bottom {
+  display: none !important;
+}
+
 /* Page header breadcrumb links */
 .page-header .breadcrumb a {
   color: #fff;
@@ -220,11 +299,6 @@ body.theme-neta h4 {
   color: #fff;
   margin-top: 1rem;
   text-align: center;
-}
-
-/* Footer attribution */
-.footer-bottom p {
-  margin: 0;
 }
 
 /* Shop / Tailwind islands still readable */
