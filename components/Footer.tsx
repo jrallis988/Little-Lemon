@@ -1,19 +1,20 @@
 import Link from "next/link";
 import { candidate } from "@/lib/candidate";
+import { NH_ELECTIONS_URL } from "@/lib/faq";
 
-const FOOTER_LINKS = [
-  { href: "/meet-nick", label: "Meet Nick" },
-  { href: "/violet-party", label: "Violet Party" },
-  { href: "/issues", label: "Issues" },
-  { href: "/how-to-vote", label: "How to Vote" },
-  { href: "/shop", label: "Store" },
-  { href: "/volunteer", label: "Volunteer" },
+const LEGAL_LINKS = [
   { href: "/privacy", label: "Privacy" },
+  { href: "/terms", label: "Terms" },
   { href: "/accessibility", label: "Accessibility" },
+  { href: "/faq", label: "FAQ" },
+  { href: "/contact", label: "Contact" },
+  { href: NH_ELECTIONS_URL, label: "Election Resources", external: true },
 ] as const;
 
 /** Compact mountain-band footer */
 export function Footer() {
+  const year = new Date().getFullYear();
+
   return (
     <footer className="footer-section site-footer-compact">
       <div className="footer-compact-inner">
@@ -56,16 +57,40 @@ export function Footer() {
                 </li>
               </ul>
             </div>
+          </div>
 
-            <nav className="footer-compact-links" aria-label="Footer">
-              {FOOTER_LINKS.map((link) => (
+          <p className="footer-compact-legal">
+            <span>
+              © {year} {candidate.brandName}. All rights reserved.
+            </span>
+            <span className="footer-compact-sep" aria-hidden>
+              ·
+            </span>
+            <span>Paid for by {candidate.committee}</span>
+            <span className="footer-compact-sep" aria-hidden>
+              ·
+            </span>
+            <span>Powered by Artistic Fountain</span>
+          </p>
+
+          <nav className="footer-compact-links" aria-label="Legal and resources">
+            {LEGAL_LINKS.map((link) =>
+              "external" in link && link.external ? (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {link.label}
+                </a>
+              ) : (
                 <Link key={link.href} href={link.href}>
                   {link.label}
                 </Link>
-              ))}
-            </nav>
-          </div>
-          <p className="footer-compact-paid">Paid for by {candidate.committee}.</p>
+              )
+            )}
+          </nav>
         </div>
       </div>
     </footer>

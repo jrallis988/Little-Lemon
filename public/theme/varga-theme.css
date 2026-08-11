@@ -404,9 +404,10 @@ body.theme-neta h4 {
 .site-footer-compact .footer-compact-links {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 0.35rem 1rem;
-  max-width: 28rem;
+  justify-content: flex-start;
+  gap: 0.35rem 1.1rem;
+  max-width: none;
+  margin-top: 0.65rem;
 }
 .site-footer-compact .footer-compact-links a {
   color: rgba(255, 255, 255, 0.9) !important;
@@ -417,6 +418,19 @@ body.theme-neta h4 {
 .site-footer-compact .footer-compact-links a:hover {
   color: #fff !important;
   text-decoration: underline;
+}
+.site-footer-compact .footer-compact-legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.5rem;
+  margin: 1rem 0 0;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.78);
+}
+.site-footer-compact .footer-compact-sep {
+  color: rgba(255, 255, 255, 0.45);
 }
 .site-footer-compact .footer-compact-paid {
   margin: 0.9rem 0 0;
@@ -430,7 +444,6 @@ body.theme-neta h4 {
   }
   .site-footer-compact .footer-compact-links {
     justify-content: flex-start;
-    max-width: none;
   }
 }
 
