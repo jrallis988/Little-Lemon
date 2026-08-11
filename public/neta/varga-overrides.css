@@ -1,0 +1,25 @@
+/* Varga for Senate — overrides on top of Neta homepage 1 */
+.banner.banner-1 {
+  background: url("./assets/images/homepage1/banner/varga-hero.jpg") center center / cover no-repeat !important;
+}
+.banner.banner-1 .banner-content {
+  background: linear-gradient(90deg, rgba(16, 19, 27, 0.78) 0%, rgba(26, 42, 78, 0.45) 55%, rgba(26, 42, 78, 0.2) 100%);
+}
+.header .logo img {
+  max-height: 52px;
+  width: auto;
+}
+.custom-btn.donate,
+.custom-btn {
+  border-radius: 2px;
+}
+.varga-demo-note {
+  background: #fff3cd;
+  color: #664d03;
+  text-align: center;
+  font-size: 13px;
+  padding: 8px 12px;
+}
+.footer-bottom p a[href*="themeforest"] {
+  /* keep attribution for template author */
+}

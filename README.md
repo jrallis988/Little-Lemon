@@ -33,6 +33,14 @@ Home · Meet Nick · Violet Party · Issues (+ subpages) · How to Vote · Store
 
 Contact · Press · Transparency · Privacy · Terms · Come to My Town · Events · Accessibility · FAQ · Endorsements
 
+## Neta HTML template preview
+
+A Varga-branded adaptation of the uploaded **Neta** political HTML template is available at:
+
+- `/neta/` (or `/neta/index.html`) when the Next.js app is running
+
+Source files live in `reference/neta-template/` and are copied to `public/neta/`. This is a **visual exploration** of the Labartisan Neta layout; the primary product remains the Next.js App Router site at `/`.
+
 ## Develop
 
 ```bash
