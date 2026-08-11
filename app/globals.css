@@ -26,6 +26,15 @@
   --pf-body: 1rem;
   --pf-body-lg: 1.125rem;
 
+  /* Explore Clubs Near You — purple → gold diagonal (PF desktop) */
+  --pf-grad-explore: linear-gradient(
+    135deg,
+    #5f259f 0%,
+    #6d20ab 38%,
+    #a85a2a 72%,
+    #ffb81c 100%
+  );
+
   /* Gradients matching live PF surfaces */
   --pf-grad-footer: linear-gradient(180deg, #5f1092 0%, #3d0958 100%);
   --pf-grad-clubs: linear-gradient(180deg, #6d20ab 0%, #4a148c 55%, #3d0958 100%);
@@ -76,6 +85,10 @@ body {
 
   .pf-grad-promo {
     background-image: var(--pf-grad-promo);
+  }
+
+  .pf-grad-explore {
+    background-image: var(--pf-grad-explore);
   }
 
   /* Subtle mesh like Explore Clubs on planetfitness.com */
