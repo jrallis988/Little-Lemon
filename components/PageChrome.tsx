@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { Breadcrumbs, type Crumb } from "@/components/Breadcrumbs";
+import type { Crumb } from "@/components/Breadcrumbs";
 
 export function PageHero({
   overline,
@@ -14,25 +14,43 @@ export function PageHero({
   breadcrumbs?: Crumb[];
 }) {
   return (
-    <header className="border-b border-slate-line bg-navy">
-      <div className="mx-auto max-w-content section-pad !py-14 md:!py-20">
-        {breadcrumbs && breadcrumbs.length > 0 && (
-          <div className="mb-6 [&_a]:text-white [&_li]:text-white/80 [&_span]:text-white">
-            <Breadcrumbs items={breadcrumbs} />
+    <section className="page-header">
+      <div className="overlay">
+        <div className="container">
+          <div className="page-header-content text-center">
+            {overline && <p className="mb-2 text-white" style={{ opacity: 0.85 }}>{overline}</p>}
+            <h2>{title}</h2>
+            {subtitle && (
+              <p className="mt-3 mb-0 text-white" style={{ maxWidth: 640, margin: "12px auto 0", opacity: 0.9 }}>
+                {subtitle}
+              </p>
+            )}
+            {breadcrumbs && breadcrumbs.length > 0 && (
+              <ul className="breadcrumb justify-content-center">
+                {breadcrumbs.map((crumb, i) => {
+                  const last = i === breadcrumbs.length - 1;
+                  return (
+                    <li key={`${crumb.label}-${i}`} className={last ? "active" : undefined}>
+                      {crumb.href && !last ? (
+                        <Link href={crumb.href}>{crumb.label}</Link>
+                      ) : (
+                        crumb.label
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
           </div>
-        )}
-        <span className="accent-line" aria-hidden />
-        {overline && <p className="section-overline">{overline}</p>}
-        <h1 className="section-headline-light">{title}</h1>
-        {subtitle && <p className="section-lead-light">{subtitle}</p>}
+        </div>
       </div>
-    </header>
+    </section>
   );
 }
 
 export function Prose({ children }: { children: ReactNode }) {
   return (
-    <div className="space-y-5 text-body-lg leading-[1.75] text-slate-text">
+    <div className="space-y-5 text-body-lg leading-[1.75] text-slate-text theme-island">
       {children}
     </div>
   );
@@ -47,14 +65,29 @@ export function CtaRow({
 }) {
   return (
     <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-      <Link href={primary.href} className="btn-primary">
+      <Link href={primary.href} className="custom-btn">
         {primary.label}
       </Link>
       {secondary && (
-        <Link href={secondary.href} className="btn-secondary">
+        <Link href={secondary.href} className="custom-btn" style={{ background: "transparent", border: "2px solid #e72f4b", color: "#e72f4b" }}>
           {secondary.label}
         </Link>
       )}
+    </div>
+  );
+}
+
+/** Optional wrapper for inner page content under the Neta page header */
+export function ThemePageBody({
+  children,
+  narrow = false,
+}: {
+  children: ReactNode;
+  narrow?: boolean;
+}) {
+  return (
+    <div className="theme-page-body">
+      <div className={`container${narrow ? " container-narrow" : ""}`}>{children}</div>
     </div>
   );
 }

@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo_Black, Inter, Lexend } from "next/font/google";
+import { Lexend } from "next/font/google";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { ThemeStyles } from "@/components/theme/ThemeStyles";
 import { AccessibilityProvider } from "@/components/a11y/AccessibilityProvider";
 import { AccessibilityPanel } from "@/components/a11y/AccessibilityPanel";
 import { CookieBanner } from "@/components/CookieBanner";
@@ -9,20 +10,6 @@ import { ChatWidget } from "@/components/ChatWidget";
 import { StoreProvider } from "@/components/store/StoreProvider";
 import { candidate } from "@/lib/candidate";
 import "./globals.css";
-
-const archivoBlack = Archivo_Black({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-archivo-black",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-inter",
-  display: "swap",
-});
 
 const lexend = Lexend({
   subsets: ["latin"],
@@ -74,7 +61,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${archivoBlack.variable} ${inter.variable} ${lexend.variable}`}
+      className={lexend.variable}
       data-theme="light"
       data-contrast="default"
       data-text-scale="100"
@@ -85,7 +72,10 @@ export default function RootLayout({
       data-underline-links="false"
       data-big-targets="false"
     >
-      <body>
+      <head>
+        <ThemeStyles />
+      </head>
+      <body className="theme-neta">
         <AccessibilityProvider>
           <StoreProvider>
             <a href="#main-content" className="skip-link">

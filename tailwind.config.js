@@ -26,13 +26,8 @@ module.exports = {
         light: "#f8f9fa",
       },
       fontFamily: {
-        display: [
-          "var(--font-archivo-black)",
-          "Inter",
-          "Georgia",
-          "serif",
-        ],
-        sans: ["var(--font-inter)", "Georgia", "sans-serif"],
+        display: ["Roboto", "Georgia", "serif"],
+        sans: ["Roboto", "Georgia", "sans-serif"],
         quote: ["Georgia", "Times New Roman", "serif"],
       },
       fontSize: {

@@ -10,12 +10,16 @@ const nextConfig = {
         destination: "/faq",
         permanent: true,
       },
-    ];
-  },
-  async rewrites() {
-    return [
-      { source: "/neta", destination: "/neta/index.html" },
-      { source: "/neta/", destination: "/neta/index.html" },
+      {
+        source: "/neta",
+        destination: "/",
+        permanent: false,
+      },
+      {
+        source: "/neta/",
+        destination: "/",
+        permanent: false,
+      },
     ];
   },
 };

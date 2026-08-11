@@ -4,9 +4,20 @@ Independent write-in campaign site — **People Over Politics.**
 
 ## Stack
 
-- Next.js 14 (App Router) · Tailwind CSS · Lucide React
-- Archivo Black (display) + Inter (body) + Georgia (pull quotes)
-- Design system: navy/slate/charcoal neutrals, red/yellow accents (70/20/10)
+- Next.js 14 (App Router) · React · Tailwind (inner pages / forms)
+- **Neta** political HTML theme (Labartisan) as the primary visual system — Bootstrap + theme CSS under `public/theme/`
+- Roboto (theme default) · Lexend available for dyslexia-friendly mode
+
+## Theme
+
+The live site uses the uploaded Neta homepage-1 template structure:
+
+- Header / footer / hero / about / countdown / issues / get-involved / join sections
+- Assets: `public/theme/assets/`
+- Overrides: `public/theme/varga-theme.css`
+- Original HTML reference: `reference/neta-template/`
+
+Legacy static preview at `/neta/` still exists; the App Router site at `/` is the real product.
 
 ## Demo / placeholder status
 
@@ -15,12 +26,12 @@ This repository currently ships as a **front-end demonstration**. The following 
 | Area | Current behavior |
 |------|------------------|
 | Contact phone | `(603) 555-0142` (placeholder) |
-| Social links | Generic platform homepages (`facebook.com/`, `x.com/`, etc.) — not live profiles |
-| Contact / Volunteer / Join / Town Request forms | Front-end mock: validation + success message only; no email, CRM, or API persistence |
+| Social links | Facebook live; other networks still placeholders |
+| Contact / Volunteer / Join / Town Request forms | Front-end mock: validation + success message only |
 | Store cart | Fully interactive (add / update / remove) |
-| Store checkout | Non-functional demo — no payment gateway, no order database |
+| Store checkout | Non-functional demo — no payment gateway |
 | Privacy & Terms | Show **LEGAL REVIEW REQUIRED** banner |
-| Cookie banner | Mentions analytics for display / draft policy purposes; **no live tracking scripts or pixels are loaded** |
+| Cookie banner | Mentions analytics for draft policy; **no live tracking scripts** |
 | Photos / testimonials / events | Placeholder content flagged for campaign replacement |
 
 Central flags and copy live in `lib/demo.ts`.
@@ -32,14 +43,6 @@ Home · Meet Nick · Violet Party · Issues (+ subpages) · How to Vote · Store
 ## Secondary
 
 Contact · Press · Transparency · Privacy · Terms · Come to My Town · Events · Accessibility · FAQ · Endorsements
-
-## Neta HTML template preview
-
-A Varga-branded adaptation of the uploaded **Neta** political HTML template is available at:
-
-- `/neta/` (or `/neta/index.html`) when the Next.js app is running
-
-Source files live in `reference/neta-template/` and are copied to `public/neta/`. This is a **visual exploration** of the Labartisan Neta layout; the primary product remains the Next.js App Router site at `/`.
 
 ## Develop
 
@@ -53,3 +56,4 @@ npm run dev
 - General Election: **November 3, 2026** (write in “Nick Varga”)
 - No live donation flows on this site
 - See `lib/candidate.ts` for contact/social placeholders
+- Template attribution: Neta by Labartisan (footer)

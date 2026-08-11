@@ -1,3 +1,11 @@
+@import url("/theme/assets/css/bootstrap.min.css");
+@import url("/theme/assets/css/animate.css");
+@import url("/theme/assets/css/font-awesome.min.css");
+@import url("/theme/assets/css/swiper.min.css");
+@import url("/theme/assets/css/lightcase.css");
+@import url("/theme/assets/css/style.css");
+@import url("/theme/varga-theme.css");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -148,15 +156,18 @@ html[data-big-targets="true"] {
   }
 
   body {
-    @apply bg-warm-white font-sans text-body-lg text-slate-text antialiased;
     line-height: var(--line-space);
     letter-spacing: var(--letter-space);
-    /* Keep sticky header anchored; avoid overflow breaking sticky positioning */
     overflow-x: clip;
   }
 
+  /* Inner Tailwind islands (shop, forms) keep prior tokens when needed */
+  body:not(.theme-neta) {
+    @apply bg-warm-white font-sans text-body-lg text-slate-text antialiased;
+  }
+
   html[data-font="dyslexia"] body {
-    font-family: var(--font-lexend), var(--font-inter), Georgia, sans-serif;
+    font-family: var(--font-lexend), "Roboto", Georgia, sans-serif !important;
   }
 
   :focus-visible {
@@ -164,10 +175,10 @@ html[data-big-targets="true"] {
     outline-offset: 2px;
   }
 
-  h1,
-  h2,
-  h3,
-  h4 {
+  body:not(.theme-neta) h1,
+  body:not(.theme-neta) h2,
+  body:not(.theme-neta) h3,
+  body:not(.theme-neta) h4 {
     @apply font-display text-ink;
   }
 
@@ -259,10 +270,6 @@ html[data-big-targets="true"] {
     @apply mb-1.5 block text-sm font-semibold text-slate-text;
   }
 
-  .skip-link {
-    @apply absolute left-4 top-0 z-[100] -translate-y-full rounded-cta bg-red px-4 py-2 font-display text-cta uppercase text-white transition-transform focus:translate-y-4;
-  }
-
   .pull-quote {
     @apply border-l-4 border-red pl-5 font-quote text-quote italic text-slate-text;
   }
@@ -290,202 +297,6 @@ html[data-big-targets="true"] {
   .nav-link-current {
     @apply text-navy underline decoration-red decoration-2 underline-offset-4;
     background-color: color-mix(in srgb, var(--granite) 60%, transparent);
-  }
-
-  /* —— Site header (fixed overlay → frosted glass) —— */
-  .site-header {
-    position: fixed;
-    inset: 0 0 auto 0;
-    z-index: 50;
-    width: 100%;
-  }
-
-  .site-header__spacer {
-    height: var(--site-header-h);
-    width: 100%;
-    flex-shrink: 0;
-  }
-
-  .site-header__surface {
-    width: 100%;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    /* Dark glass over sky/trees — no bright bar fill */
-    background-color: rgba(0, 0, 0, 0.32);
-    box-shadow: none;
-    -webkit-backdrop-filter: blur(12px) saturate(1.1);
-    backdrop-filter: blur(12px) saturate(1.1);
-    transition:
-      background-color 0.35s ease,
-      border-color 0.35s ease,
-      box-shadow 0.35s ease,
-      backdrop-filter 0.35s ease,
-      -webkit-backdrop-filter 0.35s ease;
-  }
-
-  .site-header[data-elevated="true"] .site-header__surface {
-    border-bottom-color: rgba(255, 255, 255, 0.1);
-    background-color: rgba(24, 24, 27, 0.72);
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
-    -webkit-backdrop-filter: blur(16px) saturate(1.15);
-    backdrop-filter: blur(16px) saturate(1.15);
-  }
-
-  .site-header__inner {
-    display: flex;
-    width: 100%;
-    height: var(--site-header-h);
-    max-width: none;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding-inline: clamp(1rem, 3vw, 2.5rem);
-  }
-
-  .site-header__logo {
-    position: relative;
-    display: block;
-    height: 3rem;
-    width: 10.5rem;
-    flex-shrink: 0;
-    filter: drop-shadow(0 1px 6px rgba(0, 0, 0, 0.45));
-  }
-
-  @media (min-width: 640px) {
-    .site-header__logo {
-      height: 3.75rem;
-      width: 13.5rem;
-    }
-  }
-
-  .site-header__desktop {
-    display: none;
-    min-width: 0;
-    flex: 1 1 auto;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 0.35rem;
-  }
-
-  @media (min-width: 1280px) {
-    .site-header__desktop {
-      display: flex;
-    }
-  }
-
-  .site-header__link {
-    border-radius: var(--radius-cta, 0.35rem);
-    padding: 0.5rem 0.75rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.94);
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
-    transition: color 0.25s ease, background-color 0.25s ease;
-  }
-
-  .site-header__link:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #fff;
-  }
-
-  .site-header__link.is-current {
-    background-color: rgba(255, 255, 255, 0.14);
-    color: #fff;
-  }
-
-  .site-header__cta {
-    margin-left: 0.5rem;
-    flex-shrink: 0;
-    padding: 0.7rem 1.15rem !important;
-    font-size: 0.75rem !important;
-  }
-
-  .site-header__cta-sm {
-    padding: 0.55rem 0.8rem !important;
-    font-size: 0.7rem !important;
-  }
-
-  .site-header__a11y {
-    margin-inline: 0.25rem;
-  }
-
-  .site-header__a11y--compact :is(button) {
-    padding-inline: 0.55rem;
-  }
-
-  @media (max-width: 639px) {
-    .site-header__a11y--compact :is(button) {
-      font-size: 0;
-      gap: 0;
-      padding: 0.55rem;
-    }
-
-    .site-header__a11y--compact :is(button) svg {
-      margin: 0;
-    }
-  }
-
-  .site-header__mobile-actions {
-    display: flex;
-    flex-shrink: 0;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  @media (min-width: 1280px) {
-    .site-header__mobile-actions {
-      display: none;
-    }
-  }
-
-  .site-header__menu-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: var(--radius-cta, 0.35rem);
-    border: 1px solid rgba(255, 255, 255, 0.55);
-    background-color: rgba(255, 255, 255, 0.08);
-    padding: 0.55rem 0.75rem;
-    color: #fff;
-    transition: background-color 0.25s ease, border-color 0.25s ease;
-  }
-
-  .site-header__menu-btn:hover {
-    border-color: rgba(255, 255, 255, 0.8);
-    background-color: rgba(255, 255, 255, 0.16);
-  }
-
-  .site-header__drawer {
-    width: 100%;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    background-color: rgba(9, 9, 11, 0.88);
-    padding: 1rem clamp(1rem, 3vw, 2.5rem) 1.25rem;
-    -webkit-backdrop-filter: blur(16px);
-    backdrop-filter: blur(16px);
-  }
-
-  .site-header__drawer ul {
-    display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
-  }
-
-  .site-header__drawer-link {
-    display: block;
-    border-radius: var(--radius-cta, 0.35rem);
-    padding: 0.75rem 0.85rem;
-    font-size: 1rem;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.92);
-  }
-
-  .site-header__drawer-link:hover {
-    background-color: rgba(255, 255, 255, 0.08);
-    color: #fff;
-  }
-
-  .site-header__drawer-link.is-current {
-    color: #fff;
-    background-color: rgba(255, 255, 255, 0.12);
   }
 }
 

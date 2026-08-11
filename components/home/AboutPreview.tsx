@@ -1,76 +1,116 @@
-import Image from "next/image";
 import Link from "next/link";
 import { candidate } from "@/lib/candidate";
-import { SectionIntro } from "@/components/SectionIntro";
 
 export function AboutPreview() {
   return (
-    <section
-      id="meet-preview"
-      aria-labelledby="meet-preview-heading"
-      className="scroll-mt-28 bg-warm-white"
-    >
-      <div className="mx-auto max-w-content section-pad">
-        <SectionIntro
-          overline="Meet Nick"
-          title={
-            <>
-              Nick Varga,
-              <br />
-              New Hampshire.
-            </>
-          }
-          lead="Born and raised in Newmarket, proudly representing Rockingham County, Nick understands the values and challenges facing New Hampshire families. His commitment to public service is rooted in the belief that elected officials must work for the people — not special interests, not corporations, not political insiders."
-          titleId="meet-preview-heading"
-        />
-
-        <div className="mt-12 grid gap-10 lg:grid-cols-2 lg:gap-16">
-          <div className="space-y-6">
-            <h3 className="font-display text-card-display font-normal text-ink">
-              A Commitment to Independence and Integrity
-            </h3>
-            <blockquote className="pull-quote">
-              “{candidate.pullQuote}”
-              <footer className="mt-3 font-sans text-sm font-semibold not-italic text-slate-muted">
-                — Nick Varga
-              </footer>
-            </blockquote>
-            <p className="text-body-lg text-slate-text">
-              This is the foundation of Nick’s campaign: putting New Hampshire
-              first, always. Whether fighting for good-paying jobs, affordable
-              healthcare, or supporting our veterans, Nick will never waver from
-              his commitment to serve the people who elected him.
-            </p>
-            <Link href="/meet-nick" className="link-cta">
-              Learn More About Nick →
-            </Link>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-            <figure className="relative aspect-[4/5] overflow-hidden bg-paper">
-              <Image
-                src="/images/candidate-portrait.svg"
-                alt="Nick Varga · Newmarket, NH"
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 40vw"
-              />
-              <figcaption className="absolute bottom-0 inset-x-0 bg-ink/80 px-3 py-2 text-sm text-white">
-                Nick Varga · Newmarket, NH
-              </figcaption>
-            </figure>
-            <figure className="relative aspect-[4/5] overflow-hidden bg-paper">
-              <Image
-                src="/images/town-hall.svg"
-                alt="Nick Varga on the campaign trail"
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 40vw"
-              />
-              <figcaption className="absolute bottom-0 inset-x-0 bg-ink/80 px-3 py-2 text-sm text-white">
-                On the campaign trail
-              </figcaption>
-            </figure>
+    <section className="about-section section-bg-color home-1" aria-labelledby="about-heading">
+      <div className="about-section-content">
+        <div className="container">
+          <div className="row justify-content-center flex-row-reverse">
+            <div className="col-xl-5">
+              <div className="about-politican">
+                <div className="about-bio d-flex flex-wrap">
+                  <div className="politician-thumb">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/images/candidate-portrait.svg"
+                      alt={`${candidate.fullName} portrait placeholder`}
+                    />
+                  </div>
+                  <div className="politician-content text-center text-sm-left">
+                    <h4 className="name" id="about-heading">
+                      {candidate.fullName}
+                    </h4>
+                    <p className="designation">
+                      Independent Write-In · {candidate.hometown}, NH
+                    </p>
+                    <ul className="social-media justify-content-center justify-content-md-start">
+                      <li>
+                        <a
+                          className="facebook"
+                          href={candidate.social.facebook}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="Facebook"
+                        >
+                          <i className="fa fa-facebook" aria-hidden />
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          className="twitter"
+                          href={candidate.social.x}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="X (Twitter)"
+                        >
+                          <i className="fa fa-twitter" aria-hidden />
+                        </a>
+                      </li>
+                      <li>
+                        <Link className="linkedin" href="/contact" aria-label="Contact">
+                          <i className="fa fa-envelope" aria-hidden />
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div className="about-qoute">
+                  <h5>
+                    <i>
+                      I serve the people of New Hampshire — not party bosses, not donors.
+                    </i>
+                  </h5>
+                  <p>{candidate.coreStatement}</p>
+                </div>
+              </div>
+            </div>
+            <div className="col-xl-7">
+              <div className="about-media row no-gutters">
+                <div className="col-md-12">
+                  <div className="media-thumb">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/theme/assets/images/homepage1/banner/varga-hero.jpg"
+                      alt="Newmarket, New Hampshire"
+                      className="w-100"
+                    />
+                  </div>
+                </div>
+                <div className="col-md-4">
+                  <div className="media-thumb">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/theme/assets/images/homepage1/about/media/02.jpg"
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div className="col-md-4">
+                  <div className="media-thumb">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/theme/assets/images/homepage1/about/media/03.jpg"
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div className="col-md-4">
+                  <div className="media-thumb">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/theme/assets/images/homepage1/about/media/04.jpg"
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div className="col-md-12">
+                  <Link href="/meet-nick" className="view-more">
+                    <i className="fa fa-angle-double-right" aria-hidden /> Meet Nick
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
