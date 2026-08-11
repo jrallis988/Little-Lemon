@@ -16,12 +16,12 @@ export type ScreenDef = {
 
 export const SCREENS: ScreenDef[] = [
   // —— Public Web 01–20 ——
-  { id: 1, code: "01", name: "Join offer", surface: "web", route: "/#offer", status: "live" },
-  { id: 2, code: "02", name: "Club locator", surface: "web", route: "/#clubs", status: "live" },
+  { id: 1, code: "01", name: "STRONG hero", surface: "web", route: "/", status: "live" },
+  { id: 2, code: "02", name: "Explore clubs near you", surface: "web", route: "/#clubs", status: "live" },
   { id: 3, code: "03", name: "Memberships", surface: "web", route: "/#pricing", status: "live" },
   { id: 4, code: "04", name: "Summer Pass", surface: "web", route: "/#summer-pass", status: "live" },
-  { id: 5, code: "05", name: "Welcome perks", surface: "web", route: "/", status: "live" },
-  { id: 6, code: "06", name: "App promo", surface: "web", route: "/", status: "live" },
+  { id: 5, code: "05", name: "Welcome perks", surface: "web", route: "/#welcome", status: "live" },
+  { id: 6, code: "06", name: "App promo", surface: "web", route: "/#app-promo", status: "live" },
   { id: 7, code: "07", name: "App highlights", surface: "web", route: "/", status: "live" },
   { id: 8, code: "08", name: "Virtual tour", surface: "web", route: "/#tour", status: "live" },
   { id: 9, code: "09", name: "Get Started", surface: "web", route: "/", status: "live" },
@@ -30,11 +30,11 @@ export const SCREENS: ScreenDef[] = [
   { id: 12, code: "12", name: "Join confirm", surface: "web", route: "/join", status: "live" },
   { id: 13, code: "13", name: "Join identity", surface: "web", route: "/join", status: "live" },
   { id: 14, code: "14", name: "Join payment", surface: "web", route: "/join", status: "live" },
-  { id: 15, code: "15", name: "Mobile join offer", surface: "web", route: "/", status: "live" },
-  { id: 16, code: "16", name: "Mobile club locator", surface: "web", route: "/#clubs", status: "live" },
+  { id: 15, code: "15", name: "Mobile STRONG hero", surface: "web", route: "/", status: "live" },
+  { id: 16, code: "16", name: "Mobile club cards", surface: "web", route: "/#clubs", status: "live" },
   { id: 17, code: "17", name: "Mobile memberships", surface: "web", route: "/#pricing", status: "live" },
   { id: 18, code: "18", name: "Mobile Summer Pass", surface: "web", route: "/#summer-pass", status: "live" },
-  { id: 19, code: "19", name: "Mobile app promo", surface: "web", route: "/", status: "live" },
+  { id: 19, code: "19", name: "Mobile app promo", surface: "web", route: "/#app-promo", status: "live" },
   { id: 20, code: "20", name: "Mobile footer", surface: "web", route: "/", status: "live" },
 
   // —— Member App Core 21–65 ——

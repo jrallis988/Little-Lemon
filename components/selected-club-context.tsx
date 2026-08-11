@@ -7,7 +7,8 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import type { Club } from "@/lib/clubs";
+import { getClubById, type Club } from "@/lib/clubs";
+import { HOME_CLUB } from "@/lib/home-club";
 
 type SelectedClubContextValue = {
   club: Club | null;
@@ -19,7 +20,7 @@ const SelectedClubContext = createContext<SelectedClubContextValue | null>(
 );
 
 export function SelectedClubProvider({ children }: { children: ReactNode }) {
-  const [club, setClub] = useState<Club | null>(null);
+  const [club, setClub] = useState<Club | null>(() => getClubById(HOME_CLUB.id));
   const value = useMemo(() => ({ club, setClub }), [club]);
   return (
     <SelectedClubContext.Provider value={value}>

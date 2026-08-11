@@ -2,18 +2,16 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Menu, User, X } from "lucide-react";
 import { PlanetFitnessLogo } from "@/components/brand-logo";
 import { Button } from "@/components/ui/button";
 
 const NAV = [
-  { href: "/#clubs", label: "Our Club" },
   { href: "/#pricing", label: "Memberships" },
-  { href: "/#summer-pass", label: "Summer Pass" },
-  { href: "/#app-promo", label: "PF App" },
-  { href: "/#workout-guides", label: "Workout Guides" },
+  { href: "/#welcome", label: "Why PF" },
+  { href: "/#workout-guides", label: "Work Out With Us" },
+  { href: "/#clubs", label: "Clubs" },
   { href: "/brand", label: "Brand" },
-  { href: "/join", label: "Join Now" },
 ];
 
 export function SiteHeader() {
@@ -30,9 +28,25 @@ export function SiteHeader() {
             asChild
             variant="ghost"
             size="sm"
+            className="hidden text-pf-ink hover:bg-pf-mist hover:text-pf-purple lg:inline-flex"
+          >
+            <Link href="/#pricing">Memberships</Link>
+          </Button>
+          <Button
+            asChild
+            variant="ghost"
+            size="sm"
             className="hidden text-pf-ink hover:bg-pf-mist hover:text-pf-purple md:inline-flex"
           >
-            <Link href="/#clubs">Our Club</Link>
+            <Link href="/#welcome">Why PF</Link>
+          </Button>
+          <Button
+            asChild
+            variant="ghost"
+            size="sm"
+            className="hidden text-pf-ink hover:bg-pf-mist hover:text-pf-purple xl:inline-flex"
+          >
+            <Link href="/#workout-guides">Work Out With Us</Link>
           </Button>
           <Button
             asChild
@@ -40,18 +54,13 @@ export function SiteHeader() {
             size="sm"
             className="hidden text-pf-ink hover:bg-pf-mist hover:text-pf-purple sm:inline-flex"
           >
-            <Link href="/#pricing">Memberships</Link>
+            <Link href="/app" className="gap-1.5">
+              <User className="h-4 w-4" aria-hidden />
+              My Account
+            </Link>
           </Button>
           <Button asChild variant="purple" size="sm">
             <Link href="/join">Join Now</Link>
-          </Button>
-          <Button
-            asChild
-            variant="ghost"
-            size="sm"
-            className="hidden text-pf-ink hover:bg-pf-mist hover:text-pf-purple lg:inline-flex"
-          >
-            <Link href="/app">Member App</Link>
           </Button>
           <button
             type="button"
@@ -73,17 +82,19 @@ export function SiteHeader() {
           className="border-t border-pf-line bg-white px-4 py-3 md:hidden"
         >
           <ul className="space-y-1">
-            {[...NAV, { href: "/app", label: "Member App" }].map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className="block rounded-xl px-3 py-2.5 text-sm font-semibold text-pf-ink hover:bg-pf-mist hover:text-pf-purple"
-                  onClick={() => setOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
+            {[...NAV, { href: "/app", label: "My Account" }, { href: "/join", label: "Join Now" }].map(
+              (item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="block rounded-xl px-3 py-2.5 text-sm font-semibold text-pf-ink hover:bg-pf-mist hover:text-pf-purple"
+                    onClick={() => setOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              )
+            )}
           </ul>
         </nav>
       ) : null}
