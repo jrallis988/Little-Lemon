@@ -320,6 +320,120 @@ body.theme-neta h4 {
   text-align: center;
 }
 
+/* Compact mountain footer */
+.site-footer-compact.footer-section {
+  background: transparent;
+  margin: 0;
+  padding: 0;
+}
+.site-footer-compact .footer-compact-inner {
+  position: relative;
+  background-image: url("/images/footer-mountains.jpg");
+  background-position: center 62%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 28px 0 20px;
+  color: #fff;
+}
+.site-footer-compact .footer-compact-inner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 16, 32, 0.35) 0%,
+    rgba(8, 12, 24, 0.72) 55%,
+    rgba(6, 10, 20, 0.88) 100%
+  );
+  pointer-events: none;
+}
+.site-footer-compact .footer-compact-inner > .container {
+  position: relative;
+  z-index: 1;
+}
+.site-footer-compact .footer-compact-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.25rem 2rem;
+}
+.site-footer-compact .footer-compact-logo img {
+  max-height: 40px;
+  width: auto;
+  filter: brightness(0) invert(1);
+}
+.site-footer-compact .footer-compact-tagline {
+  margin: 0.4rem 0 0.35rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92);
+}
+.site-footer-compact .footer-compact-email {
+  display: inline-block;
+  color: #fff !important;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+.site-footer-compact .footer-compact-email:hover {
+  color: #f4d03f !important;
+}
+.site-footer-compact .footer-compact-social {
+  margin: 0.65rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  gap: 0.5rem;
+}
+.site-footer-compact .footer-compact-social a {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff !important;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+}
+.site-footer-compact .footer-compact-social a:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+.site-footer-compact .footer-compact-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.35rem 1rem;
+  max-width: 28rem;
+}
+.site-footer-compact .footer-compact-links a {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.site-footer-compact .footer-compact-links a:hover {
+  color: #fff !important;
+  text-decoration: underline;
+}
+.site-footer-compact .footer-compact-paid {
+  margin: 0.9rem 0 0;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+@media (max-width: 767px) {
+  .site-footer-compact .footer-compact-inner {
+    padding: 22px 0 16px;
+    background-position: center 70%;
+  }
+  .site-footer-compact .footer-compact-links {
+    justify-content: flex-start;
+    max-width: none;
+  }
+}
+
 /* Shop / Tailwind islands still readable */
 .theme-island {
   font-family: "Roboto", sans-serif;

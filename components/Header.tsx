@@ -6,8 +6,8 @@ import { usePathname } from "next/navigation";
 import { candidate } from "@/lib/candidate";
 import { AccessibilityLauncher } from "@/components/a11y/AccessibilityPanel";
 
+/** Right-side nav tabs — order locked to campaign request */
 const NAV_LINKS = [
-  { href: "/", label: "Home", exact: true },
   { href: "/meet-nick", label: "Meet Nick" },
   { href: "/violet-party", label: "Violet Party" },
   { href: "/issues", label: "Issues" },
@@ -16,8 +16,7 @@ const NAV_LINKS = [
   { href: "/volunteer", label: "Volunteer" },
 ] as const;
 
-function linkActive(pathname: string, href: string, exact?: boolean) {
-  if (exact) return pathname === href;
+function linkActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
@@ -67,16 +66,12 @@ export function Header() {
           </button>
 
           <div
-            className={`navbar-collapse neta-nav-collapse${open ? " is-open" : ""}`}
+            className={`navbar-collapse neta-nav-collapse justify-content-end${open ? " is-open" : ""}`}
             id={menuId}
           >
             <ul className="nav navbar-nav ml-auto">
               {NAV_LINKS.map((item) => {
-                const active = linkActive(
-                  pathname,
-                  item.href,
-                  "exact" in item ? item.exact : false
-                );
+                const active = linkActive(pathname, item.href);
                 return (
                   <li key={item.href} className={active ? "active" : undefined}>
                     <Link href={item.href} onClick={() => setOpen(false)}>
