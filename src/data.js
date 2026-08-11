@@ -28,7 +28,7 @@ export const SITE = {
   mapLink:
     "https://www.openstreetmap.org/?mlat=42.94326&mlon=-70.79161#map=16/42.94326/-70.79161",
   social: {
-    facebook: "https://www.facebook.com/seascape.inn.1",
+    facebook: "https://www.facebook.com/TheSeaScapeInn",
   },
   checkIn: "3:00 PM",
   checkOut: "10:00 AM",
