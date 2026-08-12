@@ -50,14 +50,37 @@
 .banner.banner-1.varga-hero .varga-hero-sub {
   animation: varga-fade-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.16s both;
 }
+.banner.banner-1.varga-hero .varga-hero-cta {
+  animation: varga-fade-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.28s both;
+}
 
-/* Larger hero tagline — closer to the earlier full-bleed treatment */
+/* Grounded hero stack: headline → line → CTA, vertically centered (not floating high) */
+.banner.banner-1.varga-hero {
+  height: min(100vh, 52rem);
+  min-height: 28rem;
+}
+@media (max-width: 1370px) {
+  .banner.banner-1.varga-hero {
+    height: min(100vh, 48rem);
+  }
+}
+.banner.banner-1.varga-hero .banner-content {
+  top: auto;
+  bottom: 0;
+  transform: none;
+  display: flex;
+  align-items: flex-end;
+  padding: clamp(5.5rem, 12vh, 7.5rem) 0 clamp(2.75rem, 7vh, 4.5rem);
+}
+.banner.banner-1.varga-hero .varga-hero-copy {
+  max-width: 40rem;
+}
 .banner .banner-content .banner-content-text h1.hero-tagline {
   font-size: clamp(3.25rem, 8vw, 6rem);
   line-height: 1.05;
   font-weight: 700;
   letter-spacing: 0.5px;
-  margin-bottom: 1rem;
+  margin: 0 0 1.1rem;
   max-width: 14ch;
 }
 @media (max-width: 575px) {
@@ -65,9 +88,16 @@
     font-size: clamp(2.5rem, 12vw, 3.5rem);
   }
 }
-.banner .banner-content .banner-content-text h6 {
-  font-size: clamp(1.05rem, 2.2vw, 1.5rem);
-  max-width: 36rem;
+.banner.banner-1.varga-hero .varga-hero-sub {
+  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+  max-width: 32rem;
+  margin: 0 0 1.75rem;
+  line-height: 1.45;
+  opacity: 0.95;
+}
+.banner.banner-1.varga-hero .varga-hero-cta {
+  margin-top: 0;
+  display: inline-block;
 }
 
 .header .logo img,
@@ -479,6 +509,119 @@ body.theme-neta h4 {
   font-family: "Roboto", sans-serif;
 }
 
+/* District 21 splash gate */
+.district-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background:
+    linear-gradient(160deg, rgba(16, 19, 27, 0.92) 0%, rgba(26, 42, 78, 0.88) 55%, rgba(16, 19, 27, 0.94) 100%),
+    url("./assets/images/homepage1/banner/varga-hero.jpg") center center / cover no-repeat;
+}
+.district-gate--loading {
+  background: #1a2a4e;
+}
+.district-gate__card {
+  width: min(34rem, 100%);
+  padding: clamp(1.75rem, 4vw, 2.75rem);
+  background: rgba(247, 244, 238, 0.97);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.35);
+  text-align: center;
+}
+.district-gate__card--404 {
+  background: #10131b;
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #f7f4ee;
+}
+.district-gate__eyebrow {
+  margin: 0 0 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #c62834;
+}
+.district-gate__code {
+  margin: 0 0 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #e72f4b;
+}
+.district-gate__title {
+  margin: 0;
+  font-size: clamp(1.55rem, 3.5vw, 2.15rem);
+  line-height: 1.2;
+  font-weight: 700;
+  color: #10131b;
+}
+.district-gate__card--404 .district-gate__title {
+  color: #f7f4ee;
+}
+.district-gate__lead {
+  margin: 1rem 0 0;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: #3c4353;
+}
+.district-gate__card--404 .district-gate__lead {
+  color: rgba(247, 244, 238, 0.82);
+}
+.district-gate__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+.district-gate__btn {
+  min-width: 7.5rem;
+  padding: 0.85rem 1.5rem;
+  border: 2px solid transparent;
+  font-family: "Roboto", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.district-gate__btn--yes {
+  background: #c62834;
+  color: #fff;
+}
+.district-gate__btn--yes:hover {
+  background: #9f1020;
+  transform: translateY(-1px);
+}
+.district-gate__btn--no {
+  background: transparent;
+  border-color: #1a2a4e;
+  color: #1a2a4e;
+}
+.district-gate__btn--no:hover {
+  background: #1a2a4e;
+  color: #fff;
+  transform: translateY(-1px);
+}
+.district-gate__card--404 .district-gate__btn--yes {
+  background: #e72f4b;
+}
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-motion="no-preference"]) .district-gate__btn:hover {
+    transform: none;
+  }
+}
+html[data-motion="reduce"] .district-gate__btn:hover {
+  transform: none;
+}
+
 /* ——— Motion system (presence / hierarchy; respects data-motion) ——— */
 
 .varga-reveal.is-pending {
@@ -596,7 +739,8 @@ body.theme-neta h4 {
     transform: none !important;
   }
   html:not([data-motion="no-preference"]) .banner.banner-1.varga-hero .varga-hero-title,
-  html:not([data-motion="no-preference"]) .banner.banner-1.varga-hero .varga-hero-sub {
+  html:not([data-motion="no-preference"]) .banner.banner-1.varga-hero .varga-hero-sub,
+  html:not([data-motion="no-preference"]) .banner.banner-1.varga-hero .varga-hero-cta {
     animation: none !important;
   }
   html:not([data-motion="no-preference"]) .varga-reveal.is-pending {
@@ -621,7 +765,8 @@ html[data-motion="reduce"] .banner.banner-1.varga-hero::before {
   transform: none !important;
 }
 html[data-motion="reduce"] .banner.banner-1.varga-hero .varga-hero-title,
-html[data-motion="reduce"] .banner.banner-1.varga-hero .varga-hero-sub {
+html[data-motion="reduce"] .banner.banner-1.varga-hero .varga-hero-sub,
+html[data-motion="reduce"] .banner.banner-1.varga-hero .varga-hero-cta {
   animation: none !important;
 }
 html[data-motion="reduce"] .varga-reveal.is-pending {
