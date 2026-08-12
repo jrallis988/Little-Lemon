@@ -4,9 +4,8 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ThemeStyles } from "@/components/theme/ThemeStyles";
 import { AccessibilityProvider } from "@/components/a11y/AccessibilityProvider";
-import { AccessibilityPanel } from "@/components/a11y/AccessibilityPanel";
+import { AccessibilityFab, AccessibilityPanel } from "@/components/a11y/AccessibilityPanel";
 import { CookieBanner } from "@/components/CookieBanner";
-import { ChatWidget } from "@/components/ChatWidget";
 import { StoreProvider } from "@/components/store/StoreProvider";
 import { candidate } from "@/lib/candidate";
 import "./globals.css";
@@ -87,8 +86,8 @@ export default function RootLayout({
             </main>
             <Footer />
             <AccessibilityPanel />
+            <AccessibilityFab />
             <CookieBanner />
-            <ChatWidget />
           </StoreProvider>
         </AccessibilityProvider>
       </body>

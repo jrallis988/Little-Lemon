@@ -4,7 +4,6 @@ import { useEffect, useId, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { candidate } from "@/lib/candidate";
-import { AccessibilityLauncher } from "@/components/a11y/AccessibilityPanel";
 
 /** Right-side nav tabs — order locked to campaign request */
 const NAV_LINKS = [
@@ -81,9 +80,6 @@ export function Header() {
                 );
               })}
             </ul>
-            <div className="a11y-nav-slot d-none d-lg-flex">
-              <AccessibilityLauncher />
-            </div>
           </div>
         </nav>
       </div>

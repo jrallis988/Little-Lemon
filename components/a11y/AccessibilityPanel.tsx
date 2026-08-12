@@ -115,6 +115,7 @@ function Toggle({
   );
 }
 
+/** Pill/label launcher (kept for optional on-page use). */
 export function AccessibilityLauncher({
   tone = "onDark",
 }: {
@@ -135,6 +136,25 @@ export function AccessibilityLauncher({
       <Accessibility className="h-4 w-4" aria-hidden />
       Accessibility
     </button>
+  );
+}
+
+/** Circular floating control — replaces the former chat message FAB. */
+export function AccessibilityFab() {
+  const { openPanel, panelOpen } = useA11y();
+  return (
+    <div className="pointer-events-none fixed bottom-5 right-5 z-[85] sm:bottom-6 sm:right-6">
+      <button
+        type="button"
+        onClick={openPanel}
+        className="pointer-events-auto inline-flex h-14 w-14 items-center justify-center rounded-full bg-white text-ink shadow-[0_8px_24px_rgba(16,19,27,0.28)] ring-1 ring-black/5 transition hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red focus-visible:ring-offset-2"
+        aria-haspopup="dialog"
+        aria-expanded={panelOpen}
+        aria-label="Open accessibility settings"
+      >
+        <Accessibility className="h-7 w-7" aria-hidden strokeWidth={1.75} />
+      </button>
+    </div>
   );
 }
 

@@ -311,17 +311,6 @@
   top: 1rem;
 }
 
-/* Accessibility launcher sits in nav without breaking Neta */
-.header .a11y-nav-slot {
-  display: flex;
-  align-items: center;
-  margin-left: 12px;
-}
-.header .a11y-nav-slot button {
-  color: #fff !important;
-  border-color: rgba(255, 255, 255, 0.55) !important;
-}
-
 /* Inner pages: keep absolute header clear of first content when no page-header */
 body.theme-neta main > *:first-child:not(.banner):not(.page-header) {
   padding-top: 96px;
