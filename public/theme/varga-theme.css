@@ -1,65 +1,75 @@
 /* Varga for Senate — theme bridge on top of Neta (Labartisan) */
 
-/*
- * Hero — deep navy field, in-flow flex layout (no absolute clip),
- * balanced proportions, type contained inside the container.
- */
+/* Hero: background photo + readable left wash; keep type inside the container */
 .banner.banner-1.varga-hero {
-  --varga-hero-navy: #1a2a4e;
-  --varga-hero-ink: #10131b;
   box-sizing: border-box;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
   width: 100%;
   max-width: 100%;
-  /* Override Neta 100vh / 120vh — grow with content, cap for balance */
-  height: auto !important;
-  min-height: clamp(28rem, 78svh, 46rem);
-  max-height: none;
+  height: min(100vh, 52rem) !important;
+  min-height: 28rem;
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: var(--varga-hero-navy) !important;
+  background-color: #1a2a4e !important;
   background-image: none !important;
 }
-
-.banner.banner-1.varga-hero *,
-.banner.banner-1.varga-hero *::before,
-.banner.banner-1.varga-hero *::after {
-  box-sizing: border-box;
+@media (max-width: 1370px) {
+  .banner.banner-1.varga-hero {
+    height: min(100vh, 48rem) !important;
+  }
 }
-
-/* Photo sits under a consistent deep-blue wash (no washed-out right edge) */
 .banner.banner-1.varga-hero::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 0;
-  background:
-    linear-gradient(
-      105deg,
-      rgba(16, 19, 27, 0.94) 0%,
-      rgba(26, 42, 78, 0.9) 42%,
-      rgba(26, 42, 78, 0.82) 100%
-    ),
-    url("./assets/images/homepage1/banner/varga-hero.jpg") center center / cover no-repeat;
-  transform: scale(1.06);
+  background: url("./assets/images/homepage1/banner/varga-hero.jpg") center center / cover no-repeat;
+  transform: scale(1.08);
   animation: varga-hero-drift 22s ease-out forwards;
   will-change: transform;
   pointer-events: none;
 }
-
+.banner.banner-1.varga-hero .banner-content {
+  box-sizing: border-box;
+  position: absolute !important;
+  inset: 0;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  transform: none !important;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  padding: clamp(5.5rem, 12vh, 7.5rem) 0 clamp(2.5rem, 6vh, 4rem);
+  background: linear-gradient(
+    90deg,
+    rgba(16, 19, 27, 0.78) 0%,
+    rgba(26, 42, 78, 0.45) 55%,
+    rgba(26, 42, 78, 0.2) 100%
+  );
+}
+.banner.banner-1.varga-hero .banner-content > .container {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1140px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: auto;
+  margin-right: auto;
+}
 @keyframes varga-hero-drift {
   from {
-    transform: scale(1.06) translate3d(0, 0, 0);
+    transform: scale(1.08) translate3d(0, 0, 0);
   }
   to {
-    transform: scale(1) translate3d(0, -1.25%, 0);
+    transform: scale(1) translate3d(0, -1.5%, 0);
   }
 }
-
 @keyframes varga-fade-up {
   from {
     opacity: 0;
@@ -70,45 +80,6 @@
     transform: translate3d(0, 0, 0);
   }
 }
-
-/* In-flow content plane — fills hero, no absolute offset / translate clipping */
-.banner.banner-1.varga-hero .banner-content {
-  position: relative !important;
-  top: auto !important;
-  left: auto !important;
-  bottom: auto !important;
-  transform: none !important;
-  z-index: 1;
-  display: flex;
-  flex: 1 1 auto;
-  align-items: flex-end;
-  width: 100%;
-  max-width: 100%;
-  min-height: inherit;
-  margin: 0;
-  padding:
-    clamp(5.75rem, 11vh, 7.25rem)
-    0
-    clamp(2.5rem, 6vh, 4rem);
-  background: transparent;
-}
-
-.banner.banner-1.varga-hero .banner-content > .container {
-  width: 100%;
-  max-width: 1140px;
-  padding-left: clamp(1rem, 4vw, 1.5rem);
-  padding-right: clamp(1rem, 4vw, 1.5rem);
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.banner.banner-1.varga-hero .varga-hero-copy {
-  width: 100%;
-  max-width: min(36rem, 100%);
-  padding: 0;
-  overflow: visible;
-}
-
 .banner.banner-1.varga-hero .varga-hero-title {
   animation: varga-fade-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -118,59 +89,42 @@
 .banner.banner-1.varga-hero .varga-hero-cta {
   animation: varga-fade-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.28s both;
 }
-
-.banner.banner-1.varga-hero .banner-content-text h1.hero-tagline {
-  color: #fff;
-  font-size: clamp(2.65rem, 6.5vw, 5.25rem);
-  line-height: 1.05;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  margin: 0 0 1rem;
-  max-width: 100%;
-  overflow-wrap: anywhere;
-  word-break: normal;
-  hyphens: manual;
-}
-.banner.banner-1.varga-hero .banner-content-text h1.hero-tagline .varga-hero-line {
-  display: block;
-}
-
-.banner.banner-1.varga-hero .varga-hero-sub {
-  color: #fff;
-  font-size: clamp(1rem, 2vw, 1.25rem);
-  font-weight: 400;
-  line-height: 1.45;
-  max-width: 34rem;
+.banner.banner-1.varga-hero .varga-hero-copy {
+  box-sizing: border-box;
+  max-width: min(40rem, 100%);
   width: 100%;
-  margin: 0 0 1.5rem;
-  opacity: 0.95;
   overflow-wrap: break-word;
 }
-
-.banner.banner-1.varga-hero .varga-hero-cta {
-  margin-top: 0;
-  margin-bottom: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  max-width: 100%;
-  padding-left: 1.75rem;
-  padding-right: 1.75rem;
-  white-space: normal;
-  text-align: center;
+.banner .banner-content .banner-content-text h1.hero-tagline {
+  font-size: clamp(2.75rem, 7vw, 5.5rem);
+  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin: 0 0 1.1rem;
+  max-width: min(14ch, 100%);
+  overflow-wrap: break-word;
 }
-
 @media (max-width: 575px) {
-  .banner.banner-1.varga-hero {
-    min-height: clamp(26rem, 86svh, 40rem);
+  .banner .banner-content .banner-content-text h1.hero-tagline {
+    font-size: clamp(2.35rem, 11vw, 3.25rem);
   }
   .banner.banner-1.varga-hero .banner-content {
     padding-top: 5.25rem;
     padding-bottom: 2.25rem;
   }
-  .banner.banner-1.varga-hero .banner-content-text h1.hero-tagline {
-    font-size: clamp(2.35rem, 11vw, 3.25rem);
-  }
+}
+.banner.banner-1.varga-hero .varga-hero-sub {
+  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+  max-width: min(32rem, 100%);
+  margin: 0 0 1.75rem;
+  line-height: 1.45;
+  opacity: 0.95;
+  overflow-wrap: break-word;
+}
+.banner.banner-1.varga-hero .varga-hero-cta {
+  margin-top: 0;
+  display: inline-block;
+  max-width: 100%;
 }
 
 .header .logo img,
@@ -635,7 +589,7 @@ body.theme-neta h4 {
   font-family: "Roboto", sans-serif;
 }
 
-/* District 21 splash gate */
+/* District 21 splash gate — overlay only; site (hero + nav) stays mounted beneath */
 .district-gate {
   position: fixed;
   inset: 0;
@@ -643,13 +597,10 @@ body.theme-neta h4 {
   display: flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
   padding: 1.5rem;
-  background:
-    linear-gradient(160deg, rgba(16, 19, 27, 0.92) 0%, rgba(26, 42, 78, 0.88) 55%, rgba(16, 19, 27, 0.94) 100%),
-    url("./assets/images/homepage1/banner/varga-hero.jpg") center center / cover no-repeat;
-}
-.district-gate--loading {
-  background: #1a2a4e;
+  background: rgba(16, 19, 27, 0.55);
+  backdrop-filter: blur(2px);
 }
 .district-gate__card {
   width: min(34rem, 100%);
@@ -815,16 +766,12 @@ html[data-motion="reduce"] .district-gate__btn:hover {
   transform: translateY(0);
 }
 
-/* Header settle when sticky — same deep navy as hero top field */
+/* Header settle when sticky */
 .header.style-1 {
   transition: background-color 0.35s ease, box-shadow 0.35s ease, padding 0.35s ease;
 }
 .header.style-1.fixed-top-menu {
-  background-color: #1a2a4e !important;
   animation: varga-header-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-.header.style-1.fixed-top-menu .navbar {
-  background-color: #1a2a4e !important;
 }
 @keyframes varga-header-in {
   from {
