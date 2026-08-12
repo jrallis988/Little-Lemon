@@ -376,6 +376,59 @@ body.theme-neta h4 {
   margin-top: 1rem;
   text-align: center;
 }
+.become-member .join-hp {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.become-member {
+  position: relative;
+}
+.become-member .join-success {
+  text-align: center;
+  color: #fff;
+  padding: 1.25rem 0.5rem 0.5rem;
+}
+.become-member .join-success__icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin: 0 auto 0.85rem;
+  display: block;
+  color: #f4d03f;
+}
+.become-member .join-success__title {
+  margin: 0 0 0.5rem;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #fff;
+}
+.become-member .join-success__body {
+  margin: 0;
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.92);
+}
+.become-member form p .submit.custom-btn,
+.become-member form p button.submit {
+  background-color: #e72f4b;
+  color: #fff;
+  margin-top: 30px;
+  margin-bottom: 0;
+  border: none;
+  border-radius: 30px;
+  text-align: center;
+  padding: 14px 45px;
+  font-weight: 700;
+  text-transform: uppercase;
+  display: inline-block;
+  cursor: pointer;
+}
+.become-member form .submit.custom-btn:disabled,
+.become-member form p button.submit:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
 
 /* Compact mountain footer */
 .site-footer-compact.footer-section {

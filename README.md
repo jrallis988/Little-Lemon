@@ -27,7 +27,8 @@ This repository currently ships as a **front-end demonstration**. The following 
 |------|------------------|
 | Contact phone | `(603) 555-0142` (placeholder) |
 | Social links | Facebook live; other networks still placeholders |
-| Contact / Volunteer / Join / Town Request forms | Front-end mock: validation + success message only |
+| Join Team Varga form | Live `POST /api/join` — persists signups to `data/join-signups.jsonl`; optional webhook/Resend notify via env |
+| Contact / Volunteer / Town Request forms | Front-end mock: validation + success message only |
 | Store cart | Fully interactive (add / update / remove) |
 | Store checkout | Non-functional demo — no payment gateway |
 | Privacy & Terms | Show **LEGAL REVIEW REQUIRED** banner |

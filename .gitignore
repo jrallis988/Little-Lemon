@@ -24,6 +24,10 @@ yarn-error.log*
 
 # Env
 .env*.local
+.env
+
+# Live form signups (JSONL)
+/data/*.jsonl
 
 # TypeScript
 next-env.d.ts

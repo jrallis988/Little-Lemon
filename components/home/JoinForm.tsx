@@ -1,8 +1,11 @@
 "use client";
 
+import { useState } from "react";
+import { CheckCircle2 } from "lucide-react";
 import { RequiredMark, useAccessibleForm } from "@/components/a11y/FormFeedback";
 import { Reveal } from "@/components/motion/Reveal";
-import { demoFormNote, demoFormSuccess } from "@/lib/demo";
+
+const SUCCESS_MESSAGE = "You're on the list. Welcome to Team Varga.";
 
 export function JoinForm() {
   const {
@@ -14,12 +17,18 @@ export function JoinForm() {
     reportErrors,
     reportSuccess,
   } = useAccessibleForm();
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const data = new FormData(e.currentTarget);
+    if (submitting) return;
+
+    const form = e.currentTarget;
+    const data = new FormData(form);
     const name = String(data.get("name") || "").trim();
     const email = String(data.get("email") || "").trim();
+    const company = String(data.get("company") || "").trim();
     const errors: Record<string, string> = {};
 
     if (!name) errors.name = "Enter your name.";
@@ -32,8 +41,35 @@ export function JoinForm() {
       return;
     }
 
-    reportSuccess(demoFormSuccess.join);
-    e.currentTarget.reset();
+    setSubmitting(true);
+    try {
+      const res = await fetch("/api/join", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, company }),
+      });
+      const payload = (await res.json().catch(() => ({}))) as {
+        error?: string;
+        fieldErrors?: Record<string, string>;
+      };
+
+      if (!res.ok) {
+        if (payload.fieldErrors && Object.keys(payload.fieldErrors).length) {
+          reportErrors(payload.fieldErrors, payload.error);
+        } else {
+          reportErrors({}, payload.error || "Something went wrong. Please try again.");
+        }
+        return;
+      }
+
+      form.reset();
+      setSubmitted(true);
+      reportSuccess(SUCCESS_MESSAGE);
+    } catch {
+      reportErrors({}, "Network error. Check your connection and try again.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -54,50 +90,77 @@ export function JoinForm() {
             <div className="section-wrapper">
               <Reveal delayMs={100}>
                 <div className="become-member">
-                  <p className="theme-demo-note" role="note">
-                    {demoFormNote}
-                  </p>
-                  <p className="mb-3 text-center text-white" style={{ opacity: 0.85, fontSize: 13 }}>
-                    Required fields are marked with an asterisk (*).
-                  </p>
-                  <form
-                    onSubmit={onSubmit}
-                    noValidate
-                    aria-describedby={status !== "idle" ? statusId : undefined}
-                  >
-                    <label className="sr-only" htmlFor="join-name">
-                      Name
-                      <RequiredMark />
-                    </label>
-                    <input
-                      id="join-name"
-                      type="text"
-                      name="name"
-                      placeholder="Name"
-                      autoComplete="name"
-                      {...fieldProps("name")}
-                    />
-                    <FieldError name="name" />
-                    <label className="sr-only" htmlFor="join-email">
-                      Email
-                      <RequiredMark />
-                    </label>
-                    <input
-                      id="join-email"
-                      type="email"
-                      name="email"
-                      placeholder="E-Mail"
-                      autoComplete="email"
-                      {...fieldProps("email")}
-                    />
-                    <FieldError name="email" />
-                    <p className="mb-0">
-                      <input type="submit" className="submit custom-btn varga-btn-motion" value="Register Now" />
-                    </p>
-                  </form>
-                  <div className="theme-form-status">
-                    <StatusRegion successMessage={demoFormSuccess.join} />
-                  </div>
+                  {submitted ? (
+                    <div className="join-success" role="status" aria-live="polite">
+                      <CheckCircle2 className="join-success__icon" aria-hidden />
+                      <p className="join-success__title">Registration complete</p>
+                      <p className="join-success__body">{SUCCESS_MESSAGE}</p>
+                    </div>
+                  ) : (
+                    <>
+                      <p className="mb-3 text-center text-white" style={{ opacity: 0.85, fontSize: 13 }}>
+                        Required fields are marked with an asterisk (*).
+                      </p>
+                      <form
+                        onSubmit={onSubmit}
+                        noValidate
+                        aria-describedby={status !== "idle" ? statusId : undefined}
+                      >
+                        <label className="sr-only" htmlFor="join-name">
+                          Name
+                          <RequiredMark />
+                        </label>
+                        <input
+                          id="join-name"
+                          type="text"
+                          name="name"
+                          placeholder="Name"
+                          autoComplete="name"
+                          disabled={submitting}
+                          {...fieldProps("name")}
+                        />
+                        <FieldError name="name" />
+                        <label className="sr-only" htmlFor="join-email">
+                          Email
+                          <RequiredMark />
+                        </label>
+                        <input
+                          id="join-email"
+                          type="email"
+                          name="email"
+                          placeholder="E-Mail"
+                          autoComplete="email"
+                          inputMode="email"
+                          disabled={submitting}
+                          {...fieldProps("email")}
+                        />
+                        <FieldError name="email" />
+                        {/* Honeypot — leave empty */}
+                        <div className="join-hp" aria-hidden="true">
+                          <label htmlFor="join-company">Company</label>
+                          <input
+                            id="join-company"
+                            type="text"
+                            name="company"
+                            tabIndex={-1}
+                            autoComplete="off"
+                          />
+                        </div>
+                        <p className="mb-0">
+                          <button
+                            type="submit"
+                            className="submit custom-btn varga-btn-motion"
+                            disabled={submitting}
+                          >
+                            {submitting ? "Registering…" : "Register Now"}
+                          </button>
+                        </p>
+                      </form>
+                      <div className="theme-form-status">
+                        <StatusRegion successMessage={SUCCESS_MESSAGE} />
+                      </div>
+                    </>
+                  )}
                 </div>
               </Reveal>
             </div>

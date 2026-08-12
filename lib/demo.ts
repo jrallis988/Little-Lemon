@@ -16,7 +16,7 @@ export const demoFormSuccess = {
     "Demo submission received — thanks. In this preview, messages are not emailed or stored.",
   volunteer:
     "Demo volunteer sign-up received — thank you. In this preview, sign-ups are not saved to a CRM.",
-  join: "Demo join request received — thank you. In this preview, your info is not added to a mailing list.",
+    join: "You're on the list. Welcome to Team Varga.",
   townRequest:
     "Demo visit request received. In this preview, town requests are not routed to campaign staff.",
   checkout:
