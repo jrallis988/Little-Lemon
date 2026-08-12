@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { candidate } from "@/lib/candidate";
 
 /** Right-side nav tabs — order locked to campaign request */
@@ -21,6 +21,7 @@ function linkActive(pathname: string, href: string) {
 
 export function Header() {
   const pathname = usePathname();
+  const router = useRouter();
   const isHome = pathname === "/";
   const menuId = useId();
   const [open, setOpen] = useState(false);
@@ -42,13 +43,29 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  function goHome(e: React.MouseEvent<HTMLAnchorElement>) {
+    e.preventDefault();
+    setOpen(false);
+    if (pathname === "/") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+    router.push("/");
+  }
+
   return (
     <header
-      className={`header style-1${elevated || !isHome ? " fixed-top-menu" : ""}`}
+      className={`header style-1 header-transparent${elevated || !isHome ? " is-stuck" : ""}`}
     >
       <div className="container">
         <nav className="navbar navbar-expand-lg p-lg-0">
-          <Link className="navbar-brand logo" href="/" aria-label={candidate.brandName}>
+          <Link
+            className="navbar-brand logo site-logo-link"
+            href="/"
+            prefetch
+            aria-label={`${candidate.brandName} — Home`}
+            onClick={goHome}
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/theme/assets/images/logo/varga-logo.png" alt={candidate.brandName} />
           </Link>

@@ -589,7 +589,7 @@ body.theme-neta h4 {
   font-family: "Roboto", sans-serif;
 }
 
-/* District 21 splash gate — overlay only; site (hero + nav) stays mounted beneath */
+/* District 21 splash gate — prompt overlays site; No replaces with full-page 404 */
 .district-gate {
   position: fixed;
   inset: 0;
@@ -610,11 +610,6 @@ body.theme-neta h4 {
   box-shadow: 0 18px 48px rgba(0, 0, 0, 0.35);
   text-align: center;
 }
-.district-gate__card--404 {
-  background: #10131b;
-  border-color: rgba(255, 255, 255, 0.12);
-  color: #f7f4ee;
-}
 .district-gate__eyebrow {
   margin: 0 0 0.75rem;
   font-size: 0.75rem;
@@ -623,14 +618,6 @@ body.theme-neta h4 {
   text-transform: uppercase;
   color: #c62834;
 }
-.district-gate__code {
-  margin: 0 0 0.5rem;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: #e72f4b;
-}
 .district-gate__title {
   margin: 0;
   font-size: clamp(1.55rem, 3.5vw, 2.15rem);
@@ -638,17 +625,11 @@ body.theme-neta h4 {
   font-weight: 700;
   color: #10131b;
 }
-.district-gate__card--404 .district-gate__title {
-  color: #f7f4ee;
-}
 .district-gate__lead {
   margin: 1rem 0 0;
   font-size: 1.05rem;
   line-height: 1.5;
   color: #3c4353;
-}
-.district-gate__card--404 .district-gate__lead {
-  color: rgba(247, 244, 238, 0.82);
 }
 .district-gate__actions {
   display: flex;
@@ -687,9 +668,36 @@ body.theme-neta h4 {
   color: #fff;
   transform: translateY(-1px);
 }
-.district-gate__card--404 .district-gate__btn--yes {
-  background: #e72f4b;
+
+/* True full-screen 404 — no modal card, no exit control */
+.district-404 {
+  box-sizing: border-box;
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  margin: 0;
+  padding: 2rem;
+  background: #0b1020;
+  color: #f7f4ee;
+  text-align: center;
 }
+.district-404__title {
+  margin: 0;
+  max-width: 22ch;
+  font-family: "Roboto", sans-serif;
+  font-size: clamp(1.75rem, 4.5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  color: #f7f4ee;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html:not([data-motion="no-preference"]) .district-gate__btn:hover {
     transform: none;
@@ -697,6 +705,44 @@ body.theme-neta h4 {
 }
 html[data-motion="reduce"] .district-gate__btn:hover {
   transform: none;
+}
+
+/* Transparent nav over hero — no solid blue strip */
+.header.header-transparent,
+.header.header-transparent.is-stuck,
+.header.header-transparent.fixed-top-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+.header.header-transparent.is-stuck {
+  position: fixed;
+}
+.header.header-transparent .navbar,
+.header.header-transparent.is-stuck .navbar {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+.header.header-transparent .navbar-nav > li > a,
+.header.header-transparent .navbar-toggler {
+  color: #fff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+}
+.header .site-logo-link {
+  position: relative;
+  z-index: 21;
+  display: inline-flex;
+  align-items: center;
+  pointer-events: auto;
+  cursor: pointer;
+}
+.header .site-logo-link img {
+  pointer-events: none;
 }
 
 /* ——— Motion system (presence / hierarchy; respects data-motion) ——— */
@@ -766,22 +812,9 @@ html[data-motion="reduce"] .district-gate__btn:hover {
   transform: translateY(0);
 }
 
-/* Header settle when sticky */
+/* Header settle when sticky — stay transparent (no blue bar) */
 .header.style-1 {
   transition: background-color 0.35s ease, box-shadow 0.35s ease, padding 0.35s ease;
-}
-.header.style-1.fixed-top-menu {
-  animation: varga-header-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-@keyframes varga-header-in {
-  from {
-    opacity: 0.85;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
 }
 
 /* Countdown: staggered fade-in (opacity only — transform reserved for circle layout) */

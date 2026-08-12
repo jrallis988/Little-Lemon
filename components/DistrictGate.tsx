@@ -7,20 +7,22 @@ const STORAGE_KEY = "varga-district21-gate";
 type GatePhase = "prompt" | "passed" | "not-found";
 
 /**
- * District 21 splash as an overlay — site (hero + nav) stays mounted underneath.
- * Yes → dismiss. No → custom internal 404 with exit back to the site.
+ * District 21 splash.
+ * Yes → enter site. No → full-page 404 (no exit control).
  */
 export function DistrictGate({ children }: { children: React.ReactNode }) {
   const titleId = useId();
   const descId = useId();
   const yesRef = useRef<HTMLButtonElement>(null);
-  const exitRef = useRef<HTMLButtonElement>(null);
   const [phase, setPhase] = useState<GatePhase>("passed");
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
     try {
-      setPhase(sessionStorage.getItem(STORAGE_KEY) === "passed" ? "passed" : "prompt");
+      const saved = sessionStorage.getItem(STORAGE_KEY);
+      if (saved === "passed") setPhase("passed");
+      else if (saved === "denied") setPhase("not-found");
+      else setPhase("prompt");
     } catch {
       setPhase("prompt");
     }
@@ -28,15 +30,18 @@ export function DistrictGate({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (!ready) return;
-    if (phase === "prompt") {
-      yesRef.current?.focus();
-      return;
-    }
-    if (phase === "not-found") {
-      exitRef.current?.focus();
-    }
+    if (!ready || phase !== "prompt") return;
+    yesRef.current?.focus();
   }, [phase, ready]);
+
+  useEffect(() => {
+    if (phase !== "not-found") return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [phase]);
 
   function enterSite() {
     try {
@@ -45,6 +50,29 @@ export function DistrictGate({ children }: { children: React.ReactNode }) {
       /* ignore */
     }
     setPhase("passed");
+  }
+
+  function denySite() {
+    try {
+      sessionStorage.setItem(STORAGE_KEY, "denied");
+    } catch {
+      /* ignore */
+    }
+    setPhase("not-found");
+  }
+
+  if (ready && phase === "not-found") {
+    return (
+      <main
+        className="district-404"
+        role="main"
+        aria-labelledby={titleId}
+      >
+        <h1 id={titleId} className="district-404__title">
+          Error 404: Change Not Found in District 21
+        </h1>
+      </main>
+    );
   }
 
   return (
@@ -79,41 +107,9 @@ export function DistrictGate({ children }: { children: React.ReactNode }) {
               <button
                 type="button"
                 className="district-gate__btn district-gate__btn--no"
-                onClick={() => setPhase("not-found")}
+                onClick={denySite}
               >
                 No
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {ready && phase === "not-found" && (
-        <div
-          className="district-gate district-gate--404"
-          role="alertdialog"
-          aria-modal="true"
-          aria-labelledby={titleId}
-          aria-describedby={descId}
-        >
-          <div className="district-gate__card district-gate__card--404">
-            <p className="district-gate__code" aria-hidden>
-              404
-            </p>
-            <h1 id={titleId} className="district-gate__title">
-              Error 404: Change Not Found in District 21
-            </h1>
-            <p id={descId} className="district-gate__lead">
-              Looks like you’re not ready for the site yet. Exit when you are.
-            </p>
-            <div className="district-gate__actions">
-              <button
-                ref={exitRef}
-                type="button"
-                className="district-gate__btn district-gate__btn--yes"
-                onClick={enterSite}
-              >
-                Exit to main site
               </button>
             </div>
           </div>
