@@ -1,39 +1,65 @@
 /* Varga for Senate — theme bridge on top of Neta (Labartisan) */
 
-/* Hero: slow ken-burns on photo plane + overlay stays on content */
+/*
+ * Hero — deep navy field, in-flow flex layout (no absolute clip),
+ * balanced proportions, type contained inside the container.
+ */
 .banner.banner-1.varga-hero {
+  --varga-hero-navy: #1a2a4e;
+  --varga-hero-ink: #10131b;
+  box-sizing: border-box;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  max-width: 100%;
+  /* Override Neta 100vh / 120vh — grow with content, cap for balance */
+  height: auto !important;
+  min-height: clamp(28rem, 78svh, 46rem);
+  max-height: none;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
-  background: #1a2a4e !important;
+  background-color: var(--varga-hero-navy) !important;
+  background-image: none !important;
 }
+
+.banner.banner-1.varga-hero *,
+.banner.banner-1.varga-hero *::before,
+.banner.banner-1.varga-hero *::after {
+  box-sizing: border-box;
+}
+
+/* Photo sits under a consistent deep-blue wash (no washed-out right edge) */
 .banner.banner-1.varga-hero::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: url("./assets/images/homepage1/banner/varga-hero.jpg") center center / cover no-repeat;
-  transform: scale(1.08);
+  background:
+    linear-gradient(
+      105deg,
+      rgba(16, 19, 27, 0.94) 0%,
+      rgba(26, 42, 78, 0.9) 42%,
+      rgba(26, 42, 78, 0.82) 100%
+    ),
+    url("./assets/images/homepage1/banner/varga-hero.jpg") center center / cover no-repeat;
+  transform: scale(1.06);
   animation: varga-hero-drift 22s ease-out forwards;
   will-change: transform;
+  pointer-events: none;
 }
-.banner.banner-1.varga-hero .banner-content {
-  position: relative;
-  z-index: 1;
-  background: linear-gradient(
-    90deg,
-    rgba(16, 19, 27, 0.78) 0%,
-    rgba(26, 42, 78, 0.45) 55%,
-    rgba(26, 42, 78, 0.2) 100%
-  );
-}
+
 @keyframes varga-hero-drift {
   from {
-    transform: scale(1.08) translate3d(0, 0, 0);
+    transform: scale(1.06) translate3d(0, 0, 0);
   }
   to {
-    transform: scale(1) translate3d(0, -1.5%, 0);
+    transform: scale(1) translate3d(0, -1.25%, 0);
   }
 }
+
 @keyframes varga-fade-up {
   from {
     opacity: 0;
@@ -44,6 +70,45 @@
     transform: translate3d(0, 0, 0);
   }
 }
+
+/* In-flow content plane — fills hero, no absolute offset / translate clipping */
+.banner.banner-1.varga-hero .banner-content {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  z-index: 1;
+  display: flex;
+  flex: 1 1 auto;
+  align-items: flex-end;
+  width: 100%;
+  max-width: 100%;
+  min-height: inherit;
+  margin: 0;
+  padding:
+    clamp(5.75rem, 11vh, 7.25rem)
+    0
+    clamp(2.5rem, 6vh, 4rem);
+  background: transparent;
+}
+
+.banner.banner-1.varga-hero .banner-content > .container {
+  width: 100%;
+  max-width: 1140px;
+  padding-left: clamp(1rem, 4vw, 1.5rem);
+  padding-right: clamp(1rem, 4vw, 1.5rem);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.banner.banner-1.varga-hero .varga-hero-copy {
+  width: 100%;
+  max-width: min(36rem, 100%);
+  padding: 0;
+  overflow: visible;
+}
+
 .banner.banner-1.varga-hero .varga-hero-title {
   animation: varga-fade-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -54,50 +119,58 @@
   animation: varga-fade-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.28s both;
 }
 
-/* Grounded hero stack: headline → line → CTA, vertically centered (not floating high) */
-.banner.banner-1.varga-hero {
-  height: min(100vh, 52rem);
-  min-height: 28rem;
-}
-@media (max-width: 1370px) {
-  .banner.banner-1.varga-hero {
-    height: min(100vh, 48rem);
-  }
-}
-.banner.banner-1.varga-hero .banner-content {
-  top: auto;
-  bottom: 0;
-  transform: none;
-  display: flex;
-  align-items: flex-end;
-  padding: clamp(5.5rem, 12vh, 7.5rem) 0 clamp(2.75rem, 7vh, 4.5rem);
-}
-.banner.banner-1.varga-hero .varga-hero-copy {
-  max-width: 40rem;
-}
-.banner .banner-content .banner-content-text h1.hero-tagline {
-  font-size: clamp(3.25rem, 8vw, 6rem);
+.banner.banner-1.varga-hero .banner-content-text h1.hero-tagline {
+  color: #fff;
+  font-size: clamp(2.65rem, 6.5vw, 5.25rem);
   line-height: 1.05;
   font-weight: 700;
-  letter-spacing: 0.5px;
-  margin: 0 0 1.1rem;
-  max-width: 14ch;
+  letter-spacing: 0.02em;
+  margin: 0 0 1rem;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  hyphens: manual;
 }
-@media (max-width: 575px) {
-  .banner .banner-content .banner-content-text h1.hero-tagline {
-    font-size: clamp(2.5rem, 12vw, 3.5rem);
-  }
+.banner.banner-1.varga-hero .banner-content-text h1.hero-tagline .varga-hero-line {
+  display: block;
 }
+
 .banner.banner-1.varga-hero .varga-hero-sub {
-  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
-  max-width: 32rem;
-  margin: 0 0 1.75rem;
+  color: #fff;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 400;
   line-height: 1.45;
+  max-width: 34rem;
+  width: 100%;
+  margin: 0 0 1.5rem;
   opacity: 0.95;
+  overflow-wrap: break-word;
 }
+
 .banner.banner-1.varga-hero .varga-hero-cta {
   margin-top: 0;
-  display: inline-block;
+  margin-bottom: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
+  white-space: normal;
+  text-align: center;
+}
+
+@media (max-width: 575px) {
+  .banner.banner-1.varga-hero {
+    min-height: clamp(26rem, 86svh, 40rem);
+  }
+  .banner.banner-1.varga-hero .banner-content {
+    padding-top: 5.25rem;
+    padding-bottom: 2.25rem;
+  }
+  .banner.banner-1.varga-hero .banner-content-text h1.hero-tagline {
+    font-size: clamp(2.35rem, 11vw, 3.25rem);
+  }
 }
 
 .header .logo img,
@@ -742,12 +815,16 @@ html[data-motion="reduce"] .district-gate__btn:hover {
   transform: translateY(0);
 }
 
-/* Header settle when sticky */
+/* Header settle when sticky — same deep navy as hero top field */
 .header.style-1 {
   transition: background-color 0.35s ease, box-shadow 0.35s ease, padding 0.35s ease;
 }
 .header.style-1.fixed-top-menu {
+  background-color: #1a2a4e !important;
   animation: varga-header-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.header.style-1.fixed-top-menu .navbar {
+  background-color: #1a2a4e !important;
 }
 @keyframes varga-header-in {
   from {

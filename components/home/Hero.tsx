@@ -7,8 +7,9 @@ export function Hero() {
       <div className="banner-content">
         <div className="container">
           <div className="banner-content-text varga-hero-copy">
-            <h1 className="text-capitalize hero-tagline varga-hero-title">
-              <span className="d-sm-block">People Over</span> Politics.
+            <h1 className="hero-tagline varga-hero-title">
+              <span className="varga-hero-line">People Over</span>
+              <span className="varga-hero-line">Politics.</span>
             </h1>
             <h6 className="varga-hero-sub">
               Independent write-in for {candidate.office} — {candidate.state} ·{" "}
