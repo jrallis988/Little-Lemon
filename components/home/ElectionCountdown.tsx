@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { election } from "@/lib/candidate";
+import { Reveal } from "@/components/motion/Reveal";
 
 type Remaining = {
   days: number;
@@ -82,13 +83,15 @@ export function ElectionCountdown() {
   return (
     <section className="election-campaign-section" aria-labelledby="election-heading">
       <div className="section-overlay section-padding-140">
-        <div className="section-heading">
-          <h6>Mark Your Calendar</h6>
-          <h2 id="election-heading">Election Countdown</h2>
-        </div>
+        <Reveal>
+          <div className="section-heading">
+            <h6>Mark Your Calendar</h6>
+            <h2 id="election-heading">Election Countdown</h2>
+          </div>
+        </Reveal>
         <div className="section-wrapper">
           <div className="dual-countdown">
-            <div>
+            <Reveal delayMs={80}>
               <p className="countdown-block-heading">
                 {election.september.label}
                 <span>
@@ -98,8 +101,8 @@ export function ElectionCountdown() {
               <div className="campaign-countdown">
                 <CountdownList remaining={sept} ready={ready} label={election.september.label} />
               </div>
-            </div>
-            <div>
+            </Reveal>
+            <Reveal delayMs={160}>
               <p className="countdown-block-heading">
                 {election.general.label}
                 <span>
@@ -109,13 +112,13 @@ export function ElectionCountdown() {
               <div className="campaign-countdown">
                 <CountdownList remaining={nov} ready={ready} label={election.general.label} />
               </div>
-            </div>
+            </Reveal>
           </div>
-          <div className="col-md-12 text-center">
-            <Link href="/how-to-vote" className="custom-btn">
+          <Reveal delayMs={220} className="col-md-12 text-center">
+            <Link href="/how-to-vote" className="custom-btn varga-btn-motion">
               Learn How to Vote Write-In
             </Link>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

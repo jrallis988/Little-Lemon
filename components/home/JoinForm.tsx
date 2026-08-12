@@ -1,6 +1,7 @@
 "use client";
 
 import { RequiredMark, useAccessibleForm } from "@/components/a11y/FormFeedback";
+import { Reveal } from "@/components/motion/Reveal";
 import { demoFormNote, demoFormSuccess } from "@/lib/demo";
 
 export function JoinForm() {
@@ -44,57 +45,61 @@ export function JoinForm() {
       >
         <div className="section-overlay section-padding-140">
           <div className="container">
-            <div className="section-heading">
-              <h6>Get Involved!</h6>
-              <h2 id="join-heading">Join Team Varga</h2>
-            </div>
-            <div className="section-wrapper">
-              <div className="become-member">
-                <p className="theme-demo-note" role="note">
-                  {demoFormNote}
-                </p>
-                <p className="mb-3 text-center text-white" style={{ opacity: 0.85, fontSize: 13 }}>
-                  Required fields are marked with an asterisk (*).
-                </p>
-                <form
-                  onSubmit={onSubmit}
-                  noValidate
-                  aria-describedby={status !== "idle" ? statusId : undefined}
-                >
-                  <label className="sr-only" htmlFor="join-name">
-                    Name
-                    <RequiredMark />
-                  </label>
-                  <input
-                    id="join-name"
-                    type="text"
-                    name="name"
-                    placeholder="Name"
-                    autoComplete="name"
-                    {...fieldProps("name")}
-                  />
-                  <FieldError name="name" />
-                  <label className="sr-only" htmlFor="join-email">
-                    Email
-                    <RequiredMark />
-                  </label>
-                  <input
-                    id="join-email"
-                    type="email"
-                    name="email"
-                    placeholder="E-Mail"
-                    autoComplete="email"
-                    {...fieldProps("email")}
-                  />
-                  <FieldError name="email" />
-                  <p className="mb-0">
-                    <input type="submit" className="submit custom-btn" value="Register Now" />
-                  </p>
-                </form>
-                <div className="theme-form-status">
-                  <StatusRegion successMessage={demoFormSuccess.join} />
-                </div>
+            <Reveal>
+              <div className="section-heading">
+                <h6>Get Involved!</h6>
+                <h2 id="join-heading">Join Team Varga</h2>
               </div>
+            </Reveal>
+            <div className="section-wrapper">
+              <Reveal delayMs={100}>
+                <div className="become-member">
+                  <p className="theme-demo-note" role="note">
+                    {demoFormNote}
+                  </p>
+                  <p className="mb-3 text-center text-white" style={{ opacity: 0.85, fontSize: 13 }}>
+                    Required fields are marked with an asterisk (*).
+                  </p>
+                  <form
+                    onSubmit={onSubmit}
+                    noValidate
+                    aria-describedby={status !== "idle" ? statusId : undefined}
+                  >
+                    <label className="sr-only" htmlFor="join-name">
+                      Name
+                      <RequiredMark />
+                    </label>
+                    <input
+                      id="join-name"
+                      type="text"
+                      name="name"
+                      placeholder="Name"
+                      autoComplete="name"
+                      {...fieldProps("name")}
+                    />
+                    <FieldError name="name" />
+                    <label className="sr-only" htmlFor="join-email">
+                      Email
+                      <RequiredMark />
+                    </label>
+                    <input
+                      id="join-email"
+                      type="email"
+                      name="email"
+                      placeholder="E-Mail"
+                      autoComplete="email"
+                      {...fieldProps("email")}
+                    />
+                    <FieldError name="email" />
+                    <p className="mb-0">
+                      <input type="submit" className="submit custom-btn varga-btn-motion" value="Register Now" />
+                    </p>
+                  </form>
+                  <div className="theme-form-status">
+                    <StatusRegion successMessage={demoFormSuccess.join} />
+                  </div>
+                </div>
+              </Reveal>
             </div>
           </div>
         </div>
@@ -106,7 +111,7 @@ export function JoinForm() {
       >
         <div className="container">
           <div className="row justify-content-center no-gutters">
-            <div className="col-lg-6">
+            <Reveal className="col-lg-6">
               <div className="section-heading">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -118,8 +123,8 @@ export function JoinForm() {
                   Get write-in reminders, town-hall dates, and volunteer calls — never spam.
                 </p>
               </div>
-            </div>
-            <div className="col-lg-6">
+            </Reveal>
+            <Reveal className="col-lg-6" delayMs={120}>
               <div className="news-letter-content">
                 <div className="news-letter-content-inner">
                   <p>
@@ -127,13 +132,13 @@ export function JoinForm() {
                     signup.
                   </p>
                   <p>
-                    <a href="#join" className="submit custom-btn">
+                    <a href="#join" className="submit custom-btn varga-btn-motion">
                       Join the List
                     </a>
                   </p>
                 </div>
               </div>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>

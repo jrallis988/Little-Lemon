@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { issues } from "@/lib/issues";
+import { Reveal } from "@/components/motion/Reveal";
 
 const PREVIEW = issues.slice(0, 3);
 
@@ -16,14 +17,16 @@ export function IssuesPreview() {
       aria-labelledby="issues-preview-heading"
     >
       <div className="container">
-        <div className="section-heading">
-          <h2 id="issues-preview-heading">Where Nick Stands</h2>
-          <p>Platform priorities in plain English — people over politics.</p>
-        </div>
+        <Reveal>
+          <div className="section-heading">
+            <h2 id="issues-preview-heading">Where Nick Stands</h2>
+            <p>Platform priorities in plain English — people over politics.</p>
+          </div>
+        </Reveal>
         <div className="section-wrapper row justify-content-center">
           {PREVIEW.map((issue, i) => (
-            <div className="col-lg-4 col-sm-6" key={issue.slug}>
-              <div className="post-item">
+            <Reveal className="col-lg-4 col-sm-6" key={issue.slug} delayMs={i * 100}>
+              <div className="post-item varga-lift-card">
                 <div className="post-thumb">
                   <Link href={`/issues/${issue.slug}`}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -43,14 +46,14 @@ export function IssuesPreview() {
                   </Link>
                 </div>
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
-        <div className="text-center mt-4">
-          <Link href="/issues" className="custom-btn">
+        <Reveal className="text-center mt-4" delayMs={280}>
+          <Link href="/issues" className="custom-btn varga-btn-motion">
             All Issues
           </Link>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

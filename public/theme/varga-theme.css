@@ -1,16 +1,54 @@
 /* Varga for Senate — theme bridge on top of Neta (Labartisan) */
 
-.banner.banner-1 {
-  background: url("./assets/images/homepage1/banner/varga-hero.jpg") center center / cover no-repeat !important;
+/* Hero: slow ken-burns on photo plane + overlay stays on content */
+.banner.banner-1.varga-hero {
+  position: relative;
+  overflow: hidden;
+  background: #1a2a4e !important;
 }
-
-.banner.banner-1 .banner-content {
+.banner.banner-1.varga-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url("./assets/images/homepage1/banner/varga-hero.jpg") center center / cover no-repeat;
+  transform: scale(1.08);
+  animation: varga-hero-drift 22s ease-out forwards;
+  will-change: transform;
+}
+.banner.banner-1.varga-hero .banner-content {
+  position: relative;
+  z-index: 1;
   background: linear-gradient(
     90deg,
     rgba(16, 19, 27, 0.78) 0%,
     rgba(26, 42, 78, 0.45) 55%,
     rgba(26, 42, 78, 0.2) 100%
   );
+}
+@keyframes varga-hero-drift {
+  from {
+    transform: scale(1.08) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1) translate3d(0, -1.5%, 0);
+  }
+}
+@keyframes varga-fade-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 1.25rem, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+.banner.banner-1.varga-hero .varga-hero-title {
+  animation: varga-fade-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.banner.banner-1.varga-hero .varga-hero-sub {
+  animation: varga-fade-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.16s both;
 }
 
 /* Larger hero tagline — closer to the earlier full-bleed treatment */
@@ -450,4 +488,165 @@ body.theme-neta h4 {
 /* Shop / Tailwind islands still readable */
 .theme-island {
   font-family: "Roboto", sans-serif;
+}
+
+/* ——— Motion system (presence / hierarchy; respects data-motion) ——— */
+
+.varga-reveal.is-pending {
+  opacity: 0;
+  transform: translate3d(0, 1.5rem, 0);
+}
+
+.varga-reveal.is-visible {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Write-in chips: soft pop when vote band reveals */
+.varga-reveal.is-pending .varga-chip-pop {
+  opacity: 0;
+  transform: translate3d(0, 0.6rem, 0) scale(0.94);
+}
+.varga-reveal.is-visible .varga-chip-pop {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Issue / get-involved cards: image drift + light lift on hover */
+.varga-lift-card .post-thumb,
+.varga-lift-card .campaign-thumb {
+  overflow: hidden;
+}
+.varga-lift-card .post-thumb img,
+.varga-lift-card .campaign-thumb img {
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+.varga-lift-card:hover .post-thumb img,
+.varga-lift-card:hover .campaign-thumb img {
+  transform: scale(1.04);
+}
+.varga-lift-card.campaign-item,
+.varga-lift-card.post-item {
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.varga-lift-card.campaign-item:hover,
+.varga-lift-card.post-item:hover {
+  transform: translateY(-4px);
+}
+
+/* CTA micro-motion */
+.varga-btn-motion {
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease !important;
+}
+.varga-btn-motion:hover {
+  transform: translateY(-2px);
+}
+.varga-btn-motion:active {
+  transform: translateY(0);
+}
+
+/* Header settle when sticky */
+.header.style-1 {
+  transition: background-color 0.35s ease, box-shadow 0.35s ease, padding 0.35s ease;
+}
+.header.style-1.fixed-top-menu {
+  animation: varga-header-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes varga-header-in {
+  from {
+    opacity: 0.85;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Countdown: staggered fade-in (opacity only — transform reserved for circle layout) */
+.varga-reveal.is-visible .countdown-item {
+  animation: varga-count-in 0.5s ease-out both;
+}
+.varga-reveal.is-visible .countdown-item:nth-child(1) {
+  animation-delay: 0.05s;
+}
+.varga-reveal.is-visible .countdown-item:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.varga-reveal.is-visible .countdown-item:nth-child(3) {
+  animation-delay: 0.15s;
+}
+.varga-reveal.is-visible .countdown-item:nth-child(4) {
+  animation-delay: 0.2s;
+}
+@keyframes varga-count-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Reduced motion: no ken-burns, no reveals, no lifts */
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-motion="no-preference"]) .banner.banner-1.varga-hero::before {
+    animation: none !important;
+    transform: none !important;
+  }
+  html:not([data-motion="no-preference"]) .banner.banner-1.varga-hero .varga-hero-title,
+  html:not([data-motion="no-preference"]) .banner.banner-1.varga-hero .varga-hero-sub {
+    animation: none !important;
+  }
+  html:not([data-motion="no-preference"]) .varga-reveal.is-pending {
+    opacity: 1;
+    transform: none;
+  }
+  html:not([data-motion="no-preference"]) .varga-lift-card:hover .post-thumb img,
+  html:not([data-motion="no-preference"]) .varga-lift-card:hover .campaign-thumb img,
+  html:not([data-motion="no-preference"]) .varga-lift-card.campaign-item:hover,
+  html:not([data-motion="no-preference"]) .varga-lift-card.post-item:hover,
+  html:not([data-motion="no-preference"]) .varga-btn-motion:hover {
+    transform: none;
+  }
+  html:not([data-motion="no-preference"]) .header.style-1.fixed-top-menu,
+  html:not([data-motion="no-preference"]) .varga-reveal.is-visible .countdown-item {
+    animation: none !important;
+  }
+}
+
+html[data-motion="reduce"] .banner.banner-1.varga-hero::before {
+  animation: none !important;
+  transform: none !important;
+}
+html[data-motion="reduce"] .banner.banner-1.varga-hero .varga-hero-title,
+html[data-motion="reduce"] .banner.banner-1.varga-hero .varga-hero-sub {
+  animation: none !important;
+}
+html[data-motion="reduce"] .varga-reveal.is-pending {
+  opacity: 1;
+  transform: none;
+}
+html[data-motion="reduce"] .varga-lift-card:hover .post-thumb img,
+html[data-motion="reduce"] .varga-lift-card:hover .campaign-thumb img,
+html[data-motion="reduce"] .varga-lift-card.campaign-item:hover,
+html[data-motion="reduce"] .varga-lift-card.post-item:hover,
+html[data-motion="reduce"] .varga-btn-motion:hover {
+  transform: none;
+}
+html[data-motion="reduce"] .header.style-1.fixed-top-menu,
+html[data-motion="reduce"] .varga-reveal.is-visible .countdown-item {
+  animation: none !important;
 }

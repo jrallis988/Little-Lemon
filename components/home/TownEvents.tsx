@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Reveal } from "@/components/motion/Reveal";
 
 const ACTIONS = [
   {
@@ -47,34 +48,38 @@ export function TownEvents() {
     >
       <div className="section-padding-140">
         <div className="container">
-          <div className="section-heading">
-            <h2 id="get-involved-heading">Get Involved</h2>
-            <p>Volunteer, shop campaign gear, or bring Nick to your town.</p>
-          </div>
+          <Reveal>
+            <div className="section-heading">
+              <h2 id="get-involved-heading">Get Involved</h2>
+              <p>Volunteer, shop campaign gear, or bring Nick to your town.</p>
+            </div>
+          </Reveal>
           <div className="section-wrapper">
             <div className="campaign-list">
-              {ACTIONS.map((item) => (
-                <div className="campaign-item" key={item.href}>
-                  <div className="campaign-thumb">
-                    <Link href={item.href}>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={item.thumb} alt={item.alt} />
-                    </Link>
+              {ACTIONS.map((item, i) => (
+                <Reveal key={item.href} delayMs={i * 90}>
+                  <div className="campaign-item varga-lift-card">
+                    <div className="campaign-thumb">
+                      <Link href={item.href}>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={item.thumb} alt={item.alt} />
+                      </Link>
+                    </div>
+                    <div className="campaign-content">
+                      <h5 className="campaign-title">
+                        <Link href={item.href}>{item.title}</Link>
+                      </h5>
+                      <ul className="campaign-detail-list">
+                        <li>
+                          <i className={`fa ${item.icon}`} aria-hidden /> {item.detail}
+                        </li>
+                      </ul>
+                      <Link href={item.href} className="custom-btn custom-btn-sm">
+                        {item.cta}
+                      </Link>
+                    </div>
                   </div>
-                  <div className="campaign-content">
-                    <h5 className="campaign-title">
-                      <Link href={item.href}>{item.title}</Link>
-                    </h5>
-                    <ul className="campaign-detail-list">
-                      <li>
-                        <i className={`fa ${item.icon}`} aria-hidden /> {item.detail}
-                      </li>
-                    </ul>
-                    <Link href={item.href} className="custom-btn custom-btn-sm">
-                      {item.cta}
-                    </Link>
-                  </div>
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>
