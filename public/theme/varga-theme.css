@@ -304,10 +304,42 @@
   }
 }
 
-/* Meet Nick preview (replaces red card + collage) */
+/*
+ * Meet Nick — in-flow section under the hero.
+ * Overrides Neta `.about-section` pull-up (absolute top:-215px / margin-top:-100px)
+ * that was painting dark type over the photo.
+ */
+.meet-nick-preview {
+  position: relative !important;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: auto !important;
+  margin: 0 !important;
+  padding: clamp(3.5rem, 8vw, 5.5rem) 0 !important;
+  background: #f7f4ee !important;
+  background-color: #f7f4ee !important;
+  color: #2b3241;
+}
+.meet-nick-preview .container {
+  position: static !important;
+  top: auto !important;
+  left: auto !important;
+}
+.meet-nick-preview .section-heading h6 {
+  color: #c62834;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.65rem;
+}
+.meet-nick-preview .section-heading h2 {
+  color: #10131b;
+  margin: 0;
+}
 .meet-nick-preview .meet-nick-lead {
   font-size: 1.125rem;
-  color: #555;
+  color: #3c4353;
   margin-bottom: 1.5rem;
 }
 .meet-nick-preview .meet-nick-quote {
@@ -326,7 +358,10 @@
 .meet-nick-preview .meet-nick-body {
   max-width: 40rem;
   margin: 0 auto 2rem;
-  color: #555;
+  color: #3c4353;
+}
+.meet-nick-preview .custom-btn {
+  color: #fff;
 }
 
 /* Hide Neta footer copyright strip */
