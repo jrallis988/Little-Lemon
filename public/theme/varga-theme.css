@@ -346,8 +346,6 @@
   .quick-donation-section .container,
   .meet-nick-preview .container,
   .violet-party-preview .container,
-  .store-preview .container,
-  .volunteer-preview .container,
   .election-campaign-section .container {
     max-width: 1140px;
   }
@@ -544,79 +542,6 @@
   line-height: 1.5;
 }
 
-/* ——— Store + Volunteer landing previews ——— */
-.store-preview-card {
-  background: #fff;
-  height: 100%;
-  margin-bottom: 1.75rem;
-  overflow: hidden;
-}
-.store-preview-card__swatch {
-  height: 8px;
-  width: 100%;
-}
-.store-preview-card__body {
-  padding: 1.35rem 1.4rem 1.6rem;
-  text-align: center;
-}
-.store-preview-card__badge {
-  margin: 0 0 0.5rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #e72f4b;
-}
-.store-preview-card__title {
-  margin: 0 0 0.55rem;
-  font-size: 1.2rem;
-  font-weight: 700;
-}
-.store-preview-card__title a {
-  color: #10131b;
-}
-.store-preview-card__title a:hover {
-  color: #e72f4b;
-}
-.store-preview-card__blurb {
-  margin: 0 0 0.75rem;
-  color: #555;
-  line-height: 1.45;
-}
-.store-preview-card__price {
-  margin: 0;
-  font-weight: 700;
-  color: #1a2a4e;
-}
-
-.volunteer-preview {
-  background: #f7f4ee;
-}
-.volunteer-preview-card {
-  text-align: center;
-  padding: 1.75rem 1.25rem;
-  height: 100%;
-  margin-bottom: 1.5rem;
-  background: #fff;
-}
-.volunteer-preview-card__title {
-  margin: 0 0 0.4rem;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #10131b;
-}
-.volunteer-preview-card__meta {
-  margin: 0 0 0.85rem;
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: #e72f4b;
-}
-.volunteer-preview-card__body {
-  margin: 0;
-  color: #555;
-  line-height: 1.5;
-}
-
 /* Center election countdown + issue grids */
 .election-campaign-section .election-countdown-wrap {
   display: flex;
@@ -638,15 +563,11 @@
 }
 .election-campaign-section .section-heading,
 .latest-news-section .section-heading,
-.store-preview .section-heading,
-.volunteer-preview .section-heading,
 .violet-party-preview .section-heading {
   margin-left: auto;
   margin-right: auto;
 }
 .latest-news-section .section-wrapper.row,
-.store-preview .section-wrapper.row,
-.volunteer-preview .section-wrapper.row,
 .violet-party-preview .section-wrapper.row {
   justify-content: center;
   margin-left: auto;

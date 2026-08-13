@@ -4,8 +4,7 @@ import { VioletPartyPreview } from "@/components/home/VioletPartyPreview";
 import { ElectionCountdown } from "@/components/home/ElectionCountdown";
 import { IssuesPreview } from "@/components/home/IssuesPreview";
 import { HowToVoteBand } from "@/components/home/HowToVoteBand";
-import { StorePreview } from "@/components/home/StorePreview";
-import { VolunteerPreview } from "@/components/home/VolunteerPreview";
+import { TownEvents } from "@/components/home/TownEvents";
 import { JoinForm } from "@/components/home/JoinForm";
 
 export default function HomePage() {
@@ -17,8 +16,7 @@ export default function HomePage() {
       <ElectionCountdown />
       <IssuesPreview />
       <HowToVoteBand />
-      <StorePreview />
-      <VolunteerPreview />
+      <TownEvents />
       <JoinForm />
     </>
   );

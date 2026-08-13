@@ -74,7 +74,7 @@ export function TownEvents() {
                           <i className={`fa ${item.icon}`} aria-hidden /> {item.detail}
                         </li>
                       </ul>
-                      <Link href={item.href} className="custom-btn custom-btn-sm">
+                      <Link href={item.href} className="custom-btn custom-btn-sm varga-btn-motion">
                         {item.cta}
                       </Link>
                     </div>
