@@ -43,10 +43,10 @@ const ACTIONS = [
 export function TownEvents() {
   return (
     <section
-      className="campaign-program-section section-bg-color"
+      className="campaign-program-section get-involved-section"
       aria-labelledby="get-involved-heading"
     >
-      <div className="section-padding-140">
+      <div className="section-overlay section-padding-140">
         <div className="container">
           <Reveal>
             <div className="section-heading">

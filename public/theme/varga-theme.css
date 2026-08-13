@@ -351,6 +351,30 @@
   }
 }
 
+/* Get Involved — park outreach photo background */
+.campaign-program-section.get-involved-section {
+  background-color: #1a2a4e;
+  background-image: url("/images/get-involved/bg.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.campaign-program-section.get-involved-section .section-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(16, 19, 27, 0.62) 0%,
+    rgba(16, 19, 27, 0.55) 45%,
+    rgba(16, 19, 27, 0.68) 100%
+  );
+}
+.campaign-program-section.get-involved-section .section-heading h2,
+.campaign-program-section.get-involved-section .section-heading p {
+  color: #fff;
+}
+.campaign-program-section.get-involved-section .campaign-item {
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+}
+
 /* Dual election countdown */
 .election-campaign-section .dual-countdown {
   display: grid;
