@@ -55,10 +55,21 @@ body {
 
 .reel-frame {
   background:
-    linear-gradient(180deg, rgba(6, 6, 6, 0.15) 0%, rgba(6, 6, 6, 0.75) 100%),
-    radial-gradient(ellipse at 30% 20%, rgba(201, 168, 106, 0.18), transparent 55%),
-    radial-gradient(ellipse at 80% 70%, rgba(80, 90, 120, 0.22), transparent 50%),
-    linear-gradient(135deg, #1a1a1c 0%, #0a0a0a 45%, #12141a 100%);
+    linear-gradient(180deg, rgba(6, 6, 6, 0.05) 0%, rgba(6, 6, 6, 0.55) 55%, rgba(6, 6, 6, 0.92) 100%),
+    radial-gradient(ellipse 80% 60% at 62% 38%, rgba(201, 168, 106, 0.22), transparent 58%),
+    radial-gradient(ellipse 70% 55% at 18% 72%, rgba(70, 84, 118, 0.28), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 88% 18%, rgba(140, 120, 90, 0.12), transparent 50%),
+    linear-gradient(145deg, #16161a 0%, #0b0b0d 42%, #10131a 72%, #080808 100%);
+}
+
+.reel-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.55) 0%, transparent 18%, transparent 82%, rgba(0, 0, 0, 0.55) 100%),
+    linear-gradient(0deg, transparent 0%, transparent 92%, rgba(0, 0, 0, 0.85) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, transparent 8%);
 }
 
 .reel-scan {
