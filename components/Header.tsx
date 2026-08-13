@@ -19,13 +19,15 @@ function linkActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
+/**
+ * Overlay nav — sits on the hero (and page headers) and scrolls away with the page.
+ * No sticky / fixed blue bar on scroll.
+ */
 export function Header() {
   const pathname = usePathname();
   const router = useRouter();
-  const isHome = pathname === "/";
   const menuId = useId();
   const [open, setOpen] = useState(false);
-  const [pastHero, setPastHero] = useState(!isHome);
 
   useEffect(() => {
     setOpen(false);
@@ -35,32 +37,6 @@ export function Header() {
     document.body.classList.toggle("overflow-hidden", open);
     return () => document.body.classList.remove("overflow-hidden");
   }, [open]);
-
-  useEffect(() => {
-    if (!isHome) {
-      setPastHero(true);
-      return;
-    }
-
-    const update = () => {
-      const hero = document.getElementById("home-hero");
-      if (!hero) {
-        setPastHero(window.scrollY > 48);
-        return;
-      }
-      const bottom = hero.getBoundingClientRect().bottom;
-      // Stay transparent while hero still fills the area under the fixed nav
-      setPastHero(bottom <= 72);
-    };
-
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    return () => {
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-    };
-  }, [isHome]);
 
   function goHome(e: React.MouseEvent<HTMLAnchorElement>) {
     e.preventDefault();
@@ -72,12 +48,8 @@ export function Header() {
     router.push("/");
   }
 
-  const solid = pastHero || open || !isHome;
-
   return (
-    <header
-      className={`header style-1 site-header${solid ? " is-solid" : " is-over-hero"}`}
-    >
+    <header className={`header style-1 site-header is-overlay${open ? " is-open" : ""}`}>
       <div className="container">
         <nav className="navbar navbar-expand-lg p-lg-0">
           <Link
