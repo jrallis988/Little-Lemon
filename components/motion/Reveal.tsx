@@ -10,18 +10,21 @@ type RevealProps = {
   delayMs?: number;
   /** Intersection root margin */
   rootMargin?: string;
+  /** Entrance style */
+  variant?: "up" | "fade" | "scale";
   as?: "div" | "section" | "article" | "li";
 };
 
 /**
- * Scroll-triggered fade/slide-up. Content stays visible until JS mounts,
+ * Scroll-triggered entrance. Content stays visible until JS mounts,
  * then (if motion is allowed) waits for intersection before animating in.
  */
 export function Reveal({
   children,
   className = "",
   delayMs = 0,
-  rootMargin = "0px 0px -10% 0px",
+  rootMargin = "0px 0px -8% 0px",
+  variant = "up",
   as: Tag = "div",
 }: RevealProps) {
   const ref = useRef<HTMLElement | null>(null);
@@ -45,7 +48,7 @@ export function Reveal({
           io.disconnect();
         }
       },
-      { threshold: 0.12, rootMargin },
+      { threshold: 0.14, rootMargin },
     );
 
     io.observe(el);
@@ -57,9 +60,9 @@ export function Reveal({
 
   const motionClass =
     phase === "pending"
-      ? "varga-reveal is-pending"
+      ? `varga-reveal varga-reveal--${variant} is-pending`
       : phase === "visible"
-        ? "varga-reveal is-visible"
+        ? `varga-reveal varga-reveal--${variant} is-visible`
         : "";
 
   return (

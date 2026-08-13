@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { candidate } from "@/lib/candidate";
+import { WatchVideoButton } from "@/components/home/WatchVideoButton";
 
 export function Hero() {
   return (
@@ -14,9 +15,12 @@ export function Hero() {
               Independent write-in for {candidate.office} — {candidate.state} ·{" "}
               {candidate.electionLabel}
             </h6>
-            <Link href="/how-to-vote" className="custom-btn varga-hero-cta varga-btn-motion">
-              How to Vote Write-In
-            </Link>
+            <div className="varga-hero-actions varga-hero-cta">
+              <Link href="/how-to-vote" className="custom-btn varga-btn-motion">
+                How to Vote Write-In
+              </Link>
+              <WatchVideoButton />
+            </div>
           </div>
         </div>
       </div>

@@ -25,7 +25,7 @@ export function IssuesPreview() {
         </Reveal>
         <div className="section-wrapper row justify-content-center">
           {PREVIEW.map((issue, i) => (
-            <Reveal className="col-lg-4 col-sm-6" key={issue.slug} delayMs={i * 100}>
+            <Reveal className="col-lg-4 col-sm-6" key={issue.slug} delayMs={i * 110} variant="scale">
               <div className="post-item varga-lift-card">
                 <div className="post-thumb">
                   <Link href={`/issues/${issue.slug}`}>

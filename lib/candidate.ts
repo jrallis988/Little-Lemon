@@ -39,6 +39,14 @@ export const candidate = {
     instagram: "https://www.instagram.com/",
     youtube: "https://www.youtube.com/",
   },
+  /**
+   * Hero “Watch Video” — YouTube ID until a campaign upload is supplied.
+   * Replace `youtubeId` with the official intro video when available.
+   */
+  introVideo: {
+    youtubeId: "Fvae8nxzVz4",
+    title: "Varga for Senate — campaign introduction",
+  },
   pullQuote:
     "I will never be bought by investors, special interests, or political insiders. I do not serve corporations, wealthy donors, or private agendas — I serve the people of New Hampshire. Public office is not a business opportunity. It is a solemn responsibility to fight for the citizens who placed their trust in me.",
   secondAmendmentQuote:

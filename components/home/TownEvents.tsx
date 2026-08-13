@@ -57,7 +57,7 @@ export function TownEvents() {
           <div className="section-wrapper">
             <div className="campaign-list">
               {ACTIONS.map((item, i) => (
-                <Reveal key={item.href} delayMs={i * 90}>
+                <Reveal key={item.href} delayMs={i * 100} variant="up">
                   <div className="campaign-item varga-lift-card">
                     <div className="campaign-thumb">
                       <Link href={item.href}>

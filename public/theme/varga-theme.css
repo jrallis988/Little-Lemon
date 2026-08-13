@@ -86,9 +86,6 @@
 .banner.banner-1.varga-hero .varga-hero-sub {
   animation: varga-fade-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.16s both;
 }
-.banner.banner-1.varga-hero .varga-hero-cta {
-  animation: varga-fade-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.28s both;
-}
 .banner.banner-1.varga-hero .varga-hero-copy {
   box-sizing: border-box;
   max-width: min(40rem, 100%);
@@ -122,9 +119,136 @@
   overflow-wrap: break-word;
 }
 .banner.banner-1.varga-hero .varga-hero-cta {
+  animation: varga-fade-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.28s both;
+}
+.banner.banner-1.varga-hero .varga-hero-actions {
   margin-top: 0;
-  display: inline-block;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem 1.75rem;
   max-width: 100%;
+}
+.banner.banner-1.varga-hero .varga-hero-actions .custom-btn {
+  margin-top: 0;
+}
+
+/* Politicly-style Watch Video control beside primary CTA */
+.varga-watch-video {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.varga-watch-video:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+.varga-watch-video:focus-visible {
+  outline: 3px solid #c62834;
+  outline-offset: 4px;
+}
+.varga-watch-video__play {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: #c62834;
+  color: #fff;
+  font-size: 0.85rem;
+  box-shadow: 0 0 0 0 rgba(198, 40, 52, 0.45);
+  animation: varga-play-pulse 2.4s ease-out infinite;
+}
+.varga-watch-video__play .fa-play {
+  margin-left: 2px;
+}
+@keyframes varga-play-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(198, 40, 52, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 14px rgba(198, 40, 52, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(198, 40, 52, 0);
+  }
+}
+
+/* Video lightbox */
+.varga-video-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+}
+.varga-video-lightbox__backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(10, 12, 20, 0.78);
+  cursor: pointer;
+}
+.varga-video-lightbox__dialog {
+  position: relative;
+  z-index: 1;
+  width: min(56rem, 100%);
+  background: #10131b;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+.varga-video-lightbox__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+}
+.varga-video-lightbox__title {
+  margin: 0;
+  color: #f7f4ee;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+.varga-video-lightbox__close {
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  cursor: pointer;
+}
+.varga-video-lightbox__close:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+.varga-video-lightbox__frame {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  background: #000;
+}
+.varga-video-lightbox__frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
 .header .logo img,
@@ -802,18 +926,24 @@ body.theme-neta .header.site-header,
 
 .varga-reveal.is-pending {
   opacity: 0;
-  transform: translate3d(0, 1.5rem, 0);
 }
-
+.varga-reveal--up.is-pending {
+  transform: translate3d(0, 1.75rem, 0);
+}
+.varga-reveal--fade.is-pending {
+  transform: none;
+}
+.varga-reveal--scale.is-pending {
+  transform: scale(0.96);
+}
 .varga-reveal.is-visible {
   opacity: 1;
   transform: none;
   transition:
-    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Write-in chips: soft pop when vote band reveals */
 .varga-reveal.is-pending .varga-chip-pop {
   opacity: 0;
   transform: translate3d(0, 0.6rem, 0) scale(0.94);
@@ -833,12 +963,12 @@ body.theme-neta .header.site-header,
 }
 .varga-lift-card .post-thumb img,
 .varga-lift-card .campaign-thumb img {
-  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }
 .varga-lift-card:hover .post-thumb img,
 .varga-lift-card:hover .campaign-thumb img {
-  transform: scale(1.04);
+  transform: scale(1.05);
 }
 .varga-lift-card.campaign-item,
 .varga-lift-card.post-item {
@@ -846,7 +976,11 @@ body.theme-neta .header.site-header,
 }
 .varga-lift-card.campaign-item:hover,
 .varga-lift-card.post-item:hover {
-  transform: translateY(-4px);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(16, 19, 27, 0.12);
+}
+.varga-lift-card:hover .custom-btn {
+  transform: translateY(-1px);
 }
 
 /* CTA micro-motion */
@@ -860,12 +994,11 @@ body.theme-neta .header.site-header,
 }
 .varga-btn-motion:hover {
   transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(16, 19, 27, 0.18);
 }
 .varga-btn-motion:active {
   transform: translateY(0);
 }
-
-/* (site-header scroll/solid styles live above) */
 
 /* Countdown: staggered fade-in (opacity only — transform reserved for circle layout) */
 .varga-reveal.is-visible .countdown-item {
@@ -907,12 +1040,13 @@ body.theme-neta .header.site-header,
     opacity: 1;
     transform: none;
   }
-  html:not([data-motion="no-preference"]) .varga-lift-card:hover .post-thumb img,
-  html:not([data-motion="no-preference"]) .varga-lift-card:hover .campaign-thumb img,
-  html:not([data-motion="no-preference"]) .varga-lift-card.campaign-item:hover,
-  html:not([data-motion="no-preference"]) .varga-lift-card.post-item:hover,
+  html:not([data-motion="no-preference"]) .varga-watch-video__play {
+    animation: none !important;
+  }
+  html:not([data-motion="no-preference"]) .varga-watch-video:hover,
   html:not([data-motion="no-preference"]) .varga-btn-motion:hover {
     transform: none;
+    box-shadow: none;
   }
   html:not([data-motion="no-preference"]) .header.style-1.fixed-top-menu,
   html:not([data-motion="no-preference"]) .varga-reveal.is-visible .countdown-item {
@@ -933,11 +1067,18 @@ html[data-motion="reduce"] .varga-reveal.is-pending {
   opacity: 1;
   transform: none;
 }
+html[data-motion="reduce"] .varga-watch-video__play {
+  animation: none !important;
+}
+html[data-motion="reduce"] .varga-watch-video:hover,
+html[data-motion="reduce"] .varga-btn-motion:hover {
+  transform: none;
+  box-shadow: none;
+}
 html[data-motion="reduce"] .varga-lift-card:hover .post-thumb img,
 html[data-motion="reduce"] .varga-lift-card:hover .campaign-thumb img,
 html[data-motion="reduce"] .varga-lift-card.campaign-item:hover,
-html[data-motion="reduce"] .varga-lift-card.post-item:hover,
-html[data-motion="reduce"] .varga-btn-motion:hover {
+html[data-motion="reduce"] .varga-lift-card.post-item:hover {
   transform: none;
 }
 html[data-motion="reduce"] .header.style-1.fixed-top-menu,
