@@ -150,6 +150,14 @@ html[data-big-targets="true"] {
   body {
     line-height: var(--line-space);
     letter-spacing: var(--letter-space);
+    /* Do NOT set overflow-x on body — it breaks position:fixed headers in Chromium */
+  }
+
+  html {
+    overflow-x: hidden;
+  }
+
+  main {
     overflow-x: clip;
   }
 

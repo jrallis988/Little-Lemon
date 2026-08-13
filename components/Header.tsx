@@ -25,7 +25,7 @@ export function Header() {
   const isHome = pathname === "/";
   const menuId = useId();
   const [open, setOpen] = useState(false);
-  const [elevated, setElevated] = useState(false);
+  const [pastHero, setPastHero] = useState(!isHome);
 
   useEffect(() => {
     setOpen(false);
@@ -37,11 +37,30 @@ export function Header() {
   }, [open]);
 
   useEffect(() => {
-    const onScroll = () => setElevated(window.scrollY > 24);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    if (!isHome) {
+      setPastHero(true);
+      return;
+    }
+
+    const update = () => {
+      const hero = document.getElementById("home-hero");
+      if (!hero) {
+        setPastHero(window.scrollY > 48);
+        return;
+      }
+      const bottom = hero.getBoundingClientRect().bottom;
+      // Stay transparent while hero still fills the area under the fixed nav
+      setPastHero(bottom <= 72);
+    };
+
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [isHome]);
 
   function goHome(e: React.MouseEvent<HTMLAnchorElement>) {
     e.preventDefault();
@@ -53,13 +72,11 @@ export function Header() {
     router.push("/");
   }
 
-  /** Transparent only at the top of the homepage over the hero photo */
-  const overHero = isHome && !elevated && !open;
-  const solid = !overHero;
+  const solid = pastHero || open || !isHome;
 
   return (
     <header
-      className={`header style-1 site-header${solid ? " is-solid" : " is-over-hero"}${open ? " is-open" : ""}`}
+      className={`header style-1 site-header${solid ? " is-solid" : " is-over-hero"}`}
     >
       <div className="container">
         <nav className="navbar navbar-expand-lg p-lg-0">
