@@ -44,8 +44,9 @@
   transform: none !important;
   z-index: 1;
   display: flex;
-  align-items: flex-end;
-  padding: clamp(5.5rem, 12vh, 7.5rem) 0 clamp(2.5rem, 6vh, 4rem);
+  /* Align headline with the church spire tip (~30% from top of hero photo) */
+  align-items: flex-start;
+  padding: clamp(6.75rem, 28vh, 12.5rem) 0 clamp(2.5rem, 6vh, 4rem);
   background: linear-gradient(
     90deg,
     rgba(16, 19, 27, 0.78) 0%,
@@ -106,7 +107,7 @@
     font-size: clamp(2.35rem, 11vw, 3.25rem);
   }
   .banner.banner-1.varga-hero .banner-content {
-    padding-top: 5.25rem;
+    padding-top: clamp(5.75rem, 22vh, 8rem);
     padding-bottom: 2.25rem;
   }
 }
@@ -342,7 +343,12 @@
   .campaign-program-section .container,
   .become-member-section .container,
   .newsletter-section .container,
-  .quick-donation-section .container {
+  .quick-donation-section .container,
+  .meet-nick-preview .container,
+  .violet-party-preview .container,
+  .store-preview .container,
+  .volunteer-preview .container,
+  .election-campaign-section .container {
     max-width: 1140px;
   }
 }
@@ -486,6 +492,259 @@
 }
 .meet-nick-preview .custom-btn {
   color: #fff;
+}
+
+/* ——— Violet Party landing preview ——— */
+.violet-party-preview {
+  background: #10131b;
+  color: #f7f4ee;
+}
+.violet-party-preview .section-heading h6 {
+  color: #e72f4b;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.violet-party-preview .section-heading h2,
+.violet-party-preview .section-heading p {
+  color: #fff;
+}
+.violet-party-preview__lead {
+  max-width: 40rem;
+  margin: 0 auto 2.5rem;
+  font-size: 1.125rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.88);
+}
+.violet-party-preview__principles {
+  margin-bottom: 2.25rem;
+}
+.violet-principle-card {
+  text-align: center;
+  padding: 1.5rem 1.25rem 1.75rem;
+  height: 100%;
+  margin-bottom: 1.5rem;
+}
+.violet-principle-card__num {
+  margin: 0 0 0.65rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #e72f4b;
+}
+.violet-principle-card__title {
+  margin: 0 0 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+}
+.violet-principle-card__body {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.5;
+}
+
+/* ——— Store + Volunteer landing previews ——— */
+.store-preview-card {
+  background: #fff;
+  height: 100%;
+  margin-bottom: 1.75rem;
+  overflow: hidden;
+}
+.store-preview-card__swatch {
+  height: 8px;
+  width: 100%;
+}
+.store-preview-card__body {
+  padding: 1.35rem 1.4rem 1.6rem;
+  text-align: center;
+}
+.store-preview-card__badge {
+  margin: 0 0 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #e72f4b;
+}
+.store-preview-card__title {
+  margin: 0 0 0.55rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.store-preview-card__title a {
+  color: #10131b;
+}
+.store-preview-card__title a:hover {
+  color: #e72f4b;
+}
+.store-preview-card__blurb {
+  margin: 0 0 0.75rem;
+  color: #555;
+  line-height: 1.45;
+}
+.store-preview-card__price {
+  margin: 0;
+  font-weight: 700;
+  color: #1a2a4e;
+}
+
+.volunteer-preview {
+  background: #f7f4ee;
+}
+.volunteer-preview-card {
+  text-align: center;
+  padding: 1.75rem 1.25rem;
+  height: 100%;
+  margin-bottom: 1.5rem;
+  background: #fff;
+}
+.volunteer-preview-card__title {
+  margin: 0 0 0.4rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #10131b;
+}
+.volunteer-preview-card__meta {
+  margin: 0 0 0.85rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #e72f4b;
+}
+.volunteer-preview-card__body {
+  margin: 0;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* Center election countdown + issue grids */
+.election-campaign-section .election-countdown-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.election-campaign-section .dual-countdown {
+  width: 100%;
+}
+.election-campaign-section .election-countdown-cta {
+  margin-top: 2.5rem;
+}
+.election-campaign-section .election-countdown-cta .custom-btn {
+  margin-top: 0;
+}
+.election-campaign-section .section-heading,
+.latest-news-section .section-heading,
+.store-preview .section-heading,
+.volunteer-preview .section-heading,
+.violet-party-preview .section-heading {
+  margin-left: auto;
+  margin-right: auto;
+}
+.latest-news-section .section-wrapper.row,
+.store-preview .section-wrapper.row,
+.volunteer-preview .section-wrapper.row,
+.violet-party-preview .section-wrapper.row {
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.latest-news-section .post-item .post-content {
+  text-align: center;
+}
+.latest-news-section .post-item .post-content .custom-btn {
+  float: none !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Unified primary CTA red (#e72f4b) across landing + theme chrome */
+body.theme-neta a.custom-btn,
+body.theme-neta .custom-btn,
+body.theme-neta button.custom-btn,
+body.theme-neta .custom-btn.donate,
+body.theme-neta .become-member form p .submit.custom-btn,
+body.theme-neta .become-member form p button.submit,
+body.theme-neta .news-letter-content .submit.custom-btn {
+  background-color: #e72f4b !important;
+  border-color: #e72f4b !important;
+  color: #fff !important;
+}
+body.theme-neta a.custom-btn:hover,
+body.theme-neta .custom-btn:hover,
+body.theme-neta button.custom-btn:hover,
+body.theme-neta .custom-btn.donate:hover,
+body.theme-neta .become-member form p .submit.custom-btn:hover,
+body.theme-neta .news-letter-content .submit.custom-btn:hover {
+  background-color: #c62834 !important;
+  border-color: #c62834 !important;
+  color: #fff !important;
+}
+
+/* Navbar: push links further right + larger type */
+@media (min-width: 992px) {
+  .header.site-header .navbar {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  .header.site-header .navbar-brand.logo {
+    margin-right: auto;
+  }
+  .header.site-header .neta-nav-collapse.justify-content-end {
+    margin-left: auto;
+    flex: 0 0 auto;
+    justify-content: flex-end !important;
+  }
+  .header.site-header .navbar-nav.ml-auto {
+    margin-left: auto !important;
+    margin-right: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.15rem;
+  }
+  .header.site-header .navbar-nav > li > a {
+    padding: 1.35rem 0.95rem !important;
+    font-size: 1.05rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.02em;
+  }
+}
+@media (min-width: 1200px) {
+  .header.site-header .navbar-nav > li > a {
+    padding: 1.4rem 1.15rem !important;
+    font-size: 1.1rem !important;
+  }
+  .header.site-header .container {
+    padding-right: 0.5rem;
+  }
+}
+
+/* Countdown digit tick animation */
+.election-campaign-section .count-number {
+  display: inline-block;
+  min-width: 1.6em;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.28s ease;
+}
+.election-campaign-section .count-number.is-ticking {
+  animation: varga-digit-tick 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes varga-digit-tick {
+  0% {
+    opacity: 0.35;
+    transform: translateY(0.4rem) scale(0.92);
+  }
+  55% {
+    opacity: 1;
+    transform: translateY(-0.12rem) scale(1.04);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 /* Hide Neta footer copyright strip */
@@ -928,20 +1187,20 @@ body.theme-neta .header.site-header,
   opacity: 0;
 }
 .varga-reveal--up.is-pending {
-  transform: translate3d(0, 1.75rem, 0);
+  transform: translate3d(0, 2.15rem, 0);
 }
 .varga-reveal--fade.is-pending {
   transform: none;
 }
 .varga-reveal--scale.is-pending {
-  transform: scale(0.96);
+  transform: scale(0.94) translate3d(0, 0.75rem, 0);
 }
 .varga-reveal.is-visible {
   opacity: 1;
   transform: none;
   transition:
-    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .varga-reveal.is-pending .varga-chip-pop {
@@ -1049,7 +1308,8 @@ body.theme-neta .header.site-header,
     box-shadow: none;
   }
   html:not([data-motion="no-preference"]) .header.style-1.fixed-top-menu,
-  html:not([data-motion="no-preference"]) .varga-reveal.is-visible .countdown-item {
+  html:not([data-motion="no-preference"]) .varga-reveal.is-visible .countdown-item,
+  html:not([data-motion="no-preference"]) .election-campaign-section .count-number.is-ticking {
     animation: none !important;
   }
 }
@@ -1082,6 +1342,7 @@ html[data-motion="reduce"] .varga-lift-card.post-item:hover {
   transform: none;
 }
 html[data-motion="reduce"] .header.style-1.fixed-top-menu,
-html[data-motion="reduce"] .varga-reveal.is-visible .countdown-item {
+html[data-motion="reduce"] .varga-reveal.is-visible .countdown-item,
+html[data-motion="reduce"] .election-campaign-section .count-number.is-ticking {
   animation: none !important;
 }

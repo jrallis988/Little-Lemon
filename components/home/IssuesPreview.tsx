@@ -41,7 +41,7 @@ export function IssuesPreview() {
                     <li>{issue.subtitle}</li>
                   </ul>
                   <p>{issue.oneLiner}</p>
-                  <Link href={`/issues/${issue.slug}`} className="custom-btn custom-btn-sm pull-left">
+                  <Link href={`/issues/${issue.slug}`} className="custom-btn custom-btn-sm varga-btn-motion">
                     Read More
                   </Link>
                 </div>
