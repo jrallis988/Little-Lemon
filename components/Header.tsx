@@ -37,7 +37,7 @@ export function Header() {
   }, [open]);
 
   useEffect(() => {
-    const onScroll = () => setElevated(window.scrollY > 80);
+    const onScroll = () => setElevated(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -53,9 +53,13 @@ export function Header() {
     router.push("/");
   }
 
+  /** Transparent only at the top of the homepage over the hero photo */
+  const overHero = isHome && !elevated && !open;
+  const solid = !overHero;
+
   return (
     <header
-      className={`header style-1 header-transparent${elevated || !isHome ? " is-stuck" : ""}`}
+      className={`header style-1 site-header${solid ? " is-solid" : " is-over-hero"}${open ? " is-open" : ""}`}
     >
       <div className="container">
         <nav className="navbar navbar-expand-lg p-lg-0">

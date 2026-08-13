@@ -742,31 +742,57 @@ html[data-motion="reduce"] .district-gate__btn:hover {
   transform: none;
 }
 
-/* Transparent nav over hero — no solid blue strip */
-.header.header-transparent,
-.header.header-transparent.is-stuck,
-.header.header-transparent.fixed-top-menu {
-  position: absolute;
+/*
+ * Site header — always fixed so it stays in place while scrolling.
+ * Transparent only at the top of the homepage over the hero; solid navy once scrolled.
+ */
+.header.site-header {
+  position: fixed !important;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 20;
+  z-index: 100;
+  width: 100%;
+  margin: 0;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+}
+.header.site-header.is-over-hero {
   background: transparent !important;
   background-color: transparent !important;
   box-shadow: none !important;
 }
-.header.header-transparent.is-stuck {
-  position: fixed;
-}
-.header.header-transparent .navbar,
-.header.header-transparent.is-stuck .navbar {
+.header.site-header.is-over-hero .navbar {
   background: transparent !important;
   background-color: transparent !important;
 }
-.header.header-transparent .navbar-nav > li > a,
-.header.header-transparent .navbar-toggler {
+.header.site-header.is-solid {
+  background: #1a2a4e !important;
+  background-color: #1a2a4e !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.22);
+}
+.header.site-header.is-solid .navbar {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+.header.site-header .navbar-nav > li > a,
+.header.site-header .navbar-toggler {
   color: #fff !important;
+}
+.header.site-header.is-over-hero .navbar-nav > li > a,
+.header.site-header.is-over-hero .navbar-toggler {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+}
+.header.site-header.is-solid .navbar-nav > li > a,
+.header.site-header.is-solid .navbar-toggler {
+  text-shadow: none;
+}
+@media (max-width: 991px) {
+  .header.site-header .neta-nav-collapse.is-open {
+    background: #1a2a4e;
+    margin-top: 0.5rem;
+    padding: 0.75rem 1rem 1rem;
+    border-radius: 0.25rem;
+  }
 }
 .header .site-logo-link {
   position: relative;
@@ -847,10 +873,7 @@ html[data-motion="reduce"] .district-gate__btn:hover {
   transform: translateY(0);
 }
 
-/* Header settle when sticky — stay transparent (no blue bar) */
-.header.style-1 {
-  transition: background-color 0.35s ease, box-shadow 0.35s ease, padding 0.35s ease;
-}
+/* (site-header scroll/solid styles live above) */
 
 /* Countdown: staggered fade-in (opacity only — transform reserved for circle layout) */
 .varga-reveal.is-visible .countdown-item {
