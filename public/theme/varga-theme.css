@@ -351,6 +351,23 @@
   }
 }
 
+/* Write In Nick — polling place photo background */
+.quick-donation-section.write-in-band {
+  background-color: #1a2a4e;
+  background-image: url("/images/write-in-bg.jpg") !important;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.quick-donation-section.write-in-band .section-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(16, 19, 27, 0.58) 0%,
+    rgba(16, 19, 27, 0.52) 50%,
+    rgba(16, 19, 27, 0.64) 100%
+  );
+}
+
 /* Get Involved — park outreach photo background */
 .campaign-program-section.get-involved-section {
   background-color: #1a2a4e;

@@ -5,7 +5,7 @@ import { Reveal } from "@/components/motion/Reveal";
 /** Write-in voting CTA band — pill badges removed for a cleaner layout. */
 export function HowToVoteBand() {
   return (
-    <section className="quick-donation-section" aria-labelledby="vote-band-heading">
+    <section className="quick-donation-section write-in-band" aria-labelledby="vote-band-heading">
       <div className="section-overlay section-padding-140">
         <div className="container">
           <Reveal>
