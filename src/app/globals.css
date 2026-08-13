@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #060606;
-  --background-elevated: #0e0e0e;
-  --surface: #141414;
-  --foreground: #f0eee9;
-  --muted: #8f8b84;
-  --border: #262626;
-  --accent: #c9a86a;
-  --accent-soft: rgba(201, 168, 106, 0.14);
+  --background: #030303;
+  --background-elevated: #080808;
+  --surface: #101010;
+  --foreground: #f4f1ea;
+  --muted: #8a8680;
+  --border: #222222;
+  --accent: #e2c48a;
+  --accent-soft: rgba(226, 196, 138, 0.12);
 }
 
 @theme inline {
@@ -22,6 +22,7 @@
   --color-accent-soft: var(--accent-soft);
   --font-sans: var(--font-body);
   --font-display: var(--font-display);
+  --font-credit: var(--font-credit);
 }
 
 * {
@@ -48,48 +49,72 @@ body {
   position: fixed;
   inset: 0;
   z-index: 50;
-  opacity: 0.045;
+  opacity: 0.055;
   mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-.reel-frame {
-  background:
-    linear-gradient(180deg, rgba(6, 6, 6, 0.05) 0%, rgba(6, 6, 6, 0.55) 55%, rgba(6, 6, 6, 0.92) 100%),
-    radial-gradient(ellipse 80% 60% at 62% 38%, rgba(201, 168, 106, 0.22), transparent 58%),
-    radial-gradient(ellipse 70% 55% at 18% 72%, rgba(70, 84, 118, 0.28), transparent 55%),
-    radial-gradient(ellipse 50% 40% at 88% 18%, rgba(140, 120, 90, 0.12), transparent 50%),
-    linear-gradient(145deg, #16161a 0%, #0b0b0d 42%, #10131a 72%, #080808 100%);
+.letterbox {
+  box-shadow:
+    inset 0 4.5vh 0 #000,
+    inset 0 -4.5vh 0 #000;
 }
 
-.reel-frame::before {
+.hero-still {
+  background-color: #05070b;
+}
+
+.hero-still::after {
   content: "";
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(90deg, rgba(0, 0, 0, 0.55) 0%, transparent 18%, transparent 82%, rgba(0, 0, 0, 0.55) 100%),
-    linear-gradient(0deg, transparent 0%, transparent 92%, rgba(0, 0, 0, 0.85) 100%),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, transparent 8%);
-}
-
-.reel-scan {
+  pointer-events: none;
   background: linear-gradient(
-    180deg,
+    100deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.03) 50%,
-    transparent 100%
+    rgba(255, 255, 255, 0.04) 45%,
+    transparent 55%
   );
-  background-size: 100% 220%;
-  animation: scan-drift 8s ease-in-out infinite;
+  animation: light-sweep 10s ease-in-out infinite;
 }
 
-@keyframes scan-drift {
+.poster-shine {
+  background: linear-gradient(
+    125deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.08) 48%,
+    transparent 56%
+  );
+  background-size: 220% 220%;
+  transition: background-position 0.7s ease;
+}
+
+.group:hover .poster-shine {
+  background-position: 100% 100%;
+}
+
+.marquee-track {
+  animation: marquee 40s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes light-sweep {
   0%,
   100% {
-    background-position: 0% 0%;
+    opacity: 0.3;
+    transform: translateX(-8%);
   }
   50% {
-    background-position: 0% 100%;
+    opacity: 0.7;
+    transform: translateX(8%);
   }
 }
 
@@ -114,7 +139,7 @@ body {
 }
 
 .animate-rise {
-  animation: rise-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: rise-in 0.95s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .animate-fade {
@@ -144,7 +169,8 @@ body {
 
   .animate-rise,
   .animate-fade,
-  .reel-scan {
+  .hero-still::after,
+  .marquee-track {
     animation: none;
   }
 }

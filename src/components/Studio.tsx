@@ -1,50 +1,45 @@
-const pillars = [
-  {
-    title: "Independent",
-    copy: "We develop and produce outside the franchise machine—work owned by intention, not algorithm.",
-  },
-  {
-    title: "Live-action",
-    copy: "Our focus is performance, place, and practical craft. Cameras, crews, and real locations first.",
-  },
-  {
-    title: "East Coast",
-    copy: "Stories drawn from New England weather, Atlantic cities, and the working landscapes between them.",
-  },
+const credits = [
+  { role: "Focus", value: "Live-Action Features & Series" },
+  { role: "Model", value: "Independent Production" },
+  { role: "Territory", value: "East Coast, USA" },
+  { role: "Stages", value: "Development → Delivery" },
 ];
 
 export default function Studio() {
   return (
-    <section id="studio" className="scroll-mt-24 border-t border-border">
-      <div className="mx-auto grid max-w-6xl gap-16 px-6 py-24 md:grid-cols-12 md:gap-12 md:px-8 md:py-32">
+    <section id="studio" className="scroll-mt-24 border-t border-white/10">
+      <div className="mx-auto grid max-w-7xl gap-14 px-5 py-20 md:grid-cols-12 md:gap-10 md:px-8 md:py-28">
         <div className="md:col-span-5">
-          <p className="mb-4 text-xs tracking-[0.22em] text-accent uppercase">
-            Studio
+          <p className="mb-3 font-[family-name:var(--font-credit)] text-sm tracking-[0.3em] text-accent uppercase">
+            The Studio
           </p>
           <h2 className="font-display text-4xl leading-tight text-foreground md:text-5xl">
-            A lean production house with regional roots.
+            Built like a film company—not a content brand.
           </h2>
         </div>
 
-        <div className="md:col-span-7 md:pt-10">
+        <div className="md:col-span-7 md:pt-8">
           <p className="text-lg leading-relaxed text-foreground/90 md:text-xl">
-            The East Coast Motion Picture Company makes live-action features and
-            series with a clear brief: tell precise stories, hire serious crews,
-            and keep the work close to the places that shaped it.
+            The East Coast Motion Picture Company develops and produces
+            live-action cinema with a lean slate, serious crews, and stories
+            drawn from the Atlantic seaboard.
           </p>
-          <p className="mt-6 text-base leading-relaxed text-muted md:text-lg">
-            We are not a content farm. We are a film studio—measured, selective,
-            and committed to independent production on the Atlantic seaboard.
+          <p className="mt-5 text-base leading-relaxed text-muted md:text-lg">
+            We work outside the franchise machine. Fewer titles. Clearer intent.
+            Production rooted in place.
           </p>
 
-          <dl className="mt-14 grid gap-10 sm:grid-cols-3">
-            {pillars.map((pillar) => (
-              <div key={pillar.title}>
-                <dt className="font-display text-2xl text-foreground">
-                  {pillar.title}
+          <dl className="mt-12 grid gap-0 border-t border-white/10 sm:grid-cols-2">
+            {credits.map((credit) => (
+              <div
+                key={credit.role}
+                className="border-b border-white/10 px-0 py-5 sm:odd:pr-6 sm:even:pl-6"
+              >
+                <dt className="font-[family-name:var(--font-credit)] text-xs tracking-[0.24em] text-muted uppercase">
+                  {credit.role}
                 </dt>
-                <dd className="mt-3 text-sm leading-relaxed text-muted">
-                  {pillar.copy}
+                <dd className="mt-2 font-display text-2xl text-foreground">
+                  {credit.value}
                 </dd>
               </div>
             ))}

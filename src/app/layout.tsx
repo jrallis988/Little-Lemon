@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, Manrope } from "next/font/google";
+import { Barlow_Condensed, Instrument_Serif, Manrope } from "next/font/google";
 import "./globals.css";
 
 const display = Instrument_Serif({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-display",
+  display: "swap",
+});
+
+const credit = Barlow_Condensed({
+  weight: ["400", "500", "600"],
+  subsets: ["latin"],
+  variable: "--font-credit",
   display: "swap",
 });
 
@@ -33,7 +40,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} h-full`}>
+    <html
+      lang="en"
+      className={`${display.variable} ${credit.variable} ${body.variable} h-full`}
+    >
       <body className="min-h-full bg-background font-sans text-foreground antialiased">
         <div className="film-grain" aria-hidden="true" />
         {children}

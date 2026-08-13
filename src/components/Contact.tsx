@@ -20,25 +20,25 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="scroll-mt-24 border-t border-border bg-background-elevated"
+      className="scroll-mt-24 border-t border-white/10 bg-background-elevated"
     >
-      <div className="mx-auto grid max-w-6xl gap-14 px-6 py-24 md:grid-cols-12 md:gap-12 md:px-8 md:py-32">
+      <div className="mx-auto grid max-w-7xl gap-12 px-5 py-20 md:grid-cols-12 md:gap-10 md:px-8 md:py-28">
         <div className="md:col-span-5">
-          <p className="mb-4 text-xs tracking-[0.22em] text-accent uppercase">
+          <p className="mb-3 font-[family-name:var(--font-credit)] text-sm tracking-[0.3em] text-accent uppercase">
             Contact
           </p>
           <h2 className="font-display text-4xl leading-tight text-foreground md:text-5xl">
-            Inquiries & submissions.
+            Industry, casting & submissions.
           </h2>
           <p className="mt-5 max-w-md text-base leading-relaxed text-muted md:text-lg">
-            Industry contacts, casting notes, and project submissions. Keep it
-            brief—we read everything that arrives with clarity.
+            For producers, agents, casting directors, and writers with a clear
+            ask. Keep it brief.
           </p>
-          <p className="mt-8 text-sm text-muted">
-            Direct line:{" "}
+          <p className="mt-8 font-[family-name:var(--font-credit)] text-sm tracking-[0.12em] text-muted uppercase">
+            Direct:{" "}
             <a
               href="mailto:inquiries@ecmco.studio"
-              className="text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-accent"
+              className="text-foreground transition-colors hover:text-accent"
             >
               inquiries@ecmco.studio
             </a>
@@ -48,7 +48,7 @@ export default function Contact() {
         <div className="md:col-span-7">
           {submitted ? (
             <div
-              className="flex min-h-72 items-center border border-border bg-surface p-8"
+              className="flex min-h-72 items-center border border-white/10 bg-surface p-8"
               role="status"
             >
               <div>
@@ -56,20 +56,19 @@ export default function Contact() {
                   Received.
                 </p>
                 <p className="mt-3 max-w-md text-muted">
-                  Thank you. Our team will respond if there is a fit. No
-                  automated follow-ups—just a human reply when warranted.
+                  Thank you. Our team will respond if there is a fit.
                 </p>
               </div>
             </div>
           ) : (
             <form
               onSubmit={handleSubmit}
-              className="grid gap-6 border border-border bg-surface p-6 md:p-8"
+              className="grid gap-5 border border-white/10 bg-surface p-5 md:gap-6 md:p-8"
               noValidate
             >
-              <div className="grid gap-6 sm:grid-cols-2">
+              <div className="grid gap-5 sm:grid-cols-2 md:gap-6">
                 <label className="grid gap-2 text-sm">
-                  <span className="tracking-[0.12em] text-muted uppercase">
+                  <span className="font-[family-name:var(--font-credit)] tracking-[0.18em] text-muted uppercase">
                     Name
                   </span>
                   <input
@@ -77,11 +76,11 @@ export default function Contact() {
                     name="name"
                     type="text"
                     autoComplete="name"
-                    className="h-12 border border-border bg-background px-4 text-foreground outline-none transition-colors focus:border-accent"
+                    className="h-12 border border-white/10 bg-background px-4 text-foreground outline-none transition-colors focus:border-accent"
                   />
                 </label>
                 <label className="grid gap-2 text-sm">
-                  <span className="tracking-[0.12em] text-muted uppercase">
+                  <span className="font-[family-name:var(--font-credit)] tracking-[0.18em] text-muted uppercase">
                     Email
                   </span>
                   <input
@@ -89,20 +88,20 @@ export default function Contact() {
                     name="email"
                     type="email"
                     autoComplete="email"
-                    className="h-12 border border-border bg-background px-4 text-foreground outline-none transition-colors focus:border-accent"
+                    className="h-12 border border-white/10 bg-background px-4 text-foreground outline-none transition-colors focus:border-accent"
                   />
                 </label>
               </div>
 
               <label className="grid gap-2 text-sm">
-                <span className="tracking-[0.12em] text-muted uppercase">
+                <span className="font-[family-name:var(--font-credit)] tracking-[0.18em] text-muted uppercase">
                   Inquiry Type
                 </span>
                 <select
                   required
                   name="type"
                   defaultValue=""
-                  className="h-12 border border-border bg-background px-4 text-foreground outline-none transition-colors focus:border-accent"
+                  className="h-12 border border-white/10 bg-background px-4 text-foreground outline-none transition-colors focus:border-accent"
                 >
                   <option value="" disabled>
                     Select one
@@ -116,25 +115,25 @@ export default function Contact() {
               </label>
 
               <label className="grid gap-2 text-sm">
-                <span className="tracking-[0.12em] text-muted uppercase">
+                <span className="font-[family-name:var(--font-credit)] tracking-[0.18em] text-muted uppercase">
                   Message
                 </span>
                 <textarea
                   required
                   name="message"
-                  rows={6}
-                  className="resize-y border border-border bg-background px-4 py-3 text-foreground outline-none transition-colors focus:border-accent"
+                  rows={5}
+                  className="resize-y border border-white/10 bg-background px-4 py-3 text-foreground outline-none transition-colors focus:border-accent"
                   placeholder="Logline, role, or reason for reaching out."
                 />
               </label>
 
-              <div className="flex flex-wrap items-center justify-between gap-4 pt-2">
+              <div className="flex flex-wrap items-center justify-between gap-4 pt-1">
                 <p className="max-w-sm text-xs leading-relaxed text-muted">
-                  Demo form—submissions stay in-browser and are not transmitted.
+                  Demo form—submissions stay in-browser.
                 </p>
                 <button
                   type="submit"
-                  className="inline-flex h-12 items-center justify-center bg-foreground px-7 text-sm tracking-[0.16em] text-background uppercase transition-opacity hover:opacity-85"
+                  className="inline-flex h-12 items-center justify-center bg-foreground px-8 font-[family-name:var(--font-credit)] text-[15px] tracking-[0.2em] text-background uppercase transition-opacity hover:opacity-85"
                 >
                   Send Inquiry
                 </button>

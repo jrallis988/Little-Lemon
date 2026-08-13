@@ -2,43 +2,74 @@ import { projects } from "@/data/projects";
 
 export default function Projects() {
   return (
-    <section
-      id="projects"
-      className="scroll-mt-24 border-t border-border bg-background-elevated"
-    >
-      <div className="mx-auto max-w-6xl px-6 py-24 md:px-8 md:py-32">
-        <div className="mb-14 max-w-2xl md:mb-20">
-          <p className="mb-4 text-xs tracking-[0.22em] text-accent uppercase">
-            Projects
-          </p>
-          <h2 className="font-display text-4xl leading-tight text-foreground md:text-5xl">
-            Features and series in motion.
-          </h2>
-          <p className="mt-5 max-w-xl text-base leading-relaxed text-muted md:text-lg">
-            A focused slate of live-action work—each title tracked from
-            development through delivery.
+    <section id="projects" className="scroll-mt-24 bg-background">
+      <div className="border-y border-white/10 bg-background-elevated">
+        <div className="overflow-hidden py-3">
+          <div className="marquee-track flex w-max gap-10 whitespace-nowrap font-[family-name:var(--font-credit)] text-sm tracking-[0.28em] text-muted uppercase">
+            {[0, 1].map((copy) => (
+              <div key={copy} className="flex gap-10 px-5">
+                {projects.map((project) => (
+                  <span key={`${copy}-${project.id}`}>
+                    {project.title}
+                    <span className="mx-4 text-accent/70">●</span>
+                    {project.status}
+                  </span>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="mx-auto max-w-7xl px-5 py-20 md:px-8 md:py-28">
+        <div className="mb-12 flex flex-col justify-between gap-6 md:mb-16 md:flex-row md:items-end">
+          <div className="max-w-2xl">
+            <p className="mb-3 font-[family-name:var(--font-credit)] text-sm tracking-[0.3em] text-accent uppercase">
+              Current Slate
+            </p>
+            <h2 className="font-display text-4xl leading-tight text-foreground md:text-5xl">
+              Films & series in production.
+            </h2>
+          </div>
+          <p className="max-w-sm text-sm leading-relaxed text-muted md:text-base">
+            A selective slate of live-action titles—from development through
+            post—produced along the Atlantic seaboard.
           </p>
         </div>
 
-        <ul className="grid gap-px bg-border sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3 lg:gap-6">
           {projects.map((project) => (
-            <li key={project.id} className="bg-background-elevated">
-              <article className="group flex h-full flex-col justify-between border border-transparent bg-surface p-7 transition-colors hover:border-border hover:bg-background md:p-8">
-                <div>
-                  <div className="mb-8 flex items-center justify-between gap-4">
-                    <span className="text-xs tracking-[0.18em] text-muted uppercase">
-                      {project.genre}
+            <li key={project.id} id={project.id} className="scroll-mt-28">
+              <article className="group">
+                <div className="relative aspect-[2/3] overflow-hidden bg-surface">
+                  <div
+                    className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                    style={{ background: project.poster }}
+                    aria-hidden="true"
+                  />
+                  <div className="poster-shine absolute inset-0" aria-hidden="true" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-90" />
+
+                  <div className="absolute inset-x-0 top-0 flex items-start justify-between p-3 md:p-4">
+                    <span className="font-[family-name:var(--font-credit)] text-[11px] tracking-[0.2em] text-white/75 uppercase md:text-xs">
+                      {project.format}
                     </span>
-                    <span className="text-xs tracking-[0.12em] text-accent uppercase">
+                    <span className="bg-black/50 px-2 py-1 font-[family-name:var(--font-credit)] text-[11px] tracking-[0.16em] text-accent uppercase backdrop-blur-sm md:text-xs">
                       {project.status}
                     </span>
                   </div>
-                  <h3 className="font-display text-3xl leading-none text-foreground transition-colors group-hover:text-accent md:text-[2rem]">
-                    {project.title}
-                  </h3>
-                  <p className="mt-5 text-sm leading-relaxed text-muted md:text-base">
-                    {project.synopsis}
-                  </p>
+
+                  <div className="absolute inset-x-0 bottom-0 p-3 md:p-5">
+                    <p className="font-[family-name:var(--font-credit)] text-[11px] tracking-[0.22em] text-white/60 uppercase md:text-xs">
+                      {project.genre} · {project.year}
+                    </p>
+                    <h3 className="mt-1 font-display text-2xl leading-none text-foreground md:text-3xl lg:text-[2rem]">
+                      {project.title}
+                    </h3>
+                    <p className="mt-3 max-h-0 overflow-hidden text-sm leading-relaxed text-white/75 opacity-0 transition-all duration-500 group-hover:max-h-28 group-hover:opacity-100 md:text-[0.95rem]">
+                      {project.synopsis}
+                    </p>
+                  </div>
                 </div>
               </article>
             </li>
