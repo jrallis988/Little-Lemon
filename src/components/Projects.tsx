@@ -60,14 +60,18 @@ export default function Projects() {
                   </div>
 
                   <div className="absolute inset-x-0 bottom-0 p-3 md:p-5">
-                    <p className="font-[family-name:var(--font-credit)] text-[11px] tracking-[0.22em] text-white/60 uppercase md:text-xs">
+                    <p className="font-[family-name:var(--font-credit)] text-[11px] tracking-[0.22em] text-white/55 uppercase md:text-xs">
                       {project.genre} · {project.year}
                     </p>
-                    <h3 className="mt-1 font-display text-2xl leading-none text-foreground md:text-3xl lg:text-[2rem]">
+                    <h3 className="mt-2 font-display text-[1.65rem] leading-[0.95] text-foreground md:text-3xl lg:text-[2.15rem]">
                       {project.title}
                     </h3>
-                    <p className="mt-3 max-h-0 overflow-hidden text-sm leading-relaxed text-white/75 opacity-0 transition-all duration-500 group-hover:max-h-28 group-hover:opacity-100 md:text-[0.95rem]">
+                    <div className="mt-4 h-px w-8 bg-accent/70 transition-all duration-500 group-hover:w-14" />
+                    <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-white/70 opacity-0 transition-opacity duration-500 group-hover:opacity-100 md:text-[0.95rem]">
                       {project.synopsis}
+                    </p>
+                    <p className="mt-4 font-[family-name:var(--font-credit)] text-[10px] tracking-[0.28em] text-white/35 uppercase md:text-[11px]">
+                      ECMCo.
                     </p>
                   </div>
                 </div>
