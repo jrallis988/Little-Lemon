@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Courier_Prime, Instrument_Serif, Manrope } from "next/font/google";
-import { writer } from "@/data/scripts";
+import { company, writer } from "@/data/scripts";
 import "./globals.css";
 
 const display = Instrument_Serif({
@@ -24,12 +24,16 @@ const body = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: `${writer.name} — ${writer.role}`,
-  description: `${writer.name} is a screenwriter of East Coast features and pilots. ${writer.tagline}`,
+  title: `${company.name} — ${writer.name}`,
+  description: `${writer.name}, screenwriter at ${company.name}. ${writer.tagline}`,
   openGraph: {
-    title: `${writer.name} — ${writer.role}`,
+    title: `${company.name} — ${writer.name}`,
     description: writer.tagline,
-    type: "profile",
+    type: "website",
+    images: [{ url: company.logo }],
+  },
+  icons: {
+    icon: "/favicon-logo.png",
   },
 };
 

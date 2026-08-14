@@ -1,14 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0b0d;
-  --background-elevated: #101216;
-  --surface: #161920;
-  --foreground: #ece8e1;
-  --muted: #8f8b84;
-  --border: #2a2e36;
-  --accent: #9eb4c8;
-  --accent-soft: rgba(158, 180, 200, 0.12);
+  --background: #050508;
+  --background-elevated: #0b0c12;
+  --surface: #12141c;
+  --foreground: #f0ebe6;
+  --muted: #8f8b92;
+  --border: #2a2e3a;
+  --accent: #5cf0ff;
+  --accent-soft: rgba(92, 240, 255, 0.12);
+  --neon-pink: #ff3db8;
+  --neon-cyan: #5cf0ff;
   --paper: #e8e2d6;
   --ink: #12141a;
 }
@@ -22,6 +24,8 @@
   --color-border: var(--border);
   --color-accent: var(--accent);
   --color-accent-soft: var(--accent-soft);
+  --color-neon-pink: var(--neon-pink);
+  --color-neon-cyan: var(--neon-cyan);
   --color-paper: var(--paper);
   --color-ink: var(--ink);
   --font-sans: var(--font-body);
@@ -60,9 +64,9 @@ body {
 
 .hero-desk {
   background:
-    radial-gradient(ellipse 70% 55% at 72% 30%, rgba(158, 180, 200, 0.16), transparent 55%),
-    radial-gradient(ellipse 50% 40% at 15% 80%, rgba(80, 90, 110, 0.18), transparent 50%),
-    linear-gradient(165deg, #12151c 0%, #0a0b0d 48%, #0e1116 100%);
+    radial-gradient(ellipse 70% 55% at 50% 35%, rgba(255, 61, 184, 0.14), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 75% 70%, rgba(92, 240, 255, 0.1), transparent 50%),
+    linear-gradient(165deg, #100a14 0%, #050508 48%, #0a0d14 100%);
 }
 
 .script-page {

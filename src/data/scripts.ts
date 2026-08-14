@@ -12,6 +12,12 @@ export type Script = {
   tone: string;
 };
 
+export const company = {
+  name: "The East Coast Motion Picture Company",
+  shortName: "ECMCo.",
+  logo: "/logo.png",
+};
+
 export const writer = {
   name: "James Rallis",
   role: "Screenwriter",
@@ -22,7 +28,12 @@ export const writer = {
     "I write live-action features and pilots rooted in Atlantic towns, working lives, and the quiet pressure of weather and place.",
     "My work favors precise characters, moral weather, and drama that earns its turns on the page before it ever reaches a set.",
   ],
-  themes: ["Place as pressure", "Working-class Atlantic", "Family & inheritance", "Quiet suspense"],
+  themes: [
+    "Place as pressure",
+    "Working-class Atlantic",
+    "Family & inheritance",
+    "Quiet suspense",
+  ],
 };
 
 export const scripts: Script[] = [

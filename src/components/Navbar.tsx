@@ -1,7 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
-import { writer } from "@/data/scripts";
+import { company } from "@/data/scripts";
 
 const links = [
   { href: "#work", label: "Work" },
@@ -31,17 +32,24 @@ export default function Navbar() {
     <header
       className={`fixed inset-x-0 top-0 z-40 transition-[background,border-color,backdrop-filter] duration-300 ${
         scrolled || open
-          ? "border-b border-border/80 bg-background/90 backdrop-blur-md"
+          ? "border-b border-white/10 bg-black/85 backdrop-blur-md"
           : "border-b border-transparent bg-transparent"
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 md:h-20 md:px-8">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 md:h-[4.75rem] md:px-8">
         <a
           href="#top"
-          className="font-display text-xl tracking-tight text-foreground transition-colors hover:text-accent md:text-2xl"
-          aria-label={`${writer.name} — home`}
+          className="relative block h-9 w-[9.5rem] transition-opacity hover:opacity-90 md:h-11 md:w-[12.5rem]"
+          aria-label={`${company.name} — home`}
         >
-          {writer.name}
+          <Image
+            src={company.logo}
+            alt={company.name}
+            fill
+            className="object-contain object-left"
+            sizes="200px"
+            priority
+          />
         </a>
 
         <nav className="hidden items-center gap-10 md:flex" aria-label="Primary">
@@ -84,7 +92,7 @@ export default function Navbar() {
 
       <div
         id="mobile-nav"
-        className={`border-t border-border bg-background md:hidden ${
+        className={`border-t border-white/10 bg-black md:hidden ${
           open ? "block" : "hidden"
         }`}
       >
