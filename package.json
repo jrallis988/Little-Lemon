@@ -1,8 +1,8 @@
 {
-  "name": "ecmco-website",
+  "name": "james-rallis-screenwriter",
   "version": "0.1.0",
   "private": true,
-  "description": "The East Coast Motion Picture Company — independent film studio website",
+  "description": "James Rallis — screenwriter portfolio",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

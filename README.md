@@ -1,6 +1,6 @@
-# The East Coast Motion Picture Company
+# James Rallis — Screenwriter
 
-Cinematic studio website for an independent East Coast film production company.
+Portfolio site for screenwriter James Rallis: East Coast features and pilots, loglines, and industry contact.
 
 ## Stack
 
@@ -17,20 +17,11 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-## Scripts
-
-| Command | Description |
-| --- | --- |
-| `npm run dev` | Start local development server |
-| `npm run build` | Production build |
-| `npm start` | Serve production build |
-| `npm run lint` | Run ESLint |
-
 ## Structure
 
 ```
 src/
-├── app/                 # App Router entry (layout, page, styles)
-├── components/          # Navbar, Hero, Projects, Studio, Contact, Footer
-└── data/projects.ts     # Slate of feature films and series
+├── app/              # layout, page, styles
+├── components/       # Navbar, Hero, Work, About, Contact, Footer
+└── data/scripts.ts   # Writer profile + script slate
 ```

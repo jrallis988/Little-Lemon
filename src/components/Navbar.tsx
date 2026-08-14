@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { writer } from "@/data/scripts";
 
 const links = [
-  { href: "#projects", label: "Films" },
-  { href: "#studio", label: "Studio" },
+  { href: "#work", label: "Work" },
+  { href: "#about", label: "About" },
   { href: "#contact", label: "Contact" },
 ];
 
@@ -13,7 +14,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -30,22 +31,17 @@ export default function Navbar() {
     <header
       className={`fixed inset-x-0 top-0 z-40 transition-[background,border-color,backdrop-filter] duration-300 ${
         scrolled || open
-          ? "border-b border-white/10 bg-black/80 backdrop-blur-md"
+          ? "border-b border-border/80 bg-background/90 backdrop-blur-md"
           : "border-b border-transparent bg-transparent"
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 md:h-[4.5rem] md:px-8">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 md:h-20 md:px-8">
         <a
           href="#top"
-          className="group flex flex-col leading-none"
-          aria-label="The East Coast Motion Picture Company — home"
+          className="font-display text-xl tracking-tight text-foreground transition-colors hover:text-accent md:text-2xl"
+          aria-label={`${writer.name} — home`}
         >
-          <span className="font-[family-name:var(--font-credit)] text-[11px] tracking-[0.35em] text-accent uppercase">
-            Presents
-          </span>
-          <span className="font-display text-xl tracking-tight text-foreground transition-colors group-hover:text-accent md:text-2xl">
-            ECMCo.
-          </span>
+          {writer.name}
         </a>
 
         <nav className="hidden items-center gap-10 md:flex" aria-label="Primary">
@@ -53,7 +49,7 @@ export default function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              className="font-[family-name:var(--font-credit)] text-[15px] tracking-[0.22em] text-muted uppercase transition-colors hover:text-foreground"
+              className="text-sm tracking-[0.16em] text-muted uppercase transition-colors hover:text-foreground"
             >
               {link.label}
             </a>
@@ -88,11 +84,11 @@ export default function Navbar() {
 
       <div
         id="mobile-nav"
-        className={`border-t border-white/10 bg-black md:hidden ${
+        className={`border-t border-border bg-background md:hidden ${
           open ? "block" : "hidden"
         }`}
       >
-        <nav className="flex flex-col gap-1 px-5 py-6" aria-label="Mobile">
+        <nav className="flex flex-col px-5 py-6" aria-label="Mobile">
           {links.map((link) => (
             <a
               key={link.href}

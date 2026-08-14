@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Barlow_Condensed, Instrument_Serif, Manrope } from "next/font/google";
+import { Courier_Prime, Instrument_Serif, Manrope } from "next/font/google";
+import { writer } from "@/data/scripts";
 import "./globals.css";
 
 const display = Instrument_Serif({
@@ -9,10 +10,10 @@ const display = Instrument_Serif({
   display: "swap",
 });
 
-const credit = Barlow_Condensed({
-  weight: ["400", "500", "600"],
+const script = Courier_Prime({
+  weight: ["400", "700"],
   subsets: ["latin"],
-  variable: "--font-credit",
+  variable: "--font-script",
   display: "swap",
 });
 
@@ -23,14 +24,12 @@ const body = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "The East Coast Motion Picture Company",
-  description:
-    "Independent live-action feature films and series produced on the East Coast of the United States.",
+  title: `${writer.name} — ${writer.role}`,
+  description: `${writer.name} is a screenwriter of East Coast features and pilots. ${writer.tagline}`,
   openGraph: {
-    title: "The East Coast Motion Picture Company",
-    description:
-      "Independent live-action cinema with East Coast roots. Features, series, and disciplined production.",
-    type: "website",
+    title: `${writer.name} — ${writer.role}`,
+    description: writer.tagline,
+    type: "profile",
   },
 };
 
@@ -42,10 +41,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${display.variable} ${credit.variable} ${body.variable} h-full`}
+      className={`${display.variable} ${script.variable} ${body.variable} h-full`}
     >
       <body className="min-h-full bg-background font-sans text-foreground antialiased">
-        <div className="film-grain" aria-hidden="true" />
+        <div className="page-grain" aria-hidden="true" />
         {children}
       </body>
     </html>
