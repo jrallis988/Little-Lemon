@@ -1,106 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Artistic Fountain — Privacy Policy">
-    <title>Privacy Policy — Artistic Fountain</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        .legal-page {
-            max-width: 780px;
-            margin: 0 auto;
-            padding: 8rem 2rem 5rem;
-            color: var(--text);
-        }
-        .legal-page h1 { margin-bottom: 1rem; color: var(--cream); }
-        .legal-page h2 { font-size: 1.4rem; margin-top: 2.5rem; margin-bottom: 1rem; }
-        .legal-page p, .legal-page li { color: var(--text-muted); line-height: 1.7; margin-bottom: 1rem; }
-        .legal-page ul { padding-left: 1.5rem; margin-bottom: 1rem; }
-        .legal-back { display: inline-block; margin-top: 2rem; color: var(--light-purple); text-decoration: none; }
-        .legal-back:hover { text-decoration: underline; }
-        .legal-updated { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 2rem; }
-        .legal-nav { margin-bottom: 2rem; font-size: 0.9rem; }
-        .legal-nav a { color: var(--light-purple); text-decoration: none; }
-        .legal-nav a:hover { text-decoration: underline; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Privacy policy for Little Lemon kids animation portfolio.">
+  <meta name="theme-color" content="#F4C430">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <title>Privacy — Little Lemon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .legal { padding: calc(var(--header-h) + 3rem) 0 4rem; }
+    .legal-inner { width: min(720px, calc(100% - 2.5rem)); margin: 0 auto; }
+    .legal h1 { font-size: clamp(2.2rem, 5vw, 3rem); margin-bottom: 1rem; }
+    .legal h2 { font-size: 1.35rem; margin: 2rem 0 0.6rem; }
+    .legal p, .legal li { color: var(--ink-soft); font-weight: 600; margin-bottom: 0.75rem; }
+    .legal ul { padding-left: 1.2rem; list-style: disc; }
+  </style>
 </head>
 <body>
-    <header class="header">
-        <div class="logo">
-            <a href="index.html" class="logo-mark" aria-label="Artistic Fountain &mdash; home"><span class="logo-line-1">Artistic</span><span class="logo-line-2">Fountain</span></a>
-        </div>
-        <nav aria-label="Primary">
-            <ul class="nav" id="main-nav">
-                <li><a href="index.html#about">The Designer</a></li>
-                <li><a href="index.html#services">Services</a></li>
-                <li><a href="index.html#portfolio">Portfolio</a></li>
-                <li><a href="blog/index.html">Blog</a></li>
-                <li><a href="resume.pdf" download>Resume</a></li>
-            </ul>
-        </nav>
-        <div class="header-right">
-            <button class="nav-toggle" onclick="toggleNav()" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="main-nav"><span></span><span></span><span></span></button>
-        </div>
-    </header>
-
-    <main class="legal-page">
-        <h1>Privacy Policy</h1>
-        <p class="legal-updated">Last Updated: July 2026</p>
-        <p class="legal-nav"><a href="terms.html">View Terms &amp; Conditions →</a></p>
-
-        <p>Your privacy is important. This Privacy Policy outlines how your information is handled when you visit this website or work together on a design project.</p>
-
-        <h2>1. Information Collected</h2>
-        <p>When you reach out for a project or fill out a contact form, you may provide basic contact details such as your name, email address, project details, and business information. This data is used solely to communicate with you, scope projects, and deliver design services.</p>
-
-        <h2>2. Use of Information</h2>
-        <p>Your information is strictly used for:</p>
-        <ul>
-            <li>Communicating regarding active or prospective projects.</li>
-            <li>Fulfilling contractual agreements and delivering agreed-upon design assets.</li>
-            <li>Maintaining internal business and tax records.</li>
-        </ul>
-        <p>Your information is never sold, rented, or shared with third-party marketers or data brokers.</p>
-
-        <h2>3. Analytics and Cookies</h2>
-        <p>This website may utilize lightweight, privacy-focused analytics to understand general traffic patterns and site performance without tracking your personal identity across the broader web.</p>
-
-        <h2>4. Data Security</h2>
-        <p>Appropriate administrative and technical measures are taken to protect your personal information and project files from unauthorized access, loss, or misuse.</p>
-
-        <h2>5. Your Rights</h2>
-        <p>You have the right to request access to, correction of, or deletion of any personal information held. To make a request, simply reach out via the <a href="index.html#contact-form" style="color: var(--light-purple);">contact form</a>.</p>
-
-        <a href="index.html" class="legal-back">← Back to home</a>
-    </main>
-
-    <footer class="footer">
-        <div class="footer-content">
-            <nav class="footer-nav">
-                <a href="index.html#about">About</a>
-                <a href="index.html#services">Services</a>
-                <a href="index.html#portfolio">Portfolio</a>
-                <a href="blog/index.html">Blog</a>
-                <a href="index.html#faq">FAQ</a>
-                <a href="index.html#contact">Contact</a>
-            </nav>
-            <div class="footer-copyright">
-                © 2026 Artistic Fountain™ — All rights reserved. <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms &amp; Conditions</a>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        function toggleNav() {
-            const nav = document.querySelector('.nav');
-            const toggle = document.querySelector('.nav-toggle');
-            const isOpen = nav.classList.toggle('active');
-            toggle.classList.toggle('active', isOpen);
-            toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        }
-    </script>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <header class="site-header is-scrolled">
+    <a href="index.html" class="logo" aria-label="Little Lemon home">
+      <span class="logo-mark" aria-hidden="true"></span>
+      <span class="logo-text">Little Lemon</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav" id="main-nav">
+        <li><a href="index.html#work">Work</a></li>
+        <li><a href="index.html#reel">Reel</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main id="main" class="legal">
+    <div class="legal-inner">
+      <h1>Privacy</h1>
+      <p>Little Lemon is a personal kids animation portfolio. We keep things simple.</p>
+      <h2>What we collect</h2>
+      <p>If you use the contact form, we receive the name, email, and message you choose to send. We do not sell personal information.</p>
+      <h2>How we use it</h2>
+      <ul>
+        <li>To reply about animation projects and collaborations</li>
+        <li>To keep a record of project inquiries you initiate</li>
+      </ul>
+      <h2>Kids</h2>
+      <p>This site showcases work made for young audiences. It is not directed at collecting information from children. Parents and guardians should contact us on a child’s behalf when needed.</p>
+      <h2>Questions</h2>
+      <p>Reach out through the <a href="index.html#contact">contact form</a> on the home page.</p>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a href="index.html" class="logo footer-logo">
+        <span class="logo-mark" aria-hidden="true"></span>
+        <span class="logo-text">Little Lemon</span>
+      </a>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="index.html">Home</a>
+        <a href="terms.html">Terms</a>
+      </nav>
+    </div>
+  </footer>
 </body>
 </html>
