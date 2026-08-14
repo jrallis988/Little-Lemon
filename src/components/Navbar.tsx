@@ -36,10 +36,10 @@ export default function Navbar() {
           : "border-b border-transparent bg-transparent"
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 md:h-[4.75rem] md:px-8">
+      <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-5 md:h-24 md:px-8">
         <a
           href="#top"
-          className="relative block h-9 w-[9.5rem] transition-opacity hover:opacity-90 md:h-11 md:w-[12.5rem]"
+          className="relative block h-12 w-[14rem] transition-opacity hover:opacity-90 md:h-16 md:w-[20rem]"
           aria-label={`${company.name} — home`}
         >
           <Image
@@ -47,7 +47,7 @@ export default function Navbar() {
             alt={company.name}
             fill
             className="object-contain object-left"
-            sizes="200px"
+            sizes="320px"
             priority
           />
         </a>
