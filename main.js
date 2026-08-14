@@ -74,8 +74,17 @@
   }
 
   if (reelBtn && reelModal) {
-    reelBtn.addEventListener("click", () => {
-      if (typeof reelModal.showModal === "function") reelModal.showModal();
+    reelBtn.addEventListener("click", (event) => {
+      event.preventDefault();
+      if (typeof reelModal.showModal === "function") {
+        reelModal.showModal();
+      } else {
+        reelModal.setAttribute("open", "");
+      }
+    });
+
+    reelModal.addEventListener("click", (event) => {
+      if (event.target === reelModal) reelModal.close?.() || reelModal.removeAttribute("open");
     });
   }
 
