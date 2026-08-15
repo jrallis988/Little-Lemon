@@ -250,26 +250,38 @@ export function SiteHeader() {
               </div>
             </div>
 
-            <div className="relative z-[1] ml-auto flex shrink-0 items-center gap-1 sm:gap-1.5 xl:hidden">
-              <HeaderSearch />
-
-              <button
-                ref={mobileToggleRef}
-                id="mob-toggle"
-                type="button"
+            <div className="relative z-[1] ml-auto flex shrink-0 items-center gap-1 sm:gap-1.5">
+              <Link
+                href="/portal"
                 className={cn(
-                  "ml-0.5 flex h-11 w-11 items-center justify-center rounded-sm text-white/70 transition-all hover:bg-white/10 hover:text-white",
+                  "hidden min-h-10 items-center rounded-sm bg-white px-3.5 text-sm font-bold text-blue no-underline transition-colors hover:bg-sky/20 hover:text-blue xl:inline-flex 2xl:px-4 2xl:text-[15px]",
                   headerFocus,
                 )}
-                aria-label={
-                  mobileOpen ? "Close navigation menu" : "Open navigation menu"
-                }
-                aria-expanded={mobileOpen}
-                aria-controls="mob-nav"
-                onClick={() => setMobileOpen((v) => !v)}
               >
-                {mobileOpen ? <IconClose /> : <IconMenu />}
-              </button>
+                MyChildren&apos;s
+              </Link>
+
+              <div className="flex items-center gap-1 sm:gap-1.5 xl:hidden">
+                <HeaderSearch />
+
+                <button
+                  ref={mobileToggleRef}
+                  id="mob-toggle"
+                  type="button"
+                  className={cn(
+                    "ml-0.5 flex h-11 w-11 items-center justify-center rounded-sm text-white/70 transition-all hover:bg-white/10 hover:text-white",
+                    headerFocus,
+                  )}
+                  aria-label={
+                    mobileOpen ? "Close navigation menu" : "Open navigation menu"
+                  }
+                  aria-expanded={mobileOpen}
+                  aria-controls="mob-nav"
+                  onClick={() => setMobileOpen((v) => !v)}
+                >
+                  {mobileOpen ? <IconClose /> : <IconMenu />}
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -383,6 +395,16 @@ export function SiteHeader() {
           </div>
 
           <div className="flex flex-col gap-2 border-t border-white/[0.07] p-3">
+            <Link
+              href="/portal"
+              className={cn(
+                "block rounded-sm bg-white py-3 text-center text-base font-bold text-blue no-underline",
+                headerFocus,
+              )}
+              onClick={() => setMobileOpen(false)}
+            >
+              MyChildren&apos;s
+            </Link>
             <Link
               href="/appointments/request"
               className={cn(

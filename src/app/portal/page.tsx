@@ -3,9 +3,9 @@ import { PageHero } from "@/components/layout/PageHero";
 import { PortalSandbox } from "@/components/portal/PortalSandbox";
 
 export const metadata: Metadata = {
-  title: "MyChildren's Portal",
+  title: "MyChildren's",
   description:
-    "Sandbox patient portal inspired by MyChildren's — results, messages, visits, and refills.",
+    "Sign in to MyChildren's for results, messages, visits, and refill requests — Boston Children's own care account (not MyChart).",
 };
 
 export default function PortalPage() {
@@ -14,8 +14,8 @@ export default function PortalPage() {
       <PageHero
         id="portal-heading"
         eyebrow="Patients & families"
-        title="MyChildren's Portal"
-        lead="A functional sandbox that mirrors common portal tasks: test results, secure messaging, visit management, and refill requests."
+        title="MyChildren's"
+        lead="Boston Children's own place for results, secure messages, visits, and refill requests. This is not MyChart — MyChildren's is specific to care at Boston Children's."
       />
       <PortalSandbox />
     </>

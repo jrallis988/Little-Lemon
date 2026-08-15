@@ -31,21 +31,21 @@ export function PortalSandbox() {
       <div className="wrap py-s7 pb-s10">
         <div className="mx-auto max-w-[520px] rounded-md border border-border bg-white p-s6">
           <h2 className="mb-s2 text-xl font-bold text-ocean">
-            Patient portal preview
+            MyChildren&apos;s
           </h2>
           <p className="mb-s5 text-md font-light text-text-body">
-            UX preview for results, messaging, visits, and refills. This is not
-            connected to a real medical record system.
+            Sign in for results, messaging, visits, and refills. This is Boston
+            Children&apos;s own account — not MyChart.
           </p>
           <Notice className="mb-s5">
             <p>
               Preview only — local browser state. Do not enter real patient
-              information. Production portal requires SSO and HIPAA-capable
-              vendors.
+              information. Production MyChildren&apos;s requires SSO and
+              HIPAA-capable vendors.
             </p>
           </Notice>
           <Button type="button" variant="ocean" fullWidth onClick={signIn}>
-            Sign in to Portal
+            Sign in to MyChildren&apos;s
           </Button>
         </div>
       </div>

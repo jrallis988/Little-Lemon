@@ -12,7 +12,7 @@ import {
 
 const getCare = [
   { label: "Make an Appointment", href: "/appointments/request" },
-  { label: "MyChildren's Patient Portal", href: "/portal" },
+  { label: "MyChildren's", href: "/portal" },
   { label: "Find a Doctor", href: "/find-a-doctor" },
   { label: "Locations", href: "/locations" },
 ];
@@ -80,7 +80,7 @@ export function SiteFooter() {
               href="/portal"
               className="text-xs font-bold text-white no-underline hover:underline"
             >
-              MyChildren&apos;s Patient Portal
+              MyChildren&apos;s
             </Link>
           </div>
           <div className="flex items-center gap-s2 lg:border-r lg:border-white/25 lg:px-s4">
