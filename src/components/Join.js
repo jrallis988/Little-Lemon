@@ -1,24 +1,27 @@
 const actions = [
   {
     title: "Find youth support",
-    copy: "Connect with a neighborhood youth development program or guidance resource near you.",
+    copy: "Walk into a Neighborhood Resource Hub or reach out online. Support starts with you—no forms maze, no gatekeeping.",
     cta: "Get support",
-    href: "#approach",
+    href: "#hubs",
     primary: true,
+    tags: ["No red tape", "Completely confidential", "Zero fees"],
   },
   {
     title: "Become a mentor",
-    copy: "Join a civic partnership and mentorship initiative that puts young people first.",
+    copy: "Join a mentorship circle that puts young people first. Clear onboarding, real relationships, and guidance without bureaucracy.",
     cta: "Mentor with us",
-    href: "#mission",
+    href: "#voices",
     primary: false,
+    tags: ["No red tape", "Training provided", "Youth-first"],
   },
   {
     title: "Strengthen a hub",
-    copy: "Support Youth Guidance and Family Resource Centers that make community re-entry safer and more stable.",
+    copy: "Help keep drop-in spaces, creative labs, and stability navigation open to every young person who needs them.",
     cta: "Support the work",
     href: "#impact",
     primary: false,
+    tags: ["Transparent impact", "Community-rooted", "Zero barriers"],
   },
 ];
 
@@ -35,25 +38,36 @@ function Join() {
           </h2>
           <p className="mx-auto mt-6 max-w-2xl font-body text-lg text-violet-mist">
             Whether you need support, offer guidance, or strengthen a resource
-            hub, you help young people rebuild life direction with dignity.
+            hub—Civic Bound keeps the door open. No red tape. Completely
+            confidential. Zero fees.
           </p>
         </div>
 
-        <div className="mt-14 grid gap-10 md:grid-cols-3">
+        <div className="mt-14 grid gap-8 md:grid-cols-3">
           {actions.map((action) => (
             <div
               key={action.title}
-              className="border-t border-violet-bright/30 pt-8"
+              className="flex flex-col border border-violet-bright/25 bg-ink-soft/60 p-7 md:p-8"
             >
               <h3 className="font-display text-2xl font-bold text-white">
                 {action.title}
               </h3>
-              <p className="mt-4 font-body leading-relaxed text-violet-mist">
+              <p className="mt-4 flex-1 font-body leading-relaxed text-violet-mist">
                 {action.copy}
               </p>
+              <ul className="mt-5 flex flex-wrap gap-2">
+                {action.tags.map((tag) => (
+                  <li
+                    key={tag}
+                    className="border border-chartreuse/35 px-2.5 py-1 font-body text-[11px] font-semibold uppercase tracking-[0.12em] text-chartreuse"
+                  >
+                    {tag}
+                  </li>
+                ))}
+              </ul>
               <a
                 href={action.href}
-                className={`mt-6 inline-flex ${
+                className={`mt-7 inline-flex w-fit ${
                   action.primary ? "btn-primary" : "btn-ghost"
                 }`}
               >

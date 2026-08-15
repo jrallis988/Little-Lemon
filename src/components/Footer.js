@@ -18,8 +18,8 @@ function Footer() {
           <a href="#approach" className="hover:text-chartreuse">
             Programs
           </a>
-          <a href="#impact" className="hover:text-chartreuse">
-            Impact
+          <a href="#hubs" className="hover:text-chartreuse">
+            Hubs
           </a>
           <a href="#join" className="hover:text-chartreuse">
             Connect

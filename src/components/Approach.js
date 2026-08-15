@@ -27,9 +27,9 @@ function Approach() {
             Neighborhood support for critical life stages
           </h2>
           <p className="mt-5 font-body text-lg text-violet-mist">
-            Unlike school-based academic coaching models, Civic Bound operates
-            in the community—offering developmental support for youth
-            re-entering daily life with dignity, direction, and care.
+            Civic Bound blends community-hub accessibility, mission-driven
+            service, and character-building youth programming—so young people
+            get open doors, trusted mentors, and real pathways forward.
           </p>
         </div>
 
@@ -47,27 +47,6 @@ function Approach() {
               </p>
             </article>
           ))}
-        </div>
-      </div>
-
-      <div className="container mt-20">
-        <div className="relative overflow-hidden">
-          <img
-            src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=2000&q=80"
-            alt="Mentor offering guidance to a young person"
-            className="h-[48vh] w-full object-cover md:h-[56vh]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-ink via-violet-deep/55 to-transparent" />
-          <div className="absolute inset-0 flex items-end p-8 md:p-12">
-            <blockquote className="max-w-lg">
-              <p className="font-display text-2xl font-bold text-white md:text-3xl">
-                “I finally have people who see me—and help me move forward.”
-              </p>
-              <footer className="mt-4 font-body text-sm uppercase tracking-[0.16em] text-chartreuse">
-                Youth reflecting on Civic Bound mentorship
-              </footer>
-            </blockquote>
-          </div>
         </div>
       </div>
     </section>

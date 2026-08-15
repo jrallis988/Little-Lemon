@@ -3,6 +3,8 @@ import Hero from "./components/Hero";
 import Impact from "./components/Impact";
 import Mission from "./components/Mission";
 import Approach from "./components/Approach";
+import HubInside from "./components/HubInside";
+import Voices from "./components/Voices";
 import Join from "./components/Join";
 import Footer from "./components/Footer";
 
@@ -15,6 +17,8 @@ function App() {
         <Impact />
         <Mission />
         <Approach />
+        <HubInside />
+        <Voices />
         <Join />
       </main>
       <Footer />
