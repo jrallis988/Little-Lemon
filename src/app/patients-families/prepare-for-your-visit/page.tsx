@@ -33,7 +33,7 @@ export default function PrepareForVisitPage() {
               Check directions and parking
             </Button>
             <Button href="/portal" variant="ghost-white">
-              Open the patient portal
+              Open MyChildren&apos;s
             </Button>
           </>
         }
