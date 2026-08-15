@@ -53,7 +53,7 @@
 
   // Reveal sections
   const reveals = document.querySelectorAll(
-    ".section-head, .work-item, .process-track li, .about-grid, .contact-panel, .reel-stage"
+    ".section-head, .work-item, .process-track li, .about-studio, .contact-panel, .reel-stage"
   );
   reveals.forEach((el) => el.classList.add("reveal"));
   if ("IntersectionObserver" in window) {
