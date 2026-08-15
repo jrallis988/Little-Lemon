@@ -5,40 +5,37 @@ const HERO_IMAGE =
 
 function Hero() {
   return (
-    <section
-      id="top"
-      className="relative isolate flex min-h-[100svh] items-end overflow-hidden bg-violet-field"
-    >
-      <div className="absolute inset-0 -z-20 overflow-hidden opacity-0 animate-fade">
-        <img
-          src={HERO_IMAGE}
-          alt="Young people focused on learning and growth together"
-          className="h-full w-full object-cover object-center animate-drift"
-        />
-      </div>
-      <div className="absolute inset-0 -z-10 bg-hero-wash" />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-ink via-violet-deep/50 to-violet-field/35" />
+    <section id="top" className="relative overflow-hidden bg-paper pt-24 md:pt-28">
+      <div className="container grid items-center gap-12 pb-16 md:pb-24 lg:grid-cols-12 lg:gap-10">
+        <div className="lg:col-span-6">
+          <p className="eyebrow-accent opacity-0 animate-rise">
+            A nonprofit youth support network
+          </p>
+          <h1 className="display mt-6 max-w-xl text-4xl leading-[1.1] opacity-0 animate-rise-delay sm:text-5xl md:text-6xl">
+            Civic Bound
+          </h1>
+          <p className="lede mt-6 max-w-xl opacity-0 animate-rise-delay-2">
+            A youth-centered network for life direction, stability, and positive
+            community re-entry—built around young people, not adult bureaucracy.
+          </p>
+          <div className="mt-9 flex flex-wrap gap-3 opacity-0 animate-rise-delay-3">
+            <Link to="/get-support" className="btn-primary">
+              Get Support
+            </Link>
+            <a href="#approach" className="btn-ghost">
+              Our Approach
+            </a>
+          </div>
+        </div>
 
-      <div className="container relative pb-16 pt-32 md:pb-24 md:pt-40">
-        <p className="eyebrow opacity-0 animate-rise">
-          A nonprofit youth support network
-        </p>
-        <h1 className="display mt-4 max-w-4xl text-4xl leading-[1.05] opacity-0 animate-rise-delay sm:text-5xl md:text-6xl lg:text-7xl">
-          Civic <span className="text-chartreuse">Bound</span>
-        </h1>
-        <div className="mt-5 h-px w-24 origin-left scale-x-0 bg-chartreuse animate-draw" />
-        <p className="mt-6 max-w-xl font-body text-lg text-violet-mist opacity-0 animate-rise-delay-2 md:text-xl">
-          A nonprofit, youth-centered network for life direction, stability, and
-          positive community re-entry—built around young people, not adult
-          bureaucracy.
-        </p>
-        <div className="mt-10 flex flex-wrap gap-4 opacity-0 animate-rise-delay-3">
-          <Link to="/get-support" className="btn-primary">
-            Get Support
-          </Link>
-          <a href="#approach" className="btn-ghost">
-            Our Approach
-          </a>
+        <div className="lg:col-span-6">
+          <div className="overflow-hidden border border-paper-line bg-paper-soft shadow-card">
+            <img
+              src={HERO_IMAGE}
+              alt="Young people focused on learning and growth together"
+              className="h-[420px] w-full object-cover md:h-[520px]"
+            />
+          </div>
         </div>
       </div>
     </section>

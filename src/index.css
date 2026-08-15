@@ -3,13 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --ink: #12081f;
-  --ink-soft: #1b0f2e;
+  --paper: #f7f8fa;
+  --paper-soft: #ffffff;
+  --charcoal: #334155;
+  --charcoal-deep: #0f172a;
   --violet: #5b2bb3;
-  --violet-deep: #2a0f5c;
-  --violet-field: #4a1f9b;
-  --chartreuse: #c8f542;
-  --chartreuse-light: #d9ff6a;
+  --chartreuse: #a8c92a;
 }
 
 *,
@@ -25,16 +24,16 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  background: var(--ink);
-  color: #f4efff;
+  background: var(--paper);
+  color: var(--charcoal);
   font-family: "Figtree", sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
 ::selection {
-  background: rgba(200, 245, 66, 0.35);
-  color: #12081f;
+  background: rgba(91, 43, 179, 0.18);
+  color: #0f172a;
 }
 
 img {
@@ -44,23 +43,44 @@ img {
 
 @layer components {
   .section-pad {
-    @apply py-20 md:py-28;
+    @apply py-20 md:py-24;
   }
 
   .eyebrow {
-    @apply font-body text-xs uppercase tracking-[0.28em] text-chartreuse;
+    @apply font-body text-xs font-semibold uppercase tracking-[0.22em] text-charcoal-soft;
+  }
+
+  .eyebrow-accent {
+    @apply relative inline-block font-body text-xs font-semibold uppercase tracking-[0.22em] text-charcoal-soft;
+  }
+
+  .eyebrow-accent::after {
+    content: "";
+    @apply absolute -bottom-1 left-0 h-0.5 w-8 bg-chartreuse;
   }
 
   .display {
-    @apply font-display font-bold tracking-tight text-white;
+    @apply font-display font-semibold tracking-tight text-charcoal-deep;
+  }
+
+  .lede {
+    @apply font-body text-lg leading-relaxed text-charcoal md:text-xl;
+  }
+
+  .surface-card {
+    @apply border border-paper-line bg-paper-soft shadow-card;
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-sm bg-chartreuse px-6 py-3 font-body text-sm font-semibold uppercase tracking-[0.14em] text-chartreuse-ink transition duration-300 hover:bg-chartreuse-light;
+    @apply inline-flex items-center justify-center rounded-sm bg-violet px-6 py-3 font-body text-sm font-semibold tracking-wide text-white transition duration-300 hover:bg-violet-deep;
   }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center rounded-sm border border-violet-mist/40 px-6 py-3 font-body text-sm font-semibold uppercase tracking-[0.14em] text-white transition duration-300 hover:border-chartreuse hover:text-chartreuse;
+    @apply inline-flex items-center justify-center rounded-sm border border-paper-line bg-paper-soft px-6 py-3 font-body text-sm font-semibold tracking-wide text-charcoal-deep transition duration-300 hover:border-violet hover:text-violet;
+  }
+
+  .micro-label {
+    @apply font-body text-[11px] font-semibold uppercase tracking-[0.16em] text-chartreuse-ink;
   }
 }
 

@@ -2,40 +2,49 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <footer className="border-t border-violet-bright/20 bg-ink-soft">
-      <div className="container flex flex-col gap-8 py-12 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p className="font-display text-2xl font-extrabold text-white">
-            Civic <span className="text-chartreuse">Bound</span>
+    <footer className="border-t border-paper-line bg-paper-soft">
+      <div className="container flex flex-col gap-10 py-14 md:flex-row md:justify-between">
+        <div className="max-w-sm">
+          <p className="font-display text-2xl font-semibold text-charcoal-deep">
+            Civic Bound
           </p>
-          <p className="mt-3 max-w-sm font-body text-sm text-violet-mist">
+          <p className="mt-3 font-body text-sm leading-relaxed text-charcoal">
             A nonprofit community youth support network for life direction,
             stability, and positive community re-entry.
           </p>
         </div>
-        <div className="flex flex-wrap gap-x-6 gap-y-3 font-body text-sm uppercase tracking-[0.12em] text-violet-mist">
-          <Link to="/hubs" className="hover:text-chartreuse">
-            Hubs
+        <div className="grid grid-cols-2 gap-x-10 gap-y-3 font-body text-sm text-charcoal sm:grid-cols-3">
+          <Link to="/#mission" className="hover:text-violet">
+            About Us
           </Link>
-          <Link to="/get-support" className="hover:text-chartreuse">
-            Get Support
+          <Link to="/#approach" className="hover:text-violet">
+            Our Solutions
           </Link>
-          <Link to="/stories" className="hover:text-chartreuse">
-            Stories
+          <Link to="/stories" className="hover:text-violet">
+            Real Stories
           </Link>
-          <Link to="/volunteers" className="hover:text-chartreuse">
+          <Link to="/partners" className="hover:text-violet">
+            Coalition Partners
+          </Link>
+          <Link to="/news" className="hover:text-violet">
+            Latest News
+          </Link>
+          <Link to="/hubs" className="hover:text-violet">
+            Find a Hub
+          </Link>
+          <Link to="/volunteers" className="hover:text-violet">
             Volunteer
           </Link>
-          <Link to="/partners" className="hover:text-chartreuse">
-            Partners
-          </Link>
-          <Link to="/leadership" className="hover:text-chartreuse">
+          <Link to="/leadership" className="hover:text-violet">
             Leadership
+          </Link>
+          <Link to="/get-support" className="hover:text-violet">
+            Get Support
           </Link>
         </div>
       </div>
-      <div className="border-t border-violet-bright/15">
-        <div className="container flex flex-col gap-2 py-5 font-body text-xs text-violet-mist/80 md:flex-row md:justify-between">
+      <div className="border-t border-paper-line">
+        <div className="container flex flex-col gap-2 py-5 font-body text-xs text-charcoal-soft md:flex-row md:justify-between">
           <p>
             © {new Date().getFullYear()} Civic Bound. A nonprofit organization.
           </p>

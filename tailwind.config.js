@@ -6,52 +6,63 @@ module.exports = {
       center: true,
       padding: {
         DEFAULT: "1.25rem",
-        lg: "2rem",
+        lg: "2.5rem",
+      },
+      screens: {
+        sm: "640px",
+        md: "768px",
+        lg: "1024px",
+        xl: "1120px",
       },
     },
     extend: {
       colors: {
-        ink: {
-          DEFAULT: "#12081F",
-          soft: "#1B0F2E",
-          muted: "#2A1745",
+        paper: {
+          DEFAULT: "#F7F8FA",
+          soft: "#FFFFFF",
+          muted: "#EEF2F6",
+          line: "#E2E8F0",
+        },
+        charcoal: {
+          DEFAULT: "#334155",
+          deep: "#0F172A",
+          soft: "#64748B",
         },
         violet: {
-          deep: "#2A0F5C",
+          deep: "#3B1A7A",
           DEFAULT: "#5B2BB3",
-          bright: "#7B45E0",
-          mist: "#C9B4F5",
-          field: "#4A1F9B",
+          bright: "#6D3BC4",
+          mist: "#EDE4FF",
+          field: "#F3EEFF",
         },
         chartreuse: {
-          DEFAULT: "#C8F542",
-          light: "#D9FF6A",
-          soft: "#E8FF9A",
-          ink: "#142006",
+          DEFAULT: "#A8C92A",
+          light: "#C8F542",
+          soft: "#EAF6B5",
+          ink: "#3F4D0F",
+        },
+        // legacy aliases remapped toward the light system
+        ink: {
+          DEFAULT: "#F7F8FA",
+          soft: "#FFFFFF",
+          muted: "#EEF2F6",
         },
       },
       fontFamily: {
-        display: ['"Syne"', "sans-serif"],
+        display: ['"Source Serif 4"', "Georgia", "serif"],
         body: ['"Figtree"', "sans-serif"],
       },
-      backgroundImage: {
-        "hero-wash":
-          "linear-gradient(135deg, rgba(18,8,31,0.68) 0%, rgba(74,31,155,0.62) 46%, rgba(18,8,31,0.78) 100%)",
-        "section-glow":
-          "radial-gradient(ellipse at top, rgba(91,43,179,0.42), transparent 55%)",
+      boxShadow: {
+        card: "0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 24px rgba(15, 23, 42, 0.04)",
       },
       keyframes: {
         rise: {
-          "0%": { opacity: "0", transform: "translateY(28px)" },
+          "0%": { opacity: "0", transform: "translateY(20px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
         draw: {
           "0%": { transform: "scaleX(0)" },
           "100%": { transform: "scaleX(1)" },
-        },
-        drift: {
-          "0%": { transform: "scale(1.08) translate(0, 0)" },
-          "100%": { transform: "scale(1.16) translate(-1.5%, 1%)" },
         },
         fadeIn: {
           "0%": { opacity: "0" },
@@ -59,13 +70,12 @@ module.exports = {
         },
       },
       animation: {
-        rise: "rise 0.9s ease-out forwards",
-        "rise-delay": "rise 0.9s ease-out 0.18s forwards",
-        "rise-delay-2": "rise 0.9s ease-out 0.32s forwards",
-        "rise-delay-3": "rise 0.9s ease-out 0.48s forwards",
-        draw: "draw 1s ease-out 0.4s forwards",
-        drift: "drift 18s ease-in-out alternate infinite",
-        fade: "fadeIn 1.2s ease-out forwards",
+        rise: "rise 0.8s ease-out forwards",
+        "rise-delay": "rise 0.8s ease-out 0.15s forwards",
+        "rise-delay-2": "rise 0.8s ease-out 0.28s forwards",
+        "rise-delay-3": "rise 0.8s ease-out 0.4s forwards",
+        draw: "draw 0.9s ease-out 0.35s forwards",
+        fade: "fadeIn 1s ease-out forwards",
       },
     },
   },

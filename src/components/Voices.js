@@ -23,36 +23,28 @@ const voices = [
 
 function Voices() {
   return (
-    <section
-      id="voices"
-      className="section-pad relative overflow-hidden bg-ink"
-    >
-      <div className="container relative">
+    <section id="voices" className="section-pad border-y border-paper-line bg-paper-soft">
+      <div className="container">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="eyebrow">Voices & impact</p>
-          <h2 className="display mt-4 text-4xl md:text-5xl">
+          <p className="eyebrow-accent">Real Stories</p>
+          <h2 className="display mt-5 text-3xl md:text-5xl">
             Real words from the people we walk with
           </h2>
-          <p className="mt-5 font-body text-lg text-violet-mist">
+          <p className="lede mt-5">
             Metrics matter—but dignity lives in the stories. Here’s what youth,
             mentors, and families say about Civic Bound.
           </p>
         </div>
 
-        <div className="mt-14 grid gap-10 md:grid-cols-3">
+        <div className="mt-14 grid gap-8 md:grid-cols-3">
           {voices.map((voice) => (
-            <figure
-              key={voice.attribution}
-              className="border-t border-chartreuse/50 pt-8"
-            >
-              <blockquote className="font-display text-xl font-bold leading-snug text-white md:text-2xl">
+            <figure key={voice.attribution} className="surface-card p-8">
+              <blockquote className="font-display text-xl font-semibold leading-snug text-charcoal-deep">
                 “{voice.quote}”
               </blockquote>
-              <figcaption className="mt-6">
-                <p className="font-body text-sm font-semibold uppercase tracking-[0.16em] text-chartreuse">
-                  {voice.attribution}
-                </p>
-                <p className="mt-1 font-body text-sm text-violet-mist">
+              <figcaption className="mt-6 border-t border-paper-line pt-4">
+                <p className="micro-label text-chartreuse">{voice.attribution}</p>
+                <p className="mt-1 font-body text-sm text-charcoal-soft">
                   {voice.role}
                 </p>
               </figcaption>

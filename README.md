@@ -20,10 +20,12 @@ A multi-page marketing site for Civic Bound — a nonprofit, youth-centered comm
 | `/partners` | Village Network partner portal |
 | `/leadership` | Youth Advisory Board |
 
-## Palette
+## Palette (high-trust light)
 
-- Violet (`#5B2BB3`)
-- Chartreuse (`#C8F542`)
+- Paper background (`#F7F8FA`)
+- Charcoal body text (`#334155`)
+- Violet CTAs only (`#5B2BB3`)
+- Chartreuse micro-accents only (`#A8C92A`)
 
 ## Scripts
 

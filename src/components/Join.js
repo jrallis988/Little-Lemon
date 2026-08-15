@@ -29,39 +29,34 @@ const actions = [
 
 function Join() {
   return (
-    <section id="join" className="section-pad relative overflow-hidden bg-ink">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(91,43,179,0.45),transparent_45%),radial-gradient(circle_at_80%_70%,rgba(200,245,66,0.12),transparent_40%)]" />
-      <div className="container relative">
+    <section id="join" className="section-pad bg-paper">
+      <div className="container">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="eyebrow">Take part</p>
-          <h2 className="display mt-4 text-4xl md:text-6xl">
-            Local hubs. Real mentorship.{" "}
-            <span className="text-chartreuse">Forward motion.</span>
+          <p className="eyebrow-accent">Take part</p>
+          <h2 className="display mt-5 text-3xl md:text-5xl">
+            Local hubs. Real mentorship. Forward motion.
           </h2>
-          <p className="mx-auto mt-6 max-w-2xl font-body text-lg text-violet-mist">
+          <p className="lede mt-5">
             Whether you need support, offer guidance, or strengthen a resource
             hub—Civic Bound keeps the door open. No red tape. Completely
             confidential. Zero fees.
           </p>
         </div>
 
-        <div className="mt-14 grid gap-8 md:grid-cols-3">
+        <div className="mt-14 grid gap-6 md:grid-cols-3">
           {actions.map((action) => (
-            <div
-              key={action.title}
-              className="flex flex-col border border-violet-bright/25 bg-ink-soft/60 p-7 md:p-8"
-            >
-              <h3 className="font-display text-2xl font-bold text-white">
+            <div key={action.title} className="surface-card flex flex-col p-8">
+              <h3 className="font-display text-2xl font-semibold text-charcoal-deep">
                 {action.title}
               </h3>
-              <p className="mt-4 flex-1 font-body leading-relaxed text-violet-mist">
+              <p className="mt-4 flex-1 font-body leading-relaxed text-charcoal">
                 {action.copy}
               </p>
               <ul className="mt-5 flex flex-wrap gap-2">
                 {action.tags.map((tag) => (
                   <li
                     key={tag}
-                    className="border border-chartreuse/35 px-2.5 py-1 font-body text-[11px] font-semibold uppercase tracking-[0.12em] text-chartreuse"
+                    className="border border-paper-line px-2.5 py-1 font-body text-[11px] font-semibold uppercase tracking-[0.12em] text-charcoal-soft"
                   >
                     {tag}
                   </li>

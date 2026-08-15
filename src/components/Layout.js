@@ -29,7 +29,7 @@ function ScrollManager() {
 
 function Layout() {
   return (
-    <div className="min-h-screen bg-ink text-white">
+    <div className="min-h-screen bg-paper text-charcoal">
       <ScrollManager />
       <Header />
       <main>
