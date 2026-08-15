@@ -4,15 +4,15 @@ const pillars = [
     copy: "Grassroots webs of reliable adults and peers for immediate stabilization—people who show up when life shifts.",
   },
   {
-    title: "Neighborhood Youth Development",
+    title: "Neighborhood Youth Development Programs",
     copy: "Hyper-local initiatives focused on skill-building, confidence, and character through everyday community practice.",
   },
   {
-    title: "Youth Guidance & Family Resources",
+    title: "Youth Guidance and Family Resource Centers",
     copy: "Accessible physical and digital hubs offering practical navigation for youth and the families walking with them.",
   },
   {
-    title: "Civic Partnership & Mentorship",
+    title: "Civic Partnership and Mentorship Initiatives",
     copy: "Collaborative frameworks connecting youth with local leaders, mentors, and community pathways that open doors.",
   },
 ];
