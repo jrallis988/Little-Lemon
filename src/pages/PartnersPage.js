@@ -4,14 +4,13 @@ import { partnerCategories } from "../data/partners";
 function PartnersPage() {
   return (
     <>
-      <section className="relative overflow-hidden bg-violet-field pb-16 pt-28 md:pb-20 md:pt-36">
-        <div className="pointer-events-none absolute inset-0 bg-section-glow" />
-        <div className="container relative">
-          <p className="eyebrow">The village network</p>
-          <h1 className="display mt-4 max-w-4xl text-4xl md:text-6xl">
+      <section className="border-b border-paper-line bg-paper pb-14 pt-28 md:pb-16 md:pt-32">
+        <div className="container">
+          <p className="eyebrow-accent">The village network</p>
+          <h1 className="display mt-5 max-w-4xl text-4xl md:text-6xl">
             Partner with Civic Bound
           </h1>
-          <p className="mt-5 max-w-2xl font-body text-lg text-violet-mist">
+          <p className="lede mt-5 max-w-2xl">
             Local businesses, tradespeople, artists, and elders—sponsor space,
             offer skill shares, or act as sounding boards. Youth stay at the
             center.
@@ -30,27 +29,24 @@ function PartnersPage() {
         </div>
       </section>
 
-      <section className="section-pad bg-ink">
+      <section className="section-pad bg-paper-soft">
         <div className="container">
           <h2 className="display text-3xl md:text-4xl">Community action grid</h2>
           <div className="mt-12 grid gap-6 md:grid-cols-2">
             {partnerCategories.map((category, index) => (
-              <article
-                key={category.id}
-                className="border border-violet-bright/25 bg-ink-soft/60 p-7 md:p-8"
-              >
-                <span className="font-display text-sm font-bold uppercase tracking-[0.2em] text-chartreuse">
-                  0{index + 1}
-                </span>
-                <h3 className="mt-4 font-display text-2xl font-bold text-white">
+              <article key={category.id} className="surface-card p-7 md:p-8">
+                <span className="micro-label text-chartreuse">0{index + 1}</span>
+                <h3 className="mt-4 font-display text-2xl font-semibold text-charcoal-deep">
                   {category.title}
                 </h3>
-                <p className="mt-3 font-body text-violet-mist">{category.copy}</p>
+                <p className="mt-3 font-body leading-relaxed text-charcoal">
+                  {category.copy}
+                </p>
                 <ul className="mt-6 space-y-2">
                   {category.actions.map((action) => (
                     <li
                       key={action}
-                      className="border-l border-chartreuse/50 pl-3 font-body text-sm text-white"
+                      className="border-l border-chartreuse pl-3 font-body text-sm text-charcoal"
                     >
                       {action}
                     </li>
@@ -60,9 +56,9 @@ function PartnersPage() {
             ))}
           </div>
 
-          <div className="mt-14 border border-chartreuse/30 bg-violet-field/30 p-8 text-center md:p-12">
+          <div className="mt-14 surface-card p-8 text-center md:p-12">
             <h3 className="display text-3xl">Ready to strengthen a hub?</h3>
-            <p className="mx-auto mt-4 max-w-2xl font-body text-violet-mist">
+            <p className="mx-auto mt-4 max-w-2xl font-body leading-relaxed text-charcoal">
               Tell us what you can offer—space, skills, presence, or resources.
               We’ll match you with youth-led priorities. Review volunteer
               boundaries first so expectations stay clear and hub-bound.

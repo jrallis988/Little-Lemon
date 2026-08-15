@@ -40,14 +40,13 @@ function HubsPage() {
 
   return (
     <>
-      <section className="relative overflow-hidden bg-violet-field pb-16 pt-28 md:pb-20 md:pt-36">
-        <div className="pointer-events-none absolute inset-0 bg-section-glow" />
-        <div className="container relative">
-          <p className="eyebrow">Hub locator & space explorer</p>
-          <h1 className="display mt-4 max-w-4xl text-4xl md:text-6xl">
+      <section className="border-b border-paper-line bg-paper pb-14 pt-28 md:pb-16 md:pt-32">
+        <div className="container">
+          <p className="eyebrow-accent">Hub locator & space explorer</p>
+          <h1 className="display mt-5 max-w-4xl text-4xl md:text-6xl">
             Find a Neighborhood Resource Hub near you
           </h1>
-          <p className="mt-5 max-w-2xl font-body text-lg text-violet-mist">
+          <p className="lede mt-5 max-w-2xl">
             Open doors, local rhythms, and practical support—without the
             paperwork maze. Search by zip, city, or neighborhood.
           </p>
@@ -65,7 +64,7 @@ function HubsPage() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Enter zip, city, or neighborhood"
-              className="w-full border border-violet-bright/40 bg-ink/50 px-5 py-3 font-body text-white outline-none placeholder:text-violet-mist/60 focus:border-chartreuse"
+              className="w-full border border-paper-line bg-paper-soft px-5 py-3 font-body text-charcoal outline-none placeholder:text-charcoal-soft focus:border-violet"
             />
             <button type="submit" className="btn-primary shrink-0">
               Search Hubs
@@ -74,7 +73,7 @@ function HubsPage() {
         </div>
       </section>
 
-      <section className="section-pad bg-ink">
+      <section className="section-pad bg-paper-soft">
         <div className="container">
           <div className="mb-8 flex items-end justify-between gap-4">
             <h2 className="display text-3xl md:text-4xl">
@@ -87,44 +86,43 @@ function HubsPage() {
 
           <div className="grid gap-6 lg:grid-cols-2">
             {results.map((hub) => (
-              <article
-                key={hub.id}
-                className="border border-violet-bright/25 bg-ink-soft/70 p-7"
-              >
-                <p className="font-body text-xs uppercase tracking-[0.2em] text-chartreuse">
+              <article key={hub.id} className="surface-card p-7">
+                <p className="micro-label text-chartreuse">
                   {hub.neighborhood} · {hub.city}, {hub.state} {hub.zip}
                 </p>
-                <h3 className="mt-3 font-display text-2xl font-bold text-white">
+                <h3 className="mt-3 font-display text-2xl font-semibold text-charcoal-deep">
                   {hub.name}
                 </h3>
-                <p className="mt-2 font-body text-sm text-violet-mist">
+                <p className="mt-2 font-body text-sm text-charcoal-soft">
                   {hub.hours}
                 </p>
                 <ul className="mt-5 flex flex-wrap gap-2">
                   {hub.offerings.map((item) => (
                     <li
                       key={item}
-                      className="border border-chartreuse/30 px-2.5 py-1 font-body text-[11px] uppercase tracking-[0.12em] text-chartreuse"
+                      className="border border-paper-line px-2.5 py-1 font-body text-[11px] font-semibold uppercase tracking-[0.12em] text-charcoal-soft"
                     >
                       {item}
                     </li>
                   ))}
                 </ul>
-                <div className="mt-6 border-t border-violet-bright/20 pt-5">
-                  <p className="font-body text-xs uppercase tracking-[0.18em] text-violet-mist">
+                <div className="mt-6 border-t border-paper-line pt-5">
+                  <p className="font-body text-xs font-semibold uppercase tracking-[0.18em] text-charcoal-soft">
                     This week
                   </p>
                   <ul className="mt-3 space-y-2">
                     {hub.nextEvents.map((event) => (
                       <li
                         key={`${event.day}-${event.title}`}
-                        className="flex justify-between gap-4 font-body text-sm text-white"
+                        className="flex justify-between gap-4 font-body text-sm text-charcoal"
                       >
                         <span>
-                          <span className="text-chartreuse">{event.day}</span>{" "}
+                          <span className="micro-label text-chartreuse">
+                            {event.day}
+                          </span>{" "}
                           {event.title}
                         </span>
-                        <span className="shrink-0 text-violet-mist">
+                        <span className="shrink-0 text-charcoal-soft">
                           {event.time}
                         </span>
                       </li>
@@ -136,9 +134,9 @@ function HubsPage() {
           </div>
 
           {results.length === 0 && (
-            <p className="mt-8 font-body text-violet-mist">
+            <p className="mt-8 font-body text-charcoal">
               No hubs matched that search. Try another zip or city—or{" "}
-              <Link to="/get-support" className="text-chartreuse underline">
+              <Link to="/get-support" className="text-violet hover:underline">
                 Find Your Track
               </Link>{" "}
               for guided support.
@@ -147,14 +145,14 @@ function HubsPage() {
         </div>
       </section>
 
-      <section id="calendar" className="section-pad bg-ink-soft">
+      <section id="calendar" className="section-pad border-y border-paper-line bg-paper">
         <div className="container">
           <div className="max-w-3xl">
-            <p className="eyebrow">Live schedule & calendar</p>
-            <h2 className="display mt-4 text-4xl md:text-5xl">
+            <p className="eyebrow-accent">Live schedule & calendar</p>
+            <h2 className="display mt-5 text-4xl md:text-5xl">
               Weekly community rhythms
             </h2>
-            <p className="mt-5 font-body text-lg text-violet-mist">
+            <p className="lede mt-5">
               Open studio nights, peer circles, and neighborhood gatherings across
               the network—come as you are.
             </p>
@@ -164,23 +162,23 @@ function HubsPage() {
             {weekCalendar.map(({ day, events }) => (
               <div
                 key={day}
-                className="min-h-[180px] border border-violet-bright/25 bg-ink/40 p-5"
+                className="min-h-[180px] border border-paper-line bg-paper-soft p-5 shadow-card"
               >
-                <p className="font-display text-lg font-bold text-chartreuse">
+                <p className="font-display text-lg font-semibold text-charcoal-deep">
                   {day}
                 </p>
                 {events.length === 0 ? (
-                  <p className="mt-4 font-body text-sm text-violet-mist">
+                  <p className="mt-4 font-body text-sm text-charcoal-soft">
                     Open drop-in hours vary by hub.
                   </p>
                 ) : (
                   <ul className="mt-4 space-y-4">
                     {events.map((event) => (
                       <li key={`${day}-${event.hub}-${event.title}`}>
-                        <p className="font-body text-sm font-semibold text-white">
+                        <p className="font-body text-sm font-semibold text-charcoal-deep">
                           {event.time} · {event.title}
                         </p>
-                        <p className="mt-1 font-body text-xs text-violet-mist">
+                        <p className="mt-1 font-body text-xs text-charcoal-soft">
                           {event.neighborhood}
                         </p>
                       </li>
@@ -193,27 +191,24 @@ function HubsPage() {
         </div>
       </section>
 
-      <section className="section-pad bg-violet-field">
+      <section className="section-pad bg-paper-soft">
         <div className="container">
           <div className="max-w-3xl">
-            <p className="eyebrow">Inside a hub</p>
-            <h2 className="display mt-4 text-4xl md:text-5xl">
+            <p className="eyebrow-accent">Inside a hub</p>
+            <h2 className="display mt-5 text-4xl md:text-5xl">
               Spaces built for belonging and next steps
             </h2>
           </div>
           <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {hubOfferings.map((item, index) => (
-              <article
-                key={item.title}
-                className="border border-violet-bright/25 bg-ink/30 p-6"
-              >
-                <span className="font-display text-sm font-bold uppercase tracking-[0.2em] text-chartreuse">
-                  0{index + 1}
-                </span>
-                <h3 className="mt-3 font-display text-xl font-bold text-white">
+              <article key={item.title} className="surface-card p-6">
+                <span className="micro-label text-chartreuse">0{index + 1}</span>
+                <h3 className="mt-3 font-display text-xl font-semibold text-charcoal-deep">
                   {item.title}
                 </h3>
-                <p className="mt-3 font-body text-violet-mist">{item.copy}</p>
+                <p className="mt-3 font-body leading-relaxed text-charcoal">
+                  {item.copy}
+                </p>
               </article>
             ))}
           </div>

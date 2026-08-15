@@ -44,14 +44,13 @@ function GetSupportPage() {
 
   return (
     <>
-      <section className="relative overflow-hidden bg-violet-field pb-12 pt-28 md:pt-36">
-        <div className="pointer-events-none absolute inset-0 bg-section-glow" />
-        <div className="container relative">
-          <p className="eyebrow">Find your track</p>
-          <h1 className="display mt-4 max-w-4xl text-4xl md:text-6xl">
+      <section className="border-b border-paper-line bg-paper pb-14 pt-28 md:pb-16 md:pt-32">
+        <div className="container">
+          <p className="eyebrow-accent">Find your track</p>
+          <h1 className="display mt-5 max-w-4xl text-4xl md:text-6xl">
             What do you need right now?
           </h1>
-          <p className="mt-5 max-w-2xl font-body text-lg text-violet-mist">
+          <p className="lede mt-5 max-w-2xl">
             A low-friction 3-step guide. No judgment. No red tape. You stay in
             control the whole way.
           </p>
@@ -60,7 +59,7 @@ function GetSupportPage() {
             {guarantees.map((item) => (
               <span
                 key={item}
-                className="border border-chartreuse/40 px-3 py-1.5 font-body text-[11px] font-semibold uppercase tracking-[0.12em] text-chartreuse"
+                className="border border-paper-line bg-paper-soft px-3 py-1.5 font-body text-[11px] font-semibold uppercase tracking-[0.12em] text-charcoal-soft"
               >
                 {item}
               </span>
@@ -73,10 +72,10 @@ function GetSupportPage() {
                 key={n}
                 className={`border px-3 py-2 ${
                   step === n
-                    ? "border-chartreuse text-chartreuse"
+                    ? "border-violet bg-violet/5 text-violet"
                     : step > n
-                      ? "border-violet-bright/50 text-white"
-                      : "border-violet-bright/20 text-violet-mist"
+                      ? "border-paper-line bg-paper-soft text-charcoal-deep"
+                      : "border-paper-line text-charcoal-soft"
                 }`}
               >
                 Step {n}
@@ -86,7 +85,7 @@ function GetSupportPage() {
         </div>
       </section>
 
-      <section className="section-pad bg-ink">
+      <section className="section-pad bg-paper-soft">
         <div className="container max-w-4xl">
           {step === 1 && (
             <div>
@@ -101,14 +100,14 @@ function GetSupportPage() {
                     onClick={() => setNeedId(need.id)}
                     className={`border p-6 text-left transition ${
                       needId === need.id
-                        ? "border-chartreuse bg-violet-field/40"
-                        : "border-violet-bright/25 bg-ink-soft/50 hover:border-chartreuse/50"
+                        ? "border-violet bg-violet/5 shadow-card"
+                        : "border-paper-line bg-paper-soft hover:border-violet/40"
                     }`}
                   >
-                    <span className="font-display text-xl font-bold text-white">
+                    <span className="font-display text-xl font-semibold text-charcoal-deep">
                       {need.title}
                     </span>
-                    <p className="mt-2 font-body text-violet-mist">{need.copy}</p>
+                    <p className="mt-2 font-body text-charcoal">{need.copy}</p>
                   </button>
                 ))}
               </div>
@@ -128,7 +127,7 @@ function GetSupportPage() {
               <h2 className="display text-3xl md:text-4xl">
                 The no-judgment guarantee
               </h2>
-              <p className="mt-5 font-body text-lg text-violet-mist">
+              <p className="lede mt-5">
                 Civic Bound support is free, confidential, and voluntary. You
                 don’t have to prove anything. You don’t have to finish a stack of
                 forms to be welcome.
@@ -137,18 +136,18 @@ function GetSupportPage() {
                 {guarantees.map((item) => (
                   <li
                     key={item}
-                    className="border-l-2 border-chartreuse pl-4 font-body text-white"
+                    className="border-l-2 border-chartreuse pl-4 font-body text-charcoal"
                   >
                     {item}
                   </li>
                 ))}
               </ul>
-              <label className="mt-8 flex items-start gap-3 font-body text-violet-mist">
+              <label className="mt-8 flex items-start gap-3 font-body text-charcoal">
                 <input
                   type="checkbox"
                   checked={ready}
                   onChange={(e) => setReady(e.target.checked)}
-                  className="mt-1 accent-[#c8f542]"
+                  className="mt-1 accent-violet"
                 />
                 <span>
                   I understand this is voluntary support—and I can stop anytime.
@@ -179,9 +178,7 @@ function GetSupportPage() {
               <h2 className="display text-3xl md:text-4xl">
                 Your track: {selected.title}
               </h2>
-              <p className="mt-5 font-body text-lg text-violet-mist">
-                {selected.result}
-              </p>
+              <p className="lede mt-5">{selected.result}</p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link to={selected.cta.to} className="btn-primary">
                   {selected.cta.label}
@@ -197,9 +194,9 @@ function GetSupportPage() {
                   Start over
                 </button>
               </div>
-              <p className="mt-10 border-t border-violet-bright/20 pt-6 font-body text-sm text-violet-mist">
+              <p className="mt-10 border-t border-paper-line pt-6 font-body text-sm text-charcoal-soft">
                 Prefer to talk with a person first? Visit a hub drop-in or browse{" "}
-                <Link to="/stories" className="text-chartreuse underline">
+                <Link to="/stories" className="text-violet hover:underline">
                   community stories
                 </Link>{" "}
                 to see how others found their footing.

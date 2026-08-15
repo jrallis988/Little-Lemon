@@ -4,37 +4,33 @@ import { stories } from "../data/stories";
 function StoriesPage() {
   return (
     <>
-      <section className="relative overflow-hidden bg-violet-field pb-16 pt-28 md:pb-20 md:pt-36">
-        <div className="pointer-events-none absolute inset-0 bg-section-glow" />
-        <div className="container relative">
-          <p className="eyebrow">Community voices</p>
-          <h1 className="display mt-4 max-w-4xl text-4xl md:text-6xl">
+      <section className="border-b border-paper-line bg-paper pb-14 pt-28 md:pb-16 md:pt-32">
+        <div className="container">
+          <p className="eyebrow-accent">Community voices</p>
+          <h1 className="display mt-5 max-w-4xl text-4xl md:text-6xl">
             Stories of direction, re-entry, and stability
           </h1>
-          <p className="mt-5 max-w-2xl font-body text-lg text-violet-mist">
+          <p className="lede mt-5 max-w-2xl">
             Peer narratives—not charity marketing. Real dispatches from youth,
             mentors, and families walking through change with dignity.
           </p>
         </div>
       </section>
 
-      <section className="section-pad bg-ink">
+      <section className="section-pad bg-paper-soft">
         <div className="container grid gap-8 lg:grid-cols-2">
           {stories.map((story) => (
-            <article
-              key={story.id}
-              className="flex flex-col border border-violet-bright/25 bg-ink-soft/60 p-8"
-            >
-              <p className="font-body text-xs uppercase tracking-[0.2em] text-chartreuse">
+            <article key={story.id} className="surface-card flex flex-col p-8">
+              <p className="micro-label text-chartreuse">
                 {story.voice} · {story.hub}
               </p>
-              <h2 className="mt-4 font-display text-3xl font-bold text-white">
+              <h2 className="mt-4 font-display text-3xl font-semibold text-charcoal-deep">
                 {story.title}
               </h2>
-              <p className="mt-4 font-display text-xl leading-snug text-violet-mist">
+              <p className="mt-4 font-display text-xl leading-snug text-charcoal">
                 “{story.excerpt}”
               </p>
-              <p className="mt-5 flex-1 font-body leading-relaxed text-violet-mist">
+              <p className="mt-5 flex-1 font-body leading-relaxed text-charcoal">
                 {story.body}
               </p>
             </article>
