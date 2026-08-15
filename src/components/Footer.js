@@ -23,6 +23,9 @@ function Footer() {
           <Link to="/stories" className="hover:text-chartreuse">
             Stories
           </Link>
+          <Link to="/volunteers" className="hover:text-chartreuse">
+            Volunteer
+          </Link>
           <Link to="/partners" className="hover:text-chartreuse">
             Partners
           </Link>

@@ -17,6 +17,9 @@ function PartnersPage() {
             center.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
+            <Link to="/volunteers" className="btn-ghost">
+              Volunteer boundaries
+            </Link>
             <Link to="/leadership" className="btn-ghost">
               Meet youth leaders
             </Link>
@@ -61,11 +64,17 @@ function PartnersPage() {
             <h3 className="display text-3xl">Ready to strengthen a hub?</h3>
             <p className="mx-auto mt-4 max-w-2xl font-body text-violet-mist">
               Tell us what you can offer—space, skills, presence, or resources.
-              We’ll match you with youth-led priorities, not bureaucracy.
+              We’ll match you with youth-led priorities. Review volunteer
+              boundaries first so expectations stay clear and hub-bound.
             </p>
-            <Link to="/get-support" className="btn-primary mt-8 inline-flex">
-              Start a conversation
-            </Link>
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              <Link to="/volunteers" className="btn-ghost">
+                Read volunteer framework
+              </Link>
+              <Link to="/get-support" className="btn-primary inline-flex">
+                Start a conversation
+              </Link>
+            </div>
           </div>
         </div>
       </section>

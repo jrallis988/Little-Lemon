@@ -6,6 +6,7 @@ import GetSupportPage from "./pages/GetSupportPage";
 import StoriesPage from "./pages/StoriesPage";
 import PartnersPage from "./pages/PartnersPage";
 import LeadershipPage from "./pages/LeadershipPage";
+import VolunteersPage from "./pages/VolunteersPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="get-support" element={<GetSupportPage />} />
         <Route path="stories" element={<StoriesPage />} />
         <Route path="partners" element={<PartnersPage />} />
+        <Route path="volunteers" element={<VolunteersPage />} />
         <Route path="leadership" element={<LeadershipPage />} />
       </Route>
     </Routes>

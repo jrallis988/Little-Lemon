@@ -10,12 +10,12 @@ const actions = [
     tags: ["No red tape", "Completely confidential", "Zero fees"],
   },
   {
-    title: "Become a mentor",
-    copy: "Join a mentorship circle that puts young people first. Clear onboarding, real relationships, and guidance without bureaucracy.",
-    cta: "Join the village",
-    to: "/partners",
+    title: "Become a volunteer",
+    copy: "Hub-centered roles—Doers, Guides, and Anchors—with clear boundaries. No chaperone model. No court-ordered oversight.",
+    cta: "See volunteer boundaries",
+    to: "/volunteers",
     primary: false,
-    tags: ["No red tape", "Training provided", "Youth-first"],
+    tags: ["Hub-bound", "Group-centered", "No red tape"],
   },
   {
     title: "Strengthen a hub",

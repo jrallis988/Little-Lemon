@@ -22,3 +22,12 @@ test("renders hubs locator page", () => {
     screen.getByText(/Find a Neighborhood Resource Hub near you/i)
   ).toBeInTheDocument();
 });
+
+test("renders volunteer boundaries page", () => {
+  render(
+    <MemoryRouter initialEntries={["/volunteers"]}>
+      <App />
+    </MemoryRouter>
+  );
+  expect(screen.getByText(/What volunteers are not/i)).toBeInTheDocument();
+});

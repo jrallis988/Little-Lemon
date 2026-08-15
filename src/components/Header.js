@@ -6,6 +6,7 @@ const links = [
   { to: "/#approach", label: "Programs" },
   { to: "/hubs", label: "Hubs" },
   { to: "/stories", label: "Stories" },
+  { to: "/volunteers", label: "Volunteer" },
   { to: "/partners", label: "Partners" },
   { to: "/leadership", label: "Leadership" },
 ];
@@ -20,11 +21,6 @@ function Header() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  const linkClass = ({ isActive }) =>
-    `font-body text-sm font-medium uppercase tracking-[0.12em] transition hover:text-chartreuse ${
-      isActive ? "text-chartreuse" : "text-violet-mist"
-    }`;
 
   return (
     <header
@@ -43,18 +39,26 @@ function Header() {
           Civic <span className="text-chartreuse">Bound</span>
         </Link>
 
-        <nav className="hidden items-center gap-5 lg:flex xl:gap-7">
+        <nav className="hidden items-center gap-4 xl:flex xl:gap-6">
           {links.map((link) =>
             link.to.includes("#") ? (
               <Link
                 key={link.to}
                 to={link.to}
-                className="font-body text-sm font-medium uppercase tracking-[0.12em] text-violet-mist transition hover:text-chartreuse"
+                className="font-body text-xs font-medium uppercase tracking-[0.12em] text-violet-mist transition hover:text-chartreuse xl:text-sm"
               >
                 {link.label}
               </Link>
             ) : (
-              <NavLink key={link.to} to={link.to} className={linkClass}>
+              <NavLink
+                key={link.to}
+                to={link.to}
+                className={({ isActive }) =>
+                  `font-body text-xs font-medium uppercase tracking-[0.12em] transition hover:text-chartreuse xl:text-sm ${
+                    isActive ? "text-chartreuse" : "text-violet-mist"
+                  }`
+                }
+              >
                 {link.label}
               </NavLink>
             )
@@ -66,7 +70,7 @@ function Header() {
 
         <button
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center border border-violet-mist/30 text-white lg:hidden"
+          className="inline-flex h-10 w-10 items-center justify-center border border-violet-mist/30 text-white xl:hidden"
           aria-expanded={open}
           aria-label="Toggle navigation"
           onClick={() => setOpen((value) => !value)}
@@ -93,7 +97,7 @@ function Header() {
       </div>
 
       {open && (
-        <div className="border-t border-violet-bright/25 bg-ink/95 lg:hidden">
+        <div className="border-t border-violet-bright/25 bg-ink/95 xl:hidden">
           <nav className="container flex flex-col gap-4 py-6">
             {links.map((link) => (
               <Link

@@ -17,8 +17,9 @@ function Mission() {
             Civic Bound is a nonprofit community-embedded social and
             developmental support network for youth moving through critical life
             stages. We focus on community re-entry, life direction, and
-            stability—centering youth themselves, not parent-teacher politics or
-            administrative boards.
+            stability—centering youth themselves, not parent-teacher politics,
+            administrative boards, or court-ordered supervision. Young people
+            choose to show up because they want to.
           </p>
           <div className="mt-10 grid gap-8 sm:grid-cols-2">
             <div className="border-l-2 border-chartreuse pl-5">

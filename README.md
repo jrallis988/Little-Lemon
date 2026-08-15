@@ -16,6 +16,7 @@ A multi-page marketing site for Civic Bound — a nonprofit, youth-centered comm
 | `/hubs` | Hub locator & space explorer |
 | `/get-support` | Find Your Track 3-step navigator |
 | `/stories` | Community voices & impact stories |
+| `/volunteers` | Volunteer boundary & responsibility framework |
 | `/partners` | Village Network partner portal |
 | `/leadership` | Youth Advisory Board |
 
