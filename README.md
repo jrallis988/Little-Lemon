@@ -25,3 +25,18 @@ npm start
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
+
+## Deploy (Cloudflare)
+
+```bash
+mkdir -p dist/images
+cp index.html about.html programs.html join.html privacy.html styles.css main.js favicon.svg dist/
+cp images/* dist/images/
+npx wrangler deploy
+```
+
+Unauthenticated preview (temporary account, claim within 60 minutes):
+
+```bash
+npx wrangler deploy --temporary
+```
