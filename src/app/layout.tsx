@@ -25,7 +25,7 @@ const body = Manrope({
 
 export const metadata: Metadata = {
   title: `${company.name} — ${writer.name}`,
-  description: `${writer.name}, screenwriter at ${company.name}. ${writer.tagline}`,
+  description: `${writer.name}, screenwriter for film and television at ${company.name}. ${writer.tagline}`,
   openGraph: {
     title: `${company.name} — ${writer.name}`,
     description: writer.tagline,

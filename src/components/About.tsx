@@ -9,7 +9,7 @@ export default function About() {
             ABOUT THE WRITER
           </p>
           <h2 className="font-display text-4xl leading-tight text-foreground md:text-5xl">
-            A screenwriter built for the page—and the East Coast.
+            Film and television from the East Coast page.
           </h2>
         </div>
 
