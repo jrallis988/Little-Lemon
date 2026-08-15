@@ -354,12 +354,20 @@ h1, h2, h3 {
 
 .hero-brand {
   margin-bottom: 0.85rem;
+  background: none;
+  padding: 0;
+  border: 0;
+  box-shadow: none;
 }
 
 .hero-logo {
   width: min(100%, 34rem);
   height: auto;
-  filter: drop-shadow(0 8px 0 rgba(42, 42, 42, 0.18));
+  background: transparent;
+  /* soft outline so letters read on busy art without a white plate */
+  filter:
+    drop-shadow(0 2px 0 rgba(42, 42, 42, 0.35))
+    drop-shadow(0 6px 10px rgba(42, 42, 42, 0.25));
 }
 
 .hero-tagline {
