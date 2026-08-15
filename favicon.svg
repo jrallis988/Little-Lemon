@@ -1,14 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <rect width="64" height="64" rx="16" fill="#FFF3B8"/>
-  <ellipse cx="32" cy="36" rx="18" ry="20" fill="#F4C430"/>
-  <ellipse cx="32" cy="36" rx="18" ry="20" fill="url(#shine)" opacity="0.35"/>
-  <path d="M32 12c0 0 2.5 6 0 10-2.5-4 0-10 0-10z" fill="#2F9B6A"/>
-  <path d="M32 14c4-2 9-1 11 3-5 1-9 4-11 8 0-4-1-8 0-11z" fill="#3D9B6E"/>
-  <ellipse cx="26" cy="30" rx="4" ry="6" fill="#FFF8D6" opacity="0.55"/>
-  <defs>
-    <linearGradient id="shine" x1="18" y1="18" x2="44" y2="52">
-      <stop stop-color="#fff"/>
-      <stop offset="1" stop-color="#F4C430" stop-opacity="0"/>
-    </linearGradient>
-  </defs>
+  <rect width="64" height="64" rx="14" fill="#F7F4EC"/>
+  <rect x="10" y="28" width="44" height="26" rx="4" fill="#F4A04A" stroke="#2A2A2A" stroke-width="2.5"/>
+  <path d="M8 28 L32 12 L56 28 Z" fill="#E85D5D" stroke="#2A2A2A" stroke-width="2.5" stroke-linejoin="round"/>
+  <rect x="26" y="36" width="12" height="18" rx="2" fill="#F5C518" stroke="#2A2A2A" stroke-width="2"/>
+  <circle cx="22" cy="40" r="4" fill="#5BB8E0" stroke="#2A2A2A" stroke-width="2"/>
+  <circle cx="42" cy="40" r="4" fill="#7CBB4A" stroke="#2A2A2A" stroke-width="2"/>
 </svg>

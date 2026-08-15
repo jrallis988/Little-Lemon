@@ -1,8 +1,8 @@
 {
-  "name": "little-lemon-kids-animation",
+  "name": "playhouse-animation-portfolio",
   "version": "1.0.0",
   "private": true,
-  "description": "Little Lemon — kids animation portfolio",
+  "description": "Playhouse Animation — 2D kids animation portfolio",
   "scripts": {
     "start": "npx --yes serve -l 3000",
     "dev": "npx --yes serve -l 3000"

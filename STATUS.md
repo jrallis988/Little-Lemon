@@ -1,3 +1,3 @@
-# Little Lemon — status
+# Playhouse Animation — status
 
-Kids animation portfolio site (static). Hero, selected films, showreel modal placeholder, about, process, and contact form are in place. Swap placeholder stills and reel embed for production media when ready.
+2D kids animation portfolio. Brand logo, flat illustration assets, selected films, showreel modal, about, process, and contact are in place. Swap placeholder stills and reel embed for production media when ready.

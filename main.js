@@ -98,7 +98,7 @@
         return;
       }
       status.style.color = "var(--leaf)";
-      status.textContent = "Thanks! Your note is ready to send — connect this form to your email or form service.";
+      status.textContent = "Thanks! Your note is ready to send — connect this form to your Playhouse email or form service.";
       form.reset();
     });
   }

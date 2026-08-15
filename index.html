@@ -3,30 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Little Lemon — kids animation portfolio. Original shorts, character worlds, and stories made for young audiences.">
-  <meta name="author" content="James Rallis, Little Lemon">
-  <meta name="theme-color" content="#F4C430">
+  <meta name="description" content="Playhouse Animation — 2D kids shorts, character worlds, and stories made for young audiences.">
+  <meta name="author" content="James Rallis, Playhouse Animation">
+  <meta name="theme-color" content="#E85D5D">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <title>Little Lemon — Kids Animation Portfolio</title>
+  <title>Playhouse Animation — Kids Animation Portfolio</title>
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Little Lemon — Kids Animation Portfolio">
-  <meta property="og:description" content="Original shorts, character worlds, and stories made for young audiences.">
-  <meta property="og:image" content="images/hero-storybook.png">
+  <meta property="og:title" content="Playhouse Animation — Kids Animation Portfolio">
+  <meta property="og:description" content="2D kids shorts, character worlds, and stories made for young audiences.">
+  <meta property="og:image" content="images/logo.png">
   <meta name="twitter:card" content="summary_large_image">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to main content</a>
 
   <header class="site-header" data-header>
-    <a href="index.html" class="logo" aria-label="Little Lemon home">
-      <span class="logo-mark" aria-hidden="true"></span>
-      <span class="logo-text">Little Lemon</span>
+    <a href="index.html" class="logo" aria-label="Playhouse Animation home">
+      <img src="images/logo.png" alt="" class="logo-img" width="160" height="72">
+      <span class="logo-text">Playhouse Animation</span>
     </a>
     <button class="nav-toggle" type="button" data-nav-toggle aria-label="Open menu" aria-expanded="false" aria-controls="main-nav">
       <span></span><span></span><span></span>
@@ -42,21 +42,19 @@
   </nav>
 
   <main id="main">
-    <!-- Hero: brand + one line + CTA + full-bleed visual -->
-    <section class="hero" aria-label="Little Lemon introduction">
+    <section class="hero" aria-label="Playhouse Animation introduction">
       <div class="hero-visual" aria-hidden="true">
         <img src="images/hero-storybook.png" alt="" class="hero-img" width="1920" height="1080">
         <div class="hero-wash"></div>
-        <div class="hero-float lemon" data-parallax></div>
-        <div class="hero-float cloud cloud-a" data-parallax></div>
-        <div class="hero-float cloud cloud-b" data-parallax></div>
+        <div class="hero-shape shape-a" data-parallax></div>
+        <div class="hero-shape shape-b" data-parallax></div>
+        <div class="hero-shape shape-c" data-parallax></div>
       </div>
       <div class="hero-content">
         <h1 class="hero-brand">
-          <span class="hero-brand-line">Little</span>
-          <span class="hero-brand-line accent">Lemon</span>
+          <img src="images/logo.png" alt="Playhouse Animation" class="hero-logo" width="720" height="320">
         </h1>
-        <p class="hero-tagline">Kids animation that sparkles with heart, humor, and big little adventures.</p>
+        <p class="hero-tagline">Flat, friendly 2D stories for little screens — color, bounce, and big heart.</p>
         <div class="hero-actions">
           <a href="#work" class="btn btn-primary">See the films</a>
           <a href="#contact" class="btn btn-ghost">Start a story</a>
@@ -64,19 +62,18 @@
       </div>
     </section>
 
-    <!-- Selected work -->
     <section class="section work" id="work">
       <div class="section-inner">
         <header class="section-head">
           <h2>Selected films</h2>
-          <p>Shorts and character worlds built for preschool and early elementary screens.</p>
+          <p>2D shorts and character worlds built for preschool and early elementary screens.</p>
         </header>
 
         <div class="work-grid" role="list">
-          <article class="work-item" role="listitem" style="--accent:#F4C430">
+          <article class="work-item" role="listitem" style="--accent:var(--coral)">
             <a href="#contact" class="work-link">
               <div class="work-media">
-                <img src="images/work/work-lemon-friend.png" alt="Cheerful lemon character waving in a sunny meadow" width="800" height="800" loading="lazy">
+                <img src="images/work/work-lemon-friend.png" alt="Cheerful flat lemon character waving in a meadow" width="800" height="800" loading="lazy">
                 <span class="work-play" aria-hidden="true"></span>
               </div>
               <div class="work-meta">
@@ -86,23 +83,23 @@
             </a>
           </article>
 
-          <article class="work-item" role="listitem" style="--accent:#6EC4D8">
+          <article class="work-item" role="listitem" style="--accent:var(--sky)">
             <a href="#contact" class="work-link">
               <div class="work-media">
-                <img src="images/work/work-starry-friends.png" alt="Fox and bunny friends under a starry night sky" width="800" height="800" loading="lazy">
+                <img src="images/work/work-starry-friends.png" alt="Flat fox and bunny under a starry night sky" width="800" height="800" loading="lazy">
                 <span class="work-play" aria-hidden="true"></span>
               </div>
               <div class="work-meta">
                 <h3>Starry Friends</h3>
-                <p>Bedtime story · 2D series pilot</p>
+                <p>Bedtime story · 2D pilot</p>
               </div>
             </a>
           </article>
 
-          <article class="work-item" role="listitem" style="--accent:#FF6A4C">
+          <article class="work-item" role="listitem" style="--accent:var(--orange)">
             <a href="#contact" class="work-link">
               <div class="work-media">
-                <img src="images/work/work-lemon-bus.png" alt="Lemon-shaped school bus driving through a colorful neighborhood" width="800" height="800" loading="lazy">
+                <img src="images/work/work-lemon-bus.png" alt="Flat lemon-shaped school bus in a colorful town" width="800" height="800" loading="lazy">
                 <span class="work-play" aria-hidden="true"></span>
               </div>
               <div class="work-meta">
@@ -112,10 +109,10 @@
             </a>
           </article>
 
-          <article class="work-item" role="listitem" style="--accent:#2F9B6A">
+          <article class="work-item" role="listitem" style="--accent:var(--leaf)">
             <a href="#contact" class="work-link">
               <div class="work-media">
-                <img src="images/work/work-storybook-magic.png" alt="Child discovering a glowing storybook with magical creatures" width="800" height="800" loading="lazy">
+                <img src="images/work/work-storybook-magic.png" alt="Child opening a glowing storybook with flat magical creatures" width="800" height="800" loading="lazy">
                 <span class="work-play" aria-hidden="true"></span>
               </div>
               <div class="work-meta">
@@ -128,22 +125,21 @@
       </div>
     </section>
 
-    <!-- Showreel -->
     <section class="section reel" id="reel">
       <div class="section-inner">
         <header class="section-head section-head-center">
           <h2>Showreel</h2>
-          <p>A quick taste of character acting, color, and kid-forward storytelling.</p>
+          <p>A quick taste of flat character acting, bold color, and kid-forward storytelling.</p>
         </header>
         <div class="reel-stage">
-          <img src="images/reel-banner.png" alt="Showreel collage of whimsical kids animation frames" width="1600" height="900" loading="lazy">
+          <img src="images/reel-banner.png" alt="Flat 2D showreel collage of kids animation frames" width="1600" height="900" loading="lazy">
           <button type="button" class="reel-play" data-reel-play aria-label="Play showreel">
             <span class="reel-play-icon" aria-hidden="true"></span>
             <span>Watch reel</span>
           </button>
           <div class="reel-ticker" aria-hidden="true">
-            <span>Character · Story · Color · Joy · Character · Story · Color · Joy ·</span>
-            <span>Character · Story · Color · Joy · Character · Story · Color · Joy ·</span>
+            <span>2D · Character · Color · Joy · 2D · Character · Color · Joy ·</span>
+            <span>2D · Character · Color · Joy · 2D · Character · Color · Joy ·</span>
           </div>
         </div>
         <dialog class="reel-modal" data-reel-modal>
@@ -153,24 +149,23 @@
           </form>
           <div class="reel-embed">
             <div class="reel-placeholder">
-              <p>Your kids animation reel plays here.</p>
+              <p>Your Playhouse Animation reel plays here.</p>
             </div>
           </div>
         </dialog>
       </div>
     </section>
 
-    <!-- About -->
     <section class="section about" id="about">
       <div class="section-inner about-grid">
         <div class="about-portrait">
-          <img src="images/profile.jpg" alt="Portrait of James, animator behind Little Lemon" width="640" height="960" loading="lazy">
+          <img src="images/profile.jpg" alt="Portrait of James, animator behind Playhouse Animation" width="640" height="960" loading="lazy">
           <div class="about-blob" aria-hidden="true"></div>
         </div>
         <div class="about-copy">
           <h2>Hi, I’m James</h2>
-          <p>I make kids animation — the kind that feels like a warm Saturday morning and sticks with families long after the credits.</p>
-          <p>Little Lemon is my portfolio home for character shorts, educational stories, and playful worlds. From first doodle to final frame, I care about clear emotion, readable acting, and color that sings on a tablet in the back seat.</p>
+          <p>I make 2D kids animation — the kind that feels like Saturday morning cut paper and sticks with families after the credits.</p>
+          <p>Playhouse Animation is my portfolio home for character shorts, educational stories, and playful flat worlds. From first doodle to final frame, I care about clear emotion, readable acting, and color that sings on a tablet in the back seat.</p>
           <ul class="about-tags">
             <li>2D character animation</li>
             <li>Preschool storytelling</li>
@@ -181,7 +176,6 @@
       </div>
     </section>
 
-    <!-- Process -->
     <section class="section process" id="process">
       <div class="section-inner">
         <header class="section-head">
@@ -197,7 +191,7 @@
           <li>
             <span class="process-num">02</span>
             <h3>Sketch</h3>
-            <p>Characters, color keys, and boards that read from across the room.</p>
+            <p>Flat shapes, bold color keys, and boards that read from across the room.</p>
           </li>
           <li>
             <span class="process-num">03</span>
@@ -213,11 +207,10 @@
       </div>
     </section>
 
-    <!-- Contact -->
     <section class="section contact" id="contact">
       <div class="section-inner contact-panel">
         <header class="section-head">
-          <h2>Let’s make something sunny</h2>
+          <h2>Let’s make something playful</h2>
           <p>Studios, educators, and indie producers — tell me about the story you want kids to remember.</p>
         </header>
         <form class="contact-form" id="contact-form" novalidate>
@@ -243,10 +236,10 @@
   <footer class="site-footer">
     <div class="footer-inner">
       <a href="index.html" class="logo footer-logo">
-        <span class="logo-mark" aria-hidden="true"></span>
-        <span class="logo-text">Little Lemon</span>
+        <img src="images/logo.png" alt="" class="logo-img" width="140" height="64">
+        <span class="logo-text">Playhouse Animation</span>
       </a>
-      <p class="footer-tag">Kids animation with zest.</p>
+      <p class="footer-tag">2D kids animation with heart.</p>
       <nav class="footer-nav" aria-label="Footer">
         <a href="#work">Work</a>
         <a href="#reel">Reel</a>
@@ -254,7 +247,7 @@
         <a href="privacy.html">Privacy</a>
         <a href="terms.html">Terms</a>
       </nav>
-      <p class="footer-copy">&copy; <span data-year></span> Little Lemon. All rights reserved.</p>
+      <p class="footer-copy">&copy; <span data-year></span> Playhouse Animation. All rights reserved.</p>
     </div>
   </footer>
 
