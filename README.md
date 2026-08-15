@@ -1,29 +1,22 @@
-# Artistic Fountain
+# Whole Youth
 
-Independent design venture portfolio — digital media, graphic design, visual identity, and creative media projects.
+A static nonprofit website that blends the spirit of three reference models:
 
-## Dual-track separation
-
-| Track | Home | Houses |
-| --- | --- | --- |
-| **Creative** | Artistic Fountain (this repo) | Visual media, graphic identity, conceptual design, client design services |
-| **Engineering** | Developer portfolio (separate) | Back-end systems, Python/FastAPI, AI/RAG applications |
-
-See `STATUS.md` for the full status report.
+- **Youth mental wellbeing & coalition dialogue** (Empower Our Future–style research and conversation)
+- **Community belonging & programs** (YMCA-style hubs, camps, and healthy living)
+- **Education service & student success** (City Year–style coaching, serve / give / partner)
 
 ## Stack
 
-Static site: HTML, CSS, and vanilla JS (built in Cursor). Custom typefaces (Arcanite Slab, Goudy Heavyface) plus Inter for body copy.
+HTML, CSS, and vanilla JavaScript. Typography: Fraunces + Figtree.
 
 ## Pages
 
-- `index.html` — home (hero, designer, services, portfolio, blog, contact)
-- `nh-dmv/` — conceptual redesign of the New Hampshire DMV website (civic UX case study)
-- `services/` — detail pages for each service offering
-- `blog/` — blog index and post pages (content can be drafted in Blaze AI)
-- `privacy.html` — privacy policy
-- `terms.html` — terms & conditions
-- `resume.pdf` — downloadable resume
+- `index.html` — home
+- `about.html` — mission & research
+- `programs.html` — program continuum
+- `join.html` — serve, give, partner
+- `privacy.html` — demo privacy note
 
 ## Develop
 
@@ -31,23 +24,4 @@ Static site: HTML, CSS, and vanilla JS (built in Cursor). Custom typefaces (Arca
 npm start
 ```
 
-Opens a local static server at [http://localhost:3000](http://localhost:3000).
-
-Or open `index.html` directly in a browser.
-
-## Structure
-
-```
-.
-├── index.html
-├── privacy.html
-├── terms.html
-├── styles.css
-├── STATUS.md
-├── favicon.svg
-├── resume.pdf
-├── services/
-├── blog/
-├── images/
-└── *.otf          # brand fonts
-```
+Open [http://localhost:3000](http://localhost:3000).

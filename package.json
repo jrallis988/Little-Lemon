@@ -1,8 +1,8 @@
 {
-  "name": "artistic-fountain-portfolio",
+  "name": "whole-youth",
   "version": "1.0.0",
   "private": true,
-  "description": "Artistic Fountain — strategic design studio portfolio",
+  "description": "Whole Youth — coalition site for youth belonging, learning, and wellbeing",
   "scripts": {
     "start": "npx --yes serve -l 3000",
     "dev": "npx --yes serve -l 3000"

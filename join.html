@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Serve, give, or partner with Whole Youth — join a year of service, donate, or collaborate with schools and communities.">
+  <meta name="theme-color" content="#0C3D38">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <title>Get involved — Whole Youth</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,560;9..144,620&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="has-solid-header">
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <a class="logo" href="index.html" aria-label="Whole Youth home">
+      <svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M18 42V24.5c0-1.2.7-2.3 1.8-2.8L30.5 17c1-.45 2.1-.45 3.1 0L45.2 21.7c1.1.5 1.8 1.6 1.8 2.8V42" stroke="#F0C14D" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <path d="M24 42V31.5a8 8 0 0 1 16 0V42" stroke="#E8F2EE" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+      </svg>
+      Whole Youth
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav" id="main-nav">
+        <li><a href="index.html#mission">Mission</a></li>
+        <li><a href="index.html#pillars">How we help</a></li>
+        <li><a href="programs.html">Programs</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a class="nav-cta" href="join.html" aria-current="page">Get involved</a></li>
+      </ul>
+    </nav>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="main-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="page-hero-inner">
+        <h1>Actions speak louder than your resume</h1>
+        <p>Join a community that helps you grow by helping others grow — through service, giving, and partnership.</p>
+      </div>
+    </section>
+
+    <section class="section" id="serve">
+      <div class="section-inner mission-grid">
+        <div class="reveal">
+          <p class="section-kicker">Serve</p>
+          <h2 class="section-title">A year that changes more than a gap year</h2>
+          <p>Whole Youth corps members serve as student success coaches in public schools. You build trust with students, practice empathy and hard work, and leave with durable skills employers want — while kids get the extra support that helps them stay on track.</p>
+          <p>Applications are open for the coming school year.</p>
+          <a class="btn btn-ink" href="#interest-form">Start an application interest form</a>
+        </div>
+        <aside class="mission-panel reveal">
+          <blockquote>More than a service year — a launchpad for any field, powered by showing up for students.</blockquote>
+          <cite>— Alumni pathway</cite>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section section--mist" id="give">
+      <div class="section-inner reveal">
+        <p class="section-kicker">Give</p>
+        <h2 class="section-title">When we invest in young people, communities keep their talents</h2>
+        <p class="section-lede">Your support funds coaches in classrooms, scholarships for camps, and parent wellbeing workshops.</p>
+        <div class="engage-grid" style="margin-top:2rem">
+          <article class="engage-panel" style="background:var(--white);border-color:var(--fog);color:var(--ink)">
+            <h3>$50</h3>
+            <p>Supplies a tutoring kit and after-school snack support for a learning lab cohort.</p>
+          </article>
+          <article class="engage-panel" style="background:var(--white);border-color:var(--fog);color:var(--ink)">
+            <h3>$250</h3>
+            <p>Sponsors a week of summer camp for a young person who needs belonging outdoors.</p>
+          </article>
+          <article class="engage-panel" style="background:var(--white);border-color:var(--fog);color:var(--ink)">
+            <h3>$1,000</h3>
+            <p>Underwrites coaching hours that help a classroom stay on track through a critical semester.</p>
+          </article>
+        </div>
+        <p style="margin-top:1.75rem;font-size:0.95rem;color:var(--ink-soft)">Donation checkout is simulated in this demo. Reach out to partner on a real campaign.</p>
+      </div>
+    </section>
+
+    <section class="section" id="partner">
+      <div class="section-inner reveal">
+        <p class="section-kicker">Partner</p>
+        <h2 class="section-title">Schools, employers, and civic leaders</h2>
+        <p class="section-lede">We collaborate with public schools, national service programs, and the private sector to expand student success support and community hubs.</p>
+        <ul class="mission-factors" style="max-width:40rem">
+          <li>District partnerships for embedded coaches</li>
+          <li>Employer pathways for alumni hiring</li>
+          <li>Local Y-style facility and program collaborations</li>
+          <li>Research and policy dialogue on youth wellbeing</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section section--mist" id="interest-form">
+      <div class="section-inner signup">
+        <div class="reveal">
+          <p class="section-kicker">Next step</p>
+          <h2 class="section-title">Tell us how you want to help</h2>
+          <p class="section-lede">We’ll follow up with the right path — service, giving, or partnership.</p>
+        </div>
+        <form class="form-card reveal" id="learn-form" novalidate>
+          <div class="form-row two">
+            <div>
+              <label for="first">First name</label>
+              <input id="first" name="first" type="text" required>
+            </div>
+            <div>
+              <label for="last">Last name</label>
+              <input id="last" name="last" type="text" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div>
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div>
+              <label for="path">I want to</label>
+              <select id="path" name="path">
+                <option>Apply to serve</option>
+                <option>Make a gift</option>
+                <option>Explore a partnership</option>
+                <option>Join the learning list</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div>
+              <label for="note">Anything we should know?</label>
+              <textarea id="note" name="note" rows="3"></textarea>
+            </div>
+          </div>
+          <button class="btn btn-ink" type="submit">Submit</button>
+          <p class="form-note">Demo only — nothing is transmitted.</p>
+          <div class="form-success" id="form-success" role="status">Got it — thanks for stepping up with Whole Youth.</div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">Whole Youth</div>
+        <p>Belong. Learn. Thrive.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="programs.html">Programs</a></li>
+          <li><a href="join.html">Get involved</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:hello@wholeyouth.example">hello@wholeyouth.example</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Whole Youth Coalition (demo)</span>
+    </div>
+  </footer>
+  <script src="main.js"></script>
+</body>
+</html>
