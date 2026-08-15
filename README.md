@@ -1,42 +1,32 @@
-# Whole Youth
+# Civic Bound
 
-A static nonprofit website that blends the spirit of three reference models:
+A multi-page React site for **Civic Bound** — a nonprofit, youth-centered community support network — combined with Whole Youth storytelling (belonging, education coaching, and mental wellbeing dialogue).
 
-- **Youth mental wellbeing & coalition dialogue** (Empower Our Future–style research and conversation)
-- **Community belonging & programs** (YMCA-style hubs, camps, and healthy living)
-- **Education service & student success** (City Year–style coaching, serve / give / partner)
+## What this combines
 
-## Stack
+| Source | Contributions |
+| --- | --- |
+| **Civic Bound** | Hub locator, Find Your Track, volunteers, partners, leadership, stories, news |
+| **Whole Youth** | Belong / Become / Balance pillars, wellbeing conversation, impact framing, serve / give / partner CTAs, photography |
 
-HTML, CSS, and vanilla JavaScript. Typography: Fraunces + Figtree.
+## Site map
 
-## Pages
+| Route | Page |
+| --- | --- |
+| `/` | Homepage marketing core |
+| `/hubs` | Hub locator & space explorer |
+| `/get-support` | Find Your Track navigator |
+| `/stories` | Community voices |
+| `/volunteers` | Volunteer framework |
+| `/partners` | Village Network partners |
+| `/leadership` | Youth Advisory Board |
+| `/news` | Latest news |
 
-- `index.html` — home
-- `about.html` — mission & research
-- `programs.html` — program continuum
-- `join.html` — serve, give, partner
-- `privacy.html` — demo privacy note
-
-## Develop
-
-```bash
-npm start
-```
-
-Open [http://localhost:3000](http://localhost:3000).
-
-## Deploy (Cloudflare)
+## Scripts
 
 ```bash
-mkdir -p dist/images
-cp index.html about.html programs.html join.html privacy.html styles.css main.js favicon.svg dist/
-cp images/* dist/images/
-npx wrangler deploy
-```
-
-Unauthenticated preview (temporary account, claim within 60 minutes):
-
-```bash
-npx wrangler deploy --temporary
+npm install
+npm start          # http://localhost:3000
+npm run build      # production build → build/
+npx wrangler deploy --temporary   # Cloudflare Workers preview (after build)
 ```

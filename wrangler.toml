@@ -1,7 +1,6 @@
-name = "whole-youth"
+name = "civic-bound"
 compatibility_date = "2026-08-15"
 
 [assets]
-directory = "./dist"
-not_found_handling = "404-page"
-html_handling = "auto-trailing-slash"
+directory = "./build"
+not_found_handling = "single-page-application"
