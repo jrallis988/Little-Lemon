@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const voices = [
   {
     quote:
@@ -56,6 +58,12 @@ function Voices() {
               </figcaption>
             </figure>
           ))}
+        </div>
+
+        <div className="mt-12 text-center">
+          <Link to="/stories" className="btn-ghost">
+            Read More Stories
+          </Link>
         </div>
       </div>
     </section>

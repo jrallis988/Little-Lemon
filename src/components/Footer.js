@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Footer() {
   return (
     <footer className="border-t border-violet-bright/20 bg-ink-soft">
@@ -11,19 +13,22 @@ function Footer() {
             stability, and positive community re-entry.
           </p>
         </div>
-        <div className="flex flex-wrap gap-6 font-body text-sm uppercase tracking-[0.12em] text-violet-mist">
-          <a href="#mission" className="hover:text-chartreuse">
-            About
-          </a>
-          <a href="#approach" className="hover:text-chartreuse">
-            Programs
-          </a>
-          <a href="#hubs" className="hover:text-chartreuse">
+        <div className="flex flex-wrap gap-x-6 gap-y-3 font-body text-sm uppercase tracking-[0.12em] text-violet-mist">
+          <Link to="/hubs" className="hover:text-chartreuse">
             Hubs
-          </a>
-          <a href="#join" className="hover:text-chartreuse">
-            Connect
-          </a>
+          </Link>
+          <Link to="/get-support" className="hover:text-chartreuse">
+            Get Support
+          </Link>
+          <Link to="/stories" className="hover:text-chartreuse">
+            Stories
+          </Link>
+          <Link to="/partners" className="hover:text-chartreuse">
+            Partners
+          </Link>
+          <Link to="/leadership" className="hover:text-chartreuse">
+            Leadership
+          </Link>
         </div>
       </div>
       <div className="border-t border-violet-bright/15">

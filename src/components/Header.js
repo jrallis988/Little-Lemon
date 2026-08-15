@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 
 const links = [
-  { href: "#mission", label: "About" },
-  { href: "#approach", label: "Programs" },
-  { href: "#hubs", label: "Hubs" },
-  { href: "#voices", label: "Voices" },
-  { href: "#join", label: "Connect" },
+  { to: "/#mission", label: "About" },
+  { to: "/#approach", label: "Programs" },
+  { to: "/hubs", label: "Hubs" },
+  { to: "/stories", label: "Stories" },
+  { to: "/partners", label: "Partners" },
+  { to: "/leadership", label: "Leadership" },
 ];
 
 function Header() {
@@ -19,6 +21,11 @@ function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const linkClass = ({ isActive }) =>
+    `font-body text-sm font-medium uppercase tracking-[0.12em] transition hover:text-chartreuse ${
+      isActive ? "text-chartreuse" : "text-violet-mist"
+    }`;
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition duration-300 ${
@@ -27,32 +34,39 @@ function Header() {
           : "bg-transparent"
       }`}
     >
-      <div className="container flex h-16 items-center justify-between md:h-20">
-        <a
-          href="#top"
+      <div className="container flex h-16 items-center justify-between gap-4 md:h-20">
+        <Link
+          to="/"
           className="font-display text-xl font-extrabold tracking-tight text-white md:text-2xl"
+          onClick={() => setOpen(false)}
         >
           Civic <span className="text-chartreuse">Bound</span>
-        </a>
+        </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
-          {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="font-body text-sm font-medium uppercase tracking-[0.12em] text-violet-mist transition hover:text-chartreuse"
-            >
-              {link.label}
-            </a>
-          ))}
-          <a href="#join" className="btn-primary !px-5 !py-2.5 text-xs">
+        <nav className="hidden items-center gap-5 lg:flex xl:gap-7">
+          {links.map((link) =>
+            link.to.includes("#") ? (
+              <Link
+                key={link.to}
+                to={link.to}
+                className="font-body text-sm font-medium uppercase tracking-[0.12em] text-violet-mist transition hover:text-chartreuse"
+              >
+                {link.label}
+              </Link>
+            ) : (
+              <NavLink key={link.to} to={link.to} className={linkClass}>
+                {link.label}
+              </NavLink>
+            )
+          )}
+          <Link to="/get-support" className="btn-primary !px-5 !py-2.5 text-xs">
             Find Support
-          </a>
+          </Link>
         </nav>
 
         <button
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center border border-violet-mist/30 text-white md:hidden"
+          className="inline-flex h-10 w-10 items-center justify-center border border-violet-mist/30 text-white lg:hidden"
           aria-expanded={open}
           aria-label="Toggle navigation"
           onClick={() => setOpen((value) => !value)}
@@ -79,25 +93,25 @@ function Header() {
       </div>
 
       {open && (
-        <div className="border-t border-violet-bright/25 bg-ink/95 md:hidden">
+        <div className="border-t border-violet-bright/25 bg-ink/95 lg:hidden">
           <nav className="container flex flex-col gap-4 py-6">
             {links.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
+              <Link
+                key={link.to}
+                to={link.to}
                 className="font-body text-base uppercase tracking-[0.12em] text-violet-mist"
                 onClick={() => setOpen(false)}
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
-            <a
-              href="#join"
+            <Link
+              to="/get-support"
               className="btn-primary w-fit"
               onClick={() => setOpen(false)}
             >
               Find Support
-            </a>
+            </Link>
           </nav>
         </div>
       )}

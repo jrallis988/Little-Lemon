@@ -1,25 +1,27 @@
+import { Link } from "react-router-dom";
+
 const actions = [
   {
     title: "Find youth support",
-    copy: "Walk into a Neighborhood Resource Hub or reach out online. Support starts with you—no forms maze, no gatekeeping.",
+    copy: "Walk into a Neighborhood Resource Hub or use Find Your Track. Support starts with you—no forms maze, no gatekeeping.",
     cta: "Get support",
-    href: "#hubs",
+    to: "/get-support",
     primary: true,
     tags: ["No red tape", "Completely confidential", "Zero fees"],
   },
   {
     title: "Become a mentor",
     copy: "Join a mentorship circle that puts young people first. Clear onboarding, real relationships, and guidance without bureaucracy.",
-    cta: "Mentor with us",
-    href: "#voices",
+    cta: "Join the village",
+    to: "/partners",
     primary: false,
     tags: ["No red tape", "Training provided", "Youth-first"],
   },
   {
     title: "Strengthen a hub",
     copy: "Help keep drop-in spaces, creative labs, and stability navigation open to every young person who needs them.",
-    cta: "Support the work",
-    href: "#impact",
+    cta: "Explore hubs",
+    to: "/hubs",
     primary: false,
     tags: ["Transparent impact", "Community-rooted", "Zero barriers"],
   },
@@ -65,14 +67,14 @@ function Join() {
                   </li>
                 ))}
               </ul>
-              <a
-                href={action.href}
+              <Link
+                to={action.to}
                 className={`mt-7 inline-flex w-fit ${
                   action.primary ? "btn-primary" : "btn-ghost"
                 }`}
               >
                 {action.cta}
-              </a>
+              </Link>
             </div>
           ))}
         </div>

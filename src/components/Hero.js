@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const HERO_IMAGE =
   "https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=2400&q=80";
 
@@ -31,10 +33,10 @@ function Hero() {
           bureaucracy.
         </p>
         <div className="mt-10 flex flex-wrap gap-4 opacity-0 animate-rise-delay-3">
-          <a href="#join" className="btn-primary">
+          <Link to="/get-support" className="btn-primary">
             Get Support
-          </a>
-          <a href="#mission" className="btn-ghost">
+          </Link>
+          <a href="#approach" className="btn-ghost">
             Our Approach
           </a>
         </div>

@@ -1,19 +1,19 @@
 const pillars = [
   {
     title: "Community Youth Support Networks",
-    copy: "Trusted local networks that walk with young people through transition—focused on stability, belonging, and practical next steps.",
+    copy: "Grassroots webs of reliable adults and peers for immediate stabilization—people who show up when life shifts.",
   },
   {
     title: "Neighborhood Youth Development",
-    copy: "Programs rooted in the places youth already live, learning life skills and confidence through constructive mentorship.",
+    copy: "Hyper-local initiatives focused on skill-building, confidence, and character through everyday community practice.",
   },
   {
     title: "Youth Guidance & Family Resources",
-    copy: "Guidance centers that connect youth and families to tools for safety, direction, and everyday support—without stigma.",
+    copy: "Accessible physical and digital hubs offering practical navigation for youth and the families walking with them.",
   },
   {
     title: "Civic Partnership & Mentorship",
-    copy: "Mentors and civic partners who prioritize the young person first—building relationships that restore hope and momentum.",
+    copy: "Collaborative frameworks connecting youth with local leaders, mentors, and community pathways that open doors.",
   },
 ];
 

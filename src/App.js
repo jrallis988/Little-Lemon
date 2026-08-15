@@ -1,28 +1,24 @@
-import Header from "./components/Header";
-import Hero from "./components/Hero";
-import Impact from "./components/Impact";
-import Mission from "./components/Mission";
-import Approach from "./components/Approach";
-import HubInside from "./components/HubInside";
-import Voices from "./components/Voices";
-import Join from "./components/Join";
-import Footer from "./components/Footer";
+import { Routes, Route } from "react-router-dom";
+import Layout from "./components/Layout";
+import HomePage from "./pages/HomePage";
+import HubsPage from "./pages/HubsPage";
+import GetSupportPage from "./pages/GetSupportPage";
+import StoriesPage from "./pages/StoriesPage";
+import PartnersPage from "./pages/PartnersPage";
+import LeadershipPage from "./pages/LeadershipPage";
 
 function App() {
   return (
-    <div className="min-h-screen bg-ink text-white">
-      <Header />
-      <main>
-        <Hero />
-        <Impact />
-        <Mission />
-        <Approach />
-        <HubInside />
-        <Voices />
-        <Join />
-      </main>
-      <Footer />
-    </div>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route index element={<HomePage />} />
+        <Route path="hubs" element={<HubsPage />} />
+        <Route path="get-support" element={<GetSupportPage />} />
+        <Route path="stories" element={<StoriesPage />} />
+        <Route path="partners" element={<PartnersPage />} />
+        <Route path="leadership" element={<LeadershipPage />} />
+      </Route>
+    </Routes>
   );
 }
 

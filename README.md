@@ -1,19 +1,23 @@
 # Civic Bound
 
-A marketing website for Civic Bound — a nonprofit, youth-centered community support network.
+A multi-page marketing site for Civic Bound — a nonprofit, youth-centered community support network.
 
 ## Positioning
 
 - Child and student centered (not PTA / school-board bureaucracy)
 - Community-embedded developmental support for life direction and re-entry
-- Distinct from school-based classroom coaching models
+- Hybrid ethos: community-hub accessibility + mission-driven mentorship + character-building youth programming
 
-## Preferred language
+## Site map
 
-- Community Youth Support Networks
-- Neighborhood Youth Development Programs
-- Youth Guidance and Family Resource Centers
-- Civic Partnership and Mentorship Initiatives
+| Route | Page |
+| --- | --- |
+| `/` | Homepage marketing core |
+| `/hubs` | Hub locator & space explorer |
+| `/get-support` | Find Your Track 3-step navigator |
+| `/stories` | Community voices & impact stories |
+| `/partners` | Village Network partner portal |
+| `/leadership` | Youth Advisory Board |
 
 ## Palette
 
