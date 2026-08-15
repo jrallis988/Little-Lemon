@@ -2,6 +2,8 @@ import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { hubs, hubOfferings } from "../data/hubs";
 
+const WEEK_DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
 function HubsPage() {
   const [query, setQuery] = useState("");
 
@@ -16,6 +18,25 @@ function HubsPage() {
         hub.name.toLowerCase().includes(q)
     );
   }, [query]);
+
+  const weekCalendar = useMemo(() => {
+    const byDay = Object.fromEntries(WEEK_DAYS.map((day) => [day, []]));
+    hubs.forEach((hub) => {
+      hub.nextEvents.forEach((event) => {
+        if (byDay[event.day]) {
+          byDay[event.day].push({
+            ...event,
+            hub: hub.name,
+            neighborhood: hub.neighborhood,
+          });
+        }
+      });
+    });
+    return WEEK_DAYS.map((day) => ({
+      day,
+      events: byDay[day].sort((a, b) => a.time.localeCompare(b.time)),
+    }));
+  }, []);
 
   return (
     <>
@@ -123,6 +144,52 @@ function HubsPage() {
               for guided support.
             </p>
           )}
+        </div>
+      </section>
+
+      <section id="calendar" className="section-pad bg-ink-soft">
+        <div className="container">
+          <div className="max-w-3xl">
+            <p className="eyebrow">Live schedule & calendar</p>
+            <h2 className="display mt-4 text-4xl md:text-5xl">
+              Weekly community rhythms
+            </h2>
+            <p className="mt-5 font-body text-lg text-violet-mist">
+              Open studio nights, peer circles, and neighborhood gatherings across
+              the network—come as you are.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {weekCalendar.map(({ day, events }) => (
+              <div
+                key={day}
+                className="min-h-[180px] border border-violet-bright/25 bg-ink/40 p-5"
+              >
+                <p className="font-display text-lg font-bold text-chartreuse">
+                  {day}
+                </p>
+                {events.length === 0 ? (
+                  <p className="mt-4 font-body text-sm text-violet-mist">
+                    Open drop-in hours vary by hub.
+                  </p>
+                ) : (
+                  <ul className="mt-4 space-y-4">
+                    {events.map((event) => (
+                      <li key={`${day}-${event.hub}-${event.title}`}>
+                        <p className="font-body text-sm font-semibold text-white">
+                          {event.time} · {event.title}
+                        </p>
+                        <p className="mt-1 font-body text-xs text-violet-mist">
+                          {event.neighborhood}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
