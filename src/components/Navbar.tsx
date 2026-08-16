@@ -52,16 +52,16 @@ export default function Navbar() {
         <a
           href="#top"
           onClick={handleNavClick}
-          className="relative z-[61] flex h-11 w-[10.5rem] shrink-0 items-center sm:h-12 sm:w-[13rem] md:h-[3.25rem] md:w-[15.5rem]"
+          className="relative z-[61] flex h-11 w-11 shrink-0 items-center justify-center sm:h-12 sm:w-12 md:h-14 md:w-14"
           aria-label={`${company.name} — home`}
         >
           <Image
-            src={company.logo}
-            alt={company.name}
-            width={320}
-            height={140}
-            className="h-full w-full object-contain object-left"
-            sizes="(max-width: 640px) 168px, (max-width: 768px) 208px, 248px"
+            src={company.mark}
+            alt="EC"
+            width={112}
+            height={112}
+            className="h-full w-full object-contain drop-shadow-[0_0_12px_rgba(255,61,184,0.35)]"
+            sizes="56px"
             priority
           />
         </a>

@@ -18,6 +18,7 @@ export const company = {
   name: "The East Coast Motion Picture Company",
   shortName: "ECMCo.",
   logo: "/logo.png",
+  mark: "/ec-mark.png",
 };
 
 export const writer = {
