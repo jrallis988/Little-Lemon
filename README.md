@@ -1,59 +1,51 @@
-# Greenroom
+# Artistic Fountain
 
-**The social network for comedians.**
+Chronological social utility for comedians — digital green room + open-mic toolkit.
 
-Share bits, claim open-mic slots, workshop unfinished premises, and follow comics who actually work rooms.
-
-## Product pillars
-
-| Pillar | What it does |
-|--------|----------------|
-| **Lineup** | Feed of bits, setlists, show calls, clips, and workshop posts |
-| **Open mics** | Venues + upcoming nights with claimable slots |
-| **Profiles** | Stage name, styles, credits, years on stage |
-| **Compose** | Drop a bit / workshop / setlist to the lineup |
-| **Search** | Find comics by city, style, or room |
+**Against:** algorithms, vanity metrics, ads, rage-bait.  
+**For:** local scenes, craft feedback, logistics.
 
 ## Stack
 
-- Next.js App Router · React · TypeScript · Tailwind CSS
-- Lucide icons · local demo auth · seeded mock data
-- Mobile-first PWA shell (installable via `manifest.webmanifest`)
+- TanStack Start + Vite
+- Drizzle ORM + PostgreSQL
+- Better Auth
+- TanStack Query
+- Tailwind CSS v4
+
+## Docs
+
+- [Architecture](./docs/ARCHITECTURE.md)
+- [Schema reference](./docs/SCHEMA.md)
+- Drizzle source: `src/db/schema/core.ts`
 
 ## Quick start
 
 ```bash
 npm install
+cp .env.example .env.local
+# set DATABASE_URL + BETTER_AUTH_SECRET
+npm run db:push
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+App: [http://localhost:3000](http://localhost:3000)
 
-### Demo login
-
-| Field | Value |
-|-------|--------|
-| Email | `maya.kill@greenroom.app` |
-| Password | `demo1234` |
-
-## Key routes
+## Routes
 
 | Path | Purpose |
 |------|---------|
-| `/` | Brand landing |
-| `/signup`, `/login` | Demo auth |
-| `/lineup` | Main feed |
-| `/mics` | Open mics & venues |
-| `/post/new` | Composer |
-| `/u/[username]` | Comic profile |
-| `/search`, `/messages`, `/notifications`, `/settings` | Social utilities |
+| `/` | Landing |
+| `/feed` | Chronological feed |
+| `/mics` | Open mic / show board |
+| `/lab` | Material Lab |
+| `/rooms` | Regional Green Rooms |
+| `/messages` | DMs |
+| `/u/$username` | Digital green-room profile |
+| `/settings` | Scene + safety settings |
 
-## Design
+## Product invariants
 
-Nightlife club direction: stage black, spotlight amber, marquee coral. Display type is Bebas Neue; UI is Instrument Sans; bit copy uses Literata.
-
-## Next steps
-
-- Persist posts and mic claims (Supabase / API)
-- Real auth + DMs
-- Native shell (Expo) wrapping the same product surfaces
+1. Feed sort is always `created_at DESC`
+2. Public payloads never include follower/like/view counts
+3. Verification is identity / venue / booker safety only
