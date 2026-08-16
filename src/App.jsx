@@ -1,11 +1,12 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import { Layout } from './components/Layout'
 import { Home } from './pages/Home'
-import { Schedule } from './pages/Schedule'
+import { Games } from './pages/Games'
 import { Shows } from './pages/Shows'
-import { Stream } from './pages/Stream'
-import { Arcade } from './pages/Arcade'
-import { Vault } from './pages/Vault'
+import { Music } from './pages/Music'
+import { Video } from './pages/Video'
+import { Fan } from './pages/Fan'
+import { More } from './pages/More'
 
 export default function App() {
   return (
@@ -13,11 +14,16 @@ export default function App() {
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/schedule" element={<Schedule />} />
+        <Route path="/games" element={<Games />} />
+        <Route path="/arcade" element={<Navigate to="/games" replace />} />
         <Route path="/shows" element={<Shows />} />
-        <Route path="/stream" element={<Stream />} />
-        <Route path="/arcade" element={<Arcade />} />
-        <Route path="/vault" element={<Vault />} />
+        <Route path="/music" element={<Music />} />
+        <Route path="/video" element={<Video />} />
+        <Route path="/stream" element={<Navigate to="/video" replace />} />
+        <Route path="/fan" element={<Fan />} />
+        <Route path="/more" element={<More />} />
+        <Route path="/schedule" element={<Navigate to="/shows" replace />} />
+        <Route path="/vault" element={<Navigate to="/shows" replace />} />
       </Route>
     </Routes>
   )

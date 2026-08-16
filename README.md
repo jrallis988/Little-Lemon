@@ -1,8 +1,12 @@
-# Nickelodeon Web App
+# Nickelodeon Web App (classic Nick.com energy)
 
-Mobile-first fan redesign of a Nickelodeon streaming portal — rebuilt from the July 25 local prototype (`localhost:8081`).
+Unofficial fan redesign inspired by mid-2000s / late-90s **Nick.com** — busy, colorful, and interactive on purpose.
 
-## Run locally
+## The idea
+
+Early kids' web design was "basic" by today's polish standards, but it was **more playful**: clickable character rows, games everywhere, polls, login boxes, splat frames, and dense portals you could poke for hours.
+
+## Run
 
 ```bash
 npm install
@@ -11,23 +15,20 @@ npm run dev
 
 Opens at [http://localhost:8081](http://localhost:8081).
 
-## Pages
+## Sections
 
-| Route | Purpose |
+| Route | Feel |
 | --- | --- |
-| `/` or `/home` | Network showcase (Nick, Nick Jr., Orbitz, News) |
-| `/schedule` | Air-time grid + live premieres |
-| `/shows` | Show catalog |
-| `/stream` | Continue watching + premiere rails |
-| `/arcade` | Quick-play games |
-| `/vault` | Classic archive |
+| `/` | Full portal: hero, tiles, lately bands, poll, video, shop bits |
+| `/games` | Arcade cards with Play Now |
+| `/shows` | Toon + live-action hubs |
+| `/music` | Nick Radio track list |
+| `/video` | Chunk player + clip rail |
+| `/fan` | Sticker lab, poll, web-lab toys |
+| `/more` | Shop / parents / extras |
 
 ## Stack
 
-- React 19 + Vite
-- React Router
-- Custom CSS (Nick orange, slime green, deep purple night sky)
+React 19 + Vite + React Router. Custom CSS (lime field, orange splat, jagged yellow frame).
 
-## Brand note
-
-This is an unofficial design exercise / portfolio piece — not affiliated with Paramount or Nickelodeon.
+Not affiliated with Paramount or Nickelodeon.
