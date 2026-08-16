@@ -1,53 +1,59 @@
-# Artistic Fountain
+# Greenroom
 
-Independent design venture portfolio — digital media, graphic design, visual identity, and creative media projects.
+**The social network for comedians.**
 
-## Dual-track separation
+Share bits, claim open-mic slots, workshop unfinished premises, and follow comics who actually work rooms.
 
-| Track | Home | Houses |
-| --- | --- | --- |
-| **Creative** | Artistic Fountain (this repo) | Visual media, graphic identity, conceptual design, client design services |
-| **Engineering** | Developer portfolio (separate) | Back-end systems, Python/FastAPI, AI/RAG applications |
+## Product pillars
 
-See `STATUS.md` for the full status report.
+| Pillar | What it does |
+|--------|----------------|
+| **Lineup** | Feed of bits, setlists, show calls, clips, and workshop posts |
+| **Open mics** | Venues + upcoming nights with claimable slots |
+| **Profiles** | Stage name, styles, credits, years on stage |
+| **Compose** | Drop a bit / workshop / setlist to the lineup |
+| **Search** | Find comics by city, style, or room |
 
 ## Stack
 
-Static site: HTML, CSS, and vanilla JS (built in Cursor). Custom typefaces (Arcanite Slab, Goudy Heavyface) plus Inter for body copy.
+- Next.js App Router · React · TypeScript · Tailwind CSS
+- Lucide icons · local demo auth · seeded mock data
+- Mobile-first PWA shell (installable via `manifest.webmanifest`)
 
-## Pages
-
-- `index.html` — home (hero, designer, services, portfolio, blog, contact)
-- `nh-dmv/` — conceptual redesign of the New Hampshire DMV website (civic UX case study)
-- `services/` — detail pages for each service offering
-- `blog/` — blog index and post pages (content can be drafted in Blaze AI)
-- `privacy.html` — privacy policy
-- `terms.html` — terms & conditions
-- `resume.pdf` — downloadable resume
-
-## Develop
+## Quick start
 
 ```bash
-npm start
+npm install
+npm run dev
 ```
 
-Opens a local static server at [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3000](http://localhost:3000).
 
-Or open `index.html` directly in a browser.
+### Demo login
 
-## Structure
+| Field | Value |
+|-------|--------|
+| Email | `maya.kill@greenroom.app` |
+| Password | `demo1234` |
 
-```
-.
-├── index.html
-├── privacy.html
-├── terms.html
-├── styles.css
-├── STATUS.md
-├── favicon.svg
-├── resume.pdf
-├── services/
-├── blog/
-├── images/
-└── *.otf          # brand fonts
-```
+## Key routes
+
+| Path | Purpose |
+|------|---------|
+| `/` | Brand landing |
+| `/signup`, `/login` | Demo auth |
+| `/lineup` | Main feed |
+| `/mics` | Open mics & venues |
+| `/post/new` | Composer |
+| `/u/[username]` | Comic profile |
+| `/search`, `/messages`, `/notifications`, `/settings` | Social utilities |
+
+## Design
+
+Nightlife club direction: stage black, spotlight amber, marquee coral. Display type is Bebas Neue; UI is Instrument Sans; bit copy uses Literata.
+
+## Next steps
+
+- Persist posts and mic claims (Supabase / API)
+- Real auth + DMs
+- Native shell (Expo) wrapping the same product surfaces

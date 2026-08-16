@@ -1,0 +1,17 @@
+{
+  "name": "Greenroom",
+  "short_name": "Greenroom",
+  "description": "Social network for comedians — bits, open mics, and workshop notes.",
+  "start_url": "/lineup",
+  "display": "standalone",
+  "background_color": "#0c0b0a",
+  "theme_color": "#0c0b0a",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
