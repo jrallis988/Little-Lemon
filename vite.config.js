@@ -6,9 +6,11 @@ export default defineConfig({
   server: {
     port: 8081,
     host: true,
+    allowedHosts: true,
   },
   preview: {
     port: 8081,
     host: true,
+    allowedHosts: true,
   },
 })
