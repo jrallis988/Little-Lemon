@@ -1,6 +1,7 @@
 import { Outlet, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import { BottomBar, CharacterStrip, SideRail, TopTabs } from './Chrome'
+import { SlimeCursor } from './Chaos'
 
 const titles = {
   '/': 'Nickelodeon | Nick.com',
@@ -22,6 +23,21 @@ export function Layout() {
 
   return (
     <div className="nick-stage">
+      <SlimeCursor />
+
+      <div className="chaos-ticker" aria-hidden="true">
+        <div className="chaos-ticker__track">
+          <span>
+            SLIME &gt; SLEEK · KIDS DESERVE CHAOS · CLICK EVERYTHING · NOT A
+            BOARDROOM · GAMES ON THE HOMEPAGE · POLLS · CODES · MESS ·
+          </span>
+          <span>
+            SLIME &gt; SLEEK · KIDS DESERVE CHAOS · CLICK EVERYTHING · NOT A
+            BOARDROOM · GAMES ON THE HOMEPAGE · POLLS · CODES · MESS ·
+          </span>
+        </div>
+      </div>
+
       <div className="ad-banner" role="note">
         <span className="ad-banner__tag">Ad</span>
         <strong>SpongeBob 10-Lane Bowling</strong>

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { BoredomBuster, NicktaneBox } from '../components/Chaos'
 import { games, latelyRows, poll, shopBits, shows, videos } from '../data/content'
 
 export function Home() {
@@ -8,12 +9,15 @@ export function Home() {
 
   return (
     <div className="portal">
+      <BoredomBuster />
+
       <section className="hero-feature">
         <div className="hero-feature__badge">Featured Fun House</div>
         <h1 className="hero-feature__title">Jimmy Neutron&apos;s Fun House</h1>
         <p className="hero-feature__copy">
           Gadgets, goo, and giant bugs — click around, play now, and unlock
-          secret rooms like it&apos;s 2004 again.
+          secret rooms like it&apos;s 2004 again. Nick is for kids: loud on TV,
+          loud on the web.
         </p>
         <div className="hero-feature__actions">
           <Link className="btn-nick btn-nick--big" to="/games">
@@ -21,6 +25,9 @@ export function Home() {
           </Link>
           <Link className="btn-nick btn-nick--ghost" to="/shows">
             Meet Jimmy
+          </Link>
+          <Link className="btn-nick btn-nick--ghost" to="/fan">
+            Make a mess
           </Link>
         </div>
         <div className="hero-feature__art" aria-hidden="true">
@@ -31,7 +38,7 @@ export function Home() {
 
       <div className="portal-cols">
         <div className="portal-cols__main">
-          <section className="tile-row">
+          <section className="tile-row tile-row--three">
             <Link to="/games" className="mega-tile mega-tile--games">
               <span className="mega-tile__label">Games</span>
               <strong>SpongeBob Arcade</strong>
@@ -46,6 +53,14 @@ export function Home() {
               <p>Unfabulous, Drake &amp; Josh, and Nicktoon premieres.</p>
               <span className="mega-tile__emoji" aria-hidden="true">
                 📺
+              </span>
+            </Link>
+            <Link to="/fan" className="mega-tile mega-tile--lab">
+              <span className="mega-tile__label">Web Lab</span>
+              <strong>Break the UI</strong>
+              <p>Stickers, polls, codes — stuff you mash, not admire.</p>
+              <span className="mega-tile__emoji" aria-hidden="true">
+                🧪
               </span>
             </Link>
           </section>
@@ -151,6 +166,8 @@ export function Home() {
               </div>
             </div>
           </section>
+
+          <NicktaneBox />
 
           <section className="hot-list">
             <h2 className="panel-title panel-title--sm">Hot Plays</h2>
