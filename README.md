@@ -2,9 +2,11 @@
 
 Unofficial fan redesign inspired by mid-2000s / late-90s **Nick.com** — busy, colorful, and interactive on purpose.
 
-## The idea
+## Thesis
 
-Early kids' web design was "basic" by today's polish standards, but it was **more playful**: clickable character rows, games everywhere, polls, login boxes, splat frames, and dense portals you could poke for hours.
+Nickelodeon is for **kids**. Streaming and the internet both forgot that when everything got flattened into beige, minimal “content platforms.” Clean is fine for taxes. Kids need mess, motion, games on the homepage, polls, codes, and stuff you can mash.
+
+Early Nick web design was “basic” by today’s polish standards — and **more fun** than most kids’ products shipping now.
 
 ## Run
 
@@ -15,11 +17,13 @@ npm run dev
 
 Opens at [http://localhost:8081](http://localhost:8081).
 
+Try clicking empty space (slime pops), smash the “Too basic?” button, and unlock codes like `SLIME` or `NICK2004`.
+
 ## Sections
 
 | Route | Feel |
 | --- | --- |
-| `/` | Full portal: hero, tiles, lately bands, poll, video, shop bits |
+| `/` | Full portal: manifesto, hero, tiles, poll, video, Nicktane |
 | `/games` | Arcade cards with Play Now |
 | `/shows` | Toon + live-action hubs |
 | `/music` | Nick Radio track list |
