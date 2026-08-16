@@ -1,5 +1,5 @@
 {
-  "projectName": "greenroom-start",
+  "projectName": "artistic-fountain",
   "mode": "file-router",
   "typescript": true,
   "tailwind": true,
@@ -22,6 +22,6 @@
     "tanstack-query",
     "better-auth",
     "eslint",
-    "nitro"
+    "cloudflare"
   ]
 }

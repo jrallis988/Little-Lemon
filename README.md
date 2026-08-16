@@ -8,10 +8,28 @@ Chronological social utility for comedians — digital green room + open-mic too
 ## Stack
 
 - TanStack Start + Vite
+- Cloudflare Workers (`@cloudflare/vite-plugin` + Wrangler)
 - Drizzle ORM + PostgreSQL
 - Better Auth
 - TanStack Query
 - Tailwind CSS v4
+
+## Deploy (Cloudflare)
+
+```bash
+npx wrangler login
+npm run deploy
+```
+
+This builds with the Cloudflare Vite plugin and runs `wrangler deploy` to Workers (`artistic-fountain`).
+
+Preview without an account:
+
+```bash
+npm run build && npx wrangler deploy --temporary
+```
+
+Temporary previews print a live `*.workers.dev` URL plus a claim link (valid ~60 minutes).
 
 ## Docs
 

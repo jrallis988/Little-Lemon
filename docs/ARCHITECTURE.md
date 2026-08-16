@@ -2,7 +2,7 @@
 
 **Product:** Artistic Fountain — a social utility for comedians  
 **Feel:** digital green room + toolkit, not an influencer feed  
-**Stack:** TanStack Start · Vite · Drizzle · Postgres · Better Auth · TanStack Query
+**Stack:** TanStack Start · Vite · Cloudflare Workers · Drizzle · Postgres · Better Auth · TanStack Query
 
 ## Philosophy encoded in the product
 
