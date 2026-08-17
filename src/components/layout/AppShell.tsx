@@ -19,9 +19,6 @@ export function Header() {
     <header className="sticky top-0 z-40 border-b border-[var(--line)] bg-[var(--header)] backdrop-blur-md">
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-3">
         <Logo size="sm" />
-        <p className="hidden text-[11px] uppercase tracking-[0.2em] text-[var(--muted)] sm:block">
-          Only Jokes
-        </p>
         <Link
           to="/discover"
           className="rounded-md bg-[var(--accent)] px-3 py-1.5 text-sm font-semibold text-[var(--on-accent)] no-underline hover:opacity-90"

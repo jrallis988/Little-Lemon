@@ -21,7 +21,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         content: 'width=device-width, initial-scale=1, viewport-fit=cover',
       },
       {
-        title: 'OJ — Only Jokes',
+        title: 'only Jokes',
       },
       {
         name: 'description',
