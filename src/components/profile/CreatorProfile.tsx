@@ -19,7 +19,7 @@ export function CreatorProfile({
       <div
         className="relative h-40 w-full sm:h-52"
         style={{
-          background: `linear-gradient(120deg, hsl(${creator.bannerHue} 70% 35%), #0a0a0b 55%, hsl(${(creator.bannerHue + 200) % 360} 60% 28%))`,
+          background: `linear-gradient(120deg, hsl(${creator.bannerHue} 45% 28%), #07090e 52%, #0f172a 78%, hsl(${(creator.bannerHue + 200) % 360} 40% 22%))`,
         }}
       >
         <div className="absolute inset-0 bg-[linear-gradient(transparent,rgba(10,10,11,0.85))]" />
@@ -48,14 +48,14 @@ export function CreatorProfile({
             <button
               type="button"
               onClick={() => openTip(creator)}
-              className="rounded-md border border-[var(--line)] px-4 py-2 text-sm font-semibold text-[var(--ink)]"
+              className="rounded-md border border-[var(--line-strong)] px-4 py-2 text-sm font-semibold text-[var(--ice-bright)]"
             >
               Tip
             </button>
             <button
               type="button"
               onClick={() => openSubscribe(creator)}
-              className="rounded-md bg-[var(--orange)] px-4 py-2 text-sm font-semibold text-[var(--bg)]"
+              className="rounded-md bg-[var(--blue)] px-4 py-2 text-sm font-semibold text-[var(--ink)] hover:bg-[var(--blue-deep)]"
             >
               {creator.tierName} · ${creator.tierPriceMonthly}/mo
             </button>
@@ -82,7 +82,7 @@ export function CreatorProfile({
             <dt className="text-[10px] uppercase tracking-[0.16em] text-[var(--muted)]">
               Supporters
             </dt>
-            <dd className="font-display text-3xl text-[var(--orange)]">
+            <dd className="font-display text-3xl text-[var(--ice)]">
               {creator.supporters.toLocaleString()}
             </dd>
           </div>
@@ -98,7 +98,7 @@ export function CreatorProfile({
             <dt className="text-[10px] uppercase tracking-[0.16em] text-[var(--muted)]">
               Clips
             </dt>
-            <dd className="font-display text-3xl text-[var(--blue-soft)]">
+            <dd className="font-display text-3xl text-[var(--ice-bright)]">
               {creator.clips}
             </dd>
           </div>
@@ -106,7 +106,7 @@ export function CreatorProfile({
 
         <div className="mt-8 flex items-end justify-between gap-3">
           <div>
-            <p className="text-[11px] uppercase tracking-[0.2em] text-[var(--orange)]">
+            <p className="text-[11px] uppercase tracking-[0.2em] text-[var(--ice)]">
               Library
             </p>
             <h2 className="font-display text-3xl">Public + locked</h2>

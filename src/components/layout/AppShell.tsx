@@ -24,7 +24,7 @@ export function Header() {
         </p>
         <Link
           to="/discover"
-          className="rounded-md bg-[var(--orange)] px-3 py-1.5 text-sm font-semibold text-[var(--bg)] no-underline"
+          className="rounded-md bg-[var(--blue)] px-3 py-1.5 text-sm font-semibold text-[var(--ink)] no-underline hover:bg-[var(--blue-deep)]"
         >
           Discover
         </Link>
@@ -54,7 +54,7 @@ export function BottomNav() {
                 className="flex flex-col items-center gap-0.5 px-1 py-2 text-[10px] uppercase tracking-[0.14em] text-[var(--muted)] no-underline"
                 activeProps={{
                   className:
-                    'flex flex-col items-center gap-0.5 px-1 py-2 text-[10px] uppercase tracking-[0.14em] text-[var(--orange)] no-underline',
+                    'flex flex-col items-center gap-0.5 px-1 py-2 text-[10px] uppercase tracking-[0.14em] text-[var(--ice)] no-underline',
                 }}
               >
                 <Icon className="h-5 w-5" strokeWidth={1.8} />

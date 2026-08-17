@@ -19,7 +19,7 @@ function LandingPage() {
         </header>
 
         <section className="mt-auto pb-8 pt-24">
-          <p className="animate-rise text-[11px] uppercase tracking-[0.28em] text-[var(--orange)]">
+          <p className="animate-rise text-[11px] uppercase tracking-[0.28em] text-[var(--ice)]">
             Creator comedy · uncensored
           </p>
           <h1 className="sr-only">OJ — Only Jokes</h1>
@@ -27,7 +27,7 @@ function LandingPage() {
             className="animate-rise mt-3 font-display text-[5.5rem] leading-[0.85] text-[var(--ink)] sm:text-[7rem]"
             style={{ animationDelay: '60ms' }}
           >
-            O<span className="text-[var(--orange)]">J</span>
+            O<span className="text-[var(--ice)]">J</span>
           </p>
           <p
             className="animate-rise mt-2 text-lg uppercase tracking-[0.22em] text-[var(--blue-soft)]"
@@ -48,14 +48,14 @@ function LandingPage() {
           >
             <Link
               to="/discover"
-              className="rounded-md bg-[var(--orange)] px-5 py-3 text-sm font-semibold text-[var(--bg)] no-underline"
+              className="rounded-md bg-[var(--blue)] px-5 py-3 text-sm font-semibold text-[var(--ink)] no-underline hover:bg-[var(--blue-deep)]"
             >
               Open discovery
             </Link>
             <Link
               to="/c/$username"
               params={{ username: 'maya.kill' }}
-              className="rounded-md border border-[var(--line)] bg-[var(--bg-panel)] px-5 py-3 text-sm font-semibold text-[var(--ink)] no-underline"
+              className="rounded-md border border-[var(--line-strong)] bg-[var(--bg-panel)] px-5 py-3 text-sm font-semibold text-[var(--ice-bright)] no-underline"
             >
               See a creator
             </Link>

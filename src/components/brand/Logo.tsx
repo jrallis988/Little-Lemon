@@ -21,7 +21,7 @@ export function Logo({
       to={to}
       className={`font-display text-[var(--ink)] no-underline ${cls}`}
     >
-      O<span className="text-[var(--orange)]">J</span>
+      O<span className="text-[var(--ice)]">J</span>
     </Link>
   )
 }

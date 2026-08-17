@@ -39,7 +39,7 @@ src/components/
 
 ## Aesthetic
 
-Late-night club: deep charcoal/black, neon orange (`#ff6a00`) + electric blue (`#3d8bfd`), Bebas Neue display + Space Grotesk UI.
+Late-night club: near-black stage (`#07090E`), deep royal/midnight brand blue (`#1E3A8A` / `#0F172A` panels), crisp white type, icy metallic highlights (`#93C5FD` / `#BFDBFE`) on borders and locked tags. Bebas Neue display + Space Grotesk UI.
 
 ## Develop
 

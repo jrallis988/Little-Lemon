@@ -1,28 +1,58 @@
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap");
 @import "tailwindcss";
 
+/*
+  OJ (Only Jokes) — late-night club tokens
+  Near-black stage + deep midnight blue brand + icy metallic highlights
+*/
 @theme {
   --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Bebas Neue", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --color-oj-bg: #07090e;
+  --color-oj-elevated: #0b1220;
+  --color-oj-panel: #0f172a;
+  --color-oj-ink: #f8fafc;
+  --color-oj-ink-soft: #cbd5e1;
+  --color-oj-muted: #94a3b8;
+  --color-oj-brand: #1e3a8a;
+  --color-oj-brand-deep: #172554;
+  --color-oj-ice: #93c5fd;
+  --color-oj-ice-bright: #bfdbfe;
+  --color-oj-ember: #ff6a00;
 }
 
 :root {
-  --bg: #0a0a0b;
-  --bg-elevated: #121214;
-  --bg-panel: #17171a;
-  --ink: #f4f1ea;
-  --ink-soft: #c8c2b8;
-  --muted: #8a847a;
-  --line: rgba(244, 241, 234, 0.1);
+  /* Backgrounds — underground showroom */
+  --bg: #07090e;
+  --bg-elevated: #0b1220;
+  --bg-panel: #0f172a;
+
+  /* Typography — crisp white + cool slate */
+  --ink: #f8fafc;
+  --ink-soft: #cbd5e1;
+  --muted: #94a3b8;
+
+  /* Borders / chrome — icy metallic */
+  --line: rgba(147, 197, 253, 0.18);
+  --line-strong: rgba(191, 219, 254, 0.35);
+
+  /* Brand — deep midnight / royal */
+  --blue: #1e3a8a;
+  --blue-deep: #172554;
+  --blue-soft: #93c5fd;
+  --ice: #93c5fd;
+  --ice-bright: #bfdbfe;
+
+  /* Spotlight ember (secondary punch only) */
   --orange: #ff6a00;
-  --orange-deep: #e05600;
-  --blue: #3d8bfd;
-  --blue-soft: #6aa8ff;
-  --danger: #ff3b5c;
-  --success: #3dd68c;
-  --header: rgba(10, 10, 11, 0.92);
-  --blur-frost: rgba(10, 10, 11, 0.55);
+  --orange-deep: #c2410c;
+
+  --danger: #fb7185;
+  --success: #34d399;
+  --header: rgba(7, 9, 14, 0.94);
+  --blur-frost: rgba(15, 23, 42, 0.72);
 }
 
 html,
@@ -32,12 +62,14 @@ body {
 
 body {
   background:
-    radial-gradient(ellipse 80% 40% at 50% -10%, rgba(255, 106, 0, 0.14), transparent 55%),
-    radial-gradient(ellipse 50% 30% at 100% 0%, rgba(61, 139, 253, 0.1), transparent 45%),
+    radial-gradient(ellipse 90% 45% at 50% -12%, rgba(30, 58, 138, 0.35), transparent 58%),
+    radial-gradient(ellipse 45% 30% at 100% 0%, rgba(147, 197, 253, 0.08), transparent 50%),
+    radial-gradient(ellipse 40% 25% at 0% 100%, rgba(23, 37, 84, 0.45), transparent 55%),
     var(--bg);
   color: var(--ink);
   font-family: var(--font-sans), system-ui, sans-serif;
   text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 .font-display {
@@ -46,8 +78,8 @@ body {
 }
 
 ::selection {
-  background: color-mix(in oklab, var(--orange) 45%, transparent);
-  color: var(--bg);
+  background: color-mix(in oklab, var(--blue) 55%, transparent);
+  color: var(--ink);
 }
 
 .safe-bottom {
@@ -55,8 +87,14 @@ body {
 }
 
 .frost-lock {
-  backdrop-filter: blur(14px) saturate(1.1);
-  -webkit-backdrop-filter: blur(14px) saturate(1.1);
+  backdrop-filter: blur(16px) saturate(1.15);
+  -webkit-backdrop-filter: blur(16px) saturate(1.15);
+}
+
+.lock-tag {
+  border: 1px solid var(--line-strong);
+  background: color-mix(in oklab, var(--blue) 45%, transparent);
+  color: var(--ice-bright);
 }
 
 @keyframes rise-in {

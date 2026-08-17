@@ -50,7 +50,7 @@ export function UnlockSheet() {
       >
         <div className="mb-4 flex items-start justify-between gap-3">
           <div>
-            <p className="text-[11px] uppercase tracking-[0.2em] text-[var(--orange)]">
+            <p className="text-[11px] uppercase tracking-[0.2em] text-[var(--ice)]">
               {isSubscribe ? 'Creator tier' : 'Micro-tip'}
             </p>
             <h2 id={titleId} className="font-display text-3xl text-[var(--ink)]">
@@ -93,7 +93,7 @@ export function UnlockSheet() {
             <button
               type="button"
               onClick={confirm}
-              className="w-full rounded-md bg-[var(--orange)] py-3 text-sm font-semibold text-[var(--bg)]"
+              className="w-full rounded-md bg-[var(--blue)] py-3 text-sm font-semibold text-[var(--ink)] hover:bg-[var(--blue-deep)]"
             >
               Unlock {creator.tierName} · ${creator.tierPriceMonthly}/mo
             </button>
@@ -108,7 +108,7 @@ export function UnlockSheet() {
                   onClick={() => setSelectedTip(preset.id)}
                   className={`rounded-md border px-2 py-3 text-center text-xs uppercase tracking-[0.12em] ${
                     selectedTip === preset.id
-                      ? 'border-[var(--blue)] bg-[var(--blue)]/15 text-[var(--blue-soft)]'
+                      ? 'border-[var(--ice)] bg-[var(--blue)]/25 text-[var(--ice-bright)]'
                       : 'border-[var(--line)] text-[var(--muted)]'
                   }`}
                 >
@@ -128,14 +128,14 @@ export function UnlockSheet() {
                   value={customAmount}
                   onChange={(e) => setCustomAmount(e.target.value)}
                   inputMode="decimal"
-                  className="mt-1 h-11 w-full rounded-md border border-[var(--line)] bg-[var(--bg-panel)] px-3 text-[var(--ink)] outline-none focus:border-[var(--blue)]"
+                  className="mt-1 h-11 w-full rounded-md border border-[var(--line)] bg-[var(--bg-panel)] px-3 text-[var(--ink)] outline-none focus:border-[var(--ice)]"
                 />
               </label>
             ) : null}
             <button
               type="button"
               onClick={confirm}
-              className="w-full rounded-md bg-[var(--blue)] py-3 text-sm font-semibold text-[var(--bg)]"
+              className="w-full rounded-md border border-[var(--line-strong)] bg-[var(--bg-panel)] py-3 text-sm font-semibold text-[var(--ice-bright)] hover:bg-[var(--blue)]/30"
             >
               Send tip
             </button>

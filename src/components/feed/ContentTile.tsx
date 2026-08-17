@@ -38,7 +38,11 @@ export function ContentTile({
         <div className="p-2.5">
           <p className="line-clamp-2 text-sm font-medium text-[var(--ink)]">{post.title}</p>
           <p className="mt-1 text-[10px] uppercase tracking-[0.14em] text-[var(--muted)]">
-            {locked ? 'Locked' : 'Public'}
+            {locked ? (
+              <span className="lock-tag rounded px-1.5 py-0.5">Locked</span>
+            ) : (
+              'Public'
+            )}
           </p>
         </div>
       </button>
@@ -55,7 +59,7 @@ export function ContentTile({
           <Link
             to="/c/$username"
             params={{ username: creator.username }}
-            className="font-semibold text-[var(--ink)] no-underline hover:text-[var(--orange)]"
+            className="font-semibold text-[var(--ink)] no-underline hover:text-[var(--ice)]"
           >
             {creator.displayName}
           </Link>

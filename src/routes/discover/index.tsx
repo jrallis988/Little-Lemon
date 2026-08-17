@@ -14,7 +14,7 @@ function DiscoverPage() {
     <AppShell>
       <div className="mx-auto max-w-2xl px-4 py-6">
         <header className="mb-5">
-          <p className="text-[11px] uppercase tracking-[0.22em] text-[var(--orange)]">
+          <p className="text-[11px] uppercase tracking-[0.22em] text-[var(--ice)]">
             Chronological
           </p>
           <h1 className="font-display text-4xl text-[var(--ink)]">Discover</h1>
