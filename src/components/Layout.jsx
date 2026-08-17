@@ -4,13 +4,16 @@ import { BottomBar, CharacterStrip, SideRail, TopTabs } from './Chrome'
 import { SlimeCursor } from './Chaos'
 
 const titles = {
-  '/': 'Nickelodeon | Nick.com',
+  '/': 'Nickelodeon | Homepage',
   '/games': 'Nickelodeon | Games',
   '/shows': 'Nickelodeon | Shows',
-  '/music': 'Nickelodeon | Music',
   '/video': 'Nickelodeon | Video',
   '/fan': 'Nickelodeon | Your World',
   '/more': 'Nickelodeon | More',
+  '/nick-jr': 'Nickelodeon | Nick Jr.',
+  '/nick-news': 'Nickelodeon | Nick News',
+  '/weekenders': 'Nickelodeon | Nick Weekenders',
+  '/orbitz': 'Nickelodeon | Nick Orbitz',
 }
 
 export function Layout() {

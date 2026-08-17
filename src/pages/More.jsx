@@ -30,8 +30,8 @@ export function More() {
         <article className="more-card">
           <h2>Nick Jr. handoff</h2>
           <p>Preschool hour is thataway — still loud, just softer.</p>
-          <Link className="btn-nick" to="/shows">
-            Shows
+          <Link className="btn-nick" to="/nick-jr">
+            Nick Jr.
           </Link>
         </article>
       </div>

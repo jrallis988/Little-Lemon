@@ -1,14 +1,15 @@
 import { Link, NavLink } from 'react-router-dom'
-import { characters, sideLinks, topTabs } from '../data/content'
+import { characters, footerColumns, sideLinks, topTabs } from '../data/content'
 import { NickSplat } from './Brand'
 
 export function TopTabs() {
   return (
-    <nav className="top-tabs" aria-label="Main sections">
+    <nav className="top-tabs" aria-label="Primary">
       {topTabs.map((tab) => (
         <NavLink
-          key={tab.to}
+          key={tab.label}
           to={tab.to}
+          end={Boolean(tab.end)}
           className={({ isActive }) =>
             `top-tabs__tab top-tabs__tab--${tab.tone}${isActive ? ' is-active' : ''}`
           }
@@ -65,7 +66,12 @@ export function SideRail() {
 
       <nav className="side-nav" aria-label="Quick links">
         {sideLinks.map((link) => (
-          <NavLink key={link.label} to={link.to} className="side-nav__link">
+          <NavLink
+            key={link.label}
+            to={link.to}
+            end={Boolean(link.end)}
+            className="side-nav__link"
+          >
             <span className="side-nav__dot" aria-hidden="true" />
             {link.label}
           </NavLink>
@@ -93,9 +99,10 @@ export function SideRail() {
       </div>
 
       <div className="side-extra">
-        <Link to="/shows">All Shows</Link>
-        <Link to="/more">Kids for Kids</Link>
-        <Link to="/games">Nicktoons Play</Link>
+        <Link to="/">Home</Link>
+        <Link to="/weekenders">Nick Weekenders</Link>
+        <Link to="/orbitz">Nick Orbitz</Link>
+        <Link to="/parents">Parents</Link>
       </div>
     </aside>
   )
@@ -111,12 +118,17 @@ export function BottomBar() {
           </Link>
         ))}
       </div>
-      <div className="site-footer__links">
-        <Link to="/">Home</Link>
-        <Link to="/music">Nick Radio</Link>
-        <Link to="/more">Parents</Link>
-        <Link to="/more">Terms</Link>
-        <Link to="/more">Privacy</Link>
+      <div className="site-footer__columns">
+        {footerColumns.map((col) => (
+          <nav key={col.title} className="site-footer__col" aria-label={col.title}>
+            <h2>{col.title}</h2>
+            {col.links.map((link) => (
+              <Link key={link.to} to={link.to}>
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+        ))}
       </div>
       <p className="site-footer__note">
         Unofficial fan redesign inspired by classic Nick.com — not affiliated with

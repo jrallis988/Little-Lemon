@@ -23,13 +23,18 @@ Try clicking empty space (slime pops), smash the “Too basic?” button, and un
 
 | Route | Feel |
 | --- | --- |
-| `/` | Full portal: manifesto, hero, tiles, poll, video, Nicktane |
+| `/` | Portal + Nick Jr. spotlight, News / Weekenders / Orbitz rails |
 | `/games` | Arcade cards with Play Now |
 | `/shows` | Toon + live-action hubs |
-| `/music` | Nick Radio track list |
 | `/video` | Chunk player + clip rail |
 | `/fan` | Sticker lab, poll, web-lab toys |
-| `/more` | Shop / parents / extras |
+| `/nick-jr` | Preschool destination |
+| `/nick-news` | Kids current-events hub |
+| `/weekenders` | Specials and weekend promos |
+| `/orbitz` | Family vacation / partner travel |
+| `/more` | Shop extras |
+
+Primary nav: **Home**, Games, Shows, Video, Your World, More. Music is removed.
 
 ## Stack
 

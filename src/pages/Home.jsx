@@ -36,6 +36,42 @@ export function Home() {
         </div>
       </section>
 
+      <section className="jr-spotlight">
+        <p className="jr-spotlight__eyebrow">Nick Jr. spotlight</p>
+        <h2>Preschool hour, still loud — just softer.</h2>
+        <p>
+          Stories, songs, and playtime blocks with equal energy for every little
+          viewer. PAW Patrol, Dora, Bubble Guppies, and more live on their own
+          destination.
+        </p>
+        <div className="jr-spotlight__actions">
+          <Link className="btn-nick btn-nick--big" to="/nick-jr">
+            Enter Nick Jr.
+          </Link>
+          <Link className="btn-nick btn-nick--ghost" to="/parents">
+            Parent guidelines
+          </Link>
+        </div>
+      </section>
+
+      <section className="brand-rail" aria-label="Nick destinations">
+        <Link to="/nick-news" className="brand-rail__card brand-rail__card--news">
+          <span>Nick News</span>
+          <strong>Current events for curious kids</strong>
+          <p>Town halls, explainers, and a daily desk — no beige crawl.</p>
+        </Link>
+        <Link to="/weekenders" className="brand-rail__card brand-rail__card--week">
+          <span>Nick Weekenders</span>
+          <strong>Specials, slime drops, marathons</strong>
+          <p>Promos and event programming for Friday-through-Sunday energy.</p>
+        </Link>
+        <Link to="/orbitz" className="brand-rail__card brand-rail__card--orbitz">
+          <span>Nick Orbitz</span>
+          <strong>Family vacations &amp; partner travel</strong>
+          <p>Resorts, park weekends, and staycation race kits.</p>
+        </Link>
+      </section>
+
       <div className="portal-cols">
         <div className="portal-cols__main">
           <section className="tile-row tile-row--three">
@@ -77,7 +113,7 @@ export function Home() {
                     </button>
                   ))}
                 </div>
-                <Link className="lately__more" to={`/${row.id === 'weblab' ? 'video' : row.id === 'world' ? 'fan' : row.id}`}>
+                <Link className="lately__more" to={row.to}>
                   More {row.label}
                 </Link>
               </div>
