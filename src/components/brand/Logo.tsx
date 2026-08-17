@@ -5,17 +5,23 @@ export function Logo({
   size = 'md',
 }: {
   to?: string
-  size?: 'sm' | 'md' | 'lg'
+  size?: 'sm' | 'md' | 'lg' | 'hero'
 }) {
-  const text =
-    size === 'lg' ? 'text-4xl' : size === 'sm' ? 'text-lg' : 'text-xl'
+  const cls =
+    size === 'hero'
+      ? 'text-6xl sm:text-7xl'
+      : size === 'lg'
+        ? 'text-4xl'
+        : size === 'sm'
+          ? 'text-xl'
+          : 'text-2xl'
 
   return (
     <Link
       to={to}
-      className={`font-display tracking-[0.04em] text-[var(--ink)] no-underline ${text}`}
+      className={`font-display text-[var(--ink)] no-underline ${cls}`}
     >
-      Artistic <span className="text-[var(--accent)]">Fountain</span>
+      O<span className="text-[var(--orange)]">J</span>
     </Link>
   )
 }

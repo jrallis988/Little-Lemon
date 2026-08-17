@@ -5,47 +5,62 @@ export const Route = createFileRoute('/')({ component: LandingPage })
 
 function LandingPage() {
   return (
-    <main className="relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(184,92,56,0.12),transparent_50%),linear-gradient(180deg,var(--bg),#ebe4d6)]" />
-      <div className="relative mx-auto flex min-h-[calc(100dvh-8rem)] max-w-5xl flex-col justify-end px-4 pb-16 pt-20">
-        <p className="text-[11px] uppercase tracking-[0.28em] text-[var(--accent)]">
-          For comics · against the algorithm
-        </p>
-        <Logo size="lg" />
-        <h1 className="sr-only">Artistic Fountain</h1>
-        <p className="mt-5 max-w-xl text-lg leading-relaxed text-[var(--ink-soft)]">
-          A chronological social utility for comedians — local open mics, Material
-          Lab notes, and regional Green Rooms. No vanity metrics. No rage bait.
-        </p>
-        <div className="mt-8 flex flex-wrap gap-3">
+    <main className="relative min-h-dvh overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,106,0,0.18),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(61,139,253,0.12),transparent_45%)]" />
+      <div className="relative mx-auto flex min-h-dvh max-w-3xl flex-col px-4 pb-10 pt-8">
+        <header className="flex items-center justify-between">
+          <Logo size="md" />
           <Link
-            to="/feed"
-            className="rounded-md bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-[var(--bg)] no-underline"
+            to="/discover"
+            className="text-sm text-[var(--muted)] no-underline hover:text-[var(--ink)]"
           >
-            Enter the feed
+            Enter
           </Link>
-          <Link
-            to="/mics"
-            className="rounded-md border border-[var(--line)] bg-[var(--surface)] px-5 py-3 text-sm font-semibold text-[var(--ink)] no-underline"
+        </header>
+
+        <section className="mt-auto pb-8 pt-24">
+          <p className="animate-rise text-[11px] uppercase tracking-[0.28em] text-[var(--orange)]">
+            Creator comedy · uncensored
+          </p>
+          <h1 className="sr-only">OJ — Only Jokes</h1>
+          <p
+            className="animate-rise mt-3 font-display text-[5.5rem] leading-[0.85] text-[var(--ink)] sm:text-[7rem]"
+            style={{ animationDelay: '60ms' }}
           >
-            Find open mics
-          </Link>
-        </div>
-        <ul className="mt-12 grid gap-4 sm:grid-cols-3">
-          {[
-            ['Chronological only', 'Newest first. No engagement re-ranking.'],
-            ['Local scene first', 'Comics, mics, and rooms near your home city.'],
-            ['Craft over clout', 'Profiles hide follower counts by design.'],
-          ].map(([title, body]) => (
-            <li
-              key={title}
-              className="border border-[var(--line)] bg-[var(--surface)]/80 p-4"
+            O<span className="text-[var(--orange)]">J</span>
+          </p>
+          <p
+            className="animate-rise mt-2 text-lg uppercase tracking-[0.22em] text-[var(--blue-soft)]"
+            style={{ animationDelay: '100ms' }}
+          >
+            Only Jokes
+          </p>
+          <p
+            className="animate-rise mt-5 max-w-md text-base leading-relaxed text-[var(--ink-soft)]"
+            style={{ animationDelay: '140ms' }}
+          >
+            Unfiltered stand-up, raw road work, and animated comedy without
+            corporate censorship. Direct support. No algorithm tax theater.
+          </p>
+          <div
+            className="animate-rise mt-8 flex flex-wrap gap-3"
+            style={{ animationDelay: '180ms' }}
+          >
+            <Link
+              to="/discover"
+              className="rounded-md bg-[var(--orange)] px-5 py-3 text-sm font-semibold text-[var(--bg)] no-underline"
             >
-              <h2 className="font-display text-lg text-[var(--ink)]">{title}</h2>
-              <p className="mt-1 text-sm text-[var(--muted)]">{body}</p>
-            </li>
-          ))}
-        </ul>
+              Open discovery
+            </Link>
+            <Link
+              to="/c/$username"
+              params={{ username: 'maya.kill' }}
+              className="rounded-md border border-[var(--line)] bg-[var(--bg-panel)] px-5 py-3 text-sm font-semibold text-[var(--ink)] no-underline"
+            >
+              See a creator
+            </Link>
+          </div>
+        </section>
       </div>
     </main>
   )

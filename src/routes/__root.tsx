@@ -3,8 +3,8 @@ import {
   Scripts,
   createRootRouteWithContext,
 } from '@tanstack/react-router'
-import Header from '#/components/layout/Header'
-import Footer from '#/components/layout/Footer'
+import { SupportProvider } from '#/lib/support'
+import { UnlockSheet } from '#/components/monetization/UnlockSheet'
 import appCss from '../styles.css?url'
 import type { QueryClient } from '@tanstack/react-query'
 
@@ -21,14 +21,14 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         content: 'width=device-width, initial-scale=1, viewport-fit=cover',
       },
       {
-        title: 'Artistic Fountain — comedy network utility',
+        title: 'OJ — Only Jokes',
       },
       {
         name: 'description',
         content:
-          'Chronological, local, anti-vanity social utility for comedians. Digital green room + open mic toolkit.',
+          'Unfiltered stand-up, raw road work, and animated comedy without corporate censorship.',
       },
-      { name: 'theme-color', content: '#f3efe6' },
+      { name: 'theme-color', content: '#0a0a0b' },
     ],
     links: [{ rel: 'stylesheet', href: appCss }],
   }),
@@ -42,11 +42,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body className="min-h-dvh bg-[var(--bg)] font-sans text-[var(--ink)] antialiased">
-        <div className="flex min-h-dvh flex-col">
-          <Header />
-          <div className="flex-1">{children}</div>
-          <Footer />
-        </div>
+        <SupportProvider>
+          {children}
+          <UnlockSheet />
+        </SupportProvider>
         <Scripts />
       </body>
     </html>

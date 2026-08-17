@@ -10,13 +10,10 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as FeedIndexRouteImport } from './routes/feed/index'
-import { Route as LabIndexRouteImport } from './routes/lab/index'
+import { Route as CUsernameRouteImport } from './routes/c/$username'
+import { Route as DiscoverIndexRouteImport } from './routes/discover/index'
 import { Route as MessagesIndexRouteImport } from './routes/messages/index'
-import { Route as MicsIndexRouteImport } from './routes/mics/index'
-import { Route as RoomsIndexRouteImport } from './routes/rooms/index'
 import { Route as SettingsIndexRouteImport } from './routes/settings/index'
-import { Route as UUsernameRouteImport } from './routes/u/$username'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
 const IndexRoute = IndexRouteImport.update({
@@ -24,14 +21,14 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const FeedIndexRoute = FeedIndexRouteImport.update({
-  id: '/feed/',
-  path: '/feed/',
+const CUsernameRoute = CUsernameRouteImport.update({
+  id: '/c/$username',
+  path: '/c/$username',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LabIndexRoute = LabIndexRouteImport.update({
-  id: '/lab/',
-  path: '/lab/',
+const DiscoverIndexRoute = DiscoverIndexRouteImport.update({
+  id: '/discover/',
+  path: '/discover/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MessagesIndexRoute = MessagesIndexRouteImport.update({
@@ -39,24 +36,9 @@ const MessagesIndexRoute = MessagesIndexRouteImport.update({
   path: '/messages/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const MicsIndexRoute = MicsIndexRouteImport.update({
-  id: '/mics/',
-  path: '/mics/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RoomsIndexRoute = RoomsIndexRouteImport.update({
-  id: '/rooms/',
-  path: '/rooms/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const SettingsIndexRoute = SettingsIndexRouteImport.update({
   id: '/settings/',
   path: '/settings/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const UUsernameRoute = UUsernameRouteImport.update({
-  id: '/u/$username',
-  path: '/u/$username',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
@@ -67,35 +49,26 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/u/$username': typeof UUsernameRoute
-  '/feed/': typeof FeedIndexRoute
-  '/lab/': typeof LabIndexRoute
+  '/c/$username': typeof CUsernameRoute
+  '/discover/': typeof DiscoverIndexRoute
   '/messages/': typeof MessagesIndexRoute
-  '/mics/': typeof MicsIndexRoute
-  '/rooms/': typeof RoomsIndexRoute
   '/settings/': typeof SettingsIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/u/$username': typeof UUsernameRoute
-  '/feed': typeof FeedIndexRoute
-  '/lab': typeof LabIndexRoute
+  '/c/$username': typeof CUsernameRoute
+  '/discover': typeof DiscoverIndexRoute
   '/messages': typeof MessagesIndexRoute
-  '/mics': typeof MicsIndexRoute
-  '/rooms': typeof RoomsIndexRoute
   '/settings': typeof SettingsIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/u/$username': typeof UUsernameRoute
-  '/feed/': typeof FeedIndexRoute
-  '/lab/': typeof LabIndexRoute
+  '/c/$username': typeof CUsernameRoute
+  '/discover/': typeof DiscoverIndexRoute
   '/messages/': typeof MessagesIndexRoute
-  '/mics/': typeof MicsIndexRoute
-  '/rooms/': typeof RoomsIndexRoute
   '/settings/': typeof SettingsIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
@@ -103,46 +76,34 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/u/$username'
-    | '/feed/'
-    | '/lab/'
+    | '/c/$username'
+    | '/discover/'
     | '/messages/'
-    | '/mics/'
-    | '/rooms/'
     | '/settings/'
     | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/u/$username'
-    | '/feed'
-    | '/lab'
+    | '/c/$username'
+    | '/discover'
     | '/messages'
-    | '/mics'
-    | '/rooms'
     | '/settings'
     | '/api/auth/$'
   id:
     | '__root__'
     | '/'
-    | '/u/$username'
-    | '/feed/'
-    | '/lab/'
+    | '/c/$username'
+    | '/discover/'
     | '/messages/'
-    | '/mics/'
-    | '/rooms/'
     | '/settings/'
     | '/api/auth/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  UUsernameRoute: typeof UUsernameRoute
-  FeedIndexRoute: typeof FeedIndexRoute
-  LabIndexRoute: typeof LabIndexRoute
+  CUsernameRoute: typeof CUsernameRoute
+  DiscoverIndexRoute: typeof DiscoverIndexRoute
   MessagesIndexRoute: typeof MessagesIndexRoute
-  MicsIndexRoute: typeof MicsIndexRoute
-  RoomsIndexRoute: typeof RoomsIndexRoute
   SettingsIndexRoute: typeof SettingsIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
@@ -156,18 +117,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/feed/': {
-      id: '/feed/'
-      path: '/feed'
-      fullPath: '/feed/'
-      preLoaderRoute: typeof FeedIndexRouteImport
+    '/c/$username': {
+      id: '/c/$username'
+      path: '/c/$username'
+      fullPath: '/c/$username'
+      preLoaderRoute: typeof CUsernameRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/lab/': {
-      id: '/lab/'
-      path: '/lab'
-      fullPath: '/lab/'
-      preLoaderRoute: typeof LabIndexRouteImport
+    '/discover/': {
+      id: '/discover/'
+      path: '/discover'
+      fullPath: '/discover/'
+      preLoaderRoute: typeof DiscoverIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/messages/': {
@@ -177,32 +138,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MessagesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/mics/': {
-      id: '/mics/'
-      path: '/mics'
-      fullPath: '/mics/'
-      preLoaderRoute: typeof MicsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/rooms/': {
-      id: '/rooms/'
-      path: '/rooms'
-      fullPath: '/rooms/'
-      preLoaderRoute: typeof RoomsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/settings/': {
       id: '/settings/'
       path: '/settings'
       fullPath: '/settings/'
       preLoaderRoute: typeof SettingsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/u/$username': {
-      id: '/u/$username'
-      path: '/u/$username'
-      fullPath: '/u/$username'
-      preLoaderRoute: typeof UUsernameRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/auth/$': {
@@ -217,12 +157,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  UUsernameRoute: UUsernameRoute,
-  FeedIndexRoute: FeedIndexRoute,
-  LabIndexRoute: LabIndexRoute,
+  CUsernameRoute: CUsernameRoute,
+  DiscoverIndexRoute: DiscoverIndexRoute,
   MessagesIndexRoute: MessagesIndexRoute,
-  MicsIndexRoute: MicsIndexRoute,
-  RoomsIndexRoute: RoomsIndexRoute,
   SettingsIndexRoute: SettingsIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }

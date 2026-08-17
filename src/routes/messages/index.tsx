@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { AppShell } from '#/components/layout/AppShell'
 
 export const Route = createFileRoute('/messages/')({
   component: MessagesPage,
@@ -6,17 +7,25 @@ export const Route = createFileRoute('/messages/')({
 
 function MessagesPage() {
   return (
-    <main className="mx-auto max-w-2xl px-4 py-8">
-      <header className="mb-6">
-        <h1 className="font-display text-3xl text-[var(--ink)]">Messages</h1>
-        <p className="mt-1 text-sm text-[var(--muted)]">
-          Clean DMs for spot swaps, guest hosts, and rides to mics.
+    <AppShell>
+      <div className="mx-auto max-w-2xl px-4 py-8">
+        <h1 className="font-display text-4xl">Backstage</h1>
+        <p className="mt-2 text-sm text-[var(--muted)]">
+          Direct lines for fans, bookers, and venue managers. Wire-up next.
         </p>
-      </header>
-      <div className="border border-[var(--line)] bg-[var(--surface)] p-6 text-sm text-[var(--muted)]">
-        Direct message threads map to <code>conversations</code> +{' '}
-        <code>direct_messages</code>. Wire-up after auth + profiles.
+        <div className="mt-6 space-y-2">
+          {['Booker · Stage Left Lounge', 'Fan · tip follow-up', 'Venue · Friday late'].map(
+            (row) => (
+              <div
+                key={row}
+                className="border border-[var(--line)] bg-[var(--bg-elevated)] px-4 py-3 text-sm text-[var(--ink-soft)]"
+              >
+                {row}
+              </div>
+            ),
+          )}
+        </div>
       </div>
-    </main>
+    </AppShell>
   )
 }
