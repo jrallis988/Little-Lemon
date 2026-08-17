@@ -28,7 +28,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         content:
           'Unfiltered stand-up, raw road work, and animated comedy without corporate censorship.',
       },
-      { name: 'theme-color', content: '#07090e' },
+      { name: 'theme-color', content: '#000A5B' },
     ],
     links: [{ rel: 'stylesheet', href: appCss }],
   }),

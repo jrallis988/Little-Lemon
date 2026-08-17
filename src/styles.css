@@ -2,57 +2,51 @@
 @import "tailwindcss";
 
 /*
-  OJ (Only Jokes) — late-night club tokens
-  Near-black stage + deep midnight blue brand + icy metallic highlights
+  OJ (Only Jokes) — exact palette from brand mark
+  Deep navy stage #000A5B + cornflower accent #77ACF1
 */
 @theme {
   --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Bebas Neue", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 
-  --color-oj-bg: #07090e;
-  --color-oj-elevated: #0b1220;
-  --color-oj-panel: #0f172a;
-  --color-oj-ink: #f8fafc;
-  --color-oj-ink-soft: #cbd5e1;
-  --color-oj-muted: #94a3b8;
-  --color-oj-brand: #1e3a8a;
-  --color-oj-brand-deep: #172554;
-  --color-oj-ice: #93c5fd;
-  --color-oj-ice-bright: #bfdbfe;
-  --color-oj-ember: #ff6a00;
+  --color-oj-bg: #000a5b;
+  --color-oj-elevated: #00074a;
+  --color-oj-panel: #00116e;
+  --color-oj-ink: #ffffff;
+  --color-oj-accent: #77acf1;
+  --color-oj-on-accent: #000a5b;
 }
 
 :root {
-  /* Backgrounds — underground showroom */
-  --bg: #07090e;
-  --bg-elevated: #0b1220;
-  --bg-panel: #0f172a;
+  --navy: #000a5b;
+  --accent: #77acf1;
 
-  /* Typography — crisp white + cool slate */
-  --ink: #f8fafc;
-  --ink-soft: #cbd5e1;
-  --muted: #94a3b8;
+  --bg: #000a5b;
+  --bg-elevated: color-mix(in srgb, #000a5b 82%, #000000);
+  --bg-panel: color-mix(in srgb, #000a5b 86%, #77acf1);
 
-  /* Borders / chrome — icy metallic */
-  --line: rgba(147, 197, 253, 0.18);
-  --line-strong: rgba(191, 219, 254, 0.35);
+  --ink: #ffffff;
+  --ink-soft: color-mix(in srgb, #ffffff 78%, #77acf1);
+  --muted: color-mix(in srgb, #77acf1 72%, #ffffff);
 
-  /* Brand — deep midnight / royal */
-  --blue: #1e3a8a;
-  --blue-deep: #172554;
-  --blue-soft: #93c5fd;
-  --ice: #93c5fd;
-  --ice-bright: #bfdbfe;
+  --line: color-mix(in srgb, #77acf1 28%, transparent);
+  --line-strong: color-mix(in srgb, #77acf1 55%, transparent);
 
-  /* Spotlight ember (secondary punch only) */
-  --orange: #ff6a00;
-  --orange-deep: #c2410c;
+  --blue: #77acf1;
+  --blue-deep: color-mix(in srgb, #77acf1 62%, #000a5b);
+  --blue-soft: #77acf1;
+  --ice: #77acf1;
+  --ice-bright: #ffffff;
+  --on-accent: #000a5b;
+
+  --orange: #77acf1;
+  --orange-deep: color-mix(in srgb, #77acf1 62%, #000a5b);
 
   --danger: #fb7185;
   --success: #34d399;
-  --header: rgba(7, 9, 14, 0.94);
-  --blur-frost: rgba(15, 23, 42, 0.72);
+  --header: color-mix(in srgb, #000a5b 92%, transparent);
+  --blur-frost: color-mix(in srgb, #000a5b 72%, transparent);
 }
 
 html,
@@ -62,9 +56,8 @@ body {
 
 body {
   background:
-    radial-gradient(ellipse 90% 45% at 50% -12%, rgba(30, 58, 138, 0.35), transparent 58%),
-    radial-gradient(ellipse 45% 30% at 100% 0%, rgba(147, 197, 253, 0.08), transparent 50%),
-    radial-gradient(ellipse 40% 25% at 0% 100%, rgba(23, 37, 84, 0.45), transparent 55%),
+    radial-gradient(ellipse 90% 48% at 50% -14%, color-mix(in srgb, #77acf1 22%, transparent), transparent 58%),
+    radial-gradient(ellipse 40% 28% at 100% 0%, color-mix(in srgb, #77acf1 10%, transparent), transparent 50%),
     var(--bg);
   color: var(--ink);
   font-family: var(--font-sans), system-ui, sans-serif;
@@ -78,8 +71,8 @@ body {
 }
 
 ::selection {
-  background: color-mix(in oklab, var(--blue) 55%, transparent);
-  color: var(--ink);
+  background: color-mix(in srgb, #77acf1 45%, transparent);
+  color: #ffffff;
 }
 
 .safe-bottom {
@@ -93,8 +86,8 @@ body {
 
 .lock-tag {
   border: 1px solid var(--line-strong);
-  background: color-mix(in oklab, var(--blue) 45%, transparent);
-  color: var(--ice-bright);
+  background: color-mix(in srgb, #000a5b 55%, #77acf1);
+  color: #ffffff;
 }
 
 @keyframes rise-in {

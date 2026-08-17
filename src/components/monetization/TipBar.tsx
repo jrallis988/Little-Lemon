@@ -31,7 +31,7 @@ export function TipBar({
       <button
         type="button"
         onClick={() => openSubscribe(creator)}
-        className="inline-flex flex-1 items-center justify-center rounded-md bg-[var(--blue)] px-3 py-2 text-sm font-semibold text-[var(--ink)] transition hover:bg-[var(--blue-deep)]"
+        className="inline-flex flex-1 items-center justify-center rounded-md bg-[var(--accent)] px-3 py-2 text-sm font-semibold text-[var(--on-accent)] transition hover:opacity-90"
       >
         Unlock ${creator.tierPriceMonthly}/mo
       </button>

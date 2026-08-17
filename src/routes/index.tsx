@@ -27,13 +27,13 @@ function LandingPage() {
             className="animate-rise mt-3 font-display text-[5.5rem] leading-[0.85] text-[var(--ink)] sm:text-[7rem]"
             style={{ animationDelay: '60ms' }}
           >
-            O<span className="text-[var(--ice)]">J</span>
+            <span className="text-[var(--accent)]">O</span>J
           </p>
           <p
-            className="animate-rise mt-2 text-lg uppercase tracking-[0.22em] text-[var(--blue-soft)]"
+            className="animate-rise mt-2 text-lg uppercase tracking-[0.22em] text-[var(--ink)]"
             style={{ animationDelay: '100ms' }}
           >
-            Only Jokes
+            Only <span className="text-[var(--accent)]">Jokes</span>
           </p>
           <p
             className="animate-rise mt-5 max-w-md text-base leading-relaxed text-[var(--ink-soft)]"
@@ -48,7 +48,7 @@ function LandingPage() {
           >
             <Link
               to="/discover"
-              className="rounded-md bg-[var(--blue)] px-5 py-3 text-sm font-semibold text-[var(--ink)] no-underline hover:bg-[var(--blue-deep)]"
+              className="rounded-md bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-[var(--on-accent)] no-underline hover:opacity-90"
             >
               Open discovery
             </Link>

@@ -24,7 +24,7 @@ export function Header() {
         </p>
         <Link
           to="/discover"
-          className="rounded-md bg-[var(--blue)] px-3 py-1.5 text-sm font-semibold text-[var(--ink)] no-underline hover:bg-[var(--blue-deep)]"
+          className="rounded-md bg-[var(--accent)] px-3 py-1.5 text-sm font-semibold text-[var(--on-accent)] no-underline hover:opacity-90"
         >
           Discover
         </Link>

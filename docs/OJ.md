@@ -26,11 +26,10 @@ Dual-sided creator monetization network for stand-up comics and comedy animators
 
 | Token | Value | Role |
 |-------|-------|------|
-| `--bg` | `#07090E` | Near-black stage |
-| `--bg-panel` | `#0F172A` | Midnight panel |
-| `--blue` | `#1E3A8A` | Deep royal brand |
-| `--ice` / `--ice-bright` | `#93C5FD` / `#BFDBFE` | Metallic chrome highlights |
-| `--ink` | `#F8FAFC` | Crisp white type |
+| `--bg` / `--navy` | `#000A5B` | Deep navy stage |
+| `--accent` | `#77ACF1` | Cornflower logo accent (O + Jokes) |
+| `--ink` | `#FFFFFF` | Crisp white type |
+| `--on-accent` | `#000A5B` | Type on accent fills |
 
 ## Next persistence slice
 

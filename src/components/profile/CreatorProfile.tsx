@@ -19,10 +19,10 @@ export function CreatorProfile({
       <div
         className="relative h-40 w-full sm:h-52"
         style={{
-          background: `linear-gradient(120deg, hsl(${creator.bannerHue} 45% 28%), #07090e 52%, #0f172a 78%, hsl(${(creator.bannerHue + 200) % 360} 40% 22%))`,
+          background: `linear-gradient(120deg, hsl(${creator.bannerHue} 45% 28%), #000A5B 52%, color-mix(in srgb, #000A5B 70%, #77ACF1) 100%)`,
         }}
       >
-        <div className="absolute inset-0 bg-[linear-gradient(transparent,rgba(10,10,11,0.85))]" />
+        <div className="absolute inset-0 bg-[linear-gradient(transparent,rgba(0,10,91,0.88))]" />
       </div>
 
       <div className="relative mx-auto max-w-3xl px-4">
@@ -55,7 +55,7 @@ export function CreatorProfile({
             <button
               type="button"
               onClick={() => openSubscribe(creator)}
-              className="rounded-md bg-[var(--blue)] px-4 py-2 text-sm font-semibold text-[var(--ink)] hover:bg-[var(--blue-deep)]"
+              className="rounded-md bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-[var(--on-accent)] hover:opacity-90"
             >
               {creator.tierName} · ${creator.tierPriceMonthly}/mo
             </button>

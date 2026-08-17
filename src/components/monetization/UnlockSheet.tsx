@@ -93,7 +93,7 @@ export function UnlockSheet() {
             <button
               type="button"
               onClick={confirm}
-              className="w-full rounded-md bg-[var(--blue)] py-3 text-sm font-semibold text-[var(--ink)] hover:bg-[var(--blue-deep)]"
+              className="w-full rounded-md bg-[var(--accent)] py-3 text-sm font-semibold text-[var(--on-accent)] hover:opacity-90"
             >
               Unlock {creator.tierName} · ${creator.tierPriceMonthly}/mo
             </button>
