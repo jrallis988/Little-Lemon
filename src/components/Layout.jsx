@@ -53,7 +53,6 @@ export function Layout() {
       <TopTabs />
 
       <div className="nick-frame">
-        <div className="nick-frame__jag" aria-hidden="true" />
         <CharacterStrip />
         <div className="nick-grid">
           <SideRail />
