@@ -19,29 +19,29 @@ export const FOLDERS: FolderMeta[] = [
   {
     id: "inbox",
     label: "Inbox",
-    description: "Mail to read",
+    description: "",
     verified: true,
   },
   {
     id: "drafts",
     label: "Drafts",
-    description: "Work in progress",
+    description: "",
   },
   {
     id: "pending",
-    label: "Waiting for approval",
-    description: "Teacher review before send",
+    label: "Pending",
+    description: "",
   },
   {
     id: "sent",
     label: "Sent",
-    description: "Messages you have sent",
+    description: "",
     verified: true,
   },
   {
     id: "safe-contacts",
     label: "Safe Contacts",
-    description: "Approved people and places",
+    description: "",
     verified: true,
   },
 ];

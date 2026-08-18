@@ -51,7 +51,7 @@ export default function App() {
             Mailbox
           </p>
           <p className="mt-1 text-sm font-medium text-muted-foreground">
-            Opening classroom mail…
+            Opening…
           </p>
         </div>
       </div>

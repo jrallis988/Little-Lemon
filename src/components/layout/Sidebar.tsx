@@ -1,13 +1,10 @@
-import { SafetyBadge } from "@/components/mail/SafetyBadge";
 import { TeacherPanel } from "@/components/teacher/TeacherPanel";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { FOLDERS } from "@/data/seed";
 import { copyForGrade } from "@/lib/stageCopy";
 import { cn } from "@/lib/utils";
 import { useMailStore } from "@/store/mailStore";
 import type { FolderId, GradeLevel } from "@/types/mail";
-import { bandLabelForGrade } from "@/types/mail";
 import {
   Clock3,
   FileText,
@@ -29,9 +26,9 @@ const icons: Record<FolderId, typeof Inbox> = {
 };
 
 const GRADE_GROUPS: { label: string; grades: GradeLevel[] }[] = [
-  { label: "Elementary", grades: [1, 2, 3, 4, 5] },
-  { label: "Middle school", grades: [6, 7, 8] },
-  { label: "High school", grades: [9, 10, 11, 12] },
+  { label: "1–5", grades: [1, 2, 3, 4, 5] },
+  { label: "6–8", grades: [6, 7, 8] },
+  { label: "9–12", grades: [9, 10, 11, 12] },
 ];
 
 export function Sidebar() {
@@ -44,7 +41,6 @@ export function Sidebar() {
   const grade = useMailStore((s) => s.grade);
   const learningStage = useMailStore((s) => s.learningStage);
   const setGrade = useMailStore((s) => s.setGrade);
-  const teacherUnlocked = useMailStore((s) => s.teacherUnlocked);
   const copy = copyForGrade(grade);
   const [teacherOpen, setTeacherOpen] = useState(false);
 
@@ -79,9 +75,6 @@ export function Sidebar() {
             >
               Mailbox
             </p>
-            <p className="mt-1 text-sm font-semibold text-muted-foreground">
-              {copy.tagline}
-            </p>
           </Link>
         </div>
 
@@ -104,7 +97,7 @@ export function Sidebar() {
             onClick={() => setTeacherOpen(true)}
           >
             <GraduationCap className="size-5" />
-            {teacherUnlocked ? "Teacher desk" : "Teacher desk"}
+            Teacher
           </Button>
         </div>
 
@@ -169,11 +162,8 @@ export function Sidebar() {
         <div className="mt-auto space-y-3 p-4">
           <div className="space-y-2">
             <div className="flex items-baseline justify-between px-1">
-          <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
-            Preview grade
-          </p>
-              <p className="text-xs font-semibold text-foreground">
-                Grade {grade} · {bandLabelForGrade(grade)}
+              <p className="text-xs font-semibold text-muted-foreground">
+                Grade {grade}
               </p>
             </div>
 
@@ -215,25 +205,6 @@ export function Sidebar() {
                 </div>
               ))}
             </div>
-          </div>
-          <Separator />
-          <div
-            className={cn(
-              "rounded-3xl p-4",
-              learningStage === "high" ? "bg-muted/70" : "bg-safe-soft/80",
-            )}
-          >
-            <div className="flex items-center gap-2">
-              <SafetyBadge level="verified" />
-            </div>
-            <p
-              className={cn(
-                "mt-2 text-sm font-semibold leading-snug",
-                learningStage === "high" ? "text-foreground/80" : "text-safe",
-              )}
-            >
-              {copy.safetyFooter}
-            </p>
           </div>
         </div>
       </aside>

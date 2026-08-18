@@ -76,7 +76,7 @@ export function MessagePreview() {
               </h2>
               {message.folder === "pending" ? (
                 <span className="rounded-full bg-amber-100 px-2.5 py-1 text-xs font-bold text-amber-800">
-                  Waiting for approval
+                    Pending
                 </span>
               ) : (
                 <SafetyBadge level={contact.safety} />
@@ -111,7 +111,7 @@ export function MessagePreview() {
               <Button variant="default" size="sm" asChild>
                 <Link to={`/compose?draft=${linkedDraftId}`}>
                   <PenLine className="size-4" />
-                  Continue editing
+                  Edit
                 </Link>
               </Button>
             ) : (
@@ -142,7 +142,7 @@ export function MessagePreview() {
               onClick={() => void reportUnknownSender(message.id)}
             >
               <Flag className="size-4" />
-              Mark as reported
+              Report
             </Button>
           </div>
         )}
@@ -150,13 +150,13 @@ export function MessagePreview() {
         {showApprovalActions && (
           <div className="mt-4 flex flex-wrap gap-2">
             <Button onClick={() => void approveMessage(message.id)}>
-              Approve & send
+              Approve
             </Button>
             <Button
               variant="outline"
               onClick={() => void rejectMessage(message.id)}
             >
-              Return to drafts
+              Return
             </Button>
           </div>
         )}
@@ -205,10 +205,7 @@ export function MessagePreview() {
 
 function SafeContactsPane() {
   const contacts = useMailStore((s) => s.contacts);
-  const grade = useMailStore((s) => s.grade);
   const learningStage = useMailStore((s) => s.learningStage);
-  const teacherUnlocked = useMailStore((s) => s.teacherUnlocked);
-  const copy = copyForGrade(grade);
   const safe = contacts.filter((c) => c.safety !== "unknown");
 
   return (
@@ -225,14 +222,7 @@ function SafeContactsPane() {
           <h2 className="font-serif text-2xl font-semibold tracking-tight">
             Safe Contacts
           </h2>
-          <SafetyBadge level="verified" />
         </div>
-        <p className="mt-1 text-sm font-medium text-muted-foreground">
-          {copy.safeContactsHint}
-          {teacherUnlocked
-            ? " Teachers can add or update contacts in Teacher controls."
-            : " Ask a teacher to unlock controls if someone should be added."}
-        </p>
       </header>
       <ScrollArea className="flex-1">
         <ul className="grid gap-3 p-6 sm:grid-cols-2">

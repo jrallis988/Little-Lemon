@@ -1,6 +1,7 @@
 import { MessageListItem } from "@/components/mail/MessageListItem";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
+import { FOLDERS } from "@/data/seed";
 import { getContact, useMailStore } from "@/store/mailStore";
 import { Search } from "lucide-react";
 
@@ -34,18 +35,15 @@ export function MessageList() {
       <div className="space-y-3 border-b border-border/70 px-4 py-4">
         <div>
           <h2 className="font-serif text-xl font-semibold tracking-tight text-foreground">
-            Correspondence
+            {FOLDERS.find((f) => f.id === folder)?.label ?? "Inbox"}
           </h2>
-          <p className="text-sm font-medium text-muted-foreground">
-            {filtered.length} {filtered.length === 1 ? "message" : "messages"}
-          </p>
         </div>
         <div className="relative">
           <Search className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search by sender or subject"
+            placeholder="Search"
             className="pl-10"
             aria-label="Search messages"
           />

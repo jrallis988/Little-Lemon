@@ -23,32 +23,32 @@ export function evaluateWriting(input: {
   return [
     {
       id: "recipient",
-      label: "Audience",
-      hint: "Name a specific person or class contact.",
+      label: "To",
+      hint: "",
       done: input.to.trim().length > 2,
     },
     {
       id: "subject",
-      label: "Subject line",
-      hint: "Make the topic clear in a few words.",
+      label: "Subject",
+      hint: "",
       done: subject.length >= 6 && !/^(hi|hello|hey)$/i.test(subject),
     },
     {
       id: "greeting",
       label: "Greeting",
-      hint: "Open with Hi, Hello, or Dear…",
+      hint: "",
       done: GREETING.test(body),
     },
     {
       id: "purpose",
       label: "Purpose",
-      hint: "State what you need or why you are writing.",
+      hint: "",
       done: PURPOSE.test(body) && body.length >= 40,
     },
     {
       id: "closing",
       label: "Closing",
-      hint: "End with thanks or a respectful sign-off.",
+      hint: "",
       done: CLOSING.test(body),
     },
   ];

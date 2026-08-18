@@ -93,7 +93,7 @@ export function ComposeScreen() {
     if (!prompt) return;
     setSubject((current) => current || prompt.subject);
     setBody(prompt.body);
-    setStatus(`Prompt applied: ${prompt.title}`);
+    setStatus(`Using ${prompt.title}`);
   }
 
   function applyFormat(before: string, after: string) {
@@ -135,7 +135,7 @@ export function ComposeScreen() {
       replyToId,
     });
     setDraftId(id);
-    setStatus("Draft saved on this device.");
+    setStatus("Saved.");
   }
 
   async function handleSend(event: FormEvent) {
@@ -157,20 +157,10 @@ export function ComposeScreen() {
 
   return (
     <div className="flex h-full flex-col bg-background">
-      <header className="flex items-center justify-between gap-4 border-b border-border/80 bg-card px-6 py-4">
-        <div>
-          <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-muted-foreground">
-            {copy.course}
-          </p>
-          <h1 className="mt-1 font-serif text-2xl font-semibold text-foreground">
-            {replyToId ? "Reply" : copy.composeTitle}
-          </h1>
-          {copy.composeHint && (
-            <p className="mt-1 text-sm font-medium text-muted-foreground">
-              {copy.composeHint}
-            </p>
-          )}
-        </div>
+      <header className="flex items-center justify-between gap-4 border-b border-border/80 bg-card px-6 py-3">
+        <h1 className="font-serif text-xl font-semibold text-foreground">
+          {replyToId ? "Reply" : copy.composeTitle}
+        </h1>
         <Button variant="ghost" size="icon" asChild aria-label="Close compose">
           <Link to="/">
             <X className="size-5" />
@@ -184,27 +174,17 @@ export function ComposeScreen() {
           className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-4 overflow-y-auto px-6 py-6 animate-fade-up"
         >
           {prompts.length > 0 && (
-            <div className="space-y-2">
-              <p className="text-sm font-semibold text-foreground">
-                {copy.genreLabel}
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {prompts.map((prompt) => (
-                  <button
-                    key={prompt.id}
-                    type="button"
-                    onClick={() => applyPrompt(prompt.id)}
-                    className="rounded-xl border border-border bg-card px-3 py-2 text-left transition hover:border-primary/40"
-                  >
-                    <span className="block text-sm font-semibold">
-                      {prompt.title}
-                    </span>
-                    <span className="block text-xs font-medium text-muted-foreground">
-                      {prompt.description}
-                    </span>
-                  </button>
-                ))}
-              </div>
+            <div className="flex flex-wrap gap-2">
+              {prompts.map((prompt) => (
+                <button
+                  key={prompt.id}
+                  type="button"
+                  onClick={() => applyPrompt(prompt.id)}
+                  className="rounded-lg border border-border bg-card px-3 py-1.5 text-sm font-medium hover:border-primary/40"
+                >
+                  {prompt.title}
+                </button>
+              ))}
             </div>
           )}
 
@@ -288,7 +268,7 @@ export function ComposeScreen() {
               size={learningStage === "elementary" ? "lg" : "default"}
             >
               <Send className="size-5" />
-              {requireApproval ? "Submit for review" : "Send"}
+              {requireApproval ? "Send for review" : "Send"}
             </Button>
             <Button
               type="button"
@@ -347,11 +327,6 @@ export function ComposeScreen() {
             </Button>
           </div>
 
-          {requireApproval && (
-            <p className="text-sm font-medium text-muted-foreground">
-              Messages are reviewed by a teacher before they leave the classroom.
-            </p>
-          )}
           {error && (
             <p className="text-sm font-semibold text-destructive" role="alert">
               {error}

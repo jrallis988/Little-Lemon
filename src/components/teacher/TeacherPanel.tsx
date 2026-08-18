@@ -56,10 +56,7 @@ export function TeacherPanel({ onClose }: { onClose: () => void }) {
         <header className="flex items-center justify-between border-b border-border px-6 py-4">
           <div>
             <p className="font-serif text-xl font-semibold text-foreground">
-              Teacher desk
-            </p>
-            <p className="text-sm font-medium text-muted-foreground">
-              Approval queue, class contacts, and send policy.
+              Teacher
             </p>
           </div>
           <Button variant="ghost" size="icon" onClick={onClose} aria-label="Close">
@@ -72,7 +69,7 @@ export function TeacherPanel({ onClose }: { onClose: () => void }) {
             <form onSubmit={handleUnlock} className="space-y-3">
               <div className="flex items-center gap-2 text-sm font-semibold text-muted-foreground">
                 <Lock className="size-4" />
-                Enter teacher PIN to unlock
+                PIN
               </div>
               <Input
                 type="password"
@@ -92,7 +89,7 @@ export function TeacherPanel({ onClose }: { onClose: () => void }) {
               <div className="flex flex-wrap items-center justify-between gap-3 rounded-3xl bg-safe-soft/70 p-4">
                 <div className="flex items-center gap-2 text-sm font-bold text-safe">
                   <LockOpen className="size-4" />
-                  Teacher mode unlocked
+                  Unlocked
                 </div>
                 <Button type="button" variant="outline" size="sm" onClick={lockTeacher}>
                   Lock
@@ -101,11 +98,11 @@ export function TeacherPanel({ onClose }: { onClose: () => void }) {
 
               <section className="space-y-3">
                 <h2 className="text-sm font-extrabold uppercase tracking-wide text-muted-foreground">
-                  Classroom settings
+                  Settings
                 </h2>
                 <label className="flex items-center justify-between gap-4 rounded-2xl border border-border px-4 py-3">
                   <span className="text-sm font-semibold text-foreground">
-                    Require teacher approval before send
+                    Approve before send
                   </span>
                   <input
                     type="checkbox"
@@ -126,12 +123,12 @@ export function TeacherPanel({ onClose }: { onClose: () => void }) {
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="size-4 text-safe" />
                   <h2 className="text-sm font-extrabold uppercase tracking-wide text-muted-foreground">
-                    Waiting for approval ({pending.length})
+                    Pending ({pending.length})
                   </h2>
                 </div>
                 {pending.length === 0 ? (
                   <p className="text-sm font-medium text-muted-foreground">
-                    No messages waiting.
+                    None
                   </p>
                 ) : (
                   <ul className="space-y-2">
@@ -151,14 +148,14 @@ export function TeacherPanel({ onClose }: { onClose: () => void }) {
                             size="sm"
                             onClick={() => void approveMessage(message.id)}
                           >
-                            Approve & send
+                            Approve
                           </Button>
                           <Button
                             size="sm"
                             variant="outline"
                             onClick={() => void rejectMessage(message.id)}
                           >
-                            Return to drafts
+                            Return
                           </Button>
                         </div>
                       </li>
@@ -197,7 +194,7 @@ export function TeacherPanel({ onClose }: { onClose: () => void }) {
                     className="sm:col-span-2"
                   />
                   <Button type="submit" className="sm:col-span-2">
-                    Add approved contact
+                    Add
                   </Button>
                 </form>
 
