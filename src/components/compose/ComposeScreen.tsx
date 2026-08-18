@@ -1,4 +1,3 @@
-import { WritingCoach } from "@/components/compose/WritingCoach";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -6,7 +5,6 @@ import {
   createAttachmentMeta,
   validateAttachment,
 } from "@/data/seed";
-import { promptsForGrade } from "@/data/prompts";
 import { formatBytes, replySubject, wrapSelection } from "@/lib/compose";
 import { copyForGrade } from "@/lib/stageCopy";
 import { cn } from "@/lib/utils";
@@ -20,13 +18,7 @@ import {
   Underline,
   X,
 } from "lucide-react";
-import {
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  type FormEvent,
-} from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 export function ComposeScreen() {
@@ -41,7 +33,6 @@ export function ComposeScreen() {
   const contacts = useMailStore((s) => s.contacts);
   const requireApproval = useMailStore((s) => s.settings.requireSendApproval);
   const copy = copyForGrade(grade);
-  const prompts = useMemo(() => promptsForGrade(grade), [grade]);
 
   const replyToId = params.get("replyTo") ?? undefined;
   const draftIdParam = params.get("draft") ?? undefined;
@@ -87,14 +78,6 @@ export function ComposeScreen() {
       }
     }
   }, [draftIdParam, replyToId, drafts, messages, contacts]);
-
-  function applyPrompt(promptId: string) {
-    const prompt = prompts.find((p) => p.id === promptId);
-    if (!prompt) return;
-    setSubject((current) => current || prompt.subject);
-    setBody(prompt.body);
-    setStatus(`Using ${prompt.title}`);
-  }
 
   function applyFormat(before: string, after: string) {
     const el = bodyRef.current;
@@ -168,178 +151,159 @@ export function ComposeScreen() {
         </Button>
       </header>
 
-      <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
-        <form
-          onSubmit={handleSend}
-          className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-4 overflow-y-auto px-6 py-6 animate-fade-up"
-        >
-          {prompts.length > 0 && (
-            <div className="flex flex-wrap gap-2">
-              {prompts.map((prompt) => (
+      <form
+        onSubmit={handleSend}
+        className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-4 overflow-y-auto px-6 py-6 animate-fade-up"
+      >
+        <label className="space-y-2">
+          <span className="text-sm font-semibold text-foreground">To</span>
+          <Input
+            value={to}
+            onChange={(e) => setTo(e.target.value)}
+            placeholder={copy.toPlaceholder}
+            list="safe-contact-emails"
+            autoComplete="off"
+          />
+          <datalist id="safe-contact-emails">
+            {contacts
+              .filter((c) => c.safety !== "unknown")
+              .map((c) => (
+                <option key={c.id} value={c.email}>
+                  {c.name}
+                </option>
+              ))}
+          </datalist>
+        </label>
+
+        <label className="space-y-2">
+          <span className="text-sm font-semibold text-foreground">Subject</span>
+          <Input
+            value={subject}
+            onChange={(e) => setSubject(e.target.value)}
+            placeholder={copy.subjectPlaceholder}
+            autoComplete="off"
+          />
+        </label>
+
+        <label className="flex min-h-0 flex-1 flex-col space-y-2">
+          <span className="text-sm font-semibold text-foreground">Body</span>
+          <Textarea
+            ref={bodyRef}
+            value={body}
+            onChange={(e) => setBody(e.target.value)}
+            className={cn(
+              "min-h-[240px] flex-1 resize-none font-serif leading-8",
+              learningStage === "elementary" ? "text-lg" : "text-base",
+            )}
+          />
+        </label>
+
+        {attachments.length > 0 && (
+          <ul className="flex flex-wrap gap-2">
+            {attachments.map((file) => (
+              <li
+                key={file.id}
+                className="inline-flex items-center gap-2 rounded-full bg-muted px-3 py-1.5 text-xs font-semibold"
+              >
+                <Paperclip className="size-3.5" />
+                {file.name}
+                <span className="text-muted-foreground">
+                  {formatBytes(file.size)}
+                </span>
                 <button
-                  key={prompt.id}
                   type="button"
-                  onClick={() => applyPrompt(prompt.id)}
-                  className="rounded-lg border border-border bg-card px-3 py-1.5 text-sm font-medium hover:border-primary/40"
+                  className="text-muted-foreground hover:text-foreground"
+                  onClick={() =>
+                    setAttachments((current) =>
+                      current.filter((item) => item.id !== file.id),
+                    )
+                  }
+                  aria-label={`Remove ${file.name}`}
                 >
-                  {prompt.title}
+                  <X className="size-3.5" />
                 </button>
-              ))}
-            </div>
-          )}
+              </li>
+            ))}
+          </ul>
+        )}
 
-          <label className="space-y-2">
-            <span className="text-sm font-semibold text-foreground">To</span>
-            <Input
-              value={to}
-              onChange={(e) => setTo(e.target.value)}
-              placeholder={copy.toPlaceholder}
-              list="safe-contact-emails"
-              autoComplete="off"
-            />
-            <datalist id="safe-contact-emails">
-              {contacts
-                .filter((c) => c.safety !== "unknown")
-                .map((c) => (
-                  <option key={c.id} value={c.email}>
-                    {c.name}
-                  </option>
-                ))}
-            </datalist>
-          </label>
-
-          <label className="space-y-2">
-            <span className="text-sm font-semibold text-foreground">Subject</span>
-            <Input
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
-              placeholder={copy.subjectPlaceholder}
-              autoComplete="off"
-            />
-          </label>
-
-          <label className="flex min-h-0 flex-1 flex-col space-y-2">
-            <span className="text-sm font-semibold text-foreground">Body</span>
-            <Textarea
-              ref={bodyRef}
-              value={body}
-              onChange={(e) => setBody(e.target.value)}
-              placeholder={copy.bodyPlaceholder}
-              className={cn(
-                "min-h-[240px] flex-1 resize-none font-serif leading-8",
-                learningStage === "elementary" ? "text-lg" : "text-base",
-              )}
-            />
-          </label>
-
-          {attachments.length > 0 && (
-            <ul className="flex flex-wrap gap-2">
-              {attachments.map((file) => (
-                <li
-                  key={file.id}
-                  className="inline-flex items-center gap-2 rounded-full bg-muted px-3 py-1.5 text-xs font-semibold"
-                >
-                  <Paperclip className="size-3.5" />
-                  {file.name}
-                  <span className="text-muted-foreground">
-                    {formatBytes(file.size)}
-                  </span>
-                  <button
-                    type="button"
-                    className="text-muted-foreground hover:text-foreground"
-                    onClick={() =>
-                      setAttachments((current) =>
-                        current.filter((item) => item.id !== file.id),
-                      )
-                    }
-                    aria-label={`Remove ${file.name}`}
-                  >
-                    <X className="size-3.5" />
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-
-          <div className="flex flex-wrap items-center gap-3 rounded-xl border border-border bg-card p-3">
+        <div className="flex flex-wrap items-center gap-3 rounded-xl border border-border bg-card p-3">
+          <Button
+            type="submit"
+            variant="default"
+            size={learningStage === "elementary" ? "lg" : "default"}
+          >
+            <Send className="size-5" />
+            {requireApproval ? "Send for review" : "Send"}
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size={learningStage === "elementary" ? "lg" : "default"}
+            onClick={() => fileRef.current?.click()}
+          >
+            <Paperclip className="size-5" />
+            Attach
+          </Button>
+          <input
+            ref={fileRef}
+            type="file"
+            className="hidden"
+            accept=".pdf,.png,.jpg,.jpeg,.txt,.docx,application/pdf,image/png,image/jpeg,text/plain"
+            multiple
+            onChange={(e) => handleFiles(e.target.files)}
+          />
+          <div className="flex items-center gap-1 rounded-lg bg-muted/80 p-1">
             <Button
-              type="submit"
-              variant="default"
-              size={learningStage === "elementary" ? "lg" : "default"}
+              type="button"
+              variant="ghost"
+              size="icon"
+              aria-label="Bold"
+              onClick={() => applyFormat("**", "**")}
             >
-              <Send className="size-5" />
-              {requireApproval ? "Send for review" : "Send"}
+              <Bold className="size-4" />
             </Button>
             <Button
               type="button"
-              variant="outline"
-              size={learningStage === "elementary" ? "lg" : "default"}
-              onClick={() => fileRef.current?.click()}
+              variant="ghost"
+              size="icon"
+              aria-label="Italic"
+              onClick={() => applyFormat("_", "_")}
             >
-              <Paperclip className="size-5" />
-              Attach
+              <Italic className="size-4" />
             </Button>
-            <input
-              ref={fileRef}
-              type="file"
-              className="hidden"
-              accept=".pdf,.png,.jpg,.jpeg,.txt,.docx,application/pdf,image/png,image/jpeg,text/plain"
-              multiple
-              onChange={(e) => handleFiles(e.target.files)}
-            />
-            <div className="flex items-center gap-1 rounded-lg bg-muted/80 p-1">
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon"
-                aria-label="Bold"
-                onClick={() => applyFormat("**", "**")}
-              >
-                <Bold className="size-4" />
-              </Button>
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon"
-                aria-label="Italic"
-                onClick={() => applyFormat("_", "_")}
-              >
-                <Italic className="size-4" />
-              </Button>
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon"
-                aria-label="Underline"
-                onClick={() => applyFormat("__", "__")}
-              >
-                <Underline className="size-4" />
-              </Button>
-            </div>
             <Button
               type="button"
-              variant="secondary"
-              size={learningStage === "elementary" ? "lg" : "default"}
-              className="ml-auto"
-              onClick={() => void handleSave()}
+              variant="ghost"
+              size="icon"
+              aria-label="Underline"
+              onClick={() => applyFormat("__", "__")}
             >
-              Save draft
+              <Underline className="size-4" />
             </Button>
           </div>
+          <Button
+            type="button"
+            variant="secondary"
+            size={learningStage === "elementary" ? "lg" : "default"}
+            className="ml-auto"
+            onClick={() => void handleSave()}
+          >
+            Save draft
+          </Button>
+        </div>
 
-          {error && (
-            <p className="text-sm font-semibold text-destructive" role="alert">
-              {error}
-            </p>
-          )}
-          {status && (
-            <p className="text-sm font-semibold text-safe" role="status">
-              {status}
-            </p>
-          )}
-        </form>
-        <WritingCoach to={to} subject={subject} body={body} />
-      </div>
+        {error && (
+          <p className="text-sm font-semibold text-destructive" role="alert">
+            {error}
+          </p>
+        )}
+        {status && (
+          <p className="text-sm font-semibold text-safe" role="status">
+            {status}
+          </p>
+        )}
+      </form>
     </div>
   );
 }

@@ -127,20 +127,8 @@ export function Sidebar() {
                 )}
               >
                 <Icon className="size-5 shrink-0" />
-                <span className="min-w-0 flex-1">
-                  <span className="block text-sm font-bold">{item.label}</span>
-                  {copy.showFolderDescriptions && (
-                    <span
-                      className={cn(
-                        "block truncate text-xs font-medium",
-                        active
-                          ? "text-primary-foreground/80"
-                          : "text-muted-foreground",
-                      )}
-                    >
-                      {item.description}
-                    </span>
-                  )}
+                <span className="min-w-0 flex-1 text-sm font-bold">
+                  {item.label}
                 </span>
                 {typeof count === "number" && count > 0 && (
                   <span

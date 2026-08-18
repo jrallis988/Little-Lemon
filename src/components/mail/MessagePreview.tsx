@@ -45,9 +45,6 @@ export function MessagePreview() {
           <p className="font-serif text-2xl font-semibold text-foreground">
             Select a message
           </p>
-          <p className="mt-2 text-sm font-medium text-muted-foreground">
-            Choose a message from the list to read it here.
-          </p>
         </div>
       </section>
     );

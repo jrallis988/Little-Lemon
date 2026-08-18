@@ -12,9 +12,7 @@ export function OnboardingScreen() {
     <div className="flex h-screen items-center justify-center bg-background p-6">
       <div className="w-full max-w-md rounded-2xl border border-border bg-card p-8 shadow-panel">
         <p className="font-serif text-3xl font-semibold text-primary">Mailbox</p>
-        <p className="mt-4 text-base text-muted-foreground">
-          School email. Grade:
-        </p>
+        <p className="mt-4 text-sm font-medium text-muted-foreground">Grade</p>
         <div className="mt-3 grid grid-cols-6 gap-1 rounded-xl bg-muted/80 p-2">
           {ALL_GRADES.map((value) => (
             <button

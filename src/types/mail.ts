@@ -78,7 +78,6 @@ export interface Draft {
 export interface FolderMeta {
   id: FolderId;
   label: string;
-  description: string;
   verified?: boolean;
 }
 
@@ -91,12 +90,3 @@ export interface AppSettings {
   defaultGrade: GradeLevel;
 }
 
-export interface WritingPrompt {
-  id: string;
-  title: string;
-  description: string;
-  subject: string;
-  body: string;
-  minGrade: GradeLevel;
-  maxGrade: GradeLevel;
-}

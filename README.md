@@ -22,7 +22,7 @@ Maturity comes from the interface, not the name. One product; one name; every gr
 | Middle school | **6, 7, 8** | Cleaner chrome, growing independence (grade-specific guidance) |
 | High school | 9, 10, 11, 12 | Professional density, productivity-forward layout |
 
-The interface is framed as **classroom correspondence**, not a consumer inbox: course/class chrome, learning targets, and a writing-structure checklist (audience, subject, greeting, purpose, closing).
+The interface is framed as **classroom correspondence**, not a consumer inbox: course/class chrome over a quiet split-pane mailbox.
 
 ## Stack
 
@@ -42,7 +42,7 @@ npm run tauri:dev    # desktop shell
 ## Core views
 
 1. **Split-pane inbox** — folders, message list, reading pane
-2. **Compose** — message genres, writing checklist, Reply, drafts, attachments
+2. **Compose** — To, Subject, Body, Reply, drafts, attachments
 3. **Safety indicators** — verified folders and Safe Contacts woven into the UI
 4. **Grade selector (1–12)** — including middle school grades 6, 7, and 8
 5. **Teacher controls** — PIN unlock (`1234`), send approval queue, Safe Contacts management
