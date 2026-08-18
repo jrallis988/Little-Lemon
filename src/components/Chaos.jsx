@@ -60,7 +60,7 @@ export function BoredomBuster() {
   const loud = smashed >= 3
 
   return (
-    <section className={`boredom${loud ? ' is-loud' : ''}`}>
+    <section className={`boredom bleed${loud ? ' is-loud' : ''}`}>
       <div className="boredom__copy">
         <p className="boredom__eyebrow">Design note from the slime pit</p>
         <h2>

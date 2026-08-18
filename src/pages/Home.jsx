@@ -11,24 +11,26 @@ export function Home() {
     <div className="portal">
       <BoredomBuster />
 
-      <section className="hero-feature">
-        <div className="hero-feature__badge">Featured Fun House</div>
-        <h1 className="hero-feature__title">Jimmy Neutron&apos;s Fun House</h1>
-        <p className="hero-feature__copy">
-          Gadgets, goo, and giant bugs — click around, play now, and unlock
-          secret rooms like it&apos;s 2004 again. Nick is for kids: loud on TV,
-          loud on the web.
-        </p>
-        <div className="hero-feature__actions">
-          <Link className="btn-nick btn-nick--big" to="/games">
-            Play Now
-          </Link>
-          <Link className="btn-nick btn-nick--ghost" to="/shows">
-            Meet Jimmy
-          </Link>
-          <Link className="btn-nick btn-nick--ghost" to="/fan">
-            Make a mess
-          </Link>
+      <section className="hero-feature bleed">
+        <div className="hero-feature__body">
+          <div className="hero-feature__badge">Featured Fun House</div>
+          <h1 className="hero-feature__title">Jimmy Neutron&apos;s Fun House</h1>
+          <p className="hero-feature__copy">
+            Gadgets, goo, and giant bugs — click around, play now, and unlock
+            secret rooms like it&apos;s 2004 again. Nick is for kids: loud on TV,
+            loud on the web.
+          </p>
+          <div className="hero-feature__actions">
+            <Link className="btn-nick btn-nick--big" to="/games">
+              Play Now
+            </Link>
+            <Link className="btn-nick btn-nick--ghost" to="/shows">
+              Meet Jimmy
+            </Link>
+            <Link className="btn-nick btn-nick--ghost" to="/fan">
+              Make a mess
+            </Link>
+          </div>
         </div>
         <div className="hero-feature__art" aria-hidden="true">
           <span className="blob blob--brain">🧠</span>
@@ -36,14 +38,16 @@ export function Home() {
         </div>
       </section>
 
-      <section className="jr-spotlight">
-        <p className="jr-spotlight__eyebrow">Nick Jr. spotlight</p>
-        <h2>Preschool hour, still loud — just softer.</h2>
-        <p>
-          Stories, songs, and playtime blocks with equal energy for every little
-          viewer. PAW Patrol, Dora, Bubble Guppies, and more live on their own
-          destination.
-        </p>
+      <section className="jr-spotlight bleed">
+        <div>
+          <p className="jr-spotlight__eyebrow">Nick Jr. spotlight</p>
+          <h2>Preschool hour, still loud — just softer.</h2>
+          <p>
+            Stories, songs, and playtime blocks with equal energy for every little
+            viewer. PAW Patrol, Dora, Bubble Guppies, and more live on their own
+            destination.
+          </p>
+        </div>
         <div className="jr-spotlight__actions">
           <Link className="btn-nick btn-nick--big" to="/nick-jr">
             Enter Nick Jr.
@@ -221,7 +225,7 @@ export function Home() {
         </aside>
       </div>
 
-      <section className="show-marquee" aria-label="Popular shows">
+      <section className="show-marquee bleed" aria-label="Popular shows">
         {shows.slice(0, 6).map((show) => (
           <Link
             key={show.id}
