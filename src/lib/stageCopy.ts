@@ -13,84 +13,104 @@ export interface StageCopy {
   safeContactsHint: string;
   unknownSenderHint: string;
   showFolderDescriptions: boolean;
+  classLabel: string;
+  course: string;
+  learningTarget: string;
+  genreLabel: string;
 }
 
 export const STAGE_COPY: Record<LearningStage, StageCopy> = {
   elementary: {
-    tagline: "Email for school",
-    composeTitle: "New message",
-    composeHint: "Say who it is for, what it is about, then write clearly.",
-    composeCta: "Write a message",
-    toPlaceholder: "Who are you writing to?",
-    subjectPlaceholder: "What is this about?",
+    tagline: "School communication",
+    composeTitle: "Write a school message",
+    composeHint: "Name your reader, state the topic, then write in complete sentences.",
+    composeCta: "New message",
+    toPlaceholder: "Teacher or approved contact",
+    subjectPlaceholder: "Topic in a few words",
     bodyPlaceholder:
-      "Start with a greeting. Then share your update, question, or thank-you.",
+      "Greeting,\n\nWhat do you need to say?\n\nThank you,\nYour name",
     safetyFooter:
-      "Verified folders and Safe Contacts help you recognize trustworthy mail.",
+      "Use Safe Contacts. If a sender is unknown, ask a teacher before you reply.",
     safeContactsHint:
-      "These are people and places approved for school communication.",
+      "These are approved school and family contacts for class messages.",
     unknownSenderHint:
-      "This sender is not on your Safe Contacts list. Ask a teacher or parent before opening links or sharing personal information.",
+      "This sender is not on the class contact list. Ask a teacher before opening links or sharing personal information.",
     showFolderDescriptions: true,
+    classLabel: "Homeroom · Ms. Alvarez",
+    course: "English Language Arts",
+    learningTarget:
+      "Write a greeting, one clear request, and a polite closing.",
+    genreLabel: "Message type",
   },
   middle: {
-    tagline: "Clear communication",
+    tagline: "Academic communication",
     composeTitle: "Compose",
-    composeHint: "Use a clear subject and get to your point.",
+    composeHint: "Lead with purpose. Keep the request specific and respectful.",
     composeCta: "Compose",
     toPlaceholder: "Recipient",
-    subjectPlaceholder: "Subject",
-    bodyPlaceholder: "Write your message…",
+    subjectPlaceholder: "Precise subject",
+    bodyPlaceholder:
+      "Greeting,\n\nI am writing because…\n\nThank you,\n",
     safetyFooter:
-      "Stay alert with unknown senders. Prefer contacts approved for school.",
+      "Prefer class-approved contacts. Verify unknown senders before you interact.",
     safeContactsHint: "Approved contacts for school-related messages.",
     unknownSenderHint:
-      "Unknown sender. Do not click links or share personal details without checking with an adult.",
+      "Unknown sender. Do not click links or share personal details without checking with a teacher.",
     showFolderDescriptions: true,
+    classLabel: "Period 2 · Ms. Alvarez",
+    course: "English Language Arts",
+    learningTarget:
+      "State your purpose in the opening and support it with necessary detail.",
+    genreLabel: "Writing genre",
   },
   high: {
-    tagline: "Your email",
+    tagline: "Professional correspondence",
     composeTitle: "Compose",
-    composeHint: "Keep it concise, specific, and professional.",
+    composeHint: "Be concise, specific, and professional.",
     composeCta: "Compose",
     toPlaceholder: "To",
     subjectPlaceholder: "Subject",
     bodyPlaceholder: "",
     safetyFooter: "Review unknown senders before interacting with links.",
-    safeContactsHint: "Trusted contacts managed for your account.",
+    safeContactsHint: "Trusted contacts for this school account.",
     unknownSenderHint:
       "This sender is not trusted. Verify before clicking links or sharing information.",
     showFolderDescriptions: false,
+    classLabel: "English 10 · Alvarez",
+    course: "English",
+    learningTarget:
+      "Write a concise professional request with a clear subject and next step.",
+    genreLabel: "Genre",
   },
 };
 
-/** Middle school grades refine guidance while sharing the same experience band. */
 const MIDDLE_GRADE_COPY: Record<6 | 7 | 8, Partial<StageCopy>> = {
   6: {
-    tagline: "Email for middle school",
+    tagline: "School correspondence",
     composeHint: "Include a greeting, a clear subject, and what you need.",
-    bodyPlaceholder:
-      "Start with a greeting, then share your update or question.",
+    learningTarget:
+      "Organize a message with greeting, purpose, and closing.",
     safetyFooter:
-      "Grade 6 tip: pause on unknown senders and ask a teacher if something feels off.",
+      "Pause on unknown senders and ask a teacher if something feels off.",
   },
   7: {
-    tagline: "Clear school communication",
+    tagline: "Academic correspondence",
     composeHint: "Lead with your purpose, then add only the details that matter.",
-    bodyPlaceholder: "Write a clear message with a purpose in the first lines…",
+    learningTarget:
+      "Open with purpose and keep supporting detail relevant.",
     safetyFooter:
-      "Grade 7 tip: verify senders before clicking links or sharing personal info.",
+      "Verify senders before clicking links or sharing personal information.",
   },
   8: {
-    tagline: "Independent communication",
+    tagline: "Independent correspondence",
     composeHint: "Be specific, polite, and ready to follow up if needed.",
-    composeCta: "Compose",
     showFolderDescriptions: false,
-    bodyPlaceholder: "Write your message…",
+    learningTarget:
+      "Write a self-directed request that a teacher could act on immediately.",
     safetyFooter:
-      "Grade 8 tip: treat unknown mail carefully — confirm before you respond.",
+      "Treat unknown mail carefully — confirm before you respond.",
     unknownSenderHint:
-      "Unknown sender. Confirm with a teacher or parent before interacting.",
+      "Unknown sender. Confirm with a teacher before interacting.",
   },
 };
 

@@ -64,12 +64,7 @@ export function Sidebar() {
 
   return (
     <>
-      <aside
-        className={cn(
-          "flex h-full w-[280px] shrink-0 flex-col border-r border-border/70 bg-white/70 backdrop-blur-sm",
-          learningStage === "high" && "w-[252px]",
-        )}
-      >
+      <aside className="flex h-full w-[280px] shrink-0 flex-col border-r border-border/80 bg-card">
         <div className="px-5 pb-2 pt-6">
           <Link
             to="/"
@@ -78,8 +73,8 @@ export function Sidebar() {
           >
             <p
               className={cn(
-                "font-display font-extrabold tracking-tight text-primary transition-transform group-hover:translate-x-0.5",
-                learningStage === "high" ? "text-2xl" : "text-3xl",
+                "font-serif font-semibold tracking-tight text-primary",
+                learningStage === "high" ? "text-2xl" : "text-[1.65rem]",
               )}
             >
               Mailbox
@@ -93,7 +88,7 @@ export function Sidebar() {
         <div className="space-y-2 px-4 py-4">
           <Button
             asChild
-            variant={learningStage === "high" ? "default" : "coral"}
+            variant="default"
             size={learningStage === "elementary" ? "lg" : "default"}
             className="w-full justify-start gap-3"
           >
@@ -109,7 +104,7 @@ export function Sidebar() {
             onClick={() => setTeacherOpen(true)}
           >
             <GraduationCap className="size-5" />
-            {teacherUnlocked ? "Teacher controls" : "Teacher unlock"}
+            {teacherUnlocked ? "Teacher desk" : "Teacher desk"}
           </Button>
         </div>
 
@@ -131,7 +126,7 @@ export function Sidebar() {
                   if (location.pathname !== "/") navigate("/");
                 }}
                 className={cn(
-                  "flex w-full items-center gap-3 rounded-2xl px-3 text-left transition-all",
+                  "flex w-full items-center gap-3 rounded-xl px-3 text-left transition-all",
                   learningStage === "elementary" ? "py-3" : "py-2.5",
                   active
                     ? "bg-primary text-primary-foreground shadow-soft"
@@ -174,9 +169,9 @@ export function Sidebar() {
         <div className="mt-auto space-y-3 p-4">
           <div className="space-y-2">
             <div className="flex items-baseline justify-between px-1">
-              <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
-                Grade
-              </p>
+          <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
+            Preview grade
+          </p>
               <p className="text-xs font-semibold text-foreground">
                 Grade {grade} · {bandLabelForGrade(grade)}
               </p>

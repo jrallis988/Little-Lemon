@@ -4,45 +4,45 @@
 
 @layer base {
   :root {
-    /* Soft sky workspace — teal primary, coral action, mint safety */
-    --background: 198 45% 96%;
-    --foreground: 204 35% 18%;
+    /* Academic paper + ink: navy primary, warm paper ground, forest for verified */
+    --background: 40 33% 96%;
+    --foreground: 215 32% 16%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 204 35% 18%;
+    --card: 40 43% 99%;
+    --card-foreground: 215 32% 16%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 204 35% 18%;
+    --popover: 40 43% 99%;
+    --popover-foreground: 215 32% 16%;
 
-    --primary: 188 49% 36%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 215 38% 24%;
+    --primary-foreground: 40 40% 98%;
 
-    --secondary: 196 36% 90%;
-    --secondary-foreground: 204 35% 22%;
+    --secondary: 40 22% 91%;
+    --secondary-foreground: 215 28% 22%;
 
-    --muted: 196 30% 92%;
-    --muted-foreground: 204 16% 42%;
+    --muted: 40 18% 92%;
+    --muted-foreground: 215 12% 40%;
 
-    --accent: 168 42% 90%;
-    --accent-foreground: 168 45% 24%;
+    --accent: 152 22% 90%;
+    --accent-foreground: 152 35% 22%;
 
-    --destructive: 8 70% 52%;
+    --destructive: 8 70% 42%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 198 24% 84%;
-    --input: 198 24% 84%;
-    --ring: 188 49% 36%;
+    --border: 35 16% 82%;
+    --input: 35 16% 82%;
+    --ring: 215 38% 24%;
 
-    --radius: 1.1rem;
+    --radius: 0.7rem;
 
-    --safe: 152 47% 36%;
+    --safe: 152 38% 28%;
     --safe-foreground: 0 0% 100%;
-    --safe-soft: 152 45% 92%;
+    --safe-soft: 152 28% 93%;
 
-    --nest-sky: 198 55% 94%;
-    --nest-mist: 186 40% 90%;
-    --nest-leaf: 152 47% 42%;
-    --nest-coral: 16 78% 62%;
+    --nest-sky: 40 30% 95%;
+    --nest-mist: 40 22% 92%;
+    --nest-leaf: 152 38% 28%;
+    --nest-coral: 18 55% 42%;
   }
 
   * {

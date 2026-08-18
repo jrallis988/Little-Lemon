@@ -52,14 +52,14 @@ export function TeacherPanel({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/30 p-4 backdrop-blur-sm">
-      <div className="flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-[1.75rem] bg-card shadow-panel animate-fade-up">
+      <div className="flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-panel animate-fade-up">
         <header className="flex items-center justify-between border-b border-border px-6 py-4">
           <div>
-            <p className="font-display text-xl font-extrabold text-foreground">
-              Teacher controls
+            <p className="font-serif text-xl font-semibold text-foreground">
+              Teacher desk
             </p>
             <p className="text-sm font-medium text-muted-foreground">
-              Manage approval, contacts, and classroom defaults.
+              Approval queue, class contacts, and send policy.
             </p>
           </div>
           <Button variant="ghost" size="icon" onClick={onClose} aria-label="Close">

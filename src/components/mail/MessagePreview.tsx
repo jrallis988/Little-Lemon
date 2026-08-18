@@ -42,7 +42,7 @@ export function MessagePreview() {
     return (
       <section className="flex h-full items-center justify-center bg-gradient-to-br from-white/30 to-nest-mist/40 p-8">
         <div className="max-w-sm rounded-3xl bg-card/90 px-6 py-10 text-center shadow-panel animate-fade-up">
-          <p className="font-display text-2xl font-extrabold text-foreground">
+          <p className="font-serif text-2xl font-semibold text-foreground">
             Select a message
           </p>
           <p className="mt-2 text-sm font-medium text-muted-foreground">
@@ -71,7 +71,7 @@ export function MessagePreview() {
           <ContactAvatar contact={contact} size="lg" />
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
-              <h2 className="font-display text-2xl font-extrabold tracking-tight text-foreground">
+              <h2 className="font-serif text-2xl font-semibold tracking-tight text-foreground">
                 {message.subject}
               </h2>
               {message.folder === "pending" ? (
@@ -108,7 +108,7 @@ export function MessagePreview() {
           </div>
           <div className="flex flex-wrap gap-2">
             {linkedDraftId ? (
-              <Button variant="coral" size="sm" asChild>
+              <Button variant="default" size="sm" asChild>
                 <Link to={`/compose?draft=${linkedDraftId}`}>
                   <PenLine className="size-4" />
                   Continue editing
@@ -222,7 +222,7 @@ function SafeContactsPane() {
     >
       <header className="border-b border-border/70 px-6 py-5">
         <div className="flex flex-wrap items-center gap-2">
-          <h2 className="font-display text-2xl font-extrabold tracking-tight">
+          <h2 className="font-serif text-2xl font-semibold tracking-tight">
             Safe Contacts
           </h2>
           <SafetyBadge level="verified" />

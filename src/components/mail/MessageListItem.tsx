@@ -32,7 +32,7 @@ export function MessageListItem({
       type="button"
       onClick={onSelect}
       className={cn(
-        "group flex w-full items-start gap-3 rounded-3xl px-3 py-3 text-left transition-all animate-fade-up",
+        "group flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition-all animate-fade-up",
         selected
           ? "bg-primary/10 shadow-panel ring-2 ring-primary/20"
           : "hover:bg-white/70",

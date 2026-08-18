@@ -65,8 +65,9 @@ export default {
         "3xl": "1.75rem",
       },
       fontFamily: {
-        display: ["Nunito", "ui-rounded", "system-ui", "sans-serif"],
-        sans: ["Nunito", "ui-rounded", "system-ui", "sans-serif"],
+        display: ['"Source Serif 4"', "Georgia", "serif"],
+        serif: ['"Source Serif 4"', "Georgia", "serif"],
+        sans: ['"Source Sans 3"', "ui-sans-serif", "system-ui", "sans-serif"],
       },
       boxShadow: {
         soft: "0 10px 30px -18px rgba(36, 72, 96, 0.35)",

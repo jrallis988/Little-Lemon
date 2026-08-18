@@ -30,14 +30,14 @@ export function MessageList() {
   });
 
   return (
-    <section className="flex h-full min-w-0 flex-col border-r border-border/70 bg-white/40">
+    <section className="flex h-full min-w-0 flex-col border-r border-border/80 bg-muted/30">
       <div className="space-y-3 border-b border-border/70 px-4 py-4">
         <div>
-          <h2 className="font-display text-xl font-extrabold tracking-tight text-foreground">
-            Messages
+          <h2 className="font-serif text-xl font-semibold tracking-tight text-foreground">
+            Correspondence
           </h2>
-          <p className="text-sm font-semibold text-muted-foreground">
-            {filtered.length} in this folder
+          <p className="text-sm font-medium text-muted-foreground">
+            {filtered.length} {filtered.length === 1 ? "message" : "messages"}
           </p>
         </div>
         <div className="relative">
@@ -45,7 +45,7 @@ export function MessageList() {
           <Input
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Find a message…"
+            placeholder="Search by sender or subject"
             className="pl-10"
             aria-label="Search messages"
           />
