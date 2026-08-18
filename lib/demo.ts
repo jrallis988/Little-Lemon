@@ -1,24 +1,19 @@
 /**
- * Demo / placeholder site flags.
+ * Remaining demo / placeholder flags.
  *
- * This campaign site currently ships as a front-end demonstration:
- * - Forms show success UI only (no email, CRM, or API persistence)
- * - Checkout does not process payments or save orders
- * - Social links and some contact fields are placeholders
- * - No live analytics, pixels, or tracking SDKs are loaded
+ * Live forms (Join, Contact, Volunteer, Come to My Town) persist to
+ * data/form-submissions.jsonl and notify via FORM_WEBHOOK_URL / Resend
+ * when those env vars are set.
+ *
+ * Still demo-only:
+ * - Store checkout does not process payments
+ * - Chat “live support” is not connected to staff
+ * - No live analytics pixels
  */
-
 export const DEMO_MODE = true as const;
 
-/** Shared success copy for mock form submissions */
+/** Shared success copy for remaining mock surfaces */
 export const demoFormSuccess = {
-  contact:
-    "Demo submission received — thanks. In this preview, messages are not emailed or stored.",
-  volunteer:
-    "Demo volunteer sign-up received — thank you. In this preview, sign-ups are not saved to a CRM.",
-    join: "You're on the list. Welcome to Team Varga.",
-  townRequest:
-    "Demo visit request received. In this preview, town requests are not routed to campaign staff.",
   checkout:
     "Demo order request received. No payment was processed and no order was saved. In production, the campaign would confirm payment and shipping next.",
   chatLive:

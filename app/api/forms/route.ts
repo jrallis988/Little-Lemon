@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
-import { acceptSubmission, isHoneypotTripped, validateSubmission } from "@/lib/submissions";
+import {
+  acceptSubmission,
+  isHoneypotTripped,
+  validateSubmission,
+} from "@/lib/submissions";
 
 export const runtime = "nodejs";
 
@@ -18,14 +22,14 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true });
   }
 
-  const { data, fieldErrors } = validateSubmission({
-    ...(json && typeof json === "object" ? json : {}),
-    form: "join",
-  });
-
+  const { data, fieldErrors } = validateSubmission(json);
   if (fieldErrors || !data) {
     return NextResponse.json(
-      { ok: false, fieldErrors: fieldErrors ?? {}, error: "Please fix the highlighted fields." },
+      {
+        ok: false,
+        fieldErrors: fieldErrors ?? {},
+        error: "Please fix the highlighted fields.",
+      },
       { status: 400 },
     );
   }
@@ -33,9 +37,9 @@ export async function POST(request: Request) {
   try {
     await acceptSubmission(data);
   } catch (err) {
-    console.error("[api/join] accept failed", err);
+    console.error("[api/forms] accept failed", err);
     return NextResponse.json(
-      { ok: false, error: "Could not save your registration. Please try again." },
+      { ok: false, error: "Could not send your submission. Please try again or email the campaign." },
       { status: 500 },
     );
   }

@@ -1,3 +1,5 @@
+import { candidate } from "@/lib/candidate";
+
 export function LegalReviewBanner() {
   return (
     <div
@@ -13,8 +15,9 @@ export function LegalReviewBanner() {
       <p className="mt-2 text-slate-text">
         This page contains draft language for layout and development only. It is
         not final legal advice and must be reviewed by qualified counsel before
-        public launch. Do not remove this flag until approved legal copy has been
-        supplied.
+        public launch — including the “Paid for by {candidate.committee}”
+        disclaimer and any FEC committee details. Do not remove this flag until
+        approved legal copy has been supplied.
       </p>
     </div>
   );

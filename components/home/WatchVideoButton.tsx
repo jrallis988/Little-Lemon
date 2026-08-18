@@ -9,7 +9,9 @@ export function WatchVideoButton() {
   const closeRef = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
   const video = candidate.introVideo;
-  const embedSrc = `https://www.youtube-nocookie.com/embed/${video.youtubeId}?autoplay=1&rel=0`;
+  const embedSrc = video.youtubeId
+    ? `https://www.youtube-nocookie.com/embed/${video.youtubeId}?autoplay=1&rel=0`
+    : "";
 
   useEffect(() => {
     if (!open) return;
@@ -33,6 +35,8 @@ export function WatchVideoButton() {
       previouslyFocused?.focus?.();
     };
   }, [open]);
+
+  if (!video.youtubeId) return null;
 
   return (
     <>

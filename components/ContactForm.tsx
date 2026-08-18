@@ -1,19 +1,26 @@
 "use client";
 
+import { useState } from "react";
 import { RequiredLegend, RequiredMark, useAccessibleForm } from "@/components/a11y/FormFeedback";
-import { DemoFormNote } from "@/components/DemoFormNote";
-import { demoFormSuccess } from "@/lib/demo";
+import { postCampaignForm } from "@/lib/form-client";
+
+const SUCCESS_MESSAGE = "Thanks — your message was sent to the campaign. We’ll follow up by email.";
 
 export function ContactForm() {
   const { statusId, status, fieldProps, FieldError, StatusRegion, reportErrors, reportSuccess } =
     useAccessibleForm();
+  const [submitting, setSubmitting] = useState(false);
 
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const data = new FormData(e.currentTarget);
+    if (submitting) return;
+
+    const form = e.currentTarget;
+    const data = new FormData(form);
     const name = String(data.get("name") || "").trim();
     const email = String(data.get("email") || "").trim();
     const message = String(data.get("message") || "").trim();
+    const company = String(data.get("company") || "").trim();
     const errors: Record<string, string> = {};
 
     if (!name) errors.name = "Enter your name.";
@@ -27,9 +34,26 @@ export function ContactForm() {
       return;
     }
 
-    // Demo mode: front-end success only — no email/CRM/API
-    reportSuccess(demoFormSuccess.contact);
-    e.currentTarget.reset();
+    setSubmitting(true);
+    try {
+      const result = await postCampaignForm({
+        form: "contact",
+        name,
+        email,
+        message,
+        company,
+      });
+      if (!result.ok) {
+        reportErrors(result.fieldErrors ?? {}, result.error);
+        return;
+      }
+      form.reset();
+      reportSuccess(SUCCESS_MESSAGE);
+    } catch {
+      reportErrors({}, "Network error. Check your connection and try again.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -39,7 +63,6 @@ export function ContactForm() {
       className="space-y-4 border border-slate-line bg-white p-6"
       aria-describedby={status !== "idle" ? statusId : undefined}
     >
-      <DemoFormNote />
       <RequiredLegend />
       <div>
         <label htmlFor="contact-name" className="label-field">
@@ -53,6 +76,7 @@ export function ContactForm() {
           className="input-field"
           autoComplete="name"
           required
+          disabled={submitting}
           {...fieldProps("name")}
         />
         <FieldError name="name" />
@@ -69,6 +93,7 @@ export function ContactForm() {
           className="input-field"
           autoComplete="email"
           required
+          disabled={submitting}
           {...fieldProps("email")}
         />
         <FieldError name="email" />
@@ -84,14 +109,25 @@ export function ContactForm() {
           rows={5}
           className="input-field"
           required
+          disabled={submitting}
           {...fieldProps("message")}
         />
         <FieldError name="message" />
       </div>
-      <button type="submit" className="btn-primary">
-        Send message
+      <div className="join-hp" aria-hidden="true">
+        <label htmlFor="contact-company">Company</label>
+        <input
+          id="contact-company"
+          type="text"
+          name="company"
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
+      <button type="submit" className="btn-primary" disabled={submitting}>
+        {submitting ? "Sending…" : "Send message"}
       </button>
-      <StatusRegion successMessage={demoFormSuccess.contact} />
+      <StatusRegion successMessage={SUCCESS_MESSAGE} />
     </form>
   );
 }

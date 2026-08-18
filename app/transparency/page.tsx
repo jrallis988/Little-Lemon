@@ -76,8 +76,11 @@ export default function TransparencyPage() {
           </h2>
           <Prose>
             <p>
-              Public filings for {candidate.committee} will be linked here as they
-              are submitted. Until then, search committee filings at{" "}
+              Public filings for {candidate.committee}
+              {candidate.fecCommitteeId ? ` (${candidate.fecCommitteeId})` : ""} will
+              be linked here as they are submitted. A Federal Election Commission
+              committee ID has not been posted yet. Until then, search committee
+              filings at{" "}
               <a
                 href="https://www.fec.gov"
                 target="_blank"

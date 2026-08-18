@@ -93,8 +93,8 @@ export default function AccessibilityPage() {
           >
             {candidate.email}
           </a>{" "}
-          or call {candidate.phone}. We will work to provide the information in an
-          accessible format.
+          {candidate.phone ? ` or call ${candidate.phone}` : ""}. We will work to
+          provide the information in an accessible format.
         </p>
       </div>
 

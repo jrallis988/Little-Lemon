@@ -21,21 +21,19 @@ Legacy static preview at `/neta/` still exists; the App Router site at `/` is th
 
 ## Demo / placeholder status
 
-This repository currently ships as a **front-end demonstration**. The following are intentional:
-
 | Area | Current behavior |
 |------|------------------|
-| Contact phone | `(603) 555-0142` (placeholder) |
-| Social links | Facebook live; other networks still placeholders |
-| Join Team Varga form | Live `POST /api/join` — persists signups to `data/join-signups.jsonl`; optional webhook/Resend notify via env |
-| Contact / Volunteer / Town Request forms | Front-end mock: validation + success message only |
+| Contact phone / PO Box | Hidden until the campaign supplies verified values in `lib/candidate.ts` |
+| Social links | Facebook only; Instagram / X / YouTube stay hidden until URLs are supplied |
+| Intro video | Hero “Watch Video” hidden until `candidate.introVideo.youtubeId` is set |
+| Join / Contact / Volunteer / Town forms | Live `POST /api/forms` (Join also at `/api/join`) — persist to `data/form-submissions.jsonl` and notify via `FORM_WEBHOOK_URL` or Resend when env is set |
 | Store cart | Fully interactive (add / update / remove) |
 | Store checkout | Non-functional demo — no payment gateway |
-| Privacy & Terms | Show **LEGAL REVIEW REQUIRED** banner |
+| Privacy & Terms | Show **LEGAL REVIEW REQUIRED** banner until counsel approves copy |
 | Cookie banner | Mentions analytics for draft policy; **no live tracking scripts** |
-| Photos / testimonials / events | Placeholder content flagged for campaign replacement |
+| Photos / testimonials / events | Some generated stand-ins; upload original files to replace them |
 
-Central flags and copy live in `lib/demo.ts`.
+Central flags and copy live in `lib/demo.ts` and `lib/candidate.ts`.
 
 ## Primary pages
 
@@ -56,5 +54,6 @@ npm run dev
 
 - General Election: **November 3, 2026** (write in “Nick Varga”)
 - No live donation flows on this site
-- See `lib/candidate.ts` for contact/social placeholders
+- See `lib/candidate.ts` for contact/social fields still awaiting campaign values
+- See `.env.example` to turn on webhook / Resend staff notifications
 - Template attribution: Neta by Labartisan (footer)

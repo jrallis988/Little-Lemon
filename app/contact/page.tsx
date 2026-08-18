@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/PageChrome";
 import { ContactForm } from "@/components/ContactForm";
-import { candidate } from "@/lib/candidate";
+import { candidate, hasMailAddress, hasPublicPhone, phoneTelHref } from "@/lib/candidate";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -9,6 +9,8 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
+  const tel = phoneTelHref();
+
   return (
     <>
       <PageHero
@@ -34,13 +36,19 @@ export default function ContactPage() {
                 {candidate.email}
               </a>
             </li>
-            <li>
-              <a href="tel:+16035550142" className="underline-offset-2 hover:underline">
-                {candidate.phone}
-              </a>
-            </li>
-            <li>{candidate.mailAddress}</li>
+            {hasPublicPhone() && tel ? (
+              <li>
+                <a href={tel} className="underline-offset-2 hover:underline">
+                  {candidate.phone}
+                </a>
+              </li>
+            ) : null}
+            {hasMailAddress() ? <li>{candidate.mailAddress}</li> : null}
           </ul>
+          <p className="mt-4 text-sm text-slate-muted">
+            Use the form to reach campaign staff. Messages are saved and emailed
+            when campaign notify settings are configured.
+          </p>
         </div>
         <ContactForm />
       </div>

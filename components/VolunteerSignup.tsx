@@ -1,20 +1,30 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { volunteerRoles } from "@/lib/volunteers";
 import { RequiredLegend, RequiredMark, useAccessibleForm } from "@/components/a11y/FormFeedback";
-import { DemoFormNote } from "@/components/DemoFormNote";
-import { demoFormSuccess } from "@/lib/demo";
+import { postCampaignForm } from "@/lib/form-client";
+
+const SUCCESS_MESSAGE =
+  "Thanks — we received your volunteer sign-up. Campaign staff will follow up by email.";
 
 export function VolunteerSignup() {
   const { statusId, status, fieldProps, FieldError, StatusRegion, reportErrors, reportSuccess } =
     useAccessibleForm();
+  const [submitting, setSubmitting] = useState(false);
 
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const data = new FormData(e.currentTarget);
+    if (submitting) return;
+
+    const form = e.currentTarget;
+    const data = new FormData(form);
     const name = String(data.get("name") || "").trim();
     const email = String(data.get("email") || "").trim();
+    const role = String(data.get("role") || "").trim();
+    const phone = String(data.get("phone") || "").trim();
+    const company = String(data.get("company") || "").trim();
     const errors: Record<string, string> = {};
 
     if (!name) errors.name = "Enter your name.";
@@ -27,9 +37,27 @@ export function VolunteerSignup() {
       return;
     }
 
-    // Demo mode: front-end success only — no email/CRM/API
-    reportSuccess(demoFormSuccess.volunteer);
-    e.currentTarget.reset();
+    setSubmitting(true);
+    try {
+      const result = await postCampaignForm({
+        form: "volunteer",
+        name,
+        email,
+        role,
+        phone,
+        company,
+      });
+      if (!result.ok) {
+        reportErrors(result.fieldErrors ?? {}, result.error);
+        return;
+      }
+      form.reset();
+      reportSuccess(SUCCESS_MESSAGE);
+    } catch {
+      reportErrors({}, "Network error. Check your connection and try again.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -41,7 +69,6 @@ export function VolunteerSignup() {
       aria-describedby={status !== "idle" ? statusId : undefined}
     >
       <h2 className="font-display text-2xl font-bold text-ink">Sign up to volunteer</h2>
-      <DemoFormNote />
       <RequiredLegend />
       <div>
         <label htmlFor="vol-role" className="label-field">
@@ -52,6 +79,7 @@ export function VolunteerSignup() {
           name="role"
           className="input-field"
           defaultValue={volunteerRoles[0]?.id}
+          disabled={submitting}
         >
           {volunteerRoles.map((item) => (
             <option key={item.id} value={item.id}>
@@ -73,6 +101,7 @@ export function VolunteerSignup() {
             className="input-field"
             autoComplete="name"
             required
+            disabled={submitting}
             {...fieldProps("name")}
           />
           <FieldError name="name" />
@@ -89,6 +118,7 @@ export function VolunteerSignup() {
             className="input-field"
             autoComplete="email"
             required
+            disabled={submitting}
             {...fieldProps("email")}
           />
           <FieldError name="email" />
@@ -98,10 +128,27 @@ export function VolunteerSignup() {
         <label htmlFor="vol-phone" className="label-field">
           Phone
         </label>
-        <input id="vol-phone" name="phone" type="tel" className="input-field" autoComplete="tel" />
+        <input
+          id="vol-phone"
+          name="phone"
+          type="tel"
+          className="input-field"
+          autoComplete="tel"
+          disabled={submitting}
+        />
       </div>
-      <button type="submit" className="btn-primary">
-        Submit volunteer sign-up
+      <div className="join-hp" aria-hidden="true">
+        <label htmlFor="vol-company">Company</label>
+        <input
+          id="vol-company"
+          type="text"
+          name="company"
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
+      <button type="submit" className="btn-primary" disabled={submitting}>
+        {submitting ? "Submitting…" : "Submit volunteer sign-up"}
       </button>
       <p className="text-sm text-slate-muted">
         Prefer email first?{" "}
@@ -110,7 +157,7 @@ export function VolunteerSignup() {
         </Link>
         .
       </p>
-      <StatusRegion successMessage={demoFormSuccess.volunteer} />
+      <StatusRegion successMessage={SUCCESS_MESSAGE} />
     </form>
   );
 }

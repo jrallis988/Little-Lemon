@@ -134,7 +134,7 @@ export const faqs: FaqItem[] = [
     id: "contact",
     question: "How can voters contact the campaign?",
     answer: [
-      "Use the Contact page for questions, press, and general outreach. You can also reach the campaign by email or phone listed there.",
+      "Use the Contact page for questions, press, and general outreach. You can also email the campaign at the address listed there.",
       "For quick website questions, the chat helper on this site can point you to the right page. For a human teammate, choose Live Campaign Support when available.",
     ],
     links: [{ href: "/contact", label: "Contact the campaign" }],

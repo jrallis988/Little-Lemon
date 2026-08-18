@@ -234,14 +234,15 @@ export default function PrivacyPage() {
           >
             {candidate.email}
           </a>
-          , call {candidate.phone}, or use the{" "}
+          {candidate.phone ? `, call ${candidate.phone},` : ""} or use the{" "}
           <Link
             href="/contact"
             className="font-semibold text-red underline-offset-2 hover:underline"
           >
             Contact
           </Link>{" "}
-          page. Mail: {candidate.mailAddress}.
+          page
+          {candidate.mailAddress ? `. Mail: ${candidate.mailAddress}` : ""}.
         </p>
       </div>
 

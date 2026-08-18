@@ -205,14 +205,15 @@ export default function TermsPage() {
             >
               {candidate.email}
             </a>
-            , call {candidate.phone}, or use our{" "}
+            {candidate.phone ? `, call ${candidate.phone},` : ""} or use our{" "}
             <Link
               href="/contact"
               className="font-semibold text-red underline-offset-2 hover:underline"
             >
               Contact
             </Link>{" "}
-            page. Mail: {candidate.mailAddress}.
+            page
+            {candidate.mailAddress ? `. Mail: ${candidate.mailAddress}` : ""}.
           </p>
         </Prose>
 

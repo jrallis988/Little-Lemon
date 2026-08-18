@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { candidate } from "@/lib/candidate";
+import { candidate, publicSocials } from "@/lib/candidate";
 import { NH_ELECTIONS_URL } from "@/lib/faq";
 
 const LEGAL_LINKS = [
@@ -14,6 +14,7 @@ const LEGAL_LINKS = [
 /** Compact mountain-band footer */
 export function Footer() {
   const year = new Date().getFullYear();
+  const socials = publicSocials();
 
   return (
     <footer className="footer-section site-footer-compact">
@@ -32,30 +33,22 @@ export function Footer() {
               <a className="footer-compact-email" href={`mailto:${candidate.email}`}>
                 {candidate.email}
               </a>
-              <ul className="social-media footer-compact-social">
-                <li>
-                  <a
-                    className="facebook"
-                    href={candidate.social.facebook}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Facebook"
-                  >
-                    <i className="fa fa-facebook" aria-hidden />
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="linkedin"
-                    href={candidate.social.instagram}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Instagram"
-                  >
-                    <i className="fa fa-instagram" aria-hidden />
-                  </a>
-                </li>
-              </ul>
+              {socials.length ? (
+                <ul className="social-media footer-compact-social">
+                  {socials.map((item) => (
+                    <li key={item.href}>
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={item.label}
+                      >
+                        <i className={`fa ${item.icon}`} aria-hidden />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
             </div>
           </div>
 

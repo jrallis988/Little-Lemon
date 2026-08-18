@@ -36,7 +36,7 @@ function assistantReply(input: string): string {
     return `This site does not take online donations. The best way to help is to volunteer and share how to write in Nick on November 3.`;
   }
   if (q.includes("contact") || q.includes("email") || q.includes("phone")) {
-    return `Campaign contact: ${candidate.email} · ${candidate.phone}. Or use the Contact page.`;
+    return `Campaign contact: ${candidate.email}${candidate.phone ? ` · ${candidate.phone}` : ""}. Or use the Contact page.`;
   }
   return `I’m an automated website helper — not a person. For Nick and the campaign, see the FAQ. For write-in steps, see How to Vote. For a human teammate, choose Live Campaign Support (or leave a message if staff are offline).`;
 }

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { candidate } from "@/lib/candidate";
+import { candidate, hasIntroVideo } from "@/lib/candidate";
 import { WatchVideoButton } from "@/components/home/WatchVideoButton";
 
 export function Hero() {
@@ -19,7 +19,7 @@ export function Hero() {
               <Link href="/how-to-vote" className="custom-btn varga-btn-motion">
                 How to Vote Write-In
               </Link>
-              <WatchVideoButton />
+              {hasIntroVideo() ? <WatchVideoButton /> : null}
             </div>
           </div>
         </div>
