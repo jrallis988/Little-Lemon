@@ -39,6 +39,18 @@ class MailboxDB extends Dexie {
           }
         }
       });
+    this.version(3).upgrade(async (tx) => {
+      for (const seed of SEED_MESSAGES) {
+        const existing = await tx.table("messages").get(seed.id);
+        if (existing) {
+          await tx.table("messages").update(seed.id, {
+            subject: seed.subject,
+            preview: seed.preview,
+            body: seed.body,
+          });
+        }
+      }
+    });
   }
 }
 

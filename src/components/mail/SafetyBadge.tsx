@@ -8,17 +8,17 @@ const copy: Record<
 > = {
   verified: {
     label: "Verified",
-    hint: "Confirmed as a trusted school or family contact",
+    hint: "Verified",
     icon: BadgeCheck,
   },
   trusted: {
     label: "Safe contact",
-    hint: "On your approved Safe Contacts list",
+    hint: "Safe contact",
     icon: ShieldCheck,
   },
   unknown: {
     label: "Unknown",
-    hint: "Not on your Safe Contacts list — review carefully",
+    hint: "Unknown sender",
     icon: ShieldAlert,
   },
 };

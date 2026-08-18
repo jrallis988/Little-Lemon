@@ -15,7 +15,7 @@ const BASE: Omit<StageCopy, "classLabel" | "course" | "composeCta" | "composeTit
   {
     toPlaceholder: "",
     subjectPlaceholder: "",
-    unknownSenderHint: "Unknown sender. Ask a teacher before you reply.",
+    unknownSenderHint: "Unknown sender.",
   };
 
 export const STAGE_COPY: Record<LearningStage, StageCopy> = {
