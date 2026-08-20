@@ -50,6 +50,17 @@ npm install
 npm run dev
 ```
 
+## Deploy
+
+See **[LAUNCH.md](./LAUNCH.md)** for the public-launch checklist and Vercel setup.
+
+```bash
+npm run build
+npm start
+```
+
+On Vercel, set `FORM_WEBHOOK_URL` or `RESEND_API_KEY` so Contact / Volunteer / Join / Town forms reach staff (local JSONL is not durable there).
+
 ## Notes
 
 - General Election: **November 3, 2026** (write in “Nick Varga”)

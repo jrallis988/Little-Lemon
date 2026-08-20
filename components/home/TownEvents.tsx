@@ -14,7 +14,7 @@ const ACTIONS = [
   {
     href: "/shop",
     title: "Apparel & marketing collateral",
-    detail: "Campaign store (demo checkout)",
+    detail: "Campaign store",
     icon: "fa-shopping-bag",
     cta: "Shop",
     thumb: "/images/get-involved/apparel.jpg",

@@ -119,6 +119,24 @@ function notifyTargets() {
   };
 }
 
+/** True when webhook and/or Resend are configured for staff delivery. */
+export function hasNotifyConfigured(): boolean {
+  const { webhook, resendKey } = notifyTargets();
+  return Boolean(webhook || resendKey);
+}
+
+/**
+ * Hosted platforms (Vercel, Cloudflare Pages) do not keep a durable local disk.
+ * On those runtimes, staff notify must be configured or submissions are lost.
+ */
+export function isEphemeralRuntime(): boolean {
+  return Boolean(
+    process.env.VERCEL ||
+      process.env.CF_PAGES ||
+      process.env.FORCE_FORM_NOTIFY === "1",
+  );
+}
+
 function formatEmailBody(record: SubmissionRecord): string {
   const lines = [
     `New ${FORM_LABELS[record.form]} submission`,
@@ -186,15 +204,33 @@ export async function notifySubmission(record: SubmissionRecord): Promise<boolea
 
 /**
  * Persist locally when the filesystem is writable, and notify staff when
- * webhook/Resend env is set. Succeeds if either path works.
+ * webhook/Resend env is set. Succeeds if either path works — except on
+ * ephemeral hosts (Vercel / Cloudflare Pages), where notify is required.
  */
 export async function acceptSubmission(record: SubmissionRecord): Promise<void> {
+  const ephemeral = isEphemeralRuntime();
+  if (ephemeral && !hasNotifyConfigured()) {
+    throw new Error(
+      "Form notify is not configured on this host. Set FORM_WEBHOOK_URL or RESEND_API_KEY.",
+    );
+  }
+
   let persisted = false;
-  try {
-    await persistSubmission(record);
-    persisted = true;
-  } catch (err) {
-    console.error("[submissions] persist failed", err);
+  if (!ephemeral) {
+    try {
+      await persistSubmission(record);
+      persisted = true;
+    } catch (err) {
+      console.error("[submissions] persist failed", err);
+    }
+  } else {
+    // Best-effort local write on ephemeral hosts (usually fails or is discarded).
+    try {
+      await persistSubmission(record);
+      persisted = true;
+    } catch {
+      persisted = false;
+    }
   }
 
   let notified = false;
@@ -202,6 +238,11 @@ export async function acceptSubmission(record: SubmissionRecord): Promise<void> 
     notified = await notifySubmission(record);
   } catch (err) {
     console.error("[submissions] notify failed", err);
+    if (ephemeral) throw err;
+  }
+
+  if (ephemeral && !notified) {
+    throw new Error("Could not notify campaign staff of this submission.");
   }
 
   if (!persisted && !notified) {
