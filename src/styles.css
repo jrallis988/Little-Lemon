@@ -2,51 +2,51 @@
 @import "tailwindcss";
 
 /*
-  OJ (Only Jokes) — exact palette from brand mark
-  Deep navy stage #000A5B + cornflower accent #77ACF1
+  OJ (Only Jokes) — vibrant sky-blue palette from brand mark
+  Base sky #00AFF0 · tint #BEE1F9 · white #FFFFFF
 */
 @theme {
   --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Bebas Neue", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 
-  --color-oj-bg: #000a5b;
-  --color-oj-elevated: #00074a;
-  --color-oj-panel: #00116e;
+  --color-oj-sky: #00aff0;
+  --color-oj-tint: #bee1f9;
   --color-oj-ink: #ffffff;
-  --color-oj-accent: #77acf1;
-  --color-oj-on-accent: #000a5b;
+  --color-oj-bg: #00aff0;
+  --color-oj-elevated: color-mix(in srgb, #00aff0 78%, #0094d4);
+  --color-oj-panel: #bee1f9;
+  --color-oj-accent: #ffffff;
+  --color-oj-on-accent: #00aff0;
 }
 
 :root {
-  --navy: #000a5b;
-  --accent: #77acf1;
+  --sky: #00aff0;
+  --tint: #bee1f9;
 
-  --bg: #000a5b;
-  --bg-elevated: color-mix(in srgb, #000a5b 82%, #000000);
-  --bg-panel: color-mix(in srgb, #000a5b 86%, #77acf1);
+  --bg: #00aff0;
+  --bg-elevated: color-mix(in srgb, #00aff0 78%, #0094d4);
+  --bg-panel: #bee1f9;
 
+  --accent: #ffffff;
+  --on-accent: #00aff0;
   --ink: #ffffff;
-  --ink-soft: color-mix(in srgb, #ffffff 78%, #77acf1);
-  --muted: color-mix(in srgb, #77acf1 72%, #ffffff);
+  --ink-soft: color-mix(in srgb, #ffffff 88%, #bee1f9);
+  --muted: color-mix(in srgb, #bee1f9 58%, #ffffff);
 
-  --line: color-mix(in srgb, #77acf1 28%, transparent);
-  --line-strong: color-mix(in srgb, #77acf1 55%, transparent);
+  --line: color-mix(in srgb, #ffffff 32%, transparent);
+  --line-strong: color-mix(in srgb, #ffffff 52%, transparent);
 
-  --blue: #77acf1;
-  --blue-deep: color-mix(in srgb, #77acf1 62%, #000a5b);
-  --blue-soft: #77acf1;
-  --ice: #77acf1;
+  --blue: #00aff0;
+  --blue-deep: color-mix(in srgb, #00aff0 72%, #007eb8);
+  --blue-soft: #bee1f9;
+  --ice: #bee1f9;
   --ice-bright: #ffffff;
-  --on-accent: #000a5b;
-
-  --orange: #77acf1;
-  --orange-deep: color-mix(in srgb, #77acf1 62%, #000a5b);
 
   --danger: #fb7185;
   --success: #34d399;
-  --header: color-mix(in srgb, #000a5b 92%, transparent);
-  --blur-frost: color-mix(in srgb, #000a5b 72%, transparent);
+  --header: color-mix(in srgb, #00aff0 90%, transparent);
+  --blur-frost: color-mix(in srgb, #00aff0 68%, transparent);
 }
 
 html,
@@ -56,8 +56,16 @@ body {
 
 body {
   background:
-    radial-gradient(ellipse 90% 48% at 50% -14%, color-mix(in srgb, #77acf1 22%, transparent), transparent 58%),
-    radial-gradient(ellipse 40% 28% at 100% 0%, color-mix(in srgb, #77acf1 10%, transparent), transparent 50%),
+    radial-gradient(
+      ellipse 90% 48% at 50% -14%,
+      color-mix(in srgb, #bee1f9 55%, transparent),
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 40% 28% at 100% 0%,
+      color-mix(in srgb, #ffffff 22%, transparent),
+      transparent 50%
+    ),
     var(--bg);
   color: var(--ink);
   font-family: var(--font-sans), system-ui, sans-serif;
@@ -71,8 +79,8 @@ body {
 }
 
 ::selection {
-  background: color-mix(in srgb, #77acf1 45%, transparent);
-  color: #ffffff;
+  background: color-mix(in srgb, #ffffff 45%, transparent);
+  color: #00aff0;
 }
 
 .safe-bottom {
@@ -86,7 +94,7 @@ body {
 
 .lock-tag {
   border: 1px solid var(--line-strong);
-  background: color-mix(in srgb, #000a5b 55%, #77acf1);
+  background: color-mix(in srgb, #00aff0 42%, #bee1f9);
   color: #ffffff;
 }
 

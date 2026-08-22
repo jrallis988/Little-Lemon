@@ -6,20 +6,20 @@ export const Route = createFileRoute('/')({ component: LandingPage })
 function LandingPage() {
   return (
     <main className="relative min-h-dvh overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,color-mix(in_srgb,#77ACF1_18%,transparent),transparent_52%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,color-mix(in_srgb,#BEE1F9_45%,transparent),transparent_52%)]" />
       <div className="relative mx-auto flex min-h-dvh max-w-3xl flex-col px-4 pb-10 pt-8">
         <header className="flex items-center justify-between">
           <Logo size="sm" />
           <Link
-            to="/discover"
+            to="/onboarding"
             className="text-sm text-[var(--muted)] no-underline hover:text-[var(--ink)]"
           >
-            Enter
+            New here?
           </Link>
         </header>
 
         <section className="mt-auto pb-8 pt-24">
-          <p className="animate-rise text-[11px] uppercase tracking-[0.28em] text-[var(--accent)]">
+          <p className="animate-rise text-[11px] uppercase tracking-[0.28em] text-[var(--tint)]">
             Creator comedy · uncensored
           </p>
           <h1 className="sr-only">only Jokes</h1>

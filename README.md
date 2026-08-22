@@ -39,7 +39,7 @@ src/components/
 
 ## Aesthetic
 
-Brand palette from the OJ mark: deep navy stage (`#000A5B`), cornflower accent (`#77ACF1`) on the **O** and **Jokes**, crisp white for remaining type. Bebas Neue display + Space Grotesk UI.
+Brand palette from the OJ mark: vibrant sky blue (`#00AFF0`), pastel tint (`#BEE1F9`), and crisp white (`#FFFFFF`). Bebas Neue display + Space Grotesk UI.
 
 ## Develop
 

@@ -12,7 +12,7 @@ function OjMark({ className }: { className?: string }) {
         cx="26"
         cy="32"
         r="18.5"
-        stroke="#77ACF1"
+        stroke="#BEE1F9"
         strokeWidth="11"
       />
       <path
@@ -61,7 +61,7 @@ export function Logo({
           className={`flex flex-col font-semibold tracking-tight ${wordSize[size]}`}
         >
           <span className="text-[var(--ink)]">only</span>
-          <span className="text-[var(--accent)]">Jokes</span>
+          <span className="text-[var(--tint)]">Jokes</span>
         </span>
       ) : null}
     </Link>

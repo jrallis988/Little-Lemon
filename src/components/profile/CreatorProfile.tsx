@@ -19,10 +19,10 @@ export function CreatorProfile({
       <div
         className="relative h-40 w-full sm:h-52"
         style={{
-          background: `linear-gradient(120deg, hsl(${creator.bannerHue} 45% 28%), #000A5B 52%, color-mix(in srgb, #000A5B 70%, #77ACF1) 100%)`,
+          background: `linear-gradient(120deg, hsl(${creator.bannerHue} 48% 42%), #00AFF0 52%, #BEE1F9 100%)`,
         }}
       >
-        <div className="absolute inset-0 bg-[linear-gradient(transparent,rgba(0,10,91,0.88))]" />
+        <div className="absolute inset-0 bg-[linear-gradient(transparent,rgba(0,175,240,0.82))]" />
       </div>
 
       <div className="relative mx-auto max-w-3xl px-4">

@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as CUsernameRouteImport } from './routes/c/$username'
 import { Route as DiscoverIndexRouteImport } from './routes/discover/index'
 import { Route as MessagesIndexRouteImport } from './routes/messages/index'
+import { Route as OnboardingIndexRouteImport } from './routes/onboarding/index'
 import { Route as SettingsIndexRouteImport } from './routes/settings/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
@@ -36,6 +37,11 @@ const MessagesIndexRoute = MessagesIndexRouteImport.update({
   path: '/messages/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OnboardingIndexRoute = OnboardingIndexRouteImport.update({
+  id: '/onboarding/',
+  path: '/onboarding/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SettingsIndexRoute = SettingsIndexRouteImport.update({
   id: '/settings/',
   path: '/settings/',
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/c/$username': typeof CUsernameRoute
   '/discover/': typeof DiscoverIndexRoute
   '/messages/': typeof MessagesIndexRoute
+  '/onboarding/': typeof OnboardingIndexRoute
   '/settings/': typeof SettingsIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/c/$username': typeof CUsernameRoute
   '/discover': typeof DiscoverIndexRoute
   '/messages': typeof MessagesIndexRoute
+  '/onboarding': typeof OnboardingIndexRoute
   '/settings': typeof SettingsIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
@@ -69,6 +77,7 @@ export interface FileRoutesById {
   '/c/$username': typeof CUsernameRoute
   '/discover/': typeof DiscoverIndexRoute
   '/messages/': typeof MessagesIndexRoute
+  '/onboarding/': typeof OnboardingIndexRoute
   '/settings/': typeof SettingsIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
@@ -79,6 +88,7 @@ export interface FileRouteTypes {
     | '/c/$username'
     | '/discover/'
     | '/messages/'
+    | '/onboarding/'
     | '/settings/'
     | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
@@ -87,6 +97,7 @@ export interface FileRouteTypes {
     | '/c/$username'
     | '/discover'
     | '/messages'
+    | '/onboarding'
     | '/settings'
     | '/api/auth/$'
   id:
@@ -95,6 +106,7 @@ export interface FileRouteTypes {
     | '/c/$username'
     | '/discover/'
     | '/messages/'
+    | '/onboarding/'
     | '/settings/'
     | '/api/auth/$'
   fileRoutesById: FileRoutesById
@@ -104,6 +116,7 @@ export interface RootRouteChildren {
   CUsernameRoute: typeof CUsernameRoute
   DiscoverIndexRoute: typeof DiscoverIndexRoute
   MessagesIndexRoute: typeof MessagesIndexRoute
+  OnboardingIndexRoute: typeof OnboardingIndexRoute
   SettingsIndexRoute: typeof SettingsIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
@@ -138,6 +151,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MessagesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/onboarding/': {
+      id: '/onboarding/'
+      path: '/onboarding'
+      fullPath: '/onboarding/'
+      preLoaderRoute: typeof OnboardingIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/settings/': {
       id: '/settings/'
       path: '/settings'
@@ -160,6 +180,7 @@ const rootRouteChildren: RootRouteChildren = {
   CUsernameRoute: CUsernameRoute,
   DiscoverIndexRoute: DiscoverIndexRoute,
   MessagesIndexRoute: MessagesIndexRoute,
+  OnboardingIndexRoute: OnboardingIndexRoute,
   SettingsIndexRoute: SettingsIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
