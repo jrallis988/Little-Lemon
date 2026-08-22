@@ -28,6 +28,11 @@ export const candidate = {
    */
   committee: "Nick Varga Campaign Committee",
   fecCommitteeId: "",
+  /**
+   * Set to true only after counsel approves Privacy, Terms, and disclaimer copy.
+   * While false, Privacy and Terms show the legal review banner.
+   */
+  legalReviewApproved: false,
   email: "vargaforsenate@gmail.com",
   /** Leave empty until the campaign supplies a verified public number. */
   phone: "",
@@ -68,6 +73,22 @@ export function hasMailAddress(): boolean {
 
 export function hasIntroVideo(): boolean {
   return Boolean(candidate.introVideo.youtubeId);
+}
+
+export function hasFecCommitteeId(): boolean {
+  return Boolean(candidate.fecCommitteeId?.trim());
+}
+
+/** FEC committee summary page — e.g. https://www.fec.gov/data/committee/C00XXXXXX/ */
+export function fecCommitteeUrl(): string | null {
+  const id = candidate.fecCommitteeId?.trim().toUpperCase();
+  return id ? `https://www.fec.gov/data/committee/${encodeURIComponent(id)}/` : null;
+}
+
+/** FEC Form 3 / financial report filings for this committee. */
+export function fecFilingsUrl(): string | null {
+  const id = candidate.fecCommitteeId?.trim().toUpperCase();
+  return id ? `https://www.fec.gov/data/reports/fecf/${encodeURIComponent(id)}/` : null;
 }
 
 export function publicSocials(): { label: string; href: string; icon: string }[] {

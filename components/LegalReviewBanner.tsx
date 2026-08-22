@@ -1,6 +1,8 @@
 import { candidate } from "@/lib/candidate";
 
 export function LegalReviewBanner() {
+  if (candidate.legalReviewApproved) return null;
+
   return (
     <div
       role="status"

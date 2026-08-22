@@ -8,9 +8,9 @@ The pages and design are in place. What’s left is launch work, not more site-b
 TO GO PUBLIC
 1. Hosting + domain — Preview tunnels expire. Put the site on Vercel or Cloudflare Pages with a campaign domain.
 2. Email/CRM notify — Forms save on the server, but staff won’t get them until you set FORM_WEBHOOK_URL or RESEND_API_KEY on the host.
-3. Facts from the campaign — public phone, mailing address, Instagram / X / YouTube URLs, and the intro YouTube video ID.
-4. Lawyer review — Privacy and Terms still say LEGAL REVIEW REQUIRED. Confirm the “Paid for by Nick Varga Campaign Committee” line and any FEC ID.
-5. Original photos — upload files if you want those exact shots.
+3. Facts from the campaign — see **`CAMPAIGN_DATA.md`** for the paste template (phone, mail, Instagram, intro YouTube ID, FEC ID, photos).
+4. Lawyer review — set `legalReviewApproved: true` in `lib/candidate.ts` only after counsel signs off Privacy, Terms, and disclaimers.
+5. Original photos — replace files listed in `CAMPAIGN_DATA.md` (chat previews do not save to the repo).
 
 STILL PLACEHOLDER CONTENT
 - Events are TBA

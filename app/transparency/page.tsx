@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero, Prose } from "@/components/PageChrome";
-import { candidate } from "@/lib/candidate";
+import {
+  candidate,
+  fecCommitteeUrl,
+  fecFilingsUrl,
+  hasFecCommitteeId,
+} from "@/lib/candidate";
 
 export const metadata: Metadata = {
   title: "Transparency",
@@ -75,23 +80,57 @@ export default function TransparencyPage() {
             FEC Filings
           </h2>
           <Prose>
-            <p>
-              Public filings for {candidate.committee}
-              {candidate.fecCommitteeId ? ` (${candidate.fecCommitteeId})` : ""} will
-              be linked here as they are submitted. A Federal Election Commission
-              committee ID has not been posted yet. Until then, search committee
-              filings at{" "}
-              <a
-                href="https://www.fec.gov"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-semibold text-red underline-offset-2 hover:underline"
-              >
-                fec.gov
-              </a>
-              .
-            </p>
+            {hasFecCommitteeId() ? (
+              <p>
+                Public filings for {candidate.committee} (
+                {candidate.fecCommitteeId}) are available on the Federal Election
+                Commission website:
+              </p>
+            ) : (
+              <p>
+                Public filings for {candidate.committee} will be linked here as they
+                are submitted. A Federal Election Commission committee ID has not
+                been posted yet. Until then, search committee filings at{" "}
+                <a
+                  href="https://www.fec.gov"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-red underline-offset-2 hover:underline"
+                >
+                  fec.gov
+                </a>
+                .
+              </p>
+            )}
           </Prose>
+          {hasFecCommitteeId() ? (
+            <ul className="mt-4 list-disc space-y-2 pl-5 text-lg text-slate-text">
+              {fecCommitteeUrl() ? (
+                <li>
+                  <a
+                    href={fecCommitteeUrl()!}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold text-red underline-offset-2 hover:underline"
+                  >
+                    FEC committee profile ({candidate.fecCommitteeId})
+                  </a>
+                </li>
+              ) : null}
+              {fecFilingsUrl() ? (
+                <li>
+                  <a
+                    href={fecFilingsUrl()!}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold text-red underline-offset-2 hover:underline"
+                  >
+                    FEC financial reports &amp; filings
+                  </a>
+                </li>
+              ) : null}
+            </ul>
+          ) : null}
           <p className="mt-6 text-sm text-slate-muted">
             Paid for by {candidate.committee}.
           </p>
