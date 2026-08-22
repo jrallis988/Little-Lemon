@@ -1,4 +1,5 @@
 import type { ChatMessage, WorkflowTab } from "../types";
+import { THOMAS_GREETING, butlerSessionContext } from "../thomas-persona";
 
 export const currentUser = "operator-1";
 
@@ -11,8 +12,7 @@ export const appState = $state({
   chatMessages: [
     {
       role: "assistant" as const,
-      content:
-        "Good evening. I'm Thomas — your personal beverage butler. Whether you're selecting from our brewery lineup or pairing beer and wine with tonight's meal, I'm at your service. What may I recommend?",
+      content: THOMAS_GREETING,
       timestamp: new Date().toISOString(),
     },
   ] as ChatMessage[],
@@ -37,23 +37,17 @@ export function toggleChat() {
 }
 
 export function buildChatContext(): string {
-  const parts: string[] = [];
-  if (appState.summary) {
-    parts.push(
-      `Inventory: ${appState.summary.total_scans} scans, ${appState.summary.critical_variances} critical, ${appState.summary.minor_variances} minor.`,
-    );
-  }
-  if (appState.inventoryScans.length > 0) {
-    const latest = appState.inventoryScans[0];
-    parts.push(
-      `Latest scan: SKU ${latest.sku}, variance ${latest.variance}.`,
-    );
-  }
-  if (appState.shiftLogs.length > 0) {
-    const latest = appState.shiftLogs[0];
-    parts.push(
-      `Latest shift: register ${latest.register_id}, cash variance $${latest.variance.toFixed(2)}.`,
-    );
-  }
-  return parts.join(" ");
+  const summary = appState.summary;
+  const latestScan = appState.inventoryScans[0];
+  const latestShift = appState.shiftLogs[0];
+
+  return butlerSessionContext({
+    totalScans: summary?.total_scans,
+    critical: summary?.critical_variances,
+    minor: summary?.minor_variances,
+    latestItem: latestScan?.sku,
+    latestCountGap: latestScan?.variance,
+    latestRegister: latestShift?.register_id,
+    latestTillGap: latestShift?.variance,
+  });
 }

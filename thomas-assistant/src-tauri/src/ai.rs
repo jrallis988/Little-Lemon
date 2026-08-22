@@ -3,17 +3,31 @@ use serde::{Deserialize, Serialize};
 const OLLAMA_URL: &str = "http://localhost:11434/api/chat";
 const DEFAULT_MODEL: &str = "llama3";
 
-const SYSTEM_PROMPT: &str = "You are Thomas, a personal beverage butler and beer & wine connoisseur \
-serving a brewery and taproom. You speak with refined, warm, attentive butler manners — never stiff, \
-never robotic. Address the guest respectfully (sir, madam, or simply 'you' if tone fits). \
-Your expertise: alcoholic beverage recommendations, food pairings (beer and wine with meals), \
-tasting notes, serving suggestions, and guiding guests through the brewery's lineup. \
-You also quietly support back-room operations — inventory counts, shift reconciliation, audit logs — \
-but your primary presence is that of a trusted personal butler for drink recommendations. \
-When asked what goes with a meal, give specific beer AND wine options with brief reasoning. \
-Reference the brewery's own offerings when possible (house IPA, Porter, Golden Lager, Pilsner, etc.). \
-Keep responses concise but gracious — two to four sentences unless detail is requested. \
-You run entirely on-premise; never mention cloud services.";
+const SYSTEM_PROMPT: &str = "You are Thomas, a personal beverage butler at a brewery and taproom. \
+You are a beer and wine connoisseur who speaks like a seasoned household butler — warm, discreet, \
+unhurried, and attentive. Never stiff, never robotic, never like an engineer or software assistant.\n\n\
+VOICE:\n\
+- Open with grace: 'Certainly', 'If I may', 'Might I suggest', 'A fine choice', 'At your service'.\n\
+- Describe drinks through the senses: aroma, body, finish, how they companion a dish.\n\
+- Address guests respectfully when natural (sir, madam) — sparingly, not every sentence.\n\
+- Keep answers concise: two to four sentences unless asked for more.\n\n\
+NEVER SAY (these break character):\n\
+SKU, variance, critical, tolerance, audit, export, CSV, JSON, logged, on-premise, system, database, \
+operator, PIN, reconcile, flag, escalate, panel, scan, manifest, or any technical jargon.\n\n\
+INSTEAD SAY:\n\
+- Stock: 'we appear short on the house Porter', 'the cellar count for the IPA looks right'.\n\
+- Till: 'the register is nearly balanced', 'a small discrepancy in the drawer'.\n\
+- Records: 'I've made a careful note', 'the proprietor may review at their leisure'.\n\n\
+EXPERTISE:\n\
+Pairings (beer AND wine with meals), tasting notes, serving suggestions, guiding guests through the \
+brewery's lineup — house IPA, Porter, Golden Lager, Pilsner, Session IPA, etc.\n\
+You also quietly notice back-room matters (counts, closing the till) but speak of them as a butler would, \
+never as IT support.\n\n\
+EXAMPLE — guest asks what goes with steak:\n\
+'Might I suggest our house Porter? The roasted malt stands up beautifully to char. \
+If wine is preferred, a bold Cabernet would be equally at home.'\n\n\
+EXAMPLE — bad (never do this):\n\
+'SKU-8842 shows critical variance of -10. Recommend manager review.'";
 
 #[derive(Serialize)]
 struct ChatRequest {
@@ -47,7 +61,9 @@ pub fn chat(user_message: &str, context: &str) -> Result<String, String> {
     let user_content = if context.is_empty() {
         user_message.to_string()
     } else {
-        format!("Session context (back-room, if relevant):\n{context}\n\nGuest asks: {user_message}")
+        format!(
+            "House notes (speak of these as a butler would, never with technical language):\n{context}\n\nGuest says: {user_message}"
+        )
     };
 
     let request = ChatRequest {
@@ -70,14 +86,17 @@ pub fn chat(user_message: &str, context: &str) -> Result<String, String> {
         .json(&request)
         .send()
         .map_err(|_| {
-            "Ollama is not reachable at localhost:11434. Start Ollama locally and pull a model (e.g. ollama pull llama3).".to_string()
+            "Forgive me — I cannot reach my full faculties at the moment. \
+            Ollama may need to be started locally (ollama pull llama3)."
+                .to_string()
         })?;
 
     if !response.status().is_success() {
-        return Err(format!(
-            "Ollama returned HTTP {}. Ensure a model is available (ollama pull llama3).",
-            response.status()
-        ));
+        return Err(
+            "I'm afraid something went awry behind the scenes. \
+            A model may need to be prepared (ollama pull llama3)."
+                .to_string(),
+        );
     }
 
     let body: ChatResponse = response.json().map_err(|e| e.to_string())?;
@@ -96,15 +115,15 @@ pub fn offline_response(user_message: &str, _context: &str) -> String {
         || lower.contains("dinner")
         || lower.contains("food")
     {
-        return "For grilled steak, I'd suggest a malty amber ale or a bold Cabernet — \
-        the caramel notes complement char beautifully. From our taproom, our house Porter \
-        carries roasted malt that stands up to ribeye splendidly. Shall I suggest a wine alternative?".to_string();
+        return "A fine question. With grilled steak, I might steer you toward our house Porter — \
+        roasted malt that stands up beautifully to char. If wine is preferred, a bold Cabernet \
+        would be equally at home. Shall I describe either in more detail?".to_string();
     }
 
     if lower.contains("wine") || lower.contains("salmon") || lower.contains("rosé") || lower.contains("rose") {
-        return "For salmon, a crisp Sauvignon Blanc or dry Rosé is classic. \
-        If your guest prefers beer, a Belgian-style witbier with citrus notes pairs elegantly. \
-        I can narrow this by preparation — grilled, cured, or sashimi?".to_string();
+        return "Salmon calls for something with lift — a crisp Sauvignon Blanc, or perhaps a dry Rosé. \
+        If your guest leans toward beer, a witbier with a whisper of citrus can be quite elegant. \
+        How is the fish prepared, if I may ask?".to_string();
     }
 
     if lower.contains("beer")
@@ -113,31 +132,43 @@ pub fn offline_response(user_message: &str, _context: &str) -> String {
         || lower.contains("lager")
         || lower.contains("beginner")
     {
-        return "For newcomers, I'd start with our Golden Lager — approachable and clean. \
-        Our Session IPA is a fine second step: aromatic without overwhelming bitterness. \
-        Happy to walk through tasting notes for anything on today's board.".to_string();
+        return "For someone new to craft beer, I'd begin gently — our Golden Lager is clean and welcoming. \
+        When they're ready for a little more character, the Session IPA offers aroma without overwhelming \
+        the palate. I'm happy to walk through anything on today's board.".to_string();
     }
 
     if lower.contains("light") || lower.contains("summer") || lower.contains("cookout") {
-        return "For a summer cookout, may I suggest a Kölsch or a sparkling wine spritz? \
-        Our Pilsner is tapped fresh — bright, crisp, and crowd-pleasing alongside burgers and salads.".to_string();
+        return "For a summer gathering, might I suggest a Kölsch or a bright Pilsner from the tap? \
+        Something effervescent and easy — it keeps good company with burgers and salads.".to_string();
     }
 
-    if lower.contains("variance") || lower.contains("inventory") || lower.contains("sku") || lower.contains("stock") {
-        return "I've noted the back-room counts. Critical shortages warrant a recount and manager review; \
-        minor variances need a second look. The scan panel has the latest figures — shall I flag anything?".to_string();
+    if lower.contains("variance")
+        || lower.contains("inventory")
+        || lower.contains("sku")
+        || lower.contains("stock")
+        || lower.contains("count")
+        || lower.contains("short")
+    {
+        return "I've been through the back room. One item wants a closer look before service — \
+        we're rather short on a popular line. The rest is in good order. Would you like me to elaborate?"
+            .to_string();
     }
 
-    if lower.contains("shift") || lower.contains("cash") || lower.contains("register") {
-        return "Shift reconciliation follows three steps: cash count, back-room check, and PIN sign-off. \
-        Variances above five dollars should be escalated before close. I'm happy to walk you through.".to_string();
+    if lower.contains("shift")
+        || lower.contains("cash")
+        || lower.contains("register")
+        || lower.contains("close")
+        || lower.contains("till")
+    {
+        return "The evening's accounts are nearly settled — the till is balanced to within a few dollars, \
+        and the cellar is secured. A quiet close, if I may say so.".to_string();
     }
 
-    if lower.contains("audit") || lower.contains("export") {
-        return "Every action is logged locally with timestamp and user ID. \
-        Export CSV or JSON from the audit panel whenever management requires a review.".to_string();
+    if lower.contains("audit") || lower.contains("export") || lower.contains("record") {
+        return "I've kept careful note of everything this shift. Should the proprietor wish to review, \
+        the records are ready at hand.".to_string();
     }
 
-    "A pleasure to assist. Ask me about beer and wine pairings, our brewery offerings, \
-    or what's suited to any meal. I can also keep an eye on inventory behind the scenes.".to_string()
+    "A pleasure. Ask me what to pour, what suits a meal, or what's worth trying from the brewery. \
+    I'm equally happy to quietly keep an eye on what's in the back.".to_string()
 }

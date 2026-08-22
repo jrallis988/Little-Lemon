@@ -1,3 +1,6 @@
+export const THOMAS_GREETING =
+  "Good evening. Thomas, at your service. Whether you're choosing from our cellar and taps, or wondering what might suit tonight's table — I'm here to guide you. What shall we pour?";
+
 export const suggestedPrompts = [
   "What beer pairs with grilled steak?",
   "Recommend a wine for salmon",
@@ -5,33 +8,97 @@ export const suggestedPrompts = [
   "Something light for a summer cookout",
 ];
 
-export const demoChatReplies: Record<string, string> = {
-  greeting:
-    "Good evening. I'm Thomas — your personal beverage butler. Whether you're selecting from our brewery lineup or pairing beer and wine with tonight's meal, I'm at your service. What may I recommend?",
+/** Voice rules echoed in the Ollama system prompt (kept in sync conceptually). */
+export const BUTLER_VOICE_RULES = `
+Speak as a seasoned beverage butler — warm, discreet, unhurried.
+Use: "Certainly", "If I may", "Might I suggest", "A fine choice", "At your service".
+Describe drinks with the senses — aroma, body, finish, how they sit with food.
+Never sound like software: no SKU, variance, critical, tolerance, audit, export, logged, on-premise, system, database, operator, or PIN.
+For stock matters, speak of bottles, kegs, and what's on hand for guests.
+For the till, speak delicately — "nearly balanced", "a small discrepancy".
+For records, say "I've made a note" rather than "logged" or "exported".
+`;
 
+export function butlerScanNote(
+  label: string,
+  variance: number,
+  level: "exact" | "minor" | "critical",
+): string {
+  if (level === "exact") {
+    return `Very good — our count for ${label} is precisely as expected. We're well stocked for service.`;
+  }
+  if (level === "minor") {
+    const n = Math.abs(variance);
+    return `If I may mention it — ${label} is short by ${n}, though only slightly. A second look in the back might be wise before the evening rush.`;
+  }
+  const n = Math.abs(variance);
+  return `Forgive me for troubling you — ${label} appears to be ${n} below what we expected. I should think the proprietor ought to know before we commit to another round.`;
+}
+
+export function butlerShiftNote(registerLabel: string, variance: number): string {
+  const amount = Math.abs(variance).toFixed(2);
+  if (Math.abs(variance) <= 5) {
+    return `The ${registerLabel} till is closed for the evening — nearly balanced, with only a modest ${variance < 0 ? "shortfall" : "surplus"} of $${amount}. The house is ready for tomorrow.`;
+  }
+  return `The ${registerLabel} till is closed, though there's a ${variance < 0 ? "shortfall" : "surplus"} of $${amount} that strikes me as worth bringing to the proprietor's attention.`;
+}
+
+export function butlerSessionContext(parts: {
+  totalScans?: number;
+  critical?: number;
+  minor?: number;
+  latestItem?: string;
+  latestCountGap?: number;
+  latestRegister?: string;
+  latestTillGap?: number;
+}): string {
+  const notes: string[] = [];
+  if (parts.totalScans != null && parts.totalScans > 0) {
+    notes.push(
+      `We've checked ${parts.totalScans} items in the back today` +
+        (parts.critical
+          ? `; ${parts.critical} need particular attention`
+          : "") +
+        ".",
+    );
+  }
+  if (parts.latestItem != null && parts.latestCountGap != null) {
+    notes.push(
+      `Most recently, ${parts.latestItem} was ${Math.abs(parts.latestCountGap)} ${parts.latestCountGap < 0 ? "shy" : "over"} what we expected.`,
+    );
+  }
+  if (parts.latestRegister != null && parts.latestTillGap != null) {
+    notes.push(
+      `The ${parts.latestRegister} till showed a ${parts.latestTillGap < 0 ? "shortfall" : "surplus"} of $${Math.abs(parts.latestTillGap).toFixed(2)} at close.`,
+    );
+  }
+  return notes.join(" ");
+}
+
+const demoChatReplies: Record<string, string> = {
   pairing:
-    "For grilled steak, I'd suggest a malty amber ale or a bold Cabernet — the caramel notes complement char beautifully. From our taproom, our house Porter carries roasted malt that stands up to ribeye splendidly. Shall I suggest a specific pour size or a wine alternative?",
+    "A fine question. With grilled steak, I might steer you toward our house Porter — roasted malt and a gentle bitterness that stands up beautifully to char. If wine is preferred, a bold Cabernet would be equally at home. Shall I describe either in more detail?",
 
   wine:
-    "For salmon, a crisp Sauvignon Blanc or a dry Rosé is classic — the acidity cuts through the richness. If your guest prefers beer, a Belgian-style witbier with citrus notes pairs elegantly. I can narrow this by preparation: grilled, cured, or sashimi?",
+    "Salmon calls for something with lift — a crisp Sauvignon Blanc, or perhaps a dry Rosé. If your guest leans toward beer, a witbier with a whisper of citrus can be quite elegant. How is the fish prepared, if I may ask?",
 
   beer:
-    "For newcomers to craft beer, I'd start with our Golden Lager — approachable, clean, and lightly hopped. Our Session IPA is a fine second step: aromatic without overwhelming bitterness. Happy to walk through tasting notes for anything on today's board.",
+    "For someone new to craft beer, I'd begin gently — our Golden Lager is clean and welcoming. When they're ready for a little more character, the Session IPA offers aroma without overwhelming the palate. I'm happy to walk through anything on today's board.",
 
   light:
-    "For a summer cookout, may I suggest a Kölsch or a sparkling wine spritz? Both stay refreshing alongside burgers and salads. Our Pilsner is tapped fresh this week — bright, crisp, and crowd-pleasing.",
+    "For a summer gathering, might I suggest a Kölsch or a bright Pilsner from the tap? Something effervescent and easy — it keeps good company with burgers and salads without stealing the show.",
 
   inventory:
-    "I've noted the back-room counts, sir. SKU-8842 shows a critical shortage — ten units shy. I'd recommend a recount before service. SKU-3310 is a minor variance; SKU-1104 is exact. Shall I flag the manager?",
+    "I've been through the back room this evening. One item wants a closer look before service — we're rather short on a popular line. Two others are only slightly off. The rest is in good order. Would you like me to elaborate?",
 
   shift:
-    "The register reconciliation is within tolerance — a $2.50 variance on REG-01. Back-room secured and logged. The floor is ready for the evening service.",
+    "The evening's accounts are nearly settled — the till is balanced to within a few dollars, and the cellar is secured. A quiet close, if I may say so.",
 
   audit:
-    "Your audit trail is intact — three entries logged locally. Export whenever management requires a review; everything stays on-premise.",
+    "I've kept careful note of everything this shift — each count, each closing. Should the proprietor wish to review, the records are ready at hand.",
 
   default:
-    "A pleasure to assist. Ask me about beer and wine pairings, our brewery offerings, or what's suited to any meal. I can also keep an eye on inventory and shift counts behind the scenes.",
+    "A pleasure. Ask me what to pour, what suits a meal, or what's worth trying from the brewery. I'm equally happy to quietly keep an eye on what's in the back.",
 };
 
 export function matchDemoReply(message: string): string {
@@ -50,7 +117,12 @@ export function matchDemoReply(message: string): string {
     return demoChatReplies.pairing;
   }
 
-  if (lower.includes("wine") || lower.includes("rosé") || lower.includes("rose") || lower.includes("salmon")) {
+  if (
+    lower.includes("wine") ||
+    lower.includes("rosé") ||
+    lower.includes("rose") ||
+    lower.includes("salmon")
+  ) {
     return demoChatReplies.wine;
   }
 
@@ -73,15 +145,33 @@ export function matchDemoReply(message: string): string {
     return demoChatReplies.light;
   }
 
-  if (lower.includes("variance") || lower.includes("inventory") || lower.includes("sku") || lower.includes("stock")) {
+  if (
+    lower.includes("variance") ||
+    lower.includes("inventory") ||
+    lower.includes("sku") ||
+    lower.includes("stock") ||
+    lower.includes("count") ||
+    lower.includes("short")
+  ) {
     return demoChatReplies.inventory;
   }
 
-  if (lower.includes("shift") || lower.includes("cash") || lower.includes("register") || lower.includes("close")) {
+  if (
+    lower.includes("shift") ||
+    lower.includes("cash") ||
+    lower.includes("register") ||
+    lower.includes("close") ||
+    lower.includes("till")
+  ) {
     return demoChatReplies.shift;
   }
 
-  if (lower.includes("audit") || lower.includes("export") || lower.includes("log")) {
+  if (
+    lower.includes("audit") ||
+    lower.includes("export") ||
+    lower.includes("log") ||
+    lower.includes("record")
+  ) {
     return demoChatReplies.audit;
   }
 

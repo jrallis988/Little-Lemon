@@ -5,6 +5,7 @@
     getInventorySummary,
   } from "$lib/api";
   import { appState, currentUser, addChatMessage } from "$lib/stores/app.svelte";
+  import { butlerScanNote } from "$lib/thomas-persona";
   import { varianceLevel } from "$lib/types";
 
   let sku = $state("");
@@ -19,7 +20,7 @@
 
   async function handleScan() {
     if (!sku.trim()) {
-      appState.error = "Enter a SKU before scanning.";
+      appState.error = "If I may — we'll need a product code before I can verify the count.";
       return;
     }
     submitting = true;
@@ -35,13 +36,7 @@
       appState.summary = await getInventorySummary();
 
       const level = varianceLevel(scan.variance);
-      const msg =
-        level === "exact"
-          ? `${scan.sku} is accounted for — stock matches manifest precisely.`
-          : level === "minor"
-            ? `A modest variance on ${scan.sku} (${scan.variance} units). I'd suggest a quick recount before service.`
-            : `I'm afraid ${scan.sku} shows a critical shortage of ${Math.abs(scan.variance)} units. Manager review is warranted before we pour another round.`;
-      addChatMessage("assistant", msg);
+      addChatMessage("assistant", butlerScanNote(scan.sku, scan.variance, level));
 
       sku = "";
       expectedQty = 0;

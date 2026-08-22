@@ -25,7 +25,7 @@
       const reply = await chatWithAssistant(message, context);
       addChatMessage("assistant", reply);
     } catch (e) {
-      addChatMessage("assistant", `My apologies — I seem to have stumbled. ${e}`);
+      addChatMessage("assistant", "Forgive me — something unexpected arose. Might you try once more?");
     } finally {
       sending = false;
       messagesEl?.scrollTo({ top: messagesEl.scrollHeight, behavior: "smooth" });

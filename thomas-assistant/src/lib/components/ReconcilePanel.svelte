@@ -1,6 +1,7 @@
 <script lang="ts">
   import { recordShiftLog, listShiftLogs } from "$lib/api";
   import { appState, currentUser, addChatMessage } from "$lib/stores/app.svelte";
+  import { butlerShiftNote } from "$lib/thomas-persona";
 
   let step = $state(1);
   let registerId = $state("REG-01");
@@ -26,7 +27,7 @@
 
   async function completeShift() {
     if (pin !== "1234") {
-      appState.error = "Invalid PIN. Use 1234 for demo sign-off.";
+      appState.error = "That doesn't seem to be the right sign-off. For this demo, the code is 1234.";
       return;
     }
     submitting = true;
@@ -40,12 +41,7 @@
       );
       appState.shiftLogs = [log, ...appState.shiftLogs];
 
-      const variance = log.variance;
-      const msg =
-        Math.abs(variance) <= 5
-          ? `Register ${registerId} is closed — cash variance of $${variance.toFixed(2)}, well within tolerance. The floor is ready for service.`
-          : `Register ${registerId} closed with a $${variance.toFixed(2)} cash variance. I'd recommend a manager review before we call it a night.`;
-      addChatMessage("assistant", msg);
+      addChatMessage("assistant", butlerShiftNote(registerId, log.variance));
 
       step = 1;
       cashExpected = 500;
