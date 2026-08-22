@@ -13,6 +13,14 @@
   --yellow-bg: rgba(245, 197, 24, 0.12);
   --red: #ff5c5c;
   --red-bg: rgba(255, 92, 92, 0.12);
+  /* Thomas butler panel */
+  --butler-bg: #1a1210;
+  --butler-bg-top: #241815;
+  --butler-border: rgba(212, 165, 90, 0.22);
+  --butler-cream: #f5ebe0;
+  --butler-brass: #d4a55a;
+  --butler-copper: #a67c3d;
+  --butler-muted: #9a8578;
 }
 
 *,

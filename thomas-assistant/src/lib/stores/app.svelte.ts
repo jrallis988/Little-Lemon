@@ -12,7 +12,7 @@ export const appState = $state({
     {
       role: "assistant" as const,
       content:
-        "Thomas online. I'm your local retail copilot — scan inventory, close shifts, and I'll flag discrepancies in real time.",
+        "Good evening. I'm Thomas — your personal beverage butler. Whether you're selecting from our brewery lineup or pairing beer and wine with tonight's meal, I'm at your service. What may I recommend?",
       timestamp: new Date().toISOString(),
     },
   ] as ChatMessage[],

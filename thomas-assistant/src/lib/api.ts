@@ -7,11 +7,10 @@ import type {
 } from "./types";
 import {
   demoAuditTrails,
-  demoChatReplies,
   demoInventoryScans,
   demoShiftLogs,
-  demoSummary,
 } from "./demo-data";
+import { matchDemoReply } from "./thomas-persona";
 
 export const isCloudDemo =
   typeof window !== "undefined" && !("__TAURI_INTERNALS__" in window);
@@ -154,15 +153,8 @@ export async function chatWithAssistant(
   context: string,
 ): Promise<string> {
   if (isCloudDemo) {
-    await new Promise((r) => setTimeout(r, 600));
-    const lower = message.toLowerCase();
-    if (lower.includes("variance") || lower.includes("sku"))
-      return demoChatReplies.variance;
-    if (lower.includes("shift") || lower.includes("cash"))
-      return demoChatReplies.shift;
-    if (lower.includes("audit") || lower.includes("export"))
-      return demoChatReplies.audit;
-    return `${demoChatReplies.default}${context ? ` Context: ${context}` : ""}`;
+    await new Promise((r) => setTimeout(r, 700));
+    return matchDemoReply(message);
   }
   return invoke("chat_with_assistant", { message, context });
 }

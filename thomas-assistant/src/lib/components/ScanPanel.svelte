@@ -37,10 +37,10 @@
       const level = varianceLevel(scan.variance);
       const msg =
         level === "exact"
-          ? `SKU ${scan.sku} verified — exact match.`
+          ? `${scan.sku} is accounted for — stock matches manifest precisely.`
           : level === "minor"
-            ? `SKU ${scan.sku} has minor variance (${scan.variance}). Recount recommended.`
-            : `CRITICAL: SKU ${scan.sku} variance ${scan.variance}. Manager review required.`;
+            ? `A modest variance on ${scan.sku} (${scan.variance} units). I'd suggest a quick recount before service.`
+            : `I'm afraid ${scan.sku} shows a critical shortage of ${Math.abs(scan.variance)} units. Manager review is warranted before we pour another round.`;
       addChatMessage("assistant", msg);
 
       sku = "";

@@ -20,7 +20,7 @@
       <span class="logo">T</span>
       <div>
         <h1>Thomas</h1>
-        <p>Local-first retail assistant</p>
+        <p>Brewery operations · Personal beverage butler</p>
       </div>
     </div>
     <div class="badges">

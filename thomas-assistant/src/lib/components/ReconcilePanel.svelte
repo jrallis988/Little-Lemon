@@ -43,8 +43,8 @@
       const variance = log.variance;
       const msg =
         Math.abs(variance) <= 5
-          ? `Shift closed for ${registerId}. Cash variance $${variance.toFixed(2)} — within tolerance.`
-          : `Shift closed with cash variance $${variance.toFixed(2)} on ${registerId}. Manager review recommended.`;
+          ? `Register ${registerId} is closed — cash variance of $${variance.toFixed(2)}, well within tolerance. The floor is ready for service.`
+          : `Register ${registerId} closed with a $${variance.toFixed(2)} cash variance. I'd recommend a manager review before we call it a night.`;
       addChatMessage("assistant", msg);
 
       step = 1;

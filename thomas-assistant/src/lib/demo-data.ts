@@ -78,14 +78,3 @@ export const demoSummary: InventorySummary = {
   minor_variances: 1,
   exact_matches: 1,
 };
-
-export const demoChatReplies: Record<string, string> = {
-  default:
-    "Thomas online in cloud demo mode. Inventory shows 1 critical variance on SKU-8842 — recommend a recount and manager review before close.",
-  variance:
-    "SKU-8842 is flagged critical (−10 units). Yellow items like SKU-3310 (−2) need recount. SKU-1104 is exact match.",
-  shift:
-    "REG-01 closed with a $2.50 cash variance — within tolerance. Back-room check passed. Ready for next shift.",
-  audit:
-    "3 audit entries logged locally. Export CSV or JSON anytime — zero cloud upload, full on-premise trail.",
-};
