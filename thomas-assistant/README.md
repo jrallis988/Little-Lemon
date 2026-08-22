@@ -50,6 +50,27 @@ npm install
 npm run tauri dev
 ```
 
+### Browser preview (cloud demo)
+
+```bash
+npm run dev          # http://localhost:1420
+npm run build && npm run preview   # production build at :4173
+```
+
+### Deploy to Cloudflare Pages
+
+```bash
+# One-time: wrangler login (or set CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID)
+npm run deploy:cf
+```
+
+For a quick public tunnel during development:
+
+```bash
+npm run build && npm run preview -- --host 0.0.0.0 --port 4173
+cloudflared tunnel --url http://localhost:4173
+```
+
 ## Build
 
 ```bash
