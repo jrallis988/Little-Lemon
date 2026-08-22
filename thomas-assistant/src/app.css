@@ -6,6 +6,7 @@
   --text: #f0f4f8;
   --text-muted: #8b9cb3;
   --accent: #f5c518;
+  --cloud-glow: rgba(126, 200, 255, 0.08);
   --green: #3dd68c;
   --green-bg: rgba(61, 214, 140, 0.12);
   --yellow: #f5c518;
@@ -28,7 +29,10 @@ body {
   font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
   font-size: 16px;
   line-height: 1.5;
-  background: var(--bg);
+  background:
+    radial-gradient(ellipse 80% 50% at 100% 0%, var(--cloud-glow), transparent 50%),
+    radial-gradient(ellipse 60% 40% at 0% 100%, rgba(245, 197, 24, 0.04), transparent 50%),
+    var(--bg);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;

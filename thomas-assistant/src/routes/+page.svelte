@@ -3,6 +3,7 @@
   import ReconcilePanel from "$lib/components/ReconcilePanel.svelte";
   import AuditPanel from "$lib/components/AuditPanel.svelte";
   import ChatDrawer from "$lib/components/ChatDrawer.svelte";
+  import { isCloudDemo } from "$lib/api";
   import { appState, setActiveTab } from "$lib/stores/app.svelte";
   import type { WorkflowTab } from "$lib/types";
 
@@ -22,7 +23,12 @@
         <p>Local-first retail assistant</p>
       </div>
     </div>
-    <span class="local-badge">● On-Premise</span>
+    <div class="badges">
+      <span class="local-badge">● On-Premise</span>
+      {#if isCloudDemo}
+        <span class="cloud-badge">☁ Cloud Demo</span>
+      {/if}
+    </div>
   </header>
 
   {#if appState.error}
@@ -115,6 +121,12 @@
     letter-spacing: 0.08em;
   }
 
+  .badges {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
   .local-badge {
     font-size: 0.8rem;
     font-weight: 600;
@@ -122,6 +134,22 @@
     padding: 0.4rem 0.85rem;
     background: var(--green-bg);
     border-radius: 999px;
+  }
+
+  .cloud-badge {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #7ec8ff;
+    padding: 0.4rem 0.85rem;
+    background: linear-gradient(135deg, rgba(56, 132, 255, 0.2), rgba(126, 200, 255, 0.15));
+    border: 1px solid rgba(126, 200, 255, 0.35);
+    border-radius: 999px;
+    animation: cloud-pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes cloud-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(126, 200, 255, 0.2); }
+    50% { box-shadow: 0 0 12px 2px rgba(126, 200, 255, 0.25); }
   }
 
   .error-banner {
