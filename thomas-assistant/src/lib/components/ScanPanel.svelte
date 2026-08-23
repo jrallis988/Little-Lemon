@@ -20,7 +20,8 @@
 
   async function handleScan() {
     if (!sku.trim()) {
-      appState.error = "If I may — we'll need a product code before I can verify the count.";
+      appState.error =
+        "If I may — we'll need a product code before I can verify the count.";
       return;
     }
     submitting = true;
@@ -65,7 +66,13 @@
     {/if}
   </header>
 
-  <form class="scan-form" onsubmit={(e) => { e.preventDefault(); handleScan(); }}>
+  <form
+    class="scan-form panel-card"
+    onsubmit={(e) => {
+      e.preventDefault();
+      handleScan();
+    }}
+  >
     <label>
       <span>SKU / Barcode</span>
       <input
@@ -119,7 +126,7 @@
   .panel {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 1rem;
     height: 100%;
     overflow: hidden;
   }
@@ -134,61 +141,67 @@
 
   h2 {
     margin: 0;
-    font-size: 1.5rem;
+    font-size: 1.35rem;
     font-weight: 700;
-    letter-spacing: 0.02em;
+    color: var(--text);
   }
 
   h3 {
-    margin: 0 0 0.75rem;
-    font-size: 0.85rem;
+    margin: 0 0 0.65rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--text-muted);
+    font-weight: 600;
   }
 
   .summary-badges {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.4rem;
     flex-wrap: wrap;
   }
 
   .badge {
-    padding: 0.35rem 0.75rem;
+    padding: 0.3rem 0.65rem;
     border-radius: 999px;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     font-weight: 600;
   }
 
-  .badge.exact { background: var(--green-bg); color: var(--green); }
-  .badge.minor { background: var(--yellow-bg); color: var(--yellow); }
-  .badge.critical { background: var(--red-bg); color: var(--red); }
+  .badge.exact {
+    background: var(--green-bg);
+    color: var(--green);
+  }
+  .badge.minor {
+    background: var(--yellow-bg);
+    color: var(--yellow);
+  }
+  .badge.critical {
+    background: var(--red-bg);
+    color: var(--red);
+  }
 
   .scan-form {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    padding: 1.25rem;
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
+    gap: 0.85rem;
   }
 
   label {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
-    font-size: 0.85rem;
+    gap: 0.35rem;
+    font-size: 0.82rem;
     font-weight: 600;
     color: var(--text-muted);
   }
 
   input {
-    min-height: 52px;
-    padding: 0 1rem;
-    font-size: 1.1rem;
-    border-radius: 10px;
-    border: 2px solid var(--border);
+    min-height: 48px;
+    padding: 0 0.85rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
     background: var(--surface);
     color: var(--text);
   }
@@ -201,65 +214,69 @@
   .qty-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    gap: 0.85rem;
   }
-
-  .btn-primary {
-    min-height: 56px;
-    font-size: 1.1rem;
-    font-weight: 700;
-    border: none;
-    border-radius: 10px;
-    background: var(--accent);
-    color: #000;
-    cursor: pointer;
-    transition: transform 0.1s, opacity 0.1s;
-  }
-
-  .btn-primary:hover:not(:disabled) { transform: scale(1.01); }
-  .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
 
   .scan-list {
     flex: 1;
     overflow-y: auto;
-    padding-right: 0.25rem;
   }
 
   .empty {
     color: var(--text-muted);
     margin: 0;
+    font-size: 0.9rem;
   }
 
   .scan-card {
-    padding: 1rem;
-    margin-bottom: 0.75rem;
-    border-radius: 10px;
+    padding: 0.85rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
     border-left: 4px solid;
-    background: var(--surface-2);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left-width: 4px;
   }
 
-  .scan-card.exact { border-color: var(--green); }
-  .scan-card.minor { border-color: var(--yellow); }
-  .scan-card.critical { border-color: var(--red); }
+  .scan-card.exact {
+    border-left-color: var(--green);
+  }
+  .scan-card.minor {
+    border-left-color: var(--yellow);
+  }
+  .scan-card.critical {
+    border-left-color: var(--red);
+  }
 
   .scan-main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.35rem;
   }
 
-  .scan-main strong { font-size: 1.15rem; }
-  .variance { font-weight: 700; }
+  .scan-main strong {
+    font-size: 1rem;
+  }
+  .variance {
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
 
-  .scan-card.exact .variance { color: var(--green); }
-  .scan-card.minor .variance { color: var(--yellow); }
-  .scan-card.critical .variance { color: var(--red); }
+  .scan-card.exact .variance {
+    color: var(--green);
+  }
+  .scan-card.minor .variance {
+    color: var(--yellow);
+  }
+  .scan-card.critical .variance {
+    color: var(--red);
+  }
 
   .scan-meta {
     display: flex;
-    gap: 1rem;
-    font-size: 0.8rem;
+    gap: 0.85rem;
+    font-size: 0.75rem;
     color: var(--text-muted);
     flex-wrap: wrap;
   }

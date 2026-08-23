@@ -115,9 +115,10 @@ pub fn offline_response(user_message: &str, _context: &str) -> String {
         || lower.contains("dinner")
         || lower.contains("food")
     {
-        return "A fine question. With grilled steak, I might steer you toward our house Porter — \
-        roasted malt that stands up beautifully to char. If wine is preferred, a bold Cabernet \
-        would be equally at home. Shall I describe either in more detail?".to_string();
+        return "A fine question. With grilled steak, I might suggest a bold India Pale Ale — \
+        roasted malts and a bright bitterness that stands up beautifully to char. \
+        If wine is your preference, a Cabernet Sauvignon will do nicely. \
+        Shall I recommend something specific from our list?".to_string();
     }
 
     if lower.contains("wine") || lower.contains("salmon") || lower.contains("rosé") || lower.contains("rose") {

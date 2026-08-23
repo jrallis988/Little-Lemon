@@ -1,5 +1,6 @@
-export const THOMAS_GREETING =
-  "Good evening. Thomas, at your service. Whether you're choosing from our cellar and taps, or wondering what might suit tonight's table — I'm here to guide you. What shall we pour?";
+export const STAFF_FIRST_NAME = "James";
+
+export const THOMAS_GREETING = `Good evening, ${STAFF_FIRST_NAME}. I'm here to help with inventory, shifts, recipes, and pairings. What shall we pour?`;
 
 export const suggestedPrompts = [
   "What beer pairs with grilled steak?",
@@ -77,28 +78,28 @@ export function butlerSessionContext(parts: {
 
 const demoChatReplies: Record<string, string> = {
   pairing:
-    "A fine question. With grilled steak, I might steer you toward our house Porter — roasted malt and a gentle bitterness that stands up beautifully to char. If wine is preferred, a bold Cabernet would be equally at home. Shall I describe either in more detail?",
+    "A fine question. With grilled steak, I might suggest a bold India Pale Ale — roasted malts and a bright bitterness that stands up beautifully to char. If wine is your preference, a Cabernet Sauvignon will do nicely. Shall I recommend something specific from our list?",
 
   wine:
     "Salmon calls for something with lift — a crisp Sauvignon Blanc, or perhaps a dry Rosé. If your guest leans toward beer, a witbier with a whisper of citrus can be quite elegant. How is the fish prepared, if I may ask?",
 
   beer:
-    "For someone new to craft beer, I'd begin gently — our Golden Lager is clean and welcoming. When they're ready for a little more character, the Session IPA offers aroma without overwhelming the palate. I'm happy to walk through anything on today's board.",
+    "For someone new to craft beer, I'd begin gently — our Golden Lager is clean and welcoming. When they're ready for a little more character, the Session IPA offers aroma without overwhelming the palate.",
 
   light:
-    "For a summer gathering, might I suggest a Kölsch or a bright Pilsner from the tap? Something effervescent and easy — it keeps good company with burgers and salads without stealing the show.",
+    "For a summer gathering, might I suggest a Kölsch or a bright Pilsner from the tap? Something effervescent and easy — it keeps good company with burgers and salads.",
 
   inventory:
-    "I've been through the back room this evening. One item wants a closer look before service — we're rather short on a popular line. Two others are only slightly off. The rest is in good order. Would you like me to elaborate?",
+    "I've been through the back room this evening. One item wants a closer look before service — we're rather short on a popular line. The rest is in good order.",
 
   shift:
-    "The evening's accounts are nearly settled — the till is balanced to within a few dollars, and the cellar is secured. A quiet close, if I may say so.",
+    "The evening's accounts are nearly settled — the till is balanced to within a few dollars, and the cellar is secured.",
 
   audit:
-    "I've kept careful note of everything this shift — each count, each closing. Should the proprietor wish to review, the records are ready at hand.",
+    "I've kept careful note of everything this shift. Should the proprietor wish to review, the records are ready at hand.",
 
   default:
-    "A pleasure. Ask me what to pour, what suits a meal, or what's worth trying from the brewery. I'm equally happy to quietly keep an eye on what's in the back.",
+    "A pleasure. Ask me what to pour, what suits a meal, or what's worth trying from the brewery.",
 };
 
 export function matchDemoReply(message: string): string {

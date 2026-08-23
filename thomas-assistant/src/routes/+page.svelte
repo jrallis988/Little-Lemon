@@ -3,6 +3,7 @@
   import ReconcilePanel from "$lib/components/ReconcilePanel.svelte";
   import AuditPanel from "$lib/components/AuditPanel.svelte";
   import ChatDrawer from "$lib/components/ChatDrawer.svelte";
+  import ThomasLogo from "$lib/components/ThomasLogo.svelte";
   import { isCloudDemo } from "$lib/api";
   import { appState, setActiveTab } from "$lib/stores/app.svelte";
   import type { WorkflowTab } from "$lib/types";
@@ -17,10 +18,10 @@
 <div class="app-shell">
   <header class="top-bar">
     <div class="brand">
-      <span class="logo">T</span>
+      <ThomasLogo size={48} />
       <div>
         <h1>Thomas</h1>
-        <p>Brewery operations · Personal beverage butler</p>
+        <p>Brewery Operations · Personal Beverage Butler</p>
       </div>
     </div>
     <div class="badges">
@@ -81,44 +82,35 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.75rem 1.25rem;
+    padding: 0.85rem 1.5rem;
     background: var(--surface);
-    border-bottom: 2px solid var(--border);
+    border-bottom: 1px solid var(--border);
     flex-shrink: 0;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
   }
 
   .brand {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-  }
-
-  .logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 10px;
-    background: var(--accent);
-    color: #000;
-    font-weight: 900;
-    font-size: 1.4rem;
+    gap: 0.85rem;
   }
 
   .brand h1 {
     margin: 0;
-    font-size: 1.35rem;
-    font-weight: 800;
-    letter-spacing: 0.04em;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.02em;
   }
 
   .brand p {
     margin: 0;
-    font-size: 0.75rem;
+    font-size: 0.68rem;
     color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
+    font-weight: 500;
   }
 
   .badges {
@@ -128,39 +120,35 @@
   }
 
   .local-badge {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 600;
     color: var(--green);
-    padding: 0.4rem 0.85rem;
+    padding: 0.35rem 0.8rem;
     background: var(--green-bg);
     border-radius: 999px;
+    border: 1px solid rgba(45, 138, 94, 0.2);
   }
 
   .cloud-badge {
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: #7ec8ff;
-    padding: 0.4rem 0.85rem;
-    background: linear-gradient(135deg, rgba(56, 132, 255, 0.2), rgba(126, 200, 255, 0.15));
-    border: 1px solid rgba(126, 200, 255, 0.35);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--cloud-blue);
+    padding: 0.35rem 0.8rem;
+    background: var(--cloud-bg);
     border-radius: 999px;
-    animation: cloud-pulse 3s ease-in-out infinite;
-  }
-
-  @keyframes cloud-pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(126, 200, 255, 0.2); }
-    50% { box-shadow: 0 0 12px 2px rgba(126, 200, 255, 0.25); }
+    border: 1px solid rgba(74, 144, 196, 0.25);
   }
 
   .error-banner {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.75rem 1.25rem;
+    padding: 0.75rem 1.5rem;
     background: var(--red-bg);
     color: var(--red);
     font-weight: 600;
     flex-shrink: 0;
+    border-bottom: 1px solid rgba(196, 74, 74, 0.2);
   }
 
   .error-banner button {
@@ -184,7 +172,8 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    padding: 1rem 1.25rem;
+    padding: 1rem 1.5rem;
+    background: var(--bg);
   }
 
   .tab-nav {
@@ -196,20 +185,21 @@
 
   .tab-nav button {
     flex: 1;
-    min-height: 52px;
-    font-size: 1rem;
-    font-weight: 700;
-    border: 2px solid var(--border);
-    border-radius: 10px;
-    background: var(--surface-2);
+    min-height: 48px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
     color: var(--text-muted);
     cursor: pointer;
     transition: all 0.15s;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
   }
 
   .tab-nav button.active {
     background: var(--accent);
-    color: #000;
+    color: var(--accent-text);
     border-color: var(--accent);
   }
 

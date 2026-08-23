@@ -1,6 +1,7 @@
 <script lang="ts">
   import { chatWithAssistant } from "$lib/api";
   import { suggestedPrompts } from "$lib/thomas-persona";
+  import ThomasLogo from "$lib/components/ThomasLogo.svelte";
   import {
     appState,
     addChatMessage,
@@ -24,8 +25,11 @@
       const context = buildChatContext();
       const reply = await chatWithAssistant(message, context);
       addChatMessage("assistant", reply);
-    } catch (e) {
-      addChatMessage("assistant", "Forgive me — something unexpected arose. Might you try once more?");
+    } catch {
+      addChatMessage(
+        "assistant",
+        "Forgive me — something unexpected arose. Might you try once more?",
+      );
     } finally {
       sending = false;
       messagesEl?.scrollTo({ top: messagesEl.scrollHeight, behavior: "smooth" });
@@ -33,7 +37,6 @@
   }
 
   function usePrompt(prompt: string) {
-    input = prompt;
     sendMessage(prompt);
   }
 
@@ -43,29 +46,27 @@
   });
 </script>
 
-<aside class="butler-panel" class:collapsed={!appState.chatOpen}>
-  <header class="butler-header">
-    <div class="butler-identity">
-      <span class="monogram" aria-hidden="true">T</span>
+<aside class="chat-panel" class:collapsed={!appState.chatOpen}>
+  <header class="chat-header">
+    <div class="chat-identity">
+      <ThomasLogo size={40} />
       <div>
         <h2>Thomas</h2>
-        <span class="title">Your Beverage Butler</span>
+        <span class="subtitle">Your Personal Bartender</span>
       </div>
     </div>
-    <button type="button" class="toggle" onclick={toggleChat} aria-label="Toggle butler panel">
+    <button type="button" class="toggle" onclick={toggleChat} aria-label="Toggle chat">
       {appState.chatOpen ? "→" : "←"}
     </button>
   </header>
 
   {#if appState.chatOpen}
-    <div class="butler-body">
-      <p class="service-note">Beer & wine connoisseur · On-premise</p>
-
+    <div class="chat-body">
       <div class="messages" bind:this={messagesEl}>
         {#each appState.chatMessages as msg, i (i)}
           <div class="exchange {msg.role}">
             {#if msg.role === "assistant"}
-              <span class="avatar" aria-hidden="true">T</span>
+              <ThomasLogo size={28} />
             {/if}
             <div class="bubble">
               <p>{msg.content}</p>
@@ -74,7 +75,7 @@
         {/each}
         {#if sending}
           <div class="exchange assistant typing">
-            <span class="avatar" aria-hidden="true">T</span>
+            <ThomasLogo size={28} />
             <div class="bubble">
               <p>One moment, please…</p>
             </div>
@@ -95,11 +96,17 @@
         </div>
       {/if}
 
-      <form class="butler-input" onsubmit={(e) => { e.preventDefault(); sendMessage(); }}>
+      <form
+        class="chat-input"
+        onsubmit={(e) => {
+          e.preventDefault();
+          sendMessage();
+        }}
+      >
         <input
           type="text"
           bind:value={input}
-          placeholder="Ask Thomas about pairings, our brews, or your meal…"
+          placeholder="Ask Thomas about pairings, our brews, or anything…"
           disabled={sending}
           aria-label="Message to Thomas"
         />
@@ -112,82 +119,65 @@
 </aside>
 
 <style>
-  .butler-panel {
+  .chat-panel {
     display: flex;
     flex-direction: column;
-    width: 400px;
-    min-width: 340px;
-    background: linear-gradient(180deg, var(--butler-bg-top) 0%, var(--butler-bg) 100%);
-    border-left: 1px solid var(--butler-border);
-    box-shadow: -8px 0 24px rgba(0, 0, 0, 0.25);
+    width: 380px;
+    min-width: 320px;
+    background: var(--chat-bg);
+    border-left: 1px solid var(--chat-border);
     transition: width 0.2s ease;
   }
 
-  .butler-panel.collapsed {
-    width: 56px;
-    min-width: 56px;
+  .chat-panel.collapsed {
+    width: 52px;
+    min-width: 52px;
   }
 
-  .butler-header {
+  .chat-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 1.1rem;
-    border-bottom: 1px solid var(--butler-border);
-    background: rgba(0, 0, 0, 0.2);
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--chat-border);
+    background: var(--surface);
   }
 
-  .butler-identity {
+  .chat-identity {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.65rem;
   }
 
-  .monogram {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background: linear-gradient(145deg, var(--butler-brass), var(--butler-copper));
-    color: #1a0f0a;
-    font-family: Georgia, "Times New Roman", serif;
-    font-weight: 700;
-    font-size: 1.2rem;
-    box-shadow: 0 2px 8px rgba(180, 120, 60, 0.35);
-  }
-
-  .butler-identity h2 {
+  .chat-identity h2 {
     margin: 0;
     font-family: Georgia, "Times New Roman", serif;
-    font-size: 1.35rem;
+    font-size: 1.15rem;
     font-weight: 700;
-    color: var(--butler-cream);
-    letter-spacing: 0.03em;
+    color: var(--text);
   }
 
-  .title {
+  .subtitle {
     display: block;
-    font-size: 0.72rem;
-    color: var(--butler-brass);
+    font-size: 0.62rem;
+    color: var(--accent);
     text-transform: uppercase;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
     font-weight: 600;
   }
 
   .toggle {
-    width: 40px;
-    height: 40px;
-    border: 1px solid var(--butler-border);
-    border-radius: 8px;
-    background: transparent;
-    color: var(--butler-cream);
-    font-size: 1.1rem;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--text-muted);
+    font-size: 1rem;
     cursor: pointer;
   }
 
-  .butler-body {
+  .chat-body {
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -195,27 +185,18 @@
     min-height: 0;
   }
 
-  .service-note {
-    margin: 0;
-    padding: 0.6rem 1.1rem 0;
-    font-size: 0.72rem;
-    color: var(--butler-muted);
-    font-style: italic;
-    letter-spacing: 0.04em;
-  }
-
   .messages {
     flex: 1;
     overflow-y: auto;
-    padding: 1rem 1.1rem;
+    padding: 1rem;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.85rem;
   }
 
   .exchange {
     display: flex;
-    gap: 0.6rem;
+    gap: 0.5rem;
     align-items: flex-end;
   }
 
@@ -223,125 +204,115 @@
     flex-direction: row-reverse;
   }
 
-  .avatar {
+  .exchange :global(.logo) {
     flex-shrink: 0;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: Georgia, serif;
-    font-size: 0.75rem;
-    font-weight: 700;
-    background: linear-gradient(145deg, var(--butler-brass), var(--butler-copper));
-    color: #1a0f0a;
   }
 
   .bubble {
-    max-width: 88%;
-    padding: 0.85rem 1rem;
-    border-radius: 14px;
-    font-size: 0.92rem;
-    line-height: 1.55;
+    max-width: 85%;
+    padding: 0.75rem 0.9rem;
+    border-radius: 12px;
+    font-size: 0.88rem;
+    line-height: 1.5;
   }
 
-  .bubble p { margin: 0; }
+  .bubble p {
+    margin: 0;
+  }
 
   .exchange.assistant .bubble {
-    background: rgba(255, 248, 240, 0.07);
-    border: 1px solid var(--butler-border);
-    color: var(--butler-cream);
+    background: var(--chat-bubble-assistant);
+    border: 1px solid var(--chat-border);
+    color: var(--chat-text);
     border-bottom-left-radius: 4px;
     font-family: Georgia, "Times New Roman", serif;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
   }
 
   .exchange.user .bubble {
-    background: linear-gradient(135deg, var(--butler-copper), #8b5a2b);
-    color: #fff8f0;
+    background: var(--chat-bubble-user);
+    color: #fff;
     border-bottom-right-radius: 4px;
   }
 
   .exchange.typing .bubble p {
-    opacity: 0.65;
+    opacity: 0.6;
     font-style: italic;
   }
 
   .prompts {
-    padding: 0 1.1rem 0.75rem;
+    padding: 0 1rem 0.75rem;
     flex-shrink: 0;
   }
 
   .prompts-label {
     display: block;
-    font-size: 0.68rem;
+    font-size: 0.65rem;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--butler-muted);
-    margin-bottom: 0.5rem;
+    letter-spacing: 0.08em;
+    color: var(--chat-muted);
+    margin-bottom: 0.45rem;
+    font-weight: 600;
   }
 
   .prompt-chips {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 0.35rem;
   }
 
   .chip {
     text-align: left;
-    padding: 0.55rem 0.75rem;
-    border-radius: 10px;
-    border: 1px solid var(--butler-border);
-    background: rgba(255, 248, 240, 0.04);
-    color: var(--butler-cream);
-    font-size: 0.82rem;
+    padding: 0.5rem 0.7rem;
+    border-radius: 8px;
+    border: 1px solid var(--chat-border);
+    background: var(--surface);
+    color: var(--chat-text);
+    font-size: 0.8rem;
     cursor: pointer;
-    transition: border-color 0.15s, background 0.15s;
+    transition: border-color 0.15s;
   }
 
   .chip:hover {
-    border-color: var(--butler-brass);
-    background: rgba(212, 165, 90, 0.1);
+    border-color: var(--accent);
   }
 
-  .butler-input {
+  .chat-input {
     display: flex;
     gap: 0.5rem;
-    padding: 1rem 1.1rem;
-    border-top: 1px solid var(--butler-border);
-    background: rgba(0, 0, 0, 0.15);
+    padding: 0.85rem 1rem;
+    border-top: 1px solid var(--chat-border);
+    background: var(--surface);
   }
 
-  .butler-input input {
+  .chat-input input {
     flex: 1;
-    min-height: 48px;
-    padding: 0 0.85rem;
-    border-radius: 10px;
-    border: 1px solid var(--butler-border);
-    background: rgba(0, 0, 0, 0.25);
-    color: var(--butler-cream);
-    font-size: 0.9rem;
-  }
-
-  .butler-input input::placeholder {
-    color: var(--butler-muted);
-    font-style: italic;
-  }
-
-  .butler-input button {
-    min-width: 64px;
-    min-height: 48px;
-    border: none;
-    border-radius: 10px;
-    background: linear-gradient(145deg, var(--butler-brass), var(--butler-copper));
-    color: #1a0f0a;
-    font-weight: 700;
+    min-height: 44px;
+    padding: 0 0.75rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    color: var(--text);
     font-size: 0.85rem;
-    letter-spacing: 0.04em;
+  }
+
+  .chat-input input::placeholder {
+    color: var(--chat-muted);
+  }
+
+  .chat-input button {
+    min-width: 56px;
+    min-height: 44px;
+    border: none;
+    border-radius: 8px;
+    background: var(--accent);
+    color: var(--accent-text);
+    font-weight: 600;
+    font-size: 0.85rem;
     cursor: pointer;
   }
 
-  .butler-input button:disabled {
+  .chat-input button:disabled {
     opacity: 0.45;
     cursor: not-allowed;
   }

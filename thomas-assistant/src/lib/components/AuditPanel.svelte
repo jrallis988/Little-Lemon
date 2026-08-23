@@ -37,17 +37,28 @@
   <header class="panel-header">
     <h2>Audit Trail</h2>
     <div class="export-actions">
-      <button type="button" class="btn-export" disabled={exporting} onclick={() => handleExport("csv")}>
+      <button
+        type="button"
+        class="btn-export"
+        disabled={exporting}
+        onclick={() => handleExport("csv")}
+      >
         Export CSV
       </button>
-      <button type="button" class="btn-export" disabled={exporting} onclick={() => handleExport("json")}>
+      <button
+        type="button"
+        class="btn-export"
+        disabled={exporting}
+        onclick={() => handleExport("json")}
+      >
         Export JSON
       </button>
     </div>
   </header>
 
   <p class="desc">
-    Immutable local logbook — every scan, shift close, and resolution is timestamped on-device.
+    A careful record of the evening — every count and closing, kept here for the
+    proprietor's review.
   </p>
 
   <div class="trail-list">
@@ -57,7 +68,7 @@
       {#each appState.auditTrails as trail (trail.id)}
         <article class="trail-card">
           <div class="trail-top">
-            <span class="action-type">{trail.action_type}</span>
+            <span class="action-type">{trail.action_type.replace("_", " ")}</span>
             <span class="timestamp">{trail.timestamp}</span>
           </div>
           <p class="details">{trail.details}</p>
@@ -72,7 +83,7 @@
   .panel {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.85rem;
     height: 100%;
     overflow: hidden;
   }
@@ -87,34 +98,36 @@
 
   h2 {
     margin: 0;
-    font-size: 1.5rem;
+    font-size: 1.35rem;
     font-weight: 700;
   }
 
   .export-actions {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.4rem;
   }
 
   .btn-export {
-    min-height: 44px;
-    padding: 0 1rem;
+    min-height: 40px;
+    padding: 0 0.85rem;
     font-weight: 600;
+    font-size: 0.85rem;
     border-radius: 8px;
-    border: 2px solid var(--border);
-    background: var(--surface-2);
+    border: 1px solid var(--border);
+    background: var(--surface);
     color: var(--text);
     cursor: pointer;
   }
 
   .btn-export:hover:not(:disabled) {
     border-color: var(--accent);
+    color: var(--accent);
   }
 
   .desc {
     margin: 0;
     color: var(--text-muted);
-    font-size: 0.9rem;
+    font-size: 0.88rem;
   }
 
   .trail-list {
@@ -122,25 +135,29 @@
     overflow-y: auto;
   }
 
-  .empty { color: var(--text-muted); }
+  .empty {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
 
   .trail-card {
-    padding: 1rem;
-    margin-bottom: 0.75rem;
-    border-radius: 10px;
-    background: var(--surface-2);
+    padding: 0.85rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    background: var(--surface);
     border: 1px solid var(--border);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
   }
 
   .trail-top {
     display: flex;
     justify-content: space-between;
     gap: 0.5rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
   }
 
   .action-type {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -148,18 +165,19 @@
   }
 
   .timestamp {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: var(--text-muted);
   }
 
   .details {
-    margin: 0 0 0.5rem;
-    font-size: 0.95rem;
-    line-height: 1.4;
+    margin: 0 0 0.4rem;
+    font-size: 0.88rem;
+    line-height: 1.45;
+    color: var(--text);
   }
 
   .user {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: var(--text-muted);
   }
 </style>
