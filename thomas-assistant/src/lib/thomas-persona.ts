@@ -10,6 +10,15 @@ export const TAB_LABELS = {
   audit: "The Record",
 } as const;
 
+export const THOMAS_TAGLINE = "YOUR PERSONAL BARTENDER";
+
+export const suggestedPrompts = [
+  "What pairs with grilled steak?",
+  "Find me a wine for salmon",
+  "Best IPA for a beginner?",
+  "Something light for a cookout",
+] as const;
+
 export function butlerScanNote(
   sku: string,
   variance: number,

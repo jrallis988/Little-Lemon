@@ -3,7 +3,7 @@
   import ReconcilePanel from "$lib/components/ReconcilePanel.svelte";
   import AuditPanel from "$lib/components/AuditPanel.svelte";
   import ChatDrawer from "$lib/components/ChatDrawer.svelte";
-  import ThomasLogo from "$lib/components/ThomasLogo.svelte";
+  import AppHeader from "$lib/components/AppHeader.svelte";
   import { appState, setActiveTab, setMobileScreen } from "$lib/stores/app.svelte";
   import { TAB_LABELS } from "$lib/thomas-persona";
   import type { MobileScreen, WorkflowTab } from "$lib/types";
@@ -35,11 +35,7 @@
 </script>
 
 <div class="app-shell" class:mobile={isMobile}>
-  <header class="top-bar">
-    <div class="brand">
-      <ThomasLogo variant="full" />
-    </div>
-  </header>
+  <AppHeader compact={isMobile} />
 
   {#if appState.error}
     <div class="error-banner" role="alert">
@@ -108,27 +104,6 @@
     overflow: hidden;
     background: var(--bg);
     color: var(--text);
-  }
-
-  .top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.75rem 1rem;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    flex-shrink: 0;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
-  }
-
-  .brand {
-    display: flex;
-    align-items: center;
-  }
-
-  .brand :global(.logo.full) {
-    max-height: 56px;
-    max-width: 160px;
   }
 
   .error-banner {
@@ -218,29 +193,18 @@
 
   .bottom-nav button {
     flex: 1;
-    min-height: 52px;
+    min-height: 50px;
     border: none;
     background: transparent;
     color: var(--text-muted);
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     font-weight: 600;
     cursor: pointer;
-    padding: 0.5rem 0.25rem;
+    padding: 0.45rem 0.25rem;
   }
 
   .bottom-nav button.active {
     color: var(--accent);
     box-shadow: inset 0 -2px 0 var(--accent);
-  }
-
-  @media (min-width: 769px) {
-    .top-bar {
-      padding: 0.85rem 1.5rem;
-    }
-
-    .brand :global(.logo.full) {
-      max-height: 72px;
-      max-width: 200px;
-    }
   }
 </style>

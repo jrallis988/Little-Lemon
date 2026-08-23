@@ -1,6 +1,7 @@
 <script lang="ts">
   import { chatWithAssistant } from "$lib/api";
-  import ThomasLogo from "$lib/components/ThomasLogo.svelte";
+  import ThomasAvatar from "$lib/components/ThomasAvatar.svelte";
+  import { suggestedPrompts, THOMAS_TAGLINE } from "$lib/thomas-persona";
   import {
     appState,
     addChatMessage,
@@ -17,6 +18,19 @@
   let input = $state("");
   let sending = $state(false);
   let messagesEl: HTMLDivElement | undefined = $state();
+  let inputEl: HTMLTextAreaElement | undefined = $state();
+
+  const showSuggestions = $derived(
+    !sending &&
+      appState.chatMessages.length === 1 &&
+      appState.chatMessages[0]?.role === "assistant",
+  );
+
+  function resizeInput() {
+    if (!inputEl) return;
+    inputEl.style.height = "auto";
+    inputEl.style.height = `${Math.min(inputEl.scrollHeight, 120)}px`;
+  }
 
   async function sendMessage(text?: string) {
     const message = (text ?? input).trim();
@@ -24,6 +38,7 @@
 
     addChatMessage("user", message);
     input = "";
+    resizeInput();
     sending = true;
 
     try {
@@ -52,31 +67,49 @@
   class:collapsed={!fullscreen && !appState.chatOpen}
   class:fullscreen
 >
-  {#if !fullscreen}
-    <header class="chat-header">
-      <ThomasLogo variant="mark" width={36} height={36} />
-      <button type="button" class="toggle" onclick={toggleChat} aria-label="Toggle chat">
-        {appState.chatOpen ? "→" : "←"}
-      </button>
-    </header>
-  {/if}
-
   {#if fullscreen || appState.chatOpen}
+    <header class="chat-header">
+      <ThomasAvatar size={fullscreen ? 32 : 36} />
+      <div class="chat-identity">
+        <strong class="chat-name">Thomas</strong>
+        <span class="chat-tagline">{THOMAS_TAGLINE}</span>
+      </div>
+      {#if !fullscreen}
+        <button type="button" class="toggle" onclick={toggleChat} aria-label="Toggle chat">
+          {appState.chatOpen ? "→" : "←"}
+        </button>
+      {/if}
+    </header>
+
     <div class="chat-body">
       <div class="messages" bind:this={messagesEl}>
         {#each appState.chatMessages as msg, i (i)}
           <div class="exchange {msg.role}">
             {#if msg.role === "assistant"}
-              <ThomasLogo variant="mark" width={28} height={28} />
+              <ThomasAvatar size={28} />
             {/if}
             <div class="bubble">
               <p>{msg.content}</p>
             </div>
           </div>
         {/each}
+
+        {#if showSuggestions}
+          <div class="suggestions">
+            <span class="suggestions-label">Try asking</span>
+            <div class="suggestion-chips">
+              {#each suggestedPrompts as prompt}
+                <button type="button" class="chip" onclick={() => sendMessage(prompt)}>
+                  {prompt}
+                </button>
+              {/each}
+            </div>
+          </div>
+        {/if}
+
         {#if sending}
           <div class="exchange assistant typing">
-            <ThomasLogo variant="mark" width={28} height={28} />
+            <ThomasAvatar size={28} />
             <div class="bubble">
               <p>One moment…</p>
             </div>
@@ -85,24 +118,46 @@
       </div>
 
       <form
-        class="chat-input"
+        class="composer"
         onsubmit={(e) => {
           e.preventDefault();
           sendMessage();
         }}
       >
-        <input
-          type="text"
-          bind:value={input}
-          placeholder="Ask Thomas anything…"
-          disabled={sending}
-          aria-label="Message to Thomas"
-        />
-        <button type="submit" disabled={sending || !input.trim()} aria-label="Send">
-          Ask
-        </button>
+        <div class="composer-field">
+          <textarea
+            bind:this={inputEl}
+            bind:value={input}
+            rows="1"
+            placeholder="Ask Thomas anything…"
+            disabled={sending}
+            aria-label="Message to Thomas"
+            oninput={resizeInput}
+            onkeydown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+              }
+            }}
+          ></textarea>
+          <button
+            type="submit"
+            class="send"
+            disabled={sending || !input.trim()}
+            aria-label="Send message"
+          >
+            ➤
+          </button>
+        </div>
       </form>
     </div>
+  {:else}
+    <header class="chat-header collapsed-only">
+      <ThomasAvatar size={28} />
+      <button type="button" class="toggle" onclick={toggleChat} aria-label="Open chat">
+        ←
+      </button>
+    </header>
   {/if}
 </aside>
 
@@ -131,23 +186,54 @@
 
   .chat-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 0.75rem 1rem;
+    gap: 0.65rem;
+    padding: 0.65rem 0.85rem;
     border-bottom: 1px solid var(--chat-border);
-    background: var(--cream);
+    background: var(--surface);
     flex-shrink: 0;
   }
 
+  .chat-header.collapsed-only {
+    flex-direction: column;
+    justify-content: center;
+    padding: 0.5rem 0.35rem;
+    gap: 0.35rem;
+  }
+
+  .chat-identity {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .chat-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--midnight);
+    line-height: 1.1;
+  }
+
+  .chat-tagline {
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: var(--cognac);
+    line-height: 1.2;
+  }
+
   .toggle {
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
     border: 1px solid var(--border);
-    border-radius: 6px;
+    border-radius: 8px;
     background: var(--surface);
     color: var(--text-muted);
-    font-size: 1rem;
+    font-size: 0.95rem;
     cursor: pointer;
+    flex-shrink: 0;
   }
 
   .chat-body {
@@ -161,10 +247,10 @@
   .messages {
     flex: 1;
     overflow-y: auto;
-    padding: 1rem;
+    padding: 0.85rem;
     display: flex;
     flex-direction: column;
-    gap: 0.85rem;
+    gap: 0.75rem;
     -webkit-overflow-scrolling: touch;
   }
 
@@ -178,16 +264,12 @@
     flex-direction: row-reverse;
   }
 
-  .exchange :global(.logo) {
-    flex-shrink: 0;
-  }
-
   .bubble {
-    max-width: 85%;
-    padding: 0.75rem 0.9rem;
-    border-radius: 12px;
-    font-size: 0.88rem;
-    line-height: 1.5;
+    max-width: min(85%, 28rem);
+    padding: 0.7rem 0.85rem;
+    border-radius: 14px;
+    font-size: 1rem;
+    line-height: 1.45;
   }
 
   .bubble p {
@@ -200,13 +282,15 @@
     color: var(--chat-text);
     border-bottom-left-radius: 4px;
     font-family: Georgia, "Times New Roman", serif;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    font-size: 1rem;
+    box-shadow: 0 1px 2px rgba(8, 21, 35, 0.04);
   }
 
   .exchange.user .bubble {
     background: var(--chat-bubble-user);
     color: #fff;
     border-bottom-right-radius: 4px;
+    font-size: 0.95rem;
   }
 
   .exchange.typing .bubble p {
@@ -214,47 +298,145 @@
     font-style: italic;
   }
 
-  .chat-input {
+  .suggestions {
     display: flex;
-    gap: 0.5rem;
-    padding: 0.75rem 1rem;
-    padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0));
-    border-top: 1px solid var(--chat-border);
-    background: var(--surface);
-    flex-shrink: 0;
+    flex-direction: column;
+    gap: 0.45rem;
+    padding-top: 0.15rem;
   }
 
-  .chat-input input {
-    flex: 1;
-    min-width: 0;
-    min-height: 44px;
-    padding: 0 0.75rem;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    background: var(--surface-2);
-    color: var(--text);
-    font-size: 16px;
-  }
-
-  .chat-input input::placeholder {
+  .suggestions-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     color: var(--chat-muted);
   }
 
-  .chat-input button {
-    min-width: 56px;
-    min-height: 44px;
-    border: none;
-    border-radius: 8px;
-    background: var(--accent);
-    color: var(--accent-text);
-    font-weight: 600;
-    font-size: 0.85rem;
-    cursor: pointer;
-    flex-shrink: 0;
+  .suggestion-chips {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
   }
 
-  .chat-input button:disabled {
-    opacity: 0.45;
+  .chip {
+    text-align: left;
+    padding: 0.55rem 0.75rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--midnight);
+    font-size: 0.88rem;
+    line-height: 1.35;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(8, 21, 35, 0.04);
+  }
+
+  .chip:active {
+    border-color: var(--cognac);
+    background: var(--accent-light);
+  }
+
+  .composer {
+    flex-shrink: 0;
+    padding: 0.65rem 0.85rem;
+    padding-bottom: calc(0.65rem + env(safe-area-inset-bottom, 0));
+    background: var(--surface);
+    border-top: 1px solid var(--chat-border);
+  }
+
+  .composer-field {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.35rem;
+    padding: 0.35rem 0.35rem 0.35rem 0.85rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface-2);
+  }
+
+  .composer-field:focus-within {
+    border-color: var(--cognac);
+    box-shadow: 0 0 0 2px rgba(199, 138, 44, 0.12);
+  }
+
+  .composer-field textarea {
+    flex: 1;
+    min-width: 0;
+    min-height: 24px;
+    max-height: 120px;
+    padding: 0.45rem 0;
+    border: none;
+    background: transparent;
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.4;
+    resize: none;
+    font-family: inherit;
+  }
+
+  .composer-field textarea:focus {
+    outline: none;
+  }
+
+  .composer-field textarea::placeholder {
+    color: var(--chat-muted);
+  }
+
+  .send {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--accent-text);
+    font-size: 0.95rem;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    padding: 0;
+  }
+
+  .send:disabled {
+    opacity: 0.4;
     cursor: not-allowed;
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .chat-panel:not(.fullscreen) {
+      width: 320px;
+      min-width: 280px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .chat-header {
+      padding: 0.55rem 0.75rem;
+    }
+
+    .chat-name {
+      font-size: 0.95rem;
+    }
+
+    .messages {
+      padding: 0.75rem;
+      gap: 0.65rem;
+    }
+
+    .exchange.assistant .bubble {
+      font-size: 1rem;
+      line-height: 1.42;
+      padding: 0.65rem 0.8rem;
+    }
+
+    .chip {
+      padding: 0.5rem 0.7rem;
+      font-size: 0.86rem;
+    }
+
+    .suggestions {
+      gap: 0.35rem;
+    }
   }
 </style>

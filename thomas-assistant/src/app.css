@@ -1,34 +1,34 @@
 :root {
-  --cream: #f9f4ed;
-  --navy: #0a111e;
-  --gold: #b88b4a;
-  --gold-dark: #9a7340;
-  --gold-light: #f5ebe0;
-  --bg: #f9f4ed;
+  --ivory: #f6f0e7;
+  --midnight: #081523;
+  --slate-navy: #172434;
+  --cognac: #c78a2c;
+  --espresso: #211610;
+  --bg: #f6f0e7;
   --surface: #ffffff;
-  --surface-2: #faf7f2;
-  --border: #e8e0d4;
-  --border-strong: #d4c9b8;
-  --text: #0a111e;
-  --text-muted: #5c5a56;
-  --accent: #b88b4a;
-  --accent-dark: #9a7340;
-  --accent-light: #f5ebe0;
+  --surface-2: #fbf8f3;
+  --border: #e2dbd0;
+  --border-strong: #cfc6b8;
+  --text: #081523;
+  --text-muted: #4a5568;
+  --accent: #c78a2c;
+  --accent-dark: #a87324;
+  --accent-light: #f5ead8;
   --accent-text: #ffffff;
   --green: #2d8a5e;
   --green-bg: #e8f5ee;
-  --yellow: #c47d2a;
+  --yellow: #c78a2c;
   --yellow-bg: #fdf3e8;
   --red: #c44a4a;
   --red-bg: #fceaea;
   --cloud-blue: #4a90c4;
   --cloud-bg: #e8f2fa;
-  --chat-bg: #faf7f2;
-  --chat-border: #e8e0d4;
-  --chat-bubble-user: #b88b4a;
+  --chat-bg: #fbf8f3;
+  --chat-border: #e2dbd0;
+  --chat-bubble-user: #c78a2c;
   --chat-bubble-assistant: #ffffff;
-  --chat-text: #0a111e;
-  --chat-muted: #6b6560;
+  --chat-text: #081523;
+  --chat-muted: #5c6573;
 }
 
 *,

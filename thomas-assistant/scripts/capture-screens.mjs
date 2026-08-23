@@ -34,7 +34,7 @@ await page.waitForTimeout(400);
 await shot(page, "03-shift-close-step2");
 
 // Step 3 - sign off
-await page.getByRole("button", { name: /Tap to confirm/ }).click();
+await page.getByRole("button", { name: /Confirm cellar is secured/ }).click();
 await page.waitForTimeout(200);
 await page.getByRole("button", { name: "Continue →" }).click();
 await page.waitForTimeout(400);
