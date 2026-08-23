@@ -13,7 +13,7 @@
   --text-muted: #4a5568;
   --accent: #c78a2c;
   --accent-dark: #a87324;
-  --accent-light: #f5ead8;
+  --accent-light: #f8edd9;
   --accent-text: #ffffff;
   --green: #2d8a5e;
   --green-bg: #e8f5ee;
@@ -21,65 +21,13 @@
   --yellow-bg: #fdf3e8;
   --red: #c44a4a;
   --red-bg: #fceaea;
-  --cloud-blue: #4a90c4;
-  --cloud-bg: #e8f2fa;
-  --chat-bg: #fbf8f3;
+  --cloud-blue: #6b8fa8;
+  --cloud-bg: #f3f6f8;
+  --chat-bg: #f6f0e7;
   --chat-border: #e2dbd0;
   --chat-bubble-user: #c78a2c;
   --chat-bubble-assistant: #ffffff;
   --chat-text: #081523;
   --chat-muted: #5c6573;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-html,
-body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  background: var(--bg);
-  color: var(--text);
-}
-
-.panel-card {
-  padding: 1rem;
-  border-radius: 10px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-}
-
-.btn-primary {
-  min-height: 48px;
-  padding: 0 1rem;
-  border: none;
-  border-radius: 8px;
-  background: var(--accent);
-  color: var(--accent-text);
-  font-weight: 600;
-  font-size: 0.95rem;
-  cursor: pointer;
-}
-
-.btn-primary:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-.btn-secondary {
-  min-height: 48px;
-  padding: 0 1rem;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface);
-  color: var(--text);
-  font-weight: 600;
-  font-size: 0.95rem;
-  cursor: pointer;
+  --placeholder: #7a8494;
 }

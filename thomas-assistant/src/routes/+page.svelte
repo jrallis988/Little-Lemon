@@ -204,7 +204,7 @@
   }
 
   .bottom-nav button.active {
-    color: var(--accent);
-    box-shadow: inset 0 -2px 0 var(--accent);
+    color: var(--cognac);
+    box-shadow: inset 0 -2px 0 var(--cognac);
   }
 </style>

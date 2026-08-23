@@ -58,7 +58,9 @@
 
   $effect(() => {
     appState.chatMessages;
-    messagesEl?.scrollTo({ top: messagesEl.scrollHeight });
+    requestAnimationFrame(() => {
+      messagesEl?.scrollTo({ top: messagesEl.scrollHeight });
+    });
   });
 </script>
 
@@ -68,25 +70,26 @@
   class:fullscreen
 >
   {#if fullscreen || appState.chatOpen}
-    <header class="chat-header">
-      <ThomasAvatar size={fullscreen ? 32 : 36} />
-      <div class="chat-identity">
-        <strong class="chat-name">Thomas</strong>
-        <span class="chat-tagline">{THOMAS_TAGLINE}</span>
+    {#if fullscreen}
+      <div class="assistant-bar">
+        <span class="assistant-tagline">{THOMAS_TAGLINE}</span>
       </div>
-      {#if !fullscreen}
+    {:else}
+      <header class="chat-header">
+        <ThomasAvatar size={38} />
+        <span class="assistant-tagline sidebar">{THOMAS_TAGLINE}</span>
         <button type="button" class="toggle" onclick={toggleChat} aria-label="Toggle chat">
           {appState.chatOpen ? "→" : "←"}
         </button>
-      {/if}
-    </header>
+      </header>
+    {/if}
 
     <div class="chat-body">
       <div class="messages" bind:this={messagesEl}>
         {#each appState.chatMessages as msg, i (i)}
           <div class="exchange {msg.role}">
             {#if msg.role === "assistant"}
-              <ThomasAvatar size={28} />
+              <ThomasAvatar size={32} />
             {/if}
             <div class="bubble">
               <p>{msg.content}</p>
@@ -100,7 +103,8 @@
             <div class="suggestion-chips">
               {#each suggestedPrompts as prompt}
                 <button type="button" class="chip" onclick={() => sendMessage(prompt)}>
-                  {prompt}
+                  <span class="chip-text">{prompt}</span>
+                  <span class="chip-arrow" aria-hidden="true">→</span>
                 </button>
               {/each}
             </div>
@@ -109,7 +113,7 @@
 
         {#if sending}
           <div class="exchange assistant typing">
-            <ThomasAvatar size={28} />
+            <ThomasAvatar size={32} />
             <div class="bubble">
               <p>One moment…</p>
             </div>
@@ -153,7 +157,7 @@
     </div>
   {:else}
     <header class="chat-header collapsed-only">
-      <ThomasAvatar size={28} />
+      <ThomasAvatar size={32} />
       <button type="button" class="toggle" onclick={toggleChat} aria-label="Open chat">
         ←
       </button>
@@ -184,6 +188,27 @@
     border-left: none;
   }
 
+  .assistant-bar {
+    padding: 0.4rem 0.85rem;
+    border-bottom: 1px solid var(--chat-border);
+    background: var(--surface);
+    flex-shrink: 0;
+  }
+
+  .assistant-tagline {
+    display: block;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    color: var(--cognac);
+    line-height: 1.2;
+  }
+
+  .assistant-tagline.sidebar {
+    flex: 1;
+    min-width: 0;
+  }
+
   .chat-header {
     display: flex;
     align-items: center;
@@ -199,29 +224,6 @@
     justify-content: center;
     padding: 0.5rem 0.35rem;
     gap: 0.35rem;
-  }
-
-  .chat-identity {
-    display: flex;
-    flex-direction: column;
-    gap: 0.1rem;
-    flex: 1;
-    min-width: 0;
-  }
-
-  .chat-name {
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--midnight);
-    line-height: 1.1;
-  }
-
-  .chat-tagline {
-    font-size: 0.62rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    color: var(--cognac);
-    line-height: 1.2;
   }
 
   .toggle {
@@ -250,8 +252,9 @@
     padding: 0.85rem;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.7rem;
     -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
   }
 
   .exchange {
@@ -266,10 +269,9 @@
 
   .bubble {
     max-width: min(85%, 28rem);
-    padding: 0.7rem 0.85rem;
+    padding: 0.65rem 0.8rem;
     border-radius: 14px;
-    font-size: 1rem;
-    line-height: 1.45;
+    line-height: 1.38;
   }
 
   .bubble p {
@@ -282,15 +284,16 @@
     color: var(--chat-text);
     border-bottom-left-radius: 4px;
     font-family: Georgia, "Times New Roman", serif;
-    font-size: 1rem;
+    font-size: 1.0625rem;
     box-shadow: 0 1px 2px rgba(8, 21, 35, 0.04);
   }
 
   .exchange.user .bubble {
-    background: var(--chat-bubble-user);
+    background: var(--cognac);
     color: #fff;
     border-bottom-right-radius: 4px;
     font-size: 0.95rem;
+    line-height: 1.35;
   }
 
   .exchange.typing .bubble p {
@@ -301,12 +304,12 @@
   .suggestions {
     display: flex;
     flex-direction: column;
-    gap: 0.45rem;
-    padding-top: 0.15rem;
+    gap: 0.4rem;
+    padding-top: 0.1rem;
   }
 
   .suggestions-label {
-    font-size: 0.68rem;
+    font-size: 0.66rem;
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -316,31 +319,47 @@
   .suggestion-chips {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 0.35rem;
   }
 
   .chip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.65rem;
     text-align: left;
-    padding: 0.55rem 0.75rem;
+    padding: 0.5rem 0.7rem;
     border-radius: 12px;
     border: 1px solid var(--border);
-    background: var(--surface);
+    background: rgba(255, 255, 255, 0.72);
     color: var(--midnight);
-    font-size: 0.88rem;
-    line-height: 1.35;
+    font-size: 0.86rem;
+    line-height: 1.32;
     cursor: pointer;
-    box-shadow: 0 1px 2px rgba(8, 21, 35, 0.04);
+    box-shadow: 0 1px 2px rgba(8, 21, 35, 0.03);
+  }
+
+  .chip-text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .chip-arrow {
+    flex-shrink: 0;
+    color: var(--cognac);
+    font-size: 0.9rem;
+    opacity: 0.75;
   }
 
   .chip:active {
-    border-color: var(--cognac);
+    border-color: rgba(199, 138, 44, 0.45);
     background: var(--accent-light);
   }
 
   .composer {
     flex-shrink: 0;
-    padding: 0.65rem 0.85rem;
-    padding-bottom: calc(0.65rem + env(safe-area-inset-bottom, 0));
+    padding: 0.5rem 0.75rem;
+    padding-bottom: calc(0.5rem + env(safe-area-inset-bottom, 0));
     background: var(--surface);
     border-top: 1px solid var(--chat-border);
   }
@@ -348,8 +367,8 @@
   .composer-field {
     display: flex;
     align-items: flex-end;
-    gap: 0.35rem;
-    padding: 0.35rem 0.35rem 0.35rem 0.85rem;
+    gap: 0.3rem;
+    padding: 0.22rem 0.22rem 0.22rem 0.75rem;
     border: 1px solid var(--border);
     border-radius: 999px;
     background: var(--surface-2);
@@ -357,20 +376,20 @@
 
   .composer-field:focus-within {
     border-color: var(--cognac);
-    box-shadow: 0 0 0 2px rgba(199, 138, 44, 0.12);
+    box-shadow: 0 0 0 2px rgba(199, 138, 44, 0.14);
   }
 
   .composer-field textarea {
     flex: 1;
     min-width: 0;
-    min-height: 24px;
+    min-height: 22px;
     max-height: 120px;
-    padding: 0.45rem 0;
+    padding: 0.38rem 0;
     border: none;
     background: transparent;
     color: var(--text);
     font-size: 16px;
-    line-height: 1.4;
+    line-height: 1.35;
     resize: none;
     font-family: inherit;
   }
@@ -380,27 +399,29 @@
   }
 
   .composer-field textarea::placeholder {
-    color: var(--chat-muted);
+    color: var(--placeholder);
   }
 
   .send {
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
     border: none;
     border-radius: 50%;
-    background: var(--accent);
-    color: var(--accent-text);
-    font-size: 0.95rem;
+    background: var(--cognac);
+    color: #fff;
+    font-size: 0.9rem;
     cursor: pointer;
     flex-shrink: 0;
     display: grid;
     place-items: center;
     padding: 0;
+    box-shadow: 0 1px 3px rgba(199, 138, 44, 0.35);
   }
 
   .send:disabled {
-    opacity: 0.4;
+    opacity: 0.35;
     cursor: not-allowed;
+    box-shadow: none;
   }
 
   @media (min-width: 769px) and (max-width: 1024px) {
@@ -411,32 +432,24 @@
   }
 
   @media (max-width: 768px) {
-    .chat-header {
-      padding: 0.55rem 0.75rem;
-    }
-
-    .chat-name {
-      font-size: 0.95rem;
+    .assistant-bar {
+      padding: 0.35rem 0.75rem;
     }
 
     .messages {
-      padding: 0.75rem;
-      gap: 0.65rem;
+      padding: 0.7rem 0.75rem;
+      gap: 0.6rem;
     }
 
     .exchange.assistant .bubble {
-      font-size: 1rem;
-      line-height: 1.42;
-      padding: 0.65rem 0.8rem;
+      font-size: 1.0625rem;
+      line-height: 1.36;
+      padding: 0.6rem 0.75rem;
     }
 
     .chip {
-      padding: 0.5rem 0.7rem;
-      font-size: 0.86rem;
-    }
-
-    .suggestions {
-      gap: 0.35rem;
+      padding: 0.48rem 0.65rem;
+      font-size: 0.84rem;
     }
   }
 </style>

@@ -13,7 +13,7 @@
 <header class="app-header" class:compact>
   {#if compact}
     <div class="header-main">
-      <ThomasAvatar size={32} />
+      <ThomasAvatar size={46} />
       <div class="header-copy">
         <strong class="name">Thomas</strong>
         <span class="subtitle">Brewery Operations</span>
@@ -51,21 +51,21 @@
   }
 
   .app-header.compact {
-    padding: 0.5rem 0.85rem;
+    padding: 0.45rem 0.85rem;
     align-items: flex-start;
   }
 
   .header-main {
     display: flex;
     align-items: center;
-    gap: 0.65rem;
+    gap: 0.7rem;
     min-width: 0;
   }
 
   .header-copy {
     display: flex;
     flex-direction: column;
-    gap: 0.1rem;
+    gap: 0.08rem;
     min-width: 0;
   }
 
@@ -91,7 +91,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 0.25rem;
+    gap: 0.2rem;
     flex-shrink: 0;
   }
 
@@ -107,13 +107,15 @@
   .status.on-premise {
     color: var(--green);
     background: var(--green-bg);
-    border: 1px solid rgba(45, 138, 94, 0.18);
+    border: 1px solid rgba(45, 138, 94, 0.22);
   }
 
   .status.cloud {
     color: var(--cloud-blue);
     background: var(--cloud-bg);
-    border: 1px solid rgba(74, 144, 196, 0.18);
+    border: 1px solid transparent;
+    font-weight: 500;
+    opacity: 0.85;
   }
 
   @media (min-width: 769px) {
