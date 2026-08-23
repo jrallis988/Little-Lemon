@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PetSmart — adopt, shop, groom, train, and care for your pets. Find adoptable pets, pet supplies, services, and trusted pet-care resources.">
+  <meta name="theme-color" content="#0066b3">
+  <title>PetSmart — Adopt, Shop, Services &amp; Pet Care</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23e31837'/%3E%3Ccircle cx='22' cy='24' r='6' fill='white'/%3E%3Ccircle cx='42' cy='24' r='6' fill='white'/%3E%3Ccircle cx='18' cy='38' r='5' fill='white'/%3E%3Ccircle cx='46' cy='38' r='5' fill='white'/%3E%3Cellipse cx='32' cy='44' rx='8' ry='6' fill='white'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <div class="concept-ribbon">
+    Conceptual redesign by <a href="../index.html">Artistic Fountain</a> — not an official PetSmart site.
+  </div>
+
+  <header class="header">
+    <div class="header-inner">
+      <a class="brand" href="index.html" aria-label="PetSmart home">
+        <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+          <rect width="40" height="40" rx="8" fill="#e31837"/>
+          <circle cx="14" cy="15" r="4" fill="white"/>
+          <circle cx="26" cy="15" r="4" fill="white"/>
+          <circle cx="11" cy="24" r="3.5" fill="white"/>
+          <circle cx="29" cy="24" r="3.5" fill="white"/>
+          <ellipse cx="20" cy="28" rx="5" ry="4" fill="white"/>
+        </svg>
+        <span class="brand-text"><span class="pet">Pet</span><span class="smart">Smart</span></span>
+      </a>
+
+      <nav aria-label="Primary">
+        <ul class="header-nav">
+          <li><a href="shop/index.html">Shop</a></li>
+          <li><a href="services/index.html">Services</a></li>
+          <li><a href="adopt/index.html">Adopt</a></li>
+          <li><a href="care/index.html">Pet Care</a></li>
+          <li><a href="stores/index.html">Stores</a></li>
+        </ul>
+      </nav>
+
+      <form class="header-search search-bar" data-search-form data-base="" role="search" aria-label="Site search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        <input type="search" name="q" placeholder="Search food, toys, brands…" aria-label="Search products">
+      </form>
+
+      <div class="header-actions">
+        <a class="header-action" href="stores/index.html" aria-label="Find a store">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-5.4-7-11a7 7 0 1114 0c0 5.6-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          <span class="action-label">Stores</span>
+        </a>
+        <a class="header-action" href="account/index.html" aria-label="Account">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+          <span class="action-label">Account</span>
+        </a>
+        <a class="header-action" href="shop/cart.html" aria-label="Shopping cart">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.5 12h11l3-8H7"/></svg>
+          <span class="cart-count" hidden>0</span>
+        </a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+    <form class="mobile-search search-bar" data-search-form data-base="" role="search">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+      <input type="search" name="q" placeholder="Search products…" aria-label="Search">
+    </form>
+    <ul>
+      <li><a href="shop/index.html">Shop</a></li>
+      <li><a href="services/index.html">Services</a></li>
+      <li><a href="adopt/index.html">Adopt</a></li>
+      <li><a href="care/index.html">Pet Care</a></li>
+      <li><a href="stores/index.html">Stores</a></li>
+      <li><a href="account/index.html">Account</a></li>
+    </ul>
+  </nav>
+
+  <main id="main">
+    <!-- Hero: Adoption focus -->
+    <section class="hero" aria-label="Pet adoption">
+      <div class="hero__media">
+        <img
+          src="https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=1920&q=85"
+          alt="A happy dog looking up at their owner in warm natural light"
+          width="1920"
+          height="1080"
+          fetchpriority="high"
+        >
+      </div>
+      <div class="hero__scrim" aria-hidden="true"></div>
+      <div class="hero__accent" aria-hidden="true"></div>
+      <div class="hero__content">
+        <p class="hero__eyebrow">PetSmart Charities</p>
+        <h1 class="hero__title">Adopt your new best friend</h1>
+        <p class="hero__text">
+          Every year, millions of pets need loving homes. Through PetSmart Charities,
+          you can discover adoptable dogs and cats at events in stores near you — and
+          help give a pet their second chance.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn-primary btn-lg" href="adopt/index.html">Find a Pet</a>
+          <a class="btn btn-white btn-lg" href="care/article.html?id=bringing-home">New pet checklist</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Primary pathways -->
+    <section class="section" aria-labelledby="pathways-heading">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2 id="pathways-heading">Everything your pet needs</h2>
+          <p>Shop supplies, book services, or explore trusted care resources — all in one place.</p>
+        </div>
+        <div class="grid-3">
+          <a href="shop/index.html" class="pathway-card card__link reveal">
+            <div class="pathway-card__media">
+              <img src="https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=800&q=80" alt="Assortment of premium dog and cat food bags" loading="lazy" width="800" height="600">
+            </div>
+            <div class="pathway-card__scrim" aria-hidden="true"></div>
+            <div class="pathway-card__content">
+              <span class="pathway-card__label">Shop</span>
+              <h3 class="pathway-card__title">Shop top categories</h3>
+              <p class="pathway-card__text">Food, toys, health products, habitats, and everyday essentials for every pet in your family.</p>
+              <span class="btn btn-white">Browse the shop</span>
+            </div>
+          </a>
+          <a href="services/index.html" class="pathway-card card__link reveal">
+            <div class="pathway-card__media">
+              <img src="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=800&q=80" alt="Professional groomer caring for a dog in a salon" loading="lazy" width="800" height="600">
+            </div>
+            <div class="pathway-card__scrim" aria-hidden="true"></div>
+            <div class="pathway-card__content">
+              <span class="pathway-card__label">Services</span>
+              <h3 class="pathway-card__title">Pet services</h3>
+              <p class="pathway-card__text">Grooming, training, Doggie Day Camp, and veterinary connections — book care that fits your schedule.</p>
+              <span class="btn btn-white">Explore services</span>
+            </div>
+          </a>
+          <a href="care/index.html" class="pathway-card card__link reveal">
+            <div class="pathway-card__media">
+              <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=800&q=80" alt="Owner training a happy puppy outdoors" loading="lazy" width="800" height="600">
+            </div>
+            <div class="pathway-card__scrim" aria-hidden="true"></div>
+            <div class="pathway-card__content">
+              <span class="pathway-card__label">Learn &amp; Care</span>
+              <h3 class="pathway-card__title">Pet care tips</h3>
+              <p class="pathway-card__text">Guides on nutrition, grooming, training, health, and safety — written to help you make confident decisions.</p>
+              <span class="btn btn-white">Read resources</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PetSmart Ecosystem -->
+    <section class="section section--pale" aria-labelledby="ecosystem-heading">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2 id="ecosystem-heading">The PetSmart ecosystem</h2>
+          <p>From adoption to everyday care — explore the destinations that matter most.</p>
+        </div>
+        <div class="grid-2" style="gap: var(--space-4);">
+          <a href="adopt/index.html" class="eco-link eco-link--featured reveal">
+            <div class="eco-link__icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21c-4-4-7-7.5-7-11a4 4 0 018 0 4 4 0 018 0c0 3.5-3 7-7 11z"/></svg>
+            </div>
+            <div class="eco-link__text">
+              <strong>Adoption &amp; PetSmart Charities</strong>
+              <span>Find adoptable pets and support rescue organizations nationwide</span>
+            </div>
+          </a>
+          <a href="stores/index.html" class="eco-link eco-link--featured reveal">
+            <div class="eco-link__icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-5.4-7-11a7 7 0 1114 0c0 5.6-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            </div>
+            <div class="eco-link__text">
+              <strong>Store locations</strong>
+              <span>1,600+ stores with in-store adoption, grooming, and training</span>
+            </div>
+          </a>
+          <a href="services/grooming.html" class="eco-link reveal">
+            <div class="eco-link__icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3v7a6 6 0 0012 0V3"/><path d="M6 10h12"/></svg>
+            </div>
+            <div class="eco-link__text">
+              <strong>Grooming salon</strong>
+              <span>Baths, haircuts, and spa treatments</span>
+            </div>
+          </a>
+          <a href="services/training.html" class="eco-link reveal">
+            <div class="eco-link__icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M12 4v16"/></svg>
+            </div>
+            <div class="eco-link__text">
+              <strong>Dog training</strong>
+              <span>Group classes and private sessions</span>
+            </div>
+          </a>
+          <a href="services/day-camp.html" class="eco-link reveal">
+            <div class="eco-link__icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/></svg>
+            </div>
+            <div class="eco-link__text">
+              <strong>Doggie Day Camp</strong>
+              <span>Supervised play and socialization</span>
+            </div>
+          </a>
+          <a href="care/index.html" class="eco-link reveal">
+            <div class="eco-link__icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19h16M6 16V8m6 8V5m6 11v-4"/></svg>
+            </div>
+            <div class="eco-link__text">
+              <strong>Pet care resources</strong>
+              <span>Articles, guides, and seasonal tips</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured products teaser -->
+    <section class="section" aria-labelledby="featured-heading">
+      <div class="container">
+        <div class="section-header reveal" style="display:flex; flex-wrap:wrap; align-items:end; justify-content:space-between; gap:var(--space-4);">
+          <div>
+            <h2 id="featured-heading">Popular right now</h2>
+            <p>Top-rated food, toys, and essentials loved by pet parents.</p>
+          </div>
+          <a class="btn btn-outline" href="shop/index.html">View all products</a>
+        </div>
+        <div class="grid-4" id="featured-products"></div>
+      </div>
+    </section>
+
+    <!-- Featured resources -->
+    <section class="section section--cloud" aria-labelledby="resources-heading">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2 id="resources-heading">Pet care resources</h2>
+          <p>Practical guides to help you care for your companion — not ads, just useful information.</p>
+        </div>
+        <div class="grid-3" id="featured-resources"></div>
+        <p class="text-center" style="margin-top: var(--space-8);">
+          <a class="btn btn-secondary" href="care/index.html">Browse all resources</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="index.html" aria-label="PetSmart home">
+          <span class="brand-text"><span class="pet">Pet</span><span class="smart">Smart</span></span>
+        </a>
+        <p>Everything for pets — adoption, shopping, services, and trusted care resources in one modern experience.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Shop</h3>
+        <ul>
+          <li><a href="shop/index.html">All categories</a></li>
+          <li><a href="shop/category.html?cat=dog-food">Dog food</a></li>
+          <li><a href="shop/category.html?cat=cat-food">Cat food</a></li>
+          <li><a href="shop/category.html?cat=toys">Toys</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Services</h3>
+        <ul>
+          <li><a href="services/grooming.html">Grooming</a></li>
+          <li><a href="services/training.html">Training</a></li>
+          <li><a href="services/day-camp.html">Doggie Day Camp</a></li>
+          <li><a href="services/index.html">All services</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Adopt &amp; Care</h3>
+        <ul>
+          <li><a href="adopt/index.html">Find a pet</a></li>
+          <li><a href="care/index.html">Pet care hub</a></li>
+          <li><a href="stores/index.html">Store locator</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Account</h3>
+        <ul>
+          <li><a href="account/index.html">Sign in</a></li>
+          <li><a href="account/orders.html">Order history</a></li>
+          <li><a href="account/favorites.html">Saved items</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 PetSmart redesign concept — Artistic Fountain</span>
+      <span>Not affiliated with PetSmart, Inc.</span>
+    </div>
+  </footer>
+
+  <div class="a11y-panel" role="region" aria-label="Accessibility options">
+    <div class="a11y-menu" id="a11y-menu">
+      <button type="button" id="a11y-large-text">Larger text</button>
+      <button type="button" id="a11y-high-contrast">High contrast</button>
+      <button type="button" id="a11y-reduce-motion">Reduce motion</button>
+    </div>
+    <button class="a11y-toggle" type="button" aria-label="Accessibility options" aria-expanded="false" aria-controls="a11y-menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+    </button>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    PetSmartUI.renderProductGrid(
+      document.getElementById('featured-products'),
+      PetSmartData.getProducts({ sort: 'rating', limit: 4 })
+    );
+    document.getElementById('featured-resources').innerHTML =
+      PetSmartData.articles.slice(0, 3).map(a => PetSmartUI.resourceCard(a)).join('');
+  </script>
+</body>
+</html>

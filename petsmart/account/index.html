@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account — PetSmart</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="header"><div class="header-inner">
+    <a class="brand" href="../index.html"><span class="brand-text"><span class="pet">Pet</span><span class="smart">Smart</span></span></a>
+  </div></header>
+
+  <main id="main">
+    <div class="page-hero"><div class="page-hero__inner container" style="max-width:480px;">
+      <h1>Sign in to your account</h1>
+      <p>Manage orders, saved items, and service appointments.</p>
+    </div></div>
+    <div class="container" style="max-width:480px; padding:var(--space-8) var(--space-4);">
+      <form aria-label="Sign in">
+        <div class="form-group">
+          <label class="form-label" for="email">Email</label>
+          <input class="form-input" type="email" id="email" name="email" autocomplete="email" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <input class="form-input" type="password" id="password" name="password" autocomplete="current-password" required>
+        </div>
+        <button class="btn btn-primary" type="submit" style="width:100%;">Sign in</button>
+      </form>
+      <nav style="margin-top:var(--space-8); padding-top:var(--space-6); border-top:var(--border);" aria-label="Account links">
+        <ul style="list-style:none; padding:0;">
+          <li style="margin-bottom:var(--space-3);"><a href="orders.html">Order history</a></li>
+          <li style="margin-bottom:var(--space-3);"><a href="favorites.html">Saved items</a></li>
+        </ul>
+      </nav>
+    </div>
+  </main>
+  <script src="../js/app.js"></script>
+</body>
+</html>

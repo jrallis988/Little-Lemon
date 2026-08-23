@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Article — PetSmart Pet Care</title>
+  <link rel="stylesheet" href="../css/main.css">
+  <style>
+    .article-body { max-width: 42rem; margin: 0 auto; padding: var(--space-8) var(--space-4); }
+    .article-body h2 { margin: var(--space-8) 0 var(--space-4); font-size: var(--text-2xl); }
+    .article-body p, .article-body li { color: var(--ps-slate); line-height: var(--leading-relaxed); margin-bottom: var(--space-4); }
+    .article-hero img { width: 100%; max-height: 400px; object-fit: cover; }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="header"><div class="header-inner">
+    <a class="brand" href="../index.html"><span class="brand-text"><span class="pet">Pet</span><span class="smart">Smart</span></span></a>
+    <nav aria-label="Primary"><ul class="header-nav">
+      <li><a href="../care/index.html" aria-current="page">Pet Care</a></li>
+    </ul></nav>
+  </div></header>
+
+  <main id="main">
+    <article id="article-content">
+      <div class="article-hero" id="article-hero"></div>
+      <div class="article-body" id="article-body"></div>
+    </article>
+  </main>
+
+  <script src="../js/data.js"></script><script src="../js/app.js"></script>
+  <script>
+    const id = PetSmartParams.get('id') || 'bringing-home';
+    const article = PetSmartData.getArticle(id);
+    const content = {
+      'bringing-home': {
+        body: `<ol class="breadcrumb"><li><a href="../index.html">Home</a></li><li><a href="index.html">Pet Care</a></li><li>Article</li></ol>
+          <p class="badge badge--blue" style="margin-bottom:var(--space-4);">New Pet</p>
+          <h1>Bringing Home a New Pet: Your First-Week Checklist</h1>
+          <p class="text-muted">${article?.readTime || '8 min'} read</p>
+          <h2>Before arrival</h2><p>Set up a quiet space with a bed, food and water bowls, and appropriate toys. Pet-proof your home by securing cords, chemicals, and small objects.</p>
+          <h2>First 24 hours</h2><p>Keep introductions calm. Let your pet explore at their own pace. Stick to a consistent feeding schedule and establish a potty routine immediately.</p>
+          <h2>First vet visit</h2><p>Schedule a wellness exam within the first week. Bring any adoption or breeder records. Discuss vaccinations, parasite prevention, and microchipping.</p>
+          <h2>Supplies checklist</h2><ul><li>Food appropriate for age and species</li><li>Collar, ID tag, and leash or carrier</li><li>Waste bags or litter box</li><li>Enrichment toys</li><li>Grooming basics</li></ul>`
+      },
+      'nutrition-basics': {
+        body: `<p class="badge badge--blue">Nutrition</p><h1>Pet Nutrition Basics</h1>
+          <h2>Reading labels</h2><p>Look for an AAFCO nutritional adequacy statement. The first ingredients should be recognizable protein sources.</p>
+          <h2>Life stages</h2><p>Puppies, kittens, adults, and seniors have different caloric and nutrient needs. Choose formulas matched to your pet's life stage.</p>`
+      },
+      'grooming-at-home': {
+        body: `<p class="badge badge--blue">Grooming</p><h1>At-Home Grooming</h1>
+          <h2>Brushing</h2><p>Regular brushing reduces shedding and prevents mats. Frequency depends on coat type.</p>
+          <h2>Nail care</h2><p>Trim nails every 2–4 weeks. Use pet-specific clippers and reward calm behavior.</p>`
+      },
+      'puppy-training': {
+        body: `<p class="badge badge--blue">Training</p><h1>Puppy Training Foundations</h1>
+          <h2>Consistency</h2><p>Use the same cues and rewards every time. Short, positive sessions work better than long drills.</p>
+          <h2>Socialization</h2><p>Expose your puppy to new people, sounds, and environments during their critical socialization window.</p>`
+      },
+      'seasonal-safety': {
+        body: `<p class="badge badge--blue">Safety</p><h1>Seasonal Pet Safety</h1>
+          <h2>Heat</h2><p>Never leave pets in parked cars. Walk during cooler hours and provide plenty of water.</p>
+          <h2>Cold</h2><p>Limit outdoor time in freezing weather. Watch for signs of hypothermia in small or short-coated breeds.</p>`
+      },
+      'senior-pet-care': {
+        body: `<p class="badge badge--blue">Health</p><h1>Caring for Senior Pets</h1>
+          <h2>Wellness visits</h2><p>Increase vet checkups to twice yearly. Early detection improves outcomes for age-related conditions.</p>
+          <h2>Comfort</h2><p>Orthopedic bedding, ramps, and adjusted exercise help senior pets stay mobile and comfortable.</p>`
+      }
+    };
+    if (article) {
+      document.title = `${article.title} — PetSmart`;
+      document.getElementById('article-hero').innerHTML = `<img src="${article.image}" alt="">`;
+      document.getElementById('article-body').innerHTML = content[id]?.body || `<h1>${article.title}</h1><p>${article.excerpt}</p>`;
+    } else {
+      document.getElementById('article-body').innerHTML = '<div class="empty-state"><h3>Article not found</h3><a href="index.html">Back to hub</a></div>';
+    }
+  </script>
+</body>
+</html>

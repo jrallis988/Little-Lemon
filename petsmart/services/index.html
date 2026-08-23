@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PetSmart services — grooming, dog training, Doggie Day Camp, and veterinary connections.">
+  <title>Services — PetSmart</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="header"><div class="header-inner">
+    <a class="brand" href="../index.html"><span class="brand-text"><span class="pet">Pet</span><span class="smart">Smart</span></span></a>
+    <nav aria-label="Primary"><ul class="header-nav">
+      <li><a href="../shop/index.html">Shop</a></li>
+      <li><a href="index.html" aria-current="page">Services</a></li>
+      <li><a href="../adopt/index.html">Adopt</a></li>
+      <li><a href="../care/index.html">Pet Care</a></li>
+      <li><a href="../stores/index.html">Stores</a></li>
+    </ul></nav>
+    <div class="header-actions">
+      <a class="header-action" href="../shop/cart.html" aria-label="Cart"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.5 12h11l3-8H7"/></svg><span class="cart-count" hidden>0</span></a>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span><span></span></button>
+    </div>
+  </div></header>
+  <nav class="mobile-nav" id="mobile-nav"><ul><li><a href="index.html">Services</a></li></ul></nav>
+
+  <main id="main">
+    <div class="page-hero">
+      <div class="page-hero__inner container">
+        <h1>Pet services</h1>
+        <p>Professional grooming, training, day camp, and veterinary connections — book care that keeps your pet healthy and happy.</p>
+      </div>
+    </div>
+    <section class="section">
+      <div class="container">
+        <div class="grid-2" id="services-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="footer-bottom" style="border:none;margin:0;padding:0;"><span>© 2026 PetSmart redesign concept</span></div></footer>
+  <script src="../js/data.js"></script><script src="../js/ui.js"></script><script src="../js/app.js"></script>
+  <script>
+    const links = { grooming: 'grooming.html', training: 'training.html', 'day-camp': 'day-camp.html', vet: '../stores/index.html' };
+    document.getElementById('services-grid').innerHTML = PetSmartData.services.map(s => `
+      <article class="card reveal">
+        <div class="card__media"><img src="${s.image}" alt="" loading="lazy"></div>
+        <div class="card__body">
+          <h2 class="card__title">${s.name}</h2>
+          <p class="card__text">${s.description}</p>
+          <a class="btn btn-secondary" href="${links[s.id] || 'index.html'}" style="margin-top:var(--space-4);">${s.cta}</a>
+        </div>
+      </article>
+    `).join('');
+  </script>
+</body>
+</html>

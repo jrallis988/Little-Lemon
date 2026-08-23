@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout — PetSmart</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="header"><div class="header-inner">
+    <a class="brand" href="../index.html"><span class="brand-text"><span class="pet">Pet</span><span class="smart">Smart</span></span></a>
+  </div></header>
+
+  <main id="main">
+    <div class="page-hero"><div class="page-hero__inner container"><h1>Checkout</h1></div></div>
+    <div class="container" style="max-width:var(--container-lg); padding:var(--space-8) var(--space-4);">
+      <form id="checkout-form" style="display:grid; gap:var(--space-10);">
+        <section aria-labelledby="shipping-heading">
+          <h2 id="shipping-heading" style="margin-bottom:var(--space-6);">Shipping</h2>
+          <div class="grid-2">
+            <div class="form-group"><label class="form-label" for="first">First name</label><input class="form-input" id="first" required></div>
+            <div class="form-group"><label class="form-label" for="last">Last name</label><input class="form-input" id="last" required></div>
+          </div>
+          <div class="form-group"><label class="form-label" for="address">Address</label><input class="form-input" id="address" required></div>
+          <div class="grid-2">
+            <div class="form-group"><label class="form-label" for="city">City</label><input class="form-input" id="city" required></div>
+            <div class="form-group"><label class="form-label" for="zip">ZIP</label><input class="form-input" id="zip" required></div>
+          </div>
+        </section>
+        <section aria-labelledby="payment-heading">
+          <h2 id="payment-heading" style="margin-bottom:var(--space-6);">Payment</h2>
+          <div class="form-group"><label class="form-label" for="card">Card number</label><input class="form-input" id="card" inputmode="numeric" placeholder="1234 5678 9012 3456" required></div>
+          <div class="grid-2">
+            <div class="form-group"><label class="form-label" for="exp">Expiration</label><input class="form-input" id="exp" placeholder="MM/YY" required></div>
+            <div class="form-group"><label class="form-label" for="cvv">CVV</label><input class="form-input" id="cvv" inputmode="numeric" required></div>
+          </div>
+        </section>
+        <aside class="cart-summary">
+          <h2 style="font-size:var(--text-xl); margin-bottom:var(--space-4);">Order summary</h2>
+          <p style="display:flex; justify-content:space-between; margin-bottom:var(--space-4);"><span>Subtotal</span><span id="checkout-total">$0.00</span></p>
+          <button class="btn btn-primary" type="submit" style="width:100%;">Place order</button>
+          <p class="form-hint" style="margin-top:var(--space-3);">Demo checkout — no payment is processed.</p>
+        </aside>
+      </form>
+    </div>
+  </main>
+
+  <script src="../js/data.js"></script><script src="../js/app.js"></script>
+  <script>
+    const cart = PetSmartCart.get();
+    let total = 0;
+    cart.forEach(item => {
+      const p = PetSmartData.getProduct(item.id);
+      if (p) total += (p.salePrice || p.price) * item.qty;
+    });
+    document.getElementById('checkout-total').textContent = PetSmartData.formatPrice(total);
+    document.getElementById('checkout-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      PetSmartCart.clear();
+      alert('Order placed! (Demo)');
+      window.location.href = '../account/orders.html';
+    });
+  </script>
+</body>
+</html>

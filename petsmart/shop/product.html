@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product — PetSmart Shop</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="header"><div class="header-inner">
+    <a class="brand" href="../index.html"><span class="brand-text"><span class="pet">Pet</span><span class="smart">Smart</span></span></a>
+    <nav aria-label="Primary"><ul class="header-nav">
+      <li><a href="index.html" aria-current="page">Shop</a></li>
+      <li><a href="../services/index.html">Services</a></li>
+      <li><a href="../adopt/index.html">Adopt</a></li>
+      <li><a href="../care/index.html">Pet Care</a></li>
+      <li><a href="../stores/index.html">Stores</a></li>
+    </ul></nav>
+    <div class="header-actions">
+      <a class="header-action" href="cart.html" aria-label="Cart"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.5 12h11l3-8H7"/></svg><span class="cart-count" hidden>0</span></a>
+    </div>
+  </div></header>
+
+  <main id="main">
+    <div class="container" style="padding-top:var(--space-6);">
+      <ol class="breadcrumb"><li><a href="../index.html">Home</a></li><li><a href="index.html">Shop</a></li><li id="crumb-product">Product</li></ol>
+    </div>
+    <div class="product-detail" id="product-detail"></div>
+    <section class="section section--pale">
+      <div class="container">
+        <h2 style="margin-bottom:var(--space-8);">You may also like</h2>
+        <div class="grid-4" id="related-products"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../js/data.js"></script><script src="../js/ui.js"></script><script src="../js/app.js"></script>
+  <script>
+    const id = PetSmartParams.get('id') || 'p1';
+    const product = PetSmartData.getProduct(id);
+    const container = document.getElementById('product-detail');
+    if (!product) {
+      container.innerHTML = '<div class="empty-state"><h3>Product not found</h3><a class="btn btn-primary" href="index.html">Back to shop</a></div>';
+    } else {
+      document.title = `${product.name} — PetSmart`;
+      document.getElementById('crumb-product').textContent = product.name;
+      const price = product.salePrice || product.price;
+      const hasSale = product.salePrice && product.salePrice < product.price;
+      container.innerHTML = `
+        <div class="product-gallery">
+          <img src="${product.image}" alt="${product.name}" width="500" height="500">
+        </div>
+        <div>
+          <p class="text-muted text-small" style="text-transform:uppercase; letter-spacing:0.04em;">${product.brand}</p>
+          <h1 style="margin:var(--space-3) 0 var(--space-4);">${product.name}</h1>
+          <p aria-label="Rated ${product.rating} out of 5">${PetSmartData.renderStars(product.rating)} · ${product.reviews.toLocaleString()} reviews</p>
+          <p style="font-size:var(--text-3xl); font-weight:700; margin:var(--space-6) 0; color:${hasSale ? 'var(--ps-red)' : 'inherit'};">
+            ${PetSmartData.formatPrice(price)}
+            ${hasSale ? `<span style="font-size:var(--text-lg); color:var(--ps-gray); text-decoration:line-through; font-weight:400;">${PetSmartData.formatPrice(product.price)}</span>` : ''}
+          </p>
+          <p class="text-muted" style="margin-bottom:var(--space-6);">Free shipping on orders over $49. Pick up in store available at participating locations.</p>
+          <div style="display:flex; gap:var(--space-4); flex-wrap:wrap;">
+            <button class="btn btn-primary btn-lg" data-add-to-cart="${product.id}">Add to cart</button>
+            <a class="btn btn-outline btn-lg" href="../account/favorites.html">Save for later</a>
+          </div>
+          <div style="margin-top:var(--space-8); padding:var(--space-5); background:var(--ps-blue-pale); border-radius:var(--radius-lg);">
+            <h2 style="font-size:var(--text-lg); margin-bottom:var(--space-2);">Product details</h2>
+            <p class="text-muted text-small">Premium quality ${product.brand} product. Formulated for everyday nutrition and wellness. See packaging for feeding guidelines.</p>
+          </div>
+        </div>
+      `;
+      const related = PetSmartData.getProducts({ category: product.category }).filter(p => p.id !== product.id).slice(0, 4);
+      PetSmartUI.renderProductGrid(document.getElementById('related-products'), related, '../');
+    }
+  </script>
+</body>
+</html>
