@@ -92,6 +92,16 @@ export default function AboutPage() {
                   <p className="text-sm uppercase tracking-[0.16em] text-foam">{item.kind}</p>
                   <h3 className="mt-2 font-display text-2xl font-bold text-chalk">{item.org}</h3>
                   <p className="mt-2 text-base text-sand/85">{item.role}</p>
+                  {item.bullets ? (
+                    <ul className="mt-4 space-y-2 text-sm leading-relaxed text-sand/75 md:text-base">
+                      {item.bullets.map((bullet) => (
+                        <li key={bullet} className="flex gap-3">
+                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-foam" aria-hidden="true" />
+                          <span>{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
                 </li>
               ))}
               <li className="border-t border-sand/14" aria-hidden="true" />
@@ -113,7 +123,7 @@ export default function AboutPage() {
                 Credentials that back the craft.
               </h2>
               <p className="reveal mt-4 text-base leading-relaxed text-sand/85 md:text-lg">
-                Update these with your verified certificates and links as you finalize them.
+                Professional certificates and coursework that reinforce how I build for the web.
               </p>
             </div>
 
@@ -130,6 +140,16 @@ export default function AboutPage() {
                   <p className="mt-3 max-w-2xl text-base leading-relaxed text-sand/85">
                     {cert.summary}
                   </p>
+                  {cert.href ? (
+                    <a
+                      href={cert.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-4 inline-block text-sm font-semibold text-foam transition-colors hover:text-foam-soft"
+                    >
+                      {cert.linkLabel || "View credential"} →
+                    </a>
+                  ) : null}
                 </li>
               ))}
               <li className="border-t border-sand/14" aria-hidden="true" />

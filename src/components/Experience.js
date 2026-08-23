@@ -23,6 +23,16 @@ export default function Experience() {
               <p className="text-sm uppercase tracking-[0.16em] text-foam">{item.kind}</p>
               <h3 className="mt-2 font-display text-2xl font-bold text-chalk">{item.org}</h3>
               <p className="mt-2 text-base text-sand/85">{item.role}</p>
+              {item.bullets ? (
+                <ul className="mt-4 space-y-2 text-sm leading-relaxed text-sand/75 md:text-base">
+                  {item.bullets.map((bullet) => (
+                    <li key={bullet} className="flex gap-3">
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-foam" aria-hidden="true" />
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
             </li>
           ))}
           <li className="border-t border-sand/14" aria-hidden="true" />
