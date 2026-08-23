@@ -4,6 +4,13 @@
 
   let exporting = $state(false);
 
+  const actionLabels: Record<string, string> = {
+    cellar_check: "Cellar check",
+    close_night: "Close the night",
+    inventory_scan: "Cellar check",
+    shift_close: "Close the night",
+  };
+
   async function loadTrails() {
     appState.auditTrails = await listAuditTrails();
   }
@@ -18,7 +25,7 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `thomas-audit-${Date.now()}.${format}`;
+      a.download = `thomas-record-${Date.now()}.${format}`;
       a.click();
       URL.revokeObjectURL(url);
     } catch (e) {
@@ -28,6 +35,10 @@
     }
   }
 
+  function labelFor(actionType: string): string {
+    return actionLabels[actionType] ?? actionType.replace(/_/g, " ");
+  }
+
   $effect(() => {
     loadTrails();
   });
@@ -35,7 +46,7 @@
 
 <section class="panel">
   <header class="panel-header">
-    <h2>Audit Trail</h2>
+    <h2>The Record</h2>
     <div class="export-actions">
       <button
         type="button"
@@ -43,7 +54,7 @@
         disabled={exporting}
         onclick={() => handleExport("csv")}
       >
-        Export CSV
+        For the proprietor (CSV)
       </button>
       <button
         type="button"
@@ -51,7 +62,7 @@
         disabled={exporting}
         onclick={() => handleExport("json")}
       >
-        Export JSON
+        For the proprietor (JSON)
       </button>
     </div>
   </header>
@@ -63,12 +74,12 @@
 
   <div class="trail-list">
     {#if appState.auditTrails.length === 0}
-      <p class="empty">No audit entries yet. Actions will appear here automatically.</p>
+      <p class="empty">Nothing noted yet. Thomas will keep the record as you work.</p>
     {:else}
       {#each appState.auditTrails as trail (trail.id)}
         <article class="trail-card">
           <div class="trail-top">
-            <span class="action-type">{trail.action_type.replace("_", " ")}</span>
+            <span class="action-type">{labelFor(trail.action_type)}</span>
             <span class="timestamp">{trail.timestamp}</span>
           </div>
           <p class="details">{trail.details}</p>
@@ -98,6 +109,7 @@
 
   h2 {
     margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
     font-size: 1.35rem;
     font-weight: 700;
   }
@@ -105,13 +117,14 @@
   .export-actions {
     display: flex;
     gap: 0.4rem;
+    flex-wrap: wrap;
   }
 
   .btn-export {
     min-height: 40px;
     padding: 0 0.85rem;
     font-weight: 600;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     border-radius: 8px;
     border: 1px solid var(--border);
     background: var(--surface);
@@ -128,6 +141,7 @@
     margin: 0;
     color: var(--text-muted);
     font-size: 0.88rem;
+    font-style: italic;
   }
 
   .trail-list {
@@ -138,6 +152,7 @@
   .empty {
     color: var(--text-muted);
     font-size: 0.9rem;
+    font-style: italic;
   }
 
   .trail-card {

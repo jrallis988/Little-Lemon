@@ -2,6 +2,7 @@
   import { recordShiftLog, listShiftLogs } from "$lib/api";
   import { appState, currentUser, addChatMessage } from "$lib/stores/app.svelte";
   import { butlerShiftNote } from "$lib/thomas-persona";
+  import { tillGapLabel, tillLabel } from "$lib/product-catalog";
 
   let step = $state(1);
   let registerId = $state("REG-01");
@@ -11,7 +12,7 @@
   let pin = $state("");
   let submitting = $state(false);
 
-  const steps = ["Cash Count", "Back-Room Check", "Sign-Off"];
+  const steps = ["Count the till", "Secure the cellar", "Sign off"];
 
   async function loadLogs() {
     appState.shiftLogs = await listShiftLogs();
@@ -28,7 +29,7 @@
   async function completeShift() {
     if (pin !== "1234") {
       appState.error =
-        "That doesn't seem to be the right sign-off. For this demo, the code is 1234.";
+        "That doesn't seem right. For this demo, the sign-off is 1234.";
       return;
     }
     submitting = true;
@@ -62,7 +63,7 @@
 
 <section class="panel">
   <header class="panel-header">
-    <h2>Shift Reconciliation</h2>
+    <h2>Close the Night</h2>
     <div class="step-indicator">
       {#each steps as label, i}
         <span class="step" class:active={step === i + 1} class:done={step > i + 1}>
@@ -72,37 +73,39 @@
     </div>
   </header>
 
+  <p class="lead">Three steps to close the house — Thomas will walk you through and keep the record.</p>
+
   <div class="step-content">
     {#if step === 1}
       <div class="step-panel panel-card">
-        <h3>Step 1 — Register / Drawer Cash Count</h3>
+        <h3>Step 1 — Count the till</h3>
         <label>
-          <span>Register ID</span>
+          <span>Which till?</span>
           <input type="text" bind:value={registerId} />
         </label>
         <div class="qty-row">
           <label>
-            <span>Expected Cash ($)</span>
+            <span>Should have ($)</span>
             <input type="number" step="0.01" bind:value={cashExpected} />
           </label>
           <label>
-            <span>Actual Cash ($)</span>
+            <span>Counted ($)</span>
             <input type="number" step="0.01" bind:value={cashActual} />
           </label>
         </div>
-        <p class="variance-preview">
-          Variance:
+        <p class="diff-preview">
+          Difference:
           <strong class:warn={Math.abs(cashActual - cashExpected) > 5}>
-            ${(cashActual - cashExpected).toFixed(2)}
+            {tillGapLabel(cashActual - cashExpected)}
           </strong>
         </p>
         <button type="button" class="btn-primary" onclick={nextStep}>Continue →</button>
       </div>
     {:else if step === 2}
       <div class="step-panel panel-card">
-        <h3>Step 2 — Back-Room Status Check</h3>
+        <h3>Step 2 — Secure the cellar</h3>
         <p class="check-desc">
-          Confirm back-room inventory is secured and discrepancies are logged.
+          Confirm the cellar is locked and any discrepancies are noted.
         </p>
         <button
           type="button"
@@ -111,26 +114,21 @@
           onclick={() => (backroomOk = !backroomOk)}
         >
           <span class="box-icon" aria-hidden="true">📦</span>
-          {backroomOk ? "✓ Back-room secured" : "Tap to confirm back-room status"}
+          {backroomOk ? "✓ Cellar secured" : "Tap to confirm cellar is secured"}
         </button>
         <div class="nav-row">
           <button type="button" class="btn-secondary" onclick={prevStep}>← Back</button>
-          <button
-            type="button"
-            class="btn-primary"
-            disabled={!backroomOk}
-            onclick={nextStep}
-          >
+          <button type="button" class="btn-primary" disabled={!backroomOk} onclick={nextStep}>
             Continue →
           </button>
         </div>
       </div>
     {:else}
       <div class="step-panel panel-card">
-        <h3>Step 3 — Digital Sign-Off</h3>
-        <p class="check-desc">Enter manager PIN to close the shift. Demo PIN: 1234</p>
+        <h3>Step 3 — Your sign-off</h3>
+        <p class="check-desc">A quick sign-off to close the night. Demo code: 1234</p>
         <label>
-          <span>PIN</span>
+          <span>Sign-off</span>
           <input
             type="password"
             inputmode="numeric"
@@ -147,7 +145,7 @@
             disabled={submitting || pin.length < 4}
             onclick={completeShift}
           >
-            {submitting ? "Closing…" : "Close Shift"}
+            {submitting ? "Closing…" : "Close the night"}
           </button>
         </div>
       </div>
@@ -155,14 +153,14 @@
   </div>
 
   <div class="log-list">
-    <h3>Recent Shift Logs</h3>
+    <h3>Tonight's closings</h3>
     {#if appState.shiftLogs.length === 0}
-      <p class="empty">No shift logs yet.</p>
+      <p class="empty">No closings yet this evening.</p>
     {:else}
       {#each appState.shiftLogs as log (log.id)}
         <article class="log-card" class:warn={Math.abs(log.variance) > 5}>
-          <strong>{log.register_id}</strong>
-          <span>Δ ${log.variance.toFixed(2)}</span>
+          <strong>{tillLabel(log.register_id)}</strong>
+          <span>{tillGapLabel(log.variance)}</span>
           <span class="meta">{log.user_id} · {log.timestamp}</span>
         </article>
       {/each}
@@ -174,15 +172,23 @@
   .panel {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.85rem;
     height: 100%;
     overflow: hidden;
   }
 
   .panel-header h2 {
     margin: 0 0 0.65rem;
+    font-family: Georgia, "Times New Roman", serif;
     font-size: 1.35rem;
     font-weight: 700;
+  }
+
+  .lead {
+    margin: 0;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    font-style: italic;
   }
 
   .step-indicator {
@@ -194,7 +200,7 @@
   .step {
     padding: 0.35rem 0.65rem;
     border-radius: 6px;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 600;
     background: var(--surface);
     color: var(--text-muted);
@@ -213,9 +219,7 @@
     background: var(--green-bg);
   }
 
-  .step-content {
-    flex-shrink: 0;
-  }
+  .step-content { flex-shrink: 0; }
 
   .step-panel {
     display: flex;
@@ -254,14 +258,12 @@
     gap: 0.85rem;
   }
 
-  .variance-preview {
+  .diff-preview {
     margin: 0;
     font-size: 0.95rem;
   }
 
-  .variance-preview .warn {
-    color: var(--red);
-  }
+  .diff-preview .warn { color: var(--red); }
 
   .check-desc {
     margin: 0;
@@ -285,10 +287,7 @@
     cursor: pointer;
   }
 
-  .box-icon {
-    font-size: 2rem;
-    line-height: 1;
-  }
+  .box-icon { font-size: 2rem; line-height: 1; }
 
   .toggle-btn.checked {
     border-style: solid;
@@ -303,14 +302,9 @@
   }
 
   .nav-row .btn-primary,
-  .nav-row .btn-secondary {
-    flex: 1;
-  }
+  .nav-row .btn-secondary { flex: 1; }
 
-  .log-list {
-    flex: 1;
-    overflow-y: auto;
-  }
+  .log-list { flex: 1; overflow-y: auto; }
 
   .log-list h3 {
     margin: 0 0 0.65rem;
@@ -324,6 +318,8 @@
   .empty {
     color: var(--text-muted);
     margin: 0;
+    font-style: italic;
+    font-size: 0.9rem;
   }
 
   .log-card {
@@ -338,9 +334,7 @@
     border-left: 4px solid var(--green);
   }
 
-  .log-card.warn {
-    border-left-color: var(--red);
-  }
+  .log-card.warn { border-left-color: var(--red); }
 
   .meta {
     grid-column: 1 / -1;

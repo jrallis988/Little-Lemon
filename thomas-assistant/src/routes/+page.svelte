@@ -6,12 +6,13 @@
   import ThomasLogo from "$lib/components/ThomasLogo.svelte";
   import { isCloudDemo } from "$lib/api";
   import { appState, setActiveTab } from "$lib/stores/app.svelte";
+  import { TAB_LABELS } from "$lib/thomas-persona";
   import type { WorkflowTab } from "$lib/types";
 
   const tabs: { id: WorkflowTab; label: string }[] = [
-    { id: "inventory", label: "Inventory" },
-    { id: "shift", label: "Shift Close" },
-    { id: "audit", label: "Audit Log" },
+    { id: "inventory", label: TAB_LABELS.inventory },
+    { id: "shift", label: TAB_LABELS.shift },
+    { id: "audit", label: TAB_LABELS.audit },
   ];
 </script>
 

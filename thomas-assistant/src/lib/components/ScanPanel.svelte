@@ -6,12 +6,29 @@
   } from "$lib/api";
   import { appState, currentUser, addChatMessage } from "$lib/stores/app.svelte";
   import { butlerScanNote } from "$lib/thomas-persona";
+  import {
+    PRODUCT_CATALOG,
+    countGapLabel,
+    lookupProduct,
+    productName,
+    productUnit,
+    statusBadgeLabel,
+  } from "$lib/product-catalog";
   import { varianceLevel } from "$lib/types";
 
-  let sku = $state("");
+  let productInput = $state("");
   let expectedQty = $state(0);
   let actualQty = $state(0);
   let submitting = $state(false);
+
+  function resolveSku(input: string): string {
+    const trimmed = input.trim().toUpperCase();
+    const byName = PRODUCT_CATALOG.find(
+      (p) => p.name.toLowerCase() === input.trim().toLowerCase(),
+    );
+    if (byName) return byName.sku;
+    return trimmed;
+  }
 
   async function loadScans() {
     appState.inventoryScans = await listInventoryScans();
@@ -19,16 +36,16 @@
   }
 
   async function handleScan() {
-    if (!sku.trim()) {
-      appState.error =
-        "If I may — we'll need a product code before I can verify the count.";
+    if (!productInput.trim()) {
+      appState.error = "Which product shall we count?";
       return;
     }
     submitting = true;
     appState.error = null;
+    const sku = resolveSku(productInput);
     try {
       const scan = await recordInventoryScan(
-        sku.trim().toUpperCase(),
+        sku,
         expectedQty,
         actualQty,
         currentUser,
@@ -39,7 +56,7 @@
       const level = varianceLevel(scan.variance);
       addChatMessage("assistant", butlerScanNote(scan.sku, scan.variance, level));
 
-      sku = "";
+      productInput = "";
       expectedQty = 0;
       actualQty = 0;
     } catch (e) {
@@ -56,15 +73,17 @@
 
 <section class="panel">
   <header class="panel-header">
-    <h2>Inventory Scan</h2>
+    <h2>Cellar Check</h2>
     {#if appState.summary}
       <div class="summary-badges">
-        <span class="badge exact">{appState.summary.exact_matches} exact</span>
-        <span class="badge minor">{appState.summary.minor_variances} minor</span>
-        <span class="badge critical">{appState.summary.critical_variances} critical</span>
+        <span class="badge exact">{statusBadgeLabel("exact", appState.summary.exact_matches)}</span>
+        <span class="badge minor">{statusBadgeLabel("minor", appState.summary.minor_variances)}</span>
+        <span class="badge critical">{statusBadgeLabel("critical", appState.summary.critical_variances)}</span>
       </div>
     {/if}
   </header>
+
+  <p class="lead">Count what's in the cellar — Thomas will keep the record and speak up if anything's amiss.</p>
 
   <form
     class="scan-form panel-card"
@@ -74,46 +93,56 @@
     }}
   >
     <label>
-      <span>SKU / Barcode</span>
+      <span>Product</span>
       <input
         type="text"
-        bind:value={sku}
-        placeholder="Scan or enter SKU"
+        bind:value={productInput}
+        placeholder="Scan or type — e.g. House Porter"
+        list="product-suggestions"
         autocomplete="off"
       />
+      <datalist id="product-suggestions">
+        {#each PRODUCT_CATALOG as product}
+          <option value={product.name}>{product.sku}</option>
+        {/each}
+      </datalist>
+      {#if productInput && lookupProduct(resolveSku(productInput))}
+        <span class="hint">{lookupProduct(resolveSku(productInput))!.sku} · {productUnit(resolveSku(productInput))}</span>
+      {/if}
     </label>
     <div class="qty-row">
       <label>
-        <span>Expected Qty</span>
+        <span>Should have</span>
         <input type="number" min="0" bind:value={expectedQty} />
       </label>
       <label>
-        <span>Actual Qty</span>
+        <span>Counted</span>
         <input type="number" min="0" bind:value={actualQty} />
       </label>
     </div>
     <button type="submit" class="btn-primary" disabled={submitting}>
-      {submitting ? "Recording…" : "Verify Scan"}
+      {submitting ? "One moment…" : "Confirm count"}
     </button>
   </form>
 
   <div class="scan-list">
-    <h3>Recent Scans</h3>
+    <h3>Checked today</h3>
     {#if appState.inventoryScans.length === 0}
-      <p class="empty">No scans yet. Verify your first item above.</p>
+      <p class="empty">Nothing counted yet. Thomas is ready when you are.</p>
     {:else}
       {#each appState.inventoryScans as scan (scan.id)}
         {@const level = varianceLevel(scan.variance)}
         <article class="scan-card {level}">
           <div class="scan-main">
-            <strong>{scan.sku}</strong>
-            <span class="variance">
-              {scan.variance === 0 ? "✓ Exact" : `Δ ${scan.variance}`}
-            </span>
+            <div>
+              <strong>{productName(scan.sku)}</strong>
+              <span class="sku">{scan.sku}</span>
+            </div>
+            <span class="gap {level}">{countGapLabel(scan.variance)}</span>
           </div>
           <div class="scan-meta">
-            <span>Exp: {scan.expected_qty}</span>
-            <span>Act: {scan.actual_qty}</span>
+            <span>Should: {scan.expected_qty}</span>
+            <span>Counted: {scan.actual_qty}</span>
             <span>{scan.timestamp}</span>
           </div>
         </article>
@@ -126,7 +155,7 @@
   .panel {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.85rem;
     height: 100%;
     overflow: hidden;
   }
@@ -141,9 +170,16 @@
 
   h2 {
     margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
     font-size: 1.35rem;
     font-weight: 700;
-    color: var(--text);
+  }
+
+  .lead {
+    margin: 0;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    font-style: italic;
   }
 
   h3 {
@@ -168,18 +204,9 @@
     font-weight: 600;
   }
 
-  .badge.exact {
-    background: var(--green-bg);
-    color: var(--green);
-  }
-  .badge.minor {
-    background: var(--yellow-bg);
-    color: var(--yellow);
-  }
-  .badge.critical {
-    background: var(--red-bg);
-    color: var(--red);
-  }
+  .badge.exact { background: var(--green-bg); color: var(--green); }
+  .badge.minor { background: var(--yellow-bg); color: var(--yellow); }
+  .badge.critical { background: var(--red-bg); color: var(--red); }
 
   .scan-form {
     display: flex;
@@ -194,6 +221,12 @@
     font-size: 0.82rem;
     font-weight: 600;
     color: var(--text-muted);
+  }
+
+  .hint {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--accent);
   }
 
   input {
@@ -226,52 +259,50 @@
     color: var(--text-muted);
     margin: 0;
     font-size: 0.9rem;
+    font-style: italic;
   }
 
   .scan-card {
     padding: 0.85rem 1rem;
     margin-bottom: 0.5rem;
     border-radius: 8px;
-    border-left: 4px solid;
     background: var(--surface);
     border: 1px solid var(--border);
     border-left-width: 4px;
   }
 
-  .scan-card.exact {
-    border-left-color: var(--green);
-  }
-  .scan-card.minor {
-    border-left-color: var(--yellow);
-  }
-  .scan-card.critical {
-    border-left-color: var(--red);
-  }
+  .scan-card.exact { border-left-color: var(--green); }
+  .scan-card.minor { border-left-color: var(--yellow); }
+  .scan-card.critical { border-left-color: var(--red); }
 
   .scan-main {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 0.35rem;
+    gap: 0.5rem;
   }
 
   .scan-main strong {
+    display: block;
     font-size: 1rem;
-  }
-  .variance {
-    font-weight: 700;
-    font-size: 0.9rem;
+    font-family: Georgia, "Times New Roman", serif;
   }
 
-  .scan-card.exact .variance {
-    color: var(--green);
+  .sku {
+    font-size: 0.72rem;
+    color: var(--text-muted);
   }
-  .scan-card.minor .variance {
-    color: var(--yellow);
+
+  .gap {
+    font-weight: 700;
+    font-size: 0.85rem;
+    white-space: nowrap;
   }
-  .scan-card.critical .variance {
-    color: var(--red);
-  }
+
+  .gap.exact { color: var(--green); }
+  .gap.minor { color: var(--yellow); }
+  .gap.critical { color: var(--red); }
 
   .scan-meta {
     display: flex;

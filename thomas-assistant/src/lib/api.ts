@@ -11,6 +11,7 @@ import {
   demoShiftLogs,
 } from "./demo-data";
 import { matchDemoReply } from "./thomas-persona";
+import { countGapLabel, productName, tillGapLabel } from "./product-catalog";
 
 export const isCloudDemo =
   typeof window !== "undefined" && !("__TAURI_INTERNALS__" in window);
@@ -41,12 +42,14 @@ export async function recordInventoryScan(
     };
     mockScans = [scan, ...mockScans];
     const abs = Math.abs(scan.variance);
-    const severity = abs === 0 ? "exact" : abs <= 5 ? "minor" : "critical";
+    const severity =
+      abs === 0 ? "all set" : abs <= 5 ? "double-check" : "needs attention";
+    const name = productName(sku);
     mockAudits = [
       {
         id: nextId(),
-        action_type: "inventory_scan",
-        details: `SKU ${sku}: expected ${expectedQty}, actual ${actualQty}, variance ${scan.variance} (${severity})`,
+        action_type: "cellar_check",
+        details: `${name}: should have ${expectedQty}, counted ${actualQty} — ${countGapLabel(scan.variance)} (${severity})`,
         user_id: userId,
         timestamp: scan.timestamp,
       },
@@ -89,8 +92,8 @@ export async function recordShiftLog(
     mockAudits = [
       {
         id: nextId(),
-        action_type: "shift_close",
-        details: `Register ${registerId}: expected $${cashExpected.toFixed(2)}, actual $${cashActual.toFixed(2)}, variance $${log.variance.toFixed(2)}`,
+        action_type: "close_night",
+        details: `Till ${registerId.replace(/^REG-?/i, "")}: expected $${cashExpected.toFixed(2)}, counted $${cashActual.toFixed(2)} — ${tillGapLabel(log.variance)}`,
         user_id: userId,
         timestamp: log.timestamp,
       },

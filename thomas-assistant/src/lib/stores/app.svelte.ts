@@ -1,7 +1,7 @@
 import type { ChatMessage, WorkflowTab } from "../types";
-import { THOMAS_GREETING, butlerSessionContext } from "../thomas-persona";
+import { THOMAS_GREETING, butlerSessionContext, STAFF_FIRST_NAME } from "../thomas-persona";
 
-export const currentUser = "operator-1";
+export const currentUser = STAFF_FIRST_NAME;
 
 export const appState = $state({
   activeTab: "inventory" as WorkflowTab,
@@ -43,11 +43,10 @@ export function buildChatContext(): string {
 
   return butlerSessionContext({
     totalScans: summary?.total_scans,
-    critical: summary?.critical_variances,
-    minor: summary?.minor_variances,
-    latestItem: latestScan?.sku,
+    needsAttention: summary?.critical_variances,
+    latestProduct: latestScan?.sku,
     latestCountGap: latestScan?.variance,
-    latestRegister: latestShift?.register_id,
+    latestTill: latestShift?.register_id,
     latestTillGap: latestShift?.variance,
   });
 }

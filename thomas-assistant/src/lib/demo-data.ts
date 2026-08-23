@@ -4,6 +4,7 @@ import type {
   InventorySummary,
   ShiftLog,
 } from "./types";
+import { productName } from "./product-catalog";
 
 const now = () => new Date().toISOString().replace("T", " ").slice(0, 19);
 
@@ -49,25 +50,23 @@ export const demoShiftLogs: ShiftLog[] = [
 export const demoAuditTrails: AuditTrail[] = [
   {
     id: 3,
-    action_type: "inventory_scan",
-    details:
-      "SKU SKU-8842: expected 48, actual 38, variance -10 (critical)",
-    user_id: "operator-1",
+    action_type: "cellar_check",
+    details: `${productName("SKU-8842")}: should have 48, counted 38 — 10 short (needs attention)`,
+    user_id: "James",
     timestamp: `${now()} UTC`,
   },
   {
     id: 2,
-    action_type: "inventory_scan",
-    details: "SKU SKU-3310: expected 24, actual 22, variance -2 (minor)",
-    user_id: "operator-1",
+    action_type: "cellar_check",
+    details: `${productName("SKU-3310")}: should have 24, counted 22 — 2 short (double-check)`,
+    user_id: "James",
     timestamp: `${now()} UTC`,
   },
   {
     id: 1,
-    action_type: "shift_close",
-    details:
-      "Register REG-01: expected $500.00, actual $497.50, variance $-2.50",
-    user_id: "operator-1",
+    action_type: "close_night",
+    details: "Till 01: expected $500.00, counted $497.50 — $2.50 short",
+    user_id: "James",
     timestamp: `${now()} UTC`,
   },
 ];
