@@ -1,5 +1,6 @@
 <script lang="ts">
   import { recordShiftLog, listShiftLogs } from "$lib/api";
+  import { getSignoffPin, setSignoffPin } from "$lib/browser-storage";
   import { appState, currentUser, addChatMessage } from "$lib/stores/app.svelte";
   import { butlerShiftNote } from "$lib/thomas-persona";
   import { tillGapLabel, tillLabel } from "$lib/product-catalog";
@@ -11,6 +12,7 @@
   let backroomOk = $state(false);
   let pin = $state("");
   let submitting = $state(false);
+  let hasSignoffPin = $state(getSignoffPin() != null);
 
   const steps = ["Count the till", "Secure the cellar", "Sign off"];
 
@@ -27,9 +29,12 @@
   }
 
   async function completeShift() {
-    if (pin !== "1234") {
-      appState.error =
-        "That doesn't seem right. For this demo, the sign-off is 1234.";
+    const storedPin = getSignoffPin();
+    if (!storedPin) {
+      setSignoffPin(pin);
+      hasSignoffPin = true;
+    } else if (pin !== storedPin) {
+      appState.error = "That sign-off doesn't match.";
       return;
     }
     submitting = true;
@@ -73,8 +78,6 @@
     </div>
   </header>
 
-  <p class="lead">Three steps to close the house — Thomas will walk you through and keep the record.</p>
-
   <div class="step-content">
     {#if step === 1}
       <div class="step-panel panel-card">
@@ -113,8 +116,7 @@
           class:checked={backroomOk}
           onclick={() => (backroomOk = !backroomOk)}
         >
-          <span class="box-icon" aria-hidden="true">📦</span>
-          {backroomOk ? "✓ Cellar secured" : "Tap to confirm cellar is secured"}
+          {backroomOk ? "Cellar secured" : "Confirm cellar is secured"}
         </button>
         <div class="nav-row">
           <button type="button" class="btn-secondary" onclick={prevStep}>← Back</button>
@@ -125,8 +127,12 @@
       </div>
     {:else}
       <div class="step-panel panel-card">
-        <h3>Step 3 — Your sign-off</h3>
-        <p class="check-desc">A quick sign-off to close the night. Demo code: 1234</p>
+        <h3>Step 3 — Sign off</h3>
+        {#if !hasSignoffPin}
+          <p class="check-desc">Choose a four-digit sign-off code for closing the night.</p>
+        {:else}
+          <p class="check-desc">Enter your sign-off code to close the night.</p>
+        {/if}
         <label>
           <span>Sign-off</span>
           <input
@@ -182,13 +188,6 @@
     font-family: Georgia, "Times New Roman", serif;
     font-size: 1.35rem;
     font-weight: 700;
-  }
-
-  .lead {
-    margin: 0;
-    font-size: 0.88rem;
-    color: var(--text-muted);
-    font-style: italic;
   }
 
   .step-indicator {
@@ -286,8 +285,6 @@
     color: var(--text-muted);
     cursor: pointer;
   }
-
-  .box-icon { font-size: 2rem; line-height: 1; }
 
   .toggle-btn.checked {
     border-style: solid;

@@ -1,7 +1,27 @@
 import type { ChatMessage, WorkflowTab } from "../types";
-import { THOMAS_GREETING, butlerSessionContext, STAFF_FIRST_NAME } from "../thomas-persona";
+import {
+  THOMAS_GREETING,
+  butlerSessionContext,
+  STAFF_FIRST_NAME,
+} from "../thomas-persona";
+import { isBrowserMode } from "../api";
+import { getChatMessages, setChatMessages } from "../browser-storage";
 
 export const currentUser = STAFF_FIRST_NAME;
+
+function initialChatMessages(): ChatMessage[] {
+  if (isBrowserMode) {
+    const stored = getChatMessages();
+    if (stored.length > 0) return stored;
+  }
+  return [
+    {
+      role: "assistant" as const,
+      content: THOMAS_GREETING,
+      timestamp: new Date().toISOString(),
+    },
+  ];
+}
 
 export const appState = $state({
   activeTab: "inventory" as WorkflowTab,
@@ -9,13 +29,7 @@ export const appState = $state({
   shiftLogs: [] as import("../types").ShiftLog[],
   auditTrails: [] as import("../types").AuditTrail[],
   summary: null as import("../types").InventorySummary | null,
-  chatMessages: [
-    {
-      role: "assistant" as const,
-      content: THOMAS_GREETING,
-      timestamp: new Date().toISOString(),
-    },
-  ] as ChatMessage[],
+  chatMessages: initialChatMessages() as ChatMessage[],
   chatOpen: true,
   loading: false,
   error: null as string | null,
@@ -26,10 +40,14 @@ export function setActiveTab(tab: WorkflowTab) {
 }
 
 export function addChatMessage(role: ChatMessage["role"], content: string) {
-  appState.chatMessages = [
+  const next = [
     ...appState.chatMessages,
     { role, content, timestamp: new Date().toISOString() },
   ];
+  appState.chatMessages = next;
+  if (isBrowserMode) {
+    setChatMessages(next);
+  }
 }
 
 export function toggleChat() {

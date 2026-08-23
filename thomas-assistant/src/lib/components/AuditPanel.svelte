@@ -67,14 +67,9 @@
     </div>
   </header>
 
-  <p class="desc">
-    A careful record of the evening — every count and closing, kept here for the
-    proprietor's review.
-  </p>
-
   <div class="trail-list">
     {#if appState.auditTrails.length === 0}
-      <p class="empty">Nothing noted yet. Thomas will keep the record as you work.</p>
+      <p class="empty">Nothing recorded yet.</p>
     {:else}
       {#each appState.auditTrails as trail (trail.id)}
         <article class="trail-card">
@@ -135,13 +130,6 @@
   .btn-export:hover:not(:disabled) {
     border-color: var(--accent);
     color: var(--accent);
-  }
-
-  .desc {
-    margin: 0;
-    color: var(--text-muted);
-    font-size: 0.88rem;
-    font-style: italic;
   }
 
   .trail-list {

@@ -83,8 +83,6 @@
     {/if}
   </header>
 
-  <p class="lead">Count what's in the cellar — Thomas will keep the record and speak up if anything's amiss.</p>
-
   <form
     class="scan-form panel-card"
     onsubmit={(e) => {
@@ -128,7 +126,7 @@
   <div class="scan-list">
     <h3>Checked today</h3>
     {#if appState.inventoryScans.length === 0}
-      <p class="empty">Nothing counted yet. Thomas is ready when you are.</p>
+      <p class="empty">Nothing counted yet.</p>
     {:else}
       {#each appState.inventoryScans as scan (scan.id)}
         {@const level = varianceLevel(scan.variance)}
@@ -173,13 +171,6 @@
     font-family: Georgia, "Times New Roman", serif;
     font-size: 1.35rem;
     font-weight: 700;
-  }
-
-  .lead {
-    margin: 0;
-    font-size: 0.88rem;
-    color: var(--text-muted);
-    font-style: italic;
   }
 
   h3 {

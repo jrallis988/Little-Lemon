@@ -4,7 +4,6 @@
   import AuditPanel from "$lib/components/AuditPanel.svelte";
   import ChatDrawer from "$lib/components/ChatDrawer.svelte";
   import ThomasLogo from "$lib/components/ThomasLogo.svelte";
-  import { isCloudDemo } from "$lib/api";
   import { appState, setActiveTab } from "$lib/stores/app.svelte";
   import { TAB_LABELS } from "$lib/thomas-persona";
   import type { WorkflowTab } from "$lib/types";
@@ -20,12 +19,6 @@
   <header class="top-bar">
     <div class="brand">
       <ThomasLogo variant="full" />
-    </div>
-    <div class="badges">
-      <span class="local-badge">● On-Premise</span>
-      {#if isCloudDemo}
-        <span class="cloud-badge">☁ Cloud Demo</span>
-      {/if}
     </div>
   </header>
 
@@ -91,32 +84,6 @@
     align-items: center;
   }
 
-  .badges {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-  }
-
-  .local-badge {
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: var(--green);
-    padding: 0.35rem 0.8rem;
-    background: var(--green-bg);
-    border-radius: 999px;
-    border: 1px solid rgba(45, 138, 94, 0.2);
-  }
-
-  .cloud-badge {
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: var(--cloud-blue);
-    padding: 0.35rem 0.8rem;
-    background: var(--cloud-bg);
-    border-radius: 999px;
-    border: 1px solid rgba(74, 144, 196, 0.25);
-  }
-
   .error-banner {
     display: flex;
     justify-content: space-between;
@@ -171,8 +138,6 @@
     background: var(--surface);
     color: var(--text-muted);
     cursor: pointer;
-    transition: all 0.15s;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
   }
 
   .tab-nav button.active {

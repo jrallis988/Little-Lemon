@@ -6,24 +6,23 @@ import type {
   ShiftLog,
 } from "./types";
 import {
-  demoAuditTrails,
-  demoInventoryScans,
-  demoShiftLogs,
-} from "./demo-data";
-import { matchDemoReply } from "./thomas-persona";
+  formatTimestamp,
+  getAudits,
+  getScans,
+  getShifts,
+  nextRecordId,
+  setAudits,
+  setScans,
+  setShifts,
+} from "./browser-storage";
+import { matchBrowserReply } from "./thomas-persona";
 import { countGapLabel, productName, tillGapLabel } from "./product-catalog";
 
-export const isCloudDemo =
+export const isBrowserMode =
   typeof window !== "undefined" && !("__TAURI_INTERNALS__" in window);
 
-let mockScans = [...demoInventoryScans];
-let mockShifts = [...demoShiftLogs];
-let mockAudits = [...demoAuditTrails];
-let mockId = 100;
-
-function nextId() {
-  return ++mockId;
-}
+/** @deprecated use isBrowserMode */
+export const isCloudDemo = isBrowserMode;
 
 export async function recordInventoryScan(
   sku: string,
@@ -31,30 +30,33 @@ export async function recordInventoryScan(
   actualQty: number,
   userId: string,
 ): Promise<InventoryScan> {
-  if (isCloudDemo) {
+  if (isBrowserMode) {
+    const timestamp = formatTimestamp();
     const scan: InventoryScan = {
-      id: nextId(),
+      id: nextRecordId(),
       sku,
       expected_qty: expectedQty,
       actual_qty: actualQty,
       variance: actualQty - expectedQty,
-      timestamp: new Date().toISOString().replace("T", " ").slice(0, 19) + " UTC",
+      timestamp,
     };
-    mockScans = [scan, ...mockScans];
+    const scans = [scan, ...getScans()];
+    setScans(scans);
     const abs = Math.abs(scan.variance);
     const severity =
       abs === 0 ? "all set" : abs <= 5 ? "double-check" : "needs attention";
     const name = productName(sku);
-    mockAudits = [
+    const audits = [
       {
-        id: nextId(),
+        id: nextRecordId(),
         action_type: "cellar_check",
         details: `${name}: should have ${expectedQty}, counted ${actualQty} — ${countGapLabel(scan.variance)} (${severity})`,
         user_id: userId,
-        timestamp: scan.timestamp,
+        timestamp,
       },
-      ...mockAudits,
+      ...getAudits(),
     ];
+    setAudits(audits);
     return scan;
   }
   return invoke("record_inventory_scan", {
@@ -68,7 +70,7 @@ export async function recordInventoryScan(
 export async function listInventoryScans(
   limit = 50,
 ): Promise<InventoryScan[]> {
-  if (isCloudDemo) return mockScans.slice(0, limit);
+  if (isBrowserMode) return getScans().slice(0, limit);
   return invoke("list_inventory_scans", { limit });
 }
 
@@ -78,27 +80,30 @@ export async function recordShiftLog(
   cashActual: number,
   userId: string,
 ): Promise<ShiftLog> {
-  if (isCloudDemo) {
+  if (isBrowserMode) {
+    const timestamp = formatTimestamp();
     const log: ShiftLog = {
-      id: nextId(),
+      id: nextRecordId(),
       register_id: registerId,
       cash_expected: cashExpected,
       cash_actual: cashActual,
       variance: cashActual - cashExpected,
       user_id: userId,
-      timestamp: new Date().toISOString().replace("T", " ").slice(0, 19) + " UTC",
+      timestamp,
     };
-    mockShifts = [log, ...mockShifts];
-    mockAudits = [
+    const shifts = [log, ...getShifts()];
+    setShifts(shifts);
+    const audits = [
       {
-        id: nextId(),
+        id: nextRecordId(),
         action_type: "close_night",
         details: `Till ${registerId.replace(/^REG-?/i, "")}: expected $${cashExpected.toFixed(2)}, counted $${cashActual.toFixed(2)} — ${tillGapLabel(log.variance)}`,
         user_id: userId,
-        timestamp: log.timestamp,
+        timestamp,
       },
-      ...mockAudits,
+      ...getAudits(),
     ];
+    setAudits(audits);
     return log;
   }
   return invoke("record_shift_log", {
@@ -110,20 +115,20 @@ export async function recordShiftLog(
 }
 
 export async function listShiftLogs(limit = 50): Promise<ShiftLog[]> {
-  if (isCloudDemo) return mockShifts.slice(0, limit);
+  if (isBrowserMode) return getShifts().slice(0, limit);
   return invoke("list_shift_logs", { limit });
 }
 
 export async function listAuditTrails(limit = 100): Promise<AuditTrail[]> {
-  if (isCloudDemo) return mockAudits.slice(0, limit);
+  if (isBrowserMode) return getAudits().slice(0, limit);
   return invoke("list_audit_trails", { limit });
 }
 
 export async function exportAuditTrails(
   format: "csv" | "json",
 ): Promise<string> {
-  if (isCloudDemo) {
-    const trails = mockAudits;
+  if (isBrowserMode) {
+    const trails = getAudits();
     if (format === "json") return JSON.stringify(trails, null, 2);
     let csv = "id,action_type,details,user_id,timestamp\n";
     for (const t of trails) {
@@ -135,14 +140,15 @@ export async function exportAuditTrails(
 }
 
 export async function getInventorySummary(): Promise<InventorySummary> {
-  if (isCloudDemo) {
-    const critical = mockScans.filter((s) => Math.abs(s.variance) > 5).length;
-    const minor = mockScans.filter(
+  if (isBrowserMode) {
+    const scans = getScans();
+    const critical = scans.filter((s) => Math.abs(s.variance) > 5).length;
+    const minor = scans.filter(
       (s) => Math.abs(s.variance) >= 1 && Math.abs(s.variance) <= 5,
     ).length;
-    const exact = mockScans.filter((s) => s.variance === 0).length;
+    const exact = scans.filter((s) => s.variance === 0).length;
     return {
-      total_scans: mockScans.length,
+      total_scans: scans.length,
       critical_variances: critical,
       minor_variances: minor,
       exact_matches: exact,
@@ -155,9 +161,9 @@ export async function chatWithAssistant(
   message: string,
   context: string,
 ): Promise<string> {
-  if (isCloudDemo) {
-    await new Promise((r) => setTimeout(r, 700));
-    return matchDemoReply(message);
+  if (isBrowserMode) {
+    await new Promise((r) => setTimeout(r, 120));
+    return matchBrowserReply(message, context);
   }
   return invoke("chat_with_assistant", { message, context });
 }

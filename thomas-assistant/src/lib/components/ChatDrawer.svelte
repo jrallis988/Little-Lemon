@@ -1,6 +1,5 @@
 <script lang="ts">
   import { chatWithAssistant } from "$lib/api";
-  import { suggestedPrompts } from "$lib/thomas-persona";
   import ThomasLogo from "$lib/components/ThomasLogo.svelte";
   import {
     appState,
@@ -34,10 +33,6 @@
       sending = false;
       messagesEl?.scrollTo({ top: messagesEl.scrollHeight, behavior: "smooth" });
     }
-  }
-
-  function usePrompt(prompt: string) {
-    sendMessage(prompt);
   }
 
   $effect(() => {
@@ -77,19 +72,6 @@
         {/if}
       </div>
 
-      {#if appState.chatMessages.length <= 1}
-        <div class="prompts">
-          <span class="prompts-label">Try asking</span>
-          <div class="prompt-chips">
-            {#each suggestedPrompts as prompt}
-              <button type="button" class="chip" onclick={() => usePrompt(prompt)}>
-                {prompt}
-              </button>
-            {/each}
-          </div>
-        </div>
-      {/if}
-
       <form
         class="chat-input"
         onsubmit={(e) => {
@@ -100,7 +82,7 @@
         <input
           type="text"
           bind:value={input}
-          placeholder="Ask Thomas about pairings, our brews, or anything…"
+          placeholder="Ask Thomas anything…"
           disabled={sending}
           aria-label="Message to Thomas"
         />
@@ -120,7 +102,6 @@
     min-width: 320px;
     background: var(--chat-bg);
     border-left: 1px solid var(--chat-border);
-    transition: width 0.2s ease;
   }
 
   .chat-panel.collapsed {
@@ -209,43 +190,6 @@
   .exchange.typing .bubble p {
     opacity: 0.6;
     font-style: italic;
-  }
-
-  .prompts {
-    padding: 0 1rem 0.75rem;
-    flex-shrink: 0;
-  }
-
-  .prompts-label {
-    display: block;
-    font-size: 0.65rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--chat-muted);
-    margin-bottom: 0.45rem;
-    font-weight: 600;
-  }
-
-  .prompt-chips {
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-  }
-
-  .chip {
-    text-align: left;
-    padding: 0.5rem 0.7rem;
-    border-radius: 8px;
-    border: 1px solid var(--chat-border);
-    background: var(--surface);
-    color: var(--chat-text);
-    font-size: 0.8rem;
-    cursor: pointer;
-    transition: border-color 0.15s;
-  }
-
-  .chip:hover {
-    border-color: var(--accent);
   }
 
   .chat-input {
