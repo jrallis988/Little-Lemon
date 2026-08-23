@@ -48,13 +48,7 @@
 
 <aside class="chat-panel" class:collapsed={!appState.chatOpen}>
   <header class="chat-header">
-    <div class="chat-identity">
-      <ThomasLogo size={40} />
-      <div>
-        <h2>Thomas</h2>
-        <span class="subtitle">Your Personal Bartender</span>
-      </div>
-    </div>
+    <ThomasLogo variant="mark" width={36} height={36} />
     <button type="button" class="toggle" onclick={toggleChat} aria-label="Toggle chat">
       {appState.chatOpen ? "→" : "←"}
     </button>
@@ -66,7 +60,7 @@
         {#each appState.chatMessages as msg, i (i)}
           <div class="exchange {msg.role}">
             {#if msg.role === "assistant"}
-              <ThomasLogo size={28} />
+              <ThomasLogo variant="mark" width={28} height={28} />
             {/if}
             <div class="bubble">
               <p>{msg.content}</p>
@@ -75,7 +69,7 @@
         {/each}
         {#if sending}
           <div class="exchange assistant typing">
-            <ThomasLogo size={28} />
+            <ThomasLogo variant="mark" width={28} height={28} />
             <div class="bubble">
               <p>One moment, please…</p>
             </div>
@@ -138,32 +132,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.85rem 1rem;
+    padding: 0.75rem 1rem;
     border-bottom: 1px solid var(--chat-border);
-    background: var(--surface);
-  }
-
-  .chat-identity {
-    display: flex;
-    align-items: center;
-    gap: 0.65rem;
-  }
-
-  .chat-identity h2 {
-    margin: 0;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: var(--text);
-  }
-
-  .subtitle {
-    display: block;
-    font-size: 0.62rem;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    font-weight: 600;
+    background: var(--cream);
   }
 
   .toggle {

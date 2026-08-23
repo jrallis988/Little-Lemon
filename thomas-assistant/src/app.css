@@ -1,13 +1,18 @@
 :root {
-  --bg: #f0eeeb;
+  --cream: #f9f4ed;
+  --navy: #0a111e;
+  --gold: #b88b4a;
+  --gold-dark: #9a7340;
+  --gold-light: #f5ebe0;
+  --bg: #f9f4ed;
   --surface: #ffffff;
-  --surface-2: #faf9f7;
-  --border: #e4dfd8;
-  --border-strong: #d4cdc3;
-  --text: #2c2c2c;
-  --text-muted: #6b6560;
-  --accent: #9a6b3f;
-  --accent-dark: #7d5632;
+  --surface-2: #faf7f2;
+  --border: #e8e0d4;
+  --border-strong: #d4c9b8;
+  --text: #0a111e;
+  --text-muted: #5c5a56;
+  --accent: #b88b4a;
+  --accent-dark: #9a7340;
   --accent-light: #f5ebe0;
   --accent-text: #ffffff;
   --green: #2d8a5e;
@@ -18,83 +23,10 @@
   --red-bg: #fceaea;
   --cloud-blue: #4a90c4;
   --cloud-bg: #e8f2fa;
-  /* Chat sidebar */
-  --chat-bg: #f8f6f3;
-  --chat-border: #e8e2da;
-  --chat-bubble-user: #9a6b3f;
+  --chat-bg: #faf7f2;
+  --chat-border: #e8e0d4;
+  --chat-bubble-user: #b88b4a;
   --chat-bubble-assistant: #ffffff;
-  --chat-text: #3d3834;
-  --chat-muted: #8a827a;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-html,
-body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
-  font-size: 16px;
-  line-height: 1.5;
-  background: var(--bg);
-  color: var(--text);
-  -webkit-font-smoothing: antialiased;
-  -webkit-tap-highlight-color: transparent;
-}
-
-button,
-input {
-  font-family: inherit;
-}
-
-button:focus-visible,
-input:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-/* Shared panel primitives */
-:global(.btn-primary) {
-  min-height: 52px;
-  font-size: 1rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 8px;
-  background: var(--accent);
-  color: var(--accent-text);
-  cursor: pointer;
-  transition: background 0.15s;
-}
-
-:global(.btn-primary:hover:not(:disabled)) {
-  background: var(--accent-dark);
-}
-
-:global(.btn-primary:disabled) {
-  opacity: 0.55;
-  cursor: not-allowed;
-}
-
-:global(.btn-secondary) {
-  min-height: 52px;
-  font-size: 1rem;
-  font-weight: 600;
-  border-radius: 8px;
-  cursor: pointer;
-  background: var(--surface);
-  color: var(--text);
-  border: 1px solid var(--border-strong);
-}
-
-:global(.panel-card) {
-  padding: 1.25rem;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --chat-text: #0a111e;
+  --chat-muted: #6b6560;
 }

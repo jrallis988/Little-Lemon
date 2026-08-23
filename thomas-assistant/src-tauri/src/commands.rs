@@ -14,12 +14,13 @@ pub fn record_inventory_scan(
         .insert_inventory_scan(&sku, expected_qty, actual_qty)
         .map_err(|e| e.to_string())?;
 
-    let severity = variance_severity(scan.variance);
+    let status = count_status(scan.variance);
+    let name = product_name(&sku);
     db.insert_audit_trail(
-        "inventory_scan",
+        "cellar_check",
         &format!(
-            "SKU {sku}: expected {expected_qty}, actual {actual_qty}, variance {variance} ({severity})",
-            variance = scan.variance
+            "{name}: should have {expected_qty}, counted {actual_qty} — {gap} ({status})",
+            gap = count_gap_label(scan.variance)
         ),
         &user_id,
     )
@@ -49,11 +50,12 @@ pub fn record_shift_log(
         .insert_shift_log(&register_id, cash_expected, cash_actual, &user_id)
         .map_err(|e| e.to_string())?;
 
+    let till = register_id.replace("REG-", "Till ");
     db.insert_audit_trail(
-        "shift_close",
+        "close_night",
         &format!(
-            "Register {register_id}: expected ${cash_expected:.2}, actual ${cash_actual:.2}, variance ${variance:.2}",
-            variance = log.variance
+            "{till}: expected ${cash_expected:.2}, counted ${cash_actual:.2} — {}",
+            till_gap_label(log.variance)
         ),
         &user_id,
     )
@@ -105,13 +107,48 @@ pub fn chat_with_assistant(message: String, context: String) -> Result<String, S
     }
 }
 
-fn variance_severity(variance: i64) -> &'static str {
-    let abs = variance.abs();
-    if abs == 0 {
-        "exact"
-    } else if abs <= 5 {
-        "minor"
+fn product_name(sku: &str) -> &str {
+    match sku.to_uppercase().as_str() {
+        "SKU-8842" => "House Porter",
+        "SKU-3310" => "Session IPA",
+        "SKU-1104" => "Golden Lager",
+        "SKU-2201" => "Bright Pilsner",
+        "SKU-5500" => "Cabernet Sauvignon",
+        _ => sku,
+    }
+}
+
+fn count_gap_label(gap: i64) -> String {
+    if gap == 0 {
+        return "all set".to_string();
+    }
+    let n = gap.abs();
+    if gap < 0 {
+        format!("{n} short")
     } else {
-        "critical"
+        format!("{n} over")
+    }
+}
+
+fn count_status(gap: i64) -> &'static str {
+    let abs = gap.abs();
+    if abs == 0 {
+        "all set"
+    } else if abs <= 5 {
+        "double-check"
+    } else {
+        "needs attention"
+    }
+}
+
+fn till_gap_label(gap: f64) -> String {
+    if gap == 0.0 {
+        return "balanced".to_string();
+    }
+    let amount = gap.abs();
+    if gap < 0.0 {
+        format!("${amount:.2} short")
+    } else {
+        format!("${amount:.2} over")
     }
 }

@@ -1,8 +1,33 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-  <circle cx="24" cy="24" r="24" fill="#9a6b3f"/>
-  <circle cx="24" cy="17" r="7" fill="#f5ebe0"/>
-  <path d="M12 42c2-8 7-12 12-12s10 4 12 12" fill="#f5ebe0"/>
-  <path d="M16 28h16l-2 8H18l-2-8z" fill="#2c2c2c"/>
-  <path d="M18 28l2-4h8l2 4" fill="#f5ebe0"/>
-  <path d="M20 24h8v2h-8z" fill="#fff"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 100" fill="none" aria-hidden="true">
+  <text
+    x="140"
+    y="44"
+    text-anchor="middle"
+    font-family="'Pinyon Script', cursive"
+    font-size="56"
+    fill="#0A111E"
+  >Thomas</text>
+  <path
+    d="M 68 54 C 100 62, 180 62, 212 54"
+    stroke="#B88B4A"
+    stroke-width="3.5"
+    stroke-linecap="round"
+    fill="none"
+  />
+  <g transform="translate(140, 67)">
+    <path d="M-9,-3.5 L-3.5,-7 L0,-1.5 L3.5,-7 L9,-3.5 L3.5,0 L9,3.5 L3.5,7 L0,1.5 L-3.5,7 L-9,3.5 L-3.5,0 Z" fill="#B88B4A"/>
+    <rect x="-1.2" y="-2" width="2.4" height="4" rx="0.5" fill="#0A111E"/>
+  </g>
+  <line x1="44" y1="67" x2="112" y2="67" stroke="#B88B4A" stroke-width="0.75"/>
+  <line x1="168" y1="67" x2="236" y2="67" stroke="#B88B4A" stroke-width="0.75"/>
+  <text
+    x="140"
+    y="90"
+    text-anchor="middle"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="8.5"
+    font-weight="600"
+    letter-spacing="0.32em"
+    fill="#B88B4A"
+  >YOUR PERSONAL BARTENDER</text>
 </svg>

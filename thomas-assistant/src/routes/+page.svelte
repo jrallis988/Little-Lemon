@@ -19,11 +19,7 @@
 <div class="app-shell">
   <header class="top-bar">
     <div class="brand">
-      <ThomasLogo size={48} />
-      <div>
-        <h1>Thomas</h1>
-        <p>Brewery Operations · Personal Beverage Butler</p>
-      </div>
+      <ThomasLogo variant="full" />
     </div>
     <div class="badges">
       <span class="local-badge">● On-Premise</span>
@@ -93,25 +89,6 @@
   .brand {
     display: flex;
     align-items: center;
-    gap: 0.85rem;
-  }
-
-  .brand h1 {
-    margin: 0;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--text);
-    letter-spacing: 0.02em;
-  }
-
-  .brand p {
-    margin: 0;
-    font-size: 0.68rem;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    font-weight: 500;
   }
 
   .badges {
