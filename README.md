@@ -14,13 +14,17 @@ Personal portfolio for **James Rallis**, Front-End Engineer & Multimedia Designe
 
 ### GitHub Pages
 
-This repo includes `.github/workflows/deploy.yml`, which builds and deploys on push to `main` or `cursor/frontend-portfolio-d3d8`.
+This repo includes `.github/workflows/deploy.yml`, which publishes the production build to the `gh-pages` branch on push to `main`.
 
-1. In the repo **Settings → Pages**, set **Source** to **GitHub Actions**.
-2. Push to `main` (or merge the portfolio PR) to trigger a deploy.
-3. The site is served from `/Little-Lemon` with `PUBLIC_URL` set in the workflow.
+1. In the repo **Settings → Pages**, set **Source** to **Deploy from a branch**.
+2. Choose branch **`gh-pages`** and folder **`/ (root)`**.
+3. Merge to `main` to trigger a deploy.
+
+Live URL: **https://jrallis988.github.io/Little-Lemon/**
 
 `public/404.html` provides SPA fallback routing for direct links like `/about`.
+
+CI runs separately via `.github/workflows/ci.yml` on pushes and pull requests.
 
 ### Vercel
 
