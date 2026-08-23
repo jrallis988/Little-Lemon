@@ -50,12 +50,14 @@ npm install
 npm run tauri dev
 ```
 
-### Browser preview (cloud demo)
+### Browser preview
 
 ```bash
 npm run dev          # http://localhost:1420
 npm run build && npm run preview   # production build at :4173
 ```
+
+Browser mode persists cellar counts, closings, and chat to local storage. On first close, you'll set your own four-digit sign-off code.
 
 ### Deploy to Cloudflare Pages
 
@@ -85,8 +87,3 @@ ollama serve   # runs on localhost:11434 by default
 ```
 
 Without Ollama, Thomas runs in offline mode with rule-based assistant responses.
-
-## Demo Credentials
-
-- Operator ID: `operator-1` (hardcoded for demo)
-- Manager PIN for shift sign-off: `1234`

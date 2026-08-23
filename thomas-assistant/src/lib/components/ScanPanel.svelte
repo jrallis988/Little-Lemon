@@ -223,7 +223,7 @@
   input {
     min-height: 48px;
     padding: 0 0.85rem;
-    font-size: 1rem;
+    font-size: 16px;
     border-radius: 8px;
     border: 1px solid var(--border);
     background: var(--surface);

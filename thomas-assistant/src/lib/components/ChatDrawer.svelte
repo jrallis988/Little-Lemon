@@ -8,6 +8,12 @@
     toggleChat,
   } from "$lib/stores/app.svelte";
 
+  interface Props {
+    fullscreen?: boolean;
+  }
+
+  let { fullscreen = false }: Props = $props();
+
   let input = $state("");
   let sending = $state(false);
   let messagesEl: HTMLDivElement | undefined = $state();
@@ -41,15 +47,21 @@
   });
 </script>
 
-<aside class="chat-panel" class:collapsed={!appState.chatOpen}>
-  <header class="chat-header">
-    <ThomasLogo variant="mark" width={36} height={36} />
-    <button type="button" class="toggle" onclick={toggleChat} aria-label="Toggle chat">
-      {appState.chatOpen ? "→" : "←"}
-    </button>
-  </header>
+<aside
+  class="chat-panel"
+  class:collapsed={!fullscreen && !appState.chatOpen}
+  class:fullscreen
+>
+  {#if !fullscreen}
+    <header class="chat-header">
+      <ThomasLogo variant="mark" width={36} height={36} />
+      <button type="button" class="toggle" onclick={toggleChat} aria-label="Toggle chat">
+        {appState.chatOpen ? "→" : "←"}
+      </button>
+    </header>
+  {/if}
 
-  {#if appState.chatOpen}
+  {#if fullscreen || appState.chatOpen}
     <div class="chat-body">
       <div class="messages" bind:this={messagesEl}>
         {#each appState.chatMessages as msg, i (i)}
@@ -66,7 +78,7 @@
           <div class="exchange assistant typing">
             <ThomasLogo variant="mark" width={28} height={28} />
             <div class="bubble">
-              <p>One moment, please…</p>
+              <p>One moment…</p>
             </div>
           </div>
         {/if}
@@ -102,11 +114,19 @@
     min-width: 320px;
     background: var(--chat-bg);
     border-left: 1px solid var(--chat-border);
+    min-height: 0;
   }
 
   .chat-panel.collapsed {
     width: 52px;
     min-width: 52px;
+  }
+
+  .chat-panel.fullscreen {
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+    border-left: none;
   }
 
   .chat-header {
@@ -116,6 +136,7 @@
     padding: 0.75rem 1rem;
     border-bottom: 1px solid var(--chat-border);
     background: var(--cream);
+    flex-shrink: 0;
   }
 
   .toggle {
@@ -144,6 +165,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.85rem;
+    -webkit-overflow-scrolling: touch;
   }
 
   .exchange {
@@ -195,20 +217,23 @@
   .chat-input {
     display: flex;
     gap: 0.5rem;
-    padding: 0.85rem 1rem;
+    padding: 0.75rem 1rem;
+    padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0));
     border-top: 1px solid var(--chat-border);
     background: var(--surface);
+    flex-shrink: 0;
   }
 
   .chat-input input {
     flex: 1;
+    min-width: 0;
     min-height: 44px;
     padding: 0 0.75rem;
     border-radius: 8px;
     border: 1px solid var(--border);
     background: var(--surface-2);
     color: var(--text);
-    font-size: 0.85rem;
+    font-size: 16px;
   }
 
   .chat-input input::placeholder {
@@ -225,6 +250,7 @@
     font-weight: 600;
     font-size: 0.85rem;
     cursor: pointer;
+    flex-shrink: 0;
   }
 
   .chat-input button:disabled {

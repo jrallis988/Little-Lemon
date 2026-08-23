@@ -24,7 +24,7 @@ await page.waitForTimeout(800);
 await shot(page, "01-inventory");
 
 // 2. Shift Close
-await page.getByRole("button", { name: "Shift Close" }).click();
+await page.getByRole("button", { name: "Close the Night" }).click();
 await page.waitForTimeout(500);
 await shot(page, "02-shift-close-step1");
 

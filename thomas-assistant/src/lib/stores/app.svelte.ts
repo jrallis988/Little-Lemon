@@ -1,4 +1,4 @@
-import type { ChatMessage, WorkflowTab } from "../types";
+import type { ChatMessage, MobileScreen, WorkflowTab } from "../types";
 import {
   THOMAS_GREETING,
   butlerSessionContext,
@@ -25,6 +25,7 @@ function initialChatMessages(): ChatMessage[] {
 
 export const appState = $state({
   activeTab: "inventory" as WorkflowTab,
+  mobileScreen: "chat" as MobileScreen,
   inventoryScans: [] as import("../types").InventoryScan[],
   shiftLogs: [] as import("../types").ShiftLog[],
   auditTrails: [] as import("../types").AuditTrail[],
@@ -37,6 +38,13 @@ export const appState = $state({
 
 export function setActiveTab(tab: WorkflowTab) {
   appState.activeTab = tab;
+}
+
+export function setMobileScreen(screen: MobileScreen) {
+  appState.mobileScreen = screen;
+  if (screen !== "chat") {
+    appState.activeTab = screen;
+  }
 }
 
 export function addChatMessage(role: ChatMessage["role"], content: string) {

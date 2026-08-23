@@ -39,6 +39,7 @@ export interface ChatMessage {
 }
 
 export type WorkflowTab = "inventory" | "shift" | "audit";
+export type MobileScreen = "chat" | WorkflowTab;
 export type VarianceLevel = "exact" | "minor" | "critical";
 
 export function varianceLevel(variance: number): VarianceLevel {
