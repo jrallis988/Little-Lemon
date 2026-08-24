@@ -1,7 +1,16 @@
-"""Supplement label checker — profile ingestion, vision OCR, and research-cited compare."""
+"""Supplement research platform — profile gate, FastAPI, Cloudflare-backed design."""
 
+from .access_control import (
+    ProfileNotVerifiedError,
+    analysis_allowed,
+    apply_verification_state,
+    assert_profile_verified,
+    evaluate_verification,
+)
 from .profile_ingestion import (
     HealthProfile,
+    HistorySource,
+    HistorySourceType,
     ProfileIngestionError,
     example_profile,
     ingest_profile,
@@ -11,7 +20,14 @@ from .profile_ingestion import (
 
 __all__ = [
     "HealthProfile",
+    "HistorySource",
+    "HistorySourceType",
     "ProfileIngestionError",
+    "ProfileNotVerifiedError",
+    "analysis_allowed",
+    "apply_verification_state",
+    "assert_profile_verified",
+    "evaluate_verification",
     "example_profile",
     "ingest_profile",
     "ingest_profile_json",

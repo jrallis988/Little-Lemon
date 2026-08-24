@@ -1,4 +1,4 @@
-"""Step 4 — Compare extracted ingredients against the health profile."""
+"""Step 4 — Compare ingredients vs profile. LOCKED until verified."""
 
 from __future__ import annotations
 
@@ -11,11 +11,8 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from supplement_checker.profile_ingestion import (
-    example_profile,
-    ingest_profile,
-    profile_to_storage_dict,
-)
+from supplement_checker.profile_ingestion import ingest_profile
+from supplement_checker.ui_gate import get_session_profile, render_verification_banner
 
 st.set_page_config(
     page_title="Supplement Checker — Comparison",
@@ -25,16 +22,15 @@ st.set_page_config(
 
 st.title("Profile comparison")
 st.caption(
-    "Step 4 of 4 — flag conflicts, overlaps, and supportive matches with cited logic."
+    "Step 4 of 4 — literature-backed flags (stub heuristics). "
+    "Blocked while `profile_verified = False`."
 )
 
-raw_profile = st.session_state.get("ingested_profile")
-if not raw_profile:
-    raw_profile = profile_to_storage_dict(example_profile())
-    st.session_state["ingested_profile"] = raw_profile
-    st.info("Using demo profile for comparison preview.")
+if not render_verification_banner():
+    st.stop()
 
-profile = ingest_profile(raw_profile)
+raw_profile = get_session_profile()
+profile = ingest_profile(raw_profile, trust_verified_flag=True)
 ingredients = st.session_state.get("extracted_ingredients") or [
     {"name": "Vitamin D3 (cholecalciferol)", "amount": 125, "unit": "mcg"},
     {"name": "Iron (ferrous bisglycinate)", "amount": 18, "unit": "mg"},
@@ -44,7 +40,6 @@ ingredients = st.session_state.get("extracted_ingredients") or [
 
 risk = {t.lower() for t in profile.risk_tokens()}
 
-# Lightweight heuristic preview — research-cited engine lands later.
 FINDINGS = []
 for item in ingredients:
     name = str(item.get("name") or "").lower()
@@ -65,7 +60,6 @@ for item in ingredients:
             )
             citations = [
                 "NIH ODS: Caffeine — https://ods.od.nih.gov/factsheets/list-all/",
-                "FDA consumer update on caffeine (informational).",
             ]
     if "iron" in name and any("anemia" in c.lower() or "iron" in c.lower() for c in risk):
         severity = "positive"
@@ -136,6 +130,6 @@ for finding in FINDINGS:
 
 st.markdown("---")
 st.caption(
-    "Heuristic preview only. Production comparison will cite primary literature "
-    "and labeled interaction databases — not medical advice."
+    "Heuristic preview only. Production comparison will query PubMed/NCBI "
+    "against the verified physiological profile — not medical advice."
 )

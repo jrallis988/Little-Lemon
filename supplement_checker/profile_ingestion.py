@@ -88,9 +88,58 @@ class GoalCategory(str, Enum):
     OTHER = "other"
 
 
+class HistorySourceType(str, Enum):
+    """How health-history evidence was supplied."""
+
+    TEXT_INPUT = "text_input"
+    MEDICAL_PDF = "medical_pdf"
+    FILE_UPLOAD = "file_upload"
+    APPLE_HEALTHKIT = "apple_healthkit"
+    GOOGLE_HEALTH_CONNECT = "google_health_connect"
+
+
+class VerificationStatus(str, Enum):
+    DRAFT = "draft"
+    PENDING_REVIEW = "pending_review"
+    VERIFIED = "verified"
+    INCOMPLETE = "incomplete"
+
+
 # ---------------------------------------------------------------------------
 # Nested profile components
 # ---------------------------------------------------------------------------
+
+
+class HistorySource(BaseModel):
+    """
+    Evidence artifact contributing to the mandatory health history.
+
+    Medical PDFs / files are stored in Cloudflare R2; this record holds
+    metadata + object key only (never inline PHI blobs in D1 rows).
+    """
+
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+    source_id: str = Field(default_factory=lambda: str(uuid4()))
+    source_type: HistorySourceType
+    label: str | None = Field(default=None, max_length=200)
+    r2_object_key: str | None = Field(
+        default=None,
+        description="Cloudflare R2 object key for uploaded documents/images.",
+        max_length=512,
+    )
+    device_sync_at: datetime | None = Field(
+        default=None,
+        description="Timestamp of HealthKit / Health Connect sync batch.",
+    )
+    text_excerpt: str | None = Field(
+        default=None,
+        description="Optional short text intake note (avoid pasting full records).",
+        max_length=4000,
+    )
+    received_at: datetime = Field(
+        default_factory=lambda: datetime.now(timezone.utc)
+    )
 
 
 class Condition(BaseModel):
@@ -278,6 +327,22 @@ class HealthProfile(BaseModel):
     )
     display_name: str | None = Field(default=None, max_length=120)
 
+    # Non-negotiable gate — analysis locked until True.
+    profile_verified: bool = Field(
+        default=False,
+        description=(
+            "Must be False until mandatory health history is complete. "
+            "Scan/OCR/compare/literature routes refuse work while False."
+        ),
+    )
+    verification_status: VerificationStatus = VerificationStatus.DRAFT
+    verification_gaps: list[str] = Field(default_factory=list)
+    allergies_reviewed: bool = Field(
+        default=False,
+        description="User explicitly reviewed allergy section (list may be empty).",
+    )
+    history_sources: list[HistorySource] = Field(default_factory=list)
+
     demographics: Demographics
     conditions: list[Condition] = Field(default_factory=list)
     medications: list[Medication] = Field(default_factory=list)
@@ -296,7 +361,19 @@ class HealthProfile(BaseModel):
         # Keep updated_at aligned when callers rebuild from partial payloads.
         if self.updated_at < self.created_at:
             self.updated_at = self.created_at
+        # Never trust clients that send profile_verified=True without going
+        # through apply_verification_state — reset if gaps exist later.
+        if self.profile_verified:
+            self.verification_status = VerificationStatus.VERIFIED
+        elif self.history_sources:
+            self.verification_status = VerificationStatus.PENDING_REVIEW
+        else:
+            self.verification_status = VerificationStatus.DRAFT
         return self
+
+    def touch(self) -> None:
+        """Bump updated_at after mutations."""
+        self.updated_at = datetime.now(timezone.utc)
 
     def risk_tokens(self) -> set[str]:
         """
@@ -346,6 +423,11 @@ class HealthProfile(BaseModel):
         return {
             "profile_id": self.profile_id,
             "display_name": self.display_name,
+            "profile_verified": self.profile_verified,
+            "verification_status": self.verification_status.value,
+            "verification_gaps": list(self.verification_gaps),
+            "history_source_count": len(self.history_sources),
+            "allergies_reviewed": self.allergies_reviewed,
             "age_years": self.demographics.age_years,
             "biological_sex": self.demographics.biological_sex.value,
             "pregnancy_status": self.demographics.pregnancy_status.value,
@@ -369,31 +451,42 @@ class ProfileIngestionError(ValueError):
     """Raised when raw profile input cannot be normalized into HealthProfile."""
 
 
-def ingest_profile(payload: dict[str, Any] | HealthProfile) -> HealthProfile:
+def ingest_profile(
+    payload: dict[str, Any] | HealthProfile,
+    *,
+    trust_verified_flag: bool = False,
+) -> HealthProfile:
     """
     Validate and normalize a raw profile payload.
 
     Accepts either an already-built HealthProfile or a dict (e.g. from
     FastAPI JSON body or Streamlit session state).
+
+    By default, client-supplied profile_verified=True is stripped so the
+    access-control layer remains authoritative (trust_verified_flag=True
+    only for server-side rehydration from D1 after verification).
     """
     if isinstance(payload, HealthProfile):
-        return payload.model_copy(deep=True)
-
-    if not isinstance(payload, dict):
+        profile = payload.model_copy(deep=True)
+    elif isinstance(payload, dict):
+        data = dict(payload)
+        if not trust_verified_flag:
+            data["profile_verified"] = False
+            # Keep gaps if provided for UI, but never auto-verify from client.
+        try:
+            profile = HealthProfile.model_validate(data)
+        except Exception as exc:  # pydantic.ValidationError
+            raise ProfileIngestionError(f"Invalid health profile: {exc}") from exc
+    else:
         raise ProfileIngestionError(
             f"Expected dict or HealthProfile, got {type(payload).__name__}"
         )
-
-    try:
-        profile = HealthProfile.model_validate(payload)
-    except Exception as exc:  # pydantic.ValidationError
-        raise ProfileIngestionError(f"Invalid health profile: {exc}") from exc
 
     profile.updated_at = datetime.now(timezone.utc)
     return profile
 
 
-def ingest_profile_json(raw_json: str) -> HealthProfile:
+def ingest_profile_json(raw_json: str, *, trust_verified_flag: bool = False) -> HealthProfile:
     """Parse a JSON string into a validated HealthProfile."""
     import json
 
@@ -402,7 +495,7 @@ def ingest_profile_json(raw_json: str) -> HealthProfile:
     except json.JSONDecodeError as exc:
         raise ProfileIngestionError(f"Malformed JSON: {exc}") from exc
 
-    return ingest_profile(data)
+    return ingest_profile(data, trust_verified_flag=trust_verified_flag)
 
 
 def profile_to_storage_dict(profile: HealthProfile) -> dict[str, Any]:
@@ -411,9 +504,22 @@ def profile_to_storage_dict(profile: HealthProfile) -> dict[str, Any]:
 
 
 def example_profile() -> HealthProfile:
-    """Demo profile for local Streamlit / API smoke tests."""
+    """Demo profile for local Streamlit / API smoke tests (unverified by default)."""
     return HealthProfile(
         display_name="Demo User",
+        allergies_reviewed=True,
+        history_sources=[
+            HistorySource(
+                source_type=HistorySourceType.TEXT_INPUT,
+                label="Intake questionnaire",
+                text_excerpt="Migraine history; iron-deficiency anemia; shellfish allergy.",
+            ),
+            HistorySource(
+                source_type=HistorySourceType.APPLE_HEALTHKIT,
+                label="HealthKit sync (demo)",
+                device_sync_at=datetime.now(timezone.utc),
+            ),
+        ],
         demographics=Demographics(
             age_years=34,
             biological_sex=BiologicalSex.FEMALE,
@@ -456,6 +562,7 @@ def example_profile() -> HealthProfile:
         ],
         caffeine_sensitive=True,
         notes="Avoid stimulants late in the day.",
+        profile_verified=False,
     )
 
 

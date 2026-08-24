@@ -1,4 +1,4 @@
-"""Step 3 — Extracted ingredients from the label (vision model output)."""
+"""Step 3 — Extracted ingredients (vision model output). LOCKED until verified."""
 
 from __future__ import annotations
 
@@ -11,6 +11,8 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from supplement_checker.ui_gate import render_verification_banner
+
 st.set_page_config(
     page_title="Supplement Checker — Ingredients",
     layout="centered",
@@ -19,10 +21,13 @@ st.set_page_config(
 
 st.title("Extracted ingredients")
 st.caption(
-    "Step 3 of 4 — structured actives pulled from the label image via vision OCR."
+    "Step 3 of 4 — structured actives from label vision OCR. "
+    "Blocked while `profile_verified = False`."
 )
 
-# Demo extraction payload until the vision pipeline is wired.
+if not render_verification_banner():
+    st.stop()
+
 DEMO_INGREDIENTS = [
     {
         "name": "Vitamin D3 (cholecalciferol)",
@@ -70,28 +75,21 @@ if st.button("Reset to demo extraction"):
 ingredients = st.session_state["extracted_ingredients"]
 
 st.subheader("Supplement Facts (parsed)")
-st.dataframe(
-    ingredients,
-    use_container_width=True,
-    hide_index=True,
-)
+st.dataframe(ingredients, use_container_width=True, hide_index=True)
 
-st.subheader("Ingredient cards")
+st.subheader("Ingredient detail")
 for item in ingredients:
-    with st.container(border=True):
-        left, right = st.columns([3, 1])
-        with left:
-            st.markdown(f"**{item['name']}**")
-            st.caption(f"Form: {item.get('form') or '—'}")
-        with right:
-            amount = item.get("amount")
-            unit = item.get("unit") or ""
-            st.metric("Amount", f"{amount} {unit}".strip())
-            dv = item.get("daily_value_pct")
-            if dv is not None:
-                st.caption(f"{dv}% DV")
+    left, right = st.columns([3, 1])
+    with left:
+        st.markdown(f"**{item['name']}**")
+        st.caption(f"Form: {item.get('form') or '—'}")
+    with right:
+        amount = item.get("amount")
+        unit = item.get("unit") or ""
+        st.metric("Amount", f"{amount} {unit}".strip())
+        dv = item.get("daily_value_pct")
+        if dv is not None:
+            st.caption(f"{dv}% DV")
 
 st.markdown("---")
-st.caption(
-    "Vision model wiring comes next. Edit/confirm these rows before comparison."
-)
+st.caption("Vision model wiring comes next. Confirm rows before comparison.")

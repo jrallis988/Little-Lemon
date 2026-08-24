@@ -37,6 +37,8 @@ from supplement_checker.profile_ingestion import (
     GoalCategory,
     HealthGoal,
     HealthProfile,
+    HistorySource,
+    HistorySourceType,
     LactationStatus,
     Medication,
     NutrientFlag,
@@ -47,6 +49,8 @@ from supplement_checker.profile_ingestion import (
     ingest_profile,
     profile_to_storage_dict,
 )
+from supplement_checker.ui_gate import try_verify_session_profile
+
 
 st.set_page_config(
     page_title="Supplement Checker — Profile",
@@ -56,8 +60,8 @@ st.set_page_config(
 
 st.title("Health profile ingestion")
 st.caption(
-    "Informational only — not medical advice. "
-    "Step 1 of 4 — profile → label → ingredients → comparison."
+    "Research aggregation only — not a medical device or diagnostic tool. "
+    "Step 1 of 4 — mandatory history before any scan (`profile_verified` lock)."
 )
 
 with st.sidebar:
@@ -66,9 +70,12 @@ with st.sidebar:
         st.session_state["demo_seed"] = profile_to_storage_dict(example_profile())
         st.rerun()
     st.markdown(
-        "Use the sidebar pages for **Label upload**, "
-        "**Ingredients**, and **Comparison**."
+        "**Non-negotiable:** Label upload / ingredients / comparison stay locked "
+        "until you verify the health history."
     )
+    if st.button("Verify profile", type="primary", use_container_width=True):
+        try_verify_session_profile()
+
 
 demo = st.session_state.get("demo_seed") or {}
 demo_demo = demo.get("demographics") or {}
@@ -143,6 +150,48 @@ allergies_raw = st.text_area(
     )
     or "shellfish | food | severe",
     height=90,
+)
+allergies_reviewed = st.checkbox(
+    "I reviewed the allergy section (required even if empty)",
+    value=bool(demo.get("allergies_reviewed", True)),
+)
+
+st.subheader("Mandatory health history sources")
+st.caption(
+    "Provide at least one of: text intake, medical PDF/file (R2 key), "
+    "or HealthKit / Health Connect sync."
+)
+history_text = st.text_area(
+    "Direct text intake",
+    value=next(
+        (
+            s.get("text_excerpt") or ""
+            for s in demo.get("history_sources") or []
+            if s.get("source_type") == "text_input"
+        ),
+        "Migraine history; iron-deficiency anemia; shellfish allergy.",
+    ),
+    height=80,
+)
+medical_pdf_key = st.text_input(
+    "Medical PDF R2 object key (optional)",
+    value=next(
+        (
+            s.get("r2_object_key") or ""
+            for s in demo.get("history_sources") or []
+            if s.get("source_type") == "medical_pdf"
+        ),
+        "",
+    ),
+    placeholder="medical/{profile_id}/2026/08/{source_id}/record.pdf",
+)
+device_sync = st.selectbox(
+    "Native device health sync",
+    options=["none", "apple_healthkit", "google_health_connect"],
+    index=1 if any(
+        s.get("source_type") == "apple_healthkit"
+        for s in demo.get("history_sources") or []
+    ) else 0,
 )
 
 st.subheader("Lifestyle & goals")
@@ -234,8 +283,42 @@ def build_payload() -> dict:
         CurrentSupplement(**item) for item in demo.get("current_supplements") or []
     ]
 
+    history_sources: list[HistorySource] = []
+    if history_text.strip():
+        history_sources.append(
+            HistorySource(
+                source_type=HistorySourceType.TEXT_INPUT,
+                label="Intake questionnaire",
+                text_excerpt=history_text.strip(),
+            )
+        )
+    if medical_pdf_key.strip():
+        history_sources.append(
+            HistorySource(
+                source_type=HistorySourceType.MEDICAL_PDF,
+                label="Medical record PDF",
+                r2_object_key=medical_pdf_key.strip(),
+            )
+        )
+    if device_sync == "apple_healthkit":
+        history_sources.append(
+            HistorySource(
+                source_type=HistorySourceType.APPLE_HEALTHKIT,
+                label="Apple HealthKit sync",
+            )
+        )
+    elif device_sync == "google_health_connect":
+        history_sources.append(
+            HistorySource(
+                source_type=HistorySourceType.GOOGLE_HEALTH_CONNECT,
+                label="Google Health Connect sync",
+            )
+        )
+
     profile = HealthProfile(
         display_name=display_name or None,
+        allergies_reviewed=allergies_reviewed,
+        history_sources=history_sources,
         demographics=Demographics(
             age_years=int(age_years),
             biological_sex=BiologicalSex(biological_sex),
@@ -252,6 +335,7 @@ def build_payload() -> dict:
         caffeine_sensitive=caffeine_sensitive,
         stimulant_sensitive=stimulant_sensitive,
         notes=notes or None,
+        profile_verified=False,
     )
     return profile_to_storage_dict(profile)
 
@@ -259,21 +343,26 @@ def build_payload() -> dict:
 if st.button("Ingest profile", type="primary", use_container_width=True):
     try:
         payload = build_payload()
-        profile = ingest_profile(payload)
+        profile = ingest_profile(payload, trust_verified_flag=False)
         st.session_state["ingested_profile"] = profile_to_storage_dict(profile)
-        st.success("Profile ingested and validated.")
+        st.success(
+            "Profile ingested (still locked). Use **Verify profile** in the sidebar "
+            "after history sources are complete."
+        )
     except (ProfileIngestionError, ValueError) as exc:
         st.error(f"Ingestion failed: {exc}")
 
 if "ingested_profile" in st.session_state:
     stored = st.session_state["ingested_profile"]
     try:
-        profile = ingest_profile(stored)
+        profile = ingest_profile(stored, trust_verified_flag=True)
     except ProfileIngestionError as exc:
         st.error(str(exc))
     else:
         st.subheader("Validated summary")
         st.json(profile.summary())
+        lock = "UNLOCKED" if profile.profile_verified else "LOCKED"
+        st.markdown(f"**Analysis gate:** `{lock}` (`profile_verified={profile.profile_verified}`)")
         st.subheader("Risk tokens (for ingredient matching)")
         st.write(sorted(profile.risk_tokens()))
         st.subheader("Stored JSON")

@@ -1,4 +1,4 @@
-"""Step 2 — Supplement label image upload (vision OCR input)."""
+"""Step 2 — Supplement label image upload (vision OCR input). LOCKED until verified."""
 
 from __future__ import annotations
 
@@ -11,6 +11,8 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from supplement_checker.ui_gate import render_verification_banner
+
 st.set_page_config(
     page_title="Supplement Checker — Label Upload",
     layout="centered",
@@ -19,14 +21,12 @@ st.set_page_config(
 
 st.title("Label image upload")
 st.caption(
-    "Step 2 of 4 — upload a photo of the Supplement Facts / ingredients panel."
+    "Step 2 of 4 — upload a photo of the Supplement Facts / ingredients panel. "
+    "Blocked while `profile_verified = False`."
 )
 
-profile = st.session_state.get("ingested_profile")
-if profile:
-    st.info(f"Active profile: **{profile.get('display_name') or 'Unnamed'}**")
-else:
-    st.warning("No profile yet — ingest one on the Profile page first (demo OK).")
+if not render_verification_banner():
+    st.stop()
 
 uploaded = st.file_uploader(
     "Supplement label photo",

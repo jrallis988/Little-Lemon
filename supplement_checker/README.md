@@ -1,25 +1,26 @@
-# Supplement Checker
+# Supplement Research Platform
 
-Python starter for a FastAPI + Streamlit flow that:
+Clinical-grade **research and data-aggregation** platform (not a medical device or diagnostic tool).
 
-1. Ingests a structured health profile
-2. Accepts a supplement-label image
-3. Extracts ingredients with a vision model
-4. Compares them to the profile with cited research logic
+See [`ARCHITECTURE.md`](./ARCHITECTURE.md) for the full blueprint.
 
-Informational only — not medical advice.
+## Non-negotiable rule
 
-## Screenshots
+`profile_verified = False` locks **all** product scanning / OCR / comparison / literature routes until a detailed health history is completed via:
 
-Captured UI screens live under `supplement_checker/screenshots/`:
+- Direct text intake
+- Medical record PDF / file uploads (Cloudflare R2)
+- Apple HealthKit or Google Health Connect sync
 
-| File | Screen |
+## Stack
+
+| Layer | Tech |
 | --- | --- |
-| `00-nav-overview.png` | Profile + sidebar navigation |
-| `01-profile.png` | Health profile ingestion |
-| `02-label-upload.png` | Label image upload |
-| `03-ingredients.png` | Extracted ingredients |
-| `04-comparison.png` | Profile comparison findings |
+| API | Python / FastAPI (`api/main.py`) |
+| Edge / data | Cloudflare Pages/Workers, D1, R2 (`cloudflare/`) |
+| Prototype UI | Streamlit multipage (gated) |
+| Production UI | React Native / Flutter clinical dashboard (planned) |
+| Intelligence | Vision LLMs + PubMed/NCBI (planned) |
 
 ## Setup
 
@@ -27,18 +28,39 @@ Captured UI screens live under `supplement_checker/screenshots/`:
 python3 -m pip install -r supplement_checker/requirements.txt
 ```
 
-## Profile UI (Streamlit)
+## FastAPI
+
+```bash
+uvicorn supplement_checker.api.main:app --reload --port 8000
+```
+
+Key routes:
+
+- `POST /profiles` — ingest history (always starts unverified)
+- `POST /profiles/{id}/documents` — attach R2 medical PDF metadata
+- `POST /profiles/{id}/health-sync` — HealthKit / Health Connect
+- `POST /profiles/{id}/verify` — flip `profile_verified` when complete
+- `POST /labels/scan/{id}` — **403 unless verified**
+- `POST /compare/{id}` — **403 unless verified**
+
+## Streamlit prototype
 
 ```bash
 streamlit run supplement_checker/streamlit_app.py --server.port 8501
 ```
 
-## Open with Cloudflare Tunnel
-
-Expose the local Streamlit app on a public `*.trycloudflare.com` URL:
+## Cloudflare Tunnel (demo)
 
 ```bash
 cloudflared tunnel --url http://127.0.0.1:8501
 ```
 
-Quick tunnels are for demos only (no uptime guarantee). For production, use a named Cloudflare Tunnel.
+## Screenshots
+
+| File | Screen |
+| --- | --- |
+| `screenshots/00-nav-overview.png` | Profile + sidebar navigation |
+| `screenshots/01-profile.png` | Health profile ingestion |
+| `screenshots/02-label-upload.png` | Label image upload (now gated) |
+| `screenshots/03-ingredients.png` | Extracted ingredients (now gated) |
+| `screenshots/04-comparison.png` | Profile comparison (now gated) |
