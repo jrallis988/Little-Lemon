@@ -10,7 +10,8 @@ export const TAB_LABELS = {
   audit: "The Record",
 } as const;
 
-export const THOMAS_TAGLINE = "YOUR PERSONAL BARTENDER";
+export const THOMAS_TAGLINE = "YOUR OWN PERSONAL BARTENDER";
+export const THOMAS_POSITIONING = "Thomas is your own personal bartender";
 
 export const suggestedPrompts = [
   "What pairs with grilled steak?",

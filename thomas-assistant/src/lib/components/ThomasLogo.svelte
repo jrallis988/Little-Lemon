@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { THOMAS_TAGLINE } from "$lib/thomas-persona";
+
   interface Props {
     variant?: "full" | "mark" | "avatar";
     width?: number;
@@ -12,7 +14,7 @@
 </script>
 
 {#if variant === "full"}
-  <div class="logo-lockup" role="img" aria-label="Thomas — Your Personal Bartender">
+  <div class="logo-lockup" role="img" aria-label="Thomas is your own personal bartender">
     <span class="wordmark">Thomas</span>
     <span class="swoosh" aria-hidden="true"></span>
     <span class="emblem" aria-hidden="true">
@@ -26,7 +28,7 @@
       </svg>
       <span class="line"></span>
     </span>
-    <span class="tagline">YOUR PERSONAL BARTENDER</span>
+    <span class="tagline">{THOMAS_TAGLINE}</span>
   </div>
 {:else}
   <img
@@ -94,9 +96,9 @@
 
   .tagline {
     margin-top: 0.35rem;
-    font-size: 0.52rem;
+    font-size: 0.48rem;
     font-weight: 600;
-    letter-spacing: 0.28em;
+    letter-spacing: 0.2em;
     color: var(--cognac);
     text-align: center;
     white-space: nowrap;
@@ -122,8 +124,8 @@
   }
 
   :global(.app-header.compact) .tagline {
-    font-size: 0.46rem;
-    letter-spacing: 0.24em;
+    font-size: 0.42rem;
+    letter-spacing: 0.16em;
     margin-top: 0.28rem;
   }
 </style>
