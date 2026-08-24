@@ -1,5 +1,4 @@
 <script lang="ts">
-  import ThomasAvatar from "$lib/components/ThomasAvatar.svelte";
   import ThomasLogo from "$lib/components/ThomasLogo.svelte";
   import { isCloudDemo } from "$lib/api";
 
@@ -11,31 +10,18 @@
 </script>
 
 <header class="app-header" class:compact>
-  {#if compact}
-    <div class="header-main">
-      <ThomasAvatar size={46} />
-      <div class="header-copy">
-        <strong class="name">Thomas</strong>
-        <span class="subtitle">Brewery Operations</span>
-      </div>
-    </div>
-    <div class="status-group">
-      <span class="status on-premise">● On-Premise</span>
-      {#if isCloudDemo}
-        <span class="status cloud">☁ Cloud Demo</span>
-      {/if}
-    </div>
-  {:else}
-    <div class="header-main desktop-brand">
-      <ThomasLogo variant="full" />
-    </div>
-    <div class="status-group">
-      <span class="status on-premise">● On-Premise</span>
-      {#if isCloudDemo}
-        <span class="status cloud">☁ Cloud Demo</span>
-      {/if}
-    </div>
-  {/if}
+  <div class="header-main" class:desktop-brand={!compact}>
+    <ThomasLogo variant="full" />
+    {#if compact}
+      <span class="product-line">Brewery Operations</span>
+    {/if}
+  </div>
+  <div class="status-group">
+    <span class="status on-premise">● On-Premise</span>
+    {#if isCloudDemo}
+      <span class="status cloud">☁ Cloud Demo</span>
+    {/if}
+  </div>
 </header>
 
 <style>
@@ -44,47 +30,33 @@
     justify-content: space-between;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.85rem 1.5rem;
+    padding: 0.7rem 1.5rem;
     background: var(--surface);
     border-bottom: 1px solid var(--border);
     flex-shrink: 0;
   }
 
   .app-header.compact {
-    padding: 0.45rem 0.85rem;
-    align-items: flex-start;
+    padding: 0.4rem 0.85rem;
+    align-items: center;
   }
 
   .header-main {
     display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    min-width: 0;
-  }
-
-  .header-copy {
-    display: flex;
     flex-direction: column;
-    gap: 0.08rem;
+    align-items: flex-start;
+    gap: 0.15rem;
     min-width: 0;
   }
 
-  .name {
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--midnight);
-    line-height: 1.1;
-  }
-
-  .subtitle {
-    font-size: 0.72rem;
+  .product-line {
+    font-size: 0.68rem;
     color: var(--text-muted);
     line-height: 1.2;
-  }
-
-  .desktop-brand :global(.logo.full) {
-    max-height: 64px;
-    max-width: 180px;
+    padding-left: 0.1rem;
+    align-self: center;
+    width: 100%;
+    text-align: center;
   }
 
   .status-group {

@@ -8,7 +8,7 @@
 </script>
 
 <img
-  src="/thomas-avatar.svg"
+  src="/thomas-mark.svg"
   alt=""
   class="avatar {className}"
   width={size}

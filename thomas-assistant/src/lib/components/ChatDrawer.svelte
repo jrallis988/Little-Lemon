@@ -1,7 +1,7 @@
 <script lang="ts">
   import { chatWithAssistant } from "$lib/api";
-  import ThomasAvatar from "$lib/components/ThomasAvatar.svelte";
-  import { suggestedPrompts, THOMAS_TAGLINE } from "$lib/thomas-persona";
+  import ThomasLogo from "$lib/components/ThomasLogo.svelte";
+  import { suggestedPrompts } from "$lib/thomas-persona";
   import {
     appState,
     addChatMessage,
@@ -70,14 +70,9 @@
   class:fullscreen
 >
   {#if fullscreen || appState.chatOpen}
-    {#if fullscreen}
-      <div class="assistant-bar">
-        <span class="assistant-tagline">{THOMAS_TAGLINE}</span>
-      </div>
-    {:else}
+    {#if !fullscreen}
       <header class="chat-header">
-        <ThomasAvatar size={38} />
-        <span class="assistant-tagline sidebar">{THOMAS_TAGLINE}</span>
+        <ThomasLogo variant="mark" width={36} height={36} />
         <button type="button" class="toggle" onclick={toggleChat} aria-label="Toggle chat">
           {appState.chatOpen ? "→" : "←"}
         </button>
@@ -89,7 +84,7 @@
         {#each appState.chatMessages as msg, i (i)}
           <div class="exchange {msg.role}">
             {#if msg.role === "assistant"}
-              <ThomasAvatar size={32} />
+              <ThomasLogo variant="mark" width={32} height={32} />
             {/if}
             <div class="bubble">
               <p>{msg.content}</p>
@@ -113,7 +108,7 @@
 
         {#if sending}
           <div class="exchange assistant typing">
-            <ThomasAvatar size={32} />
+            <ThomasLogo variant="mark" width={32} height={32} />
             <div class="bubble">
               <p>One moment…</p>
             </div>
@@ -157,7 +152,7 @@
     </div>
   {:else}
     <header class="chat-header collapsed-only">
-      <ThomasAvatar size={32} />
+      <ThomasLogo variant="mark" width={32} height={32} />
       <button type="button" class="toggle" onclick={toggleChat} aria-label="Open chat">
         ←
       </button>
@@ -188,32 +183,12 @@
     border-left: none;
   }
 
-  .assistant-bar {
-    padding: 0.4rem 0.85rem;
-    border-bottom: 1px solid var(--chat-border);
-    background: var(--surface);
-    flex-shrink: 0;
-  }
-
-  .assistant-tagline {
-    display: block;
-    font-size: 0.62rem;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    color: var(--cognac);
-    line-height: 1.2;
-  }
-
-  .assistant-tagline.sidebar {
-    flex: 1;
-    min-width: 0;
-  }
-
   .chat-header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 0.65rem;
-    padding: 0.65rem 0.85rem;
+    padding: 0.55rem 0.85rem;
     border-bottom: 1px solid var(--chat-border);
     background: var(--surface);
     flex-shrink: 0;
@@ -432,10 +407,6 @@
   }
 
   @media (max-width: 768px) {
-    .assistant-bar {
-      padding: 0.35rem 0.75rem;
-    }
-
     .messages {
       padding: 0.7rem 0.75rem;
       gap: 0.6rem;
