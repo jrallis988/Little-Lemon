@@ -1,0 +1,36 @@
+"""
+Cloudflare Workers / Pages project scaffold.
+
+Production target:
+  - Pages: marketing + web shell
+  - Workers: edge auth / routing to FastAPI origin (or Workers for Platforms)
+  - D1: structured profile + verification state
+  - R2: medical PDFs + label images (private)
+
+This wrangler.toml is a starting point — bind real account/db IDs before deploy.
+"""
+
+name = "supplement-research-platform"
+main = "src/worker.js"
+compatibility_date = "2026-08-01"
+
+# Pages project (static / RN web shell) can be configured separately in dashboard.
+# [[pages]]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "supplement_profiles"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+migrations_dir = "migrations"
+
+[[r2_buckets]]
+binding = "MEDICAL_DOCS"
+bucket_name = "supplement-medical-docs"
+
+[[r2_buckets]]
+binding = "LABEL_IMAGES"
+bucket_name = "supplement-label-images"
+
+[vars]
+API_ORIGIN = "https://api.example.com"
+PRODUCT_DISCLAIMER = "Research aggregation only — not a medical device or diagnostic tool."

@@ -5,3 +5,7 @@ node_modules/
 *.log
 dist/
 .cache/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
