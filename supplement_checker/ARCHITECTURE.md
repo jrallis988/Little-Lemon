@@ -29,6 +29,26 @@ Health history may be assembled from any combination of:
 
 Verification criteria are enforced server-side (`assert_profile_verified` / FastAPI dependencies). Clients must not bypass this lock.
 
+## Legal & transparency safeguard (Gaps & Knowledge Limits)
+
+**Before** medical-history upload **or** scan UI access, users must explicitly accept an un-skippable Gaps & Knowledge Limits notice (`legal_notice.py`).
+
+```text
+terms accepted  →  profile upload / scan UI may proceed
+terms missing   →  hard block (UI + API 403)
+```
+
+### Unknown / missing literature rule
+
+If OCR extracts an ingredient/dosage without sufficient indexed human research:
+
+1. Hard programmatic stop (no speculative safety or mechanism claims)
+2. Explicit UI/API message:
+
+> Data Gap Identified: This ingredient or dosage lacks sufficient indexed human research literature. No safety or mechanistic evaluation can be provided. Review this item directly with your clinician.
+
+Implemented in `data_gaps.py` (`evaluate_ingredients_with_gap_stops`).
+
 ## Tech stack
 
 | Layer | Choice |

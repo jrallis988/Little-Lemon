@@ -12,6 +12,14 @@ See [`ARCHITECTURE.md`](./ARCHITECTURE.md) for the full blueprint.
 - Medical record PDF / file uploads (Cloudflare R2)
 - Apple HealthKit or Google Health Connect sync
 
+## Gaps & Knowledge Limits (legal gate)
+
+Before medical-history upload **or** scan UI, users must accept the un-skippable notice in `legal_notice.py`.
+
+Unindexed OCR ingredients hard-stop via `data_gaps.py` with:
+
+> Data Gap Identified: This ingredient or dosage lacks sufficient indexed human research literature...
+
 ## Stack
 
 | Layer | Tech |

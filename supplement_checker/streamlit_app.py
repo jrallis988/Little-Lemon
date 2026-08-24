@@ -49,7 +49,7 @@ from supplement_checker.profile_ingestion import (
     ingest_profile,
     profile_to_storage_dict,
 )
-from supplement_checker.ui_gate import try_verify_session_profile
+from supplement_checker.ui_gate import require_terms_or_stop, try_verify_session_profile
 
 
 st.set_page_config(
@@ -57,6 +57,9 @@ st.set_page_config(
     layout="centered",
     initial_sidebar_state="expanded",
 )
+
+# Un-skippable legal gate BEFORE any medical history upload / intake UI.
+require_terms_or_stop(for_profile_upload=True)
 
 st.title("Health profile ingestion")
 st.caption(

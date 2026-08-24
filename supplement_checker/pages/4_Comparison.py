@@ -1,4 +1,4 @@
-"""Step 4 — Compare ingredients vs profile. LOCKED until verified."""
+"""Step 4 — Compare ingredients vs profile. Terms + verified + data-gap hard stops."""
 
 from __future__ import annotations
 
@@ -11,6 +11,10 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from supplement_checker.data_gaps import (
+    DATA_GAP_UI_MESSAGE,
+    evaluate_ingredients_with_gap_stops,
+)
 from supplement_checker.profile_ingestion import ingest_profile
 from supplement_checker.ui_gate import get_session_profile, render_verification_banner
 
@@ -22,8 +26,8 @@ st.set_page_config(
 
 st.title("Profile comparison")
 st.caption(
-    "Step 4 of 4 — literature-backed flags (stub heuristics). "
-    "Blocked while `profile_verified = False`."
+    "Step 4 of 4 — literature-backed flags. Unindexed items hard-stop with "
+    "Data Gap Identified (no speculation)."
 )
 
 if not render_verification_banner():
@@ -36,12 +40,38 @@ ingredients = st.session_state.get("extracted_ingredients") or [
     {"name": "Iron (ferrous bisglycinate)", "amount": 18, "unit": "mg"},
     {"name": "Caffeine (from green tea extract)", "amount": 50, "unit": "mg"},
     {"name": "Fish oil (omega-3)", "amount": 1000, "unit": "mg"},
+    # Intentionally unindexed proprietary / rare variant for gap demo:
+    {"name": "Proprietary NeuroBlend X-9", "amount": 500, "unit": "mg"},
 ]
 
+gap_result = evaluate_ingredients_with_gap_stops(ingredients)
+
+st.subheader("Profile snapshot")
+c1, c2, c3, c4 = st.columns(4)
+c1.metric("Conditions", profile.summary()["condition_count"])
+c2.metric("Meds", profile.summary()["medication_count"])
+c3.metric("Allergies", profile.summary()["allergy_count"])
+c4.metric("Risk tokens", profile.summary()["risk_token_count"])
+
+if gap_result["data_gaps"]:
+    st.subheader("Data gaps — evaluation refused")
+    st.error(DATA_GAP_UI_MESSAGE)
+    for gap in gap_result["data_gaps"]:
+        st.markdown(f"**{gap['ingredient']}**")
+        st.caption(
+            "Hard stop · safety_evaluation=None · mechanistic_evaluation=None · "
+            "speculative_assessment_refused=True"
+        )
+
 risk = {t.lower() for t in profile.risk_tokens()}
+evaluable = gap_result["evaluable_ingredients"]
+
+st.subheader("Findings (indexed ingredients only)")
+if not evaluable:
+    st.warning("No ingredients cleared the literature-coverage gate for evaluation.")
 
 FINDINGS = []
-for item in ingredients:
+for item in evaluable:
     name = str(item.get("name") or "").lower()
     severity = "info"
     title = f"Review: {item.get('name')}"
@@ -104,14 +134,6 @@ for item in ingredients:
         }
     )
 
-st.subheader("Profile snapshot")
-c1, c2, c3, c4 = st.columns(4)
-c1.metric("Conditions", profile.summary()["condition_count"])
-c2.metric("Meds", profile.summary()["medication_count"])
-c3.metric("Allergies", profile.summary()["allergy_count"])
-c4.metric("Risk tokens", profile.summary()["risk_token_count"])
-
-st.subheader("Findings")
 for finding in FINDINGS:
     severity = finding["severity"]
     if severity == "danger":
@@ -130,6 +152,6 @@ for finding in FINDINGS:
 
 st.markdown("---")
 st.caption(
-    "Heuristic preview only. Production comparison will query PubMed/NCBI "
-    "against the verified physiological profile — not medical advice."
+    "Absence of a flag does not indicate safety. Unindexed items never receive "
+    "speculative assessments. Not medical advice."
 )

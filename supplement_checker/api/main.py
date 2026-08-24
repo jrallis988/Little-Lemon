@@ -1,7 +1,10 @@
 """
 FastAPI application — clinical research aggregation API.
 
-Locked routes refuse work while profile_verified is False.
+Gates (in order):
+  1. Gaps & Knowledge Limits notice acceptance (before history upload / scan)
+  2. profile_verified=True (before analysis)
+  3. Data-gap hard stop for unindexed ingredients (no speculation)
 """
 
 from __future__ import annotations
@@ -9,7 +12,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 from typing import Any
 
-from fastapi import Depends, FastAPI, HTTPException, status
+from fastapi import Depends, FastAPI, Header, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field, field_validator
 
@@ -19,6 +22,18 @@ from supplement_checker.access_control import (
     apply_verification_state,
     assert_profile_verified,
     evaluate_verification,
+)
+from supplement_checker.data_gaps import (
+    DATA_GAP_UI_MESSAGE,
+    evaluate_ingredients_with_gap_stops,
+)
+from supplement_checker.legal_notice import (
+    NOTICE_VERSION,
+    TermsAcceptance,
+    TermsNotAcceptedError,
+    assert_terms_accepted,
+    build_terms_acceptance,
+    terms_payload,
 )
 from supplement_checker.profile_ingestion import (
     HealthProfile,
@@ -36,9 +51,9 @@ app = FastAPI(
     description=(
         "Clinical-grade research and data-aggregation API. "
         "Not a medical device or diagnostic tool. "
-        "Analysis endpoints require profile_verified=True."
+        "Requires Gaps & Knowledge Limits acceptance, then profile_verified=True."
     ),
-    version="0.1.0",
+    version="0.2.0",
 )
 
 app.add_middleware(
@@ -49,8 +64,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# In-memory store for local prototype — Cloudflare D1 in production.
 _PROFILES: dict[str, dict[str, Any]] = {}
+# session_id / client_id → TermsAcceptance dict
+_TERMS: dict[str, dict[str, Any]] = {}
 
 
 class DocumentMetadataIn(BaseModel):
@@ -89,6 +105,43 @@ class CompareIn(BaseModel):
     ingredients: list[dict[str, Any]] = Field(default_factory=list)
 
 
+class TermsAcceptIn(BaseModel):
+    accepted: bool
+    client_id: str = Field(..., min_length=1, max_length=128)
+
+
+class ProfileCreateIn(BaseModel):
+    client_id: str = Field(..., min_length=1, max_length=128)
+    profile: dict[str, Any]
+
+
+def _client_id(
+    x_client_id: str | None = Header(default=None, alias="X-Client-Id"),
+    client_id: str | None = None,
+) -> str:
+    value = client_id or x_client_id
+    if not value:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="X-Client-Id header (or client_id) is required for terms binding.",
+        )
+    return value
+
+
+def require_terms(client_id: str = Depends(_client_id)) -> TermsAcceptance:
+    try:
+        return assert_terms_accepted(_TERMS.get(client_id))
+    except TermsNotAcceptedError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail={
+                "error": "terms_not_accepted",
+                "message": str(exc),
+                "notice": terms_payload(),
+            },
+        ) from exc
+
+
 def _get_profile_or_404(profile_id: str) -> HealthProfile:
     raw = _PROFILES.get(profile_id)
     if not raw:
@@ -116,10 +169,51 @@ def health() -> dict[str, str]:
     return {"status": "ok", "service": "supplement-research-api"}
 
 
-@app.post("/profiles", status_code=201)
-def create_profile(payload: dict[str, Any]) -> dict[str, Any]:
+@app.get("/legal/notice")
+def get_legal_notice() -> dict[str, Any]:
+    """Public Gaps & Knowledge Limits notice for mandatory UI gate."""
+    return terms_payload()
+
+
+@app.post("/legal/accept")
+def accept_legal_notice(body: TermsAcceptIn) -> dict[str, Any]:
+    """Record un-skippable notice acceptance for a client session."""
     try:
-        profile = ingest_profile(payload, trust_verified_flag=False)
+        acceptance = build_terms_acceptance(
+            accepted=body.accepted,
+            method="api_explicit",
+        )
+    except TermsNotAcceptedError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail={"error": "terms_checkbox_required", "message": str(exc)},
+        ) from exc
+    _TERMS[body.client_id] = acceptance.model_dump(mode="json")
+    return {
+        "accepted": True,
+        "notice_version": NOTICE_VERSION,
+        "client_id": body.client_id,
+        "record": _TERMS[body.client_id],
+    }
+
+
+@app.post("/profiles", status_code=201)
+def create_profile(body: ProfileCreateIn) -> dict[str, Any]:
+    """Create profile — blocked until Gaps & Knowledge Limits notice is accepted."""
+    try:
+        assert_terms_accepted(_TERMS.get(body.client_id))
+    except TermsNotAcceptedError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail={
+                "error": "terms_not_accepted",
+                "message": str(exc),
+                "notice": terms_payload(),
+            },
+        ) from exc
+
+    try:
+        profile = ingest_profile(body.profile, trust_verified_flag=False)
     except ProfileIngestionError as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
 
@@ -148,8 +242,12 @@ def get_profile(profile_id: str) -> dict[str, Any]:
 
 
 @app.post("/profiles/{profile_id}/documents")
-def attach_document(profile_id: str, body: DocumentMetadataIn) -> dict[str, Any]:
-    """Register a medical PDF / file already uploaded to R2."""
+def attach_document(
+    profile_id: str,
+    body: DocumentMetadataIn,
+    _: TermsAcceptance = Depends(require_terms),
+) -> dict[str, Any]:
+    """Register medical PDF metadata — requires prior notice acceptance."""
     profile = _get_profile_or_404(profile_id)
     profile.history_sources.append(
         HistorySource(
@@ -169,8 +267,11 @@ def attach_document(profile_id: str, body: DocumentMetadataIn) -> dict[str, Any]
 
 
 @app.post("/profiles/{profile_id}/health-sync")
-def health_sync(profile_id: str, body: HealthSyncIn) -> dict[str, Any]:
-    """Record Apple HealthKit or Google Health Connect sync metadata."""
+def health_sync(
+    profile_id: str,
+    body: HealthSyncIn,
+    _: TermsAcceptance = Depends(require_terms),
+) -> dict[str, Any]:
     profile = _get_profile_or_404(profile_id)
     profile.history_sources.append(
         HistorySource(
@@ -186,8 +287,10 @@ def health_sync(profile_id: str, body: HealthSyncIn) -> dict[str, Any]:
 
 
 @app.post("/profiles/{profile_id}/verify")
-def verify_profile(profile_id: str) -> dict[str, Any]:
-    """Attempt to flip profile_verified when completeness gates pass."""
+def verify_profile(
+    profile_id: str,
+    _: TermsAcceptance = Depends(require_terms),
+) -> dict[str, Any]:
     profile = _get_profile_or_404(profile_id)
     profile = apply_verification_state(profile)
     _PROFILES[profile.profile_id] = profile_to_storage_dict(profile)
@@ -207,22 +310,18 @@ def verify_profile(profile_id: str) -> dict[str, Any]:
     }
 
 
-# ---------------------------------------------------------------------------
-# LOCKED analysis routes — require profile_verified=True
-# ---------------------------------------------------------------------------
-
-
 @app.post("/labels/scan/{profile_id}")
 def scan_label_for_profile(
     body: LabelScanIn,
     profile: HealthProfile = Depends(require_verified_profile),
+    _: TermsAcceptance = Depends(require_terms),
 ) -> dict[str, Any]:
-    """Vision OCR entrypoint — locked until profile_verified."""
+    """Vision OCR entrypoint — requires terms + verified profile."""
     return {
         "status": "accepted",
         "profile_id": profile.profile_id,
         "r2_object_key": body.r2_object_key,
-        "message": "Vision OCR pipeline stub — profile gate passed.",
+        "message": "Vision OCR pipeline stub — legal + profile gates passed.",
     }
 
 
@@ -230,14 +329,27 @@ def scan_label_for_profile(
 def compare_ingredients(
     body: CompareIn,
     profile: HealthProfile = Depends(require_verified_profile),
+    _: TermsAcceptance = Depends(require_terms),
 ) -> dict[str, Any]:
-    """Literature-backed comparison stub — locked until profile_verified."""
+    """
+    Literature-backed comparison.
+
+    Unindexed ingredients trigger a hard data-gap stop — no speculative
+    safety or mechanistic evaluation is returned for those items.
+    """
+    gap_result = evaluate_ingredients_with_gap_stops(body.ingredients)
     return {
-        "status": "accepted",
+        "status": "completed_with_gaps" if gap_result["data_gaps"] else "completed",
         "profile_id": profile.profile_id,
-        "ingredient_count": len(body.ingredients),
         "risk_tokens": sorted(profile.risk_tokens()),
-        "message": "Comparison + PubMed pipeline stub — profile gate passed.",
+        "evaluable_ingredients": gap_result["evaluable_ingredients"],
+        "data_gaps": gap_result["data_gaps"],
+        "evaluation_blocked_for_gaps": gap_result["evaluation_blocked_for_gaps"],
+        "data_gap_notice": DATA_GAP_UI_MESSAGE if gap_result["data_gaps"] else None,
+        "message": (
+            "Comparison ran only on ingredients with sufficient indexed literature. "
+            "Unindexed items received an explicit Data Gap Identified hard stop."
+        ),
     }
 
 
@@ -245,18 +357,19 @@ def compare_ingredients(
 def literature_query(
     query: str,
     profile: HealthProfile = Depends(require_verified_profile),
+    _: TermsAcceptance = Depends(require_terms),
 ) -> dict[str, Any]:
     return {
         "status": "accepted",
         "profile_id": profile.profile_id,
         "query": query,
-        "message": "PubMed/NCBI query stub — profile gate passed.",
+        "message": "PubMed/NCBI query stub — legal + profile gates passed.",
     }
 
 
 @app.post("/demo/seed")
 def seed_demo(verified: bool = False) -> dict[str, Any]:
-    """Dev helper: seed example profile; optionally verify if complete."""
+    """Dev helper: seed example profile (does not bypass terms for other routes)."""
     profile = example_profile()
     if verified:
         profile = apply_verification_state(profile)

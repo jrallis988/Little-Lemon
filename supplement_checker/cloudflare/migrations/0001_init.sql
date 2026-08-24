@@ -49,5 +49,13 @@ CREATE TABLE IF NOT EXISTS analysis_jobs (
 CREATE INDEX IF NOT EXISTS idx_analysis_jobs_profile
   ON analysis_jobs (profile_id, created_at);
 
--- Trigger-style enforcement is application-level: Workers/FastAPI MUST refuse
--- inserting analysis_jobs when profiles.profile_verified = 0.
+CREATE TABLE IF NOT EXISTS terms_acceptances (
+  client_id TEXT PRIMARY KEY,
+  notice_version TEXT NOT NULL,
+  accepted INTEGER NOT NULL CHECK (accepted IN (0, 1)),
+  accepted_at TEXT NOT NULL,
+  acceptance_method TEXT
+);
+
+-- Application MUST refuse profile create / document upload / scan when
+-- no matching terms_acceptances row exists for the client session.
