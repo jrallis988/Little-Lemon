@@ -247,3 +247,116 @@ export async function notifyAdminsOfChatMessage(
   }
   return results;
 }
+
+export type RefillReminderPayload = {
+  medicationId: string;
+  email: string;
+  phone?: string | null;
+  drugName: string;
+  brandName?: string;
+  nextRefillAt: Date;
+  supplyDays: number;
+  quantity: number;
+};
+
+export async function sendRefillReminderEmail(
+  payload: RefillReminderPayload
+): Promise<DispatchResult> {
+  const resend = getResend();
+  const env = getEnv();
+  if (!resend || !env.RESEND_FROM_EMAIL) {
+    return { channel: "email", ok: false, skipped: true, error: "Resend not configured" };
+  }
+
+  try {
+    const due = payload.nextRefillAt.toLocaleDateString("en-US", {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+    });
+    const subject = `Trump RX refill reminder: ${payload.drugName}`;
+    const html = `
+      <div style="font-family: system-ui, sans-serif; line-height: 1.5; color: #111;">
+        <h1 style="font-size: 20px;">Refill reminder</h1>
+        <p>
+          <strong>${payload.drugName}</strong>
+          ${payload.brandName ? `(${payload.brandName})` : ""}
+          is due around <strong>${due}</strong>.
+        </p>
+        <p>Qty ${payload.quantity} · ${payload.supplyDays}-day supply.</p>
+        <p>
+          <a href="${env.NEXT_PUBLIC_APP_URL}/profile/prescriptions">Open refill tracker</a>
+          ·
+          <a href="${env.NEXT_PUBLIC_APP_URL}/search">Compare prices</a>
+        </p>
+        <p style="font-size: 12px; color: #666;">
+          Trump RX is not a pharmacy. Confirm refills with your clinician and pharmacist.
+        </p>
+      </div>
+    `;
+
+    const result = await resend.emails.send({
+      from: env.RESEND_FROM_EMAIL,
+      to: payload.email,
+      subject,
+      html,
+    });
+
+    if (result.error) {
+      return { channel: "email", ok: false, error: result.error.message };
+    }
+    return { channel: "email", ok: true, providerId: result.data?.id };
+  } catch (err) {
+    return {
+      channel: "email",
+      ok: false,
+      error: err instanceof Error ? err.message : "Refill email failed",
+    };
+  }
+}
+
+export async function sendRefillReminderSms(
+  payload: RefillReminderPayload
+): Promise<DispatchResult> {
+  const client = getTwilio();
+  const env = getEnv();
+  if (!client || !env.TWILIO_FROM_NUMBER) {
+    return { channel: "sms", ok: false, skipped: true, error: "Twilio not configured" };
+  }
+  if (!payload.phone) {
+    return { channel: "sms", ok: false, skipped: true, error: "No phone on account" };
+  }
+
+  try {
+    const due = payload.nextRefillAt.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+    });
+    const body = `Trump RX refill: ${payload.drugName} due ~${due}. Compare prices: ${env.NEXT_PUBLIC_APP_URL}/search`;
+    const msg = await client.messages.create({
+      from: env.TWILIO_FROM_NUMBER,
+      to: payload.phone,
+      body,
+    });
+    return { channel: "sms", ok: true, providerId: msg.sid };
+  } catch (err) {
+    return {
+      channel: "sms",
+      ok: false,
+      error: err instanceof Error ? err.message : "Refill SMS failed",
+    };
+  }
+}
+
+export async function dispatchRefillReminder(
+  payload: RefillReminderPayload
+): Promise<DispatchResult[]> {
+  const results: DispatchResult[] = [];
+  const email = await sendRefillReminderEmail(payload);
+  results.push(email);
+  logger.info("refill_dispatch_email", { medicationId: payload.medicationId, ...email });
+  const sms = await sendRefillReminderSms(payload);
+  results.push(sms);
+  logger.info("refill_dispatch_sms", { medicationId: payload.medicationId, ...sms });
+  return results;
+}

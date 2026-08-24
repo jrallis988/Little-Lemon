@@ -4,7 +4,7 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { getEnv } from "@/lib/env";
 import { DEFAULT_LOCATION } from "@/lib/chains";
-import { dispatchPriceAlert } from "@/lib/alerts/dispatch";
+import { dispatchPriceAlert, dispatchRefillReminder } from "@/lib/alerts/dispatch";
 import { getPriceQuotes, sortComparisonRows } from "@/lib/pricing-service";
 import { logger } from "@/lib/logger";
 
@@ -185,11 +185,64 @@ export async function PUT(req: Request) {
     logger.error("alerts_cron_expiry_sweep_failed", { error: err instanceof Error ? err.message : String(err) });
   }
 
+  const refillTriggered: Array<{ medicationId: string; email: string }> = [];
+  const now = new Date();
+  const horizon = new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000);
+  const remindCooldown = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+  const dueMeds = await prisma.savedMedication.findMany({
+    where: {
+      rxStatus: "active",
+      refillRemindersEnabled: true,
+      nextRefillAt: { lte: horizon, gte: now },
+      OR: [
+        { lastRefillReminderAt: null },
+        { lastRefillReminderAt: { lt: remindCooldown } },
+      ],
+      user: { refillRemindersEnabled: true },
+    },
+    include: { user: true, drug: true },
+    take: 200,
+  });
+
+  for (const med of dueMeds) {
+    if (!med.nextRefillAt) continue;
+    try {
+      const delivery = await dispatchRefillReminder({
+        medicationId: med.id,
+        email: med.user.email,
+        phone: med.user.phone,
+        drugName: med.drug.genericName,
+        brandName: med.drug.brandName,
+        nextRefillAt: med.nextRefillAt,
+        supplyDays: med.supplyDays,
+        quantity: med.quantity,
+      });
+      const anyDelivered = delivery.some((d) => d.ok);
+      const onlySkipped = delivery.every((d) => d.skipped);
+      if (anyDelivered || onlySkipped) {
+        await prisma.savedMedication.update({
+          where: { id: med.id },
+          data: { lastRefillReminderAt: now },
+        });
+        refillTriggered.push({ medicationId: med.id, email: med.user.email });
+      }
+    } catch (err) {
+      logger.error("refill_cron_failed", {
+        medicationId: med.id,
+        error: err instanceof Error ? err.message : String(err),
+      });
+    }
+  }
+
   return NextResponse.json({
     checked: alerts.length,
     triggered: triggered.length,
     failed: failures.length,
+    refillDueChecked: dueMeds.length,
+    refillRemindersSent: refillTriggered.length,
     triggers: triggered,
+    refillTriggers: refillTriggered,
     failures,
   });
 }

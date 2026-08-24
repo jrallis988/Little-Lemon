@@ -166,6 +166,11 @@ export default function ProfilePage() {
               body: "Upgrade, invoices, or cancel Plus",
             },
             {
+              href: "/profile/insurance",
+              title: "Insurance plan",
+              body: "Deductible & copay for comparisons",
+            },
+            {
               href: "/transfer",
               title: "Transfer a prescription",
               body: "Move an Rx to a network pharmacy",

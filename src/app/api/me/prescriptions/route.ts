@@ -11,6 +11,7 @@ const patchSchema = z.object({
   refillsRemaining: z.number().int().min(0).max(99).nullable().optional(),
   notes: z.string().max(500).nullable().optional(),
   preferredPharmacyId: z.string().nullable().optional(),
+  refillRemindersEnabled: z.boolean().optional(),
 });
 
 export async function GET() {
@@ -19,7 +20,7 @@ export async function GET() {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const [medications, coupons, passes] = await Promise.all([
+  const [medications, coupons, passes, user] = await Promise.all([
     prisma.savedMedication.findMany({
       where: { userId: session.user.id },
       include: {
@@ -53,9 +54,18 @@ export async function GET() {
         },
       },
     }),
+    prisma.user.findUnique({
+      where: { id: session.user.id },
+      select: { refillRemindersEnabled: true },
+    }),
   ]);
 
-  return NextResponse.json({ medications, coupons, passes });
+  return NextResponse.json({
+    medications,
+    coupons,
+    passes,
+    refillRemindersEnabled: user?.refillRemindersEnabled ?? true,
+  });
 }
 
 export async function PATCH(req: Request) {
@@ -101,6 +111,7 @@ export async function PATCH(req: Request) {
         parsed.data.preferredPharmacyId === undefined
           ? undefined
           : parsed.data.preferredPharmacyId,
+      refillRemindersEnabled: parsed.data.refillRemindersEnabled,
     },
     include: { drug: { include: { strengths: true } } },
   });

@@ -82,7 +82,7 @@ export async function POST(req: Request) {
       html: `<p>New transfer request from <strong>${transfer.patientName}</strong>.</p>
         <p>${transfer.drugName}${transfer.strength ? ` · ${transfer.strength}` : ""}</p>
         <p>From: ${transfer.fromPharmacyName}<br/>To: ${transfer.toPharmacyName ?? "TBD"}</p>
-        <p><a href="${env.NEXT_PUBLIC_APP_URL}/admin/tickets">Open ops</a></p>`,
+        <p><a href="${env.NEXT_PUBLIC_APP_URL}/admin/transfers">Open transfer queue</a></p>`,
     });
   }
 

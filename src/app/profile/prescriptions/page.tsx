@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { CalendarClock, Loader2, Pill, Receipt } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
 import { EmptyState } from "@/components/design/empty-state";
 import { TrustCallout } from "@/components/design/trust-callout";
 import { formatCurrency } from "@/lib/pricing";
@@ -44,6 +45,8 @@ export default function PrescriptionsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [savingId, setSavingId] = useState<string | null>(null);
+  const [refillReminders, setRefillReminders] = useState(true);
+  const [reminderSaving, setReminderSaving] = useState(false);
 
   async function load() {
     const res = await fetch("/api/me/prescriptions");
@@ -52,9 +55,11 @@ export default function PrescriptionsPage() {
     const data = (await res.json()) as {
       medications: MedRow[];
       coupons: CouponRow[];
+      refillRemindersEnabled?: boolean;
     };
     setMedications(data.medications);
     setCoupons(data.coupons);
+    setRefillReminders(data.refillRemindersEnabled ?? true);
   }
 
   useEffect(() => {
@@ -108,6 +113,24 @@ export default function PrescriptionsPage() {
     }
   }
 
+  async function toggleAccountReminders(enabled: boolean) {
+    setReminderSaving(true);
+    setRefillReminders(enabled);
+    try {
+      const res = await fetch("/api/me/refill-reminders", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ refillRemindersEnabled: enabled }),
+      });
+      if (!res.ok) throw new Error("Could not update reminders.");
+    } catch (err) {
+      setRefillReminders(!enabled);
+      setError(err instanceof Error ? err.message : "Could not update reminders.");
+    } finally {
+      setReminderSaving(false);
+    }
+  }
+
   if (loading) {
     return (
       <div className="flex min-h-[50dvh] items-center justify-center text-muted-foreground">
@@ -149,9 +172,25 @@ export default function PrescriptionsPage() {
         </header>
 
         <TrustCallout title="Refill reminders are guidance only">
-          Trump RX does not dispense medication. Use this tracker alongside your
-          pharmacy’s refill schedule and your clinician’s directions.
+          Trump RX does not dispense medication. When enabled, email/SMS reminders
+          fire a few days before a tracked next refill date (requires Resend/Twilio
+          in production).
         </TrustCallout>
+
+        <div className="flex items-center justify-between gap-4 rounded-2xl border border-border bg-card px-4 py-3">
+          <div>
+            <p className="font-medium">Email & SMS refill reminders</p>
+            <p className="text-sm text-muted-foreground">
+              Account-wide toggle for active medications with a next refill date.
+            </p>
+          </div>
+          <Switch
+            checked={refillReminders}
+            disabled={reminderSaving}
+            onCheckedChange={(v) => void toggleAccountReminders(v)}
+            aria-label="Enable refill reminders"
+          />
+        </div>
 
         {error && (
           <p className="rounded-xl border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive">

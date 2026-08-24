@@ -16,6 +16,7 @@ model User {
   passwordHash           String?
   phone                  String?
   allowPersonalizedTips  Boolean   @default(false)
+  refillRemindersEnabled Boolean   @default(true)
   membershipTier         String    @default("free") // free | plus
   stripeCustomerId       String?
   stripeSubscriptionId   String?
@@ -38,6 +39,7 @@ model User {
   supportMessages        Message[]
   prescriptionTransfers  PrescriptionTransfer[]
   supportTickets         SupportTicket[]
+  insurancePlan          InsurancePlan?
 }
 
 model Account {
@@ -270,6 +272,8 @@ model SavedMedication {
   nextRefillAt         DateTime?
   refillsRemaining     Int?
   notes                String?
+  refillRemindersEnabled Boolean   @default(true)
+  lastRefillReminderAt DateTime?
   savedAt              DateTime  @default(now())
   updatedAt            DateTime  @updatedAt
 
@@ -326,6 +330,24 @@ model FamilyMember {
   @@index([userId])
 }
 
+/// Saved insurance plan fields for Insurance vs cash comparisons.
+model InsurancePlan {
+  id               String   @id @default(cuid())
+  userId           String   @unique
+  planType         String   // commercial | medicare_part_d | medicaid | other
+  carrierName      String?
+  memberIdLast4    String?
+  annualDeductible Float?
+  deductibleMet    Float?
+  typicalCopay     Float?
+  /// manual | partner (future eligibility API)
+  source           String   @default("manual")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
 /// Patient request to move an existing Rx to a Trump RX–compatible pharmacy.
 model PrescriptionTransfer {
   id               String   @id @default(cuid())
@@ -343,6 +365,8 @@ model PrescriptionTransfer {
   notes            String?
   /// submitted | in_review | completed | canceled
   status           String   @default("submitted")
+  adminNotes       String?
+  assignedTo       String?
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 

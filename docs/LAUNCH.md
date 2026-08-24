@@ -27,7 +27,10 @@ Operational checklist for going live. Product blueprint surfaces are already shi
 | Chat + admin inbox + notify | Shipped — `/admin/messages`, email/SMS on new chats |
 | Counter reject guidance | Shipped — coupon pharmacist mode + help |
 | First-win homepage CTAs | Shipped — curated common fills |
-| True insurance plan import | Stub API `POST /api/insurance/plan-import` |
+| True insurance plan import | Shipped — `/profile/insurance` + saved plan in Insurance vs cash |
+| Rx transfer ops queue | Shipped — `/admin/transfers` |
+| Refill email/SMS reminders | Shipped — cron on `PUT /api/alerts` checks `nextRefillAt` |
+| FAQ page | Shipped — `/faq` |
 | NCPDP / pharmacy ID enrichment | Mapped + seeded |
 | Admin tools | `/admin` + messages inbox |
 | Observability | Health + optional `SENTRY_DSN` |

@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -35,6 +36,32 @@ export function InsuranceVsCashMatrix({
   const [deductibleLeft, setDeductibleLeft] = useState("");
   const [preferToday, setPreferToday] = useState(true);
   const [importNote, setImportNote] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch("/api/insurance/plan-import")
+      .then(async (res) => {
+        if (!res.ok) return;
+        const data = (await res.json()) as {
+          plan?: {
+            planType: string;
+            remainingDeductible: number;
+            typicalCopay: number | null;
+          } | null;
+        };
+        if (!data.plan) return;
+        if (data.plan.planType === "medicare_part_d") {
+          setSituation("medicare_part_d");
+        } else if (data.plan.planType === "commercial") {
+          setSituation("high_deductible");
+        }
+        setDeductibleLeft(String(data.plan.remainingDeductible));
+        if (data.plan.typicalCopay != null) {
+          setPlanPay(String(data.plan.typicalCopay));
+        }
+        setImportNote("Using your saved insurance plan.");
+      })
+      .catch(() => undefined);
+  }, []);
 
   async function importPlanStub() {
     setImportNote(null);
@@ -171,8 +198,14 @@ export function InsuranceVsCashMatrix({
         onClick={() => void importPlanStub()}
         className="text-left text-sm font-medium text-primary underline-offset-2 hover:underline"
       >
-        Normalize plan fields
+        Refresh from saved plan
       </button>
+      <Link
+        href="/profile/insurance"
+        className="ml-3 text-sm font-medium text-muted-foreground underline-offset-2 hover:underline"
+      >
+        Edit plan
+      </Link>
       {importNote && (
         <p className="text-xs text-muted-foreground" role="status">
           {importNote}

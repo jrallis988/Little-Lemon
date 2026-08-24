@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/help",
     "/help/pharmacist",
     "/help/counter-issue",
+    "/faq",
     "/transfer",
     "/membership",
     "/privacy",
