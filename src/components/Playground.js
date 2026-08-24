@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import FoamDriftGame from "./FoamDriftGame";
 
 const notes = [
@@ -30,6 +31,11 @@ export default function Playground() {
             Foam Drift is a lightweight canvas prototype in React—useful as a craft
             sample for interaction, state, and accessible motion preferences.
           </p>
+          <div className="reveal mt-6">
+            <Link to="/lab" className="btn-ghost">
+              More in the Lab →
+            </Link>
+          </div>
         </div>
 
         <div className="reveal mb-12">

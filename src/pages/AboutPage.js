@@ -54,9 +54,9 @@ export default function AboutPage() {
               <Link to="/#contact" className="btn-primary">
                 Get in touch
               </Link>
-              <a href={`${process.env.PUBLIC_URL}/resume.html`} className="btn-ghost">
+              <Link to="/resume" className="btn-ghost">
                 View resume
-              </a>
+              </Link>
             </div>
           </div>
         </section>

@@ -1,4 +1,61 @@
+import { Link } from "react-router-dom";
 import projects from "../data/projects";
+import TechStack from "./project/TechStack";
+
+const typeLabels = {
+  "case-study": "Case study",
+  professional: "Professional",
+  personal: "Personal project",
+  experiment: "Experiment",
+};
+
+function ProjectActions({ project }) {
+  const actions = [
+    {
+      key: "case",
+      label: "Case Study",
+      href: project.links?.caseStudy || (project.slug ? `/work/${project.slug}` : null),
+      primary: true,
+    },
+    { key: "live", label: "Live Site", href: project.links?.live },
+    { key: "github", label: "GitHub", href: project.links?.github },
+  ].filter((action) => action.href);
+
+  return (
+    <div className="mt-5 flex flex-wrap gap-3">
+      {actions.map((action) => {
+        const className = action.primary
+          ? "text-sm font-semibold text-foam transition-colors hover:text-foam-soft"
+          : "text-sm font-semibold text-chalk transition-colors hover:text-foam-soft";
+        if (action.href.startsWith("/")) {
+          return (
+            <Link key={action.key} to={action.href} className={className}>
+              {action.label} →
+            </Link>
+          );
+        }
+        if (action.href.startsWith("#")) {
+          return (
+            <a key={action.key} href={action.href} className={className}>
+              {action.label} →
+            </a>
+          );
+        }
+        return (
+          <a
+            key={action.key}
+            href={action.href}
+            target="_blank"
+            rel="noreferrer"
+            className={className}
+          >
+            {action.label} →
+          </a>
+        );
+      })}
+    </div>
+  );
+}
 
 export default function Work() {
   return (
@@ -13,40 +70,44 @@ export default function Work() {
           </h2>
           <p className="reveal mt-4 text-base leading-relaxed text-sand/85 md:text-lg">
             Front-end UI work focused on responsive layouts, accessible interaction,
-            and clean component systems—plus a live interactive prototype on this site.
+            and clean component systems—plus interactive experiments in the Lab.
           </p>
         </div>
 
         <ul className="stagger">
           {projects.map((project) => (
             <li key={project.id} className="project-row reveal">
-              <a
-                href={project.href}
-                className="group grid gap-4 py-8 md:grid-cols-[1fr_1.4fr_auto] md:items-end md:gap-8 md:py-10"
-              >
+              <div className="grid gap-4 py-8 md:grid-cols-[1fr_1.35fr] md:items-start md:gap-10 md:py-10">
                 <div>
-                  <div className="flex items-baseline gap-3">
-                    <h3 className="font-display text-2xl font-bold text-chalk transition-colors group-hover:text-foam-soft md:text-3xl">
-                      {project.name}
-                    </h3>
-                    <span className="text-sm text-sand/60">{project.year}</span>
-                  </div>
-                  <p className="mt-2 text-sm text-sand/70">{project.role}</p>
-                </div>
-                <p className="text-base leading-relaxed text-sand/85 md:max-w-xl">
-                  {project.summary}
-                </p>
-                <div className="md:text-right">
-                  <p className="text-sm text-foam-soft">{project.stack}</p>
-                  <p className="mt-2 text-sm font-semibold text-chalk transition-transform group-hover:translate-x-1">
-                    {project.cta}
+                  <p className="text-sm uppercase tracking-[0.14em] text-foam">
+                    {typeLabels[project.type] || project.category} · {project.year}
                   </p>
+                  <h3 className="mt-2 font-display text-2xl font-bold text-chalk md:text-3xl">
+                    {project.name}
+                  </h3>
+                  <p className="mt-2 text-sm text-sand/70">{project.role}</p>
+                  <TechStack items={project.stack} className="mt-4" />
                 </div>
-              </a>
+                <div>
+                  <p className="text-base leading-relaxed text-sand/85 md:max-w-xl">
+                    {project.summary}
+                  </p>
+                  <ProjectActions project={project} />
+                </div>
+              </div>
             </li>
           ))}
           <li className="border-t border-sand/14" aria-hidden="true" />
         </ul>
+
+        <div className="mt-10 flex flex-wrap gap-3">
+          <Link to="/lab" className="btn-ghost">
+            Visit the Lab
+          </Link>
+          <Link to="/engineering" className="btn-ghost">
+            How I build
+          </Link>
+        </div>
       </div>
     </section>
   );

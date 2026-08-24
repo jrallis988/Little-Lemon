@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const beats = [
   {
     label: "Problem",
@@ -45,6 +47,9 @@ export default function CaseStudy() {
             constraints, and the front-end choices that kept the flow fast and clean.
           </p>
           <div className="reveal mt-6 flex flex-wrap gap-3">
+            <Link to="/work/little-lemon" className="btn-primary">
+              Full case study
+            </Link>
             <a
               href="https://github.com/jrallis988/Little-Lemon"
               target="_blank"
@@ -53,7 +58,7 @@ export default function CaseStudy() {
             >
               View repository
             </a>
-            <a href="#contact" className="btn-primary">
+            <a href="#contact" className="btn-ghost">
               Discuss this build
             </a>
           </div>

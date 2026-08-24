@@ -1,10 +1,6 @@
-const skills = [
-  "HTML, CSS, JavaScript",
-  "React",
-  "Responsive & accessible UI",
-  "Design systems",
-  "Git & GitHub",
-];
+import { Link } from "react-router-dom";
+import skillGroups from "../data/skills";
+import SkillGroup from "./SkillGroup";
 
 export default function Skills() {
   return (
@@ -22,21 +18,22 @@ export default function Skills() {
             Core front-end toolkit.
           </h2>
           <p className="reveal mt-4 text-base leading-relaxed text-sand/85 md:text-lg">
-            Focused skills for building accessible, performance-minded interfaces—
-            and the collaboration habits to ship them.
+            What I work with day to day—organized for quick scanning. For how I use these
+            tools in practice, see Engineering.
           </p>
         </div>
 
-        <ul className="stagger grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {skills.map((skill) => (
-            <li
-              key={skill}
-              className="reveal border-t border-foam/35 pt-5 font-display text-xl font-bold text-chalk md:text-2xl"
-            >
-              {skill}
-            </li>
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 stagger">
+          {skillGroups.map((group) => (
+            <SkillGroup key={group.id} title={group.title} items={group.items} />
           ))}
-        </ul>
+        </div>
+
+        <div className="reveal mt-12">
+          <Link to="/engineering" className="btn-ghost">
+            How I build →
+          </Link>
+        </div>
       </div>
     </section>
   );

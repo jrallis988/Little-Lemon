@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import profile from "../data/profile";
 
 export default function Footer() {
@@ -5,13 +6,19 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-sand/10 bg-ink py-8">
-      <div className="container flex flex-col gap-4 text-sm text-sand/65 sm:flex-row sm:items-center sm:justify-between">
+      <div className="container flex flex-col gap-4 text-sm text-sand/65 lg:flex-row lg:items-center lg:justify-between">
         <p>© {year} James Rallis</p>
         <p className="text-sand/75">{profile.title}</p>
         <nav className="flex flex-wrap gap-4" aria-label="Footer">
-          <a href={profile.portfolio} className="transition-colors hover:text-foam-soft">
-            Portfolio
-          </a>
+          <Link to="/lab" className="transition-colors hover:text-foam-soft">
+            Lab
+          </Link>
+          <Link to="/engineering" className="transition-colors hover:text-foam-soft">
+            Engineering
+          </Link>
+          <Link to="/resume" className="transition-colors hover:text-foam-soft">
+            Resume
+          </Link>
           <a
             href={profile.linkedin}
             target="_blank"

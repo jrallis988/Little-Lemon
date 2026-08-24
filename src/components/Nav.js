@@ -3,11 +3,18 @@ import { Link, useLocation } from "react-router-dom";
 
 const links = [
   { to: "/#work", label: "Work" },
-  { to: "/#play", label: "Play" },
+  { to: "/lab", label: "Lab" },
+  { to: "/engineering", label: "Engineering" },
   { to: "/#about", label: "About" },
-  { to: "/#experience", label: "Experience" },
   { to: "/#skills", label: "Skills" },
   { to: "/#contact", label: "Contact" },
+];
+
+const moreLinks = [
+  { to: "/about", label: "About (full)" },
+  { to: "/resume", label: "Resume" },
+  { to: "/#play", label: "Play" },
+  { to: "/#experience", label: "Experience" },
 ];
 
 export default function Nav() {
@@ -48,7 +55,7 @@ export default function Nav() {
           James Rallis
         </Link>
 
-        <nav className="hidden items-center gap-4 lg:gap-6 md:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-4 lg:gap-5 md:flex" aria-label="Primary">
           {links.map((link) => (
             <Link key={link.to} to={link.to} className="nav-link text-sm font-medium text-sand">
               {link.label}
@@ -100,13 +107,16 @@ export default function Nav() {
               {link.label}
             </Link>
           ))}
-          <Link
-            to="/about"
-            className="py-3 font-display text-2xl font-semibold text-foam-soft"
-            onClick={() => setOpen(false)}
-          >
-            About (full)
-          </Link>
+          {moreLinks.map((link) => (
+            <Link
+              key={link.to}
+              to={link.to}
+              className="py-3 font-display text-xl font-semibold text-foam-soft"
+              onClick={() => setOpen(false)}
+            >
+              {link.label}
+            </Link>
+          ))}
         </nav>
       </div>
     </header>

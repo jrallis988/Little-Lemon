@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Hero() {
   return (
     <section
@@ -48,9 +50,9 @@ export default function Hero() {
             <a href="#work" className="btn-primary">
               View selected work
             </a>
-            <a href={`${process.env.PUBLIC_URL}/resume.html`} className="btn-ghost">
+            <Link to="/resume" className="btn-ghost">
               View resume
-            </a>
+            </Link>
           </div>
         </div>
       </div>
