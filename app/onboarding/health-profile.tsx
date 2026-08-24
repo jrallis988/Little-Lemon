@@ -30,16 +30,18 @@ const MANUAL_CATEGORIES = [
   { label: 'Medical Conditions', status: '2 added', added: true, icon: 'heart-outline' as const },
   { label: 'Medications', status: '4 added', added: true, icon: 'medical-outline' as const },
   { label: 'Supplements', status: '2 added', added: true, icon: 'leaf-outline' as const },
-  { label: 'Allergies', status: '1 added', added: true, icon: 'warning-outline' as const },
-  { label: 'Surgeries', status: '4 added', added: true, icon: 'cut-outline' as const },
-  { label: 'Test Results', status: 'Not added', added: false, icon: 'flask-outline' as const },
-  { label: 'Lifestyle', status: 'Not added', added: false, icon: 'fitness-outline' as const },
+  { label: 'Allergies & Reactions', status: '1 added', added: true, icon: 'warning-outline' as const },
+  { label: 'Surgeries & Procedures', status: '4 added', added: true, icon: 'cut-outline' as const },
+  { label: 'Important Test Results', status: 'Not added', added: false, icon: 'flask-outline' as const },
+  { label: 'Lifestyle Factors', status: 'Not added', added: false, icon: 'fitness-outline' as const },
   { label: 'Recent Changes', status: 'Not added', added: false, icon: 'time-outline' as const },
 ];
 
 export default function HealthProfileScreen() {
   const router = useRouter();
   const { profile, uploadDocument } = useBioCross();
+  const [uploading, setUploading] = useState(false);
+  const [manualExpanded, setManualExpanded] = useState(true);
 
   const handleUpload = async () => {
     setUploading(true);

@@ -26,23 +26,23 @@ import { useBioCross } from '../../src/state/BioCrossContext';
 const FEATURES = [
   {
     icon: 'shield-checkmark-outline' as const,
-    title: 'Personalized checks',
-    body: 'Matched to your medications, conditions, and allergies.',
+    title: 'Science-Backed',
+    body: 'Trusted research and interaction databases.',
   },
   {
-    icon: 'library-outline' as const,
-    title: 'Evidence-based',
-    body: 'Backed by trusted research and interaction databases.',
+    icon: 'person-outline' as const,
+    title: 'Personalized',
+    body: 'Matched to your unique health profile.',
   },
   {
-    icon: 'notifications-outline' as const,
-    title: 'Safety alerts',
-    body: 'Recalls, interactions, and research updates for you.',
+    icon: 'lock-closed-outline' as const,
+    title: 'Private & Secure',
+    body: 'Your data stays under your control.',
   },
   {
-    icon: 'document-text-outline' as const,
-    title: 'Health records',
-    body: 'Import records to strengthen your profile.',
+    icon: 'heart-outline' as const,
+    title: "You're in Control",
+    body: 'Nothing is added without your confirmation.',
   },
 ];
 
@@ -92,6 +92,7 @@ export default function HomeScreen() {
             variant="outline"
             size="md"
             fullWidth={false}
+            icon="person-outline"
             onPress={() => router.push('/(tabs)/profile')}
             accessibilityLabel="View My Profile"
             style={styles.profileBtn}
@@ -102,7 +103,7 @@ export default function HomeScreen() {
           <HealthCardHeader
             icon="search-outline"
             title="Check a Supplement"
-            subtitle="Search by name or scan a barcode"
+            subtitle="Search by name, ingredient, or brand."
           />
           <View style={styles.searchRow}>
             <View style={styles.searchInputWrap}>
@@ -110,7 +111,7 @@ export default function HomeScreen() {
               <TextInput
                 value={searchQuery}
                 onChangeText={setSearchQuery}
-                placeholder="Search supplements…"
+                placeholder="Search any supplement or ingredient..."
                 placeholderTextColor={colors.text.tertiary}
                 style={styles.searchInput}
                 returnKeyType="search"

@@ -47,17 +47,17 @@ const HEALTH_GRID = [
 ];
 
 const SETTINGS = [
-  { label: 'Notifications', icon: 'notifications-outline' as const },
-  { label: 'Privacy & Security', icon: 'lock-closed-outline' as const },
-  { label: 'Data Sharing', icon: 'share-social-outline' as const },
-  { label: 'Language', icon: 'language-outline' as const },
-  { label: 'Appearance', icon: 'color-palette-outline' as const },
-  { label: 'Help', icon: 'help-circle-outline' as const },
+  { label: 'Notifications', subtitle: 'Manage your alerts and reminders', icon: 'notifications-outline' as const },
+  { label: 'Privacy & Security', subtitle: 'Control your data and privacy settings', icon: 'lock-closed-outline' as const },
+  { label: 'Data Sharing', subtitle: 'Manage what you share and with whom', icon: 'shield-outline' as const },
+  { label: 'Language', subtitle: 'English (US)', icon: 'language-outline' as const },
+  { label: 'Appearance', subtitle: 'Light Mode', icon: 'color-palette-outline' as const },
+  { label: 'Help & Support', subtitle: 'Get help and contact support', icon: 'help-circle-outline' as const },
 ];
 
 export default function ProfileScreen() {
   const router = useRouter();
-  const { ready, user, profile, documents, preferences } = useBioCross();
+  const { ready, user, profile, documents } = useBioCross();
 
   if (!ready || !user || !profile) {
     return (
@@ -75,7 +75,7 @@ export default function ProfileScreen() {
     <SafeAreaView style={styles.safe} edges={['top']}>
       <ScreenTitle
         title="My Profile"
-        subtitle="Your health information powers personalized safety checks"
+        subtitle="Manage your health profile and app settings."
         right={
           <Pressable
             onPress={() => router.push('/onboarding/create-profile')}
@@ -83,7 +83,7 @@ export default function ProfileScreen() {
             accessibilityLabel="Edit Profile"
             style={styles.editBtn}
           >
-            <Ionicons name="create-outline" size={18} color={colors.brand.blue} />
+            <Ionicons name="pencil" size={14} color={colors.brand.blue} />
             <Text style={styles.editText}>Edit Profile</Text>
           </Pressable>
         }
@@ -148,18 +148,15 @@ export default function ProfileScreen() {
           <Pressable
             key={s.label}
             accessibilityRole="button"
-            accessibilityLabel={s.label}
+            accessibilityLabel={`${s.label}. ${s.subtitle}`}
           >
             <HealthCard style={styles.settingCard}>
               <View style={styles.settingRow}>
-                <Ionicons name={s.icon} size={20} color={colors.text.secondary} />
-                <Text style={styles.settingLabel}>{s.label}</Text>
-                {s.label === 'Language' && preferences ? (
-                  <Text style={styles.settingValue}>{preferences.language}</Text>
-                ) : null}
-                {s.label === 'Appearance' && preferences ? (
-                  <Text style={styles.settingValue}>{preferences.appearance}</Text>
-                ) : null}
+                <Ionicons name={s.icon} size={20} color={colors.brand.navy} />
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.settingLabel}>{s.label}</Text>
+                  <Text style={styles.settingSubtitle}>{s.subtitle}</Text>
+                </View>
                 <Ionicons name="chevron-forward" size={18} color={colors.text.tertiary} />
               </View>
             </HealthCard>
@@ -298,10 +295,14 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
   },
   settingLabel: {
-    flex: 1,
-    fontWeight: '600',
+    fontWeight: '700',
     color: colors.text.primary,
     fontSize: typography.size.md,
+  },
+  settingSubtitle: {
+    color: colors.text.secondary,
+    fontSize: typography.size.xs,
+    marginTop: 2,
   },
   settingValue: {
     color: colors.text.tertiary,

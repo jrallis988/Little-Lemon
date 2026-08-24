@@ -8,12 +8,12 @@ import {
   ErrorState,
   HealthCard,
   LoadingState,
-} from '../../src/design-system';
-import { colors, spacing, typography } from '../../src/design-system/tokens';
-import type { EvidenceSource, SafetyFinding, SupplementCheck } from '../../src/domain/models';
-import { biocrossRepository } from '../../src/domain/repository';
-import { DEMO_EVIDENCE } from '../../src/domain/fixtures';
-import { useBioCross } from '../../src/state/BioCrossContext';
+} from '../../../src/design-system';
+import { colors, spacing, typography } from '../../../src/design-system/tokens';
+import type { EvidenceSource, SafetyFinding, SupplementCheck } from '../../../src/domain/models';
+import { biocrossRepository } from '../../../src/domain/repository';
+import { DEMO_EVIDENCE } from '../../../src/domain/fixtures';
+import { useBioCross } from '../../../src/state/BioCrossContext';
 
 export default function EvidenceDetailScreen() {
   const router = useRouter();
