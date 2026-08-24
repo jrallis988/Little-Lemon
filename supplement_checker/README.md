@@ -9,6 +9,18 @@ Python starter for a FastAPI + Streamlit flow that:
 
 Informational only — not medical advice.
 
+## Screenshots
+
+Captured UI screens live under `supplement_checker/screenshots/`:
+
+| File | Screen |
+| --- | --- |
+| `00-nav-overview.png` | Profile + sidebar navigation |
+| `01-profile.png` | Health profile ingestion |
+| `02-label-upload.png` | Label image upload |
+| `03-ingredients.png` | Extracted ingredients |
+| `04-comparison.png` | Profile comparison findings |
+
 ## Setup
 
 ```bash

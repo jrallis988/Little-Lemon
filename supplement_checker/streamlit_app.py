@@ -1,11 +1,17 @@
 """
-Streamlit UI for structured health-profile ingestion.
+Streamlit multipage entry — Supplement Checker.
 
-Run locally:
-  streamlit run supplement_checker/streamlit_app.py
+Pages:
+  1. Health profile ingestion (this file)
+  2. Label upload
+  3. Extracted ingredients
+  4. Profile comparison
 
-Expose with Cloudflare Tunnel (quick tunnel):
-  cloudflared tunnel --url http://localhost:8501
+Run:
+  streamlit run supplement_checker/streamlit_app.py --server.port 8501
+
+Cloudflare Tunnel:
+  cloudflared tunnel --url http://127.0.0.1:8501
 """
 
 from __future__ import annotations
@@ -16,7 +22,6 @@ from pathlib import Path
 
 import streamlit as st
 
-# Allow `streamlit run supplement_checker/streamlit_app.py` from repo root.
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
@@ -46,12 +51,13 @@ from supplement_checker.profile_ingestion import (
 st.set_page_config(
     page_title="Supplement Checker — Profile",
     layout="centered",
+    initial_sidebar_state="expanded",
 )
 
 st.title("Health profile ingestion")
 st.caption(
     "Informational only — not medical advice. "
-    "First step toward label OCR + research-cited comparison."
+    "Step 1 of 4 — profile → label → ingredients → comparison."
 )
 
 with st.sidebar:
@@ -60,8 +66,8 @@ with st.sidebar:
         st.session_state["demo_seed"] = profile_to_storage_dict(example_profile())
         st.rerun()
     st.markdown(
-        "Next steps in this app: label image upload, "
-        "vision ingredient extraction, profile comparison."
+        "Use the sidebar pages for **Label upload**, "
+        "**Ingredients**, and **Comparison**."
     )
 
 demo = st.session_state.get("demo_seed") or {}
@@ -221,7 +227,6 @@ def build_payload() -> dict:
         for i, g in enumerate(goals_selected)
     ]
 
-    # Carry nutrient flags / current supplements from demo seed when present.
     nutrient_flags = [
         NutrientFlag(**item) for item in demo.get("nutrient_flags") or []
     ]
