@@ -42,4 +42,35 @@
   } else {
     reveals.forEach((el) => el.classList.add("is-visible"));
   }
+
+  const jumpNav = document.querySelector(".menu-jump");
+  if (jumpNav) {
+    const scrollToId = (id) => {
+      const target = document.getElementById(id);
+      if (!target) return;
+      const headerH = header ? header.getBoundingClientRect().height : 0;
+      const jumpH = jumpNav.getBoundingClientRect().height;
+      const top =
+        window.scrollY +
+        target.getBoundingClientRect().top -
+        headerH -
+        jumpH -
+        12;
+      window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+    };
+
+    jumpNav.querySelectorAll('a[href^="#"]').forEach((link) => {
+      link.addEventListener("click", (event) => {
+        const id = link.getAttribute("href")?.slice(1);
+        if (!id) return;
+        event.preventDefault();
+        history.pushState(null, "", `#${id}`);
+        scrollToId(id);
+      });
+    });
+
+    if (location.hash.length > 1) {
+      requestAnimationFrame(() => scrollToId(location.hash.slice(1)));
+    }
+  }
 })();
