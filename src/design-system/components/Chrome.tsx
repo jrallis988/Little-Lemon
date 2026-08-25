@@ -17,7 +17,7 @@ export function BioCrossLogo({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) {
 
 export function LogoMark({ size = 28 }: { size?: number }) {
   return (
-    <Svg width={size} height={size} viewBox="0 0 64 64" accessibilityElementsHidden>
+    <Svg width={size} height={size} viewBox="0 0 64 64">
       <Circle cx="32" cy="32" r="30" fill={colors.brand.blue} opacity={0.12} />
       <Path
         d="M32 10c6 8 14 12 14 22a14 14 0 1 1-28 0c0-10 8-14 14-22z"

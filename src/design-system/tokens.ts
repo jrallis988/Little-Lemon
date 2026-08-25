@@ -97,6 +97,7 @@ export const typography = {
 
 export const shadows = {
   card: {
+    // Use boxShadow-compatible elevation for native; web Metro maps these.
     shadowColor: '#0A1128',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.06,

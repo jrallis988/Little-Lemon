@@ -20,7 +20,7 @@ export const DEMO_USER: User = {
   dateOfBirth: '1997-03-14',
   biologicalSex: 'female',
   country: 'United States',
-  onboardingCompleted: false,
+  onboardingCompleted: true,
   createdAt: '2026-05-01T12:00:00.000Z',
 };
 
