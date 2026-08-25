@@ -29,11 +29,13 @@ function ChipGroup<T extends string>({
   options,
   value,
   onChange,
+  labelMap,
 }: {
   label: string
   options: T[]
   value: T
   onChange: (v: T) => void
+  labelMap?: Partial<Record<T, string>>
 }) {
   return (
     <div className="filter-group">
@@ -45,9 +47,10 @@ function ChipGroup<T extends string>({
             type="button"
             className={`chip${value === opt ? ' chip-active' : ''}`}
             aria-pressed={value === opt}
+            aria-label={`${label}: ${labelMap?.[opt] ?? opt}`}
             onClick={() => onChange(opt)}
           >
-            {opt}
+            {labelMap?.[opt] ?? opt}
           </button>
         ))}
       </div>
@@ -115,6 +118,7 @@ export function PerformanceExplorer() {
               options={formats}
               value={format}
               onChange={setFormat}
+              labelMap={{ TikTok: 'TT native' }}
             />
             <ChipGroup
               label="Content pillar"
