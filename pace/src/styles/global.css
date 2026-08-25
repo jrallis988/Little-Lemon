@@ -462,9 +462,9 @@ select {
 /* Objectives */
 .objective-row {
   display: grid;
-  grid-template-columns: 8rem 1fr;
-  gap: 1rem;
-  padding: 1.15rem 0;
+  grid-template-columns: 1fr;
+  gap: 0.45rem;
+  padding: 1.25rem 0;
   border-top: 1px solid var(--line);
 }
 
@@ -476,13 +476,9 @@ select {
   font-family: var(--font-display);
   font-weight: 800;
   letter-spacing: -0.03em;
-  font-size: 1.05rem;
-}
-
-@media (max-width: 700px) {
-  .objective-row {
-    grid-template-columns: 1fr;
-  }
+  font-size: 1.2rem;
+  line-height: 1.15;
+  color: var(--asphalt);
 }
 
 /* Journey timeline */
@@ -557,8 +553,13 @@ select {
   letter-spacing: -0.03em;
 }
 
+.calendar-week .panel {
+  overflow-x: auto;
+}
+
 .calendar-table {
   width: 100%;
+  min-width: 760px;
   border-collapse: collapse;
   font-size: 0.88rem;
 }
@@ -903,22 +904,50 @@ select {
 }
 
 .filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
+  display: grid;
+  gap: 1rem;
   margin-bottom: 1.25rem;
 }
 
 .filter-group {
   display: grid;
-  gap: 0.3rem;
+  gap: 0.4rem;
 }
 
-.filter-group label {
+.filter-label {
   font-size: 0.68rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.55);
+  font-weight: 700;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.chip {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.88);
+  border-radius: var(--radius);
+  padding: 0.45rem 0.8rem;
+  font-size: 0.82rem;
+  font-weight: 650;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.chip:hover {
+  border-color: rgba(197, 255, 61, 0.55);
+}
+
+.chip-active {
+  background: var(--lime);
+  color: var(--asphalt);
+  border-color: transparent;
 }
 
 .filter-group select {

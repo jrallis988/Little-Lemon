@@ -24,6 +24,37 @@ const pillars: Array<Pillar | 'All'> = [
   'Community',
 ]
 
+function ChipGroup<T extends string>({
+  label,
+  options,
+  value,
+  onChange,
+}: {
+  label: string
+  options: T[]
+  value: T
+  onChange: (v: T) => void
+}) {
+  return (
+    <div className="filter-group">
+      <span className="filter-label">{label}</span>
+      <div className="chip-row" role="group" aria-label={label}>
+        {options.map((opt) => (
+          <button
+            key={opt}
+            type="button"
+            className={`chip${value === opt ? ' chip-active' : ''}`}
+            aria-pressed={value === opt}
+            onClick={() => onChange(opt)}
+          >
+            {opt}
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export function PerformanceExplorer() {
   const [platform, setPlatform] = useState<Platform | 'All'>('All')
   const [format, setFormat] = useState<Format | 'All'>('All')
@@ -73,48 +104,24 @@ export function PerformanceExplorer() {
           </p>
 
           <div className="filters">
-            <div className="filter-group">
-              <label htmlFor="ex-platform">Platform</label>
-              <select
-                id="ex-platform"
-                value={platform}
-                onChange={(e) => setPlatform(e.target.value as Platform | 'All')}
-              >
-                {platforms.map((p) => (
-                  <option key={p} value={p}>
-                    {p}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="filter-group">
-              <label htmlFor="ex-format">Format</label>
-              <select
-                id="ex-format"
-                value={format}
-                onChange={(e) => setFormat(e.target.value as Format | 'All')}
-              >
-                {formats.map((f) => (
-                  <option key={f} value={f}>
-                    {f}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="filter-group">
-              <label htmlFor="ex-pillar">Content pillar</label>
-              <select
-                id="ex-pillar"
-                value={pillar}
-                onChange={(e) => setPillar(e.target.value as Pillar | 'All')}
-              >
-                {pillars.map((p) => (
-                  <option key={p} value={p}>
-                    {p}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <ChipGroup
+              label="Platform"
+              options={platforms}
+              value={platform}
+              onChange={setPlatform}
+            />
+            <ChipGroup
+              label="Format"
+              options={formats}
+              value={format}
+              onChange={setFormat}
+            />
+            <ChipGroup
+              label="Content pillar"
+              options={pillars}
+              value={pillar}
+              onChange={setPillar}
+            />
           </div>
 
           <div className="explorer-stats">
