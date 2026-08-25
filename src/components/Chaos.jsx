@@ -9,7 +9,9 @@ export function SlimeCursor() {
     const onClick = (event) => {
       const target = event.target
       if (
-        target.closest('input, textarea, button, a, label, .sticker-wall, .no-splat')
+        target.closest(
+          'input, textarea, button, a, label, .sticker-wall, .no-splat, .arcade-modal',
+        )
       ) {
         return
       }

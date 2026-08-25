@@ -24,7 +24,7 @@ Try clicking empty space (slime pops), smash the “Too basic?” button, and un
 | Route | Feel |
 | --- | --- |
 | `/` | Portal + Nick Jr. spotlight, News / Weekenders / Orbitz rails |
-| `/games` | Arcade cards with Play Now |
+| `/games` | Playable arcade cabinets (Slime Dash splat rounds + high scores) |
 | `/shows` | Toon + live-action hubs |
 | `/video` | Chunk player + clip rail |
 | `/fan` | Sticker lab, poll, web-lab toys |
@@ -38,6 +38,6 @@ Primary nav: **Home**, Games, Shows, Video, Your World, More. Music is removed.
 
 ## Stack
 
-React 19 + Vite + React Router. Custom CSS (lime field, orange splat, jagged yellow frame).
+React 19 + Vite + React Router. Custom CSS (lime field, orange splat, rectangular yellow portal shell).
 
 Not affiliated with Paramount or Nickelodeon.
