@@ -9,7 +9,7 @@ ARTISTIC FOUNTAIN: STATUS REPORT
 2. BUILD & DEVELOPMENT STATUS
 • Tech Stack Alignment: Developed in Cursor. Live site is currently a static front-end (HTML, CSS, vanilla JS). A Next.js + TypeScript + Tailwind CSS build remains an optional migration path if we want that stack explicitly.
 • Design System: Live site uses a dark charcoal base with expressive brand typography and spectrum/magenta accents. A calmer charcoal/slate + muted teal/cyan system is documented as an alternate direction if we restyle.
-• Current Progress: Layout components in place — navigation, hero, services (with Learn More detail pages), selected work showcase, blog index + post pages, contact, privacy, and terms — emphasizing typographic clarity and avoiding algorithmic bloat.
+• Current Progress: Layout components in place — navigation, hero, services (with Learn More detail pages), selected work showcase (including BREAKAWAY editorial case study and NH DMV), blog index + post pages, contact, privacy, and terms — emphasizing typographic clarity and avoiding algorithmic bloat.
 • Content workflow: Blog drafts can be crafted in Blaze AI, then pasted into `blog/*.html` post bodies.
 
 3. DUAL-TRACK SEPARATION

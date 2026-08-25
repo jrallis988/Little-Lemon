@@ -1,0 +1,25 @@
+:root {
+  /* BREAKAWAY editorial system */
+  --ink: #0b0b0b;
+  --ink-soft: #1a1a1a;
+  --paper: #ebeef1;
+  --paper-warm: #f2f3f5;
+  --rule: #c5c9cf;
+  --mute: #5c6570;
+  --accent: #e62314;
+  --accent-deep: #b4180e;
+  --steel: #2c3e4e;
+  --ice: #9eb6c4;
+  --white: #ffffff;
+
+  --font-display: "Archivo Black", "Arial Black", sans-serif;
+  --font-deck: "Instrument Serif", Georgia, serif;
+  --font-body: "Newsreader", "Times New Roman", serif;
+  --font-ui: "DM Sans", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --page-ratio: 0.783; /* 9 × 11.5 */
+  --spread-gap: 2px;
+  --archive-max: 1180px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}

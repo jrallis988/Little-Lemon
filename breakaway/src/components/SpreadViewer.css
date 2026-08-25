@@ -1,0 +1,154 @@
+.sv {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sv-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+
+.sv-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  align-items: baseline;
+}
+
+.sv-pages {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.sv-title {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+
+.sv-section {
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.sv-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sv-actions button {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  border: 1px solid var(--rule);
+  background: var(--white);
+  color: var(--ink);
+  padding: 0.4rem 0.7rem;
+  cursor: pointer;
+  transition: border-color 0.2s var(--ease), background 0.2s var(--ease);
+}
+
+.sv-actions button:hover {
+  border-color: var(--ink);
+}
+
+.sv-count {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--mute);
+  min-width: 3.5rem;
+  text-align: center;
+}
+
+.sv-fs-btn {
+  margin-left: 0.35rem;
+}
+
+.sv-stage {
+  background: #121212;
+  padding: clamp(0.75rem, 2vw, 1.5rem);
+}
+
+.sv-caption {
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  color: var(--mute);
+  margin: 0;
+  max-width: 52rem;
+}
+
+.sv-thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.sv-thumbs button {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--rule);
+  background: transparent;
+  color: var(--mute);
+  cursor: pointer;
+}
+
+.sv-thumbs button.is-active,
+.sv-thumbs button:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+  background: var(--white);
+}
+
+.sv-fs-portal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(8, 8, 8, 0.96);
+  padding: 1.5rem;
+  overflow: auto;
+}
+
+.sv--fs .sv-title,
+.sv--fs .sv-caption,
+.sv--fs .sv-section {
+  color: var(--paper);
+}
+
+.sv--fs .sv-caption {
+  opacity: 0.7;
+}
+
+.sv--fs .sv-actions button {
+  background: transparent;
+  color: var(--paper);
+  border-color: rgba(235, 238, 241, 0.3);
+}
+
+.sv--fs .sv-thumbs button {
+  border-color: rgba(235, 238, 241, 0.25);
+  color: rgba(235, 238, 241, 0.55);
+}
+
+.sv--fs .sv-thumbs button.is-active {
+  color: var(--paper);
+  border-color: var(--paper);
+  background: transparent;
+}
+
+.sv--fs .sv-stage {
+  background: transparent;
+  max-width: 1100px;
+  margin: 0 auto;
+}
