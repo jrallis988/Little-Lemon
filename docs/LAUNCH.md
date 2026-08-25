@@ -31,6 +31,10 @@ Operational checklist for going live. Product blueprint surfaces are already shi
 | Rx transfer ops queue | Shipped — `/admin/transfers` |
 | Refill email/SMS reminders | Shipped — cron on `PUT /api/alerts` checks `nextRefillAt` |
 | FAQ page | Shipped — `/faq` |
+| Order confirmation | Shipped — `/checkout/confirmation` after digital pass |
+| Insurance calculator | Shipped — `/tools/insurance-calculator` |
+| Provider portal | Shipped — `/providers` |
+| Security settings | Shipped — `/profile/security` (password, 2FA preference, privacy) |
 | NCPDP / pharmacy ID enrichment | Mapped + seeded |
 | Admin tools | `/admin` + messages inbox |
 | Observability | Health + optional `SENTRY_DSN` |

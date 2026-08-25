@@ -52,6 +52,19 @@ export function SiteFooter() {
               </Link>
             </li>
             <li>
+              <Link
+                href="/tools/insurance-calculator"
+                className="hover:text-foreground"
+              >
+                Insurance calculator
+              </Link>
+            </li>
+            <li>
+              <Link href="/providers" className="hover:text-foreground">
+                For providers
+              </Link>
+            </li>
+            <li>
               <Link href="/help/pharmacist" className="hover:text-foreground">
                 Pharmacist guide
               </Link>

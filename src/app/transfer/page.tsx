@@ -78,11 +78,12 @@ export default function TransferPage() {
         <header className="space-y-1.5">
           <p className="text-sm font-medium text-primary">Prescription transfer</p>
           <h1 className="font-display text-3xl font-semibold tracking-tight md:text-4xl">
-            Move your Rx to a Trump RX pharmacy
+            Transfer your prescription
           </h1>
           <p className="text-muted-foreground">
-            Tell us where the prescription is today and where you want to fill.
-            Your receiving pharmacy usually completes the transfer call.
+            Dedicated flow to request moving an active Rx from your current
+            pharmacy to a Trump RX–compatible location. Your receiving pharmacy
+            usually completes the transfer call.
           </p>
         </header>
 

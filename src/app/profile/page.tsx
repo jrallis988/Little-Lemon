@@ -171,6 +171,16 @@ export default function ProfilePage() {
               body: "Deductible & copay for comparisons",
             },
             {
+              href: "/profile/security",
+              title: "Security & privacy",
+              body: "Password, 2FA preference, privacy controls",
+            },
+            {
+              href: "/tools/insurance-calculator",
+              title: "Insurance calculator",
+              body: "Compare copay vs cash coupon",
+            },
+            {
               href: "/transfer",
               title: "Transfer a prescription",
               body: "Move an Rx to a network pharmacy",

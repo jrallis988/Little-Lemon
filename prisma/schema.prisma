@@ -17,6 +17,9 @@ model User {
   phone                  String?
   allowPersonalizedTips  Boolean   @default(false)
   refillRemindersEnabled Boolean   @default(true)
+  twoFactorEnabled       Boolean   @default(false)
+  /// email | app (app reserved for future TOTP)
+  twoFactorMethod        String?
   membershipTier         String    @default("free") // free | plus
   stripeCustomerId       String?
   stripeSubscriptionId   String?

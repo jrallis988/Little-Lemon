@@ -1,13 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import JsBarcode from "jsbarcode";
+import { useRouter } from "next/navigation";
 import {
   ArrowRight,
-  CheckCircle2,
   Loader2,
-  Printer,
   ShoppingBag,
   Trash2,
 } from "lucide-react";
@@ -22,7 +20,9 @@ import { useToast } from "@/components/providers/toast-provider";
 import { formatCurrency } from "@/lib/pricing";
 import { cn } from "@/lib/utils";
 
-interface IssuedPass {
+export const PASS_STORAGE_KEY = "trumprx_last_digital_pass";
+
+export type StoredIssuedPass = {
   passId: string;
   savedToAccount?: boolean;
   issuedAt: string;
@@ -33,6 +33,9 @@ interface IssuedPass {
     pharmacyName: string;
     counterPrice: number;
     retailPrice: number;
+    genericName?: string;
+    strengthLabel?: string;
+    quantity?: number;
     coupon: {
       id: string;
       bin: string;
@@ -48,35 +51,7 @@ interface IssuedPass {
       pharmacistTip: string;
     };
   }>;
-}
-
-function PassBarcode({ value }: { value: string }) {
-  const svgRef = useRef<SVGSVGElement>(null);
-  useEffect(() => {
-    if (!svgRef.current) return;
-    try {
-      JsBarcode(svgRef.current, value, {
-        format: "CODE128",
-        width: 2.2,
-        height: 64,
-        displayValue: false,
-        margin: 0,
-        background: "#ffffff",
-        lineColor: "#0f1b3d",
-      });
-    } catch {
-      /* ignore */
-    }
-  }, [value]);
-  return (
-    <div className="rounded-xl border border-border bg-white p-3">
-      <svg ref={svgRef} className="mx-auto h-16 w-full max-w-xs" role="img" />
-      <p className="mt-1 text-center font-mono text-xs tracking-widest">
-        {value}
-      </p>
-    </div>
-  );
-}
+};
 
 function CartLine({
   item,
@@ -86,39 +61,34 @@ function CartLine({
   onRemove: () => void;
 }) {
   return (
-    <article className="flex flex-col gap-3 border-b border-border py-4 last:border-0 sm:flex-row sm:items-center sm:justify-between">
-      <div className="min-w-0">
-        <p className="font-semibold text-foreground">{item.genericName}</p>
+    <div className="flex flex-wrap items-start justify-between gap-3 border-b border-border py-4 last:border-0">
+      <div>
+        <p className="font-semibold capitalize">{item.genericName}</p>
         <p className="text-sm text-muted-foreground">
-          {item.strengthLabel} · Qty {item.quantity} · {item.supplyDays}-day
-        </p>
-        <p className="mt-1 text-sm text-foreground/80">
-          {item.pharmacyName}
-          <span className="text-muted-foreground"> · {item.pharmacyAddress}</span>
+          {item.pharmacyName} · {item.strengthLabel} · Qty {item.quantity} ·{" "}
+          {item.supplyDays}-day
         </p>
       </div>
       <div className="flex items-center gap-3">
-        <div className="text-right">
-          <p className="font-display text-2xl font-semibold tabular-nums">
-            {formatCurrency(item.couponPrice)}
-          </p>
-          <p className="text-xs text-muted-foreground">counter price</p>
-        </div>
+        <p className="font-display text-2xl font-semibold tabular-nums text-primary">
+          {formatCurrency(item.couponPrice)}
+        </p>
         <Button
           type="button"
-          variant="ghost"
           size="icon"
-          aria-label="Remove from checkout"
+          variant="ghost"
           onClick={onRemove}
+          aria-label="Remove"
         >
           <Trash2 className="size-4" />
         </Button>
       </div>
-    </article>
+    </div>
   );
 }
 
 export function CheckoutClient() {
+  const router = useRouter();
   const items = useCheckoutCartStore((s) => s.items);
   const removeItem = useCheckoutCartStore((s) => s.removeItem);
   const clear = useCheckoutCartStore((s) => s.clear);
@@ -127,7 +97,6 @@ export function CheckoutClient() {
   const { toast } = useToast();
   const [issuing, setIssuing] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [pass, setPass] = useState<IssuedPass | null>(null);
 
   useEffect(() => {
     if (!hydrated) void hydrate();
@@ -157,9 +126,28 @@ export function CheckoutClient() {
           })),
         }),
       });
-      const data = (await res.json()) as IssuedPass & { error?: string };
+      const data = (await res.json()) as StoredIssuedPass & { error?: string };
       if (!res.ok) throw new Error(data.error ?? "Could not issue digital pass.");
-      setPass(data);
+
+      const enriched: StoredIssuedPass = {
+        ...data,
+        passes: data.passes.map((entry) => {
+          const cartItem = items.find((i) => i.id === entry.cartItemId);
+          return {
+            ...entry,
+            genericName: cartItem?.genericName,
+            strengthLabel: cartItem?.strengthLabel,
+            quantity: cartItem?.quantity,
+          };
+        }),
+      };
+
+      try {
+        sessionStorage.setItem(PASS_STORAGE_KEY, JSON.stringify(enriched));
+      } catch {
+        /* ignore */
+      }
+
       toast({
         title: "Digital pass issued",
         description: data.savedToAccount
@@ -167,6 +155,11 @@ export function CheckoutClient() {
           : "Sign in next time to keep passes on your account.",
         tone: "success",
       });
+
+      await clear();
+      router.push(
+        `/checkout/confirmation?pass=${encodeURIComponent(data.passId)}`
+      );
     } catch (caught) {
       const message =
         caught instanceof Error ? caught.message : "Checkout failed. Try again.";
@@ -177,7 +170,7 @@ export function CheckoutClient() {
     }
   }
 
-  if (items.length === 0 && !pass) {
+  if (items.length === 0) {
     return (
       <div className="mx-auto max-w-lg space-y-4 py-16 text-center">
         <ShoppingBag className="mx-auto size-10 text-muted-foreground" />
@@ -217,170 +210,77 @@ export function CheckoutClient() {
         digital pass creates scannable discount-card claims. Not insurance.
       </TrustCallout>
 
-      {!pass && (
-        <section className="rounded-2xl border border-border bg-card px-4 sm:px-5">
-          {items.map((item) => (
-            <CartLine
-              key={item.id}
-              item={item}
-              onRemove={() => {
-                void removeItem(item.id).then((result) => {
+      <section className="rounded-2xl border border-border bg-card px-4 sm:px-5">
+        {items.map((item) => (
+          <CartLine
+            key={item.id}
+            item={item}
+            onRemove={() => {
+              void removeItem(item.id).then((result) => {
+                if (!result.ok) {
+                  toast({
+                    title: "Could not remove item",
+                    description: result.error,
+                    tone: "error",
+                  });
+                }
+              });
+            }}
+          />
+        ))}
+        <div className="flex flex-col gap-3 border-t border-border py-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-sm text-muted-foreground">
+              {items.length} deal{items.length === 1 ? "" : "s"}
+            </p>
+            <p className="font-display text-3xl font-semibold tabular-nums">
+              {formatCurrency(total)}
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => {
+                void clear().then((result) => {
                   if (!result.ok) {
                     toast({
-                      title: "Could not remove item",
+                      title: "Could not clear cart",
                       description: result.error,
                       tone: "error",
                     });
                   }
                 });
               }}
-            />
-          ))}
-          <div className="flex flex-col gap-3 border-t border-border py-4 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <p className="text-sm text-muted-foreground">
-                {items.length} deal{items.length === 1 ? "" : "s"}
-              </p>
-              <p className="font-display text-3xl font-semibold tabular-nums">
-                {formatCurrency(total)}
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => {
-                  void clear().then((result) => {
-                    if (!result.ok) {
-                      toast({
-                        title: "Could not clear cart",
-                        description: result.error,
-                        tone: "error",
-                      });
-                    }
-                  });
-                }}
-              >
-                Clear
-              </Button>
-              <Button
-                type="button"
-                className="min-h-11"
-                disabled={issuing}
-                onClick={() => void issueDigitalPass()}
-              >
-                {issuing ? (
-                  <>
-                    <Loader2 className="animate-spin" />
-                    Issuing pass…
-                  </>
-                ) : (
-                  <>
-                    Issue digital pass
-                    <ArrowRight />
-                  </>
-                )}
-              </Button>
-            </div>
+            >
+              Clear
+            </Button>
+            <Button
+              type="button"
+              className="min-h-11"
+              disabled={issuing}
+              onClick={() => void issueDigitalPass()}
+            >
+              {issuing ? (
+                <>
+                  <Loader2 className="animate-spin" />
+                  Issuing pass…
+                </>
+              ) : (
+                <>
+                  Issue digital pass
+                  <ArrowRight />
+                </>
+              )}
+            </Button>
           </div>
-          {error && (
-            <p className="pb-4 text-sm text-destructive" role="alert">
-              {error}
-            </p>
-          )}
-        </section>
-      )}
-
-      {pass && (
-        <section className="trx-coupon-print space-y-4">
-          <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-savings/30 bg-savings/10 px-4 py-3">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="size-5 text-savings" />
-              <div>
-                <p className="font-semibold">Pass {pass.passId}</p>
-                <p className="text-sm text-muted-foreground">
-                  Total counter {formatCurrency(pass.totalCounterPrice)} ·{" "}
-                  {new Date(pass.issuedAt).toLocaleString()}
-                  {pass.savedToAccount
-                    ? " · saved to your account"
-                    : " · sign in next time to save passes"}
-                </p>
-              </div>
-            </div>
-            <div className="no-print flex gap-2">
-              <Button type="button" variant="outline" onClick={() => window.print()}>
-                <Printer />
-                Print pack
-              </Button>
-              <Button
-                type="button"
-                variant="secondary"
-                onClick={() => {
-                  setPass(null);
-                  void clear();
-                }}
-              >
-                Start new checkout
-              </Button>
-            </div>
-          </div>
-
-          {pass.passes.map((entry) => {
-            const cartItem = items.find((i) => i.id === entry.cartItemId);
-            return (
-              <article
-                key={entry.coupon.id}
-                className="space-y-3 rounded-2xl border border-border bg-card p-4"
-              >
-                <div className="flex flex-wrap items-start justify-between gap-2">
-                  <div>
-                    <p className="font-semibold">
-                      {cartItem?.genericName ?? "Medication"}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      {entry.pharmacyName}
-                      {cartItem
-                        ? ` · ${cartItem.strengthLabel} · Qty ${cartItem.quantity}`
-                        : ""}
-                    </p>
-                  </div>
-                  <p className="font-display text-3xl font-semibold tabular-nums">
-                    {formatCurrency(entry.counterPrice)}
-                  </p>
-                </div>
-                <PassBarcode value={entry.coupon.barcodeValue} />
-                <div className="grid grid-cols-2 gap-2 text-sm sm:grid-cols-4">
-                  {(
-                    [
-                      ["BIN", entry.coupon.bin],
-                      ["PCN", entry.coupon.pcn],
-                      ["Group", entry.coupon.group],
-                      ["Member", entry.coupon.memberId],
-                    ] as const
-                  ).map(([label, value]) => (
-                    <div key={label} className="rounded-lg bg-muted/70 px-3 py-2">
-                      <p className="text-xs uppercase text-muted-foreground">
-                        {label}
-                      </p>
-                      <p className="font-mono font-semibold">{value}</p>
-                    </div>
-                  ))}
-                </div>
-                <p
-                  className={cn(
-                    "text-sm",
-                    entry.precheck.status === "likely_accept"
-                      ? "text-savings"
-                      : "text-muted-foreground"
-                  )}
-                >
-                  Smart Switch: {entry.precheck.pharmacistTip}
-                </p>
-              </article>
-            );
-          })}
-        </section>
-      )}
+        </div>
+        {error && (
+          <p className="pb-4 text-sm text-destructive" role="alert">
+            {error}
+          </p>
+        )}
+      </section>
 
       {first && (
         <FulfillmentPanel
