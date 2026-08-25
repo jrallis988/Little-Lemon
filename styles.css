@@ -508,6 +508,24 @@ a:hover {
   border-top: 1px solid var(--line);
 }
 
+.order-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.btn--outline {
+  background: transparent;
+  color: var(--lacquer-deep);
+  border-color: var(--lacquer);
+}
+
+.btn--outline:hover {
+  background: rgba(184, 28, 28, 0.08);
+  color: var(--lacquer-deep);
+}
+
 .reserve-form {
   display: grid;
   gap: 1rem;

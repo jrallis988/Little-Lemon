@@ -1,10 +1,12 @@
-# Red Mango
+# Red Mango Asian Cuisine
 
-Website for **Red Mango** (红芒果), a Chinese restaurant — wok classics, hand-folded dumplings, and a bright finish.
+Marketing site for **Red Mango Asian Cuisine** in Stratham, New Hampshire — Chinese and Japanese favorites, sushi, takeout, and delivery.
 
-## Stack
+## Real location
 
-Static HTML, CSS, and vanilla JS. Typefaces: Yeseva One, Noto Serif SC, Outfit.
+- **Address:** 28 Portsmouth Ave #8, Stratham, NH 03885
+- **Phone:** (603) 772-0572
+- **Order online:** [redmangostrathamnh.com](https://www.redmangostrathamnh.com/)
 
 ## Develop
 
@@ -14,13 +16,6 @@ npm start
 
 Opens a local static server at [http://localhost:3000](http://localhost:3000).
 
-## Structure
+## Stack
 
-```
-.
-├── index.html      # Landing page (hero, menu, story, visit, reserve)
-├── styles.css
-├── app.js
-├── favicon.svg
-└── images/         # Food and interior photography
-```
+Static HTML, CSS, and vanilla JS. Typefaces: Yeseva One, Noto Serif SC, Outfit.
