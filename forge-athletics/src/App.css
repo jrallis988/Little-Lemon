@@ -107,6 +107,7 @@ button {
   padding: 0;
   overflow-x: auto;
   flex: 1;
+  min-width: 0;
   scrollbar-width: none;
 }
 
@@ -131,6 +132,8 @@ button {
 }
 
 .case-nav-back {
+  position: relative;
+  z-index: 2;
   font-family: var(--font-mono);
   font-size: 0.62rem;
   letter-spacing: 0.1em;
@@ -138,6 +141,10 @@ button {
   text-decoration: none;
   color: var(--forge-black);
   flex-shrink: 0;
+  padding: 0.4rem 0.55rem;
+  margin-left: 0.25rem;
+  border: 1px solid var(--rule);
+  background: var(--bone);
 }
 
 /* ——— Hero ——— */
