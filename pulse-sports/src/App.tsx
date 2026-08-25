@@ -14,6 +14,7 @@ import { Countdown } from './components/motion/Countdown'
 import { SocialEndCard, SocialPromo } from './components/motion/SocialMotion'
 import { MotionPreviewer } from './components/tools/MotionPreviewer'
 import { AspectRatioPreviewer } from './components/tools/AspectRatioPreviewer'
+import { BeforeAfterCompare } from './components/tools/BeforeAfterCompare'
 import {
   aeTechniques,
   assetLibrary,
@@ -228,6 +229,11 @@ export default function App() {
               </article>
             ))}
           </div>
+          <div className="divider-line" />
+          <h3 className="display" style={{ fontSize: '1.8rem', marginBottom: '1rem' }}>
+            Before / After
+          </h3>
+          <BeforeAfterCompare />
           <p className="placeholder-note">
             Replace these presentations with final Photoshop style frames when available.
           </p>

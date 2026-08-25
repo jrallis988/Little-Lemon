@@ -11,23 +11,34 @@ export function useMotionReplay(build: BuildFn, deps: unknown[] = []) {
   const play = useCallback(() => {
     const root = rootRef.current
     if (!root) return
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     tlRef.current?.kill()
     gsap.killTweensOf(root.querySelectorAll('*'))
+
     const tl = gsap.timeline({
       onStart: () => setPlaying(true),
       onComplete: () => setPlaying(false),
     })
     tlRef.current = tl
     build(tl, root)
+
+    if (reduced) {
+      tl.progress(1)
+      setPlaying(false)
+    }
   }, [build, ...deps])
 
   useEffect(() => {
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reduced) return
-    const t = window.setTimeout(play, 120)
+    const t = window.setTimeout(play, 80)
     return () => {
       window.clearTimeout(t)
-      tlRef.current?.kill()
+      const tl = tlRef.current
+      if (tl) {
+        // Finish on cleanup so StrictMode remounts don't leave opacity:0 mid-tween
+        tl.progress(1)
+        tl.kill()
+      }
     }
   }, [play])
 
