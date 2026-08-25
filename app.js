@@ -51,10 +51,14 @@
       const data = new FormData(form);
       const name = String(data.get("name") || "").trim();
       const date = String(data.get("date") || "");
+      const guests = String(data.get("guests") || "2");
       status.textContent = name
-        ? `Thanks, ${name}. We received your request for ${date || "your selected night"} and will confirm by email.`
+        ? `Thanks, ${name}. We received your request for ${guests} on ${date || "your selected night"} and will confirm by email.`
         : "Thanks — we received your reservation request.";
+      status.classList.add("is-success");
       form.reset();
+      const defaultGuests = form.querySelector('input[name="guests"][value="2"]');
+      if (defaultGuests) defaultGuests.checked = true;
     });
   }
 })();

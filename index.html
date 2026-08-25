@@ -160,16 +160,16 @@
             <span>Date</span>
             <input type="date" name="date" required />
           </label>
-          <label>
-            <span>Guests</span>
-            <select name="guests" required>
-              <option value="2">2 guests</option>
-              <option value="3">3 guests</option>
-              <option value="4">4 guests</option>
-              <option value="5">5 guests</option>
-              <option value="6">6+ guests</option>
-            </select>
-          </label>
+          <fieldset class="guest-field">
+            <legend>Guests</legend>
+            <div class="guest-options" role="radiogroup" aria-label="Number of guests">
+              <label class="guest-option"><input type="radio" name="guests" value="2" checked /> 2</label>
+              <label class="guest-option"><input type="radio" name="guests" value="3" /> 3</label>
+              <label class="guest-option"><input type="radio" name="guests" value="4" /> 4</label>
+              <label class="guest-option"><input type="radio" name="guests" value="5" /> 5</label>
+              <label class="guest-option"><input type="radio" name="guests" value="6" /> 6+</label>
+            </div>
+          </fieldset>
           <button class="btn btn--primary" type="submit">Request reservation</button>
           <p class="form-status" data-form-status role="status" aria-live="polite"></p>
         </form>
