@@ -18,6 +18,7 @@ Static site: HTML, CSS, and vanilla JS (built in Cursor). Custom typefaces (Arca
 ## Pages
 
 - `index.html` — home (hero, designer, services, portfolio, blog, contact)
+- `roam-coffee/` — ROAM Coffee packaging & retail identity case study (React + TypeScript; open `roam-coffee/dist/index.html` or run `npm run dev` in `roam-coffee/`)
 - `nh-dmv/` — conceptual redesign of the New Hampshire DMV website (civic UX case study)
 - `services/` — detail pages for each service offering
 - `blog/` — blog index and post pages (content can be drafted in Blaze AI)

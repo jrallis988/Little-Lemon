@@ -4,4 +4,6 @@ node_modules/
 .idea/
 *.log
 dist/
+!roam-coffee/dist/
+!roam-coffee/dist/**
 .cache/
