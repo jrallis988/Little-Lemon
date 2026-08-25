@@ -57,26 +57,25 @@ export default async function HomePage() {
           aria-hidden
         />
         <div
-          className="absolute inset-0 bg-gradient-to-t from-trust via-transparent to-trust/40"
+          className="absolute inset-0 bg-gradient-to-t from-trust via-transparent to-trust/25"
           aria-hidden
         />
-        <div className="trx-hero-grid absolute inset-0" aria-hidden />
 
-        <div className="relative mx-auto flex min-h-[calc(100dvh-7.5rem)] max-w-6xl flex-col justify-center px-4 py-12 sm:min-h-[calc(100dvh-6.5rem)] sm:px-6 sm:py-16">
+        <div className="relative mx-auto flex min-h-[calc(100dvh-7.5rem)] max-w-6xl flex-col justify-end px-4 pb-14 pt-16 sm:min-h-[calc(100dvh-6.5rem)] sm:justify-center sm:px-6 sm:pb-16 sm:pt-12">
           <div className="max-w-3xl text-trust-foreground">
-            <p className="animate-trx-fade-up font-display text-6xl font-bold uppercase leading-[0.9] tracking-tight sm:text-7xl md:text-8xl">
+            <p className="animate-trx-fade-up font-display text-6xl font-bold uppercase leading-[0.85] tracking-tight sm:text-7xl md:text-[6.5rem]">
               Trump RX
             </p>
-            <h1 className="animate-trx-fade-up-delay mt-5 max-w-xl font-display text-3xl font-semibold uppercase leading-tight tracking-tight sm:text-4xl md:text-5xl">
+            <h1 className="animate-trx-fade-up-delay mt-4 max-w-xl font-display text-3xl font-semibold uppercase leading-[1.05] tracking-tight text-trust-foreground sm:mt-5 sm:text-4xl md:text-5xl">
               Lower prices. Local pharmacies.
             </h1>
-            <p className="animate-trx-fade-up-delay-2 mt-4 max-w-md text-base leading-relaxed text-trust-foreground/90 sm:text-lg">
+            <p className="animate-trx-fade-up-delay-2 mt-4 max-w-md text-base leading-relaxed text-trust-foreground/95 sm:text-lg">
               Compare cash-discount prices near you, then show a digital coupon
               at the counter.
             </p>
           </div>
 
-          <div className="animate-trx-scale-in mt-8 max-w-2xl">
+          <div className="animate-trx-scale-in mt-7 max-w-2xl sm:mt-8">
             <DrugSearch size="hero" autoFocus />
           </div>
         </div>
