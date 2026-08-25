@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Nick Jr. — watch, play, explore, and create. A conceptual kids entertainment homepage redesign by Artistic Fountain.">
+  <meta name="theme-color" content="#5B2C9D">
+  <title>Nick Jr. — Watch, Play, Explore &amp; Create</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%235B2C9D'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-size='22' font-weight='700' fill='white' font-family='Arial,sans-serif'%3Enj%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <div class="concept-ribbon">
+    Conceptual redesign by <a href="../index.html">Artistic Fountain</a> — not an official Nick Jr. / Paramount site.
+  </div>
+
+  <div class="page-shell">
+    <div class="wave wave-teal" aria-hidden="true"></div>
+    <div class="wave wave-pink" aria-hidden="true"></div>
+    <div class="wave wave-blue" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="logo" href="index.html" aria-label="Nick Jr. home">
+          <span class="logo-mark" aria-hidden="true">
+            <span class="c-orange">n</span><span class="c-blue">i</span><span class="c-green">c</span><span class="c-red">k</span>
+            <span class="logo-jr"><span class="c-purple">j</span><span class="c-sky">r</span><span class="logo-dot">.</span></span>
+          </span>
+        </a>
+
+        <nav class="primary-nav" aria-label="Primary">
+          <ul id="primary-nav">
+            <li>
+              <a href="#watch">
+                <span class="nav-icon nav-watch" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M10 8.5v7l6-3.5-6-3.5z" fill="#fff"/></svg>
+                </span>
+                Watch
+              </a>
+            </li>
+            <li>
+              <a href="#play">
+                <span class="nav-icon nav-play" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="10" rx="3" fill="currentColor"/><circle cx="8" cy="13" r="1.5" fill="#fff"/><circle cx="16" cy="13" r="1.5" fill="#fff"/><path d="M9 8V6a3 3 0 0 1 6 0v2" stroke="#fff" stroke-width="1.5" fill="none"/></svg>
+                </span>
+                Play
+              </a>
+            </li>
+            <li>
+              <a href="#explore">
+                <span class="nav-icon nav-explore" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="currentColor"/><ellipse cx="12" cy="12" rx="4" ry="9" fill="none" stroke="#fff" stroke-width="1.4"/><path d="M3.5 12h17M12 3.5c2.5 2.8 2.5 14.2 0 17M12 3.5c-2.5 2.8-2.5 14.2 0 17" fill="none" stroke="#fff" stroke-width="1.2"/></svg>
+                </span>
+                Explore
+              </a>
+            </li>
+            <li>
+              <a href="#create">
+                <span class="nav-icon nav-create" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M14.5 4.5l5 5L9 20H4v-5L14.5 4.5z" fill="currentColor"/><path d="M12.5 6.5l5 5" stroke="#fff" stroke-width="1.5"/></svg>
+                </span>
+                Create
+              </a>
+            </li>
+            <li>
+              <a href="#shows">
+                <span class="nav-icon nav-shows" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M12 3l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 15.8 7 18.2l1.2-5.6L4 8.8l5.6-.6L12 3z" fill="currentColor"/></svg>
+                </span>
+                Shows
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="header-actions">
+          <button class="icon-btn search-btn" type="button" aria-label="Search" aria-expanded="false" aria-controls="search-panel">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+          </button>
+          <a class="grownups-btn" href="#grown-ups">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3" fill="currentColor"/><circle cx="16" cy="9" r="2.5" fill="currentColor"/><path d="M3 19c0-3.2 2.5-5.5 6-5.5s6 2.3 6 5.5M13.5 19c.4-2.2 2.2-4 4.5-4 1.4 0 2.6.5 3.5 1.4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            Grown-Ups
+          </a>
+          <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="search-panel" id="search-panel" hidden>
+        <label class="visually-hidden" for="site-search">Search Nick Jr.</label>
+        <input id="site-search" type="search" placeholder="Find shows, games, and more…" autocomplete="off">
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" aria-roledescription="carousel" aria-label="Today on Nick Jr.">
+        <div class="hero-slides">
+          <article class="hero-slide is-active" data-slide="0" aria-hidden="false">
+            <div class="hero-media">
+              <img src="images/hero-playroom.jpg" alt="Bright playroom ready for morning stories and songs" width="1600" height="900" fetchpriority="high">
+              <div class="hero-tint" aria-hidden="true"></div>
+            </div>
+            <div class="hero-copy">
+              <p class="hero-greeting">
+                <span class="sun" aria-hidden="true">☀</span>
+                Good Morning!
+              </p>
+              <h1>Today on <span class="brand-inline">Nick Jr.</span></h1>
+              <p class="hero-sub">Start your day with stories, songs and lots of learning fun!</p>
+              <a class="btn btn-watch" href="#watch">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="M10 8v8l7-4-7-4z" fill="#fff"/></svg>
+                Watch Now
+              </a>
+            </div>
+            <aside class="now-playing" aria-label="Now playing">
+              <p class="np-label">Now Playing</p>
+              <p class="np-title">Blue’s Clues &amp; You!</p>
+              <p class="np-meta">S1 E15 · Skidoo Adventure</p>
+              <div class="np-progress" role="progressbar" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100" aria-label="Episode progress">
+                <span style="--p:42%"></span>
+              </div>
+              <p class="np-time"><span>5:12</span><span>12:30</span></p>
+            </aside>
+          </article>
+
+          <article class="hero-slide" data-slide="1" aria-hidden="true">
+            <div class="hero-media">
+              <img src="images/explore-nature.jpg" alt="Kids exploring outdoors with curiosity" width="1600" height="900">
+              <div class="hero-tint tint-green" aria-hidden="true"></div>
+            </div>
+            <div class="hero-copy">
+              <p class="hero-greeting">
+                <span class="sun" aria-hidden="true">✦</span>
+                Let’s Explore!
+              </p>
+              <h1>Adventure awaits on <span class="brand-inline">Nick Jr.</span></h1>
+              <p class="hero-sub">Discover animals, oceans, and big ideas made for little learners.</p>
+              <a class="btn btn-watch" href="#explore">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="M10 8v8l7-4-7-4z" fill="#fff"/></svg>
+                Explore Now
+              </a>
+            </div>
+            <aside class="now-playing" aria-label="Featured">
+              <p class="np-label">Featured</p>
+              <p class="np-title">Adventure Sprouts</p>
+              <p class="np-meta">New · Nature &amp; Discovery</p>
+              <div class="np-progress" role="progressbar" aria-valuenow="18" aria-valuemin="0" aria-valuemax="100">
+                <span style="--p:18%"></span>
+              </div>
+              <p class="np-time"><span>New</span><span>Series</span></p>
+            </aside>
+          </article>
+
+          <article class="hero-slide" data-slide="2" aria-hidden="true">
+            <div class="hero-media">
+              <img src="images/hot-air-balloons.jpg" alt="Colorful hot air balloons in a bright sky" width="1600" height="900">
+              <div class="hero-tint tint-sky" aria-hidden="true"></div>
+            </div>
+            <div class="hero-copy">
+              <p class="hero-greeting">
+                <span class="sun" aria-hidden="true">♪</span>
+                Sing Along!
+              </p>
+              <h1>Songs &amp; stories on <span class="brand-inline">Nick Jr.</span></h1>
+              <p class="hero-sub">Tap play for music moments that teach colors, numbers, and kindness.</p>
+              <a class="btn btn-watch" href="#create">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="M10 8v8l7-4-7-4z" fill="#fff"/></svg>
+                Play a Song
+              </a>
+            </div>
+            <aside class="now-playing" aria-label="Playlist">
+              <p class="np-label">Playlist</p>
+              <p class="np-title">Morning Music Mix</p>
+              <p class="np-meta">8 songs · Feel-good fun</p>
+              <div class="np-progress" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
+                <span style="--p:65%"></span>
+              </div>
+              <p class="np-time"><span>Track 3</span><span>8 songs</span></p>
+            </aside>
+          </article>
+
+          <article class="hero-slide" data-slide="3" aria-hidden="true">
+            <div class="hero-media">
+              <img src="images/ocean-turtle.jpg" alt="Sea turtle swimming in clear blue water" width="1600" height="900">
+              <div class="hero-tint tint-ocean" aria-hidden="true"></div>
+            </div>
+            <div class="hero-copy">
+              <p class="hero-greeting">
+                <span class="sun" aria-hidden="true">★</span>
+                Play Time!
+              </p>
+              <h1>Games that grow with <span class="brand-inline">Nick Jr.</span></h1>
+              <p class="hero-sub">Problem-solving, counting, and map adventures — ready when you are.</p>
+              <a class="btn btn-watch" href="#play">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="M10 8v8l7-4-7-4z" fill="#fff"/></svg>
+                Play a Game
+              </a>
+            </div>
+            <aside class="now-playing" aria-label="Game spotlight">
+              <p class="np-label">Game Spotlight</p>
+              <p class="np-title">Number Rescue</p>
+              <p class="np-meta">Ages 3–5 · Numbers</p>
+              <div class="np-progress" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">
+                <span style="--p:30%"></span>
+              </div>
+              <p class="np-time"><span>Level 2</span><span>Easy</span></p>
+            </aside>
+          </article>
+        </div>
+
+        <div class="hero-dots" role="tablist" aria-label="Hero slides">
+          <button type="button" class="is-active" role="tab" aria-selected="true" aria-label="Slide 1" data-dot="0"></button>
+          <button type="button" role="tab" aria-selected="false" aria-label="Slide 2" data-dot="1"></button>
+          <button type="button" role="tab" aria-selected="false" aria-label="Slide 3" data-dot="2"></button>
+          <button type="button" role="tab" aria-selected="false" aria-label="Slide 4" data-dot="3"></button>
+        </div>
+      </section>
+
+      <section class="want-to" aria-labelledby="want-heading">
+        <h2 id="want-heading" class="section-title center">What Do You Want to Do?</h2>
+        <div class="want-grid">
+          <a class="want-card want-watch" href="#watch">
+            <div class="want-art" aria-hidden="true">
+              <div class="art-tv">
+                <div class="tv-screen"></div>
+                <div class="tv-stand"></div>
+              </div>
+              <div class="art-popcorn"></div>
+            </div>
+            <span class="want-label">Watch Something</span>
+            <span class="want-go" aria-hidden="true">→</span>
+          </a>
+          <a class="want-card want-play" href="#play">
+            <div class="want-art" aria-hidden="true">
+              <div class="art-controller"></div>
+              <div class="art-star"></div>
+            </div>
+            <span class="want-label">Play a Game</span>
+            <span class="want-go" aria-hidden="true">→</span>
+          </a>
+          <a class="want-card want-explore" href="#explore">
+            <div class="want-art" aria-hidden="true">
+              <div class="art-globe"></div>
+              <div class="art-cloud c1"></div>
+              <div class="art-cloud c2"></div>
+            </div>
+            <span class="want-label">Explore Something</span>
+            <span class="want-go" aria-hidden="true">→</span>
+          </a>
+          <a class="want-card want-make" href="#create">
+            <div class="want-art" aria-hidden="true">
+              <div class="art-bucket"></div>
+              <div class="art-crayon c-r"></div>
+              <div class="art-crayon c-y"></div>
+              <div class="art-crayon c-b"></div>
+            </div>
+            <span class="want-label">Make Something</span>
+            <span class="want-go" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </section>
+
+      <div class="content-layout">
+        <div class="content-main">
+          <section class="block" id="explore" aria-labelledby="sprouts-heading">
+            <div class="block-head">
+              <h2 id="sprouts-heading">Adventure Sprouts</h2>
+              <p>Little discoveries for curious minds.</p>
+            </div>
+            <div class="sprout-row">
+              <a class="sprout" href="#explore">
+                <img src="images/ocean-turtle.jpg" alt="" width="600" height="400">
+                <span>Explore the Ocean</span>
+              </a>
+              <a class="sprout" href="#explore">
+                <img src="images/tiger-cub.jpg" alt="" width="600" height="400">
+                <span>Meet Amazing Animals</span>
+              </a>
+              <a class="sprout" href="#explore">
+                <img src="images/hot-air-balloons.jpg" alt="" width="600" height="400">
+                <span>Up in the Sky</span>
+              </a>
+              <a class="sprout" href="#explore">
+                <img src="images/explore-nature.jpg" alt="" width="600" height="400">
+                <span>Nature Detectives</span>
+              </a>
+            </div>
+          </section>
+
+          <section class="block" id="create" aria-labelledby="make-heading">
+            <div class="block-head">
+              <h2 id="make-heading" class="pink">Make Something</h2>
+              <p>Color, craft, cook, and create together.</p>
+            </div>
+            <div class="make-row">
+              <a class="make-item" href="#create">
+                <span class="make-icon make-color" aria-hidden="true"></span>
+                <span>Coloring</span>
+              </a>
+              <a class="make-item" href="#create">
+                <span class="make-icon make-draw" aria-hidden="true"></span>
+                <span>Drawing</span>
+              </a>
+              <a class="make-item" href="#create">
+                <span class="make-icon make-music" aria-hidden="true"></span>
+                <span>Music</span>
+              </a>
+              <a class="make-item" href="#create">
+                <span class="make-icon make-craft" aria-hidden="true"></span>
+                <span>Printable Crafts</span>
+              </a>
+              <a class="make-item" href="#create">
+                <span class="make-icon make-story" aria-hidden="true"></span>
+                <span>Build-a-Story</span>
+              </a>
+              <a class="make-item" href="#create">
+                <span class="make-icon make-recipe" aria-hidden="true"></span>
+                <span>Recipes</span>
+              </a>
+            </div>
+          </section>
+
+          <section class="block" id="watch" aria-labelledby="shows-heading">
+            <div class="block-head">
+              <h2 id="shows-heading">Watch Something Fun</h2>
+              <p>Stories packed with kindness, curiosity, and giggles.</p>
+            </div>
+            <div class="show-rail" id="shows">
+              <article class="show-tile">
+                <div class="show-art show-blue" aria-hidden="true"></div>
+                <h3>Blue’s Clues &amp; You!</h3>
+                <p>Solve clues and sing along.</p>
+              </article>
+              <article class="show-tile">
+                <div class="show-art show-dora" aria-hidden="true"></div>
+                <h3>Dora the Explorer</h3>
+                <p>Map adventures and Spanish words.</p>
+              </article>
+              <article class="show-tile">
+                <div class="show-art show-paw" aria-hidden="true"></div>
+                <h3>Paw Patrol</h3>
+                <p>Pups ready for any rescue.</p>
+              </article>
+              <article class="show-tile">
+                <div class="show-art show-bubble" aria-hidden="true"></div>
+                <h3>Bubble Guppies</h3>
+                <p>Underwater classroom songs.</p>
+              </article>
+            </div>
+          </section>
+        </div>
+
+        <aside class="sidebar">
+          <section class="side-block" id="friends" aria-labelledby="friends-heading">
+            <h2 id="friends-heading">Your Nick Jr. Friends</h2>
+            <div class="friends-grid">
+              <button type="button" class="friend f-dora" aria-label="Dora"><span>Dora</span></button>
+              <button type="button" class="friend f-blue" aria-label="Blue"><span>Blue</span></button>
+              <button type="button" class="friend f-peppa" aria-label="Peppa"><span>Peppa</span></button>
+              <button type="button" class="friend f-chase" aria-label="Chase"><span>Chase</span></button>
+              <button type="button" class="friend f-blaze" aria-label="Blaze"><span>Blaze</span></button>
+              <button type="button" class="friend f-molly" aria-label="Molly"><span>Molly</span></button>
+              <button type="button" class="friend f-umi" aria-label="Umi"><span>Umi</span></button>
+              <button type="button" class="friend f-shimmer" aria-label="Shimmer"><span>Shimmer</span></button>
+            </div>
+          </section>
+
+          <section class="side-block" id="play" aria-labelledby="play-heading">
+            <h2 id="play-heading">Play &amp; Learn</h2>
+            <div class="play-list">
+              <a class="play-card play-problem" href="#play">
+                <span class="play-badge">Problem Solving</span>
+                <strong>Dora’s Map Adventure</strong>
+                <span>Follow the map and help Dora find the way.</span>
+              </a>
+              <a class="play-card play-numbers" href="#play">
+                <span class="play-badge">Numbers</span>
+                <strong>Number Rescue</strong>
+                <span>Count to save the day with the pups.</span>
+              </a>
+              <a class="play-card play-letters" href="#play">
+                <span class="play-badge">Letters</span>
+                <strong>Alphabet Skidoo</strong>
+                <span>Jump into letter worlds with Blue.</span>
+              </a>
+              <a class="play-card play-science" href="#play">
+                <span class="play-badge">Science</span>
+                <strong>Bubble Lab</strong>
+                <span>Mix, splash, and learn how things work.</span>
+              </a>
+            </div>
+          </section>
+
+          <section class="side-block" aria-labelledby="more-heading">
+            <h2 id="more-heading">More to Explore</h2>
+            <ul class="more-list">
+              <li><a href="#watch"><span class="more-icon more-video" aria-hidden="true"></span>Videos</a></li>
+              <li><a href="#create"><span class="more-icon more-songs" aria-hidden="true"></span>Songs</a></li>
+              <li><a href="#explore"><span class="more-icon more-stories" aria-hidden="true"></span>Stories</a></li>
+              <li><a href="#listen"><span class="more-icon more-podcasts" aria-hidden="true"></span>Podcasts</a></li>
+            </ul>
+          </section>
+
+          <section class="grownups-panel" id="grown-ups" aria-labelledby="grownups-heading">
+            <div class="grownups-media">
+              <img src="images/grown-ups.jpg" alt="Parent and child sharing a tablet together" width="800" height="500">
+            </div>
+            <div class="grownups-copy">
+              <h2 id="grownups-heading">For Grown-Ups</h2>
+              <p>Tips, schedules, and learning guides for caregivers.</p>
+              <a class="btn btn-grownups" href="#grown-ups">Visit Grown-Ups Area</a>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <a class="footer-logo" href="index.html" aria-label="Nick Jr. home">
+          <span class="logo-mark light" aria-hidden="true">
+            <span>n</span><span>i</span><span>c</span><span>k</span>
+            <span class="logo-jr"><span>j</span><span>r</span><span class="logo-dot">.</span></span>
+          </span>
+        </a>
+        <nav aria-label="Footer">
+          <ul class="footer-nav">
+            <li><a href="#about">About Nick Jr.</a></li>
+            <li><a href="#help">Help</a></li>
+            <li><a href="#schedule">TV Schedule</a></li>
+            <li><a href="#apps">Apps</a></li>
+            <li><a href="#shop">Shop</a></li>
+            <li><a href="../privacy.html">Privacy</a></li>
+            <li><a href="../terms.html">Terms of Use</a></li>
+            <li><a href="#a11y">Accessibility</a></li>
+          </ul>
+        </nav>
+        <div class="region">
+          <label for="region-select" class="visually-hidden">Region</label>
+          <span class="region-icon" aria-hidden="true">🌐</span>
+          <select id="region-select">
+            <option>United States</option>
+            <option>Canada</option>
+            <option>United Kingdom</option>
+            <option>Australia</option>
+          </select>
+        </div>
+      </div>
+      <p class="footer-note">Conceptual redesign for portfolio demonstration. Show names are trademarks of their respective owners.</p>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
