@@ -77,6 +77,25 @@ const PetSmartUI = (() => {
     `;
   }
 
+  function petCard(pet, basePath = '') {
+    const store = PetSmartData.getStore(pet.store);
+    return `
+      <article class="pet-card reveal">
+        <div class="pet-card__media">
+          <img src="${pet.image}" alt="${pet.name}, ${pet.breed}" loading="lazy" width="400" height="300">
+          <span class="badge badge--red pet-card__badge">${pet.species}</span>
+        </div>
+        <div class="pet-card__body">
+          <h3 class="pet-card__name">${pet.name}</h3>
+          <p class="pet-card__meta">${pet.breed} · ${pet.age} · ${pet.gender}</p>
+          <p class="pet-card__story">${pet.story}</p>
+          <p class="text-small text-muted">${store ? store.name : 'Local partner shelter'}</p>
+          <a class="btn btn-primary btn-sm" href="${basePath}stores/detail.html?id=${pet.store}" style="margin-top:var(--space-4);">Meet at store</a>
+        </div>
+      </article>
+    `;
+  }
+
   function renderProductGrid(container, products, basePath = '') {
     if (!container) return;
     if (!products.length) {
@@ -86,7 +105,16 @@ const PetSmartUI = (() => {
     container.innerHTML = products.map((p) => productCard(p, basePath)).join('');
   }
 
-  return { productCard, resourceCard, categoryCard, storeCard, renderProductGrid };
+  function renderPetGrid(container, pets, basePath = '') {
+    if (!container) return;
+    if (!pets.length) {
+      container.innerHTML = '<div class="empty-state"><h3>No pets match</h3><p>Try another filter or check back soon.</p></div>';
+      return;
+    }
+    container.innerHTML = pets.map((p) => petCard(p, basePath)).join('');
+  }
+
+  return { productCard, resourceCard, categoryCard, storeCard, petCard, renderProductGrid, renderPetGrid };
 })();
 
 if (typeof module !== 'undefined') module.exports = PetSmartUI;

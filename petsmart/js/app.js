@@ -43,11 +43,11 @@
   }
 
   function updateCartBadge() {
-    const badge = document.querySelector('.cart-count');
-    if (!badge) return;
-    const count = getCart().reduce((sum, item) => sum + item.qty, 0);
-    badge.textContent = count;
-    badge.hidden = count === 0;
+    document.querySelectorAll('.cart-count').forEach((badge) => {
+      const count = getCart().reduce((sum, item) => sum + item.qty, 0);
+      badge.textContent = count;
+      badge.hidden = count === 0;
+    });
   }
 
   window.PetSmartCart = {
@@ -78,21 +78,67 @@
     },
   };
 
+  /* Favorites */
+  const FAV_KEY = 'petsmart-favorites';
+  function getFavorites() {
+    try {
+      return JSON.parse(localStorage.getItem(FAV_KEY)) || [];
+    } catch {
+      return [];
+    }
+  }
+  function saveFavorites(ids) {
+    localStorage.setItem(FAV_KEY, JSON.stringify(ids));
+  }
+  window.PetSmartFavorites = {
+    get: getFavorites,
+    has(id) {
+      return getFavorites().includes(id);
+    },
+    toggle(id) {
+      const ids = getFavorites();
+      const i = ids.indexOf(id);
+      if (i >= 0) ids.splice(i, 1);
+      else ids.push(id);
+      saveFavorites(ids);
+      return ids.includes(id);
+    },
+  };
+
   updateCartBadge();
 
-  /* Add to cart buttons */
-  document.querySelectorAll('[data-add-to-cart]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const id = btn.dataset.addToCart;
-      window.PetSmartCart.add(id);
-      const label = btn.textContent;
-      btn.textContent = 'Added!';
-      btn.disabled = true;
+  /* Event delegation for dynamic product actions */
+  document.addEventListener('click', (e) => {
+    const addBtn = e.target.closest('[data-add-to-cart]');
+    if (addBtn) {
+      const id = addBtn.dataset.addToCart;
+      const qtyInput = document.getElementById('product-qty');
+      const qty = qtyInput ? Math.max(1, parseInt(qtyInput.value, 10) || 1) : 1;
+      window.PetSmartCart.add(id, qty);
+      const label = addBtn.textContent;
+      addBtn.textContent = 'Added!';
+      addBtn.disabled = true;
       setTimeout(() => {
-        btn.textContent = label;
-        btn.disabled = false;
+        addBtn.textContent = label;
+        addBtn.disabled = false;
       }, 1500);
-    });
+      return;
+    }
+
+    const favBtn = e.target.closest('[data-toggle-favorite]');
+    if (favBtn) {
+      const id = favBtn.dataset.toggleFavorite;
+      const saved = window.PetSmartFavorites.toggle(id);
+      favBtn.setAttribute('aria-pressed', String(saved));
+      favBtn.textContent = saved ? 'Saved' : 'Save for later';
+    }
+  });
+
+  document.querySelectorAll('[data-toggle-favorite]').forEach((btn) => {
+    const id = btn.dataset.toggleFavorite;
+    const saved = window.PetSmartFavorites.has(id);
+    btn.setAttribute('aria-pressed', String(saved));
+    btn.textContent = saved ? 'Saved' : 'Save for later';
   });
 
   /* Accessibility panel */

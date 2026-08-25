@@ -50,11 +50,24 @@ const PetSmartData = (() => {
     { id: 'vet', name: 'Veterinary Connections', description: 'Find Banfield Pet Hospital locations and wellness plans inside select PetSmart stores.', image: 'https://images.unsplash.com/photo-1628009368231-7bb8d5fcef4c?w=600&q=80', cta: 'Find vet care' },
   ];
 
+  const pets = [
+    { id: 'pet1', name: 'Buddy', species: 'Dog', breed: 'Lab Mix', age: '2 years', gender: 'Male', store: 's1', image: 'https://images.unsplash.com/photo-1552053831-71594a27632d?w=600&q=80', story: 'Friendly and energetic — loves fetch and kids.' },
+    { id: 'pet2', name: 'Luna', species: 'Cat', breed: 'Domestic Shorthair', age: '1 year', gender: 'Female', store: 's2', image: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600&q=80', story: 'Curious lap cat who purrs at first hello.' },
+    { id: 'pet3', name: 'Max', species: 'Dog', breed: 'Beagle', age: '4 years', gender: 'Male', store: 's3', image: 'https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?w=600&q=80', story: 'Gentle walker with a nose for adventure.' },
+    { id: 'pet4', name: 'Mochi', species: 'Cat', breed: 'Tabby', age: '3 years', gender: 'Female', store: 's1', image: 'https://images.unsplash.com/photo-1574158622682-e40e69881006?w=600&q=80', story: 'Calm companion who thrives in quiet homes.' },
+    { id: 'pet5', name: 'Scout', species: 'Dog', breed: 'Terrier Mix', age: '8 months', gender: 'Female', store: 's4', image: 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600&q=80', story: 'Playful puppy ready for training and love.' },
+    { id: 'pet6', name: 'Oliver', species: 'Cat', breed: 'Orange Tabby', age: '5 years', gender: 'Male', store: 's2', image: 'https://images.unsplash.com/photo-1596854407944-bf87f6fdd46e?w=600&q=80', story: 'Affectionate senior-at-heart who enjoys sunny windows.' },
+  ];
+
   function getCategory(slug) {
     return categories.find((c) => c.slug === slug || c.id === slug);
   }
 
-  function getProducts({ category, query, sort, limit } = {}) {
+  function effectivePrice(p) {
+    return p.salePrice || p.price;
+  }
+
+  function getProducts({ category, query, sort, limit, priceBands, brands } = {}) {
     let result = [...products];
     if (category) {
       result = result.filter((p) => p.category === category);
@@ -65,8 +78,22 @@ const PetSmartData = (() => {
         `${p.name} ${p.brand}`.toLowerCase().includes(q)
       );
     }
-    if (sort === 'price-asc') result.sort((a, b) => (a.salePrice || a.price) - (b.salePrice || b.price));
-    if (sort === 'price-desc') result.sort((a, b) => (b.salePrice || b.price) - (a.salePrice || a.price));
+    if (brands && brands.length) {
+      result = result.filter((p) => brands.includes(p.brand));
+    }
+    if (priceBands && priceBands.length) {
+      result = result.filter((p) => {
+        const price = effectivePrice(p);
+        return priceBands.some((band) => {
+          if (band === 'under-25') return price < 25;
+          if (band === '25-50') return price >= 25 && price <= 50;
+          if (band === '50-plus') return price > 50;
+          return true;
+        });
+      });
+    }
+    if (sort === 'price-asc') result.sort((a, b) => effectivePrice(a) - effectivePrice(b));
+    if (sort === 'price-desc') result.sort((a, b) => effectivePrice(b) - effectivePrice(a));
     if (sort === 'rating') result.sort((a, b) => b.rating - a.rating);
     if (limit) result = result.slice(0, limit);
     return result;
@@ -82,6 +109,25 @@ const PetSmartData = (() => {
 
   function getStore(id) {
     return stores.find((s) => s.id === id);
+  }
+
+  function getPets({ species } = {}) {
+    let result = [...pets];
+    if (species && species !== 'all') {
+      result = result.filter((p) => p.species.toLowerCase() === species.toLowerCase());
+    }
+    return result;
+  }
+
+  function getPet(id) {
+    return pets.find((p) => p.id === id);
+  }
+
+  function brandsForCategory(category) {
+    const set = new Set(
+      products.filter((p) => !category || p.category === category).map((p) => p.brand)
+    );
+    return [...set].sort();
   }
 
   function formatPrice(amount) {
@@ -102,11 +148,15 @@ const PetSmartData = (() => {
     articles,
     stores,
     services,
+    pets,
     getCategory,
     getProducts,
     getProduct,
     getArticle,
     getStore,
+    getPets,
+    getPet,
+    brandsForCategory,
     formatPrice,
     renderStars,
   };

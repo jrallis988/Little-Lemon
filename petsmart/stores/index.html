@@ -9,14 +9,7 @@
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
-  <header class="header"><div class="header-inner">
-    <a class="brand" href="../index.html"><span class="brand-text"><span class="pet">Pet</span><span class="smart">Smart</span></span></a>
-    <nav aria-label="Primary"><ul class="header-nav">
-      <li><a href="../shop/index.html">Shop</a></li><li><a href="../services/index.html">Services</a></li>
-      <li><a href="../adopt/index.html">Adopt</a></li><li><a href="../care/index.html">Pet Care</a></li>
-      <li><a href="index.html" aria-current="page">Stores</a></li>
-    </ul></nav>
-  </div></header>
+  <div id="ps-header" data-base="../" data-active="stores"></div>
 
   <main id="main">
     <div class="page-hero">
@@ -32,6 +25,8 @@
     <section class="section"><div class="container" style="display:grid; gap:var(--space-4);" id="stores-list"></div></section>
   </main>
 
+  <div id="ps-footer" data-base="../"></div>
+  <script src="../js/chrome.js"></script>
   <script src="../js/data.js"></script><script src="../js/ui.js"></script><script src="../js/app.js"></script>
   <script>
     const list = document.getElementById('stores-list');

@@ -12,73 +12,7 @@
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
 
-  <div class="concept-ribbon">
-    Conceptual redesign by <a href="../index.html">Artistic Fountain</a> — not an official PetSmart site.
-  </div>
-
-  <header class="header">
-    <div class="header-inner">
-      <a class="brand" href="index.html" aria-label="PetSmart home">
-        <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
-          <rect width="40" height="40" rx="8" fill="#e31837"/>
-          <circle cx="14" cy="15" r="4" fill="white"/>
-          <circle cx="26" cy="15" r="4" fill="white"/>
-          <circle cx="11" cy="24" r="3.5" fill="white"/>
-          <circle cx="29" cy="24" r="3.5" fill="white"/>
-          <ellipse cx="20" cy="28" rx="5" ry="4" fill="white"/>
-        </svg>
-        <span class="brand-text"><span class="pet">Pet</span><span class="smart">Smart</span></span>
-      </a>
-
-      <nav aria-label="Primary">
-        <ul class="header-nav">
-          <li><a href="shop/index.html">Shop</a></li>
-          <li><a href="services/index.html">Services</a></li>
-          <li><a href="adopt/index.html">Adopt</a></li>
-          <li><a href="care/index.html">Pet Care</a></li>
-          <li><a href="stores/index.html">Stores</a></li>
-        </ul>
-      </nav>
-
-      <form class="header-search search-bar" data-search-form data-base="" role="search" aria-label="Site search">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
-        <input type="search" name="q" placeholder="Search food, toys, brands…" aria-label="Search products">
-      </form>
-
-      <div class="header-actions">
-        <a class="header-action" href="stores/index.html" aria-label="Find a store">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-5.4-7-11a7 7 0 1114 0c0 5.6-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
-          <span class="action-label">Stores</span>
-        </a>
-        <a class="header-action" href="account/index.html" aria-label="Account">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
-          <span class="action-label">Account</span>
-        </a>
-        <a class="header-action" href="shop/cart.html" aria-label="Shopping cart">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.5 12h11l3-8H7"/></svg>
-          <span class="cart-count" hidden>0</span>
-        </a>
-        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
-    <form class="mobile-search search-bar" data-search-form data-base="" role="search">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
-      <input type="search" name="q" placeholder="Search products…" aria-label="Search">
-    </form>
-    <ul>
-      <li><a href="shop/index.html">Shop</a></li>
-      <li><a href="services/index.html">Services</a></li>
-      <li><a href="adopt/index.html">Adopt</a></li>
-      <li><a href="care/index.html">Pet Care</a></li>
-      <li><a href="stores/index.html">Stores</a></li>
-      <li><a href="account/index.html">Account</a></li>
-    </ul>
-  </nav>
+  <div id="ps-header" data-base="" data-active=""></div>
 
   <main id="main">
     <!-- Hero: Adoption focus -->
@@ -252,66 +186,9 @@
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a class="brand" href="index.html" aria-label="PetSmart home">
-          <span class="brand-text"><span class="pet">Pet</span><span class="smart">Smart</span></span>
-        </a>
-        <p>Everything for pets — adoption, shopping, services, and trusted care resources in one modern experience.</p>
-      </div>
-      <div class="footer-col">
-        <h3>Shop</h3>
-        <ul>
-          <li><a href="shop/index.html">All categories</a></li>
-          <li><a href="shop/category.html?cat=dog-food">Dog food</a></li>
-          <li><a href="shop/category.html?cat=cat-food">Cat food</a></li>
-          <li><a href="shop/category.html?cat=toys">Toys</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h3>Services</h3>
-        <ul>
-          <li><a href="services/grooming.html">Grooming</a></li>
-          <li><a href="services/training.html">Training</a></li>
-          <li><a href="services/day-camp.html">Doggie Day Camp</a></li>
-          <li><a href="services/index.html">All services</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h3>Adopt &amp; Care</h3>
-        <ul>
-          <li><a href="adopt/index.html">Find a pet</a></li>
-          <li><a href="care/index.html">Pet care hub</a></li>
-          <li><a href="stores/index.html">Store locator</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h3>Account</h3>
-        <ul>
-          <li><a href="account/index.html">Sign in</a></li>
-          <li><a href="account/orders.html">Order history</a></li>
-          <li><a href="account/favorites.html">Saved items</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2026 PetSmart redesign concept — Artistic Fountain</span>
-      <span>Not affiliated with PetSmart, Inc.</span>
-    </div>
-  </footer>
+  <div id="ps-footer" data-base=""></div>
 
-  <div class="a11y-panel" role="region" aria-label="Accessibility options">
-    <div class="a11y-menu" id="a11y-menu">
-      <button type="button" id="a11y-large-text">Larger text</button>
-      <button type="button" id="a11y-high-contrast">High contrast</button>
-      <button type="button" id="a11y-reduce-motion">Reduce motion</button>
-    </div>
-    <button class="a11y-toggle" type="button" aria-label="Accessibility options" aria-expanded="false" aria-controls="a11y-menu">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
-    </button>
-  </div>
-
+  <script src="js/chrome.js"></script>
   <script src="js/data.js"></script>
   <script src="js/ui.js"></script>
   <script src="js/app.js"></script>

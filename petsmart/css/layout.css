@@ -597,3 +597,156 @@ body.high-contrast {
   --ps-slate: #1a1a1a;
   --border: 2px solid #000;
 }
+
+/* Pet adoption cards */
+.pet-card {
+  background: var(--ps-white);
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-card);
+  transition: transform var(--duration-normal) var(--ease),
+              box-shadow var(--duration-normal) var(--ease);
+}
+
+.pet-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.pet-card__media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--ps-mist);
+}
+
+.pet-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pet-card__badge {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+}
+
+.pet-card__body {
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.pet-card__name {
+  font-size: var(--text-xl);
+  margin-bottom: var(--space-1);
+}
+
+.pet-card__meta {
+  font-size: var(--text-sm);
+  color: var(--ps-blue);
+  font-weight: 600;
+  margin-bottom: var(--space-3);
+}
+
+.pet-card__story {
+  font-size: var(--text-sm);
+  color: var(--ps-slate);
+  line-height: var(--leading-relaxed);
+  flex: 1;
+}
+
+/* Quantity stepper */
+.qty-stepper {
+  display: inline-flex;
+  align-items: center;
+  border: var(--border-strong);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.qty-stepper button {
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: var(--ps-cloud);
+  cursor: pointer;
+  font-size: var(--text-lg);
+  font-weight: 600;
+}
+
+.qty-stepper button:hover {
+  background: var(--ps-mist);
+}
+
+.qty-stepper input {
+  width: 56px;
+  height: 44px;
+  border: none;
+  border-left: var(--border);
+  border-right: var(--border);
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Mobile filter drawer toggle */
+.filters-toggle {
+  display: inline-flex;
+  margin-bottom: var(--space-4);
+}
+
+@media (min-width: 1024px) {
+  .filters-toggle { display: none; }
+}
+
+.filters-sidebar.is-open {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  background: var(--ps-white);
+  padding: var(--space-6);
+  overflow-y: auto;
+}
+
+@media (min-width: 1024px) {
+  .filters-sidebar.is-open {
+    position: static;
+    padding: 0;
+  }
+}
+
+.filters-close {
+  display: none;
+  margin-bottom: var(--space-4);
+}
+
+.filters-sidebar.is-open .filters-close {
+  display: inline-flex;
+}
+
+/* Confirmation */
+.confirm-panel {
+  max-width: 32rem;
+  margin: 0 auto;
+  text-align: center;
+  padding: var(--space-12) var(--space-4);
+}
+
+.confirm-panel__icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto var(--space-6);
+  border-radius: var(--radius-full);
+  background: var(--ps-blue-soft);
+  color: var(--ps-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+}

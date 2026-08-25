@@ -8,21 +8,7 @@
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
-  <header class="header"><div class="header-inner">
-    <a class="brand" href="../index.html"><span class="brand-text"><span class="pet">Pet</span><span class="smart">Smart</span></span></a>
-    <nav aria-label="Primary"><ul class="header-nav">
-      <li><a href="index.html" aria-current="page">Shop</a></li>
-      <li><a href="../services/index.html">Services</a></li>
-      <li><a href="../adopt/index.html">Adopt</a></li>
-      <li><a href="../care/index.html">Pet Care</a></li>
-      <li><a href="../stores/index.html">Stores</a></li>
-    </ul></nav>
-    <div class="header-actions">
-      <a class="header-action" href="cart.html" aria-label="Cart"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.5 12h11l3-8H7"/></svg><span class="cart-count" hidden>0</span></a>
-      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span><span></span></button>
-    </div>
-  </div></header>
-  <nav class="mobile-nav" id="mobile-nav"><ul><li><a href="index.html">Shop</a></li></ul></nav>
+  <div id="ps-header" data-base="../" data-active="shop"></div>
 
   <main id="main">
     <div class="page-hero"><div class="page-hero__inner container">
@@ -32,34 +18,44 @@
     </div></div>
 
     <div class="shop-layout">
-      <aside class="filters-sidebar" aria-label="Filters">
+      <aside class="filters-sidebar" id="filters" aria-label="Filters">
+        <button type="button" class="btn btn-ghost btn-sm filters-close" id="filters-close">Close filters</button>
         <h3>Filter</h3>
         <fieldset class="filter-group">
-          <legend>Pet type</legend>
-          <label class="filter-option"><input type="checkbox" checked disabled> All pets</label>
-        </fieldset>
-        <fieldset class="filter-group">
           <legend>Price</legend>
-          <label class="filter-option"><input type="checkbox"> Under $25</label>
-          <label class="filter-option"><input type="checkbox"> $25 – $50</label>
-          <label class="filter-option"><input type="checkbox"> $50+</label>
+          <label class="filter-option"><input type="checkbox" name="price" value="under-25"> Under $25</label>
+          <label class="filter-option"><input type="checkbox" name="price" value="25-50"> $25 – $50</label>
+          <label class="filter-option"><input type="checkbox" name="price" value="50-plus"> $50+</label>
         </fieldset>
+        <fieldset class="filter-group" id="brand-filters">
+          <legend>Brand</legend>
+        </fieldset>
+        <button type="button" class="btn btn-outline btn-sm" id="clear-filters">Clear filters</button>
       </aside>
       <div>
         <div class="shop-toolbar">
-          <p id="result-count" class="text-muted text-small"></p>
-          <select class="form-select" id="sort-select" style="width:auto;">
-            <option value="rating">Top rated</option>
-            <option value="price-asc">Price: low to high</option>
-            <option value="price-desc">Price: high to low</option>
-          </select>
+          <div>
+            <button type="button" class="btn btn-outline btn-sm filters-toggle" id="filters-open">Filters</button>
+            <p id="result-count" class="text-muted text-small" style="display:inline; margin-left:var(--space-3);"></p>
+          </div>
+          <label class="text-small">Sort by
+            <select class="form-select" id="sort-select" style="width:auto; display:inline-block; margin-left:var(--space-2);">
+              <option value="rating">Top rated</option>
+              <option value="price-asc">Price: low to high</option>
+              <option value="price-desc">Price: high to low</option>
+            </select>
+          </label>
         </div>
         <div class="grid-4" id="product-grid"></div>
       </div>
     </div>
   </main>
 
-  <script src="../js/data.js"></script><script src="../js/ui.js"></script><script src="../js/app.js"></script>
+  <div id="ps-footer" data-base="../"></div>
+  <script src="../js/chrome.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="../js/app.js"></script>
   <script>
     const catSlug = PetSmartParams.get('cat') || 'dog-food';
     const cat = PetSmartData.getCategory(catSlug);
@@ -69,14 +65,42 @@
       document.getElementById('crumb-cat').textContent = cat.name;
       document.getElementById('cat-desc').textContent = `Browse ${cat.name.toLowerCase()} from trusted brands.`;
     }
+
+    const brandBox = document.getElementById('brand-filters');
+    PetSmartData.brandsForCategory(catSlug).forEach((brand) => {
+      brandBox.insertAdjacentHTML('beforeend',
+        `<label class="filter-option"><input type="checkbox" name="brand" value="${brand}"> ${brand}</label>`);
+    });
+
     const grid = document.getElementById('product-grid');
     const sortSelect = document.getElementById('sort-select');
+    const filters = document.getElementById('filters');
+
+    function selected(name) {
+      return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map((el) => el.value);
+    }
+
     function render() {
-      const products = PetSmartData.getProducts({ category: catSlug, sort: sortSelect.value });
+      const products = PetSmartData.getProducts({
+        category: catSlug,
+        sort: sortSelect.value,
+        priceBands: selected('price'),
+        brands: selected('brand'),
+      });
       document.getElementById('result-count').textContent = `${products.length} products`;
       PetSmartUI.renderProductGrid(grid, products, '../');
     }
+
+    document.querySelectorAll('input[name="price"], input[name="brand"]').forEach((el) => {
+      el.addEventListener('change', render);
+    });
     sortSelect.addEventListener('change', render);
+    document.getElementById('clear-filters').addEventListener('click', () => {
+      document.querySelectorAll('input[name="price"], input[name="brand"]').forEach((el) => { el.checked = false; });
+      render();
+    });
+    document.getElementById('filters-open').addEventListener('click', () => filters.classList.add('is-open'));
+    document.getElementById('filters-close').addEventListener('click', () => filters.classList.remove('is-open'));
     render();
   </script>
 </body>

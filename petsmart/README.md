@@ -19,32 +19,31 @@ PetSmart is more than an online pet-supply store. The experience unifies four pi
 
 ```
 petsmart/
-├── index.html              # Homepage (adoption hero, pathways, ecosystem)
-├── css/
-│   ├── tokens.css          # Design tokens
-│   ├── base.css            # Reset, typography, accessibility
-│   ├── components.css      # Buttons, cards, forms, product cards
-│   ├── layout.css          # Header, footer, hero, page shells
-│   └── main.css            # Entry point
+├── index.html
+├── css/          # tokens, base, components, layout
 ├── js/
-│   ├── data.js             # Products, articles, stores (content layer)
-│   ├── ui.js               # Reusable render helpers
-│   └── app.js              # Navigation, cart, search, a11y
-├── shop/                   # E-commerce pages
-├── services/               # Grooming, training, day camp
-├── adopt/                  # Adoption & charities
-├── care/                   # Pet care hub & articles
-├── stores/                 # Locator & store detail
-├── account/                # Sign in, orders, favorites
-└── checkout/               # Checkout flow
+│   ├── chrome.js # shared header / footer
+│   ├── data.js   # products, pets, stores, articles
+│   ├── ui.js     # render helpers
+│   └── app.js    # cart, favorites, search, a11y
+├── shop/         # commerce (incl. filters, cart)
+├── services/     # grooming, training, day camp, vet
+├── adopt/        # charities + adoptable pets grid
+├── care/         # learning hub + articles
+├── stores/       # locator + detail
+├── account/      # sign in, orders, favorites
+└── checkout/     # checkout + confirmation
 ```
 
-## Design system
+## Recent depth additions
 
-- **Colors:** PetSmart red (`#e31837`) for primary actions; blue (`#0066b3`) for trust and navigation; white and pale blue environments
-- **Typography:** Plus Jakarta Sans (display) + Source Sans 3 (body)
-- **Components:** Reusable cards, product grids, forms, pathway cards, ecosystem links
-- **Accessibility:** WCAG AA — semantic HTML, focus states, skip links, reduced motion, a11y panel
+- Shared header/footer via `chrome.js` across all pages
+- Working category filters (price + brand) with mobile filter drawer
+- Product quantity stepper + real favorites (localStorage)
+- Adoptable pets grid on Adopt (filter Dogs / Cats)
+- Veterinary services page
+- Checkout confirmation page
+- Linked from Artistic Fountain portfolio homepage
 
 ## Pages
 
@@ -58,10 +57,12 @@ petsmart/
 | 6 | Product detail | `/petsmart/shop/product.html?id=p1` |
 | 7 | Cart | `/petsmart/shop/cart.html` |
 | 8 | Checkout | `/petsmart/checkout/` |
+| 8b | Order confirmation | `/petsmart/checkout/confirmation.html` |
 | 9 | Services landing | `/petsmart/services/` |
 | 10 | Grooming | `/petsmart/services/grooming.html` |
 | 11 | Training | `/petsmart/services/training.html` |
 | 12 | Doggie Day Camp | `/petsmart/services/day-camp.html` |
+| 12b | Veterinary | `/petsmart/services/vet.html` |
 | 13 | Adoption | `/petsmart/adopt/` |
 | 14 | Pet Care hub | `/petsmart/care/` |
 | 15 | Pet Care article | `/petsmart/care/article.html?id=bringing-home` |
