@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="APEX Hockey">
+  <rect width="120" height="120" fill="#0B0D10"/>
+  <path d="M18 92 L60 18 L102 92 H78 L60 58 L42 92 Z" fill="#F0F4F7"/>
+  <path d="M48 92 H72 L60 70 Z" fill="#C8102E"/>
+  <rect x="18" y="98" width="84" height="6" fill="#C8102E"/>
+</svg>

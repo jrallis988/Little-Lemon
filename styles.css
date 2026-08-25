@@ -791,6 +791,12 @@ a:hover { opacity: 0.8; }
 }
 
 /* Palette-matched previews per project */
+.portfolio-image--apex {
+    background:
+        linear-gradient(155deg, rgba(11, 13, 16, 0.2) 0%, rgba(200, 16, 46, 0.55) 100%),
+        linear-gradient(135deg, #0B0D10 0%, #1C2128 55%, #C8102E 100%);
+}
+
 .portfolio-image--nhdmv {
     background:
         linear-gradient(160deg, rgba(0, 38, 58, 0.82) 0%, rgba(31, 92, 69, 0.55) 100%),

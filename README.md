@@ -18,6 +18,7 @@ Static site: HTML, CSS, and vanilla JS (built in Cursor). Custom typefaces (Arca
 ## Pages
 
 - `index.html` — home (hero, designer, services, portfolio, blog, contact)
+- `apex-hockey/` — APEX V1 “RELEASE FASTER.” sports marketing case study (React/TypeScript; serve `site/`)
 - `nh-dmv/` — conceptual redesign of the New Hampshire DMV website (civic UX case study)
 - `services/` — detail pages for each service offering
 - `blog/` — blog index and post pages (content can be drafted in Blaze AI)
@@ -32,6 +33,13 @@ npm start
 ```
 
 Opens a local static server at [http://localhost:3000](http://localhost:3000).
+
+APEX Hockey case study (Vite + React):
+
+```bash
+npm run dev:apex
+npm run build:apex
+```
 
 Or open `index.html` directly in a browser.
 
