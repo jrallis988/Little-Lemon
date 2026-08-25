@@ -224,10 +224,13 @@ p:last-child {
   border: 1px solid transparent;
   background: transparent;
   color: var(--text-muted);
-  padding: 0.4rem 0.85rem;
+  padding: 0.55rem 1rem;
   border-radius: 999px;
   font-size: 0.82rem;
   letter-spacing: 0.04em;
+  min-height: 2.25rem;
+  position: relative;
+  z-index: 1;
   transition: color 0.2s var(--ease), background 0.2s var(--ease), border-color 0.2s var(--ease);
 }
 

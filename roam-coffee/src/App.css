@@ -125,6 +125,10 @@
   filter: drop-shadow(0 8px 24px rgba(184, 90, 50, 0.25));
 }
 
+.section {
+  scroll-margin-top: 4.5rem;
+}
+
 .section-body {
   margin-top: var(--space-lg);
 }
