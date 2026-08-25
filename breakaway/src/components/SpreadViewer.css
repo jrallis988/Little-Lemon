@@ -55,6 +55,8 @@
   color: var(--ink);
   padding: 0.4rem 0.7rem;
   cursor: pointer;
+  position: relative;
+  z-index: 2;
   transition: border-color 0.2s var(--ease), background 0.2s var(--ease);
 }
 

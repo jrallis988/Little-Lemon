@@ -239,152 +239,132 @@
   height: 28%;
 }
 
-/* Photographic atmospheres — CSS art direction stand-ins for linked InDesign assets */
+/* Photographic atmospheres — linked Unsplash stand-ins for InDesign image links */
 .ms-photo--athlete-glance {
   background-image:
-    radial-gradient(ellipse at 45% 30%, rgba(158, 182, 196, 0.35), transparent 50%),
-    linear-gradient(180deg, #2a3540 0%, #0d1216 55%, #050708 100%);
+    linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, transparent 35%, rgba(0, 0, 0, 0.55) 100%),
+    url("https://images.unsplash.com/photo-1515703407324-5f753af48eea?auto=format&fit=crop&w=1200&q=80");
+  background-size: cover;
+  background-position: center 20%;
 }
 
 .ms-photo--athlete-glance::before {
-  content: "";
-  position: absolute;
-  left: 28%;
-  top: 18%;
-  width: 44%;
-  height: 70%;
-  background:
-    radial-gradient(circle at 50% 20%, #d4c4b0 0%, #8a7360 28%, #3a3030 55%, #12161a 100%);
-  border-radius: 42% 42% 38% 38%;
-  filter: contrast(1.05);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  display: none;
 }
 
 .ms-photo--stick-flex {
-  background:
-    linear-gradient(115deg, #0e1418 0%, #24303a 40%, #8fa3b0 52%, #1a2228 70%, #0a0c0e 100%);
+  background-image:
+    linear-gradient(115deg, rgba(10, 10, 10, 0.35), transparent 50%),
+    url("https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1000&q=80");
+  background-size: cover;
+  background-position: center;
 }
 
 .ms-photo--stick-flex::before {
-  content: "";
-  position: absolute;
-  inset: 20% -10% 30% -10%;
-  background: linear-gradient(90deg, transparent, #c5d0d8 20%, #e8eef2 50%, #9aaeb8 80%, transparent);
-  transform: rotate(-18deg);
-  opacity: 0.9;
+  display: none;
 }
 
 .ms-photo--night-rink {
-  background:
-    radial-gradient(ellipse at 50% 80%, rgba(200, 220, 230, 0.25), transparent 45%),
-    linear-gradient(180deg, #05080a 0%, #101820 40%, #1a2830 70%, #0a1014 100%);
+  background-image:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.2) 40%, rgba(0, 0, 0, 0.65)),
+    url("https://images.unsplash.com/photo-1575361204480-aadea25e6e68?auto=format&fit=crop&w=1400&q=80");
+  background-size: cover;
+  background-position: center;
 }
 
 .ms-photo--night-rink::before {
-  content: "";
-  position: absolute;
-  left: 10%;
-  right: 10%;
-  bottom: 22%;
-  height: 2px;
-  background: rgba(235, 238, 241, 0.35);
-  box-shadow: 0 0 40px 8px rgba(180, 200, 220, 0.15);
-}
-
-.ms-photo--toc-athlete,
-.ms-photo--editors,
-.ms-photo--ice-action,
-.ms-photo--stick-detail,
-.ms-photo--portrait-quiet,
-.ms-photo--moment-a,
-.ms-photo--moment-b,
-.ms-photo--moment-c,
-.ms-photo--wide-action,
-.ms-photo--skate-hero,
-.ms-photo--back {
-  background-image: linear-gradient(145deg, #1c2830, #0a0e12 60%, #152028);
+  display: none;
 }
 
 .ms-photo--toc-athlete {
   height: 48%;
   margin-top: 1rem;
-  background:
-    radial-gradient(circle at 50% 35%, #b8a090 0 12%, transparent 13%),
-    radial-gradient(ellipse at 50% 70%, #2a3038 0%, #0c1014 70%),
-    linear-gradient(#152028, #0a0e12);
+  background-image:
+    linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, 0.35)),
+    url("https://images.unsplash.com/photo-1551958219-acbc608c6377?auto=format&fit=crop&w=900&q=80");
+  background-size: cover;
+  background-position: center;
 }
 
 .ms-photo--editors {
-  background:
-    radial-gradient(ellipse at 40% 40%, #6a5848 0%, #2a241f 45%, #0e1216 100%);
+  background-image:
+    linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.25)),
+    url("https://images.unsplash.com/photo-1461896836934-ffe607ba6851?auto=format&fit=crop&w=900&q=80");
+  background-size: cover;
+  background-position: center 30%;
 }
 
 .ms-photo--ice-action {
-  background:
-    radial-gradient(circle at 70% 40%, rgba(230, 35, 20, 0.25), transparent 35%),
-    linear-gradient(120deg, #0a1014 0%, #1a3038 35%, #d8e4ea 48%, #2a3840 62%, #080c10 100%);
+  background-image:
+    linear-gradient(120deg, rgba(0, 0, 0, 0.35), transparent 45%, rgba(0, 0, 0, 0.4)),
+    url("https://images.unsplash.com/photo-1515703407324-5f753af48eea?auto=format&fit=crop&w=1400&q=80");
+  background-size: cover;
+  background-position: center;
 }
 
 .ms-photo--stick-detail {
-  background:
-    repeating-linear-gradient(
-      90deg,
-      #1a1e22 0 2px,
-      #2a3238 2px 4px,
-      #1a1e22 4px 8px
-    ),
-    linear-gradient(180deg, #3a444c, #12161a);
+  background-image:
+    url("https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=900&q=80");
+  background-size: cover;
+  background-position: center;
 }
 
 .ms-photo--portrait-quiet {
-  background:
-    radial-gradient(ellipse at 48% 35%, #c4b2a0 0%, #5a4a40 35%, #1a1816 65%, #080808 100%);
+  background-image:
+    linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.45)),
+    url("https://images.unsplash.com/photo-1517466787929-bc90951d0974?auto=format&fit=crop&w=1000&q=80");
+  background-size: cover;
+  background-position: center 20%;
 }
 
 .ms-photo--moment-a {
-  background:
-    linear-gradient(30deg, #0a0c10 0%, #203040 40%, #8aa0b0 55%, #152028 75%, #050608 100%);
+  background-image:
+    url("https://images.unsplash.com/photo-1461896836934-ffe607ba6851?auto=format&fit=crop&w=1400&q=80");
+  background-size: cover;
+  background-position: center;
 }
 
 .ms-photo--moment-b {
   height: 55%;
-  background:
-    radial-gradient(circle at 60% 40%, #e8eef2 0%, #6a7a88 30%, #1a2228 70%);
+  background-image:
+    url("https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1000&q=80");
+  background-size: cover;
+  background-position: center;
 }
 
 .ms-photo--moment-c {
-  background:
-    linear-gradient(200deg, #101820, #2a3848 40%, #0a0e12);
+  background-image:
+    url("https://images.unsplash.com/photo-1575361204480-aadea25e6e68?auto=format&fit=crop&w=1200&q=80");
+  background-size: cover;
+  background-position: center;
 }
 
 .ms-photo--wide-action {
-  background:
-    linear-gradient(100deg, #080a0c 10%, #1a2830 35%, #c5d4dc 48%, #243038 60%, #0a0e12 90%);
+  background-image:
+    url("https://images.unsplash.com/photo-1551958219-acbc608c6377?auto=format&fit=crop&w=1400&q=80");
+  background-size: cover;
+  background-position: center;
 }
 
 .ms-photo--skate-hero {
   height: 42%;
   margin-top: 0.75rem;
-  background:
-    radial-gradient(ellipse at 50% 60%, #4a5560 0%, #1a2028 50%, #0a0c10 100%);
+  background-image:
+    url("https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=1000&q=80");
+  background-size: cover;
+  background-position: center;
 }
 
 .ms-photo--skate-hero::before {
-  content: "";
-  position: absolute;
-  left: 15%;
-  right: 15%;
-  top: 35%;
-  height: 28%;
-  background: linear-gradient(90deg, #2a3038, #8a929a 40%, #e0e4e8 50%, #6a727a 70%, #1a2028);
-  border-radius: 4px 40% 20% 4px;
-  transform: rotate(-8deg);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  display: none;
 }
 
 .ms-photo--back {
-  background:
-    radial-gradient(ellipse at 50% 60%, #2a3840, #0a0c10 70%);
+  background-image:
+    linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.5)),
+    url("https://images.unsplash.com/photo-1515703407324-5f753af48eea?auto=format&fit=crop&w=1200&q=80");
+  background-size: cover;
+  background-position: center;
 }
 
 /* Cover A */

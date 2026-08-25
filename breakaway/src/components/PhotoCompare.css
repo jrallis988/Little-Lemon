@@ -24,7 +24,9 @@
 
 .pc-layer--after {
   background:
-    linear-gradient(120deg, #0a1014 0%, #1a3038 35%, #c8d8e0 50%, #2a3840 65%, #080c10 100%);
+    linear-gradient(120deg, rgba(10, 16, 20, 0.2), transparent 40%),
+    url("https://images.unsplash.com/photo-1515703407324-5f753af48eea?auto=format&fit=crop&w=1400&q=80")
+      center / cover;
   filter: contrast(1.08) saturate(0.85);
 }
 
@@ -32,8 +34,9 @@
   overflow: hidden;
   border-right: 2px solid var(--paper);
   background:
-    linear-gradient(120deg, #1a2228 0%, #3a5058 40%, #e8f0f4 55%, #4a6068 70%, #12161a 100%);
-  filter: saturate(1.2) brightness(1.08);
+    url("https://images.unsplash.com/photo-1515703407324-5f753af48eea?auto=format&fit=crop&w=1400&q=80")
+      center / cover;
+  filter: saturate(1.25) brightness(1.12) contrast(0.92);
 }
 
 .pc-handle {
