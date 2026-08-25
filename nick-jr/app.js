@@ -6,20 +6,22 @@
     if (!toast) return;
     toast.hidden = false;
     toast.textContent = message;
-    requestAnimationFrame(() => toast.classList.add("is-visible"));
+    toast.classList.remove("is-visible");
+    // Force reflow so the enter transition always plays
+    void toast.offsetWidth;
+    toast.classList.add("is-visible");
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => {
       toast.classList.remove("is-visible");
       setTimeout(() => {
         toast.hidden = true;
-      }, 250);
-    }, 2200);
+      }, 280);
+    }, 2600);
   }
 
   /* Mobile nav */
   const navToggle = document.querySelector(".nav-toggle");
   const primaryNav = document.querySelector(".primary-nav");
-  const navList = document.getElementById("primary-nav");
 
   if (navToggle && primaryNav) {
     navToggle.addEventListener("click", () => {
@@ -43,7 +45,8 @@
   const searchInput = document.getElementById("site-search");
 
   if (searchBtn && searchPanel && searchInput) {
-    searchBtn.addEventListener("click", () => {
+    searchBtn.addEventListener("click", (event) => {
+      event.preventDefault();
       const willOpen = searchPanel.hasAttribute("hidden");
       if (willOpen) {
         searchPanel.removeAttribute("hidden");
@@ -60,6 +63,11 @@
         event.preventDefault();
         const q = searchInput.value.trim();
         showToast(q ? `Looking for “${q}”…` : "Try searching for a show or game!");
+      }
+      if (event.key === "Escape") {
+        searchPanel.setAttribute("hidden", "");
+        searchBtn.setAttribute("aria-expanded", "false");
+        searchBtn.focus();
       }
     });
   }
@@ -91,7 +99,9 @@
 
   function startAuto() {
     clearInterval(timer);
-    timer = setInterval(() => goTo(index + 1), 6500);
+    if (slides.length > 1) {
+      timer = setInterval(() => goTo(index + 1), 6500);
+    }
   }
 
   dots.forEach((dot, i) => {
@@ -101,7 +111,7 @@
     });
   });
 
-  if (slides.length > 1) startAuto();
+  startAuto();
 
   const hero = document.querySelector(".hero");
   if (hero) {
@@ -111,28 +121,38 @@
 
   /* Friend / activity feedback */
   document.querySelectorAll(".friend").forEach((btn) => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", (event) => {
+      event.preventDefault();
       const name = btn.getAttribute("aria-label") || "Friend";
       showToast(`Hi from ${name}!`);
     });
   });
 
-  document.querySelectorAll(".want-card, .play-card, .make-item, .sprout, .btn-watch").forEach((el) => {
+  document.querySelectorAll(".want-card").forEach((el) => {
+    el.addEventListener("click", () => {
+      const label = el.querySelector(".want-label")?.textContent?.trim() || "Let’s go!";
+      showToast(label);
+    });
+  });
+
+  document.querySelectorAll(".play-card").forEach((el) => {
+    el.addEventListener("click", () => {
+      const label = el.querySelector("strong")?.textContent?.trim() || "Play time!";
+      showToast(`Loading ${label}…`);
+    });
+  });
+
+  document.querySelectorAll(".make-item").forEach((el) => {
     el.addEventListener("click", (event) => {
-      const label =
-        el.querySelector(".want-label")?.textContent?.trim() ||
-        el.querySelector("strong")?.textContent?.trim() ||
-        el.textContent?.trim().replace(/\s+/g, " ").slice(0, 40) ||
-        "Let’s go!";
-      if (el.getAttribute("href")?.startsWith("#")) {
-        showToast(label);
-      }
+      event.preventDefault();
+      const label = el.textContent?.trim().replace(/\s+/g, " ") || "Create!";
+      showToast(label);
     });
   });
 
   /* Keyboard carousel */
   document.addEventListener("keydown", (event) => {
-    if (event.target.matches("input, textarea, select")) return;
+    if (event.target.matches("input, textarea, select, button")) return;
     if (event.key === "ArrowRight") {
       goTo(index + 1);
       startAuto();
