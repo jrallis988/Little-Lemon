@@ -1,11 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1250" role="img" aria-label="Athlete crop photography placeholder">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1250" width="1000" height="1250">
   <rect width="1000" height="1250" fill="#14171c"/>
-  <rect x="0" y="0" width="1000" height="1250" fill="#0b0d10" opacity="0.35"/>
+  <rect width="1000" height="1250" fill="#0b0d10" opacity="0.35"/>
   <g fill="#e8eef2" transform="translate(-40 40) scale(1.35)">
     <ellipse cx="420" cy="220" rx="110" ry="125"/>
     <path d="M250 380 C320 300 540 300 590 390 L640 620 L560 640 L540 500 L520 900 L420 900 L400 560 L360 900 L260 900 L250 520 L200 650 L140 620 Z"/>
   </g>
   <rect x="40" y="40" width="60" height="60" fill="none" stroke="#c8102e" stroke-width="4"/>
   <rect x="900" y="1150" width="60" height="60" fill="none" stroke="#c8102e" stroke-width="4"/>
-  <text x="48" y="1210" fill="#a8b0b8" font-family="Arial Narrow, sans-serif" font-size="22" letter-spacing="4">REPLACE  TIGHT ATHLETE CROP</text>
 </svg>

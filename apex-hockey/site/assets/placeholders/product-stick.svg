@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1400" role="img" aria-label="Hockey stick product photography placeholder">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1400" width="900" height="1400">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#14171c"/>
@@ -9,10 +9,8 @@
   <g transform="translate(250 80) rotate(18)">
     <rect x="0" y="0" width="54" height="980" rx="6" fill="#e8eef2"/>
     <rect x="8" y="40" width="38" height="120" fill="#1c2128"/>
-    <text x="14" y="110" fill="#e8eef2" font-family="Arial Narrow, sans-serif" font-size="22" transform="rotate(-90 14 110)">APEX V1</text>
     <path d="M0 980 L54 980 L170 1120 L130 1160 L0 1040 Z" fill="#c8102e"/>
     <rect x="6" y="700" width="42" height="8" fill="#c8102e"/>
     <rect x="6" y="720" width="42" height="8" fill="#7a9aad"/>
   </g>
-  <text x="48" y="56" fill="#a8b0b8" font-family="Arial Narrow, sans-serif" font-size="22" letter-spacing="4">REPLACE  PRODUCT PHOTO</text>
 </svg>

@@ -32,26 +32,26 @@ export function FormatPreviewer() {
         <div className="previewer__controls">
           <div className="previewer__formats" role="radiogroup" aria-label="Social format">
             {formats.map((f) => (
-              <label key={f.id} className={format === f.id ? "is-active" : ""}>
-                <input
-                  type="radio"
-                  name="social-format"
-                  value={f.id}
-                  checked={format === f.id}
-                  onChange={() => setFormat(f.id)}
-                />
+              <button
+                key={f.id}
+                type="button"
+                role="radio"
+                aria-checked={format === f.id}
+                className={format === f.id ? "is-active" : ""}
+                onClick={() => setFormat(f.id)}
+              >
                 {f.label}
-              </label>
+              </button>
             ))}
           </div>
-          <label className="previewer__toggle">
-            <input
-              type="checkbox"
-              checked={safeAreas}
-              onChange={(e) => setSafeAreas(e.target.checked)}
-            />
-            Show safe-area overlays
-          </label>
+          <button
+            type="button"
+            className={`previewer__toggle ${safeAreas ? "is-active" : ""}`}
+            aria-pressed={safeAreas}
+            onClick={() => setSafeAreas((v) => !v)}
+          >
+            {safeAreas ? "Safe-area overlays: On" : "Safe-area overlays: Off"}
+          </button>
         </div>
 
         <div className="previewer__stage">
