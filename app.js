@@ -2,8 +2,6 @@
   const header = document.querySelector("[data-header]");
   const nav = document.querySelector("[data-nav]");
   const toggle = document.querySelector("[data-nav-toggle]");
-  const form = document.querySelector("[data-reserve-form]");
-  const status = document.querySelector("[data-form-status]");
 
   const setHeaderState = () => {
     if (!header) return;
@@ -43,22 +41,5 @@
     reveals.forEach((el) => io.observe(el));
   } else {
     reveals.forEach((el) => el.classList.add("is-visible"));
-  }
-
-  if (form && status) {
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const data = new FormData(form);
-      const name = String(data.get("name") || "").trim();
-      const date = String(data.get("date") || "");
-      const guests = String(data.get("guests") || "2");
-      status.textContent = name
-        ? `Thanks, ${name}. We received your request for ${guests} on ${date || "your selected night"} and will confirm by email.`
-        : "Thanks — we received your reservation request.";
-      status.classList.add("is-success");
-      form.reset();
-      const defaultGuests = form.querySelector('input[name="guests"][value="2"]');
-      if (defaultGuests) defaultGuests.checked = true;
-    });
   }
 })();
