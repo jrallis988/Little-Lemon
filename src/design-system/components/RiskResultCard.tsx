@@ -63,12 +63,22 @@ export function RiskResultCard({ check, onLearnMore }: RiskResultCardProps) {
         </View>
       ) : null}
 
+      {check.riskLevel === 'caution' ? (
+        <View style={[styles.confidence, { backgroundColor: colors.semantic.cautionBg }]}>
+          <Ionicons name="warning" size={18} color={colors.semantic.caution} />
+          <Text style={[styles.confidenceText, { color: colors.semantic.caution }]}>
+            Something needs your attention before you take this. Review the findings and talk with your
+            healthcare provider.
+          </Text>
+        </View>
+      ) : null}
+
       {check.riskLevel === 'low' ? (
         <View style={[styles.confidence, { backgroundColor: colors.semantic.lowBg }]}>
           <Ionicons name="checkmark-circle" size={18} color={colors.semantic.low} />
           <Text style={[styles.confidenceText, { color: colors.semantic.low }]}>
-            This supplement is likely okay for you based on your current health profile — not a guarantee of
-            safety.
+            No known conflicts were identified based on the health information currently available to
+            BioCross — not a guarantee of safety.
           </Text>
         </View>
       ) : null}

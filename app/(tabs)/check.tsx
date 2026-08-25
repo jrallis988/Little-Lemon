@@ -22,13 +22,14 @@ import { colors, radii, spacing, typography } from '../../src/design-system/toke
 import { useBioCross } from '../../src/state/BioCrossContext';
 
 const TESTO_BARCODE = '012345678943';
-const TESTO_SUPPLEMENT_ID = 'sup-catalog-testo';
+const UNKNOWN_BARCODE = '000000000000';
 
 export default function CheckScreen() {
   const router = useRouter();
-  const { lookupBarcode } = useBioCross();
+  const { lookupBarcode, profile } = useBioCross();
   const [scanning, setScanning] = useState(false);
   const [flashOn, setFlashOn] = useState(false);
+  const [demoFailNext, setDemoFailNext] = useState(false);
   const scanAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -57,30 +58,92 @@ export default function CheckScreen() {
     outputRange: [8, 148],
   });
 
-  const handlePhoto = async () => {
+  const maybeWarnOutdatedProfile = (next: () => void) => {
+    const needsAttention =
+      profile?.readiness === 'needs_attention' ||
+      profile?.readiness === 'getting_started' ||
+      profile?.items.some((i) => i.status === 'not_reviewed' || i.status === 'pending_review');
+    if (needsAttention) {
+      router.push({
+        pathname: '/check/issue',
+        params: { kind: 'outdated_profile', supplementId: 'sup-catalog-testo' },
+      });
+      return;
+    }
+    next();
+  };
+
+  const handlePhotoLibrary = async () => {
+    const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!permission.granted) {
+      router.push({ pathname: '/check/issue', params: { kind: 'permission' } });
+      return;
+    }
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ['images'],
       allowsEditing: true,
       quality: 0.8,
     });
-    if (!result.canceled) {
-      // Mock: treat photo selection as barcode scan success
-      router.push({
-        pathname: '/check/confirm',
-        params: { supplementId: TESTO_SUPPLEMENT_ID },
-      });
+    if (result.canceled) return;
+
+    // Label photo path — distinct from barcode identification
+    router.push({
+      pathname: '/check/label-review',
+      params: {
+        supplementId: 'sup-catalog-mag',
+        mode: demoFailNext ? 'incomplete' : 'complete',
+      },
+    });
+  };
+
+  const handleTakeLabelPhoto = async () => {
+    const permission = await ImagePicker.requestCameraPermissionsAsync();
+    if (!permission.granted) {
+      router.push({ pathname: '/check/issue', params: { kind: 'permission' } });
+      return;
     }
+    const result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      quality: 0.8,
+    });
+    if (result.canceled) return;
+    router.push({
+      pathname: '/check/label-review',
+      params: { supplementId: 'sup-catalog-mag' },
+    });
   };
 
   const handleScanBarcode = async () => {
     setScanning(true);
     try {
+      if (demoFailNext) {
+        router.push({ pathname: '/check/issue', params: { kind: 'scan_failure' } });
+        return;
+      }
       const supplement = await lookupBarcode(TESTO_BARCODE);
-      if (supplement) {
+      if (!supplement) {
+        router.push({ pathname: '/check/issue', params: { kind: 'unknown_product' } });
+        return;
+      }
+      maybeWarnOutdatedProfile(() => {
         router.push({
           pathname: '/check/confirm',
-          params: { supplementId: supplement.id },
+          params: { supplementId: supplement.id, source: 'barcode' },
         });
+      });
+    } catch {
+      router.push({ pathname: '/check/issue', params: { kind: 'offline' } });
+    } finally {
+      setScanning(false);
+    }
+  };
+
+  const handleDemoUnknown = async () => {
+    setScanning(true);
+    try {
+      const supplement = await lookupBarcode(UNKNOWN_BARCODE);
+      if (!supplement) {
+        router.push({ pathname: '/check/issue', params: { kind: 'unknown_product' } });
       }
     } finally {
       setScanning(false);
@@ -91,234 +154,222 @@ export default function CheckScreen() {
     <SafeAreaView style={styles.safe} edges={['top']}>
       <ScreenTitle
         title="Scan Supplement Label"
-        subtitle="Point your camera at the barcode on the supplement bottle or package"
+        subtitle="Scan the barcode on your supplement to instantly check it against your health profile."
       />
 
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
         <View style={styles.viewfinderWrap}>
-          <View style={styles.viewfinder}>
+          <View style={styles.viewfinder} accessibilityLabel="Barcode scanner viewfinder">
             <View style={[styles.corner, styles.cornerTL]} />
             <View style={[styles.corner, styles.cornerTR]} />
             <View style={[styles.corner, styles.cornerBL]} />
             <View style={[styles.corner, styles.cornerBR]} />
+            <View style={styles.alignPill}>
+              <Text style={styles.alignText}>Align barcode within the frame</Text>
+            </View>
             <Animated.View
               style={[styles.scanLine, { transform: [{ translateY: scanLineTranslate }] }]}
             />
-            <Text style={styles.alignText}>Align barcode within the frame</Text>
-          </View>
-
-          <View style={styles.cameraControls}>
-            <Pressable
-              onPress={() => setFlashOn((v) => !v)}
-              accessibilityRole="button"
-              accessibilityLabel={flashOn ? 'Turn flash off' : 'Turn flash on'}
-              style={styles.controlBtn}
-            >
-              <Ionicons
-                name={flashOn ? 'flash' : 'flash-outline'}
-                size={20}
-                color={colors.text.primary}
-              />
-              <Text style={styles.controlLabel}>Light</Text>
-            </Pressable>
-            <Pressable
-              onPress={handlePhoto}
-              accessibilityRole="button"
-              accessibilityLabel="Take or choose photo of label"
-              style={styles.controlBtn}
-            >
-              <Ionicons name="camera-outline" size={20} color={colors.text.primary} />
-              <Text style={styles.controlLabel}>Photo</Text>
-            </Pressable>
+            <View style={styles.sideControls}>
+              <Pressable
+                onPress={() => setFlashOn((v) => !v)}
+                style={[styles.sideBtn, flashOn && styles.sideBtnOn]}
+                accessibilityRole="button"
+                accessibilityLabel={flashOn ? 'Turn light off' : 'Turn light on'}
+              >
+                <Ionicons name={flashOn ? 'flash' : 'flash-outline'} size={18} color="#fff" />
+                <Text style={styles.sideLabel}>Light</Text>
+              </Pressable>
+              <Pressable
+                onPress={handlePhotoLibrary}
+                style={styles.sideBtn}
+                accessibilityRole="button"
+                accessibilityLabel="Choose label photo from library"
+              >
+                <Ionicons name="images-outline" size={18} color="#fff" />
+                <Text style={styles.sideLabel}>Photo</Text>
+              </Pressable>
+            </View>
           </View>
         </View>
 
-        <View style={styles.section}>
+        <Pressable
+          onPress={() =>
+            router.push({ pathname: '/check/issue', params: { kind: 'permission' } })
+          }
+        >
           <InfoCallout
             tone="privacy"
-            icon="lock-closed-outline"
-            title="Your privacy matters"
-            body="We only scan the barcode. No personal information is captured."
+            icon="shield-checkmark"
+            title="We only scan the barcode."
+            body="No personal information is captured."
           />
-        </View>
+        </Pressable>
 
-        <View style={styles.section}>
+        <HealthCard style={styles.altCard}>
           <Text style={styles.altTitle}>Other ways to search</Text>
-          <Pressable
+          <AltRow
+            icon="search-outline"
+            title="Search by name or ingredient"
+            subtitle="Find supplements by name, brand, or ingredient."
             onPress={() => router.push('/check/search')}
-            accessibilityRole="button"
-            accessibilityLabel="Search by supplement name"
-          >
-            <HealthCard>
-              <View style={styles.altRow}>
-                <View style={styles.altIcon}>
-                  <Ionicons name="search-outline" size={20} color={colors.brand.blue} />
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text style={styles.altLabel}>Search by name</Text>
-                  <Text style={styles.altSub}>Find a supplement in our catalog</Text>
-                </View>
-                <Ionicons name="chevron-forward" size={18} color={colors.text.tertiary} />
-              </View>
-            </HealthCard>
-          </Pressable>
-
-          <Pressable
-            onPress={() => router.push('/check/manual-barcode')}
-            accessibilityRole="button"
-            accessibilityLabel="Enter barcode manually"
-            style={{ marginTop: spacing.sm }}
-          >
-            <HealthCard>
-              <View style={styles.altRow}>
-                <View style={styles.altIcon}>
-                  <Ionicons name="barcode-outline" size={20} color={colors.brand.blue} />
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text style={styles.altLabel}>Enter barcode manually</Text>
-                  <Text style={styles.altSub}>Type the numbers under the barcode</Text>
-                </View>
-                <Ionicons name="chevron-forward" size={18} color={colors.text.tertiary} />
-              </View>
-            </HealthCard>
-          </Pressable>
-        </View>
-
-        <View style={styles.section}>
-          <HealthCard backgroundColor={colors.brand.blueLight} borderColor={colors.brand.blueMuted}>
-            <View style={styles.whyRow}>
-              <Ionicons name="help-circle-outline" size={22} color={colors.brand.blue} />
-              <View style={{ flex: 1 }}>
-                <Text style={styles.whyTitle}>Why scan?</Text>
-                <Text style={styles.whyBody}>
-                  Barcodes help BioCross identify the exact product and formulation so your safety
-                  check matches what you actually have — not a similar product with different
-                  ingredients.
-                </Text>
-              </View>
-            </View>
-          </HealthCard>
-        </View>
-
-        <View style={styles.section}>
-          <BioCrossButton
-            label="Scan Barcode"
-            icon="scan-outline"
-            loading={scanning}
-            onPress={handleScanBarcode}
-            accessibilityHint="Simulates scanning TestoMax barcode and opens product confirmation"
           />
-        </View>
+          <AltRow
+            icon="keypad-outline"
+            title="Enter barcode manually"
+            subtitle="Type the barcode number from the label."
+            onPress={() => router.push('/check/manual-barcode')}
+          />
+          <AltRow
+            icon="camera-outline"
+            title="Photograph Supplement Facts"
+            subtitle="Capture formulation details when barcode data is incomplete."
+            onPress={handleTakeLabelPhoto}
+          />
+        </HealthCard>
+
+        <HealthCard style={styles.eduCard} backgroundColor={colors.brand.blueLight} borderColor={colors.brand.blueMuted}>
+          <View style={styles.eduRow}>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.eduTitle}>Why scan the label?</Text>
+              <Text style={styles.eduBody}>
+                Scanning helps us analyze the exact product and formula so we can give you the most
+                accurate results.
+              </Text>
+            </View>
+            <Ionicons name="shield-checkmark" size={36} color={colors.brand.blue} />
+          </View>
+        </HealthCard>
+
+        <BioCrossButton
+          label="Scan Barcode"
+          icon="scan-outline"
+          loading={scanning}
+          onPress={handleScanBarcode}
+          accessibilityHint="Simulates scanning a supplement barcode"
+        />
+
+        <Pressable
+          onPress={() => setDemoFailNext((v) => !v)}
+          style={styles.demoToggle}
+          accessibilityRole="switch"
+          accessibilityState={{ checked: demoFailNext }}
+          accessibilityLabel="Demo failure mode"
+        >
+          <Text style={styles.demoText}>
+            Demo: next scan {demoFailNext ? 'will simulate failure' : 'will succeed'}
+          </Text>
+        </Pressable>
+        <Pressable onPress={handleDemoUnknown} style={styles.demoToggle}>
+          <Text style={styles.demoText}>Demo: unknown product</Text>
+        </Pressable>
       </ScrollView>
     </SafeAreaView>
   );
 }
 
-const CORNER_SIZE = 28;
-const CORNER_THICK = 4;
+function AltRow({
+  icon,
+  title,
+  subtitle,
+  onPress,
+}: {
+  icon: keyof typeof Ionicons.glyphMap;
+  title: string;
+  subtitle: string;
+  onPress: () => void;
+}) {
+  return (
+    <Pressable onPress={onPress} style={styles.altRow} accessibilityRole="button" accessibilityLabel={title}>
+      <View style={styles.altIcon}>
+        <Ionicons name={icon} size={18} color={colors.brand.blue} />
+      </View>
+      <View style={{ flex: 1 }}>
+        <Text style={styles.altRowTitle}>{title}</Text>
+        <Text style={styles.altRowSub}>{subtitle}</Text>
+      </View>
+      <Ionicons name="chevron-forward" size={18} color={colors.text.tertiary} />
+    </Pressable>
+  );
+}
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.surface.background },
-  scroll: { paddingBottom: spacing.xxxl },
-  viewfinderWrap: { marginHorizontal: spacing.xl },
+  scroll: { paddingHorizontal: spacing.xl, paddingBottom: spacing.xxxl, gap: spacing.md },
+  viewfinderWrap: { borderRadius: radii.lg, overflow: 'hidden' },
   viewfinder: {
-    height: 200,
-    backgroundColor: '#1a2332',
+    height: 220,
+    backgroundColor: '#1a2238',
     borderRadius: radii.lg,
-    alignItems: 'center',
     justifyContent: 'center',
-    overflow: 'hidden',
+    alignItems: 'center',
   },
   corner: {
     position: 'absolute',
-    width: CORNER_SIZE,
-    height: CORNER_SIZE,
-    borderColor: colors.brand.blue,
+    width: 28,
+    height: 28,
+    borderColor: '#fff',
   },
-  cornerTL: {
-    top: 16,
-    left: 16,
-    borderTopWidth: CORNER_THICK,
-    borderLeftWidth: CORNER_THICK,
-    borderTopLeftRadius: 4,
+  cornerTL: { top: 16, left: 16, borderTopWidth: 3, borderLeftWidth: 3 },
+  cornerTR: { top: 16, right: 16, borderTopWidth: 3, borderRightWidth: 3 },
+  cornerBL: { bottom: 16, left: 16, borderBottomWidth: 3, borderLeftWidth: 3 },
+  cornerBR: { bottom: 16, right: 16, borderBottomWidth: 3, borderRightWidth: 3 },
+  alignPill: {
+    position: 'absolute',
+    top: 20,
+    backgroundColor: 'rgba(0,0,0,0.55)',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: radii.pill,
   },
-  cornerTR: {
-    top: 16,
-    right: 16,
-    borderTopWidth: CORNER_THICK,
-    borderRightWidth: CORNER_THICK,
-    borderTopRightRadius: 4,
-  },
-  cornerBL: {
-    bottom: 16,
-    left: 16,
-    borderBottomWidth: CORNER_THICK,
-    borderLeftWidth: CORNER_THICK,
-    borderBottomLeftRadius: 4,
-  },
-  cornerBR: {
-    bottom: 16,
-    right: 16,
-    borderBottomWidth: CORNER_THICK,
-    borderRightWidth: CORNER_THICK,
-    borderBottomRightRadius: 4,
-  },
+  alignText: { color: '#fff', fontSize: 12, fontWeight: '600' },
   scanLine: {
     position: 'absolute',
-    left: 24,
-    right: 24,
+    left: 40,
+    right: 70,
     height: 2,
     backgroundColor: colors.brand.blue,
-    opacity: 0.85,
   },
-  alignText: {
-    color: colors.text.inverse,
-    fontSize: typography.size.sm,
-    opacity: 0.9,
-    marginTop: spacing.xl,
-  },
-  cameraControls: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    gap: spacing.xl,
-    marginTop: spacing.md,
-  },
-  controlBtn: {
+  sideControls: { position: 'absolute', right: 12, top: 56, gap: 12 },
+  sideBtn: {
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    backgroundColor: 'rgba(0,0,0,0.45)',
     alignItems: 'center',
-    gap: 4,
-    minWidth: 64,
-    minHeight: 44,
     justifyContent: 'center',
   },
-  controlLabel: {
-    fontSize: typography.size.xs,
-    color: colors.text.secondary,
-    fontWeight: '600',
-  },
-  section: { marginHorizontal: spacing.xl, marginTop: spacing.lg },
+  sideBtnOn: { backgroundColor: colors.brand.blue },
+  sideLabel: { color: '#fff', fontSize: 9, marginTop: 2, fontWeight: '600' },
+  altCard: { paddingVertical: spacing.sm },
   altTitle: {
-    fontWeight: '700',
+    fontWeight: '800',
     color: colors.text.primary,
-    fontSize: typography.size.md,
     marginBottom: spacing.sm,
+    fontSize: typography.size.md,
   },
-  altRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
+  altRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
+    paddingVertical: spacing.sm,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: colors.surface.border,
+  },
   altIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     backgroundColor: colors.brand.blueLight,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  altLabel: { fontWeight: '700', color: colors.text.primary, fontSize: typography.size.md },
-  altSub: { color: colors.text.secondary, fontSize: typography.size.sm, marginTop: 2 },
-  whyRow: { flexDirection: 'row', gap: spacing.sm, alignItems: 'flex-start' },
-  whyTitle: { fontWeight: '700', color: colors.text.primary, fontSize: typography.size.md },
-  whyBody: {
-    marginTop: 4,
-    color: colors.text.secondary,
-    fontSize: typography.size.sm,
-    lineHeight: 20,
-  },
+  altRowTitle: { fontWeight: '700', color: colors.text.primary },
+  altRowSub: { color: colors.text.secondary, fontSize: typography.size.xs, marginTop: 2 },
+  eduCard: {},
+  eduRow: { flexDirection: 'row', gap: spacing.md, alignItems: 'center' },
+  eduTitle: { fontWeight: '800', color: colors.text.primary, marginBottom: 4 },
+  eduBody: { color: colors.text.secondary, fontSize: typography.size.sm, lineHeight: 18 },
+  demoToggle: { alignItems: 'center', paddingVertical: 6 },
+  demoText: { color: colors.text.tertiary, fontSize: typography.size.xs },
 });

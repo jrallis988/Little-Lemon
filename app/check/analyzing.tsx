@@ -69,7 +69,10 @@ export default function AnalyzingScreen() {
         }
       } catch {
         if (!cancelled) {
-          router.back();
+          router.replace({
+            pathname: '/check/issue',
+            params: { kind: 'offline', supplementId: supplement.id },
+          });
         }
       }
     })();

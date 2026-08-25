@@ -47,12 +47,12 @@ const HEALTH_GRID = [
 ];
 
 const SETTINGS = [
-  { label: 'Notifications', subtitle: 'Manage your alerts and reminders', icon: 'notifications-outline' as const },
-  { label: 'Privacy & Security', subtitle: 'Control your data and privacy settings', icon: 'lock-closed-outline' as const },
-  { label: 'Data Sharing', subtitle: 'Manage what you share and with whom', icon: 'shield-outline' as const },
-  { label: 'Language', subtitle: 'English (US)', icon: 'language-outline' as const },
-  { label: 'Appearance', subtitle: 'Light Mode', icon: 'color-palette-outline' as const },
-  { label: 'Help & Support', subtitle: 'Get help and contact support', icon: 'help-circle-outline' as const },
+  { key: 'notifications', label: 'Notifications', subtitle: 'Manage your alerts and reminders', icon: 'notifications-outline' as const },
+  { key: 'privacy', label: 'Privacy & Security', subtitle: 'Control your data and privacy settings', icon: 'lock-closed-outline' as const },
+  { key: 'sharing', label: 'Data Sharing', subtitle: 'Manage what you share and with whom', icon: 'shield-outline' as const },
+  { key: 'language', label: 'Language', subtitle: 'English (US)', icon: 'language-outline' as const },
+  { key: 'appearance', label: 'Appearance', subtitle: 'Light Mode', icon: 'color-palette-outline' as const },
+  { key: 'help', label: 'Help & Support', subtitle: 'Get help and contact support', icon: 'help-circle-outline' as const },
 ];
 
 export default function ProfileScreen() {
@@ -109,17 +109,19 @@ export default function ProfileScreen() {
         <Text style={styles.sectionTitle}>Health Summary</Text>
         <View style={styles.healthGrid}>
           {HEALTH_GRID.map((item) => (
-            <View
+            <Pressable
               key={item.key}
               style={styles.healthCell}
+              accessibilityRole="button"
               accessibilityLabel={`${item.label}: ${counts[item.key as keyof typeof counts]}`}
+              onPress={() => router.push(`/profile/${item.key}`)}
             >
               <Ionicons name={item.icon} size={18} color={colors.brand.blue} />
               <Text style={styles.healthCount}>
                 {counts[item.key as keyof typeof counts]}
               </Text>
               <Text style={styles.healthLabel}>{item.label}</Text>
-            </View>
+            </Pressable>
           ))}
         </View>
 
@@ -139,16 +141,27 @@ export default function ProfileScreen() {
         </View>
         {documents.slice(0, 2).map((doc) => (
           <View key={doc.id} style={styles.docGap}>
-            <HealthRecordCard document={doc} />
+            <HealthRecordCard
+              document={doc}
+              onView={() => router.push(`/profile/records`)}
+            />
           </View>
         ))}
+        <Pressable
+          onPress={() => router.push('/profile/records')}
+          style={styles.recordsLink}
+          accessibilityRole="link"
+        >
+          <Text style={styles.recordsLinkText}>View all uploaded records ›</Text>
+        </Pressable>
 
         <Text style={styles.sectionTitle}>Settings</Text>
         {SETTINGS.map((s) => (
           <Pressable
-            key={s.label}
+            key={s.key}
             accessibilityRole="button"
             accessibilityLabel={`${s.label}. ${s.subtitle}`}
+            onPress={() => router.push(`/profile/${s.key}`)}
           >
             <HealthCard style={styles.settingCard}>
               <View style={styles.settingRow}>
@@ -167,6 +180,7 @@ export default function ProfileScreen() {
           accessibilityRole="button"
           accessibilityLabel="Sign Out"
           style={styles.signOutWrap}
+          onPress={() => router.push('/profile/signout')}
         >
           <HealthCard borderColor={colors.semantic.highBorder} backgroundColor={colors.semantic.highBg}>
             <View style={styles.settingRow}>
@@ -287,6 +301,8 @@ const styles = StyleSheet.create({
     fontSize: typography.size.sm,
     color: colors.text.secondary,
   },
+  recordsLink: { marginBottom: spacing.md, minHeight: 40, justifyContent: 'center' },
+  recordsLinkText: { color: colors.brand.blue, fontWeight: '700', fontSize: typography.size.sm },
   docGap: { marginBottom: spacing.sm },
   settingCard: { marginBottom: spacing.sm },
   settingRow: {

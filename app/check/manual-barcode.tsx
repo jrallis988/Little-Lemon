@@ -11,7 +11,6 @@ import { Ionicons } from '@expo/vector-icons';
 import {
   AppHeader,
   BioCrossButton,
-  ErrorState,
   HealthCard,
   InfoCallout,
   LoadingState,
@@ -25,23 +24,24 @@ export default function ManualBarcodeScreen() {
   const { lookupBarcode } = useBioCross();
   const [barcode, setBarcode] = useState('');
   const [loading, setLoading] = useState(false);
-  const [notFound, setNotFound] = useState(false);
 
   const handleLookup = async () => {
     const code = barcode.trim();
     if (!code) return;
 
     setLoading(true);
-    setNotFound(false);
     try {
       const supplement = await lookupBarcode(code);
       if (supplement) {
         router.push({
           pathname: '/check/confirm',
-          params: { supplementId: supplement.id },
+          params: { supplementId: supplement.id, source: 'barcode' },
         });
       } else {
-        setNotFound(true);
+        router.replace({
+          pathname: '/check/issue',
+          params: { kind: 'unknown_product' },
+        });
       }
     } finally {
       setLoading(false);
@@ -70,7 +70,6 @@ export default function ManualBarcodeScreen() {
             value={barcode}
             onChangeText={(t) => {
               setBarcode(t.replace(/[^\d]/g, ''));
-              setNotFound(false);
             }}
             placeholder="Enter barcode numbers"
             placeholderTextColor={colors.text.tertiary}
@@ -92,13 +91,6 @@ export default function ManualBarcodeScreen() {
 
         {loading ? (
           <LoadingState message="Looking up barcode…" />
-        ) : notFound ? (
-          <ErrorState
-            title="Product not found"
-            body={`No supplement matched barcode ${barcode}. Check the number or search by name.`}
-            actionLabel="Search by name"
-            onAction={() => router.push('/check/search')}
-          />
         ) : (
           <BioCrossButton
             label="Look Up Product"
