@@ -18,6 +18,7 @@ Static site: HTML, CSS, and vanilla JS (built in Cursor). Custom typefaces (Arca
 ## Pages
 
 - `index.html` — home (hero, designer, services, portfolio, blog, contact)
+- `courtside/` — COURTSIDE YouTube sports design system (React case study; build with `npm run build:courtside`, view `/courtside/dist/`)
 - `nh-dmv/` — conceptual redesign of the New Hampshire DMV website (civic UX case study)
 - `services/` — detail pages for each service offering
 - `blog/` — blog index and post pages (content can be drafted in Blaze AI)

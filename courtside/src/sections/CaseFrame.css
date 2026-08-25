@@ -1,0 +1,35 @@
+.case-concept {
+  display: block;
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  color: var(--cs-orange);
+  margin-bottom: var(--space-6);
+  max-width: 18ch;
+}
+
+.case-grid {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 700px) {
+  .case-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.case-card {
+  padding: 1.25rem 1.35rem;
+  background: var(--cs-paper-dim);
+  border-top: 3px solid var(--cs-orange);
+}
+
+.case-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.case-card p {
+  color: var(--cs-fog);
+  font-size: 0.95rem;
+}

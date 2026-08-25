@@ -1,0 +1,49 @@
+.closing__list {
+  list-style: none;
+  margin: 0 0 var(--space-7);
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.closing__list li {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.45rem 0.7rem;
+  background: rgba(255, 255, 255, 0.06);
+  border-left: 3px solid var(--cs-orange);
+}
+
+.closing__end {
+  border-top: 1px solid var(--cs-line-bright);
+  padding-top: var(--space-6);
+}
+
+.closing__end .cs-logo__word {
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+}
+
+.closing__tag {
+  margin: 1rem 0 1.5rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--cs-signal);
+}
+
+.closing__disclaimer {
+  max-width: 42rem;
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.closing__apps {
+  max-width: 40rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.45);
+}

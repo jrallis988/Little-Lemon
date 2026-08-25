@@ -1,0 +1,53 @@
+.film-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: var(--cs-ink);
+}
+
+.possession {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+@media (max-width: 700px) {
+  .possession {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.possession__step {
+  background: var(--cs-ink);
+  color: var(--cs-white);
+  padding: 0.9rem;
+  border-top: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.possession__step span {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: var(--cs-orange);
+  margin-bottom: 0.35rem;
+}
+
+.possession__step strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.2rem;
+}
+
+.possession__step p {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.possession__step--result {
+  border-top-color: var(--cs-signal);
+}

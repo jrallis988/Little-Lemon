@@ -1,0 +1,68 @@
+.ab-grid {
+  display: grid;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 720px) {
+  .ab-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.ab-grid .label-chip {
+  margin-bottom: 0.65rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.ab-sim {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--cs-line-bright);
+  padding: 1.25rem;
+}
+
+.ab-sim__badge {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  color: var(--cs-ink);
+  background: var(--cs-signal);
+  padding: 0.3rem 0.55rem;
+  margin-bottom: 1rem;
+}
+
+.ab-sim table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.ab-sim th,
+.ab-sim td {
+  text-align: left;
+  padding: 0.55rem 0.4rem;
+  border-bottom: 1px solid var(--cs-line-bright);
+}
+
+.ab-sim thead th {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.ab-win {
+  color: var(--cs-signal);
+  font-weight: 700;
+}
+
+.ab-sim__insight {
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 48rem;
+  font-size: 0.95rem;
+}
