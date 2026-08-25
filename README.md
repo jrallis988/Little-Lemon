@@ -8,6 +8,11 @@ Marketing site for **Red Mango Asian Cuisine** in Stratham, New Hampshire — Ch
 - **Phone:** (603) 772-0572
 - **Order online:** [redmangostrathamnh.com](https://www.redmangostrathamnh.com/)
 
+## Pages
+
+- `index.html` — home (hero, lunch, favorites, story, visit + map, order)
+- `menu.html` — full menu with prices (excerpt from public Beyond Menu listing)
+
 ## Develop
 
 ```bash
