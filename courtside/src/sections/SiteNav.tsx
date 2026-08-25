@@ -1,7 +1,19 @@
 import { useEffect, useState } from "react";
 import { Logo } from "../components/Logo";
-import { navSections } from "../data/brand";
 import "./SiteNav.css";
+
+const primary = [
+  { id: "challenge", label: "Case" },
+  { id: "brand", label: "Brand" },
+  { id: "channel", label: "Channel" },
+  { id: "series", label: "Series" },
+  { id: "thumbnails", label: "Thumbs" },
+  { id: "compare", label: "Compare" },
+  { id: "interview", label: "Packages" },
+  { id: "motion", label: "Motion" },
+  { id: "shorts", label: "Shorts" },
+  { id: "performance", label: "Perf" },
+];
 
 export function SiteNav() {
   const [open, setOpen] = useState(false);
@@ -15,7 +27,10 @@ export function SiteNav() {
   }, []);
 
   return (
-    <nav className={`site-nav ${scrolled ? "site-nav--scrolled" : ""}`} aria-label="Case study">
+    <nav
+      className={`site-nav ${scrolled ? "site-nav--scrolled" : ""}`}
+      aria-label="Case study"
+    >
       <div className="site-nav__bar wrap-wide">
         <a href="#top" className="site-nav__brand" onClick={() => setOpen(false)}>
           <Logo inverted />
@@ -27,14 +42,14 @@ export function SiteNav() {
           aria-controls="site-nav-panel"
           onClick={() => setOpen((v) => !v)}
         >
-          {open ? "Close" : "Sections"}
+          {open ? "Close" : "Menu"}
         </button>
         <div
           id="site-nav-panel"
           className={`site-nav__panel ${open ? "is-open" : ""}`}
         >
           <ul>
-            {navSections.map((s) => (
+            {primary.map((s) => (
               <li key={s.id}>
                 <a href={`#${s.id}`} onClick={() => setOpen(false)}>
                   {s.label}

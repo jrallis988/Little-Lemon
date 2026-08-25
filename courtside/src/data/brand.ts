@@ -9,16 +9,16 @@ export const brand = {
 } as const;
 
 export const photos = {
-  athletePortrait: "/assets/photos/athlete-portrait.jpg",
-  actionDrive: "/assets/photos/action-drive.jpg",
-  trainingLab: "/assets/photos/training-lab.jpg",
-  gearSneaker: "/assets/photos/gear-sneaker.jpg",
-  gamedayArena: "/assets/photos/gameday-arena.jpg",
-  cultureCourt: "/assets/photos/culture-court.jpg",
-  documentary: "/assets/photos/documentary-bleachers.jpg",
-  handsBall: "/assets/photos/hands-ball.jpg",
-  avatar: "/assets/photos/avatar-player.jpg",
-  filmRoom: "/assets/photos/film-room.jpg",
+  athletePortrait: "./assets/photos/athlete-portrait.jpg",
+  actionDrive: "./assets/photos/action-drive.jpg",
+  trainingLab: "./assets/photos/training-lab.jpg",
+  gearSneaker: "./assets/photos/gear-sneaker.jpg",
+  gamedayArena: "./assets/photos/gameday-arena.jpg",
+  cultureCourt: "./assets/photos/culture-court.jpg",
+  documentary: "./assets/photos/documentary-bleachers.jpg",
+  handsBall: "./assets/photos/hands-ball.jpg",
+  avatar: "./assets/photos/avatar-player.jpg",
+  filmRoom: "./assets/photos/film-room.jpg",
 } as const;
 
 export type SeriesId =

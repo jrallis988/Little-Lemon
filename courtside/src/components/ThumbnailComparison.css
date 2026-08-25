@@ -8,6 +8,14 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.thumb-compare__controls .btn {
+  min-height: 2.5rem;
+  position: relative;
+  z-index: 2;
 }
 
 .thumb-compare__note {

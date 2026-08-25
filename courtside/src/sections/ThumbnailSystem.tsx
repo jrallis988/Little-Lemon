@@ -17,7 +17,7 @@ export function ThumbnailSystem() {
           ))}
         </div>
         <p className="asset-note" style={{ marginTop: "1.5rem" }}>
-          Photoshop exports drop into /public/assets/photos/ — update paths in data/brand.ts
+          Thumbnail photography is replaceable via assets/photos and data/brand.ts
         </p>
       </div>
     </section>
