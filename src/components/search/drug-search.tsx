@@ -108,8 +108,10 @@ export function DrugSearch({
       </Label>
       <div
         className={cn(
-          "flex items-stretch overflow-hidden border bg-card shadow-[0_12px_40px_-12px_rgba(8,24,48,0.45)] transition-shadow focus-within:ring-3 focus-within:ring-ring/40",
-          isHero ? "border-transparent" : "border-border shadow-sm"
+          "flex overflow-hidden border bg-card transition-shadow focus-within:ring-3 focus-within:ring-ring/40",
+          isHero
+            ? "flex-col border-transparent shadow-[0_12px_40px_-12px_rgba(8,24,48,0.45)] sm:flex-row"
+            : "items-stretch border-border shadow-sm"
         )}
       >
         <div className="relative flex flex-1 items-center">
@@ -153,8 +155,10 @@ export function DrugSearch({
           size={isHero ? "lg" : "default"}
           disabled={pending}
           className={cn(
-            "m-1.5 rounded-md px-5 text-base font-semibold",
-            isHero && "h-12 min-w-[7.5rem] px-6 text-lg"
+            "rounded-md text-base font-semibold",
+            isHero
+              ? "m-0 h-12 w-full rounded-none px-6 text-lg sm:m-1.5 sm:w-auto sm:min-w-[7.5rem] sm:rounded-md"
+              : "m-1.5 rounded-md px-5"
           )}
         >
           {pending ? (
