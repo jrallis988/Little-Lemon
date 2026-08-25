@@ -791,6 +791,12 @@ a:hover { opacity: 0.8; }
 }
 
 /* Palette-matched previews per project */
+.portfolio-image--velocity {
+    background:
+        linear-gradient(135deg, rgba(10, 10, 10, 0.55), rgba(200, 16, 46, 0.45)),
+        url('velocity/dist/posters/running.jpg') center/cover;
+}
+
 .portfolio-image--nhdmv {
     background:
         linear-gradient(160deg, rgba(0, 38, 58, 0.82) 0%, rgba(31, 92, 69, 0.55) 100%),
