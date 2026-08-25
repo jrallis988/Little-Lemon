@@ -1,0 +1,54 @@
+.gs-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  align-items: center;
+}
+
+.gs-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.gs-tabs button {
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.65rem;
+  border: 1px solid var(--rule);
+  background: transparent;
+  color: var(--mute);
+  cursor: pointer;
+}
+
+.gs-tabs button.is-active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+.gs-toggle {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.gs-desc {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  color: var(--mute);
+  margin: 0 0 1rem;
+}
+
+.gs-stage {
+  background: #121212;
+  padding: clamp(0.75rem, 2vw, 1.25rem);
+}

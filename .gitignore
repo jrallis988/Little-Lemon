@@ -4,4 +4,6 @@ node_modules/
 .idea/
 *.log
 dist/
+!breakaway/dist/
+!breakaway/dist/**
 .cache/
