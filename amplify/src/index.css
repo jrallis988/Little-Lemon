@@ -435,8 +435,14 @@ ul {
   inset: 0;
   z-index: 5;
   border: 1px dashed rgba(212, 255, 0, 0.55);
-  margin: var(--safe-top) var(--safe-side) var(--safe-bottom);
+  margin: 6% 6%;
   border-radius: 4px;
+}
+
+.social-frame--story .social-frame__safe,
+.social-frame--reel .social-frame__safe,
+.motion-stage .social-frame__safe {
+  margin: var(--safe-top) var(--safe-side) var(--safe-bottom);
 }
 
 .social-frame__safe::before {
