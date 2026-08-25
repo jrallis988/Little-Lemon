@@ -56,7 +56,7 @@ export default function App() {
 
       <header className="site-header">
         <div className="shell header-inner">
-          <a href="../../index.html" className="back-link">
+          <a href="/index.html" className="back-link">
             ← Artistic Fountain
           </a>
           <nav className="case-nav" aria-label="Case study">
