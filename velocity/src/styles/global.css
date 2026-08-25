@@ -1312,10 +1312,11 @@ a {
   font-family: var(--condensed);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   opacity: 0.5;
-  padding: 0.25rem 0;
-  border-bottom: 1px solid transparent;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid transparent;
+  border-radius: 2px;
 }
 
 .detail-select button.is-active {
