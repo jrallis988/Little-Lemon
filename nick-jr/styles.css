@@ -276,8 +276,8 @@ main,
 }
 
 .icon-btn {
-  width: 2.6rem;
-  height: 2.6rem;
+  width: 2.75rem;
+  height: 2.75rem;
   border: 0;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.8);
@@ -287,6 +287,8 @@ main,
   cursor: pointer;
   box-shadow: var(--shadow-soft);
   transition: transform 0.2s ease, background 0.2s ease;
+  position: relative;
+  z-index: 2;
 }
 
 .icon-btn svg {
@@ -352,6 +354,7 @@ main,
   max-width: var(--max);
   margin: 0.35rem auto 0.75rem;
   padding: 0 0.5rem;
+  animation: rise-in 0.25s ease;
 }
 
 .search-panel input {
