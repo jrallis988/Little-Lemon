@@ -797,6 +797,11 @@ a:hover { opacity: 0.8; }
         url('nh-dmv/images/nh-highway-hero.jpg') center / cover;
 }
 
+.portfolio-image--forge {
+    background:
+        linear-gradient(155deg, #121212 0%, #2a2a2a 48%, #a84828 140%);
+}
+
 .portfolio-image--flote {
     background: linear-gradient(135deg, #0B4F5C 0%, #1B7A8B 55%, #3EAEB8 100%);
 }
