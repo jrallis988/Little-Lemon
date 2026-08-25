@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Source_Sans_3, Geist_Mono } from "next/font/google";
+import { Barlow_Condensed, IBM_Plex_Sans, Geist_Mono } from "next/font/google";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { DisclaimerBanner } from "@/components/layout/disclaimer-banner";
@@ -10,12 +10,13 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { SupportChatWidget } from "@/components/chat/support-chat-widget";
 import "./globals.css";
 
-const display = Fraunces({
+const display = Barlow_Condensed({
   variable: "--font-display",
   subsets: ["latin"],
+  weight: ["500", "600", "700"],
 });
 
-const sans = Source_Sans_3({
+const sans = IBM_Plex_Sans({
   variable: "--font-sans",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -51,7 +52,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#e24a2e",
+  themeColor: "#0c1f3d",
   width: "device-width",
   initialScale: 1,
 };
@@ -78,7 +79,7 @@ export default function RootLayout({
               </a>
               <DisclaimerBanner />
               <SiteHeader />
-<main id="main-content">{children}</main>
+              <main id="main-content">{children}</main>
               <SiteFooter />
               <SupportChatWidget />
             </TooltipProvider>

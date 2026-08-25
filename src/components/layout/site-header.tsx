@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Pill, UserRound } from "lucide-react";
+import { Menu, UserRound } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -36,28 +36,20 @@ export function SiteHeader() {
       : { href: "/login", label: "Sign in" };
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border/70 bg-background/90 backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b border-border/80 bg-background/92 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-2.5 sm:px-6">
         <Link
           href="/"
-          className="group flex items-center gap-2.5 rounded-lg focus-visible:outline-none"
+          className="group rounded-sm focus-visible:outline-none"
           aria-label="Trump RX home"
         >
-          <span className="flex size-10 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm transition-transform group-hover:scale-[1.03]">
-            <Pill className="size-5" aria-hidden />
-          </span>
-          <span className="flex flex-col leading-none">
-            <span className="font-display text-xl font-semibold tracking-tight text-foreground">
-              Trump RX
-            </span>
-            <span className="text-xs text-muted-foreground">
-              Lower prices. Local pharmacies.
-            </span>
+          <span className="font-display text-2xl font-bold uppercase tracking-tight text-trust transition-colors group-hover:text-primary sm:text-[1.65rem]">
+            Trump RX
           </span>
         </Link>
 
         <nav
-          className="hidden items-center gap-1 md:flex"
+          className="hidden items-center gap-0.5 md:flex"
           aria-label="Primary"
         >
           {NAV.map((item) => (
@@ -65,9 +57,9 @@ export function SiteHeader() {
               key={item.href}
               href={item.href}
               className={cn(
-                "rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-foreground",
+                "px-3 py-2 text-sm font-medium transition-colors hover:text-foreground",
                 pathname === item.href || pathname.startsWith(`${item.href}/`)
-                  ? "bg-secondary text-secondary-foreground"
+                  ? "text-foreground"
                   : "text-muted-foreground"
               )}
             >
@@ -84,7 +76,7 @@ export function SiteHeader() {
           {status !== "loading" && (
             <Link
               href={accountLink.href}
-              className="inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-border bg-background px-3 text-sm font-medium hover:bg-muted"
+              className="inline-flex min-h-9 items-center gap-1.5 border border-border bg-card px-3 text-sm font-medium hover:bg-muted"
             >
               <UserRound className="size-4" />
               {accountLink.label}
@@ -107,7 +99,9 @@ export function SiteHeader() {
           </SheetTrigger>
           <SheetContent side="right" className="w-[min(100%,20rem)]">
             <SheetHeader>
-              <SheetTitle className="font-display text-left">Menu</SheetTitle>
+              <SheetTitle className="font-display text-left uppercase">
+                Menu
+              </SheetTitle>
             </SheetHeader>
             <div className="mt-4 space-y-4 px-1">
               <LocationPicker />
@@ -122,7 +116,7 @@ export function SiteHeader() {
                     href={item.href}
                     onClick={() => setOpen(false)}
                     className={cn(
-                      "rounded-lg px-3 py-3 text-base font-medium",
+                      "px-3 py-3 text-base font-medium",
                       pathname === item.href
                         ? "bg-secondary"
                         : "hover:bg-muted"
@@ -135,7 +129,7 @@ export function SiteHeader() {
                   <Link
                     href={accountLink.href}
                     onClick={() => setOpen(false)}
-                    className="mt-2 flex items-center gap-2 rounded-lg bg-secondary px-3 py-3 text-base font-medium"
+                    className="mt-2 flex items-center gap-2 bg-secondary px-3 py-3 text-base font-medium"
                   >
                     <UserRound className="size-4" />
                     {accountLink.label}
