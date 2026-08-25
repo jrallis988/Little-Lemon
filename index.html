@@ -1,785 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Artistic Fountain — strategic design studio building visual identities and digital experiences for ambitious brands.">
-    <meta name="author" content="James, Artistic Fountain">
-    <meta name="theme-color" content="#FF6B35">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <title>Artistic Fountain — Strategic Design for Ambitious Brands</title>
-
-    <!-- Open Graph / social share -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Artistic Fountain — Strategic Design for Ambitious Brands">
-    <meta property="og:description" content="Visual identities and digital experiences built for impact.">
-    <meta property="og:image" content="images/profile.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://db.onlinewebfonts.com/c/ad05d06c90299db4072a9a2af1392868?family=Goudy+Heavyface+W01" rel="stylesheet">
-
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Red Mango — Chinese Kitchen</title>
+  <meta name="description" content="Red Mango is a Chinese kitchen serving wok-fired classics, hand-folded dumplings, and seasonal flavors. Reserve a table or order for takeout." />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700&family=Outfit:wght@300;400;500;600&family=Yeseva+One&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <!-- Skip to Main Content Link -->
-    <a href="#main" class="skip-link">Skip to main content</a>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-    <!-- Header -->
-    <header class="header">
-        <div class="logo">
-            <a href="index.html" class="logo-mark" aria-label="Artistic Fountain — home">
-                <span class="logo-line-1">Artistic</span>
-                <span class="logo-line-2">Fountain</span>
-            </a>
-        </div>
-        <nav aria-label="Primary">
-            <ul class="nav" id="main-nav">
-                <li><a href="#about">The Designer</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="blog/index.html">Blog</a></li>
-                <li><a href="resume.pdf" download>Resume</a></li>
-            </ul>
-        </nav>
-        <div class="header-right">
-            <button class="nav-toggle" onclick="toggleNav()" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="main-nav">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </header>
-
-    <!-- Hero -->
-    <main id="main">
-    <!-- Hero -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1 class="hero-brand">
-                <span class="hero-brand-line">Artistic</span>
-                <span class="hero-brand-line accent">Fountain</span>
-            </h1>
-            <p class="hero-offer">Strategic design for ambitious brands — visual identities and digital experiences built to ship.</p>
-            <div class="hero-actions">
-                <a href="#portfolio" id="hero-btn" class="cta-btn">View Work</a>
-                <a href="#contact-form" class="cta-btn cta-btn--soft">Start a Project</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Clients -->
-    <section class="clients">
-        <div class="clients-wrapper">
-            <div class="clients-label">Featured in recent work</div>
-            <div class="clients-grid">
-                <div class="clients-track">
-                    <div class="client-logo">
-                        <img src="images/client1.png" alt="Great Bay Community College">
-                    </div>
-                    <div class="client-logo">
-                        <img src="images/client2.jpg" alt="Princess Cruises">
-                    </div>
-                    <div class="client-logo">
-                        <img src="images/client3.png" alt="Tin Mountain Conservation Center">
-                    </div>
-                    <div class="client-logo">
-                        <img src="images/client4.png" alt="Red River Theatres">
-                    </div>
-                    <div class="client-logo">
-                        <img src="images/client5.png" alt="NHTI Concord's Community College">
-                    </div>
-                    <div class="client-logo">
-                        <img src="images/client6.png" alt="Nick Varga">
-                    </div>
-                    <div class="client-logo">
-                        <img src="images/client7.png" alt="Birds Eye Lounge">
-                    </div>
-                    <div class="client-logo" aria-hidden="true">
-                        <img src="images/client1.png" alt="">
-                    </div>
-                    <div class="client-logo" aria-hidden="true">
-                        <img src="images/client2.jpg" alt="">
-                    </div>
-                    <div class="client-logo" aria-hidden="true">
-                        <img src="images/client3.png" alt="">
-                    </div>
-                    <div class="client-logo" aria-hidden="true">
-                        <img src="images/client4.png" alt="">
-                    </div>
-                    <div class="client-logo" aria-hidden="true">
-                        <img src="images/client5.png" alt="">
-                    </div>
-                    <div class="client-logo" aria-hidden="true">
-                        <img src="images/client6.png" alt="">
-                    </div>
-                    <div class="client-logo" aria-hidden="true">
-                        <img src="images/client7.png" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About -->
-    <section class="about" id="about">
-        <div class="about-wrapper">
-            <h2>The Designer</h2>
-            <div class="about-grid">
-                <div class="about-image">
-                    <img src="images/profile.jpg" alt="Portrait of James">
-                </div>
-                <div class="about-content">
-                    <p>I'm <strong>James</strong>, a New Hampshire designer running Artistic Fountain as a one-person studio.</p>
-                    <p>I work across brand systems, product strategy, and full-stack web — from institutional identity work like <strong>NHTI</strong> and <strong>Great Bay</strong>, to speculative rebrands for consumer brands, to production HTML for launch-ready sites.</p>
-                    <p>My work is defined by <strong>strategic depth over surface polish</strong>. Every project starts with the problem, not the palette. If you're building something and want a designer who ships, not just decks, let's talk.</p>
-                    <a href="#contact-form" id="designer-btn" class="view-btn" style="margin-top: 2rem; display: inline-block;">Start a Project</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- My Design Philosophy & Approach -->
-    <section class="philosophy">
-        <div class="philosophy-section">
-            <h3>How I Work</h3>
-            <p>Intentional systems over arbitrary aesthetics — a clear process from discovery through launch.</p>
-            
-            <div class="process-steps">
-                <div class="process-step">
-                    <div class="step-number">01</div>
-                    <h4>Discovery & Strategy</h4>
-                    <p>I begin by understanding your brand, audience, and market position. Through deep market research, competitive analysis, and customer discovery, I build the strategic foundation for every design decision. No assumptions—just informed strategy grounded in real data.</p>
-                </div>
-
-                <div class="process-step">
-                    <div class="step-number">02</div>
-                    <h4>Concept & Creation</h4>
-                    <p>With strategy in place, I create visual identities, design systems, and digital experiences. This includes everything from typography and color theory to wireframes, 3D modeling, AI-enhanced assets, and interactive prototypes. Every element is intentional and aligned with your brand goals.</p>
-                </div>
-
-                <div class="process-step">
-                    <div class="step-number">03</div>
-                    <h4>Technical Execution</h4>
-                    <p>I deliver production-ready assets and full-stack web development solutions. From React and responsive design to backend infrastructure, I ensure your concepts translate flawlessly into code. Your designs don't just look beautiful—they perform.</p>
-                </div>
-
-                <div class="process-step">
-                    <div class="step-number">04</div>
-                    <h4>Optimization & Launch</h4>
-                    <p>Post-launch, I implement analytics, run A/B testing, and track KPIs to optimize performance. I refine based on real user data, ensuring your design continues to deliver results. Continuous improvement is built into every project.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Capabilities -->
-    <section class="capabilities" id="capabilities">
-        <div class="capabilities-wrapper">
-            <h2>Capabilities</h2>
-            <p class="capabilities-lead">One studio across brand systems, product strategy, and full-stack delivery.</p>
-            <div class="capabilities-grid">
-                <div class="capability">
-                    <h3>Creative Direction</h3>
-                    <p>Brand systems, art direction, motion, and production assets — Adobe suite, Figma, Blender, and AI-assisted pipelines.</p>
-                </div>
-                <div class="capability">
-                    <h3>Full-Stack Web</h3>
-                    <p>Production HTML/CSS/JS, React, and launch-ready sites with accessibility and performance built in.</p>
-                </div>
-                <div class="capability">
-                    <h3>Strategy &amp; Analytics</h3>
-                    <p>Positioning, campaign design, and measurement — from discovery through post-launch optimization.</p>
-                </div>
-            </div>
-            <div class="capabilities-cta">
-                <a href="resume.pdf" class="view-btn" download>Download Resume</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Portfolio -->
-    <section class="portfolio" id="portfolio">
-        <div class="portfolio-wrapper">
-            <h2>Portfolio</h2>
-            <div class="portfolio-grid">
-                <a class="portfolio-card" href="nh-dmv/index.html" style="text-decoration:none;color:inherit;display:block;">
-                    <div class="portfolio-image portfolio-image--nhdmv"><span class="portfolio-image-label">NH DMV</span></div>
-                    <div class="portfolio-info">
-                        <p class="portfolio-category">Civic UX</p>
-                        <h3>NH DMV Redesign</h3>
-                        <p class="portfolio-desc">Task-first redesign of dmv.nh.gov — appointment-led hero, searchable service finder, and Granite State visual system. Concept prototype with live service paths.</p>
-                    </div>
-                </a>
-                <div class="portfolio-card">
-                    <div class="portfolio-image portfolio-image--flote"><span class="portfolio-image-label">Seacoast Flōte</span></div>
-                    <div class="portfolio-info">
-                        <p class="portfolio-category">UX</p>
-                        <h3>Seacoast Flōte</h3>
-                        <p class="portfolio-desc">Full identity and booking experience for a Portsmouth &amp; Hampton float therapy studio. WCAG 2.1 AAA accessibility system with kid-friendly content variants.</p>
-                    </div>
-                </div>
-                <div class="portfolio-card">
-                    <div class="portfolio-image portfolio-image--hannaford"><span class="portfolio-image-label">Hannaford</span></div>
-                    <div class="portfolio-info">
-                        <p class="portfolio-category">Digital</p>
-                        <h3>Hannaford: Checkout-First</h3>
-                        <p class="portfolio-desc">Grocery app strategy pitch reframing the shopping experience around a concierge model. Fresh Pass paid tier concept, delivered as a production-ready HTML pitch site.</p>
-                    </div>
-                </div>
-                <div class="portfolio-card">
-                    <div class="portfolio-image portfolio-image--nhti"><span class="portfolio-image-label">NHTI</span></div>
-                    <div class="portfolio-info">
-                        <p class="portfolio-category">Web</p>
-                        <h3>NHTI Identity Restoration</h3>
-                        <p class="portfolio-desc">Editorial redesign for NH's community college. Restored the Lynx identity and connected the 1965 motto <em>Scientia cum manu</em> to the modern tagline in a maroon &amp; gold system.</p>
-                    </div>
-                </div>
-                <div class="portfolio-card">
-                    <div class="portfolio-image portfolio-image--aveeno"><span class="portfolio-image-label">Aveeno</span></div>
-                    <div class="portfolio-info">
-                        <p class="portfolio-category">Social Media Marketing</p>
-                        <h3>Aveeno: The Oat Standard</h3>
-                        <p class="portfolio-desc">Brand campaign concept positioning Aveeno's oat heritage as a category standard. Built on a Next.js 15 scaffold with typed data libraries for scaled content deployment.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="portfolio-cta">
-                <a href="#contact-form" id="portfolio-btn" class="cta-btn">Start a Project</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Blog -->
-    <section class="full-blog" id="blog">
-        <div class="blog-wrapper">
-            <h2>Blog</h2>
-            <p class="blog-lead">Notes on design, strategy, and digital media.</p>
-            <div class="blog-grid">
-                <article class="blog-card">
-                    <div class="blog-header">
-                        <span class="blog-category">Design</span>
-                        <span class="blog-date">Jul 2026</span>
-                    </div>
-                    <h3><a href="blog/negative-space.html">The Silent Power of Negative Space</a></h3>
-                    <p>Minimalism isn't about removing everything—it's about being intentional with what remains. Strategic empty space creates focus and lets your message breathe.</p>
-                    <a href="blog/negative-space.html" class="read-more">Read More →</a>
-                </article>
-                <article class="blog-card">
-                    <div class="blog-header">
-                        <span class="blog-category">Digital Media</span>
-                        <span class="blog-date">Jun 2026</span>
-                    </div>
-                    <h3><a href="blog/video-design-canvas.html">Video as the New Design Canvas</a></h3>
-                    <p>Motion graphics aren't extras anymore. From micro-interactions to animated explainers, video elevates digital experiences and drives engagement.</p>
-                    <a href="blog/video-design-canvas.html" class="read-more">Read More →</a>
-                </article>
-                <article class="blog-card">
-                    <div class="blog-header">
-                        <span class="blog-category">Strategy</span>
-                        <span class="blog-date">May 2026</span>
-                    </div>
-                    <h3><a href="blog/brand-redesign.html">Brand Redesign: Evolve or Revolution</a></h3>
-                    <p>Not every brand needs a complete overhaul. The key is reading the signals that tell you whether a refresh or a revolution is the right move.</p>
-                    <a href="blog/brand-redesign.html" class="read-more">Read More →</a>
-                </article>
-            </div>
-            <div class="blog-section-cta">
-                <a href="blog/index.html" class="view-btn">View All Posts</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services -->
-    <section class="services" id="services">
-        <div class="services-wrapper">
-            <h2>Services</h2>
-            <p class="services-lead">Focused offerings for brands that need strategy and shipping power in one studio.</p>
-            <div class="services-grid">
-                <div class="service-card">
-                    <h3>Brand &amp; Graphic Design</h3>
-                    <p>Graphic design, identity systems, and art direction that define who you are — from digital to print.</p>
-                    <a href="services/brand-strategy.html" class="service-learn-more">Learn More</a>
-                </div>
-                <div class="service-card">
-                    <h3>UI/UX Design</h3>
-                    <p>Product interfaces and user experiences built for clarity, conversion, and ease of use.</p>
-                    <a href="services/digital-design.html" class="service-learn-more">Learn More</a>
-                </div>
-                <div class="service-card">
-                    <h3>Web Design</h3>
-                    <p>Launch-ready websites designed and built to perform — clear structure, strong brand, real code.</p>
-                    <a href="services/web-design.html" class="service-learn-more">Learn More</a>
-                </div>
-                <div class="service-card">
-                    <h3>Animation</h3>
-                    <p>2D character animation, motion graphics, storyboarding, and full production from concept to final delivery.</p>
-                    <a href="services/animation.html" class="service-learn-more">Learn More</a>
-                </div>
-                <div class="service-card">
-                    <h3>Package Design</h3>
-                    <p>Shelf-ready packaging that communicates the brand story at a glance.</p>
-                    <a href="services/package-design.html" class="service-learn-more">Learn More</a>
-                </div>
-                <div class="service-card">
-                    <h3>Social Media Marketing</h3>
-                    <p>Content strategy and campaign design that turns attention into customers.</p>
-                    <a href="services/social-media.html" class="service-learn-more">Learn More</a>
-                </div>
-            </div>
-            <div class="services-cta">
-                <a href="#contact-form" id="services-btn" class="cta-btn">Discuss a Project</a>
-            </div>
-        </div>
-    </section>
-
-    <!--
-        TESTIMONIALS SECTION — hidden until real client quotes are collected.
-        To restore: delete the comment wrapper (this line and the "END HIDDEN" one)
-        and replace the sample quotes/names below with real testimonials.
-    -->
-    <!--
-    <section class="testimonials" id="testimonials">
-        <div class="testimonials-wrapper">
-            <h2>What Clients Say</h2>
-            <div class="testimonial-grid">
-                <div class="testimonial-card">
-                    <div class="stars">★★★★★</div>
-                    <div class="testimonial-text">"James completely transformed our brand identity. The work is strategic, intentional, and absolutely impressive."</div>
-                    <div class="testimonial-author">Sarah Chen</div>
-                    <div class="testimonial-role">Founder, Tech Startup</div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="stars">★★★★★</div>
-                    <div class="testimonial-text">"A designer who truly understands strategy. Every decision is purposeful. Highly recommended."</div>
-                    <div class="testimonial-author">Marcus Williams</div>
-                    <div class="testimonial-role">Creative Director</div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="stars">★★★★★</div>
-                    <div class="testimonial-text">"Professional, responsive, and creatively brilliant. James elevated our entire digital presence."</div>
-                    <div class="testimonial-author">Elena Rodriguez</div>
-                    <div class="testimonial-role">CEO, Design Agency</div>
-                </div>
-            </div>
-        </div>
-    </section>
-    -->
-    <!-- END HIDDEN TESTIMONIALS -->
-
-    <!-- CTA -->
-    <section class="cta-section" id="contact">
-        <div class="cta-section-content">
-            <h2>Ready to Elevate Your Brand?</h2>
-            <p>Let's discuss how strategic design can move your brand forward. Every brand has a story—let's make sure it's told beautifully.</p>
-        </div>
-    </section>
-
-    <!-- Contact CTA -->
-    <!-- FAQ Section -->
-    <section class="faq-section" id="faq">
-        <div class="faq-wrapper">
-            <h2>Frequently Asked Questions</h2>
-            <p>Have questions? We've got answers. If you don't see what you're looking for, feel free to reach out.</p>
-            
-            <div class="faq-container">
-                <!-- Q1 -->
-                <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFAQ(this)">
-                        <span>What's your typical project timeline?</span>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Timeline varies by project scope. Starter packages typically take 2-3 weeks, Professional packages 4-6 weeks, and Enterprise projects are custom. We always communicate realistic timelines upfront and work to meet your deadlines when possible.</p>
-                    </div>
-                </div>
-
-                <!-- Q2 -->
-                <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFAQ(this)">
-                        <span>How many revision rounds are included?</span>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Revisions are built into every package. Starter includes 2 rounds, Professional includes 3 rounds, and Enterprise packages include unlimited revisions during the project phase. We believe in getting it right for you.</p>
-                    </div>
-                </div>
-
-                <!-- Q3 -->
-                <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFAQ(this)">
-                        <span>What's your design process like?</span>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>We follow a proven 4-step process: Discovery & Strategy (understanding your goals), Design & Prototyping (visualizing solutions), Development & Execution (bringing it to life), and Launch & Support (ensuring success). You're involved throughout—regular check-ins and feedback are essential.</p>
-                    </div>
-                </div>
-
-                <!-- Q4 -->
-                <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFAQ(this)">
-                        <span>Do you work with startups and established brands?</span>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Absolutely! We work with ambitious brands at every stage—from scrappy startups building from scratch to established companies undergoing brand evolution. Each brings unique challenges and opportunities, and we love both.</p>
-                    </div>
-                </div>
-
-                <!-- Q5 -->
-                <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFAQ(this)">
-                        <span>Can you work on very tight deadlines?</span>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>We can! Rush projects are possible depending on our current workload. They may include a rush fee, but we're transparent about what's realistic. Reach out with your deadline and we'll let you know if we can make it happen.</p>
-                    </div>
-                </div>
-
-                <!-- Q6 -->
-                <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFAQ(this)">
-                        <span>What's included in deliverables?</span>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Deliverables depend on your project type. Brand work includes logo files, brand guidelines, color palettes, and typography specs. Web/app projects include production-ready code, responsive design, and documentation. We always clarify what's included before we start.</p>
-                    </div>
-                </div>
-
-                <!-- Q7 -->
-                <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFAQ(this)">
-                        <span>What's your payment structure?</span>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>We typically require 50% upfront to kick off a project and 50% upon delivery. For larger Enterprise projects, we can discuss milestone-based payments. We're flexible and happy to discuss payment terms that work for your situation.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Form Section -->
-    <section class="contact-section" id="contact-form">
-        <div class="contact-wrapper">
-            <h2>Get In Touch</h2>
-            <p>Send us a message and we'll respond as soon as possible.</p>
-            
-            <form id="contactForm" action="https://formspree.io/f/xpwzojrq" method="POST" class="contact-form">
-                <div class="form-group">
-                    <label for="name">Full Name *</label>
-                    <input 
-                        type="text" 
-                        id="name" 
-                        name="name" 
-                        required 
-                        aria-required="true"
-                        placeholder="Your name"
-                    >
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email Address *</label>
-                    <input 
-                        type="email" 
-                        id="email" 
-                        name="email" 
-                        required 
-                        aria-required="true"
-                        placeholder="your@email.com"
-                    >
-                </div>
-
-                <div class="form-group">
-                    <label for="subject">Subject *</label>
-                    <input 
-                        type="text" 
-                        id="subject" 
-                        name="subject" 
-                        required 
-                        aria-required="true"
-                        placeholder="What is this about?"
-                    >
-                </div>
-
-                <div class="form-group">
-                    <label for="message">Message *</label>
-                    <textarea 
-                        id="message" 
-                        name="message" 
-                        rows="6" 
-                        required 
-                        aria-required="true"
-                        placeholder="Tell us more about your project..."
-                    ></textarea>
-                </div>
-
-                <button type="submit" id="contact-btn" class="cta-btn">Send Message</button>
-            </form>
-
-            <div id="formSuccess" class="form-success" style="display: none;" role="alert" aria-live="polite">
-                ✓ <strong>Thanks for reaching out!</strong> We'll get back to you soon.
-            </div>
-        </div>
-    </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <nav class="footer-nav">
-                <a href="#about">About</a>
-                <a href="#services">Services</a>
-                <a href="#portfolio">Portfolio</a>
-                <a href="blog/index.html">Blog</a>
-                <a href="#faq">FAQ</a>
-                <a href="#contact">Contact</a>
-            </nav>
-
-            <div class="footer-social">
-                <a href="https://instagram.com" target="_blank" aria-label="Instagram" title="Instagram">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.9.9 1.4.2.4.4 1 .4 2.2.1 1.2.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.9.7-1.4.9-.4.2-1 .4-2.2.4-1.2.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.9-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.9-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2M12 0C8.7 0 8.3 0 7.1.1 5.8.1 5 .3 4.2.6c-.8.3-1.5.7-2.2 1.4C1.3 2.7.9 3.4.6 4.2.3 5 .1 5.8.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.1 1.3.2 2.1.5 2.9.3.8.7 1.5 1.4 2.2.7.7 1.4 1.1 2.2 1.4.8.3 1.6.5 2.9.5C8.3 24 8.7 24 12 24s3.7 0 4.9-.1c1.3-.1 2.1-.2 2.9-.5.8-.3 1.5-.7 2.2-1.4.7-.7 1.1-1.4 1.4-2.2.3-.8.5-1.6.5-2.9.1-1.3.1-1.7.1-4.9s0-3.7-.1-4.9c-.1-1.3-.2-2.1-.5-2.9-.3-.8-.7-1.5-1.4-2.2C21.3 1.3 20.6.9 19.8.6 19 .3 18.2.1 16.9.1 15.7 0 15.3 0 12 0zm0 5.8c-3.4 0-6.2 2.8-6.2 6.2s2.8 6.2 6.2 6.2 6.2-2.8 6.2-6.2S15.4 5.8 12 5.8zM12 16c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4zm6.4-11.8c-.8 0-1.4.6-1.4 1.4s.6 1.4 1.4 1.4 1.4-.6 1.4-1.4-.6-1.4-1.4-1.4z"/></svg>
-                </a>
-                <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn" title="LinkedIn">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
-                </a>
-                <a href="https://github.com" target="_blank" aria-label="GitHub" title="GitHub">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .3a12 12 0 00-3.8 23.38c.6.12.83-.26.83-.57v-2c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.49.99.11-.77.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.23-3.22-.12-.3-.53-1.52.12-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 016 0c2.28-1.55 3.28-1.23 3.28-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.49 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.71.83.58A12 12 0 0012 .3"/></svg>
-                </a>
-                <a href="https://behance.net" target="_blank" aria-label="Behance" title="Behance">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 7h-7V5h7v2zM15.5 12.5c1.6.5 2.5 2 2.5 3.6 0 2.7-2.2 4-4.6 4H7V5h6.5c2.3 0 4.4 1 4.4 3.5 0 1.4-.7 2.4-1.9 3v.9zM10 10.5h2.9c1 0 1.9-.3 1.9-1.5 0-1.3-1-1.5-2-1.5H10v3zM13.4 17.5c1.1 0 2-.3 2-1.7s-1.1-1.7-2.2-1.7H10v3.4h3.4zM20.5 16.5c.5.7 1.3 1 2.1 1 .8 0 1.8-.4 2.1-1.2h2.6c-.9 2-2.7 3-4.8 3-3 0-5-2.2-5-5.2 0-2.9 2.1-5.3 5-5.3 3.4 0 5.1 2.7 4.8 6H20.5c0 .6.4 1.5 0 1.7zM24 12.4c-.1-1.2-.9-1.9-2-1.9-1.2 0-1.8.8-1.9 1.9H24z"/></svg>
-                </a>
-            </div>
-
-            <div class="footer-copyright">
-                © 2026 Artistic Fountain™ — All rights reserved. <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms &amp; Conditions</a>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Scroll Animations with IntersectionObserver
-        const observerOptions = {
-            threshold: 0.05,
-            rootMargin: '0px 0px -10% 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    // Reveal grid children together so bottom cards never stay faded
-                    entry.target.querySelectorAll('.stagger-item').forEach(card => {
-                        card.classList.add('visible');
-                    });
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        // Apply animations to elements
-        document.querySelectorAll('h2, .about-image, .about-content').forEach(el => {
-            el.classList.add('fade-in');
-            observer.observe(el);
-        });
-
-        // Service cards stay fully visible (no opacity stagger — bottom cards were getting stuck faded)
-        document.querySelectorAll('.testimonial-grid').forEach(grid => {
-            grid.querySelectorAll('.testimonial-card').forEach(card => {
-                card.classList.add('stagger-item');
-            });
-            observer.observe(grid);
-        });
-
-        // Hamburger menu toggle
-        function toggleNav() {
-            const nav = document.querySelector('.nav');
-            const toggle = document.querySelector('.nav-toggle');
-            const isOpen = nav.classList.toggle('active');
-            toggle.classList.toggle('active', isOpen);
-            toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        }
-
-        // Close menu when clicking on a link
-        document.querySelectorAll('.nav a').forEach(link => {
-            link.addEventListener('click', function() {
-                const nav = document.querySelector('.nav');
-                const toggle = document.querySelector('.nav-toggle');
-                nav.classList.remove('active');
-                toggle.classList.remove('active');
-                toggle.setAttribute('aria-expanded', 'false');
-            });
-        });
-
-        // FAQ Toggle
-        function toggleFAQ(button) {
-            const faqItem = button.parentElement;
-            const answer = faqItem.querySelector('.faq-answer');
-            
-            // Close all other FAQ items
-            document.querySelectorAll('.faq-item').forEach(item => {
-                if (item !== faqItem) {
-                    item.querySelector('.faq-question').classList.remove('active');
-                    item.querySelector('.faq-answer').classList.remove('active');
-                }
-            });
-            
-            // Toggle current FAQ item
-            button.classList.toggle('active');
-            answer.classList.toggle('active');
-        }
-
-        // Smooth scroll for all anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', function(event) {
-            const nav = document.querySelector('.nav');
-            const toggle = document.querySelector('.nav-toggle');
-            if (nav && toggle && !nav.contains(event.target) && !toggle.contains(event.target)) {
-                nav.classList.remove('active');
-                toggle.classList.remove('active');
-            }
-        });
-
-        // Form handling with Formspree
-        const contactForm = document.getElementById('contactForm');
-        if (contactForm) {
-            contactForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                
-                const submitBtn = contactForm.querySelector('button[type="submit"]');
-                const originalText = submitBtn.textContent;
-                submitBtn.textContent = 'Sending...';
-                submitBtn.disabled = true;
-                
-                const formData = new FormData(contactForm);
-                
-                try {
-                    const response = await fetch(contactForm.action, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'Accept': 'application/json'
-                        }
-                    });
-
-                    if (response.ok) {
-                        // Show success message
-                        const successMsg = document.getElementById('formSuccess');
-                        if (successMsg) {
-                            successMsg.style.display = 'block';
-                            successMsg.setAttribute('role', 'alert');
-                            successMsg.setAttribute('aria-live', 'polite');
-                        }
-                        contactForm.reset();
-                        
-                        // Hide after 5 seconds
-                        setTimeout(() => {
-                            if (successMsg) {
-                                successMsg.style.display = 'none';
-                            }
-                            submitBtn.textContent = originalText;
-                            submitBtn.disabled = false;
-                        }, 5000);
-                    } else {
-                        alert('There was an error sending your message. Please try again.');
-                        submitBtn.textContent = originalText;
-                        submitBtn.disabled = false;
-                    }
-                } catch (error) {
-                    alert('There was an error sending your message. Please try again.');
-                    submitBtn.textContent = originalText;
-                    submitBtn.disabled = false;
-                }
-            });
-        }
-    </script>
-
-    <!-- Cookie Consent Banner -->
-    <div id="cookie-banner" class="cookie-banner">
-        <div class="cookie-content">
-            <div class="cookie-text">
-                <p>We use cookies to enhance your experience and analyze site performance. By continuing, you accept our use of cookies.</p>
-            </div>
-            <div class="cookie-actions">
-                <button id="cookie-decline" class="cookie-btn decline">Decline</button>
-                <button id="cookie-accept" class="cookie-btn accept">Accept</button>
-            </div>
-        </div>
+  <header class="site-header" data-header>
+    <div class="header-inner">
+      <a class="brand-mark" href="#top" aria-label="Red Mango home">
+        <span class="brand-mark__en">Red Mango</span>
+        <span class="brand-mark__zh" lang="zh-Hans">红芒果</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
+        <span class="nav-toggle__label">Menu</span>
+        <span class="nav-toggle__bars" aria-hidden="true"></span>
+      </button>
+      <nav id="site-nav" class="site-nav" data-nav>
+        <a href="#menu">Menu</a>
+        <a href="#story">Story</a>
+        <a href="#visit">Visit</a>
+        <a class="nav-cta" href="#reserve">Reserve</a>
+      </nav>
     </div>
+  </header>
 
-    <script>
-        // Cookie Consent Logic
-        function initCookieConsent() {
-            const banner = document.getElementById('cookie-banner');
-            const acceptBtn = document.getElementById('cookie-accept');
-            const declineBtn = document.getElementById('cookie-decline');
-            
-            if (!banner || !acceptBtn || !declineBtn) return;
-            
-            // Check if user has already made a choice
-            const cookieChoice = localStorage.getItem('cookieConsent');
-            
-            if (!cookieChoice) {
-                // Show banner if no choice has been made
-                banner.style.display = 'flex';
-                banner.style.opacity = '1';
-            } else {
-                // Hide banner if choice already made
-                banner.style.display = 'none';
-            }
-            
-            // Handle Accept
-            acceptBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                localStorage.setItem('cookieConsent', 'accepted');
-                banner.style.opacity = '0';
-                setTimeout(() => {
-                    banner.style.display = 'none';
-                }, 300);
-            });
-            
-            // Handle Decline
-            declineBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                localStorage.setItem('cookieConsent', 'declined');
-                banner.style.opacity = '0';
-                setTimeout(() => {
-                    banner.style.display = 'none';
-                }, 300);
-            });
-        }
-        
-        // Initialize when DOM is ready - with fallback timing
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initCookieConsent);
-        } else {
-            initCookieConsent();
-        }
-        
-        // Also initialize on load event for extra reliability
-        window.addEventListener('load', initCookieConsent);
-    </script>
+  <main id="main">
+    <section class="hero" id="top" aria-label="Welcome">
+      <div class="hero__media" aria-hidden="true">
+        <img
+          src="images/hero-chinese-feast.jpg"
+          alt=""
+          class="hero__image"
+          width="1920"
+          height="2880"
+          fetchpriority="high"
+        />
+        <div class="hero__wash"></div>
+      </div>
+      <div class="hero__content">
+        <p class="hero__zh" lang="zh-Hans">红芒果中餐厅</p>
+        <h1 class="hero__brand">Red Mango</h1>
+        <p class="hero__lede">Wok heat, hand-folded dumplings, and the bright sweetness of ripe mango—Chinese cooking with a warm pulse.</p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#reserve">Reserve a table</a>
+          <a class="btn btn--ghost" href="#menu">View the menu</a>
+        </div>
+      </div>
+    </section>
 
-    
+    <section class="menu-section" id="menu" aria-labelledby="menu-heading">
+      <div class="section-intro reveal">
+        <p class="eyebrow">From the kitchen</p>
+        <h2 id="menu-heading">Signatures worth the trip</h2>
+        <p class="section-lede">A focused board of favorites—crisp, fragrant, and built for sharing.</p>
+      </div>
 
-    
+      <div class="menu-feature reveal">
+        <figure class="menu-feature__visual">
+          <img src="images/dish-peking-duck.jpg" alt="Sliced Peking duck with crispy skin" width="1200" height="800" loading="lazy" />
+        </figure>
+        <div class="menu-feature__copy">
+          <p class="menu-feature__zh" lang="zh-Hans">北京烤鸭</p>
+          <h3>Peking Duck</h3>
+          <p>Lacquered skin, soft scallion, and thin pancakes—carved tableside on Friday and Saturday evenings.</p>
+        </div>
+      </div>
 
+      <ul class="menu-list">
+        <li class="menu-item reveal">
+          <figure class="menu-item__visual">
+            <img src="images/dish-dumplings.jpg" alt="Steamed dumplings in a bamboo basket" width="1200" height="724" loading="lazy" />
+          </figure>
+          <div class="menu-item__copy">
+            <h3>Hand-Folded Dumplings <span lang="zh-Hans">饺子</span></h3>
+            <p>Pork &amp; chives or mushroom &amp; cabbage, steamed or pan-seared.</p>
+          </div>
+        </li>
+        <li class="menu-item reveal">
+          <figure class="menu-item__visual">
+            <img src="images/dish-noodles.jpg" alt="Bowl of Chinese noodles with chili oil" width="1200" height="1007" loading="lazy" />
+          </figure>
+          <div class="menu-item__copy">
+            <h3>Chili Oil Noodles <span lang="zh-Hans">红油面</span></h3>
+            <p>Hand-pulled strands, fragrant chili oil, crushed peanuts, and herbs.</p>
+          </div>
+        </li>
+        <li class="menu-item reveal">
+          <figure class="menu-item__visual">
+            <img src="images/dish-mapo.jpg" alt="Mapo tofu in a spicy red sauce" width="1200" height="800" loading="lazy" />
+          </figure>
+          <div class="menu-item__copy">
+            <h3>Mapo Tofu <span lang="zh-Hans">麻婆豆腐</span></h3>
+            <p>Silken tofu in a numbing Sichuan glaze—heat you can taste, not just feel.</p>
+          </div>
+        </li>
+        <li class="menu-item reveal">
+          <figure class="menu-item__visual">
+            <img src="images/dish-fried-rice.jpg" alt="Wok-fried rice with vegetables" width="1200" height="799" loading="lazy" />
+          </figure>
+          <div class="menu-item__copy">
+            <h3>Wok Fried Rice <span lang="zh-Hans">炒饭</span></h3>
+            <p>High-heat grains, seasonal greens, and a finish of toasted garlic.</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <section class="story-section" id="story" aria-labelledby="story-heading">
+      <div class="story-section__media reveal">
+        <img src="images/restaurant-interior.jpg" alt="Warm restaurant dining room with set tables" width="1200" height="800" loading="lazy" />
+      </div>
+      <div class="story-section__copy reveal">
+        <p class="eyebrow">Our story</p>
+        <h2 id="story-heading">A neighborhood kitchen with a mango heart</h2>
+        <p>Red Mango began as a family table—recipes carried from Chengdu and Guangzhou, then tuned for the people who eat with us every week. We cook with a hot wok, honest seasoning, and one sweet rule: leave room for something bright at the end.</p>
+        <p class="story-section__note" lang="zh-Hans">以热锅、真心、一颗芒果的甜意待客。</p>
+      </div>
+    </section>
+
+    <section class="visit-section" id="visit" aria-labelledby="visit-heading">
+      <div class="visit-section__intro reveal">
+        <p class="eyebrow">Visit</p>
+        <h2 id="visit-heading">Find us on Orchard Street</h2>
+        <p class="section-lede">Walk in for lunch, reserve for dinner, or take the feast home.</p>
+      </div>
+      <div class="visit-grid reveal">
+        <div class="visit-block">
+          <h3>Hours</h3>
+          <dl class="hours">
+            <div><dt>Tue – Thu</dt><dd>11:30 am – 9:00 pm</dd></div>
+            <div><dt>Fri – Sat</dt><dd>11:30 am – 10:00 pm</dd></div>
+            <div><dt>Sun</dt><dd>12:00 pm – 8:30 pm</dd></div>
+            <div><dt>Monday</dt><dd>Closed</dd></div>
+          </dl>
+        </div>
+        <div class="visit-block">
+          <h3>Location</h3>
+          <p>418 Orchard Street<br />Chinatown</p>
+          <p><a href="tel:+15550188200">(555) 018-8200</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="reserve-section" id="reserve" aria-labelledby="reserve-heading">
+      <div class="reserve-section__inner reveal">
+        <p class="eyebrow">Reserve</p>
+        <h2 id="reserve-heading">Save a seat</h2>
+        <p class="section-lede">Tell us when you’re coming—we’ll hold a table by the window or the quiet corner.</p>
+        <form class="reserve-form" data-reserve-form>
+          <label>
+            <span>Name</span>
+            <input type="text" name="name" autocomplete="name" required />
+          </label>
+          <label>
+            <span>Email</span>
+            <input type="email" name="email" autocomplete="email" required />
+          </label>
+          <label>
+            <span>Date</span>
+            <input type="date" name="date" required />
+          </label>
+          <label>
+            <span>Guests</span>
+            <select name="guests" required>
+              <option value="2">2 guests</option>
+              <option value="3">3 guests</option>
+              <option value="4">4 guests</option>
+              <option value="5">5 guests</option>
+              <option value="6">6+ guests</option>
+            </select>
+          </label>
+          <button class="btn btn--primary" type="submit">Request reservation</button>
+          <p class="form-status" data-form-status role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__brand">
+      <p class="site-footer__name">Red Mango</p>
+      <p class="site-footer__zh" lang="zh-Hans">红芒果中餐厅</p>
+    </div>
+    <p class="site-footer__meta">Chinese kitchen · Orchard Street · Open Tue–Sun</p>
+  </footer>
+
+  <script src="app.js" defer></script>
 </body>
 </html>
