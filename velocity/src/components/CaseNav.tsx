@@ -18,7 +18,7 @@ export function CaseNav() {
           </li>
         ))}
       </ul>
-      <a className="case-nav__back" href="../../index.html">
+      <a className="case-nav__back" href="/index.html">
         Artistic Fountain
       </a>
     </nav>

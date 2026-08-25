@@ -1,17 +1,17 @@
 const examples = [
   {
     title: 'Hockey — Release',
-    image: './posters/hockey.jpg',
+    image: '/velocity/dist/posters/hockey.jpg',
     finalWord: 'RELEASE',
   },
   {
     title: 'Basketball — Rise',
-    image: './posters/basketball.jpg',
+    image: '/velocity/dist/posters/basketball.jpg',
     finalWord: 'RISE',
   },
   {
     title: 'Running — Drive',
-    image: './posters/running.jpg',
+    image: '/velocity/dist/posters/running.jpg',
     finalWord: 'DRIVE',
   },
 ]

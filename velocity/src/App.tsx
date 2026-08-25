@@ -48,7 +48,7 @@ export default function App() {
       </main>
       <footer className="site-footer">
         <span>VELOCITY · Sports Poster & Art Direction Series</span>
-        <a href="../../index.html">← Artistic Fountain</a>
+        <a href="/index.html">← Artistic Fountain</a>
       </footer>
       <Lightbox id={lightboxId} onClose={closePoster} />
     </>

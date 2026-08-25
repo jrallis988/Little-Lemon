@@ -61,17 +61,17 @@ export function TypographySection() {
           <figure className="type-photo type-photo--behind">
             <span className="type-photo__caption">Type behind</span>
             <p className="type-photo__word">RISE</p>
-            <img src="./posters/basketball.jpg" alt="Basketball athlete with type behind" />
+            <img src="/velocity/dist/posters/basketball.jpg" alt="Basketball athlete with type behind" />
           </figure>
           <figure className="type-photo type-photo--front">
             <span className="type-photo__caption">Type in front</span>
-            <img src="./posters/running.jpg" alt="Sprinter with type in foreground" />
+            <img src="/velocity/dist/posters/running.jpg" alt="Sprinter with type in foreground" />
             <p className="type-photo__word">DRIVE</p>
           </figure>
           <figure className="type-photo type-photo--break">
             <span className="type-photo__caption">Breaking type</span>
             <p className="type-photo__word">STRIKE</p>
-            <img src="./posters/soccer.jpg" alt="Soccer athlete interrupting typography" />
+            <img src="/velocity/dist/posters/soccer.jpg" alt="Soccer athlete interrupting typography" />
           </figure>
         </div>
       </div>

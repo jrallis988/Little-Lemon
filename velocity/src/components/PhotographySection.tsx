@@ -41,14 +41,14 @@ export function PhotographySection() {
 
         <div className="compare" aria-label="Before and after photography treatment">
           <div className="compare__panel">
-            <img src="./posters/before-raw.jpg" alt="Raw source photograph" />
+            <img src="/velocity/dist/posters/before-raw.jpg" alt="Raw source photograph" />
             <span className="compare__label">Before — Raw</span>
           </div>
           <div className="compare__arrow" aria-hidden>
             →
           </div>
           <div className="compare__panel compare__panel--after">
-            <img src="./posters/running.jpg" alt="Finished campaign treatment" />
+            <img src="/velocity/dist/posters/running.jpg" alt="Finished campaign treatment" />
             <span className="compare__label">After — Campaign</span>
           </div>
         </div>

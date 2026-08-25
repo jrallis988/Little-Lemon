@@ -58,19 +58,19 @@ export function Process() {
             <span className="process-thumb__tag">Type</span>
           </div>
           <div className="process-thumb process-thumb--photo">
-            <img src="./posters/running.jpg" alt="" />
+            <img src="/velocity/dist/posters/running.jpg" alt="" />
             <span className="process-thumb__tag">Photo</span>
           </div>
           <div className="process-thumb process-thumb--comp">
-            <img src="./posters/running.jpg" alt="" />
+            <img src="/velocity/dist/posters/running.jpg" alt="" />
             <span className="process-thumb__tag">Compose</span>
           </div>
           <div className="process-thumb process-thumb--refine">
-            <img src="./posters/running.jpg" alt="" />
+            <img src="/velocity/dist/posters/running.jpg" alt="" />
             <span className="process-thumb__tag">Refine</span>
           </div>
           <div className="process-thumb process-thumb--final">
-            <img src="./posters/running.jpg" alt="" />
+            <img src="/velocity/dist/posters/running.jpg" alt="" />
             <span
               style={{
                 position: 'absolute',

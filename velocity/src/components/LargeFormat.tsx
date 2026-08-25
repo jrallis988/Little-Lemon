@@ -13,7 +13,7 @@ export function LargeFormat() {
           <div className="ribbon">
             <p className="ribbon__label">Arena Ribbon Display</p>
             <div className="ribbon__stage">
-              <img src="./posters/hockey.jpg" alt="" />
+              <img src="/velocity/dist/posters/hockey.jpg" alt="" />
               <div className="ribbon__type">
                 <p className="poster__concept" style={{ margin: 0 }}>
                   RELEASE
@@ -28,7 +28,7 @@ export function LargeFormat() {
           <div className="ribbon">
             <p className="ribbon__label">Stadium Wall / Billboard</p>
             <div className="ribbon__stage" style={{ height: 'clamp(160px, 28vw, 240px)' }}>
-              <img src="./posters/snowboard.jpg" alt="" style={{ width: '55%' }} />
+              <img src="/velocity/dist/posters/snowboard.jpg" alt="" style={{ width: '55%' }} />
               <div className="ribbon__type">
                 <div>
                   <p
@@ -55,7 +55,7 @@ export function LargeFormat() {
           <div className="ribbon">
             <p className="ribbon__label">Retail Window</p>
             <div className="ribbon__stage">
-              <img src="./posters/basketball.jpg" alt="" style={{ width: '35%' }} />
+              <img src="/velocity/dist/posters/basketball.jpg" alt="" style={{ width: '35%' }} />
               <div className="ribbon__type">
                 <p className="poster__concept" style={{ margin: 0 }}>
                   RISE
