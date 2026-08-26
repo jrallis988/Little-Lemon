@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Alert,
   Pressable,
@@ -54,6 +54,13 @@ export default function ResultScreen() {
     if (ready) loadCheck();
   }, [ready, loadCheck]);
 
+  const profileRelevant = useMemo(() => {
+    if (!check) return [];
+    return check.findings.filter(
+      (f) => f.triggeredByProfileItemLabel || f.whyItMatters,
+    );
+  }, [check]);
+
   const handleShare = async () => {
     if (!check) return;
     try {
@@ -98,8 +105,10 @@ export default function ResultScreen() {
 
   const lowSummary =
     check.riskLevel === 'low'
-      ? 'No known conflicts were identified based on the health information currently available to BioCross.'
+      ? 'No known conflicts were identified based on your current health profile and the information available to BioCross.'
       : check.summary;
+
+  const firstFindingWithEvidence = check.findings.find((f) => f.evidenceIds.length > 0);
 
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
@@ -110,18 +119,14 @@ export default function ResultScreen() {
           <Text style={styles.checkedAt}>
             Checked {new Date(check.checkedAt).toLocaleString()}
           </Text>
-          {check.newerInfoAvailable ? (
-            <View style={styles.newerBadge}>
-              <Ionicons name="refresh-circle" size={14} color={colors.semantic.caution} />
-              <Text style={styles.newerText}>Newer information available</Text>
-            </View>
-          ) : null}
         </View>
 
+        {/* 1. Supplement card */}
         <View style={styles.section}>
           <SupplementCard supplement={check.supplement} />
         </View>
 
+        {/* 2. RiskResultCard summary */}
         <View style={styles.section}>
           <RiskResultCard
             check={{ ...check, summary: lowSummary }}
@@ -137,6 +142,37 @@ export default function ResultScreen() {
           />
         </View>
 
+        {/* 3. more_info action buttons */}
+        {check.riskLevel === 'more_info' ? (
+          <View style={styles.section}>
+            <BioCrossButton
+              label="Update my information"
+              icon="person-outline"
+              onPress={() => router.push('/(tabs)/profile')}
+            />
+            <BioCrossButton
+              label="Review supplement label"
+              variant="outline"
+              size="md"
+              onPress={() =>
+                router.push({
+                  pathname: '/check/label-review',
+                  params: { supplementId: check.supplement.id },
+                })
+              }
+              style={styles.actionGap}
+            />
+            <BioCrossButton
+              label="Try again"
+              variant="secondary"
+              size="md"
+              onPress={() => router.push('/(tabs)/check')}
+              style={styles.actionGap}
+            />
+          </View>
+        ) : null}
+
+        {/* 4. What we found */}
         {check.findings.length > 0 ? (
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>What we found</Text>
@@ -156,22 +192,61 @@ export default function ResultScreen() {
           </View>
         ) : null}
 
+        {/* 5. Why it matters / profile relevance */}
+        {profileRelevant.length > 0 ? (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>
+              Why it matters / What in my profile is relevant
+            </Text>
+            <HealthCard>
+              {profileRelevant.map((finding) => (
+                <View key={finding.id} style={styles.profileBlock}>
+                  <Text style={styles.profileFindingTitle}>{finding.title}</Text>
+                  {finding.triggeredByProfileItemLabel ? (
+                    <Text style={styles.profileTrigger}>
+                      Relevant profile item: {finding.triggeredByProfileItemLabel}
+                    </Text>
+                  ) : null}
+                  <Text style={styles.profileWhy}>{finding.whyItMatters}</Text>
+                </View>
+              ))}
+            </HealthCard>
+          </View>
+        ) : null}
+
+        {/* 6. Evidence & Sources */}
         {check.evidence.length > 0 ? (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Evidence & sources</Text>
+            <Text style={styles.sectionTitle}>Evidence & Sources</Text>
             {check.evidence.map((ev) => (
               <View key={ev.id} style={styles.cardGap}>
                 <EvidenceCard evidence={ev} />
               </View>
             ))}
+            {firstFindingWithEvidence ? (
+              <Pressable
+                onPress={() =>
+                  router.push({
+                    pathname: '/result/evidence/[findingId]',
+                    params: {
+                      findingId: firstFindingWithEvidence.id,
+                      checkId: check.id,
+                    },
+                  })
+                }
+                accessibilityRole="link"
+                style={styles.evidenceLinkBtn}
+              >
+                <Text style={styles.evidenceLinkText}>View full evidence detail ›</Text>
+              </Pressable>
+            ) : null}
           </View>
         ) : null}
 
+        {/* 7. What should I do next */}
         {check.tips.length > 0 ? (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>
-              {check.riskLevel === 'high' ? 'What to do next' : 'Tips'}
-            </Text>
+            <Text style={styles.sectionTitle}>What should I do next</Text>
             <HealthCard>
               {check.tips.map((tip, i) => (
                 <View key={i} style={styles.tipRow}>
@@ -179,13 +254,17 @@ export default function ResultScreen() {
                     name={
                       check.riskLevel === 'high'
                         ? 'alert-circle-outline'
-                        : 'checkmark-circle-outline'
+                        : check.riskLevel === 'more_info'
+                          ? 'information-circle-outline'
+                          : 'checkmark-circle-outline'
                     }
                     size={18}
                     color={
                       check.riskLevel === 'high'
                         ? colors.semantic.high
-                        : colors.semantic.low
+                        : check.riskLevel === 'more_info'
+                          ? colors.semantic.unknown
+                          : colors.semantic.low
                     }
                   />
                   <Text style={styles.tipText}>{tip}</Text>
@@ -195,10 +274,7 @@ export default function ResultScreen() {
           </View>
         ) : null}
 
-        <View style={styles.section}>
-          <Text style={styles.snapshot}>{check.profileSnapshotNote}</Text>
-        </View>
-
+        {/* 8. Disclaimer */}
         <View style={styles.section}>
           <InfoCallout
             tone="warning"
@@ -206,28 +282,39 @@ export default function ResultScreen() {
             title="Medical disclaimer"
             body={check.disclaimer}
           />
+          <Text style={styles.changeNote}>
+            Results may change if your health information or available research changes.
+          </Text>
+          {check.profileSnapshotNote ? (
+            <Text style={styles.snapshot}>{check.profileSnapshotNote}</Text>
+          ) : null}
         </View>
 
-        <View style={styles.actions}>
-          <BioCrossButton
-            label="View My Profile"
-            variant="outline"
-            size="md"
-            onPress={() => router.push('/(tabs)/profile')}
-          />
-          <BioCrossButton
-            label="Edit Supplement"
-            variant="secondary"
-            size="md"
-            onPress={() =>
-              router.push({
-                pathname: '/check/confirm',
-                params: { supplementId: check.supplement.id },
-              })
-            }
-            style={styles.actionGap}
-          />
-        </View>
+        {/* 9. Newer information banner */}
+        {check.newerInfoAvailable ? (
+          <View style={styles.section}>
+            <View style={styles.newerBanner}>
+              <Ionicons name="refresh-circle" size={20} color={colors.semantic.caution} />
+              <View style={{ flex: 1 }}>
+                <Text style={styles.newerTitle}>New information available</Text>
+                <Text style={styles.newerBody}>
+                  Updated research or profile data may change this result.
+                </Text>
+              </View>
+            </View>
+            <BioCrossButton
+              label="Recheck Supplement"
+              icon="refresh-outline"
+              onPress={() =>
+                router.push({
+                  pathname: '/check/confirm',
+                  params: { supplementId: check.supplement.id },
+                })
+              }
+              style={styles.actionGap}
+            />
+          </View>
+        ) : null}
 
         <View style={styles.shareRow}>
           <Pressable
@@ -302,22 +389,6 @@ const styles = StyleSheet.create({
   scroll: { paddingBottom: spacing.xxxl },
   header: { paddingHorizontal: spacing.xl, marginBottom: spacing.sm },
   checkedAt: { color: colors.text.tertiary, fontSize: typography.size.sm },
-  newerBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    marginTop: spacing.xs,
-    backgroundColor: colors.semantic.cautionBg,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: 4,
-    borderRadius: radii.pill,
-    alignSelf: 'flex-start',
-  },
-  newerText: {
-    color: colors.semantic.caution,
-    fontWeight: '600',
-    fontSize: typography.size.xs,
-  },
   section: { marginHorizontal: spacing.xl, marginBottom: spacing.lg },
   sectionTitle: {
     fontSize: typography.size.lg,
@@ -326,6 +397,31 @@ const styles = StyleSheet.create({
     marginBottom: spacing.sm,
   },
   cardGap: { marginBottom: spacing.sm },
+  actionGap: { marginTop: spacing.sm },
+  profileBlock: {
+    paddingVertical: spacing.sm,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: colors.surface.border,
+  },
+  profileFindingTitle: {
+    fontWeight: '700',
+    color: colors.text.primary,
+    fontSize: typography.size.md,
+  },
+  profileTrigger: {
+    marginTop: 4,
+    color: colors.brand.blue,
+    fontSize: typography.size.sm,
+    fontWeight: '600',
+  },
+  profileWhy: {
+    marginTop: 4,
+    color: colors.text.secondary,
+    fontSize: typography.size.sm,
+    lineHeight: 20,
+  },
+  evidenceLinkBtn: { marginTop: spacing.xs, minHeight: 44, justifyContent: 'center' },
+  evidenceLinkText: { color: colors.brand.blue, fontWeight: '700', fontSize: typography.size.sm },
   tipRow: {
     flexDirection: 'row',
     gap: spacing.sm,
@@ -338,13 +434,40 @@ const styles = StyleSheet.create({
     fontSize: typography.size.sm,
     lineHeight: 20,
   },
+  changeNote: {
+    marginTop: spacing.sm,
+    color: colors.text.secondary,
+    fontSize: typography.size.sm,
+    lineHeight: 20,
+  },
   snapshot: {
+    marginTop: spacing.xs,
     color: colors.text.secondary,
     fontSize: typography.size.sm,
     fontStyle: 'italic',
   },
-  actions: { marginHorizontal: spacing.xl, marginBottom: spacing.md },
-  actionGap: { marginTop: spacing.sm },
+  newerBanner: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: spacing.sm,
+    backgroundColor: colors.semantic.cautionBg,
+    borderRadius: radii.md,
+    borderWidth: 1,
+    borderColor: colors.semantic.cautionBorder,
+    padding: spacing.md,
+    marginBottom: spacing.sm,
+  },
+  newerTitle: {
+    fontWeight: '700',
+    color: colors.semantic.caution,
+    fontSize: typography.size.md,
+  },
+  newerBody: {
+    marginTop: 2,
+    color: colors.text.secondary,
+    fontSize: typography.size.sm,
+    lineHeight: 18,
+  },
   shareRow: {
     alignItems: 'center',
     marginBottom: spacing.lg,

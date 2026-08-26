@@ -16,6 +16,7 @@ import {
   LoadingState,
   RecentCheckCard,
   ScreenTitle,
+  BioCrossButton,
 } from '../../src/design-system';
 import { colors, radii, spacing, typography } from '../../src/design-system/tokens';
 import { useBioCross } from '../../src/state/BioCrossContext';
@@ -130,16 +131,21 @@ export default function HistoryScreen() {
                 onPress={() => router.push(`/result/${check.id}`)}
               />
               {check.newerInfoAvailable ? (
-                <Pressable
-                  onPress={() => router.push(`/result/${check.id}`)}
-                  accessibilityRole="button"
-                  accessibilityLabel="Newer information available for this check"
-                  style={styles.newerBanner}
-                >
+                <View style={styles.newerBanner}>
                   <Ionicons name="refresh-circle" size={16} color={colors.semantic.caution} />
-                  <Text style={styles.newerText}>Newer information available</Text>
-                  <Ionicons name="chevron-forward" size={14} color={colors.semantic.caution} />
-                </Pressable>
+                  <Text style={styles.newerText}>New information available</Text>
+                  <BioCrossButton
+                    label="Recheck"
+                    size="sm"
+                    variant="outline"
+                    onPress={() =>
+                      router.push({
+                        pathname: '/check/confirm',
+                        params: { supplementId: check.supplement.id },
+                      })
+                    }
+                  />
+                </View>
               ) : null}
             </View>
           ))}

@@ -9,11 +9,18 @@ import { colors, spacing, typography } from '../../src/design-system/tokens';
 type IssueKind =
   | 'permission'
   | 'offline'
+  | 'network'
   | 'scan_failure'
   | 'unknown_product'
   | 'incomplete_label'
+  | 'label_partial'
+  | 'formulation_uncertain'
   | 'outdated_profile'
-  | 'unavailable_evidence';
+  | 'unavailable_evidence'
+  | 'research_unavailable'
+  | 'analysis_failed'
+  | 'upload_failed'
+  | 'unsupported_file';
 
 const COPY: Record<
   IssueKind,
@@ -33,22 +40,29 @@ const COPY: Record<
     secondary: 'Enter barcode manually',
   },
   offline: {
-    title: 'You’re offline',
+    title: "You're offline",
+    body: 'BioCross needs a connection to look up products and evidence. Check your network and try again. Previously saved checks in History are still available.',
+    icon: 'cloud-offline-outline',
+    primary: 'Try again',
+    secondary: 'Go to History',
+  },
+  network: {
+    title: "You're offline",
     body: 'BioCross needs a connection to look up products and evidence. Check your network and try again. Previously saved checks in History are still available.',
     icon: 'cloud-offline-outline',
     primary: 'Try again',
     secondary: 'Go to History',
   },
   scan_failure: {
-    title: 'We couldn’t read that scan',
-    body: 'The barcode or label wasn’t clear enough. Try better lighting, hold steadier, or use another way to find the product.',
+    title: "We couldn't read that scan",
+    body: "The barcode or label wasn't clear enough. Try better lighting, hold steadier, or use another way to find the product.",
     icon: 'scan-outline',
     primary: 'Try scanning again',
     secondary: 'Search by name',
   },
   unknown_product: {
     title: 'Product not recognized',
-    body: 'BioCross couldn’t match this barcode to a known supplement. You can search by name, enter the barcode manually, or photograph the Supplement Facts panel.',
+    body: "BioCross couldn't match this barcode to a known supplement. You can search by name, enter the barcode manually, or photograph the Supplement Facts panel.",
     icon: 'help-circle-outline',
     primary: 'Search by name',
     secondary: 'Enter barcode manually',
@@ -60,21 +74,68 @@ const COPY: Record<
     primary: 'Photograph the label',
     secondary: 'Search by name',
   },
+  label_partial: {
+    title: 'Label only partially readable',
+    body: 'Some Supplement Facts lines were unclear. A clearer photo helps BioCross verify ingredients before analyzing.',
+    icon: 'document-text-outline',
+    primary: 'Photograph the label again',
+    secondary: 'Search by name',
+  },
+  formulation_uncertain: {
+    title: 'Formulation could not be verified',
+    body: 'BioCross could not confidently match this product to a complete ingredient list. Review the label or search by name before analyzing.',
+    icon: 'flask-outline',
+    primary: 'Review supplement label',
+    secondary: 'Search by name',
+  },
   outdated_profile: {
     title: 'Your health profile may be out of date',
-    body: 'Some key profile sections haven’t been reviewed recently. Updating them helps BioCross avoid missing relevant interactions — BioCross will not invent a positive safety result when information is incomplete.',
+    body: "Some key profile sections haven't been reviewed recently. Updating them helps BioCross avoid missing relevant interactions. BioCross will not invent a positive safety result when information is incomplete.",
     icon: 'clipboard-outline',
     primary: 'Review health profile',
     secondary: 'Continue anyway',
   },
   unavailable_evidence: {
     title: 'Evidence temporarily unavailable',
-    body: 'BioCross couldn’t retrieve supporting research sources for this finding right now. Your check result is still saved. Try viewing evidence again later.',
+    body: "BioCross couldn't retrieve supporting research sources for this finding right now. Your check result is still saved. Try viewing evidence again later.",
     icon: 'library-outline',
     primary: 'Back to result',
     secondary: 'Go Home',
   },
+  research_unavailable: {
+    title: 'Research sources unavailable',
+    body: "BioCross couldn't load supporting research for this check right now. Your saved result is still available. Try again when you're back online.",
+    icon: 'library-outline',
+    primary: 'Try again',
+    secondary: 'Go to History',
+  },
+  analysis_failed: {
+    title: 'Analysis could not be completed',
+    body: 'Something went wrong while checking this supplement. Your health profile was not changed. Try again or confirm the product details.',
+    icon: 'alert-circle-outline',
+    primary: 'Try again',
+    secondary: 'Confirm product',
+  },
+  upload_failed: {
+    title: 'Upload failed',
+    body: 'Your health record could not be uploaded. Check your connection and file size, then try again.',
+    icon: 'cloud-upload-outline',
+    primary: 'Try upload again',
+    secondary: 'Enter information manually',
+  },
+  unsupported_file: {
+    title: 'File type not supported',
+    body: 'BioCross supports PDF, JPG, and PNG health records up to 25MB. Choose a different file or enter information manually.',
+    icon: 'document-outline',
+    primary: 'Choose another file',
+    secondary: 'Enter information manually',
+  },
 };
+
+function resolveIssueKind(kind?: string): IssueKind {
+  if (kind && kind in COPY) return kind as IssueKind;
+  return 'scan_failure';
+}
 
 export default function CheckIssueScreen() {
   const router = useRouter();
@@ -84,8 +145,7 @@ export default function CheckIssueScreen() {
     checkId?: string;
   }>();
 
-  const issue: IssueKind =
-    kind && kind in COPY ? (kind as IssueKind) : 'scan_failure';
+  const issue = resolveIssueKind(kind);
   const copy = COPY[issue];
 
   const onPrimary = async () => {
@@ -98,6 +158,7 @@ export default function CheckIssueScreen() {
         }
         break;
       case 'offline':
+      case 'network':
         router.replace('/(tabs)/check');
         break;
       case 'scan_failure':
@@ -107,6 +168,13 @@ export default function CheckIssueScreen() {
         router.push('/check/search');
         break;
       case 'incomplete_label':
+      case 'label_partial':
+        router.push({
+          pathname: '/check/label-review',
+          params: supplementId ? { supplementId } : undefined,
+        });
+        break;
+      case 'formulation_uncertain':
         router.push({
           pathname: '/check/label-review',
           params: supplementId ? { supplementId } : undefined,
@@ -116,8 +184,20 @@ export default function CheckIssueScreen() {
         router.push('/(tabs)/profile');
         break;
       case 'unavailable_evidence':
+      case 'research_unavailable':
         if (checkId) router.replace(`/result/${checkId}`);
         else router.back();
+        break;
+      case 'analysis_failed':
+        if (supplementId) {
+          router.replace({ pathname: '/check/confirm', params: { supplementId } });
+        } else {
+          router.replace('/(tabs)/check');
+        }
+        break;
+      case 'upload_failed':
+      case 'unsupported_file':
+        router.push('/onboarding/health-profile');
         break;
     }
   };
@@ -128,6 +208,7 @@ export default function CheckIssueScreen() {
         router.push('/check/manual-barcode');
         break;
       case 'offline':
+      case 'network':
         router.push('/(tabs)/history');
         break;
       case 'scan_failure':
@@ -137,6 +218,8 @@ export default function CheckIssueScreen() {
         router.push('/check/manual-barcode');
         break;
       case 'incomplete_label':
+      case 'label_partial':
+      case 'formulation_uncertain':
         router.push('/check/search');
         break;
       case 'outdated_profile':
@@ -149,22 +232,34 @@ export default function CheckIssueScreen() {
       case 'unavailable_evidence':
         router.push('/(tabs)/home');
         break;
+      case 'research_unavailable':
+        router.push('/(tabs)/history');
+        break;
+      case 'analysis_failed':
+        router.push('/check/search');
+        break;
+      case 'upload_failed':
+      case 'unsupported_file':
+        router.push('/onboarding/health-profile');
+        break;
     }
   };
+
+  const cautionIcon =
+    issue === 'outdated_profile' ||
+    issue === 'incomplete_label' ||
+    issue === 'label_partial' ||
+    issue === 'formulation_uncertain';
 
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
       <AppHeader onBack={() => router.back()} />
       <View style={styles.content}>
-        <View style={[styles.iconWrap, issue === 'outdated_profile' && styles.iconCaution]}>
+        <View style={[styles.iconWrap, cautionIcon && styles.iconCaution]}>
           <Ionicons
             name={copy.icon}
             size={32}
-            color={
-              issue === 'outdated_profile' || issue === 'incomplete_label'
-                ? colors.semantic.caution
-                : colors.brand.blue
-            }
+            color={cautionIcon ? colors.semantic.caution : colors.brand.blue}
           />
         </View>
         <Text style={styles.title} accessibilityRole="header">
@@ -175,7 +270,7 @@ export default function CheckIssueScreen() {
         <HealthCard style={styles.card}>
           <InfoCallout
             tone={issue === 'outdated_profile' ? 'warning' : 'info'}
-            title="BioCross won’t guess"
+            title="BioCross won't guess"
             body="When information is missing or unclear, BioCross shows that more detail is needed instead of inventing a safety result."
           />
         </HealthCard>

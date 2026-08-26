@@ -1,7 +1,7 @@
 import { analyzeSupplement, findSupplementByBarcode } from '../src/domain/analysis';
 import {
   DEMO_HEALTH_PROFILE,
-  DEMO_UNKNOWN_CHECK,
+  DEMO_MORE_INFO_CHECK,
   DEMO_USER,
   SUPPLEMENT_CATALOG,
 } from '../src/domain/fixtures';
@@ -15,18 +15,18 @@ describe('Check workflow domain paths', () => {
     expect(findSupplementByBarcode('000000000000')).toBeUndefined();
   });
 
-  it('produces unknown risk when formulation is empty', () => {
+  it('produces more_info risk when formulation is empty', () => {
     const check = analyzeSupplement(
       { id: 'x', name: 'Unknown Product', ingredients: [] },
       DEMO_HEALTH_PROFILE,
       DEMO_USER.id,
     );
-    expect(check.riskLevel).toBe('unknown');
-    expect(check.headline).toBe(DEMO_UNKNOWN_CHECK.headline);
+    expect(check.riskLevel).toBe('more_info');
+    expect(check.headline).toBe(DEMO_MORE_INFO_CHECK.headline);
   });
 
   it('keeps historical risk levels intact for demo history items', () => {
-    const levels = ['low', 'caution', 'high'] as const;
+    const levels = ['low', 'caution', 'high', 'more_info'] as const;
     for (const level of levels) {
       expect(levels.includes(level)).toBe(true);
     }
@@ -39,15 +39,22 @@ describe('Issue screen kind coverage', () => {
   const kinds = [
     'permission',
     'offline',
+    'network',
     'scan_failure',
     'unknown_product',
     'incomplete_label',
+    'label_partial',
+    'formulation_uncertain',
     'outdated_profile',
     'unavailable_evidence',
+    'research_unavailable',
+    'analysis_failed',
+    'upload_failed',
+    'unsupported_file',
   ];
 
   it('defines the expected edge-case kinds used by /check/issue', () => {
-    expect(kinds).toHaveLength(7);
-    expect(new Set(kinds).size).toBe(7);
+    expect(kinds).toHaveLength(14);
+    expect(new Set(kinds).size).toBe(14);
   });
 });

@@ -32,18 +32,21 @@ describe('BioCross safety analysis', () => {
 
     expect(result.riskLevel).toBe('low');
     expect(result.summary.toLowerCase()).not.toContain('this supplement is safe for you');
-    expect(result.headline).toBe('Low Risk');
+    expect(result.summary).toContain(
+      'No known conflicts were identified based on your current health profile',
+    );
+    expect(result.headline).toBe('No Known Conflicts');
   });
 
-  it('returns unknown when product identity is incomplete', () => {
+  it('returns more_info when product identity is incomplete', () => {
     const result = analyzeSupplement(
       { id: 'x', name: 'Unknown Product', ingredients: [] },
       profile,
       userId,
     );
 
-    expect(result.riskLevel).toBe('unknown');
-    expect(result.headline).toBe('Unable to Determine');
+    expect(result.riskLevel).toBe('more_info');
+    expect(result.headline).toBe('More Information Needed');
   });
 
   it('returns caution for ashwagandha against heart condition profile', () => {
@@ -77,10 +80,10 @@ describe('Supplement lookup', () => {
   });
 
   it('maps risk levels to accessible text labels', () => {
-    expect(riskLevelLabel('low')).toBe('Low Risk');
+    expect(riskLevelLabel('low')).toBe('No Known Conflicts');
     expect(riskLevelLabel('caution')).toBe('Use Caution');
     expect(riskLevelLabel('high')).toBe('High Risk');
-    expect(riskLevelLabel('unknown')).toBe('Unable to Determine');
+    expect(riskLevelLabel('more_info')).toBe('More Information Needed');
   });
 });
 

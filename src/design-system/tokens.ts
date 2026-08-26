@@ -134,7 +134,7 @@ export const tokens = {
   touchTargets,
 } as const;
 
-export type RiskLevel = 'low' | 'caution' | 'high' | 'unknown' | 'info';
+export type RiskLevel = 'low' | 'caution' | 'high' | 'more_info' | 'info';
 
 export function riskColors(level: RiskLevel) {
   switch (level) {
@@ -143,7 +143,7 @@ export function riskColors(level: RiskLevel) {
         fg: colors.semantic.low,
         bg: colors.semantic.lowBg,
         border: colors.semantic.lowBorder,
-        label: 'Low Risk',
+        label: 'No Known Conflicts',
       };
     case 'caution':
       return {
@@ -159,12 +159,12 @@ export function riskColors(level: RiskLevel) {
         border: colors.semantic.highBorder,
         label: 'High Risk',
       };
-    case 'unknown':
+    case 'more_info':
       return {
         fg: colors.semantic.unknown,
         bg: colors.semantic.unknownBg,
         border: colors.surface.borderStrong,
-        label: 'Unable to Determine',
+        label: 'More Information Needed',
       };
     case 'info':
     default:

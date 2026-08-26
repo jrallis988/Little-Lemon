@@ -16,7 +16,6 @@ import {
   HealthCard,
   HealthCardHeader,
   InfoCallout,
-  ProgressSegments,
   ScreenTitle,
 } from '../../src/design-system';
 import { colors, radii, spacing, typography } from '../../src/design-system/tokens';
@@ -66,11 +65,15 @@ export default function PreferencesScreen() {
     if (preferences) setPrefs(preferences);
   }, [preferences]);
 
-  const handleContinue = async () => {
+  const handleSave = async () => {
     setSaving(true);
     try {
       await updatePreferences(prefs);
-      router.push('/onboarding/complete');
+      if (router.canGoBack()) {
+        router.back();
+      } else {
+        router.replace('/(tabs)/home');
+      }
     } finally {
       setSaving(false);
     }
@@ -79,11 +82,10 @@ export default function PreferencesScreen() {
   return (
     <SafeAreaView style={styles.safe}>
       <AppHeader onBack={() => router.back()} />
-      <ProgressSegments total={6} current={5} label="Step 5 of 6" />
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <ScreenTitle
-          title="Set Your Preferences"
-          subtitle="Tell us about your goals and lifestyle so BioCross can tailor insights to what matters most to you."
+          title="Personalize insights (optional)"
+          subtitle="Wellness goals are optional and not required for safety checks."
         />
 
         <PreferenceCard
@@ -143,30 +145,13 @@ export default function PreferencesScreen() {
           />
         </HealthCard>
 
-        <HealthCard style={styles.card}>
-          <HealthCardHeader
-            icon="lock-closed-outline"
-            title="Privacy"
-            subtitle="Your data stays yours."
-          />
-          <View style={styles.privacyRow}>
-            <Ionicons name="shield-checkmark-outline" size={18} color={colors.brand.blue} />
-            <Text style={styles.privacyText}>
-              BioCross encrypts your health information and never sells your data. You control what&apos;s
-              stored and can export or delete it anytime.
-            </Text>
-          </View>
-        </HealthCard>
-
         <InfoCallout
-          icon="heart"
-          tone="success"
-          title="Built on trust"
-          body="BioCross is designed with clinicians and researchers. We show our sources, explain our reasoning, and never guess when information is missing."
+          tone="info"
+          body="You can skip this entirely — BioCross safety checks work without wellness preferences."
         />
 
         <View style={styles.footer}>
-          <BioCrossButton label="Continue" onPress={handleContinue} loading={saving} />
+          <BioCrossButton label="Save" onPress={handleSave} loading={saving} />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -295,7 +280,5 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface.border,
     marginTop: spacing.md,
   },
-  privacyRow: { flexDirection: 'row', gap: spacing.sm, marginTop: spacing.md, alignItems: 'flex-start' },
-  privacyText: { flex: 1, color: colors.text.secondary, fontSize: typography.size.sm, lineHeight: 18 },
   footer: { marginHorizontal: spacing.xl, marginTop: spacing.lg },
 });

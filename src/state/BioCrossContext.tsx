@@ -3,6 +3,7 @@ import type {
   AppPreferences,
   ExtractedHealthItem,
   HealthProfile,
+  HealthProfileItem,
   SafetyAlert,
   Supplement,
   SupplementCheck,
@@ -31,6 +32,9 @@ interface BioCrossContextValue {
   getExtractedItems: (documentId: string) => Promise<ExtractedHealthItem[]>;
   confirmExtractedItems: (items: ExtractedHealthItem[]) => Promise<void>;
   markAlertRead: (id: string) => Promise<void>;
+  addProfileItem: (item: HealthProfileItem) => Promise<void>;
+  removeProfileItem: (itemId: string) => Promise<void>;
+  confirmProfileItem: (itemId: string) => Promise<void>;
 }
 
 const BioCrossContext = createContext<BioCrossContextValue | null>(null);
@@ -125,6 +129,18 @@ export function BioCrossProvider({ children }: { children: React.ReactNode }) {
       },
       markAlertRead: async (id) => {
         await biocrossRepository.markAlertRead(id);
+        await refresh();
+      },
+      addProfileItem: async (item) => {
+        await biocrossRepository.addProfileItem(item);
+        await refresh();
+      },
+      removeProfileItem: async (itemId) => {
+        await biocrossRepository.removeProfileItem(itemId);
+        await refresh();
+      },
+      confirmProfileItem: async (itemId) => {
+        await biocrossRepository.confirmProfileItem(itemId);
         await refresh();
       },
     }),

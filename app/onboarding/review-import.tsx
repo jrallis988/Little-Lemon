@@ -49,6 +49,7 @@ export default function ReviewImportScreen() {
   const resolvedDocumentId = documentId ?? DEMO_DOCUMENT.id;
   const document =
     documents.find((d) => d.id === resolvedDocumentId) ?? { ...DEMO_DOCUMENT, id: resolvedDocumentId };
+  const progressStep = documentId ? 4 : 3;
 
   const loadItems = useCallback(async () => {
     setLoading(true);
@@ -94,7 +95,7 @@ export default function ReviewImportScreen() {
     setSubmitting(true);
     try {
       await confirmExtractedItems(items);
-      router.push('/onboarding/preferences');
+      router.push('/onboarding/profile-ready');
     } finally {
       setSubmitting(false);
     }
@@ -110,7 +111,7 @@ export default function ReviewImportScreen() {
   return (
     <SafeAreaView style={styles.safe}>
       <AppHeader onBack={() => router.back()} />
-      <ProgressSegments total={6} current={4} label="Step 4 of 6" />
+      <ProgressSegments total={6} current={progressStep} label={`Step ${progressStep} of 6`} />
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <ScreenTitle
           title="Review Imported Information"
@@ -182,7 +183,7 @@ export default function ReviewImportScreen() {
             loading={submitting}
           />
           <Pressable
-            onPress={() => router.push('/onboarding/preferences')}
+            onPress={() => router.push('/onboarding/profile-ready')}
             style={styles.skipLink}
             accessibilityRole="link"
           >

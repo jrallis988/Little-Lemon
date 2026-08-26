@@ -98,6 +98,28 @@ export const biocrossRepository = {
     return this.saveHealthProfile({ ...profile, items: merged, readiness: 'strong' });
   },
 
+  async addProfileItem(item: HealthProfileItem): Promise<HealthProfile> {
+    return this.addProfileItems([item]);
+  },
+
+  async removeProfileItem(itemId: string): Promise<HealthProfile> {
+    const profile = await this.getHealthProfile();
+    return this.saveHealthProfile({
+      ...profile,
+      items: profile.items.filter((i) => i.id !== itemId),
+    });
+  },
+
+  async confirmProfileItem(itemId: string): Promise<HealthProfile> {
+    const profile = await this.getHealthProfile();
+    const items = profile.items.map((i) =>
+      i.id === itemId
+        ? { ...i, status: 'confirmed' as const, confirmedAt: new Date().toISOString() }
+        : i,
+    );
+    return this.saveHealthProfile({ ...profile, items });
+  },
+
   async getPreferences(): Promise<AppPreferences> {
     return readJSON(KEYS.prefs, DEMO_PREFERENCES);
   },

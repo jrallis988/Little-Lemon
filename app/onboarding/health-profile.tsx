@@ -60,7 +60,7 @@ export default function HealthProfileScreen() {
   return (
     <SafeAreaView style={styles.safe}>
       <AppHeader onBack={() => router.back()} />
-      <ProgressSegments total={3} current={2} label="Step 2 of 3" />
+      <ProgressSegments total={6} current={2} label="Step 2 of 6" />
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <ScreenTitle
           title="Your Health Profile"
@@ -181,7 +181,7 @@ export default function HealthProfileScreen() {
         <View style={styles.footer}>
           <BioCrossButton label="Continue" onPress={handleContinue} />
           <Pressable
-            onPress={() => router.push('/onboarding/preferences')}
+            onPress={() => router.push('/onboarding/profile-ready')}
             style={styles.later}
             accessibilityRole="link"
           >

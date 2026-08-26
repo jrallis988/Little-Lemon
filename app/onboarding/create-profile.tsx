@@ -54,7 +54,7 @@ export default function CreateProfileScreen() {
   return (
     <SafeAreaView style={styles.safe}>
       <AppHeader onBack={() => router.back()} />
-      <ProgressSegments total={3} current={1} label="Step 1 of 3" />
+      <ProgressSegments total={6} current={1} label="Step 1 of 6" />
       <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
         <ScreenTitle
           title="Create Your Health Profile"

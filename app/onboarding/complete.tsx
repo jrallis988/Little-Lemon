@@ -10,7 +10,7 @@ import {
   InfoCallout,
   ProgressSegments,
 } from '../../src/design-system';
-import { colors, radii, spacing, typography } from '../../src/design-system/tokens';
+import { colors, spacing, typography } from '../../src/design-system/tokens';
 import { useBioCross } from '../../src/state/BioCrossContext';
 
 const WHATS_NEXT = [
@@ -27,7 +27,7 @@ const WHATS_NEXT = [
   {
     icon: 'notifications-outline' as const,
     title: 'Stay informed',
-    body: 'Get alerts about recalls, interactions, and new research relevant to you.',
+    body: 'Get alerts about recalls, interactions, and research relevant to you.',
   },
 ];
 
@@ -36,21 +36,11 @@ export default function CompleteScreen() {
   const { completeOnboarding } = useBioCross();
   const [finishing, setFinishing] = useState(false);
 
-  const startChecking = async () => {
+  const finish = async (dest: '/(tabs)/home' | '/(tabs)/check') => {
     setFinishing(true);
     try {
       await completeOnboarding();
-      router.replace('/(tabs)/home');
-    } finally {
-      setFinishing(false);
-    }
-  };
-
-  const goToDashboard = async () => {
-    setFinishing(true);
-    try {
-      await completeOnboarding();
-      router.replace('/(tabs)/home');
+      router.replace(dest);
     } finally {
       setFinishing(false);
     }
@@ -67,15 +57,16 @@ export default function CompleteScreen() {
           </View>
           <Text style={styles.title}>You&apos;re All Set!</Text>
           <Text style={styles.subtitle}>
-            Your health profile is ready. BioCross will use it to give you personalized supplement safety
-            checks.
+            Your health profile is ready. BioCross will use your confirmed information to help you
+            check supplements for safety.
           </Text>
         </View>
 
         <InfoCallout
           icon="lock-closed"
           tone="privacy"
-          body="Your health information is encrypted and never sold. You're always in control of what's stored and shared."
+          title="Your data is private and secure."
+          body="We never sell your data. You're always in control of your information."
         />
 
         <HealthCard style={styles.card}>
@@ -99,17 +90,17 @@ export default function CompleteScreen() {
         <View style={styles.footer}>
           <BioCrossButton
             label="Start Checking Supplements"
-            onPress={startChecking}
+            onPress={() => finish('/(tabs)/check')}
             loading={finishing}
-            icon="shield-checkmark"
+            icon="scan-outline"
           />
           <Pressable
-            onPress={goToDashboard}
+            onPress={() => finish('/(tabs)/home')}
             style={styles.dashboardLink}
             accessibilityRole="link"
             disabled={finishing}
           >
-            <Text style={styles.dashboardLinkText}>Go to Dashboard</Text>
+            <Text style={styles.dashboardLinkText}>Go to Home</Text>
           </Pressable>
         </View>
       </ScrollView>
@@ -153,11 +144,7 @@ const styles = StyleSheet.create({
     fontSize: typography.size.lg,
     marginBottom: spacing.sm,
   },
-  nextRow: {
-    flexDirection: 'row',
-    gap: spacing.sm,
-    paddingVertical: spacing.sm,
-  },
+  nextRow: { flexDirection: 'row', gap: spacing.sm, paddingVertical: spacing.sm },
   nextRowBorder: { borderBottomWidth: 1, borderBottomColor: colors.surface.border },
   nextIcon: {
     width: 36,

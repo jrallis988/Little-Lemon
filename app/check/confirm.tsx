@@ -16,14 +16,15 @@ import {
   InfoCallout,
   SupplementCard,
 } from '../../src/design-system';
-import { colors, radii, spacing, typography } from '../../src/design-system/tokens';
+import { colors, spacing, typography } from '../../src/design-system/tokens';
 import { SUPPLEMENT_CATALOG } from '../../src/domain/fixtures';
 
 export default function ConfirmScreen() {
   const router = useRouter();
-  const { supplementId } = useLocalSearchParams<{ supplementId: string }>();
+  const { supplementId, source } = useLocalSearchParams<{ supplementId: string; source?: string }>();
 
   const supplement = SUPPLEMENT_CATALOG.find((s) => s.id === supplementId);
+  const fromLabel = source === 'label';
 
   if (!supplement) {
     return (
@@ -39,7 +40,7 @@ export default function ConfirmScreen() {
     );
   }
 
-  const activeIngredients = supplement.ingredients.filter((i) => i.isActive);
+  const serving = [supplement.dosage, supplement.form].filter(Boolean).join(' · ');
 
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
@@ -59,25 +60,51 @@ export default function ConfirmScreen() {
 
         <View style={styles.section}>
           <HealthCard>
-            <Text style={styles.ingredientsTitle}>Active ingredients</Text>
-            {activeIngredients.map((ing) => (
-              <View key={ing.id} style={styles.ingredientRow}>
-                <Ionicons name="leaf-outline" size={16} color={colors.brand.blue} />
-                <Text style={styles.ingredientName}>{ing.name}</Text>
-                {ing.amount ? <Text style={styles.ingredientAmt}>{ing.amount}</Text> : null}
-              </View>
-            ))}
+            <Text style={styles.productName}>{supplement.name}</Text>
+            {supplement.brand ? <Text style={styles.brand}>Brand: {supplement.brand}</Text> : null}
+            {serving ? <Text style={styles.serving}>Serving / dosage: {serving}</Text> : null}
+
+            <Text style={styles.ingredientsTitle}>Ingredient list</Text>
+            {supplement.ingredients.length > 0 ? (
+              supplement.ingredients.map((ing) => (
+                <View key={ing.id} style={styles.ingredientRow}>
+                  <Ionicons
+                    name={ing.isActive ? 'leaf-outline' : 'ellipse-outline'}
+                    size={16}
+                    color={ing.isActive ? colors.brand.blue : colors.text.tertiary}
+                  />
+                  <Text style={styles.ingredientName}>
+                    {ing.name}
+                    {!ing.isActive ? ' (inactive)' : ''}
+                  </Text>
+                  {ing.amount ? <Text style={styles.ingredientAmt}>{ing.amount}</Text> : null}
+                </View>
+              ))
+            ) : (
+              <Text style={styles.noIngredients}>No ingredients listed for this product.</Text>
+            )}
             {supplement.barcode ? (
               <Text style={styles.barcode}>Barcode: {supplement.barcode}</Text>
             ) : null}
           </HealthCard>
         </View>
 
+        {fromLabel ? (
+          <View style={styles.section}>
+            <InfoCallout
+              tone="success"
+              icon="checkmark-circle"
+              title="Formulation verified"
+              body="Ingredient details were confirmed from the Supplement Facts panel you photographed."
+            />
+          </View>
+        ) : null}
+
         <View style={styles.section}>
           <InfoCallout
             tone="info"
             title="What happens next?"
-            body="BioCross will analyze this product against your health profile — medications, conditions, allergies, and supplements — using trusted evidence sources."
+            body="When you tap Analyze Supplement, BioCross will check this product against your health profile using available safety evidence."
           />
         </View>
 
@@ -122,10 +149,27 @@ const styles = StyleSheet.create({
     lineHeight: 22,
   },
   section: { marginHorizontal: spacing.xl, marginBottom: spacing.lg },
+  productName: {
+    fontWeight: '800',
+    color: colors.text.primary,
+    fontSize: typography.size.lg,
+  },
+  brand: {
+    marginTop: spacing.xs,
+    color: colors.text.secondary,
+    fontSize: typography.size.sm,
+  },
+  serving: {
+    marginTop: spacing.xs,
+    color: colors.text.primary,
+    fontSize: typography.size.sm,
+    fontWeight: '600',
+  },
   ingredientsTitle: {
     fontWeight: '700',
     color: colors.text.primary,
     fontSize: typography.size.md,
+    marginTop: spacing.md,
     marginBottom: spacing.sm,
   },
   ingredientRow: {
@@ -141,6 +185,11 @@ const styles = StyleSheet.create({
     color: colors.text.secondary,
     fontSize: typography.size.sm,
     fontWeight: '600',
+  },
+  noIngredients: {
+    color: colors.text.secondary,
+    fontSize: typography.size.sm,
+    fontStyle: 'italic',
   },
   barcode: {
     marginTop: spacing.md,

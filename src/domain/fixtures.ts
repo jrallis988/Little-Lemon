@@ -439,8 +439,9 @@ export const DEMO_CHECKS: SupplementCheck[] = [
     supplement: SUPPLEMENT_CATALOG[0],
     checkedAt: daysAgo(2),
     riskLevel: 'low',
-    headline: 'Low Risk',
-    summary: 'No significant interactions or concerns found.',
+    headline: 'No Known Conflicts',
+    summary:
+      'No known conflicts were identified based on your current health profile and the information available to BioCross.',
     findings: [
       {
         id: 'f-vitd-1',
@@ -595,8 +596,9 @@ export const DEMO_LOW_RISK_CHECK: SupplementCheck = {
   supplement: SUPPLEMENT_CATALOG[1],
   checkedAt: new Date().toISOString(),
   riskLevel: 'low',
-  headline: 'Low Risk',
-  summary: 'No significant interactions or concerns found.',
+  headline: 'No Known Conflicts',
+  summary:
+    'No known conflicts were identified based on your current health profile and the information available to BioCross.',
   findings: [
     {
       id: 'f-mag-1',
@@ -632,39 +634,60 @@ export const DEMO_LOW_RISK_CHECK: SupplementCheck = {
   profileSnapshotNote: 'We analyzed this supplement against your health profile.',
 };
 
-export const DEMO_UNKNOWN_CHECK: SupplementCheck = {
-  id: 'check-unknown',
+export const DEMO_MORE_INFO_CHECK: SupplementCheck = {
+  id: 'check-more-info',
   userId: DEMO_USER.id,
   supplement: {
-    id: 'sup-unknown',
-    name: 'Unknown Product',
-    brand: 'Unidentified',
+    id: 'sup-incomplete',
+    name: 'Unverified Formula',
+    brand: 'Label partially readable',
     ingredients: [],
   },
   checkedAt: new Date().toISOString(),
-  riskLevel: 'unknown',
-  headline: 'Unable to Determine',
-  summary: 'BioCross needs more information before it can assess this product for you.',
+  riskLevel: 'more_info',
+  headline: 'More Information Needed',
+  summary:
+    "We couldn't confidently complete this safety check with the information currently available.",
   findings: [
     {
-      id: 'f-unk-1',
-      severity: 'info',
-      title: 'More information needed',
-      summary: 'Product identity or formulation details are incomplete.',
-      whatWeFound: 'Barcode/label data did not resolve to a complete product formula.',
+      id: 'f-more-1',
+      severity: 'more_info',
+      title: 'Ingredient dosage could not be identified',
+      summary: 'Supplement Facts lines were incomplete or unreadable.',
+      whatWeFound: 'Barcode/label data did not resolve to a complete product formula with dosages.',
       whyItMatters:
         'Without enough product detail, BioCross will not invent a positive or negative safety result.',
       evidenceIds: [],
-      discussWithProvider: 'Bring the bottle or label photo to your pharmacist or clinician if you need guidance sooner.',
+      discussWithProvider:
+        'Bring the bottle or a clear Supplement Facts photo to your pharmacist or clinician if you need guidance sooner.',
+      category: 'general',
+    },
+    {
+      id: 'f-more-2',
+      severity: 'more_info',
+      title: 'What we need',
+      summary: 'A clearer label photo, verified ingredient list, or updated health-profile details.',
+      whatWeFound: 'Formulation verification is required before a safety result can be issued.',
+      whyItMatters:
+        'Missing information is not the same as “no known conflict.” BioCross keeps those outcomes separate.',
+      evidenceIds: [],
+      discussWithProvider: 'Ask your care team before starting any unverified product.',
       category: 'general',
     },
   ],
   evidence: [],
-  tips: ['Try scanning the barcode again.', 'Photograph the Supplement Facts panel.', 'Search by name or enter the barcode manually.'],
+  tips: [
+    'Photograph the Supplement Facts panel',
+    'Update or confirm your medications',
+    'Search by name if the barcode is unclear',
+  ],
   disclaimer:
     'BioCross provides informational insights, not medical advice. Always talk to your healthcare provider with any concerns.',
-  profileSnapshotNote: 'Analysis paused due to insufficient product information.',
+  profileSnapshotNote: 'Analysis paused due to insufficient product or profile information.',
 };
+
+/** @deprecated Use DEMO_MORE_INFO_CHECK */
+export const DEMO_UNKNOWN_CHECK = DEMO_MORE_INFO_CHECK;
 
 export const DEMO_ALERTS: SafetyAlert[] = [
   {

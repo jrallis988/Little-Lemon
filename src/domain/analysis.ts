@@ -10,7 +10,7 @@ import {
   DEMO_EVIDENCE,
   DEMO_HIGH_RISK_CHECK,
   DEMO_LOW_RISK_CHECK,
-  DEMO_UNKNOWN_CHECK,
+  DEMO_MORE_INFO_CHECK,
   SUPPLEMENT_CATALOG,
 } from './fixtures';
 
@@ -24,7 +24,7 @@ export function analyzeSupplement(
   userId: string,
 ): SupplementCheck {
   if (!supplement.ingredients.length && (!supplement.name || supplement.name === 'Unknown Product')) {
-    return { ...DEMO_UNKNOWN_CHECK, id: `check-${Date.now()}`, userId, checkedAt: new Date().toISOString() };
+    return { ...DEMO_MORE_INFO_CHECK, id: `check-${Date.now()}`, userId, checkedAt: new Date().toISOString() };
   }
 
   const name = supplement.name.toLowerCase();
@@ -61,9 +61,9 @@ export function analyzeSupplement(
     supplement,
     checkedAt: new Date().toISOString(),
     riskLevel: 'low',
-    headline: 'Low Risk',
+    headline: 'No Known Conflicts',
     summary:
-      'No known conflicts were identified based on the health information currently available to BioCross.',
+      'No known conflicts were identified based on your current health profile and the information available to BioCross.',
     findings: [
       {
         id: `f-${Date.now()}`,
@@ -187,13 +187,13 @@ export function findSupplementByBarcode(barcode: string): Supplement | undefined
 export function riskLevelLabel(level: RiskLevel): string {
   switch (level) {
     case 'low':
-      return 'Low Risk';
+      return 'No Known Conflicts';
     case 'caution':
       return 'Use Caution';
     case 'high':
       return 'High Risk';
-    case 'unknown':
-      return 'Unable to Determine';
+    case 'more_info':
+      return 'More Information Needed';
   }
 }
 

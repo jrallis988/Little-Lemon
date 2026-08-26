@@ -9,11 +9,12 @@ import { SUPPLEMENT_CATALOG } from '../../src/domain/fixtures';
 import { useBioCross } from '../../src/state/BioCrossContext';
 
 const STEPS = [
-  'Identifying ingredients…',
-  'Checking medication interactions…',
-  'Reviewing your health profile…',
-  'Matching evidence sources…',
-  'Preparing your safety report…',
+  'Checking supplement ingredients...',
+  'Comparing with your medications...',
+  'Checking your medical conditions...',
+  'Reviewing known interactions...',
+  'Reviewing available safety evidence...',
+  'Preparing your results...',
 ];
 
 export default function AnalyzingScreen() {

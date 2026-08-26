@@ -15,8 +15,8 @@ export type ProfileItemCategory =
   | 'recent_change'
   | 'basic';
 
-export type RiskLevel = 'low' | 'caution' | 'high' | 'unknown';
-export type FindingSeverity = 'low' | 'caution' | 'high' | 'info';
+export type RiskLevel = 'low' | 'caution' | 'high' | 'more_info';
+export type FindingSeverity = 'low' | 'caution' | 'high' | 'info' | 'more_info';
 export type EvidenceStrength = 'established' | 'moderate' | 'limited' | 'emerging';
 export type AlertType = 'recall' | 'interaction' | 'research' | 'system' | 'regulatory';
 export type AlertPriority = 'urgent' | 'personalized' | 'informational';

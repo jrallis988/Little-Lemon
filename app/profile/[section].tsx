@@ -1,5 +1,13 @@
-import React, { useMemo } from 'react';
-import { Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
+import React, { useEffect, useMemo, useState } from 'react';
+import {
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Switch,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -13,8 +21,8 @@ import {
   ScreenTitle,
 } from '../../src/design-system';
 import { colors, radii, spacing, typography } from '../../src/design-system/tokens';
+import type { ConfirmationStatus, HealthProfileItem, ProfileItemCategory } from '../../src/domain/models';
 import { useBioCross } from '../../src/state/BioCrossContext';
-import type { ProfileItemCategory } from '../../src/domain/models';
 
 const SETTINGS_COPY: Record<
   string,
@@ -45,6 +53,11 @@ const SETTINGS_COPY: Record<
     subtitle: 'Light Mode',
     icon: 'color-palette-outline',
   },
+  personalization: {
+    title: 'Personalization',
+    subtitle: 'Optional wellness goals and preferences',
+    icon: 'heart-outline',
+  },
   help: {
     title: 'Help & Support',
     subtitle: 'Get help and contact support',
@@ -54,53 +67,83 @@ const SETTINGS_COPY: Record<
 
 const CATEGORY_META: Record<
   string,
-  { title: string; category: ProfileItemCategory; empty: string }
+  { title: string; category: ProfileItemCategory; empty: string; addLabel: string }
 > = {
   conditions: {
     title: 'Medical Conditions',
     category: 'condition',
     empty: 'No confirmed conditions in your health profile yet.',
+    addLabel: 'condition',
   },
   medications: {
     title: 'Medications',
     category: 'medication',
     empty: 'No confirmed medications in your health profile yet.',
+    addLabel: 'medication',
   },
   supplements: {
     title: 'Supplements',
     category: 'supplement',
     empty: 'No confirmed supplements in your health profile yet.',
+    addLabel: 'supplement',
   },
   allergies: {
     title: 'Allergies & Reactions',
     category: 'allergy',
     empty: 'No confirmed allergies in your health profile yet.',
+    addLabel: 'allergy',
   },
   surgeries: {
     title: 'Surgeries & Procedures',
     category: 'procedure',
     empty: 'No confirmed procedures in your health profile yet.',
+    addLabel: 'procedure',
   },
   testResults: {
     title: 'Test Results',
     category: 'lab_result',
     empty: 'No confirmed test results in your health profile yet.',
+    addLabel: 'test result',
+  },
+  recentChanges: {
+    title: 'Recent Changes',
+    category: 'recent_change',
+    empty: 'No recent health changes recorded yet.',
+    addLabel: 'recent change',
   },
   records: {
     title: 'Uploaded Health Records',
     category: 'basic',
     empty: 'No uploaded health records yet.',
+    addLabel: 'record',
   },
 };
 
 export default function ProfileSectionScreen() {
   const router = useRouter();
   const { section } = useLocalSearchParams<{ section: string }>();
-  const { ready, preferences, updatePreferences, profile, documents } =
-    useBioCross();
+  const {
+    ready,
+    preferences,
+    updatePreferences,
+    profile,
+    documents,
+    addProfileItem,
+    removeProfileItem,
+    confirmProfileItem,
+  } = useBioCross();
+
+  const [showAddCallout, setShowAddCallout] = useState(false);
+  const [addName, setAddName] = useState('');
 
   const settings = section ? SETTINGS_COPY[section] : undefined;
   const category = section ? CATEGORY_META[section] : undefined;
+
+  useEffect(() => {
+    if (section === 'personalization') {
+      router.replace('/onboarding/preferences');
+    }
+  }, [section, router]);
 
   const items = useMemo(() => {
     if (!profile || !category || section === 'records') return [];
@@ -122,7 +165,7 @@ export default function ProfileSectionScreen() {
         <View style={styles.pad}>
           <ScreenTitle
             title="Sign Out"
-            subtitle="You’ll need to sign in again to access your health profile on this device."
+            subtitle="You'll need to sign in again to access your health profile on this device."
           />
           <InfoCallout
             tone="warning"
@@ -132,7 +175,6 @@ export default function ProfileSectionScreen() {
             label="Sign Out"
             variant="danger"
             onPress={async () => {
-              // Demo: return to welcome; production would clear session credentials.
               router.replace('/onboarding/welcome');
             }}
             style={{ marginTop: spacing.lg }}
@@ -143,7 +185,7 @@ export default function ProfileSectionScreen() {
     );
   }
 
-  if (settings) {
+  if (settings && section !== 'personalization') {
     return (
       <SafeAreaView style={styles.safe} edges={['top']}>
         <AppHeader onBack={() => router.back()} />
@@ -172,7 +214,7 @@ export default function ProfileSectionScreen() {
               <InfoCallout
                 tone="privacy"
                 title="Your data is private and secure."
-                body="We never sell your data. You’re always in control of your information."
+                body="We never sell your data. You're always in control of your information."
               />
               <HealthCard style={styles.card}>
                 <ActionRow label="Export my health data" onPress={() => {}} />
@@ -185,7 +227,7 @@ export default function ProfileSectionScreen() {
           {section === 'sharing' ? (
             <InfoCallout
               tone="info"
-              title="You’re in control"
+              title="You're in control"
               body="BioCross does not share your confirmed health profile with third parties without explicit consent. Future clinician-sharing features will require your approval each time."
             />
           ) : null}
@@ -267,25 +309,109 @@ export default function ProfileSectionScreen() {
                 </HealthCard>
               ))
             )
-          ) : items.length === 0 ? (
-            <EmptyState title={`No ${category.title.toLowerCase()}`} body={category.empty} />
+          ) : items.length === 0 && !showAddCallout ? (
+            <EmptyState
+              title={`No ${category.title.toLowerCase()}`}
+              body={category.empty}
+              actionLabel={`Add ${category.addLabel}`}
+              onAction={() => setShowAddCallout(true)}
+            />
           ) : (
-            items.map((item) => (
-              <HealthCard key={item.id} style={styles.card}>
-                <View style={styles.itemHeader}>
-                  <Text style={styles.rowTitle}>{item.name}</Text>
-                  <StatusPill status={item.status} />
-                </View>
-                {item.details ? <Text style={styles.rowSub}>{item.details}</Text> : null}
-                {item.sourceDocumentId ? (
+            <>
+              {items.map((item) => (
+                <HealthCard key={item.id} style={styles.card}>
+                  <View style={styles.itemHeader}>
+                    <Text style={styles.rowTitle}>{item.name}</Text>
+                    <StatusBadge status={item.status} />
+                  </View>
+                  {item.details ? <Text style={styles.rowSub}>{item.details}</Text> : null}
                   <Text style={styles.provenance}>
-                    Imported from health record · confirmed{' '}
-                    {item.confirmedAt ? new Date(item.confirmedAt).toLocaleDateString() : '—'}
+                    {item.sourceDocumentId
+                      ? 'Imported from health record'
+                      : 'Entered manually'}
+                    {' · '}
+                    Last updated{' '}
+                    {item.confirmedAt
+                      ? new Date(item.confirmedAt).toLocaleDateString()
+                      : item.extractedAt
+                        ? new Date(item.extractedAt).toLocaleDateString()
+                        : '—'}
                   </Text>
-                ) : null}
-              </HealthCard>
-            ))
+                  <View style={styles.itemActions}>
+                    {item.status === 'pending_review' || item.status === 'not_reviewed' ? (
+                      <Pressable
+                        onPress={() => confirmProfileItem(item.id)}
+                        style={styles.actionBtn}
+                        accessibilityRole="button"
+                        accessibilityLabel={`Confirm ${item.name}`}
+                      >
+                        <Ionicons name="checkmark-circle-outline" size={16} color={colors.brand.blue} />
+                        <Text style={styles.actionBtnText}>Confirm</Text>
+                      </Pressable>
+                    ) : null}
+                    <Pressable
+                      onPress={() => removeProfileItem(item.id)}
+                      style={styles.actionBtn}
+                      accessibilityRole="button"
+                      accessibilityLabel={`Remove ${item.name}`}
+                    >
+                      <Ionicons name="trash-outline" size={16} color={colors.semantic.high} />
+                      <Text style={[styles.actionBtnText, { color: colors.semantic.high }]}>Remove</Text>
+                    </Pressable>
+                  </View>
+                </HealthCard>
+              ))}
+            </>
           )}
+
+          {section !== 'records' ? (
+            <>
+              <BioCrossButton
+                label={`Add ${category.addLabel}`}
+                variant="outline"
+                size="md"
+                onPress={() => setShowAddCallout(true)}
+              />
+              {showAddCallout ? (
+                <InfoCallout
+                  tone="info"
+                  title="Add or edit items"
+                  body="A full form is coming soon. For now, enter a name below to add an item to your profile."
+                />
+              ) : null}
+              {showAddCallout ? (
+                <HealthCard style={styles.card}>
+                  <Text style={styles.fieldLabel}>Name</Text>
+                  <TextInput
+                    value={addName}
+                    onChangeText={setAddName}
+                    placeholder={`Enter ${category.addLabel} name`}
+                    placeholderTextColor={colors.text.tertiary}
+                    style={styles.input}
+                    accessibilityLabel={`${category.addLabel} name`}
+                  />
+                  <BioCrossButton
+                    label="Save item"
+                    size="md"
+                    onPress={async () => {
+                      if (!addName.trim()) return;
+                      await addProfileItem({
+                        id: `manual-${Date.now()}`,
+                        category: category.category,
+                        name: addName.trim(),
+                        status: 'confirmed',
+                        confirmedAt: new Date().toISOString(),
+                        extractedAt: new Date().toISOString(),
+                      });
+                      setAddName('');
+                      setShowAddCallout(false);
+                    }}
+                    style={{ marginTop: spacing.sm }}
+                  />
+                </HealthCard>
+              ) : null}
+            </>
+          ) : null}
 
           <InfoCallout
             tone="info"
@@ -299,7 +425,7 @@ export default function ProfileSectionScreen() {
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
       <AppHeader onBack={() => router.back()} />
-      <EmptyState title="Section not found" body="This profile section isn’t available." />
+      <EmptyState title="Section not found" body="This profile section isn't available." />
     </SafeAreaView>
   );
 }
@@ -356,13 +482,17 @@ function ActionRow({
   );
 }
 
-function StatusPill({ status }: { status: string }) {
+function StatusBadge({ status }: { status: ConfirmationStatus }) {
   const tone =
     status === 'confirmed'
       ? { bg: colors.semantic.lowBg, fg: colors.semantic.low, label: 'Confirmed' }
-      : status === 'pending_review' || status === 'not_reviewed'
-        ? { bg: colors.semantic.cautionBg, fg: colors.semantic.caution, label: 'Needs review' }
-        : { bg: colors.surface.background, fg: colors.text.secondary, label: status };
+      : status === 'missing'
+        ? { bg: colors.semantic.unknownBg, fg: colors.semantic.unknown, label: 'Missing' }
+        : status === 'not_reviewed'
+          ? { bg: colors.surface.background, fg: colors.text.secondary, label: 'Not reviewed' }
+          : status === 'pending_review'
+            ? { bg: colors.semantic.cautionBg, fg: colors.semantic.caution, label: 'Needs attention' }
+            : { bg: colors.surface.background, fg: colors.text.secondary, label: 'Not reviewed' };
   return (
     <View style={[styles.pill, { backgroundColor: tone.bg }]}>
       <Text style={[styles.pillText, { color: tone.fg }]}>{tone.label}</Text>
@@ -391,6 +521,19 @@ const styles = StyleSheet.create({
   pill: { paddingHorizontal: 8, paddingVertical: 3, borderRadius: radii.pill },
   pillText: { fontSize: 11, fontWeight: '700' },
   provenance: { marginTop: 8, color: colors.text.tertiary, fontSize: typography.size.xs },
+  itemActions: { flexDirection: 'row', gap: spacing.md, marginTop: spacing.sm },
+  actionBtn: { flexDirection: 'row', alignItems: 'center', gap: 4, minHeight: 36 },
+  actionBtnText: { color: colors.brand.blue, fontWeight: '600', fontSize: typography.size.sm },
   linkBtn: { marginTop: spacing.sm },
   link: { color: colors.brand.blue, fontWeight: '700' },
+  fieldLabel: { color: colors.text.secondary, fontSize: typography.size.xs, fontWeight: '600' },
+  input: {
+    marginTop: spacing.xs,
+    borderWidth: 1,
+    borderColor: colors.surface.border,
+    borderRadius: radii.md,
+    padding: spacing.sm,
+    color: colors.text.primary,
+    fontSize: typography.size.md,
+  },
 });

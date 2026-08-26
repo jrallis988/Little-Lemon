@@ -13,7 +13,7 @@ const ICONS: Record<RiskLevel, keyof typeof Ionicons.glyphMap> = {
   low: 'shield-checkmark',
   caution: 'warning',
   high: 'alert-circle',
-  unknown: 'help-circle',
+  more_info: 'help-circle',
   info: 'information-circle',
 };
 

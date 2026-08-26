@@ -50,6 +50,7 @@ const SETTINGS = [
   { key: 'notifications', label: 'Notifications', subtitle: 'Manage your alerts and reminders', icon: 'notifications-outline' as const },
   { key: 'privacy', label: 'Privacy & Security', subtitle: 'Control your data and privacy settings', icon: 'lock-closed-outline' as const },
   { key: 'sharing', label: 'Data Sharing', subtitle: 'Manage what you share and with whom', icon: 'shield-outline' as const },
+  { key: 'personalization', label: 'Personalization', subtitle: 'Optional wellness goals and preferences', icon: 'heart-outline' as const },
   { key: 'language', label: 'Language', subtitle: 'English (US)', icon: 'language-outline' as const },
   { key: 'appearance', label: 'Appearance', subtitle: 'Light Mode', icon: 'color-palette-outline' as const },
   { key: 'help', label: 'Help & Support', subtitle: 'Get help and contact support', icon: 'help-circle-outline' as const },

@@ -77,19 +77,32 @@ export function RiskResultCard({ check, onLearnMore }: RiskResultCardProps) {
         <View style={[styles.confidence, { backgroundColor: colors.semantic.lowBg }]}>
           <Ionicons name="checkmark-circle" size={18} color={colors.semantic.low} />
           <Text style={[styles.confidenceText, { color: colors.semantic.low }]}>
-            No known conflicts were identified based on the health information currently available to
-            BioCross — not a guarantee of safety.
+            No known conflicts were identified based on your current health profile and the information
+            available to BioCross.
           </Text>
         </View>
       ) : null}
 
-      {check.riskLevel === 'unknown' ? (
-        <View style={styles.confidence}>
-          <Ionicons name="information-circle" size={18} color={colors.semantic.unknown} />
-          <Text style={styles.confidenceText}>
-            BioCross will not invent a safety result when product or profile information is incomplete.
-          </Text>
-        </View>
+      {check.riskLevel === 'more_info' ? (
+        <>
+          <View style={[styles.confidence, { backgroundColor: colors.semantic.unknownBg }]}>
+            <Ionicons name="information-circle" size={18} color={colors.semantic.unknown} />
+            <Text style={styles.confidenceText}>
+              BioCross will not invent a safety result when product or profile information is incomplete.
+            </Text>
+          </View>
+          {check.findings.length > 0 ? (
+            <View style={styles.whyBox}>
+              <Text style={styles.whyTitle}>What we need:</Text>
+              {check.findings.map((f) => (
+                <View key={f.id} style={styles.whyRow}>
+                  <Ionicons name="ellipse" size={8} color={colors.semantic.unknown} />
+                  <Text style={styles.whyText}>{f.title}</Text>
+                </View>
+              ))}
+            </View>
+          ) : null}
+        </>
       ) : null}
 
       <View style={styles.footer}>
@@ -114,7 +127,13 @@ function RiskGauge({ level }: { level: RiskLevel }) {
         <View style={[styles.gaugeSeg, { backgroundColor: colors.semantic.high }]} />
       </View>
       <View style={[styles.needle, { left: position }]} />
-      <Text style={styles.gaugeLabel}>{level === 'unknown' ? 'Unknown' : level.charAt(0).toUpperCase() + level.slice(1)}</Text>
+      <Text style={styles.gaugeLabel}>
+        {level === 'more_info'
+          ? 'More info'
+          : level === 'low'
+            ? 'Low'
+            : level.charAt(0).toUpperCase() + level.slice(1)}
+      </Text>
     </View>
   );
 }
@@ -147,7 +166,9 @@ export function FindingCard({
                   ? 'warning'
                   : finding.severity === 'low'
                     ? 'checkmark-circle'
-                    : 'information-circle'
+                    : finding.severity === 'more_info'
+                      ? 'help-circle'
+                      : 'information-circle'
             }
             size={20}
             color={tone.fg}

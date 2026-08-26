@@ -53,6 +53,7 @@ export function RecentCheckCard({
   onPress?: () => void;
 }) {
   const level = check.riskLevel as RiskLevel;
+  const isMoreInfo = level === 'more_info';
   return (
     <HealthCard>
       <Pressable
@@ -72,7 +73,9 @@ export function RecentCheckCard({
                     ? colors.semantic.cautionBg
                     : level === 'high'
                       ? colors.semantic.highBg
-                      : colors.semantic.unknownBg,
+                      : isMoreInfo
+                        ? colors.semantic.unknownBg
+                        : colors.semantic.unknownBg,
             },
           ]}
         >
