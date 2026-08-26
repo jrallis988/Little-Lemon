@@ -11,6 +11,14 @@ import { SavedPassViewer } from "@/components/checkout/saved-pass-viewer";
 import { formatCurrency } from "@/lib/pricing";
 import { cn } from "@/lib/utils";
 
+interface LaunchConfig {
+  launch: {
+    membership: boolean;
+    transfer: boolean;
+    familyProfiles: boolean;
+  };
+}
+
 interface ProfileData {
   id: string;
   email: string;
@@ -53,6 +61,17 @@ export default function ProfilePage() {
   const [error, setError] = useState<string | null>(null);
   const [highContrast, setHighContrast] = useState(false);
   const [largeText, setLargeText] = useState(false);
+  const [launch, setLaunch] = useState<LaunchConfig["launch"] | null>(null);
+
+  useEffect(() => {
+    fetch("/api/config")
+      .then(async (res) => {
+        if (!res.ok) return null;
+        return res.json() as Promise<LaunchConfig>;
+      })
+      .then((data) => setLaunch(data?.launch ?? null))
+      .catch(() => setLaunch(null));
+  }, []);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -138,14 +157,20 @@ export default function ProfilePage() {
 
         <TrustCallout title="Caregiver-friendly controls">
           Use larger text or high contrast below. Your signed-in account keeps
-          saved information available across devices. Manage plan options on the{" "}
-          <Link
-            href="/membership"
-            className="font-medium underline-offset-2 hover:underline"
-          >
-            membership page
-          </Link>
-          .
+          saved information available across devices.
+          {launch?.membership !== false && (
+            <>
+              {" "}
+              Manage plan options on the{" "}
+              <Link
+                href="/membership"
+                className="font-medium underline-offset-2 hover:underline"
+              >
+                membership page
+              </Link>
+              .
+            </>
+          )}
         </TrustCallout>
 
         <nav className="grid gap-2 sm:grid-cols-2">
@@ -154,38 +179,47 @@ export default function ProfilePage() {
               href: "/profile/prescriptions",
               title: "Refill tracker",
               body: "Active prescriptions and coupon history",
+              show: true,
             },
             {
               href: "/profile/family",
               title: "Family & dependents",
               body: "Plus household profiles",
+              show: launch?.familyProfiles !== false,
             },
             {
               href: "/profile/billing",
               title: "Subscription & billing",
               body: "Upgrade, invoices, or cancel Plus",
+              show: launch?.membership !== false,
             },
             {
               href: "/profile/insurance",
               title: "Insurance plan",
               body: "Deductible & copay for comparisons",
+              show: true,
             },
             {
               href: "/profile/security",
               title: "Security & privacy",
               body: "Password, 2FA preference, privacy controls",
+              show: true,
             },
             {
               href: "/tools/insurance-calculator",
               title: "Insurance calculator",
               body: "Compare copay vs cash coupon",
+              show: true,
             },
             {
               href: "/transfer",
               title: "Transfer a prescription",
               body: "Move an Rx to a network pharmacy",
+              show: launch?.transfer !== false,
             },
-          ].map((item) => (
+          ]
+            .filter((item) => item.show)
+            .map((item) => (
             <Link
               key={item.href}
               href={item.href}

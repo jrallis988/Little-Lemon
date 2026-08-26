@@ -1,7 +1,10 @@
 import Link from "next/link";
 import { ShieldCheck } from "lucide-react";
+import { getLaunchFeatures } from "@/lib/launch-mode";
 
 export function SiteFooter() {
+  const features = getLaunchFeatures();
+
   return (
     <footer className="mt-auto border-t border-border bg-trust text-trust-foreground">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-[1.4fr_1fr_1fr] md:gap-10 md:py-12">
@@ -53,11 +56,20 @@ export function SiteFooter() {
                 Help
               </Link>
             </li>
-            <li>
-              <Link href="/providers" className="hover:text-trust-foreground">
-                For providers
-              </Link>
-            </li>
+            {features.providers && (
+              <li>
+                <Link href="/providers" className="hover:text-trust-foreground">
+                  For providers
+                </Link>
+              </li>
+            )}
+            {features.transfer && (
+              <li>
+                <Link href="/transfer" className="hover:text-trust-foreground">
+                  Pharmacy transfer
+                </Link>
+              </li>
+            )}
             <li>
               <Link href="/profile" className="hover:text-trust-foreground">
                 Saved tools (account)

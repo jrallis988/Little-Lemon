@@ -18,17 +18,27 @@ interface ProfileBilling {
 
 export default function BillingPage() {
   const [profile, setProfile] = useState<ProfileBilling | null>(null);
+  const [membershipEnabled, setMembershipEnabled] = useState(true);
   const [loading, setLoading] = useState(true);
   const [portalLoading, setPortalLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/api/me")
-      .then(async (res) => {
+    Promise.all([
+      fetch("/api/config").then(async (res) => {
+        if (!res.ok) return { launch: { membership: true } };
+        return res.json() as Promise<{ launch: { membership: boolean } }>;
+      }),
+      fetch("/api/me").then(async (res) => {
         if (res.status === 401) throw new Error("Sign in required");
         if (!res.ok) throw new Error("Could not load billing.");
         const data = (await res.json()) as { profile: ProfileBilling };
-        setProfile(data.profile);
+        return data.profile;
+      }),
+    ])
+      .then(([config, prof]) => {
+        setMembershipEnabled(config.launch.membership);
+        setProfile(prof);
       })
       .catch((err: Error) => setError(err.message))
       .finally(() => setLoading(false));
@@ -65,6 +75,21 @@ export default function BillingPage() {
         <h1 className="font-display text-3xl font-semibold">Sign in required</h1>
         <Link href="/login" className={cn(buttonVariants({ size: "lg" }), "mt-5")}>
           Sign in
+        </Link>
+      </div>
+    );
+  }
+
+  if (!membershipEnabled) {
+    return (
+      <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6">
+        <h1 className="font-display text-3xl font-semibold">Not available in limited launch</h1>
+        <p className="mt-3 text-muted-foreground">
+          Paid membership and billing are disabled during the v1 launch. Coverage
+          check and pharmacy pickup pathways remain free.
+        </p>
+        <Link href="/profile" className="mt-6 inline-block text-sm font-medium text-primary hover:underline">
+          ← Back to account
         </Link>
       </div>
     );

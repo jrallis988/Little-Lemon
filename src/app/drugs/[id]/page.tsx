@@ -8,6 +8,7 @@ import { EligibilitySection } from "@/components/medication/eligibility-section"
 import { FulfillmentSection } from "@/components/medication/fulfillment-section";
 import { ReportIssueButton } from "@/components/support/report-issue-button";
 import { getProgramMeta, PRODUCT_TYPE_LABEL } from "@/lib/program-catalog";
+import { getLaunchFeatures } from "@/lib/launch-mode";
 import { formatCurrency } from "@/lib/pricing";
 import { getDrugById } from "@/lib/pricing-service";
 import { prisma } from "@/lib/db";
@@ -40,6 +41,7 @@ export default async function DrugDetailPage({ params }: PageProps) {
   if (!drug) notFound();
 
   const program = getProgramMeta(drug.id);
+  const features = getLaunchFeatures();
   const forms = Array.from(new Set(drug.strengths.map((s) => s.form)));
 
   return (
@@ -89,13 +91,13 @@ export default async function DrugDetailPage({ params }: PageProps) {
               <ArrowRight className="size-4" aria-hidden />
             </Link>
             <Link
-              href={`/search?drug=${drug.id}`}
+              href={`/pharmacies?drug=${drug.id}`}
               className={cn(
                 buttonVariants({ variant: "outline", size: "lg" }),
                 "min-h-11"
               )}
             >
-              See pharmacy cash options
+              Find participating pharmacies
             </Link>
             <ReportIssueButton drugId={drug.id} />
           </div>
@@ -143,8 +145,9 @@ export default async function DrugDetailPage({ params }: PageProps) {
                 TrumpRx price
               </h2>
               <p className="mt-1 text-sm text-muted-foreground">
-                Illustrative program cash option for a common 30-day fill.
-                Confirm at the pharmacy or manufacturer program before you fill.
+                {features.livePharmacyPricing
+                  ? "Program cash option for a common 30-day fill. Confirm at the pharmacy before you fill."
+                  : "Program price for a common 30-day fill. Live per-pharmacy quotes are not enabled — confirm final price at the counter."}
               </p>
               <p className="mt-3 font-display text-4xl font-semibold tabular-nums text-primary">
                 {formatCurrency(program.programPrice30)}
@@ -159,6 +162,7 @@ export default async function DrugDetailPage({ params }: PageProps) {
               medicationLabel={`${drug.brandName} (${drug.genericName})`}
               trumpRxPrice={program.programPrice30}
               suggestedRetail={drug.retailCashPrice30}
+              livePharmacyPricing={features.livePharmacyPricing}
             />
 
             <EligibilitySection eligibility={program.eligibility} />

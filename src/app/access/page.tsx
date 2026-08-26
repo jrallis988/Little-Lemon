@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { getProgramMeta } from "@/lib/program-catalog";
+import { getLaunchFeatures } from "@/lib/launch-mode";
 import { getDrugById } from "@/lib/pricing-service";
 import { AccessPathwayClient } from "@/components/access/access-pathway-client";
 import { cn } from "@/lib/utils";
@@ -63,6 +64,8 @@ export default async function AccessPage({ searchParams }: PageProps) {
           ? "pharmacy"
           : "manufacturer";
 
+  const features = getLaunchFeatures();
+
   return (
     <div className="min-h-[70dvh] bg-background">
       <div className="border-b border-border bg-surface">
@@ -75,8 +78,11 @@ export default async function AccessPage({ searchParams }: PageProps) {
           </h1>
           <p className="mt-2 text-sm text-muted-foreground">
             TrumpRx does not sell or dispense {drug.brandName}. You will work
-            with a participating pharmacy or the manufacturer program — we show
-            you which path applies and what to do next.
+            with a participating pharmacy
+            {features.manufacturerPathway
+              ? " or the manufacturer program"
+              : ""}{" "}
+            — we show you which path applies and what to do next.
           </p>
         </div>
       </div>
@@ -86,9 +92,9 @@ export default async function AccessPage({ searchParams }: PageProps) {
           brandName={drug.brandName}
           genericName={drug.genericName}
           preferred={preferred}
-          fulfillmentPath={program.fulfillment.path}
           fulfillmentLabel={program.fulfillment.label}
           steps={program.fulfillment.steps}
+          allowManufacturerPathway={features.manufacturerPathway}
         />
       </div>
     </div>

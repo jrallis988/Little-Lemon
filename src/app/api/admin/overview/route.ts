@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { requireAdmin } from "@/lib/admin";
 import { prisma } from "@/lib/db";
 import { peekEnv, isStripeConfigured } from "@/lib/env";
+import { getLaunchFeatures, V1_PHARMACY_PICKUP_DRUG_IDS } from "@/lib/launch-mode";
 
 /** Admin overview — drugs, pharmacies, coupons, switch events, chats. */
 export async function GET() {
@@ -20,6 +21,8 @@ export async function GET() {
     openChats,
     openTickets,
     openTransfers,
+    openMedicationRequests,
+    openIssueReports,
     recentSwitch,
     switchByStatus,
   ] = await Promise.all([
@@ -38,6 +41,12 @@ export async function GET() {
     prisma.prescriptionTransfer.count({
       where: { status: { in: ["submitted", "in_review"] } },
     }),
+    prisma.medicationRequest.count({
+      where: { status: { in: ["received", "reviewed"] } },
+    }),
+    prisma.issueReport.count({
+      where: { status: { in: ["received", "reviewed"] } },
+    }),
     prisma.switchEvent.findMany({
       orderBy: { createdAt: "desc" },
       take: 20,
@@ -50,6 +59,7 @@ export async function GET() {
   ]);
 
   const peek = peekEnv();
+  const launchFeatures = getLaunchFeatures();
 
   return NextResponse.json({
     counts: {
@@ -62,6 +72,8 @@ export async function GET() {
       openChats,
       openTickets,
       openTransfers,
+      openMedicationRequests,
+      openIssueReports,
     },
     switchAnalytics: {
       byStatus: switchByStatus.map((row) => ({
@@ -79,6 +91,10 @@ export async function GET() {
     },
     launch: {
       envOk: peek.ok,
+      mode: launchFeatures.mode,
+      v1FormularyCount: V1_PHARMACY_PICKUP_DRUG_IDS.length,
+      membershipEnabled: launchFeatures.membership,
+      livePharmacyPricing: launchFeatures.livePharmacyPricing,
       stripe: peek.ok ? isStripeConfigured() : false,
       liveSwitch: Boolean(process.env.SWITCH_API_URL),
       externalPricing: (process.env.PRICING_PROVIDER ?? "network") === "external",

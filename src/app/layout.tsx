@@ -3,6 +3,8 @@ import { Barlow_Condensed, IBM_Plex_Sans, Geist_Mono } from "next/font/google";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { DisclaimerBanner } from "@/components/layout/disclaimer-banner";
+import { LimitedBetaBanner } from "@/components/layout/limited-beta-banner";
+import { getLaunchFeatures } from "@/lib/launch-mode";
 import { SessionProvider } from "@/components/providers/session-provider";
 import { ToastProvider } from "@/components/providers/toast-provider";
 import { CartHydrator } from "@/components/providers/cart-hydrator";
@@ -61,6 +63,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const launchFeatures = getLaunchFeatures();
+
   return (
     <html lang="en">
       <body
@@ -77,7 +81,14 @@ export default function RootLayout({
                 Skip to main content
               </a>
               <DisclaimerBanner />
-              <SiteHeader />
+              <LimitedBetaBanner />
+              <SiteHeader
+                features={{
+                  membership: launchFeatures.membership,
+                  transfer: launchFeatures.transfer,
+                  providers: launchFeatures.providers,
+                }}
+              />
               <main id="main-content">{children}</main>
               <SiteFooter />
               <SupportChatWidget />

@@ -6,6 +6,11 @@ import {
   isTwilioConfigured,
   peekEnv,
 } from "@/lib/env";
+import {
+  getLaunchFeatures,
+  launchModeLabel,
+  V1_PHARMACY_PICKUP_DRUG_IDS,
+} from "@/lib/launch-mode";
 
 export const dynamic = "force-dynamic";
 
@@ -20,9 +25,22 @@ export async function GET() {
   const liveSwitch = Boolean(process.env.SWITCH_API_URL);
   const externalPricing =
     (process.env.PRICING_PROVIDER ?? "network") === "external";
+  const launch = getLaunchFeatures();
 
   return NextResponse.json({
     appName: process.env.NEXT_PUBLIC_APP_NAME ?? "Trump RX",
+    launch: {
+      mode: launch.mode,
+      label: launchModeLabel(),
+      v1FormularyCount: V1_PHARMACY_PICKUP_DRUG_IDS.length,
+      membership: launch.membership,
+      transfer: launch.transfer,
+      providers: launch.providers,
+      familyProfiles: launch.familyProfiles,
+      manufacturerPathway: launch.manufacturerPathway,
+      livePharmacyPricing: launch.livePharmacyPricing,
+      showLimitedBetaBanner: launch.showLimitedBetaBanner,
+    },
     partners: {
       telehealth,
       mailOrder,

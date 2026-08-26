@@ -21,6 +21,7 @@ interface Member {
 export default function FamilyPage() {
   const [members, setMembers] = useState<Member[]>([]);
   const [limit, setLimit] = useState(0);
+  const [membershipEnabled, setMembershipEnabled] = useState(true);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -39,7 +40,20 @@ export default function FamilyPage() {
   }
 
   useEffect(() => {
-    load()
+    Promise.all([
+      fetch("/api/config").then(async (res) => {
+        if (!res.ok) return { launch: { membership: true, familyProfiles: true } };
+        return res.json() as Promise<{
+          launch: { membership: boolean; familyProfiles: boolean };
+        }>;
+      }),
+      load(),
+    ])
+      .then(([config]) => {
+        setMembershipEnabled(
+          config.launch.membership && config.launch.familyProfiles
+        );
+      })
       .catch((err: Error) => setError(err.message))
       .finally(() => setLoading(false));
   }, []);
@@ -103,6 +117,21 @@ export default function FamilyPage() {
         <h1 className="font-display text-3xl font-semibold">Sign in required</h1>
         <Link href="/login" className={cn(buttonVariants({ size: "lg" }), "mt-5")}>
           Sign in
+        </Link>
+      </div>
+    );
+  }
+
+  if (!membershipEnabled) {
+    return (
+      <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6">
+        <h1 className="font-display text-3xl font-semibold">Not available in limited launch</h1>
+        <p className="mt-3 text-muted-foreground">
+          Family profiles are a Plus benefit and are disabled during the v1
+          launch.
+        </p>
+        <Link href="/profile" className="mt-6 inline-block text-sm font-medium text-primary hover:underline">
+          ← Back to account
         </Link>
       </div>
     );

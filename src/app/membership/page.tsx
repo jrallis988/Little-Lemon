@@ -5,6 +5,7 @@ import { Check } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { TrustCallout } from "@/components/design/trust-callout";
 import { UpgradeButton } from "@/components/upgrade-button";
+import { getLaunchFeatures } from "@/lib/launch-mode";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -30,6 +31,34 @@ const PLUS = [
 ];
 
 export default function MembershipPage() {
+  const features = getLaunchFeatures();
+
+  if (!features.membership) {
+    return (
+      <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6">
+        <h1 className="font-display text-3xl font-semibold uppercase tracking-tight">
+          Not available in limited launch
+        </h1>
+        <p className="mt-3 text-muted-foreground">
+          Paid membership and Plus account tools are disabled during the v1
+          launch. Coverage check, medication details, and pharmacy pickup
+          pathways are free to use. TrumpRx still does not sell medications.
+        </p>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <Link href="/search" className={cn(buttonVariants({ size: "lg" }))}>
+            Check coverage
+          </Link>
+          <Link
+            href="/medications"
+            className={cn(buttonVariants({ variant: "outline", size: "lg" }))}
+          >
+            Included medications
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-[70dvh] bg-background">
       <div className="relative isolate overflow-hidden border-b border-border">
@@ -83,7 +112,7 @@ export default function MembershipPage() {
                 "mt-5 min-h-11 w-full"
               )}
             >
-              Start comparing free
+              Check coverage
             </Link>
           </section>
 

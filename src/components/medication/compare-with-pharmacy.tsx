@@ -14,14 +14,15 @@ const PHARMACIES = [
 interface CompareWithPharmacyProps {
   medicationLabel: string;
   trumpRxPrice: number;
-  /** Optional suggested retail when user hasn't entered a price yet */
   suggestedRetail?: number;
+  livePharmacyPricing?: boolean;
 }
 
 export function CompareWithPharmacy({
   medicationLabel,
   trumpRxPrice,
   suggestedRetail,
+  livePharmacyPricing = false,
 }: CompareWithPharmacyProps) {
   const [pharmacyId, setPharmacyId] = useState<string>("cvs");
   const [currentPay, setCurrentPay] = useState(
@@ -50,7 +51,9 @@ export function CompareWithPharmacy({
       </h2>
       <p className="mt-1 text-sm text-muted-foreground">
         Is TrumpRx cheaper than what you currently pay for {medicationLabel}?
-        Enter what you pay today if live pharmacy pricing is unavailable.
+        {livePharmacyPricing
+          ? " Enter what you pay today if your pharmacy price is not shown live."
+          : " Enter what you pay today — live per-pharmacy pricing is not enabled in this launch."}
       </p>
 
       <div className="mt-4 grid gap-3 sm:grid-cols-2">

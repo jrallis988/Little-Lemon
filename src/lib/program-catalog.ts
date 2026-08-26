@@ -3,6 +3,11 @@
  * Scope is intentionally limited — only select medications are included.
  */
 
+import {
+  getLaunchMode,
+  isDrugInLaunchFormulary,
+} from "@/lib/launch-mode";
+
 export type ProductType = "brand" | "generic" | "compounded";
 
 export type FulfillmentPath =
@@ -438,7 +443,9 @@ export function getProgramMeta(drugId: string): ProgramDrugMeta | null {
 }
 
 export function isIncludedMedication(drugId: string): boolean {
-  return drugId in CATALOG;
+  if (!(drugId in CATALOG)) return false;
+  if (getLaunchMode() === "full") return true;
+  return isDrugInLaunchFormulary(drugId);
 }
 
 export const PRODUCT_TYPE_LABEL: Record<ProductType, string> = {

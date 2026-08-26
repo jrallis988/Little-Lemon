@@ -5,10 +5,15 @@ import { DrugSearch } from "@/components/search/drug-search";
 import { buttonVariants } from "@/components/ui/button";
 import { prisma } from "@/lib/db";
 import { isIncludedMedication } from "@/lib/program-catalog";
+import {
+  isLimitedV1Launch,
+  V1_PHARMACY_PICKUP_DRUG_IDS,
+} from "@/lib/launch-mode";
 import { mapDrug } from "@/lib/pricing-service";
 import { cn } from "@/lib/utils";
 
 export default async function HomePage() {
+  const limited = isLimitedV1Launch();
   const included = (
     await prisma.drug.findMany({
       orderBy: { brandName: "asc" },
@@ -47,8 +52,18 @@ export default async function HomePage() {
               See if your medication is included.
             </h1>
             <p className="animate-trx-fade-up-delay-2 mt-4 max-w-lg text-base leading-relaxed text-trust-foreground/95 sm:text-lg">
-              TrumpRx provides lower-cost options for select medications. Search
-              below or browse all currently included medications.
+              {limited ? (
+                <>
+                  TrumpRx currently includes{" "}
+                  {V1_PHARMACY_PICKUP_DRUG_IDS.length} generic medications for
+                  pharmacy pickup. Search below to see if yours is on the list.
+                </>
+              ) : (
+                <>
+                  TrumpRx provides lower-cost options for select medications.
+                  Search below or browse all currently included medications.
+                </>
+              )}
             </p>
           </div>
 
@@ -98,7 +113,9 @@ export default async function HomePage() {
               {
                 n: "04",
                 t: "Access path",
-                d: "Pharmacy pickup or manufacturer-direct — clearly labeled.",
+                d: limited
+                  ? "Participating pharmacy pickup — clearly labeled."
+                  : "Pharmacy pickup or manufacturer-direct — clearly labeled.",
               },
             ].map((s) => (
               <li key={s.n} className="border border-border bg-card p-4">
@@ -123,7 +140,9 @@ export default async function HomePage() {
                 Currently included
               </h2>
               <p className="mt-1 text-sm text-muted-foreground">
-                {included.length} medications in the program directory right now.
+                {included.length} medication{included.length === 1 ? "" : "s"} in
+                the program directory right now
+                {limited ? " (v1 limited launch)" : ""}.
               </p>
             </div>
             <Link
@@ -138,7 +157,7 @@ export default async function HomePage() {
             </Link>
           </div>
           <ul className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-            {included.slice(0, 9).map((d) => (
+            {included.slice(0, limited ? included.length : 9).map((d) => (
               <li key={d.id}>
                 <Link
                   href={`/drugs/${d.id}`}

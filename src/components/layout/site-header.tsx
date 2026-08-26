@@ -16,16 +16,27 @@ import {
 import { cn } from "@/lib/utils";
 import { LocationPicker } from "@/components/pharmacy/location-picker";
 
-const NAV = [
-  { href: "/search", label: "Check coverage" },
-  { href: "/medications", label: "Included meds" },
-  { href: "/pharmacies", label: "Pharmacies" },
-  { href: "/faq", label: "FAQ" },
-  { href: "/help", label: "Help" },
-  { href: "/profile", label: "My tools" },
+const ALL_NAV = [
+  { href: "/search", label: "Check coverage", always: true },
+  { href: "/medications", label: "Included meds", always: true },
+  { href: "/pharmacies", label: "Pharmacies", always: true },
+  { href: "/faq", label: "FAQ", always: true },
+  { href: "/help", label: "Help", always: true },
+  { href: "/profile", label: "My tools", always: true },
+  { href: "/membership", label: "Membership", feature: "membership" as const },
+  { href: "/transfer", label: "Transfer", feature: "transfer" as const },
+  { href: "/providers", label: "Providers", feature: "providers" as const },
 ];
 
-export function SiteHeader() {
+interface SiteHeaderProps {
+  features: {
+    membership: boolean;
+    transfer: boolean;
+    providers: boolean;
+  };
+}
+
+export function SiteHeader({ features }: SiteHeaderProps) {
   const pathname = usePathname();
   const { status } = useSession();
   const [open, setOpen] = useState(false);
@@ -33,6 +44,14 @@ export function SiteHeader() {
     status === "authenticated"
       ? { href: "/profile", label: "Account" }
       : { href: "/login", label: "Sign in" };
+
+  const nav = ALL_NAV.filter((item) => {
+    if (item.always) return true;
+    if (item.feature === "membership") return features.membership;
+    if (item.feature === "transfer") return features.transfer;
+    if (item.feature === "providers") return features.providers;
+    return true;
+  });
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/80 bg-background/92 backdrop-blur-md">
@@ -51,7 +70,7 @@ export function SiteHeader() {
           className="hidden items-center gap-0.5 md:flex"
           aria-label="Primary"
         >
-          {NAV.map((item) => (
+          {nav.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -104,7 +123,7 @@ export function SiteHeader() {
             <div className="mt-4 space-y-4 px-1">
               <LocationPicker />
               <nav className="flex flex-col gap-1" aria-label="Mobile">
-                {NAV.map((item) => (
+                {nav.map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}
@@ -119,13 +138,6 @@ export function SiteHeader() {
                     {item.label}
                   </Link>
                 ))}
-                <Link
-                  href="/help"
-                  onClick={() => setOpen(false)}
-                  className="px-3 py-3 text-base font-medium hover:bg-muted md:hidden"
-                >
-                  Automated help
-                </Link>
                 {status !== "loading" && (
                   <Link
                     href={accountLink.href}

@@ -49,6 +49,10 @@ const envSchema = z
     ALLOW_DEMO_SEED: z.string().optional(),
     NEXT_PUBLIC_APP_URL: z.string().default("http://127.0.0.1:3000"),
     NEXT_PUBLIC_APP_NAME: z.string().default("Trump RX"),
+    NEXT_PUBLIC_LAUNCH_MODE: z
+      .enum(["limited_v1", "full", "demo"])
+      .default("limited_v1"),
+    TRUMPRX_LAUNCH_MODE: z.enum(["limited_v1", "full", "demo"]).optional(),
     ADMIN_EMAILS: z.string().optional(),
     ADMIN_SMS_TO: z.string().optional(),
     SENTRY_DSN: z.string().optional(),

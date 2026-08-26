@@ -98,6 +98,18 @@ export default function AdminPage() {
             Pharmacy partners →
           </Link>
           <Link
+            href="/admin/medication-requests"
+            className="inline-flex text-sm font-medium text-primary underline-offset-2 hover:underline"
+          >
+            Medication requests →
+          </Link>
+          <Link
+            href="/admin/issue-reports"
+            className="inline-flex text-sm font-medium text-primary underline-offset-2 hover:underline"
+          >
+            Issue reports →
+          </Link>
+          <Link
             href="/admin/launch"
             className="inline-flex text-sm font-medium text-primary underline-offset-2 hover:underline"
           >
@@ -188,7 +200,8 @@ export default function AdminPage() {
       </section>
 
       <p className="text-sm text-muted-foreground">
-        See <code className="text-xs">docs/LAUNCH.md</code> for the full
+        See <code className="text-xs">docs/LIMITED_V1_LAUNCH.md</code> for v1
+        scope and <code className="text-xs">docs/LAUNCH.md</code> for the full
         production checklist.
       </p>
     </div>
