@@ -252,7 +252,6 @@ function EditorsSpread({ showGrid }: { showGrid?: boolean }) {
           </p>
           <p>The score says what happened. These pages look at why.</p>
           <p className="ms-signature">— The Editors</p>
-          <p className="ms-hand-note">Issue 08 — keep looking upstream.</p>
         </div>
       </PageShell>
     </div>
@@ -524,49 +523,54 @@ function ProfileBody({ showGrid }: { showGrid?: boolean }) {
 
 function PhotoSpread({ variant, showGrid }: { variant?: string; showGrid?: boolean }) {
   const second = variant === "moment-2";
+
+  if (second) {
+    return (
+      <div className="ms-spread">
+        <PageShell tone="ink" bleed>
+          {showGrid && <GridOverlay />}
+          <div className="ms-photo ms-photo--moment-hold ms-full" />
+        </PageShell>
+        <PageShell>
+          {showGrid && <GridOverlay />}
+          <Folio left="" right="33" section="CULTURE" />
+          <div className="ms-moment-pause">
+            <p className="ms-section-label">THE MOMENT</p>
+            <p className="ms-moment-meta">19:44 · THIRD PERIOD · CONTINUED</p>
+            <p className="ms-moment-line">The lane closed. The decision had already been made.</p>
+            <p className="ms-moment-meta ms-moment-meta--soft">Frame 02 · 1/2000s · Issue 08</p>
+            <p className="ms-folio-solo ink">32–33</p>
+          </div>
+        </PageShell>
+      </div>
+    );
+  }
+
   return (
     <div className="ms-spread">
       <PageShell tone="ink" bleed>
         {showGrid && <GridOverlay />}
-        <div
-          className={`ms-photo ${second ? "ms-photo--empty-rink" : "ms-photo--moment-a"} ms-full`}
-        />
-        <div className="ms-doc-stamp">
-          {second ? (
-            <>
-              <span>05:52 AM</span>
-              <span>EMPTY ICE</span>
-              <span>BEFORE FIRST WHISTLE</span>
-            </>
-          ) : (
-            <>
-              <span>THE MOMENT</span>
-              <span>FRAME 01</span>
-            </>
-          )}
-        </div>
+        <div className="ms-photo ms-photo--moment-a ms-full" />
       </PageShell>
-      <PageShell tone={second ? "paper" : "ink"} bleed={!second}>
+      <PageShell tone="ink" bleed>
         {showGrid && <GridOverlay />}
-        {second ? (
-          <div className="ms-photo-neg">
-            <div className="ms-photo ms-photo--bench-scratches" />
-            <p className="ms-caption">Scratched bench rail · years of shift changes</p>
-            <p className="ms-hand-note">The work is already finished when the crowd arrives.</p>
-            <p className="ms-folio-solo ink">32–33</p>
+        <div className="ms-moment-right">
+          <div className="ms-photo ms-photo--moment-c ms-moment-right-photo" />
+          <div className="ms-moment-copy">
+            <p className="ms-section-label light">THE MOMENT</p>
+            <p className="ms-moment-meta light">19:42 — THIRD PERIOD</p>
+            <p className="ms-moment-line light">The opening lasted less than half a second.</p>
+            <p className="ms-moment-meta ms-moment-meta--soft light">
+              Home crease · near-side lane · Issue 08
+            </p>
           </div>
-        ) : (
-          <>
-            <div className="ms-photo ms-photo--moment-c ms-full" />
-            <p className="ms-caption light ms-caption--overlay">Release · 1/2000s</p>
-          </>
-        )}
+        </div>
       </PageShell>
     </div>
   );
 }
 
-/* ─── 13–16 Major revision ─── */
+/* ─── 13–16 Technical → Human → Numbers ─── */
 
 function GearSpread({ showGrid }: { showGrid?: boolean }) {
   return (
@@ -575,13 +579,17 @@ function GearSpread({ showGrid }: { showGrid?: boolean }) {
         {showGrid && <GridOverlay />}
         <Folio left="38" right="" section="" />
         <div className="ms-gear ms-gear--industrial">
-          <p className="ms-section-label light">GEAR · INDUSTRIAL STUDY</p>
+          <p className="ms-section-label light">GEAR · EQUIPMENT STUDY</p>
           <h2 className="ms-gear-hed light">
             DESIGNED
             <br />
             FOR SPEED
           </h2>
-          <div className="ms-exploded" aria-hidden="true">
+          <div className="ms-gear-macro">
+            <div className="ms-photo ms-photo--stick-macro" />
+            <p className="ms-caption light">Blade toe · carbon weave · flex stamp “85”</p>
+          </div>
+          <div className="ms-exploded ms-exploded--compact" aria-hidden="true">
             <div className="ms-exploded-part ms-exploded-blade">
               <span>01 Blade</span>
             </div>
@@ -589,12 +597,9 @@ function GearSpread({ showGrid }: { showGrid?: boolean }) {
               <span>02 Shaft</span>
             </div>
             <div className="ms-exploded-part ms-exploded-grip">
-              <span>03 Grip tape</span>
+              <span>03 Grip</span>
             </div>
           </div>
-          <p className="ms-caption light">
-            Stick as system — construction that shortens the 0.3-second window
-          </p>
         </div>
       </PageShell>
       <PageShell tone="rink">
@@ -602,46 +607,59 @@ function GearSpread({ showGrid }: { showGrid?: boolean }) {
         <Folio left="" right="39" section="GEAR" />
         <div className="ms-gear-specs ms-gear-specs--tech">
           <p className="ms-deck light" style={{ marginBottom: "0.75rem" }}>
-            Flex, weight, and blade curve are not preferences — they are timing instruments.
+            How the stick shortens the 0.3-second window — mass, flex, and blade geometry as timing
+            instruments.
           </p>
           <div className="ms-measure-row">
             <div>
               <span className="ms-measure-num">85</span>
               <span className="ms-measure-unit">FLEX</span>
-              <p>Kick point mid-shaft for quicker load</p>
+              <p>Mid kick · faster load</p>
             </div>
             <div>
               <span className="ms-measure-num">397</span>
               <span className="ms-measure-unit">g</span>
-              <p>Stick mass without tape</p>
+              <p>Mass without tape</p>
             </div>
             <div>
               <span className="ms-measure-num">½"</span>
               <span className="ms-measure-unit">CURVE</span>
-              <p>Opens release lane 8–12°</p>
+              <p>Opens 8–12° at exit</p>
             </div>
           </div>
-          <RinkRule tone="blue" />
+          <div className="ms-blade-profile" aria-hidden="true">
+            <svg viewBox="0 0 200 48" fill="none">
+              <path
+                d="M4 28 C40 28 70 10 110 12 C150 14 175 22 196 20"
+                stroke="currentColor"
+                strokeWidth="2"
+              />
+              <path d="M4 28 L4 36 L24 36" stroke="currentColor" strokeWidth="1.5" />
+              <text x="110" y="44" fill="currentColor" fontSize="8" fontFamily="monospace">
+                BLADE PROFILE
+              </text>
+            </svg>
+          </div>
           <div className="ms-callouts ms-callouts--light">
             <div>
               <span className="ms-dot" />
               <div>
                 <strong>Blade profile</strong>
-                <p>Stiffer toe delays open-face — holds puck through 0.23 contact</p>
+                <p>Stiffer toe holds the puck through 0.23 contact</p>
               </div>
             </div>
             <div>
               <span className="ms-dot" />
               <div>
                 <strong>Carbon layup</strong>
-                <p>Unidirectional fibers along load path; fewer wasted milliseconds</p>
+                <p>Fibers along the load path — fewer wasted milliseconds</p>
               </div>
             </div>
             <div>
               <span className="ms-dot" />
               <div>
-                <strong>Tape &amp; friction</strong>
-                <p>Two heel wraps — observed pattern from Issue 08 athlete</p>
+                <strong>Heel tape</strong>
+                <p>Two wraps — friction pattern from Issue 08 athlete</p>
               </div>
             </div>
           </div>
@@ -676,7 +694,7 @@ function DataSpread({ showGrid }: { showGrid?: boolean }) {
               </li>
               <li>
                 <strong>40 reps</strong>
-                <span>Morning practice set that built the pattern</span>
+                <span>Tuesday set that built the pattern</span>
               </li>
             </ul>
           </div>
@@ -689,7 +707,7 @@ function DataSpread({ showGrid }: { showGrid?: boolean }) {
               { mph: 88, label: "Fatigue" },
             ].map((s) => (
               <div key={s.label} className={`ms-shot-tick${s.hot ? " is-hot" : ""}`}>
-                <i style={{ height: `${(s.mph / 100) * 100}%` }} />
+                <i style={{ height: `${s.mph}%` }} />
                 <strong>{s.mph}</strong>
                 <span>{s.label}</span>
               </div>
@@ -706,8 +724,8 @@ function DataSpread({ showGrid }: { showGrid?: boolean }) {
           <p className="ms-num ms-num--sm">4.2×</p>
           <p className="ms-num-label">BODYWEIGHT — LATERAL BOUND PEAK</p>
           <p className="ms-load-explain">
-            The force that lets a player plant and open a lane in under a tenth of a second. Not a
-            gym vanity number — the physical basis of the 0.08 weight shift on the decision map.
+            The force behind the 0.08 weight shift on the decision map — how a player plants and
+            opens a lane in under a tenth of a second.
           </p>
           <div className="ms-rep-blocks">
             <div>
@@ -732,11 +750,11 @@ function DataSpread({ showGrid }: { showGrid?: boolean }) {
             </div>
             <div>
               <span>Fri</span>
-              <em>Video + tape</em>
+              <em>Video + edges</em>
               <i style={{ width: "35%" }} />
             </div>
           </div>
-          <p className="ms-caption light">Load as preparation for the window — not for the board</p>
+          <p className="ms-caption light">Load prepares the window — not the scoreboard</p>
         </div>
       </PageShell>
     </div>
@@ -749,6 +767,10 @@ function InterviewSpread({ showGrid }: { showGrid?: boolean }) {
       <PageShell tone="ink" bleed>
         {showGrid && <GridOverlay />}
         <div className="ms-photo ms-photo--interview-portrait ms-full" />
+        <div className="ms-interview-id">
+          <span>MAYA REEVES</span>
+          <span>FORWARD · ISSUE 08</span>
+        </div>
         <blockquote className="ms-interview-pull">
           “The interesting work was always upstream.”
         </blockquote>
@@ -758,26 +780,25 @@ function InterviewSpread({ showGrid }: { showGrid?: boolean }) {
         <Folio left="" right="45" section="PEOPLE" />
         <div className="ms-interview ms-interview--human">
           <p className="ms-section-label">FIVE QUESTIONS</p>
-          <p className="ms-interview-aside">After the data — a person.</p>
-          <p className="ms-q">
-            <span>Q</span> When did competition stop being the loudest part of your life?
+          <p className="ms-interview-aside">After the data — listening.</p>
+          <p className="ms-interview-pullout">
+            The scoreboard was a summary, not the story.
           </p>
-          <p className="ms-a">
-            <span>A</span> When I realized the scoreboard was a summary, not the story.
-          </p>
-          <p className="ms-q">
-            <span>Q</span> What do you refuse to romanticize?
-          </p>
-          <p className="ms-a">
-            <span>A</span> Pain as proof. Effort matters. Suffering for the camera does not.
-          </p>
-          <p className="ms-q">
-            <span>Q</span> Where should a reader look?
-          </p>
-          <p className="ms-a">
-            <span>A</span> The calendar. The unremarkable Tuesday.
-          </p>
-          <p className="ms-hand-note">Coffee. Same thermos. Seat three from the door.</p>
+          <div className="ms-interview-qa">
+            <p className="ms-q">
+              <span>Q</span> What do you refuse to romanticize?
+            </p>
+            <p className="ms-a">
+              <span>A</span> Pain as proof. Effort matters. Suffering for the camera does not.
+            </p>
+            <p className="ms-q">
+              <span>Q</span> Where should a reader look?
+            </p>
+            <p className="ms-a">
+              <span>A</span> The calendar. The unremarkable Tuesday.
+            </p>
+          </div>
+          <p className="ms-hand-note">Same thermos. Seat three from the door.</p>
         </div>
       </PageShell>
     </div>

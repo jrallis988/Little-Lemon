@@ -132,7 +132,7 @@ export const SPREADS: SpreadMeta[] = [
     title: "The Moment",
     section: "CULTURE",
     kind: "photo",
-    caption: "Photography-led sequence with documentary stamps.",
+    caption: "Emotional pause — one moment, timestamp, observational line, photography leads.",
   },
   {
     id: "moment-2",
@@ -140,7 +140,7 @@ export const SPREADS: SpreadMeta[] = [
     title: "The Moment — Continuation",
     section: "CULTURE",
     kind: "photo",
-    caption: "Empty ice and scratched benches — preparation before the crowd.",
+    caption: "Negative space after the moment — ice white reflection page.",
   },
   {
     id: "gear",
@@ -148,7 +148,7 @@ export const SPREADS: SpreadMeta[] = [
     title: "Designed for Speed",
     section: "GEAR",
     kind: "gear",
-    caption: "Industrial stick study — flex, mass, curve tied to the release window.",
+    caption: "Macro blade + flex/mass/curve — equipment as timing instrument.",
   },
   {
     id: "data",
@@ -164,7 +164,7 @@ export const SPREADS: SpreadMeta[] = [
     title: "Five Questions",
     section: "PEOPLE",
     kind: "interview",
-    caption: "Human rhythm after analysis — portrait, large quote, personal detail.",
+    caption: "Human interruption — Maya Reeves, large pullout, listening not analyzing.",
   },
   {
     id: "numbers",

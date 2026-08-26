@@ -1417,6 +1417,23 @@
   background-position: center 70%;
 }
 
+.ms-photo--moment-hold {
+  background-image:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.45)),
+    url("https://images.unsplash.com/photo-1610884972303-15c0830ffb53?auto=format&fit=crop&w=1400&q=80");
+  background-size: cover;
+  background-position: center;
+}
+
+.ms-photo--stick-macro {
+  height: 100%;
+  background-image:
+    linear-gradient(100deg, rgba(10, 10, 10, 0.2), transparent 40%),
+    url("https://images.unsplash.com/photo-1551241784-1058bb555220?auto=format&fit=crop&w=1200&q=80");
+  background-size: cover;
+  background-position: 60% center;
+}
+
 .ms-photo--interview-portrait {
   background-image:
     linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, 0.65)),
@@ -1826,6 +1843,124 @@
 
 .ms-page--rink .ms-caption.light {
   color: rgba(244, 246, 248, 0.55);
+}
+
+/* ─── Final refinement: Moment / Gear / Interview ─── */
+
+.ms-moment-right {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.ms-moment-right-photo {
+  flex: 1;
+  min-height: 55%;
+  position: relative;
+}
+
+.ms-moment-copy {
+  padding: 8% 10% 10%;
+  background: var(--ba-arena);
+}
+
+.ms-moment-pause {
+  padding-top: 28%;
+  max-width: 22ch;
+}
+
+.ms-moment-meta {
+  font-family: var(--font-mono);
+  font-size: clamp(7px, 1.9cqw, 10px);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 0 0 1rem;
+  color: var(--ink);
+}
+
+.ms-moment-meta.light {
+  color: var(--ba-ice);
+}
+
+.ms-moment-meta--soft {
+  opacity: 0.55;
+  margin-top: 1.5rem;
+  margin-bottom: 0;
+}
+
+.ms-moment-line {
+  font-family: var(--font-deck);
+  font-size: clamp(14px, 3.8cqw, 22px);
+  line-height: 1.25;
+  margin: 0;
+  color: var(--ink);
+}
+
+.ms-moment-line.light {
+  color: var(--ba-ice);
+}
+
+.ms-gear-macro {
+  margin: 0.5rem 0 0.45rem;
+  height: 28%;
+}
+
+.ms-exploded--compact {
+  height: 28%;
+  margin-top: 0.35rem;
+}
+
+.ms-blade-profile {
+  margin: 0.35rem 0 0.75rem;
+  color: rgba(244, 246, 248, 0.75);
+}
+
+.ms-blade-profile svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.ms-interview-id {
+  position: absolute;
+  left: 8%;
+  top: 8%;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-family: var(--font-mono);
+  font-size: clamp(6px, 1.6cqw, 9px);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ba-ice);
+}
+
+.ms-interview-id span:first-child {
+  color: var(--ba-red);
+  font-weight: 600;
+}
+
+.ms-interview-pullout {
+  font-family: var(--font-deck);
+  font-size: clamp(14px, 3.8cqw, 22px);
+  line-height: 1.2;
+  margin: 0 0 1.25rem;
+  padding-left: 0.75rem;
+  border-left: 3px solid var(--ba-red);
+  max-width: 18ch;
+  color: var(--ink);
+}
+
+.ms-interview-qa {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.ms-interview--human .ms-q {
+  margin-top: 0.65rem;
 }
 
 @media (max-width: 720px) {
