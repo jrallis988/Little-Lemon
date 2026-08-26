@@ -532,7 +532,7 @@ export default function App() {
       </main>
 
       <footer className="case-footer">
-        <span>Artistic Fountain · Case Study</span>
+        <span>AMPLIFY · Instagram Campaign Case Study</span>
         <a href="../../index.html">Return to portfolio</a>
       </footer>
     </div>
