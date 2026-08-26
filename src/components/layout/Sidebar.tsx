@@ -1,6 +1,5 @@
 import { MailboxLogo } from "@/components/brand/MailboxBrand";
 import { TeacherPanel } from "@/components/teacher/TeacherPanel";
-import { Button } from "@/components/ui/button";
 import { FOLDERS } from "@/data/seed";
 import { cn } from "@/lib/utils";
 import { useMailStore } from "@/store/mailStore";
@@ -56,42 +55,47 @@ export function Sidebar() {
 
   return (
     <>
-      <aside className="flex h-full w-[248px] shrink-0 flex-col border-r-2 border-primary/10 bg-card">
-        <div className="flex items-center gap-2.5 px-5 pb-3 pt-6">
-          <MailboxLogo size={44} className="animate-float" />
+      <aside className="relative flex h-full w-[256px] shrink-0 flex-col overflow-hidden bg-rail text-rail-foreground shadow-[8px_0_28px_-18px_rgba(60,70,200,0.55)]">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-30"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 20% 10%, rgba(255,255,255,0.35) 0 2px, transparent 3px), radial-gradient(circle at 80% 30%, rgba(255,220,120,0.35) 0 2px, transparent 3px), radial-gradient(circle at 30% 85%, rgba(255,255,255,0.25) 0 2px, transparent 3px)",
+          }}
+        />
+
+        <div className="relative z-10 flex items-center gap-2.5 px-5 pb-4 pt-6">
+          <MailboxLogo size={48} className="animate-float drop-shadow-md" />
           <Link
             to="/"
-            className="font-display text-2xl font-semibold tracking-tight text-brand"
+            className="font-display text-[1.7rem] font-semibold tracking-tight text-white"
             onClick={() => setFolder("inbox")}
           >
             mailbox
           </Link>
         </div>
 
-        <div className="space-y-2.5 px-4 pb-3 pt-2">
-          <Button
-            asChild
-            variant="default"
-            className="h-12 w-full justify-start gap-3 rounded-3xl text-base shadow-pop"
+        <div className="relative z-10 space-y-2.5 px-4 pb-4">
+          <Link
+            to="/compose"
+            className="flex h-12 w-full items-center justify-start gap-3 rounded-3xl bg-white px-4 text-base font-extrabold text-rail shadow-soft transition hover:brightness-105 active:translate-y-px"
           >
-            <Link to="/compose">
-              <PenSquare className="size-5" />
-              Compose
-            </Link>
-          </Button>
-          <Button
+            <PenSquare className="size-5" />
+            Compose
+          </Link>
+          <button
             type="button"
-            variant="outline"
-            className="h-12 w-full justify-start gap-3 rounded-3xl border-[2.5px] border-brand/30 bg-brand-soft text-brand hover:bg-brand-soft"
+            className="flex h-12 w-full items-center justify-start gap-3 rounded-3xl border-[2.5px] border-white/35 bg-white/10 px-4 text-base font-extrabold text-white backdrop-blur transition hover:bg-white/18"
             onClick={() => setTeacherOpen(true)}
           >
             <GraduationCap className="size-5" />
             Teacher
-          </Button>
+          </button>
         </div>
 
         <nav
-          className="flex-1 space-y-1 overflow-y-auto px-3 py-2"
+          className="relative z-10 flex-1 space-y-1.5 overflow-y-auto px-3 py-1"
           aria-label="Mail folders"
         >
           {FOLDERS.map((item) => {
@@ -110,11 +114,18 @@ export function Sidebar() {
                 className={cn(
                   "flex w-full items-center gap-3 rounded-3xl px-3.5 py-3 text-left transition-all",
                   active
-                    ? "bg-primary text-primary-foreground shadow-soft"
-                    : "text-foreground/85 hover:bg-secondary",
+                    ? "bg-white text-rail shadow-soft"
+                    : "text-white/90 hover:bg-white/12",
                 )}
               >
-                <Icon className="size-5 shrink-0" />
+                <span
+                  className={cn(
+                    "flex size-9 items-center justify-center rounded-2xl",
+                    active ? "bg-rail/10" : "bg-white/12",
+                  )}
+                >
+                  <Icon className="size-5 shrink-0" />
+                </span>
                 <span className="min-w-0 flex-1 text-[15px] font-extrabold">
                   {item.label}
                 </span>
@@ -123,8 +134,8 @@ export function Sidebar() {
                     className={cn(
                       "rounded-full px-2.5 py-0.5 text-xs font-extrabold",
                       active
-                        ? "bg-white/25 text-primary-foreground"
-                        : "bg-pending-soft text-amber-800",
+                        ? "bg-pending text-amber-950"
+                        : "bg-pending text-amber-950",
                     )}
                   >
                     {count}
@@ -135,15 +146,15 @@ export function Sidebar() {
           })}
         </nav>
 
-        <div className="p-3">
+        <div className="relative z-10 p-3 pb-4">
           <button
             type="button"
             onClick={() => goFolder("settings")}
             className={cn(
-              "flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-left text-sm font-bold transition-all",
+              "flex w-full items-center gap-3 rounded-3xl px-3.5 py-3 text-left text-[15px] font-extrabold transition-all",
               folder === "settings"
-                ? "bg-primary text-primary-foreground shadow-soft"
-                : "text-muted-foreground hover:bg-secondary hover:text-foreground",
+                ? "bg-white text-rail shadow-soft"
+                : "text-white/85 hover:bg-white/12",
             )}
           >
             <Settings className="size-5" />

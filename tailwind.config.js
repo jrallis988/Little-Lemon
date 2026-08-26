@@ -53,6 +53,13 @@ export default {
           DEFAULT: "hsl(var(--brand))",
           soft: "hsl(var(--brand-soft))",
         },
+        rail: {
+          DEFAULT: "hsl(var(--rail))",
+          deep: "hsl(var(--rail-deep))",
+          foreground: "hsl(var(--rail-foreground))",
+          muted: "hsl(var(--rail-muted))",
+          soft: "hsl(var(--rail-soft))",
+        },
         pending: {
           DEFAULT: "hsl(var(--pending))",
           soft: "hsl(var(--pending-soft))",
@@ -90,7 +97,7 @@ export default {
       fontFamily: {
         display: ['"Fredoka"', '"Nunito"', "ui-rounded", "system-ui", "sans-serif"],
         serif: ['"Fredoka"', '"Nunito"', "ui-rounded", "system-ui", "sans-serif"],
-        sans: ['"Nunito"', "ui-rounded", "system-ui", "sans-serif"],
+        sans: ['"Fredoka"', '"Nunito"', "ui-rounded", "system-ui", "sans-serif"],
       },
       boxShadow: {
         soft: "0 12px 28px -14px rgba(99, 122, 255, 0.45)",

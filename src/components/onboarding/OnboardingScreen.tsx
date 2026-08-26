@@ -17,8 +17,8 @@ export function OnboardingScreen() {
       <DoodleBackdrop />
       <div className="relative z-10 w-full max-w-lg rounded-[2rem] border-[3px] border-primary/15 bg-card p-8 shadow-panel animate-fade-up">
         <div className="flex flex-col items-center text-center">
-          <MailboxLogo size={110} className="animate-float" />
-          <h1 className="mt-3 font-display text-4xl font-semibold tracking-tight text-brand">
+          <MailboxLogo size={120} className="animate-float" />
+          <h1 className="mt-3 font-display text-[2.5rem] font-semibold tracking-tight text-rail">
             Welcome to Mailbox!
           </h1>
           <p className="mt-2 max-w-sm text-base font-bold text-muted-foreground">
@@ -26,7 +26,7 @@ export function OnboardingScreen() {
           </p>
         </div>
 
-        <p className="mt-8 text-center font-display text-lg font-semibold text-foreground">
+        <p className="mt-8 text-center font-display text-xl font-semibold text-foreground">
           What grade are you in?
         </p>
         <div className="mt-4 grid grid-cols-6 gap-2.5">
@@ -37,8 +37,8 @@ export function OnboardingScreen() {
               onClick={() => setGrade(value)}
               className={`rounded-2xl py-3.5 text-base font-extrabold transition-all ${
                 grade === value
-                  ? "bg-primary text-primary-foreground shadow-pop"
-                  : "bg-secondary text-muted-foreground hover:bg-primary/10 hover:text-primary"
+                  ? "bg-rail text-white shadow-pop"
+                  : "bg-secondary text-muted-foreground hover:bg-rail/10 hover:text-rail"
               }`}
             >
               {value}
@@ -50,7 +50,7 @@ export function OnboardingScreen() {
           <Button
             type="button"
             size="lg"
-            className="min-w-48 rounded-3xl text-lg shadow-pop"
+            className="min-w-48 rounded-full bg-rail text-lg shadow-pop hover:bg-rail-deep"
             onClick={() => void completeOnboarding(grade)}
           >
             Open Mailbox

@@ -9,11 +9,11 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground shadow-soft hover:brightness-105",
+          "bg-rail text-white shadow-soft hover:bg-rail-deep",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         outline:
-          "border-[2.5px] border-primary/25 bg-card text-foreground hover:bg-primary/5",
+          "border-[2.5px] border-rail/25 bg-card text-rail hover:bg-rail/5",
         ghost: "hover:bg-secondary text-foreground",
         coral:
           "bg-warn text-white shadow-soft hover:brightness-105",

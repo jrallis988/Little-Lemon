@@ -164,7 +164,7 @@ export function ComposeScreen() {
   return (
     <div className="doodle-bg flex h-full flex-col">
       <header className="flex items-center justify-between gap-4 border-b border-border/80 bg-card/90 px-6 py-3 backdrop-blur">
-        <h1 className="font-display text-xl font-extrabold text-foreground">
+        <h1 className="font-display text-2xl font-semibold text-rail">
           {replyToId ? "Reply" : "New message"}
         </h1>
         <Button variant="ghost" size="icon" asChild aria-label="Close compose">
@@ -187,7 +187,7 @@ export function ComposeScreen() {
 
         {!replyToId && (
           <div>
-            <p className="mb-3 font-display text-lg font-semibold text-foreground">
+            <p className="mb-3 font-display text-xl font-semibold text-rail">
               What are you writing today?
             </p>
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">

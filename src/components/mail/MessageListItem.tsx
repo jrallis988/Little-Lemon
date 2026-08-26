@@ -34,11 +34,11 @@ export function MessageListItem({
       type="button"
       onClick={onSelect}
       className={cn(
-        "group flex w-full items-start gap-3 rounded-3xl px-3.5 py-3.5 text-left transition-all animate-fade-up",
+        "group flex w-full items-start gap-3 rounded-[1.5rem] border-[2.5px] px-3.5 py-3.5 text-left transition-all animate-fade-up",
         selected
-          ? "bg-primary/12 shadow-card ring-[3px] ring-primary/25"
-          : "hover:bg-white/90",
-        message.unread && !selected && "bg-white/80",
+          ? "border-rail/35 bg-[#EEF0FF] shadow-card ring-[3px] ring-rail/20"
+          : "border-transparent bg-white/90 hover:border-rail/20 hover:bg-white",
+        message.unread && !selected && "border-rail/10 bg-white",
       )}
     >
       <ContactAvatar contact={sender} />
