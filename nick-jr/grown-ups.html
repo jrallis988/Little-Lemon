@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Nick Jr. for Grown-Ups — schedules, learning tips, and parent guides. Conceptual redesign by Artistic Fountain.">
+  <meta name="theme-color" content="#5B2C9D">
+  <title>Grown-Ups — Nick Jr.</title>
+  <base href="/nick-jr/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%235B2C9D'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-size='22' font-weight='700' fill='white' font-family='Arial,sans-serif'%3Enj%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-grownups">
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <div class="concept-ribbon">
+    Conceptual redesign by <a href="../index.html">Artistic Fountain</a> — not an official Nick Jr. / Paramount site.
+  </div>
+
+  <div class="page-shell">
+    <div class="wave wave-teal" aria-hidden="true"></div>
+    <div class="wave wave-pink" aria-hidden="true"></div>
+    <div class="wave wave-blue" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="logo" href="index.html" aria-label="Nick Jr. home">
+          <span class="logo-mark" aria-hidden="true">
+            <span class="c-orange">n</span><span class="c-blue">i</span><span class="c-green">c</span><span class="c-red">k</span>
+            <span class="logo-jr"><span class="c-purple">j</span><span class="c-sky">r</span><span class="logo-dot">.</span></span>
+          </span>
+        </a>
+
+        <nav class="primary-nav" aria-label="Primary">
+          <ul id="primary-nav">
+            <li><a href="index.html#watch"><span class="nav-icon nav-watch" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M10 8.5v7l6-3.5-6-3.5z" fill="#fff"/></svg></span>Watch</a></li>
+            <li><a href="index.html#play"><span class="nav-icon nav-play" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="10" rx="3" fill="currentColor"/><circle cx="8" cy="13" r="1.5" fill="#fff"/><circle cx="16" cy="13" r="1.5" fill="#fff"/><path d="M9 8V6a3 3 0 0 1 6 0v2" stroke="#fff" stroke-width="1.5" fill="none"/></svg></span>Play</a></li>
+            <li><a href="index.html#explore"><span class="nav-icon nav-explore" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="currentColor"/><ellipse cx="12" cy="12" rx="4" ry="9" fill="none" stroke="#fff" stroke-width="1.4"/><path d="M3.5 12h17M12 3.5c2.5 2.8 2.5 14.2 0 17M12 3.5c-2.5 2.8-2.5 14.2 0 17" fill="none" stroke="#fff" stroke-width="1.2"/></svg></span>Explore</a></li>
+            <li><a href="index.html#create"><span class="nav-icon nav-create" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14.5 4.5l5 5L9 20H4v-5L14.5 4.5z" fill="currentColor"/><path d="M12.5 6.5l5 5" stroke="#fff" stroke-width="1.5"/></svg></span>Create</a></li>
+            <li><a href="index.html#shows"><span class="nav-icon nav-shows" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 15.8 7 18.2l1.2-5.6L4 8.8l5.6-.6L12 3z" fill="currentColor"/></svg></span>Shows</a></li>
+          </ul>
+        </nav>
+
+        <div class="header-actions">
+          <button class="icon-btn search-btn" type="button" aria-label="Search" aria-expanded="false" aria-controls="search-panel">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+          </button>
+          <a class="grownups-btn is-active" href="grown-ups.html" aria-current="page">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3" fill="currentColor"/><circle cx="16" cy="9" r="2.5" fill="currentColor"/><path d="M3 19c0-3.2 2.5-5.5 6-5.5s6 2.3 6 5.5M13.5 19c.4-2.2 2.2-4 4.5-4 1.4 0 2.6.5 3.5 1.4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            Grown-Ups
+          </a>
+          <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="search-panel" id="search-panel" hidden>
+        <label class="visually-hidden" for="site-search">Search Nick Jr.</label>
+        <input id="site-search" type="search" placeholder="Find shows, games, and more…" autocomplete="off">
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="gu-hero" aria-labelledby="gu-hero-title">
+        <div class="gu-hero-media">
+          <img src="images/grown-ups.jpg" alt="Caregiver and child learning together on a tablet" width="800" height="500">
+        </div>
+        <div class="gu-hero-copy">
+          <p class="gu-kicker">For caregivers</p>
+          <h1 id="gu-hero-title">Grown-Ups Area</h1>
+          <p>TV schedules, learning tips, and calm tools so screen time feels purposeful — not just busy.</p>
+          <div class="gu-hero-actions">
+            <a class="btn btn-watch" href="#schedule">View Today’s Schedule</a>
+            <a class="btn btn-outline" href="index.html">Back to Kids Home</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="gu-grid" aria-label="Grown-ups topics">
+        <article class="gu-card">
+          <h2>Learning at Home</h2>
+          <p>Short activities that pair with favorite shows — counting, kindness, and curiosity.</p>
+          <ul>
+            <li>After Blue’s Clues: draw three clues from your day</li>
+            <li>After Dora: practice one new map word</li>
+            <li>After Bubble Guppies: splash-safe science in the sink</li>
+          </ul>
+        </article>
+        <article class="gu-card">
+          <h2>Screen Time Tips</h2>
+          <p>Simple guardrails that keep Nick Jr. moments joyful for kids and adults.</p>
+          <ul>
+            <li>Co-view when you can — ask “what happens next?”</li>
+            <li>Use Play &amp; Learn games as a bridge off video</li>
+            <li>End on a Create activity, not a cliffhanger</li>
+          </ul>
+        </article>
+        <article class="gu-card">
+          <h2>Ages &amp; Stages</h2>
+          <p>Find shows and games that match where your little learner is right now.</p>
+          <ul>
+            <li>Ages 2–3: songs, colors, gentle stories</li>
+            <li>Ages 3–5: numbers, letters, problem solving</li>
+            <li>Ages 5–7: longer adventures and crafts</li>
+          </ul>
+        </article>
+      </section>
+
+      <section class="gu-schedule" id="schedule" aria-labelledby="schedule-title">
+        <div class="block-head">
+          <h2 id="schedule-title">Today’s Sample Schedule</h2>
+          <p>Demo lineup for portfolio illustration — not a live broadcast guide.</p>
+        </div>
+        <div class="schedule-table" role="table" aria-label="Sample TV schedule">
+          <div class="schedule-row schedule-head" role="row">
+            <span role="columnheader">Time</span>
+            <span role="columnheader">Show</span>
+            <span role="columnheader">Focus</span>
+          </div>
+          <div class="schedule-row" role="row">
+            <span role="cell">7:00 AM</span>
+            <span role="cell">Blue’s Clues &amp; You!</span>
+            <span role="cell">Problem solving</span>
+          </div>
+          <div class="schedule-row" role="row">
+            <span role="cell">7:30 AM</span>
+            <span role="cell">Dora the Explorer</span>
+            <span role="cell">Language &amp; maps</span>
+          </div>
+          <div class="schedule-row" role="row">
+            <span role="cell">8:00 AM</span>
+            <span role="cell">Paw Patrol</span>
+            <span role="cell">Teamwork</span>
+          </div>
+          <div class="schedule-row" role="row">
+            <span role="cell">8:30 AM</span>
+            <span role="cell">Bubble Guppies</span>
+            <span role="cell">Music &amp; science</span>
+          </div>
+          <div class="schedule-row" role="row">
+            <span role="cell">9:00 AM</span>
+            <span role="cell">Adventure Sprouts</span>
+            <span role="cell">Nature discovery</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="gu-cta-band" aria-labelledby="gu-cta-title">
+        <h2 id="gu-cta-title">Ready to play together?</h2>
+        <p>Jump back to the kids homepage for Watch, Play, Explore, and Create.</p>
+        <a class="btn btn-watch" href="index.html">Go to Nick Jr. Home</a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <a class="footer-logo" href="index.html" aria-label="Nick Jr. home">
+          <span class="logo-mark light" aria-hidden="true">
+            <span>n</span><span>i</span><span>c</span><span>k</span>
+            <span class="logo-jr"><span>j</span><span>r</span><span class="logo-dot">.</span></span>
+          </span>
+        </a>
+        <nav aria-label="Footer">
+          <ul class="footer-nav">
+            <li><a href="index.html">Kids Home</a></li>
+            <li><a href="grown-ups.html">Grown-Ups</a></li>
+            <li><a href="../privacy.html">Privacy</a></li>
+            <li><a href="../terms.html">Terms of Use</a></li>
+          </ul>
+        </nav>
+        <div class="region">
+          <label for="region-select" class="visually-hidden">Region</label>
+          <span class="region-icon" aria-hidden="true">🌐</span>
+          <select id="region-select">
+            <option>United States</option>
+            <option>Canada</option>
+            <option>United Kingdom</option>
+            <option>Australia</option>
+          </select>
+        </div>
+      </div>
+      <p class="footer-note">Conceptual redesign for portfolio demonstration. Show names are trademarks of their respective owners.</p>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script src="app.js"></script>
+</body>
+</html>
