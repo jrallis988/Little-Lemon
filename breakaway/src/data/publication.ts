@@ -108,7 +108,7 @@ export const SPREADS: SpreadMeta[] = [
     title: "The 0.3 Second — Decision Map",
     section: "PLAY",
     kind: "feature-stats",
-    caption: "Diagram and statistics spread explaining the release window.",
+    caption: "Decision map — recognize → release path with rink diagram, not generic charts.",
   },
   {
     id: "profile-1",
@@ -116,7 +116,7 @@ export const SPREADS: SpreadMeta[] = [
     title: "The Work Nobody Sees — Portrait",
     section: "PEOPLE",
     kind: "profile-open",
-    caption: "Athlete profile opener: quiet portrait, minimal typography.",
+    caption: "Documentary opener with time/place stamp: 06:14 AM · Rink 2.",
   },
   {
     id: "profile-2",
@@ -124,7 +124,7 @@ export const SPREADS: SpreadMeta[] = [
     title: "The Work Nobody Sees — Training",
     section: "PEOPLE",
     kind: "profile-body",
-    caption: "Training narrative with interview excerpt and time-block stats.",
+    caption: "Practice-sheet layout — observational notes, tape ritual, equipment room.",
   },
   {
     id: "moment-1",
@@ -132,7 +132,7 @@ export const SPREADS: SpreadMeta[] = [
     title: "The Moment",
     section: "CULTURE",
     kind: "photo",
-    caption: "Photography-led sequence. Typography reduced to captions and folio.",
+    caption: "Photography-led sequence with documentary stamps.",
   },
   {
     id: "moment-2",
@@ -140,7 +140,7 @@ export const SPREADS: SpreadMeta[] = [
     title: "The Moment — Continuation",
     section: "CULTURE",
     kind: "photo",
-    caption: "Full-bleed double truck; negative space as pacing device.",
+    caption: "Empty ice and scratched benches — preparation before the crowd.",
   },
   {
     id: "gear",
@@ -148,7 +148,7 @@ export const SPREADS: SpreadMeta[] = [
     title: "Designed for Speed",
     section: "GEAR",
     kind: "gear",
-    caption: "Equipment editorial with callouts, materials, and performance specs.",
+    caption: "Industrial stick study — flex, mass, curve tied to the release window.",
   },
   {
     id: "data",
@@ -156,7 +156,7 @@ export const SPREADS: SpreadMeta[] = [
     title: "Shot Speed / Training Load",
     section: "PLAY",
     kind: "data",
-    caption: "Information graphics: large numbers, charts, and clear labeling.",
+    caption: "Hockey-specific evidence: flight time, reps, and 4.2× as weight-shift physics.",
   },
   {
     id: "interview",
@@ -164,7 +164,7 @@ export const SPREADS: SpreadMeta[] = [
     title: "Five Questions",
     section: "PEOPLE",
     kind: "interview",
-    caption: "Q/A hierarchy carried entirely by typography.",
+    caption: "Human rhythm after analysis — portrait, large quote, personal detail.",
   },
   {
     id: "numbers",
@@ -172,7 +172,7 @@ export const SPREADS: SpreadMeta[] = [
     title: "Numbers",
     section: "Dept.",
     kind: "department",
-    caption: "Short-form department for rhythm between features.",
+    caption: "Signature department: each figure explains why it matters.",
   },
   {
     id: "back",
@@ -180,7 +180,7 @@ export const SPREADS: SpreadMeta[] = [
     title: "Back Cover",
     section: "Close",
     kind: "back",
-    caption: "Subscription mark, barcode, and quiet closing image.",
+    caption: "Closing argument — The score says what happened. BREAKAWAY looks at why.",
   },
 ];
 

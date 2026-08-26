@@ -37,6 +37,15 @@
   background: #d5dee4;
 }
 
+.ms-page--rink {
+  background: var(--ba-rink);
+  color: var(--ba-ice);
+}
+
+.ms-page--rink .ms-folio {
+  color: rgba(244, 246, 248, 0.55);
+}
+
 .ms-page--bleed {
   padding: 0;
 }
@@ -1007,6 +1016,816 @@
     transparent 10px 12px
   );
   opacity: 0.8;
+}
+
+/* ═══ Issue 08 revision — visual vocabulary & section systems ═══ */
+
+.ms-issue-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: clamp(5px, 1.5cqw, 8px);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.ms-issue-mark-line {
+  width: 18px;
+  height: 2px;
+  background: var(--ba-red);
+}
+
+.ms-issue-mark--light {
+  color: rgba(244, 246, 248, 0.65);
+}
+
+.ms-rink-rule {
+  height: 3px;
+  width: 100%;
+  margin: 0.65rem 0 0.85rem;
+  background: var(--ba-red);
+  position: relative;
+}
+
+.ms-rink-rule--blue {
+  background: var(--ba-blue-line);
+}
+
+.ms-rink-rule--blue::after {
+  content: "";
+  position: absolute;
+  left: 30%;
+  top: -1px;
+  width: 12%;
+  height: 5px;
+  background: var(--ba-red);
+}
+
+.ms-hand-note {
+  font-family: var(--font-hand);
+  font-size: clamp(11px, 3cqw, 16px);
+  color: var(--ba-red);
+  margin: 0.75rem 0 0;
+  line-height: 1.2;
+  transform: rotate(-1deg);
+}
+
+.ms-hand-note--block {
+  display: block;
+  color: #f0c4b8;
+  margin: 0.5rem 0 0.75rem;
+  transform: rotate(-0.5deg);
+}
+
+.ms-cover-rink-mark {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: 28%;
+  height: 2px;
+  background: rgba(230, 35, 20, 0.55);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.ms-cover-rink-mark::before {
+  content: "";
+  position: absolute;
+  left: 12%;
+  top: -18px;
+  width: 36px;
+  height: 36px;
+  border: 2px solid rgba(230, 35, 20, 0.4);
+  border-radius: 50%;
+}
+
+.ms-cover-clock {
+  color: var(--ba-red);
+  letter-spacing: 0.14em;
+}
+
+.ms-cover-b-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.ms-toc-head-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ms-toc-thesis {
+  font-family: var(--font-deck);
+  font-size: clamp(9px, 2.4cqw, 13px);
+  line-height: 1.25;
+  margin: 0 0 0.75rem;
+  max-width: 22ch;
+  color: var(--ink-soft);
+}
+
+.ms-toc-note {
+  font-family: var(--font-mono);
+  font-size: clamp(5px, 1.4cqw, 8px);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ba-red);
+  margin: 0.15rem 0 0;
+}
+
+.ms-clock-chip {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 10cqw, 52px);
+  color: var(--ba-red);
+  line-height: 1;
+  margin: 1.25rem 0 0.75rem;
+  letter-spacing: -0.03em;
+}
+
+/* Decision map */
+.ms-decision {
+  padding-top: 2rem;
+  height: 100%;
+}
+
+.ms-decision-hed {
+  font-family: var(--font-deck);
+  font-size: clamp(12px, 3.2cqw, 18px);
+  font-weight: 400;
+  margin: 0 0 1rem;
+  color: var(--ba-ice);
+}
+
+.ms-decision-path {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.ms-decision-path li {
+  display: grid;
+  grid-template-columns: 2.4rem 1rem 1fr;
+  gap: 0.35rem;
+  align-items: start;
+}
+
+.ms-decision-t {
+  font-family: var(--font-mono);
+  font-size: clamp(7px, 1.9cqw, 10px);
+  color: var(--ba-red);
+  font-weight: 600;
+}
+
+.ms-decision-arrow {
+  color: rgba(244, 246, 248, 0.35);
+  font-size: clamp(8px, 2cqw, 11px);
+  line-height: 1.4;
+}
+
+.ms-decision-path strong {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: clamp(8px, 2.1cqw, 11px);
+  letter-spacing: 0.02em;
+}
+
+.ms-decision-path em {
+  display: block;
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: clamp(7px, 1.8cqw, 9px);
+  opacity: 0.7;
+  margin-top: 0.1rem;
+}
+
+.ms-decision-side {
+  padding-top: 2rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ms-rink-diagram {
+  border: 1px solid rgba(244, 246, 248, 0.2);
+  padding: 0.5rem;
+}
+
+.ms-rink-diagram-ice {
+  position: relative;
+  height: 28%;
+  min-height: 90px;
+  background: linear-gradient(180deg, #d8e4ea, #b8c8d2);
+  overflow: hidden;
+}
+
+.ms-crease {
+  position: absolute;
+  right: 8%;
+  top: 20%;
+  bottom: 20%;
+  width: 18%;
+  border: 2px solid var(--ba-red);
+  border-right: none;
+}
+
+.ms-faceoff {
+  position: absolute;
+  left: 35%;
+  top: 50%;
+  width: 22px;
+  height: 22px;
+  margin: -11px 0 0 -11px;
+  border: 2px solid var(--ba-red);
+  border-radius: 50%;
+}
+
+.ms-shot-path {
+  position: absolute;
+  left: 35%;
+  top: 50%;
+  width: 42%;
+  height: 2px;
+  background: var(--ba-red);
+  transform-origin: left center;
+  transform: rotate(-8deg);
+}
+
+.ms-shot-dot {
+  position: absolute;
+  right: 18%;
+  top: 42%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ba-arena);
+}
+
+.ms-rink-diagram p {
+  font-family: var(--font-mono);
+  font-size: clamp(5px, 1.4cqw, 8px);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0.35rem 0 0;
+  opacity: 0.65;
+}
+
+.ms-big-nums--rink .ms-num-label {
+  color: rgba(244, 246, 248, 0.55);
+}
+
+/* Documentary */
+.ms-doc-stamp {
+  position: absolute;
+  left: 6%;
+  bottom: 6%;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  font-family: var(--font-mono);
+  font-size: clamp(6px, 1.7cqw, 9px);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ba-ice);
+  background: rgba(0, 0, 0, 0.55);
+  padding: 0.45rem 0.55rem;
+}
+
+.ms-profile-open--doc {
+  color: var(--ba-ice);
+}
+
+.ms-profile-open--doc .ms-deck.light {
+  color: rgba(244, 246, 248, 0.85);
+}
+
+.ms-train-log {
+  padding-top: 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.ms-train-log-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  border-bottom: 1px solid rgba(244, 246, 248, 0.25);
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.ms-train-log-head h3 {
+  font-family: var(--font-display);
+  font-size: clamp(14px, 4cqw, 22px);
+  margin: 0.2rem 0 0;
+  letter-spacing: 0.02em;
+}
+
+.ms-train-log-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.15rem;
+  font-family: var(--font-mono);
+  font-size: clamp(5px, 1.4cqw, 8px);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.ms-train-log-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  flex: 1;
+  min-height: 0;
+}
+
+.ms-train-log-label {
+  font-family: var(--font-mono);
+  font-size: clamp(5px, 1.4cqw, 8px);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ba-red);
+  margin: 0 0 0.4rem;
+}
+
+.ms-train-log-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ms-train-log-col li {
+  font-family: var(--font-ui);
+  font-size: clamp(6px, 1.7cqw, 9px);
+  padding: 0.28rem 0;
+  border-bottom: 1px dotted rgba(244, 246, 248, 0.2);
+}
+
+.ms-train-log-col strong {
+  font-family: var(--font-mono);
+  color: var(--ba-red);
+  margin-right: 0.35rem;
+}
+
+.ms-photo--equip-room {
+  height: 38%;
+  margin-top: 0.35rem;
+  background-image:
+    linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.35)),
+    url("https://images.unsplash.com/photo-1551241784-1058bb555220?auto=format&fit=crop&w=900&q=80");
+  background-size: cover;
+  background-position: center;
+}
+
+.ms-doc-details {
+  padding-top: 2rem;
+}
+
+.ms-photo--tape-detail {
+  height: 32%;
+  background-image:
+    url("https://images.unsplash.com/photo-1611674863385-68f9cd9b1f52?auto=format&fit=crop&w=900&q=80");
+  background-size: cover;
+  background-position: center;
+}
+
+.ms-photo--empty-rink {
+  background-image:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.55)),
+    url("https://images.unsplash.com/photo-1644553054315-9fb69509f932?auto=format&fit=crop&w=1400&q=80");
+  background-size: cover;
+  background-position: center;
+}
+
+.ms-photo--bench-scratches {
+  height: 48%;
+  background-image:
+    linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.25)),
+    url("https://images.unsplash.com/photo-1708477859742-7bce099bce11?auto=format&fit=crop&w=1000&q=80");
+  background-size: cover;
+  background-position: center 70%;
+}
+
+.ms-photo--interview-portrait {
+  background-image:
+    linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, 0.65)),
+    url("https://images.unsplash.com/photo-1708477859742-7bce099bce11?auto=format&fit=crop&w=1200&q=80");
+  background-size: cover;
+  background-position: center 20%;
+}
+
+/* Gear industrial */
+.ms-gear--industrial {
+  padding-top: 1.5rem;
+}
+
+.ms-gear-hed.light {
+  color: var(--ba-ice);
+}
+
+.ms-exploded {
+  margin-top: 0.75rem;
+  height: 48%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  justify-content: center;
+}
+
+.ms-exploded-part {
+  position: relative;
+  border: 1px dashed rgba(244, 246, 248, 0.35);
+  background: rgba(0, 0, 0, 0.25);
+  min-height: 22%;
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem;
+}
+
+.ms-exploded-blade {
+  height: 28%;
+  clip-path: polygon(0 40%, 70% 20%, 100% 30%, 100% 70%, 70% 80%, 0 60%);
+  background: linear-gradient(90deg, #1a2228, #8a929a 40%, #e0e4e8 55%, #4a5560);
+}
+
+.ms-exploded-shaft {
+  height: 22%;
+  background: linear-gradient(90deg, #0a0c10, #2a3840 50%, #1a2228);
+}
+
+.ms-exploded-grip {
+  height: 18%;
+  background: repeating-linear-gradient(
+    90deg,
+    #1a1e22 0 3px,
+    #3a4048 3px 6px
+  );
+}
+
+.ms-exploded-part span {
+  font-family: var(--font-mono);
+  font-size: clamp(5px, 1.5cqw, 8px);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ba-red);
+  position: relative;
+  z-index: 1;
+  mix-blend-mode: difference;
+}
+
+.ms-gear-specs--tech {
+  padding-top: 2rem;
+  color: var(--ba-ice);
+}
+
+.ms-deck.light {
+  color: rgba(244, 246, 248, 0.9);
+}
+
+.ms-measure-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.ms-measure-row > div {
+  border-top: 2px solid var(--ba-red);
+  padding-top: 0.35rem;
+}
+
+.ms-measure-num {
+  font-family: var(--font-display);
+  font-size: clamp(16px, 5cqw, 28px);
+  color: var(--ba-red);
+  line-height: 1;
+}
+
+.ms-measure-unit {
+  font-family: var(--font-mono);
+  font-size: clamp(5px, 1.4cqw, 8px);
+  letter-spacing: 0.12em;
+  margin-left: 0.25rem;
+  opacity: 0.7;
+}
+
+.ms-measure-row p {
+  font-family: var(--font-ui);
+  font-size: clamp(6px, 1.6cqw, 9px);
+  margin: 0.25rem 0 0;
+  opacity: 0.7;
+}
+
+.ms-callouts--light strong {
+  color: var(--ba-ice);
+}
+
+.ms-callouts--light p {
+  color: rgba(244, 246, 248, 0.7);
+}
+
+/* Hockey data */
+.ms-data-hockey,
+.ms-load-hockey {
+  padding-top: 1.75rem;
+  color: var(--ba-ice);
+}
+
+.ms-data-hed {
+  font-family: var(--font-deck);
+  font-size: clamp(12px, 3.2cqw, 18px);
+  font-weight: 400;
+  margin: 0 0 0.85rem;
+}
+
+.ms-force-diagram {
+  margin-bottom: 0.85rem;
+}
+
+.ms-force-track {
+  position: relative;
+  height: 28px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(244, 246, 248, 0.15);
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+}
+
+.ms-force-trail {
+  position: absolute;
+  left: 8%;
+  top: 50%;
+  width: 70%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--ba-red), transparent);
+  transform: translateY(-50%);
+}
+
+.ms-force-puck {
+  position: absolute;
+  left: 72%;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+  border-radius: 50%;
+  background: var(--ba-arena);
+  border: 1px solid var(--ba-ice);
+}
+
+.ms-force-facts {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.35rem;
+}
+
+.ms-force-facts li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.ms-force-facts strong {
+  font-family: var(--font-display);
+  font-size: clamp(12px, 3.5cqw, 18px);
+  color: var(--ba-red);
+  line-height: 1;
+}
+
+.ms-force-facts span {
+  font-family: var(--font-ui);
+  font-size: clamp(5px, 1.4cqw, 8px);
+  opacity: 0.65;
+  line-height: 1.2;
+}
+
+.ms-shot-rail {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.35rem;
+  height: 32%;
+  min-height: 70px;
+  border-bottom: 1px solid rgba(244, 246, 248, 0.2);
+  padding-bottom: 0.35rem;
+}
+
+.ms-shot-tick {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.ms-shot-tick i {
+  display: block;
+  width: 100%;
+  background: rgba(244, 246, 248, 0.35);
+  min-height: 4px;
+}
+
+.ms-shot-tick.is-hot i {
+  background: var(--ba-red);
+}
+
+.ms-shot-tick strong {
+  font-family: var(--font-mono);
+  font-size: clamp(6px, 1.6cqw, 9px);
+}
+
+.ms-shot-tick span {
+  font-family: var(--font-ui);
+  font-size: clamp(5px, 1.3cqw, 7px);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.ms-load-explain {
+  font-family: var(--font-body);
+  font-size: clamp(8px, 2cqw, 11px);
+  line-height: 1.35;
+  margin: 0.5rem 0 0.85rem;
+  opacity: 0.85;
+}
+
+.ms-rep-blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.ms-rep-blocks > div {
+  display: grid;
+  grid-template-columns: 2rem 4.5rem 1fr;
+  gap: 0.35rem;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: clamp(6px, 1.5cqw, 8px);
+}
+
+.ms-rep-blocks em {
+  font-style: normal;
+  font-family: var(--font-ui);
+  opacity: 0.65;
+  font-size: 0.95em;
+}
+
+.ms-rep-blocks i {
+  display: block;
+  height: 6px;
+  background: rgba(244, 246, 248, 0.3);
+}
+
+.ms-rep-blocks > div:nth-child(2) i {
+  background: var(--ba-red);
+}
+
+/* Human interview */
+.ms-interview-pull {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: 10%;
+  z-index: 4;
+  margin: 0;
+  font-family: var(--font-deck);
+  font-size: clamp(14px, 4cqw, 22px);
+  line-height: 1.2;
+  color: var(--ba-ice);
+}
+
+.ms-interview--human {
+  padding-top: 2rem;
+}
+
+.ms-interview-aside {
+  font-family: var(--font-deck);
+  font-style: italic;
+  font-size: clamp(10px, 2.6cqw, 14px);
+  margin: 0 0 1rem;
+  color: var(--mute);
+}
+
+/* Numbers department */
+.ms-numbers-dept {
+  padding-top: 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.ms-numbers-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.ms-numbers-head h2 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 10cqw, 48px);
+  margin: 0;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+
+.ms-numbers-lede {
+  font-family: var(--font-deck);
+  font-size: clamp(9px, 2.4cqw, 13px);
+  margin: 0.5rem 0 0;
+  max-width: 36ch;
+  color: var(--ink-soft);
+}
+
+.ms-numbers-list {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  flex: 1;
+}
+
+.ms-numbers-item {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 0.65rem;
+  border-top: 1px solid var(--rule);
+  padding-top: 0.45rem;
+}
+
+.ms-numbers-figure {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+}
+
+.ms-num--dept {
+  font-size: clamp(22px, 7cqw, 36px);
+}
+
+.ms-numbers-unit {
+  font-family: var(--font-mono);
+  font-size: clamp(6px, 1.6cqw, 9px);
+  letter-spacing: 0.12em;
+  color: var(--mute);
+}
+
+.ms-numbers-item h3 {
+  font-family: var(--font-ui);
+  font-size: clamp(8px, 2cqw, 11px);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0 0 0.2rem;
+}
+
+.ms-numbers-item p {
+  font-family: var(--font-body);
+  font-size: clamp(7px, 1.8cqw, 10px);
+  line-height: 1.3;
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+/* Closing back cover */
+.ms-back--close {
+  justify-content: flex-end;
+}
+
+.ms-back-copy--close {
+  padding: 10% 8% 9%;
+}
+
+.ms-back-close-line {
+  font-family: var(--font-display);
+  font-size: clamp(12px, 3.6cqw, 20px);
+  letter-spacing: 0.02em;
+  margin: 0 0 0.35rem;
+  line-height: 1.15;
+}
+
+.ms-back-close-line--accent {
+  color: var(--ba-red);
+  margin-bottom: 0.75rem;
+}
+
+.ms-page--rink .ms-caption.light {
+  color: rgba(244, 246, 248, 0.55);
 }
 
 @media (max-width: 720px) {

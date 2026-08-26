@@ -100,9 +100,10 @@ export default function App() {
           <div>
             <p className="concept-line">BEYOND THE SCORE.</p>
             <p className="prose">
-              BREAKAWAY treats sport as culture, craft, and decision-making. The score is context;
-              the publication’s job is everything surrounding it — preparation, equipment geometry,
-              the photograph that freezes intent.
+              BREAKAWAY documents the fractions of a second, unseen preparation, equipment,
+              decisions, and human details that determine what happens before the scoreboard
+              records it. Issue 08 is one editorial argument — decision, preparation, equipment,
+              evidence — not a stack of unrelated hockey layouts.
             </p>
           </div>
         </section>
@@ -113,9 +114,10 @@ export default function App() {
             <h2>Editorial Direction</h2>
           </div>
           <p className="prose narrow">
-            Restrained identity: editorial, athletic, contemporary, intelligent, premium. Masthead
-            in condensed display, cool paper stock, vermillion accent for urgency without franchise
-            color language.
+            Editorial precision × the physical messiness of hockey. A visual library of rink
+            markings, tape, clocks, and coaching ephemera — used when the story needs them, not as
+            decoration. Color has a job: red for action and decisions, ice for reading, rink
+            blue-gray for analysis, arena black for documentary weight.
           </p>
           <ul className="section-list">
             {SECTIONS.map((s) => (
@@ -126,20 +128,20 @@ export default function App() {
             ))}
           </ul>
           <div className="swatches" aria-label="Color system">
-            <div style={{ background: "#0B0B0B" }}>
-              <span>Ink</span>
-            </div>
-            <div style={{ background: "#EBEEF1", color: "#0B0B0B" }}>
-              <span>Paper</span>
-            </div>
             <div style={{ background: "#E62314" }}>
-              <span>Accent</span>
+              <span>Red · action</span>
             </div>
-            <div style={{ background: "#2C3E4E" }}>
-              <span>Steel</span>
+            <div style={{ background: "#F4F6F8", color: "#0B0B0B" }}>
+              <span>Ice · reading</span>
             </div>
-            <div style={{ background: "#9EB6C4", color: "#0B0B0B" }}>
-              <span>Ice</span>
+            <div style={{ background: "#2A3D4D" }}>
+              <span>Rink · analysis</span>
+            </div>
+            <div style={{ background: "#0B0B0B" }}>
+              <span>Arena · drama</span>
+            </div>
+            <div style={{ background: "#1E4D8C" }}>
+              <span>Blue line</span>
             </div>
           </div>
         </section>
@@ -332,13 +334,13 @@ export default function App() {
 
         <section className="closing">
           <p>
-            BREAKAWAY is a fictional self-initiated editorial design project created to demonstrate
-            Adobe InDesign, typography, grid systems, sports art direction, print production, and
-            multi-page publication design.
+            THE SCORE SAYS WHAT HAPPENED. BREAKAWAY LOOKS AT WHY.
           </p>
           <p className="closing-meta">
-            Portfolio presentation built in React + TypeScript as a digital design archive — not a
-            replacement for the InDesign publication.
+            BREAKAWAY is a fictional self-initiated editorial design project created to demonstrate
+            Adobe InDesign, typography, grid systems, sports art direction, print production, and
+            multi-page publication design. Portfolio presentation in React + TypeScript — archive,
+            not substitute, for the InDesign publication.
           </p>
           <a className="back-link" href="../../index.html">
             ← Artistic Fountain

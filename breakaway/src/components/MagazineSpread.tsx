@@ -11,7 +11,30 @@ interface Props {
   className?: string;
 }
 
-function Folio({ left, right, section }: { left: string; right: string; section: string }) {
+/** Recurring Issue 08 identifier */
+function IssueMark({ light }: { light?: boolean }) {
+  return (
+    <div className={`ms-issue-mark${light ? " ms-issue-mark--light" : ""}`} aria-hidden="true">
+      <span className="ms-issue-mark-line" />
+      <span>ISSUE {ISSUE.number}</span>
+    </div>
+  );
+}
+
+/** Thin rink line device — red center / blue line */
+function RinkRule({ tone = "red" }: { tone?: "red" | "blue" }) {
+  return <div className={`ms-rink-rule ms-rink-rule--${tone}`} aria-hidden="true" />;
+}
+
+function Folio({
+  left,
+  right,
+  section,
+}: {
+  left: string;
+  right: string;
+  section: string;
+}) {
   return (
     <>
       <div className="ms-folio ms-folio--l">
@@ -42,7 +65,7 @@ function PageShell({
   bleed,
 }: {
   children: ReactNode;
-  tone?: "paper" | "ink" | "ice";
+  tone?: "paper" | "ink" | "ice" | "rink";
   bleed?: boolean;
 }) {
   return (
@@ -52,6 +75,8 @@ function PageShell({
   );
 }
 
+/* ─── 01–03 Covers (refine) ─── */
+
 function CoverA() {
   return (
     <div className="ms-spread ms-spread--single">
@@ -59,6 +84,7 @@ function CoverA() {
         <div className="ms-cover ms-cover--a">
           <div className="ms-cover-photo ms-photo ms-photo--athlete-glance" />
           <div className="ms-cover-scrim" />
+          <div className="ms-cover-rink-mark" aria-hidden="true" />
           <header className="ms-cover-mast">
             <p className="ms-masthead">{ISSUE.title}</p>
             <p className="ms-tagline">{ISSUE.tagline}</p>
@@ -69,15 +95,18 @@ function CoverA() {
               <br />
               SECOND
             </p>
-            <p className="ms-cover-deck">Inside the decision before the puck leaves the stick</p>
+            <p className="ms-cover-deck">
+              Inside the decision that happens before the puck leaves the stick
+            </p>
             <ul className="ms-cover-sec">
               <li>The Work Nobody Sees</li>
               <li>Designed for Speed</li>
-              <li>The Moment — Photo Essay</li>
+              <li>Numbers — Decision Evidence</li>
             </ul>
           </div>
           <footer className="ms-cover-meta">
             <span>No. {ISSUE.number}</span>
+            <span className="ms-cover-clock">0.30 SEC</span>
             <span>{ISSUE.season}</span>
           </footer>
         </div>
@@ -91,11 +120,14 @@ function CoverB() {
     <div className="ms-spread ms-spread--single">
       <PageShell tone="paper" bleed>
         <div className="ms-cover ms-cover--b">
-          <p className="ms-masthead ms-masthead--ink">{ISSUE.title}</p>
+          <div className="ms-cover-b-top">
+            <p className="ms-masthead ms-masthead--ink">{ISSUE.title}</p>
+            <IssueMark />
+          </div>
           <div className="ms-cover-b-grid">
             <div className="ms-photo ms-photo--stick-flex" />
             <div className="ms-cover-b-type">
-              <p className="ms-cover-b-kicker">FEATURE</p>
+              <p className="ms-cover-b-kicker">FEATURE · EQUIPMENT</p>
               <h2>
                 CUT
                 <br />
@@ -103,7 +135,8 @@ function CoverB() {
                 <br />
                 CONTACT
               </h2>
-              <p className="ms-cover-deck ink">Equipment geometry and the science of release.</p>
+              <RinkRule />
+              <p className="ms-cover-deck ink">How blade geometry changes the release window.</p>
               <p className="ms-cover-meta-inline">
                 No. {ISSUE.number} · {ISSUE.season}
               </p>
@@ -135,6 +168,8 @@ function CoverC() {
   );
 }
 
+/* ─── 04–05 Front matter ─── */
+
 function TocSpread({ showGrid }: { showGrid?: boolean }) {
   return (
     <div className="ms-spread">
@@ -142,33 +177,40 @@ function TocSpread({ showGrid }: { showGrid?: boolean }) {
         {showGrid && <GridOverlay />}
         <Folio left="02" right="" section="" />
         <div className="ms-toc-left">
-          <p className="ms-section-label">CONTENTS</p>
+          <div className="ms-toc-head-row">
+            <p className="ms-section-label">CONTENTS</p>
+            <IssueMark />
+          </div>
           <h2 className="ms-toc-title">
             Issue
             <br />
             {ISSUE.number}
           </h2>
+          <p className="ms-toc-thesis">
+            Four investigations into what happens before the scoreboard.
+          </p>
           <div className="ms-photo ms-photo--toc-athlete" />
-          <p className="ms-caption">Cover athlete · training camp, morning skate</p>
+          <p className="ms-caption">Morning skate · Rink 2 · cover sequence</p>
         </div>
       </PageShell>
       <PageShell>
         {showGrid && <GridOverlay />}
         <Folio left="" right="03" section="CONTENTS" />
         <div className="ms-toc-right">
-          {["PLAY", "PEOPLE", "PROCESS", "GEAR", "CULTURE"].map((sec, i) => (
-            <div key={sec} className="ms-toc-block">
+          {[
+            { sec: "PLAY", item: "The 0.3 Second", note: "Decision", pg: "12" },
+            { sec: "PEOPLE", item: "The Work Nobody Sees", note: "Preparation", pg: "22" },
+            { sec: "PROCESS", item: "Five Questions", note: "Human detail", pg: "44" },
+            { sec: "GEAR", item: "Designed for Speed", note: "Equipment", pg: "38" },
+            { sec: "EVIDENCE", item: "Numbers", note: "Measurement", pg: "08" },
+          ].map((row) => (
+            <div key={row.sec} className="ms-toc-block">
               <div className="ms-toc-sec-head">
-                <span className="ms-toc-sec">{sec}</span>
-                <span className="ms-toc-pg">{String(12 + i * 6).padStart(2, "0")}</span>
+                <span className="ms-toc-sec">{row.sec}</span>
+                <span className="ms-toc-pg">{row.pg}</span>
               </div>
-              <p className="ms-toc-item">
-                {i === 0 && "The 0.3 Second"}
-                {i === 1 && "The Work Nobody Sees"}
-                {i === 2 && "Five Minutes with a Strength Coach"}
-                {i === 3 && "Designed for Speed"}
-                {i === 4 && "The Moment"}
-              </p>
+              <p className="ms-toc-item">{row.item}</p>
+              <p className="ms-toc-note">{row.note}</p>
             </div>
           ))}
         </div>
@@ -190,6 +232,7 @@ function EditorsSpread({ showGrid }: { showGrid?: boolean }) {
             <br />
             the score
           </h2>
+          <RinkRule />
           <div className="ms-photo ms-photo--editors ms-editors-img" />
         </div>
       </PageShell>
@@ -198,27 +241,25 @@ function EditorsSpread({ showGrid }: { showGrid?: boolean }) {
         <Folio left="" right="05" section="EDITORIAL" />
         <div className="ms-editors-body">
           <p className="ms-dropcap-para">
-            <span className="ms-drop">W</span>
-            e built this issue around a single belief: the most interesting part of sport is rarely
-            the number on the board. It is the quiet preparation, the equipment engineered to
-            disappear in the hand, the photograph that freezes a decision you cannot see in real
-            time.
+            <span className="ms-drop">B</span>
+            REAKAWAY documents the fractions of a second, unseen preparation, equipment, decisions,
+            and human details that determine what happens before the scoreboard records it.
           </p>
           <p>
-            BREAKAWAY exists for readers who want journalism with the patience of a long skate and
-            the clarity of a clean layout. In these pages you will find hockey dissected to
-            three-tenths of a second, an athlete profile that stays in the weight room, and a
-            photography essay that refuses to decorate.
+            This issue follows that argument through four linked investigations: a release window
+            measured in tenths, a morning no camera crew covers, a stick engineered for speed, and
+            the numbers that prove none of it is abstract.
           </p>
-          <p>
-            Thank you for reading past the scoreline.
-          </p>
+          <p>The score says what happened. These pages look at why.</p>
           <p className="ms-signature">— The Editors</p>
+          <p className="ms-hand-note">Issue 08 — keep looking upstream.</p>
         </div>
       </PageShell>
     </div>
   );
 }
+
+/* ─── 06–08 Feature ─── */
 
 function FeatureOpen({ showGrid }: { showGrid?: boolean }) {
   return (
@@ -228,7 +269,7 @@ function FeatureOpen({ showGrid }: { showGrid?: boolean }) {
         <div className="ms-feature-open">
           <div className="ms-photo ms-photo--ice-action ms-feature-open-bg" />
           <div className="ms-feature-open-type">
-            <p className="ms-section-label light">PLAY · FEATURE</p>
+            <p className="ms-section-label light">PLAY · FEATURE · ISSUE {ISSUE.number}</p>
             <h2>
               THE
               <br />
@@ -245,7 +286,8 @@ function FeatureOpen({ showGrid }: { showGrid?: boolean }) {
           <p className="ms-deck light">
             Inside the decision that happens before the puck leaves the stick.
           </p>
-          <p className="ms-caption light">Photography · rinkside sequence, period two</p>
+          <div className="ms-clock-chip">0.30</div>
+          <p className="ms-caption light">High-speed sequence · period two · lane recognition</p>
           <p className="ms-folio-solo">12–13</p>
         </div>
       </PageShell>
@@ -259,6 +301,7 @@ function FeatureBody({ showGrid }: { showGrid?: boolean }) {
       <PageShell>
         {showGrid && <GridOverlay />}
         <Folio left="14" right="" section="" />
+        <IssueMark />
         <div className="ms-cols-2">
           <p>
             The clock on the scoreboard lies. What looks continuous from the seats is, for the
@@ -270,13 +313,12 @@ function FeatureBody({ showGrid }: { showGrid?: boolean }) {
             time folding until the only available action is the one already chosen.
           </p>
           <p>
-            We spent a week with a release specialist and a high-speed camera crew to map that
-            window. The average elite wrister leaves the stick in roughly three-tenths of a second
-            from the first intentional load.
+            We mapped forty-eight releases with a high-speed camera. From first intentional load to
+            puck leaving the blade: roughly three-tenths of a second.
           </p>
         </div>
         <div className="ms-photo ms-photo--stick-detail ms-inset" />
-        <p className="ms-caption">Stick face at peak load — composite weave visible under frost.</p>
+        <p className="ms-caption">Stick face at peak load — tape wear marks the contact zone.</p>
       </PageShell>
       <PageShell>
         {showGrid && <GridOverlay />}
@@ -290,8 +332,8 @@ function FeatureBody({ showGrid }: { showGrid?: boolean }) {
             fatigue does — the same pattern until the nervous system stops negotiating.
           </p>
           <p>
-            On the following pages: a diagram of the release path, shot-speed comparisons across a
-            season, and the equipment variables that quietly change the window.
+            On the next spread: the 0.3-second decision itself — not a chart of season averages, but
+            the path from recognition to release.
           </p>
         </div>
       </PageShell>
@@ -300,61 +342,65 @@ function FeatureBody({ showGrid }: { showGrid?: boolean }) {
 }
 
 function FeatureStats({ showGrid }: { showGrid?: boolean }) {
+  const steps = [
+    { t: "0.00", label: "Recognize opening", detail: "Lane appears — eyes commit first" },
+    { t: "0.08", label: "Shift weight", detail: "Inside edge loads; hips square" },
+    { t: "0.16", label: "Commit to release", detail: "No abort path left" },
+    { t: "0.23", label: "Stick contact", detail: "Blade closes through the puck" },
+    { t: "0.30", label: "Shot released", detail: "Puck leaves — decision complete" },
+  ];
+
   return (
     <div className="ms-spread">
-      <PageShell>
+      <PageShell tone="rink">
         {showGrid && <GridOverlay />}
         <Folio left="16" right="" section="" />
-        <div className="ms-stats">
-          <p className="ms-section-label">DECISION MAP</p>
-          <div className="ms-diagram">
-            <div className="ms-diagram-row">
-              <span>0.00</span>
-              <div className="ms-diagram-bar">
-                <i style={{ width: "20%" }} />
-              </div>
-              <span>Plant</span>
-            </div>
-            <div className="ms-diagram-row">
-              <span>0.12</span>
-              <div className="ms-diagram-bar">
-                <i style={{ width: "45%" }} />
-              </div>
-              <span>Load</span>
-            </div>
-            <div className="ms-diagram-row">
-              <span>0.21</span>
-              <div className="ms-diagram-bar">
-                <i style={{ width: "70%" }} />
-              </div>
-              <span>Commit</span>
-            </div>
-            <div className="ms-diagram-row">
-              <span>0.30</span>
-              <div className="ms-diagram-bar">
-                <i style={{ width: "100%" }} />
-              </div>
-              <span>Release</span>
-            </div>
-          </div>
-          <p className="ms-caption">Fig. 01 — Average release timeline, sample of 48 shots</p>
+        <div className="ms-decision">
+          <p className="ms-section-label light">DECISION MAP · 0.3 SECOND</p>
+          <h3 className="ms-decision-hed">What happens inside the window</h3>
+          <ol className="ms-decision-path">
+            {steps.map((s, i) => (
+              <li key={s.t}>
+                <span className="ms-decision-t">{s.t}</span>
+                <span className="ms-decision-arrow" aria-hidden="true">
+                  {i < steps.length - 1 ? "→" : "■"}
+                </span>
+                <div>
+                  <strong>{s.label}</strong>
+                  <em>{s.detail}</em>
+                </div>
+              </li>
+            ))}
+          </ol>
+          <p className="ms-caption light">Fig. 01 — Composite of 48 elite wristers, Issue 08 sample</p>
         </div>
       </PageShell>
-      <PageShell>
+      <PageShell tone="rink">
         {showGrid && <GridOverlay />}
         <Folio left="" right="17" section="PLAY" />
-        <div className="ms-big-nums">
-          <div>
-            <p className="ms-num">98.4</p>
-            <p className="ms-num-label">MPH peak wrister</p>
+        <div className="ms-decision-side">
+          <div className="ms-rink-diagram" aria-hidden="true">
+            <div className="ms-rink-diagram-ice">
+              <span className="ms-crease" />
+              <span className="ms-faceoff" />
+              <span className="ms-shot-path" />
+              <span className="ms-shot-dot" />
+            </div>
+            <p>Release lane · near-side open</p>
           </div>
-          <div>
-            <p className="ms-num">0.28</p>
-            <p className="ms-num-label">SEC median release</p>
-          </div>
-          <div>
-            <p className="ms-num">12°</p>
-            <p className="ms-num-label">BLADE OPEN AT EXIT</p>
+          <div className="ms-big-nums ms-big-nums--rink">
+            <div>
+              <p className="ms-num">98.4</p>
+              <p className="ms-num-label">MPH at exit — peak in sample</p>
+            </div>
+            <div>
+              <p className="ms-num">12°</p>
+              <p className="ms-num-label">Blade open at contact</p>
+            </div>
+            <div>
+              <p className="ms-num">0.28</p>
+              <p className="ms-num-label">SEC median — recognize → release</p>
+            </div>
           </div>
         </div>
       </PageShell>
@@ -362,18 +408,25 @@ function FeatureStats({ showGrid }: { showGrid?: boolean }) {
   );
 }
 
+/* ─── 09–12 Documentary ─── */
+
 function ProfileOpen({ showGrid }: { showGrid?: boolean }) {
   return (
     <div className="ms-spread">
       <PageShell tone="ink" bleed>
         {showGrid && <GridOverlay />}
         <div className="ms-photo ms-photo--portrait-quiet ms-full" />
+        <div className="ms-doc-stamp">
+          <span>06:14 AM</span>
+          <span>RINK 2</span>
+          <span>47 MIN BEFORE PRACTICE</span>
+        </div>
       </PageShell>
-      <PageShell>
+      <PageShell tone="rink">
         {showGrid && <GridOverlay />}
         <Folio left="" right="23" section="PEOPLE" />
-        <div className="ms-profile-open">
-          <p className="ms-section-label">ATHLETE PROFILE</p>
+        <div className="ms-profile-open ms-profile-open--doc">
+          <p className="ms-section-label light">ATHLETE PROFILE · DOCUMENTARY</p>
           <h2>
             THE WORK
             <br />
@@ -381,9 +434,9 @@ function ProfileOpen({ showGrid }: { showGrid?: boolean }) {
             <br />
             SEES
           </h2>
-          <p className="ms-deck">
-            Before the lights, before the broadcast graphic, there is a Tuesday morning and a
-            quiet rink.
+          <p className="ms-deck light">
+            Before the lights, before the broadcast graphic — wet floors, taped sticks, empty
+            benches.
           </p>
         </div>
       </PageShell>
@@ -394,37 +447,54 @@ function ProfileOpen({ showGrid }: { showGrid?: boolean }) {
 function ProfileBody({ showGrid }: { showGrid?: boolean }) {
   return (
     <div className="ms-spread">
-      <PageShell>
+      <PageShell tone="rink">
         {showGrid && <GridOverlay />}
         <Folio left="24" right="" section="" />
-        <div className="ms-profile-train">
-          <p className="ms-section-label">TRAINING</p>
-          <div className="ms-cols-2">
-            <p>
-              The session starts without ceremony. Mobility, then load, then on-ice edges. Nothing
-              is filmed for social. The work is the point.
-            </p>
-            <p>
-              “If it looks dramatic,” she says, “I probably did it wrong.” Efficiency over
-              spectacle — a philosophy that resists the highlight reel.
-            </p>
-          </div>
-          <div className="ms-timeblocks">
+        <div className="ms-train-log">
+          <header className="ms-train-log-head">
             <div>
-              <strong>05:40</strong>
-              <span>Activation</span>
+              <p className="ms-section-label light">PRACTICE SHEET</p>
+              <h3>Rink 2 — Tuesday</h3>
             </div>
-            <div>
-              <strong>06:15</strong>
-              <span>Strength</span>
+            <div className="ms-train-log-meta">
+              <span>06:14 AM</span>
+              <span>Session 04 / 05</span>
+              <span>Issue 08</span>
             </div>
-            <div>
-              <strong>07:30</strong>
-              <span>On ice</span>
+          </header>
+          <div className="ms-train-log-grid">
+            <div className="ms-train-log-col">
+              <p className="ms-train-log-label">TIME</p>
+              <ul>
+                <li>
+                  <strong>05:40</strong> Activation — hallway mats
+                </li>
+                <li>
+                  <strong>06:05</strong> Skate sharpen · steel check
+                </li>
+                <li>
+                  <strong>06:14</strong> Stick tape · two wraps heel
+                </li>
+                <li>
+                  <strong>06:30</strong> On ice — edges only
+                </li>
+                <li>
+                  <strong>07:10</strong> Release reps × 40
+                </li>
+                <li>
+                  <strong>08:00</strong> Empty rink cool-down
+                </li>
+              </ul>
             </div>
-            <div>
-              <strong>09:00</strong>
-              <span>Recovery</span>
+            <div className="ms-train-log-col">
+              <p className="ms-train-log-label">NOTES</p>
+              <p className="ms-hand-note ms-hand-note--block">
+                Keep blade closed through contact.
+                <br />
+                No drama — if it looks hard, redo.
+              </p>
+              <div className="ms-photo ms-photo--equip-room" />
+              <p className="ms-caption light">Equipment room · gloves still wet from yesterday</p>
             </div>
           </div>
         </div>
@@ -432,21 +502,20 @@ function ProfileBody({ showGrid }: { showGrid?: boolean }) {
       <PageShell>
         {showGrid && <GridOverlay />}
         <Folio left="" right="25" section="PEOPLE" />
-        <div className="ms-qa-mini">
-          <p className="ms-section-label">INTERVIEW EXCERPT</p>
-          <p className="ms-q">
-            <span>Q</span> What do you protect most fiercely?
-          </p>
-          <p className="ms-a">
-            <span>A</span> The mornings. Once the day becomes public, the work has to already be
-            done.
-          </p>
-          <p className="ms-q">
-            <span>Q</span> How do you measure a good week?
-          </p>
-          <p className="ms-a">
-            <span>A</span> Sleep, edges, and whether I left the rink quieter than I arrived.
-          </p>
+        <div className="ms-doc-details">
+          <div className="ms-photo ms-photo--tape-detail" />
+          <p className="ms-caption">Tape ritual — same pattern every morning</p>
+          <div className="ms-qa-mini">
+            <p className="ms-section-label">FIELD NOTES</p>
+            <p className="ms-q">
+              <span>Q</span> What do you protect most fiercely?
+            </p>
+            <p className="ms-a">
+              <span>A</span> The mornings. Once the day becomes public, the work has to already be
+              done.
+            </p>
+            <p className="ms-hand-note">Observed: locker lights off until 06:00.</p>
+          </div>
         </div>
       </PageShell>
     </div>
@@ -460,18 +529,30 @@ function PhotoSpread({ variant, showGrid }: { variant?: string; showGrid?: boole
       <PageShell tone="ink" bleed>
         {showGrid && <GridOverlay />}
         <div
-          className={`ms-photo ${second ? "ms-photo--wide-action" : "ms-photo--moment-a"} ms-full`}
+          className={`ms-photo ${second ? "ms-photo--empty-rink" : "ms-photo--moment-a"} ms-full`}
         />
-        <p className="ms-caption light ms-caption--overlay">
-          {second ? "Board battle · frame 184" : "THE MOMENT · 01"}
-        </p>
+        <div className="ms-doc-stamp">
+          {second ? (
+            <>
+              <span>05:52 AM</span>
+              <span>EMPTY ICE</span>
+              <span>BEFORE FIRST WHISTLE</span>
+            </>
+          ) : (
+            <>
+              <span>THE MOMENT</span>
+              <span>FRAME 01</span>
+            </>
+          )}
+        </div>
       </PageShell>
       <PageShell tone={second ? "paper" : "ink"} bleed={!second}>
         {showGrid && <GridOverlay />}
         {second ? (
           <div className="ms-photo-neg">
-            <div className="ms-photo ms-photo--moment-b" />
-            <p className="ms-caption">Caption only. Let the sequence breathe.</p>
+            <div className="ms-photo ms-photo--bench-scratches" />
+            <p className="ms-caption">Scratched bench rail · years of shift changes</p>
+            <p className="ms-hand-note">The work is already finished when the crowd arrives.</p>
             <p className="ms-folio-solo ink">32–33</p>
           </div>
         ) : (
@@ -485,70 +566,85 @@ function PhotoSpread({ variant, showGrid }: { variant?: string; showGrid?: boole
   );
 }
 
+/* ─── 13–16 Major revision ─── */
+
 function GearSpread({ showGrid }: { showGrid?: boolean }) {
   return (
     <div className="ms-spread">
-      <PageShell>
+      <PageShell tone="rink">
         {showGrid && <GridOverlay />}
         <Folio left="38" right="" section="" />
-        <div className="ms-gear">
-          <p className="ms-section-label">GEAR</p>
-          <h2 className="ms-gear-hed">
+        <div className="ms-gear ms-gear--industrial">
+          <p className="ms-section-label light">GEAR · INDUSTRIAL STUDY</p>
+          <h2 className="ms-gear-hed light">
             DESIGNED
             <br />
             FOR SPEED
           </h2>
-          <div className="ms-photo ms-photo--skate-hero" />
-          <p className="ms-caption">Carbon chassis · exploded view reference</p>
+          <div className="ms-exploded" aria-hidden="true">
+            <div className="ms-exploded-part ms-exploded-blade">
+              <span>01 Blade</span>
+            </div>
+            <div className="ms-exploded-part ms-exploded-shaft">
+              <span>02 Shaft</span>
+            </div>
+            <div className="ms-exploded-part ms-exploded-grip">
+              <span>03 Grip tape</span>
+            </div>
+          </div>
+          <p className="ms-caption light">
+            Stick as system — construction that shortens the 0.3-second window
+          </p>
         </div>
       </PageShell>
-      <PageShell>
+      <PageShell tone="rink">
         {showGrid && <GridOverlay />}
         <Folio left="" right="39" section="GEAR" />
-        <div className="ms-gear-specs">
-          <p className="ms-deck ink" style={{ marginBottom: "1rem" }}>
-            A skate is a negotiation between stiffness, weight, and the athlete’s preference for
-            how the ice “talks back.”
+        <div className="ms-gear-specs ms-gear-specs--tech">
+          <p className="ms-deck light" style={{ marginBottom: "0.75rem" }}>
+            Flex, weight, and blade curve are not preferences — they are timing instruments.
           </p>
-          <div className="ms-callouts">
+          <div className="ms-measure-row">
+            <div>
+              <span className="ms-measure-num">85</span>
+              <span className="ms-measure-unit">FLEX</span>
+              <p>Kick point mid-shaft for quicker load</p>
+            </div>
+            <div>
+              <span className="ms-measure-num">397</span>
+              <span className="ms-measure-unit">g</span>
+              <p>Stick mass without tape</p>
+            </div>
+            <div>
+              <span className="ms-measure-num">½"</span>
+              <span className="ms-measure-unit">CURVE</span>
+              <p>Opens release lane 8–12°</p>
+            </div>
+          </div>
+          <RinkRule tone="blue" />
+          <div className="ms-callouts ms-callouts--light">
             <div>
               <span className="ms-dot" />
               <div>
-                <strong>Shell</strong>
-                <p>Thermoformable composite, asymmetric ankle wrap</p>
+                <strong>Blade profile</strong>
+                <p>Stiffer toe delays open-face — holds puck through 0.23 contact</p>
               </div>
             </div>
             <div>
               <span className="ms-dot" />
               <div>
-                <strong>Holder</strong>
-                <p>Lightweight alloy, quick-release runner</p>
+                <strong>Carbon layup</strong>
+                <p>Unidirectional fibers along load path; fewer wasted milliseconds</p>
               </div>
             </div>
             <div>
               <span className="ms-dot" />
               <div>
-                <strong>Liner</strong>
-                <p>Moisture-channel knit, minimal break-in cycle</p>
+                <strong>Tape &amp; friction</strong>
+                <p>Two heel wraps — observed pattern from Issue 08 athlete</p>
               </div>
             </div>
           </div>
-          <table className="ms-spec-table">
-            <tbody>
-              <tr>
-                <td>Weight</td>
-                <td>612 g</td>
-              </tr>
-              <tr>
-                <td>Stiffness index</td>
-                <td>95</td>
-              </tr>
-              <tr>
-                <td>Runner</td>
-                <td>280 mm</td>
-              </tr>
-            </tbody>
-          </table>
         </div>
       </PageShell>
     </div>
@@ -558,52 +654,89 @@ function GearSpread({ showGrid }: { showGrid?: boolean }) {
 function DataSpread({ showGrid }: { showGrid?: boolean }) {
   return (
     <div className="ms-spread">
-      <PageShell>
+      <PageShell tone="rink">
         {showGrid && <GridOverlay />}
         <Folio left="40" right="" section="" />
-        <div className="ms-data">
-          <p className="ms-section-label">SHOT SPEED</p>
-          <div className="ms-chart">
-            {[72, 84, 91, 98, 88, 95].map((v, i) => (
-              <div key={i} className="ms-chart-col">
-                <div className="ms-chart-bar" style={{ height: `${v}%` }} />
-                <span>{v}</span>
+        <div className="ms-data-hockey">
+          <p className="ms-section-label light">SHOT SPEED × RELEASE</p>
+          <h3 className="ms-data-hed">What 98.4 mph costs</h3>
+          <div className="ms-force-diagram">
+            <div className="ms-force-track">
+              <span className="ms-force-puck" />
+              <span className="ms-force-trail" />
+            </div>
+            <ul className="ms-force-facts">
+              <li>
+                <strong>14 m</strong>
+                <span>Distance to net at release</span>
+              </li>
+              <li>
+                <strong>0.32 s</strong>
+                <span>Flight time at 98.4 mph</span>
+              </li>
+              <li>
+                <strong>40 reps</strong>
+                <span>Morning practice set that built the pattern</span>
+              </li>
+            </ul>
+          </div>
+          <div className="ms-shot-rail">
+            {[
+              { mph: 72, label: "Warm" },
+              { mph: 84, label: "Mid" },
+              { mph: 91, label: "Game" },
+              { mph: 98, label: "Peak", hot: true },
+              { mph: 88, label: "Fatigue" },
+            ].map((s) => (
+              <div key={s.label} className={`ms-shot-tick${s.hot ? " is-hot" : ""}`}>
+                <i style={{ height: `${(s.mph / 100) * 100}%` }} />
+                <strong>{s.mph}</strong>
+                <span>{s.label}</span>
               </div>
             ))}
           </div>
-          <p className="ms-caption">Season sample · miles per hour</p>
+          <p className="ms-caption light">Same stick · same lane · different body state</p>
         </div>
       </PageShell>
-      <PageShell>
+      <PageShell tone="rink">
         {showGrid && <GridOverlay />}
         <Folio left="" right="41" section="PLAY" />
-        <div className="ms-data-right">
-          <p className="ms-section-label">TRAINING LOAD</p>
+        <div className="ms-load-hockey">
+          <p className="ms-section-label light">TRAINING LOAD</p>
           <p className="ms-num ms-num--sm">4.2×</p>
-          <p className="ms-num-label">BODYWEIGHT PEAK FORCE · LATERAL BOUND</p>
-          <div className="ms-load-rows">
+          <p className="ms-num-label">BODYWEIGHT — LATERAL BOUND PEAK</p>
+          <p className="ms-load-explain">
+            The force that lets a player plant and open a lane in under a tenth of a second. Not a
+            gym vanity number — the physical basis of the 0.08 weight shift on the decision map.
+          </p>
+          <div className="ms-rep-blocks">
             <div>
               <span>Mon</span>
+              <em>Edges</em>
               <i style={{ width: "40%" }} />
             </div>
             <div>
               <span>Tue</span>
+              <em>Release ×40</em>
               <i style={{ width: "85%" }} />
             </div>
             <div>
               <span>Wed</span>
+              <em>Recovery skate</em>
               <i style={{ width: "55%" }} />
             </div>
             <div>
               <span>Thu</span>
+              <em>Game pace</em>
               <i style={{ width: "70%" }} />
             </div>
             <div>
               <span>Fri</span>
+              <em>Video + tape</em>
               <i style={{ width: "35%" }} />
             </div>
           </div>
-          <p className="ms-caption">Relative load · internal session RPE × duration</p>
+          <p className="ms-caption light">Load as preparation for the window — not for the board</p>
         </div>
       </PageShell>
     </div>
@@ -613,25 +746,25 @@ function DataSpread({ showGrid }: { showGrid?: boolean }) {
 function InterviewSpread({ showGrid }: { showGrid?: boolean }) {
   return (
     <div className="ms-spread">
-      <PageShell>
+      <PageShell tone="ink" bleed>
         {showGrid && <GridOverlay />}
-        <Folio left="44" right="" section="" />
-        <div className="ms-interview">
-          <p className="ms-section-label">CONVERSATION</p>
-          <h2 className="ms-interview-hed">Five Questions</h2>
-          <p className="ms-q">
-            <span>Q</span> When did competition stop being the loudest part of your life?
-          </p>
-          <p className="ms-a">
-            <span>A</span> When I realized the scoreboard was a summary, not the story. The
-            interesting work was always upstream.
-          </p>
-        </div>
+        <div className="ms-photo ms-photo--interview-portrait ms-full" />
+        <blockquote className="ms-interview-pull">
+          “The interesting work was always upstream.”
+        </blockquote>
       </PageShell>
       <PageShell>
         {showGrid && <GridOverlay />}
         <Folio left="" right="45" section="PEOPLE" />
-        <div className="ms-interview ms-interview--cont">
+        <div className="ms-interview ms-interview--human">
+          <p className="ms-section-label">FIVE QUESTIONS</p>
+          <p className="ms-interview-aside">After the data — a person.</p>
+          <p className="ms-q">
+            <span>Q</span> When did competition stop being the loudest part of your life?
+          </p>
+          <p className="ms-a">
+            <span>A</span> When I realized the scoreboard was a summary, not the story.
+          </p>
           <p className="ms-q">
             <span>Q</span> What do you refuse to romanticize?
           </p>
@@ -639,12 +772,12 @@ function InterviewSpread({ showGrid }: { showGrid?: boolean }) {
             <span>A</span> Pain as proof. Effort matters. Suffering for the camera does not.
           </p>
           <p className="ms-q">
-            <span>Q</span> Where should a reader look if they want to understand an athlete?
+            <span>Q</span> Where should a reader look?
           </p>
           <p className="ms-a">
-            <span>A</span> The calendar. Not the interview. The unremarkable Tuesday tells you
-            everything.
+            <span>A</span> The calendar. The unremarkable Tuesday.
           </p>
+          <p className="ms-hand-note">Coffee. Same thermos. Seat three from the door.</p>
         </div>
       </PageShell>
     </div>
@@ -652,47 +785,85 @@ function InterviewSpread({ showGrid }: { showGrid?: boolean }) {
 }
 
 function DepartmentSpread({ showGrid }: { showGrid?: boolean }) {
+  const nums = [
+    {
+      n: "0.3",
+      unit: "SEC",
+      title: "Decision window",
+      why: "Recognize opening → shot released. The unit of BREAKAWAY’s argument.",
+    },
+    {
+      n: "56",
+      unit: "SHOTS",
+      title: "Recorded this issue",
+      why: "High-speed frames studied for the decision map — not a page count.",
+    },
+    {
+      n: "12°",
+      unit: "",
+      title: "Release angle",
+      why: "Blade open at contact. Geometry that turns flex into flight.",
+    },
+    {
+      n: "5",
+      unit: "",
+      title: "Training sessions",
+      why: "One week of preparation behind a single published window.",
+    },
+  ];
+
   return (
     <div className="ms-spread ms-spread--single">
       <PageShell>
         {showGrid && <GridOverlay />}
-        <div className="ms-dept">
-          <p className="ms-section-label">NUMBERS</p>
-          <div className="ms-dept-grid">
+        <div className="ms-numbers-dept">
+          <header className="ms-numbers-head">
             <div>
-              <p className="ms-num">0.3</p>
-              <p className="ms-num-label">SECONDS · AVERAGE RELEASE WINDOW</p>
+              <p className="ms-section-label">DEPARTMENT</p>
+              <h2>NUMBERS</h2>
             </div>
-            <div>
-              <p className="ms-num">56</p>
-              <p className="ms-num-label">PAGES IN THIS ISSUE</p>
-            </div>
-            <div>
-              <p className="ms-num">12</p>
-              <p className="ms-num-label">COLUMN GRID</p>
-            </div>
-            <div>
-              <p className="ms-num">5</p>
-              <p className="ms-num-label">EDITORIAL SECTIONS</p>
-            </div>
+            <IssueMark />
+          </header>
+          <p className="ms-numbers-lede">
+            Evidence from Issue 08 — each figure explains why the scoreboard is not the story.
+          </p>
+          <RinkRule />
+          <div className="ms-numbers-list">
+            {nums.map((item) => (
+              <article key={item.title} className="ms-numbers-item">
+                <div className="ms-numbers-figure">
+                  <span className="ms-num ms-num--dept">{item.n}</span>
+                  {item.unit && <span className="ms-numbers-unit">{item.unit}</span>}
+                </div>
+                <div>
+                  <h3>{item.title}</h3>
+                  <p>{item.why}</p>
+                </div>
+              </article>
+            ))}
           </div>
-          <p className="ms-caption">Department page · short-form rhythm between features</p>
         </div>
       </PageShell>
     </div>
   );
 }
 
+/* ─── 17 Ending ─── */
+
 function BackCover() {
   return (
     <div className="ms-spread ms-spread--single">
       <PageShell tone="ink" bleed>
-        <div className="ms-back">
+        <div className="ms-back ms-back--close">
           <div className="ms-photo ms-photo--back ms-back-photo" />
-          <div className="ms-back-copy">
+          <div className="ms-back-copy ms-back-copy--close">
+            <p className="ms-back-close-line">THE SCORE SAYS WHAT HAPPENED.</p>
+            <p className="ms-back-close-line ms-back-close-line--accent">
+              BREAKAWAY LOOKS AT WHY.
+            </p>
+            <RinkRule />
             <p className="ms-masthead">{ISSUE.title}</p>
             <p className="ms-tagline">{ISSUE.tagline}</p>
-            <p className="ms-back-sub">Subscribe · Independent sports journalism, printed.</p>
             <div className="ms-barcode" aria-hidden="true" />
           </div>
         </div>
