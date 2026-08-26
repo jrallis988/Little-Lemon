@@ -56,11 +56,6 @@ export function AuthProvider({
     refreshSession().finally(() => setAuthReady(true));
   }, [refreshSession]);
 
-  const afterAuth = useCallback(async () => {
-    await refreshSession();
-    if (onSessionChange) await onSessionChange();
-  }, [refreshSession, onSessionChange]);
-
   const signIn = useCallback(
     async (email: string, password: string) => {
       const session = await biocrossApi.signIn(email.trim(), password);
