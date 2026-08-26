@@ -13,7 +13,8 @@ const SCREENS = [
   { id: '02_create_profile', path: '/onboarding/create-profile', label: 'Create Profile' },
   { id: '03_health_profile', path: '/onboarding/health-profile', label: 'Health Profile' },
   { id: '04_review_import', path: '/onboarding/review-import', label: 'Review Import' },
-  { id: '05_preferences', path: '/onboarding/preferences', label: 'Preferences' },
+  { id: '05_profile_ready', path: '/onboarding/profile-ready', label: 'Profile Ready' },
+  { id: '05b_preferences', path: '/onboarding/preferences', label: 'Preferences' },
   { id: '06_complete', path: '/onboarding/complete', label: "You're All Set" },
   { id: '07_home', path: '/(tabs)/home', label: 'Home', afterDemo: true },
   { id: '08_history', path: '/(tabs)/history', label: 'History', afterDemo: true },
@@ -32,8 +33,9 @@ const SCREENS = [
   { id: '21_privacy', path: '/profile/privacy', label: 'Privacy', afterDemo: true },
   { id: '22_medications', path: '/profile/medications', label: 'Medications', afterDemo: true },
   { id: '23_result_high', path: '/result/check-sjw', label: 'High Risk Result', afterDemo: true },
-  { id: '24_result_low', path: '/result/check-vitd', label: 'Low Risk Result', afterDemo: true },
+  { id: '24_result_low', path: '/result/check-vitd', label: 'No Known Conflicts', afterDemo: true },
   { id: '25_result_caution', path: '/result/check-ash', label: 'Caution Result', afterDemo: true },
+  { id: '26_result_more_info', path: '/result/check-more-info', label: 'More Info Needed', afterDemo: true },
 ];
 
 async function shot(page, screen) {

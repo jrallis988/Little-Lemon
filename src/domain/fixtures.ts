@@ -689,6 +689,13 @@ export const DEMO_MORE_INFO_CHECK: SupplementCheck = {
 /** @deprecated Use DEMO_MORE_INFO_CHECK */
 export const DEMO_UNKNOWN_CHECK = DEMO_MORE_INFO_CHECK;
 
+// Include more-info state in seed history after the constant is defined.
+DEMO_CHECKS.push({
+  ...DEMO_MORE_INFO_CHECK,
+  id: 'check-more-info',
+  checkedAt: daysAgo(1),
+});
+
 export const DEMO_ALERTS: SafetyAlert[] = [
   {
     id: 'alert-1',
