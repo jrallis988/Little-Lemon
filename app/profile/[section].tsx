@@ -1,11 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import {
   Pressable,
   ScrollView,
   StyleSheet,
   Switch,
   Text,
-  TextInput,
   View,
 } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
@@ -135,9 +134,6 @@ export default function ProfileSectionScreen() {
   } = useBioCross();
   const { signOut } = useAuth();
 
-  const [showAddCallout, setShowAddCallout] = useState(false);
-  const [addName, setAddName] = useState('');
-
   const settings = section ? SETTINGS_COPY[section] : undefined;
   const category = section ? CATEGORY_META[section] : undefined;
 
@@ -220,9 +216,9 @@ export default function ProfileSectionScreen() {
                 body="We never sell your data. You're always in control of your information."
               />
               <HealthCard style={styles.card}>
-                <ActionRow label="Export my health data" onPress={() => {}} />
-                <ActionRow label="Download uploaded documents" onPress={() => {}} />
-                <ActionRow label="Delete my BioCross account" destructive onPress={() => {}} />
+                <ActionRow label="Export my health data" onPress={() => router.push('/profile/export-data')} />
+                <ActionRow label="Privacy Policy" onPress={() => router.push('/legal/privacy')} />
+                <ActionRow label="Delete my BioCross account" destructive onPress={() => router.push('/profile/delete-account')} />
               </HealthCard>
             </>
           ) : null}
@@ -245,24 +241,35 @@ export default function ProfileSectionScreen() {
           {section === 'appearance' && preferences ? (
             <HealthCard>
               <Text style={styles.rowTitle}>Appearance</Text>
-              <Text style={styles.rowSub}>
-                {preferences.appearance === 'light'
-                  ? 'Light Mode'
-                  : preferences.appearance === 'dark'
-                    ? 'Dark Mode'
-                    : 'System'}
+              <Text style={[styles.rowSub, { marginBottom: spacing.sm }]}>
+                Risk colors stay consistent in both themes for clarity and trust.
               </Text>
-              <Text style={[styles.rowSub, { marginTop: 8 }]}>
-                BioCross currently ships in light mode to keep risk colors clear and trustworthy.
-              </Text>
+              {(['light', 'dark', 'system'] as const).map((mode) => (
+                <Pressable
+                  key={mode}
+                  onPress={() => updatePreferences({ ...preferences, appearance: mode })}
+                  style={styles.appearanceRow}
+                  accessibilityRole="radio"
+                  accessibilityState={{ selected: preferences.appearance === mode }}
+                >
+                  <Text style={styles.appearanceLabel}>
+                    {mode === 'light' ? 'Light' : mode === 'dark' ? 'Dark' : 'System'}
+                  </Text>
+                  {preferences.appearance === mode ? (
+                    <Ionicons name="checkmark-circle" size={20} color={colors.brand.blue} />
+                  ) : (
+                    <Ionicons name="ellipse-outline" size={20} color={colors.text.tertiary} />
+                  )}
+                </Pressable>
+              ))}
             </HealthCard>
           ) : null}
 
           {section === 'help' ? (
             <HealthCard>
-              <ActionRow label="How BioCross safety checks work" onPress={() => {}} />
-              <ActionRow label="Contact support" onPress={() => {}} />
-              <ActionRow label="Medical disclaimer" onPress={() => {}} />
+              <ActionRow label="How BioCross safety checks work" onPress={() => router.push('/legal/how-it-works')} />
+              <ActionRow label="Contact support" onPress={() => router.push('/legal/support')} />
+              <ActionRow label="Medical disclaimer" onPress={() => router.push('/legal/disclaimer')} />
               <ActionRow
                 label="Restart onboarding demo"
                 onPress={async () => {
@@ -312,12 +319,12 @@ export default function ProfileSectionScreen() {
                 </HealthCard>
               ))
             )
-          ) : items.length === 0 && !showAddCallout ? (
+          ) : items.length === 0 ? (
             <EmptyState
               title={`No ${category.title.toLowerCase()}`}
               body={category.empty}
               actionLabel={`Add ${category.addLabel}`}
-              onAction={() => setShowAddCallout(true)}
+              onAction={() => router.push(`/profile/add-item?section=${section}`)}
             />
           ) : (
             <>
@@ -373,46 +380,8 @@ export default function ProfileSectionScreen() {
                 label={`Add ${category.addLabel}`}
                 variant="outline"
                 size="md"
-                onPress={() => setShowAddCallout(true)}
+                onPress={() => router.push(`/profile/add-item?section=${section}`)}
               />
-              {showAddCallout ? (
-                <InfoCallout
-                  tone="info"
-                  title="Add or edit items"
-                  body="A full form is coming soon. For now, enter a name below to add an item to your profile."
-                />
-              ) : null}
-              {showAddCallout ? (
-                <HealthCard style={styles.card}>
-                  <Text style={styles.fieldLabel}>Name</Text>
-                  <TextInput
-                    value={addName}
-                    onChangeText={setAddName}
-                    placeholder={`Enter ${category.addLabel} name`}
-                    placeholderTextColor={colors.text.tertiary}
-                    style={styles.input}
-                    accessibilityLabel={`${category.addLabel} name`}
-                  />
-                  <BioCrossButton
-                    label="Save item"
-                    size="md"
-                    onPress={async () => {
-                      if (!addName.trim()) return;
-                      await addProfileItem({
-                        id: `manual-${Date.now()}`,
-                        category: category.category,
-                        name: addName.trim(),
-                        status: 'confirmed',
-                        confirmedAt: new Date().toISOString(),
-                        extractedAt: new Date().toISOString(),
-                      });
-                      setAddName('');
-                      setShowAddCallout(false);
-                    }}
-                    style={{ marginTop: spacing.sm }}
-                  />
-                </HealthCard>
-              ) : null}
             </>
           ) : null}
 
@@ -539,4 +508,14 @@ const styles = StyleSheet.create({
     color: colors.text.primary,
     fontSize: typography.size.md,
   },
+  appearanceRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: spacing.sm,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: colors.surface.border,
+    minHeight: 48,
+  },
+  appearanceLabel: { fontWeight: '600', color: colors.text.primary, fontSize: typography.size.md },
 });

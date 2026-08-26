@@ -23,7 +23,7 @@ import { useBioCross } from '../../src/state/BioCrossContext';
 
 export default function HistoryScreen() {
   const router = useRouter();
-  const { ready, checks, refresh } = useBioCross();
+  const { ready, checks, refresh, recheckCheck } = useBioCross();
   const [searchQuery, setSearchQuery] = useState('');
   const [error, setError] = useState(false);
 
@@ -139,12 +139,10 @@ export default function HistoryScreen() {
                     size="sm"
                     variant="outline"
                     fullWidth={false}
-                    onPress={() =>
-                      router.push({
-                        pathname: '/check/confirm',
-                        params: { supplementId: check.supplement.id },
-                      })
-                    }
+                    onPress={async () => {
+                      const updated = await recheckCheck(check.id);
+                      if (updated) router.push(`/result/${updated.id}`);
+                    }}
                   />
                 </View>
               ) : null}

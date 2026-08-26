@@ -5,7 +5,23 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { BioCrossProvider } from '../src/state/BioCrossContext';
 import { AuthProvider } from '../src/state/AuthContext';
-import { colors } from '../src/design-system/tokens';
+import { ThemeProvider, useTheme } from '../src/state/ThemeContext';
+
+function ThemedStack() {
+  const { colors, isDark } = useTheme();
+  return (
+    <>
+      <StatusBar style={isDark ? 'light' : 'dark'} />
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          contentStyle: { backgroundColor: colors.surface.background },
+          animation: 'slide_from_right',
+        }}
+      />
+    </>
+  );
+}
 
 export default function RootLayout() {
   const refreshRef = useRef<(() => Promise<void>) | null>(null);
@@ -19,14 +35,9 @@ export default function RootLayout() {
               await refreshRef.current?.();
             }}
           >
-            <StatusBar style="dark" />
-            <Stack
-              screenOptions={{
-                headerShown: false,
-                contentStyle: { backgroundColor: colors.surface.background },
-                animation: 'slide_from_right',
-              }}
-            />
+            <ThemeProvider>
+              <ThemedStack />
+            </ThemeProvider>
           </AuthProvider>
         </BioCrossProvider>
       </SafeAreaProvider>

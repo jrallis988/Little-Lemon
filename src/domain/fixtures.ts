@@ -373,6 +373,35 @@ export const SUPPLEMENT_CATALOG: Supplement[] = [
     barcode: '012345678974',
     ingredients: [{ id: 'ing-zn', name: 'Zinc', amount: '25 mg', isActive: true }],
   },
+  {
+    id: 'sup-catalog-ginkgo',
+    name: 'Ginkgo Biloba',
+    brand: 'MindLeaf',
+    dosage: '120 mg',
+    form: 'Capsule',
+    barcode: '012345678981',
+    ingredients: [
+      { id: 'ing-gink', name: 'Ginkgo biloba extract', amount: '120 mg', isActive: true },
+    ],
+  },
+  {
+    id: 'sup-catalog-kava',
+    name: 'Kava Root Extract',
+    brand: 'Pacific Calm',
+    dosage: '250 mg',
+    form: 'Capsule',
+    barcode: '012345678998',
+    ingredients: [{ id: 'ing-kava', name: 'Kava root extract', amount: '250 mg', isActive: true }],
+  },
+  {
+    id: 'sup-catalog-iron',
+    name: 'Iron Bisglycinate',
+    brand: 'PureHealth Essentials',
+    dosage: '18 mg',
+    form: 'Capsule',
+    barcode: '012345679005',
+    ingredients: [{ id: 'ing-fe', name: 'Iron (as bisglycinate)', amount: '18 mg', isActive: true }],
+  },
 ];
 
 export const DEMO_EVIDENCE: EvidenceSource[] = [

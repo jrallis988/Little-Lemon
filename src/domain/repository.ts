@@ -28,6 +28,7 @@ import type { Supplement as SupplementType } from './models';
 const LOCAL_KEYS = {
   onboarded: '@biocross/onboarded',
   extracted: '@biocross/extracted-local',
+  checks: '@biocross/checks',
 } as const;
 
 async function readLocalJSON<T>(key: string, fallback: T): Promise<T> {
@@ -40,10 +41,18 @@ async function readLocalJSON<T>(key: string, fallback: T): Promise<T> {
   }
 }
 
-/** Guest/offline fallback when no auth session exists. */
 async function hasSession(): Promise<boolean> {
   const token = await authStorage.getAccessToken();
   return Boolean(token);
+}
+
+function mergeChecks(remote: SupplementCheck[], local: SupplementCheck[]): SupplementCheck[] {
+  const map = new Map<string, SupplementCheck>();
+  for (const c of remote) map.set(c.id, c);
+  for (const c of local) map.set(c.id, c);
+  return [...map.values()].sort(
+    (a, b) => new Date(b.checkedAt).getTime() - new Date(a.checkedAt).getTime(),
+  );
 }
 
 export const biocrossRepository = {
@@ -199,30 +208,27 @@ export const biocrossRepository = {
   },
 
   async getChecks(): Promise<SupplementCheck[]> {
+    const local = await readLocalJSON<SupplementCheck[] | null>(LOCAL_KEYS.checks, null);
     if (await hasSession()) {
       try {
-        return await biocrossApi.getChecks();
+        const remote = await biocrossApi.getChecks();
+        return local ? mergeChecks(remote, local) : remote;
       } catch {
         /* fall through */
       }
     }
-    return DEMO_CHECKS;
+    return local ?? DEMO_CHECKS;
   },
 
   async getCheckById(id: string): Promise<SupplementCheck | undefined> {
-    if (await hasSession()) {
-      try {
-        return await biocrossApi.getCheckById(id);
-      } catch {
-        /* fall through */
-      }
-    }
     const checks = await this.getChecks();
     return checks.find((c) => c.id === id);
   },
 
   async saveCheck(check: SupplementCheck): Promise<SupplementCheck> {
-    // Checks are persisted via runAnalysis on the API; local path is read-only demo.
+    const checks = await this.getChecks();
+    const next = [check, ...checks.filter((c) => c.id !== check.id)];
+    await AsyncStorage.setItem(LOCAL_KEYS.checks, JSON.stringify(next));
     return check;
   },
 
@@ -255,14 +261,16 @@ export const biocrossRepository = {
   async runAnalysis(supplement: SupplementType): Promise<SupplementCheck> {
     if (await hasSession()) {
       try {
-        return await biocrossApi.runAnalysis(supplement.id);
+        const check = await biocrossApi.runAnalysis(supplement.id);
+        return this.saveCheck(check);
       } catch {
         /* fall through to local analysis */
       }
     }
     const user = await this.getUser();
     const profile = await this.getHealthProfile();
-    return analyzeSupplement(supplement, profile, user.id);
+    const check = analyzeSupplement(supplement, profile, user.id);
+    return this.saveCheck(check);
   },
 
   async getAlerts(): Promise<SafetyAlert[]> {

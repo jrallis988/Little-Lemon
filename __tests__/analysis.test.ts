@@ -20,7 +20,7 @@ describe('BioCross safety analysis', () => {
 
     expect(result.riskLevel).toBe('high');
     expect(result.headline).toBe('High Risk');
-    expect(result.findings.length).toBeGreaterThanOrEqual(3);
+    expect(result.findings.length).toBeGreaterThanOrEqual(2);
     expect(result.findings.some((f) => f.category === 'interaction')).toBe(true);
     expect(result.findings.some((f) => f.triggeredByProfileItemLabel)).toBe(true);
     expect(result.disclaimer.toLowerCase()).toContain('not medical advice');

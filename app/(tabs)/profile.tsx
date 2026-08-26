@@ -100,7 +100,7 @@ export default function ProfileScreen() {
           <View style={styles.userMeta}>
             {age !== null ? <MetaChip label={`Age ${age}`} /> : null}
             {user.biologicalSex ? <MetaChip label={formatSex(user.biologicalSex)} /> : null}
-            <MetaChip label="Blood Type O+" />
+            {user.country ? <MetaChip label={user.country} /> : null}
           </View>
           <View style={styles.profileStatusWrap}>
             <ProfileStatus readiness={profile.readiness} note={profile.readinessNote} />

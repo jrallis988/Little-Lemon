@@ -21,10 +21,9 @@ import {
   ScreenTitle,
 } from '../../src/design-system';
 import { colors, radii, spacing, typography } from '../../src/design-system/tokens';
+import * as DocumentPicker from 'expo-document-picker';
 import { DEMO_HEALTH_PROFILE } from '../../src/domain/fixtures';
 import { useBioCross } from '../../src/state/BioCrossContext';
-
-const DEMO_FILE_NAME = 'Boston_Childrens_Visit_Summary.pdf';
 
 const MANUAL_CATEGORIES = [
   { label: 'Medical Conditions', status: '2 added', added: true, icon: 'heart-outline' as const },
@@ -44,9 +43,26 @@ export default function HealthProfileScreen() {
   const [manualExpanded, setManualExpanded] = useState(true);
 
   const handleUpload = async () => {
+    const picked = await DocumentPicker.getDocumentAsync({
+      type: ['application/pdf', 'image/*'],
+      copyToCacheDirectory: true,
+    });
+    if (picked.canceled || !picked.assets?.[0]) return;
+
     setUploading(true);
     try {
-      const doc = await uploadDocument(DEMO_FILE_NAME);
+      const fileName = picked.assets[0].name;
+      const doc = await uploadDocument(fileName);
+      router.push(`/onboarding/review-import?documentId=${doc.id}`);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleDemoUpload = async () => {
+    setUploading(true);
+    try {
+      const doc = await uploadDocument('Boston_Childrens_Visit_Summary.pdf');
       router.push(`/onboarding/review-import?documentId=${doc.id}`);
     } finally {
       setUploading(false);

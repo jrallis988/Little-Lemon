@@ -165,7 +165,12 @@ export default function CheckScreen() {
 
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
         <View style={styles.viewfinderWrap}>
-          <View style={styles.viewfinder} accessibilityLabel="Barcode scanner viewfinder">
+          <Pressable
+            onPress={() => router.push('/check/scanner')}
+            style={styles.viewfinder}
+            accessibilityRole="button"
+            accessibilityLabel="Open full-screen barcode scanner"
+          >
             <BarcodeScannerView
               onScan={handleLiveScan}
               onPermissionDenied={() =>
@@ -207,7 +212,7 @@ export default function CheckScreen() {
                 <Text style={styles.sideLabel}>Photo</Text>
               </Pressable>
             </View>
-          </View>
+          </Pressable>
         </View>
 
         <InfoCallout

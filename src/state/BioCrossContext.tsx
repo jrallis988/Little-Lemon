@@ -11,6 +11,7 @@ import type {
   User,
 } from '../domain/models';
 import { biocrossRepository } from '../domain/repository';
+import { markChecksForRecheck, recheckSupplement } from '../domain/recheck';
 
 interface BioCrossContextValue {
   ready: boolean;
@@ -35,6 +36,7 @@ interface BioCrossContextValue {
   addProfileItem: (item: HealthProfileItem) => Promise<void>;
   removeProfileItem: (itemId: string) => Promise<void>;
   confirmProfileItem: (itemId: string) => Promise<void>;
+  recheckCheck: (checkId: string) => Promise<SupplementCheck | null>;
 }
 
 const BioCrossContext = createContext<BioCrossContextValue | null>(null);
@@ -67,7 +69,7 @@ export function BioCrossProvider({
     ]);
     setUser(u);
     setProfile(p);
-    setChecks(c);
+    setChecks(markChecksForRecheck(c, p));
     setAlerts(a);
     setPreferences(pref);
     setDocuments(docs);
@@ -152,6 +154,16 @@ export function BioCrossProvider({
       confirmProfileItem: async (itemId) => {
         await biocrossRepository.confirmProfileItem(itemId);
         await refresh();
+      },
+      recheckCheck: async (checkId) => {
+        const prior = await biocrossRepository.getCheckById(checkId);
+        const p = await biocrossRepository.getHealthProfile();
+        const u = await biocrossRepository.getUser();
+        if (!prior || !p || !u) return null;
+        const next = recheckSupplement(prior, p, u.id);
+        await biocrossRepository.saveCheck(next);
+        await refresh();
+        return next;
       },
     }),
     [ready, user, profile, checks, alerts, preferences, documents, onboarded, refresh],

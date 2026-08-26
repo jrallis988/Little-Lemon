@@ -126,6 +126,23 @@ npm run typecheck
 npm test
 ```
 
+### Remote API server (optional)
+
+```bash
+cd apps/api && npm install && npm run dev
+```
+
+## What's included in this build
+
+- **Profile forms** — full add-item flows per category (`/profile/add-item`)
+- **Settings wired** — export JSON, delete account, legal pages, appearance (light/dark/system)
+- **Ingredient-level analysis** — rules engine in `src/domain/ingredientRules.ts`
+- **Recheck** — history recheck when profile is newer than a prior check
+- **Scanner screen** — `/check/scanner` with haptics
+- **Label review** — editable mock OCR fields before confirm
+- **Document picker** — real file picker on health profile upload
+- **Backend scaffold** — `apps/api` Fastify server for remote mode
+
 ## Accessibility
 
 Targets WCAG 2.2 AA principles for mobile: Dynamic Type-friendly typography sizing, screen-reader labels, contrast, large touch targets, non-color risk indicators, and reduced-motion-friendly patterns where animation is used.
