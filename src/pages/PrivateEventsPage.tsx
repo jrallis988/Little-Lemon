@@ -1,9 +1,10 @@
 import { FormEvent, useState } from "react";
-import { Link } from "react-router-dom";
 import { CampusImage } from "../components/CampusImage";
 import { CartDrawer } from "../components/CartDrawer";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
+import { PageMeta } from "../components/PageMeta";
+import { TripleseatEmbed } from "../components/TripleseatEmbed";
 import { links } from "../data/links";
 import { venues } from "../data/venues";
 import { mailtoContact, submitContact } from "../lib/forms";
@@ -44,6 +45,11 @@ export function PrivateEventsPage() {
 
   return (
     <div className="min-h-screen bg-foam">
+      <PageMeta
+        title="Private events"
+        description="Book the Heritage Room, Field, or Backyard Patio at Smuttynose Towle Farm — up to 200 guests."
+        path="/events/private"
+      />
       <Header solid />
       <CartDrawer />
       <main>
@@ -118,44 +124,45 @@ export function PrivateEventsPage() {
           </div>
         </section>
 
+        <section className="px-5 py-16 md:px-8 md:py-20">
+          <div className="mx-auto max-w-site">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-tide">
+              Official booking
+            </p>
+            <h2 className="mt-3 font-display text-4xl font-bold uppercase tracking-wide">
+              Tripleseat event form
+            </h2>
+            <p className="mt-3 max-w-2xl text-steel">
+              Same private-event software as{" "}
+              <a
+                href={links.privateEvent}
+                target="_blank"
+                rel="noreferrer"
+                className="font-semibold text-tide underline-offset-2 hover:underline"
+              >
+                smuttynose.com/private-event
+              </a>
+              . Tell us about your event below.
+            </p>
+            <div className="mt-8">
+              <TripleseatEmbed scriptUrl={links.tripleseatScript} />
+            </div>
+          </div>
+        </section>
+
         <section className="bg-tide-deep px-5 py-16 text-foam md:px-8 md:py-24">
           <div className="mx-auto grid max-w-site gap-12 md:grid-cols-2">
             <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-salt">
-                Inquiry
+              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-salt">
+                Demo inquiry
               </p>
               <h2 className="mt-3 font-display text-4xl font-bold uppercase tracking-wide">
-                Tell us about your event
+                Project inbox backup
               </h2>
               <p className="mt-4 text-foam/75">
-                Share a few details and we’ll follow up with availability,
-                catering options, and next steps — or book through the official{" "}
-                <a
-                  href={links.privateEvent}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="underline underline-offset-2"
-                >
-                  Tripleseat private event form
-                </a>
-                .
+                Prefer Tripleseat above for official bookings. This demo form
+                sends to the project inbox as a fallback.
               </p>
-              <div className="mt-6 flex flex-wrap gap-3">
-                <a
-                  href={links.privateEvent}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex bg-foam px-5 py-3 text-sm font-semibold text-ink"
-                >
-                  Tripleseat form
-                </a>
-                <Link
-                  to="/#contact"
-                  className="inline-flex border border-foam/40 px-5 py-3 text-sm font-semibold"
-                >
-                  General contact
-                </Link>
-              </div>
             </div>
 
             <form onSubmit={onSubmit} className="space-y-4">

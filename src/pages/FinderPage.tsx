@@ -2,11 +2,17 @@ import { Link } from "react-router-dom";
 import { CartDrawer } from "../components/CartDrawer";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
+import { PageMeta } from "../components/PageMeta";
 import { links } from "../data/links";
 
 export function FinderPage() {
   return (
     <div className="min-h-screen bg-foam">
+      <PageMeta
+        title="Beer locator"
+        description="Find Smuttynose beer near you — official VT locator embedded from smuttynose.com."
+        path="/finder"
+      />
       <Header solid />
       <CartDrawer />
       <main className="px-5 pb-20 pt-28 md:px-8 md:pb-28">

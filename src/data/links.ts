@@ -24,6 +24,10 @@ export const links = {
     "https://tables.toasttab.com/restaurants/d7942056-dcdb-4996-9af0-83fbffbfffa3/findTime",
   loyalty: "https://www.toasttab.com/smuttynose-restaurant/rewardsSignup",
   loyaltyRewards: "https://www.toasttab.com/smuttynose-restaurant/rewards",
+  /** Tripleseat private-event intake (embedded on /events/private) */
+  tripleseatScript:
+    "https://api.tripleseat.com/v1/leads/ts_script.js?lead_form_id=43987&public_key=61032ecb760d4d0eb98220d376b5a755ede22d5b",
+  beKind: "https://smuttynose.com/contact/",
   maps: "https://www.google.com/maps/search/?api=1&query=105+Towle+Farm+Road,+Hampton,+NH+03842",
   mapsEmbed:
     "https://www.google.com/maps?q=105+Towle+Farm+Road,+Hampton,+NH+03842&output=embed",

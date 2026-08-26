@@ -81,6 +81,13 @@ export const classics: Beer[] = [
     note: "Seasonal — light citrus notes and a thirst-quenching finish.",
     status: "classic",
   },
+  {
+    name: "Key Lime Pie Sour",
+    style: "Sour Ale",
+    abv: "5.2%",
+    note: "Tart key lime with a graham-cracker finish — a newer classic.",
+    status: "classic",
+  },
 ];
 
 export function tapListUpdatedLabel(date = new Date()) {

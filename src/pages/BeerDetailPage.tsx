@@ -3,6 +3,7 @@ import { CampusImage } from "../components/CampusImage";
 import { CartDrawer } from "../components/CartDrawer";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
+import { PageMeta } from "../components/PageMeta";
 import { getBeerBySlug } from "../data/beerDetails";
 import { links } from "../data/links";
 
@@ -16,6 +17,12 @@ export function BeerDetailPage() {
 
   return (
     <div className="min-h-screen bg-foam">
+      <PageMeta
+        title={beer.name}
+        description={beer.tagline}
+        path={`/beers/${beer.slug}`}
+        image={`/images/${beer.image}.jpg`}
+      />
       <Header solid />
       <CartDrawer />
       <main className="pt-24">

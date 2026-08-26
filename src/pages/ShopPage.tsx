@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { CampusImage } from "../components/CampusImage";
 import { CartDrawer } from "../components/CartDrawer";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
+import { PageMeta } from "../components/PageMeta";
 import { useCart } from "../context/CartContext";
 import { links } from "../data/links";
 import { merch, MerchItem } from "../data/merch";
@@ -18,6 +20,11 @@ export function ShopPage() {
 
   return (
     <div className="min-h-screen bg-foam">
+      <PageMeta
+        title="Shop"
+        description="Smuttynose merch, glassware, and gear — demo cart with checkout on smuttynose.com."
+        path="/shop"
+      />
       <Header solid />
       <CartDrawer />
       <main className="px-5 pb-20 pt-28 md:px-8 md:pb-28">
@@ -108,7 +115,18 @@ export function ShopPage() {
 function MerchCard({ item, onAdd }: { item: MerchItem; onAdd: () => void }) {
   return (
     <article className="flex flex-col border border-ink/10 bg-foam">
-      <div className="aspect-square" style={{ background: item.color }} />
+      <div className="relative aspect-square overflow-hidden">
+        <CampusImage
+          name={item.image}
+          alt={item.name}
+          className="h-full w-full object-cover"
+        />
+        <span
+          className="absolute inset-0 mix-blend-multiply opacity-25"
+          style={{ background: item.color }}
+          aria-hidden="true"
+        />
+      </div>
       <div className="flex flex-1 flex-col p-4">
         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-tide">
           {item.category}

@@ -15,6 +15,7 @@ const sectionLinks = [
 const pageLinks = [
   { to: "/shop", label: "Shop" },
   { to: "/finder", label: "Beer finder" },
+  { to: "/be-kind", label: "Be KIND" },
   { to: "/events/private", label: "Private events" },
   { to: "/#contact", label: "Contact", hash: true },
 ];

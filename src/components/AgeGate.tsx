@@ -77,10 +77,10 @@ export function AgeGate() {
           id={titleId}
           className="mt-3 font-display text-3xl font-bold uppercase tracking-wide"
         >
-          Are you 21 or older?
+          Please verify your age
         </h2>
         <p className="mt-3 text-sm leading-relaxed text-foam/75">
-          You must be of legal drinking age to enter this site.
+          Are you over 21 years of age?
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <button
@@ -89,13 +89,13 @@ export function AgeGate() {
             onClick={accept}
             className="bg-buoy px-5 py-3 text-sm font-semibold tracking-wide text-foam transition-transform duration-300 hover:-translate-y-0.5"
           >
-            Yes, I’m 21+
+            Yes
           </button>
           <a
             href="https://www.responsibility.org/"
             className="border border-foam/40 px-5 py-3 text-sm font-semibold tracking-wide text-foam transition-colors hover:bg-foam/10"
           >
-            No, take me back
+            No
           </a>
         </div>
       </div>

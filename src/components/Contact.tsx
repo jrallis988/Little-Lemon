@@ -115,6 +115,16 @@ export function Contact() {
             </div>
             <div>
               <dt className="font-semibold uppercase tracking-[0.16em] text-salt">
+                Be KIND
+              </dt>
+              <dd className="mt-1 text-base text-foam/85">
+                <Link to="/be-kind" className="underline-offset-2 hover:underline">
+                  Nonprofit donation requests
+                </Link>
+              </dd>
+            </div>
+            <div>
+              <dt className="font-semibold uppercase tracking-[0.16em] text-salt">
                 Careers
               </dt>
               <dd className="mt-1 text-base text-foam/85">

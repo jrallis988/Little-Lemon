@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { useCart } from "../context/CartContext";
+import { CampusImage } from "./CampusImage";
+import { links } from "../data/links";
 
 export function CartDrawer() {
   const { lines, open, setOpen, subtotal, setQty, removeItem, clear } = useCart();
@@ -52,11 +54,13 @@ export function CartDrawer() {
             <ul className="divide-y divide-ink/10">
               {lines.map(({ item, qty }) => (
                 <li key={item.id} className="flex gap-4 py-4">
-                  <div
-                    className="h-16 w-16 shrink-0"
-                    style={{ background: item.color }}
-                    aria-hidden="true"
-                  />
+                  <div className="relative h-16 w-16 shrink-0 overflow-hidden bg-mist">
+                    <CampusImage
+                      name={item.image}
+                      alt={item.name}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
                   <div className="min-w-0 flex-1">
                     <p className="font-display text-lg font-bold uppercase tracking-wide">
                       {item.name}
@@ -107,13 +111,13 @@ export function CartDrawer() {
             onClick={() => {
               clear();
               setOpen(false);
-              alert("Demo checkout — connect Shopify or smuttynose.com shop next.");
+              window.open(links.shopOfficial, "_blank", "noopener,noreferrer");
             }}
           >
-            Checkout
+            Checkout on smuttynose.com
           </button>
           <p className="mt-2 text-xs text-steel">
-            Demo cart — wire to the live shop when ready.
+            Demo cart — live checkout on the official shop.
           </p>
         </div>
       </aside>

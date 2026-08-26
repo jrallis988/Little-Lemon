@@ -117,6 +117,12 @@ export function Footer() {
               >
                 E-gift cards
               </a>
+              <Link
+                to="/be-kind"
+                className="transition-colors hover:text-foam"
+              >
+                Be KIND
+              </Link>
               <a
                 href={links.careers}
                 target="_blank"
