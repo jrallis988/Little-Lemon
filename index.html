@@ -66,63 +66,77 @@
       </div>
     </section>
 
-    <section class="lunch-strip" aria-labelledby="lunch-strip-heading">
-      <div class="lunch-strip__inner reveal">
-        <p class="eyebrow">Weekday lunch</p>
-        <h2 id="lunch-strip-heading">Luncheon specials Mon–Fri until 3</h2>
-        <p>Egg roll, wings, fingers, or crab rangoons—plus rice—from about $11.95. General Tso’s lunch $12.50.</p>
+    <section class="favorites-section" id="menu" aria-labelledby="menu-heading">
+      <div class="lunch-callout reveal">
+        <div class="lunch-callout__copy">
+          <p class="eyebrow">Weekday lunch</p>
+          <h2 id="lunch-strip-heading">Luncheon specials Mon–Fri until 3</h2>
+          <p>Egg roll, wings, fingers, or crab rangoons—plus rice—from about $11.95. General Tso’s lunch $12.50.</p>
+        </div>
         <a class="btn btn--outline" href="menu.html#lunch">See lunch menu</a>
       </div>
-    </section>
 
-    <section class="menu-section" id="menu" aria-labelledby="menu-heading">
       <div class="section-intro reveal">
         <p class="eyebrow">From the kitchen</p>
         <h2 id="menu-heading">Local favorites</h2>
         <p class="section-lede">Must-tries from our Chinese and Japanese board—fresh, colorful, and cooked to order.</p>
-        <p class="section-link"><a href="menu.html">View full menu with prices</a></p>
       </div>
 
-      <div class="menu-feature reveal">
+      <article class="menu-feature reveal">
         <figure class="menu-feature__visual">
           <img src="images/dish-general-tso.jpg" alt="General Tso’s chicken with broccoli on a Red Mango plate" width="1024" height="768" loading="lazy" />
         </figure>
         <div class="menu-feature__copy">
+          <p class="favorite-cat">Mandarin specialty</p>
           <p class="menu-feature__zh" lang="zh-Hans">左宗鸡</p>
           <h3>General Tso’s Chicken</h3>
           <p>Crispy chicken in a glossy sweet-heat sauce—the classic dinner plate regulars come back for.</p>
         </div>
-      </div>
+      </article>
 
-      <ul class="menu-list">
-        <li class="menu-item reveal">
-          <figure class="menu-item__visual">
+      <ul class="favorite-grid">
+        <li class="favorite-card reveal">
+          <figure class="favorite-card__visual">
             <img src="images/dish-lo-mein.jpg" alt="Singapore-style noodles with shrimp and vegetables" width="1024" height="768" loading="lazy" />
           </figure>
-          <div class="menu-item__copy">
+          <div class="favorite-card__copy">
+            <p class="favorite-cat">Noodles</p>
             <h3>Chicken Lo Mein <span lang="zh-Hans">捞面</span></h3>
-            <p>Soft noodles, tender chicken, and crisp vegetables tossed in a savory wok sauce.</p>
+            <p>Soft noodles, tender chicken, and crisp vegetables in a savory wok sauce.</p>
           </div>
         </li>
-        <li class="menu-item reveal">
-          <figure class="menu-item__visual">
+        <li class="favorite-card reveal">
+          <figure class="favorite-card__visual">
             <img src="images/dish-sesame-chicken.jpg" alt="Sesame chicken over rice with broccoli on a Red Mango plate" width="1024" height="768" loading="lazy" />
           </figure>
-          <div class="menu-item__copy">
+          <div class="favorite-card__copy">
+            <p class="favorite-cat">Mandarin specialty</p>
             <h3>Sesame Chicken <span lang="zh-Hans">芝麻鸡</span></h3>
-            <p>Crispy chicken in sesame sauce over rice—a Mandarin specialty regulars order again.</p>
+            <p>Crispy chicken in sesame sauce over rice—a house favorite.</p>
           </div>
         </li>
-        <li class="menu-item reveal">
-          <figure class="menu-item__visual">
+        <li class="favorite-card reveal">
+          <figure class="favorite-card__visual">
             <img src="images/dish-spicy-tuna.jpg" alt="Specialty sushi roll on a branded Red Mango plate" width="1024" height="768" loading="lazy" />
           </figure>
-          <div class="menu-item__copy">
+          <div class="favorite-card__copy">
+            <p class="favorite-cat">Sushi bar</p>
             <h3>Spicy Tuna Roll <span lang="zh-Hans">辣金枪鱼卷</span></h3>
-            <p>Fresh sushi from our Japanese side of the menu—bright, clean, and made to share.</p>
+            <p>Fresh sushi from our Japanese side—bright, clean, and made to share.</p>
+          </div>
+        </li>
+        <li class="favorite-card reveal">
+          <figure class="favorite-card__visual">
+            <img src="images/dish-mango-roll.jpg" alt="Mango avocado sushi roll on a Red Mango plate" width="1024" height="768" loading="lazy" />
+          </figure>
+          <div class="favorite-card__copy">
+            <p class="favorite-cat">Signature roll</p>
+            <h3>Mango Avocado Roll <span lang="zh-Hans">芒果卷</span></h3>
+            <p>Ripe mango and avocado—the roll that shares our name.</p>
           </div>
         </li>
       </ul>
+      <p class="section-link reveal"><a href="menu.html">View full menu with prices →</a></p>
     </section>
 
     <section class="story-section" id="story" aria-labelledby="story-heading">
@@ -144,12 +158,27 @@
       </div>
       <ul class="reviews-list">
         <li class="review reveal">
+          <div class="review__meta">
+            <span class="review__stars" aria-label="5 out of 5 stars">★★★★★</span>
+            <span class="review__author">Local regular</span>
+            <span class="review__source">Website review</span>
+          </div>
           <p>“We have eaten here often. Food is always fresh, crispy colorful veggies, never over cooked or greasy. Nice sushi and other Japanese appetizers. It’s the best Chinese food in the area.”</p>
         </li>
         <li class="review reveal">
+          <div class="review__meta">
+            <span class="review__stars" aria-label="5 out of 5 stars">★★★★★</span>
+            <span class="review__author">Returning guest</span>
+            <span class="review__source">Website review</span>
+          </div>
           <p>“Family owned and operated by a very gracious husband and wife team who, with the help of their kitchen staff and servers, deliver outstanding food and service.”</p>
         </li>
         <li class="review reveal">
+          <div class="review__meta">
+            <span class="review__stars" aria-label="5 out of 5 stars">★★★★★</span>
+            <span class="review__author">Neighborhood diner</span>
+            <span class="review__source">Website review</span>
+          </div>
           <p>“We have been searching the area for many years, and finally found an Asian restaurant that has great food, friendly staff and a comfortable atmosphere.”</p>
         </li>
       </ul>
@@ -198,52 +227,49 @@
       </div>
     </section>
 
-    <section class="faq-section" id="faq" aria-labelledby="faq-heading">
-      <div class="faq-section__inner reveal">
-        <p class="eyebrow">FAQ</p>
-        <h2 id="faq-heading">Before you visit</h2>
-        <dl class="faq-list">
-          <div>
-            <dt>Where do I park?</dt>
-            <dd>We’re in Kings Highway Plaza at 28 Portsmouth Ave. Free plaza parking is right outside Suite 8.</dd>
+    <section class="info-section" id="faq" aria-labelledby="faq-heading">
+      <div class="info-section__grid reveal">
+        <div class="info-section__faq">
+          <p class="eyebrow">FAQ</p>
+          <h2 id="faq-heading">Before you visit</h2>
+          <dl class="faq-list">
+            <div>
+              <dt>Where do I park?</dt>
+              <dd>We’re in Kings Highway Plaza at 28 Portsmouth Ave. Free plaza parking is right outside Suite 8.</dd>
+            </div>
+            <div>
+              <dt>Do you deliver?</dt>
+              <dd>Yes—order online for delivery or pickup. Delivery fees and distance limits depend on your address.</dd>
+            </div>
+            <div>
+              <dt>How spicy is the food?</dt>
+              <dd>Tell us your preference when you order. Many dishes can be mild, medium, or hot.</dd>
+            </div>
+            <div>
+              <dt>Vegetarian options?</dt>
+              <dd>Yes—vegetable dishes, tofu specialties, veggie lo mein, and vegetarian sushi rolls are on the menu.</dd>
+            </div>
+          </dl>
+        </div>
+        <div class="info-section__catering" id="catering" aria-labelledby="catering-heading">
+          <p class="eyebrow">Catering</p>
+          <h2 id="catering-heading">Feeding a group?</h2>
+          <p class="section-lede">Party trays, sushi boats, and family platters for gatherings—call the kitchen and we’ll help you plan.</p>
+          <div class="order-actions">
+            <a class="btn btn--primary" href="tel:+16037720572">Call about catering</a>
+            <a class="btn btn--outline" href="menu.html">View menu options</a>
           </div>
-          <div>
-            <dt>Do you deliver?</dt>
-            <dd>Yes—order online for delivery or pickup. Delivery fees and distance limits depend on your address.</dd>
-          </div>
-          <div>
-            <dt>How spicy is the food?</dt>
-            <dd>Tell us your preference when you order. Many dishes can be mild, medium, or hot.</dd>
-          </div>
-          <div>
-            <dt>Vegetarian options?</dt>
-            <dd>Yes—vegetable dishes, tofu specialties, veggie lo mein, and vegetarian sushi rolls are on the menu.</dd>
-          </div>
-          <div>
-            <dt>Large orders or parties?</dt>
-            <dd>Call ahead for party trays, sushi boats, and catering-sized orders so we can prepare on time.</dd>
-          </div>
-        </dl>
-      </div>
-    </section>
-
-    <section class="catering-section" id="catering" aria-labelledby="catering-heading">
-      <div class="catering-section__inner reveal">
-        <p class="eyebrow">Catering</p>
-        <h2 id="catering-heading">Large orders &amp; party trays</h2>
-        <p class="section-lede">Hosting a gathering? We’ll build trays, sushi boats, and family platters—call the kitchen and we’ll help you plan.</p>
-        <div class="order-actions">
-          <a class="btn btn--primary" href="tel:+16037720572">Call (603) 772-0572</a>
-          <a class="btn btn--outline" href="menu.html">Browse the menu</a>
         </div>
       </div>
     </section>
 
-    <section class="reserve-section" id="order" aria-labelledby="order-heading">
-      <div class="reserve-section__inner reveal">
-        <p class="eyebrow">Order</p>
-        <h2 id="order-heading">Pickup or delivery</h2>
-        <p class="section-lede">Order online for takeout and delivery, or call the kitchen—we’ll have it ready hot.</p>
+    <section class="order-band" id="order" aria-labelledby="order-heading">
+      <div class="order-band__inner reveal">
+        <div class="order-band__copy">
+          <p class="eyebrow">Order</p>
+          <h2 id="order-heading">Pickup or delivery</h2>
+          <p class="section-lede">Order online or call—we’ll have it ready hot.</p>
+        </div>
         <div class="order-actions">
           <a class="btn btn--primary" href="https://order.mealkeyway.com/merchant/76314c764f6d6b723139457239512b6a594f6f6379513d3d/main" target="_blank" rel="noopener noreferrer">Order online</a>
           <a class="btn btn--outline" href="tel:+16037720572">Call (603) 772-0572</a>
