@@ -6,7 +6,7 @@ export function CaseStudySummary() {
       <div className="section__inner">
         <p className="section__eyebrow">Final Case Study</p>
         <h2 id="summary-title" className="section__title">
-          The full arc.
+          What APEX actually does.
         </h2>
         <p className="disclosure" role="note">
           {brand.disclaimer}

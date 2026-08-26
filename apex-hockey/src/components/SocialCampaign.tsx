@@ -4,12 +4,12 @@ export function SocialCampaign() {
   return (
     <section className="section social" id="social" aria-labelledby="social-title">
       <div className="section__inner">
-        <p className="section__eyebrow">Social Media Campaign</p>
+        <p className="section__eyebrow">Social — One Channel of Many</p>
         <h2 id="social-title" className="section__title">
-          Platform-native executions.
+          Platform-native, system-consistent.
         </h2>
         <p className="section__lead">
-          Each treatment is designed for its format — not one graphic resized repeatedly.
+          Social translates the Apex Mark system — it does not invent a separate brand for the feed.
         </p>
 
         <div className="social__block">
@@ -21,16 +21,16 @@ export function SocialCampaign() {
                 <article className="social-card replace-slot" style={{ aspectRatio: post.ratio }}>
                   <p className="social-card__kicker">{post.title}</p>
                   <p className="social-card__line">
-                    {post.id === "quote" ? "0.18s" : brand.line}
+                    {post.id === "quote" ? "1.8 SEC" : post.id === "feature" ? brand.ask : brand.thesis}
                   </p>
                   <p className="social-card__sub">
                     {post.id === "announce"
-                      ? brand.product
+                      ? "Campaign thesis"
                       : post.id === "athlete"
-                        ? "Athlete crop"
+                        ? "Mark stamp + crop"
                         : post.id === "feature"
-                          ? "Blade response tech"
-                          : "Simulated release metric"}
+                          ? "Challenge prompt"
+                          : "Scoreboard data as identity"}
                   </p>
                   <span className="replace-slot__label">{post.size}</span>
                 </article>
@@ -60,7 +60,7 @@ export function SocialCampaign() {
               <li key={story.id} className="story-frame replace-slot">
                 <div className="story-frame__safe" aria-hidden="true" />
                 <p className="story-frame__title">{story.title}</p>
-                <p className="story-frame__line">{brand.line}</p>
+                <p className="story-frame__line">{brand.ask}</p>
                 <span className="replace-slot__label">Story / Reel</span>
               </li>
             ))}
@@ -70,15 +70,15 @@ export function SocialCampaign() {
         <div className="social__block">
           <h3 className="headline">TikTok Vertical System</h3>
           <p className="social__note">
-            Safe areas account for TikTok UI — username, captions, and right-rail actions. Not a
-            duplicated Instagram Story.
+            Safe areas for TikTok UI. Hook-first composition for silent autoplay — not a duplicated
+            Story.
           </p>
           <div className="tiktok-stage">
             <article className="tiktok-frame replace-slot">
               <div className="tiktok-frame__safe">
                 <p className="tiktok-frame__hook">Don&apos;t hesitate.</p>
                 <p className="tiktok-frame__product">{brand.product}</p>
-                <p className="tiktok-frame__line">{brand.line}</p>
+                <p className="tiktok-frame__line">{brand.ask}</p>
               </div>
               <div className="tiktok-ui" aria-hidden="true">
                 <div className="tiktok-ui__rail" />
@@ -90,7 +90,7 @@ export function SocialCampaign() {
               <li>Top reserved for system / sounds</li>
               <li>Right rail kept clear of critical type</li>
               <li>Lower third avoids caption collision</li>
-              <li>Hook-first composition for silent autoplay</li>
+              <li>Cut → stop beats in edit rhythm</li>
             </ul>
           </div>
         </div>

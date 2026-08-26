@@ -1,32 +1,35 @@
 import { useState } from "react";
 import { ApexLogo } from "./ApexLogo";
 import { MediaSlot } from "./MediaSlot";
-import { assets, palette, typeScale } from "../data/content";
-
-const devices = [
-  { id: "rules", title: "Directional Rules", desc: "Trajectory / speed lines at fixed angles" },
-  { id: "frames", title: "Crop Frames", desc: "Signal-red corner brackets for photo systems" },
-  { id: "nums", title: "Number Treatments", desc: "Tabular condensed stats for reaction metrics" },
-  { id: "slash", title: "Slash Panels", desc: "Asymmetric panels that imply forward motion" },
-] as const;
+import {
+  assets,
+  colorReasons,
+  hockeyGeometry,
+  movementCycle,
+  typeBehaviors,
+  typeScale,
+} from "../data/content";
 
 export function BrandSystem() {
-  const [device, setDevice] = useState<(typeof devices)[number]["id"]>("rules");
+  const [device, setDevice] = useState<(typeof hockeyGeometry)[number]["id"]>("blueline");
 
   return (
-    <section className="section brand" id="brand" aria-labelledby="brand-title">
+    <section className="section brand" id="system" aria-labelledby="system-title">
       <div className="section__inner">
-        <p className="section__eyebrow">Brand System</p>
-        <h2 id="brand-title" className="section__title">
-          Identity under the campaign.
+        <p className="section__eyebrow">04–07 — Campaign System</p>
+        <h2 id="system-title" className="section__title">
+          Built from hockey — not generic sports.
         </h2>
         <p className="section__lead">
-          A restrained athletic system designed so final Illustrator, Figma, and photography assets
-          can drop in without rebuilding the experience.
+          Rink geometry, equipment color, scoreboard data, and the physics of a shift become the
+          design system. Someone should recognize APEX before they see the logo.
         </p>
 
         <div className="brand__logo-block">
           <h3 className="headline">Logo</h3>
+          <p className="brand__note">
+            Peak + blue line + faceoff point + impact tick. Replaceable with final Illustrator mark.
+          </p>
           <div className="brand__logo-stage replace-slot">
             <ApexLogo className="brand__logo-large" />
             <span className="replace-slot__label">Replaceable logo area</span>
@@ -34,7 +37,11 @@ export function BrandSystem() {
         </div>
 
         <div className="brand__type">
-          <h3 className="headline">Typography System</h3>
+          <h3 className="headline">Typography</h3>
+          <p className="brand__note">
+            Technical and competitive — not stereotypical condensed sports defaults. Data lives in
+            mono as identity.
+          </p>
           <ul className="brand__type-list">
             {typeScale.map((item) => (
               <li key={item.name} className="brand__type-item">
@@ -46,15 +53,24 @@ export function BrandSystem() {
               </li>
             ))}
           </ul>
+          <ul className="type-behaviors">
+            {typeBehaviors.map((b) => (
+              <li key={b.name}>
+                <strong>{b.name}</strong>
+                <span>{b.desc}</span>
+              </li>
+            ))}
+          </ul>
         </div>
 
         <div className="brand__palette">
-          <h3 className="headline">Color Palette</h3>
+          <h3 className="headline">Color — with reasons</h3>
           <p className="brand__note">
-            Placeholder athletic palette — swap CSS variables when final brand colors are locked.
+            Not default black + red + white aggression. Every major color has a job in the
+            performance system.
           </p>
-          <ul className="brand__swatches">
-            {palette.map((c) => (
+          <ul className="brand__swatches brand__swatches--reasoned">
+            {colorReasons.map((c) => (
               <li key={c.hex}>
                 <button
                   type="button"
@@ -65,6 +81,7 @@ export function BrandSystem() {
                 />
                 <span>{c.name}</span>
                 <code>{c.hex}</code>
+                <p>{c.reason}</p>
               </li>
             ))}
           </ul>
@@ -72,9 +89,12 @@ export function BrandSystem() {
 
         <div className="brand__devices">
           <div className="brand__devices-copy">
-            <h3 className="headline">Graphic Devices</h3>
-            <div className="brand__device-tabs" role="tablist" aria-label="Graphic devices">
-              {devices.map((d) => (
+            <h3 className="headline">Hockey geometry</h3>
+            <p className="brand__note">
+              Building blocks — not stickers. These control grids, crops, and movement.
+            </p>
+            <div className="brand__device-tabs" role="tablist" aria-label="Hockey geometry">
+              {hockeyGeometry.map((d) => (
                 <button
                   key={d.id}
                   type="button"
@@ -87,50 +107,58 @@ export function BrandSystem() {
                 </button>
               ))}
             </div>
-            <p>{devices.find((d) => d.id === device)?.desc}</p>
+            <p>{hockeyGeometry.find((d) => d.id === device)?.desc}</p>
           </div>
           <div className="brand__device-stage" data-device={device} aria-live="polite">
-            {device === "rules" && (
-              <div className="device-demo device-demo--rules" aria-hidden="true">
-                <span />
+            {device === "blueline" && (
+              <div className="device-demo device-demo--blueline" aria-hidden="true">
                 <span />
                 <span />
               </div>
             )}
-            {device === "frames" && (
-              <MediaSlot
-                src={assets.athleteCrop}
-                label="Cropping system demo"
-                framed
-                ratio="4 / 5"
-              />
-            )}
-            {device === "nums" && (
-              <div className="device-demo device-demo--nums">
-                <p className="stat-num">0.18</p>
-                <p>SEC · RELEASE WINDOW</p>
+            {device === "redline" && (
+              <div className="device-demo device-demo--redline" aria-hidden="true">
+                <span />
               </div>
             )}
-            {device === "slash" && (
-              <div className="device-demo device-demo--slash" aria-hidden="true">
+            {device === "crease" && (
+              <div className="device-demo device-demo--crease" aria-hidden="true">
                 <div />
-                <div />
+              </div>
+            )}
+            {device === "faceoff" && (
+              <MediaSlot src={assets.athleteCrop} label="Faceoff-circle crop" framed ratio="1 / 1" />
+            )}
+            {device === "shotchart" && (
+              <div className="device-demo device-demo--shotchart" aria-hidden="true">
+                {Array.from({ length: 28 }).map((_, i) => (
+                  <i key={i} style={{ ["--i" as string]: i }} />
+                ))}
+              </div>
+            )}
+            {device === "trajectory" && (
+              <div className="device-demo device-demo--trajectory" aria-hidden="true">
+                <span />
+                <span />
+                <span />
               </div>
             )}
           </div>
         </div>
 
-        <div className="brand__photo">
-          <h3 className="headline">Photography Direction</h3>
-          <div className="brand__photo-grid">
-            <MediaSlot src={assets.athleteCrop} label="Athlete — tight crop" framed ratio="4 / 5" />
-            <MediaSlot
-              src={assets.productDetail}
-              label="Product — detail framing"
-              framed
-              ratio="5 / 4"
-            />
-          </div>
+        <div className="brand__cycle">
+          <h3 className="headline">Movement cycle</h3>
+          <p className="brand__note">
+            Hockey is not one continuous direction. Layouts and motion follow the shift:
+          </p>
+          <ol className="movement-cycle">
+            {movementCycle.map((beat) => (
+              <li key={beat.id} data-beat={beat.id}>
+                <strong>{beat.label}</strong>
+                <span>{beat.note}</span>
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
     </section>

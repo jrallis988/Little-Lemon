@@ -14,7 +14,6 @@ const formats: { id: FormatId; label: string; ratio: string; note: string }[] = 
 export function FormatPreviewer() {
   const [format, setFormat] = useState<FormatId>("ig-post");
   const [safeAreas, setSafeAreas] = useState(true);
-
   const active = useMemo(() => formats.find((f) => f.id === format)!, [format]);
 
   return (
@@ -22,11 +21,10 @@ export function FormatPreviewer() {
       <div className="section__inner">
         <p className="section__eyebrow">Social Format Previewer</p>
         <h2 id="previewer-title" className="section__title">
-          Evaluate the art on-platform.
+          Stress-test the mark on-platform.
         </h2>
         <p className="section__lead">
-          Switch formats to change aspect ratio instantly. Toggle safe-area overlays to stress-test
-          hierarchy against platform UI.
+          Switch formats to change aspect ratio. Toggle safe-area overlays against platform UI.
         </p>
 
         <div className="previewer__controls">
@@ -62,8 +60,8 @@ export function FormatPreviewer() {
           >
             <div className="preview-frame__art">
               <p className="preview-frame__product">{brand.product}</p>
-              <p className="preview-frame__line">{brand.line}</p>
-              <p className="preview-frame__sub">Campaign artwork preview</p>
+              <p className="preview-frame__line">{brand.ask}</p>
+              <p className="preview-frame__sub">{brand.thesis}</p>
             </div>
             {safeAreas ? <div className="preview-frame__overlay" aria-hidden="true" /> : null}
           </div>

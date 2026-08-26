@@ -6,11 +6,11 @@ export function AdvertisingApps() {
       <div className="section__inner">
         <p className="section__eyebrow">Advertising Applications</p>
         <h2 id="ads-title" className="section__title">
-          Campaign applications.
+          Inside the hockey environment.
         </h2>
         <p className="section__lead">
-          Presentation frames for finished artwork — each format keeps hierarchy intact while
-          leaving imagery and type lockups easy to replace.
+          Posters, rink boards, scoreboard graphics, arena signage, retail — hierarchy holds while
+          artwork stays replaceable.
         </p>
 
         <ul className="ads__grid">
@@ -19,7 +19,8 @@ export function AdvertisingApps() {
               <div className="ad-frame__art replace-slot" style={{ aspectRatio: format.ratio }}>
                 <div className="ad-frame__comp">
                   <p className="ad-frame__product">{brand.product}</p>
-                  <p className="ad-frame__line">{brand.line}</p>
+                  <p className="ad-frame__line">{brand.ask}</p>
+                  <p className="ad-frame__sub">{brand.line}</p>
                   <div className="ad-frame__figure" aria-hidden="true" />
                   <span className="ad-frame__rule" />
                 </div>

@@ -1,8 +1,13 @@
 import { SiteHeader } from "./components/SiteHeader";
 import { Hero } from "./components/Hero";
-import { CreativeStrategy } from "./components/CreativeStrategy";
+import { Meaning } from "./components/Meaning";
+import { Audience } from "./components/Audience";
+import { Payoff } from "./components/Payoff";
 import { BrandSystem } from "./components/BrandSystem";
+import { CreativeStrategy } from "./components/CreativeStrategy";
+import { PhotoLanguage } from "./components/PhotoLanguage";
 import { KeyVisual } from "./components/KeyVisual";
+import { Ecosystem } from "./components/Ecosystem";
 import { AdvertisingApps } from "./components/AdvertisingApps";
 import { SocialCampaign } from "./components/SocialCampaign";
 import { FormatPreviewer } from "./components/FormatPreviewer";
@@ -23,9 +28,14 @@ export default function App() {
       <SiteHeader />
       <main id="main">
         <Hero />
-        <CreativeStrategy />
+        <Meaning />
+        <Audience />
+        <Payoff />
         <BrandSystem />
+        <CreativeStrategy />
+        <PhotoLanguage />
         <KeyVisual />
+        <Ecosystem />
         <AdvertisingApps />
         <SocialCampaign />
         <FormatPreviewer />

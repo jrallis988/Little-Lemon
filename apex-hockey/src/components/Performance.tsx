@@ -9,13 +9,12 @@ export function Performance() {
           Simulated Campaign Performance
         </h2>
         <p className="section__lead">
-          Fictional metrics used to demonstrate how performance data could influence future creative
-          decisions. These numbers are not real results.
+          Fictional metrics focused on challenge behavior — not vanity reach alone. These numbers
+          are not real results.
         </p>
 
         <p className="disclosure" role="note">
-          <strong>Simulated data only.</strong> {brand.disclaimer} Metrics below are illustrative
-          placeholders for portfolio storytelling.
+          <strong>Simulated data only.</strong> {brand.disclaimer}
         </p>
 
         <ul className="perf-grid">
@@ -32,10 +31,9 @@ export function Performance() {
         <div className="perf-insight">
           <h3 className="headline">Creative read from the numbers</h3>
           <p>
-            <strong>Best-performing creative (simulated):</strong> Athlete release crop with
-            oversized “0.18s” typography outperformed product-only stills on engagement. Next
-            flight would lean harder into reaction-time visual metaphors and shorten education
-            carousels into punchier three-slide cuts.
+            <strong>Best-performing creative (simulated):</strong> Apex Mark share cards with mono
+            “1.8 SEC” data outperformed product-only stills. Next flight doubles down on challenge
+            prompts and clinic CTAs — proof the ask is the campaign, not the poster.
           </p>
         </div>
       </div>

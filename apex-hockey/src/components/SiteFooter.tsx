@@ -8,12 +8,15 @@ export function SiteFooter() {
         <ApexLogo />
         <div className="site-footer__copy">
           <p>
+            {brand.thesis} · {brand.ask}
+          </p>
+          <p>
             {brand.product} · {brand.line}
           </p>
           <p>{brand.disclaimer}</p>
           <p>
-            Presented by{" "}
-            <a href="../../index.html">Artistic Fountain</a> — sports marketing case study.
+            Presented by <a href="../../index.html">Artistic Fountain</a> — hockey campaign case
+            study.
           </p>
         </div>
       </div>

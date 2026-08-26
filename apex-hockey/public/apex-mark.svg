@@ -1,6 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="APEX Hockey">
-  <rect width="120" height="120" fill="#0B0D10"/>
-  <path d="M18 92 L60 18 L102 92 H78 L60 58 L42 92 Z" fill="#F0F4F7"/>
-  <path d="M48 92 H72 L60 70 Z" fill="#C8102E"/>
-  <rect x="18" y="98" width="84" height="6" fill="#C8102E"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="APEX Hockey">
+  <rect width="120" height="120" fill="#12161A"/>
+  <!-- Blue line base -->
+  <rect x="14" y="96" width="92" height="6" fill="#2F6FED"/>
+  <!-- Apex peak from rink geometry -->
+  <path d="M20 92 L60 22 L100 92 Z" fill="none" stroke="#E9F2F6" stroke-width="6" stroke-linejoin="miter"/>
+  <!-- Faceoff dot / apex point -->
+  <circle cx="60" cy="58" r="7" fill="#D6FF3A"/>
+  <!-- Impact tick (red line sparingly) -->
+  <rect x="54" y="88" width="12" height="4" fill="#E23B2F"/>
 </svg>
