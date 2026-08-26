@@ -22,7 +22,8 @@ export function FinalCollection({ onOpen }: FinalCollectionProps) {
         <p className="final-statement">
           <strong>VELOCITY</strong> is a self-initiated fictional graphic-design project created to
           demonstrate sports art direction, typography, Photoshop compositing, Illustrator graphics,
-          and campaign design.
+          campaign design — and a visual system where athletic movement determines how the design
+          behaves.
         </p>
       </div>
     </section>

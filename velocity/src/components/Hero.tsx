@@ -8,11 +8,11 @@ export function Hero() {
         <h1 className="hero__brand">VELOCITY</h1>
         <p className="hero__headline">Motion defines the moment.</p>
         <p className="hero__support">
-          A self-initiated graphic-design project exploring how one visual system can represent
-          athletes across six sports — through photography, typography, and decisive composition.
+          A self-initiated graphic-design project where athletic movement determines how the design
+          behaves — across six sports, one visual system.
         </p>
-        <a className="hero__cta" href="#posters">
-          View Poster Series →
+        <a className="hero__cta" href="#motion-language">
+          See the Motion Language →
         </a>
       </div>
       <p className="hero__meta">Fictional campaign · Graphic design study</p>

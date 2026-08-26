@@ -1,7 +1,7 @@
 const links = [
-  { href: '#concept', label: 'Concept' },
+  { href: '#motion-language', label: 'Motion' },
   { href: '#posters', label: 'Posters' },
-  { href: '#typography', label: 'Type' },
+  { href: '#rule-breakers', label: 'Intensity' },
   { href: '#gallery', label: 'Gallery' },
 ]
 

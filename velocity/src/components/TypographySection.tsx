@@ -2,11 +2,12 @@ export function TypographySection() {
   return (
     <section className="section" id="typography">
       <div className="section__inner">
-        <p className="section__eyebrow">03 — Typography</p>
+        <p className="section__eyebrow">04 — Typography</p>
         <h2 className="section__title">Type as athletic force</h2>
         <p className="section__lead">
-          Display type carries campaign voice. Supporting type holds athlete data. Numbers become
-          graphic objects — without sacrificing readability.
+          Display type carries campaign voice. Late-90s / early-00s sports editorial energy —
+          aggressive crop, extreme scale, type cutting through athletes — without nostalgia.
+          Numbers become graphic objects.
         </p>
 
         <div className="type-showcase">

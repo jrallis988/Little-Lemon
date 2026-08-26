@@ -8,10 +8,14 @@ export function Concept() {
         <div className="concept-grid">
           <div>
             <p className="concept-manifesto">Motion defines the moment.</p>
+            <p className="section__lead" style={{ marginBottom: '1rem' }}>
+              Every sport contains a fraction of a second that defines the action. VELOCITY is not a
+              mood board of athletic imagery — it is a visual system where the type of movement
+              determines how composition, typography, photography, and graphics behave.
+            </p>
             <p className="section__lead" style={{ marginBottom: 0 }}>
-              Every sport contains a fraction of a second that defines the action. VELOCITY builds a
-              shared campaign language around those decisive instants — without generic futurism,
-              neon noise, or esports aesthetics. Photography and typography do the heavy lifting.
+              Photography and typography do the heavy lifting. Controlled imperfection — grain,
+              flash, hard crops, coaching marks — appears only where intensity is required.
             </p>
             <div className="pillars" aria-label="Design pillars">
               {['Speed', 'Power', 'Precision', 'Movement', 'Competition', 'Performance'].map((p) => (
