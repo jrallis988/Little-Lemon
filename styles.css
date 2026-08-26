@@ -965,3 +965,139 @@ a:hover {
 .site-nav a[aria-current="page"] {
   color: var(--lacquer);
 }
+
+/* Reviews */
+
+.reviews-section {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 5rem 1.25rem 2rem;
+}
+
+.reviews-section__intro {
+  max-width: 36rem;
+}
+
+.reviews-section h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.reviews-list {
+  list-style: none;
+  margin: 2.5rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 1.75rem;
+}
+
+.review {
+  margin: 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.review p {
+  margin: 0;
+  font-size: clamp(1.05rem, 2vw, 1.2rem);
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: 40rem;
+}
+
+.reviews-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin: 2rem 0 0;
+  font-weight: 500;
+}
+
+/* FAQ */
+
+.faq-section {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 4rem 1.25rem 1rem;
+}
+
+.faq-section h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.faq-list {
+  margin: 2rem 0 0;
+}
+
+.faq-list > div {
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.faq-list dt {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.faq-list dd {
+  margin: 0.45rem 0 0;
+  color: var(--muted);
+}
+
+/* Catering */
+
+.catering-section {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 3rem 1.25rem 1rem;
+}
+
+.catering-section__inner {
+  max-width: 36rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.catering-section h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.site-footer__social {
+  margin: 0.85rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.55rem;
+  font-weight: 500;
+}
+
+@media (min-width: 800px) {
+  .reviews-list {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .review {
+    border-top: 0;
+    padding-top: 0;
+    border-left: 1px solid var(--line);
+    padding-left: 1.25rem;
+  }
+
+  .review:first-child {
+    border-left: 0;
+    padding-left: 0;
+  }
+}

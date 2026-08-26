@@ -6,12 +6,15 @@ Marketing site for **Red Mango Asian Cuisine** in Stratham, New Hampshire — Ch
 
 - **Address:** 28 Portsmouth Ave #8, Stratham, NH 03885
 - **Phone:** (603) 772-0572
-- **Order online:** [redmangostrathamnh.com](https://www.redmangostrathamnh.com/)
+- **Order online:** [MealKeyWay](https://order.mealkeyway.com/merchant/76314c764f6d6b723139457239512b6a594f6f6379513d3d/main)
+- **Social:** [Facebook](https://www.facebook.com/Jade-Palace-105172948426464/) · [Yelp](https://www.yelp.com/biz/red-mango-asian-cuisine-stratham)
 
 ## Pages
 
-- `index.html` — home (hero, lunch, favorites, story, visit + map, order)
-- `menu.html` — full menu with prices (excerpt from public Beyond Menu listing)
+- `index.html` — home (hero, lunch, favorites, story, reviews, visit + map, FAQ, catering, order)
+- `menu.html` — full menu with prices
+
+Photography on the site is from Red Mango’s public gallery at redmangostratham.com.
 
 ## Develop
 
@@ -19,8 +22,6 @@ Marketing site for **Red Mango Asian Cuisine** in Stratham, New Hampshire — Ch
 npm start
 ```
 
-Opens a local static server at [http://localhost:3000](http://localhost:3000).
-
 ## Stack
 
-Static HTML, CSS, and vanilla JS. Typefaces: Yeseva One, Noto Serif SC, Outfit.
+Static HTML, CSS, and vanilla JS.
