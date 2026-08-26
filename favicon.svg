@@ -1,17 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <defs>
-    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FF6B35"/>
-      <stop offset="50%" stop-color="#FF0080"/>
-      <stop offset="100%" stop-color="#0066FF"/>
-    </linearGradient>
-  </defs>
-  <rect width="64" height="64" rx="12" fill="url(#g)"/>
-  <text x="32" y="46"
-        font-family="Georgia, 'Times New Roman', serif"
-        font-size="44"
-        font-weight="900"
-        font-style="italic"
-        text-anchor="middle"
-        fill="#F8F8F8">A</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" rx="14" fill="#B81C1C"/>
+  <path d="M32 14c-1.2 4.8-1 9.2.6 13.2 2.8-2.4 6.4-3.8 10.4-3.8-4.2 1.2-7.2 4-8.8 8.2C39 35 42 40.4 42 48c0-10.4-4.4-17.2-10-20.4C26.4 30.8 22 37.6 22 48c0-7.6 3-13 7.8-16.4-1.6-4.2-4.6-7-8.8-8.2 4 0 7.6 1.4 10.4 3.8 1.6-4 .8-8.4-.4-13.2z" fill="#F0A202"/>
+  <ellipse cx="32" cy="46" rx="11" ry="9" fill="#F7C948"/>
+  <ellipse cx="32" cy="45" rx="7" ry="5.5" fill="#F0A202" opacity=".45"/>
 </svg>

@@ -1,29 +1,20 @@
-# Artistic Fountain
+# Red Mango Asian Cuisine
 
-Independent design venture portfolio — digital media, graphic design, visual identity, and creative media projects.
+Marketing site for **Red Mango Asian Cuisine** in Stratham, New Hampshire — Chinese and Japanese favorites, sushi, takeout, and delivery.
 
-## Dual-track separation
+## Real location
 
-| Track | Home | Houses |
-| --- | --- | --- |
-| **Creative** | Artistic Fountain (this repo) | Visual media, graphic identity, conceptual design, client design services |
-| **Engineering** | Developer portfolio (separate) | Back-end systems, Python/FastAPI, AI/RAG applications |
-
-See `STATUS.md` for the full status report.
-
-## Stack
-
-Static site: HTML, CSS, and vanilla JS (built in Cursor). Custom typefaces (Arcanite Slab, Goudy Heavyface) plus Inter for body copy.
+- **Address:** 28 Portsmouth Ave #8, Stratham, NH 03885
+- **Phone:** (603) 772-0572
+- **Order online:** [MealKeyWay](https://order.mealkeyway.com/merchant/76314c764f6d6b723139457239512b6a594f6f6379513d3d/main)
+- **Social:** [Facebook](https://www.facebook.com/Jade-Palace-105172948426464/) · [Yelp](https://www.yelp.com/biz/red-mango-asian-cuisine-stratham)
 
 ## Pages
 
-- `index.html` — home (hero, designer, services, portfolio, blog, contact)
-- `nh-dmv/` — conceptual redesign of the New Hampshire DMV website (civic UX case study)
-- `services/` — detail pages for each service offering
-- `blog/` — blog index and post pages (content can be drafted in Blaze AI)
-- `privacy.html` — privacy policy
-- `terms.html` — terms & conditions
-- `resume.pdf` — downloadable resume
+- `index.html` — home (hero, lunch, favorites, story, reviews, visit + map, FAQ, catering, order)
+- `menu.html` — full menu with prices
+
+Photography on the site is from Red Mango’s public gallery at redmangostratham.com.
 
 ## Develop
 
@@ -31,23 +22,6 @@ Static site: HTML, CSS, and vanilla JS (built in Cursor). Custom typefaces (Arca
 npm start
 ```
 
-Opens a local static server at [http://localhost:3000](http://localhost:3000).
+## Stack
 
-Or open `index.html` directly in a browser.
-
-## Structure
-
-```
-.
-├── index.html
-├── privacy.html
-├── terms.html
-├── styles.css
-├── STATUS.md
-├── favicon.svg
-├── resume.pdf
-├── services/
-├── blog/
-├── images/
-└── *.otf          # brand fonts
-```
+Static HTML, CSS, and vanilla JS.
