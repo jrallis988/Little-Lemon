@@ -20,7 +20,7 @@ export type CreativeApproach =
   | 'People-led'
   | 'Educational'
   | 'Community'
-export type PaceState = 'Start' | 'Flow' | 'Push' | 'Break' | 'Recover'
+export type PaceState = 'Start' | 'Flow' | 'Push' | 'Beat' | 'Recover'
 
 export interface CampaignRecord {
   content_id: string

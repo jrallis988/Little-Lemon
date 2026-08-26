@@ -1,61 +1,40 @@
-export function Measurement() {
-  const groups = [
-    {
-      title: 'Discover',
-      items: ['Reach', 'Impressions', 'Video views'],
-      note: 'Did the idea get seen?',
-    },
-    {
-      title: 'Engage',
-      items: ['Comments', 'Shares', 'Saves', 'Engagement rate'],
-      note: 'Did runners participate?',
-    },
-    {
-      title: 'Video',
-      items: ['Watch time', 'Avg view duration', 'Completion', 'Retention'],
-      note: 'Did storytelling hold?',
-    },
-    {
-      title: 'Reveal',
-      items: ['Spotify opens', 'Card views', 'Link clicks', 'CTR'],
-      note: 'Did identity convert interest?',
-    },
-    {
-      title: 'Return',
-      items: ['Session starts', 'Card shares', 'Challenge joins'],
-      note: 'Did they run again?',
-    },
-  ]
+import { proposedKpis } from '../../data/content'
 
+export function Measurement() {
   return (
     <section className="section" id="measurement">
       <div className="shell">
         <p className="section-kicker">12 — Measurement framework</p>
-        <h2 className="section-title">Metrics only matter relative to the objective.</h2>
+        <h2 className="section-title">Proposed KPIs—clearly labeled, professionally responsible.</h2>
         <p className="section-lede">
-          A high-reach challenge with low Spotify opens isn’t a failure—unless
-          the job was Reveal. Objectives dictate both the art and the scoreboard.
+          PACE was not launched by Spotify. Analytics below are proposed KPIs,
+          creative testing scenarios, and simulated campaign data for portfolio
+          demonstration—not claimed live results.
         </p>
-        <div className="measure-grid">
-          {groups.map((g) => (
-            <article className="panel measure-card" key={g.title}>
-              <h3>{g.title}</h3>
+
+        <div className="label-row">
+          <span className="sim-badge">Proposed KPIs</span>
+          <span className="sim-badge">Prototype testing</span>
+          <span className="sim-badge">Simulated campaign data</span>
+          <span className="sim-badge">Projected performance</span>
+        </div>
+
+        <div className="measure-grid" style={{ marginTop: '1.25rem' }}>
+          {proposedKpis.map((g) => (
+            <article className="panel measure-card" key={g.group}>
+              <h3>{g.group}</h3>
               <ul>
                 {g.items.map((i) => (
                   <li key={i}>{i}</li>
                 ))}
               </ul>
-              <p style={{ marginTop: '0.75rem', fontSize: '0.85rem', color: 'var(--muted)' }}>
-                {g.note}
-              </p>
             </article>
           ))}
         </div>
         <div className="note-callout">
-          <strong>SIMULATED DATA</strong> — Performance sections use a fictional
-          social dataset analyzed with Python/Pandas and visualized in React.
-          Patterns are designed to be interpretable—not to claim real Spotify
-          results.
+          <strong>Credibility note</strong> — Success is measured against the
+          brief: playlist engagement, music discovery, saves, Spotify CTR, Card
+          shares, and return listening—not vanity metrics alone.
         </div>
       </div>
     </section>

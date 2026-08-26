@@ -3,27 +3,28 @@ export function Hero() {
     <section className="hero" id="top" aria-label="Campaign hero">
       <div className="hero-inner">
         <p className="sim-badge" style={{ marginBottom: '1.25rem' }}>
-          Simulated portfolio project · Spotify × running
+          Self-initiated portfolio · Spotify × running concept
         </p>
         <h1 className="hero-brand">
           PACE<em>.</em>
         </h1>
         <p className="hero-line">Find Your Pace.</p>
         <p className="hero-support">
-          A campaign that turns the relationship between your music and your run
-          into something personal, measurable, and shareable.
+          Spotify doesn’t track your run. Spotify gives your run its soundtrack—
+          a campaign that makes the relationship between music and running more
+          personal, discoverable, and shareable.
         </p>
         <div className="hero-actions">
-          <a className="btn btn-primary" href="#idea">
-            See the idea
+          <a className="btn btn-primary" href="#brief">
+            Read the brief
           </a>
           <a className="btn btn-ghost" href="#chapter-creative">
-            Experience the creative
+            See the creative
           </a>
         </div>
         <div className="hero-meta">
-          <span>Spotify campaign concept</span>
-          <span>Music × movement</span>
+          <span>Music-first</span>
+          <span>Not a fitness tracker</span>
           <span>Strategy · Creative · Analytics</span>
         </div>
       </div>

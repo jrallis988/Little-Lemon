@@ -1,11 +1,11 @@
 export function WhatWeLearned() {
   const proofs = [
-    'Identify an audience problem.',
-    'Develop a campaign idea around it.',
-    'Create the visual system.',
-    'Adapt that system across platforms.',
-    'Measure how audiences respond.',
-    'Understand why something performed differently.',
+    'Identify a real cultural behavior Spotify already sits inside.',
+    'Write a brief that stays music-first.',
+    'Build a creative system around energy and listening.',
+    'Adapt that system across platforms that point back to Spotify.',
+    'Propose KPIs Spotify could actually measure.',
+    'Test why audiences respond differently.',
     'Use that information to make the next creative execution better.',
   ]
 
@@ -21,11 +21,17 @@ export function WhatWeLearned() {
         </h2>
         <p className="yes-answer">YES.</p>
         <p className="section-lede">
-          PACE isn’t just a campaign about running with Spotify. It’s a campaign
-          that turns the relationship between your music and your run into
-          something personal, measurable, and shareable—and a case study that
-          proves creative decisions can get sharper because of audience behavior.
+          PACE is not a fitness application. It is not Spotify replacing Strava.
+          It is an integrated campaign built around an existing habit: people run
+          with music. Spotify already provides the soundtrack—PACE makes that
+          relationship more personal, discoverable, visual, and shareable.
         </p>
+
+        <div className="positioning-lockup">
+          <p>SPOTIFY DOESN’T TRACK YOUR RUN.</p>
+          <p>SPOTIFY GIVES YOUR RUN ITS SOUNDTRACK.</p>
+          <p className="lockup-end">FIND YOUR PACE.</p>
+        </div>
 
         <div className="proof-list">
           {proofs.map((p, i) => (
@@ -34,24 +40,6 @@ export function WhatWeLearned() {
               <p>{p}</p>
             </div>
           ))}
-        </div>
-
-        <div className="insight-chain">
-          <div className="chain-step">
-            <strong>Data</strong>
-            People + Card creative led engagement; educational BPM tips led
-            saves; experience UI led CTR later in the journey.
-          </div>
-          <div className="chain-step">
-            <strong>Insight</strong>
-            Runners respond to proof, utility, and identity before polish.
-            Spotify clarity still matters—just after the hook lands.
-          </div>
-          <div className="chain-step">
-            <strong>Creative decision</strong>
-            Lead with runners and Cards; teach weekly; convert with state clarity;
-            package YouTube with athletes; keep testing openings.
-          </div>
         </div>
 
         <div className="tools-row">
@@ -81,19 +69,10 @@ export function WhatWeLearned() {
           <strong style={{ color: 'var(--lime)' }}>Disclaimer</strong>
           <p style={{ margin: '0.55rem 0 0' }}>
             PACE is a fictional self-initiated portfolio project. It is not an
-            official Spotify campaign. All campaign performance data shown in this
-            case study is simulated and is included solely to demonstrate
-            social-media measurement, analysis, and creative optimization.
-          </p>
-          <p
-            style={{
-              margin: '1rem 0 0',
-              fontFamily: 'var(--font-display)',
-              fontSize: '1.4rem',
-              letterSpacing: '-0.03em',
-            }}
-          >
-            FIND YOUR PACE.
+            official Spotify campaign and is not affiliated with Bauer or any
+            hockey brand. All campaign performance data shown is simulated and
+            included solely to demonstrate social-media measurement, analysis,
+            and creative optimization.
           </p>
         </div>
       </div>

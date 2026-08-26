@@ -5,7 +5,7 @@ export function WhySpotify() {
     <section className="section" id="why-spotify">
       <div className="shell">
         <p className="section-kicker">03 — Why Spotify</p>
-        <h2 className="section-title">Spotify already owns the soundtrack. Running adds movement.</h2>
+        <h2 className="section-title">Spotify already owns the soundtrack. Running is already a listening habit.</h2>
         <p className="section-lede">{whySpotify.connection}</p>
         <div className="grid-2">
           <article className="panel">

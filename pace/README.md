@@ -1,39 +1,27 @@
 # PACE — Find Your Pace
 
-Fictional self-initiated portfolio case study: a **Spotify × running** campaign that turns the relationship between music and movement into something personal, measurable, and shareable.
+Fictional self-initiated portfolio case study: a **music-first Spotify × running** campaign concept.
 
-> All campaign metrics are **SIMULATED DATA**. This is not an official Spotify project.
+> Not an official Spotify launch. Not a fitness tracker. Not affiliated with Bauer or hockey brands. All metrics are **SIMULATED**.
 
-## Core idea
+## Positioning
 
-PACE turns Spotify from something runners happen to listen to into something that actively participates in their run.
+**Spotify doesn’t track your run. Spotify gives your run its soundtrack.**
 
-**FIND YOUR PACE** = discovering the relationship between how you run and how you listen.
+PACE builds on an existing behavior — RUNNING → MUSIC → SPOTIFY — and asks how Spotify could play a more meaningful role in the running experience through music.
 
-## Case study chapters
+## Chapters
 
-1. **Strategy** — problem, insight, why Spotify, audiences, pace states, behavioral loop, platforms  
-2. **Experience + Creative** — PACE Card, visual system, calendar, multi-platform executions  
-3. **Performance + Optimization** — measurement, analytics, A/B design chains, explorer  
-4. **Results + Reflection** — recommendations and the thesis: analytics can improve creative decisions
-
-## Stack
-
-- React + TypeScript + Vite + Recharts
-- Python + Pandas (`analysis/analyze.py`)
+1. Strategy — client brief, opportunity, why Spotify, audiences, music states, journey, platforms  
+2. Experience + Creative — music-first PACE Card, energy color/type system, executions  
+3. Performance + Optimization — proposed KPIs, simulated tests, design feedback loops  
+4. Reflection — recommendations + thesis
 
 ## Develop
 
 ```bash
 cd pace
 npm install
-npm run analyze
-npm run dev
-```
-
-## Build
-
-```bash
 npm run build
 npm run preview
 ```

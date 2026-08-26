@@ -31,16 +31,17 @@ export function PerformanceOverview() {
   return (
     <section className="section" id="performance">
       <div className="shell">
-        <p className="section-kicker">12b — Performance overview</p>
+        <p className="section-kicker">12b — Simulated performance overview</p>
         <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', alignItems: 'center' }}>
           <h2 className="section-title" style={{ marginBottom: 0 }}>
-            Campaign performance
+            Simulated campaign performance
           </h2>
           <span className="sim-badge">Simulated data</span>
         </div>
         <p className="section-lede" style={{ marginTop: '1rem' }}>
-          Editorial readouts—not a BI wall. Which creative behaviors moved
-          discovery, Card identity, and return-to-Spotify intent?
+          Not claimed live Spotify results. Editorial readouts that show how
+          creative behaviors might move discovery, playlist intent, and return
+          listening in a test scenario.
         </p>
 
         <div className="stat-strip">

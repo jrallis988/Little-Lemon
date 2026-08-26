@@ -1813,3 +1813,185 @@ select {
   margin: 0;
   color: rgba(255, 255, 255, 0.85);
 }
+
+/* Energy color system */
+:root {
+  --spotify-green: #1db954;
+  --electric-blue: #2f6bff;
+  --volt: #c5ff3d;
+  --signal: #ff5a36;
+  --pulse: #8b5cff;
+}
+
+.state-start { background: linear-gradient(160deg, #1e3a6e, #1a1c1e); }
+.state-flow { background: linear-gradient(160deg, #0f3d24, #1a1c1e); }
+.state-push { background: linear-gradient(160deg, #3a4210, #1a1c1e); }
+.state-beat { background: linear-gradient(160deg, #4a1c16, #1a1c1e); }
+.state-break { background: linear-gradient(160deg, #4a1c16, #1a1c1e); }
+.state-recover { background: linear-gradient(160deg, #2a1a4a, #1a1c1e); }
+
+.exec-state-beat .exec-visual {
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255, 90, 54, 0.45), transparent 40%),
+    linear-gradient(150deg, #4a1814, #121417);
+}
+
+.brief-meta {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+@media (max-width: 800px) {
+  .brief-meta {
+    grid-template-columns: 1fr;
+  }
+}
+
+.brief-meta div {
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0.9rem 1rem;
+}
+
+.brief-meta span {
+  display: block;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 750;
+}
+
+.brief-meta strong {
+  display: block;
+  margin-top: 0.3rem;
+  font-family: var(--font-display);
+  letter-spacing: -0.03em;
+  font-size: 1.15rem;
+}
+
+.pace-card-eyebrow {
+  margin: 0;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  font-weight: 750;
+}
+
+.pace-card-artrow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.45rem;
+  margin: 1rem 0 0.5rem;
+}
+
+.pace-card-artrow span {
+  aspect-ratio: 1;
+  border-radius: 4px;
+  background:
+    linear-gradient(135deg, rgba(29, 185, 84, 0.7), rgba(47, 107, 255, 0.5));
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.pace-card-artrow span:nth-child(2) {
+  background: linear-gradient(135deg, rgba(197, 255, 61, 0.7), rgba(255, 90, 54, 0.5));
+}
+.pace-card-artrow span:nth-child(3) {
+  background: linear-gradient(135deg, rgba(255, 90, 54, 0.7), rgba(139, 92, 255, 0.5));
+}
+.pace-card-artrow span:nth-child(4) {
+  background: linear-gradient(135deg, rgba(139, 92, 255, 0.7), rgba(29, 185, 84, 0.4));
+}
+
+.color-row {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+@media (max-width: 900px) {
+  .color-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.color-swatch {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius);
+  padding: 0.75rem;
+}
+
+.chapter-light .color-swatch {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: var(--line);
+}
+
+.swatch {
+  height: 42px;
+  border-radius: 4px;
+  margin-bottom: 0.55rem;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.color-swatch strong {
+  display: block;
+  font-size: 0.85rem;
+  margin-bottom: 0.2rem;
+}
+
+.color-swatch span {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.chapter-dark .color-swatch span {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.wave {
+  width: 64px;
+  height: 18px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      var(--spotify-green) 0 3px,
+      transparent 3px 6px
+    );
+  opacity: 0.85;
+  border-radius: 2px;
+}
+
+.label-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.positioning-lockup {
+  margin: 1.5rem 0;
+  padding: 1.25rem 1.35rem;
+  border: 1px solid rgba(197, 255, 61, 0.35);
+  border-radius: var(--radius);
+}
+
+.positioning-lockup p {
+  margin: 0.25rem 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2.5vw, 1.45rem);
+  letter-spacing: -0.03em;
+}
+
+.positioning-lockup .lockup-end {
+  color: var(--lime);
+  margin-top: 0.75rem;
+}
+
+.state-pill.state-start { background: rgba(47, 107, 255, 0.25); }
+.state-pill.state-flow { background: rgba(29, 185, 84, 0.25); }
+.state-pill.state-push { background: rgba(197, 255, 61, 0.2); color: #e8ff9a; }
+.state-pill.state-beat { background: rgba(255, 90, 54, 0.25); }
+.state-pill.state-recover { background: rgba(139, 92, 255, 0.25); }

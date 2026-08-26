@@ -4,11 +4,11 @@ export function PaceStates() {
   return (
     <section className="section" id="states">
       <div className="shell">
-        <p className="section-kicker">05 — The running experience</p>
-        <h2 className="section-title">Five states. One creative system.</h2>
+        <p className="section-kicker">05 — Music for the run</p>
+        <h2 className="section-title">Five states. Music that fits the moment.</h2>
         <p className="section-lede">
-          These moments shape typography, photography, motion, music, messaging,
-          and social content—so PACE is recognizable before the logo appears.
+          These describe how music supports different moments of a run—connected
+          directly to Spotify’s expertise, not to fitness-tracker ownership.
         </p>
         <div className="states-grid">
           {paceStates.map((s) => (
@@ -22,6 +22,9 @@ export function PaceStates() {
                 </span>
                 <span>
                   <strong>Music</strong> {s.music}
+                </span>
+                <span>
+                  <strong>Color</strong> {s.color}
                 </span>
               </div>
             </article>

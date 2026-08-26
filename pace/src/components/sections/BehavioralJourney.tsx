@@ -6,11 +6,11 @@ export function BehavioralJourney() {
       <div className="shell">
         <p className="section-kicker">06 — User journey</p>
         <h2 className="section-title">
-          Discover → Run → Listen → Measure → Reveal → Share → Run again
+          Discover → Listen → Run → Discover music → Reveal → Share → Listen again
         </h2>
         <p className="section-lede">
-          The campaign doesn’t end when someone clicks an ad. Participation
-          creates another reason to return to Spotify.
+          Every stage leads back to Spotify’s actual product—playlists, discovery,
+          and return listening.
         </p>
         <div className="loop-grid">
           {behavioralLoop.map((step, i) => (

@@ -1,10 +1,15 @@
 import { useMemo, useState } from 'react'
 import { filterCampaign } from '../../data/analytics'
 import { formatNumber, formatPct } from '../../data/campaign'
-import { creativeAssets } from '../../data/content'
+import { creativeExecutions } from '../../data/content'
 import type { Format, Pillar, Platform } from '../../data/types'
 
-const platforms: Array<Platform | 'All'> = ['All', 'Instagram', 'TikTok', 'YouTube']
+const platforms: Array<Exclude<Platform, 'Spotify'> | 'All'> = [
+  'All',
+  'Instagram',
+  'TikTok',
+  'YouTube',
+]
 const formats: Array<Format | 'All'> = [
   'All',
   'Feed',
@@ -59,7 +64,9 @@ function ChipGroup<T extends string>({
 }
 
 export function PerformanceExplorer() {
-  const [platform, setPlatform] = useState<Platform | 'All'>('All')
+  const [platform, setPlatform] = useState<Exclude<Platform, 'Spotify'> | 'All'>(
+    'All',
+  )
   const [format, setFormat] = useState<Format | 'All'>('All')
   const [pillar, setPillar] = useState<Pillar | 'All'>('All')
 
@@ -82,9 +89,8 @@ export function PerformanceExplorer() {
     return { reach, clicks, er, ctr, count: rows.length }
   }, [rows])
 
-  const relatedCreative = creativeAssets.filter((a) => {
-    if (platform !== 'All' && a.platform !== platform) return false
-    if (pillar !== 'All' && a.pillar !== pillar) return false
+  const relatedCreative = creativeExecutions.filter((a) => {
+    if (platform !== 'All' && a.channel !== platform) return false
     return true
   })
 
@@ -93,17 +99,24 @@ export function PerformanceExplorer() {
       <div className="shell">
         <div className="explorer">
           <p className="section-kicker" style={{ color: 'rgba(255,255,255,0.55)' }}>
-            20 — Interactive performance explorer
+            Interactive performance explorer
           </p>
-          <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', alignItems: 'center' }}>
+          <div
+            style={{
+              display: 'flex',
+              gap: '0.75rem',
+              flexWrap: 'wrap',
+              alignItems: 'center',
+            }}
+          >
             <h2 className="section-title" style={{ marginBottom: 0 }}>
-              Filter creative by performance
+              Filter simulated creative by performance
             </h2>
             <span className="sim-badge">Simulated data</span>
           </div>
           <p className="section-lede">
             Explore how platform, format, and pillar relate to reach, engagement,
-            and clicks — then glance at matching creative examples.
+            and clicks—then glance at matching creative examples.
           </p>
 
           <div className="filters">

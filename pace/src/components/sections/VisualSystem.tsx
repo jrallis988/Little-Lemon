@@ -1,44 +1,58 @@
+import { colorSystem, typeSystem } from '../../data/content'
+
 export function VisualSystem() {
-  const tokens = [
-    ['Mile markers', 'Distance as graphic rhythm'],
-    ['Split times', 'Proof that pace is personal'],
-    ['Route lines', 'Path energy across layouts'],
-    ['Cadence / BPM', 'Music × movement metrics'],
-    ['Stopwatch graphics', 'Tension for BREAK moments'],
-    ['Kinetic type', 'Speed shifts by state'],
+  const musicTokens = [
+    ['Album artwork', 'Always visible music ownership'],
+    ['Song + artist titles', 'Named tracks, not generic “workout”'],
+    ['Playlist covers', 'Discovery objects people recognize'],
+    ['BPM + waveforms', 'Energy as graphic language'],
+    ['Playback UI', 'Reminds viewers this is Spotify'],
+    ['Listening history', 'Personalization made visual'],
   ]
 
   return (
     <section className="section" id="visual-system">
       <div className="shell">
         <p className="section-kicker">09 — Visual language</p>
-        <h2 className="section-title">Recognize PACE before you see the logo.</h2>
+        <h2 className="section-title">Color responds to energy. Type moves with the rhythm.</h2>
         <p className="section-lede">
-          Beyond Spotify green, PACE borrows the grammar of running—then lets
-          that grammar change with START, FLOW, PUSH, BREAK, and RECOVER.
+          A Spotify campaign about running—not a running app sponsored by Spotify.
+          Music cues stay visually present at every turn.
         </p>
-        <div className="visual-demo">
+
+        <div className="color-row">
+          {colorSystem.map((c) => (
+            <div className="color-swatch" key={c.name}>
+              <div className="swatch" style={{ background: c.swatch }} />
+              <strong>{c.name}</strong>
+              <span>{c.role}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="visual-demo" style={{ marginTop: '1.25rem' }}>
           <div className="visual-track" aria-hidden>
-            <span className="mile">0</span>
+            <span className="mile">BPM 142</span>
             <span className="route" />
-            <span className="mile">1</span>
-            <span className="route" />
-            <span className="mile">2</span>
+            <span className="bpm">POWER TRACK</span>
             <span className="route hot" />
-            <span className="mile">3</span>
-            <span className="bpm">156 BPM</span>
-            <span className="split">9:14</span>
+            <span className="split">3:42</span>
+            <span className="wave" />
           </div>
           <div className="state-strip">
-            <span className="state-pill state-start">START · controlled</span>
-            <span className="state-pill state-flow">FLOW · rhythmic</span>
-            <span className="state-pill state-push">PUSH · compressed</span>
-            <span className="state-pill state-break">BREAK · explosive</span>
-            <span className="state-pill state-recover">RECOVER · open</span>
+            {typeSystem.map((t) => (
+              <span
+                key={t.state}
+                className={`state-pill state-${t.state.toLowerCase()}`}
+              >
+                {t.state} · {t.feel}
+              </span>
+            ))}
           </div>
         </div>
+
         <div className="grid-3" style={{ marginTop: '1.25rem' }}>
-          {tokens.map(([t, d]) => (
+          {musicTokens.map(([t, d]) => (
             <article className="panel" key={t}>
               <h3>{t}</h3>
               <p>{d}</p>

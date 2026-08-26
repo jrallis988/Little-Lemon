@@ -1,6 +1,7 @@
 import { CaseNav } from './components/layout/CaseNav'
 import { Chapter } from './components/layout/Chapter'
 import { Hero } from './components/sections/Hero'
+import { ClientBrief } from './components/sections/ClientBrief'
 import { CoreIdea } from './components/sections/CoreIdea'
 import { Problem } from './components/sections/Problem'
 import { WhySpotify } from './components/sections/WhySpotify'
@@ -25,7 +26,7 @@ import { WhatWeLearned } from './components/sections/WhatWeLearned'
 export default function App() {
   return (
     <>
-      <a className="skip-link" href="#idea">
+      <a className="skip-link" href="#brief">
         Skip to main content
       </a>
       <CaseNav />
@@ -36,8 +37,9 @@ export default function App() {
           id="chapter-strategy"
           tone="light"
           kicker="Chapter 01 — Strategy"
-          title="The idea, the problem, and why it belongs to Spotify."
+          title="A music-first brief for an existing cultural habit."
         >
+          <ClientBrief />
           <CoreIdea />
           <Problem />
           <WhySpotify />
@@ -51,7 +53,7 @@ export default function App() {
           id="chapter-creative"
           tone="dark"
           kicker="Chapter 02 — Experience + Creative"
-          title="PACE is a creative system—not just a campaign name."
+          title="Soundtrack first. Running culture as context."
         >
           <PaceCard />
           <VisualSystem />
