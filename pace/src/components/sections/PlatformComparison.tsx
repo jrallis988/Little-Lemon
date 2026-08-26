@@ -1,30 +1,33 @@
 const platforms = [
   {
-    name: 'Instagram',
+    name: 'TikTok',
+    role: 'Challenge',
     worked:
-      'People-led Reels and runner stories carried brand emotion. Educational carousels earned saves. Stories RSVPs converted community intent.',
+      'Proof-led hooks, BPM challenges, and Card payoffs drove discovery and shares. Native pacing beat polished intros.',
     didnt:
-      'Product-only feed stills under-indexed on engagement when used as cold awareness. Grid looked sharp but conversation stayed thin.',
+      '“Meet PACE on Spotify” openings lost early retention. Overproduced session demos felt like ads too soon.',
     change:
-      'Lead awareness with runners using the product. Keep polished product carousels for consideration/convert weeks. Expand Story participation.',
+      'Standardize tension-first hooks. Keep weekly educational tips. Treat challenges as growth engines.',
   },
   {
-    name: 'TikTok',
+    name: 'Instagram',
+    role: 'Identity',
     worked:
-      'Outcome-led hooks, POV culture, challenges, and tip videos drove discovery and shares. Native pacing beat polished intros.',
+      'PACE Cards, runner stories, and state carousels carried identity. Stories stickers converted share intent.',
     didnt:
-      '“Meet the new PACE ONE” openings lost early retention. Overproduced product teases felt like ads too soon.',
+      'UI-only feed stills under-indexed on engagement as cold awareness.',
     change:
-      'Standardize proof-first hooks. Keep weekly educational tips. Treat challenges as growth engines, not one-offs.',
+      'Lead awareness with runners + Cards. Keep polished UI for consideration. Expand Card Stories.',
   },
   {
     name: 'YouTube',
+    role: 'Stories',
     worked:
-      'Athlete packaging, training long-form, and Shorts bridges built watch time and mid-funnel clicks. Depth created belief.',
+      'Athlete music diaries, training long-form, and Shorts bridges built watch time and Spotify clicks.',
     didnt:
-      'Product-only thumbnails depressed CTR. Community documentary under-retained without a tighter narrative spine.',
+      'UI-only thumbnails depressed CTR. Community cuts under-retained without a tighter narrative spine.',
     change:
-      'Default to athlete-focused thumbnails. Chapter training films. Use Shorts to feed the long-form library, not replace it.',
+      'Default athlete + Card packaging. Chapter training films. Use Shorts to feed long-form.',
   },
 ]
 
@@ -32,14 +35,16 @@ export function PlatformComparison() {
   return (
     <section className="section" id="platform-compare">
       <div className="shell">
-        <p className="section-kicker">18 — Platform comparison</p>
-        <h2 className="section-title">Creative decisions — not just platform tallies.</h2>
+        <p className="section-kicker">16 — Platform comparison</p>
+        <h2 className="section-title">Creative decisions—not just platform tallies.</h2>
         <p className="section-lede">
-          What to keep, what to stop, and what to change on each surface.
+          What to keep, stop, and change on each surface—while Spotify remains
+          the experience destination.
         </p>
         <div className="grid-3">
           {platforms.map((p) => (
             <article className="panel compare-col" key={p.name}>
+              <p className="platform-purpose">{p.role}</p>
               <h3>{p.name}</h3>
               <div className="compare-block worked">
                 <div className="label">What worked</div>

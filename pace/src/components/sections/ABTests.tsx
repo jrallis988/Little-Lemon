@@ -4,11 +4,13 @@ export function ABTests() {
   return (
     <section className="section" id="testing">
       <div className="shell">
-        <p className="section-kicker">13–15 — A/B testing</p>
-        <h2 className="section-title">Three tests. Three creative decisions.</h2>
+        <p className="section-kicker">14 — A/B testing as design process</p>
+        <h2 className="section-title">
+          Version A → result → insight → design change → Version B → result
+        </h2>
         <p className="section-lede">
-          Simulated experiments that turn preference into evidence — then into
-          the next brief.
+          Not just which variant won—exactly what changed in photography,
+          headline, CTA, type, format, editing, and pace-state treatment.
         </p>
 
         {abTests.map((test, idx) => (
@@ -23,7 +25,7 @@ export function ABTests() {
             </div>
             <h3
               className="section-title"
-              style={{ fontSize: '1.6rem', margin: '0.75rem 0 0.5rem' }}
+              style={{ fontSize: '1.55rem', margin: '0.75rem 0 0.5rem' }}
             >
               {test.name}
             </h3>
@@ -38,15 +40,25 @@ export function ABTests() {
                 {idx === 2 && (
                   <div className="thumb-preview thumb-a" aria-label="Thumbnail version A preview">
                     <div className="thumb-label">
-                      PACE ONE
+                      PACE UI
                       <br />
                       <span style={{ fontSize: '0.75rem', opacity: 0.75 }}>
-                        Product on black
+                        Session screen on black
                       </span>
                     </div>
                     <span className="thumb-size-note">1280×720 preview</span>
                   </div>
                 )}
+                <p className="design-label">Design decisions</p>
+                <ul className="metric-list">
+                  {Object.entries(test.versionA.design).map(([k, v]) => (
+                    <li key={k}>
+                      <span>{k}</span>
+                      <strong>{v}</strong>
+                    </li>
+                  ))}
+                </ul>
+                <p className="design-label">Results</p>
                 <ul className="metric-list">
                   {Object.entries(test.versionA.metrics).map(([k, v]) => (
                     <li key={k}>
@@ -62,15 +74,25 @@ export function ABTests() {
                 {idx === 2 && (
                   <div className="thumb-preview thumb-b" aria-label="Thumbnail version B preview">
                     <div className="thumb-label">
-                      Athlete mid-stride
+                      Athlete + Card
                       <br />
                       <span style={{ fontSize: '0.75rem', opacity: 0.75 }}>
-                        Face + shoe visible
+                        Face + PACE Card fragment
                       </span>
                     </div>
                     <span className="thumb-size-note">1280×720 preview</span>
                   </div>
                 )}
+                <p className="design-label">Design decisions</p>
+                <ul className="metric-list">
+                  {Object.entries(test.versionB.design).map(([k, v]) => (
+                    <li key={k}>
+                      <span>{k}</span>
+                      <strong>{v}</strong>
+                    </li>
+                  ))}
+                </ul>
+                <p className="design-label">Results</p>
                 <ul className="metric-list">
                   {Object.entries(test.versionB.metrics).map(([k, v]) => (
                     <li key={k}>
@@ -83,9 +105,12 @@ export function ABTests() {
             </div>
 
             <div className="note-callout" style={{ marginTop: '1rem' }}>
-              <strong>Conclusion</strong>
-              <div style={{ marginTop: '0.35rem' }}>{test.conclusion}</div>
+              <strong>Feedback chain</strong>
+              <div style={{ marginTop: '0.35rem' }}>{test.chain}</div>
               <div style={{ marginTop: '0.55rem' }}>
+                <strong>Conclusion →</strong> {test.conclusion}
+              </div>
+              <div style={{ marginTop: '0.35rem' }}>
                 <strong>Creative decision →</strong> {test.creativeDecision}
               </div>
             </div>

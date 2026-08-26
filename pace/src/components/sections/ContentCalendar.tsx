@@ -6,11 +6,11 @@ export function ContentCalendar() {
   return (
     <section className="section" id="calendar">
       <div className="shell">
-        <p className="section-kicker">07 — Content calendar</p>
-        <h2 className="section-title">Four weeks. One campaign rhythm.</h2>
+        <p className="section-kicker">10 — Campaign calendar</p>
+        <h2 className="section-title">Four weeks around the behavioral loop.</h2>
         <p className="section-lede">
-          A professional launch calendar distributed across Instagram, TikTok,
-          and YouTube — designed as campaign material, not project-management UI.
+          Discover → Experience → Measure/Reveal → Share/Return—distributed
+          across TikTok, Instagram, and YouTube with Spotify as the destination.
         </p>
         {weeks.map((week) => {
           const items = calendar.filter((c) => c.week === week)
@@ -25,7 +25,6 @@ export function ContentCalendar() {
                       <th>Platform</th>
                       <th>Format</th>
                       <th>Pillar</th>
-                      <th>Stage</th>
                       <th>Objective</th>
                       <th>Content</th>
                       <th>CTA</th>
@@ -37,8 +36,7 @@ export function ContentCalendar() {
                         <td>{item.day}</td>
                         <td>{item.platform}</td>
                         <td>{item.format}</td>
-                        <td>{item.pillar}</td>
-                        <td>{item.stage}</td>
+                        <td>{item.pillar === 'Product' ? 'Experience' : item.pillar}</td>
                         <td>{item.objective}</td>
                         <td>{item.title}</td>
                         <td>{item.cta}</td>

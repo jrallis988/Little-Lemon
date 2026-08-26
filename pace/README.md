@@ -1,26 +1,25 @@
 # PACE — Find Your Pace
 
-Fictional self-initiated portfolio case study: social strategy + creative performance for a contemporary performance-running brand launching **PACE ONE**.
+Fictional self-initiated portfolio case study: a **Spotify × running** campaign that turns the relationship between music and movement into something personal, measurable, and shareable.
 
-> All campaign metrics are **SIMULATED DATA**. PACE is not a real client.
+> All campaign metrics are **SIMULATED DATA**. This is not an official Spotify project.
 
-## What this demonstrates
+## Core idea
 
-- Social strategy, objectives, audiences, pillars, platform roles
-- Campaign journey + four-week calendar
-- Creative system boards across Instagram, TikTok, YouTube
-- Measurement framework tied to objectives
-- Python / Pandas analysis of a ~32-piece simulated dataset
-- Performance interpretation, A/B tests, scorecards, optimization
-- Interactive React performance explorer
+PACE turns Spotify from something runners happen to listen to into something that actively participates in their run.
 
-**Core thesis:** data → insight → creative decision
+**FIND YOUR PACE** = discovering the relationship between how you run and how you listen.
+
+## Case study chapters
+
+1. **Strategy** — problem, insight, why Spotify, audiences, pace states, behavioral loop, platforms  
+2. **Experience + Creative** — PACE Card, visual system, calendar, multi-platform executions  
+3. **Performance + Optimization** — measurement, analytics, A/B design chains, explorer  
+4. **Results + Reflection** — recommendations and the thesis: analytics can improve creative decisions
 
 ## Stack
 
-- React + TypeScript + Vite
-- Recharts
-- Modern CSS
+- React + TypeScript + Vite + Recharts
 - Python + Pandas (`analysis/analyze.py`)
 
 ## Develop
@@ -28,8 +27,8 @@ Fictional self-initiated portfolio case study: social strategy + creative perfor
 ```bash
 cd pace
 npm install
-npm run analyze   # regenerates insights.json from CSV
-npm run dev       # http://localhost:5173
+npm run analyze
+npm run dev
 ```
 
 ## Build
@@ -37,22 +36,4 @@ npm run dev       # http://localhost:5173
 ```bash
 npm run build
 npm run preview
-```
-
-Production assets land in `dist/` (relative base path for portfolio embedding).
-
-## Structure
-
-```
-pace/
-├── analysis/
-│   ├── campaign_data.csv
-│   ├── analyze.py
-│   └── insights.json
-├── public/
-├── src/
-│   ├── components/
-│   ├── data/
-│   └── styles/
-└── dist/          # after build
 ```

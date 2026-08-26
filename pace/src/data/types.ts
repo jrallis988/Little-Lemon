@@ -1,4 +1,4 @@
-export type Platform = 'Instagram' | 'TikTok' | 'YouTube'
+export type Platform = 'Instagram' | 'TikTok' | 'YouTube' | 'Spotify'
 export type Format =
   | 'Feed'
   | 'Carousel'
@@ -20,10 +20,11 @@ export type CreativeApproach =
   | 'People-led'
   | 'Educational'
   | 'Community'
+export type PaceState = 'Start' | 'Flow' | 'Push' | 'Break' | 'Recover'
 
 export interface CampaignRecord {
   content_id: string
-  platform: Platform
+  platform: Exclude<Platform, 'Spotify'>
   format: Format
   content_pillar: Pillar
   campaign_stage: Stage
@@ -63,22 +64,11 @@ export interface ContentPillar {
   examples: string[]
 }
 
-export interface JourneyStage {
-  id: Stage
-  name: string
-  objective: string
-  content: string
-  platforms: string[]
-  formats: string[]
-  cta: string
-  kpi: string
-}
-
 export interface CalendarItem {
   week: 1 | 2 | 3 | 4
   weekLabel: string
   day: string
-  platform: Platform
+  platform: Exclude<Platform, 'Spotify'>
   format: Format
   pillar: Pillar
   stage: Stage
@@ -89,7 +79,7 @@ export interface CalendarItem {
 
 export interface CreativeAsset {
   id: string
-  platform: Platform
+  platform: Exclude<Platform, 'Spotify'>
   format: string
   title: string
   pillar: Pillar
@@ -106,18 +96,21 @@ export interface CreativeAsset {
 export interface ABTest {
   id: string
   name: string
-  platform: Platform
+  platform: Exclude<Platform, 'Spotify'>
   hypothesis: string
   versionA: {
     label: string
     description: string
+    design: Record<string, string>
     metrics: Record<string, number | string>
   }
   versionB: {
     label: string
     description: string
+    design: Record<string, string>
     metrics: Record<string, number | string>
   }
+  chain: string
   conclusion: string
   creativeDecision: string
 }

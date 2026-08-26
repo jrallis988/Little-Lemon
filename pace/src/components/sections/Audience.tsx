@@ -4,11 +4,11 @@ export function Audience() {
   return (
     <section className="section" id="audience">
       <div className="shell">
-        <p className="section-kicker">02 — Audience</p>
-        <h2 className="section-title">One brand. Three runner mindsets.</h2>
+        <p className="section-kicker">04 — Audience</p>
+        <h2 className="section-title">One campaign. Three runner mindsets.</h2>
         <p className="section-lede">
-          Messaging shifts by motivation — health, consistency, or competition —
-          while the visual system and campaign line stay unmistakably PACE.
+          Messaging shifts by motivation—confidence, consistency, or competition—
+          while FIND YOUR PACE stays unmistakably PACE.
         </p>
         <div className="grid-3">
           {audiences.map((a) => (

@@ -7,31 +7,31 @@ export function CreativePerformance() {
 
   const rows = [
     {
-      name: 'Product-led',
-      job: 'Polished product advertising and feature clarity.',
-      wins: 'Strongest CTR and convert-stage link intent.',
-      watch: 'Weaker cold engagement vs people/community.',
+      name: 'Experience-led',
+      job: 'Session UI, playlists, and feature clarity.',
+      wins: 'Stronger CTR once intent exists.',
+      watch: 'Weaker cold engagement vs people/Cards.',
       stats: map['Product-led'],
     },
     {
       name: 'People-led',
-      job: 'Runner stories and athlete proof.',
-      wins: 'Expanded reach and emotional completion on video.',
-      watch: 'Needs clear mid-funnel CTAs to convert attention.',
+      job: 'Runner stories, athlete diaries, Card reveals.',
+      wins: 'Expanded reach and emotional completion.',
+      watch: 'Needs clear Spotify CTAs to convert attention.',
       stats: map['People-led'],
     },
     {
       name: 'Educational',
-      job: 'Tips, pacing cues, training plans.',
-      wins: 'Highest utility — saves and revisit behavior.',
+      job: 'BPM tips, cadence cues, state explainers.',
+      wins: 'Highest utility—saves and revisit behavior.',
       watch: 'Lower share velocity than challenges.',
       stats: map['Educational'],
     },
     {
       name: 'Community',
-      job: 'Group runs, challenges, participation prompts.',
+      job: 'Challenges, Card shares, group participation.',
       wins: 'Strongest share-led engagement loops.',
-      watch: 'Requires operational follow-through (events).',
+      watch: 'Needs operational follow-through.',
       stats: map['Community'],
     },
   ]
@@ -39,11 +39,11 @@ export function CreativePerformance() {
   return (
     <section className="section" id="what-worked">
       <div className="shell">
-        <p className="section-kicker">12 — What creative worked?</p>
-        <h2 className="section-title">No universal winner — only winners by objective.</h2>
+        <p className="section-kicker">13 — What creative worked?</p>
+        <h2 className="section-title">No universal winner—only winners by objective.</h2>
         <p className="section-lede">
-          Declaring one format “best” is how brands overfit. The simulated results
-          show different creative approaches winning different jobs.
+          Community drove participation. Education drove saves. Experience UI
+          drove CTR. People-led storytelling drove reach.
         </p>
         <div className="creative-compare">
           {rows.map((r) => (
@@ -69,12 +69,6 @@ export function CreativePerformance() {
               )}
             </article>
           ))}
-        </div>
-        <div className="note-callout">
-          Community content generated the strongest participatory engagement.
-          Educational content generated the most saves. Product content generated
-          stronger CTR. People-led video storytelling produced stronger reach.
-          That nuance is the strategy.
         </div>
       </div>
     </section>

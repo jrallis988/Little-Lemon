@@ -1,40 +1,40 @@
 export function Measurement() {
   const groups = [
     {
-      title: 'Awareness',
+      title: 'Discover',
       items: ['Reach', 'Impressions', 'Video views'],
-      note: 'Primary for tease & reveal.',
+      note: 'Did the idea get seen?',
     },
     {
-      title: 'Engagement',
-      items: ['Likes', 'Comments', 'Shares', 'Saves', 'Engagement rate'],
-      note: 'Primary for community & culture.',
+      title: 'Engage',
+      items: ['Comments', 'Shares', 'Saves', 'Engagement rate'],
+      note: 'Did runners participate?',
     },
     {
       title: 'Video',
       items: ['Watch time', 'Avg view duration', 'Completion', 'Retention'],
-      note: 'Judge storytelling quality.',
+      note: 'Did storytelling hold?',
     },
     {
-      title: 'Consideration',
-      items: ['Profile visits', 'Product-page visits', 'Link clicks', 'CTR'],
-      note: 'Bridge from interest to intent.',
+      title: 'Reveal',
+      items: ['Spotify opens', 'Card views', 'Link clicks', 'CTR'],
+      note: 'Did identity convert interest?',
     },
     {
-      title: 'Action',
-      items: ['Sign-ups', 'Event registrations', 'Product-page actions'],
-      note: 'Only meaningful after intent creative.',
+      title: 'Return',
+      items: ['Session starts', 'Card shares', 'Challenge joins'],
+      note: 'Did they run again?',
     },
   ]
 
   return (
     <section className="section" id="measurement">
       <div className="shell">
-        <p className="section-kicker">09 — Measurement framework</p>
+        <p className="section-kicker">12 — Measurement framework</p>
         <h2 className="section-title">Metrics only matter relative to the objective.</h2>
         <p className="section-lede">
-          Not every number is equal. A high-reach tease with low CTR is not a
-          failure — unless the stage was Convert.
+          A high-reach challenge with low Spotify opens isn’t a failure—unless
+          the job was Reveal. Objectives dictate both the art and the scoreboard.
         </p>
         <div className="measure-grid">
           {groups.map((g) => (
@@ -52,10 +52,10 @@ export function Measurement() {
           ))}
         </div>
         <div className="note-callout">
-          <strong>SIMULATED DATA</strong> — The following performance sections use
-          a fictional ~32-piece dataset analyzed with Python and Pandas, then
-          visualized in React. Patterns are designed to be interpretable, not to
-          claim real client results.
+          <strong>SIMULATED DATA</strong> — Performance sections use a fictional
+          social dataset analyzed with Python/Pandas and visualized in React.
+          Patterns are designed to be interpretable—not to claim real Spotify
+          results.
         </div>
       </div>
     </section>
