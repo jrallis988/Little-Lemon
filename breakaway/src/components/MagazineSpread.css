@@ -1903,11 +1903,22 @@
 
 .ms-gear-macro {
   margin: 0.5rem 0 0.45rem;
-  height: 28%;
+  height: 36%;
+  min-height: 90px;
+  border: 1px solid rgba(244, 246, 248, 0.2);
+  overflow: hidden;
+}
+
+.ms-gear-macro .ms-photo--stick-macro {
+  height: 78%;
+}
+
+.ms-gear-macro .ms-caption {
+  margin: 0.35rem 0.4rem 0.4rem;
 }
 
 .ms-exploded--compact {
-  height: 28%;
+  height: 22%;
   margin-top: 0.35rem;
 }
 
