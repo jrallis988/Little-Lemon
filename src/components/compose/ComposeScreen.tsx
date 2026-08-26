@@ -194,10 +194,11 @@ export function ComposeScreen() {
               {prompts.map((prompt) => {
                 const Icon = promptIcons[prompt.icon];
                 const colors = {
-                  teacher: "bg-tag-teacher-soft border-tag-teacher/30 text-tag-teacher",
-                  thanks: "bg-warn-soft border-warn/30 text-warn",
-                  peer: "bg-tag-classmate-soft border-tag-classmate/30 text-tag-classmate",
-                  project: "bg-tag-school-soft border-tag-school/30 text-tag-school",
+                  teacher:
+                    "bg-[#DCE4FF] border-[#7B8CFF] text-[#3F51D8]",
+                  thanks: "bg-[#FFE0D6] border-[#FF8A65] text-[#E64A19]",
+                  peer: "bg-[#D6F5E9] border-[#4DB6A0] text-[#1B7A63]",
+                  project: "bg-[#EBDFFF] border-[#B388FF] text-[#6A3BCF]",
                 } as const;
                 return (
                   <button
@@ -205,15 +206,16 @@ export function ComposeScreen() {
                     type="button"
                     onClick={() => applyPrompt(prompt.id)}
                     className={cn(
-                      "rounded-3xl border-[2.5px] px-3.5 py-4 text-left shadow-card transition hover:-translate-y-0.5",
+                      "rounded-[1.6rem] border-[3px] px-3.5 py-4 text-left shadow-card transition hover:-translate-y-1",
                       colors[prompt.icon],
-                      activePrompt === prompt.id && "ring-[3px] ring-primary/30",
+                      activePrompt === prompt.id &&
+                        "ring-[4px] ring-primary/35",
                     )}
                   >
-                    <span className="mb-2 flex size-10 items-center justify-center rounded-2xl bg-white/80">
-                      <Icon className="size-5" />
+                    <span className="mb-2 flex size-11 items-center justify-center rounded-2xl bg-white shadow-sm">
+                      <Icon className="size-6" />
                     </span>
-                    <span className="block text-sm font-extrabold text-foreground">
+                    <span className="block text-[15px] font-extrabold text-foreground">
                       {prompt.title}
                     </span>
                   </button>
