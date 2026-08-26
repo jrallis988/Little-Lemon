@@ -21,7 +21,7 @@ import {
   ScreenTitle,
 } from '../../src/design-system';
 import { colors, radii, spacing, typography } from '../../src/design-system/tokens';
-import type { ConfirmationStatus, HealthProfileItem, ProfileItemCategory } from '../../src/domain/models';
+import type { ConfirmationStatus, ProfileItemCategory } from '../../src/domain/models';
 import { useBioCross } from '../../src/state/BioCrossContext';
 
 const SETTINGS_COPY: Record<

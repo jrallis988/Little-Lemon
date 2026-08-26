@@ -138,6 +138,7 @@ export default function HistoryScreen() {
                     label="Recheck"
                     size="sm"
                     variant="outline"
+                    fullWidth={false}
                     onPress={() =>
                       router.push({
                         pathname: '/check/confirm',
