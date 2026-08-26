@@ -23,6 +23,7 @@ import {
 import { colors, radii, spacing, typography } from '../../src/design-system/tokens';
 import type { ConfirmationStatus, ProfileItemCategory } from '../../src/domain/models';
 import { useBioCross } from '../../src/state/BioCrossContext';
+import { useAuth } from '../../src/state/AuthContext';
 
 const SETTINGS_COPY: Record<
   string,
@@ -132,6 +133,7 @@ export default function ProfileSectionScreen() {
     removeProfileItem,
     confirmProfileItem,
   } = useBioCross();
+  const { signOut } = useAuth();
 
   const [showAddCallout, setShowAddCallout] = useState(false);
   const [addName, setAddName] = useState('');
@@ -175,6 +177,7 @@ export default function ProfileSectionScreen() {
             label="Sign Out"
             variant="danger"
             onPress={async () => {
+              await signOut();
               router.replace('/onboarding/welcome');
             }}
             style={{ marginTop: spacing.lg }}

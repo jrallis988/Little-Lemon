@@ -45,6 +45,13 @@
       "expo-font",
       "expo-secure-store",
       [
+        "expo-camera",
+        {
+          "cameraPermission": "BioCross uses the camera to scan supplement barcodes and photograph Supplement Facts labels.",
+          "recordAudioAndroid": false
+        }
+      ],
+      [
         "expo-image-picker",
         {
           "photosPermission": "Allow BioCross to access your photos to upload supplement labels and health records."

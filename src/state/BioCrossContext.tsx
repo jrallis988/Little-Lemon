@@ -39,7 +39,13 @@ interface BioCrossContextValue {
 
 const BioCrossContext = createContext<BioCrossContextValue | null>(null);
 
-export function BioCrossProvider({ children }: { children: React.ReactNode }) {
+export function BioCrossProvider({
+  children,
+  registerRefresh,
+}: {
+  children: React.ReactNode;
+  registerRefresh?: (refresh: () => Promise<void>) => void;
+}) {
   const [ready, setReady] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<HealthProfile | null>(null);
@@ -72,6 +78,10 @@ export function BioCrossProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     refresh();
   }, [refresh]);
+
+  useEffect(() => {
+    registerRefresh?.(refresh);
+  }, [refresh, registerRefresh]);
 
   const value = useMemo<BioCrossContextValue>(
     () => ({

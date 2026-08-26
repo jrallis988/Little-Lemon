@@ -1,16 +1,20 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { biocrossApi } from '../api/client';
+import { authStorage } from '../api/authStorage';
+import { getMockExtractedItems, saveMockExtractedItems, updateMockUser } from '../api/mockServer';
+import { isRemoteApi } from '../api/config';
 import type {
   AppPreferences,
   ExtractedHealthItem,
   HealthProfile,
   HealthProfileItem,
   SafetyAlert,
+  Supplement,
   SupplementCheck,
   UploadedDocument,
   User,
 } from './models';
 import {
-  DEMO_ALERTS,
   DEMO_CHECKS,
   DEMO_DOCUMENT,
   DEMO_EXTRACTED_ITEMS,
@@ -18,21 +22,15 @@ import {
   DEMO_PREFERENCES,
   DEMO_USER,
 } from './fixtures';
-import { analyzeSupplement, findSupplementByBarcode, findSupplementByQuery } from './analysis';
-import type { Supplement } from './models';
+import { analyzeSupplement } from './analysis';
+import type { Supplement as SupplementType } from './models';
 
-const KEYS = {
-  user: '@biocross/user',
-  profile: '@biocross/profile',
-  checks: '@biocross/checks',
-  alerts: '@biocross/alerts',
-  prefs: '@biocross/prefs',
-  documents: '@biocross/documents',
-  extracted: '@biocross/extracted',
+const LOCAL_KEYS = {
   onboarded: '@biocross/onboarded',
+  extracted: '@biocross/extracted-local',
 } as const;
 
-async function readJSON<T>(key: string, fallback: T): Promise<T> {
+async function readLocalJSON<T>(key: string, fallback: T): Promise<T> {
   try {
     const raw = await AsyncStorage.getItem(key);
     if (!raw) return fallback;
@@ -42,67 +40,118 @@ async function readJSON<T>(key: string, fallback: T): Promise<T> {
   }
 }
 
-async function writeJSON<T>(key: string, value: T): Promise<void> {
-  await AsyncStorage.setItem(key, JSON.stringify(value));
-}
-
-function delay(ms = 400): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+/** Guest/offline fallback when no auth session exists. */
+async function hasSession(): Promise<boolean> {
+  const token = await authStorage.getAccessToken();
+  return Boolean(token);
 }
 
 export const biocrossRepository = {
   async getUser(): Promise<User> {
-    return readJSON(KEYS.user, DEMO_USER);
+    if (await hasSession()) {
+      try {
+        return await biocrossApi.getMe();
+      } catch {
+        /* fall through to local */
+      }
+    }
+    return { ...DEMO_USER };
   },
 
   async saveUser(user: User): Promise<User> {
-    await writeJSON(KEYS.user, user);
+    if (await hasSession()) {
+      try {
+        return await biocrossApi.updateUser(user);
+      } catch {
+        await updateMockUser(user);
+      }
+    }
     return user;
   },
 
   async isOnboarded(): Promise<boolean> {
-    const flag = await AsyncStorage.getItem(KEYS.onboarded);
+    const flag = await AsyncStorage.getItem(LOCAL_KEYS.onboarded);
     if (flag === 'true') return true;
     const user = await this.getUser();
     return user.onboardingCompleted;
   },
 
   async completeOnboarding(): Promise<void> {
+    if (await hasSession()) {
+      await biocrossApi.completeOnboarding();
+    }
     const user = await this.getUser();
     await this.saveUser({ ...user, onboardingCompleted: true });
-    await AsyncStorage.setItem(KEYS.onboarded, 'true');
+    await AsyncStorage.setItem(LOCAL_KEYS.onboarded, 'true');
   },
 
   async resetDemo(): Promise<void> {
-    await AsyncStorage.multiRemove(Object.values(KEYS));
+    await authStorage.clearTokens();
+    await AsyncStorage.multiRemove(Object.values(LOCAL_KEYS));
   },
 
   async getHealthProfile(): Promise<HealthProfile> {
-    return readJSON(KEYS.profile, DEMO_HEALTH_PROFILE);
+    if (await hasSession()) {
+      try {
+        return await biocrossApi.getProfile();
+      } catch {
+        /* fall through */
+      }
+    }
+    return DEMO_HEALTH_PROFILE;
   },
 
   async saveHealthProfile(profile: HealthProfile): Promise<HealthProfile> {
     const next = { ...profile, lastUpdatedAt: new Date().toISOString() };
-    await writeJSON(KEYS.profile, next);
+    if (await hasSession()) {
+      try {
+        return await biocrossApi.saveProfile(next);
+      } catch {
+        /* fall through */
+      }
+    }
     return next;
   },
 
   async addProfileItems(items: HealthProfileItem[]): Promise<HealthProfile> {
-    const profile = await this.getHealthProfile();
-    const merged = [...profile.items];
+    let profile = await this.getHealthProfile();
     for (const item of items) {
-      const idx = merged.findIndex((m) => m.id === item.id || (m.name === item.name && m.category === item.category));
-      if (idx >= 0) merged[idx] = item;
-      else merged.push(item);
+      if (await hasSession()) {
+        try {
+          profile = await biocrossApi.addProfileItem(item);
+        } catch {
+          const merged = [...profile.items];
+          const idx = merged.findIndex(
+            (m) => m.id === item.id || (m.name === item.name && m.category === item.category),
+          );
+          if (idx >= 0) merged[idx] = item;
+          else merged.push(item);
+          profile = { ...profile, items: merged, readiness: 'strong' };
+        }
+      }
     }
-    return this.saveHealthProfile({ ...profile, items: merged, readiness: 'strong' });
+    return this.saveHealthProfile(profile);
   },
 
   async addProfileItem(item: HealthProfileItem): Promise<HealthProfile> {
+    if (await hasSession()) {
+      try {
+        return await biocrossApi.addProfileItem(item);
+      } catch {
+        /* fall through */
+      }
+    }
     return this.addProfileItems([item]);
   },
 
   async removeProfileItem(itemId: string): Promise<HealthProfile> {
+    if (await hasSession()) {
+      try {
+        return await biocrossApi.removeProfileItem(itemId);
+      } catch {
+        /* fall through */
+      }
+    }
     const profile = await this.getHealthProfile();
     return this.saveHealthProfile({
       ...profile,
@@ -111,6 +160,13 @@ export const biocrossRepository = {
   },
 
   async confirmProfileItem(itemId: string): Promise<HealthProfile> {
+    if (await hasSession()) {
+      try {
+        return await biocrossApi.confirmProfileItem(itemId);
+      } catch {
+        /* fall through */
+      }
+    }
     const profile = await this.getHealthProfile();
     const items = profile.items.map((i) =>
       i.id === itemId
@@ -121,76 +177,160 @@ export const biocrossRepository = {
   },
 
   async getPreferences(): Promise<AppPreferences> {
-    return readJSON(KEYS.prefs, DEMO_PREFERENCES);
+    if (await hasSession()) {
+      try {
+        return await biocrossApi.getPreferences();
+      } catch {
+        /* fall through */
+      }
+    }
+    return DEMO_PREFERENCES;
   },
 
   async savePreferences(prefs: AppPreferences): Promise<AppPreferences> {
-    await writeJSON(KEYS.prefs, prefs);
+    if (await hasSession()) {
+      try {
+        return await biocrossApi.savePreferences(prefs);
+      } catch {
+        /* fall through */
+      }
+    }
     return prefs;
   },
 
   async getChecks(): Promise<SupplementCheck[]> {
-    return readJSON(KEYS.checks, DEMO_CHECKS);
+    if (await hasSession()) {
+      try {
+        return await biocrossApi.getChecks();
+      } catch {
+        /* fall through */
+      }
+    }
+    return DEMO_CHECKS;
   },
 
   async getCheckById(id: string): Promise<SupplementCheck | undefined> {
+    if (await hasSession()) {
+      try {
+        return await biocrossApi.getCheckById(id);
+      } catch {
+        /* fall through */
+      }
+    }
     const checks = await this.getChecks();
     return checks.find((c) => c.id === id);
   },
 
   async saveCheck(check: SupplementCheck): Promise<SupplementCheck> {
-    const checks = await this.getChecks();
-    const next = [check, ...checks.filter((c) => c.id !== check.id)];
-    await writeJSON(KEYS.checks, next);
+    // Checks are persisted via runAnalysis on the API; local path is read-only demo.
     return check;
   },
 
   async searchSupplements(query: string): Promise<Supplement[]> {
-    await delay(250);
+    if (await hasSession()) {
+      try {
+        const res = await biocrossApi.searchSupplements(query);
+        return res.supplements;
+      } catch {
+        /* fall through */
+      }
+    }
+    const { findSupplementByQuery } = await import('./analysis');
     return findSupplementByQuery(query);
   },
 
   async lookupBarcode(barcode: string): Promise<Supplement | null> {
-    await delay(500);
+    if (await hasSession()) {
+      try {
+        const res = await biocrossApi.lookupBarcode(barcode);
+        return res.supplement;
+      } catch {
+        /* fall through */
+      }
+    }
+    const { findSupplementByBarcode } = await import('./analysis');
     return findSupplementByBarcode(barcode) ?? null;
   },
 
-  async runAnalysis(supplement: Supplement): Promise<SupplementCheck> {
-    await delay(900);
+  async runAnalysis(supplement: SupplementType): Promise<SupplementCheck> {
+    if (await hasSession()) {
+      try {
+        return await biocrossApi.runAnalysis(supplement.id);
+      } catch {
+        /* fall through to local analysis */
+      }
+    }
     const user = await this.getUser();
     const profile = await this.getHealthProfile();
-    const check = analyzeSupplement(supplement, profile, user.id);
-    await this.saveCheck(check);
-    return check;
+    return analyzeSupplement(supplement, profile, user.id);
   },
 
   async getAlerts(): Promise<SafetyAlert[]> {
-    return readJSON(KEYS.alerts, DEMO_ALERTS);
+    if (await hasSession()) {
+      try {
+        return await biocrossApi.getAlerts();
+      } catch {
+        /* fall through */
+      }
+    }
+    const { DEMO_ALERTS } = await import('./fixtures');
+    return DEMO_ALERTS;
   },
 
   async markAlertRead(id: string): Promise<void> {
-    const alerts = await this.getAlerts();
-    await writeJSON(
-      KEYS.alerts,
-      alerts.map((a) => (a.id === id ? { ...a, isRead: true } : a)),
-    );
+    if (await hasSession()) {
+      try {
+        await biocrossApi.markAlertRead(id);
+        return;
+      } catch {
+        /* fall through */
+      }
+    }
   },
 
   async getDocuments(): Promise<UploadedDocument[]> {
-    return readJSON(KEYS.documents, [DEMO_DOCUMENT]);
+    if (await hasSession()) {
+      try {
+        return await biocrossApi.getDocuments();
+      } catch {
+        /* fall through */
+      }
+    }
+    return [DEMO_DOCUMENT];
   },
 
   async getExtractedItems(documentId: string): Promise<ExtractedHealthItem[]> {
-    const all = await readJSON(KEYS.extracted, DEMO_EXTRACTED_ITEMS);
+    if (await hasSession()) {
+      try {
+        const res = await biocrossApi.getExtractedItems(documentId);
+        return res.items;
+      } catch {
+        /* fall through */
+      }
+    }
+    if (!isRemoteApi()) {
+      const all = await getMockExtractedItems();
+      return all.filter((i) => i.documentId === documentId);
+    }
+    const all = await readLocalJSON(LOCAL_KEYS.extracted, DEMO_EXTRACTED_ITEMS);
     return all.filter((i) => i.documentId === documentId);
   },
 
   async saveExtractedItems(items: ExtractedHealthItem[]): Promise<void> {
-    await writeJSON(KEYS.extracted, items);
+    if (!isRemoteApi()) {
+      await saveMockExtractedItems(items);
+    }
+    await AsyncStorage.setItem(LOCAL_KEYS.extracted, JSON.stringify(items));
   },
 
   async simulateUpload(fileName: string): Promise<UploadedDocument> {
-    await delay(800);
+    if (await hasSession()) {
+      try {
+        return await biocrossApi.uploadDocument(fileName);
+      } catch {
+        /* fall through */
+      }
+    }
     const doc: UploadedDocument = {
       id: `doc-${Date.now()}`,
       fileName,
@@ -198,22 +338,8 @@ export const biocrossRepository = {
       sizeBytes: 1_200_000,
       pageCount: 12,
       uploadedAt: new Date().toISOString(),
-      status: 'processing',
+      status: 'extracted',
     };
-    const docs = await this.getDocuments();
-    await writeJSON(KEYS.documents, [doc, ...docs]);
-    await delay(700);
-    const ready = { ...doc, status: 'extracted' as const };
-    await writeJSON(KEYS.documents, [ready, ...docs]);
-    // Seed extracted items for new upload from demo template with new document id
-    const extracted = DEMO_EXTRACTED_ITEMS.map((i) => ({
-      ...i,
-      id: `${i.id}-${ready.id}`,
-      documentId: ready.id,
-      status: i.status,
-    }));
-    const existing = await readJSON(KEYS.extracted, DEMO_EXTRACTED_ITEMS);
-    await writeJSON(KEYS.extracted, [...extracted, ...existing]);
-    return ready;
+    return doc;
   },
 };

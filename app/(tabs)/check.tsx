@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Animated,
   Easing,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -19,6 +20,7 @@ import {
   ScreenTitle,
 } from '../../src/design-system';
 import { colors, radii, spacing, typography } from '../../src/design-system/tokens';
+import { BarcodeScannerView } from '../../src/features/scan/BarcodeScannerView';
 import { useBioCross } from '../../src/state/BioCrossContext';
 
 const TESTO_BARCODE = '012345678943';
@@ -30,6 +32,7 @@ export default function CheckScreen() {
   const [scanning, setScanning] = useState(false);
   const [flashOn, setFlashOn] = useState(false);
   const [demoFailNext, setDemoFailNext] = useState(false);
+  const [cameraPaused, setCameraPaused] = useState(false);
   const scanAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -58,20 +61,53 @@ export default function CheckScreen() {
     outputRange: [8, 148],
   });
 
-  const maybeWarnOutdatedProfile = (next: () => void) => {
-    const needsAttention =
-      profile?.readiness === 'needs_attention' ||
-      profile?.readiness === 'getting_started' ||
-      profile?.items.some((i) => i.status === 'not_reviewed' || i.status === 'pending_review');
-    if (needsAttention) {
-      router.push({
-        pathname: '/check/issue',
-        params: { kind: 'outdated_profile', supplementId: 'sup-catalog-testo' },
-      });
-      return;
-    }
-    next();
-  };
+  const maybeWarnOutdatedProfile = useCallback(
+    (next: () => void) => {
+      const needsAttention =
+        profile?.readiness === 'needs_attention' ||
+        profile?.readiness === 'getting_started' ||
+        profile?.items.some((i) => i.status === 'not_reviewed' || i.status === 'pending_review');
+      if (needsAttention) {
+        router.push({
+          pathname: '/check/issue',
+          params: { kind: 'outdated_profile', supplementId: 'sup-catalog-testo' },
+        });
+        return;
+      }
+      next();
+    },
+    [profile, router],
+  );
+
+  const processBarcode = useCallback(
+    async (barcode: string) => {
+      setScanning(true);
+      setCameraPaused(true);
+      try {
+        if (demoFailNext) {
+          router.push({ pathname: '/check/issue', params: { kind: 'scan_failure' } });
+          return;
+        }
+        const supplement = await lookupBarcode(barcode);
+        if (!supplement) {
+          router.push({ pathname: '/check/issue', params: { kind: 'unknown_product' } });
+          return;
+        }
+        maybeWarnOutdatedProfile(() => {
+          router.push({
+            pathname: '/check/confirm',
+            params: { supplementId: supplement.id, source: 'barcode' },
+          });
+        });
+      } catch {
+        router.push({ pathname: '/check/issue', params: { kind: 'offline' } });
+      } finally {
+        setScanning(false);
+        setTimeout(() => setCameraPaused(false), 800);
+      }
+    },
+    [demoFailNext, lookupBarcode, maybeWarnOutdatedProfile, router],
+  );
 
   const handlePhotoLibrary = async () => {
     const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -86,7 +122,6 @@ export default function CheckScreen() {
     });
     if (result.canceled) return;
 
-    // Label photo path — distinct from barcode identification
     router.push({
       pathname: '/check/label-review',
       params: {
@@ -113,41 +148,12 @@ export default function CheckScreen() {
     });
   };
 
-  const handleScanBarcode = async () => {
-    setScanning(true);
-    try {
-      if (demoFailNext) {
-        router.push({ pathname: '/check/issue', params: { kind: 'scan_failure' } });
-        return;
-      }
-      const supplement = await lookupBarcode(TESTO_BARCODE);
-      if (!supplement) {
-        router.push({ pathname: '/check/issue', params: { kind: 'unknown_product' } });
-        return;
-      }
-      maybeWarnOutdatedProfile(() => {
-        router.push({
-          pathname: '/check/confirm',
-          params: { supplementId: supplement.id, source: 'barcode' },
-        });
-      });
-    } catch {
-      router.push({ pathname: '/check/issue', params: { kind: 'offline' } });
-    } finally {
-      setScanning(false);
-    }
-  };
+  const handleScanBarcode = () => processBarcode(TESTO_BARCODE);
 
-  const handleDemoUnknown = async () => {
-    setScanning(true);
-    try {
-      const supplement = await lookupBarcode(UNKNOWN_BARCODE);
-      if (!supplement) {
-        router.push({ pathname: '/check/issue', params: { kind: 'unknown_product' } });
-      }
-    } finally {
-      setScanning(false);
-    }
+  const handleDemoUnknown = () => processBarcode(UNKNOWN_BARCODE);
+
+  const handleLiveScan = (result: { data: string }) => {
+    processBarcode(result.data);
   };
 
   return (
@@ -160,16 +166,27 @@ export default function CheckScreen() {
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
         <View style={styles.viewfinderWrap}>
           <View style={styles.viewfinder} accessibilityLabel="Barcode scanner viewfinder">
-            <View style={[styles.corner, styles.cornerTL]} />
-            <View style={[styles.corner, styles.cornerTR]} />
-            <View style={[styles.corner, styles.cornerBL]} />
-            <View style={[styles.corner, styles.cornerBR]} />
-            <View style={styles.alignPill}>
-              <Text style={styles.alignText}>Align barcode within the frame</Text>
-            </View>
-            <Animated.View
-              style={[styles.scanLine, { transform: [{ translateY: scanLineTranslate }] }]}
+            <BarcodeScannerView
+              onScan={handleLiveScan}
+              onPermissionDenied={() =>
+                router.push({ pathname: '/check/issue', params: { kind: 'permission' } })
+              }
+              flashOn={flashOn}
+              paused={cameraPaused || scanning}
+              style={styles.camera}
             />
+            <View style={styles.overlay} pointerEvents="none">
+              <View style={[styles.corner, styles.cornerTL]} />
+              <View style={[styles.corner, styles.cornerTR]} />
+              <View style={[styles.corner, styles.cornerBL]} />
+              <View style={[styles.corner, styles.cornerBR]} />
+              <View style={styles.alignPill}>
+                <Text style={styles.alignText}>Align barcode within the frame</Text>
+              </View>
+              <Animated.View
+                style={[styles.scanLine, { transform: [{ translateY: scanLineTranslate }] }]}
+              />
+            </View>
             <View style={styles.sideControls}>
               <Pressable
                 onPress={() => setFlashOn((v) => !v)}
@@ -193,18 +210,12 @@ export default function CheckScreen() {
           </View>
         </View>
 
-        <Pressable
-          onPress={() =>
-            router.push({ pathname: '/check/issue', params: { kind: 'permission' } })
-          }
-        >
-          <InfoCallout
-            tone="privacy"
-            icon="shield-checkmark"
-            title="We only scan the barcode."
-            body="No personal information is captured."
-          />
-        </Pressable>
+        <InfoCallout
+          tone="privacy"
+          icon="shield-checkmark"
+          title="We only scan the barcode."
+          body="No personal information is captured."
+        />
 
         <HealthCard style={styles.altCard}>
           <Text style={styles.altTitle}>Other ways to search</Text>
@@ -241,13 +252,15 @@ export default function CheckScreen() {
           </View>
         </HealthCard>
 
-        <BioCrossButton
-          label="Scan Barcode"
-          icon="scan-outline"
-          loading={scanning}
-          onPress={handleScanBarcode}
-          accessibilityHint="Simulates scanning a supplement barcode"
-        />
+        {Platform.OS === 'web' ? (
+          <BioCrossButton
+            label="Scan Barcode"
+            icon="scan-outline"
+            loading={scanning}
+            onPress={handleScanBarcode}
+            accessibilityHint="Simulates scanning a supplement barcode on web"
+          />
+        ) : null}
 
         <Pressable
           onPress={() => setDemoFailNext((v) => !v)}
@@ -260,9 +273,11 @@ export default function CheckScreen() {
             Demo: next scan {demoFailNext ? 'will simulate failure' : 'will succeed'}
           </Text>
         </Pressable>
-        <Pressable onPress={handleDemoUnknown} style={styles.demoToggle}>
-          <Text style={styles.demoText}>Demo: unknown product</Text>
-        </Pressable>
+        {Platform.OS === 'web' ? (
+          <Pressable onPress={handleDemoUnknown} style={styles.demoToggle}>
+            <Text style={styles.demoText}>Demo: unknown product</Text>
+          </Pressable>
+        ) : null}
       </ScrollView>
     </SafeAreaView>
   );
@@ -301,9 +316,10 @@ const styles = StyleSheet.create({
     height: 220,
     backgroundColor: '#1a2238',
     borderRadius: radii.lg,
-    justifyContent: 'center',
-    alignItems: 'center',
+    overflow: 'hidden',
   },
+  camera: { ...StyleSheet.absoluteFill },
+  overlay: { ...StyleSheet.absoluteFill, justifyContent: 'center', alignItems: 'center' },
   corner: {
     position: 'absolute',
     width: 28,
@@ -330,7 +346,7 @@ const styles = StyleSheet.create({
     height: 2,
     backgroundColor: colors.brand.blue,
   },
-  sideControls: { position: 'absolute', right: 12, top: 56, gap: 12 },
+  sideControls: { position: 'absolute', right: 12, top: 56, gap: 12, zIndex: 2 },
   sideBtn: {
     width: 52,
     height: 52,

@@ -10,8 +10,50 @@ BioCross helps people understand whether a vitamin, mineral, herb, or dietary su
 
 - **React Native + Expo** (SDK 57) + **TypeScript**
 - **Expo Router** for navigation
-- Typed mock repositories for end-to-end workflows before production APIs
+- **Typed API client** with mock server (default) or remote backend via env
+- **expo-secure-store** for auth tokens; **expo-camera** for live barcode scanning
 - Design-system components shared across all screens
+
+## API & authentication
+
+By default the app runs against an **in-process mock API** (`EXPO_PUBLIC_API_MODE=mock`) that mirrors the production contract. Demo sign-in:
+
+- Email: `demo@biocross.app`
+- Password: `demo1234`
+
+To connect a real backend:
+
+```bash
+EXPO_PUBLIC_API_MODE=remote
+EXPO_PUBLIC_API_URL=https://api.your-backend.com
+```
+
+Copy `.env.example` to `.env` for local overrides.
+
+## Device builds (EAS)
+
+```bash
+npm install -g eas-cli
+eas login
+eas build:configure   # first time — links EAS project
+eas build --profile preview --platform ios
+eas build --profile preview --platform android
+```
+
+Profiles in `eas.json`:
+
+| Profile | Use |
+|---------|-----|
+| `development` | Dev client + simulator |
+| `preview` | Internal TestFlight / APK |
+| `production` | Store release (requires remote API URL) |
+
+## E2E (Maestro)
+
+```bash
+# Install Maestro, then:
+maestro test .maestro/onboarding-auth-check.yaml
+```
 
 ## Product navigation
 
@@ -30,9 +72,11 @@ app/                     # Expo Router screens
   check/                 # Search, manual barcode, confirm, analyzing
   result/                # Reusable risk-result screen + evidence detail
 src/
+  api/                   # HTTP client, auth storage, mock server
   design-system/         # Tokens + reusable UI components
   domain/                # Models, fixtures, analysis, repositories
-  state/                 # BioCrossProvider app state
+  features/scan/         # Live barcode scanner (expo-camera)
+  state/                 # BioCrossProvider + AuthProvider
 ```
 
 ### Domain entities

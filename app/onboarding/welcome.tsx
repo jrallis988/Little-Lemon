@@ -5,11 +5,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { BioCrossButton, BioCrossLogo, LogoMark } from '../../src/design-system';
 import { colors, radii, spacing, typography } from '../../src/design-system/tokens';
-import { useBioCross } from '../../src/state/BioCrossContext';
 
 export default function WelcomeScreen() {
   const router = useRouter();
-  const { completeOnboarding } = useBioCross();
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -62,10 +60,7 @@ export default function WelcomeScreen() {
 
         <BioCrossButton label="Get Started" onPress={() => router.push('/onboarding/create-profile')} />
         <Pressable
-          onPress={async () => {
-            await completeOnboarding();
-            router.replace('/(tabs)/home');
-          }}
+          onPress={() => router.push('/auth/sign-in')}
           accessibilityRole="link"
           style={styles.accountLink}
         >
