@@ -64,6 +64,10 @@ await mkdir(OUT, { recursive: true });
 {
   const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
   await go(page);
+  await shot(page, "screen-mobile-00-home");
+
+  await page.getByRole("button", { name: "Chat" }).click();
+  await page.waitForTimeout(400);
   await shot(page, "screen-mobile-01-chat");
 
   await page.getByRole("button", { name: "Cellar" }).click();
