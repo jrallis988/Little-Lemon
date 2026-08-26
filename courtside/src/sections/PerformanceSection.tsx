@@ -1,25 +1,21 @@
 import "./PerformanceSection.css";
 
-const levers = [
+const loops = [
   {
-    metric: "Impressions → CTR",
-    lesson:
-      "If athlete close-ups beat wide game photos on CTR, future THE PLAYER concepts lead with expression while GAME DAY keeps testing kinetic crops.",
+    metric: "CTR ↑ on athlete close-ups",
+    next: "Prioritize expression crops for THE PLAYER; keep testing team frames on GAME DAY.",
   },
   {
-    metric: "Views → Avg. view duration",
-    lesson:
-      "Strong opens with series identity and a clear promise help early retention — motion intros stay under three seconds.",
+    metric: "Retention dip at 0:45 on dense stats",
+    next: "Move full stat walls to chapter beats; keep mid-narrative numbers singular and large.",
   },
   {
-    metric: "Audience retention",
-    lesson:
-      "Chapter cards and lower thirds orient viewers without pausing story. Drop dense stat walls mid-narrative.",
+    metric: "Shorts completion higher with vertical quote lockups",
+    next: "Rebuild graphics for 9:16 — never letterbox the master.",
   },
   {
-    metric: "Watch time · Subscribers · Traffic",
-    lesson:
-      "End screens and playlist packaging turn one click into a session. Browse and Suggested traffic favor thumbnails that still read at recommended size.",
+    metric: "End-screen clicks rise when playlist packaging is clear",
+    next: "Reserve UI hotspots; brand sits in safe zones only.",
   },
 ];
 
@@ -27,26 +23,39 @@ export function PerformanceSection() {
   return (
     <section className="section" id="performance">
       <div className="wrap">
-        <p className="section__eyebrow">20 · YouTube Performance</p>
-        <h2 className="section__title">Creative Decisions from Data</h2>
+        <p className="section__eyebrow">Learning system</p>
+        <h2 className="section__title">Creative decisions from data</h2>
         <p className="section__lede">
-          Not an analytics dashboard — a designer’s read on how impressions, CTR,
-          views, retention, watch time, subscribers, and traffic sources reshape
-          packaging choices.
+          CTR, watch time, retention, completion, engagement, Shorts views,
+          subscriber conversion — each result feeds the next packaging choice.
+          COURTSIDE learns; it is not a static brand PDF.
         </p>
+
+        <div className="perf-metrics">
+          {[
+            "CTR",
+            "Watch time",
+            "Retention",
+            "Completion",
+            "Engagement",
+            "Shorts views",
+            "Subs conversion",
+          ].map((m) => (
+            <span key={m}>{m}</span>
+          ))}
+        </div>
+
         <div className="perf-grid">
-          {levers.map((l) => (
+          {loops.map((l) => (
             <article key={l.metric} className="perf-card">
               <h3>{l.metric}</h3>
-              <p>{l.lesson}</p>
+              <p>
+                <strong>Next decision → </strong>
+                {l.next}
+              </p>
             </article>
           ))}
         </div>
-        <blockquote className="perf-quote">
-          If athlete-close-up thumbnails consistently produce stronger CTR than wide
-          game photography, future thumbnail concepts could prioritize athlete
-          expression while continuing to test variations.
-        </blockquote>
       </div>
     </section>
   );

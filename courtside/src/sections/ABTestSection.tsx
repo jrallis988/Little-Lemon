@@ -6,28 +6,38 @@ export function ABTestSection() {
   const a = thumbnails[0];
   const b = {
     ...thumbnails[9],
-    title: "DRIVE",
+    title: "HUDDLE",
     subtitle: "GAME DAY",
-    category: "Action-focused",
+    category: "Team / action crop",
   };
 
   return (
-    <section className="section section--dark" id="abtest">
+    <section className="section section--emphasis" id="abtest">
       <div className="wrap">
-        <p className="section__eyebrow">19 · Thumbnail A/B Testing</p>
-        <h2 className="section__title">Simulated Experiment</h2>
+        <p className="section__eyebrow">Priority board · Simulated</p>
+        <h2 className="section__title">What we actually tested</h2>
         <p className="section__lede">
-          Athlete-focused vs action-focused. Metrics below are fictional and labeled
-          for demonstration only.
+          Athlete crop vs team energy — plus headline, accent, and expression
+          variables. Metrics below are fictional and labeled for demonstration.
         </p>
+
+        <div className="ab-vars">
+          <span>Athlete crop</span>
+          <span>Headline</span>
+          <span>Accent color</span>
+          <span>Composition</span>
+          <span>Number placement</span>
+          <span>Expression</span>
+          <span>Product vs athlete</span>
+        </div>
 
         <div className="ab-grid">
           <div>
-            <span className="label-chip">Thumbnail A · Athlete-focused</span>
+            <span className="label-chip">A · Athlete-focused</span>
             <YouTubeThumbnail concept={a} />
           </div>
           <div>
-            <span className="label-chip">Thumbnail B · Action-focused</span>
+            <span className="label-chip">B · Team / action</span>
             <YouTubeThumbnail concept={b} />
           </div>
         </div>
@@ -59,6 +69,11 @@ export function ABTestSection() {
                 <td>6,429</td>
               </tr>
               <tr>
+                <th scope="row">Avg. view duration</th>
+                <td className="ab-win">4:12</td>
+                <td>3:41</td>
+              </tr>
+              <tr>
                 <th scope="row">Watch time (hrs)</th>
                 <td className="ab-win">412</td>
                 <td>298</td>
@@ -66,9 +81,10 @@ export function ABTestSection() {
             </tbody>
           </table>
           <p className="ab-sim__insight">
-            Hypothetical read: athlete expression outperformed wide action on CTR.
-            Creative decision — prioritize subject-led thumbnails for THE PLAYER while
-            continuing to test action crops on GAME DAY.
+            <strong>Winner: A — athlete expression.</strong> Close-up + name
+            hierarchy outperformed wide team energy on CTR. Decision: THE PLAYER
+            defaults to subject-led crops; GAME DAY keeps testing action/team
+            frames as a separate hypothesis.
           </p>
         </div>
       </div>

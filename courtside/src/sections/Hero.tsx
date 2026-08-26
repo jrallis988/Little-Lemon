@@ -14,9 +14,9 @@ export function Hero() {
         <Logo variant="wordmark" inverted className="hero__logo" />
         <p className="hero__tag">{brand.tagline}</p>
         <p className="hero__lede">
-          A complete visual content system for a fictional basketball media
-          brand — thumbnails, series packaging, motion graphics, and
-          platform-specific YouTube identity.
+          A scalable visual content system for sports media — built to carry
+          athlete stories, analysis, training, gear, live coverage, and culture
+          without fragmenting the brand.
         </p>
         <div className="hero__meta">
           <span>Portfolio Case Study</span>

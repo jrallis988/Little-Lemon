@@ -1,5 +1,9 @@
 import {
   CourtDiagram,
+  FreezeAnnotation,
+  HeatMap,
+  PassRoutes,
+  PlayerTrack,
   PossessionBreakdown,
   ShotChart,
 } from "../components/FilmGraphics";
@@ -9,56 +13,53 @@ import { photos } from "../data/brand";
 
 export function FilmRoom() {
   return (
-    <section className="section" id="filmroom">
+    <section className="section section--emphasis" id="filmroom">
       <div className="wrap">
-        <p className="section__eyebrow">08 · Film Room Graphics</p>
-        <h2 className="section__title">Sports Editorial Analysis</h2>
+        <p className="section__eyebrow">Priority board · Performance mode</p>
+        <h2 className="section__title">Film Room Language</h2>
         <p className="section__lede">
-          Player stats, shot charts, court diagrams, comparisons, and possession
-          breakdowns — understandable, branded, never financial-software chrome.
+          A visual language for explaining sports — tracking, routes, heat,
+          freeze-frame notes — not just showing highlights.
         </p>
 
-        <div className="pkg-grid" style={{ marginBottom: "1.25rem" }}>
-          <VideoFrame photo={photos.filmRoom} label="Series open">
-            <div className="pkg-open">
-              <span className="series-tag" style={{ color: "var(--series-film)" }}>
-                FILM ROOM
-              </span>
-              <strong className="pkg-open__name">WHY THIS WORKS</strong>
-            </div>
-          </VideoFrame>
-          <StatCard
-            variant="compare"
-            title="REED"
-            subtitle="Player comparison"
-            stats={[
-              { label: "PPG", value: "27.4" },
-              { label: "APG", value: "6.7" },
-              { label: "TS%", value: "61" },
-              { label: "USG", value: "28%" },
-            ]}
-            compareName="LEAGUE AVG"
-            compareStats={[
-              { label: "PPG", value: "22.1" },
-              { label: "APG", value: "5.2" },
-              { label: "TS%", value: "57" },
-              { label: "USG", value: "24%" },
-            ]}
-          />
-        </div>
+        <VideoFrame photo={photos.filmRoom} label="Series open">
+          <div className="pkg-open">
+            <span className="series-tag" style={{ color: "var(--series-film)" }}>
+              FILM ROOM
+            </span>
+            <strong className="pkg-open__name">WHY THIS WORKS</strong>
+          </div>
+        </VideoFrame>
 
-        <div className="pkg-grid pkg-grid--3">
+        <div className="pkg-grid pkg-grid--3" style={{ marginTop: "1.25rem" }}>
           <CourtDiagram />
           <ShotChart />
+          <HeatMap />
+        </div>
+
+        <div className="pkg-grid" style={{ marginTop: "1.25rem" }}>
+          <PassRoutes />
+          <FreezeAnnotation />
+        </div>
+
+        <div className="pkg-grid" style={{ marginTop: "1.25rem" }}>
+          <PlayerTrack />
           <StatCard
-            variant="game"
-            title="GAME"
-            subtitle="Final box"
+            variant="compare"
+            title="VALE"
+            subtitle="Player comparison"
             stats={[
-              { label: "PTS", value: "32" },
-              { label: "REB", value: "9" },
-              { label: "AST", value: "8" },
-              { label: "FG", value: "12-21" },
+              { label: "PPG", value: "22.1" },
+              { label: "FG%", value: "48" },
+              { label: "3PT", value: "39%" },
+              { label: "STL", value: "1.8" },
+            ]}
+            compareName="LEAGUE"
+            compareStats={[
+              { label: "PPG", value: "18.4" },
+              { label: "FG%", value: "45" },
+              { label: "3PT", value: "35%" },
+              { label: "STL", value: "1.1" },
             ]}
           />
         </div>

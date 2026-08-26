@@ -3,15 +3,17 @@ import { VideoFrame } from "../components/VideoFrame";
 import { YouTubeThumbnail } from "../components/YouTubeThumbnail";
 import { photos, thumbnails } from "../data/brand";
 import "./Packages.css";
+import "./GearPackage.css";
 
 export function GearPackage() {
   return (
     <section className="section" id="gear">
       <div className="wrap">
-        <p className="section__eyebrow">10 · Product / Gear Video</p>
-        <h2 className="section__title">Editorial, Not Ecommerce</h2>
+        <p className="section__eyebrow">Culture / Gear mode</p>
+        <h2 className="section__title">Editorial Review Format</h2>
         <p className="section__lede">
-          Shoe and equipment review packaging that stays in sports-media territory.
+          Reusable components for sneakers, apparel, and equipment — ratings,
+          categories, pros/cons, athlete testing, and a final score.
         </p>
 
         <div className="pkg-grid">
@@ -26,6 +28,24 @@ export function GearPackage() {
           </VideoFrame>
         </div>
 
+        <div className="gear-cats">
+          {[
+            { k: "Traction", v: 9.1 },
+            { k: "Cushion", v: 8.4 },
+            { k: "Lockdown", v: 8.8 },
+            { k: "Durability", v: 7.9 },
+            { k: "Weight", v: 8.2 },
+          ].map((c) => (
+            <div key={c.k} className="gear-cat">
+              <span>{c.k}</span>
+              <strong className="num-display">{c.v.toFixed(1)}</strong>
+              <div className="gear-cat__bar">
+                <i style={{ width: `${c.v * 10}%` }} />
+              </div>
+            </div>
+          ))}
+        </div>
+
         <div className="pkg-grid pkg-grid--3" style={{ marginTop: "1.25rem" }}>
           <VideoFrame photo={photos.gearSneaker} label="Feature callout">
             <div className="gear-feature">
@@ -33,15 +53,15 @@ export function GearPackage() {
               <span>Responsive on plant. Stable on cut.</span>
             </div>
           </VideoFrame>
-          <VideoFrame photo={photos.gearSneaker} label="Specs">
+          <VideoFrame photo={photos.athleteYouth} label="Athlete testing">
             <div className="lab-stack" style={{ position: "absolute", left: "6%", bottom: "12%" }}>
               <div className="lab-card" style={{ borderLeftColor: "var(--series-gear)" }}>
-                <span>SPECS</span>
-                <strong>12.4 oz · Mid drop · Court rubber</strong>
+                <span>ON-COURT TEST</span>
+                <strong>Cho · 3 sessions · full practices</strong>
               </div>
             </div>
           </VideoFrame>
-          <VideoFrame label="Rating">
+          <VideoFrame label="Final score">
             <div className="gd-score">
               <span>COURTSIDE SCORE</span>
               <strong style={{ color: "var(--cs-signal)" }}>8.4</strong>
@@ -70,10 +90,10 @@ export function GearPackage() {
         </div>
 
         <div className="pkg-grid" style={{ marginTop: "1.25rem" }}>
-          <VideoFrame photo={photos.gearSneaker} label="Comparison">
+          <VideoFrame photo={photos.gearSneaker} label="Comparison result">
             <div className="gd-match">
               <span>MODEL A</span>
-              <em>VS</em>
+              <em>8.4</em>
               <span>MODEL B</span>
             </div>
           </VideoFrame>

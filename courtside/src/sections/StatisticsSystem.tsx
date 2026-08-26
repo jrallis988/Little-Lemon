@@ -1,58 +1,109 @@
 import { StatCard } from "../components/StatCard";
-import { athlete } from "../data/brand";
+import { athletes } from "../data/brand";
+import "./StatisticsSystem.css";
+
+const bigNums = [
+  { value: "27.4", label: "PPG", note: "Season average" },
+  { value: "41%", label: "3PT", note: "League rank #4" },
+  { value: "+6.8", label: "+/-", note: "Net rating" },
+  { value: "8.4", label: "GEAR", note: "Product score" },
+];
 
 export function StatisticsSystem() {
   return (
-    <section className="section section--dark" id="stats">
+    <section className="section section--emphasis" id="stats">
       <div className="wrap">
-        <p className="section__eyebrow">13 · Statistics Graphics</p>
-        <h2 className="section__title">Numbers as Design</h2>
+        <p className="section__eyebrow">Priority board · Numbers as design</p>
+        <h2 className="section__title">Data is a graphic.</h2>
         <p className="section__lede">
-          Reusable sports statistics system — typography and figures do the heavy lifting.
+          Lime for performance numbers. Scale overboxes. Rules for type, color,
+          and reveal — statistics are signature COURTSIDE identity, not filler UI.
         </p>
 
-        <div className="grid-4" style={{ marginBottom: "1.25rem" }}>
-          {athlete.stats.map((s) => (
-            <StatCard
-              key={s.label}
-              variant="individual"
-              stats={[{ label: s.label, value: s.value }]}
-            />
+        <div className="num-hero">
+          {bigNums.map((n) => (
+            <div key={n.label} className="num-hero__item">
+              <strong className="num-display">{n.value}</strong>
+              <span>{n.label}</span>
+              <em>{n.note}</em>
+            </div>
           ))}
         </div>
 
-        <div className="pkg-grid pkg-grid--3">
+        <div className="stat-rules">
+          <article>
+            <h3>Typography</h3>
+            <p>Barlow Condensed Black. Tabular figures. Leading tight.</p>
+          </article>
+          <article>
+            <h3>Scale</h3>
+            <p>Hero stats dominate the frame. Labels stay secondary.</p>
+          </article>
+          <article>
+            <h3>Color</h3>
+            <p>Lime = live performance. Orange = brand action. Never both competing.</p>
+          </article>
+          <article>
+            <h3>Motion</h3>
+            <p>Snap in under 0.4s. Count-up optional. No bounce.</p>
+          </article>
+        </div>
+
+        <div className="pkg-grid pkg-grid--3" style={{ marginTop: "1.5rem" }}>
           <StatCard
             variant="card"
-            title={athlete.nameUpper}
+            title={athletes[1].nameUpper}
             subtitle="Player card"
-            stats={athlete.stats.map((s) => ({ label: s.label, value: s.value }))}
+            stats={[
+              { label: "PPG", value: "22.1" },
+              { label: "RPG", value: "7.4" },
+              { label: "APG", value: "3.2" },
+              { label: "3PT", value: "39%" },
+            ]}
           />
           <StatCard
             variant="compare"
             title="REED"
-            subtitle="Comparison"
+            subtitle="Head to head"
             stats={[
               { label: "PPG", value: "27.4" },
-              { label: "RPG", value: "8.2" },
+              { label: "AST%", value: "32" },
             ]}
-            compareName="EAST AVG"
+            compareName="VALE"
             compareStats={[
-              { label: "PPG", value: "21.8" },
-              { label: "RPG", value: "6.1" },
+              { label: "PPG", value: "22.1" },
+              { label: "AST%", value: "18" },
             ]}
           />
           <StatCard
             variant="season"
-            title="SEASON"
-            subtitle="2025–26"
+            title="TREND"
+            subtitle="Last 10"
             stats={[
-              { label: "GP", value: "64" },
-              { label: "MIN", value: "34.2" },
-              { label: "TS%", value: "61.4" },
-              { label: "+/-", value: "+6.8" },
+              { label: "PTS", value: "29.1" },
+              { label: "TS%", value: "63" },
+              { label: "TOV", value: "2.1" },
+              { label: "+/-", value: "+8.2" },
             ]}
           />
+        </div>
+
+        <div className="rank-row">
+          <div className="rank-item">
+            <span>01</span>
+            <strong>Harbor FC</strong>
+            <em className="num-display">18–4</em>
+          </div>
+          <div className="rank-item">
+            <span>02</span>
+            <strong>Metro United</strong>
+            <em className="num-display">16–6</em>
+          </div>
+          <div className="rank-item">
+            <span>03</span>
+            <strong>Coast SC</strong>
+            <em className="num-display">15–7</em>
+          </div>
         </div>
       </div>
     </section>

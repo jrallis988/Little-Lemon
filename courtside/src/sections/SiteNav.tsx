@@ -1,19 +1,7 @@
 import { useEffect, useState } from "react";
 import { Logo } from "../components/Logo";
+import { chapters } from "../data/brand";
 import "./SiteNav.css";
-
-const primary = [
-  { id: "challenge", label: "Case" },
-  { id: "brand", label: "Brand" },
-  { id: "channel", label: "Channel" },
-  { id: "series", label: "Series" },
-  { id: "thumbnails", label: "Thumbs" },
-  { id: "compare", label: "Compare" },
-  { id: "interview", label: "Packages" },
-  { id: "motion", label: "Motion" },
-  { id: "shorts", label: "Shorts" },
-  { id: "performance", label: "Perf" },
-];
 
 export function SiteNav() {
   const [open, setOpen] = useState(false);
@@ -29,7 +17,7 @@ export function SiteNav() {
   return (
     <nav
       className={`site-nav ${scrolled ? "site-nav--scrolled" : ""}`}
-      aria-label="Case study"
+      aria-label="Case study chapters"
     >
       <div className="site-nav__bar wrap-wide">
         <a href="#top" className="site-nav__brand" onClick={() => setOpen(false)}>
@@ -42,17 +30,17 @@ export function SiteNav() {
           aria-controls="site-nav-panel"
           onClick={() => setOpen((v) => !v)}
         >
-          {open ? "Close" : "Menu"}
+          {open ? "Close" : "Chapters"}
         </button>
         <div
           id="site-nav-panel"
           className={`site-nav__panel ${open ? "is-open" : ""}`}
         >
           <ul>
-            {primary.map((s) => (
-              <li key={s.id}>
-                <a href={`#${s.id}`} onClick={() => setOpen(false)}>
-                  {s.label}
+            {chapters.map((c) => (
+              <li key={c.id}>
+                <a href={`#${c.id}`} onClick={() => setOpen(false)}>
+                  {c.num} {c.label}
                 </a>
               </li>
             ))}

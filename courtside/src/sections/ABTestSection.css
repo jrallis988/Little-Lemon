@@ -15,6 +15,24 @@
   color: rgba(255, 255, 255, 0.55);
 }
 
+.ab-vars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.25rem;
+}
+
+.ab-vars span {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.6rem;
+  background: rgba(255, 255, 255, 0.06);
+  border-left: 2px solid var(--cs-orange);
+}
+
 .ab-sim {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--cs-line-bright);
@@ -62,7 +80,11 @@
 }
 
 .ab-sim__insight {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.75);
   max-width: 48rem;
   font-size: 0.95rem;
+}
+
+.ab-sim__insight strong {
+  color: var(--cs-signal);
 }

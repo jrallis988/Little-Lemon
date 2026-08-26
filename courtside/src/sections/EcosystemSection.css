@@ -1,0 +1,127 @@
+.eco-source {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 1rem;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 560px) {
+  .eco-source {
+    grid-template-columns: 1fr;
+  }
+}
+
+.eco-source img {
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  width: 100%;
+}
+
+.eco-source span {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  color: var(--cs-signal);
+}
+
+.eco-source strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.45rem;
+  margin: 0.25rem 0;
+}
+
+.eco-source p {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+}
+
+.eco-flow {
+  list-style: none;
+  margin: 0 0 1.75rem;
+  padding: 0;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.eco-flow li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.5rem 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-left: 3px solid var(--cs-orange);
+}
+
+.eco-flow__hero {
+  background: var(--cs-orange);
+  color: var(--cs-white);
+  border-left-color: var(--cs-signal);
+}
+
+.eco-flow__hero span {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.eco-flow span {
+  font-family: var(--font-display);
+  font-weight: 800;
+  color: var(--cs-signal);
+}
+
+.eco-flow strong {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+}
+
+.eco-flow em {
+  font-style: normal;
+  color: var(--cs-orange);
+  font-size: 1.1rem;
+}
+
+.eco-flow__hero em {
+  color: var(--cs-white);
+}
+
+.eco-outputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 0.55rem;
+}
+
+.eco-outputs article {
+  text-align: center;
+  padding: 1rem 0.5rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-top: 3px solid var(--cs-signal);
+}
+
+.eco-outputs strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 2rem;
+  color: var(--cs-signal);
+  line-height: 1;
+}
+
+.eco-outputs span {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
