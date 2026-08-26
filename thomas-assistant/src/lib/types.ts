@@ -38,9 +38,33 @@ export interface ChatMessage {
   timestamp: string;
 }
 
-export type WorkflowTab = "inventory" | "shift" | "audit";
-export type MobileScreen = "chat" | WorkflowTab;
+export type ProductMode = "personal" | "business";
+export type WorkflowTab = "home" | "inventory" | "shift" | "audit";
+export type MobileScreen = "home" | "chat" | "inventory" | "shift" | "audit";
 export type VarianceLevel = "exact" | "minor" | "critical";
+
+export type NoticeSeverity = "info" | "watch" | "urgent";
+export type NoticeAction = {
+  label: string;
+  target: MobileScreen | "chat";
+};
+
+export interface ThomasNotice {
+  id: string;
+  title: string;
+  detail: string;
+  severity: NoticeSeverity;
+  actions: NoticeAction[];
+}
+
+export interface BusinessSnapshot {
+  inventoryExact: number;
+  inventoryMinor: number;
+  inventoryAttention: number;
+  tonightClose: string;
+  recentDiscrepancies: number;
+  runningLow: number;
+}
 
 export function varianceLevel(variance: number): VarianceLevel {
   const abs = Math.abs(variance);

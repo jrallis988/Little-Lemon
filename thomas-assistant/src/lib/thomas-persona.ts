@@ -5,12 +5,23 @@ export const STAFF_FIRST_NAME = "James";
 export const THOMAS_GREETING = `Good evening, ${STAFF_FIRST_NAME}. What shall we pour?`;
 
 export const TAB_LABELS = {
+  home: "Home",
   inventory: "Cellar Check",
   shift: "Close the Night",
   audit: "The Record",
 } as const;
 
-export const THOMAS_TAGLINE = "YOUR OWN PERSONAL BARTENDER";
+/** Personal product positioning */
+export const PERSONAL_TAGLINE = "YOUR OWN PERSONAL BARTENDER";
+export const PERSONAL_POSITIONING = "Thomas knows you.";
+
+/** Business product positioning — not “personal bartender” */
+export const BUSINESS_TAGLINE = "THOMAS FOR BUSINESS";
+export const BUSINESS_SUPPORTING = "Thomas knows the house.";
+export const BUSINESS_PRODUCT_LINE = "Beverage Operations Intelligence";
+
+/** @deprecated use PERSONAL_TAGLINE — kept for gradual migration */
+export const THOMAS_TAGLINE = PERSONAL_TAGLINE;
 export const THOMAS_POSITIONING = "Thomas is your own personal bartender";
 
 export const suggestedPrompts = [

@@ -1,20 +1,30 @@
 <script lang="ts">
-  import { THOMAS_TAGLINE } from "$lib/thomas-persona";
+  import { PERSONAL_TAGLINE, BUSINESS_TAGLINE } from "$lib/thomas-persona";
+  import type { ProductMode } from "$lib/types";
 
   interface Props {
     variant?: "full" | "mark" | "avatar";
     width?: number;
     height?: number;
+    mode?: ProductMode;
   }
 
-  let { variant = "full", width, height }: Props = $props();
+  let { variant = "full", width, height, mode = "business" }: Props = $props();
 
   const markSrc = "/thomas-mark.svg";
   const markSize = $derived(width ?? height ?? 36);
+  const tagline = $derived(
+    mode === "personal" ? PERSONAL_TAGLINE : BUSINESS_TAGLINE,
+  );
+  const ariaLabel = $derived(
+    mode === "personal"
+      ? "Thomas — your own personal bartender"
+      : "Thomas for Business — Thomas knows the house",
+  );
 </script>
 
 {#if variant === "full"}
-  <div class="logo-lockup" role="img" aria-label="Thomas is your own personal bartender">
+  <div class="logo-lockup" role="img" aria-label={ariaLabel}>
     <span class="wordmark">Thomas</span>
     <span class="swoosh" aria-hidden="true"></span>
     <span class="emblem" aria-hidden="true">
@@ -28,7 +38,7 @@
       </svg>
       <span class="line"></span>
     </span>
-    <span class="tagline">{THOMAS_TAGLINE}</span>
+    <span class="tagline">{tagline}</span>
   </div>
 {:else}
   <img
@@ -98,7 +108,7 @@
     margin-top: 0.35rem;
     font-size: 0.48rem;
     font-weight: 600;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.18em;
     color: var(--cognac);
     text-align: center;
     white-space: nowrap;
@@ -124,8 +134,8 @@
   }
 
   :global(.app-header.compact) .tagline {
-    font-size: 0.42rem;
-    letter-spacing: 0.16em;
+    font-size: 0.4rem;
+    letter-spacing: 0.14em;
     margin-top: 0.28rem;
   }
 </style>

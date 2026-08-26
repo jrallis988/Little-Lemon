@@ -1,4 +1,4 @@
-import type { ChatMessage, MobileScreen, WorkflowTab } from "../types";
+import type { ChatMessage, MobileScreen, ProductMode, WorkflowTab } from "../types";
 import {
   THOMAS_GREETING,
   butlerSessionContext,
@@ -24,8 +24,9 @@ function initialChatMessages(): ChatMessage[] {
 }
 
 export const appState = $state({
-  activeTab: "inventory" as WorkflowTab,
-  mobileScreen: "chat" as MobileScreen,
+  mode: "business" as ProductMode,
+  activeTab: "home" as WorkflowTab,
+  mobileScreen: "home" as MobileScreen,
   inventoryScans: [] as import("../types").InventoryScan[],
   shiftLogs: [] as import("../types").ShiftLog[],
   auditTrails: [] as import("../types").AuditTrail[],
@@ -36,13 +37,24 @@ export const appState = $state({
   error: null as string | null,
 });
 
+export function setMode(mode: ProductMode) {
+  appState.mode = mode;
+  if (mode === "business") {
+    appState.activeTab = "home";
+    appState.mobileScreen = "home";
+  }
+}
+
 export function setActiveTab(tab: WorkflowTab) {
   appState.activeTab = tab;
+  if (tab === "home" || tab === "inventory" || tab === "shift" || tab === "audit") {
+    appState.mobileScreen = tab;
+  }
 }
 
 export function setMobileScreen(screen: MobileScreen) {
   appState.mobileScreen = screen;
-  if (screen !== "chat") {
+  if (screen === "inventory" || screen === "shift" || screen === "audit" || screen === "home") {
     appState.activeTab = screen;
   }
 }

@@ -2,6 +2,7 @@
   import ScanPanel from "$lib/components/ScanPanel.svelte";
   import ReconcilePanel from "$lib/components/ReconcilePanel.svelte";
   import AuditPanel from "$lib/components/AuditPanel.svelte";
+  import BusinessHome from "$lib/components/BusinessHome.svelte";
   import ChatDrawer from "$lib/components/ChatDrawer.svelte";
   import AppHeader from "$lib/components/AppHeader.svelte";
   import { appState, setActiveTab, setMobileScreen } from "$lib/stores/app.svelte";
@@ -9,12 +10,14 @@
   import type { MobileScreen, WorkflowTab } from "$lib/types";
 
   const tabs: { id: WorkflowTab; label: string }[] = [
+    { id: "home", label: TAB_LABELS.home },
     { id: "inventory", label: TAB_LABELS.inventory },
     { id: "shift", label: TAB_LABELS.shift },
     { id: "audit", label: TAB_LABELS.audit },
   ];
 
   const mobileNav: { id: MobileScreen; label: string }[] = [
+    { id: "home", label: "Home" },
     { id: "chat", label: "Chat" },
     { id: "inventory", label: "Cellar" },
     { id: "shift", label: "Close" },
@@ -34,7 +37,7 @@
   });
 </script>
 
-<div class="app-shell" class:mobile={isMobile}>
+<div class="app-shell" class:mobile={isMobile} class:business={appState.mode === "business"}>
   <AppHeader compact={isMobile} />
 
   {#if appState.error}
@@ -62,7 +65,9 @@
         {/if}
 
         <div class="tab-content">
-          {#if appState.activeTab === "inventory"}
+          {#if appState.activeTab === "home"}
+            <BusinessHome />
+          {:else if appState.activeTab === "inventory"}
             <ScanPanel />
           {:else if appState.activeTab === "shift"}
             <ReconcilePanel />
@@ -154,7 +159,7 @@
 
   .tab-nav {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.45rem;
     margin-bottom: 1rem;
     flex-shrink: 0;
   }
@@ -162,7 +167,7 @@
   .tab-nav button {
     flex: 1;
     min-height: 48px;
-    font-size: 0.95rem;
+    font-size: 0.88rem;
     font-weight: 600;
     border: 1px solid var(--border);
     border-radius: 8px;
@@ -197,10 +202,10 @@
     border: none;
     background: transparent;
     color: var(--text-muted);
-    font-size: 0.76rem;
+    font-size: 0.7rem;
     font-weight: 600;
     cursor: pointer;
-    padding: 0.45rem 0.25rem;
+    padding: 0.45rem 0.15rem;
   }
 
   .bottom-nav button.active {
