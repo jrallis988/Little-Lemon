@@ -55,7 +55,7 @@ export function Sidebar() {
 
   return (
     <>
-      <aside className="relative flex h-full w-[256px] shrink-0 flex-col overflow-hidden bg-rail text-rail-foreground shadow-[8px_0_28px_-18px_rgba(60,70,200,0.55)]">
+      <aside className="relative flex h-full w-[256px] shrink-0 flex-col overflow-hidden bg-[#5850EC] text-white shadow-[8px_0_28px_-18px_rgba(60,70,200,0.55)]">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 opacity-30"
@@ -79,7 +79,7 @@ export function Sidebar() {
         <div className="relative z-10 space-y-2.5 px-4 pb-4">
           <Link
             to="/compose"
-            className="flex h-12 w-full items-center justify-start gap-3 rounded-3xl bg-white px-4 text-base font-extrabold text-rail shadow-soft transition hover:brightness-105 active:translate-y-px"
+            className="flex h-12 w-full items-center justify-start gap-3 rounded-3xl bg-white px-4 text-base font-extrabold text-[#5850EC] shadow-soft transition hover:brightness-105 active:translate-y-px"
           >
             <PenSquare className="size-5" />
             Compose
@@ -114,14 +114,14 @@ export function Sidebar() {
                 className={cn(
                   "flex w-full items-center gap-3 rounded-3xl px-3.5 py-3 text-left transition-all",
                   active
-                    ? "bg-white text-rail shadow-soft"
+                    ? "bg-white text-[#5850EC] shadow-soft"
                     : "text-white/90 hover:bg-white/12",
                 )}
               >
                 <span
                   className={cn(
                     "flex size-9 items-center justify-center rounded-2xl",
-                    active ? "bg-rail/10" : "bg-white/12",
+                    active ? "bg-[#5850EC]/10" : "bg-white/12",
                   )}
                 >
                   <Icon className="size-5 shrink-0" />
@@ -153,7 +153,7 @@ export function Sidebar() {
             className={cn(
               "flex w-full items-center gap-3 rounded-3xl px-3.5 py-3 text-left text-[15px] font-extrabold transition-all",
               folder === "settings"
-                ? "bg-white text-rail shadow-soft"
+                ? "bg-white text-[#5850EC] shadow-soft"
                 : "text-white/85 hover:bg-white/12",
             )}
           >
