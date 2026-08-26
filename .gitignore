@@ -4,4 +4,6 @@ node_modules/
 .idea/
 *.log
 dist/
+!velocity/dist/
+!velocity/dist/**
 .cache/
