@@ -3,9 +3,20 @@ export type FolderId =
   | "drafts"
   | "sent"
   | "pending"
-  | "safe-contacts";
+  | "safe-contacts"
+  | "settings";
 
 export type SafetyLevel = "verified" | "trusted" | "unknown";
+
+export type ContactCategory = "teacher" | "classmate" | "family" | "school";
+
+export type InboxFilter =
+  | "all"
+  | "unread"
+  | "teachers"
+  | "classmates"
+  | "family"
+  | "school";
 
 /** Experience profile derived from the selected grade. */
 export type LearningStage = "elementary" | "middle" | "high";
@@ -47,6 +58,7 @@ export interface Contact {
   initials: string;
   safety: SafetyLevel;
   relationship?: string;
+  category?: ContactCategory;
 }
 
 export interface Message {
@@ -63,6 +75,7 @@ export interface Message {
   attachments?: AttachmentMeta[];
   approvalStatus?: ApprovalStatus;
   replyToId?: string;
+  teacherComment?: string;
 }
 
 export interface Draft {
@@ -73,6 +86,7 @@ export interface Draft {
   updatedAt: string;
   attachments?: AttachmentMeta[];
   replyToId?: string;
+  teacherComment?: string;
 }
 
 export interface FolderMeta {
@@ -88,5 +102,17 @@ export interface AppSettings {
   /** Demo PIN for teacher unlock — replace with real auth later. */
   teacherPin: string;
   defaultGrade: GradeLevel;
+  studentName: string;
+  schoolName: string;
 }
 
+export interface WritingPrompt {
+  id: string;
+  title: string;
+  description: string;
+  subject: string;
+  body: string;
+  minGrade: GradeLevel;
+  maxGrade: GradeLevel;
+  icon: "teacher" | "thanks" | "peer" | "project";
+}

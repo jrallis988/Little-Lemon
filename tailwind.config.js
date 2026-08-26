@@ -49,6 +49,18 @@ export default {
           foreground: "hsl(var(--safe-foreground))",
           soft: "hsl(var(--safe-soft))",
         },
+        brand: {
+          DEFAULT: "hsl(var(--brand))",
+          soft: "hsl(var(--brand-soft))",
+        },
+        pending: {
+          DEFAULT: "hsl(var(--pending))",
+          soft: "hsl(var(--pending-soft))",
+        },
+        warn: {
+          DEFAULT: "hsl(var(--warn))",
+          soft: "hsl(var(--warn-soft))",
+        },
         nest: {
           sky: "hsl(var(--nest-sky))",
           mist: "hsl(var(--nest-mist))",
@@ -61,18 +73,19 @@ export default {
         md: "calc(var(--radius) - 4px)",
         sm: "calc(var(--radius) - 8px)",
         xl: "calc(var(--radius) + 4px)",
-        "2xl": "calc(var(--radius) + 10px)",
+        "2xl": "calc(var(--radius) + 8px)",
         "3xl": "1.75rem",
       },
       fontFamily: {
-        display: ['"Source Serif 4"', "Georgia", "serif"],
-        serif: ['"Source Serif 4"', "Georgia", "serif"],
-        sans: ['"Source Sans 3"', "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ['"Nunito"', "ui-rounded", "system-ui", "sans-serif"],
+        serif: ['"Nunito"', "ui-rounded", "system-ui", "sans-serif"],
+        sans: ['"Nunito"', "ui-rounded", "system-ui", "sans-serif"],
       },
       boxShadow: {
-        soft: "0 10px 30px -18px rgba(36, 72, 96, 0.35)",
+        soft: "0 10px 28px -16px rgba(67, 97, 238, 0.35)",
         panel:
-          "0 1px 0 rgba(255,255,255,0.7) inset, 0 12px 32px -20px rgba(36, 72, 96, 0.28)",
+          "0 1px 0 rgba(255,255,255,0.85) inset, 0 14px 36px -22px rgba(67, 97, 238, 0.28)",
+        card: "0 8px 24px -14px rgba(40, 60, 120, 0.22)",
       },
       keyframes: {
         "fade-up": {
@@ -83,10 +96,15 @@ export default {
           "0%, 100%": { opacity: "1" },
           "50%": { opacity: "0.55" },
         },
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-6px)" },
+        },
       },
       animation: {
         "fade-up": "fade-up 0.35s ease-out both",
         "soft-pulse": "soft-pulse 2s ease-in-out infinite",
+        float: "float 3.5s ease-in-out infinite",
       },
     },
   },

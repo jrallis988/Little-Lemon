@@ -4,45 +4,52 @@
 
 @layer base {
   :root {
-    /* Academic paper + ink: navy primary, warm paper ground, forest for verified */
-    --background: 40 33% 96%;
-    --foreground: 215 32% 16%;
+    /* Soft school blue + cream — matches friendly Mailbox mockup */
+    --background: 220 40% 97%;
+    --foreground: 222 35% 18%;
 
-    --card: 40 43% 99%;
-    --card-foreground: 215 32% 16%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 35% 18%;
 
-    --popover: 40 43% 99%;
-    --popover-foreground: 215 32% 16%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 35% 18%;
 
-    --primary: 215 38% 24%;
-    --primary-foreground: 40 40% 98%;
+    --primary: 221 83% 58%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 40 22% 91%;
-    --secondary-foreground: 215 28% 22%;
+    --secondary: 220 35% 94%;
+    --secondary-foreground: 222 30% 28%;
 
-    --muted: 40 18% 92%;
-    --muted-foreground: 215 12% 40%;
+    --muted: 220 28% 94%;
+    --muted-foreground: 220 12% 46%;
 
-    --accent: 152 22% 90%;
-    --accent-foreground: 152 35% 22%;
+    --accent: 262 70% 96%;
+    --accent-foreground: 262 45% 38%;
 
-    --destructive: 8 70% 42%;
+    --destructive: 8 78% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 35 16% 82%;
-    --input: 35 16% 82%;
-    --ring: 215 38% 24%;
+    --border: 220 22% 88%;
+    --input: 220 22% 88%;
+    --ring: 221 83% 58%;
 
-    --radius: 0.7rem;
+    --radius: 1rem;
 
-    --safe: 152 38% 28%;
+    --safe: 152 55% 38%;
     --safe-foreground: 0 0% 100%;
-    --safe-soft: 152 28% 93%;
+    --safe-soft: 152 45% 93%;
 
-    --nest-sky: 40 30% 95%;
-    --nest-mist: 40 22% 92%;
-    --nest-leaf: 152 38% 28%;
-    --nest-coral: 18 55% 42%;
+    --brand: 262 72% 58%;
+    --brand-soft: 262 70% 95%;
+    --pending: 42 95% 52%;
+    --pending-soft: 42 100% 94%;
+    --warn: 18 90% 58%;
+    --warn-soft: 18 100% 95%;
+
+    --nest-sky: 220 45% 96%;
+    --nest-mist: 220 30% 93%;
+    --nest-leaf: 152 55% 38%;
+    --nest-coral: 18 90% 58%;
   }
 
   * {
@@ -64,5 +71,16 @@
   input,
   textarea {
     font: inherit;
+  }
+}
+
+@layer utilities {
+  .doodle-bg {
+    background-color: hsl(var(--background));
+    background-image:
+      radial-gradient(circle at 12% 18%, hsl(262 70% 92% / 0.7) 0 2px, transparent 3px),
+      radial-gradient(circle at 88% 12%, hsl(221 83% 90% / 0.8) 0 2.5px, transparent 3.5px),
+      radial-gradient(circle at 76% 78%, hsl(42 95% 85% / 0.7) 0 2px, transparent 3px),
+      radial-gradient(circle at 18% 82%, hsl(152 45% 88% / 0.7) 0 2px, transparent 3px);
   }
 }

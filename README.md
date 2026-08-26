@@ -2,27 +2,7 @@
 
 Mailbox is a modern email client for students in grades 1–12.
 
-It is not a “kids mode” or a simplified toy version of email. It is a full email client for grades 1–12.
-
-## Why Mailbox
-
-- Simple and familiar — everyone understands the word
-- Approachable without sounding childish
-- Timeless enough that the product — not a trendy name — carries the brand
-
-When someone hears **Mailbox**, they should think: “That’s an email app.”
-
-## Design philosophy
-
-Maturity comes from the interface, not the name. One product; one name; every grade from **1 through 12** selectable, with experience profiles that evolve:
-
-| Band | Grades | Experience |
-| --- | --- | --- |
-| Elementary | 1, 2, 3, 4, 5 | Larger targets, warmer visual cues |
-| Middle school | **6, 7, 8** | Cleaner chrome |
-| High school | 9, 10, 11, 12 | Professional density |
-
-The interface is framed as **classroom correspondence**, not a consumer inbox: course/class chrome over a quiet split-pane mailbox.
+A safe place to learn, connect, and communicate — not a kids toy, and not a consumer Gmail clone.
 
 ## Stack
 
@@ -39,11 +19,14 @@ npm run dev          # http://localhost:1420
 npm run tauri:dev    # desktop shell
 ```
 
-## Core views
+Teacher PIN: `1234`
 
-1. **Split-pane inbox** — folders, message list, reading pane
-2. **Compose** — To, Subject, Body, Reply, drafts, attachments
-3. **Safety indicators** — verified folders and Safe Contacts woven into the UI
-4. **Grade selector (1–12)** — including middle school grades 6, 7, and 8
-5. **Teacher controls** — PIN unlock (`1234`), send approval queue, Safe Contacts management
-6. **Onboarding** — grade selection
+## Screens
+
+1. Onboarding — welcome + grade
+2. Inbox — filters, verified senders, reading pane
+3. Compose — writing starters, attach, send for review
+4. Drafts / Sent / Pending
+5. Safe Contacts — teachers, classmates, family
+6. Teacher review — approve or return with comment
+7. Settings & profile

@@ -51,6 +51,33 @@ class MailboxDB extends Dexie {
         }
       }
     });
+    this.version(4).upgrade(async (tx) => {
+      const settings = await tx.table("settings").get("app");
+      await tx.table("settings").put({
+        ...DEFAULT_SETTINGS,
+        ...settings,
+        studentName: settings?.studentName ?? DEFAULT_SETTINGS.studentName,
+        schoolName: settings?.schoolName ?? DEFAULT_SETTINGS.schoolName,
+      });
+
+      for (const contact of SEED_CONTACTS) {
+        const existing = await tx.table("contacts").get(contact.id);
+        if (existing) {
+          await tx.table("contacts").update(contact.id, {
+            category: contact.category,
+            relationship: contact.relationship,
+            avatarColor: contact.avatarColor,
+          });
+        }
+      }
+
+      for (const seed of SEED_MESSAGES) {
+        await tx.table("messages").put(seed);
+      }
+      for (const draft of SEED_DRAFTS) {
+        await tx.table("drafts").put(draft);
+      }
+    });
   }
 }
 
@@ -65,15 +92,23 @@ export async function ensureSeedData(): Promise<void> {
     const settings = await db.settings.get("app");
     if (!settings) {
       await db.settings.put(DEFAULT_SETTINGS);
+    } else {
+      await db.settings.put({ ...DEFAULT_SETTINGS, ...settings });
     }
 
     const count = await db.messages.count();
     if (count > 0) {
-      // Ensure pending demo message exists for upgraded DBs.
       const pending = await db.messages.get("m8");
       if (!pending) {
         const seedPending = SEED_MESSAGES.find((m) => m.id === "m8");
         if (seedPending) await db.messages.put(seedPending);
+      }
+      const returned = await db.messages.get("draft-msg-d2");
+      if (!returned) {
+        const seedReturned = SEED_MESSAGES.find((m) => m.id === "draft-msg-d2");
+        if (seedReturned) await db.messages.put(seedReturned);
+        const draft = SEED_DRAFTS.find((d) => d.id === "d2");
+        if (draft) await db.drafts.put(draft);
       }
       return;
     }

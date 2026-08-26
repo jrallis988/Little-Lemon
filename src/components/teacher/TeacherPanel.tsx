@@ -3,6 +3,7 @@ import { SafetyBadge } from "@/components/mail/SafetyBadge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { Textarea } from "@/components/ui/textarea";
 import { useMailStore } from "@/store/mailStore";
 import type { SafetyLevel } from "@/types/mail";
 import { Lock, LockOpen, ShieldCheck, X } from "lucide-react";
@@ -27,6 +28,7 @@ export function TeacherPanel({ onClose }: { onClose: () => void }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [relationship, setRelationship] = useState("");
+  const [comments, setComments] = useState<Record<string, string>>({});
 
   const pending = messages.filter((m) => m.folder === "pending");
 
@@ -52,13 +54,11 @@ export function TeacherPanel({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/30 p-4 backdrop-blur-sm">
-      <div className="flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-panel animate-fade-up">
+      <div className="flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-panel animate-fade-up">
         <header className="flex items-center justify-between border-b border-border px-6 py-4">
-          <div>
-            <p className="font-serif text-xl font-semibold text-foreground">
-              Teacher
-            </p>
-          </div>
+          <p className="font-display text-xl font-extrabold text-foreground">
+            Teacher
+          </p>
           <Button variant="ghost" size="icon" onClick={onClose} aria-label="Close">
             <X className="size-5" />
           </Button>
@@ -67,7 +67,7 @@ export function TeacherPanel({ onClose }: { onClose: () => void }) {
         <div className="space-y-6 overflow-y-auto px-6 py-5">
           {!teacherUnlocked ? (
             <form onSubmit={handleUnlock} className="space-y-3">
-              <div className="flex items-center gap-2 text-sm font-semibold text-muted-foreground">
+              <div className="flex items-center gap-2 text-sm font-extrabold text-muted-foreground">
                 <Lock className="size-4" />
                 PIN
               </div>
@@ -78,16 +78,17 @@ export function TeacherPanel({ onClose }: { onClose: () => void }) {
                 onChange={(e) => setPin(e.target.value)}
                 placeholder="PIN"
                 autoFocus
+                className="rounded-2xl"
               />
               {error && (
-                <p className="text-sm font-semibold text-destructive">{error}</p>
+                <p className="text-sm font-extrabold text-destructive">{error}</p>
               )}
               <Button type="submit">Unlock</Button>
             </form>
           ) : (
             <>
               <div className="flex flex-wrap items-center justify-between gap-3 rounded-3xl bg-safe-soft/70 p-4">
-                <div className="flex items-center gap-2 text-sm font-bold text-safe">
+                <div className="flex items-center gap-2 text-sm font-extrabold text-safe">
                   <LockOpen className="size-4" />
                   Unlocked
                 </div>
@@ -101,7 +102,7 @@ export function TeacherPanel({ onClose }: { onClose: () => void }) {
                   Settings
                 </h2>
                 <label className="flex items-center justify-between gap-4 rounded-2xl border border-border px-4 py-3">
-                  <span className="text-sm font-semibold text-foreground">
+                  <span className="text-sm font-bold text-foreground">
                     Approve before send
                   </span>
                   <input
@@ -127,35 +128,52 @@ export function TeacherPanel({ onClose }: { onClose: () => void }) {
                   </h2>
                 </div>
                 {pending.length === 0 ? (
-                  <p className="text-sm font-medium text-muted-foreground">
+                  <p className="text-sm font-semibold text-muted-foreground">
                     None
                   </p>
                 ) : (
-                  <ul className="space-y-2">
+                  <ul className="space-y-3">
                     {pending.map((message) => (
                       <li
                         key={message.id}
                         className="rounded-2xl border border-border px-4 py-3"
                       >
-                        <p className="font-bold text-foreground">
+                        <p className="font-extrabold text-foreground">
                           {message.subject}
                         </p>
-                        <p className="text-sm font-medium text-muted-foreground">
+                        <p className="text-sm font-semibold text-muted-foreground">
                           To {message.toLabel}
                         </p>
+                        <Textarea
+                          className="mt-3 min-h-[72px] rounded-2xl"
+                          placeholder="Teacher comment (optional)"
+                          value={comments[message.id] ?? ""}
+                          onChange={(e) =>
+                            setComments((current) => ({
+                              ...current,
+                              [message.id]: e.target.value,
+                            }))
+                          }
+                        />
                         <div className="mt-3 flex gap-2">
                           <Button
                             size="sm"
+                            variant="safe"
                             onClick={() => void approveMessage(message.id)}
                           >
-                            Approve
+                            Download & send
                           </Button>
                           <Button
                             size="sm"
-                            variant="outline"
-                            onClick={() => void rejectMessage(message.id)}
+                            variant="coral"
+                            onClick={() =>
+                              void rejectMessage(
+                                message.id,
+                                comments[message.id],
+                              )
+                            }
                           >
-                            Return
+                            Return for changes
                           </Button>
                         </div>
                       </li>
@@ -179,6 +197,7 @@ export function TeacherPanel({ onClose }: { onClose: () => void }) {
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Name"
                     required
+                    className="rounded-2xl"
                   />
                   <Input
                     value={email}
@@ -186,15 +205,16 @@ export function TeacherPanel({ onClose }: { onClose: () => void }) {
                     placeholder="Email"
                     type="email"
                     required
+                    className="rounded-2xl"
                   />
                   <Input
                     value={relationship}
                     onChange={(e) => setRelationship(e.target.value)}
                     placeholder="Relationship (optional)"
-                    className="sm:col-span-2"
+                    className="rounded-2xl sm:col-span-2"
                   />
                   <Button type="submit" className="sm:col-span-2">
-                    Add
+                    Add contact
                   </Button>
                 </form>
 
@@ -206,14 +226,14 @@ export function TeacherPanel({ onClose }: { onClose: () => void }) {
                     >
                       <ContactAvatar contact={contact} size="sm" />
                       <div className="min-w-0 flex-1">
-                        <p className="truncate font-bold">{contact.name}</p>
-                        <p className="truncate text-xs font-medium text-muted-foreground">
+                        <p className="truncate font-extrabold">{contact.name}</p>
+                        <p className="truncate text-xs font-semibold text-muted-foreground">
                           {contact.email}
                         </p>
                       </div>
                       <SafetyBadge level={contact.safety} />
                       <select
-                        className="rounded-xl border border-input bg-card px-2 py-1 text-xs font-bold"
+                        className="rounded-xl border border-input bg-card px-2 py-1 text-xs font-extrabold"
                         value={contact.safety}
                         onChange={(e) =>
                           void updateContactSafety(

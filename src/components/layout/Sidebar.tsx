@@ -1,35 +1,30 @@
+import { MailboxLogo } from "@/components/brand/MailboxBrand";
 import { TeacherPanel } from "@/components/teacher/TeacherPanel";
 import { Button } from "@/components/ui/button";
 import { FOLDERS } from "@/data/seed";
-import { copyForGrade } from "@/lib/stageCopy";
 import { cn } from "@/lib/utils";
 import { useMailStore } from "@/store/mailStore";
-import type { FolderId, GradeLevel } from "@/types/mail";
+import type { FolderId } from "@/types/mail";
 import {
   Clock3,
   FileText,
   Inbox,
   PenSquare,
   Send,
+  Settings,
   ShieldCheck,
   GraduationCap,
 } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-const icons: Record<FolderId, typeof Inbox> = {
+const icons: Record<Exclude<FolderId, "settings">, typeof Inbox> = {
   inbox: Inbox,
   drafts: FileText,
   pending: Clock3,
   sent: Send,
   "safe-contacts": ShieldCheck,
 };
-
-const GRADE_GROUPS: { label: string; grades: GradeLevel[] }[] = [
-  { label: "1–5", grades: [1, 2, 3, 4, 5] },
-  { label: "6–8", grades: [6, 7, 8] },
-  { label: "9–12", grades: [9, 10, 11, 12] },
-];
 
 export function Sidebar() {
   const location = useLocation();
@@ -38,10 +33,6 @@ export function Sidebar() {
   const setFolder = useMailStore((s) => s.setFolder);
   const messages = useMailStore((s) => s.messages);
   const contacts = useMailStore((s) => s.contacts);
-  const grade = useMailStore((s) => s.grade);
-  const learningStage = useMailStore((s) => s.learningStage);
-  const setGrade = useMailStore((s) => s.setGrade);
-  const copy = copyForGrade(grade);
   const [teacherOpen, setTeacherOpen] = useState(false);
 
   const unreadInbox = messages.filter(
@@ -58,42 +49,40 @@ export function Sidebar() {
     "safe-contacts": safeCount,
   };
 
+  function goFolder(id: FolderId) {
+    setFolder(id);
+    if (location.pathname !== "/") navigate("/");
+  }
+
   return (
     <>
-      <aside className="flex h-full w-[280px] shrink-0 flex-col border-r border-border/80 bg-card">
-        <div className="px-5 pb-2 pt-6">
+      <aside className="flex h-full w-[232px] shrink-0 flex-col border-r border-border/70 bg-card">
+        <div className="flex items-center gap-2.5 px-5 pb-3 pt-6">
+          <MailboxLogo size={36} className="animate-float" />
           <Link
             to="/"
-            className="group block"
+            className="font-display text-xl font-extrabold tracking-tight text-brand"
             onClick={() => setFolder("inbox")}
           >
-            <p
-              className={cn(
-                "font-serif font-semibold tracking-tight text-primary",
-                learningStage === "high" ? "text-2xl" : "text-[1.65rem]",
-              )}
-            >
-              Mailbox
-            </p>
+            mailbox
           </Link>
         </div>
 
-        <div className="space-y-2 px-4 py-4">
+        <div className="space-y-2 px-4 pb-3 pt-2">
           <Button
             asChild
             variant="default"
-            size={learningStage === "elementary" ? "lg" : "default"}
-            className="w-full justify-start gap-3"
+            className="w-full justify-start gap-3 rounded-2xl shadow-soft"
           >
             <Link to="/compose">
               <PenSquare className="size-5" />
-              {copy.composeCta}
+              Compose
             </Link>
           </Button>
           <Button
             type="button"
             variant="outline"
-            className="w-full justify-start gap-3"
+            className="w-full justify-start gap-3 rounded-2xl border-brand/20 bg-brand-soft/60 text-brand hover:bg-brand-soft"
             onClick={() => setTeacherOpen(true)}
           >
             <GraduationCap className="size-5" />
@@ -102,28 +91,27 @@ export function Sidebar() {
         </div>
 
         <nav
-          className="flex-1 space-y-1 overflow-y-auto px-3"
+          className="flex-1 space-y-1 overflow-y-auto px-3 py-2"
           aria-label="Mail folders"
         >
           {FOLDERS.map((item) => {
-            const Icon = icons[item.id];
-            const active = location.pathname === "/" && folder === item.id;
+            const Icon = icons[item.id as Exclude<FolderId, "settings">];
+            const active =
+              location.pathname === "/" &&
+              folder === item.id &&
+              folder !== "settings";
             const count = counts[item.id];
 
             return (
               <button
                 key={item.id}
                 type="button"
-                onClick={() => {
-                  setFolder(item.id);
-                  if (location.pathname !== "/") navigate("/");
-                }}
+                onClick={() => goFolder(item.id)}
                 className={cn(
-                  "flex w-full items-center gap-3 rounded-xl px-3 text-left transition-all",
-                  learningStage === "elementary" ? "py-3" : "py-2.5",
+                  "flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-left transition-all",
                   active
                     ? "bg-primary text-primary-foreground shadow-soft"
-                    : "text-foreground/90 hover:bg-white/80",
+                    : "text-foreground/85 hover:bg-secondary",
                 )}
               >
                 <Icon className="size-5 shrink-0" />
@@ -133,10 +121,10 @@ export function Sidebar() {
                 {typeof count === "number" && count > 0 && (
                   <span
                     className={cn(
-                      "rounded-full px-2 py-0.5 text-xs font-bold",
+                      "rounded-full px-2 py-0.5 text-xs font-extrabold",
                       active
                         ? "bg-white/20 text-primary-foreground"
-                        : "bg-muted text-muted-foreground",
+                        : "bg-primary/10 text-primary",
                     )}
                   >
                     {count}
@@ -147,53 +135,20 @@ export function Sidebar() {
           })}
         </nav>
 
-        <div className="mt-auto space-y-3 p-4">
-          <div className="space-y-2">
-            <div className="flex items-baseline justify-between px-1">
-              <p className="text-xs font-semibold text-muted-foreground">
-                Grade {grade}
-              </p>
-            </div>
-
-            <div className="space-y-2 rounded-2xl bg-muted/80 p-2">
-              {GRADE_GROUPS.map((group) => (
-                <div key={group.label} className="space-y-1">
-                  <p className="px-1 text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
-                    {group.label}
-                  </p>
-                  <div
-                    className={cn(
-                      "grid gap-1",
-                      group.grades.length === 3
-                        ? "grid-cols-3"
-                        : group.grades.length === 4
-                          ? "grid-cols-4"
-                          : "grid-cols-5",
-                    )}
-                  >
-                    {group.grades.map((value) => (
-                      <button
-                        key={value}
-                        type="button"
-                        onClick={() => setGrade(value)}
-                        className={cn(
-                          "rounded-xl py-2 text-xs font-bold transition-colors",
-                          grade === value
-                            ? "bg-card text-foreground shadow-sm ring-1 ring-primary/25"
-                            : "text-muted-foreground hover:bg-card/70 hover:text-foreground",
-                        )}
-                        aria-pressed={grade === value}
-                        aria-label={`Grade ${value}`}
-                        title={`Grade ${value}`}
-                      >
-                        {value}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+        <div className="p-3">
+          <button
+            type="button"
+            onClick={() => goFolder("settings")}
+            className={cn(
+              "flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-left text-sm font-bold transition-all",
+              folder === "settings"
+                ? "bg-primary text-primary-foreground shadow-soft"
+                : "text-muted-foreground hover:bg-secondary hover:text-foreground",
+            )}
+          >
+            <Settings className="size-5" />
+            Settings
+          </button>
         </div>
       </aside>
 

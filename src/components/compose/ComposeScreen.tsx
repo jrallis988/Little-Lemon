@@ -5,21 +5,32 @@ import {
   createAttachmentMeta,
   validateAttachment,
 } from "@/data/seed";
+import { promptsForGrade } from "@/data/prompts";
 import { formatBytes, replySubject, wrapSelection } from "@/lib/compose";
-import { copyForGrade } from "@/lib/stageCopy";
 import { cn } from "@/lib/utils";
 import { useMailStore } from "@/store/mailStore";
 import type { AttachmentMeta } from "@/types/mail";
 import {
   Bold,
+  HeartHandshake,
   Italic,
+  MessageCircleQuestion,
   Paperclip,
   Send,
   Underline,
+  Users,
   X,
+  FolderKanban,
 } from "lucide-react";
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
+
+const promptIcons = {
+  teacher: MessageCircleQuestion,
+  thanks: HeartHandshake,
+  peer: Users,
+  project: FolderKanban,
+} as const;
 
 export function ComposeScreen() {
   const navigate = useNavigate();
@@ -27,12 +38,11 @@ export function ComposeScreen() {
   const saveDraft = useMailStore((s) => s.saveDraft);
   const sendMessage = useMailStore((s) => s.sendMessage);
   const grade = useMailStore((s) => s.grade);
-  const learningStage = useMailStore((s) => s.learningStage);
   const messages = useMailStore((s) => s.messages);
   const drafts = useMailStore((s) => s.drafts);
   const contacts = useMailStore((s) => s.contacts);
   const requireApproval = useMailStore((s) => s.settings.requireSendApproval);
-  const copy = copyForGrade(grade);
+  const prompts = useMemo(() => promptsForGrade(grade), [grade]);
 
   const replyToId = params.get("replyTo") ?? undefined;
   const draftIdParam = params.get("draft") ?? undefined;
@@ -41,9 +51,11 @@ export function ComposeScreen() {
   const [to, setTo] = useState("");
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
+  const [teacherComment, setTeacherComment] = useState<string | undefined>();
   const [attachments, setAttachments] = useState<AttachmentMeta[]>([]);
   const [status, setStatus] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [activePrompt, setActivePrompt] = useState<string | null>(null);
   const bodyRef = useRef<HTMLTextAreaElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -56,6 +68,7 @@ export function ComposeScreen() {
         setSubject(draft.subject);
         setBody(draft.body);
         setAttachments(draft.attachments ?? []);
+        setTeacherComment(draft.teacherComment);
         return;
       }
     }
@@ -78,6 +91,15 @@ export function ComposeScreen() {
       }
     }
   }, [draftIdParam, replyToId, drafts, messages, contacts]);
+
+  function applyPrompt(promptId: string) {
+    const prompt = prompts.find((p) => p.id === promptId);
+    if (!prompt) return;
+    setActivePrompt(promptId);
+    setSubject((current) => current || prompt.subject);
+    setBody(prompt.body);
+    setStatus(`Using ${prompt.title}`);
+  }
 
   function applyFormat(before: string, after: string) {
     const el = bodyRef.current;
@@ -116,6 +138,7 @@ export function ComposeScreen() {
       body,
       attachments,
       replyToId,
+      teacherComment,
     });
     setDraftId(id);
     setStatus("Saved.");
@@ -139,10 +162,10 @@ export function ComposeScreen() {
   }
 
   return (
-    <div className="flex h-full flex-col bg-background">
-      <header className="flex items-center justify-between gap-4 border-b border-border/80 bg-card px-6 py-3">
-        <h1 className="font-serif text-xl font-semibold text-foreground">
-          {replyToId ? "Reply" : copy.composeTitle}
+    <div className="doodle-bg flex h-full flex-col">
+      <header className="flex items-center justify-between gap-4 border-b border-border/80 bg-card/90 px-6 py-3 backdrop-blur">
+        <h1 className="font-display text-xl font-extrabold text-foreground">
+          {replyToId ? "Reply" : "New message"}
         </h1>
         <Button variant="ghost" size="icon" asChild aria-label="Close compose">
           <Link to="/">
@@ -155,14 +178,53 @@ export function ComposeScreen() {
         onSubmit={handleSend}
         className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-4 overflow-y-auto px-6 py-6 animate-fade-up"
       >
+        {teacherComment && (
+          <div className="rounded-2xl border border-warn/30 bg-warn-soft px-4 py-3 text-sm font-semibold text-warn">
+            <p className="font-extrabold">Teacher comment</p>
+            <p className="mt-1 text-foreground/80">{teacherComment}</p>
+          </div>
+        )}
+
+        {!replyToId && (
+          <div>
+            <p className="mb-2 text-sm font-extrabold text-foreground">
+              What are you writing today?
+            </p>
+            <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+              {prompts.map((prompt) => {
+                const Icon = promptIcons[prompt.icon];
+                return (
+                  <button
+                    key={prompt.id}
+                    type="button"
+                    onClick={() => applyPrompt(prompt.id)}
+                    className={cn(
+                      "rounded-2xl border bg-card px-3 py-3 text-left shadow-card transition hover:border-primary/40",
+                      activePrompt === prompt.id
+                        ? "border-primary ring-2 ring-primary/20"
+                        : "border-border",
+                    )}
+                  >
+                    <Icon className="mb-2 size-5 text-primary" />
+                    <span className="block text-sm font-extrabold">
+                      {prompt.title}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         <label className="space-y-2">
-          <span className="text-sm font-semibold text-foreground">To</span>
+          <span className="text-sm font-extrabold text-foreground">To</span>
           <Input
             value={to}
             onChange={(e) => setTo(e.target.value)}
-            placeholder={copy.toPlaceholder}
+            placeholder="Recipient"
             list="safe-contact-emails"
             autoComplete="off"
+            className="rounded-2xl"
           />
           <datalist id="safe-contact-emails">
             {contacts
@@ -176,25 +238,23 @@ export function ComposeScreen() {
         </label>
 
         <label className="space-y-2">
-          <span className="text-sm font-semibold text-foreground">Subject</span>
+          <span className="text-sm font-extrabold text-foreground">Subject</span>
           <Input
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
-            placeholder={copy.subjectPlaceholder}
+            placeholder="Subject"
             autoComplete="off"
+            className="rounded-2xl"
           />
         </label>
 
         <label className="flex min-h-0 flex-1 flex-col space-y-2">
-          <span className="text-sm font-semibold text-foreground">Body</span>
+          <span className="text-sm font-extrabold text-foreground">Message</span>
           <Textarea
             ref={bodyRef}
             value={body}
             onChange={(e) => setBody(e.target.value)}
-            className={cn(
-              "min-h-[240px] flex-1 resize-none font-serif leading-8",
-              learningStage === "elementary" ? "text-lg" : "text-base",
-            )}
+            className="min-h-[240px] flex-1 resize-none rounded-2xl text-base font-semibold leading-8"
           />
         </label>
 
@@ -203,7 +263,7 @@ export function ComposeScreen() {
             {attachments.map((file) => (
               <li
                 key={file.id}
-                className="inline-flex items-center gap-2 rounded-full bg-muted px-3 py-1.5 text-xs font-semibold"
+                className="inline-flex items-center gap-2 rounded-full bg-muted px-3 py-1.5 text-xs font-extrabold"
               >
                 <Paperclip className="size-3.5" />
                 {file.name}
@@ -227,19 +287,14 @@ export function ComposeScreen() {
           </ul>
         )}
 
-        <div className="flex flex-wrap items-center gap-3 rounded-xl border border-border bg-card p-3">
-          <Button
-            type="submit"
-            variant="default"
-            size={learningStage === "elementary" ? "lg" : "default"}
-          >
+        <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-border bg-card p-3 shadow-card">
+          <Button type="submit" variant="default">
             <Send className="size-5" />
             {requireApproval ? "Send for review" : "Send"}
           </Button>
           <Button
             type="button"
             variant="outline"
-            size={learningStage === "elementary" ? "lg" : "default"}
             onClick={() => fileRef.current?.click()}
           >
             <Paperclip className="size-5" />
@@ -253,7 +308,7 @@ export function ComposeScreen() {
             multiple
             onChange={(e) => handleFiles(e.target.files)}
           />
-          <div className="flex items-center gap-1 rounded-lg bg-muted/80 p-1">
+          <div className="flex items-center gap-1 rounded-xl bg-muted/80 p-1">
             <Button
               type="button"
               variant="ghost"
@@ -285,7 +340,6 @@ export function ComposeScreen() {
           <Button
             type="button"
             variant="secondary"
-            size={learningStage === "elementary" ? "lg" : "default"}
             className="ml-auto"
             onClick={() => void handleSave()}
           >
@@ -294,12 +348,12 @@ export function ComposeScreen() {
         </div>
 
         {error && (
-          <p className="text-sm font-semibold text-destructive" role="alert">
+          <p className="text-sm font-extrabold text-destructive" role="alert">
             {error}
           </p>
         )}
         {status && (
-          <p className="text-sm font-semibold text-safe" role="status">
+          <p className="text-sm font-extrabold text-safe" role="status">
             {status}
           </p>
         )}

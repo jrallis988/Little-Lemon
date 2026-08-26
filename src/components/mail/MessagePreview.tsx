@@ -1,12 +1,24 @@
+import {
+  DoodleBackdrop,
+  MailboxLogo,
+} from "@/components/brand/MailboxBrand";
 import { ContactAvatar } from "@/components/mail/ContactAvatar";
 import { SafetyBadge } from "@/components/mail/SafetyBadge";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Textarea } from "@/components/ui/textarea";
 import { formatBytes } from "@/lib/compose";
-import { copyForGrade } from "@/lib/stageCopy";
 import { cn, formatMessageTime } from "@/lib/utils";
 import { getContact, useMailStore } from "@/store/mailStore";
-import { Flag, Paperclip, PenLine, Reply, Share2 } from "lucide-react";
+import {
+  Download,
+  Flag,
+  Paperclip,
+  PenLine,
+  Reply,
+  X,
+} from "lucide-react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 function draftIdFromMessage(messageId: string): string | null {
@@ -21,28 +33,44 @@ export function MessagePreview() {
   const contacts = useMailStore((s) => s.contacts);
   const selectedMessageId = useMailStore((s) => s.selectedMessageId);
   const folder = useMailStore((s) => s.folder);
-  const grade = useMailStore((s) => s.grade);
-  const learningStage = useMailStore((s) => s.learningStage);
   const teacherUnlocked = useMailStore((s) => s.teacherUnlocked);
   const approveMessage = useMailStore((s) => s.approveMessage);
   const rejectMessage = useMailStore((s) => s.rejectMessage);
   const reportUnknownSender = useMailStore((s) => s.reportUnknownSender);
-  const copy = copyForGrade(grade);
+  const searchQuery = useMailStore((s) => s.searchQuery);
+  const [teacherComment, setTeacherComment] = useState("");
+  const [previewAttachment, setPreviewAttachment] = useState<{
+    name: string;
+    type: string;
+  } | null>(null);
+
+  if (folder === "safe-contacts") {
+    return <SafeContactsPane />;
+  }
+
+  if (folder === "settings") {
+    return <SettingsPane />;
+  }
 
   const message = messages.find((m) => m.id === selectedMessageId);
   const contact = message
     ? getContact(contacts, message.fromContactId)
     : undefined;
 
-  if (folder === "safe-contacts") {
-    return <SafeContactsPane />;
+  if (searchQuery.trim() && !message) {
+    return <SearchResultsPane />;
   }
 
   if (!message || !contact) {
+    if (folder === "pending") {
+      return <PendingEmptyState />;
+    }
     return (
-      <section className="flex h-full items-center justify-center bg-gradient-to-br from-white/30 to-nest-mist/40 p-8">
-        <div className="max-w-sm rounded-3xl bg-card/90 px-6 py-10 text-center shadow-panel animate-fade-up">
-          <p className="font-serif text-2xl font-semibold text-foreground">
+      <section className="relative flex h-full items-center justify-center p-8">
+        <DoodleBackdrop className="opacity-50" />
+        <div className="relative z-10 max-w-sm rounded-3xl bg-card px-6 py-10 text-center shadow-panel animate-fade-up">
+          <MailboxLogo size={64} className="mx-auto" />
+          <p className="mt-4 font-display text-2xl font-extrabold text-foreground">
             Select a message
           </p>
         </div>
@@ -53,27 +81,25 @@ export function MessagePreview() {
   const linkedDraftId = draftIdFromMessage(message.id);
   const showApprovalActions =
     message.folder === "pending" && teacherUnlocked;
+  const returned = message.approvalStatus === "rejected" && message.teacherComment;
 
   return (
-    <section
-      className={cn(
-        "flex h-full min-w-0 flex-col",
-        learningStage === "high"
-          ? "bg-card"
-          : "bg-gradient-to-br from-white/50 via-white/30 to-nest-mist/50",
-      )}
-    >
+    <section className="relative flex h-full min-w-0 flex-col bg-card/40">
       <header className="border-b border-border/70 px-6 py-5">
         <div className="flex flex-wrap items-start gap-4">
           <ContactAvatar contact={contact} size="lg" />
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
-              <h2 className="font-serif text-2xl font-semibold tracking-tight text-foreground">
+              <h2 className="font-display text-2xl font-extrabold tracking-tight text-foreground">
                 {message.subject}
               </h2>
               {message.folder === "pending" ? (
-                <span className="rounded-full bg-amber-100 px-2.5 py-1 text-xs font-bold text-amber-800">
-                    Pending
+                <span className="rounded-full bg-pending-soft px-2.5 py-1 text-xs font-extrabold text-amber-800">
+                  Pending
+                </span>
+              ) : returned ? (
+                <span className="rounded-full bg-warn-soft px-2.5 py-1 text-xs font-extrabold text-warn">
+                  Returned
                 </span>
               ) : (
                 <SafetyBadge level={contact.safety} />
@@ -108,7 +134,7 @@ export function MessagePreview() {
               <Button variant="default" size="sm" asChild>
                 <Link to={`/compose?draft=${linkedDraftId}`}>
                   <PenLine className="size-4" />
-                  Edit
+                  Edit message
                 </Link>
               </Button>
             ) : (
@@ -119,20 +145,19 @@ export function MessagePreview() {
                 </Link>
               </Button>
             )}
-            <Button variant="ghost" size="icon" aria-label="Forward" asChild>
-              <Link
-                to={`/compose?replyTo=${message.id}`}
-                aria-label="Forward"
-              >
-                <Share2 className="size-4" />
-              </Link>
-            </Button>
           </div>
         </div>
 
+        {returned && (
+          <div className="mt-4 rounded-2xl border border-warn/30 bg-warn-soft px-4 py-3 text-sm font-semibold text-warn animate-fade-up">
+            <p className="font-extrabold">Teacher comment</p>
+            <p className="mt-1 text-foreground/80">{message.teacherComment}</p>
+          </div>
+        )}
+
         {contact.safety === "unknown" && message.folder === "inbox" && (
-          <div className="mt-4 space-y-3 rounded-3xl border-2 border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-900 animate-fade-up">
-            <p>{copy.unknownSenderHint}</p>
+          <div className="mt-4 space-y-3 rounded-2xl border border-warn/30 bg-warn-soft px-4 py-3 text-sm font-semibold text-warn animate-fade-up">
+            <p>Unknown sender.</p>
             <Button
               size="sm"
               variant="outline"
@@ -143,58 +168,270 @@ export function MessagePreview() {
             </Button>
           </div>
         )}
-
-        {showApprovalActions && (
-          <div className="mt-4 flex flex-wrap gap-2">
-            <Button onClick={() => void approveMessage(message.id)}>
-              Approve
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() => void rejectMessage(message.id)}
-            >
-              Return
-            </Button>
-          </div>
-        )}
       </header>
 
       <ScrollArea className="flex-1">
         <article className="space-y-4 px-6 py-6">
+          <div className="rounded-3xl bg-card p-6 shadow-card animate-fade-up">
+            <p className="whitespace-pre-wrap text-[15px] font-semibold leading-8 text-foreground/90">
+              {message.body}
+            </p>
+          </div>
+
           {(message.attachments?.length ?? 0) > 0 && (
-            <ul className="flex flex-wrap gap-2">
+            <ul className="space-y-2">
               {message.attachments?.map((file) => (
-                <li
-                  key={file.id}
-                  className="inline-flex items-center gap-2 rounded-full bg-muted px-3 py-1.5 text-xs font-bold"
-                >
-                  <Paperclip className="size-3.5" />
-                  {file.name}
-                  <span className="text-muted-foreground">
-                    {formatBytes(file.size)}
-                  </span>
+                <li key={file.id}>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setPreviewAttachment({ name: file.name, type: file.type })
+                    }
+                    className="flex w-full items-center gap-3 rounded-2xl border border-border bg-card px-4 py-3 text-left shadow-card transition hover:border-primary/30"
+                  >
+                    <span className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                      <Paperclip className="size-5" />
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-sm font-extrabold">
+                        {file.name}
+                      </span>
+                      <span className="text-xs font-semibold text-muted-foreground">
+                        {formatBytes(file.size)}
+                      </span>
+                    </span>
+                    <Download className="size-4 text-muted-foreground" />
+                  </button>
                 </li>
               ))}
             </ul>
           )}
-          <div
-            className={cn(
-              "bg-card p-6 animate-fade-up",
-              learningStage === "high"
-                ? "rounded-xl border border-border"
-                : "rounded-[1.75rem] shadow-panel",
-            )}
-          >
-            <p
+
+          {showApprovalActions && (
+            <div className="rounded-3xl border border-border bg-card p-4 shadow-card">
+              <p className="text-sm font-extrabold text-foreground">
+                Review message
+              </p>
+              <Textarea
+                value={teacherComment}
+                onChange={(e) => setTeacherComment(e.target.value)}
+                placeholder="Teacher comment (optional)"
+                className="mt-3 min-h-[88px] rounded-2xl"
+              />
+              <div className="mt-3 flex flex-wrap gap-2">
+                <Button
+                  variant="safe"
+                  onClick={() => void approveMessage(message.id)}
+                >
+                  Download & send
+                </Button>
+                <Button
+                  variant="coral"
+                  onClick={() =>
+                    void rejectMessage(message.id, teacherComment)
+                  }
+                >
+                  Return for changes
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {message.folder === "pending" && !teacherUnlocked && (
+            <div className="rounded-2xl bg-pending-soft px-4 py-3 text-sm font-semibold text-amber-800">
+              Waiting for teacher review. You will be notified once it is sent.
+            </div>
+          )}
+        </article>
+      </ScrollArea>
+
+      {previewAttachment && (
+        <AttachmentPreviewModal
+          name={previewAttachment.name}
+          type={previewAttachment.type}
+          onClose={() => setPreviewAttachment(null)}
+        />
+      )}
+    </section>
+  );
+}
+
+function PendingEmptyState() {
+  return (
+    <section className="relative flex h-full items-center justify-center p-8">
+      <DoodleBackdrop className="opacity-50" />
+      <div className="relative z-10 max-w-md rounded-3xl bg-card px-8 py-10 text-center shadow-panel animate-fade-up">
+        <MailboxLogo size={72} className="mx-auto animate-float" />
+        <p className="mt-4 font-display text-2xl font-extrabold">
+          Waiting for approval
+        </p>
+        <p className="mt-2 text-sm font-semibold text-muted-foreground">
+          Once your teacher reviews your message, it will be sent!
+        </p>
+      </div>
+    </section>
+  );
+}
+
+function AttachmentPreviewModal({
+  name,
+  type,
+  onClose,
+}: {
+  name: string;
+  type: string;
+  onClose: () => void;
+}) {
+  const isImage = type.startsWith("image/");
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/40 p-4 backdrop-blur-sm">
+      <div className="w-full max-w-2xl overflow-hidden rounded-3xl border border-border bg-card shadow-panel animate-fade-up">
+        <header className="flex items-center justify-between border-b border-border px-5 py-3">
+          <p className="truncate font-extrabold">{name}</p>
+          <Button variant="ghost" size="icon" onClick={onClose} aria-label="Close">
+            <X className="size-5" />
+          </Button>
+        </header>
+        <div className="flex min-h-[280px] items-center justify-center bg-secondary/50 p-8">
+          {isImage ? (
+            <div className="rounded-2xl border-2 border-dashed border-primary/30 bg-card px-10 py-16 text-center">
+              <p className="font-display text-lg font-extrabold text-primary">
+                {name}
+              </p>
+              <p className="mt-2 text-sm font-semibold text-muted-foreground">
+                Image attachment preview
+              </p>
+            </div>
+          ) : (
+            <div className="text-center">
+              <Paperclip className="mx-auto size-10 text-primary" />
+              <p className="mt-3 font-extrabold">{name}</p>
+              <p className="text-sm font-semibold text-muted-foreground">
+                File ready to download
+              </p>
+            </div>
+          )}
+        </div>
+        <footer className="flex justify-end gap-2 border-t border-border px-5 py-3">
+          <Button variant="outline" onClick={onClose}>
+            Close
+          </Button>
+          <Button>
+            <Download className="size-4" />
+            Download
+          </Button>
+        </footer>
+      </div>
+    </div>
+  );
+}
+
+function SearchResultsPane() {
+  const searchQuery = useMailStore((s) => s.searchQuery);
+  const messages = useMailStore((s) => s.messages);
+  const contacts = useMailStore((s) => s.contacts);
+  const selectMessage = useMailStore((s) => s.selectMessage);
+  const setFolder = useMailStore((s) => s.setFolder);
+  const q = searchQuery.trim().toLowerCase();
+
+  const messageHits = messages.filter((m) =>
+    [m.subject, m.preview, m.body, m.toLabel].join(" ").toLowerCase().includes(q),
+  );
+  const peopleHits = contacts.filter((c) =>
+    [c.name, c.email, c.relationship ?? ""].join(" ").toLowerCase().includes(q),
+  );
+  const attachmentHits = messages.flatMap((m) =>
+    (m.attachments ?? [])
+      .filter((a) => a.name.toLowerCase().includes(q))
+      .map((a) => ({ message: m, attachment: a })),
+  );
+
+  const [tab, setTab] = useState<"messages" | "people" | "attachments">(
+    "messages",
+  );
+
+  return (
+    <section className="flex h-full flex-col bg-card/50">
+      <header className="border-b border-border/70 px-6 py-5">
+        <h2 className="font-display text-2xl font-extrabold">
+          Search results for “{searchQuery.trim()}”
+        </h2>
+        <div className="mt-4 flex gap-2">
+          {(
+            [
+              ["messages", `Messages (${messageHits.length})`],
+              ["people", `People (${peopleHits.length})`],
+              ["attachments", `Attachments (${attachmentHits.length})`],
+            ] as const
+          ).map(([id, label]) => (
+            <button
+              key={id}
+              type="button"
+              onClick={() => setTab(id)}
               className={cn(
-                "whitespace-pre-wrap font-medium leading-8 text-foreground/90",
-                learningStage === "elementary" ? "text-base" : "text-[15px]",
+                "rounded-full px-3 py-1.5 text-xs font-extrabold",
+                tab === id
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-secondary text-muted-foreground",
               )}
             >
-              {message.body}
-            </p>
-          </div>
-        </article>
+              {label}
+            </button>
+          ))}
+        </div>
+      </header>
+      <ScrollArea className="flex-1">
+        <ul className="space-y-2 p-6">
+          {tab === "messages" &&
+            messageHits.map((m) => (
+              <li key={m.id}>
+                <button
+                  type="button"
+                  className="w-full rounded-2xl bg-card px-4 py-3 text-left shadow-card"
+                  onClick={() => {
+                    setFolder(m.folder);
+                    selectMessage(m.id);
+                  }}
+                >
+                  <p className="font-extrabold">{m.subject}</p>
+                  <p className="text-sm font-semibold text-muted-foreground">
+                    {m.preview}
+                  </p>
+                </button>
+              </li>
+            ))}
+          {tab === "people" &&
+            peopleHits.map((c) => (
+              <li
+                key={c.id}
+                className="flex items-center gap-3 rounded-2xl bg-card px-4 py-3 shadow-card"
+              >
+                <ContactAvatar contact={c} />
+                <div>
+                  <p className="font-extrabold">{c.name}</p>
+                  <p className="text-sm font-semibold text-muted-foreground">
+                    {c.relationship ?? c.email}
+                  </p>
+                </div>
+              </li>
+            ))}
+          {tab === "attachments" &&
+            attachmentHits.map(({ message, attachment }) => (
+              <li key={`${message.id}-${attachment.id}`}>
+                <button
+                  type="button"
+                  className="flex w-full items-center gap-3 rounded-2xl bg-card px-4 py-3 text-left shadow-card"
+                  onClick={() => {
+                    setFolder(message.folder);
+                    selectMessage(message.id);
+                  }}
+                >
+                  <Paperclip className="size-4 text-primary" />
+                  <span className="font-extrabold">{attachment.name}</span>
+                </button>
+              </li>
+            ))}
+        </ul>
       </ScrollArea>
     </section>
   );
@@ -202,53 +439,195 @@ export function MessagePreview() {
 
 function SafeContactsPane() {
   const contacts = useMailStore((s) => s.contacts);
-  const learningStage = useMailStore((s) => s.learningStage);
-  const safe = contacts.filter((c) => c.safety !== "unknown");
+  const teacherUnlocked = useMailStore((s) => s.teacherUnlocked);
+  const groups = [
+    {
+      label: "Teachers",
+      items: contacts.filter((c) => c.category === "teacher"),
+    },
+    {
+      label: "Classmates",
+      items: contacts.filter((c) => c.category === "classmate"),
+    },
+    {
+      label: "Family",
+      items: contacts.filter((c) => c.category === "family"),
+    },
+    {
+      label: "School",
+      items: contacts.filter((c) => c.category === "school"),
+    },
+  ];
 
   return (
-    <section
-      className={cn(
-        "flex h-full flex-col",
-        learningStage === "high"
-          ? "bg-card"
-          : "bg-gradient-to-br from-safe-soft/40 via-white/40 to-nest-mist/50",
-      )}
-    >
-      <header className="border-b border-border/70 px-6 py-5">
-        <div className="flex flex-wrap items-center gap-2">
-          <h2 className="font-serif text-2xl font-semibold tracking-tight">
-            Safe Contacts
-          </h2>
-        </div>
+    <section className="relative flex h-full flex-col">
+      <DoodleBackdrop className="opacity-40" />
+      <header className="relative z-10 flex items-center justify-between border-b border-border/70 px-6 py-5">
+        <h2 className="font-display text-2xl font-extrabold tracking-tight">
+          Safe Contacts
+        </h2>
+        {teacherUnlocked && (
+          <span className="rounded-full bg-brand-soft px-3 py-1 text-xs font-extrabold text-brand">
+            Manage in Teacher
+          </span>
+        )}
       </header>
-      <ScrollArea className="flex-1">
-        <ul className="grid gap-3 p-6 sm:grid-cols-2">
-          {safe.map((contact) => (
-            <li
-              key={contact.id}
+      <ScrollArea className="relative z-10 flex-1">
+        <div className="space-y-6 p-6">
+          {groups.map((group) =>
+            group.items.length === 0 ? null : (
+              <div key={group.label}>
+                <h3 className="mb-3 text-xs font-extrabold uppercase tracking-wide text-muted-foreground">
+                  {group.label}
+                </h3>
+                <ul className="grid gap-3 sm:grid-cols-2">
+                  {group.items.map((contact) => (
+                    <li
+                      key={contact.id}
+                      className="flex items-center gap-3 rounded-3xl bg-card p-4 shadow-card animate-fade-up"
+                    >
+                      <ContactAvatar contact={contact} size="lg" />
+                      <div className="min-w-0">
+                        <p className="truncate font-extrabold text-foreground">
+                          {contact.name}
+                        </p>
+                        <p className="truncate text-sm font-semibold text-muted-foreground">
+                          {contact.relationship ?? contact.email}
+                        </p>
+                        <div className="mt-2">
+                          <SafetyBadge level={contact.safety} />
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ),
+          )}
+        </div>
+      </ScrollArea>
+    </section>
+  );
+}
+
+function SettingsPane() {
+  const settings = useMailStore((s) => s.settings);
+  const grade = useMailStore((s) => s.grade);
+  const setGrade = useMailStore((s) => s.setGrade);
+  const updateSettings = useMailStore((s) => s.updateSettings);
+  const [name, setName] = useState(settings.studentName);
+  const [school, setSchool] = useState(settings.schoolName);
+  const [section, setSection] = useState("account");
+
+  const nav = [
+    "account",
+    "notifications",
+    "appearance",
+    "accessibility",
+    "privacy",
+    "help",
+  ] as const;
+
+  const labels: Record<(typeof nav)[number], string> = {
+    account: "Account",
+    notifications: "Notifications",
+    appearance: "Appearance",
+    accessibility: "Accessibility",
+    privacy: "Privacy & Safety",
+    help: "Help",
+  };
+
+  return (
+    <section className="grid h-full min-h-0 grid-cols-1 lg:grid-cols-[220px_minmax(0,1fr)_260px]">
+      <aside className="border-r border-border/70 bg-card/70 p-4">
+        <nav className="space-y-1">
+          {nav.map((id) => (
+            <button
+              key={id}
+              type="button"
+              onClick={() => setSection(id)}
               className={cn(
-                "flex items-center gap-3 bg-card p-4 animate-fade-up",
-                learningStage === "high"
-                  ? "rounded-xl border border-border"
-                  : "rounded-3xl shadow-panel",
+                "w-full rounded-2xl px-3 py-2.5 text-left text-sm font-bold",
+                section === id
+                  ? "bg-primary text-primary-foreground"
+                  : "text-muted-foreground hover:bg-secondary",
               )}
             >
-              <ContactAvatar contact={contact} size="lg" />
-              <div className="min-w-0">
-                <p className="truncate font-bold text-foreground">
-                  {contact.name}
-                </p>
-                <p className="truncate text-sm font-medium text-muted-foreground">
-                  {contact.relationship ?? contact.email}
-                </p>
-                <div className="mt-2">
-                  <SafetyBadge level={contact.safety} />
-                </div>
-              </div>
-            </li>
+              {labels[id]}
+            </button>
           ))}
-        </ul>
-      </ScrollArea>
+        </nav>
+      </aside>
+
+      <div className="overflow-y-auto p-6">
+        {section === "account" ? (
+          <div className="mx-auto max-w-lg space-y-4 animate-fade-up">
+            <h2 className="font-display text-2xl font-extrabold">Account</h2>
+            <label className="block space-y-2">
+              <span className="text-sm font-extrabold">Name</span>
+              <input
+                className="flex h-11 w-full rounded-2xl border border-input bg-card px-4 text-sm font-semibold"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </label>
+            <label className="block space-y-2">
+              <span className="text-sm font-extrabold">Grade</span>
+              <select
+                className="flex h-11 w-full rounded-2xl border border-input bg-card px-4 text-sm font-semibold"
+                value={grade}
+                onChange={(e) => setGrade(Number(e.target.value) as typeof grade)}
+              >
+                {Array.from({ length: 12 }, (_, i) => i + 1).map((g) => (
+                  <option key={g} value={g}>
+                    Grade {g}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="block space-y-2">
+              <span className="text-sm font-extrabold">School</span>
+              <input
+                className="flex h-11 w-full rounded-2xl border border-input bg-card px-4 text-sm font-semibold"
+                value={school}
+                onChange={(e) => setSchool(e.target.value)}
+              />
+            </label>
+            <Button
+              onClick={() =>
+                void updateSettings({
+                  studentName: name,
+                  schoolName: school,
+                  defaultGrade: grade,
+                })
+              }
+            >
+              Save
+            </Button>
+          </div>
+        ) : (
+          <div className="mx-auto max-w-lg rounded-3xl bg-card p-8 text-center shadow-card">
+            <p className="font-display text-xl font-extrabold">
+              {labels[section as (typeof nav)[number]]}
+            </p>
+            <p className="mt-2 text-sm font-semibold text-muted-foreground">
+              Coming soon in classroom rollout.
+            </p>
+          </div>
+        )}
+      </div>
+
+      <aside className="hidden border-l border-border/70 bg-card/50 p-5 lg:block">
+        <div className="rounded-3xl bg-brand-soft/70 p-5 text-center shadow-card">
+          <MailboxLogo size={72} className="mx-auto" />
+          <p className="mt-3 font-display text-lg font-extrabold text-brand">
+            You’re all set!
+          </p>
+          <p className="mt-1 text-sm font-semibold text-muted-foreground">
+            Your account is secure.
+          </p>
+        </div>
+      </aside>
     </section>
   );
 }

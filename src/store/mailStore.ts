@@ -8,6 +8,7 @@ import type {
   Draft,
   FolderId,
   GradeLevel,
+  InboxFilter,
   LearningStage,
   Message,
   SafetyLevel,
@@ -62,6 +63,7 @@ export interface ComposePayload {
   body: string;
   attachments?: AttachmentMeta[];
   replyToId?: string;
+  teacherComment?: string;
 }
 
 interface MailState {
@@ -76,12 +78,14 @@ interface MailState {
   settings: AppSettings;
   teacherUnlocked: boolean;
   searchQuery: string;
+  inboxFilter: InboxFilter;
   hydrate: () => Promise<void>;
   setGrade: (grade: GradeLevel) => void;
   setFolder: (folder: FolderId) => void;
   selectMessage: (id: string | null) => void;
   markRead: (id: string) => Promise<void>;
   setSearchQuery: (query: string) => void;
+  setInboxFilter: (filter: InboxFilter) => void;
   completeOnboarding: (grade: GradeLevel) => Promise<void>;
   unlockTeacher: (pin: string) => boolean;
   lockTeacher: () => void;
@@ -91,6 +95,7 @@ interface MailState {
     email: string;
     relationship?: string;
     safety?: SafetyLevel;
+    category?: Contact["category"];
   }) => Promise<void>;
   updateContactSafety: (id: string, safety: SafetyLevel) => Promise<void>;
   removeContact: (id: string) => Promise<void>;
@@ -98,7 +103,7 @@ interface MailState {
   deleteDraft: (id: string) => Promise<void>;
   sendMessage: (draft: ComposePayload) => Promise<"sent" | "pending">;
   approveMessage: (id: string) => Promise<void>;
-  rejectMessage: (id: string) => Promise<void>;
+  rejectMessage: (id: string, comment?: string) => Promise<void>;
   reportUnknownSender: (messageId: string) => Promise<void>;
   refreshAll: () => Promise<void>;
 }
@@ -125,14 +130,14 @@ async function loadCollections() {
     messages,
     contacts,
     drafts,
-    settings: settings ?? DEFAULT_SETTINGS,
+    settings: { ...DEFAULT_SETTINGS, ...settings },
   };
 }
 
 export const useMailStore = create<MailState>((set, get) => ({
   ready: false,
-  grade: 3,
-  learningStage: "elementary",
+  grade: 6,
+  learningStage: "middle",
   folder: "inbox",
   selectedMessageId: null,
   messages: [],
@@ -141,6 +146,7 @@ export const useMailStore = create<MailState>((set, get) => ({
   settings: DEFAULT_SETTINGS,
   teacherUnlocked: false,
   searchQuery: "",
+  inboxFilter: "all",
 
   hydrate: async () => {
     await ensureSeedData();
@@ -186,7 +192,8 @@ export const useMailStore = create<MailState>((set, get) => ({
     set({
       folder,
       selectedMessageId: first?.id ?? null,
-      searchQuery: "",
+      searchQuery: folder === "inbox" ? get().searchQuery : "",
+      inboxFilter: "all",
     });
   },
 
@@ -202,6 +209,7 @@ export const useMailStore = create<MailState>((set, get) => ({
   },
 
   setSearchQuery: (searchQuery) => set({ searchQuery }),
+  setInboxFilter: (inboxFilter) => set({ inboxFilter }),
 
   completeOnboarding: async (grade) => {
     const settings = {
@@ -243,9 +251,25 @@ export const useMailStore = create<MailState>((set, get) => ({
   },
 
   updateSettings: async (patch) => {
-    if (!get().teacherUnlocked) return;
+    const needsTeacher =
+      "requireSendApproval" in patch || "teacherPin" in patch;
+    if (needsTeacher && !get().teacherUnlocked) return;
+
     const settings = { ...get().settings, ...patch, id: "app" as const };
     await db.settings.put(settings);
+    if (typeof patch.defaultGrade === "number") {
+      try {
+        localStorage.setItem(GRADE_STORAGE_KEY, String(patch.defaultGrade));
+      } catch {
+        /* ignore */
+      }
+      set({
+        settings,
+        grade: patch.defaultGrade,
+        learningStage: stageFromGrade(patch.defaultGrade),
+      });
+      return;
+    }
     set({ settings });
   },
 
@@ -257,6 +281,7 @@ export const useMailStore = create<MailState>((set, get) => ({
       email: input.email.trim().toLowerCase(),
       relationship: input.relationship?.trim() || "Approved contact",
       safety: input.safety ?? "trusted",
+      category: input.category,
       initials: initialsFromName(input.name),
       avatarColor:
         AVATAR_COLORS[Math.floor(Math.random() * AVATAR_COLORS.length)],
@@ -291,6 +316,7 @@ export const useMailStore = create<MailState>((set, get) => ({
       body: draftInput.body,
       attachments: draftInput.attachments ?? [],
       replyToId: draftInput.replyToId,
+      teacherComment: draftInput.teacherComment,
       updatedAt: new Date().toISOString(),
     };
 
@@ -309,8 +335,9 @@ export const useMailStore = create<MailState>((set, get) => ({
       unread: false,
       hasAttachment: (draft.attachments?.length ?? 0) > 0,
       attachments: draft.attachments,
-      approvalStatus: "none",
+      approvalStatus: draft.teacherComment ? "rejected" : "none",
       replyToId: draft.replyToId,
+      teacherComment: draft.teacherComment,
     };
     await db.messages.put(mirror);
 
@@ -378,6 +405,7 @@ export const useMailStore = create<MailState>((set, get) => ({
     await db.messages.update(id, {
       folder: "sent",
       approvalStatus: "approved",
+      teacherComment: undefined,
     });
     const messages = await db.messages.orderBy("sentAt").reverse().toArray();
     set({
@@ -387,22 +415,15 @@ export const useMailStore = create<MailState>((set, get) => ({
     });
   },
 
-  rejectMessage: async (id) => {
+  rejectMessage: async (id, comment) => {
     if (!get().teacherUnlocked) return;
     const message = get().messages.find((m) => m.id === id);
     if (!message) return;
 
     const draftId = crypto.randomUUID();
-    await db.drafts.put({
-      id: draftId,
-      to: message.toLabel,
-      subject: message.subject,
-      body: message.body,
-      attachments: message.attachments ?? [],
-      replyToId: message.replyToId,
-      updatedAt: new Date().toISOString(),
-    });
-    await db.messages.delete(id);
+    const teacherComment =
+      comment?.trim() ||
+      "Please revise this message and send it again for review.";
     await get().saveDraft({
       id: draftId,
       to: message.toLabel,
@@ -410,14 +431,16 @@ export const useMailStore = create<MailState>((set, get) => ({
       body: message.body,
       attachments: message.attachments ?? [],
       replyToId: message.replyToId,
+      teacherComment,
     });
+    await db.messages.delete(id);
 
     const data = await loadCollections();
     set({
       messages: data.messages,
       drafts: data.drafts,
       folder: "drafts",
-      selectedMessageId: `draft:${draftId}`,
+      selectedMessageId: `draft-msg-${draftId}`,
     });
   },
 

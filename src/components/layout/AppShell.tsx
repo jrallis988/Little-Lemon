@@ -1,5 +1,6 @@
-import { ClassroomBar } from "@/components/layout/ClassroomBar";
+import { DoodleBackdrop } from "@/components/brand/MailboxBrand";
 import { Sidebar } from "@/components/layout/Sidebar";
+import { TopBar } from "@/components/layout/TopBar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useMailStore } from "@/store/mailStore";
 import { Outlet } from "react-router-dom";
@@ -16,10 +17,11 @@ export function AppShell() {
 
   return (
     <TooltipProvider delayDuration={200}>
-      <div className="flex h-screen min-h-[640px] overflow-hidden bg-background text-foreground">
+      <div className="doodle-bg relative flex h-screen min-h-[640px] overflow-hidden text-foreground">
+        <DoodleBackdrop className="opacity-70" />
         <Sidebar />
-        <div className="flex min-w-0 flex-1 flex-col">
-          <ClassroomBar />
+        <div className="relative z-10 flex min-w-0 flex-1 flex-col">
+          <TopBar />
           <main className="min-h-0 min-w-0 flex-1">
             <Outlet />
           </main>

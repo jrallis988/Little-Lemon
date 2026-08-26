@@ -12,33 +12,17 @@ export const DEFAULT_SETTINGS: AppSettings = {
   onboardingComplete: false,
   requireSendApproval: true,
   teacherPin: "1234",
-  defaultGrade: 3,
+  defaultGrade: 6,
+  studentName: "Alex Johnson",
+  schoolName: "Riverside Middle School",
 };
 
 export const FOLDERS: FolderMeta[] = [
-  {
-    id: "inbox",
-    label: "Inbox",
-    verified: true,
-  },
-  {
-    id: "drafts",
-    label: "Drafts",
-  },
-  {
-    id: "pending",
-    label: "Pending",
-  },
-  {
-    id: "sent",
-    label: "Sent",
-    verified: true,
-  },
-  {
-    id: "safe-contacts",
-    label: "Safe Contacts",
-    verified: true,
-  },
+  { id: "inbox", label: "Inbox", verified: true },
+  { id: "drafts", label: "Drafts" },
+  { id: "pending", label: "Pending" },
+  { id: "sent", label: "Sent", verified: true },
+  { id: "safe-contacts", label: "Safe Contacts", verified: true },
 ];
 
 export const SEED_CONTACTS: Contact[] = [
@@ -46,10 +30,11 @@ export const SEED_CONTACTS: Contact[] = [
     id: "c-teacher",
     name: "Ms. Alvarez",
     email: "alvarez@school.edu",
-    avatarColor: "#2A9D8F",
+    avatarColor: "#7C6CF0",
     initials: "MA",
     safety: "verified",
     relationship: "Homeroom teacher",
+    category: "teacher",
   },
   {
     id: "c-grandma",
@@ -59,24 +44,27 @@ export const SEED_CONTACTS: Contact[] = [
     initials: "GJ",
     safety: "verified",
     relationship: "Family",
+    category: "family",
   },
   {
     id: "c-sam",
     name: "Sam Chen",
     email: "sam.chen@school.edu",
-    avatarColor: "#457B9D",
+    avatarColor: "#2A9D8F",
     initials: "SC",
     safety: "trusted",
     relationship: "Classmate",
+    category: "classmate",
   },
   {
     id: "c-library",
     name: "School Library",
     email: "library@school.edu",
-    avatarColor: "#E76F51",
+    avatarColor: "#457B9D",
     initials: "SL",
     safety: "verified",
     relationship: "Campus resource",
+    category: "school",
   },
   {
     id: "c-unknown",
@@ -96,10 +84,19 @@ export const SEED_MESSAGES: Message[] = [
     toLabel: "You",
     subject: "Reading reflection due Friday",
     preview: "Please send your Chapter 4 reflection by Friday.",
-    body: "Hi,\n\nPlease send your Chapter 4 reflection by Friday.\n\nThank you,\nMs. Alvarez",
+    body: "Hi Alex,\n\nPlease send your Chapter 4 reflection by Friday. Include one sentence about what the character learned.\n\nThank you,\nMs. Alvarez",
     sentAt: "2026-07-24T08:12:00.000Z",
     unread: true,
     approvalStatus: "none",
+    hasAttachment: true,
+    attachments: [
+      {
+        id: "a-rubric",
+        name: "reflection-rubric.pdf",
+        size: 94208,
+        type: "application/pdf",
+      },
+    ],
   },
   {
     id: "m2",
@@ -128,8 +125,7 @@ export const SEED_MESSAGES: Message[] = [
     fromContactId: "c-library",
     toLabel: "You",
     subject: "Summer reading checkpoint",
-    preview:
-      "You are on track — four books logged. Stop by for the next challenge card.",
+    preview: "You are on track — four books logged.",
     body: "Hello,\n\nYou are on track — four books logged. Stop by the library desk for the next challenge card.\n\nSchool Library",
     sentAt: "2026-07-23T15:05:00.000Z",
     unread: false,
@@ -165,8 +161,7 @@ export const SEED_MESSAGES: Message[] = [
     fromContactId: "c-teacher",
     toLabel: "Ms. Alvarez",
     subject: "Reading reflection — Chapter 4",
-    preview:
-      "In this chapter, the main character learns to ask for help when a problem feels too big.",
+    preview: "In this chapter, the main character learns to ask for help.",
     body: "Hi Ms. Alvarez,\n\nIn this chapter, the main character learns to ask for help when a problem feels too big. That reminded me of working on group projects in class.\n\nThank you,\nAlex",
     sentAt: "2026-07-20T17:30:00.000Z",
     unread: false,
@@ -185,6 +180,20 @@ export const SEED_MESSAGES: Message[] = [
     approvalStatus: "none",
   },
   {
+    id: "draft-msg-d2",
+    folder: "drafts",
+    fromContactId: "c-teacher",
+    toLabel: "Ms. Alvarez",
+    subject: "Question about the homework",
+    preview: "Could you explain question 3 on the worksheet?",
+    body: "Hi Ms. Alvarez,\n\nCould you explain question 3 on the worksheet?\n\nThanks,\nAlex",
+    sentAt: "2026-07-24T06:30:00.000Z",
+    unread: false,
+    approvalStatus: "rejected",
+    teacherComment:
+      "Great start! Please add more details about which part of question 3 is confusing.",
+  },
+  {
     id: "m8",
     folder: "pending",
     fromContactId: "c-teacher",
@@ -195,6 +204,15 @@ export const SEED_MESSAGES: Message[] = [
     sentAt: "2026-07-24T09:15:00.000Z",
     unread: false,
     approvalStatus: "pending",
+    hasAttachment: true,
+    attachments: [
+      {
+        id: "a-board",
+        name: "board-sketch.png",
+        size: 220160,
+        type: "image/png",
+      },
+    ],
   },
 ];
 
@@ -205,6 +223,15 @@ export const SEED_DRAFTS: Draft[] = [
     subject: "Idea for the volcano",
     body: "Maybe we add baking soda and red tissue paper for lava…",
     updatedAt: "2026-07-24T07:00:00.000Z",
+  },
+  {
+    id: "d2",
+    to: "alvarez@school.edu",
+    subject: "Question about the homework",
+    body: "Hi Ms. Alvarez,\n\nCould you explain question 3 on the worksheet?\n\nThanks,\nAlex",
+    updatedAt: "2026-07-24T06:30:00.000Z",
+    teacherComment:
+      "Great start! Please add more details about which part of question 3 is confusing.",
   },
 ];
 
@@ -252,10 +279,10 @@ export function validateAttachment(file: File): string | null {
 }
 
 export const AVATAR_COLORS = [
-  "#2A9D8F",
+  "#7C6CF0",
   "#457B9D",
-  "#E76F51",
+  "#2A9D8F",
   "#F4A261",
-  "#6D6875",
-  "#2F7D8C",
+  "#E76F51",
+  "#4361EE",
 ];

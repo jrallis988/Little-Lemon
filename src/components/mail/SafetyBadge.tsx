@@ -41,10 +41,10 @@ export function SafetyBadge({
     <span
       title={meta.hint}
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-bold tracking-wide",
+        "inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-extrabold tracking-wide",
         level === "verified" && "bg-safe-soft text-safe",
         level === "trusted" && "bg-safe-soft text-safe",
-        level === "unknown" && "bg-amber-100 text-amber-800",
+        level === "unknown" && "bg-warn-soft text-warn",
         className,
       )}
     >
