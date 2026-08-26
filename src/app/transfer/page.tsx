@@ -76,21 +76,24 @@ export default function TransferPage() {
     <div className="min-h-[70dvh] bg-background">
       <div className="mx-auto max-w-3xl space-y-6 px-4 py-6 sm:px-6">
         <header className="space-y-1.5">
-          <p className="text-sm font-medium text-primary">Prescription transfer</p>
+          <p className="text-sm font-medium text-primary">
+            Connection to your pharmacy
+          </p>
           <h1 className="font-display text-3xl font-semibold tracking-tight md:text-4xl">
-            Transfer your prescription
+            Request a transfer to a participating pharmacy
           </h1>
           <p className="text-muted-foreground">
-            Dedicated flow to request moving an active Rx from your current
-            pharmacy to a Trump RX–compatible location. Your receiving pharmacy
-            usually completes the transfer call.
+            TrumpRx does not take ownership of your prescription. This form asks
+            a participating pharmacy to request a transfer from your current
+            pharmacy — they complete the call. Only useful when the medication’s
+            access path is pharmacy pickup.
           </p>
         </header>
 
         <ol className="grid gap-3 sm:grid-cols-3">
           {[
             "Share current pharmacy details",
-            "Choose a Trump RX–compatible location",
+            "Choose a participating pharmacy",
             "Receiving pharmacy requests the transfer",
           ].map((step, i) => (
             <li

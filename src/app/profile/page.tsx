@@ -436,20 +436,23 @@ function SavedPassesSection() {
   return (
     <section className="space-y-3">
       <div className="flex items-center justify-between gap-3">
-        <h2 className="font-display text-2xl font-semibold">Digital passes</h2>
+        <h2 className="font-display text-2xl font-semibold">
+          Saved program information
+        </h2>
         <Link
-          href="/checkout"
+          href="/search"
           className={cn(buttonVariants({ variant: "outline" }))}
         >
-          Open checkout
+          Check coverage
         </Link>
       </div>
       {!loaded ? (
-        <p className="text-sm text-muted-foreground">Loading passes…</p>
+        <p className="text-sm text-muted-foreground">Loading…</p>
       ) : passes.length === 0 ? (
         <p className="text-muted-foreground">
-          Issue a digital pass from checkout while signed in — it will appear
-          here for the counter.
+          When you save pharmacy program information for an included medication,
+          it can appear here for the counter. TrumpRx still does not sell or
+          dispense medications.
         </p>
       ) : (
         <ul className="space-y-2">

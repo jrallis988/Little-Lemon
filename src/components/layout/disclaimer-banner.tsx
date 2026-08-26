@@ -15,15 +15,16 @@ export function DisclaimerBanner() {
         />
         <p>
           <span className="font-semibold">
-            Trump RX is a prescription discount provider — not insurance.
+            TrumpRx is a savings &amp; access guide for select medications — not
+            a pharmacy and not insurance.
           </span>{" "}
-          Coupons cannot be combined with insurance. Compare with your plan and
-          ask the pharmacist which option costs less.{" "}
+          Only listed medications have a program option. Final eligibility and
+          price are set by the pharmacy or manufacturer program.{" "}
           <Link
-            href="/privacy"
+            href="/faq"
             className="font-medium underline underline-offset-2 hover:text-trust-foreground/90"
           >
-            Privacy Policy
+            FAQ
           </Link>
         </p>
       </div>

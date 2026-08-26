@@ -57,21 +57,51 @@ export function DrugSearch({
     };
   }, [query]);
 
-  function navigateToDrug(drugId: string) {
+  const [recent, setRecent] = useState<Array<{ id: string; label: string }>>(
+    []
+  );
+
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem("trx_recent_meds");
+      if (!raw) return;
+      const parsed = JSON.parse(raw) as Array<{ id: string; label: string }>;
+      if (Array.isArray(parsed)) setRecent(parsed.slice(0, 5));
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  function rememberRecent(drugId: string, label: string) {
+    try {
+      const next = [
+        { id: drugId, label },
+        ...recent.filter((r) => r.id !== drugId),
+      ].slice(0, 5);
+      setRecent(next);
+      window.localStorage.setItem("trx_recent_meds", JSON.stringify(next));
+    } catch {
+      /* ignore */
+    }
+  }
+
+  function navigateToDrug(drugId: string, label?: string) {
+    if (label) rememberRecent(drugId, label);
     setOpen(false);
     startTransition(() => {
-      router.push(`/search?drug=${encodeURIComponent(drugId)}`);
+      router.push(`/drugs/${encodeURIComponent(drugId)}`);
     });
   }
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (activeIndex >= 0 && suggestions[activeIndex]) {
-      navigateToDrug(suggestions[activeIndex].drug.id);
+      const s = suggestions[activeIndex];
+      navigateToDrug(s.drug.id, s.matchedLabel);
       return;
     }
     if (suggestions[0]) {
-      navigateToDrug(suggestions[0].drug.id);
+      navigateToDrug(suggestions[0].drug.id, suggestions[0].matchedLabel);
       return;
     }
     if (query.trim()) {
@@ -190,17 +220,50 @@ export function DrugSearch({
                     : "hover:bg-muted"
                 )}
                 onMouseDown={(e) => e.preventDefault()}
-                onClick={() => navigateToDrug(s.drug.id)}
+                onClick={() =>
+                  navigateToDrug(s.drug.id, s.matchedLabel)
+                }
               >
                 <span className="text-base font-semibold">{s.matchedLabel}</span>
                 <span className="text-sm text-muted-foreground">
                   {s.drug.therapeuticClass}
-                  {s.matchType === "generic" ? " · Generic available" : ""}
+                  {s.matchType === "generic" ? " · Included when listed" : ""}
                 </span>
               </button>
             </li>
           ))}
         </ul>
+      )}
+
+      {!query && recent.length > 0 && (
+        <div className="mt-3">
+          <p
+            className={cn(
+              "text-xs font-semibold uppercase tracking-wide",
+              isHero ? "text-trust-foreground/80" : "text-muted-foreground"
+            )}
+          >
+            Recent searches
+          </p>
+          <ul className="mt-1.5 flex flex-wrap gap-1.5">
+            {recent.map((r) => (
+              <li key={r.id}>
+                <button
+                  type="button"
+                  onClick={() => navigateToDrug(r.id, r.label)}
+                  className={cn(
+                    "border px-2.5 py-1 text-xs font-medium",
+                    isHero
+                      ? "border-trust-foreground/30 bg-trust-foreground/10 text-trust-foreground hover:bg-trust-foreground/20"
+                      : "border-border bg-card hover:bg-muted"
+                  )}
+                >
+                  {r.label}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
     </form>
   );

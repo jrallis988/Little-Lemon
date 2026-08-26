@@ -30,6 +30,24 @@ export interface DrugStrength {
   form: DosageForm;
 }
 
+export type ProductType = "brand" | "generic" | "compounded";
+
+export type FulfillmentPath =
+  | "pharmacy_pickup"
+  | "manufacturer_direct"
+  | "specialty"
+  | "program_specific";
+
+export interface DrugProgramInfo {
+  manufacturer: string;
+  productType: ProductType;
+  receivingLabel: string;
+  receivingDetail: string;
+  programPrice30: number;
+  fulfillmentPath: FulfillmentPath;
+  fulfillmentLabel: string;
+}
+
 export interface Drug {
   id: string;
   brandName: string;
@@ -42,6 +60,8 @@ export interface Drug {
   retailCashPrice90: number;
   isControlled?: boolean;
   searchAliases: string[];
+  /** Present when this medication is in the TrumpRx select catalog. */
+  program?: DrugProgramInfo;
 }
 
 export interface CouponBinDetails {

@@ -10,9 +10,9 @@ export function SiteFooter() {
             Trump RX
           </p>
           <p className="max-w-sm text-sm leading-relaxed text-trust-foreground/80">
-            Compare cash-discount prescription prices at nearby pharmacies and
-            show a pharmacist-ready coupon — brand and generic. A private
-            discount service, not insurance.
+            A medication savings, eligibility, comparison, and access platform
+            for select medications — not a universal pharmacy or replacement for
+            your existing pharmacy.
           </p>
           <p className="flex items-start gap-2 text-xs text-trust-foreground/70">
             <ShieldCheck
@@ -24,28 +24,23 @@ export function SiteFooter() {
         </div>
 
         <div>
-          <h2 className="font-display text-sm font-semibold uppercase tracking-wider text-trust-foreground">
+          <h2 className="font-display text-sm font-semibold uppercase tracking-wider">
             Explore
           </h2>
           <ul className="mt-3 space-y-2 text-sm text-trust-foreground/75">
             <li>
               <Link href="/search" className="hover:text-trust-foreground">
-                Drug price search
+                Check coverage
+              </Link>
+            </li>
+            <li>
+              <Link href="/medications" className="hover:text-trust-foreground">
+                Included medications
               </Link>
             </li>
             <li>
               <Link href="/pharmacies" className="hover:text-trust-foreground">
-                Nearby pharmacies
-              </Link>
-            </li>
-            <li>
-              <Link href="/profile" className="hover:text-trust-foreground">
-                Saved medications
-              </Link>
-            </li>
-            <li>
-              <Link href="/help" className="hover:text-trust-foreground">
-                How coupons work
+                Participating pharmacies
               </Link>
             </li>
             <li>
@@ -54,11 +49,8 @@ export function SiteFooter() {
               </Link>
             </li>
             <li>
-              <Link
-                href="/tools/insurance-calculator"
-                className="hover:text-trust-foreground"
-              >
-                Insurance calculator
+              <Link href="/help" className="hover:text-trust-foreground">
+                Help
               </Link>
             </li>
             <li>
@@ -67,28 +59,15 @@ export function SiteFooter() {
               </Link>
             </li>
             <li>
-              <Link
-                href="/help/pharmacist"
-                className="hover:text-trust-foreground"
-              >
-                Pharmacist guide
-              </Link>
-            </li>
-            <li>
-              <Link href="/transfer" className="hover:text-trust-foreground">
-                Transfer a prescription
-              </Link>
-            </li>
-            <li>
-              <Link href="/membership" className="hover:text-trust-foreground">
-                Free vs membership
+              <Link href="/profile" className="hover:text-trust-foreground">
+                Saved tools (account)
               </Link>
             </li>
           </ul>
         </div>
 
         <div>
-          <h2 className="font-display text-sm font-semibold uppercase tracking-wider text-trust-foreground">
+          <h2 className="font-display text-sm font-semibold uppercase tracking-wider">
             Trust
           </h2>
           <ul className="mt-3 space-y-2 text-sm text-trust-foreground/75">
@@ -102,26 +81,17 @@ export function SiteFooter() {
                 Terms of Service
               </Link>
             </li>
-            <li>Not insurance · Discount cards only</li>
-            <li>WCAG 2.1 AA oriented interface</li>
+            <li>Not a pharmacy · Not insurance</li>
+            <li>Select medications only</li>
           </ul>
         </div>
       </div>
       <div className="border-t border-trust-foreground/15 py-4">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-center gap-2 px-4 text-center text-xs text-trust-foreground/65 sm:flex-row sm:gap-4 sm:px-6">
           <p>
-            © {new Date().getFullYear()} Trump RX. Prices are network
-            cash-discount pricing and may vary at the pharmacy.
+            © {new Date().getFullYear()} Trump RX. Program availability and
+            pricing vary. TrumpRx does not sell or dispense medications.
           </p>
-          <span className="hidden sm:inline" aria-hidden>
-            ·
-          </span>
-          <Link
-            href="/privacy"
-            className="font-medium text-trust-foreground/85 underline-offset-2 hover:text-trust-foreground hover:underline"
-          >
-            Privacy Policy
-          </Link>
         </div>
       </div>
     </footer>

@@ -14,10 +14,10 @@ interface ChatMessage {
 }
 
 const SUGGESTIONS = [
-  { label: "How do coupons work?", topic: "coupon" as const },
-  { label: "Insurance vs cash?", topic: "pricing" as const },
-  { label: "Membership / Plus", topic: "membership" as const },
-  { label: "Pharmacy pickup help", topic: "pharmacy" as const },
+  { label: "Why isn’t my medication listed?", topic: "coverage" as const },
+  { label: "Can I use TrumpRx at CVS?", topic: "pharmacy" as const },
+  { label: "Is this the brand-name medication?", topic: "product" as const },
+  { label: "How do I get my medication?", topic: "access" as const },
 ];
 
 export function SupportChatWidget() {
@@ -117,15 +117,15 @@ export function SupportChatWidget() {
         <div
           className="flex h-[min(32rem,70dvh)] w-[min(100vw-2rem,22rem)] flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-xl"
           role="dialog"
-          aria-label="Trump RX messages"
+          aria-label="TrumpRx automated help"
         >
           <header className="flex items-start justify-between gap-2 border-b border-border bg-primary px-4 py-3 text-primary-foreground">
             <div>
               <p className="font-display text-lg font-semibold leading-tight">
-                Messages
+                Automated Help
               </p>
               <p className="text-xs opacity-90">
-                Ask about prices, coupons, and checkout
+                Not a human representative · Select medications only
               </p>
             </div>
             <Button
@@ -133,7 +133,7 @@ export function SupportChatWidget() {
               size="icon"
               variant="ghost"
               className="size-8 text-primary-foreground hover:bg-primary-foreground/15"
-              aria-label="Close messages"
+              aria-label="Close automated help"
               onClick={() => setOpen(false)}
             >
               <X className="size-4" />
@@ -162,10 +162,11 @@ export function SupportChatWidget() {
                 >
                   {m.sender !== "visitor" && (
                     <p className="mb-0.5 text-[10px] font-semibold uppercase tracking-wide opacity-70">
-                      {m.sender === "support" ? "Support" : "Trump RX Assist"}
+                      {m.sender === "support"
+                        ? "Automated Help"
+                        : "System"}
                     </p>
-                  )}
-                  <p>{m.body}</p>
+                  )}                  <p>{m.body}</p>
                 </div>
               ))
             )}
@@ -232,13 +233,13 @@ export function SupportChatWidget() {
       <Button
         type="button"
         size="lg"
-        className="min-h-12 gap-2 rounded-full px-5 shadow-lg"
+        className="min-h-12 gap-2 rounded-md px-5 shadow-lg"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-controls={open ? undefined : undefined}
       >
         <MessageCircle className="size-5" />
-        {open ? "Close chat" : "Chat with us"}
+        {open ? "Close help" : "Help"}
       </Button>
     </div>
   );

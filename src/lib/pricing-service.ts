@@ -15,6 +15,7 @@ import type {
   SearchFilters,
   SupplyDays,
 } from "@/lib/types";
+import { getProgramMeta } from "@/lib/program-catalog";
 import type {
   Drug as DbDrug,
   DrugQuantity,
@@ -37,6 +38,7 @@ export function formatCurrency(amount: number): string {
 }
 
 export function mapDrug(d: DrugWithRelations): Drug {
+  const program = getProgramMeta(d.id);
   return {
     id: d.id,
     brandName: d.brandName,
@@ -53,6 +55,17 @@ export function mapDrug(d: DrugWithRelations): Drug {
       form: s.form as DosageForm,
     })),
     commonQuantities: d.quantities.map((q) => q.quantity).sort((a, b) => a - b),
+    program: program
+      ? {
+          manufacturer: program.manufacturer,
+          productType: program.productType,
+          receivingLabel: program.receivingLabel,
+          receivingDetail: program.receivingDetail,
+          programPrice30: program.programPrice30,
+          fulfillmentPath: program.fulfillment.path,
+          fulfillmentLabel: program.fulfillment.label,
+        }
+      : undefined,
   };
 }
 

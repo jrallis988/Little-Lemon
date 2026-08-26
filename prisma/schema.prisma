@@ -517,3 +517,35 @@ model LaunchChecklistItem {
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
 }
+
+/// User requests a medication not currently in the TrumpRx select catalog
+model MedicationRequest {
+  id             String   @id @default(cuid())
+  referenceCode  String   @unique
+  medicationName String
+  email          String?
+  notes          String?
+  status         String   @default("received") // received | reviewed | closed
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([createdAt])
+}
+
+/// Contextual issue reports from medication / pharmacy / pricing screens
+model IssueReport {
+  id            String   @id @default(cuid())
+  referenceCode String   @unique
+  category      String
+  pagePath      String?
+  drugId        String?
+  pharmacyId    String?
+  details       String
+  email         String?
+  status        String   @default("received")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([createdAt])
+  @@index([category])
+}

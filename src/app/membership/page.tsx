@@ -8,25 +8,25 @@ import { UpgradeButton } from "@/components/upgrade-button";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Free vs membership",
+  title: "Optional account tools",
   description:
-    "Compare free Trump RX coupons with an optional membership tier for deeper savings — GoodRx-style clarity without forced paywalls.",
+    "Optional TrumpRx account tools for saved medications and reminders. Membership is not a pharmacy checkout and does not make medications free.",
 };
 
 const FREE = [
-  "Search brand and generic medications",
-  "Compare local pharmacy coupon prices",
-  "Show-to-pharmacist digital coupon",
-  "Save meds to your account",
-  "No account required to compare",
+  "Check whether select medications are included",
+  "Compare TrumpRx option with what you currently pay",
+  "Review eligibility and access pathways",
+  "Save included meds to your account",
+  "No account required to check coverage",
 ];
 
 const PLUS = [
   "Everything in Free",
-  "Deeper membership prices at participating pharmacies",
-  "Family profiles (up to 5)",
-  "Cross-device saved meds & price alerts",
-  "Priority coupon support tips",
+  "Optional deeper cash options at some participating pharmacies",
+  "Family profiles for organizing household meds (up to 5)",
+  "Cross-device saved meds & refill reminders",
+  "Priority tips for program information issues",
 ];
 
 export default function MembershipPage() {
@@ -43,11 +43,12 @@ export default function MembershipPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/92 to-background/70" />
         <div className="relative mx-auto max-w-6xl px-4 py-8 sm:px-6">
           <h1 className="font-display text-3xl font-semibold tracking-tight md:text-4xl">
-            Free coupons. Optional membership.
+            Optional account tools
           </h1>
           <p className="mt-2 max-w-2xl text-lg text-muted-foreground">
-            Compare first — no aggressive paywall. Membership is optional for
-            people who refill often and want deeper prices.
+            Membership is for account convenience — not a shopping cart for
+            medications. TrumpRx still does not sell or dispense drugs. “Free to
+            use” does not mean medications are free.
           </p>
         </div>
       </div>

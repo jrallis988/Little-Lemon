@@ -34,38 +34,45 @@ export function mapMessage(m: {
   };
 }
 
-/** Instant helpful replies about site topics while support is in the queue. */
+/** Automated help replies — clearly not a human pharmacist or insurer. */
 export function buildAssistReply(visitorText: string): string | null {
   const t = visitorText.toLowerCase();
 
-  if (
-    /(insurance|copay|deductible|medicare|part d)/.test(t)
-  ) {
-    return "Trump RX is a cash discount card — not insurance. Compare the coupon price with your plan copay at the pharmacy and use whichever is lower. On search results, open Insurance vs cash to walk through deductible tradeoffs.";
+  if (/(not listed|isn'?t listed|not included|why isn'?t|missing med)/.test(t)) {
+    return "TrumpRx only lists select medications. If yours isn’t included, that’s a coverage gap — not a site error. Use Request this medication on the coverage page, or Browse included medications.";
+  }
+  if (/(cvs|walgreens|my pharmacy|regular pharmacy)/.test(t)) {
+    return "Whether you can use CVS, Walgreens, or your regular pharmacy depends on the medication’s access path. Open the medication page → How can I get it? Manufacturer-direct options usually are not simple retail pickup.";
+  }
+  if (/(brand-?name|generic|compounded|what am i (getting|receiving))/.test(t)) {
+    return "Each medication page has a “What am I actually receiving?” section that states brand-name, generic, or compounded. Don’t assume it matches your usual pharmacy dispense.";
+  }
+  if (/(eligible|eligibility|qualify|medicare|medicaid|insurance)/.test(t)) {
+    return "Open Eligibility & insurance on the medication page. TrumpRx explains typical rules; the pharmacy/processor or manufacturer program makes the final eligibility decision — not TrumpRx.";
+  }
+  if (/(price different|wrong price|incorrect price)/.test(t)) {
+    return "Prices can vary by pharmacy, dosage, and program rules. Use Compare your price on the medication page, and Report an issue if something on our site looks wrong.";
+  }
+  if (/(how do i get|fulfillment|pickup|ship|who ships|where is my order|delivery)/.test(t)) {
+    return "Use How can I get it? on the medication page, then Get this price for the pathway. TrumpRx does not sell or ship medications — the pharmacy or manufacturer program does.";
+  }
+  if (/(report|incorrect information|broken link)/.test(t)) {
+    return "Use Report an issue on medication, pharmacy, pricing, or access screens. You’ll get a reference number after you submit.";
   }
   if (/(coupon|barcode|bin|pcn|pharmacist|counter)/.test(t)) {
-    return "To use a coupon: open Get coupon (or Checkout → Issue digital pass), then show the barcode or have the pharmacist enter BIN / PCN / Group / Member ID. Ask them to process it as a discount card, not insurance.";
+    return "For pharmacy-pickup options: after you review eligibility, use Get this price → pharmacy pathway to obtain program information for the counter (barcode / BIN / PCN when applicable). Ask the pharmacist to process it as a discount program, not as insurance.";
   }
-  if (/(price|cheap|cost|save|generic|brand)/.test(t)) {
-    return "Search your medication, pick dosage and 30- or 90-day supply, then compare nearby pharmacies. The number you see is the counter price with the coupon. Use Benchmarks on the results page for cash price context.";
+  if (/(membership|plus|stripe|billing|subscription|do i have to pay trump)/.test(t)) {
+    return "Checking coverage does not mean TrumpRx is charging you for a drug. Optional account tools may have a membership — that is separate from paying for medication at a pharmacy or manufacturer. “Free to use” does not mean medications are free.";
   }
-  if (/(membership|plus|stripe|billing|upgrade)/.test(t)) {
-    return "Free covers search, compare, and coupons. Plus is optional for deeper member prices and alerts — upgrade from Membership via secure Stripe checkout. Manage billing anytime from your account.";
-  }
-  if (/(mail|telehealth|delivery|ship|specialty)/.test(t)) {
-    return "If telehealth or mail-order partners are enabled for this site, you’ll see Close the loop on search results. Otherwise fill locally with your coupon at a network pharmacy.";
-  }
-  if (/(account|sign in|login|password|profile)/.test(t)) {
-    return "Create an account to save meds, digital passes, and price alerts across devices. Use Sign up / Sign in in the header — your checkout cart also syncs when you’re signed in.";
-  }
-  if (/(hello|hi |hey|help|support)/.test(t)) {
-    return "Hi — you’re chatting with Trump RX support. Ask about prices, coupons, insurance vs cash, membership, or checkout. A specialist can follow up in this thread.";
+  if (/(hello|hi |hey|help)/.test(t)) {
+    return "Hi — this is TrumpRx Automated Help (not a human representative). Ask about coverage, brand vs generic, eligibility, pharmacy vs manufacturer access, pricing differences, or how to report an issue.";
   }
   return null;
 }
 
 export const WELCOME_MESSAGE =
-  "Welcome to Trump RX Messages. Ask about comparing prices, using coupons at the counter, insurance vs cash, membership, or checkout. You’re chatting live in this thread — replies may come from automated assist and our support team.";
+  "TrumpRx Automated Help — not a human representative. Ask why a medication isn’t listed, whether CVS/Walgreens apply, brand vs generic, eligibility, how to get your medication, shipping, or how to report incorrect information.";
 
 export async function getOrCreateOpenConversation(params: {
   userId?: string | null;

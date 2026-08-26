@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
-import { TrustCallout } from "@/components/design/trust-callout";
-import { prisma } from "@/lib/db";
+import { CompareWithPharmacy } from "@/components/medication/compare-with-pharmacy";
+import { EligibilitySection } from "@/components/medication/eligibility-section";
+import { FulfillmentSection } from "@/components/medication/fulfillment-section";
+import { ReportIssueButton } from "@/components/support/report-issue-button";
+import { getProgramMeta, PRODUCT_TYPE_LABEL } from "@/lib/program-catalog";
 import { formatCurrency } from "@/lib/pricing";
 import { getDrugById } from "@/lib/pricing-service";
+import { prisma } from "@/lib/db";
 import { cn } from "@/lib/utils";
 
 interface PageProps {
@@ -19,13 +22,15 @@ export async function generateStaticParams() {
   return drugs.map(({ id }) => ({ id }));
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { id } = await params;
   const drug = await getDrugById(id);
   if (!drug) return { title: "Medication" };
   return {
-    title: `${drug.genericName} (${drug.brandName}) prices`,
-    description: `Compare Trump RX coupon prices for ${drug.genericName} near you.`,
+    title: `${drug.brandName} (${drug.genericName}) — TrumpRx option`,
+    description: `See whether a TrumpRx savings option is available for ${drug.brandName}, compare costs, review eligibility, and learn how to access it.`,
   };
 }
 
@@ -34,108 +39,136 @@ export default async function DrugDetailPage({ params }: PageProps) {
   const drug = await getDrugById(id);
   if (!drug) notFound();
 
+  const program = getProgramMeta(drug.id);
+  const forms = Array.from(new Set(drug.strengths.map((s) => s.form)));
+
   return (
     <div className="min-h-[70dvh] bg-background">
-      <div className="relative isolate overflow-hidden border-b border-border">
-        <Image
-          src="/images/step-search.webp"
-          alt=""
-          fill
-          className="object-cover opacity-35"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/92 to-background/70" />
-        <div className="relative mx-auto max-w-6xl px-4 py-7 sm:px-6">
-          <p className="text-sm font-medium text-primary">{drug.therapeuticClass}</p>
-          <h1 className="mt-1 font-display text-3xl font-semibold tracking-tight md:text-4xl">
-            {drug.genericName}
-          </h1>
-          <p className="mt-1 text-lg text-muted-foreground">
-            Brand name: {drug.brandName}
+      <div className="border-b border-border bg-surface">
+        <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
+          <p className="text-xs font-semibold uppercase tracking-wider text-primary">
+            Included medication
           </p>
+          <h1 className="mt-1 font-display text-3xl font-semibold uppercase tracking-tight md:text-4xl">
+            {drug.brandName}
+          </h1>
+          <p className="mt-1 text-base text-muted-foreground">
+            Generic name: <span className="text-foreground">{drug.genericName}</span>
+            {program ? (
+              <>
+                {" "}
+                · Manufacturer:{" "}
+                <span className="text-foreground">{program.manufacturer}</span>
+              </>
+            ) : null}
+          </p>
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            {program && (
+              <span className="inline-flex items-center border border-primary/30 bg-primary/5 px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
+                {PRODUCT_TYPE_LABEL[program.productType]}
+              </span>
+            )}
+            <span className="inline-flex items-center border border-border bg-card px-2.5 py-1 text-xs font-medium text-muted-foreground">
+              {drug.therapeuticClass}
+            </span>
+            {forms.map((f) => (
+              <span
+                key={f}
+                className="inline-flex items-center border border-border bg-card px-2.5 py-1 text-xs font-medium capitalize text-muted-foreground"
+              >
+                {f}
+              </span>
+            ))}
+          </div>
           <div className="mt-4 flex flex-wrap gap-2">
             <Link
-              href={`/search?drug=${drug.id}`}
+              href={`/access?drug=${drug.id}`}
               className={cn(buttonVariants({ size: "lg" }), "min-h-11 gap-1.5")}
             >
-              Compare local prices
-              <ArrowRight className="size-4" />
+              Get this price
+              <ArrowRight className="size-4" aria-hidden />
             </Link>
             <Link
-              href="/help"
+              href={`/search?drug=${drug.id}`}
               className={cn(
                 buttonVariants({ variant: "outline", size: "lg" }),
                 "min-h-11"
               )}
             >
-              How coupons work
+              See pharmacy cash options
             </Link>
+            <ReportIssueButton drugId={drug.id} />
           </div>
         </div>
       </div>
 
-      <div className="mx-auto grid max-w-6xl gap-5 px-4 py-6 sm:px-6 lg:grid-cols-[1.3fr_0.7fr]">
-        <div className="space-y-4">
-          <section className="rounded-2xl border border-border bg-card p-4">
-            <h2 className="font-display text-xl font-semibold">Common dosages</h2>
-            <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+      <div className="mx-auto max-w-6xl space-y-5 px-4 py-6 sm:px-6 sm:py-8">
+        <section className="rounded-lg border border-border bg-card p-4 sm:p-5">
+          <h2 className="font-display text-xl font-semibold uppercase tracking-tight">
+            What am I actually receiving?
+          </h2>
+          {program ? (
+            <>
+              <p className="mt-2 text-base font-semibold">
+                {program.receivingLabel}
+              </p>
+              <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                {program.receivingDetail}
+              </p>
+            </>
+          ) : (
+            <p className="mt-2 text-sm text-muted-foreground">
+              Program details are unavailable for this record.
+            </p>
+          )}
+          <div className="mt-4">
+            <h3 className="text-sm font-semibold">Dosage options</h3>
+            <ul className="mt-2 flex flex-wrap gap-2">
               {drug.strengths.map((s) => (
                 <li
                   key={s.id}
-                  className="rounded-xl bg-surface px-3 py-2.5 text-sm font-medium"
+                  className="border border-border bg-surface px-2.5 py-1.5 text-sm font-medium"
                 >
                   {s.label}
                 </li>
               ))}
             </ul>
-          </section>
-
-          <section className="rounded-2xl border border-border bg-card p-4">
-            <h2 className="font-display text-xl font-semibold">
-              Estimated cash retail
-            </h2>
-            <dl className="mt-3 grid gap-3 sm:grid-cols-2">
-              <div className="rounded-xl bg-surface px-3 py-3">
-                <dt className="text-sm text-muted-foreground">30-day supply</dt>
-                <dd className="trx-price-md mt-1">
-                  {formatCurrency(drug.retailCashPrice30)}
-                </dd>
-              </div>
-              <div className="rounded-xl bg-surface px-3 py-3">
-                <dt className="text-sm text-muted-foreground">90-day supply</dt>
-                <dd className="trx-price-md mt-1">
-                  {formatCurrency(drug.retailCashPrice90)}
-                </dd>
-              </div>
-            </dl>
-            <p className="mt-3 text-sm text-muted-foreground">
-              Retail estimates are before Trump RX coupons. Local coupon prices
-              are usually much lower.
-            </p>
-          </section>
-
-          <TrustCallout title="Generic vs brand">
-            Ask your pharmacist about generic <strong>{drug.genericName}</strong>{" "}
-            when appropriate. It usually has the same active ingredient as{" "}
-            <strong>{drug.brandName}</strong> at a lower cash price.
-          </TrustCallout>
-        </div>
-
-        <aside className="space-y-3">
-          <div className="trx-photo relative aspect-[4/5]">
-            <Image
-              src="/images/prescription-bottle.webp"
-              alt="Prescription medication packaging"
-              fill
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 30vw"
-            />
           </div>
-          <TrustCallout variant="warning" title="Not insurance">
-            Always compare this coupon price with your plan copay before you
-            fill.
-          </TrustCallout>
-        </aside>
+        </section>
+
+        {program && (
+          <>
+            <section className="rounded-lg border border-border bg-card p-4 sm:p-5">
+              <h2 className="font-display text-xl font-semibold uppercase tracking-tight">
+                TrumpRx price
+              </h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Illustrative program cash option for a common 30-day fill.
+                Confirm at the pharmacy or manufacturer program before you fill.
+              </p>
+              <p className="mt-3 font-display text-4xl font-semibold tabular-nums text-primary">
+                {formatCurrency(program.programPrice30)}
+              </p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Estimated cash retail without program:{" "}
+                {formatCurrency(drug.retailCashPrice30)} (30-day)
+              </p>
+            </section>
+
+            <CompareWithPharmacy
+              medicationLabel={`${drug.brandName} (${drug.genericName})`}
+              trumpRxPrice={program.programPrice30}
+              suggestedRetail={drug.retailCashPrice30}
+            />
+
+            <EligibilitySection eligibility={program.eligibility} />
+
+            <FulfillmentSection
+              drugId={drug.id}
+              fulfillment={program.fulfillment}
+            />
+          </>
+        )}
       </div>
     </div>
   );

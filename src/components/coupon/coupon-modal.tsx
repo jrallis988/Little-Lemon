@@ -423,21 +423,23 @@ export function CouponModal({
                   Email
                 </Button>
               </div>
-              <Button
+                <Button
                 type="button"
                 variant={addedToCheckout ? "secondary" : "default"}
                 className="no-print min-h-11 w-full"
                 onClick={() => void onAddToCheckout()}
               >
                 <ShoppingBag />
-                {addedToCheckout ? "Updated in checkout" : "Add to digital checkout"}
+                {addedToCheckout
+                  ? "Saved program information"
+                  : "Save program information"}
               </Button>
               {addedToCheckout && (
                 <Link
-                  href="/checkout"
+                  href={`/access?drug=${encodeURIComponent(drug.id)}&path=pharmacy`}
                   className="no-print block text-center text-sm font-medium text-primary underline-offset-2 hover:underline"
                 >
-                  Open checkout →
+                  Continue access pathway →
                 </Link>
               )}
               <Button

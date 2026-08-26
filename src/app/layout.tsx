@@ -29,24 +29,23 @@ const mono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Trump RX — Lower prescription prices at pharmacies near you",
+    default: "Trump RX — See if your medication is included",
     template: "%s · Trump RX",
   },
   description:
-    "Search brand and generic medications, compare local pharmacy coupon prices, and show a digital discount at the counter. Trump RX is a private discount provider — not insurance and not a government service.",
+    "TrumpRx helps you check whether a select medication has a savings option, compare it with what you pay today, understand eligibility, and learn how to access it. Not a pharmacy and not insurance.",
   keywords: [
     "Trump RX",
     "TrumpRx",
-    "prescription coupons",
-    "drug prices",
-    "pharmacy discount",
     "medication savings",
-    "generic vs brand",
+    "prescription discount",
+    "eligibility",
+    "select medications",
   ],
   openGraph: {
-    title: "Trump RX — Compare pharmacy prices. Keep more of your money.",
+    title: "Trump RX — See if your medication is included",
     description:
-      "Search medications, compare nearby pharmacies, and show a digital coupon at the counter. Private discount service — not insurance.",
+      "Select medications only. Compare options, review eligibility, and follow a clear access path — pharmacy or manufacturer-direct.",
     type: "website",
   },
 };

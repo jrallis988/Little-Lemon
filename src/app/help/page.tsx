@@ -1,163 +1,76 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
-import { buttonVariants } from "@/components/ui/button";
-import { TrustCallout } from "@/components/design/trust-callout";
-import { cn } from "@/lib/utils";
+import { ReportIssueButton } from "@/components/support/report-issue-button";
 
 export const metadata: Metadata = {
-  title: "How coupons work",
+  title: "Help",
   description:
-    "Learn how Trump RX discount coupons work at the pharmacy counter — and how to compare with insurance.",
+    "Automated help topics for TrumpRx coverage, access pathways, eligibility, and reporting issues.",
 };
 
-const STEPS = [
+const TOPICS = [
   {
-    title: "Search your medication",
-    body: "Enter the brand or generic name, then pick dosage, quantity, and 30- or 90-day supply.",
+    q: "Why isn’t my medication listed?",
+    a: "TrumpRx only includes select medications. Use Check coverage to confirm, Request this medication if missing, or browse the included directory.",
   },
   {
-    title: "Compare nearby pharmacies",
-    body: "Sort by lowest price or nearest store. Open a row for hours, phone, and coupon acceptance.",
+    q: "How do I get my medication?",
+    a: "Open the medication page → How can I get it? → Get this price. Pathways are pharmacy pickup or manufacturer-direct — TrumpRx does not sell or ship drugs.",
   },
   {
-    title: "Show the coupon at the counter",
-    body: "Use pharmacist mode for a large barcode, or have them enter BIN / PCN / Group / Member ID.",
+    q: "Does my insurance qualify?",
+    a: "Read Eligibility & insurance on the medication page. TrumpRx explains typical rules; the pharmacy or manufacturer makes the final determination.",
   },
   {
-    title: "Or use digital checkout",
-    body: "Add deals to Checkout, then issue a multi-drug digital pass — barcodes stay on Trump RX without manufacturer redirects.",
+    q: "Can I use CVS or Walgreens?",
+    a: "Depends on the medication’s fulfillment path. Pharmacy-pickup options often work at participating retail locations; manufacturer-direct usually does not.",
   },
-  {
-    title: "Compare with your insurance",
-    body: "Ask which costs less: the Trump RX coupon or your plan copay. Use the Insurance vs cash tool on search results for deductible tradeoffs.",
-  },
-] as const;
+];
 
 export default function HelpPage() {
   return (
     <div className="min-h-[70dvh] bg-background">
-      <div className="relative isolate overflow-hidden border-b border-border">
-        <Image
-          src="/images/step-coupon.webp"
-          alt=""
-          fill
-          className="object-cover object-[center_30%] opacity-40"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/92 to-background/75" />
-        <div className="relative mx-auto max-w-6xl px-4 py-8 sm:px-6">
-          <h1 className="font-display text-3xl font-semibold tracking-tight md:text-4xl">
-            How Trump RX coupons work
-          </h1>
-          <p className="mt-2 max-w-2xl text-lg text-muted-foreground">
-            A clear counter flow for patients and caregivers — built for phones
-            first.
+      <div className="border-b border-border bg-surface">
+        <div className="mx-auto max-w-3xl px-4 py-6 sm:px-6">
+          <p className="text-xs font-semibold uppercase tracking-wider text-primary">
+            Support
           </p>
+          <h1 className="mt-1 font-display text-3xl font-semibold uppercase tracking-tight">
+            Help
+          </h1>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Use the floating <strong>Help</strong> button for Automated Help (not
+            a human representative). For deeper answers, see the{" "}
+            <Link href="/faq" className="font-medium text-primary hover:underline">
+              FAQ
+            </Link>
+            .
+          </p>
+          <div className="mt-4">
+            <ReportIssueButton />
+          </div>
         </div>
       </div>
-
-      <div className="mx-auto max-w-6xl space-y-6 px-4 py-6 sm:px-6">
-        <TrustCallout variant="warning" title="Discount card — not insurance">
-          Trump RX coupons generally cannot be combined with insurance. Always
-          ask the pharmacist to compare prices before processing.
-        </TrustCallout>
-
-        <TrustCallout title="Need a person?">
-          Tap <strong>Chat with us</strong> in the corner to message Trump RX
-          about prices, coupons, insurance vs cash, membership, or checkout.
-          You&apos;ll get instant topic help and can wait for a support reply in
-          the same thread.
-        </TrustCallout>
-
-        <ol className="grid gap-3 md:grid-cols-2">
-          {STEPS.map((step, i) => (
-            <li
-              key={step.title}
-              className="rounded-2xl border border-border bg-card p-4"
-            >
-              <p className="text-xs font-bold tracking-wide text-primary">
-                STEP {i + 1}
-              </p>
-              <h2 className="mt-1 text-lg font-semibold">{step.title}</h2>
-              <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                {step.body}
-              </p>
-            </li>
-          ))}
-        </ol>
-
-        <section className="grid gap-4 md:grid-cols-[1.1fr_0.9fr] md:items-center">
-          <div className="space-y-3">
-            <h2 className="font-display text-2xl font-semibold">
-              If something goes wrong at the pharmacy
-            </h2>
-            <ul className="list-disc space-y-2 pl-5 text-sm leading-relaxed text-muted-foreground">
-              <li>
-                <strong className="text-foreground">Coupon not accepted:</strong>{" "}
-                Ask them to process as a discount card (not insurance), or try
-                another nearby pharmacy.
-              </li>
-              <li>
-                <strong className="text-foreground">Price looks different:</strong>{" "}
-                Confirm dosage, quantity, and brand vs generic. Re-check Trump RX
-                before you leave.
-              </li>
-              <li>
-                <strong className="text-foreground">Stock issue:</strong> Call
-                ahead using the pharmacy phone number on the store card.
-              </li>
-              <li>
-                <strong className="text-foreground">Location denied:</strong> Enter
-                a ZIP code instead of using “Near me.”
-              </li>
-            </ul>
-            <div className="flex flex-wrap gap-2 pt-1">
-              <Link
-                href="/help/pharmacist"
-                className={cn(buttonVariants({ size: "lg" }), "min-h-11")}
-              >
-                Pharmacist guide
-              </Link>
-              <Link
-                href="/help/counter-issue"
-                className={cn(
-                  buttonVariants({ variant: "outline", size: "lg" }),
-                  "min-h-11"
-                )}
-              >
-                Report counter issue
-              </Link>
-              <Link
-                href="/transfer"
-                className={cn(
-                  buttonVariants({ variant: "outline", size: "lg" }),
-                  "min-h-11"
-                )}
-              >
-                Transfer prescription
-              </Link>
-              <Link
-                href="/search"
-                className={cn(
-                  buttonVariants({ variant: "ghost", size: "lg" }),
-                  "min-h-11"
-                )}
-              >
-                Compare prices
-              </Link>
-            </div>
-          </div>
-          <div className="trx-photo relative aspect-[4/3]">
-            <Image
-              src="/images/pharmacist-helping.webp"
-              alt="Pharmacist assisting a patient with a prescription"
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 40vw"
-            />
-          </div>
-        </section>
+      <div className="mx-auto max-w-3xl space-y-3 px-4 py-8 sm:px-6">
+        {TOPICS.map((t) => (
+          <article
+            key={t.q}
+            className="rounded-lg border border-border bg-card px-4 py-3"
+          >
+            <h2 className="text-sm font-semibold">{t.q}</h2>
+            <p className="mt-1 text-sm text-muted-foreground">{t.a}</p>
+          </article>
+        ))}
+        <p className="pt-2 text-sm text-muted-foreground">
+          Pharmacist processing notes remain at{" "}
+          <Link
+            href="/help/pharmacist"
+            className="font-medium text-primary hover:underline"
+          >
+            /help/pharmacist
+          </Link>{" "}
+          for participating pharmacy pickup programs.
+        </p>
       </div>
     </div>
   );

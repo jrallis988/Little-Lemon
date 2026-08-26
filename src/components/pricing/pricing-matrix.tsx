@@ -402,8 +402,8 @@ export function PricingMatrix({ drug }: PricingMatrixProps) {
             </Link>
           )}
           {saveMessage.includes("digital checkout") && (
-            <Link href="/checkout" className="font-medium text-primary underline-offset-2 hover:underline">
-              Open checkout
+            <Link href="/access" className="font-medium text-primary underline-offset-2 hover:underline">
+              Get this price / access pathway
             </Link>
           )}
         </p>

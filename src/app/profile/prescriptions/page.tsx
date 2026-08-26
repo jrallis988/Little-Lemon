@@ -161,18 +161,20 @@ export default function PrescriptionsPage() {
     <div className="min-h-[70dvh] bg-background">
       <div className="mx-auto max-w-3xl space-y-6 px-4 py-6 sm:px-6">
         <header className="space-y-1.5">
-          <p className="text-sm font-medium text-primary">Patient tools</p>
+          <p className="text-sm font-medium text-primary">Account tools</p>
           <h1 className="font-display text-3xl font-semibold tracking-tight md:text-4xl">
-            Active prescriptions
+            Saved medications & reminders
           </h1>
           <p className="text-muted-foreground">
-            Track refill timing and review historical coupon usage. Not a pharmacy
-            of record — always confirm with your pharmacist.
+            Organize included medications you care about and optional refill
+            reminders. TrumpRx is not your pharmacy of record and does not own
+            or fill these prescriptions — confirm everything with your pharmacy
+            or manufacturer program.
           </p>
         </header>
 
-        <TrustCallout title="Refill reminders are guidance only">
-          Trump RX does not dispense medication. When enabled, email/SMS reminders
+        <TrustCallout title="Reminders are guidance only">
+          TrumpRx does not dispense medication. When enabled, email/SMS reminders
           fire a few days before a tracked next refill date (requires Resend/Twilio
           in production).
         </TrustCallout>
@@ -217,7 +219,9 @@ export default function PrescriptionsPage() {
         </div>
 
         <section className="space-y-3">
-          <h2 className="font-display text-2xl font-semibold">Refill tracker</h2>
+          <h2 className="font-display text-2xl font-semibold">
+            Reminder tracker
+          </h2>
           {active.length === 0 ? (
             <EmptyState
               icon={Pill}
