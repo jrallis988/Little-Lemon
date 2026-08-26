@@ -28,10 +28,10 @@ export function TopBar() {
   return (
     <header className="flex shrink-0 items-center gap-4 border-b border-border/70 bg-card/90 px-5 py-3 backdrop-blur">
       <div className="min-w-0">
-        <h1 className="font-display text-xl font-extrabold tracking-tight text-foreground">
+        <h1 className="font-display text-2xl font-semibold tracking-tight text-foreground">
           {titles[folder] ?? "Mailbox"}
           {count != null ? (
-            <span className="ml-2 text-sm font-bold text-muted-foreground">
+            <span className="ml-2 rounded-full bg-pending-soft px-2.5 py-0.5 text-sm font-extrabold text-amber-800">
               {count}
             </span>
           ) : null}
@@ -44,16 +44,16 @@ export function TopBar() {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search messages, people, attachments…"
-          className="h-11 rounded-2xl border-border/80 bg-secondary/70 pl-10"
+          className="h-12 rounded-3xl border-2 border-border/80 bg-white pl-10 text-sm font-bold"
           aria-label="Search"
         />
       </div>
 
       <div className="ml-auto flex items-center gap-3">
-        <span className="hidden rounded-full bg-brand-soft px-3 py-1.5 text-xs font-extrabold text-brand sm:inline">
+        <span className="hidden rounded-full border-2 border-brand/20 bg-brand-soft px-3.5 py-1.5 text-xs font-extrabold text-brand sm:inline">
           Grade {grade}
         </span>
-        <div className="flex items-center gap-2 rounded-full bg-secondary/80 py-1 pl-1 pr-3">
+        <div className="flex items-center gap-2 rounded-full border-2 border-primary/15 bg-white py-1 pl-1 pr-3.5 shadow-card">
           <ContactAvatar
             contact={{
               id: "me",

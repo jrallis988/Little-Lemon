@@ -1,6 +1,7 @@
 import {
   DoodleBackdrop,
-  MailboxLogo,
+  EmptyStateArt,
+  TipCard,
 } from "@/components/brand/MailboxBrand";
 import { ContactAvatar } from "@/components/mail/ContactAvatar";
 import { SafetyBadge } from "@/components/mail/SafetyBadge";
@@ -62,35 +63,23 @@ export function MessagePreview() {
   }
 
   if (!message || !contact) {
-    if (folder === "pending") {
-      return <PendingEmptyState />;
-    }
-    return (
-      <section className="relative flex h-full items-center justify-center p-8">
-        <DoodleBackdrop className="opacity-50" />
-        <div className="relative z-10 max-w-sm rounded-3xl bg-card px-6 py-10 text-center shadow-panel animate-fade-up">
-          <MailboxLogo size={64} className="mx-auto" />
-          <p className="mt-4 font-display text-2xl font-extrabold text-foreground">
-            Select a message
-          </p>
-        </div>
-      </section>
-    );
+    return <FolderEmptyState folder={folder} />;
   }
 
   const linkedDraftId = draftIdFromMessage(message.id);
   const showApprovalActions =
     message.folder === "pending" && teacherUnlocked;
-  const returned = message.approvalStatus === "rejected" && message.teacherComment;
+  const returned =
+    message.approvalStatus === "rejected" && message.teacherComment;
 
   return (
-    <section className="relative flex h-full min-w-0 flex-col bg-card/40">
+    <section className="relative flex h-full min-w-0 flex-col bg-card/50">
       <header className="border-b border-border/70 px-6 py-5">
         <div className="flex flex-wrap items-start gap-4">
           <ContactAvatar contact={contact} size="lg" />
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
-              <h2 className="font-display text-2xl font-extrabold tracking-tight text-foreground">
+              <h2 className="font-display text-2xl font-semibold tracking-tight text-foreground">
                 {message.subject}
               </h2>
               {message.folder === "pending" ? (
@@ -105,7 +94,7 @@ export function MessagePreview() {
                 <SafetyBadge level={contact.safety} />
               )}
             </div>
-            <p className="mt-1 text-sm font-semibold text-foreground/85">
+            <p className="mt-1 text-sm font-bold text-foreground/85">
               {message.folder === "sent" ||
               message.folder === "pending" ||
               message.folder === "drafts" ? (
@@ -124,14 +113,14 @@ export function MessagePreview() {
                 </>
               )}
             </p>
-            <p className="text-xs font-semibold text-muted-foreground">
+            <p className="text-xs font-bold text-muted-foreground">
               {formatMessageTime(message.sentAt)}
               {contact.email ? ` · ${contact.email}` : ""}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
             {linkedDraftId ? (
-              <Button variant="default" size="sm" asChild>
+              <Button variant="coral" size="sm" asChild>
                 <Link to={`/compose?draft=${linkedDraftId}`}>
                   <PenLine className="size-4" />
                   Edit message
@@ -149,15 +138,17 @@ export function MessagePreview() {
         </div>
 
         {returned && (
-          <div className="mt-4 rounded-2xl border border-warn/30 bg-warn-soft px-4 py-3 text-sm font-semibold text-warn animate-fade-up">
-            <p className="font-extrabold">Teacher comment</p>
-            <p className="mt-1 text-foreground/80">{message.teacherComment}</p>
+          <div className="mt-4 rounded-3xl border-2 border-warn/35 bg-warn-soft px-4 py-3 text-sm font-bold text-warn animate-fade-up">
+            <p className="font-display text-base font-semibold">
+              Teacher comment
+            </p>
+            <p className="mt-1 text-foreground/85">{message.teacherComment}</p>
           </div>
         )}
 
         {contact.safety === "unknown" && message.folder === "inbox" && (
-          <div className="mt-4 space-y-3 rounded-2xl border border-warn/30 bg-warn-soft px-4 py-3 text-sm font-semibold text-warn animate-fade-up">
-            <p>Unknown sender.</p>
+          <div className="mt-4 space-y-3 rounded-3xl border-2 border-warn/35 bg-warn-soft px-4 py-3 text-sm font-bold text-warn animate-fade-up">
+            <p>Unknown sender — ask a grown-up before you reply.</p>
             <Button
               size="sm"
               variant="outline"
@@ -172,8 +163,8 @@ export function MessagePreview() {
 
       <ScrollArea className="flex-1">
         <article className="space-y-4 px-6 py-6">
-          <div className="rounded-3xl bg-card p-6 shadow-card animate-fade-up">
-            <p className="whitespace-pre-wrap text-[15px] font-semibold leading-8 text-foreground/90">
+          <div className="rounded-[1.75rem] border-2 border-border/70 bg-card p-6 shadow-card animate-fade-up">
+            <p className="whitespace-pre-wrap text-base font-bold leading-8 text-foreground/90">
               {message.body}
             </p>
           </div>
@@ -187,20 +178,20 @@ export function MessagePreview() {
                     onClick={() =>
                       setPreviewAttachment({ name: file.name, type: file.type })
                     }
-                    className="flex w-full items-center gap-3 rounded-2xl border border-border bg-card px-4 py-3 text-left shadow-card transition hover:border-primary/30"
+                    className="flex w-full items-center gap-3 rounded-3xl border-2 border-primary/15 bg-primary/5 px-4 py-3.5 text-left shadow-card transition hover:border-primary/35"
                   >
-                    <span className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <span className="flex size-11 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
                       <Paperclip className="size-5" />
                     </span>
                     <span className="min-w-0 flex-1">
                       <span className="block truncate text-sm font-extrabold">
                         {file.name}
                       </span>
-                      <span className="text-xs font-semibold text-muted-foreground">
+                      <span className="text-xs font-bold text-muted-foreground">
                         {formatBytes(file.size)}
                       </span>
                     </span>
-                    <Download className="size-4 text-muted-foreground" />
+                    <Download className="size-4 text-primary" />
                   </button>
                 </li>
               ))}
@@ -208,15 +199,15 @@ export function MessagePreview() {
           )}
 
           {showApprovalActions && (
-            <div className="rounded-3xl border border-border bg-card p-4 shadow-card">
-              <p className="text-sm font-extrabold text-foreground">
+            <div className="rounded-[1.75rem] border-2 border-brand/20 bg-brand-soft/50 p-4 shadow-card">
+              <p className="font-display text-lg font-semibold text-foreground">
                 Review message
               </p>
               <Textarea
                 value={teacherComment}
                 onChange={(e) => setTeacherComment(e.target.value)}
-                placeholder="Teacher comment (optional)"
-                className="mt-3 min-h-[88px] rounded-2xl"
+                placeholder="Add a comment for the student…"
+                className="mt-3 min-h-[96px] rounded-3xl border-2"
               />
               <div className="mt-3 flex flex-wrap gap-2">
                 <Button
@@ -238,9 +229,9 @@ export function MessagePreview() {
           )}
 
           {message.folder === "pending" && !teacherUnlocked && (
-            <div className="rounded-2xl bg-pending-soft px-4 py-3 text-sm font-semibold text-amber-800">
-              Waiting for teacher review. You will be notified once it is sent.
-            </div>
+            <TipCard title="Almost there!">
+              Once your teacher reviews your message, it will be sent!
+            </TipCard>
           )}
         </article>
       </ScrollArea>
@@ -256,19 +247,55 @@ export function MessagePreview() {
   );
 }
 
-function PendingEmptyState() {
+function FolderEmptyState({ folder }: { folder: string }) {
+  if (folder === "pending") {
+    return (
+      <section className="relative flex h-full items-center justify-center p-6">
+        <DoodleBackdrop className="opacity-60" />
+        <EmptyStateArt
+          src="/illust-pending.png"
+          title="Waiting for approval"
+          body="Hang tight — your teacher is checking this message."
+          tip="Once your teacher reviews your message, it will be sent!"
+        />
+      </section>
+    );
+  }
+
+  if (folder === "drafts") {
+    return (
+      <section className="relative flex h-full items-center justify-center p-6">
+        <DoodleBackdrop className="opacity-60" />
+        <EmptyStateArt
+          src="/illust-notebook.png"
+          title="Pick a draft"
+          tip="Save your work anytime — drafts keep your ideas safe."
+        />
+      </section>
+    );
+  }
+
+  if (folder === "sent") {
+    return (
+      <section className="relative flex h-full items-center justify-center p-6">
+        <DoodleBackdrop className="opacity-60" />
+        <EmptyStateArt
+          src="/illust-airplane.png"
+          title="Messages fly from here"
+          tip="After a teacher approves your mail, it shows up in Sent."
+        />
+      </section>
+    );
+  }
+
   return (
     <section className="relative flex h-full items-center justify-center p-8">
       <DoodleBackdrop className="opacity-50" />
-      <div className="relative z-10 max-w-md rounded-3xl bg-card px-8 py-10 text-center shadow-panel animate-fade-up">
-        <MailboxLogo size={72} className="mx-auto animate-float" />
-        <p className="mt-4 font-display text-2xl font-extrabold">
-          Waiting for approval
-        </p>
-        <p className="mt-2 text-sm font-semibold text-muted-foreground">
-          Once your teacher reviews your message, it will be sent!
-        </p>
-      </div>
+      <EmptyStateArt
+        src="/mailbox-mascot.png"
+        title="Select a message"
+        body="Choose one from the list to read it here."
+      />
     </section>
   );
 }
@@ -285,28 +312,28 @@ function AttachmentPreviewModal({
   const isImage = type.startsWith("image/");
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/40 p-4 backdrop-blur-sm">
-      <div className="w-full max-w-2xl overflow-hidden rounded-3xl border border-border bg-card shadow-panel animate-fade-up">
+      <div className="w-full max-w-2xl overflow-hidden rounded-[2rem] border-[3px] border-primary/20 bg-card shadow-panel animate-fade-up">
         <header className="flex items-center justify-between border-b border-border px-5 py-3">
-          <p className="truncate font-extrabold">{name}</p>
+          <p className="truncate font-display text-lg font-semibold">{name}</p>
           <Button variant="ghost" size="icon" onClick={onClose} aria-label="Close">
             <X className="size-5" />
           </Button>
         </header>
-        <div className="flex min-h-[280px] items-center justify-center bg-secondary/50 p-8">
+        <div className="flex min-h-[300px] items-center justify-center bg-secondary/60 p-8">
           {isImage ? (
-            <div className="rounded-2xl border-2 border-dashed border-primary/30 bg-card px-10 py-16 text-center">
-              <p className="font-display text-lg font-extrabold text-primary">
+            <div className="rotate-1 rounded-2xl border-4 border-white bg-pending-soft px-10 py-16 text-center shadow-card">
+              <p className="font-display text-xl font-semibold text-primary">
                 {name}
               </p>
-              <p className="mt-2 text-sm font-semibold text-muted-foreground">
-                Image attachment preview
+              <p className="mt-2 text-sm font-bold text-muted-foreground">
+                Taped-up attachment preview
               </p>
             </div>
           ) : (
             <div className="text-center">
-              <Paperclip className="mx-auto size-10 text-primary" />
-              <p className="mt-3 font-extrabold">{name}</p>
-              <p className="text-sm font-semibold text-muted-foreground">
+              <Paperclip className="mx-auto size-12 text-primary" />
+              <p className="mt-3 font-display text-xl font-semibold">{name}</p>
+              <p className="text-sm font-bold text-muted-foreground">
                 File ready to download
               </p>
             </div>
@@ -351,9 +378,9 @@ function SearchResultsPane() {
   );
 
   return (
-    <section className="flex h-full flex-col bg-card/50">
+    <section className="flex h-full flex-col bg-card/60">
       <header className="border-b border-border/70 px-6 py-5">
-        <h2 className="font-display text-2xl font-extrabold">
+        <h2 className="font-display text-2xl font-semibold">
           Search results for “{searchQuery.trim()}”
         </h2>
         <div className="mt-4 flex gap-2">
@@ -369,7 +396,7 @@ function SearchResultsPane() {
               type="button"
               onClick={() => setTab(id)}
               className={cn(
-                "rounded-full px-3 py-1.5 text-xs font-extrabold",
+                "rounded-full px-3.5 py-2 text-xs font-extrabold",
                 tab === id
                   ? "bg-primary text-primary-foreground"
                   : "bg-secondary text-muted-foreground",
@@ -387,14 +414,14 @@ function SearchResultsPane() {
               <li key={m.id}>
                 <button
                   type="button"
-                  className="w-full rounded-2xl bg-card px-4 py-3 text-left shadow-card"
+                  className="w-full rounded-3xl border-2 border-border/70 bg-card px-4 py-3 text-left shadow-card"
                   onClick={() => {
                     setFolder(m.folder);
                     selectMessage(m.id);
                   }}
                 >
                   <p className="font-extrabold">{m.subject}</p>
-                  <p className="text-sm font-semibold text-muted-foreground">
+                  <p className="text-sm font-bold text-muted-foreground">
                     {m.preview}
                   </p>
                 </button>
@@ -404,12 +431,12 @@ function SearchResultsPane() {
             peopleHits.map((c) => (
               <li
                 key={c.id}
-                className="flex items-center gap-3 rounded-2xl bg-card px-4 py-3 shadow-card"
+                className="flex items-center gap-3 rounded-3xl border-2 border-border/70 bg-card px-4 py-3 shadow-card"
               >
                 <ContactAvatar contact={c} />
                 <div>
                   <p className="font-extrabold">{c.name}</p>
-                  <p className="text-sm font-semibold text-muted-foreground">
+                  <p className="text-sm font-bold text-muted-foreground">
                     {c.relationship ?? c.email}
                   </p>
                 </div>
@@ -420,7 +447,7 @@ function SearchResultsPane() {
               <li key={`${message.id}-${attachment.id}`}>
                 <button
                   type="button"
-                  className="flex w-full items-center gap-3 rounded-2xl bg-card px-4 py-3 text-left shadow-card"
+                  className="flex w-full items-center gap-3 rounded-3xl border-2 border-border/70 bg-card px-4 py-3 text-left shadow-card"
                   onClick={() => {
                     setFolder(message.folder);
                     selectMessage(message.id);
@@ -439,7 +466,6 @@ function SearchResultsPane() {
 
 function SafeContactsPane() {
   const contacts = useMailStore((s) => s.contacts);
-  const teacherUnlocked = useMailStore((s) => s.teacherUnlocked);
   const groups = [
     {
       label: "Teachers",
@@ -461,37 +487,38 @@ function SafeContactsPane() {
 
   return (
     <section className="relative flex h-full flex-col">
-      <DoodleBackdrop className="opacity-40" />
+      <DoodleBackdrop className="opacity-45" />
       <header className="relative z-10 flex items-center justify-between border-b border-border/70 px-6 py-5">
-        <h2 className="font-display text-2xl font-extrabold tracking-tight">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">
           Safe Contacts
         </h2>
-        {teacherUnlocked && (
-          <span className="rounded-full bg-brand-soft px-3 py-1 text-xs font-extrabold text-brand">
-            Manage in Teacher
-          </span>
-        )}
+        <img
+          src="/illust-shield.png"
+          alt=""
+          className="h-14 w-14 object-contain"
+          draggable={false}
+        />
       </header>
       <ScrollArea className="relative z-10 flex-1">
         <div className="space-y-6 p-6">
           {groups.map((group) =>
             group.items.length === 0 ? null : (
               <div key={group.label}>
-                <h3 className="mb-3 text-xs font-extrabold uppercase tracking-wide text-muted-foreground">
+                <h3 className="mb-3 font-display text-sm font-semibold uppercase tracking-wide text-muted-foreground">
                   {group.label}
                 </h3>
                 <ul className="grid gap-3 sm:grid-cols-2">
                   {group.items.map((contact) => (
                     <li
                       key={contact.id}
-                      className="flex items-center gap-3 rounded-3xl bg-card p-4 shadow-card animate-fade-up"
+                      className="flex items-center gap-3 rounded-[1.75rem] border-2 border-safe/20 bg-card p-4 shadow-card animate-fade-up"
                     >
                       <ContactAvatar contact={contact} size="lg" />
                       <div className="min-w-0">
                         <p className="truncate font-extrabold text-foreground">
                           {contact.name}
                         </p>
-                        <p className="truncate text-sm font-semibold text-muted-foreground">
+                        <p className="truncate text-sm font-bold text-muted-foreground">
                           {contact.relationship ?? contact.email}
                         </p>
                         <div className="mt-2">
@@ -538,18 +565,18 @@ function SettingsPane() {
   };
 
   return (
-    <section className="grid h-full min-h-0 grid-cols-1 lg:grid-cols-[220px_minmax(0,1fr)_260px]">
-      <aside className="border-r border-border/70 bg-card/70 p-4">
-        <nav className="space-y-1">
+    <section className="grid h-full min-h-0 grid-cols-1 lg:grid-cols-[220px_minmax(0,1fr)_280px]">
+      <aside className="border-r border-border/70 bg-card/80 p-4">
+        <nav className="space-y-1.5">
           {nav.map((id) => (
             <button
               key={id}
               type="button"
               onClick={() => setSection(id)}
               className={cn(
-                "w-full rounded-2xl px-3 py-2.5 text-left text-sm font-bold",
+                "w-full rounded-3xl px-3.5 py-3 text-left text-sm font-extrabold",
                 section === id
-                  ? "bg-primary text-primary-foreground"
+                  ? "bg-primary text-primary-foreground shadow-soft"
                   : "text-muted-foreground hover:bg-secondary",
               )}
             >
@@ -562,11 +589,11 @@ function SettingsPane() {
       <div className="overflow-y-auto p-6">
         {section === "account" ? (
           <div className="mx-auto max-w-lg space-y-4 animate-fade-up">
-            <h2 className="font-display text-2xl font-extrabold">Account</h2>
+            <h2 className="font-display text-3xl font-semibold">Account</h2>
             <label className="block space-y-2">
               <span className="text-sm font-extrabold">Name</span>
               <input
-                className="flex h-11 w-full rounded-2xl border border-input bg-card px-4 text-sm font-semibold"
+                className="flex h-12 w-full rounded-3xl border-2 border-input bg-card px-4 text-sm font-bold"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
@@ -574,9 +601,11 @@ function SettingsPane() {
             <label className="block space-y-2">
               <span className="text-sm font-extrabold">Grade</span>
               <select
-                className="flex h-11 w-full rounded-2xl border border-input bg-card px-4 text-sm font-semibold"
+                className="flex h-12 w-full rounded-3xl border-2 border-input bg-card px-4 text-sm font-bold"
                 value={grade}
-                onChange={(e) => setGrade(Number(e.target.value) as typeof grade)}
+                onChange={(e) =>
+                  setGrade(Number(e.target.value) as typeof grade)
+                }
               >
                 {Array.from({ length: 12 }, (_, i) => i + 1).map((g) => (
                   <option key={g} value={g}>
@@ -588,7 +617,7 @@ function SettingsPane() {
             <label className="block space-y-2">
               <span className="text-sm font-extrabold">School</span>
               <input
-                className="flex h-11 w-full rounded-2xl border border-input bg-card px-4 text-sm font-semibold"
+                className="flex h-12 w-full rounded-3xl border-2 border-input bg-card px-4 text-sm font-bold"
                 value={school}
                 onChange={(e) => setSchool(e.target.value)}
               />
@@ -606,25 +635,29 @@ function SettingsPane() {
             </Button>
           </div>
         ) : (
-          <div className="mx-auto max-w-lg rounded-3xl bg-card p-8 text-center shadow-card">
-            <p className="font-display text-xl font-extrabold">
+          <div className="mx-auto max-w-lg rounded-[2rem] border-2 border-border bg-card p-8 text-center shadow-card">
+            <p className="font-display text-2xl font-semibold">
               {labels[section as (typeof nav)[number]]}
             </p>
-            <p className="mt-2 text-sm font-semibold text-muted-foreground">
+            <p className="mt-2 text-sm font-bold text-muted-foreground">
               Coming soon in classroom rollout.
             </p>
           </div>
         )}
       </div>
 
-      <aside className="hidden border-l border-border/70 bg-card/50 p-5 lg:block">
-        <div className="rounded-3xl bg-brand-soft/70 p-5 text-center shadow-card">
-          <MailboxLogo size={72} className="mx-auto" />
-          <p className="mt-3 font-display text-lg font-extrabold text-brand">
+      <aside className="hidden border-l border-border/70 bg-brand-soft/40 p-5 lg:block">
+        <div className="rounded-[2rem] border-2 border-brand/20 bg-card p-5 text-center shadow-card">
+          <img
+            src="/mailbox-mascot.png"
+            alt=""
+            className="mx-auto h-24 w-24 object-contain animate-float"
+          />
+          <p className="mt-3 font-display text-xl font-semibold text-brand">
             You’re all set!
           </p>
-          <p className="mt-1 text-sm font-semibold text-muted-foreground">
-            Your account is secure.
+          <p className="mt-1 text-sm font-bold text-muted-foreground">
+            Your account is secure and ready for school mail.
           </p>
         </div>
       </aside>

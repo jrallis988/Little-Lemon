@@ -56,23 +56,23 @@ export function Sidebar() {
 
   return (
     <>
-      <aside className="flex h-full w-[232px] shrink-0 flex-col border-r border-border/70 bg-card">
+      <aside className="flex h-full w-[248px] shrink-0 flex-col border-r-2 border-primary/10 bg-card">
         <div className="flex items-center gap-2.5 px-5 pb-3 pt-6">
-          <MailboxLogo size={36} className="animate-float" />
+          <MailboxLogo size={44} className="animate-float" />
           <Link
             to="/"
-            className="font-display text-xl font-extrabold tracking-tight text-brand"
+            className="font-display text-2xl font-semibold tracking-tight text-brand"
             onClick={() => setFolder("inbox")}
           >
             mailbox
           </Link>
         </div>
 
-        <div className="space-y-2 px-4 pb-3 pt-2">
+        <div className="space-y-2.5 px-4 pb-3 pt-2">
           <Button
             asChild
             variant="default"
-            className="w-full justify-start gap-3 rounded-2xl shadow-soft"
+            className="h-12 w-full justify-start gap-3 rounded-3xl text-base shadow-pop"
           >
             <Link to="/compose">
               <PenSquare className="size-5" />
@@ -82,7 +82,7 @@ export function Sidebar() {
           <Button
             type="button"
             variant="outline"
-            className="w-full justify-start gap-3 rounded-2xl border-brand/20 bg-brand-soft/60 text-brand hover:bg-brand-soft"
+            className="h-12 w-full justify-start gap-3 rounded-3xl border-[2.5px] border-brand/30 bg-brand-soft text-brand hover:bg-brand-soft"
             onClick={() => setTeacherOpen(true)}
           >
             <GraduationCap className="size-5" />
@@ -108,23 +108,23 @@ export function Sidebar() {
                 type="button"
                 onClick={() => goFolder(item.id)}
                 className={cn(
-                  "flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-left transition-all",
+                  "flex w-full items-center gap-3 rounded-3xl px-3.5 py-3 text-left transition-all",
                   active
                     ? "bg-primary text-primary-foreground shadow-soft"
                     : "text-foreground/85 hover:bg-secondary",
                 )}
               >
                 <Icon className="size-5 shrink-0" />
-                <span className="min-w-0 flex-1 text-sm font-bold">
+                <span className="min-w-0 flex-1 text-[15px] font-extrabold">
                   {item.label}
                 </span>
                 {typeof count === "number" && count > 0 && (
                   <span
                     className={cn(
-                      "rounded-full px-2 py-0.5 text-xs font-extrabold",
+                      "rounded-full px-2.5 py-0.5 text-xs font-extrabold",
                       active
-                        ? "bg-white/20 text-primary-foreground"
-                        : "bg-primary/10 text-primary",
+                        ? "bg-white/25 text-primary-foreground"
+                        : "bg-pending-soft text-amber-800",
                     )}
                   >
                     {count}

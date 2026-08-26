@@ -4,52 +4,64 @@
 
 @layer base {
   :root {
-    /* Soft school blue + cream — matches friendly Mailbox mockup */
-    --background: 220 40% 97%;
-    --foreground: 222 35% 18%;
+    /* Kid-forward Mailbox: periwinkle primary, sunny accents, bubbly radii */
+    --background: 228 55% 97%;
+    --foreground: 230 35% 22%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222 35% 18%;
+    --card-foreground: 230 35% 22%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 35% 18%;
+    --popover-foreground: 230 35% 22%;
 
-    --primary: 221 83% 58%;
+    /* Soft mailbox periwinkle */
+    --primary: 230 78% 64%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 35% 94%;
-    --secondary-foreground: 222 30% 28%;
+    --secondary: 228 45% 94%;
+    --secondary-foreground: 230 30% 30%;
 
-    --muted: 220 28% 94%;
-    --muted-foreground: 220 12% 46%;
+    --muted: 228 35% 94%;
+    --muted-foreground: 230 14% 46%;
 
-    --accent: 262 70% 96%;
-    --accent-foreground: 262 45% 38%;
+    --accent: 262 75% 95%;
+    --accent-foreground: 262 50% 40%;
 
-    --destructive: 8 78% 55%;
+    --destructive: 4 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 22% 88%;
-    --input: 220 22% 88%;
-    --ring: 221 83% 58%;
+    --border: 228 30% 88%;
+    --input: 228 30% 88%;
+    --ring: 230 78% 64%;
 
-    --radius: 1rem;
+    --radius: 1.25rem;
 
-    --safe: 152 55% 38%;
+    --safe: 158 58% 40%;
     --safe-foreground: 0 0% 100%;
-    --safe-soft: 152 45% 93%;
+    --safe-soft: 158 55% 92%;
 
-    --brand: 262 72% 58%;
-    --brand-soft: 262 70% 95%;
-    --pending: 42 95% 52%;
-    --pending-soft: 42 100% 94%;
-    --warn: 18 90% 58%;
-    --warn-soft: 18 100% 95%;
+    --brand: 268 72% 62%;
+    --brand-soft: 268 80% 95%;
 
-    --nest-sky: 220 45% 96%;
-    --nest-mist: 220 30% 93%;
-    --nest-leaf: 152 55% 38%;
-    --nest-coral: 18 90% 58%;
+    --pending: 42 98% 55%;
+    --pending-soft: 42 100% 92%;
+
+    --warn: 14 90% 58%;
+    --warn-soft: 14 100% 94%;
+
+    --tag-teacher: 230 78% 64%;
+    --tag-teacher-soft: 230 90% 94%;
+    --tag-classmate: 158 55% 42%;
+    --tag-classmate-soft: 158 55% 92%;
+    --tag-family: 28 95% 55%;
+    --tag-family-soft: 28 100% 93%;
+    --tag-school: 268 70% 60%;
+    --tag-school-soft: 268 80% 95%;
+
+    --nest-sky: 228 55% 96%;
+    --nest-mist: 228 40% 93%;
+    --nest-leaf: 158 58% 40%;
+    --nest-coral: 14 90% 58%;
   }
 
   * {
@@ -78,9 +90,18 @@
   .doodle-bg {
     background-color: hsl(var(--background));
     background-image:
-      radial-gradient(circle at 12% 18%, hsl(262 70% 92% / 0.7) 0 2px, transparent 3px),
-      radial-gradient(circle at 88% 12%, hsl(221 83% 90% / 0.8) 0 2.5px, transparent 3.5px),
-      radial-gradient(circle at 76% 78%, hsl(42 95% 85% / 0.7) 0 2px, transparent 3px),
-      radial-gradient(circle at 18% 82%, hsl(152 45% 88% / 0.7) 0 2px, transparent 3px);
+      radial-gradient(circle at 8% 12%, hsl(268 80% 90% / 0.85) 0 3px, transparent 4px),
+      radial-gradient(circle at 92% 10%, hsl(42 98% 78% / 0.9) 0 3.5px, transparent 4.5px),
+      radial-gradient(circle at 86% 84%, hsl(158 55% 82% / 0.75) 0 3px, transparent 4px),
+      radial-gradient(circle at 12% 88%, hsl(230 90% 86% / 0.8) 0 2.5px, transparent 3.5px),
+      radial-gradient(circle at 48% 6%, hsl(14 90% 88% / 0.7) 0 2px, transparent 3px);
+  }
+
+  .bubble {
+    @apply rounded-[1.5rem];
+  }
+
+  .kid-card {
+    @apply rounded-[1.5rem] border-2 border-border/80 bg-card shadow-card;
   }
 }

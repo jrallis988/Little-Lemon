@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 active:scale-[0.98]",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-2xl text-sm font-extrabold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 active:translate-y-[1px]",
   {
     variants: {
       variant: {
@@ -13,17 +13,17 @@ const buttonVariants = cva(
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         outline:
-          "border-2 border-border bg-card text-foreground hover:bg-muted",
-        ghost: "hover:bg-muted text-foreground",
+          "border-[2.5px] border-primary/25 bg-card text-foreground hover:bg-primary/5",
+        ghost: "hover:bg-secondary text-foreground",
         coral:
-          "bg-nest-coral text-white shadow-soft hover:brightness-105",
+          "bg-warn text-white shadow-soft hover:brightness-105",
         safe: "bg-safe text-safe-foreground shadow-soft hover:brightness-105",
       },
       size: {
-        default: "h-11 px-5 py-2",
-        sm: "h-9 rounded-xl px-3 text-xs",
-        lg: "h-14 rounded-3xl px-7 text-base",
-        icon: "h-11 w-11",
+        default: "h-12 px-5 py-2",
+        sm: "h-10 rounded-2xl px-3.5 text-xs",
+        lg: "h-14 rounded-3xl px-8 text-base",
+        icon: "h-12 w-12",
       },
     },
     defaultVariants: {

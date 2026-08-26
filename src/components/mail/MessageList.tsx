@@ -1,3 +1,4 @@
+import { TipCard } from "@/components/brand/MailboxBrand";
 import { MessageListItem } from "@/components/mail/MessageListItem";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
@@ -42,7 +43,10 @@ export function MessageList() {
     if (message.folder !== folder) return false;
     const contact = getContact(contacts, message.fromContactId);
 
-    if (folder === "inbox" && !matchesFilter(inboxFilter, contact?.category, message.unread)) {
+    if (
+      folder === "inbox" &&
+      !matchesFilter(inboxFilter, contact?.category, message.unread)
+    ) {
       return false;
     }
 
@@ -60,18 +64,18 @@ export function MessageList() {
   });
 
   return (
-    <section className="flex h-full min-w-0 flex-col border-r border-border/70 bg-card/60">
+    <section className="flex h-full min-w-0 flex-col border-r border-border/70 bg-card/70">
       {folder === "inbox" && (
-        <div className="flex gap-1 overflow-x-auto border-b border-border/60 px-3 py-3">
+        <div className="flex gap-1.5 overflow-x-auto border-b border-border/60 px-3 py-3">
           {FILTERS.map((filter) => (
             <button
               key={filter.id}
               type="button"
               onClick={() => setInboxFilter(filter.id)}
               className={cn(
-                "shrink-0 rounded-full px-3 py-1.5 text-xs font-extrabold transition-colors",
+                "shrink-0 rounded-full px-3.5 py-2 text-xs font-extrabold transition-colors",
                 inboxFilter === filter.id
-                  ? "bg-primary text-primary-foreground"
+                  ? "bg-primary text-primary-foreground shadow-soft"
                   : "bg-secondary text-muted-foreground hover:text-foreground",
               )}
             >
@@ -82,10 +86,12 @@ export function MessageList() {
       )}
 
       <ScrollArea className="flex-1">
-        <div className="space-y-1 p-2">
+        <div className="space-y-1.5 p-2.5">
           {filtered.length === 0 ? (
-            <div className="rounded-3xl bg-white/70 px-4 py-10 text-center">
-              <p className="font-extrabold text-foreground">No messages</p>
+            <div className="rounded-3xl bg-white/80 px-4 py-10 text-center">
+              <p className="font-display text-lg font-semibold text-foreground">
+                No messages here
+              </p>
             </div>
           ) : (
             filtered.map((message) => (
@@ -103,6 +109,14 @@ export function MessageList() {
           )}
         </div>
       </ScrollArea>
+
+      {folder === "inbox" && (
+        <div className="border-t border-border/60 p-3">
+          <TipCard title="Tip of the day">
+            Look for the green Verified badge before you reply.
+          </TipCard>
+        </div>
+      )}
     </section>
   );
 }
