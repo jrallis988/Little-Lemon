@@ -791,10 +791,10 @@ a:hover { opacity: 0.8; }
 }
 
 /* Palette-matched previews per project */
-.portfolio-image--pulse {
+.portfolio-image--shift {
     background:
-        linear-gradient(160deg, rgba(8, 9, 11, 0.55) 0%, rgba(232, 32, 32, 0.55) 100%),
-        linear-gradient(135deg, #08090b 0%, #1a1c24 45%, #e82020 160%);
+        linear-gradient(160deg, rgba(18, 24, 32, 0.55) 0%, rgba(31, 169, 224, 0.45) 55%, rgba(184, 240, 0, 0.25) 100%),
+        linear-gradient(135deg, #1b2533 0%, #243142 50%, #1fa9e0 140%);
 }
 
 .portfolio-image--nhdmv {
