@@ -1,0 +1,402 @@
+/* Motion prototype styles — BUILT FOR THE SHIFT */
+
+.film-stage {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.film-beat {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: start;
+  padding: 8%;
+  opacity: 0;
+}
+
+.film-beat .tag {
+  font-family: var(--font-tech);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--shift-volt);
+  margin-bottom: 0.5rem;
+}
+
+.film-beat .word {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 8vw, 5rem);
+  letter-spacing: 0.02em;
+  line-height: 0.9;
+}
+
+.film-beat .sub {
+  margin-top: 0.55rem;
+  font-family: var(--font-info);
+  font-size: 0.95rem;
+  color: var(--shift-frost);
+  max-width: 28ch;
+}
+
+.film-beat--resolve {
+  place-items: center;
+  justify-items: center;
+  text-align: center;
+  background: rgba(18, 24, 32, 0.72);
+}
+
+.film-product {
+  position: absolute;
+  right: 8%;
+  bottom: 14%;
+  z-index: 3;
+  padding: 0.65rem 0.85rem;
+  background: rgba(18, 24, 32, 0.85);
+  border-left: 3px solid var(--shift-iceblue);
+  opacity: 0;
+}
+
+.film-product strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+}
+
+.film-product span {
+  font-family: var(--font-tech);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: var(--shift-volt);
+}
+
+/* Athlete intro */
+.ai-layout {
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  bottom: 10%;
+  z-index: 3;
+}
+
+.ai-bar {
+  width: 64px;
+  height: 3px;
+  background: var(--shift-iceblue);
+  margin-bottom: 0.7rem;
+}
+
+.ai-name {
+  font-size: clamp(2rem, 6vw, 3.6rem);
+}
+
+.ai-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.1rem;
+  margin-top: 0.55rem;
+  font-family: var(--font-tech);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--shift-frost);
+}
+
+.ai-line {
+  margin-top: 0.85rem;
+  font-family: var(--font-condensed);
+  letter-spacing: 0.12em;
+  color: var(--shift-volt);
+  font-size: 0.85rem;
+}
+
+/* Performance stat */
+.perf-panel {
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  bottom: 10%;
+  z-index: 3;
+  padding: 1rem 1.15rem;
+  background: rgba(18, 24, 32, 0.88);
+  border-top: 3px solid var(--shift-volt);
+}
+
+.perf-num {
+  font-family: var(--font-tech);
+  font-size: clamp(2.4rem, 8vw, 4.2rem);
+  line-height: 0.95;
+  color: var(--shift-volt);
+}
+
+.perf-label {
+  font-family: var(--font-condensed);
+  letter-spacing: 0.14em;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.perf-unit {
+  font-family: var(--font-tech);
+  font-size: 0.72rem;
+  color: var(--shift-frost);
+  letter-spacing: 0.08em;
+}
+
+.perf-bar {
+  margin-top: 0.65rem;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+
+.perf-bar-fill {
+  height: 100%;
+  width: 100%;
+  background: var(--shift-iceblue);
+  transform-origin: left center;
+}
+
+/* Product reveal */
+.product-stage {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 2;
+}
+
+.product-block {
+  width: min(280px, 55%);
+  aspect-ratio: 3 / 4;
+  background:
+    linear-gradient(160deg, rgba(31, 169, 224, 0.25), transparent 50%),
+    linear-gradient(200deg, #2a3a4d, #151c26);
+  border: 1px solid rgba(247, 250, 252, 0.12);
+  display: grid;
+  place-items: end start;
+  padding: 1rem;
+  position: relative;
+}
+
+.product-block::before {
+  content: "";
+  position: absolute;
+  inset: 12% 18%;
+  background: linear-gradient(180deg, transparent, rgba(184, 240, 0, 0.15));
+  border: 1px solid rgba(31, 169, 224, 0.35);
+  clip-path: polygon(20% 0, 100% 0, 80% 100%, 0 100%);
+}
+
+.product-block .name {
+  position: relative;
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  z-index: 1;
+}
+
+.product-callouts {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.product-callout {
+  position: absolute;
+  padding: 0.4rem 0.55rem;
+  background: rgba(18, 24, 32, 0.9);
+  border-left: 2px solid var(--shift-volt);
+  font-family: var(--font-tech);
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  opacity: 0;
+}
+
+.product-callout--1 {
+  top: 18%;
+  left: 8%;
+}
+.product-callout--2 {
+  top: 42%;
+  right: 8%;
+}
+.product-callout--3 {
+  bottom: 18%;
+  left: 12%;
+}
+
+/* Athlete × Product bridge */
+.ap-flow {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+}
+
+.ap-step {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: start;
+  padding: 8%;
+  opacity: 0;
+}
+
+.ap-step .k {
+  font-family: var(--font-tech);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--shift-volt);
+}
+
+.ap-step .w {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 7vw, 4rem);
+  margin-top: 0.35rem;
+}
+
+.ap-step .d {
+  margin-top: 0.45rem;
+  color: var(--shift-frost);
+  max-width: 28ch;
+}
+
+/* Kinetic type */
+.type-stage {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 3;
+}
+
+.type-word {
+  position: absolute;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 12vw, 7rem);
+  letter-spacing: 0.02em;
+}
+
+.type-word--volt {
+  color: var(--shift-volt);
+}
+
+.type-word--ice {
+  color: var(--shift-iceblue);
+}
+
+/* Social promo */
+.sp-stack {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  padding: 1.1rem;
+}
+
+.sp-beat {
+  position: absolute;
+  left: 8%;
+  bottom: 12%;
+  display: grid;
+  gap: 0.3rem;
+  max-width: 90%;
+}
+
+.sp-beat span {
+  font-family: var(--font-tech);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: var(--shift-slate);
+}
+
+.sp-beat strong {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 6vw, 3rem);
+  line-height: 0.95;
+}
+
+.sp-beat em {
+  font-style: normal;
+  font-family: var(--font-info);
+  font-size: 0.85rem;
+  color: var(--shift-frost);
+}
+
+.stage.sp--vertical {
+  aspect-ratio: 9 / 16;
+  max-width: 320px;
+  margin-inline: auto;
+}
+
+.stage.sp--square {
+  aspect-ratio: 1 / 1;
+  max-width: 480px;
+  margin-inline: auto;
+}
+
+.stage.sp--wide {
+  aspect-ratio: 16 / 9;
+}
+
+/* End card / sting */
+.ec-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 40%, rgba(31, 169, 224, 0.22), transparent 55%),
+    #121820;
+}
+
+.ec-content {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.55rem;
+  text-align: center;
+  z-index: 2;
+}
+
+.ec-line {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 7vw, 3.8rem);
+  max-width: 12ch;
+}
+
+.ec-line em {
+  font-style: normal;
+  color: var(--shift-iceblue);
+}
+
+.ec-sub {
+  font-family: var(--font-tech);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--shift-frost);
+}
+
+.ec-cta {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.65rem;
+  font-family: var(--font-tech);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: var(--shift-slate);
+}
+
+/* Transition wipe */
+.tr-wipe {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--shift-iceblue), #121820 60%);
+  z-index: 5;
+  transform-origin: left center;
+}
+
+.tr-a,
+.tr-b {
+  position: absolute;
+  inset: 0;
+}
