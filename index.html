@@ -71,7 +71,7 @@
 
         <div class="work-grid" role="list">
           <article class="work-item" role="listitem" style="--accent:var(--coral)">
-            <a href="#contact" class="work-link">
+            <a href="films/lemon-friend.html" class="work-link">
               <div class="work-media">
                 <img src="images/work/work-lemon-friend.png" alt="Cheerful flat lemon character waving in a meadow" width="800" height="800" loading="lazy">
                 <span class="work-play" aria-hidden="true"></span>
@@ -84,7 +84,7 @@
           </article>
 
           <article class="work-item" role="listitem" style="--accent:var(--sky)">
-            <a href="#contact" class="work-link">
+            <a href="films/starry-friends.html" class="work-link">
               <div class="work-media">
                 <img src="images/work/work-starry-friends.png" alt="Flat fox and bunny under a starry night sky" width="800" height="800" loading="lazy">
                 <span class="work-play" aria-hidden="true"></span>
@@ -97,7 +97,7 @@
           </article>
 
           <article class="work-item" role="listitem" style="--accent:var(--orange)">
-            <a href="#contact" class="work-link">
+            <a href="films/lemon-bus.html" class="work-link">
               <div class="work-media">
                 <img src="images/work/work-lemon-bus.png" alt="Flat lemon-shaped school bus in a colorful town" width="800" height="800" loading="lazy">
                 <span class="work-play" aria-hidden="true"></span>
@@ -110,7 +110,7 @@
           </article>
 
           <article class="work-item" role="listitem" style="--accent:var(--leaf)">
-            <a href="#contact" class="work-link">
+            <a href="films/storybook-magic.html" class="work-link">
               <div class="work-media">
                 <img src="images/work/work-storybook-magic.png" alt="Child opening a glowing storybook with flat magical creatures" width="800" height="800" loading="lazy">
                 <span class="work-play" aria-hidden="true"></span>
@@ -133,7 +133,15 @@
         </header>
         <div class="reel-stage">
           <img src="images/reel-banner.png" alt="Flat 2D showreel collage of kids animation frames" width="1600" height="900" loading="lazy">
-          <button type="button" class="reel-play" data-reel-play aria-label="Play showreel">
+          <button
+            type="button"
+            class="reel-play"
+            data-open-video
+            data-video-title="Playhouse Animation Showreel"
+            data-poster="images/reel-banner.png"
+            data-video-message="Showreel trailer"
+            aria-label="Play showreel"
+          >
             <span class="reel-play-icon" aria-hidden="true"></span>
             <span>Watch reel</span>
           </button>
@@ -142,17 +150,7 @@
             <span>2D · Character · Color · Joy · 2D · Character · Color · Joy ·</span>
           </div>
         </div>
-        <dialog class="reel-modal" data-reel-modal>
-          <form method="dialog" class="reel-modal-bar">
-            <p>Showreel placeholder — drop your Vimeo or YouTube embed here.</p>
-            <button value="close" class="btn btn-ghost">Close</button>
-          </form>
-          <div class="reel-embed">
-            <div class="reel-placeholder">
-              <p>Your Playhouse Animation reel plays here.</p>
-            </div>
-          </div>
-        </dialog>
+        <p class="reel-note">Tip: add <code>data-youtube="YOUR_ID"</code> or <code>data-vimeo="YOUR_ID"</code> on the Watch reel button to embed your real reel.</p>
       </div>
     </section>
 
@@ -182,6 +180,21 @@
           <li>Educational shorts</li>
           <li>Title &amp; motion design</li>
         </ul>
+
+        <div class="studio-links">
+          <a class="studio-link-card" href="studio/educators.html" style="--accent:var(--sky)">
+            <h3>For educators</h3>
+            <p>Curriculum-friendly shorts, classroom kits, and literacy companions.</p>
+          </a>
+          <a class="studio-link-card" href="studio/partners.html" style="--accent:var(--coral)">
+            <h3>Institutional partners</h3>
+            <p>Museums, libraries, and public media collaborations.</p>
+          </a>
+          <a class="studio-link-card" href="studio/co-production.html" style="--accent:var(--leaf)">
+            <h3>Co-production</h3>
+            <p>Series pilots, brand worlds, and shared IP development.</p>
+          </a>
+        </div>
       </div>
     </section>
 
@@ -222,6 +235,17 @@
           <h2>Let’s make something playful</h2>
           <p>Studios, educators, and indie producers — tell us about the story you want kids to remember.</p>
         </header>
+
+        <div class="contact-success" data-contact-success hidden tabindex="-1">
+          <div class="contact-success-mark" aria-hidden="true">✓</div>
+          <h3>Note sent — thanks for writing!</h3>
+          <p>We’ll read your message and get back soon. In the meantime, peek at a film or the showreel.</p>
+          <div class="contact-success-actions">
+            <button type="button" class="btn btn-primary" data-contact-reset>Send another note</button>
+            <a href="#work" class="btn btn-ghost">Browse films</a>
+          </div>
+        </div>
+
         <form class="contact-form" id="contact-form" novalidate>
           <div class="field">
             <label for="name">Name</label>
@@ -253,6 +277,7 @@
         <a href="#work">Work</a>
         <a href="#reel">Reel</a>
         <a href="#about">Studio</a>
+        <a href="studio/educators.html">Educators</a>
         <a href="privacy.html">Privacy</a>
         <a href="terms.html">Terms</a>
       </nav>

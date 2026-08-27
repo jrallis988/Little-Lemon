@@ -6,6 +6,13 @@
 
 Static HTML, CSS, and vanilla JS. Typography: Baloo 2 + Nunito.
 
+## Pages
+
+- `index.html` — hero, films, showreel, studio, process, contact
+- `films/*.html` — detailed film pages (synopsis, art, credits, trailer modal)
+- `studio/*.html` — educators, partners, and co-production case studies
+- `privacy.html` / `terms.html`
+
 ## Develop
 
 ```bash
@@ -17,5 +24,5 @@ Open [http://localhost:3000](http://localhost:3000).
 ## Customize
 
 1. Replace stills in `images/work/` with your frames.
-2. Drop a Vimeo/YouTube embed into the showreel modal in `index.html`.
-3. Wire the contact form to your email service in `main.js`.
+2. Add `data-youtube="ID"` or `data-vimeo="ID"` on any `[data-open-video]` button for real trailers/showreel.
+3. Wire the contact form to Formspree (or similar) in `main.js`.
