@@ -70,11 +70,11 @@ export default function Navbar() {
                 priority
               />
             </span>
-            <span className="hidden flex-col leading-none sm:flex">
-              <span className="text-[0.65rem] tracking-[0.22em] text-muted uppercase">
+            <span className="flex flex-col leading-none">
+              <span className="text-[0.6rem] tracking-[0.22em] text-muted uppercase sm:text-[0.65rem]">
                 East Coast
               </span>
-              <span className="font-display text-lg tracking-wide text-foreground md:text-xl">
+              <span className="font-display text-base tracking-wide text-foreground sm:text-lg md:text-xl">
                 {company.shortName}
               </span>
             </span>
