@@ -1,0 +1,27 @@
+/* Graphite Lattice — Phase 1 baseline tokens. Expanded in later UI phases. */
+.root {
+    -fx-font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+    -fx-background-color: #12141A;
+    -fx-text-fill: #F2F3F5;
+}
+
+.home-root {
+    -fx-background-color: linear-gradient(to bottom, #1A1D26, #12141A);
+}
+
+.brand {
+    -fx-font-size: 48px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #F2F3F5;
+    -fx-letter-spacing: 2px;
+}
+
+.tagline {
+    -fx-font-size: 16px;
+    -fx-text-fill: #9AA3B2;
+}
+
+.phase-note {
+    -fx-font-size: 13px;
+    -fx-text-fill: #D4A15A;
+}
