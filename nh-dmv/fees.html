@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#1d3557">
   <meta name="description" content="Common New Hampshire DMV fees mirrored from the official licensing fees schedule.">
-  <title>Fees — NH DMV</title>
+  <title>What will this cost? — NH DMV</title>
   <base href="/nh-dmv/">
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -49,11 +49,25 @@
     </div>
   </header>
 
-  <main id="main" class="page">
+  <main id="main" class="page page-fees">
     <header class="page-intro">
-      <h1>Common DMV <span class="mark">fees</span></h1>
-      <p>Mirrored from the public NH DMV fee schedule. Vehicle registration also requires town/city permit fees before the state portion.</p>
+      <p class="section-kicker">Fees</p>
+      <h1>What will this <span class="mark">cost</span>?</h1>
+      <p>Search by what you’re doing — not by the DMV’s fee table structure. Figures mirrored from the public schedule.</p>
     </header>
+
+    <div class="intent-panel fee-search-panel">
+      <div class="intent-search">
+        <svg class="intent-search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
+          <path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <label class="visually-hidden" for="fee-search" style="position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden">Search fees</label>
+        <input id="fee-search" type="search" placeholder="Try “REAL ID”, “duplicate”, “plate”…" autocomplete="off">
+      </div>
+      <div class="chip-row" id="fee-cats" aria-label="Fee categories"></div>
+    </div>
+
     <div id="fees-root"></div>
   </main>
 

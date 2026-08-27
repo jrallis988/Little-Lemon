@@ -48,46 +48,50 @@
     </div>
   </header>
 
-
-  <main id="main" class="page">
+  <main id="main" class="page page-branches">
     <header class="page-intro">
-      <h1>Find a branch</h1>
-      <p>Fifteen offices statewide with simulated live operational status and one-click scheduling into the same portal.</p>
+      <p class="section-kicker">Locations</p>
+      <h1>Find a <span class="mark">branch</span></h1>
+      <p>Map + list of fifteen offices. Open a branch for hours, services, parking, and a before-you-go document check — without inventing live wait times.</p>
     </header>
 
-    <div class="branch-toolbar">
-      <div class="field">
-        <label for="branch-query">Search</label>
-        <input id="branch-query" type="search" placeholder="City or street…">
-      </div>
-      <div class="field">
-        <label for="branch-region">Region</label>
-        <select id="branch-region">
-          <option value="all">All regions</option>
-          <option value="south">Southern NH</option>
-          <option value="seacoast">Seacoast</option>
-          <option value="central">Central</option>
-          <option value="west">Western</option>
-          <option value="north">North Country</option>
-        </select>
-      </div>
-      <div class="field">
-        <label for="branch-status">Status</label>
-        <select id="branch-status">
-          <option value="all">Any status</option>
-          <option value="open">Open · slots available</option>
-          <option value="busy">Busy</option>
-          <option value="limited">Limited hours</option>
-        </select>
+    <div class="branch-layout">
+      <aside class="branch-map-panel" id="branch-map" aria-label="Region map"></aside>
+      <div>
+        <div class="branch-toolbar">
+          <div class="field">
+            <label for="branch-query">Search</label>
+            <input id="branch-query" type="search" placeholder="City or street…">
+          </div>
+          <div class="field">
+            <label for="branch-region">Region</label>
+            <select id="branch-region">
+              <option value="all">All regions</option>
+              <option value="south">Southern NH</option>
+              <option value="seacoast">Seacoast</option>
+              <option value="central">Central</option>
+              <option value="west">Western</option>
+              <option value="north">North Country</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="branch-status">Status</label>
+            <select id="branch-status">
+              <option value="all">Any status</option>
+              <option value="open">Open · slots available</option>
+              <option value="busy">Busy</option>
+              <option value="limited">Limited hours</option>
+            </select>
+          </div>
+        </div>
+        <div class="branch-grid" id="branch-grid"></div>
       </div>
     </div>
-
-    <div class="branch-grid" id="branch-grid"></div>
   </main>
 
   <footer class="app-footer">
     <div class="footer-inner">
-      <div><div class="footer-brand">New Hampshire DMV</div><p>Branch finder concept with live-status simulation.</p></div>
+      <div><div class="footer-brand">New Hampshire DMV</div><p>Branch finder with map + detail pages.</p></div>
       <div><h3>Next</h3><ul><li><a href="appointments.html">Book appointment</a></li><li><a href="checklist.html">What to bring</a></li></ul></div>
       <div><h3>Account</h3><ul><li><a href="dashboard.html">Dashboard</a></li></ul></div>
       <div><h3>Official</h3><ul><li><a href="https://www.dmv.nh.gov/hours-and-locations" rel="noopener">Official hours</a></li></ul></div>

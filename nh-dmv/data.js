@@ -93,45 +93,92 @@ window.NHDMV = {
 
   dashboardItems: [
     {
-      id: 'appt-knowledge',
-      title: 'Knowledge test',
-      detail: 'Concord · Thu Mar 12 · 10:30 AM',
-      meta: 'Reschedule',
-      href: 'appointments.html?service=knowledge-test&reschedule=1',
-      tone: 'ok'
-    },
-    {
-      id: 'license-exp',
-      title: 'License expires Nov 14, 2026',
-      detail: 'REAL ID Operator · renewal fee $60.00 when eligible',
-      meta: 'Renew',
-      href: 'renew.html',
+      id: 'appt-tomorrow',
+      title: 'Appointment tomorrow — 10:30 AM',
+      detail: 'Knowledge test · Concord · you still need 1 document',
+      meta: 'Checklist',
+      href: 'checklist.html?intent=first-license&demo=almost',
       tone: 'warn'
     },
     {
-      id: 'real-id',
-      title: 'REAL ID on file',
-      detail: 'Star credential — valid for domestic flights',
-      meta: 'View',
-      href: 'real-id.html',
+      id: 'license-exp',
+      title: 'Your license expires in 47 days',
+      detail: 'You’re eligible to renew now · REAL ID Operator $60.00',
+      meta: 'Renew',
+      href: 'service.html?id=dl-renew',
+      tone: 'warn'
+    },
+    {
+      id: 'reg-exp',
+      title: 'Registration expires next month',
+      detail: 'Plate NH 482-193 · pay town/city permit fees first',
+      meta: 'Renew',
+      href: 'vehicle.html#reg-renew',
+      tone: 'alert'
+    },
+    {
+      id: 'real-id-check',
+      title: 'REAL ID checklist',
+      detail: '4 of 5 requirements ready',
+      meta: 'Finish',
+      href: 'checklist.html?intent=real-id&demo=almost',
+      tone: 'ok'
+    }
+  ],
+
+  attentionCards: [
+    {
+      id: 'license',
+      eyebrow: 'License',
+      title: 'Your license expires in 47 days',
+      body: 'You’re eligible to renew now.',
+      cta: 'Renew license',
+      href: 'service.html?id=dl-renew',
+      tone: 'warn'
+    },
+    {
+      id: 'appt',
+      eyebrow: 'Appointment',
+      title: 'Tomorrow — 10:30 AM',
+      body: 'You still need one required document.',
+      cta: 'Review checklist',
+      href: 'checklist.html?intent=first-license&demo=almost',
+      tone: 'alert'
+    },
+    {
+      id: 'reg',
+      eyebrow: 'Registration',
+      title: 'Expires next month',
+      body: 'Renew after town/city permit fees are paid.',
+      cta: 'Renew registration',
+      href: 'vehicle.html#reg-renew',
+      tone: 'warn'
+    },
+    {
+      id: 'realid',
+      eyebrow: 'REAL ID',
+      title: '4 of 5 requirements ready',
+      body: 'Finish the last residency document before you book.',
+      cta: 'Finish checklist',
+      href: 'checklist.html?intent=real-id&demo=almost',
       tone: 'ok'
     }
   ],
 
   services: [
-    { id: 'dl-renew', category: 'license', group: 'renewals', name: 'Renew driver license', blurb: 'Operator $50 · REAL ID Operator $60 (as of Jan 1, 2026 fee schedule)', ways: ['online', 'appt'], href: 'renew.html', fee: '$50–$60' },
-    { id: 'nd-renew', category: 'license', group: 'renewals', name: 'Renew non-driver ID', blurb: 'Non-driver identification card — $20.00', ways: ['online', 'drop', 'appt'], href: 'renew.html?type=non-driver', fee: '$20' },
-    { id: 'real-id', category: 'license', group: 'renewals', name: 'Upgrade to REAL ID', blurb: 'Required for domestic flights & federal facilities — book after document check', ways: ['appt'], href: 'real-id.html', fee: '$60' },
-    { id: 'first-license', category: 'license', group: 'first', name: 'First-time license or permit', blurb: 'Checklist first, then knowledge test by appointment', ways: ['appt'], href: 'checklist.html?intent=first-license' },
-    { id: 'transfer', category: 'license', group: 'first', name: 'Transfer out-of-state license', blurb: 'New residents have 60 days after establishing residency', ways: ['appt'], href: 'checklist.html?intent=transfer' },
-    { id: 'non-driver', category: 'license', group: 'first', name: 'Apply for non-driver ID', blurb: 'State photo ID without driving privileges — $20.00', ways: ['appt'], href: 'checklist.html?intent=non-driver', fee: '$20' },
-    { id: 'knowledge', category: 'license', group: 'testing', name: 'Schedule knowledge test', blurb: 'Driver, CDL, and motorcycle knowledge tests are appointment-only', ways: ['appt'], href: 'appointments.html?service=knowledge-test' },
-    { id: 'road', category: 'license', group: 'testing', name: 'Book road skills test', blurb: 'Schedule after successful knowledge test completion', ways: ['appt'], href: 'appointments.html?service=road-test' },
-    { id: 'motorcycle', category: 'license', group: 'testing', name: 'Motorcycle rider training', blurb: 'Season calendar and registration via motorcycle training path', ways: ['online', 'appt'], href: 'appointments.html?service=motorcycle' },
-    { id: 'duplicate', category: 'license', group: 'updates', name: 'Duplicate license or ID', blurb: 'Replace lost, stolen, or damaged credentials — $20.00', ways: ['online', 'drop', 'appt'], href: 'renew.html?type=duplicate', fee: '$20' },
-    { id: 'address', category: 'license', group: 'updates', name: 'Update address', blurb: 'Address change reprint — $10.00 · drop box friendly', ways: ['drop'], href: 'checklist.html?intent=address', fee: '$10' },
-    { id: 'name-change', category: 'license', group: 'updates', name: 'Name or gender change', blurb: 'Bring certified court or vital records to your appointment', ways: ['appt'], href: 'checklist.html?intent=name-change' },
-    { id: 'cdl-med', category: 'license', group: 'updates', name: 'CDL medical card update', blurb: 'Submit via drop box, email, or mail', ways: ['drop', 'mail'], href: 'checklist.html?intent=cdl-med' },
+    { id: 'dl-renew', category: 'license', group: 'renewals', name: 'Renew driver license', blurb: 'Operator $50 · REAL ID Operator $60 (as of Jan 1, 2026 fee schedule)', ways: ['online', 'appt'], href: 'service.html?id=dl-renew', fee: '$50–$60' },
+    { id: 'nd-renew', category: 'license', group: 'renewals', name: 'Renew non-driver ID', blurb: 'Non-driver identification card — $20.00', ways: ['online', 'drop', 'appt'], href: 'service.html?id=nd-renew', fee: '$20' },
+    { id: 'real-id', category: 'license', group: 'renewals', name: 'Upgrade to REAL ID', blurb: 'Required for domestic flights & federal facilities — book after document check', ways: ['appt'], href: 'service.html?id=real-id', fee: '$60' },
+    { id: 'first-license', category: 'license', group: 'first', name: 'First-time license or permit', blurb: 'Checklist first, then knowledge test by appointment', ways: ['appt'], href: 'first-license.html' },
+    { id: 'transfer', category: 'license', group: 'first', name: 'Transfer out-of-state license', blurb: 'New residents have 60 days after establishing residency', ways: ['appt'], href: 'service.html?id=transfer' },
+    { id: 'non-driver', category: 'license', group: 'first', name: 'Apply for non-driver ID', blurb: 'State photo ID without driving privileges — $20.00', ways: ['appt'], href: 'service.html?id=non-driver', fee: '$20' },
+    { id: 'knowledge', category: 'license', group: 'testing', name: 'Schedule knowledge test', blurb: 'Driver, CDL, and motorcycle knowledge tests are appointment-only', ways: ['appt'], href: 'service.html?id=knowledge' },
+    { id: 'road', category: 'license', group: 'testing', name: 'Book road skills test', blurb: 'Schedule after successful knowledge test completion', ways: ['appt'], href: 'service.html?id=road' },
+    { id: 'motorcycle', category: 'license', group: 'testing', name: 'Motorcycle rider training', blurb: 'Season calendar and registration via motorcycle training path', ways: ['online', 'appt'], href: 'service.html?id=motorcycle' },
+    { id: 'duplicate', category: 'license', group: 'updates', name: 'Duplicate license or ID', blurb: 'Replace lost, stolen, or damaged credentials — $20.00', ways: ['online', 'drop', 'appt'], href: 'service.html?id=duplicate', fee: '$20' },
+    { id: 'address', category: 'license', group: 'updates', name: 'Update address', blurb: 'Address change reprint — $10.00 · drop box friendly', ways: ['drop'], href: 'change-address.html', fee: '$10' },
+    { id: 'name-change', category: 'license', group: 'updates', name: 'Name or gender change', blurb: 'Bring certified court or vital records to your appointment', ways: ['appt'], href: 'service.html?id=name-change' },
+    { id: 'cdl-med', category: 'license', group: 'updates', name: 'CDL medical card update', blurb: 'Submit via drop box, email, or mail', ways: ['drop', 'mail'], href: 'service.html?id=cdl-med' },
     { id: 'reg-renew', category: 'vehicle', group: 'registration', name: 'Renew vehicle registration', blurb: 'Pay town/city permit fees first, then state portion at DMV or municipal agent', ways: ['drop', 'appt'], href: 'vehicle.html#reg-renew' },
     { id: 'reg-new', category: 'vehicle', group: 'registration', name: 'New or transfer registration', blurb: 'Title and plate workflows · first-time plate fee $8.00', ways: ['drop', 'appt'], href: 'vehicle.html#reg-new', fee: '+$8 plates' },
     { id: 'temp-plates', category: 'vehicle', group: 'registration', name: 'Temporary plates', blurb: 'Short-term plates while permanent paperwork clears', ways: ['drop', 'appt'], href: 'vehicle.html#temp-plates' },
@@ -164,6 +211,26 @@ window.NHDMV = {
     { id: 'colebrook', name: 'Colebrook', address: '17 Bridge Street (Town Hall)', hours: 'Limited availability', services: 'Driver licensing appointments only', status: 'limited', region: 'north' },
     { id: 'north-haverhill', name: 'North Haverhill', address: '3785 Dartmouth College Highway (Grafton County Courthouse)', hours: 'Limited availability', services: 'Driver licensing appointments only', status: 'limited', region: 'north' }
   ],
+
+
+  /* Branch visit details (concept — parking/access generalized; notes from public hours page where present) */
+  branchDetails: {
+    concord: { parking: 'Visitor parking at Hazen Drive complex', accessibility: 'Accessible entrance and counter service', directions: 'Off I-93 Exit 14 · follow signs to Hazen Drive', waitNote: 'Appointment-only; same-day slots release daily when available', servicesList: ['Driver licensing','Registration','Titles','Financial Responsibility','Walking disability','Drop box'] },
+    manchester: { parking: 'Park in front of the building (maintenance notice)', accessibility: 'Accessible entrance', directions: '377 South Willow Street', waitNote: 'Appointment-only', servicesList: ['Driver licensing','Registration','Duplicate titles','Driving records*','Drop box'] },
+    nashua: { parking: 'On-site lot', accessibility: 'Accessible entrance', directions: '110 Broad Street', waitNote: 'Often busy — book ahead', servicesList: ['Driver licensing','Registration','Duplicate titles','Driving records*','Drop box'] },
+    dover: { parking: 'On-site lot', accessibility: 'Accessible entrance', directions: '50 Boston Harbor Road', waitNote: 'Appointment-only', servicesList: ['Driver licensing','Registration','Duplicate titles','Driving records*','Drop box'] },
+    salem: { parking: 'Behind Romano’s Pizzeria lot', accessibility: 'Accessible entrance', directions: '154 Main Street', waitNote: 'Appointment-only', servicesList: ['Driver licensing','Registration','Duplicate titles','Driving records*','Drop box'] },
+    raymond: { parking: 'On-site lot', accessibility: 'Accessible entrance', directions: '17 Freetown Road', waitNote: 'Extended hours Tue/Thu', servicesList: ['Driver licensing','Registration','Duplicate titles','Driving records*','Drop box'] },
+    keene: { parking: 'Suite complex parking', accessibility: 'Accessible entrance', directions: '149 Emerald Street', waitNote: 'Appointment-only', servicesList: ['Driver licensing','Registration','Duplicate titles','Driving records*','Drop box'] },
+    milford: { parking: 'On-site lot', accessibility: 'Accessible entrance', directions: '4 Meadowbrook Drive', waitNote: 'Often busy — book ahead', servicesList: ['Driver licensing','Registration','Duplicate titles','Driving records*','Drop box'] },
+    newport: { parking: 'Street / nearby lot', accessibility: 'Accessible entrance', directions: '20 North Main Street', waitNote: 'Appointment-only', servicesList: ['Driver licensing','Registration','Duplicate titles','Driving records*','Drop box'] },
+    tamworth: { parking: 'On-site lot', accessibility: 'Accessible entrance', directions: '1864 White Mountain Highway', waitNote: 'Appointment-only', servicesList: ['Driver licensing','Registration','Duplicate titles','Driving records*','Drop box'] },
+    'twin-mountain': { parking: 'On-site lot', accessibility: 'Accessible entrance', directions: '549 Route 302 West', waitNote: 'Appointment-only', servicesList: ['Driver licensing','Registration','Duplicate titles','Driving records*','Drop box'] },
+    gorham: { parking: 'Mountain Valley Plaza lot', accessibility: 'Accessible entrance', directions: '491 Main Street', waitNote: 'Closed Fridays', servicesList: ['Driver licensing','Registration','Duplicate titles','Driving records*','Drop box'] },
+    colebrook: { parking: 'Town Hall parking', accessibility: 'Accessible entrance', directions: '17 Bridge Street (Town Hall)', waitNote: 'Driver licensing appointments only · limited availability', servicesList: ['Driver licensing appointments'] },
+    'north-haverhill': { parking: 'Courthouse parking', accessibility: 'Accessible entrance', directions: '3785 Dartmouth College Highway', waitNote: 'Driver licensing appointments only · limited availability', servicesList: ['Driver licensing appointments'] },
+    'concord-irp': { parking: 'Hazen Drive complex', accessibility: 'Accessible entrance', directions: '23 Hazen Drive', waitNote: 'IRP only', servicesList: ['IRP'] }
+  },
 
   appointmentServices: [
     { id: 'knowledge-test', label: 'Driver knowledge test' },
@@ -243,5 +310,350 @@ window.NHDMV = {
         { id: 'cdl', label: 'CDL credential information', hint: 'License number and class' }
       ]
     }
-  }
+  },
+
+  homeTasks: [
+    { id: 'renew', label: 'Renew my license', href: 'service.html?id=dl-renew', hint: 'Often online' },
+    { id: 'real-id', label: 'Get a REAL ID', href: 'service.html?id=real-id', hint: 'Appointment' },
+    { id: 'register', label: 'Register a vehicle', href: 'vehicle.html#reg-new', hint: 'Drop box or appt' },
+    { id: 'replace', label: 'Replace a lost license', href: 'service.html?id=duplicate', hint: 'Often online' },
+    { id: 'address', label: 'Change my address', href: 'change-address.html', hint: 'Guided form' },
+    { id: 'first', label: 'Get my first license', href: 'first-license.html', hint: 'Guided journey' },
+    { id: 'road', label: 'Schedule a road test', href: 'service.html?id=road', hint: 'Appointment' },
+    { id: 'branch', label: 'Find a DMV location', href: 'branches.html', hint: 'Map + list' }
+  ],
+
+  onlineGuide: [
+    { id: 'dl-renew', title: 'Renew license', status: 'online', blurb: 'Complete entirely online when eligible', href: 'service.html?id=dl-renew' },
+    { id: 'duplicate', title: 'Replace license', status: 'online', blurb: 'Duplicate credential often available online or via drop box', href: 'service.html?id=duplicate' },
+    { id: 'address', title: 'Change address', status: 'partial', blurb: 'Start online; reprint may use drop box ($10)', href: 'change-address.html' },
+    { id: 'reg-renew', title: 'Renew registration', status: 'partial', blurb: 'Town/city fees first, then state portion online or drop box', href: 'vehicle.html#reg-renew' },
+    { id: 'mvr', title: 'Order records', status: 'online', blurb: 'Your own driving record can be requested online', href: 'records.html#mvr' },
+    { id: 'real-id', title: 'REAL ID', status: 'visit', blurb: 'Requires an in-person visit with original documents', href: 'service.html?id=real-id' },
+    { id: 'title', title: 'Transfer title', status: 'partial', blurb: 'Start paperwork online; finish by drop box or appointment', href: 'vehicle.html#title' },
+    { id: 'road', title: 'Road test', status: 'visit', blurb: 'Requires an in-person skills test appointment', href: 'service.html?id=road' }
+  ],
+
+  serviceDetails: {
+    'dl-renew': {
+      title: 'Renew your driver license',
+      summary: 'Keep your Class D credential current. Many residents can renew online when eligible — no counter visit required.',
+      eligible: 'NH license holders within the renewal window (typically the months before expiration). Suspensions, required tests, or REAL ID upgrades may change the path.',
+      online: 'online',
+      onlineLabel: 'Often completed entirely online',
+      docs: ['Current license or ID number', 'Date of birth and last name on file', 'Payment method (card)'],
+      cost: 'Operator $50.00 · REAL ID Operator $60.00',
+      process: ['Confirm eligibility', 'Verify identity', 'Choose standard or REAL ID path', 'Pay fee', 'Receive confirmation'],
+      appointment: false,
+      where: 'Online when eligible · otherwise any full-service branch by appointment',
+      primaryCta: { label: 'Renew online', href: 'renew.html' },
+      secondaryCta: { label: 'Book appointment', href: 'appointments.html?service=other' },
+      beforeBegin: ['Check your expiration date', 'Confirm your mailing address is current', 'Decide if you also need REAL ID'],
+      related: ['real-id', 'duplicate', 'address']
+    },
+    'nd-renew': {
+      title: 'Renew non-driver ID',
+      summary: 'Renew your New Hampshire non-driver identification card.',
+      eligible: 'Current NH non-driver ID holders within the renewal window.',
+      online: 'online',
+      onlineLabel: 'Online, drop box, or appointment',
+      docs: ['Non-driver ID number', 'Date of birth', 'Last name'],
+      cost: '$20.00',
+      process: ['Verify identity', 'Confirm address', 'Pay fee', 'Receive confirmation'],
+      appointment: false,
+      where: 'Online · drop box · appointment',
+      primaryCta: { label: 'Renew online', href: 'renew.html?type=non-driver' },
+      secondaryCta: { label: 'Book appointment', href: 'appointments.html' },
+      beforeBegin: ['Have your ID number ready', 'Confirm your address'],
+      related: ['duplicate', 'address']
+    },
+    'real-id': {
+      title: 'Upgrade to REAL ID',
+      summary: 'Get a federally compliant credential for domestic flights and secure federal facilities.',
+      eligible: 'NH residents who can present original identity, SSN, and two residency documents.',
+      online: 'visit',
+      onlineLabel: 'DMV visit required',
+      docs: ['Identity document (birth certificate or passport)', 'Social Security evidence', 'Two proofs of NH residency'],
+      cost: 'REAL ID Operator $60.00',
+      process: ['Run document checklist', 'Book appointment', 'Bring originals', 'Photo and issuance at counter'],
+      appointment: true,
+      where: 'Any branch offering driver licensing — by appointment',
+      primaryCta: { label: 'Book appointment', href: 'appointments.html?service=real-id' },
+      secondaryCta: { label: 'Check documents', href: 'checklist.html?intent=real-id' },
+      beforeBegin: ['Gather originals (not photocopies)', 'Confirm names match across documents', 'Book only when documents are ready'],
+      related: ['dl-renew', 'transfer']
+    },
+    'first-license': {
+      title: 'Get your first driver license',
+      summary: 'A guided path from requirements through knowledge and road tests.',
+      eligible: 'New drivers meeting age, education, and supervised driving requirements.',
+      online: 'partial',
+      onlineLabel: 'Start online — testing requires a visit',
+      docs: ['Proof of identity', 'Social Security number', 'Two proofs of NH residency', 'Parental consent if under 18'],
+      cost: 'Youth Operator $10.00 per year up to age 21 · standard Operator fees after 21',
+      process: ['Check requirements', 'Driver education', 'Supervised driving', 'Knowledge test', 'Road test', 'Receive license'],
+      appointment: true,
+      where: 'Knowledge and road tests at branches that offer testing',
+      primaryCta: { label: 'Start journey', href: 'first-license.html' },
+      secondaryCta: { label: 'Document checklist', href: 'checklist.html?intent=first-license' },
+      beforeBegin: ['Review age requirements', 'Plan driver education', 'Bookmark the NH Driver Manual'],
+      related: ['knowledge', 'road']
+    },
+    transfer: {
+      title: 'Transfer an out-of-state license',
+      summary: 'New residents have 60 days after establishing NH residency to obtain an NH license.',
+      eligible: 'Residents with a valid out-of-state license establishing NH residency.',
+      online: 'visit',
+      onlineLabel: 'DMV visit required',
+      docs: ['Current out-of-state license', 'Social Security evidence', 'Two proofs of NH residency', 'REAL ID docs if upgrading'],
+      cost: 'Operator $50.00 · REAL ID Operator $60.00',
+      process: ['Establish residency documents', 'Run transfer checklist', 'Book appointment', 'Surrender out-of-state license'],
+      appointment: true,
+      where: 'Any licensing branch by appointment',
+      primaryCta: { label: 'Book appointment', href: 'appointments.html?service=transfer' },
+      secondaryCta: { label: 'New resident guide', href: 'new-resident.html' },
+      beforeBegin: ['Confirm you have two residency proofs', 'Decide on REAL ID now or later'],
+      related: ['real-id', 'reg-new']
+    },
+    'non-driver': {
+      title: 'Apply for non-driver ID',
+      summary: 'State photo ID without driving privileges.',
+      eligible: 'NH residents who need photo ID but not a license.',
+      online: 'visit',
+      onlineLabel: 'Appointment required for first issuance',
+      docs: ['Proof of identity', 'Social Security number', 'Two proofs of NH residency'],
+      cost: '$20.00',
+      process: ['Gather documents', 'Book appointment', 'Photo and issuance'],
+      appointment: true,
+      where: 'Licensing branches by appointment',
+      primaryCta: { label: 'Book appointment', href: 'appointments.html' },
+      secondaryCta: { label: 'Checklist', href: 'checklist.html?intent=non-driver' },
+      beforeBegin: ['Gather originals', 'Confirm residency proofs'],
+      related: ['nd-renew']
+    },
+    knowledge: {
+      title: 'Schedule a knowledge test',
+      summary: 'Written exam for driver, CDL, or motorcycle knowledge — appointment only.',
+      eligible: 'Applicants who have completed prerequisite steps for their credential path.',
+      online: 'partial',
+      onlineLabel: 'Book online — take the test in person',
+      docs: ['Required identity documents for your path', 'Permit or application paperwork if applicable'],
+      cost: 'Included in credential fees where applicable — confirm at booking',
+      process: ['Confirm readiness', 'Book appointment', 'Arrive with documents', 'Take exam'],
+      appointment: true,
+      where: 'Branches offering knowledge testing',
+      primaryCta: { label: 'Book appointment', href: 'appointments.html?service=knowledge-test' },
+      secondaryCta: { label: 'First license journey', href: 'first-license.html' },
+      beforeBegin: ['Study the Driver Manual', 'Bring required IDs'],
+      related: ['road', 'first-license']
+    },
+    road: {
+      title: 'Book a road skills test',
+      summary: 'Behind-the-wheel exam after a successful knowledge test.',
+      eligible: 'Applicants who passed knowledge and completed supervised driving requirements.',
+      online: 'visit',
+      onlineLabel: 'DMV visit required',
+      docs: ['Permit / temporary credential', 'Vehicle meeting test requirements', 'Accompanying licensed driver if required'],
+      cost: 'Per official testing schedule',
+      process: ['Confirm knowledge test passed', 'Book road test', 'Arrive with safe vehicle', 'Complete skills exam'],
+      appointment: true,
+      where: 'Branches offering road testing',
+      primaryCta: { label: 'Book appointment', href: 'appointments.html?service=road-test' },
+      secondaryCta: { label: 'Find a branch', href: 'branches.html' },
+      beforeBegin: ['Confirm vehicle is roadworthy', 'Bring permit and ID'],
+      related: ['knowledge', 'first-license']
+    },
+    motorcycle: {
+      title: 'Motorcycle rider training',
+      summary: 'Seasonal training and motorcycle permit / endorsement paths.',
+      eligible: 'Residents seeking motorcycle privileges.',
+      online: 'partial',
+      onlineLabel: 'Register online — training and tests in person',
+      docs: ['Identity documents', 'Training registration confirmation'],
+      cost: 'Motorcycle only $55.00 · first endorsement $30.00 · renewal $5.00',
+      process: ['Review season calendar', 'Register', 'Complete training / testing'],
+      appointment: true,
+      where: 'Training sites and DMV testing locations',
+      primaryCta: { label: 'Start registration', href: 'appointments.html?service=motorcycle' },
+      secondaryCta: { label: 'See fees', href: 'fees.html' },
+      beforeBegin: ['Check season dates', 'Confirm eligibility age'],
+      related: ['knowledge']
+    },
+    duplicate: {
+      title: 'Replace a lost or stolen license',
+      summary: 'Request a duplicate license or non-driver ID when your credential is lost, stolen, or damaged.',
+      eligible: 'Current NH credential holders needing a replacement.',
+      online: 'online',
+      onlineLabel: 'Often completed online or via drop box',
+      docs: ['Identity verification', 'License / ID number if known'],
+      cost: '$20.00',
+      process: ['Verify identity', 'Request duplicate', 'Pay fee', 'Receive confirmation'],
+      appointment: false,
+      where: 'Online · drop box · appointment if needed',
+      primaryCta: { label: 'Request duplicate', href: 'renew.html?type=duplicate' },
+      secondaryCta: { label: 'Book appointment', href: 'appointments.html' },
+      beforeBegin: ['Have your license number ready if possible', 'Update address if you’ve moved'],
+      related: ['address', 'dl-renew']
+    },
+    address: {
+      title: 'Change my address',
+      summary: 'Update the mailing address on your DMV record. Reprint fee applies.',
+      eligible: 'NH credential holders with a new residential mailing address.',
+      online: 'partial',
+      onlineLabel: 'Start online — drop box friendly',
+      docs: ['Completed address change information', 'Proof of new address preferred'],
+      cost: 'Address change reprint $10.00',
+      process: ['Verify identity', 'Enter new address', 'Review', 'Submit', 'Confirmation'],
+      appointment: false,
+      where: 'Guided digital form · drop box · appointment',
+      primaryCta: { label: 'Start address change', href: 'change-address.html' },
+      secondaryCta: { label: 'Checklist', href: 'checklist.html?intent=address' },
+      beforeBegin: ['Know your new NH address', 'Have proof of residency if using drop box'],
+      related: ['duplicate', 'dl-renew']
+    },
+    'name-change': {
+      title: 'Name or gender change',
+      summary: 'Update your credential with certified court or vital records.',
+      eligible: 'Residents with certified legal name or gender change documentation.',
+      online: 'visit',
+      onlineLabel: 'DMV visit required',
+      docs: ['Court order or vital records (certified)', 'Current NH credential', 'Updated SSN evidence if name changed'],
+      cost: 'Per credential reissue fees',
+      process: ['Gather certified documents', 'Book appointment', 'Update credential at counter'],
+      appointment: true,
+      where: 'Licensing branches by appointment',
+      primaryCta: { label: 'Book appointment', href: 'appointments.html' },
+      secondaryCta: { label: 'Checklist', href: 'checklist.html?intent=name-change' },
+      beforeBegin: ['Obtain certified copies', 'Update SSA records if name changed'],
+      related: ['duplicate']
+    },
+    'cdl-med': {
+      title: 'CDL medical card update',
+      summary: 'Submit a current medical examiner certificate for your CDL.',
+      eligible: 'CDL holders needing to update medical certification.',
+      online: 'partial',
+      onlineLabel: 'Submit via drop box, email, or mail',
+      docs: ['Current medical examiner certificate', 'CDL credential information'],
+      cost: 'No separate listed fee for submission — confirm if reissue needed',
+      process: ['Obtain medical certificate', 'Submit via drop box / mail / email path', 'Confirm on file'],
+      appointment: false,
+      where: 'Drop box · mail · email path',
+      primaryCta: { label: 'Open checklist', href: 'checklist.html?intent=cdl-med' },
+      secondaryCta: { label: 'Find a branch', href: 'branches.html' },
+      beforeBegin: ['Have the original or certified certificate'],
+      related: []
+    },
+    'reg-renew': {
+      title: 'Renew vehicle registration',
+      summary: 'Pay town/city permit fees first, then complete the state portion.',
+      eligible: 'Vehicle owners with an upcoming registration expiration.',
+      online: 'partial',
+      onlineLabel: 'Start at town/city — finish online or drop box',
+      docs: ['Registration renewal notice', 'Proof of town/city permit fees paid', 'Insurance information as required'],
+      cost: 'Town/city fees vary · state portion per schedule · plates/decals as needed',
+      process: ['Pay municipal permit fees', 'Complete state registration', 'Receive decal / confirmation'],
+      appointment: false,
+      where: 'Municipal agent · DMV drop box · appointment',
+      primaryCta: { label: 'Vehicle services', href: 'vehicle.html#reg-renew' },
+      secondaryCta: { label: 'Book appointment', href: 'appointments.html?service=registration' },
+      beforeBegin: ['Check municipal requirements', 'Confirm insurance'],
+      related: ['title']
+    },
+    'reg-new': {
+      title: 'Register a vehicle',
+      summary: 'New or transfer registration with title and plate workflows.',
+      eligible: 'Owners registering a vehicle in New Hampshire.',
+      online: 'partial',
+      onlineLabel: 'Paperwork first — finish by drop box or appointment',
+      docs: ['Title or ownership documents', 'Proof of identity', 'Insurance', 'Municipal permit fees'],
+      cost: 'First-time plate fee $8.00 + registration fees',
+      process: ['Gather ownership docs', 'Municipal steps', 'State registration', 'Plates'],
+      appointment: false,
+      where: 'Drop box or appointment',
+      primaryCta: { label: 'Start registration path', href: 'vehicle.html#reg-new' },
+      secondaryCta: { label: 'New resident guide', href: 'new-resident.html' },
+      beforeBegin: ['Confirm title status', 'Budget for municipal + state fees'],
+      related: ['title', 'transfer']
+    },
+    title: {
+      title: 'Certificate of title',
+      summary: 'Process a new title with ownership documents.',
+      eligible: 'Owners needing NH title issuance or transfer.',
+      online: 'partial',
+      onlineLabel: 'Start paperwork — finish by drop box or appointment',
+      docs: ['Prior title or MSO', 'Bill of sale if applicable', 'ID'],
+      cost: 'Per title fee schedule',
+      process: ['Assemble ownership chain', 'Submit via drop box or appointment', 'Receive title'],
+      appointment: false,
+      where: 'Drop box · appointment',
+      primaryCta: { label: 'Title services', href: 'vehicle.html#title' },
+      secondaryCta: { label: 'Book appointment', href: 'appointments.html?service=registration' },
+      beforeBegin: ['Do not laminate titles', 'Bring complete ownership chain'],
+      related: ['reg-new', 'dup-title']
+    },
+    mvr: {
+      title: 'Request your driving record',
+      summary: 'Your own motor vehicle record can be requested online. Third-party requests go to Concord.',
+      eligible: 'Individuals requesting their own record.',
+      online: 'online',
+      onlineLabel: 'Available online for your own record',
+      docs: ['License / ID number', 'Date of birth'],
+      cost: 'Research / records fees may apply ($20.00 Concord research listed)',
+      process: ['Verify identity', 'Select record type', 'Submit request', 'Download or receive'],
+      appointment: false,
+      where: 'Online for your own record · Concord for third-party',
+      primaryCta: { label: 'Request record', href: 'records.html#mvr' },
+      secondaryCta: { label: 'My DMV records', href: 'records.html' },
+      beforeBegin: ['Have your license number ready'],
+      related: ['ticket']
+    }
+  },
+
+  searchIntents: [
+    { phrases: ['lost', 'stolen', 'replace', 'duplicate', 'missing license'], title: 'Replace a lost or stolen driver license', blurb: 'Request a duplicate credential — often online.', href: 'service.html?id=duplicate', badge: 'Often online' },
+    { phrases: ['moved', 'move', 'address', 'new address', 'i moved'], title: 'Change my address', blurb: 'Guided address update with $10 reprint fee.', href: 'change-address.html', badge: 'Guided form' },
+    { phrases: ['expire', 'expires', 'renew', 'renewal', 'expiring'], title: 'Renew your driver license', blurb: 'You’re likely looking for online renewal eligibility.', href: 'service.html?id=dl-renew', badge: 'Often online' },
+    { phrases: ['bought', 'buy', 'new car', 'purchased', 'register'], title: 'Register a vehicle', blurb: 'New or transfer registration path.', href: 'service.html?id=reg-new', badge: 'Partial online' },
+    { phrases: ['real id', 'realid', 'flight', 'tsa', 'airport'], title: 'Upgrade to REAL ID', blurb: 'In-person visit with original documents.', href: 'service.html?id=real-id', badge: 'Visit required' },
+    { phrases: ['failed', 'fail', 'road test', 'retake'], title: 'Schedule another road test', blurb: 'Book a new skills test appointment after a failed attempt.', href: 'service.html?id=road', badge: 'Appointment' },
+    { phrases: ['name change', 'married', 'divorce', 'gender'], title: 'Name or gender change', blurb: 'Appointment with certified records.', href: 'service.html?id=name-change', badge: 'Visit required' },
+    { phrases: ['new to', 'new hampshire', 'moved here', 'new resident', 'just moved'], title: 'New to New Hampshire?', blurb: 'Build a 60-day plan for license and vehicle.', href: 'new-resident.html', badge: 'Guided' },
+    { phrases: ['first license', 'learner', 'permit', 'teen', 'first driver'], title: 'Get your first driver license', blurb: 'Step-by-step journey for new drivers.', href: 'first-license.html', badge: 'Journey' },
+    { phrases: ['online', 'skip the trip', 'do this online', 'visit'], title: 'Can I do this online?', blurb: 'See which services skip the counter.', href: 'online.html', badge: 'Guide' },
+    { phrases: ['location', 'branch', 'office', 'hours', 'near me'], title: 'Find a DMV location', blurb: 'Map and list of 15 branches.', href: 'branches.html', badge: 'Locations' },
+    { phrases: ['fee', 'cost', 'price', 'how much'], title: 'What will this cost?', blurb: 'Search common DMV fees by service.', href: 'fees.html', badge: 'Fees' }
+  ],
+
+  firstLicenseJourney: [
+    { id: 'requirements', title: 'Check requirements', body: 'Confirm age, residency, and parental consent rules for your situation.', action: { label: 'Open checklist', href: 'checklist.html?intent=first-license' }, reqs: ['Confirm eligibility age', 'Review residency proofs needed'] },
+    { id: 'education', title: 'Driver education', body: 'Complete approved driver education when required for your age.', action: { label: 'See first-license path', href: 'service.html?id=first-license' }, reqs: ['Enroll in approved course', 'Keep completion certificate'] },
+    { id: 'practice', title: 'Supervised driving', body: 'Log required supervised practice with a licensed adult.', action: { label: 'Continue journey', href: 'first-license.html' }, reqs: ['Track practice hours', 'Use a safe vehicle'] },
+    { id: 'knowledge', title: 'Knowledge test', body: 'Pass the written exam — book an appointment and bring documents.', action: { label: 'Book knowledge test', href: 'appointments.html?service=knowledge-test' }, reqs: ['Study Driver Manual', 'Bring identity documents'] },
+    { id: 'road', title: 'Road test', body: 'Schedule your skills test after passing knowledge and completing practice.', action: { label: 'Book road test', href: 'appointments.html?service=road-test' }, reqs: ['Passed knowledge test', 'Roadworthy vehicle'] },
+    { id: 'license', title: 'Receive license', body: 'Complete issuance steps and pay applicable fees.', action: { label: 'See fees', href: 'fees.html' }, reqs: ['Passed road test', 'Fee payment ready'] }
+  ],
+
+  myRecords: {
+    availableOnline: [
+      { title: 'Driver license status', detail: 'Class D · REAL ID · expires Nov 14, 2026', href: 'dashboard.html', action: 'View' },
+      { title: 'Vehicle registrations', detail: 'Plate NH 482-193', href: 'vehicle.html', action: 'Manage' },
+      { title: 'Appointments', detail: 'Upcoming knowledge test · Concord', href: 'appointments.html', action: 'Open' },
+      { title: 'Receipts & confirmations', detail: 'Demo booking receipts stored in this browser', href: 'confirmation.html', action: 'View' },
+      { title: 'Your driving record (MVR)', detail: 'Request your own record online', href: 'records.html#mvr', action: 'Request' }
+    ],
+    formalRequest: [
+      { title: 'Third-party driving records', detail: 'Must go through Concord research — not instant online', href: 'records.html#mvr', action: 'Learn more' },
+      { title: 'Accident reports', detail: 'Drop-box request path', href: 'records.html#accident', action: 'Start' },
+      { title: 'Certified copies & research', detail: 'Formal records request · fees may apply', href: 'fees.html', action: 'See fees' }
+    ]
+  },
+
+  problemStates: {
+    missingDoc: { title: 'You’re missing one document', body: 'Your visit can still succeed — gather the remaining item before you travel.', next: 'Open checklist', href: 'checklist.html' },
+    notAccepted: { title: 'This document isn’t accepted', body: 'Photocopies and expired statements usually fail. Use an original from the accepted list.', next: 'See acceptable documents', href: 'checklist.html?intent=real-id' },
+    notOnline: { title: 'This service can’t be completed online', body: 'You’ll need an appointment. Prepare documents first so there are no surprises at the counter.', next: 'Book appointment', href: 'appointments.html' },
+    notEligible: { title: 'Your license isn’t currently eligible for online renewal', body: 'You may need a test, REAL ID upgrade, or in-person verification.', next: 'See renewal options', href: 'service.html?id=dl-renew' },
+    noSlots: { title: 'No appointments available at this location', body: 'Try another day or branch. Same-day slots release daily when available.', next: 'Try another branch', href: 'branches.html' }
+  },
+
 };

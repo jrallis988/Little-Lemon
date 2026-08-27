@@ -691,45 +691,790 @@
     const root = $('#fees-root');
     if (!root || !window.NHDMV?.fees) return;
     const { licensing, cdl, other } = window.NHDMV.fees;
-    const table = (rows) =>
-      `<div class="fee-table">${rows
-        .map((r) => `<div class="fee-row"><span>${r.name}</span><strong>${r.amount}</strong></div>`)
+    const categories = [
+      { id: 'licensing', title: 'Driver licensing', lede: 'Operator, REAL ID, duplicates, and ID cards. Fee changes noted as of January 1, 2026.', rows: licensing },
+      { id: 'cdl', title: 'Commercial licensing', lede: 'CDL classes, learner permits, and endorsements.', rows: cdl },
+      { id: 'other', title: 'Registration, plates & records', lede: 'Vehicle registration also requires town/city permit fees before the state portion.', rows: other },
+      {
+        id: 'testing',
+        title: 'Testing & related',
+        lede: 'Testing is typically bundled with credential fees — confirm at booking.',
+        rows: [
+          { name: 'Knowledge / road testing', amount: 'Included in path · confirm at appointment' },
+          { name: 'Motorcycle endorsement (first-time)', amount: '$30.00' },
+          { name: 'Motorcycle endorsement renewal', amount: '$5.00' }
+        ]
+      }
+    ];
+
+    const search = $('#fee-search');
+    const nav = $('#fee-cats');
+
+    function table(rows) {
+      return `<div class="fee-table" role="table">${rows
+        .map(
+          (r) =>
+            `<div class="fee-row" role="row"><span role="cell">${r.name}</span><strong role="cell">${r.amount}</strong></div>`
+        )
         .join('')}</div>`;
+    }
+
+    function render(q = '') {
+      const query = q.toLowerCase().trim();
+      const blocks = categories
+        .map((cat) => {
+          const rows = cat.rows.filter((r) => !query || `${r.name} ${r.amount} ${cat.title}`.toLowerCase().includes(query));
+          if (!rows.length) return '';
+          return `<section class="panel fee-panel" id="fee-${cat.id}">
+            <h2>${cat.title}</h2>
+            <p class="panel-lede">${cat.lede}</p>
+            ${table(rows)}
+            <p class="field-hint">Related: <a href="online.html">Can I do this online?</a> · <a href="search.html">Find a service</a></p>
+          </section>`;
+        })
+        .filter(Boolean);
+
+      root.innerHTML =
+        blocks.join('') ||
+        `<div class="empty-state is-visible" style="display:block"><strong>No fees match “${q}”.</strong><p>Try “REAL ID”, “duplicate”, or “plate” — or <a href="search.html">describe your task</a>.</p></div>`;
+
+      root.insertAdjacentHTML(
+        'beforeend',
+        `<section class="panel">
+          <h2>Accepted payment types</h2>
+          <ul class="plain-list">${window.NHDMV.payments.map((p) => `<li>${p}</li>`).join('')}</ul>
+          <p class="panel-lede" style="margin-top:1rem;margin-bottom:0">Source: <a href="${window.NHDMV.meta.feesSource}" rel="noopener">dmv.nh.gov licensing fees</a>. Demo mirror only.</p>
+        </section>`
+      );
+    }
+
+    if (nav) {
+      nav.innerHTML = categories
+        .map((c) => `<a class="chip" href="#fee-${c.id}">${c.title}</a>`)
+        .join('');
+    }
+    search?.addEventListener('input', () => render(search.value));
+    render(params.get('q') || '');
+  }
+
+  function statusBadge(status) {
+    const map = {
+      online: ['status-pill status-online', 'Online', 'Complete entirely online'],
+      partial: ['status-pill status-partial', 'Partially online', 'Start online, finish at DMV'],
+      visit: ['status-pill status-visit', 'DMV visit required', 'Requires an in-person visit']
+    };
+    const [cls, label, hint] = map[status] || map.visit;
+    return `<span class="${cls}" title="${hint}"><span class="status-pill-label">${label}</span><span class="status-pill-hint">${hint}</span></span>`;
+  }
+
+  function initHomeTasks() {
+    const grid = $('#home-task-grid');
+    if (!grid || !window.NHDMV?.homeTasks) return;
+    grid.innerHTML = window.NHDMV.homeTasks
+      .map(
+        (t) => `<a class="task-chip" href="${t.href}">
+          <strong>${t.label}</strong>
+          <span>${t.hint}</span>
+        </a>`
+      )
+      .join('');
+  }
+
+  function initServiceDetail() {
+    const root = $('#service-detail-root');
+    if (!root || !window.NHDMV?.serviceDetails) return;
+    const id = params.get('id');
+    const empty = $('#service-detail-empty');
+    const detail = window.NHDMV.serviceDetails[id];
+    const title = $('#service-detail-title');
+    const lede = $('#service-detail-lede');
+
+    if (!detail) {
+      if (empty) empty.classList.add('is-visible');
+      return;
+    }
+    if (empty) empty.classList.remove('is-visible');
+    if (title) title.textContent = detail.title;
+    if (lede) lede.textContent = detail.summary;
+    document.title = `${detail.title} — NH DMV`;
+
+    const related = (detail.related || [])
+      .map((rid) => {
+        const r = window.NHDMV.serviceDetails[rid];
+        if (!r) return '';
+        return `<a class="tax-item" href="service.html?id=${rid}"><div><h3>${r.title}</h3><p>${r.onlineLabel}</p></div><span class="tax-cta">Open →</span></a>`;
+      })
+      .join('');
 
     root.innerHTML = `
-      <section class="panel">
-        <h2>Driver licensing fees</h2>
-        <p class="panel-lede">From the official NH DMV licensing fees page. Fee changes noted as of January 1, 2026.</p>
-        ${table(licensing)}
-      </section>
-      <section class="panel">
-        <h2>Commercial license fees</h2>
-        ${table(cdl)}
-      </section>
-      <section class="panel">
-        <h2>Common registration &amp; records fees</h2>
-        <p class="panel-lede">Vehicle registration also requires town/city permit fees before the state portion can be completed.</p>
-        ${table(other)}
-      </section>
-      <section class="panel">
-        <h2>Accepted payment types</h2>
-        <ul class="plain-list">${window.NHDMV.payments.map((p) => `<li>${p}</li>`).join('')}</ul>
-        <p class="panel-lede" style="margin-top:1rem;margin-bottom:0">Source: <a href="${window.NHDMV.meta.feesSource}" rel="noopener">dmv.nh.gov licensing fees</a>. Demo mirror only.</p>
-      </section>`;
+      <div class="service-detail">
+        <div class="service-detail-main">
+          <div class="status-row">${statusBadge(detail.online)}</div>
+          <section class="panel">
+            <h2>Who is eligible</h2>
+            <p class="panel-lede">${detail.eligible}</p>
+          </section>
+          <section class="panel">
+            <h2>What documents are required</h2>
+            <ul class="plain-list">${detail.docs.map((d) => `<li>${d}</li>`).join('')}</ul>
+            <p class="field-hint"><a href="checklist.html?intent=${id === 'real-id' ? 'real-id' : id === 'transfer' ? 'transfer' : id === 'first-license' ? 'first-license' : 'real-id'}">See acceptable documents →</a></p>
+          </section>
+          <section class="panel">
+            <h2>Expected process</h2>
+            <ol class="process-list">${detail.process.map((p) => `<li>${p}</li>`).join('')}</ol>
+          </section>
+          ${related ? `<section class="panel"><h2>Related services</h2><div class="tax-list">${related}</div></section>` : ''}
+        </div>
+        <aside class="service-rail sticky-rail">
+          <div class="summary-card">
+            <h2>At a glance</h2>
+            <div class="summary-row"><span>Cost</span><span>${detail.cost}</span></div>
+            <div class="summary-row"><span>Appointment</span><span>${detail.appointment ? 'Required' : 'Not usually required'}</span></div>
+            <div class="summary-row"><span>Where</span><span>${detail.where}</span></div>
+            <div class="hero-actions" style="margin-top:1rem;flex-direction:column">
+              <a class="btn btn-primary btn-block" href="${detail.primaryCta.href}">${detail.primaryCta.label}</a>
+              ${detail.secondaryCta ? `<a class="btn btn-secondary btn-block" href="${detail.secondaryCta.href}">${detail.secondaryCta.label}</a>` : ''}
+            </div>
+          </div>
+          <div class="panel readiness-card">
+            <h2>Before you begin</h2>
+            <ul class="ready-list">
+              ${detail.beforeBegin.map((b) => `<li><span class="ready-dot" aria-hidden="true"></span>${b}</li>`).join('')}
+            </ul>
+            <a class="btn btn-navy btn-sm" href="checklist.html">Open readiness checklist</a>
+          </div>
+        </aside>
+      </div>
+      <div class="mobile-sticky-cta" role="region" aria-label="Primary action">
+        <a class="btn btn-primary" href="${detail.primaryCta.href}">${detail.primaryCta.label}</a>
+      </div>`;
+  }
+
+  function initOnlineGuide() {
+    const grid = $('#online-grid');
+    if (!grid || !window.NHDMV?.onlineGuide) return;
+    const chips = $$('[data-online-filter]');
+    const empty = $('#online-empty');
+    let active = 'all';
+
+    function render() {
+      const items = window.NHDMV.onlineGuide.filter((i) => active === 'all' || i.status === active);
+      grid.innerHTML = items
+        .map(
+          (i) => `<a class="online-card" href="${i.href}" data-status="${i.status}">
+            ${statusBadge(i.status)}
+            <h3>${i.title}</h3>
+            <p>${i.blurb}</p>
+            <span class="more">See requirements</span>
+          </a>`
+        )
+        .join('');
+      if (empty) empty.classList.toggle('is-visible', items.length === 0);
+    }
+
+    chips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        active = chip.dataset.onlineFilter || 'all';
+        chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+        render();
+      });
+    });
+    render();
+  }
+
+  function initTaskSearch() {
+    const input = $('#task-search');
+    const results = $('#task-search-results');
+    if (!input || !results || !window.NHDMV?.searchIntents) return;
+    const empty = $('#task-search-empty');
+
+    function score(intent, q) {
+      const hay = `${intent.phrases.join(' ')} ${intent.title} ${intent.blurb}`.toLowerCase();
+      if (!q) return 1;
+      if (hay.includes(q)) return 3;
+      return q.split(/\s+/).filter((w) => w.length > 2 && hay.includes(w)).length;
+    }
+
+    function render(qRaw) {
+      const q = (qRaw || '').toLowerCase().trim();
+      const ranked = window.NHDMV.searchIntents
+        .map((intent) => ({ intent, s: score(intent, q) }))
+        .filter((x) => (q ? x.s > 0 : true))
+        .sort((a, b) => b.s - a.s);
+
+      const primary = ranked[0];
+      const rest = ranked.slice(1, 6);
+
+      results.innerHTML = '';
+      if (primary) {
+        results.innerHTML += `<a class="search-primary" href="${primary.intent.href}">
+          <span class="section-kicker">Best match</span>
+          <h2>${primary.intent.title}</h2>
+          <p>${primary.intent.blurb}</p>
+          <span class="badge badge-info">${primary.intent.badge}</span>
+        </a>`;
+      }
+      results.innerHTML += rest
+        .map(
+          (x) => `<a class="service-tile" href="${x.intent.href}">
+            <h3>${x.intent.title}</h3>
+            <p>${x.intent.blurb}</p>
+            <div class="ways"><span class="fee-chip">${x.intent.badge}</span></div>
+          </a>`
+        )
+        .join('');
+
+      if (empty) empty.classList.toggle('is-visible', ranked.length === 0);
+    }
+
+    $$('[data-task-example]').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        input.value = chip.dataset.taskExample || '';
+        render(input.value);
+        input.focus();
+      });
+    });
+    input.addEventListener('input', () => render(input.value));
+    const pre = params.get('q');
+    if (pre) input.value = pre;
+    render(input.value);
+  }
+
+  function initHeaderSearch() {
+    const tools = $('.header-tools');
+    if (!tools || $('#header-search-link')) return;
+    const link = document.createElement('a');
+    link.id = 'header-search-link';
+    link.className = 'btn btn-ghost btn-sm header-search-link';
+    link.href = 'search.html';
+    link.textContent = 'Search';
+    const book = tools.querySelector('.btn-primary');
+    tools.insertBefore(link, book || tools.firstChild);
+  }
+
+  function initBranchDetail() {
+    const root = $('#branch-detail-root');
+    if (!root || !window.NHDMV) return;
+    const id = params.get('id');
+    const branch = window.NHDMV.branches.find((b) => b.id === id);
+    const empty = $('#branch-detail-empty');
+    const content = $('#branch-detail-content');
+    const title = $('#branch-detail-title');
+    const lede = $('#branch-detail-lede');
+    if (!branch) return;
+    if (empty) empty.hidden = true;
+    if (content) content.hidden = false;
+    if (title) title.textContent = `${branch.name} DMV`;
+    if (lede) lede.textContent = `${branch.address} · ${branch.hours}`;
+    document.title = `${branch.name} DMV — NH DMV`;
+
+    const extra = window.NHDMV.branchDetails?.[id] || {};
+    const set = (sel, val) => {
+      const el = $(sel);
+      if (el) el.textContent = val || '—';
+    };
+    set('#branch-address', branch.address);
+    set('#branch-hours', branch.hours);
+    set('#branch-region-label', `Region: ${branch.region}`);
+    set('#branch-services', (extra.servicesList || branch.services.split(';')).join ? (extra.servicesList || []).join(' · ') || branch.services : branch.services);
+    const servicesEl = $('#branch-services');
+    if (servicesEl && extra.servicesList) {
+      servicesEl.innerHTML = `<ul class="plain-list">${extra.servicesList.map((s) => `<li>${s}</li>`).join('')}</ul>`;
+    } else if (servicesEl) servicesEl.textContent = branch.services;
+    set('#branch-parking', extra.parking || 'See branch for on-site parking guidance');
+    set('#branch-accessibility', extra.accessibility || 'Contact the branch for accessibility details');
+    set('#branch-directions', extra.directions || branch.address);
+    set('#branch-note', branch.note || extra.waitNote || 'In-person services require an appointment.');
+    const status = $('#branch-status');
+    if (status) {
+      status.textContent =
+        branch.status === 'busy'
+          ? 'Busy · book ahead'
+          : branch.status === 'limited'
+            ? 'Limited hours / availability'
+            : branch.status === 'closed'
+              ? 'Closed'
+              : 'Open · appointment slots when available';
+      status.className = `badge ${branch.status === 'busy' ? 'badge-warn' : branch.status === 'closed' ? 'badge-alert' : 'badge-ok'}`;
+    }
+    const book = $('#branch-book-link');
+    if (book) book.href = `appointments.html?branch=${branch.id}`;
+    const maps = $('#branch-maps-link');
+    if (maps) {
+      maps.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(branch.address + ' New Hampshire')}`;
+      maps.target = '_blank';
+    }
+
+    const sel = $('#branch-before-go');
+    const out = $('#branch-before-go-result');
+    if (sel) {
+      const options = [
+        { label: 'REAL ID', intent: 'real-id' },
+        { label: 'License renewal / duplicate', intent: 'address' },
+        { label: 'Out-of-state transfer', intent: 'transfer' },
+        { label: 'First license / knowledge test', intent: 'first-license' },
+        { label: 'Name change', intent: 'name-change' }
+      ];
+      sel.innerHTML =
+        `<option value="">Select a service…</option>` +
+        options.map((o) => `<option value="${o.intent}">${o.label}</option>`).join('');
+      const sync = () => {
+        if (!out) return;
+        if (!sel.value) {
+          out.hidden = true;
+          return;
+        }
+        const preset = window.NHDMV.checklistPresets[sel.value];
+        if (!preset) return;
+        out.hidden = false;
+        out.innerHTML = `<h3>Bring these</h3><ul class="plain-list">${preset.docs
+          .map((d) => `<li><strong>${d.label}</strong> — ${d.hint}</li>`)
+          .join('')}</ul>
+          <p style="margin-top:0.75rem"><a href="checklist.html?intent=${sel.value}">Open full readiness checklist →</a></p>`;
+      };
+      sel.addEventListener('change', sync);
+    }
+  }
+
+  function initBranchesMap() {
+    const map = $('#branch-map');
+    if (!map || !window.NHDMV) return;
+    const regions = {
+      north: { label: 'North', x: 48, y: 12 },
+      west: { label: 'West', x: 22, y: 48 },
+      central: { label: 'Central', x: 48, y: 42 },
+      south: { label: 'South', x: 52, y: 68 },
+      seacoast: { label: 'Seacoast', x: 78, y: 55 }
+    };
+    map.innerHTML = `
+      <div class="map-canvas" role="img" aria-label="Stylized New Hampshire branch regions">
+        ${Object.entries(regions)
+          .map(
+            ([key, r]) =>
+              `<button type="button" class="map-pin" style="left:${r.x}%;top:${r.y}%" data-map-region="${key}" aria-label="${r.label} region">${r.label}</button>`
+          )
+          .join('')}
+      </div>
+      <p class="field-hint">Select a region to filter the list. Pins are illustrative — not GPS-precise.</p>`;
+    map.addEventListener('click', (e) => {
+      const pin = e.target.closest('[data-map-region]');
+      if (!pin) return;
+      const region = $('#branch-region');
+      if (region) {
+        region.value = pin.dataset.mapRegion;
+        region.dispatchEvent(new Event('change'));
+      }
+      $$('.map-pin', map).forEach((p) => p.classList.toggle('is-active', p === pin));
+    });
+  }
+
+  /* Enhance branch cards with detail links */
+  const _initBranches = initBranches;
+  initBranches = function () {
+    _initBranches();
+    const grid = $('#branch-grid');
+    if (!grid) return;
+    const obs = new MutationObserver(() => {
+      $$('.branch', grid).forEach((card) => {
+        if (card.dataset.enhanced) return;
+        card.dataset.enhanced = '1';
+        const id = card.id;
+        const actions = $('.branch-actions', card);
+        if (actions && id) {
+          actions.insertAdjacentHTML(
+            'afterbegin',
+            `<a class="btn btn-navy btn-sm" href="branch.html?id=${id}">Branch details</a>`
+          );
+        }
+      });
+    });
+    obs.observe(grid, { childList: true });
+    grid.dispatchEvent(new Event('DOMNodeInserted')); // nudge
+    // trigger once after first render
+    setTimeout(() => {
+      $$('.branch', grid).forEach((card) => {
+        if (card.dataset.enhanced) return;
+        card.dataset.enhanced = '1';
+        const actions = $('.branch-actions', card);
+        if (actions && card.id) {
+          actions.insertAdjacentHTML(
+            'afterbegin',
+            `<a class="btn btn-navy btn-sm" href="branch.html?id=${card.id}">Branch details</a>`
+          );
+        }
+      });
+    }, 0);
+  };
+
+  function initNewResident() {
+    const root = $('#new-resident-quiz');
+    if (!root) return;
+    const steps = $$('[data-quiz-step]', root);
+    const indicators = $$('[data-quiz-step-indicator]', root);
+    const plan = $('#new-resident-plan');
+    let step = 0;
+    const answers = { license: 'transfer', vehicle: 'yes', title: 'yes', docs: 'ready' };
+
+    root.addEventListener('change', (e) => {
+      const input = e.target.closest('[data-nr-answer]');
+      if (!input) return;
+      answers[input.dataset.nrAnswer] = input.value;
+      const group = input.closest('.option-grid');
+      if (group) {
+        $$('.option', group).forEach((o) => o.classList.toggle('is-selected', o.querySelector('input')?.checked));
+      }
+    });
+
+    function show(n) {
+      step = n;
+      steps.forEach((p, i) => {
+        p.hidden = i !== step;
+      });
+      indicators.forEach((t, i) => {
+        t.classList.toggle('is-active', i === step);
+        t.classList.toggle('is-done', i < step);
+      });
+    }
+
+    function buildPlan() {
+      if (!plan) return;
+      const items = [];
+      if (answers.license === 'transfer') {
+        items.push({ title: 'Transfer your out-of-state license', href: 'service.html?id=transfer', detail: '60 days after establishing residency · appointment required' });
+      } else if (answers.license === 'first') {
+        items.push({ title: 'Get your first NH license', href: 'first-license.html', detail: 'Guided journey: education → tests → credential' });
+      } else {
+        items.push({ title: 'Apply for non-driver ID', href: 'service.html?id=non-driver', detail: 'Photo ID without driving privileges' });
+      }
+      if (answers.vehicle === 'yes') {
+        items.push({ title: 'Register your vehicle', href: 'service.html?id=reg-new', detail: 'Municipal fees first, then state registration' });
+      }
+      if (answers.title === 'yes' && answers.vehicle === 'yes') {
+        items.push({ title: 'Transfer or obtain NH title', href: 'service.html?id=title', detail: 'Bring ownership documents — drop box or appointment' });
+      }
+      items.push({
+        title: answers.docs === 'ready' ? 'Confirm residency documents' : 'Gather residency documentation',
+        href: 'checklist.html?intent=transfer',
+        detail: 'Two proofs of NH residency are required for most credential paths'
+      });
+      items.push({ title: 'Find a convenient branch', href: 'branches.html', detail: 'Appointment-only visits — check hours first' });
+
+      plan.hidden = false;
+      const list = $('#new-resident-plan-list') || plan;
+      const html = `
+          <ol class="plan-list">
+            ${items
+              .map(
+                (it, i) => `<li>
+                  <span class="plan-num">${i + 1}</span>
+                  <div>
+                    <h3><a href="${it.href}">${it.title}</a></h3>
+                    <p>${it.detail}</p>
+                  </div>
+                </li>`
+              )
+              .join('')}
+          </ol>`;
+      if ($('#new-resident-plan-list')) {
+        $('#new-resident-plan-list').innerHTML = html;
+        const actions = plan.querySelector('.hero-actions');
+        if (actions) {
+          actions.innerHTML = `
+            <a class="btn btn-primary" href="${items[0].href}">Start step 1</a>
+            <a class="btn btn-secondary" href="online.html">Can I do any of this online?</a>
+            <a class="btn btn-navy" href="branches.html">Find a branch</a>`;
+        }
+      } else {
+        plan.innerHTML = `<div class="panel plan-card"><h2>Welcome to New Hampshire</h2>${html}</div>`;
+      }
+      plan.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    root.addEventListener('click', (e) => {
+      if (e.target.closest('[data-quiz-next]')) {
+        if (step >= steps.length - 1) {
+          root.hidden = true;
+          buildPlan();
+        } else show(step + 1);
+      }
+      if (e.target.closest('[data-quiz-back]')) show(Math.max(step - 1, 0));
+      if (e.target.closest('[data-quiz-finish]')) {
+        root.hidden = true;
+        buildPlan();
+      }
+    });
+    show(0);
+  }
+
+  function initFirstLicenseJourney() {
+    const journey = $('#license-journey');
+    if (!journey || !window.NHDMV?.firstLicenseJourney) return;
+    const steps = window.NHDMV.firstLicenseJourney;
+    let current = Number(params.get('step') || 2);
+    if (Number.isNaN(current) || current < 0 || current >= steps.length) current = 2;
+
+    const currentEl = $('#journey-current');
+    const reqEl = $('#journey-requirements');
+    const nextEl = $('#journey-next-action');
+
+    function render() {
+      $$('[data-journey-step]', journey).forEach((el, i) => {
+        el.classList.toggle('is-active', i === current);
+        el.classList.toggle('is-done', i < current);
+      });
+      const step = steps[current];
+      if (!step) return;
+      if (currentEl) {
+        const heading = $('#journey-current-heading', currentEl);
+        const lede = $('.panel-lede', currentEl);
+        if (heading) heading.textContent = step.title;
+        if (lede) lede.textContent = step.body;
+      }
+      if (reqEl) {
+        reqEl.innerHTML = `<ul class="check-list">${step.reqs
+          .map((r) => `<li class="check-item"><div><h3>${r}</h3></div></li>`)
+          .join('')}</ul>`;
+      }
+      if (nextEl) {
+        nextEl.innerHTML = `
+          <a class="btn btn-primary" href="${step.action.href}">${step.action.label}</a>
+          <button type="button" class="btn btn-secondary" data-journey-prev ${current === 0 ? 'disabled' : ''}>Previous step</button>
+          <button type="button" class="btn btn-navy" data-journey-next ${current === steps.length - 1 ? 'disabled' : ''}>Next step</button>`;
+      }
+    }
+
+    journey.addEventListener('click', (e) => {
+      const tab = e.target.closest('[data-journey-step]');
+      if (!tab) return;
+      current = Number(tab.dataset.journeyStep);
+      render();
+    });
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('[data-journey-next]')) {
+        current = Math.min(current + 1, steps.length - 1);
+        render();
+      }
+      if (e.target.closest('[data-journey-prev]')) {
+        current = Math.max(current - 1, 0);
+        render();
+      }
+    });
+    render();
+  }
+
+  function initAddressWizard() {
+    const form = $('#address-wizard');
+    if (!form) return;
+    const steps = $$('[data-address-step]', form);
+    const indicators = $$('[data-address-step-indicator]', form);
+    const error = $('#address-error');
+    let step = 0;
+
+    function show(n) {
+      step = n;
+      steps.forEach((p, i) => {
+        p.hidden = i !== step;
+      });
+      indicators.forEach((t, i) => {
+        t.classList.toggle('is-active', i === step);
+        t.classList.toggle('is-done', i < step);
+      });
+    }
+
+    const reviewLicense = $('#addr-review-license');
+    const reviewName = $('#addr-review-name');
+    const reviewAddress = $('#addr-review-address');
+    function fillReview() {
+      if (reviewLicense) reviewLicense.textContent = $('#addr-license')?.value || '';
+      if (reviewName) reviewName.textContent = $('#addr-last')?.value || '';
+      const street = $('#addr-street')?.value || '';
+      const unit = $('#addr-unit')?.value;
+      const city = $('#addr-city')?.value || '';
+      const zip = $('#addr-zip')?.value || '';
+      if (reviewAddress) {
+        reviewAddress.textContent = `${street}${unit ? ` ${unit}` : ''}, ${city} NH ${zip}`;
+      }
+    }
+
+    form.addEventListener('click', (e) => {
+      if (e.target.closest('[data-address-next]')) {
+        if (step === 1 && params.get('demo') === 'bad-doc') {
+          form.hidden = true;
+          if (error) error.hidden = false;
+          return;
+        }
+        if (step === 1) fillReview();
+        show(Math.min(step + 1, steps.length - 1));
+      }
+      if (e.target.closest('[data-address-back]')) show(Math.max(step - 1, 0));
+      if (e.target.closest('[data-address-submit]')) {
+        e.preventDefault();
+        show(steps.length - 1);
+        toast('Address change submitted (demo)');
+      }
+      if (e.target.closest('[data-address-show-error]')) {
+        form.hidden = true;
+        if (error) error.hidden = false;
+      }
+    });
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('[data-address-retry]')) return;
+      if (error) error.hidden = true;
+      form.hidden = false;
+      show(1);
+    });
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      show(steps.length - 1);
+      toast('Address change submitted (demo)');
+    });
+    show(0);
+  }
+
+  function initReadinessChecklist() {
+    /* Enhance wizard evaluate already exists; add demo almost-ready state */
+    const root = $('#doc-wizard');
+    if (!root) return;
+    if (params.get('demo') !== 'almost') return;
+
+    // After docs render, pre-check all but last
+    const orig = root.querySelector('[data-next]');
+    const observer = new MutationObserver(() => {
+      const boxes = $$('#doc-check-list input[type="checkbox"]');
+      if (boxes.length < 2) return;
+      boxes.forEach((b, i) => {
+        const on = i < boxes.length - 1;
+        b.checked = on;
+        b.closest('.check-item')?.classList.toggle('is-checked', on);
+        b.closest('.check-item')?.classList.toggle('is-missing', !on);
+      });
+      const meter = $('#readiness-meter');
+      if (meter) {
+        const done = boxes.length - 1;
+        meter.innerHTML = readinessMeter(done, boxes.length, params.get('intent') || 'real-id');
+      }
+    });
+    observer.observe(root, { childList: true, subtree: true });
+  }
+
+  function readinessMeter(done, total, intent) {
+    const missing = total - done;
+    const pct = total ? Math.round((done / total) * 100) : 0;
+    const title = window.NHDMV?.checklistPresets?.[intent]?.title || 'Appointment readiness';
+    return `
+      <div class="readiness-hero ${missing ? 'is-attention' : 'is-ready'}">
+        <p class="section-kicker">${title.replace(' checklist', '').toUpperCase()}</p>
+        <h2>${missing ? 'You’re almost ready.' : 'You’re ready.'}</h2>
+        <p class="readiness-count"><strong>${done} of ${total}</strong> requirements complete</p>
+        <div class="readiness-bar" role="progressbar" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${done}" aria-label="${done} of ${total} requirements complete">
+          <span style="width:${pct}%"></span>
+        </div>
+        ${
+          missing
+            ? `<div class="missing-callout" role="status"><strong>${missing} item${missing > 1 ? 's' : ''} still needed</strong><p>Finish these before you travel — no surprises at the counter.</p><a href="#doc-check-list">See acceptable documents →</a></div>`
+            : `<div class="ready-callout" role="status"><strong>All requirements checked</strong><p>You can book with confidence.</p></div>`
+        }
+      </div>`;
+  }
+
+  // Patch wizard evaluate for richer readiness UI
+  const _initWizard = initWizard;
+  initWizard = function () {
+    _initWizard();
+    const root = $('#doc-wizard');
+    if (!root) return;
+    const body0 = $('.wizard-panel', root);
+    if (body0 && !$('#readiness-meter')) {
+      const meter = document.createElement('div');
+      meter.id = 'readiness-meter';
+      meter.className = 'readiness-meter';
+      root.insertBefore(meter, root.firstChild.nextSibling);
+    }
+    root.addEventListener('change', () => {
+      const boxes = $$('#doc-check-list input[type="checkbox"]');
+      if (!boxes.length) return;
+      const done = boxes.filter((b) => b.checked).length;
+      const intent = $$('#intent-options input:checked')[0]?.value || params.get('intent') || 'real-id';
+      const meter = $('#readiness-meter');
+      if (meter) meter.innerHTML = readinessMeter(done, boxes.length, intent);
+      boxes.forEach((b) => {
+        const item = b.closest('.check-item');
+        if (!item) return;
+        item.classList.toggle('is-checked', b.checked);
+        item.classList.toggle('is-missing', !b.checked);
+      });
+    });
+  };
+
+  function initProactiveDashboard() {
+    const host = $('#attention-board');
+    if (!host || !window.NHDMV?.attentionCards) return;
+    host.innerHTML = window.NHDMV.attentionCards
+      .map(
+        (c) => `<article class="attention-card tone-${c.tone}">
+          <p class="attention-eyebrow">${c.eyebrow}</p>
+          <h3>${c.title}</h3>
+          <p>${c.body}</p>
+          <a class="btn btn-primary btn-sm" href="${c.href}">${c.cta} →</a>
+        </article>`
+      )
+      .join('');
+  }
+
+  function initMyRecords() {
+    const online = $('#records-online');
+    const formal = $('#records-formal');
+    if (!online || !window.NHDMV?.myRecords) return;
+    const row = (items) =>
+      items
+        .map(
+          (i) => `<a class="tax-item" href="${i.href}"><div><h3>${i.title}</h3><p>${i.detail}</p></div><span class="tax-cta">${i.action} →</span></a>`
+        )
+        .join('');
+    online.innerHTML = row(window.NHDMV.myRecords.availableOnline);
+    if (formal) formal.innerHTML = row(window.NHDMV.myRecords.formalRequest);
+  }
+
+  function initProblemDemo() {
+    const host = $('#problem-demos');
+    if (!host || !window.NHDMV?.problemStates) return;
+    host.innerHTML = Object.values(window.NHDMV.problemStates)
+      .map(
+        (p) => `<article class="problem-card">
+          <h3>${p.title}</h3>
+          <p>${p.body}</p>
+          <a class="btn btn-navy btn-sm" href="${p.href}">${p.next} →</a>
+        </article>`
+      )
+      .join('');
   }
 
   initAuthChrome();
+  initHeaderSearch();
   initHomeAuth();
+  initHomeTasks();
   initServiceBrowser();
   initDashboardTeaser();
   initDashboardPage();
+  initProactiveDashboard();
   initBranches();
+  initBranchesMap();
+  initBranchDetail();
   initAppointments();
   initConfirmation();
   initWizard();
+  initReadinessChecklist();
   initRealIdChecker();
   initRenewal();
   initRecordsActions();
+  initMyRecords();
   initNotices();
   initFeesPage();
+  initServiceDetail();
+  initOnlineGuide();
+  initTaskSearch();
+  initNewResident();
+  initFirstLicenseJourney();
+  initAddressWizard();
+  initProblemDemo();
 })();

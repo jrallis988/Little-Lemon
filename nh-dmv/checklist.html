@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#1d3557">
-  <title>What to bring — NH DMV</title>
+  <title>Am I ready? — NH DMV</title>
   <base href="/nh-dmv/">
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -48,12 +48,14 @@
     </div>
   </header>
 
-
-  <main id="main" class="page page-narrow">
+  <main id="main" class="page page-narrow page-checklist">
     <header class="page-intro">
-      <h1>What to bring</h1>
-      <p>Interactive checklist for identity, SSN, and residency documents — finish this before you burn an appointment slot.</p>
+      <p class="section-kicker">Readiness</p>
+      <h1>Am I <span class="mark">ready</span>?</h1>
+      <p>Don’t just list documents — measure readiness. Know what’s complete, what’s missing, and whether you should travel yet.</p>
     </header>
+
+    <div id="readiness-meter" class="readiness-meter" aria-live="polite"></div>
 
     <div class="wizard" id="doc-wizard">
       <div class="wizard-steps" aria-label="Progress">
@@ -75,8 +77,9 @@
 
       <div class="wizard-panel wizard-body" data-step="1" hidden>
         <h2 id="docs-title">Document checklist</h2>
-        <p>Check each item you already have as an original (not a photocopy).</p>
+        <p>Check each item you already have as an <strong>original</strong> (not a photocopy). Green = ready. Yellow/red = still needed.</p>
         <div class="check-list" id="doc-check-list"></div>
+        <p class="field-hint"><a href="real-id.html">See acceptable documents for REAL ID →</a></p>
         <div class="wizard-footer" style="margin:1.25rem -1.35rem -1.5rem;border-radius:0">
           <button type="button" class="btn btn-secondary" data-back>Back</button>
           <button type="button" class="btn btn-primary" data-next>Check readiness</button>
@@ -107,12 +110,18 @@
         </div>
       </div>
     </div>
+
+    <section class="panel" style="margin-top:1.5rem" aria-labelledby="problem-heading">
+      <h2 id="problem-heading">If something goes wrong</h2>
+      <p class="panel-lede">Calm recovery paths — every problem has a next step.</p>
+      <div class="problem-grid" id="problem-demos"></div>
+    </section>
   </main>
 
   <footer class="app-footer">
     <div class="footer-inner">
-      <div><div class="footer-brand">New Hampshire DMV</div><p>Document readiness wizard.</p></div>
-      <div><h3>Next</h3><ul><li><a href="appointments.html">Appointments</a></li><li><a href="real-id.html">REAL ID</a></li></ul></div>
+      <div><div class="footer-brand">New Hampshire DMV</div><p>Readiness checklist — no surprises at the counter.</p></div>
+      <div><h3>Next</h3><ul><li><a href="appointments.html">Appointments</a></li><li><a href="online.html">Online eligibility</a></li></ul></div>
       <div><h3>Account</h3><ul><li><a href="dashboard.html">Dashboard</a></li></ul></div>
       <div><h3>Official</h3><ul><li><a href="../index.html">Artistic Fountain</a></li></ul></div>
     </div>

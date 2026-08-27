@@ -49,17 +49,31 @@
   </header>
 
 
-  <main id="main" class="page">
+  <main id="main" class="page page-records">
     <header class="page-intro">
-      <h1>Records, tickets &amp; safety</h1>
-      <p>Request your history, respond to tickets, and handle restoration — without bouncing across state subdomains.</p>
+      <p class="section-kicker">Records</p>
+      <h1>My DMV <span class="mark">records</span></h1>
+      <p>Credentials, vehicles, receipts, and formal requests — clearly separated between what you can get online and what needs a formal records request.</p>
     </header>
 
-    <div class="taxonomy">
+    <div class="records-split">
+      <section class="panel records-online-panel" aria-labelledby="records-online-heading">
+        <h2 id="records-online-heading">Available online</h2>
+        <p class="panel-lede">Signed-in demo items and self-service requests for your own records.</p>
+        <div class="tax-list" id="records-online"></div>
+      </section>
+      <section class="panel records-formal-panel" aria-labelledby="records-formal-heading">
+        <h2 id="records-formal-heading">Requires formal request</h2>
+        <p class="panel-lede">Legally restricted or third-party records are not automatically available online.</p>
+        <div class="tax-list" id="records-formal"></div>
+      </section>
+    </div>
+
+    <div class="taxonomy" style="margin-top:1.75rem">
       <section class="tax-group" id="records">
         <header>
-          <h2>Driving records</h2>
-          <p>Secure requests for your own record. Third-party requests go through Concord.</p>
+          <h2>Driving records &amp; tickets</h2>
+          <p>Request your history, respond to tickets, and handle restoration — without bouncing across state subdomains.</p>
         </header>
         <div class="tax-list">
           <div class="tax-item" id="mvr">

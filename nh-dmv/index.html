@@ -110,7 +110,30 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="today">
+      <div class="section-inner">
+        <p class="section-kicker">No surprises at the counter</p>
+        <h2 class="section-title">What do you need to do <span class="mark">today</span>?</h2>
+        <p class="section-lede">Start with your task — we’ll tell you if it’s online, what to bring, what it costs, and whether you need an appointment.</p>
+
+        <div class="task-grid" id="home-task-grid" aria-label="Common tasks"></div>
+
+        <div class="split-cta">
+          <a class="split-cta-primary" href="appointments.html">
+            <span class="section-kicker">Most visits need this</span>
+            <strong>Book appointment</strong>
+            <span>Hold a time before you travel</span>
+          </a>
+          <a class="split-cta-secondary" href="online.html">
+            <span class="section-kicker">Skip the trip?</span>
+            <strong>Can I do this online?</strong>
+            <span>See what you can finish without a counter visit</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-muted">
       <div class="section-inner">
         <div class="feature-row">
           <div class="feature-card">
@@ -120,13 +143,13 @@
             <div class="hub-grid" style="grid-template-columns:1fr 1fr;margin-top:0.5rem">
               <a class="hub-card" href="checklist.html" style="min-height:0;box-shadow:none;border:1px solid var(--line)">
                 <span class="hub-icon">OK</span>
-                <h3>What to bring</h3>
-                <p>Interactive document checklist</p>
+                <h3>Am I ready?</h3>
+                <p>Readiness checklist before you travel</p>
               </a>
-              <a class="hub-card" href="branches.html" style="min-height:0;box-shadow:none;border:1px solid var(--line)">
-                <span class="hub-icon">BR</span>
-                <h3>Branch status</h3>
-                <p>Live hours and scheduling links</p>
+              <a class="hub-card" href="new-resident.html" style="min-height:0;box-shadow:none;border:1px solid var(--line)">
+                <span class="hub-icon">NH</span>
+                <h3>New resident</h3>
+                <p>60-day plan for license &amp; vehicle</p>
               </a>
             </div>
           </div>
@@ -140,7 +163,7 @@
               </div>
               <div class="hero-actions" style="margin-top:0.5rem">
                 <button type="button" class="btn btn-navy btn-sm" data-sign-in-hero>Sign in (demo)</button>
-                <a class="btn btn-secondary btn-sm" href="fees.html">View fees</a>
+                <a class="btn btn-secondary btn-sm" href="fees.html">What will this cost?</a>
               </div>
             </div>
             <div data-home-member hidden>
@@ -158,11 +181,11 @@
       </div>
     </section>
 
-    <section class="section section-muted" id="services">
+    <section class="section" id="services">
       <div class="section-inner">
         <p class="section-kicker">Our services</p>
         <h2 class="section-title">Explore DMV <span class="mark">services</span></h2>
-        <p class="section-lede">Four clear paths — same structure as a modern service kit, built for Granite State errands.</p>
+        <p class="section-lede">Four clear paths — then a service detail page that answers cost, documents, and online eligibility.</p>
 
         <div class="course-grid">
           <a class="course-card" href="license.html">
@@ -192,8 +215,10 @@
         </div>
 
         <p style="margin-top:1.5rem;color:var(--muted);text-align:center">
-          Tailored paths for every life event — from new resident transfers to renewals.
-          <a href="#finder" style="font-weight:800;color:var(--navy)">Find a service</a>
+          Prefer plain language?
+          <a href="search.html" style="font-weight:800;color:var(--navy)">Search by what you need to do</a>
+          ·
+          <a href="online.html" style="font-weight:800;color:var(--navy)">Can I do this online?</a>
         </p>
       </div>
     </section>
@@ -279,7 +304,8 @@
         <ul>
           <li><a href="dashboard.html">Dashboard</a></li>
           <li><a href="checklist.html">What to bring</a></li>
-          <li><a href="real-id.html">REAL ID</a></li>
+          <li><a href="online.html">Can I do this online?</a></li>
+          <li><a href="new-resident.html">New resident</a></li>
           <li><a href="fees.html">Fees</a></li>
           <li><a href="branches.html">Branches</a></li>
         </ul>

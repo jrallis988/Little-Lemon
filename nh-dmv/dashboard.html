@@ -48,11 +48,10 @@
     </div>
   </header>
 
-
   <main id="main" class="page">
     <header class="page-intro">
       <h1>Welcome back, <span id="dash-user-name">Alex</span></h1>
-      <p>Your active appointments, renewals, and credentials — one click away. No nested hunting.</p>
+      <p>What needs your attention — renewals, appointments, and readiness — before you travel.</p>
     </header>
 
     <div class="dash-layout">
@@ -60,32 +59,38 @@
         <h2>Quick links</h2>
         <a href="dashboard.html" aria-current="page">Overview</a>
         <a href="appointments.html">Appointments</a>
-        <a href="renew.html">Renew license</a>
-        <a href="real-id.html">REAL ID</a>
-        <a href="checklist.html">What to bring</a>
+        <a href="service.html?id=dl-renew">Renew license</a>
+        <a href="checklist.html">Readiness checklist</a>
+        <a href="online.html">Can I do this online?</a>
+        <a href="records.html">My DMV records</a>
         <a href="branches.html">Find a branch</a>
-        <a href="records.html">Records</a>
       </aside>
 
       <div>
+        <section class="panel panel-navy-edge" aria-labelledby="attention-heading">
+          <h2 id="attention-heading">What needs my attention?</h2>
+          <p class="panel-lede">Actionable items first — not a static account dump.</p>
+          <div class="attention-board" id="attention-board"></div>
+        </section>
+
         <section class="panel">
           <h2>At a glance</h2>
           <p class="panel-lede">Live status for the demo resident account.</p>
           <div class="stat-row">
             <div class="stat">
               <div class="stat-label">Next appointment</div>
-              <div class="stat-value">Mar 12</div>
-              <div class="stat-hint">Knowledge test · Concord</div>
+              <div class="stat-value">Tomorrow</div>
+              <div class="stat-hint">10:30 AM · Knowledge test · Concord</div>
             </div>
             <div class="stat">
               <div class="stat-label">License expires</div>
-              <div class="stat-value">98d</div>
-              <div class="stat-hint">Class D · REAL ID</div>
+              <div class="stat-value">47d</div>
+              <div class="stat-hint">Eligible to renew now</div>
             </div>
             <div class="stat">
               <div class="stat-label">Open tasks</div>
-              <div class="stat-value">2</div>
-              <div class="stat-hint">Reschedule · renew soon</div>
+              <div class="stat-value">3</div>
+              <div class="stat-hint">Doc · renew · registration</div>
             </div>
           </div>
         </section>
@@ -102,7 +107,8 @@
           <div class="hero-actions">
             <a class="btn btn-primary" href="appointments.html">Book appointment</a>
             <a class="btn btn-secondary" href="checklist.html">Document checklist</a>
-            <a class="btn btn-secondary" href="vehicle.html">Vehicle services</a>
+            <a class="btn btn-secondary" href="change-address.html">Change address</a>
+            <a class="btn btn-navy" href="search.html">Search tasks</a>
           </div>
         </section>
       </div>
@@ -113,7 +119,7 @@
     <div class="footer-inner">
       <div>
         <div class="footer-brand">New Hampshire DMV</div>
-        <p>Dashboard concept — simulated resident session.</p>
+        <p>Proactive dashboard — simulated resident session.</p>
       </div>
       <div>
         <h3>Services</h3>
