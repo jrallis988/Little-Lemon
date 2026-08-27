@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img">
+  <rect width="64" height="64" rx="14" fill="#C2410C"/>
+  <text x="32" y="30" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="16" fill="#fff">TB</text>
+  <text x="32" y="46" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="600" font-size="8" fill="#FFEDD5">Harmony</text>
+</svg>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Meet James — New Hampshire designer behind Artistic Fountain. Strategic depth over surface polish.">
+    <meta name="theme-color" content="#FF6B35">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <title>The Designer — Artistic Fountain</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <header class="header">
+        <div class="logo">
+            <a href="index.html" class="logo-mark" aria-label="Artistic Fountain — home">
+                <span class="logo-line-1">Artistic</span>
+                <span class="logo-line-2">Fountain</span>
+            </a>
+        </div>
+        <nav aria-label="Primary">
+            <ul class="nav" id="main-nav">
+                <li><a href="designer.html" aria-current="page">The Designer</a></li>
+                <li><a href="services/index.html">Services</a></li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="blog/index.html">Blog</a></li>
+                <li><a href="resume.pdf" class="nav-resume" download="James-Rallis-Resume.pdf">Resume</a></li>
+            </ul>
+        </nav>
+        <div class="header-right">
+            <button class="nav-toggle" onclick="toggleNav()" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="main-nav">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main id="main" class="page-shell designer-page">
+        <div class="page-shell-inner">
+            <p class="page-kicker">About</p>
+            <h1>The Designer</h1>
+            <p class="page-lead">Strategic design from a one-person New Hampshire studio — identity systems, digital experiences, and production-ready delivery.</p>
+
+            <div class="about-grid">
+                <div class="about-image">
+                    <img src="images/profile.jpg" alt="Portrait of James">
+                </div>
+                <div class="about-content">
+                    <p>I'm <strong>James</strong>, a New Hampshire designer running Artistic Fountain as a one-person studio.</p>
+                    <p>I work across brand systems, product strategy, and full-stack web — from institutional identity work like <strong>NHTI</strong> and <strong>Great Bay</strong>, to speculative rebrands for consumer brands, to production HTML for launch-ready sites.</p>
+                    <p>My work is defined by <strong>strategic depth over surface polish</strong>. Every project starts with the problem, not the palette. If you're building something and want a designer who ships, not just decks, let's talk.</p>
+                    <div class="about-actions">
+                        <a href="resume.pdf" class="cta-btn" download="James-Rallis-Resume.pdf">Download Résumé</a>
+                        <a href="index.html#contact-form" class="cta-btn cta-btn--soft">Start a Project</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="designer-capabilities">
+                <h2>Capabilities</h2>
+                <p class="capabilities-lead">One studio across brand systems, product strategy, and full-stack delivery.</p>
+                <div class="capabilities-grid">
+                    <div class="capability">
+                        <h3>Creative Direction</h3>
+                        <p>Brand systems, art direction, motion, and production assets — Adobe suite, Figma, Blender, and AI-assisted pipelines.</p>
+                    </div>
+                    <div class="capability">
+                        <h3>Full-Stack Web</h3>
+                        <p>Production HTML/CSS/JS, React, and launch-ready sites with accessibility and performance built in.</p>
+                    </div>
+                    <div class="capability">
+                        <h3>Strategy &amp; Analytics</h3>
+                        <p>Positioning, campaign design, and measurement — from discovery through post-launch optimization.</p>
+                    </div>
+                </div>
+            </div>
+
+            <section class="philosophy-section" style="padding: 4rem 0 0; text-align: left;">
+                <h3 style="color: var(--dark); text-align: left;">How I Work</h3>
+                <p style="color: rgba(15,15,15,0.75); max-width: 40rem; margin-bottom: 2rem;">Intentional systems over arbitrary aesthetics — a clear process from discovery through launch.</p>
+                <div class="process-steps">
+                    <div class="process-step">
+                        <div class="step-number">01</div>
+                        <h4>Discovery &amp; Strategy</h4>
+                        <p>Understand brand, audience, and market position. Research and discovery build the foundation for every design decision.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">02</div>
+                        <h4>Concept &amp; Creation</h4>
+                        <p>Visual identities, design systems, and digital experiences — typography, color, wireframes, and prototypes aligned to goals.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">03</div>
+                        <h4>Technical Execution</h4>
+                        <p>Production-ready assets and full-stack delivery so concepts translate cleanly into code that performs.</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">04</div>
+                        <h4>Optimization &amp; Launch</h4>
+                        <p>Analytics, testing, and refinement after launch so the work keeps delivering results.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <nav class="footer-nav">
+                <a href="designer.html">The Designer</a>
+                <a href="services/index.html">Services</a>
+                <a href="portfolio.html">Portfolio</a>
+                <a href="blog/index.html">Blog</a>
+                <a href="index.html#faq">FAQ</a>
+                <a href="index.html#contact-form">Contact</a>
+            </nav>
+            <div class="footer-copyright">
+                © 2026 Artistic Fountain™ — All rights reserved. <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms &amp; Conditions</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleNav() {
+            const nav = document.querySelector('.nav');
+            const toggle = document.querySelector('.nav-toggle');
+            const isOpen = nav.classList.toggle('active');
+            toggle.classList.toggle('active', isOpen);
+            toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        }
+        document.querySelectorAll('.nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                const nav = document.querySelector('.nav');
+                const toggle = document.querySelector('.nav-toggle');
+                nav.classList.remove('active');
+                toggle.classList.remove('active');
+                toggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+    </script>
+</body>
+</html>

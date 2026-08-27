@@ -4,7 +4,7 @@
   "private": true,
   "description": "Artistic Fountain — strategic design studio portfolio",
   "scripts": {
-    "start": "npx --yes serve -l 3000",
-    "dev": "npx --yes serve -l 3000"
+    "start": "npx --yes serve -l 3000 -c serve.json",
+    "dev": "npx --yes serve -l 3000 -c serve.json"
   }
 }
