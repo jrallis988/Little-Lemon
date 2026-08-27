@@ -15,7 +15,7 @@ import type {
   SearchFilters,
   SupplyDays,
 } from "@/lib/types";
-import { getProgramMeta } from "@/lib/program-catalog";
+import { isIncludedMedication, getProgramMeta } from "@/lib/program-catalog";
 import type {
   Drug as DbDrug,
   DrugQuantity,
@@ -98,12 +98,19 @@ export function mapPharmacy(
   };
 }
 
-export async function getDrugById(id: string): Promise<Drug | null> {
+export async function getDrugById(
+  id: string,
+  opts?: { requireIncluded?: boolean }
+): Promise<Drug | null> {
   const d = await prisma.drug.findUnique({
     where: { id },
     include: { strengths: true, quantities: true },
   });
-  return d ? mapDrug(d) : null;
+  if (!d) return null;
+  if (opts?.requireIncluded !== false && !isIncludedMedication(d.id)) {
+    return null;
+  }
+  return mapDrug(d);
 }
 
 export async function getPharmacyById(id: string): Promise<Pharmacy | null> {
@@ -164,6 +171,7 @@ export async function searchDrugs(
   const scored: Array<DrugSearchSuggestion & { score: number }> = [];
 
   for (const raw of drugs) {
+    if (!isIncludedMedication(raw.id)) continue;
     const drug = mapDrug(raw);
     const brand = drug.brandName.toLowerCase();
     const generic = drug.genericName.toLowerCase();

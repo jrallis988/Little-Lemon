@@ -19,7 +19,7 @@ interface AdminOverview {
       createdAt: string;
     }>;
   };
-  launch: Record<string, boolean>;
+  launch: Record<string, boolean | string | number>;
 }
 
 export default function AdminPage() {
@@ -137,21 +137,34 @@ export default function AdminPage() {
       <section className="space-y-2">
         <h2 className="font-display text-xl font-semibold">Launch gates</h2>
         <ul className="grid gap-2 sm:grid-cols-2">
-          {Object.entries(data.launch).map(([key, ok]) => (
-            <li
-              key={key}
-              className="flex items-center justify-between rounded-lg border border-border px-3 py-2 text-sm"
-            >
-              <span>{key}</span>
-              <span
-                className={
-                  ok ? "font-medium text-savings" : "text-muted-foreground"
-                }
+          {Object.entries(data.launch).map(([key, value]) => {
+            const isBool = typeof value === "boolean";
+            const ok = isBool ? value : true;
+            const display = isBool
+              ? value
+                ? "ready"
+                : "pending"
+              : String(value);
+            return (
+              <li
+                key={key}
+                className="flex items-center justify-between rounded-lg border border-border px-3 py-2 text-sm"
               >
-                {ok ? "ready" : "pending"}
-              </span>
-            </li>
-          ))}
+                <span>{key}</span>
+                <span
+                  className={
+                    isBool
+                      ? ok
+                        ? "font-medium text-savings"
+                        : "text-muted-foreground"
+                      : "font-medium tabular-nums"
+                  }
+                >
+                  {display}
+                </span>
+              </li>
+            );
+          })}
         </ul>
       </section>
 

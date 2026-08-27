@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { CompareWithPharmacy } from "@/components/medication/compare-with-pharmacy";
 import { EligibilitySection } from "@/components/medication/eligibility-section";
 import { FulfillmentSection } from "@/components/medication/fulfillment-section";
 import { ReportIssueButton } from "@/components/support/report-issue-button";
-import { getProgramMeta, PRODUCT_TYPE_LABEL } from "@/lib/program-catalog";
-import { getLaunchFeatures } from "@/lib/launch-mode";
+import {
+  getProgramMeta,
+  isIncludedMedication,
+  PRODUCT_TYPE_LABEL,
+} from "@/lib/program-catalog";
+import { getLaunchFeatures, isLimitedV1Launch } from "@/lib/launch-mode";
 import { formatCurrency } from "@/lib/pricing";
 import { getDrugById } from "@/lib/pricing-service";
 import { prisma } from "@/lib/db";
@@ -20,6 +24,11 @@ interface PageProps {
 
 export async function generateStaticParams() {
   const drugs = await prisma.drug.findMany({ select: { id: true } });
+  if (isLimitedV1Launch()) {
+    return drugs
+      .filter((d) => isIncludedMedication(d.id))
+      .map(({ id }) => ({ id }));
+  }
   return drugs.map(({ id }) => ({ id }));
 }
 
@@ -27,6 +36,9 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { id } = await params;
+  if (!isIncludedMedication(id)) {
+    return { title: "Medication not included" };
+  }
   const drug = await getDrugById(id);
   if (!drug) return { title: "Medication" };
   return {
@@ -37,6 +49,9 @@ export async function generateMetadata({
 
 export default async function DrugDetailPage({ params }: PageProps) {
   const { id } = await params;
+  if (!isIncludedMedication(id)) {
+    redirect(`/search?q=${encodeURIComponent(id)}`);
+  }
   const drug = await getDrugById(id);
   if (!drug) notFound();
 

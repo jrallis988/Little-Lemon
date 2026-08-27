@@ -139,7 +139,7 @@ export function CompareWithPharmacy({
       </dl>
       <p className="mt-3 text-xs text-muted-foreground">
         Comparison is informational. Final price is determined at fill time by
-        the pharmacy or manufacturer program — not by TrumpRx.
+        the pharmacy — not by TrumpRx.
       </p>
     </section>
   );

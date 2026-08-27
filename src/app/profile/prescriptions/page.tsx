@@ -47,6 +47,7 @@ export default function PrescriptionsPage() {
   const [savingId, setSavingId] = useState<string | null>(null);
   const [refillReminders, setRefillReminders] = useState(true);
   const [reminderSaving, setReminderSaving] = useState(false);
+  const [transferEnabled, setTransferEnabled] = useState(false);
 
   async function load() {
     const res = await fetch("/api/me/prescriptions");
@@ -63,6 +64,13 @@ export default function PrescriptionsPage() {
   }
 
   useEffect(() => {
+    fetch("/api/config")
+      .then(async (res) => {
+        if (!res.ok) return;
+        const data = (await res.json()) as { launch?: { transfer?: boolean } };
+        setTransferEnabled(Boolean(data.launch?.transfer));
+      })
+      .catch(() => setTransferEnabled(false));
     load()
       .catch((err: Error) => setError(err.message))
       .finally(() => setLoading(false));
@@ -204,12 +212,14 @@ export default function PrescriptionsPage() {
           <Link href="/search" className={cn(buttonVariants())}>
             Find prices
           </Link>
-          <Link
-            href="/transfer"
-            className={cn(buttonVariants({ variant: "outline" }))}
-          >
-            Transfer a prescription
-          </Link>
+          {transferEnabled && (
+            <Link
+              href="/transfer"
+              className={cn(buttonVariants({ variant: "outline" }))}
+            >
+              Transfer a prescription
+            </Link>
+          )}
           <Link
             href="/profile"
             className={cn(buttonVariants({ variant: "ghost" }))}

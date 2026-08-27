@@ -2,7 +2,12 @@ import { NextResponse } from "next/server";
 import { requireAdmin } from "@/lib/admin";
 import { prisma } from "@/lib/db";
 import { peekEnv, isStripeConfigured } from "@/lib/env";
-import { getLaunchFeatures, V1_PHARMACY_PICKUP_DRUG_IDS } from "@/lib/launch-mode";
+import {
+  getLaunchFeatures,
+  isLimitedV1Launch,
+  V1_PHARMACY_PICKUP_DRUG_IDS,
+} from "@/lib/launch-mode";
+import { isIncludedMedication } from "@/lib/program-catalog";
 
 /** Admin overview — drugs, pharmacies, coupons, switch events, chats. */
 export async function GET() {
@@ -25,6 +30,7 @@ export async function GET() {
     openIssueReports,
     recentSwitch,
     switchByStatus,
+    allDrugIds,
   ] = await Promise.all([
     prisma.drug.count(),
     prisma.pharmacy.count(),
@@ -56,14 +62,19 @@ export async function GET() {
       by: ["status"],
       _count: { status: true },
     }),
+    prisma.drug.findMany({ select: { id: true } }),
   ]);
 
   const peek = peekEnv();
   const launchFeatures = getLaunchFeatures();
+  const formularyDrugs = isLimitedV1Launch()
+    ? allDrugIds.filter((d) => isIncludedMedication(d.id)).length
+    : drugCount;
 
   return NextResponse.json({
     counts: {
-      drugs: drugCount,
+      formularyDrugs,
+      catalogDrugs: drugCount,
       pharmacies: pharmacyCount,
       contracts: contractCount,
       coupons: couponCount,

@@ -258,17 +258,17 @@ export function CouponModal({
     });
     if (!result.ok) {
       toast({
-        title: "Could not add to checkout",
+        title: "Could not save program information",
         description: result.error,
         tone: "error",
       });
       return;
     }
     setAddedToCheckout(true);
-    setSharedMsg("Added to digital checkout.");
+    setSharedMsg("Program information saved to your account tools.");
     toast({
-      title: "Added to checkout",
-      description: "Your cart is saved securely.",
+      title: "Program information saved",
+      description: "Show this at the pharmacy counter — TrumpRx does not sell medications.",
       tone: "success",
     });
   }

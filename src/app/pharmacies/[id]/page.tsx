@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Clock, MapPin, Navigation, Phone, Printer } from "lucide-react";
 import { CHAIN_LABELS } from "@/lib/chains";
+import { getLaunchFeatures } from "@/lib/launch-mode";
 import { getPharmacyById } from "@/lib/pricing-service";
 import { ChainMark } from "@/components/pharmacy/chain-mark";
 import { TrustCallout } from "@/components/design/trust-callout";
@@ -25,6 +26,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function PharmacyDetailPage({ params }: PageProps) {
   const pharmacy = await getPharmacyById((await params).id);
   if (!pharmacy) notFound();
+  const features = getLaunchFeatures();
 
   const mapsQuery = encodeURIComponent(
     `${pharmacy.address}, ${pharmacy.city}, ${pharmacy.state} ${pharmacy.zip}`
@@ -152,12 +154,14 @@ export default async function PharmacyDetailPage({ params }: PageProps) {
               >
                 Price mismatch help
               </Link>
-              <Link
-                href="/transfer"
-                className={cn(buttonVariants({ variant: "outline" }), "min-h-10")}
-              >
-                Transfer Rx here
-              </Link>
+              {features.transfer && (
+                <Link
+                  href="/transfer"
+                  className={cn(buttonVariants({ variant: "outline" }), "min-h-10")}
+                >
+                  Transfer Rx here
+                </Link>
+              )}
             </div>
           </section>
 

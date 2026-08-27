@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { AlertTriangle } from "lucide-react";
+import { isLimitedV1Launch } from "@/lib/launch-mode";
 
 export function DisclaimerBanner() {
+  const limited = isLimitedV1Launch();
   return (
     <div
       role="note"
@@ -19,7 +21,8 @@ export function DisclaimerBanner() {
             a pharmacy and not insurance.
           </span>{" "}
           Only listed medications have a program option. Final eligibility and
-          price are set by the pharmacy or manufacturer program.{" "}
+          price are set by the pharmacy
+          {limited ? "" : " or manufacturer program"}.{" "}
           <Link
             href="/faq"
             className="font-medium underline underline-offset-2 hover:text-trust-foreground/90"

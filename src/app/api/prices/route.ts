@@ -4,6 +4,7 @@ import { auth } from "@/lib/auth";
 import { DEFAULT_LOCATION } from "@/lib/chains";
 import { resolveZip } from "@/lib/geo";
 import { logger } from "@/lib/logger";
+import { isIncludedMedication } from "@/lib/program-catalog";
 import {
   buildSavingsTips,
   getDrugById,
@@ -37,6 +38,13 @@ export async function GET(req: Request) {
     return NextResponse.json(
       { error: "Invalid price query", details: parsed.error.flatten() },
       { status: 400 }
+    );
+  }
+
+  if (!isIncludedMedication(parsed.data.drugId)) {
+    return NextResponse.json(
+      { error: "Medication is not in the current TrumpRx launch formulary." },
+      { status: 404 }
     );
   }
 

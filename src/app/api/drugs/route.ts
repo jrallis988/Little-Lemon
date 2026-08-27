@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { isIncludedMedication } from "@/lib/program-catalog";
 import { searchDrugs, getDrugById } from "@/lib/pricing-service";
 
 export async function GET(req: Request) {
@@ -8,6 +9,12 @@ export async function GET(req: Request) {
   const limit = Number(searchParams.get("limit") ?? "8");
 
   if (id) {
+    if (!isIncludedMedication(id)) {
+      return NextResponse.json(
+        { error: "Medication is not in the current TrumpRx launch formulary." },
+        { status: 404 }
+      );
+    }
     const drug = await getDrugById(id);
     if (!drug) {
       return NextResponse.json({ error: "Drug not found" }, { status: 404 });

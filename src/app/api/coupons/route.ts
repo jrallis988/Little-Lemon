@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { auth } from "@/lib/auth";
 import { issueCoupon, getCoupon } from "@/lib/coupons";
+import { isIncludedMedication } from "@/lib/program-catalog";
 
 const issueSchema = z.object({
   pharmacyId: z.string(),
@@ -38,6 +39,13 @@ export async function POST(req: Request) {
     return NextResponse.json(
       { error: "Invalid coupon request", details: parsed.error.flatten() },
       { status: 400 }
+    );
+  }
+
+  if (!isIncludedMedication(parsed.data.drugId)) {
+    return NextResponse.json(
+      { error: "Medication is not in the current TrumpRx launch formulary." },
+      { status: 404 }
     );
   }
 

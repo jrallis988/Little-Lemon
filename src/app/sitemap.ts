@@ -1,29 +1,30 @@
 import type { MetadataRoute } from "next";
+import { getLaunchFeatures } from "@/lib/launch-mode";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = process.env.NEXT_PUBLIC_APP_URL ?? "https://trumprx.app";
+  const features = getLaunchFeatures();
   const paths = [
     "",
     "/search",
     "/medications",
     "/access",
     "/pharmacies",
-    "/checkout",
     "/help",
     "/help/pharmacist",
     "/help/counter-issue",
     "/faq",
-    "/transfer",
     "/tools/insurance-calculator",
-    "/providers",
-    "/checkout/confirmation",
-    "/membership",
     "/privacy",
     "/terms",
     "/login",
     "/signup",
     "/forgot-password",
   ];
+  if (features.membership) paths.push("/membership");
+  if (features.transfer) paths.push("/transfer");
+  if (features.providers) paths.push("/providers");
+
   return paths.map((path) => ({
     url: `${base}${path}`,
     lastModified: new Date(),

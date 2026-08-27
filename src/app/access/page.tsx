@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
-import { getProgramMeta } from "@/lib/program-catalog";
+import { getProgramMeta, isIncludedMedication } from "@/lib/program-catalog";
 import { getLaunchFeatures } from "@/lib/launch-mode";
 import { getDrugById } from "@/lib/pricing-service";
 import { AccessPathwayClient } from "@/components/access/access-pathway-client";
@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 export const metadata: Metadata = {
   title: "Get this price",
   description:
-    "Confirm eligibility and follow the correct TrumpRx access pathway — pharmacy program information or manufacturer-direct enrollment.",
+    "Confirm eligibility and follow the TrumpRx pharmacy pickup access pathway for included medications.",
 };
 
 interface PageProps {
@@ -20,8 +20,11 @@ interface PageProps {
 
 export default async function AccessPage({ searchParams }: PageProps) {
   const params = await searchParams;
-  const drug = params.drug ? await getDrugById(params.drug) : null;
+  const drugId = params.drug;
+  const included = drugId ? isIncludedMedication(drugId) : false;
+  const drug = included && drugId ? await getDrugById(drugId) : null;
   const program = drug ? getProgramMeta(drug.id) : null;
+  const features = getLaunchFeatures();
 
   if (!drug || !program) {
     return (
@@ -56,15 +59,9 @@ export default async function AccessPage({ searchParams }: PageProps) {
   }
 
   const preferred =
-    params.path === "manufacturer"
+    features.manufacturerPathway && params.path === "manufacturer"
       ? "manufacturer"
-      : params.path === "pharmacy"
-        ? "pharmacy"
-        : program.fulfillment.path === "pharmacy_pickup"
-          ? "pharmacy"
-          : "manufacturer";
-
-  const features = getLaunchFeatures();
+      : "pharmacy";
 
   return (
     <div className="min-h-[70dvh] bg-background">

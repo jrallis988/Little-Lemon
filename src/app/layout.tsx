@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Trump RX — See if your medication is included",
     description:
-      "Select medications only. Compare options, review eligibility, and follow a clear access path — pharmacy or manufacturer-direct.",
+      "Select medications only. Compare options, review eligibility, and follow a clear pharmacy pickup access path. Not a pharmacy and not insurance.",
     type: "website",
   },
 };
