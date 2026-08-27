@@ -45,7 +45,7 @@ async function shot(page, name) {
 
 async function go(page) {
   await page.goto(BASE, { waitUntil: "networkidle" });
-  await page.waitForTimeout(500);
+  await page.waitForTimeout(600);
 }
 
 async function seedChat(page) {
@@ -99,6 +99,8 @@ await mkdir(OUT, { recursive: true });
   const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
   await seedChat(page);
   await go(page);
+  await page.getByRole("button", { name: "Chat" }).click();
+  await page.waitForTimeout(500);
   await shot(page, "screen-mobile-07-chat-conversation");
   await page.close();
 }
@@ -107,6 +109,10 @@ await mkdir(OUT, { recursive: true });
 {
   const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
   await go(page);
+  await shot(page, "screen-desktop-00-home");
+
+  await page.getByRole("button", { name: "Cellar Check" }).click();
+  await page.waitForTimeout(400);
   await shot(page, "screen-desktop-01-cellar-chat");
 
   await page.getByRole("button", { name: "Close the Night" }).click();
@@ -125,7 +131,7 @@ await mkdir(OUT, { recursive: true });
   await seedChat(page);
   await go(page);
   await page.getByRole("button", { name: "Cellar Check" }).click().catch(() => {});
-  await page.waitForTimeout(400);
+  await page.waitForTimeout(500);
   await shot(page, "screen-desktop-04-chat-conversation");
   await page.close();
 }
