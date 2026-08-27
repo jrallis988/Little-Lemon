@@ -101,15 +101,15 @@ const FOOTER_COLUMNS: {
       { label: "Kids", to: "/department/boys-girls" },
       { label: "Home", to: "/department/home" },
       { label: "Shoes", to: "/department/footwear" },
-      { label: "Clearance", to: "/shop/clearance" },
+      { label: "Clearance", to: "/clearance" },
     ],
   },
   {
     id: "discover",
     title: "Discover",
     links: [
-      { label: "Designer Shop", to: "/shop/designer" },
-      { label: "Under $50", to: "/shop/under-50" },
+      { label: "Designer Shop", to: "/designer-shop" },
+      { label: "Under $50", to: "/under-50" },
       { label: "New finds", to: "/catalog?sort=newest" },
       { label: "Fit quiz", to: "/fit-quiz" },
       { label: "Gift cards", to: "/gift-cards" },

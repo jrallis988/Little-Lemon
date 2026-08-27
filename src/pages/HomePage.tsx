@@ -25,7 +25,7 @@ const HERO_SLIDES = [
     image:
       "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=1800&q=82",
     primary: { label: "Shop Handbags", to: "/department/handbags" },
-    secondary: { label: "Designer Shop", to: "/shop/designer" },
+    secondary: { label: "Designer Shop", to: "/designer-shop" },
   },
   {
     id: "footwear",
@@ -34,7 +34,7 @@ const HERO_SLIDES = [
     image:
       "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=1800&q=82",
     primary: { label: "Shop Footwear", to: "/department/footwear" },
-    secondary: { label: "Clearance", to: "/shop/clearance" },
+    secondary: { label: "Clearance", to: "/clearance" },
   },
   {
     id: "home",
@@ -43,7 +43,7 @@ const HERO_SLIDES = [
     image:
       "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1800&q=82",
     primary: { label: "Shop Home", to: "/department/home" },
-    secondary: { label: "Under $50", to: "/shop/under-50" },
+    secondary: { label: "Under $50", to: "/under-50" },
   },
   {
     id: "clearance",
@@ -51,7 +51,7 @@ const HERO_SLIDES = [
     copy: "Final markdowns on already wow prices — while supplies last.",
     image:
       "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1800&q=82",
-    primary: { label: "Shop Clearance", to: "/shop/clearance" },
+    primary: { label: "Shop Clearance", to: "/clearance" },
     secondary: { label: "Shop All", to: "/catalog" },
   },
 ]
@@ -101,7 +101,7 @@ const DEPARTMENTS = [
   },
   {
     label: "Clearance",
-    to: "/shop/clearance",
+    to: "/clearance",
     image:
       "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&h=600&q=80",
   },
@@ -325,7 +325,7 @@ export function HomePage() {
               size="sm"
               asChild
             >
-              <Link to="/shop/designer">Shop</Link>
+              <Link to="/designer-shop">Shop</Link>
             </Button>
           </div>
           <div className="grid grid-cols-2 gap-3">
@@ -351,7 +351,7 @@ export function HomePage() {
               size="sm"
               asChild
             >
-              <Link to="/shop/under-50">Shop</Link>
+              <Link to="/under-50">Shop</Link>
             </Button>
           </div>
           <div className="grid grid-cols-2 gap-3">
@@ -414,7 +414,7 @@ export function HomePage() {
             </Button>
           </div>
           <Link
-            to="/shop/clearance"
+            to="/clearance"
             className="flex flex-col justify-between rounded-md bg-navy px-6 py-8 text-navy-foreground no-underline shadow-lift transition-transform duration-300 ease-retail hover:scale-[1.01]"
           >
             <div>

@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button"
 import { useFilterStore } from "@/stores/filterStore"
 
 const RECOVERY = [
-  { label: "Designer Shop", to: "/shop/designer" },
-  { label: "Under $50", to: "/shop/under-50" },
-  { label: "Clearance", to: "/shop/clearance" },
+  { label: "Designer Shop", to: "/designer-shop" },
+  { label: "Under $50", to: "/under-50" },
+  { label: "Clearance", to: "/clearance" },
   { label: "Women", to: "/department/women" },
 ] as const
 

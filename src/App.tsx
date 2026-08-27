@@ -1,5 +1,5 @@
 import { Suspense, useEffect } from "react"
-import { Route, Routes, useLocation } from "react-router-dom"
+import { Navigate, Route, Routes, useLocation } from "react-router-dom"
 import { AppShell } from "@/components/layout/AppShell"
 import { track } from "@/lib/analytics"
 import {
@@ -51,7 +51,8 @@ function AnalyticsListener() {
  * PDP:        /product/:slug
  * Department: /department/:slug
  * Fit quiz:   /fit-quiz
- * Merch:      /shop/designer | /shop/under-50 | /shop/clearance
+ * Merch:      /designer-shop | /under-50 | /clearance
+ *             (legacy /shop/:slug redirects preserved)
  * Utilities:  /stores /wishlist /account /gift-cards
  *             /shipping-returns /order-status
  * Commerce:   /bag /checkout /order-confirmation
@@ -71,6 +72,12 @@ export default function App() {
             <Route path="product/:slug" element={<ProductDetailPage />} />
             <Route path="department/:slug" element={<DepartmentLandingPage />} />
             <Route path="fit-quiz" element={<FitQuizPage />} />
+            <Route path="designer-shop" element={<MerchLandingPage />} />
+            <Route path="under-50" element={<MerchLandingPage />} />
+            <Route path="clearance" element={<MerchLandingPage />} />
+            <Route path="shop/designer" element={<Navigate to="/designer-shop" replace />} />
+            <Route path="shop/under-50" element={<Navigate to="/under-50" replace />} />
+            <Route path="shop/clearance" element={<Navigate to="/clearance" replace />} />
             <Route path="shop/:slug" element={<MerchLandingPage />} />
             <Route path="stores" element={<StoreFinderPage />} />
             <Route path="wishlist" element={<WishlistPage />} />

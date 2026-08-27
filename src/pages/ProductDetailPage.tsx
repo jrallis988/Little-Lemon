@@ -23,6 +23,8 @@ import { discountPercent, formatCurrency } from "@/lib/utils"
 import { useCartStore } from "@/stores/cartStore"
 import { useWishlistStore } from "@/stores/wishlistStore"
 import { useRecentStore } from "@/stores/recentStore"
+import { useStorePreferenceStore } from "@/stores/storePreferenceStore"
+import { useToastStore } from "@/stores/toastStore"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
@@ -204,10 +206,19 @@ function StoreStockPanel({
   stores: NearbyStore[]
   size: string | null
 }) {
-  const [zip, setZip] = useState("10003")
-  const [selected, setSelected] = useState(
-    () => stores.find((s) => s.status !== "out_of_stock")?.id ?? stores[0]?.id ?? "",
-  )
+  const preferredStoreId = useStorePreferenceStore((s) => s.preferredStoreId)
+  const lastSearchQuery = useStorePreferenceStore((s) => s.lastSearchQuery)
+  const setPreferredStore = useStorePreferenceStore((s) => s.setPreferredStore)
+  const setLastSearchQuery = useStorePreferenceStore((s) => s.setLastSearchQuery)
+  const pushToast = useToastStore((s) => s.push)
+
+  const [zip, setZip] = useState(lastSearchQuery || "10003")
+  const [selected, setSelected] = useState(() => {
+    if (preferredStoreId && stores.some((s) => s.id === preferredStoreId)) {
+      return preferredStoreId
+    }
+    return stores.find((s) => s.status !== "out_of_stock")?.id ?? stores[0]?.id ?? ""
+  })
   const [queried, setQueried] = useState(true)
   const [reservation, setReservation] = useState<string | null>(null)
 
@@ -219,6 +230,7 @@ function StoreStockPanel({
     selectedStore.status !== "out_of_stock" &&
     product.inventory !== "out_of_stock" &&
     product.inventory !== "online_only"
+  const isPreferred = !!selectedStore && selectedStore.id === preferredStoreId
 
   return (
     <div className="rounded-md border border-border bg-surface-muted/50 p-4">
@@ -236,6 +248,7 @@ function StoreStockPanel({
           e.preventDefault()
           setQueried(true)
           setReservation(null)
+          setLastSearchQuery(zip.trim() || "10003")
         }}
       >
         <Input
@@ -256,6 +269,7 @@ function StoreStockPanel({
           {results.map((store) => {
             const status = storeStatusLabel(store.status)
             const active = selected === store.id
+            const mine = store.id === preferredStoreId
             return (
               <li key={store.id}>
                 <button
@@ -272,7 +286,14 @@ function StoreStockPanel({
                   )}
                 >
                   <div>
-                    <p className="text-sm font-medium">{store.name}</p>
+                    <p className="text-sm font-medium">
+                      {store.name}
+                      {mine && (
+                        <span className="ml-2 text-2xs font-bold uppercase tracking-wide text-primary">
+                          My store
+                        </span>
+                      )}
+                    </p>
                     <p className="text-2xs text-muted-foreground">
                       {store.distanceMi} mi · {store.pickup}
                     </p>
@@ -300,6 +321,23 @@ function StoreStockPanel({
         >
           Reserve in store
         </Button>
+        {selectedStore && (
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full"
+            disabled={isPreferred}
+            onClick={() => {
+              setPreferredStore(selectedStore.id)
+              pushToast({
+                title: "Store saved",
+                description: `${selectedStore.name} is now your store.`,
+              })
+            }}
+          >
+            {isPreferred ? "This is your store" : "Make this my store"}
+          </Button>
+        )}
         {!size && (
           <p className="text-2xs text-muted-foreground">Select a size to reserve.</p>
         )}
@@ -327,6 +365,7 @@ function StoreStockPanel({
     </div>
   )
 }
+
 
 function StarRow({ rating, className }: { rating: number; className?: string }) {
   return (

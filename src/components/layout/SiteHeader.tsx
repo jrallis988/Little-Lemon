@@ -12,6 +12,7 @@ import {
 import { useCartStore } from "@/stores/cartStore"
 import { useWishlistStore } from "@/stores/wishlistStore"
 import { useAccountStore } from "@/stores/accountStore"
+import { useStorePreferenceStore } from "@/stores/storePreferenceStore"
 import { navHref, SHOP_NAV } from "@/data/navigation"
 import { Button } from "@/components/ui/button"
 import {
@@ -82,6 +83,7 @@ export function SiteHeader() {
   const [megaOpen, setMegaOpen] = useState(false)
   const wishlistCount = useWishlistStore((s) => s.productIds.length)
   const user = useAccountStore((s) => s.user)
+  const preferredStore = useStorePreferenceStore((s) => s.preferredStore())
 
   return (
     <header className="sticky top-0 z-40 shadow-header">
@@ -105,10 +107,11 @@ export function SiteHeader() {
           <div className="flex h-[var(--utility-height)] items-center justify-end gap-4 text-xs text-muted-foreground">
             <Link
               to="/stores"
-              className="inline-flex items-center gap-1 text-muted-foreground no-underline hover:text-foreground"
+              className="inline-flex max-w-[14rem] items-center gap-1 truncate text-muted-foreground no-underline hover:text-foreground"
+              title={preferredStore ? preferredStore.name : "Find a store"}
             >
-              <MapPin className="h-3.5 w-3.5" />
-              Find a store
+              <MapPin className="h-3.5 w-3.5 shrink-0" />
+              {preferredStore ? preferredStore.name.replace(/^Marshalls\s+/i, "") : "Find a store"}
             </Link>
             <Link
               to="/gift-cards"
@@ -184,21 +187,21 @@ export function SiteHeader() {
                   </div>
                   <div className="mt-4 flex flex-wrap gap-3 border-t border-border pt-3">
                     <Link
-                      to="/shop/designer"
+                      to="/designer-shop"
                       className="text-sm font-semibold text-navy no-underline hover:underline"
                       onClick={() => setMegaOpen(false)}
                     >
                       Designer Shop
                     </Link>
                     <Link
-                      to="/shop/under-50"
+                      to="/under-50"
                       className="text-sm font-semibold text-navy no-underline hover:underline"
                       onClick={() => setMegaOpen(false)}
                     >
                       Under $50
                     </Link>
                     <Link
-                      to="/shop/clearance"
+                      to="/clearance"
                       className="text-sm font-semibold text-primary no-underline hover:underline"
                       onClick={() => setMegaOpen(false)}
                     >
@@ -224,7 +227,7 @@ export function SiteHeader() {
             </div>
 
             <NavLink
-              to="/shop/clearance"
+              to="/clearance"
               className={({ isActive }) =>
                 cn(
                   "hidden rounded-sm px-3 py-2 text-sm font-semibold text-primary transition-all hover:bg-deal-soft lg:inline-flex",
@@ -342,21 +345,21 @@ export function SiteHeader() {
               </span>
             </Link>
             <Link
-              to="/shop/clearance"
+              to="/clearance"
               onClick={() => setMenuOpen(false)}
               className="rounded-md px-3 py-3 text-base font-semibold text-primary no-underline hover:bg-deal-soft"
             >
               Clearance
             </Link>
             <Link
-              to="/shop/designer"
+              to="/designer-shop"
               onClick={() => setMenuOpen(false)}
               className="rounded-md px-3 py-3 text-sm font-medium no-underline hover:bg-secondary"
             >
               Designer Shop
             </Link>
             <Link
-              to="/shop/under-50"
+              to="/under-50"
               onClick={() => setMenuOpen(false)}
               className="rounded-md px-3 py-3 text-sm font-medium no-underline hover:bg-secondary"
             >

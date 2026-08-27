@@ -1,37 +1,29 @@
-import { Link, useParams } from "react-router-dom"
-import { PRODUCTS } from "@/data/products"
+import { Link, useParams, useLocation } from "react-router-dom"
 import { ProductCard } from "@/components/catalog/ProductCard"
 import { Button } from "@/components/ui/button"
+import {
+  curatedMerchProducts,
+  MERCH_LANDINGS,
+  resolveMerchSlug,
+} from "@/data/merchLandings"
 import { useDocumentMeta } from "@/hooks/useDocumentMeta"
-import { discountPercent } from "@/lib/utils"
+import { cn } from "@/lib/utils"
 
-const LANDINGS = {
-  designer: {
-    title: "Designer Shop",
-    eyebrow: "Elevated labels",
-    description:
-      "Coach, Theory, Michael Kors, and more — designer and contemporary brands at off-price.",
-    filter: (p: (typeof PRODUCTS)[number]) =>
-      p.brandTier === "Designer" || p.price >= 90,
-  },
-  clearance: {
-    title: "Clearance",
-    eyebrow: "Extra markdowns",
-    description: "Deepest discounts on already wow prices — while supplies last.",
-    filter: (p: (typeof PRODUCTS)[number]) =>
-      discountPercent(p.compareAt, p.price) >= 45,
-  },
-  "under-50": {
-    title: "Under $50",
-    eyebrow: "Gift-ready finds",
-    description: "Style under fifty — perfect for everyday and last-minute gifting.",
-    filter: (p: (typeof PRODUCTS)[number]) => p.price < 50,
-  },
+const ACCENT_CLASS = {
+  navy: "from-navy/90 via-navy/70 to-navy/40",
+  deal: "from-primary/90 via-primary/65 to-navy/50",
+  sky: "from-sky/90 via-navy/55 to-navy/40",
 } as const
 
 export function MerchLandingPage() {
-  const { slug } = useParams()
-  const landing = slug && slug in LANDINGS ? LANDINGS[slug as keyof typeof LANDINGS] : null
+  const { slug: paramSlug } = useParams()
+  const location = useLocation()
+  const raw =
+    paramSlug ??
+    location.pathname.replace(/^\//, "").split("/")[0] ??
+    ""
+  const slug = resolveMerchSlug(raw)
+  const landing = slug ? MERCH_LANDINGS[slug] : null
 
   useDocumentMeta({
     title: landing ? `${landing.title} | Marshalls` : "Shop | Marshalls",
@@ -49,36 +41,75 @@ export function MerchLandingPage() {
     )
   }
 
-  const products = PRODUCTS.filter(landing.filter).filter(
-    (p) => p.inventory !== "out_of_stock",
-  )
+  const products = curatedMerchProducts(landing.slug)
 
   return (
     <div>
-      <section className="border-b border-border bg-gradient-to-br from-sky-soft via-surface to-deal-soft">
-        <div className="shelf-container py-12 md:py-16">
-          <p className="text-2xs font-bold uppercase tracking-[0.12em] text-primary">
+      <section className="relative isolate overflow-hidden border-b border-border">
+        <img
+          src={landing.heroImage}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div
+          className={cn(
+            "absolute inset-0 bg-gradient-to-r",
+            ACCENT_CLASS[landing.accent],
+          )}
+        />
+        <div className="shelf-container relative py-14 md:py-20">
+          <p className="text-2xs font-bold uppercase tracking-[0.14em] text-white/85">
             {landing.eyebrow}
           </p>
-          <h1 className="mt-2 font-display text-4xl font-bold italic text-navy md:text-5xl">
+          <h1 className="mt-2 max-w-xl font-display text-4xl font-bold italic text-white md:text-5xl">
             {landing.title}
           </h1>
-          <p className="mt-3 max-w-xl text-muted-foreground">{landing.description}</p>
-          <Button asChild className="mt-6 bg-navy hover:bg-navy/90">
-            <Link to="/catalog">Browse full catalog</Link>
-          </Button>
+          <p className="mt-3 max-w-lg text-base text-white/90 md:text-lg">
+            {landing.description}
+          </p>
+          <div className="mt-7 flex flex-wrap gap-3">
+            <Button asChild className="bg-white text-navy hover:bg-white/90">
+              <a href="#curated-grid">{landing.ctaLabel}</a>
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              className="border-white/70 bg-transparent text-white hover:bg-white/10"
+            >
+              <Link to="/catalog">Browse full catalog</Link>
+            </Button>
+          </div>
         </div>
       </section>
 
-      <div className="shelf-container py-10">
-        <p className="mb-6 text-sm text-muted-foreground">
-          {products.length} styles
-        </p>
-        <div className="grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3 lg:grid-cols-4">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+      <div id="curated-grid" className="shelf-container scroll-mt-28 py-10">
+        <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 className="font-display text-2xl font-bold text-navy">
+              Curated for this edit
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Hand-picked assortment — not a catalog filter pass-through.
+            </p>
+          </div>
+          <p className="text-sm font-semibold text-navy" aria-live="polite">
+            {products.length} styles
+          </p>
         </div>
+        {products.length === 0 ? (
+          <p className="rounded-md border border-dashed border-border px-4 py-12 text-center text-sm text-muted-foreground">
+            This edit is between drops.{" "}
+            <Link to="/catalog" className="font-semibold text-navy underline">
+              Browse the full catalog
+            </Link>
+          </p>
+        ) : (
+          <div className="grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3 lg:grid-cols-4">
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )
