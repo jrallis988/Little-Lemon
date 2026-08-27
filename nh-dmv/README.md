@@ -1,31 +1,26 @@
-# NH DMV Redesign (Concept)
+# NH DMV — Digital Service Experience
 
-Task-first rebuild of [dmv.nh.gov](https://www.dmv.nh.gov) as a DriveSkill-inspired service portal — Artistic Fountain concept.
+Conceptual redesign by Artistic Fountain. **Not** an official State of New Hampshire website.
 
-**Not an official State of New Hampshire site.** Demo account, appointments, and form submits are simulated in-app.
+**Principle:** No surprises at the counter.
 
-## Data sources (public)
+Residents should understand what to do, whether it can be done online, what documents and fees apply, whether an appointment is needed, and what happens next.
 
-Mirrored for the demo from official pages:
+## Key paths
 
-- Hours & locations — [dmv.nh.gov/hours-and-locations](https://www.dmv.nh.gov/hours-and-locations)
-- Licensing fees — [dmv.nh.gov/.../licensing-fees](https://www.dmv.nh.gov/drivers-licensenon-driver-ids/licensing-fees)
-- Notices / REAL ID / new-resident rules — [dmv.nh.gov](https://www.dmv.nh.gov/)
+| Page | Role |
+|------|------|
+| `index.html` | Home + task hierarchy |
+| `online.html` | Can I do this online? |
+| `service.html?id=…` | Service detail template |
+| `checklist.html` | Readiness checklist |
+| `first-license.html` | First license journey |
+| `new-resident.html` | New resident guided plan |
+| `change-address.html` | Guided digital form |
+| `search.html` | Task-aware search |
+| `dashboard.html` | Proactive attention board |
+| `branches.html` / `branch.html?id=…` | Map + list / branch detail |
+| `fees.html` | Searchable fees by service |
+| `records.html` | My DMV records |
 
-## Product features
-
-1. Guest vs signed-in home (demo Sign in)
-2. Dashboard with active appointments / renewals
-3. Inline booking → printable confirmation receipt
-4. Document checklist wizard
-5. Branch finder with live-status simulation + empty states
-6. Fees page with official schedule figures
-7. Empty / error states (no slots, no branch matches, incomplete docs)
-
-## Preview
-
-```bash
-npm start
-```
-
-Open [http://localhost:3000/nh-dmv/](http://localhost:3000/nh-dmv/).
+Preview: `npm start` → http://localhost:3000/nh-dmv/
