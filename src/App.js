@@ -17,6 +17,41 @@ import News from "./pages/News";
 import Contact from "./pages/Contact";
 import Directory from "./pages/Directory";
 import Sitemap from "./pages/Sitemap";
+import ContentPage from "./pages/ContentPage";
+import { contentPagePaths } from "./data/pageContent";
+import {
+  academicsSectionNav,
+  admissionsSectionNav,
+  studentSectionNav,
+  workforceSectionNav,
+  aboutSectionNav,
+  campusNav,
+} from "./data/navigation";
+
+function sectionFor(path) {
+  if (path.startsWith("/academics")) return [academicsSectionNav, "Academics"];
+  if (path.startsWith("/admissions")) return [admissionsSectionNav, "Admissions & Aid"];
+  if (path.startsWith("/student-experience") || path === "/athletics") {
+    return [studentSectionNav, "Student Experience"];
+  }
+  if (path.startsWith("/workforce")) return [workforceSectionNav, "Workforce"];
+  if (path.startsWith("/about")) return [aboutSectionNav, "About"];
+  if (path.startsWith("/campus") || path === "/events") {
+    return [campusNav, "Campus"];
+  }
+  return [null, "Section"];
+}
+
+const contentRoutes = contentPagePaths.map((path) => {
+  const [nav, label] = sectionFor(path);
+  const routePath = path.replace(/^\//, "");
+  return {
+    path: routePath,
+    element: (
+      <ContentPage path={path} sectionNav={nav} sectionLabel={label} />
+    ),
+  };
+});
 
 function App() {
   return (
@@ -39,6 +74,9 @@ function App() {
         <Route path="contact" element={<Contact />} />
         <Route path="directory" element={<Directory />} />
         <Route path="sitemap" element={<Sitemap />} />
+        {contentRoutes.map((route) => (
+          <Route key={route.path} path={route.path} element={route.element} />
+        ))}
       </Route>
     </Routes>
   );

@@ -5,6 +5,11 @@ import { admissionsNav } from "./admissionsNav";
 
 const paths = [
   {
+    title: "Begin the Process",
+    copy: "Start exploring programs, visits, and your path to enrollment.",
+    to: "/admissions/begin",
+  },
+  {
     title: "How to Apply",
     copy: "Step-by-step guidance for first-time, transfer, military, and international students.",
     to: "/admissions/how-to-apply",
@@ -15,14 +20,19 @@ const paths = [
     to: "/admissions/visit",
   },
   {
+    title: "Next Steps",
+    copy: "Accepted students: placement, advising, aid, and registration.",
+    to: "/admissions/next-steps",
+  },
+  {
     title: "Tuition & Fees",
     copy: "2026–2027 per-credit rates, residency categories, and cost comparisons.",
     to: "/admissions/tuition",
   },
   {
-    title: "Financial Aid",
-    copy: "FAFSA steps, school code 002583, grants, loans, and work-study.",
-    to: "/admissions/financial-aid",
+    title: "Scholarships & Aid",
+    copy: "FAFSA, scholarships, grants, loans, and work-study options.",
+    to: "/admissions/scholarships",
   },
 ];
 

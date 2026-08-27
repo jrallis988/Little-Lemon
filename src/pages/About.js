@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import SectionNav from "../components/SectionNav";
+import { aboutSectionNav } from "../data/navigation";
 
 const values = [
   {
@@ -37,6 +39,7 @@ function About() {
           </p>
         </div>
       </section>
+      <SectionNav label="About" items={aboutSectionNav} />
 
       <section className="section">
         <div className="container mission-grid">

@@ -1,6 +1,17 @@
 import { Link } from "react-router-dom";
 import PageHero from "../components/PageHero";
+import SectionNav from "../components/SectionNav";
+import { workforceSectionNav } from "../data/navigation";
 import { workforceTracks } from "../data/siteContent";
+
+const workforceLinks = {
+  "Short-Term Healthcare Training": "/workforce/healthcare",
+  "Culinary Arts & Sustainable Foodways": "/workforce/culinary",
+  "Professional Development": "/workforce/professional-development",
+  "Apprenticeships & WorkReadyNH": "/workforce/workready",
+  "Corporate & Customized Training": "/workforce/corporate",
+  "Police Testing Alliance": "/workforce/police-testing",
+};
 
 function Workforce() {
   return (
@@ -11,6 +22,7 @@ function Workforce() {
         copy="The Business & Training Center is the region’s partner for short-term skills training, apprenticeships, and customized employer programs."
         image="/images/science-lab.jpg"
       />
+      <SectionNav label="Workforce" items={workforceSectionNav} />
 
       <section className="section">
         <div className="container">
@@ -28,6 +40,11 @@ function Workforce() {
               <article key={track.title} className="area-item">
                 <h3>{track.title}</h3>
                 <p>{track.copy}</p>
+                {workforceLinks[track.title] ? (
+                  <Link className="text-link" to={workforceLinks[track.title]}>
+                    Learn more
+                  </Link>
+                ) : null}
               </article>
             ))}
           </div>

@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
 import { legalLinks } from "../data/siteContent";
+import { primaryNav, campusNav } from "../data/navigation";
 
 function Footer() {
+  const explore = primaryNav.flatMap((section) => [
+    { label: section.label, to: section.to },
+  ]);
+
   return (
     <footer className="site-footer">
       <div className="footer-inner">
@@ -23,20 +28,24 @@ function Footer() {
           <div>
             <h2>Explore</h2>
             <ul>
-              <li><Link to="/academics">Academics</Link></li>
-              <li><Link to="/academics/resources">Academic Resources</Link></li>
-              <li><Link to="/admissions">Admissions &amp; Aid</Link></li>
-              <li><Link to="/student-experience">Student Experience</Link></li>
-              <li><Link to="/workforce">Workforce Development</Link></li>
+              {explore.map((link) => (
+                <li key={link.to}>
+                  <Link to={link.to}>{link.label}</Link>
+                </li>
+              ))}
+              <li><Link to="/athletics">Athletics</Link></li>
               <li><Link to="/news">News</Link></li>
+              <li><Link to="/events">Events</Link></li>
             </ul>
           </div>
           <div>
             <h2>Campus</h2>
             <ul>
-              <li><Link to="/directory">Faculty &amp; Staff Directory</Link></li>
-              <li><Link to="/academics/calendar">Calendar &amp; Schedule</Link></li>
-              <li><Link to="/contact">Hours &amp; Directions</Link></li>
+              {campusNav.slice(0, 8).map((link) => (
+                <li key={link.to}>
+                  <Link to={link.to}>{link.label}</Link>
+                </li>
+              ))}
               <li>320 Corporate Drive</li>
               <li>Portsmouth, NH 03801</li>
             </ul>

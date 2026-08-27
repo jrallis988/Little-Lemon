@@ -63,7 +63,13 @@ function AcademicResources() {
           <ul className="support-list">
             {academicSupportServices.map((service) => (
               <li key={service.title}>
-                <strong>{service.title}</strong>
+                <strong>
+                  {service.to ? (
+                    <Link to={service.to}>{service.title}</Link>
+                  ) : (
+                    service.title
+                  )}
+                </strong>
                 <span>{service.copy}</span>
               </li>
             ))}

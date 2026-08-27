@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import HeroCarousel from "../components/HeroCarousel";
+import { iconMap } from "../components/Icons";
 import { highlights } from "../data/programs";
 import {
   apartPillars,
@@ -8,6 +9,15 @@ import {
   newsItems,
   socialPosts,
 } from "../data/siteContent";
+
+const pillarIcons = {
+  "academic-excellence": "graduation",
+  "support-to-succeed": "users",
+  "transfer-pathways": "book",
+  "career-workforce": "briefcase",
+  facilities: "building",
+  athletics: "trophy",
+};
 
 function Home() {
   const featuredNews = newsItems.slice(0, 2);
@@ -30,7 +40,7 @@ function Home() {
         <div className="container stats-grid">
           {highlights.map((item) => (
             <div key={item.label} className="stat">
-              <p className="stat-value">{item.value}</p>
+              <p className="stat-value factoid">{item.value}</p>
               <p className="stat-label">{item.label}</p>
               <p className="stat-detail">{item.detail}</p>
             </div>
@@ -49,15 +59,19 @@ function Home() {
             </p>
           </div>
           <div className="apart-grid">
-            {apartPillars.map((item) => (
-              <article key={item.id} className="apart-item">
-                <h3>{item.title}</h3>
-                <p>{item.copy}</p>
-                <Link className="text-link" to={item.to}>
-                  Learn more
-                </Link>
-              </article>
-            ))}
+            {apartPillars.map((item) => {
+              const Icon = iconMap[pillarIcons[item.id]] || iconMap.book;
+              return (
+                <article key={item.id} className="apart-item home-icon-card">
+                  <Icon accent />
+                  <h3>{item.title}</h3>
+                  <p>{item.copy}</p>
+                  <Link className="text-link" to={item.to}>
+                    Learn more
+                  </Link>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>

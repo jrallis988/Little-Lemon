@@ -1,22 +1,31 @@
 export const academicsNav = [
   { to: "/academics", label: "Programs", end: true },
-  { to: "/academics/resources", label: "Resources" },
-  { to: "/academics/calendar", label: "Calendar & Schedule" },
-  { to: "/directory", label: "Faculty Directory" },
+  { to: "/academics/course-descriptions", label: "Courses" },
+  { to: "/academics/calendar", label: "Calendar" },
+  { to: "/academics/catalog", label: "Catalog" },
+  { to: "/academics/support", label: "Support" },
+  { to: "/academics/registration", label: "Registration" },
+  { to: "/directory", label: "Directory" },
 ];
 
 export const academicResources = [
   {
     title: "Course Descriptions",
     copy: "Browse the classes behind each major, from general education foundations to advanced technical labs.",
-    linkLabel: "View Catalog",
-    href: "https://catalog.greatbay.edu/",
+    linkLabel: "View course descriptions",
+    to: "/academics/course-descriptions",
   },
   {
     title: "Course Schedule / Offerings",
     copy: "Plan day, evening, hybrid, hyflex, and online courses around work and family responsibilities.",
-    linkLabel: "Registration Path",
-    to: "/admissions/how-to-apply",
+    linkLabel: "View schedule",
+    to: "/academics/course-schedule",
+  },
+  {
+    title: "College Catalog",
+    copy: "Official program requirements, academic policies, and consumer disclosures.",
+    linkLabel: "Open catalog",
+    to: "/academics/catalog",
   },
   {
     title: "Academic Calendar",
@@ -27,20 +36,14 @@ export const academicResources = [
   {
     title: "Programs for High School Students",
     copy: "Early College options help students earn credits, explore majors, and lower the eventual cost of a degree.",
-    linkLabel: "Talk to Admissions",
-    to: "/admissions",
+    linkLabel: "Explore Early College",
+    to: "/academics/high-school",
   },
   {
-    title: "Academic Advising",
-    copy: "Work one-on-one with advisors to select a major, choose classes, and stay on track to graduation or transfer.",
-    linkLabel: "Contact Advising",
-    href: "mailto:greatbayadvising@ccsnh.edu",
-  },
-  {
-    title: "Library & Learning Support",
-    copy: "Get tutoring, research help, accessibility accommodations, and success coaching through CAPS and campus partners.",
-    linkLabel: "Support services",
-    to: "/academics/resources",
+    title: "Registration",
+    copy: "Forms and steps to register, change majors, or apply to graduate.",
+    linkLabel: "Registration hub",
+    to: "/academics/registration",
   },
 ];
 
@@ -48,26 +51,32 @@ export const academicSupportServices = [
   {
     title: "Academic Advising",
     copy: "Degree planning, registration help, transfer conversations, and progress check-ins.",
+    to: "/academics/support/advising",
   },
   {
     title: "Tutoring & Writing Support",
     copy: "In-person tutors plus online support for math, writing, science, and more.",
+    to: "/academics/support/tutoring",
   },
   {
     title: "Accessibility Services",
     copy: "Accommodations and learning support for students with documented disabilities.",
+    to: "/academics/support/accessibility",
   },
   {
     title: "Success Coaching",
     copy: "Study skills, time management, goal setting, and persistence support through the semester.",
+    to: "/academics/support/success-coaching",
   },
   {
     title: "Career Center",
     copy: "Resume reviews, internship guidance, career exploration, and job search support.",
+    to: "/academics/support/career-center",
   },
   {
     title: "Transfer Options",
     copy: "Transfer agreements and advising for students planning a seamless path to a four-year degree.",
+    to: "/academics/support/transfer",
   },
 ];
 

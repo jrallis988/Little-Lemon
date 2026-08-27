@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
 import PageHero from "../components/PageHero";
+import SectionNav from "../components/SectionNav";
+import { IconTrophy } from "../components/Icons";
+import { studentSectionNav } from "../data/navigation";
 import { athleticTeams, clubs } from "../data/siteContent";
 
 function StudentExperience() {
@@ -11,11 +14,15 @@ function StudentExperience() {
         copy="Athletics, clubs, wellness resources, and a Student Success Center — built to help you belong, lead, and thrive at Great Bay."
         image="/images/students.jpg"
       />
+      <SectionNav label="Student Experience" items={studentSectionNav} />
 
       <section className="section">
         <div className="container split">
           <div className="split-copy">
-            <p className="eyebrow">Athletics</p>
+            <p className="eyebrow">
+              <span className="eyebrow-icon"><IconTrophy accent /></span>
+              Athletics
+            </p>
             <h2>Compete as a Heron.</h2>
             <p>
               GBCC is a member of the Yankee Small College Conference (YSCC)
@@ -31,6 +38,9 @@ function StudentExperience() {
             <p className="fine-print">
               Athletics: (603) 427-7733 · greatbayathletics@ccsnh.edu
             </p>
+            <Link className="btn btn-gold" to="/athletics">
+              Athletics hub
+            </Link>
           </div>
           <figure className="split-media">
             <img

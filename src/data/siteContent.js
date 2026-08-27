@@ -171,7 +171,7 @@ export const apartPillars = [
     title: "Athletics",
     copy:
       "Men’s basketball and baseball; women’s basketball and volleyball; men’s and women’s golf and track & field. GBCC is a YSCC member within the USCAA. In 2025 the men’s basketball team won the conference championship.",
-    to: "/student-experience",
+    to: "/athletics",
   },
 ];
 

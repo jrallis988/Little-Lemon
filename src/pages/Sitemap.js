@@ -1,62 +1,36 @@
 import { Link } from "react-router-dom";
 import PageHero from "../components/PageHero";
-import { focusAreas, programs } from "../data/programs";
-
-const siteSections = [
-  {
-    title: "Main",
-    links: [
-      { label: "Home", to: "/" },
-      { label: "News", to: "/news" },
-      { label: "Contact / Hours & Directions", to: "/contact" },
-      { label: "Faculty & Staff Directory", to: "/directory" },
-    ],
-  },
-  {
-    title: "Academics",
-    links: [
-      { label: "Our Programs", to: "/academics" },
-      { label: "Academic Resources", to: "/academics/resources" },
-      { label: "Calendar & Schedule", to: "/academics/calendar" },
-      ...focusAreas.map((area) => ({ label: area.title, to: `/academics?focus=${area.id}` })),
-    ],
-  },
-  {
-    title: "Admissions & Aid",
-    links: [
-      { label: "Admissions Overview", to: "/admissions" },
-      { label: "How to Apply", to: "/admissions/how-to-apply" },
-      { label: "Visit Campus", to: "/admissions/visit" },
-      { label: "Tuition & Fees", to: "/admissions/tuition" },
-      { label: "Financial Aid", to: "/admissions/financial-aid" },
-    ],
-  },
-  {
-    title: "Student Experience",
-    links: [{ label: "Athletics, Clubs & Wellness", to: "/student-experience" }],
-  },
-  {
-    title: "Workforce Development",
-    links: [{ label: "Business & Training Center", to: "/workforce" }],
-  },
-  {
-    title: "About",
-    links: [
-      { label: "Mission, Vision & Values", to: "/about" },
-      { label: "News & Events", to: "/news" },
-    ],
-  },
-];
+import { programs } from "../data/programs";
+import { flattenNavLinks, primaryNav, campusNav } from "../data/navigation";
 
 function Sitemap() {
   const sortedPrograms = [...programs].sort((a, b) => a.title.localeCompare(b.title));
+  const allLinks = flattenNavLinks();
+
+  const siteSections = [
+    ...primaryNav.map((section) => ({
+      title: section.label,
+      links: [
+        { label: `${section.label} overview`, to: section.to },
+        ...section.groups.flatMap((group) => group.links),
+      ],
+    })),
+    {
+      title: "Campus & Utilities",
+      links: campusNav,
+    },
+    {
+      title: "All registered routes",
+      links: allLinks,
+    },
+  ];
 
   return (
     <>
       <PageHero
         brand="Sitemap"
         title="Find your way around Great Bay."
-        copy="A full list of pages, pathways, and programs on this site — similar to the sitemap on greatbay.edu."
+        copy="Full master route list for Academics, Admissions & Aid, Student Experience, Workforce, About, and campus utilities."
         image="/images/campus-exterior.jpg"
         compact
       />
@@ -77,7 +51,7 @@ function Sitemap() {
           ))}
 
           <div className="sitemap-group sitemap-programs">
-            <h2>Programs</h2>
+            <h2>Programs A–Z</h2>
             <p className="fine-print">All {sortedPrograms.length} degree and certificate programs</p>
             <ul className="sitemap-program-list">
               {sortedPrograms.map((program) => (
