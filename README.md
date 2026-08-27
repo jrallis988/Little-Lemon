@@ -9,7 +9,7 @@ Independent design venture portfolio — digital media, graphic design, visual i
 | **Creative** | Artistic Fountain (this repo) | Visual media, graphic identity, conceptual design, client design services |
 | **Engineering** | Developer portfolio (separate) | Back-end systems, Python/FastAPI, AI/RAG applications |
 
-See `STATUS.md` for the full status report.
+See `STATUS.md` for the full status report and a **project-by-project language inventory** (64 branches across static HTML, React, TypeScript/Next.js, Tauri/Rust, and Python).
 
 ## Stack
 
