@@ -36,6 +36,16 @@
   window.NHDMVToast = toast;
 
   const params = new URLSearchParams(location.search);
+  // serve cleanUrls can drop ?id= on redirect — also accept #id or #key=value
+  if (![...params.keys()].length && location.hash) {
+    const raw = location.hash.replace(/^#/, '');
+    if (raw.includes('=')) {
+      new URLSearchParams(raw).forEach((v, k) => params.set(k, v));
+    } else if (raw) {
+      params.set('id', raw);
+      params.set('intent', raw);
+    }
+  }
   window.NHDMVParams = params;
 
   function wayBadges(ways = []) {
