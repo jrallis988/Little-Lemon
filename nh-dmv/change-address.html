@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d3557">
+  <title>Change of address — NH DMV</title>
+  <base href="/nh-dmv/">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="concept-ribbon">Conceptual redesign by <a href="../index.html">Artistic Fountain</a> — DriveSkill-inspired layout · not an official NH.gov site.</div>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-meta">
+        <span>Mon–Fri · most offices 8:00–4:30</span>
+        <span>603-227-4000</span>
+        <span>15 branches statewide</span>
+      </div>
+    </div>
+  </div>
+
+  <header class="app-header">
+    <div class="header-top">
+      <a class="brand" href="index.html" aria-label="NH DMV home">
+        <span class="brand-mark">NH</span>
+        <span class="brand-text">
+          <span class="brand-name">NH DMV</span>
+          <span class="brand-sub">Division of Motor Vehicles</span>
+        </span>
+      </a>
+      <nav class="life-nav" id="life-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="license.html" aria-current="page">License &amp; ID</a>
+        <a href="vehicle.html">Vehicle</a>
+        <a href="records.html">Records</a>
+        <a href="appointments.html">Appointments</a>
+        <a href="branches.html">Branches</a>
+      </nav>
+      <div class="header-tools">
+        <a class="btn btn-primary btn-sm" href="appointments.html">Book appointment</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="life-nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="page page-narrow">
+    <header class="page-intro">
+      <p class="section-kicker">Guided form</p>
+      <h1>Change of <span class="mark">address</span></h1>
+      <p>Update your DMV mailing address in a calm, step-by-step flow. Address change reprint is $10.00 on the official fee schedule.</p>
+    </header>
+
+    <div class="panel" id="address-error" data-address-error hidden role="alert" aria-labelledby="address-error-heading">
+      <h2 id="address-error-heading">We couldn’t accept that document</h2>
+      <p class="panel-lede">The upload didn’t meet residency proof rules (for example: photocopy only, expired statement, or name mismatch). Try another document, or finish by drop box / appointment instead.</p>
+      <div class="hero-actions">
+        <button type="button" class="btn btn-primary" data-address-retry>Try another document</button>
+        <a class="btn btn-secondary" href="checklist.html?intent=address">Open checklist</a>
+        <a class="btn btn-navy" href="appointments.html">Book in person</a>
+      </div>
+    </div>
+
+    <form class="wizard" id="address-wizard" data-address-wizard>
+      <div class="wizard-steps" aria-label="Address change progress" style="grid-template-columns:repeat(5,1fr)">
+        <div class="wizard-step is-active" data-address-step-indicator="0"><span>1</span>Identity</div>
+        <div class="wizard-step" data-address-step-indicator="1"><span>2</span>New address</div>
+        <div class="wizard-step" data-address-step-indicator="2"><span>3</span>Review</div>
+        <div class="wizard-step" data-address-step-indicator="3"><span>4</span>Submit</div>
+        <div class="wizard-step" data-address-step-indicator="4"><span>5</span>Done</div>
+      </div>
+
+      <div class="wizard-panel wizard-body" data-address-step="0">
+        <h2>Verify identity</h2>
+        <p>Confirm it’s you before we change the mailing address on file.</p>
+        <div class="field">
+          <label for="addr-license">License / ID number</label>
+          <input id="addr-license" name="license" required autocomplete="off" value="NHL482193">
+        </div>
+        <div class="field">
+          <label for="addr-dob">Date of birth</label>
+          <input id="addr-dob" name="dob" type="date" required value="1992-06-14">
+        </div>
+        <div class="field">
+          <label for="addr-last">Last name</label>
+          <input id="addr-last" name="last" required value="Morgan" autocomplete="family-name">
+        </div>
+        <div class="wizard-footer" style="margin:1.25rem -1.35rem -1.5rem;border-radius:0">
+          <span></span>
+          <button type="button" class="btn btn-primary" data-address-next>Continue</button>
+        </div>
+      </div>
+
+      <div class="wizard-panel wizard-body" data-address-step="1" hidden>
+        <h2>Enter new address</h2>
+        <p>Use your New Hampshire residential mailing address.</p>
+        <div class="field">
+          <label for="addr-street">Street address</label>
+          <input id="addr-street" name="street" required autocomplete="street-address" placeholder="123 Main Street">
+        </div>
+        <div class="field">
+          <label for="addr-unit">Apt / unit (optional)</label>
+          <input id="addr-unit" name="unit" autocomplete="address-line2">
+        </div>
+        <div class="field">
+          <label for="addr-city">City</label>
+          <input id="addr-city" name="city" required autocomplete="address-level2">
+        </div>
+        <div class="field">
+          <label for="addr-zip">ZIP</label>
+          <input id="addr-zip" name="zip" required pattern="[0-9]{5}" maxlength="5" autocomplete="postal-code" inputmode="numeric">
+        </div>
+        <div class="wizard-footer" style="margin:1.25rem -1.35rem -1.5rem;border-radius:0">
+          <button type="button" class="btn btn-secondary" data-address-back>Back</button>
+          <button type="button" class="btn btn-primary" data-address-next>Continue</button>
+        </div>
+      </div>
+
+      <div class="wizard-panel wizard-body" data-address-step="2" hidden>
+        <h2>Review</h2>
+        <p>Confirm everything looks right before you submit.</p>
+        <div class="summary-card" style="margin:0;box-shadow:none" aria-label="Address review">
+          <div class="summary-row"><span>License</span><span id="addr-review-license">—</span></div>
+          <div class="summary-row"><span>Name</span><span id="addr-review-name">—</span></div>
+          <div class="summary-row"><span>New address</span><span id="addr-review-address">—</span></div>
+          <div class="summary-row"><span>Fee</span><span>$10.00 reprint</span></div>
+        </div>
+        <div class="wizard-footer" style="margin:1.25rem -1.35rem -1.5rem;border-radius:0">
+          <button type="button" class="btn btn-secondary" data-address-back>Back</button>
+          <button type="button" class="btn btn-primary" data-address-next>Continue to submit</button>
+        </div>
+      </div>
+
+      <div class="wizard-panel wizard-body" data-address-step="3" hidden>
+        <h2>Submit</h2>
+        <p>In production this would collect payment for the address change reprint. For the demo, submit to see confirmation.</p>
+        <div class="field">
+          <label for="addr-email">Email for receipt</label>
+          <input id="addr-email" name="email" type="email" required autocomplete="email" value="alex.morgan@example.com">
+        </div>
+        <label class="check-item" style="margin-bottom:1rem">
+          <input type="checkbox" id="addr-attest" name="attest" required>
+          <div>
+            <h3>I certify this is my current NH address</h3>
+            <p>False statements may affect your credentials.</p>
+          </div>
+        </label>
+        <div class="wizard-footer" style="margin:1.25rem -1.35rem -1.5rem;border-radius:0">
+          <button type="button" class="btn btn-secondary" data-address-back>Back</button>
+          <button type="submit" class="btn btn-primary" data-address-submit>Submit change</button>
+        </div>
+      </div>
+
+      <div class="wizard-panel wizard-body" data-address-step="4" hidden>
+        <h2>Confirmation</h2>
+        <div class="result-box" id="address-confirmation" role="status">
+          <h3>Address change received (demo)</h3>
+          <p>Your reprint request is queued. Keep an eye on your dashboard for status — no email scavenger hunt required for the concept.</p>
+        </div>
+        <div class="hero-actions" style="margin-top:1.25rem">
+          <a class="btn btn-primary" href="dashboard.html">Go to dashboard</a>
+          <a class="btn btn-secondary" href="online.html">More online services</a>
+          <button type="button" class="btn btn-ghost" data-address-show-error>Demo: document not accepted</button>
+        </div>
+        <div class="wizard-footer" style="margin:1.25rem -1.35rem -1.5rem;border-radius:0">
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </form>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <div><div class="footer-brand">New Hampshire DMV</div><p>Guided address change form.</p></div>
+      <div><h3>Related</h3><ul><li><a href="license.html">License hub</a></li><li><a href="checklist.html">What to bring</a></li></ul></div>
+      <div><h3>Account</h3><ul><li><a href="dashboard.html">Dashboard</a></li></ul></div>
+      <div><h3>Official</h3><ul><li><a href="../index.html">Artistic Fountain</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© Concept redesign</span><a href="index.html">Home</a></div>
+  </footer>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

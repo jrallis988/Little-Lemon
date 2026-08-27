@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d3557">
+  <title>Search — NH DMV</title>
+  <base href="/nh-dmv/">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="concept-ribbon">Conceptual redesign by <a href="../index.html">Artistic Fountain</a> — DriveSkill-inspired layout · not an official NH.gov site.</div>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-meta">
+        <span>Mon–Fri · most offices 8:00–4:30</span>
+        <span>603-227-4000</span>
+        <span>15 branches statewide</span>
+      </div>
+    </div>
+  </div>
+
+  <header class="app-header">
+    <div class="header-top">
+      <a class="brand" href="index.html" aria-label="NH DMV home">
+        <span class="brand-mark">NH</span>
+        <span class="brand-text">
+          <span class="brand-name">NH DMV</span>
+          <span class="brand-sub">Division of Motor Vehicles</span>
+        </span>
+      </a>
+      <nav class="life-nav" id="life-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="license.html">License &amp; ID</a>
+        <a href="vehicle.html">Vehicle</a>
+        <a href="records.html">Records</a>
+        <a href="appointments.html">Appointments</a>
+        <a href="branches.html">Branches</a>
+      </nav>
+      <div class="header-tools">
+        <a class="btn btn-primary btn-sm" href="appointments.html">Book appointment</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="life-nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="page">
+    <header class="page-intro">
+      <p class="section-kicker">Task-aware search</p>
+      <h1>What do you need to <span class="mark">get done</span>?</h1>
+      <p>Describe your situation in plain language — we’ll match services, checklists, and booking paths instead of dumping you into an org chart.</p>
+    </header>
+
+    <div class="intent-panel" style="margin-bottom:1.5rem">
+      <div class="intent-search">
+        <svg class="intent-search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
+          <path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <label class="visually-hidden" for="task-search" style="position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden">Search tasks</label>
+        <input id="task-search" type="search" name="q" placeholder="e.g. I lost my license, I moved, REAL ID for a flight…" autocomplete="off" aria-describedby="task-search-hint" data-task-search>
+      </div>
+      <p id="task-search-hint" class="field-hint" style="margin:0.65rem 0 0.85rem">Try an example or type your own task.</p>
+
+      <div class="chip-row" role="group" aria-label="Example searches">
+        <button type="button" class="chip" data-task-example="I lost my license">I lost my license</button>
+        <button type="button" class="chip" data-task-example="I moved">I moved</button>
+        <button type="button" class="chip" data-task-example="New to New Hampshire">New to New Hampshire</button>
+        <button type="button" class="chip" data-task-example="First driver license">First driver license</button>
+        <button type="button" class="chip" data-task-example="REAL ID for a flight">REAL ID for a flight</button>
+        <button type="button" class="chip" data-task-example="Renew registration">Renew registration</button>
+        <button type="button" class="chip" data-task-example="Can I do this online?">Can I do this online?</button>
+      </div>
+
+      <div id="task-search-results" class="service-grid" data-task-search-results aria-live="polite">
+        <!-- Populated by app.js -->
+      </div>
+      <div class="empty-state" id="task-search-empty" role="status">Start typing or pick an example to see matching tasks.</div>
+    </div>
+
+    <section class="panel" aria-labelledby="search-shortcuts-heading">
+      <h2 id="search-shortcuts-heading">Popular paths</h2>
+      <p class="panel-lede">Jump straight into the most common journeys.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="renew.html">Renew license</a>
+        <a class="btn btn-secondary" href="change-address.html">Change address</a>
+        <a class="btn btn-navy" href="new-resident.html">New resident plan</a>
+        <a class="btn btn-ghost" href="online.html">Skip the trip</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <div><div class="footer-brand">New Hampshire DMV</div><p>Task-aware search concept.</p></div>
+      <div><h3>Next</h3><ul><li><a href="appointments.html">Book appointment</a></li><li><a href="online.html">Online eligibility</a></li></ul></div>
+      <div><h3>Account</h3><ul><li><a href="dashboard.html">Dashboard</a></li></ul></div>
+      <div><h3>Official</h3><ul><li><a href="../index.html">Artistic Fountain</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© Concept redesign</span><a href="index.html">Home</a></div>
+  </footer>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

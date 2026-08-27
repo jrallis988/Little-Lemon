@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d3557">
+  <title>First driver license — NH DMV</title>
+  <base href="/nh-dmv/">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="concept-ribbon">Conceptual redesign by <a href="../index.html">Artistic Fountain</a> — DriveSkill-inspired layout · not an official NH.gov site.</div>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-meta">
+        <span>Mon–Fri · most offices 8:00–4:30</span>
+        <span>603-227-4000</span>
+        <span>15 branches statewide</span>
+      </div>
+    </div>
+  </div>
+
+  <header class="app-header">
+    <div class="header-top">
+      <a class="brand" href="index.html" aria-label="NH DMV home">
+        <span class="brand-mark">NH</span>
+        <span class="brand-text">
+          <span class="brand-name">NH DMV</span>
+          <span class="brand-sub">Division of Motor Vehicles</span>
+        </span>
+      </a>
+      <nav class="life-nav" id="life-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="license.html" aria-current="page">License &amp; ID</a>
+        <a href="vehicle.html">Vehicle</a>
+        <a href="records.html">Records</a>
+        <a href="appointments.html">Appointments</a>
+        <a href="branches.html">Branches</a>
+      </nav>
+      <div class="header-tools">
+        <a class="btn btn-primary btn-sm" href="appointments.html">Book appointment</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="life-nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="page">
+    <header class="page-intro">
+      <p class="section-kicker">First-time drivers</p>
+      <h1>GET YOUR FIRST DRIVER <span class="mark">LICENSE</span></h1>
+      <p>A clear path from eligibility through road test — one step at a time, with the right documents before you book.</p>
+    </header>
+
+    <section class="panel" aria-labelledby="journey-heading">
+      <h2 id="journey-heading">Your journey</h2>
+      <p class="panel-lede">Six steps from start to credential. Current step updates as you progress (demo).</p>
+
+      <ol class="wizard-steps" id="license-journey" data-license-journey aria-label="License journey progress" style="list-style:none;margin:0;padding:0;grid-template-columns:repeat(6,1fr)">
+        <li class="wizard-step is-done" data-journey-step="0"><span>1</span>Eligibility</li>
+        <li class="wizard-step is-done" data-journey-step="1"><span>2</span>Documents</li>
+        <li class="wizard-step is-active" data-journey-step="2"><span>3</span>Permit / knowledge</li>
+        <li class="wizard-step" data-journey-step="3"><span>4</span>Practice</li>
+        <li class="wizard-step" data-journey-step="4"><span>5</span>Road test</li>
+        <li class="wizard-step" data-journey-step="5"><span>6</span>License</li>
+      </ol>
+    </section>
+
+    <div class="flow-grid">
+      <section class="panel" id="journey-current" data-journey-current aria-labelledby="journey-current-heading">
+        <p class="section-kicker">Current step</p>
+        <h2 id="journey-current-heading">Schedule your knowledge test</h2>
+        <p class="panel-lede">You’ve confirmed documents. Book a knowledge test appointment next — bring originals on test day.</p>
+        <div id="journey-requirements" data-journey-requirements>
+          <h3 class="visually-hidden" style="position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden">Requirements</h3>
+          <ul class="check-list" style="list-style:none;padding:0;margin:0 0 1.25rem">
+            <li class="check-item is-checked"><input type="checkbox" checked disabled aria-hidden="true"><div><h3>Identity &amp; residency docs</h3><p>Verified in the checklist wizard</p></div></li>
+            <li class="check-item"><input type="checkbox" disabled aria-hidden="true"><div><h3>Knowledge test appointment</h3><p>Book a slot at a branch that offers testing</p></div></li>
+            <li class="check-item"><input type="checkbox" disabled aria-hidden="true"><div><h3>Study materials</h3><p>Review the NH Driver Manual before you go</p></div></li>
+          </ul>
+        </div>
+        <div id="journey-next-action" data-journey-next class="hero-actions">
+          <a class="btn btn-primary" href="appointments.html?service=knowledge-test">Book knowledge test</a>
+          <a class="btn btn-secondary" href="checklist.html?intent=first-license">Review documents</a>
+          <a class="btn btn-navy" href="fees.html">See fees</a>
+        </div>
+      </section>
+
+      <aside class="summary-card" aria-label="Journey overview">
+        <h2>What’s ahead</h2>
+        <div class="summary-row"><span>4</span><span>Practice driving hours</span></div>
+        <div class="summary-row"><span>5</span><span>Road skills test</span></div>
+        <div class="summary-row"><span>6</span><span>Receive license</span></div>
+        <a class="btn btn-secondary btn-block" style="margin-top:1rem" href="online.html">Can I do any of this online?</a>
+        <a class="btn btn-ghost btn-block" style="margin-top:0.5rem" href="branches.html">Find a testing branch</a>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <div><div class="footer-brand">New Hampshire DMV</div><p>First license journey map.</p></div>
+      <div><h3>Next</h3><ul><li><a href="appointments.html">Book appointment</a></li><li><a href="checklist.html">What to bring</a></li></ul></div>
+      <div><h3>Account</h3><ul><li><a href="dashboard.html">Dashboard</a></li></ul></div>
+      <div><h3>Official</h3><ul><li><a href="../index.html">Artistic Fountain</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© Concept redesign</span><a href="index.html">Home</a></div>
+  </footer>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

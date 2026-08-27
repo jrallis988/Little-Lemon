@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d3557">
+  <title>Branch detail — NH DMV</title>
+  <base href="/nh-dmv/">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="concept-ribbon">Conceptual redesign by <a href="../index.html">Artistic Fountain</a> — DriveSkill-inspired layout · not an official NH.gov site.</div>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-meta">
+        <span>Mon–Fri · most offices 8:00–4:30</span>
+        <span>603-227-4000</span>
+        <span>15 branches statewide</span>
+      </div>
+    </div>
+  </div>
+
+  <header class="app-header">
+    <div class="header-top">
+      <a class="brand" href="index.html" aria-label="NH DMV home">
+        <span class="brand-mark">NH</span>
+        <span class="brand-text">
+          <span class="brand-name">NH DMV</span>
+          <span class="brand-sub">Division of Motor Vehicles</span>
+        </span>
+      </a>
+      <nav class="life-nav" id="life-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="license.html">License &amp; ID</a>
+        <a href="vehicle.html">Vehicle</a>
+        <a href="records.html">Records</a>
+        <a href="appointments.html">Appointments</a>
+        <a href="branches.html" aria-current="page">Branches</a>
+      </nav>
+      <div class="header-tools">
+        <a class="btn btn-primary btn-sm" href="appointments.html">Book appointment</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="life-nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="page">
+    <header class="page-intro">
+      <p class="section-kicker">Branch detail</p>
+      <h1 id="branch-detail-title">Branch</h1>
+      <p id="branch-detail-lede">Open a branch from the finder, or use a deep link like <code>branch.html?id=concord</code>.</p>
+    </header>
+
+    <div id="branch-detail-root" data-branch-root aria-live="polite">
+      <div class="empty-state is-visible" id="branch-detail-empty" role="status">
+        <h2>No branch selected</h2>
+        <p>Add a branch id to the URL, or browse the statewide finder.</p>
+        <div class="hero-actions" style="margin-top:1rem">
+          <a class="btn btn-primary" href="branches.html">Browse branches</a>
+          <a class="btn btn-secondary" href="appointments.html">Book appointment</a>
+        </div>
+      </div>
+
+      <div class="flow-grid" id="branch-detail-content" hidden>
+        <div>
+          <section class="panel" aria-labelledby="branch-address-heading">
+            <h2 id="branch-address-heading">Address</h2>
+            <p class="panel-lede" id="branch-address">—</p>
+            <p id="branch-region-label" class="field-hint"></p>
+          </section>
+
+          <section class="panel" aria-labelledby="branch-hours-heading">
+            <h2 id="branch-hours-heading">Hours</h2>
+            <p class="panel-lede" id="branch-hours">—</p>
+            <p id="branch-status" class="badge badge-info" role="status">—</p>
+          </section>
+
+          <section class="panel" aria-labelledby="branch-services-heading">
+            <h2 id="branch-services-heading">Services</h2>
+            <p class="panel-lede" id="branch-services">—</p>
+          </section>
+
+          <section class="panel" aria-labelledby="branch-access-heading">
+            <h2 id="branch-access-heading">Accessibility</h2>
+            <p class="panel-lede" id="branch-accessibility">Accessible entrance and counter service where available. Contact the office if you need accommodations.</p>
+          </section>
+
+          <section class="panel" aria-labelledby="branch-parking-heading">
+            <h2 id="branch-parking-heading">Parking</h2>
+            <p class="panel-lede" id="branch-parking">On-site or nearby public parking. Check branch notices for temporary lot closures.</p>
+          </section>
+
+          <section class="panel" aria-labelledby="branch-directions-heading">
+            <h2 id="branch-directions-heading">Directions</h2>
+            <p class="panel-lede" id="branch-directions">Use the address above in your maps app. Allow extra time for city-center branches.</p>
+            <div class="hero-actions">
+              <a class="btn btn-secondary" id="branch-maps-link" href="branches.html" rel="noopener">Open in maps</a>
+            </div>
+          </section>
+        </div>
+
+        <aside>
+          <section class="panel" aria-labelledby="branch-appt-heading">
+            <h2 id="branch-appt-heading">Appointments</h2>
+            <p class="panel-lede">Most in-person services require an appointment. Same-day slots release daily when available.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" id="branch-book-link" href="appointments.html">Book at this branch</a>
+              <a class="btn btn-navy" href="checklist.html">What to bring</a>
+            </div>
+          </section>
+
+          <section class="panel" aria-labelledby="branch-notices-heading">
+            <h2 id="branch-notices-heading">Notices</h2>
+            <div id="branch-notices" class="result-box warn">
+              <h3>Check before you go</h3>
+              <p id="branch-note">No special notices for this branch.</p>
+            </div>
+          </section>
+
+          <section class="panel" aria-labelledby="branch-before-heading">
+            <h2 id="branch-before-heading">Before you go</h2>
+            <p class="panel-lede">Pick the service you’re completing so we can confirm documents and whether this branch offers it.</p>
+            <div class="field">
+              <label for="branch-before-go">Service</label>
+              <select id="branch-before-go" data-branch-before-go>
+                <option value="">Select a service…</option>
+              </select>
+            </div>
+            <div id="branch-before-go-result" class="result-box" hidden role="status"></div>
+          </section>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <div><div class="footer-brand">New Hampshire DMV</div><p>Branch detail with before-you-go picker.</p></div>
+      <div><h3>Next</h3><ul><li><a href="appointments.html">Book appointment</a></li><li><a href="branches.html">All branches</a></li></ul></div>
+      <div><h3>Account</h3><ul><li><a href="dashboard.html">Dashboard</a></li></ul></div>
+      <div><h3>Official</h3><ul><li><a href="https://www.dmv.nh.gov/hours-and-locations" rel="noopener">Official hours</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© Concept redesign</span><a href="index.html">Home</a></div>
+  </footer>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d3557">
+  <title>Service detail — NH DMV</title>
+  <base href="/nh-dmv/">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="concept-ribbon">Conceptual redesign by <a href="../index.html">Artistic Fountain</a> — DriveSkill-inspired layout · not an official NH.gov site.</div>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-meta">
+        <span>Mon–Fri · most offices 8:00–4:30</span>
+        <span>603-227-4000</span>
+        <span>15 branches statewide</span>
+      </div>
+    </div>
+  </div>
+
+  <header class="app-header">
+    <div class="header-top">
+      <a class="brand" href="index.html" aria-label="NH DMV home">
+        <span class="brand-mark">NH</span>
+        <span class="brand-text">
+          <span class="brand-name">NH DMV</span>
+          <span class="brand-sub">Division of Motor Vehicles</span>
+        </span>
+      </a>
+      <nav class="life-nav" id="life-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="license.html">License &amp; ID</a>
+        <a href="vehicle.html">Vehicle</a>
+        <a href="records.html">Records</a>
+        <a href="appointments.html">Appointments</a>
+        <a href="branches.html">Branches</a>
+      </nav>
+      <div class="header-tools">
+        <a class="btn btn-primary btn-sm" href="appointments.html">Book appointment</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="life-nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="page">
+    <header class="page-intro">
+      <p class="section-kicker">Service detail</p>
+      <h1 id="service-detail-title">Service</h1>
+      <p id="service-detail-lede">Choose a service from License, Vehicle, or Records — or open a deep link like <code>service.html?id=dl-renew</code>.</p>
+    </header>
+
+    <div id="service-detail-root" data-service-root aria-live="polite">
+      <!-- Populated by app.js from ?id= -->
+    </div>
+
+    <div class="empty-state is-visible" id="service-detail-empty" role="status">
+      <h2>No service selected</h2>
+      <p>Add a service id to the URL (for example <code>?id=dl-renew</code>), or browse from a hub below.</p>
+      <div class="hero-actions" style="margin-top:1rem">
+        <a class="btn btn-primary" href="license.html">License &amp; ID</a>
+        <a class="btn btn-secondary" href="vehicle.html">Vehicle</a>
+        <a class="btn btn-navy" href="online.html">Can I do this online?</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <div><div class="footer-brand">New Hampshire DMV</div><p>Service detail template with query-driven content.</p></div>
+      <div><h3>Next</h3><ul><li><a href="appointments.html">Book appointment</a></li><li><a href="online.html">Online eligibility</a></li></ul></div>
+      <div><h3>Account</h3><ul><li><a href="dashboard.html">Dashboard</a></li></ul></div>
+      <div><h3>Official</h3><ul><li><a href="../index.html">Artistic Fountain</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© Concept redesign</span><a href="index.html">Home</a></div>
+  </footer>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

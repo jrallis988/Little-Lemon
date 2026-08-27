@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d3557">
+  <title>New to New Hampshire — NH DMV</title>
+  <base href="/nh-dmv/">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="concept-ribbon">Conceptual redesign by <a href="../index.html">Artistic Fountain</a> — DriveSkill-inspired layout · not an official NH.gov site.</div>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-meta">
+        <span>Mon–Fri · most offices 8:00–4:30</span>
+        <span>603-227-4000</span>
+        <span>15 branches statewide</span>
+      </div>
+    </div>
+  </div>
+
+  <header class="app-header">
+    <div class="header-top">
+      <a class="brand" href="index.html" aria-label="NH DMV home">
+        <span class="brand-mark">NH</span>
+        <span class="brand-text">
+          <span class="brand-name">NH DMV</span>
+          <span class="brand-sub">Division of Motor Vehicles</span>
+        </span>
+      </a>
+      <nav class="life-nav" id="life-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="license.html" aria-current="page">License &amp; ID</a>
+        <a href="vehicle.html">Vehicle</a>
+        <a href="records.html">Records</a>
+        <a href="appointments.html">Appointments</a>
+        <a href="branches.html">Branches</a>
+      </nav>
+      <div class="header-tools">
+        <a class="btn btn-primary btn-sm" href="appointments.html">Book appointment</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="life-nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="page page-narrow">
+    <header class="page-intro">
+      <p class="section-kicker">New residents</p>
+      <h1>NEW TO NEW <span class="mark">HAMPSHIRE</span>?</h1>
+      <p>Welcome. Answer a few questions and we’ll build a simple plan for your license, vehicle, title, and residency documents — so you know what to do in your first 60 days.</p>
+    </header>
+
+    <div class="wizard" id="new-resident-quiz" data-new-resident-quiz>
+      <div class="wizard-steps" aria-label="Quiz progress">
+        <div class="wizard-step is-active" data-quiz-step-indicator="0"><span>1</span>License</div>
+        <div class="wizard-step" data-quiz-step-indicator="1"><span>2</span>Vehicle</div>
+        <div class="wizard-step" data-quiz-step-indicator="2"><span>3</span>Title</div>
+        <div class="wizard-step" data-quiz-step-indicator="3"><span>4</span>Docs</div>
+      </div>
+
+      <div class="wizard-panel wizard-body" data-quiz-step="0">
+        <h2>Do you already have a valid out-of-state driver license?</h2>
+        <p>New residents generally have 60 days after establishing NH residency to transfer.</p>
+        <div class="option-grid" role="radiogroup" aria-label="License status">
+          <label class="option is-selected">
+            <input type="radio" name="nr-license" value="transfer" checked data-nr-answer="license">
+            <div>
+              <h3>Yes — I need to transfer it</h3>
+              <p>We’ll point you to the out-of-state transfer checklist and booking.</p>
+            </div>
+          </label>
+          <label class="option">
+            <input type="radio" name="nr-license" value="first" data-nr-answer="license">
+            <div>
+              <h3>No — I need a first NH license</h3>
+              <p>Start with the first-license journey (permit → knowledge → road test).</p>
+            </div>
+          </label>
+          <label class="option">
+            <input type="radio" name="nr-license" value="none" data-nr-answer="license">
+            <div>
+              <h3>I only need a non-driver ID</h3>
+              <p>Photo ID without driving privileges.</p>
+            </div>
+          </label>
+        </div>
+        <div class="wizard-footer" style="margin:1.25rem -1.35rem -1.5rem;border-radius:0">
+          <span></span>
+          <button type="button" class="btn btn-primary" data-quiz-next>Continue</button>
+        </div>
+      </div>
+
+      <div class="wizard-panel wizard-body" data-quiz-step="1" hidden>
+        <h2>Are you bringing a vehicle to New Hampshire?</h2>
+        <p>Registration timing depends on whether the vehicle is already titled and insured in your name.</p>
+        <div class="option-grid" role="radiogroup" aria-label="Vehicle status">
+          <label class="option is-selected">
+            <input type="radio" name="nr-vehicle" value="yes" checked data-nr-answer="vehicle">
+            <div>
+              <h3>Yes — I need to register it here</h3>
+              <p>We’ll include registration and plate steps in your plan.</p>
+            </div>
+          </label>
+          <label class="option">
+            <input type="radio" name="nr-vehicle" value="no" data-nr-answer="vehicle">
+            <div>
+              <h3>Not right now</h3>
+              <p>Skip vehicle steps for this plan.</p>
+            </div>
+          </label>
+        </div>
+        <div class="wizard-footer" style="margin:1.25rem -1.35rem -1.5rem;border-radius:0">
+          <button type="button" class="btn btn-secondary" data-quiz-back>Back</button>
+          <button type="button" class="btn btn-primary" data-quiz-next>Continue</button>
+        </div>
+      </div>
+
+      <div class="wizard-panel wizard-body" data-quiz-step="2" hidden>
+        <h2>Do you need a New Hampshire title?</h2>
+        <p>Titles are required for most vehicles. Bring ownership and lien documents if applicable.</p>
+        <div class="option-grid" role="radiogroup" aria-label="Title needs">
+          <label class="option is-selected">
+            <input type="radio" name="nr-title" value="yes" checked data-nr-answer="title">
+            <div>
+              <h3>Yes — title or transfer title</h3>
+              <p>We’ll add title processing to your plan.</p>
+            </div>
+          </label>
+          <label class="option">
+            <input type="radio" name="nr-title" value="no" data-nr-answer="title">
+            <div>
+              <h3>No title work needed</h3>
+              <p>Continue without a title step.</p>
+            </div>
+          </label>
+        </div>
+        <div class="wizard-footer" style="margin:1.25rem -1.35rem -1.5rem;border-radius:0">
+          <button type="button" class="btn btn-secondary" data-quiz-back>Back</button>
+          <button type="button" class="btn btn-primary" data-quiz-next>Continue</button>
+        </div>
+      </div>
+
+      <div class="wizard-panel wizard-body" data-quiz-step="3" hidden>
+        <h2>Do you already have residency documents?</h2>
+        <p>REAL ID and many credentials need two proofs of NH residency (utility bill, lease, bank statement, etc.).</p>
+        <div class="option-grid" role="radiogroup" aria-label="Residency documents">
+          <label class="option is-selected">
+            <input type="radio" name="nr-docs" value="ready" checked data-nr-answer="docs">
+            <div>
+              <h3>Yes — I have two proofs ready</h3>
+              <p>You’re clear to book after the checklist.</p>
+            </div>
+          </label>
+          <label class="option">
+            <input type="radio" name="nr-docs" value="need-help" data-nr-answer="docs">
+            <div>
+              <h3>Not yet — show me what counts</h3>
+              <p>We’ll send you through the document wizard first.</p>
+            </div>
+          </label>
+        </div>
+        <div class="wizard-footer" style="margin:1.25rem -1.35rem -1.5rem;border-radius:0">
+          <button type="button" class="btn btn-secondary" data-quiz-back>Back</button>
+          <button type="button" class="btn btn-primary" data-quiz-finish>Build my plan</button>
+        </div>
+      </div>
+    </div>
+
+    <section class="panel" id="new-resident-plan" data-new-resident-plan hidden aria-live="polite">
+      <h2>Your move-in plan</h2>
+      <p class="panel-lede">Based on your answers — complete these in order so you don’t waste an appointment.</p>
+      <div id="new-resident-plan-list" class="check-list">
+        <!-- Populated by app.js -->
+      </div>
+      <div class="hero-actions" style="margin-top:1.25rem">
+        <a class="btn btn-primary" href="checklist.html?intent=transfer">Open checklist</a>
+        <a class="btn btn-secondary" href="appointments.html?service=transfer">Book appointment</a>
+        <a class="btn btn-navy" href="branches.html">Find a branch</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <div><div class="footer-brand">New Hampshire DMV</div><p>New-resident guided quiz.</p></div>
+      <div><h3>Next</h3><ul><li><a href="checklist.html">What to bring</a></li><li><a href="first-license.html">First license</a></li></ul></div>
+      <div><h3>Account</h3><ul><li><a href="dashboard.html">Dashboard</a></li></ul></div>
+      <div><h3>Official</h3><ul><li><a href="../index.html">Artistic Fountain</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© Concept redesign</span><a href="index.html">Home</a></div>
+  </footer>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

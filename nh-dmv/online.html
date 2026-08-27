@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d3557">
+  <title>Can I do this online? — NH DMV</title>
+  <base href="/nh-dmv/">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="concept-ribbon">Conceptual redesign by <a href="../index.html">Artistic Fountain</a> — DriveSkill-inspired layout · not an official NH.gov site.</div>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-meta">
+        <span>Mon–Fri · most offices 8:00–4:30</span>
+        <span>603-227-4000</span>
+        <span>15 branches statewide</span>
+      </div>
+    </div>
+  </div>
+
+  <header class="app-header">
+    <div class="header-top">
+      <a class="brand" href="index.html" aria-label="NH DMV home">
+        <span class="brand-mark">NH</span>
+        <span class="brand-text">
+          <span class="brand-name">NH DMV</span>
+          <span class="brand-sub">Division of Motor Vehicles</span>
+        </span>
+      </a>
+      <nav class="life-nav" id="life-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="license.html">License &amp; ID</a>
+        <a href="vehicle.html">Vehicle</a>
+        <a href="records.html">Records</a>
+        <a href="appointments.html">Appointments</a>
+        <a href="branches.html">Branches</a>
+      </nav>
+      <div class="header-tools">
+        <a class="btn btn-primary btn-sm" href="appointments.html">Book appointment</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="life-nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="page">
+    <header class="page-intro">
+      <p class="section-kicker">Online eligibility</p>
+      <h1>SKIP THE <span class="mark">TRIP</span>.</h1>
+      <p>Find out which DMV services you can complete online and which require an office visit.</p>
+    </header>
+
+    <div class="intent-panel" style="margin-bottom:1.5rem">
+      <div class="chip-row" role="group" aria-label="Filter by how you can complete the service">
+        <button type="button" class="chip" data-online-filter="all" aria-pressed="true">All</button>
+        <button type="button" class="chip" data-online-filter="online" aria-pressed="false">Online</button>
+        <button type="button" class="chip" data-online-filter="partial" aria-pressed="false">Partially</button>
+        <button type="button" class="chip" data-online-filter="visit" aria-pressed="false">Visit required</button>
+      </div>
+
+      <div class="service-grid" id="online-grid" data-online-grid aria-live="polite">
+        <!-- Populated by app.js: ONLINE / PARTIALLY ONLINE / DMV VISIT REQUIRED cards -->
+      </div>
+
+      <div class="empty-state" id="online-empty" role="status">No services match this filter.</div>
+    </div>
+
+    <section class="panel" aria-labelledby="online-help-heading">
+      <h2 id="online-help-heading">Not sure where to start?</h2>
+      <p class="panel-lede">Describe your task and we’ll point you to the right path.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="search.html">Task search</a>
+        <a class="btn btn-secondary" href="new-resident.html">New to New Hampshire</a>
+        <a class="btn btn-navy" href="appointments.html">Book an appointment</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <div><div class="footer-brand">New Hampshire DMV</div><p>Skip-the-trip eligibility guide.</p></div>
+      <div><h3>Next</h3><ul><li><a href="appointments.html">Book appointment</a></li><li><a href="branches.html">Find a branch</a></li></ul></div>
+      <div><h3>Account</h3><ul><li><a href="dashboard.html">Dashboard</a></li></ul></div>
+      <div><h3>Official</h3><ul><li><a href="../index.html">Artistic Fountain</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© Concept redesign</span><a href="index.html">Home</a></div>
+  </footer>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
