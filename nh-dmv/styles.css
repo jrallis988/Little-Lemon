@@ -209,13 +209,10 @@ ul { list-style: none; }
 .btn-block { width: 100%; }
 
 .mark {
-  display: inline;
-  background: var(--yellow);
-  color: var(--ink);
-  padding: 0.05em 0.18em;
-  border-radius: 4px;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
+  /* plain emphasis — no yellow highlight */
+  color: inherit;
+  background: none;
+  padding: 0;
 }
 
 /* ===== LAYOUT ===== */
@@ -275,10 +272,10 @@ ul { list-style: none; }
   max-width: 12ch;
 }
 .hero-title .mark {
-  display: inline-block;
-  margin-top: 0.18em;
-  padding: 0.08em 0.2em;
-  line-height: 1.15;
+  display: inline;
+  margin-top: 0;
+  padding: 0;
+  line-height: inherit;
 }
 .hero-lede {
   font-size: 1.05rem;
@@ -1055,7 +1052,7 @@ ul { list-style: none; }
     max-width: none;
   }
   .hero-title .mark {
-    margin-top: 0.22em;
+    margin-top: 0;
   }
   .btn-primary {
     box-shadow: none;
