@@ -120,12 +120,13 @@
 
   /* Guest vs signed-in home */
   function initHomeAuth() {
-    const guest = $('[data-home-guest]');
-    const member = $('[data-home-member]');
-    if (!guest && !member) return;
     const on = isSignedIn();
-    if (guest) guest.hidden = on;
-    if (member) member.hidden = !on;
+    $$('[data-home-guest]').forEach((el) => {
+      el.hidden = on;
+    });
+    $$('[data-home-member]').forEach((el) => {
+      el.hidden = !on;
+    });
     const dashList = $('#dash-status-list');
     if (on && dashList && window.NHDMV) {
       dashList.innerHTML = window.NHDMV.dashboardItems

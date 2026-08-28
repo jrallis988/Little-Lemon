@@ -1,5 +1,5 @@
 /* NH DMV — DriveSkill-inspired civic service kit
-   Navy + soft gold accent (not neon), rounded cards, word marks */
+   Navy + electric yellow accent, rounded cards, word marks */
 
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Poppins:wght@500;600;700;800&display=swap');
 
@@ -7,9 +7,9 @@
   --navy: #1d3557;
   --navy-deep: #152844;
   --navy-mid: #294b7a;
-  --yellow: #e6c84a;
-  --yellow-hot: #d9b83a;
-  --yellow-rgb: 230, 200, 74;
+  --yellow: #fefa07;
+  --yellow-hot: #f5ef00;
+  --yellow-rgb: 254, 250, 7;
   --ink: #111827;
   --muted: #5b6472;
   --line: #e6e9ef;
@@ -182,9 +182,13 @@ ul { list-style: none; }
 .btn-primary {
   background: var(--yellow);
   color: var(--ink);
-  box-shadow: 0 6px 16px rgba(var(--yellow-rgb), 0.18);
+  box-shadow: none;
 }
-.btn-primary:hover { background: var(--yellow-hot); color: var(--ink); }
+.btn-primary:hover {
+  background: var(--yellow-hot);
+  color: var(--ink);
+  box-shadow: 0 4px 12px rgba(29, 53, 87, 0.12);
+}
 .btn-secondary {
   background: #fff; color: var(--ink); border-color: transparent;
   box-shadow: 0 8px 20px rgba(29, 53, 87, 0.12);
@@ -206,9 +210,9 @@ ul { list-style: none; }
 
 .mark {
   display: inline;
-  background: rgba(var(--yellow-rgb), 0.55);
+  background: var(--yellow);
   color: var(--ink);
-  padding: 0 0.18em;
+  padding: 0.05em 0.18em;
   border-radius: 4px;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
@@ -265,10 +269,16 @@ ul { list-style: none; }
   font-family: var(--display);
   font-size: clamp(2.4rem, 5vw, 3.6rem);
   font-weight: 800;
-  line-height: 1.08;
+  line-height: 1.28;
   letter-spacing: -0.03em;
   margin-bottom: 1rem;
   max-width: 12ch;
+}
+.hero-title .mark {
+  display: inline-block;
+  margin-top: 0.18em;
+  padding: 0.08em 0.2em;
+  line-height: 1.15;
 }
 .hero-lede {
   font-size: 1.05rem;
@@ -623,7 +633,7 @@ ul { list-style: none; }
 /* Notices */
 .notice-strip {
   display: grid; gap: 0.55rem;
-  background: #fff8c4;
+  background: #f7efd2;
   border: 1px solid rgba(var(--yellow-rgb), 0.55);
   border-radius: var(--radius);
   padding: 1rem 1.15rem;
@@ -827,7 +837,7 @@ ul { list-style: none; }
 .check-item input { margin-top: 0.2rem; accent-color: var(--navy); width: 1.05rem; height: 1.05rem; }
 .check-item h3 { font-size: 0.95rem; font-weight: 700; }
 .check-item p { font-size: 0.82rem; color: var(--muted); margin-top: 0.15rem; }
-.check-item.is-checked { background: #fff8c4; border-color: rgba(254,250,7,0.8); }
+.check-item.is-checked { background: #f3faf6; border-color: rgba(31, 122, 76, 0.35); }
 .result-box {
   padding: 1.15rem;
   border-radius: 12px;
@@ -1039,6 +1049,17 @@ ul { list-style: none; }
   .topbar-social { display: none; }
   .phone-fab { display: none; }
   .hero-ds-shell { border-radius: 0 0 28px 28px; min-height: 0; }
+  .hero-ds-copy { padding: 2rem 1.25rem 1.25rem; }
+  .hero-title {
+    line-height: 1.32;
+    max-width: none;
+  }
+  .hero-title .mark {
+    margin-top: 0.22em;
+  }
+  .btn-primary {
+    box-shadow: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1439,7 +1460,7 @@ ul { list-style: none; }
   height: 280px;
   border-radius: 16px;
   background:
-    radial-gradient(circle at 60% 30%, rgba(254,250,7,0.12), transparent 40%),
+    radial-gradient(circle at 60% 30%, rgba(var(--yellow-rgb), 0.14), transparent 40%),
     linear-gradient(180deg, rgba(255,255,255,0.08), transparent);
   border: 1px solid rgba(255,255,255,0.12);
   margin-bottom: 0.75rem;
