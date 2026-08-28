@@ -83,7 +83,7 @@ window.NHDMV = {
       { name: 'Replacement plate (one)', amount: '$4.00' },
       { name: 'Replacement plate set (both)', amount: '$8.00' },
       { name: 'Replacement decal', amount: '$5.00' },
-      { name: 'America’s 250th commemorative cover plate', amount: '$25.00 + shipping' }
+      { name: 'America’s 250th commemorative cover plate', amount: '$25.00 + $4.95 shipping' }
     ]
   },
 
@@ -191,7 +191,7 @@ window.NHDMV = {
     { id: 'boat', category: 'vehicle', group: 'registration', name: 'Boat registration', blurb: 'New, renew, or commercial boat registration', ways: ['drop', 'appt'], href: 'vehicle.html#boat' },
     { id: 'title', category: 'vehicle', group: 'titles', name: 'Certificate of title', blurb: 'New title processing with ownership documents', ways: ['drop', 'appt'], href: 'vehicle.html#title' },
     { id: 'dup-title', category: 'vehicle', group: 'titles', name: 'Duplicate title', blurb: 'Replace a lost or damaged title via drop box or appointment', ways: ['drop', 'appt'], href: 'vehicle.html#dup-title' },
-    { id: 'america-250', category: 'vehicle', group: 'specialty', name: 'America’s 250th commemorative plate', blurb: 'Cover plate $25 + shipping · display Jan 1, 2026 – Jul 4, 2027 · LCHIP proceeds', ways: ['online'], href: 'america-250.html', fee: '$25 + ship' },
+    { id: 'america-250', category: 'vehicle', group: 'specialty', name: 'America’s 250th commemorative plate', blurb: 'Cover plate $25 + $4.95 shipping · display Jan 1, 2026 – Jul 4, 2027 · LCHIP proceeds', ways: ['online'], href: 'america-250.html', fee: '$25 + $4.95 ship' },
     { id: 'vanity', category: 'vehicle', group: 'specialty', name: 'Vanity plates', blurb: 'Personalized plate combinations and other specialty designs', ways: ['online', 'appt'], href: 'vehicle.html#vanity' },
     { id: 'placard', category: 'vehicle', group: 'specialty', name: 'Walking disability placard', blurb: 'Accessible parking placard applications', ways: ['drop', 'appt'], href: 'vehicle.html#placard' },
     { id: 'mvr', category: 'records', group: 'records', name: 'Request your driving record', blurb: 'Your own record only online · third-party requests must go to Concord', ways: ['online', 'drop', 'appt'], href: 'records.html#mvr', fee: '$20 research' },
@@ -607,13 +607,13 @@ window.NHDMV = {
       online: 'online',
       onlineLabel: 'Order entirely online',
       docs: ['Shipping address', 'Payment method'],
-      cost: '$25.00 + shipping',
-      process: ['Review plate details', 'Order online', 'Allow up to 4 weeks for production & shipping', 'Display on front only with rear registration plate'],
+      cost: '$25.00 + $4.95 shipping',
+      process: ['Review plate details', 'Order online (up to 4 per order)', 'Allow up to 4 weeks for production & shipping', 'Display on front only with rear registration plate — or keep as souvenir'],
       appointment: false,
-      where: 'Online order · ships to you',
+      where: 'Online order · ships to you · bulk 25+ at Concord',
       primaryCta: { label: 'Plate details & order', href: 'america-250.html' },
       secondaryCta: { label: 'Vehicle specialty hub', href: 'vehicle.html#specialty' },
-      beforeBegin: ['Confirm you want a front cover plate (not a registration replacement)', 'Note display window: Jan 1, 2026 – Jul 4, 2027'],
+      beforeBegin: ['Credit card only — purchases are non-refundable', 'Confirm front cover plate use (rear registration plate stays on)'],
       related: ['vanity', 'reg-renew']
     },
     vanity: {
