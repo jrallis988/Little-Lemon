@@ -12,14 +12,14 @@ Residents should understand what to do, whether it can be done online, what docu
 |------|------|
 | `index.html` | Home + task hierarchy |
 | `online.html` | Can I do this online? |
-| `service.html?id=…` | Service detail template |
+| `service.html#dl-renew` | Service detail template |
 | `checklist.html` | Readiness checklist |
 | `first-license.html` | First license journey |
 | `new-resident.html` | New resident guided plan |
 | `change-address.html` | Guided digital form |
 | `search.html` | Task-aware search |
 | `dashboard.html` | Proactive attention board |
-| `branches.html` / `branch.html?id=…` | Map + list / branch detail |
+| `branches.html` / `branch.html#concord` | Map + list / branch detail |
 | `fees.html` | Searchable fees by service |
 | `records.html` | My DMV records |
 
