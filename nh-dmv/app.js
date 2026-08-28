@@ -1600,7 +1600,7 @@
           </div>
         </div>
         <div class="footer-bottom">
-          <span>© Concept redesign — not affiliated with the State of New Hampshire.</span>
+          <span>© 2026 Artistic Fountain · Conceptual redesign — not affiliated with the State of New Hampshire.</span>
           <a href="index.html">Back to portal home</a>
         </div>`;
     }

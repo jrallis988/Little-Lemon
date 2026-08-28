@@ -1,5 +1,5 @@
 /* NH DMV — DriveSkill-inspired civic service kit
-   Navy + electric yellow, rounded cards, yellow word marks */
+   Navy + soft gold accent (not neon), rounded cards, word marks */
 
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Poppins:wght@500;600;700;800&display=swap');
 
@@ -7,8 +7,9 @@
   --navy: #1d3557;
   --navy-deep: #152844;
   --navy-mid: #294b7a;
-  --yellow: #fefa07;
-  --yellow-hot: #f5ef00;
+  --yellow: #e6c84a;
+  --yellow-hot: #d9b83a;
+  --yellow-rgb: 230, 200, 74;
   --ink: #111827;
   --muted: #5b6472;
   --line: #e6e9ef;
@@ -181,7 +182,7 @@ ul { list-style: none; }
 .btn-primary {
   background: var(--yellow);
   color: var(--ink);
-  box-shadow: 0 10px 24px rgba(254, 250, 7, 0.35);
+  box-shadow: 0 6px 16px rgba(var(--yellow-rgb), 0.18);
 }
 .btn-primary:hover { background: var(--yellow-hot); color: var(--ink); }
 .btn-secondary {
@@ -205,7 +206,7 @@ ul { list-style: none; }
 
 .mark {
   display: inline;
-  background: var(--yellow);
+  background: rgba(var(--yellow-rgb), 0.55);
   color: var(--ink);
   padding: 0 0.18em;
   border-radius: 4px;
@@ -623,7 +624,7 @@ ul { list-style: none; }
 .notice-strip {
   display: grid; gap: 0.55rem;
   background: #fff8c4;
-  border: 1px solid rgba(254, 250, 7, 0.65);
+  border: 1px solid rgba(var(--yellow-rgb), 0.55);
   border-radius: var(--radius);
   padding: 1rem 1.15rem;
 }
@@ -994,7 +995,7 @@ ul { list-style: none; }
   background: var(--yellow); color: var(--ink);
   display: grid; place-items: center;
   text-decoration: none; font-weight: 800;
-  box-shadow: 0 10px 24px rgba(254, 250, 7, 0.4);
+  box-shadow: 0 6px 14px rgba(29, 53, 87, 0.16);
 }
 .back-top:hover { color: var(--ink); }
 
@@ -1065,7 +1066,7 @@ ul { list-style: none; }
   display: inline-block;
   margin-top: 0.75rem;
   padding: 0.45rem 0.75rem;
-  background: #fff8c4;
+  background: #f7efd2;
   border-radius: 8px;
   font-size: 0.9rem;
   font-weight: 700;
