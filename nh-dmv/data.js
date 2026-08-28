@@ -97,7 +97,7 @@ window.NHDMV = {
       title: 'Appointment tomorrow — 10:30 AM',
       detail: 'Knowledge test · Concord · you still need 1 document',
       meta: 'Checklist',
-      href: 'checklist.html?intent=first-license&demo=almost',
+      href: 'checklist.html#intent=first-license&demo=almost',
       tone: 'warn'
     },
     {
@@ -105,7 +105,7 @@ window.NHDMV = {
       title: 'Your license expires in 47 days',
       detail: 'You’re eligible to renew now · REAL ID Operator $60.00',
       meta: 'Renew',
-      href: 'service.html?id=dl-renew',
+      href: 'service.html#dl-renew',
       tone: 'warn'
     },
     {
@@ -121,7 +121,7 @@ window.NHDMV = {
       title: 'REAL ID checklist',
       detail: '4 of 5 requirements ready',
       meta: 'Finish',
-      href: 'checklist.html?intent=real-id&demo=almost',
+      href: 'checklist.html#intent=real-id&demo=almost',
       tone: 'ok'
     }
   ],
@@ -133,7 +133,7 @@ window.NHDMV = {
       title: 'Your license expires in 47 days',
       body: 'You’re eligible to renew now.',
       cta: 'Renew license',
-      href: 'service.html?id=dl-renew',
+      href: 'service.html#dl-renew',
       tone: 'warn'
     },
     {
@@ -142,7 +142,7 @@ window.NHDMV = {
       title: 'Tomorrow — 10:30 AM',
       body: 'You still need one required document.',
       cta: 'Review checklist',
-      href: 'checklist.html?intent=first-license&demo=almost',
+      href: 'checklist.html#intent=first-license&demo=almost',
       tone: 'alert'
     },
     {
@@ -160,25 +160,25 @@ window.NHDMV = {
       title: '4 of 5 requirements ready',
       body: 'Finish the last residency document before you book.',
       cta: 'Finish checklist',
-      href: 'checklist.html?intent=real-id&demo=almost',
+      href: 'checklist.html#intent=real-id&demo=almost',
       tone: 'ok'
     }
   ],
 
   services: [
-    { id: 'dl-renew', category: 'license', group: 'renewals', name: 'Renew driver license', blurb: 'Operator $50 · REAL ID Operator $60 (as of Jan 1, 2026 fee schedule)', ways: ['online', 'appt'], href: 'service.html?id=dl-renew', fee: '$50–$60' },
-    { id: 'nd-renew', category: 'license', group: 'renewals', name: 'Renew non-driver ID', blurb: 'Non-driver identification card — $20.00', ways: ['online', 'drop', 'appt'], href: 'service.html?id=nd-renew', fee: '$20' },
-    { id: 'real-id', category: 'license', group: 'renewals', name: 'Upgrade to REAL ID', blurb: 'Required for domestic flights & federal facilities — book after document check', ways: ['appt'], href: 'service.html?id=real-id', fee: '$60' },
+    { id: 'dl-renew', category: 'license', group: 'renewals', name: 'Renew driver license', blurb: 'Operator $50 · REAL ID Operator $60 (as of Jan 1, 2026 fee schedule)', ways: ['online', 'appt'], href: 'service.html#dl-renew', fee: '$50–$60' },
+    { id: 'nd-renew', category: 'license', group: 'renewals', name: 'Renew non-driver ID', blurb: 'Non-driver identification card — $20.00', ways: ['online', 'drop', 'appt'], href: 'service.html#nd-renew', fee: '$20' },
+    { id: 'real-id', category: 'license', group: 'renewals', name: 'Upgrade to REAL ID', blurb: 'Required for domestic flights & federal facilities — book after document check', ways: ['appt'], href: 'service.html#real-id', fee: '$60' },
     { id: 'first-license', category: 'license', group: 'first', name: 'First-time license or permit', blurb: 'Checklist first, then knowledge test by appointment', ways: ['appt'], href: 'first-license.html' },
-    { id: 'transfer', category: 'license', group: 'first', name: 'Transfer out-of-state license', blurb: 'New residents have 60 days after establishing residency', ways: ['appt'], href: 'service.html?id=transfer' },
-    { id: 'non-driver', category: 'license', group: 'first', name: 'Apply for non-driver ID', blurb: 'State photo ID without driving privileges — $20.00', ways: ['appt'], href: 'service.html?id=non-driver', fee: '$20' },
-    { id: 'knowledge', category: 'license', group: 'testing', name: 'Schedule knowledge test', blurb: 'Driver, CDL, and motorcycle knowledge tests are appointment-only', ways: ['appt'], href: 'service.html?id=knowledge' },
-    { id: 'road', category: 'license', group: 'testing', name: 'Book road skills test', blurb: 'Schedule after successful knowledge test completion', ways: ['appt'], href: 'service.html?id=road' },
-    { id: 'motorcycle', category: 'license', group: 'testing', name: 'Motorcycle rider training', blurb: 'Season calendar and registration via motorcycle training path', ways: ['online', 'appt'], href: 'service.html?id=motorcycle' },
-    { id: 'duplicate', category: 'license', group: 'updates', name: 'Duplicate license or ID', blurb: 'Replace lost, stolen, or damaged credentials — $20.00', ways: ['online', 'drop', 'appt'], href: 'service.html?id=duplicate', fee: '$20' },
+    { id: 'transfer', category: 'license', group: 'first', name: 'Transfer out-of-state license', blurb: 'New residents have 60 days after establishing residency', ways: ['appt'], href: 'service.html#transfer' },
+    { id: 'non-driver', category: 'license', group: 'first', name: 'Apply for non-driver ID', blurb: 'State photo ID without driving privileges — $20.00', ways: ['appt'], href: 'service.html#non-driver', fee: '$20' },
+    { id: 'knowledge', category: 'license', group: 'testing', name: 'Schedule knowledge test', blurb: 'Driver, CDL, and motorcycle knowledge tests are appointment-only', ways: ['appt'], href: 'service.html#knowledge' },
+    { id: 'road', category: 'license', group: 'testing', name: 'Book road skills test', blurb: 'Schedule after successful knowledge test completion', ways: ['appt'], href: 'service.html#road' },
+    { id: 'motorcycle', category: 'license', group: 'testing', name: 'Motorcycle rider training', blurb: 'Season calendar and registration via motorcycle training path', ways: ['online', 'appt'], href: 'service.html#motorcycle' },
+    { id: 'duplicate', category: 'license', group: 'updates', name: 'Duplicate license or ID', blurb: 'Replace lost, stolen, or damaged credentials — $20.00', ways: ['online', 'drop', 'appt'], href: 'service.html#duplicate', fee: '$20' },
     { id: 'address', category: 'license', group: 'updates', name: 'Update address', blurb: 'Address change reprint — $10.00 · drop box friendly', ways: ['drop'], href: 'change-address.html', fee: '$10' },
-    { id: 'name-change', category: 'license', group: 'updates', name: 'Name or gender change', blurb: 'Bring certified court or vital records to your appointment', ways: ['appt'], href: 'service.html?id=name-change' },
-    { id: 'cdl-med', category: 'license', group: 'updates', name: 'CDL medical card update', blurb: 'Submit via drop box, email, or mail', ways: ['drop', 'mail'], href: 'service.html?id=cdl-med' },
+    { id: 'name-change', category: 'license', group: 'updates', name: 'Name or gender change', blurb: 'Bring certified court or vital records to your appointment', ways: ['appt'], href: 'service.html#name-change' },
+    { id: 'cdl-med', category: 'license', group: 'updates', name: 'CDL medical card update', blurb: 'Submit via drop box, email, or mail', ways: ['drop', 'mail'], href: 'service.html#cdl-med' },
     { id: 'reg-renew', category: 'vehicle', group: 'registration', name: 'Renew vehicle registration', blurb: 'Pay town/city permit fees first, then state portion at DMV or municipal agent', ways: ['drop', 'appt'], href: 'vehicle.html#reg-renew' },
     { id: 'reg-new', category: 'vehicle', group: 'registration', name: 'New or transfer registration', blurb: 'Title and plate workflows · first-time plate fee $8.00', ways: ['drop', 'appt'], href: 'vehicle.html#reg-new', fee: '+$8 plates' },
     { id: 'temp-plates', category: 'vehicle', group: 'registration', name: 'Temporary plates', blurb: 'Short-term plates while permanent paperwork clears', ways: ['drop', 'appt'], href: 'vehicle.html#temp-plates' },
@@ -313,25 +313,25 @@ window.NHDMV = {
   },
 
   homeTasks: [
-    { id: 'renew', label: 'Renew my license', href: 'service.html?id=dl-renew', hint: 'Often online' },
-    { id: 'real-id', label: 'Get a REAL ID', href: 'service.html?id=real-id', hint: 'Appointment' },
+    { id: 'renew', label: 'Renew my license', href: 'service.html#dl-renew', hint: 'Often online' },
+    { id: 'real-id', label: 'Get a REAL ID', href: 'service.html#real-id', hint: 'Appointment' },
     { id: 'register', label: 'Register a vehicle', href: 'vehicle.html#reg-new', hint: 'Drop box or appt' },
-    { id: 'replace', label: 'Replace a lost license', href: 'service.html?id=duplicate', hint: 'Often online' },
+    { id: 'replace', label: 'Replace a lost license', href: 'service.html#duplicate', hint: 'Often online' },
     { id: 'address', label: 'Change my address', href: 'change-address.html', hint: 'Guided form' },
     { id: 'first', label: 'Get my first license', href: 'first-license.html', hint: 'Guided journey' },
-    { id: 'road', label: 'Schedule a road test', href: 'service.html?id=road', hint: 'Appointment' },
+    { id: 'road', label: 'Schedule a road test', href: 'service.html#road', hint: 'Appointment' },
     { id: 'branch', label: 'Find a DMV location', href: 'branches.html', hint: 'Map + list' }
   ],
 
   onlineGuide: [
-    { id: 'dl-renew', title: 'Renew license', status: 'online', blurb: 'Complete entirely online when eligible', href: 'service.html?id=dl-renew' },
-    { id: 'duplicate', title: 'Replace license', status: 'online', blurb: 'Duplicate credential often available online or via drop box', href: 'service.html?id=duplicate' },
+    { id: 'dl-renew', title: 'Renew license', status: 'online', blurb: 'Complete entirely online when eligible', href: 'service.html#dl-renew' },
+    { id: 'duplicate', title: 'Replace license', status: 'online', blurb: 'Duplicate credential often available online or via drop box', href: 'service.html#duplicate' },
     { id: 'address', title: 'Change address', status: 'partial', blurb: 'Start online; reprint may use drop box ($10)', href: 'change-address.html' },
     { id: 'reg-renew', title: 'Renew registration', status: 'partial', blurb: 'Town/city fees first, then state portion online or drop box', href: 'vehicle.html#reg-renew' },
     { id: 'mvr', title: 'Order records', status: 'online', blurb: 'Your own driving record can be requested online', href: 'records.html#mvr' },
-    { id: 'real-id', title: 'REAL ID', status: 'visit', blurb: 'Requires an in-person visit with original documents', href: 'service.html?id=real-id' },
+    { id: 'real-id', title: 'REAL ID', status: 'visit', blurb: 'Requires an in-person visit with original documents', href: 'service.html#real-id' },
     { id: 'title', title: 'Transfer title', status: 'partial', blurb: 'Start paperwork online; finish by drop box or appointment', href: 'vehicle.html#title' },
-    { id: 'road', title: 'Road test', status: 'visit', blurb: 'Requires an in-person skills test appointment', href: 'service.html?id=road' }
+    { id: 'road', title: 'Road test', status: 'visit', blurb: 'Requires an in-person skills test appointment', href: 'service.html#road' }
   ],
 
   serviceDetails: {
@@ -347,7 +347,7 @@ window.NHDMV = {
       appointment: false,
       where: 'Online when eligible · otherwise any full-service branch by appointment',
       primaryCta: { label: 'Renew online', href: 'renew.html' },
-      secondaryCta: { label: 'Book appointment', href: 'appointments.html?service=other' },
+      secondaryCta: { label: 'Book appointment', href: 'appointments.html#service=other' },
       beforeBegin: ['Check your expiration date', 'Confirm your mailing address is current', 'Decide if you also need REAL ID'],
       related: ['real-id', 'duplicate', 'address']
     },
@@ -362,7 +362,7 @@ window.NHDMV = {
       process: ['Verify identity', 'Confirm address', 'Pay fee', 'Receive confirmation'],
       appointment: false,
       where: 'Online · drop box · appointment',
-      primaryCta: { label: 'Renew online', href: 'renew.html?type=non-driver' },
+      primaryCta: { label: 'Renew online', href: 'renew.html#type=non-driver' },
       secondaryCta: { label: 'Book appointment', href: 'appointments.html' },
       beforeBegin: ['Have your ID number ready', 'Confirm your address'],
       related: ['duplicate', 'address']
@@ -378,8 +378,8 @@ window.NHDMV = {
       process: ['Run document checklist', 'Book appointment', 'Bring originals', 'Photo and issuance at counter'],
       appointment: true,
       where: 'Any branch offering driver licensing — by appointment',
-      primaryCta: { label: 'Book appointment', href: 'appointments.html?service=real-id' },
-      secondaryCta: { label: 'Check documents', href: 'checklist.html?intent=real-id' },
+      primaryCta: { label: 'Book appointment', href: 'appointments.html#service=real-id' },
+      secondaryCta: { label: 'Check documents', href: 'checklist.html#intent=real-id' },
       beforeBegin: ['Gather originals (not photocopies)', 'Confirm names match across documents', 'Book only when documents are ready'],
       related: ['dl-renew', 'transfer']
     },
@@ -395,7 +395,7 @@ window.NHDMV = {
       appointment: true,
       where: 'Knowledge and road tests at branches that offer testing',
       primaryCta: { label: 'Start journey', href: 'first-license.html' },
-      secondaryCta: { label: 'Document checklist', href: 'checklist.html?intent=first-license' },
+      secondaryCta: { label: 'Document checklist', href: 'checklist.html#intent=first-license' },
       beforeBegin: ['Review age requirements', 'Plan driver education', 'Bookmark the NH Driver Manual'],
       related: ['knowledge', 'road']
     },
@@ -410,7 +410,7 @@ window.NHDMV = {
       process: ['Establish residency documents', 'Run transfer checklist', 'Book appointment', 'Surrender out-of-state license'],
       appointment: true,
       where: 'Any licensing branch by appointment',
-      primaryCta: { label: 'Book appointment', href: 'appointments.html?service=transfer' },
+      primaryCta: { label: 'Book appointment', href: 'appointments.html#service=transfer' },
       secondaryCta: { label: 'New resident guide', href: 'new-resident.html' },
       beforeBegin: ['Confirm you have two residency proofs', 'Decide on REAL ID now or later'],
       related: ['real-id', 'reg-new']
@@ -427,7 +427,7 @@ window.NHDMV = {
       appointment: true,
       where: 'Licensing branches by appointment',
       primaryCta: { label: 'Book appointment', href: 'appointments.html' },
-      secondaryCta: { label: 'Checklist', href: 'checklist.html?intent=non-driver' },
+      secondaryCta: { label: 'Checklist', href: 'checklist.html#intent=non-driver' },
       beforeBegin: ['Gather originals', 'Confirm residency proofs'],
       related: ['nd-renew']
     },
@@ -442,7 +442,7 @@ window.NHDMV = {
       process: ['Confirm readiness', 'Book appointment', 'Arrive with documents', 'Take exam'],
       appointment: true,
       where: 'Branches offering knowledge testing',
-      primaryCta: { label: 'Book appointment', href: 'appointments.html?service=knowledge-test' },
+      primaryCta: { label: 'Book appointment', href: 'appointments.html#service=knowledge-test' },
       secondaryCta: { label: 'First license journey', href: 'first-license.html' },
       beforeBegin: ['Study the Driver Manual', 'Bring required IDs'],
       related: ['road', 'first-license']
@@ -458,7 +458,7 @@ window.NHDMV = {
       process: ['Confirm knowledge test passed', 'Book road test', 'Arrive with safe vehicle', 'Complete skills exam'],
       appointment: true,
       where: 'Branches offering road testing',
-      primaryCta: { label: 'Book appointment', href: 'appointments.html?service=road-test' },
+      primaryCta: { label: 'Book appointment', href: 'appointments.html#service=road-test' },
       secondaryCta: { label: 'Find a branch', href: 'branches.html' },
       beforeBegin: ['Confirm vehicle is roadworthy', 'Bring permit and ID'],
       related: ['knowledge', 'first-license']
@@ -474,7 +474,7 @@ window.NHDMV = {
       process: ['Review season calendar', 'Register', 'Complete training / testing'],
       appointment: true,
       where: 'Training sites and DMV testing locations',
-      primaryCta: { label: 'Start registration', href: 'appointments.html?service=motorcycle' },
+      primaryCta: { label: 'Start registration', href: 'appointments.html#service=motorcycle' },
       secondaryCta: { label: 'See fees', href: 'fees.html' },
       beforeBegin: ['Check season dates', 'Confirm eligibility age'],
       related: ['knowledge']
@@ -490,7 +490,7 @@ window.NHDMV = {
       process: ['Verify identity', 'Request duplicate', 'Pay fee', 'Receive confirmation'],
       appointment: false,
       where: 'Online · drop box · appointment if needed',
-      primaryCta: { label: 'Request duplicate', href: 'renew.html?type=duplicate' },
+      primaryCta: { label: 'Request duplicate', href: 'renew.html#type=duplicate' },
       secondaryCta: { label: 'Book appointment', href: 'appointments.html' },
       beforeBegin: ['Have your license number ready if possible', 'Update address if you’ve moved'],
       related: ['address', 'dl-renew']
@@ -507,7 +507,7 @@ window.NHDMV = {
       appointment: false,
       where: 'Guided digital form · drop box · appointment',
       primaryCta: { label: 'Start address change', href: 'change-address.html' },
-      secondaryCta: { label: 'Checklist', href: 'checklist.html?intent=address' },
+      secondaryCta: { label: 'Checklist', href: 'checklist.html#intent=address' },
       beforeBegin: ['Know your new NH address', 'Have proof of residency if using drop box'],
       related: ['duplicate', 'dl-renew']
     },
@@ -523,7 +523,7 @@ window.NHDMV = {
       appointment: true,
       where: 'Licensing branches by appointment',
       primaryCta: { label: 'Book appointment', href: 'appointments.html' },
-      secondaryCta: { label: 'Checklist', href: 'checklist.html?intent=name-change' },
+      secondaryCta: { label: 'Checklist', href: 'checklist.html#intent=name-change' },
       beforeBegin: ['Obtain certified copies', 'Update SSA records if name changed'],
       related: ['duplicate']
     },
@@ -538,7 +538,7 @@ window.NHDMV = {
       process: ['Obtain medical certificate', 'Submit via drop box / mail / email path', 'Confirm on file'],
       appointment: false,
       where: 'Drop box · mail · email path',
-      primaryCta: { label: 'Open checklist', href: 'checklist.html?intent=cdl-med' },
+      primaryCta: { label: 'Open checklist', href: 'checklist.html#intent=cdl-med' },
       secondaryCta: { label: 'Find a branch', href: 'branches.html' },
       beforeBegin: ['Have the original or certified certificate'],
       related: []
@@ -555,7 +555,7 @@ window.NHDMV = {
       appointment: false,
       where: 'Municipal agent · DMV drop box · appointment',
       primaryCta: { label: 'Vehicle services', href: 'vehicle.html#reg-renew' },
-      secondaryCta: { label: 'Book appointment', href: 'appointments.html?service=registration' },
+      secondaryCta: { label: 'Book appointment', href: 'appointments.html#service=registration' },
       beforeBegin: ['Check municipal requirements', 'Confirm insurance'],
       related: ['title']
     },
@@ -587,7 +587,7 @@ window.NHDMV = {
       appointment: false,
       where: 'Drop box · appointment',
       primaryCta: { label: 'Title services', href: 'vehicle.html#title' },
-      secondaryCta: { label: 'Book appointment', href: 'appointments.html?service=registration' },
+      secondaryCta: { label: 'Book appointment', href: 'appointments.html#service=registration' },
       beforeBegin: ['Do not laminate titles', 'Bring complete ownership chain'],
       related: ['reg-new', 'dup-title']
     },
@@ -610,13 +610,13 @@ window.NHDMV = {
   },
 
   searchIntents: [
-    { phrases: ['lost', 'stolen', 'replace', 'duplicate', 'missing license'], title: 'Replace a lost or stolen driver license', blurb: 'Request a duplicate credential — often online.', href: 'service.html?id=duplicate', badge: 'Often online' },
+    { phrases: ['lost', 'stolen', 'replace', 'duplicate', 'missing license'], title: 'Replace a lost or stolen driver license', blurb: 'Request a duplicate credential — often online.', href: 'service.html#duplicate', badge: 'Often online' },
     { phrases: ['moved', 'move', 'address', 'new address', 'i moved'], title: 'Change my address', blurb: 'Guided address update with $10 reprint fee.', href: 'change-address.html', badge: 'Guided form' },
-    { phrases: ['expire', 'expires', 'renew', 'renewal', 'expiring'], title: 'Renew your driver license', blurb: 'You’re likely looking for online renewal eligibility.', href: 'service.html?id=dl-renew', badge: 'Often online' },
-    { phrases: ['bought', 'buy', 'new car', 'purchased', 'register'], title: 'Register a vehicle', blurb: 'New or transfer registration path.', href: 'service.html?id=reg-new', badge: 'Partial online' },
-    { phrases: ['real id', 'realid', 'flight', 'tsa', 'airport'], title: 'Upgrade to REAL ID', blurb: 'In-person visit with original documents.', href: 'service.html?id=real-id', badge: 'Visit required' },
-    { phrases: ['failed', 'fail', 'road test', 'retake'], title: 'Schedule another road test', blurb: 'Book a new skills test appointment after a failed attempt.', href: 'service.html?id=road', badge: 'Appointment' },
-    { phrases: ['name change', 'married', 'divorce', 'gender'], title: 'Name or gender change', blurb: 'Appointment with certified records.', href: 'service.html?id=name-change', badge: 'Visit required' },
+    { phrases: ['expire', 'expires', 'renew', 'renewal', 'expiring'], title: 'Renew your driver license', blurb: 'You’re likely looking for online renewal eligibility.', href: 'service.html#dl-renew', badge: 'Often online' },
+    { phrases: ['bought', 'buy', 'new car', 'purchased', 'register'], title: 'Register a vehicle', blurb: 'New or transfer registration path.', href: 'service.html#reg-new', badge: 'Partial online' },
+    { phrases: ['real id', 'realid', 'flight', 'tsa', 'airport'], title: 'Upgrade to REAL ID', blurb: 'In-person visit with original documents.', href: 'service.html#real-id', badge: 'Visit required' },
+    { phrases: ['failed', 'fail', 'road test', 'retake'], title: 'Schedule another road test', blurb: 'Book a new skills test appointment after a failed attempt.', href: 'service.html#road', badge: 'Appointment' },
+    { phrases: ['name change', 'married', 'divorce', 'gender'], title: 'Name or gender change', blurb: 'Appointment with certified records.', href: 'service.html#name-change', badge: 'Visit required' },
     { phrases: ['new to', 'new hampshire', 'moved here', 'new resident', 'just moved'], title: 'New to New Hampshire?', blurb: 'Build a 60-day plan for license and vehicle.', href: 'new-resident.html', badge: 'Guided' },
     { phrases: ['first license', 'learner', 'permit', 'teen', 'first driver'], title: 'Get your first driver license', blurb: 'Step-by-step journey for new drivers.', href: 'first-license.html', badge: 'Journey' },
     { phrases: ['online', 'skip the trip', 'do this online', 'visit'], title: 'Can I do this online?', blurb: 'See which services skip the counter.', href: 'online.html', badge: 'Guide' },
@@ -625,11 +625,11 @@ window.NHDMV = {
   ],
 
   firstLicenseJourney: [
-    { id: 'requirements', title: 'Check requirements', body: 'Confirm age, residency, and parental consent rules for your situation.', action: { label: 'Open checklist', href: 'checklist.html?intent=first-license' }, reqs: ['Confirm eligibility age', 'Review residency proofs needed'] },
-    { id: 'education', title: 'Driver education', body: 'Complete approved driver education when required for your age.', action: { label: 'See first-license path', href: 'service.html?id=first-license' }, reqs: ['Enroll in approved course', 'Keep completion certificate'] },
+    { id: 'requirements', title: 'Check requirements', body: 'Confirm age, residency, and parental consent rules for your situation.', action: { label: 'Open checklist', href: 'checklist.html#intent=first-license' }, reqs: ['Confirm eligibility age', 'Review residency proofs needed'] },
+    { id: 'education', title: 'Driver education', body: 'Complete approved driver education when required for your age.', action: { label: 'See first-license path', href: 'service.html#first-license' }, reqs: ['Enroll in approved course', 'Keep completion certificate'] },
     { id: 'practice', title: 'Supervised driving', body: 'Log required supervised practice with a licensed adult.', action: { label: 'Continue journey', href: 'first-license.html' }, reqs: ['Track practice hours', 'Use a safe vehicle'] },
-    { id: 'knowledge', title: 'Knowledge test', body: 'Pass the written exam — book an appointment and bring documents.', action: { label: 'Book knowledge test', href: 'appointments.html?service=knowledge-test' }, reqs: ['Study Driver Manual', 'Bring identity documents'] },
-    { id: 'road', title: 'Road test', body: 'Schedule your skills test after passing knowledge and completing practice.', action: { label: 'Book road test', href: 'appointments.html?service=road-test' }, reqs: ['Passed knowledge test', 'Roadworthy vehicle'] },
+    { id: 'knowledge', title: 'Knowledge test', body: 'Pass the written exam — book an appointment and bring documents.', action: { label: 'Book knowledge test', href: 'appointments.html#service=knowledge-test' }, reqs: ['Study Driver Manual', 'Bring identity documents'] },
+    { id: 'road', title: 'Road test', body: 'Schedule your skills test after passing knowledge and completing practice.', action: { label: 'Book road test', href: 'appointments.html#service=road-test' }, reqs: ['Passed knowledge test', 'Roadworthy vehicle'] },
     { id: 'license', title: 'Receive license', body: 'Complete issuance steps and pay applicable fees.', action: { label: 'See fees', href: 'fees.html' }, reqs: ['Passed road test', 'Fee payment ready'] }
   ],
 
@@ -650,9 +650,9 @@ window.NHDMV = {
 
   problemStates: {
     missingDoc: { title: 'You’re missing one document', body: 'Your visit can still succeed — gather the remaining item before you travel.', next: 'Open checklist', href: 'checklist.html' },
-    notAccepted: { title: 'This document isn’t accepted', body: 'Photocopies and expired statements usually fail. Use an original from the accepted list.', next: 'See acceptable documents', href: 'checklist.html?intent=real-id' },
+    notAccepted: { title: 'This document isn’t accepted', body: 'Photocopies and expired statements usually fail. Use an original from the accepted list.', next: 'See acceptable documents', href: 'checklist.html#intent=real-id' },
     notOnline: { title: 'This service can’t be completed online', body: 'You’ll need an appointment. Prepare documents first so there are no surprises at the counter.', next: 'Book appointment', href: 'appointments.html' },
-    notEligible: { title: 'Your license isn’t currently eligible for online renewal', body: 'You may need a test, REAL ID upgrade, or in-person verification.', next: 'See renewal options', href: 'service.html?id=dl-renew' },
+    notEligible: { title: 'Your license isn’t currently eligible for online renewal', body: 'You may need a test, REAL ID upgrade, or in-person verification.', next: 'See renewal options', href: 'service.html#dl-renew' },
     noSlots: { title: 'No appointments available at this location', body: 'Try another day or branch. Same-day slots release daily when available.', next: 'Try another branch', href: 'branches.html' }
   },
 

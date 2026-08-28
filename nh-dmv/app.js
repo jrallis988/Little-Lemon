@@ -36,14 +36,16 @@
   window.NHDMVToast = toast;
 
   const params = new URLSearchParams(location.search);
-  // serve cleanUrls can drop ?id= on redirect — also accept #id or #key=value
-  if (![...params.keys()].length && location.hash) {
+  // cleanUrls drops ?query on redirect — prefer hash deep-links: #id or #key=value&...
+  if (location.hash) {
     const raw = location.hash.replace(/^#/, '');
     if (raw.includes('=')) {
-      new URLSearchParams(raw).forEach((v, k) => params.set(k, v));
-    } else if (raw) {
+      new URLSearchParams(raw).forEach((v, k) => {
+        if (!params.has(k)) params.set(k, v);
+      });
+    } else if (raw && !params.has('id')) {
       params.set('id', raw);
-      params.set('intent', raw);
+      if (!params.has('intent')) params.set('intent', raw);
     }
   }
   window.NHDMVParams = params;
@@ -218,7 +220,7 @@
             <p style="margin-top:0.35rem"><a href="confirmation.html">View receipt</a> · confirmation ${booking.confirmationId}</p>
           </div>
           <div class="appt-actions">
-            <a class="btn btn-secondary btn-sm" href="appointments.html?service=${encodeURIComponent(booking.serviceId || 'other')}&reschedule=1">Reschedule</a>
+            <a class="btn btn-secondary btn-sm" href="appointments.html#service=${encodeURIComponent(booking.serviceId || 'other')}&reschedule=1">Reschedule</a>
           </div>
         </div>`
       : '';
@@ -232,7 +234,7 @@
           <p>Concord DMV · Thursday, Mar 12, 2026 · 10:30 AM</p>
         </div>
         <div class="appt-actions">
-          <a class="btn btn-secondary btn-sm" href="appointments.html?service=knowledge-test&reschedule=1">Reschedule</a>
+          <a class="btn btn-secondary btn-sm" href="appointments.html#service=knowledge-test&reschedule=1">Reschedule</a>
           <button type="button" class="btn btn-ghost btn-sm" data-cancel="knowledge">Cancel</button>
         </div>
       </div>
@@ -312,7 +314,7 @@
             <div class="branch-actions">
               ${bookDisabled
                 ? `<button type="button" class="btn btn-secondary btn-sm" disabled>Closed</button>`
-                : `<a class="btn btn-primary btn-sm" href="appointments.html?branch=${b.id}">Book here</a>`}
+                : `<a class="btn btn-primary btn-sm" href="appointments.html#branch=${b.id}">Book here</a>`}
               <a class="btn btn-secondary btn-sm" href="checklist.html">What to bring</a>
             </div>
           </article>`;
@@ -584,7 +586,7 @@
       box.className = `result-box ${ready ? '' : 'warn'}`;
       box.innerHTML = ready
         ? `<h3>You’re ready to book</h3><p>All required documents for this path are checked. Continue to choose a branch and time.</p>
-           <div style="margin-top:1rem"><a class="btn btn-primary" href="appointments.html?service=${
+           <div style="margin-top:1rem"><a class="btn btn-primary" href="appointments.html#service=${
              selectedIntent === 'real-id' ? 'real-id' : selectedIntent === 'transfer' ? 'transfer' : 'knowledge-test'
            }">Book appointment</a></div>`
         : `<h3>${checked} of ${total} documents checked</h3>
@@ -621,8 +623,8 @@
       out.innerHTML = ok
         ? `<h3>Likely eligible to book</h3><p>REAL ID Operator fee is <strong>$60.00</strong> on the official schedule. Bring originals to your appointment.</p>
            <div style="margin-top:1rem;display:flex;gap:0.5rem;flex-wrap:wrap">
-             <a class="btn btn-primary" href="appointments.html?service=real-id">Book REAL ID appointment</a>
-             <a class="btn btn-secondary" href="checklist.html?intent=real-id">Full document wizard</a>
+             <a class="btn btn-primary" href="appointments.html#service=real-id">Book REAL ID appointment</a>
+             <a class="btn btn-secondary" href="checklist.html#intent=real-id">Full document wizard</a>
            </div>`
         : `<h3>Complete the checklist first</h3><p>Missing documents are the #1 reason REAL ID visits fail. Finish the items above or open the full wizard.</p>`;
     });
@@ -654,7 +656,7 @@
       e.preventDefault();
       const upgrade = $('#renew-option')?.value;
       if (upgrade === 'yes') {
-        window.location.href = 'real-id.html?from=renew';
+        window.location.href = 'real-id.html#from=renew';
         return;
       }
       const panel = $('#renew-done');
@@ -812,7 +814,7 @@
       .map((rid) => {
         const r = window.NHDMV.serviceDetails[rid];
         if (!r) return '';
-        return `<a class="tax-item" href="service.html?id=${rid}"><div><h3>${r.title}</h3><p>${r.onlineLabel}</p></div><span class="tax-cta">Open →</span></a>`;
+        return `<a class="tax-item" href="service.html#${rid}"><div><h3>${r.title}</h3><p>${r.onlineLabel}</p></div><span class="tax-cta">Open →</span></a>`;
       })
       .join('');
 
@@ -827,7 +829,7 @@
           <section class="panel">
             <h2>What documents are required</h2>
             <ul class="plain-list">${detail.docs.map((d) => `<li>${d}</li>`).join('')}</ul>
-            <p class="field-hint"><a href="checklist.html?intent=${id === 'real-id' ? 'real-id' : id === 'transfer' ? 'transfer' : id === 'first-license' ? 'first-license' : 'real-id'}">See acceptable documents →</a></p>
+            <p class="field-hint"><a href="checklist.html#intent=${id === 'real-id' ? 'real-id' : id === 'transfer' ? 'transfer' : id === 'first-license' ? 'first-license' : 'real-id'}">See acceptable documents →</a></p>
           </section>
           <section class="panel">
             <h2>Expected process</h2>
@@ -1008,7 +1010,7 @@
       status.className = `badge ${branch.status === 'busy' ? 'badge-warn' : branch.status === 'closed' ? 'badge-alert' : 'badge-ok'}`;
     }
     const book = $('#branch-book-link');
-    if (book) book.href = `appointments.html?branch=${branch.id}`;
+    if (book) book.href = `appointments.html#branch=${branch.id}`;
     const maps = $('#branch-maps-link');
     if (maps) {
       maps.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(branch.address + ' New Hampshire')}`;
@@ -1040,7 +1042,7 @@
         out.innerHTML = `<h3>Bring these</h3><ul class="plain-list">${preset.docs
           .map((d) => `<li><strong>${d.label}</strong> — ${d.hint}</li>`)
           .join('')}</ul>
-          <p style="margin-top:0.75rem"><a href="checklist.html?intent=${sel.value}">Open full readiness checklist →</a></p>`;
+          <p style="margin-top:0.75rem"><a href="checklist.html#intent=${sel.value}">Open full readiness checklist →</a></p>`;
       };
       sel.addEventListener('change', sync);
     }
@@ -1093,7 +1095,7 @@
         if (actions && id) {
           actions.insertAdjacentHTML(
             'afterbegin',
-            `<a class="btn btn-navy btn-sm" href="branch.html?id=${id}">Branch details</a>`
+            `<a class="btn btn-navy btn-sm" href="branch.html#${id}">Branch details</a>`
           );
         }
       });
@@ -1109,7 +1111,7 @@
         if (actions && card.id) {
           actions.insertAdjacentHTML(
             'afterbegin',
-            `<a class="btn btn-navy btn-sm" href="branch.html?id=${card.id}">Branch details</a>`
+            `<a class="btn btn-navy btn-sm" href="branch.html#${card.id}">Branch details</a>`
           );
         }
       });
@@ -1150,21 +1152,21 @@
       if (!plan) return;
       const items = [];
       if (answers.license === 'transfer') {
-        items.push({ title: 'Transfer your out-of-state license', href: 'service.html?id=transfer', detail: '60 days after establishing residency · appointment required' });
+        items.push({ title: 'Transfer your out-of-state license', href: 'service.html#transfer', detail: '60 days after establishing residency · appointment required' });
       } else if (answers.license === 'first') {
         items.push({ title: 'Get your first NH license', href: 'first-license.html', detail: 'Guided journey: education → tests → credential' });
       } else {
-        items.push({ title: 'Apply for non-driver ID', href: 'service.html?id=non-driver', detail: 'Photo ID without driving privileges' });
+        items.push({ title: 'Apply for non-driver ID', href: 'service.html#non-driver', detail: 'Photo ID without driving privileges' });
       }
       if (answers.vehicle === 'yes') {
-        items.push({ title: 'Register your vehicle', href: 'service.html?id=reg-new', detail: 'Municipal fees first, then state registration' });
+        items.push({ title: 'Register your vehicle', href: 'service.html#reg-new', detail: 'Municipal fees first, then state registration' });
       }
       if (answers.title === 'yes' && answers.vehicle === 'yes') {
-        items.push({ title: 'Transfer or obtain NH title', href: 'service.html?id=title', detail: 'Bring ownership documents — drop box or appointment' });
+        items.push({ title: 'Transfer or obtain NH title', href: 'service.html#title', detail: 'Bring ownership documents — drop box or appointment' });
       }
       items.push({
         title: answers.docs === 'ready' ? 'Confirm residency documents' : 'Gather residency documentation',
-        href: 'checklist.html?intent=transfer',
+        href: 'checklist.html#intent=transfer',
         detail: 'Two proofs of NH residency are required for most credential paths'
       });
       items.push({ title: 'Find a convenient branch', href: 'branches.html', detail: 'Appointment-only visits — check hours first' });
@@ -1459,8 +1461,170 @@
       .join('');
   }
 
+  function initSiteConnectivity() {
+    const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+    const file = !path || path === 'nh-dmv' ? 'index.html' : path.includes('.html') ? path : `${path}.html`;
+
+    const hubs = [
+      { href: 'index.html', label: 'Home', match: ['index.html', ''] },
+      {
+        href: 'license.html',
+        label: 'License & ID',
+        match: [
+          'license.html',
+          'renew.html',
+          'real-id.html',
+          'first-license.html',
+          'service.html',
+          'change-address.html',
+          'new-resident.html'
+        ]
+      },
+      { href: 'vehicle.html', label: 'Vehicle', match: ['vehicle.html'] },
+      { href: 'records.html', label: 'Records', match: ['records.html'] },
+      { href: 'appointments.html', label: 'Appointments', match: ['appointments.html', 'confirmation.html'] },
+      { href: 'branches.html', label: 'Branches', match: ['branches.html', 'branch.html', 'locations.html'] }
+    ];
+    const tools = [
+      { href: 'search.html', label: 'Search' },
+      { href: 'online.html', label: 'Can I do this online?' },
+      { href: 'checklist.html', label: 'Am I ready?' },
+      { href: 'fees.html', label: 'Fees' },
+      { href: 'dashboard.html', label: 'Dashboard' }
+    ];
+    const journeys = [
+      { href: 'service.html#dl-renew', label: 'Renew license' },
+      { href: 'service.html#real-id', label: 'REAL ID' },
+      { href: 'service.html#duplicate', label: 'Replace license' },
+      { href: 'first-license.html', label: 'First license' },
+      { href: 'new-resident.html', label: 'New resident' },
+      { href: 'change-address.html', label: 'Change address' },
+      { href: 'online.html', label: 'Skip the trip' },
+      { href: 'search.html', label: 'Task search' }
+    ];
+
+    const nav = $('#life-nav');
+    if (nav) {
+      hubs.forEach((h) => {
+        const a = nav.querySelector(`a[href="${h.href}"]`);
+        if (!a) return;
+        if (h.match.includes(file)) a.setAttribute('aria-current', 'page');
+        else a.removeAttribute('aria-current');
+      });
+      if (!nav.querySelector('[data-nav-extra]')) {
+        nav.insertAdjacentHTML(
+          'beforeend',
+          `<a href="search.html" data-nav-extra>Search</a>
+           <a href="online.html" data-nav-extra>Online?</a>
+           <a href="checklist.html" data-nav-extra>Checklist</a>
+           <a href="fees.html" data-nav-extra>Fees</a>`
+        );
+      }
+      $$('a[data-nav-extra]', nav).forEach((a) => {
+        const hrefFile = (a.getAttribute('href') || '').split('?')[0];
+        if (hrefFile === file) a.setAttribute('aria-current', 'page');
+      });
+    }
+
+    const toolsEl = $('.header-tools');
+    if (toolsEl && !$('#header-online-link')) {
+      const online = document.createElement('a');
+      online.id = 'header-online-link';
+      online.className = 'btn btn-ghost btn-sm header-search-link';
+      online.href = 'online.html';
+      online.textContent = 'Online?';
+      const search = $('#header-search-link');
+      toolsEl.insertBefore(online, search || toolsEl.querySelector('.btn-primary') || toolsEl.firstChild);
+    }
+
+    const main = $('#main');
+    if (main && !$('#portal-connect')) {
+      const strip = document.createElement('nav');
+      strip.id = 'portal-connect';
+      strip.className = 'portal-connect';
+      strip.setAttribute('aria-label', 'Explore this portal');
+      strip.innerHTML = `
+        <div class="portal-connect-inner">
+          <div>
+            <p class="section-kicker">Stay in this portal</p>
+            <h2 class="portal-connect-title">Everything connects here</h2>
+            <p>No off-site forms hop. Pick any destination below — same NH DMV concept throughout.</p>
+          </div>
+          <div class="portal-connect-grid">
+            <div>
+              <h3>Main</h3>
+              <ul>${hubs.map((h) => `<li><a href="${h.href}">${h.label}</a></li>`).join('')}</ul>
+            </div>
+            <div>
+              <h3>Tools</h3>
+              <ul>${tools.map((t) => `<li><a href="${t.href}">${t.label}</a></li>`).join('')}</ul>
+            </div>
+            <div>
+              <h3>Common tasks</h3>
+              <ul>${journeys.map((j) => `<li><a href="${j.href}">${j.label}</a></li>`).join('')}</ul>
+            </div>
+          </div>
+        </div>`;
+      main.appendChild(strip);
+    }
+
+    const footer = $('.app-footer');
+    if (footer) {
+      footer.innerHTML = `
+        <div class="footer-inner footer-connected">
+          <div>
+            <div class="footer-brand">NH DMV</div>
+            <p>Digital service experience by Artistic Fountain. Demo only — all flows stay inside this portal.</p>
+            <div class="hero-actions" style="margin-top:0.85rem">
+              <a class="btn btn-primary btn-sm" href="appointments.html">Book appointment</a>
+              <a class="btn btn-secondary btn-sm" href="search.html">Search tasks</a>
+            </div>
+          </div>
+          <div>
+            <h3>Main</h3>
+            <ul>${hubs.map((h) => `<li><a href="${h.href}">${h.label}</a></li>`).join('')}</ul>
+          </div>
+          <div>
+            <h3>Tools</h3>
+            <ul>${tools.map((t) => `<li><a href="${t.href}">${t.label}</a></li>`).join('')}</ul>
+          </div>
+          <div>
+            <h3>Tasks</h3>
+            <ul>
+              ${journeys
+                .slice(0, 6)
+                .map((j) => `<li><a href="${j.href}">${j.label}</a></li>`)
+                .join('')}
+              <li><a href="../index.html">Artistic Fountain portfolio</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© Concept redesign — not affiliated with the State of New Hampshire.</span>
+          <a href="index.html">Back to portal home</a>
+        </div>`;
+    }
+
+    document.addEventListener(
+      'click',
+      (e) => {
+        const a = e.target.closest('a[href]');
+        if (!a) return;
+        const href = a.getAttribute('href') || '';
+        if (!href.includes('dmv.nh.gov')) return;
+        e.preventDefault();
+        if (href.includes('licensing-fees') || href.includes('fees')) location.href = 'fees.html';
+        else if (href.includes('hours') || href.includes('locations')) location.href = 'branches.html';
+        else location.href = 'online.html';
+        toast('Opened the in-portal version — stayed on this site');
+      },
+      true
+    );
+  }
+
   initAuthChrome();
   initHeaderSearch();
+  initSiteConnectivity();
   initHomeAuth();
   initHomeTasks();
   initServiceBrowser();
