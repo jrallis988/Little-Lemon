@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#1d3557">
-  <title>Service detail — NH DMV</title>
+  <title>Scam alert — NH DMV</title>
   <base href="/nh-dmv/">
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -49,35 +49,38 @@
 
   <main id="main" class="page">
     <header class="page-intro">
-      <p class="section-kicker">Service detail</p>
-      <h1 id="service-detail-title">Service</h1>
-      <p id="service-detail-lede">Choose a service from License, Vehicle, or Records — or open a deep link like <code>service.html#dl-renew</code>.</p>
+      <p class="section-kicker">Stay safe</p>
+      <h1>Scam alert</h1>
+      <p>The New Hampshire DMV never texts residents about payments. Here’s how to spot and avoid common DMV-related scams.</p>
     </header>
 
-    <div id="service-detail-root" data-service-root aria-live="polite">
-      <!-- Populated by app.js from ?id= -->
-    </div>
+    <section class="panel">
+      <h2>What the NH DMV will never do</h2>
+      <ul class="scam-list">
+        <li>Send text messages asking you to pay a fine, fee, or “unlock” your license</li>
+        <li>Ask you to click a link in a text or email to pay immediately</li>
+        <li>Demand gift cards, wire transfers, or cryptocurrency</li>
+        <li>Threaten arrest over the phone for unpaid “DMV tickets”</li>
+      </ul>
+    </section>
 
-    <div class="empty-state is-visible" id="service-detail-empty" role="status">
-      <h2>No service selected</h2>
-      <p>Add a service id to the URL (for example <code>?id=dl-renew</code>), or browse from a hub below.</p>
+    <section class="panel" style="margin-top:1.25rem">
+      <h2>What to do if you get a suspicious message</h2>
+      <ol class="scam-steps">
+        <li>Do not click links or call numbers in the message.</li>
+        <li>Verify through this portal or by calling <a href="tel:6032274000">603-227-4000</a>.</li>
+        <li>Never share Social Security numbers, bank details, or one-time codes with unexpected callers.</li>
+        <li>Report suspected scams to local law enforcement when appropriate.</li>
+      </ol>
       <div class="hero-actions" style="margin-top:1rem">
-        <a class="btn btn-primary" href="license.html">License &amp; ID</a>
-        <a class="btn btn-secondary" href="vehicle.html">Vehicle</a>
-        <a class="btn btn-navy" href="online.html">Can I do this online?</a>
+        <a class="btn btn-primary" href="index.html">Back to home</a>
+        <a class="btn btn-secondary" href="fees.html">See real DMV fees</a>
+        <a class="btn btn-navy" href="tel:6032274000">Call DMV</a>
       </div>
-    </div>
+    </section>
   </main>
 
-  <footer class="app-footer">
-    <div class="footer-inner">
-      <div><div class="footer-brand">New Hampshire DMV</div><p>Service detail template with query-driven content.</p></div>
-      <div><h3>Next</h3><ul><li><a href="appointments.html">Book appointment</a></li><li><a href="online.html">Online eligibility</a></li></ul></div>
-      <div><h3>Account</h3><ul><li><a href="dashboard.html">Dashboard</a></li></ul></div>
-      <div><h3>Official</h3><ul><li><a href="../index.html">Artistic Fountain</a></li></ul></div>
-    </div>
-    <div class="footer-bottom"><span>© 2026 Artistic Fountain</span><a href="index.html">Home</a></div>
-  </footer>
+  <footer class="app-footer"></footer>
   <script src="data.js"></script>
   <script src="app.js"></script>
 </body>

@@ -47,7 +47,7 @@ window.NHDMV = {
     {
       id: 'america-250',
       title: 'Celebrate America! — 250th commemorative plate',
-      body: 'Order the America’s 250th cover plate online — $25 + shipping. Display Jan 1, 2026 – Jul 4, 2027. Proceeds support LCHIP.'
+      body: 'Order the America’s 250th cover plate online — $25 + $4.95 shipping. Display Jan 1, 2026 – Jul 4, 2027. Proceeds support LCHIP.'
     }
   ],
 

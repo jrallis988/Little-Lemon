@@ -700,6 +700,46 @@
       .join('');
   }
 
+  function initScamPopup() {
+    const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+    const file = !path || path === 'nh-dmv' ? 'index.html' : path.includes('.html') ? path : `${path}.html`;
+    if (file === 'scam-alert.html') return;
+    if (sessionStorage.getItem('nhdmv-scam-dismissed') === '1') return;
+    if ($('#scam-popup')) return;
+
+    const popup = document.createElement('div');
+    popup.id = 'scam-popup';
+    popup.className = 'scam-popup';
+    popup.setAttribute('role', 'alertdialog');
+    popup.setAttribute('aria-labelledby', 'scam-popup-title');
+    popup.setAttribute('aria-describedby', 'scam-popup-body');
+    popup.innerHTML = `
+      <div class="scam-popup-inner">
+        <div class="scam-popup-copy">
+          <strong id="scam-popup-title">Scam alert</strong>
+          <span id="scam-popup-body">The NH DMV never texts about payments.</span>
+        </div>
+        <div class="scam-popup-actions">
+          <a class="btn btn-navy btn-sm" href="scam-alert.html">Learn more</a>
+          <button type="button" class="scam-popup-close" aria-label="Dismiss scam alert">&times;</button>
+        </div>
+      </div>`;
+    document.body.prepend(popup);
+    document.body.classList.add('has-scam-popup');
+
+    const dismiss = () => {
+      popup.classList.remove('is-visible');
+      sessionStorage.setItem('nhdmv-scam-dismissed', '1');
+      document.body.classList.remove('has-scam-popup');
+      window.setTimeout(() => popup.remove(), 350);
+    };
+    popup.querySelector('.scam-popup-close')?.addEventListener('click', dismiss);
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => popup.classList.add('is-visible'));
+    });
+  }
+
   function initFeesPage() {
     const root = $('#fees-root');
     if (!root || !window.NHDMV?.fees) return;
@@ -1501,6 +1541,7 @@
       { href: 'new-resident.html', label: 'New resident' },
       { href: 'america-250.html', label: 'America 250 plate' },
       { href: 'appointments.html#how-to-video', label: 'Appointment video' },
+      { href: 'scam-alert.html', label: 'Scam alert' },
       { href: 'change-address.html', label: 'Change address' },
       { href: 'online.html', label: 'Skip the trip' },
       { href: 'search.html', label: 'Task search' }
@@ -1646,6 +1687,7 @@
   initRecordsActions();
   initMyRecords();
   initNotices();
+  initScamPopup();
   initFeesPage();
   initServiceDetail();
   initOnlineGuide();
