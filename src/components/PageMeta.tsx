@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 
+import { SITE_URL } from "../lib/site";
+
 export type PageMetaProps = {
   title: string;
   description: string;
@@ -7,7 +9,6 @@ export type PageMetaProps = {
   image?: string;
 };
 
-const SITE = "https://www.weightwatchers.com";
 const DEFAULT_IMAGE = "/images/campaign/hero-cook.jpg";
 
 function upsertMeta(attr: "name" | "property", key: string, content: string) {
@@ -37,8 +38,9 @@ export function PageMeta({
   image = DEFAULT_IMAGE,
 }: PageMetaProps) {
   useEffect(() => {
-    const absoluteImage = image.startsWith("http") ? image : `${window.location.origin}${image}`;
-    const canonical = `${SITE}${path === "/" ? "" : path}`;
+    const origin = SITE_URL || window.location.origin;
+    const absoluteImage = image.startsWith("http") ? image : `${origin}${image}`;
+    const canonical = `${origin}${path === "/" ? "" : path}`;
 
     document.title = title;
     upsertMeta("name", "description", description);

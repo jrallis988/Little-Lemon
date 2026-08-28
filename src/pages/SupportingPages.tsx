@@ -73,7 +73,10 @@ export function ProgramsPage() {
       image="/images/campaign/hero-market.jpg"
     >
       <p className="mb-8 max-w-2xl font-serif text-lg text-ink/70">
-        Clear pathways for real life—connected by one idea: support that evolves with people.
+        Clear pathways for real life—connected by one idea: support that evolves with people.{" "}
+        <Link to="/#plan-matrix" className="font-semibold text-cobalt-700">
+          Compare concept plans on the homepage →
+        </Link>
       </p>
       <div className="grid gap-6 lg:grid-cols-2">
         {programPathways.map((item) => (

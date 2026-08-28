@@ -1,7 +1,9 @@
 import { FormEvent, useState } from "react";
 import { Link } from "react-router-dom";
+import { useOnboarding } from "../../hooks/useOnboarding";
 
 export function CampaignFinale() {
+  const { openOnboarding } = useOnboarding();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "invalid" | "demo">("idle");
 
@@ -13,6 +15,7 @@ export function CampaignFinale() {
     }
     // Concept/demo only — no backend handler is wired in this redesign.
     setStatus("demo");
+    openOnboarding();
   };
 
   return (
@@ -39,9 +42,16 @@ export function CampaignFinale() {
             </h2>
             <p className="mt-2 font-serif text-xl text-tide sm:text-2xl">And we’re just getting started.</p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+              <button
+                type="button"
+                onClick={openOnboarding}
+                className="rounded-2xl bg-white px-6 py-3.5 font-sans text-sm font-semibold text-ink transition hover:bg-cloud"
+              >
+                Start onboarding
+              </button>
               <Link
                 to="/whats-next"
-                className="rounded-2xl bg-white px-6 py-3.5 font-sans text-sm font-semibold text-ink transition hover:bg-cloud"
+                className="rounded-2xl border border-white/35 px-6 py-3.5 font-sans text-sm font-semibold text-white transition hover:bg-white/10"
               >
                 Explore What’s Next
               </Link>

@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { AnniversaryBadge } from "../Logo";
 import { campaign, heroSlides } from "../../data/campaign";
+import { useOnboarding } from "../../hooks/useOnboarding";
 import { useCountUp, useInView } from "../../hooks/motion";
 import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 
 const SLIDE_MS = 5500;
 
 export function CampaignHero() {
+  const { openOnboarding } = useOnboarding();
   const { ref, visible } = useInView<HTMLElement>(0.2);
   const years = useCountUp(63, visible, 1600);
   const [index, setIndex] = useState(0);
@@ -112,9 +114,16 @@ export function CampaignHero() {
           style={{ animationDelay: "320ms" }}
         >
           <div className="flex flex-wrap gap-3">
+            <button
+              type="button"
+              onClick={openOnboarding}
+              className="rounded-2xl bg-white px-6 py-3.5 font-sans text-sm font-semibold text-ink transition hover:bg-cloud"
+            >
+              Start your journey
+            </button>
             <a
               href="#why-it-matters"
-              className="rounded-2xl bg-white px-6 py-3.5 font-sans text-sm font-semibold text-ink transition hover:bg-cloud"
+              className="rounded-2xl border border-white/35 bg-white/5 px-6 py-3.5 font-sans text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/15"
             >
               Why it matters
             </a>

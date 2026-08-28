@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import { useOnboarding } from "../hooks/useOnboarding";
 import { campaignHash, isCampaignHome } from "../lib/routing";
 import { Logo } from "./Logo";
 
 export function Header() {
   const location = useLocation();
+  const { openOnboarding } = useOnboarding();
   const home = isCampaignHome(location.pathname);
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -80,8 +82,9 @@ export function Header() {
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
-          <Link
-            to={campaignHash("finale", location.pathname)}
+          <button
+            type="button"
+            onClick={openOnboarding}
             className={`rounded-2xl px-5 py-2.5 font-sans text-sm font-semibold transition ${
               overHero
                 ? "bg-white text-ink hover:bg-cloud"
@@ -89,7 +92,7 @@ export function Header() {
             }`}
           >
             Start Your Journey
-          </Link>
+          </button>
         </div>
 
         <button
@@ -128,13 +131,16 @@ export function Header() {
               {link.label}
             </Link>
           ))}
-          <Link
-            to={campaignHash("finale", location.pathname)}
-            className="mt-2 rounded-2xl bg-cobalt-600 px-5 py-3 text-center font-sans text-sm font-semibold text-white"
-            onClick={() => setOpen(false)}
+          <button
+            type="button"
+            onClick={() => {
+              setOpen(false);
+              openOnboarding();
+            }}
+            className="mt-2 w-full rounded-2xl bg-cobalt-600 px-5 py-3 text-center font-sans text-sm font-semibold text-white"
           >
             Start Your Journey
-          </Link>
+          </button>
         </nav>
       </div>
 

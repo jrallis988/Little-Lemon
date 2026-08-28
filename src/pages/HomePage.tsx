@@ -7,6 +7,7 @@ import { ChapterPresent } from "../components/campaign/ChapterPresent";
 import { ChapterAhead } from "../components/campaign/ChapterAhead";
 import { CampaignFinale } from "../components/campaign/CampaignFinale";
 import { ConnectedSocial } from "../components/ConnectedSocial";
+import { PlanMatrix } from "../components/pricing/PlanMatrix";
 import { PageMeta } from "../components/PageMeta";
 import { campaign } from "../data/campaign";
 
@@ -25,6 +26,7 @@ export function HomePage() {
       <ChapterEvolution />
       <ChapterYearsOfYou />
       <ChapterPresent />
+      <PlanMatrix />
       <ChapterAhead />
       <ConnectedSocial />
       <CampaignFinale />
