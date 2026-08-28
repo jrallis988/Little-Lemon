@@ -43,6 +43,11 @@ window.NHDMV = {
       id: 'scam',
       title: 'Scam alert',
       body: 'The NH DMV never sends text messages regarding payments.'
+    },
+    {
+      id: 'america-250',
+      title: 'Celebrate America! — 250th commemorative plate',
+      body: 'Order the America’s 250th cover plate online — $25 + shipping. Display Jan 1, 2026 – Jul 4, 2027. Proceeds support LCHIP.'
     }
   ],
 
@@ -77,7 +82,8 @@ window.NHDMV = {
       { name: 'First-time plate fee', amount: '$8.00' },
       { name: 'Replacement plate (one)', amount: '$4.00' },
       { name: 'Replacement plate set (both)', amount: '$8.00' },
-      { name: 'Replacement decal', amount: '$5.00' }
+      { name: 'Replacement decal', amount: '$5.00' },
+      { name: 'America’s 250th commemorative cover plate', amount: '$25.00 + shipping' }
     ]
   },
 
@@ -185,7 +191,8 @@ window.NHDMV = {
     { id: 'boat', category: 'vehicle', group: 'registration', name: 'Boat registration', blurb: 'New, renew, or commercial boat registration', ways: ['drop', 'appt'], href: 'vehicle.html#boat' },
     { id: 'title', category: 'vehicle', group: 'titles', name: 'Certificate of title', blurb: 'New title processing with ownership documents', ways: ['drop', 'appt'], href: 'vehicle.html#title' },
     { id: 'dup-title', category: 'vehicle', group: 'titles', name: 'Duplicate title', blurb: 'Replace a lost or damaged title via drop box or appointment', ways: ['drop', 'appt'], href: 'vehicle.html#dup-title' },
-    { id: 'vanity', category: 'vehicle', group: 'specialty', name: 'Vanity or commemorative plates', blurb: 'Including America’s 250th Anniversary plate', ways: ['appt', 'mail'], href: 'vehicle.html#vanity' },
+    { id: 'america-250', category: 'vehicle', group: 'specialty', name: 'America’s 250th commemorative plate', blurb: 'Cover plate $25 + shipping · display Jan 1, 2026 – Jul 4, 2027 · LCHIP proceeds', ways: ['online'], href: 'america-250.html', fee: '$25 + ship' },
+    { id: 'vanity', category: 'vehicle', group: 'specialty', name: 'Vanity plates', blurb: 'Personalized plate combinations and other specialty designs', ways: ['online', 'appt'], href: 'vehicle.html#vanity' },
     { id: 'placard', category: 'vehicle', group: 'specialty', name: 'Walking disability placard', blurb: 'Accessible parking placard applications', ways: ['drop', 'appt'], href: 'vehicle.html#placard' },
     { id: 'mvr', category: 'records', group: 'records', name: 'Request your driving record', blurb: 'Your own record only online · third-party requests must go to Concord', ways: ['online', 'drop', 'appt'], href: 'records.html#mvr', fee: '$20 research' },
     { id: 'accident', category: 'records', group: 'records', name: 'Request accident report', blurb: 'Drop-box request for crash reports', ways: ['drop'], href: 'records.html#accident' },
@@ -320,12 +327,14 @@ window.NHDMV = {
     { id: 'address', label: 'Change my address', href: 'change-address.html', hint: 'Guided form' },
     { id: 'first', label: 'Get my first license', href: 'first-license.html', hint: 'Guided journey' },
     { id: 'road', label: 'Schedule a road test', href: 'service.html#road', hint: 'Appointment' },
-    { id: 'branch', label: 'Find a DMV location', href: 'branches.html', hint: 'Map + list' }
+    { id: 'branch', label: 'Find a DMV location', href: 'branches.html', hint: 'Map + list' },
+    { id: 'america-250', label: 'Order America 250 plate', href: 'america-250.html', hint: 'Online' }
   ],
 
   onlineGuide: [
     { id: 'dl-renew', title: 'Renew license', status: 'online', blurb: 'Complete entirely online when eligible', href: 'service.html#dl-renew' },
     { id: 'duplicate', title: 'Replace license', status: 'online', blurb: 'Duplicate credential often available online or via drop box', href: 'service.html#duplicate' },
+    { id: 'america-250', title: 'America’s 250th plate', status: 'online', blurb: 'Order the commemorative cover plate online — ships to you', href: 'america-250.html' },
     { id: 'address', title: 'Change address', status: 'partial', blurb: 'Start online; reprint may use drop box ($10)', href: 'change-address.html' },
     { id: 'reg-renew', title: 'Renew registration', status: 'partial', blurb: 'Town/city fees first, then state portion online or drop box', href: 'vehicle.html#reg-renew' },
     { id: 'mvr', title: 'Order records', status: 'online', blurb: 'Your own driving record can be requested online', href: 'records.html#mvr' },
@@ -591,6 +600,38 @@ window.NHDMV = {
       beforeBegin: ['Do not laminate titles', 'Bring complete ownership chain'],
       related: ['reg-new', 'dup-title']
     },
+    'america-250': {
+      title: 'America’s 250th commemorative cover plate',
+      summary: 'Order New Hampshire’s Celebrate America commemorative cover plate online. Ships to you — no counter visit required.',
+      eligible: 'Anyone ordering a front cover plate for display during the authorized window.',
+      online: 'online',
+      onlineLabel: 'Order entirely online',
+      docs: ['Shipping address', 'Payment method'],
+      cost: '$25.00 + shipping',
+      process: ['Review plate details', 'Order online', 'Allow up to 4 weeks for production & shipping', 'Display on front only with rear registration plate'],
+      appointment: false,
+      where: 'Online order · ships to you',
+      primaryCta: { label: 'Plate details & order', href: 'america-250.html' },
+      secondaryCta: { label: 'Vehicle specialty hub', href: 'vehicle.html#specialty' },
+      beforeBegin: ['Confirm you want a front cover plate (not a registration replacement)', 'Note display window: Jan 1, 2026 – Jul 4, 2027'],
+      related: ['vanity', 'reg-renew']
+    },
+    vanity: {
+      title: 'Vanity & specialty plates',
+      summary: 'Personalized combinations plus conservation, parks, veteran, and other specialty designs.',
+      eligible: 'Vehicle owners requesting vanity or specialty plate types.',
+      online: 'partial',
+      onlineLabel: 'Start online — some types need documents or an appointment',
+      docs: ['Registration information', 'Eligibility docs for veteran / specialty types when required'],
+      cost: 'Varies by plate type — see fees',
+      process: ['Choose plate type', 'Check availability', 'Submit order or book if documents required'],
+      appointment: false,
+      where: 'Online · appointment when eligibility review is needed',
+      primaryCta: { label: 'Specialty plates', href: 'vehicle.html#specialty' },
+      secondaryCta: { label: 'America’s 250th plate', href: 'america-250.html' },
+      beforeBegin: ['Decide vanity vs commemorative vs specialty design'],
+      related: ['america-250', 'reg-new']
+    },
     mvr: {
       title: 'Request your driving record',
       summary: 'Your own motor vehicle record can be requested online. Third-party requests go to Concord.',
@@ -621,7 +662,10 @@ window.NHDMV = {
     { phrases: ['first license', 'learner', 'permit', 'teen', 'first driver'], title: 'Get your first driver license', blurb: 'Step-by-step journey for new drivers.', href: 'first-license.html', badge: 'Journey' },
     { phrases: ['online', 'skip the trip', 'do this online', 'visit'], title: 'Can I do this online?', blurb: 'See which services skip the counter.', href: 'online.html', badge: 'Guide' },
     { phrases: ['location', 'branch', 'office', 'hours', 'near me'], title: 'Find a DMV location', blurb: 'Map and list of 15 branches.', href: 'branches.html', badge: 'Locations' },
-    { phrases: ['fee', 'cost', 'price', 'how much'], title: 'What will this cost?', blurb: 'Search common DMV fees by service.', href: 'fees.html', badge: 'Fees' }
+    { phrases: ['fee', 'cost', 'price', 'how much'], title: 'What will this cost?', blurb: 'Search common DMV fees by service.', href: 'fees.html', badge: 'Fees' },
+    { phrases: ['america', '250', 'commemorative', 'cover plate', 'celebrate america', 'lchip', 'specialty plate'], title: 'America’s 250th commemorative plate', blurb: 'Order the cover plate online — $25 + shipping.', href: 'america-250.html', badge: 'Online' },
+    { phrases: ['vanity', 'personalized plate', 'custom plate', 'moose plate', 'parks plate'], title: 'Vanity & specialty plates', blurb: 'Personalized and specialty plate options.', href: 'vehicle.html#specialty', badge: 'Plates' },
+    { phrases: ['video', 'how to appointment', 'how to make an appointment', 'appointment video'], title: 'How to make an appointment', blurb: 'Short how-to video with transcript, then book.', href: 'appointments.html#how-to-video', badge: 'Video' }
   ],
 
   firstLicenseJourney: [

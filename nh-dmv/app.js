@@ -1481,7 +1481,7 @@
           'new-resident.html'
         ]
       },
-      { href: 'vehicle.html', label: 'Vehicle', match: ['vehicle.html'] },
+      { href: 'vehicle.html', label: 'Vehicle', match: ['vehicle.html', 'america-250.html'] },
       { href: 'records.html', label: 'Records', match: ['records.html'] },
       { href: 'appointments.html', label: 'Appointments', match: ['appointments.html', 'confirmation.html'] },
       { href: 'branches.html', label: 'Branches', match: ['branches.html', 'branch.html', 'locations.html'] }
@@ -1499,6 +1499,8 @@
       { href: 'service.html#duplicate', label: 'Replace license' },
       { href: 'first-license.html', label: 'First license' },
       { href: 'new-resident.html', label: 'New resident' },
+      { href: 'america-250.html', label: 'America 250 plate' },
+      { href: 'appointments.html#how-to-video', label: 'Appointment video' },
       { href: 'change-address.html', label: 'Change address' },
       { href: 'online.html', label: 'Skip the trip' },
       { href: 'search.html', label: 'Task search' }

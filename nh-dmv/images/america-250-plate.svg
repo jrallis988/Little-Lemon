@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" role="img" aria-label="America 250 commemorative New Hampshire cover plate">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7eb6e8"/>
+      <stop offset="55%" stop-color="#c9dff5"/>
+      <stop offset="100%" stop-color="#f4f7fb"/>
+    </linearGradient>
+    <linearGradient id="stripe" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#b22234"/>
+      <stop offset="100%" stop-color="#9a1b2a"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <!-- plate body -->
+  <rect x="8" y="8" width="624" height="304" rx="28" fill="#f7f9fc" stroke="#1d3557" stroke-width="10"/>
+  <rect x="22" y="22" width="596" height="276" rx="18" fill="url(#sky)" stroke="#c5d0dc" stroke-width="1"/>
+  <!-- flag corner motif -->
+  <g transform="translate(48,48)">
+    <rect width="92" height="62" rx="4" fill="#1d3557"/>
+    <g fill="#fefa07">
+      <circle cx="16" cy="14" r="2.2"/><circle cx="32" cy="14" r="2.2"/><circle cx="48" cy="14" r="2.2"/><circle cx="64" cy="14" r="2.2"/><circle cx="80" cy="14" r="2.2"/>
+      <circle cx="24" cy="26" r="2.2"/><circle cx="40" cy="26" r="2.2"/><circle cx="56" cy="26" r="2.2"/><circle cx="72" cy="26" r="2.2"/>
+      <circle cx="16" cy="38" r="2.2"/><circle cx="32" cy="38" r="2.2"/><circle cx="48" cy="38" r="2.2"/><circle cx="64" cy="38" r="2.2"/><circle cx="80" cy="38" r="2.2"/>
+      <circle cx="24" cy="50" r="2.2"/><circle cx="40" cy="50" r="2.2"/><circle cx="56" cy="50" r="2.2"/><circle cx="72" cy="50" r="2.2"/>
+    </g>
+  </g>
+  <g transform="translate(500,48)">
+    <rect width="92" height="10" fill="url(#stripe)"/>
+    <rect y="14" width="92" height="10" fill="#f4f7fb"/>
+    <rect y="28" width="92" height="10" fill="url(#stripe)"/>
+    <rect y="42" width="92" height="10" fill="#f4f7fb"/>
+    <rect y="56" width="92" height="10" fill="url(#stripe)"/>
+  </g>
+  <!-- LIVE FREE OR DIE -->
+  <text x="320" y="58" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="18" font-weight="700" letter-spacing="4" fill="#1d3557">LIVE FREE OR DIE</text>
+  <!-- Old Man silhouette stylized -->
+  <g transform="translate(278,78)" fill="#1d3557" opacity="0.85">
+    <path d="M42 18c8-14 28-16 38-6 6 6 8 14 6 22-10 4-18 6-28 6-12 0-20-2-28-8 2-6 6-12 12-14z"/>
+    <path d="M34 40c-4 18-2 42 8 58h24c8-16 10-38 4-56-10 2-22 2-36-2z"/>
+  </g>
+  <!-- 250 seal -->
+  <g transform="translate(320,128)" filter="url(#shadow)">
+    <circle r="46" fill="#1d3557" stroke="#fefa07" stroke-width="4"/>
+    <circle r="38" fill="none" stroke="#f4f7fb" stroke-width="1.5" stroke-dasharray="3 3"/>
+    <text y="-6" text-anchor="middle" font-family="Arial Black, Helvetica, sans-serif" font-size="28" fill="#fefa07" font-weight="900">250</text>
+    <text y="16" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="9" letter-spacing="1.5" fill="#f4f7fb">AMERICA</text>
+  </g>
+  <!-- years -->
+  <text x="120" y="140" text-anchor="middle" font-family="Georgia, serif" font-size="22" font-weight="700" fill="#1d3557">1776</text>
+  <text x="520" y="140" text-anchor="middle" font-family="Georgia, serif" font-size="22" font-weight="700" fill="#c45c26">2026</text>
+  <!-- NEW HAMPSHIRE -->
+  <text x="320" y="220" text-anchor="middle" font-family="Arial Black, Helvetica, sans-serif" font-size="34" letter-spacing="6" fill="#1d3557">NEW HAMPSHIRE</text>
+  <!-- commemorative line -->
+  <text x="320" y="252" text-anchor="middle" font-family="Georgia, serif" font-size="15" font-style="italic" fill="#334155">America’s 250th · Commemorative Cover Plate</text>
+  <!-- bolt holes -->
+  <circle cx="56" cy="160" r="8" fill="#dbe3ec" stroke="#94a3b8" stroke-width="2"/>
+  <circle cx="584" cy="160" r="8" fill="#dbe3ec" stroke="#94a3b8" stroke-width="2"/>
+</svg>
