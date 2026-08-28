@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { OnboardingContext } from "./onboardingContext";
+import { OnboardingContext } from "../context/onboardingContext";
 
 export function useOnboarding() {
   const ctx = useContext(OnboardingContext);
