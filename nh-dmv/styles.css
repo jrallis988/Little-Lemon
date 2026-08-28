@@ -1250,6 +1250,7 @@ body.has-scam-popup {
   .app-footer,
   .back-top,
   .alert-banner,
+  .scam-popup,
   .toast,
   .hero-actions .btn-secondary,
   .hero-actions .btn-navy { display: none !important; }
