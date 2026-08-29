@@ -218,6 +218,7 @@ export default function ProfileSectionScreen() {
               <HealthCard style={styles.card}>
                 <ActionRow label="Export my health data" onPress={() => router.push('/profile/export-data')} />
                 <ActionRow label="Privacy Policy" onPress={() => router.push('/legal/privacy')} />
+                <ActionRow label="Terms of Service" onPress={() => router.push('/legal/terms')} />
                 <ActionRow label="Delete my BioCross account" destructive onPress={() => router.push('/profile/delete-account')} />
               </HealthCard>
             </>

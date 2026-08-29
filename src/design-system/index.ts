@@ -11,3 +11,4 @@ export { EmptyState, LoadingState, ErrorState } from './components/States';
 export { BottomNavigation } from './components/BottomNavigation';
 export type { TabKey } from './components/BottomNavigation';
 export { BioCrossLogo, LogoMark, AppHeader, ProgressSegments, ScreenTitle } from './components/Chrome';
+export { OfflineBanner } from './components/OfflineBanner';

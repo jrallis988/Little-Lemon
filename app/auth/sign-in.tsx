@@ -99,6 +99,13 @@ export default function SignInScreen() {
           </View>
 
           <BioCrossButton label="Sign In" loading={loading} onPress={submit} />
+          <Pressable
+            onPress={() => router.push('/auth/forgot-password')}
+            style={styles.demoLink}
+            accessibilityRole="link"
+          >
+            <Text style={styles.forgotText}>Forgot password?</Text>
+          </Pressable>
           <Pressable onPress={fillDemo} style={styles.demoLink} accessibilityRole="button">
             <Text style={styles.demoText}>Fill demo credentials</Text>
           </Pressable>
@@ -146,6 +153,7 @@ const styles = StyleSheet.create({
   showText: { color: colors.brand.blue, fontWeight: '700', fontSize: typography.size.sm },
   demoLink: { alignItems: 'center', marginTop: spacing.sm },
   demoText: { color: colors.text.tertiary, fontSize: typography.size.xs },
+  forgotText: { color: colors.brand.blue, fontWeight: '600', fontSize: typography.size.sm },
   linkWrap: { alignItems: 'center', marginTop: spacing.lg },
   linkText: { color: colors.brand.blue, fontWeight: '700' },
   backText: { color: colors.text.secondary },

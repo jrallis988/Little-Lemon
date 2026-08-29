@@ -17,11 +17,13 @@ import {
   HealthCardHeader,
   InfoCallout,
   LoadingState,
+  OfflineBanner,
   RecentCheckCard,
 } from '../../src/design-system';
 import { colors, radii, spacing, typography } from '../../src/design-system/tokens';
 import { POPULAR_SEARCHES } from '../../src/domain/fixtures';
 import { useBioCross } from '../../src/state/BioCrossContext';
+import { useAuth } from '../../src/state/AuthContext';
 
 const FEATURES = [
   {
@@ -48,10 +50,16 @@ const FEATURES = [
 
 export default function HomeScreen() {
   const router = useRouter();
-  const { ready, checks, alerts } = useBioCross();
+  const { ready, checks, alerts, user, profile, refresh } = useBioCross();
+  const { isAuthenticated } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const unreadCount = alerts.filter((a) => !a.isRead).length;
   const recentChecks = checks.slice(0, 5);
+  const firstName = user?.fullName?.split(' ')[0] ?? 'there';
+  const needsProfileAttention =
+    profile?.readiness === 'needs_attention' ||
+    profile?.readiness === 'getting_started' ||
+    profile?.items.some((i) => i.status === 'not_reviewed' || i.status === 'pending_review');
 
   const handleSearch = () => {
     const q = searchQuery.trim();
@@ -82,8 +90,40 @@ export default function HomeScreen() {
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
       >
+        <OfflineBanner onRetry={() => refresh()} />
+
+        {!isAuthenticated ? (
+          <Pressable
+            onPress={() => router.push('/auth/sign-in')}
+            accessibilityRole="button"
+            accessibilityLabel="Sign in to sync your health profile"
+            style={{ marginBottom: spacing.sm }}
+          >
+            <InfoCallout
+              tone="info"
+              title="Browsing as a guest"
+              body="Sign in to sync your health profile and check history across devices."
+            />
+          </Pressable>
+        ) : null}
+
+        {needsProfileAttention ? (
+          <Pressable
+            onPress={() => router.push('/(tabs)/profile')}
+            accessibilityRole="button"
+            accessibilityLabel="Update health profile"
+            style={{ marginBottom: spacing.sm }}
+          >
+            <InfoCallout
+              tone="warning"
+              title="Profile needs attention"
+              body="Confirm pending items so BioCross can give more accurate safety checks."
+            />
+          </Pressable>
+        ) : null}
+
         <View style={styles.hero}>
-          <Text style={styles.welcome}>Welcome to BioCross</Text>
+          <Text style={styles.welcome}>Welcome, {firstName}</Text>
           <Text style={styles.tagline}>
             Check before you take it. Your safety. Your health. Your control.
           </Text>

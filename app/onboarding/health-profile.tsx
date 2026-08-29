@@ -22,18 +22,18 @@ import {
 } from '../../src/design-system';
 import { colors, radii, spacing, typography } from '../../src/design-system/tokens';
 import * as DocumentPicker from 'expo-document-picker';
+import { countByCategory } from '../../src/domain/analysis';
 import { DEMO_HEALTH_PROFILE } from '../../src/domain/fixtures';
 import { useBioCross } from '../../src/state/BioCrossContext';
 
 const MANUAL_CATEGORIES = [
-  { label: 'Medical Conditions', status: '2 added', added: true, icon: 'heart-outline' as const },
-  { label: 'Medications', status: '4 added', added: true, icon: 'medical-outline' as const },
-  { label: 'Supplements', status: '2 added', added: true, icon: 'leaf-outline' as const },
-  { label: 'Allergies & Reactions', status: '1 added', added: true, icon: 'warning-outline' as const },
-  { label: 'Surgeries & Procedures', status: '4 added', added: true, icon: 'cut-outline' as const },
-  { label: 'Important Test Results', status: 'Not added', added: false, icon: 'flask-outline' as const },
-  { label: 'Lifestyle Factors', status: 'Not added', added: false, icon: 'fitness-outline' as const },
-  { label: 'Recent Changes', status: 'Not added', added: false, icon: 'time-outline' as const },
+  { key: 'conditions', label: 'Medical Conditions', category: 'condition' as const, icon: 'heart-outline' as const },
+  { key: 'medications', label: 'Medications', category: 'medication' as const, icon: 'medical-outline' as const },
+  { key: 'supplements', label: 'Supplements', category: 'supplement' as const, icon: 'leaf-outline' as const },
+  { key: 'allergies', label: 'Allergies & Reactions', category: 'allergy' as const, icon: 'warning-outline' as const },
+  { key: 'surgeries', label: 'Surgeries & Procedures', category: 'procedure' as const, icon: 'cut-outline' as const },
+  { key: 'testResults', label: 'Important Test Results', category: 'lab_result' as const, icon: 'flask-outline' as const },
+  { key: 'recentChanges', label: 'Recent Changes', category: 'recent_change' as const, icon: 'time-outline' as const },
 ];
 
 export default function HealthProfileScreen() {
@@ -41,6 +41,20 @@ export default function HealthProfileScreen() {
   const { profile, uploadDocument } = useBioCross();
   const [uploading, setUploading] = useState(false);
   const [manualExpanded, setManualExpanded] = useState(true);
+
+  const counts = countByCategory(profile ?? DEMO_HEALTH_PROFILE);
+  const recentCount =
+    profile?.items.filter((i) => i.category === 'recent_change' && i.status === 'confirmed').length ?? 0;
+
+  const statusFor = (key: string, category: string) => {
+    const n =
+      key === 'recentChanges'
+        ? recentCount
+        : (counts[key as keyof typeof counts] as number | undefined) ??
+          profile?.items.filter((i) => i.category === category && i.status === 'confirmed').length ??
+          0;
+    return n > 0 ? `${n} added` : 'Not added';
+  };
 
   const handleUpload = async () => {
     const picked = await DocumentPicker.getDocumentAsync({
@@ -91,7 +105,12 @@ export default function HealthProfileScreen() {
               "You've provided the key information BioCross uses for supplement safety checks."
             }
           />
-          <Pressable style={styles.viewSummaryLink} accessibilityRole="link">
+          <Pressable
+            style={styles.viewSummaryLink}
+            accessibilityRole="link"
+            accessibilityLabel="View profile summary"
+            onPress={() => router.push('/onboarding/profile-ready')}
+          >
             <Text style={styles.viewSummary}>View summary ›</Text>
           </Pressable>
         </View>
@@ -134,6 +153,15 @@ export default function HealthProfileScreen() {
               Your documents are encrypted and never shared without your permission.
             </Text>
           </View>
+          <Pressable
+            onPress={handleDemoUpload}
+            disabled={uploading}
+            style={styles.demoUpload}
+            accessibilityRole="button"
+            accessibilityLabel="Use demo health record"
+          >
+            <Text style={styles.demoUploadText}>Or use demo health record ›</Text>
+          </Pressable>
         </HealthCard>
 
         <Text style={styles.preImportNote}>
@@ -168,22 +196,28 @@ export default function HealthProfileScreen() {
 
           {manualExpanded ? (
             <View style={styles.manualList}>
-              {MANUAL_CATEGORIES.map((cat, index) => (
-                <Pressable
-                  key={cat.label}
-                  style={[styles.manualRow, index < MANUAL_CATEGORIES.length - 1 && styles.manualRowBorder]}
-                  accessibilityRole="button"
-                >
-                  <View style={styles.manualRowIcon}>
-                    <Ionicons name={cat.icon} size={16} color={colors.brand.blue} />
-                  </View>
-                  <Text style={styles.manualRowLabel}>{cat.label}</Text>
-                  <Text style={[styles.manualRowStatus, !cat.added && styles.manualRowStatusMuted]}>
-                    {cat.status}
-                  </Text>
-                  <Ionicons name="chevron-forward" size={16} color={colors.text.tertiary} />
-                </Pressable>
-              ))}
+              {MANUAL_CATEGORIES.map((cat, index) => {
+                const status = statusFor(cat.key, cat.category);
+                const added = !status.startsWith('Not');
+                return (
+                  <Pressable
+                    key={cat.key}
+                    style={[styles.manualRow, index < MANUAL_CATEGORIES.length - 1 && styles.manualRowBorder]}
+                    accessibilityRole="button"
+                    accessibilityLabel={`${cat.label}: ${status}`}
+                    onPress={() => router.push(`/profile/add-item?section=${cat.key}`)}
+                  >
+                    <View style={styles.manualRowIcon}>
+                      <Ionicons name={cat.icon} size={16} color={colors.brand.blue} />
+                    </View>
+                    <Text style={styles.manualRowLabel}>{cat.label}</Text>
+                    <Text style={[styles.manualRowStatus, !added && styles.manualRowStatusMuted]}>
+                      {status}
+                    </Text>
+                    <Ionicons name="chevron-forward" size={16} color={colors.text.tertiary} />
+                  </Pressable>
+                );
+              })}
             </View>
           ) : null}
         </HealthCard>
@@ -254,6 +288,8 @@ const styles = StyleSheet.create({
     marginTop: spacing.sm,
   },
   privacyNoteText: { flex: 1, color: colors.text.tertiary, fontSize: typography.size.xs, lineHeight: 16 },
+  demoUpload: { marginTop: spacing.sm, minHeight: 40, justifyContent: 'center' },
+  demoUploadText: { color: colors.brand.blue, fontWeight: '700', fontSize: typography.size.sm },
   preImportNote: {
     marginHorizontal: spacing.xl,
     color: colors.text.secondary,

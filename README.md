@@ -142,6 +142,13 @@ cd apps/api && npm install && npm run dev
 - **Label review** — editable mock OCR fields before confirm
 - **Document picker** — real file picker on health profile upload
 - **Backend scaffold** — `apps/api` Fastify server for remote mode
+- **Offline banner** — connectivity awareness on Home and Scan
+- **Forgot password** — reset flow UI (email delivery needs a provider)
+- **Personalized home** — greeting, guest banner, profile-attention callout
+
+## What's still outside Cursor
+
+Real product status requires: hosted API + Postgres, Apple/Google developer accounts, barcode/supplement data, OCR API keys, medical advisor, and lawyer-reviewed policies.
 
 ## Accessibility
 

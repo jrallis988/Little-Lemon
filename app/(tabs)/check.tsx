@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
+  AccessibilityInfo,
   Animated,
   Easing,
   Platform,
@@ -17,25 +18,47 @@ import {
   BioCrossButton,
   HealthCard,
   InfoCallout,
+  OfflineBanner,
   ScreenTitle,
 } from '../../src/design-system';
 import { colors, radii, spacing, typography } from '../../src/design-system/tokens';
 import { BarcodeScannerView } from '../../src/features/scan/BarcodeScannerView';
 import { useBioCross } from '../../src/state/BioCrossContext';
+import { useOnlineStatus } from '../../src/hooks/useOnlineStatus';
 
 const TESTO_BARCODE = '012345678943';
 const UNKNOWN_BARCODE = '000000000000';
 
 export default function CheckScreen() {
   const router = useRouter();
-  const { lookupBarcode, profile } = useBioCross();
+  const { lookupBarcode, profile, refresh } = useBioCross();
+  const online = useOnlineStatus();
   const [scanning, setScanning] = useState(false);
   const [flashOn, setFlashOn] = useState(false);
   const [demoFailNext, setDemoFailNext] = useState(false);
   const [cameraPaused, setCameraPaused] = useState(false);
+  const [reduceMotion, setReduceMotion] = useState(false);
   const scanAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
+    let cancelled = false;
+    AccessibilityInfo.isReduceMotionEnabled().then((enabled) => {
+      if (!cancelled) setReduceMotion(enabled);
+    });
+    const sub = AccessibilityInfo.addEventListener('reduceMotionChanged', (enabled) => {
+      setReduceMotion(enabled);
+    });
+    return () => {
+      cancelled = true;
+      sub.remove();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (reduceMotion) {
+      scanAnim.setValue(0.5);
+      return;
+    }
     const loop = Animated.loop(
       Animated.sequence([
         Animated.timing(scanAnim, {
@@ -54,7 +77,7 @@ export default function CheckScreen() {
     );
     loop.start();
     return () => loop.stop();
-  }, [scanAnim]);
+  }, [scanAnim, reduceMotion]);
 
   const scanLineTranslate = scanAnim.interpolate({
     inputRange: [0, 1],
@@ -164,6 +187,15 @@ export default function CheckScreen() {
       />
 
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
+        <OfflineBanner onRetry={() => refresh()} />
+        {!online ? (
+          <InfoCallout
+            tone="warning"
+            title="Offline mode"
+            body="Barcode lookups need a connection. You can still browse recent history."
+          />
+        ) : null}
+
         <View style={styles.viewfinderWrap}>
           <Pressable
             onPress={() => router.push('/check/scanner')}

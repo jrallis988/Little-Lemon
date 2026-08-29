@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -90,6 +91,9 @@ export default function SignUpScreen() {
           </View>
 
           <BioCrossButton label="Create Account" loading={loading} onPress={submit} />
+          <Pressable onPress={() => router.push('/legal/terms')} style={styles.termsLink}>
+            <Text style={styles.termsText}>By creating an account you agree to our Terms</Text>
+          </Pressable>
           <BioCrossButton label="Back to Sign In" variant="ghost" onPress={() => router.back()} />
         </ScrollView>
       </KeyboardAvoidingView>
@@ -118,4 +122,6 @@ const styles = StyleSheet.create({
     color: colors.text.primary,
   },
   hint: { marginTop: 4, color: colors.text.tertiary, fontSize: typography.size.xs },
+  termsLink: { alignItems: 'center', marginTop: spacing.sm },
+  termsText: { color: colors.brand.blue, fontSize: typography.size.xs, fontWeight: '600' },
 });
