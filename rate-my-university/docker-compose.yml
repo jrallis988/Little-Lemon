@@ -1,0 +1,38 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: rmu-postgres
+    environment:
+      POSTGRES_USER: rmu
+      POSTGRES_PASSWORD: rmu_dev_password
+      POSTGRES_DB: rate_my_university
+    ports:
+      - "5432:5432"
+    volumes:
+      - rmu_pgdata:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rmu -d rate_my_university"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: rmu-api
+    environment:
+      DATABASE_URL: postgresql+asyncpg://rmu:rmu_dev_password@db:5432/rate_my_university
+      APP_ENV: development
+      CORS_ORIGINS: "*"
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./backend/app:/app/app:ro
+
+volumes:
+  rmu_pgdata:
