@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rate My University — Screen Previews</title>
+  <style>
+    :root {
+      --navy: #0B1F33;
+      --ink: #142433;
+      --slate: #3D5163;
+      --mist: #E8EEF3;
+      --paper: #F7FAFC;
+      --accent: #C45C26;
+      --accent-soft: #F3D9C8;
+      --border: #D5DEE7;
+      --white: #FFFFFF;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #1a2330;
+      color: var(--ink);
+      padding: 40px 32px 60px;
+    }
+    h1.page-title {
+      color: #fff;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.3px;
+    }
+    p.page-sub {
+      color: #9aabba;
+      font-size: 14px;
+      margin-bottom: 36px;
+    }
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 36px;
+      justify-content: flex-start;
+    }
+    .phone-wrap { width: 320px; }
+    .phone-label {
+      color: #c8d4de;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      text-align: center;
+      letter-spacing: 0.02em;
+    }
+    .phone {
+      width: 320px;
+      height: 680px;
+      background: var(--paper);
+      border-radius: 36px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.45);
+      border: 3px solid #2a3544;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .notch {
+      height: 28px;
+      background: var(--paper);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .notch-bar {
+      width: 90px;
+      height: 6px;
+      background: #c5ced6;
+      border-radius: 99px;
+    }
+    .screen { flex: 1; overflow: hidden; display: flex; flex-direction: column; }
+    .tabbar {
+      height: 64px;
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding-bottom: 8px;
+      flex-shrink: 0;
+    }
+    .tab {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      font-size: 11px;
+      color: var(--slate);
+      font-weight: 500;
+    }
+    .tab.active { color: var(--accent); font-weight: 700; }
+    .tab .icon { font-size: 16px; line-height: 1; }
+
+    /* Home */
+    .hero {
+      background: var(--navy);
+      padding: 28px 24px 22px;
+    }
+    .brand {
+      color: #fff;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+    .headline {
+      color: var(--accent-soft);
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      line-height: 1.25;
+    }
+    .sub-hero {
+      color: var(--mist);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ink);
+      padding: 20px 24px 8px;
+    }
+    .campus {
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .campus-name { font-size: 15px; font-weight: 700; color: var(--navy); }
+    .campus-meta { font-size: 12px; color: var(--slate); margin-top: 4px; }
+
+    /* Directory / shared */
+    .pad { padding: 28px 24px 0; flex: 1; overflow: hidden; }
+    .title { font-size: 22px; font-weight: 700; color: var(--navy); }
+    .caption { font-size: 12px; color: var(--slate); margin-top: 4px; margin-bottom: 14px; line-height: 1.4; }
+    .input {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 15px;
+      color: var(--ink);
+    }
+    .input.placeholder { color: var(--slate); }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 8px; }
+    .chip {
+      padding: 5px 14px;
+      border-radius: 999px;
+      background: var(--mist);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--slate);
+    }
+    .chip.active { background: var(--navy); color: #fff; }
+    .row {
+      display: flex;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .kind {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      width: 68px;
+      flex-shrink: 0;
+      padding-top: 2px;
+    }
+    .row-label { font-size: 15px; font-weight: 600; color: var(--ink); }
+    .row-sub { font-size: 12px; color: var(--slate); margin-top: 2px; }
+    .link {
+      color: var(--accent);
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    /* Rating form */
+    .eyebrow {
+      font-size: 12px;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .metric { margin-bottom: 14px; }
+    .metric-head {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .metric-val { color: var(--accent); font-size: 13px; font-weight: 700; }
+    .segments { display: flex; gap: 8px; }
+    .seg {
+      flex: 1;
+      text-align: center;
+      padding: 8px 0;
+      border-radius: 8px;
+      background: var(--mist);
+      color: var(--slate);
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .seg.on { background: var(--accent); color: #fff; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 14px; }
+    .tag {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 5px 10px;
+      font-size: 12px;
+      color: var(--slate);
+      background: #fff;
+    }
+    .tag.on { background: var(--navy); color: #fff; border-color: var(--navy); }
+    .comment {
+      min-height: 72px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: #fff;
+      color: var(--slate);
+      font-size: 14px;
+    }
+    .cta {
+      margin-top: 16px;
+      background: var(--accent);
+      color: #fff;
+      text-align: center;
+      padding: 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 15px;
+    }
+    .body-text {
+      font-size: 15px;
+      color: var(--slate);
+      line-height: 1.45;
+      margin-bottom: 20px;
+    }
+    .block {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .label {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--slate);
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    .value { font-size: 15px; font-weight: 600; color: var(--ink); }
+    .back { font-size: 12px; color: var(--accent); margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <h1 class="page-title">Rate My University — Screen Previews</h1>
+  <p class="page-sub">Faithful mockups of the four Expo tab screens from <code>mobile/src/screens</code></p>
+
+  <div class="gallery">
+    <!-- HOME -->
+    <div class="phone-wrap" id="home">
+      <div class="phone-label">1 · Home</div>
+      <div class="phone">
+        <div class="notch"><div class="notch-bar"></div></div>
+        <div class="screen">
+          <div class="hero">
+            <div class="brand">Rate My University</div>
+            <div class="headline">The student utility for every layer of campus.</div>
+            <div class="sub-hero">Rate professors, advisors, courses, dorms, and the university itself — in one place.</div>
+          </div>
+          <div class="section-title">Campuses</div>
+          <div class="campus">
+            <div class="campus-name">University of New Hampshire</div>
+            <div class="campus-meta">Durham, NH, USA · @unh.edu</div>
+          </div>
+          <div class="campus">
+            <div class="campus-name">University of Massachusetts Amherst</div>
+            <div class="campus-meta">Amherst, MA, USA · @umass.edu</div>
+          </div>
+          <div class="campus">
+            <div class="campus-name">Northeastern University</div>
+            <div class="campus-meta">Boston, MA, USA · @northeastern.edu</div>
+          </div>
+          <div class="campus">
+            <div class="campus-name">Boston University</div>
+            <div class="campus-meta">Boston, MA, USA · @bu.edu</div>
+          </div>
+          <div class="campus">
+            <div class="campus-name">University of Vermont</div>
+            <div class="campus-meta">Burlington, VT, USA · @uvm.edu</div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab active"><span class="icon">⌂</span>Home</div>
+          <div class="tab"><span class="icon">⌕</span>Directory</div>
+          <div class="tab"><span class="icon">＋</span>Add</div>
+          <div class="tab"><span class="icon">◎</span>Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DIRECTORY -->
+    <div class="phone-wrap" id="directory">
+      <div class="phone-label">2 · Directory (Search)</div>
+      <div class="phone">
+        <div class="notch"><div class="notch-bar"></div></div>
+        <div class="screen">
+          <div class="pad">
+            <div class="title">Directory</div>
+            <div class="caption">Drill the hierarchy: University → Department → Professor, Course, or Dorm.</div>
+            <div class="input">algorithms</div>
+            <div class="chips">
+              <span class="chip">All</span>
+              <span class="chip">Schools</span>
+              <span class="chip">Depts</span>
+              <span class="chip active">People</span>
+              <span class="chip">Courses</span>
+              <span class="chip">Housing</span>
+            </div>
+            <div class="row">
+              <div class="kind">professor</div>
+              <div>
+                <div class="row-label">Dr. Maya Chen</div>
+                <div class="row-sub">professor · Computer Science</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="kind">course</div>
+              <div>
+                <div class="row-label">CS-420 — Algorithms</div>
+                <div class="row-sub">Computer Science</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="kind">professor</div>
+              <div>
+                <div class="row-label">Prof. James Okonkwo</div>
+                <div class="row-sub">both · Mathematics</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="kind">course</div>
+              <div>
+                <div class="row-label">CS-515 — Advanced Algorithms</div>
+                <div class="row-sub">Computer Science</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab"><span class="icon">⌂</span>Home</div>
+          <div class="tab active"><span class="icon">⌕</span>Directory</div>
+          <div class="tab"><span class="icon">＋</span>Add</div>
+          <div class="tab"><span class="icon">◎</span>Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADD / RATE -->
+    <div class="phone-wrap" id="add">
+      <div class="phone-label">3 · Add Entry (Rating form)</div>
+      <div class="phone">
+        <div class="notch"><div class="notch-bar"></div></div>
+        <div class="screen">
+          <div class="pad" style="padding-top: 18px; overflow-y: auto;">
+            <div class="back">← Back</div>
+            <div class="eyebrow">professor</div>
+            <div class="title" style="font-size:20px; margin-bottom:6px;">Dr. Maya Chen</div>
+            <div class="caption">Rate each dimension from 1 (low) to 5 (high).</div>
+
+            <div class="metric">
+              <div class="metric-head"><span>Clarity</span><span class="metric-val">4</span></div>
+              <div class="segments">
+                <div class="seg on">1</div><div class="seg on">2</div><div class="seg on">3</div><div class="seg on">4</div><div class="seg">5</div>
+              </div>
+            </div>
+            <div class="metric">
+              <div class="metric-head"><span>Helpfulness</span><span class="metric-val">5</span></div>
+              <div class="segments">
+                <div class="seg on">1</div><div class="seg on">2</div><div class="seg on">3</div><div class="seg on">4</div><div class="seg on">5</div>
+              </div>
+            </div>
+            <div class="metric">
+              <div class="metric-head"><span>Difficulty</span><span class="metric-val">3</span></div>
+              <div class="segments">
+                <div class="seg on">1</div><div class="seg on">2</div><div class="seg on">3</div><div class="seg">4</div><div class="seg">5</div>
+              </div>
+            </div>
+
+            <div style="font-size:15px; font-weight:700; margin: 8px 0 6px;">Tags</div>
+            <div class="tags">
+              <span class="tag on">engaging</span>
+              <span class="tag">tough-grader</span>
+              <span class="tag on">caring</span>
+              <span class="tag">clear-lectures</span>
+            </div>
+            <div style="font-size:15px; font-weight:700; margin-bottom:6px;">Comment</div>
+            <div class="comment">What should other students know?</div>
+            <div class="cta">Submit review</div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab"><span class="icon">⌂</span>Home</div>
+          <div class="tab"><span class="icon">⌕</span>Directory</div>
+          <div class="tab active"><span class="icon">＋</span>Add</div>
+          <div class="tab"><span class="icon">◎</span>Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFILE -->
+    <div class="phone-wrap" id="profile">
+      <div class="phone-label">4 · Profile</div>
+      <div class="phone">
+        <div class="notch"><div class="notch-bar"></div></div>
+        <div class="screen">
+          <div class="pad">
+            <div class="title">Profile</div>
+            <div class="body-text" style="margin-top:8px;">
+              Reviews are stored against an anonymous device token (SHA-256 hashed on the server). Sign-in and campus email verification can plug in here later.
+            </div>
+            <div class="block">
+              <div class="label">Identity</div>
+              <div class="value">Anonymous student</div>
+            </div>
+            <div class="block">
+              <div class="label">Home campus</div>
+              <div class="value">Not set</div>
+            </div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab"><span class="icon">⌂</span>Home</div>
+          <div class="tab"><span class="icon">⌕</span>Directory</div>
+          <div class="tab"><span class="icon">＋</span>Add</div>
+          <div class="tab active"><span class="icon">◎</span>Profile</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
