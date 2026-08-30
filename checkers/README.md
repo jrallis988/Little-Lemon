@@ -83,15 +83,20 @@ Requires JDK 21+ and Maven 3.8+.
 
 ```bash
 cd checkers
-mvn -q compile
-mvn -q test          # placeholder suite; real engine tests arrive in Phase 4
+mvn -q test
+mvn javafx:run          # opens gallery + navigable screen stubs
 ```
 
-Run the UI (stub window until later phases):
+Export PNG previews of every screen stub:
 
 ```bash
-mvn javafx:run
+mvn -q -DskipTests compile
+java --module-path "$HOME/.m2/repository/org/openjfx/javafx-controls/21.0.12:..." \
+  --add-modules javafx.controls,javafx.graphics,javafx.swing \
+  -cp target/classes com.lattice.checkers.ui.ScreenExport target/screen-previews
 ```
+
+Or from the app chrome: **All screens** opens the gallery.
 
 ## Status honesty
 
