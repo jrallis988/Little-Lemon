@@ -1,0 +1,163 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap");
+@import "tailwindcss";
+
+/*
+  OJ (Only Jokes) — vibrant sky-blue palette from brand mark
+  Base sky #00AFF0 · tint #BEE1F9 · white #FFFFFF
+*/
+@theme {
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bebas Neue", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --color-oj-sky: #00aff0;
+  --color-oj-tint: #bee1f9;
+  --color-oj-ink: #ffffff;
+  --color-oj-bg: #00aff0;
+  --color-oj-elevated: color-mix(in srgb, #00aff0 82%, #007eb8);
+  --color-oj-panel: #bee1f9;
+  --color-oj-accent: #ffffff;
+  --color-oj-on-accent: #00aff0;
+  --color-oj-panel-ink: #046a9e;
+}
+
+:root {
+  --sky: #00aff0;
+  --tint: #bee1f9;
+
+  --bg: #00aff0;
+  --bg-elevated: color-mix(in srgb, #00aff0 82%, #007eb8);
+  --bg-panel: #bee1f9;
+
+  --accent: #ffffff;
+  --on-accent: #00aff0;
+  /* Text on tint panels — readable navy-sky, not washed white */
+  --panel-ink: #046a9e;
+  --panel-muted: color-mix(in srgb, #046a9e 72%, #bee1f9);
+
+  --ink: #ffffff;
+  --ink-soft: color-mix(in srgb, #ffffff 94%, #bee1f9);
+  --muted: color-mix(in srgb, #ffffff 78%, #bee1f9);
+
+  --line: color-mix(in srgb, #ffffff 26%, transparent);
+  --line-strong: color-mix(in srgb, #ffffff 48%, transparent);
+  --hairline: color-mix(in srgb, #ffffff 18%, transparent);
+
+  --blue: #00aff0;
+  --blue-deep: color-mix(in srgb, #00aff0 72%, #007eb8);
+  --blue-soft: #bee1f9;
+  --ice: #bee1f9;
+  --ice-bright: #ffffff;
+
+  --danger: #fb7185;
+  --success: #34d399;
+  --header: color-mix(in srgb, #00aff0 88%, transparent);
+  --blur-frost: color-mix(in srgb, #00aff0 55%, #ffffff 12%);
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  background:
+    radial-gradient(
+      ellipse 90% 48% at 50% -14%,
+      color-mix(in srgb, #ffffff 28%, transparent),
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 42% 30% at 100% 0%,
+      color-mix(in srgb, #bee1f9 40%, transparent),
+      transparent 52%
+    ),
+    var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display {
+  font-family: var(--font-display), sans-serif;
+  letter-spacing: 0.04em;
+}
+
+::selection {
+  background: color-mix(in srgb, #ffffff 50%, transparent);
+  color: #00aff0;
+}
+
+.safe-bottom {
+  padding-bottom: calc(4.75rem + env(safe-area-inset-bottom));
+}
+
+.frost-lock {
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  animation: frost-in 0.4s ease-out both;
+}
+
+.lock-tag {
+  border: 1px solid color-mix(in srgb, #ffffff 55%, transparent);
+  background: color-mix(in srgb, #00aff0 35%, #046a9e);
+  color: #ffffff;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sheet-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes frost-in {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(14px) saturate(1.2);
+  }
+}
+
+@keyframes play-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.92;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+.animate-rise {
+  animation: rise-in 0.4s ease-out both;
+}
+
+.animate-sheet {
+  animation: sheet-up 0.28s ease-out both;
+}
+
+.animate-play {
+  animation: play-pulse 2.4s ease-in-out infinite;
+}

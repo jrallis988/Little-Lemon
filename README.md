@@ -1,53 +1,51 @@
-# Artistic Fountain
+# OJ — Only Jokes
 
-Independent design venture portfolio — digital media, graphic design, visual identity, and creative media projects.
+**Unfiltered stand-up, raw road work, and animated comedy without corporate censorship.**
 
-## Dual-track separation
-
-| Track | Home | Houses |
-| --- | --- | --- |
-| **Creative** | Artistic Fountain (this repo) | Visual media, graphic identity, conceptual design, client design services |
-| **Engineering** | Developer portfolio (separate) | Back-end systems, Python/FastAPI, AI/RAG applications |
-
-See `STATUS.md` for the full status report.
+Creator-subscription comedy platform for stand-ups, comedy animators, and fans. Chronological discovery. Direct tips. Locked supporter tiers for full specials, writing-lab audio, and exclusive shorts.
 
 ## Stack
 
-Static site: HTML, CSS, and vanilla JS (built in Cursor). Custom typefaces (Arcanite Slab, Goudy Heavyface) plus Inter for body copy.
+- TanStack Start + Vite
+- Cloudflare Workers
+- Tailwind CSS v4
+- Drizzle schema (core + OJ monetization tables)
+- Demo auth + membership on-device until `DATABASE_URL` / Stripe are connected
 
-## Pages
+## Core views
 
-- `index.html` — home (hero, designer, services, portfolio, blog, contact)
-- `nh-dmv/` — conceptual redesign of the New Hampshire DMV website (civic UX case study)
-- `services/` — detail pages for each service offering
-- `blog/` — blog index and post pages (content can be drafted in Blaze AI)
-- `privacy.html` — privacy policy
-- `terms.html` — terms & conditions
-- `resume.pdf` — downloadable resume
+| Route | Purpose |
+|-------|---------|
+| `/` | Brand landing |
+| `/onboarding` | Product tour → fan/creator signup |
+| `/auth` | Demo sign up / sign in |
+| `/discover` | Chronological public discovery feed |
+| `/creators` | Creator directory |
+| `/c/$username` | Creator profile (public + locked tiles) |
+| `/messages` | Backstage inbox |
+| `/settings` | Account, role switch, tier pricing |
 
-## Develop
+## Local develop
 
 ```bash
-npm start
+npm install
+npm run dev
 ```
 
-Opens a local static server at [http://localhost:3000](http://localhost:3000).
+Without `DATABASE_URL`, the UI uses demo auth and local membership (localStorage). Unlocking a tier or sending a tip persists on-device and opens locked posts.
 
-Or open `index.html` directly in a browser.
+## Production wiring
 
-## Structure
+1. Postgres (`DATABASE_URL`) + migrate Drizzle schema (`oj_*` tables)
+2. Better Auth secrets
+3. Stripe Checkout / Connect for live unlock + tips
+4. R2 for real media uploads (SVG posters are temporary)
+5. `npx wrangler deploy` with a permanent Cloudflare account
 
-```
-.
-├── index.html
-├── privacy.html
-├── terms.html
-├── styles.css
-├── STATUS.md
-├── favicon.svg
-├── resume.pdf
-├── services/
-├── blog/
-├── images/
-└── *.otf          # brand fonts
+## Deploy (Cloudflare)
+
+```bash
+npm run build && npx wrangler deploy --temporary
+# or permanent:
+npm run deploy
 ```

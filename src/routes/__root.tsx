@@ -1,0 +1,64 @@
+import {
+  HeadContent,
+  Scripts,
+  createRootRouteWithContext,
+} from '@tanstack/react-router'
+import { SupportProvider } from '#/lib/support'
+import { MembershipProvider } from '#/lib/membership'
+import { DemoAuthProvider } from '#/lib/demo-auth'
+import { PlayerProvider } from '#/lib/player'
+import { UnlockSheet } from '#/components/monetization/UnlockSheet'
+import { PlaySheet } from '#/components/media/PlaySheet'
+import appCss from '../styles.css?url'
+import type { QueryClient } from '@tanstack/react-query'
+
+interface MyRouterContext {
+  queryClient: QueryClient
+}
+
+export const Route = createRootRouteWithContext<MyRouterContext>()({
+  head: () => ({
+    meta: [
+      { charSet: 'utf-8' },
+      {
+        name: 'viewport',
+        content: 'width=device-width, initial-scale=1, viewport-fit=cover',
+      },
+      {
+        title: 'only Jokes',
+      },
+      {
+        name: 'description',
+        content:
+          'Unfiltered stand-up, raw road work, and animated comedy without corporate censorship.',
+      },
+      { name: 'theme-color', content: '#00AFF0' },
+    ],
+    links: [{ rel: 'stylesheet', href: appCss }],
+  }),
+  shellComponent: RootDocument,
+})
+
+function RootDocument({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <head>
+        <HeadContent />
+      </head>
+      <body className="min-h-dvh bg-[var(--bg)] font-sans text-[var(--ink)] antialiased">
+        <DemoAuthProvider>
+          <MembershipProvider>
+            <PlayerProvider>
+              <SupportProvider>
+                {children}
+                <UnlockSheet />
+                <PlaySheet />
+              </SupportProvider>
+            </PlayerProvider>
+          </MembershipProvider>
+        </DemoAuthProvider>
+        <Scripts />
+      </body>
+    </html>
+  )
+}
