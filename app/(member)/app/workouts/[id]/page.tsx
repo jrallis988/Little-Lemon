@@ -79,7 +79,7 @@ export default function WorkoutDetailPage() {
           <div className="space-y-2">
             <p className="font-display text-2xl text-emerald-700">Workout complete</p>
             <p className="text-sm text-pf-ink/65">
-              Nice work. History is saved on this device for the demo.
+              Nice work. Your session history is saved for this account.
             </p>
             <Button
               type="button"

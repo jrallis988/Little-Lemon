@@ -1,10 +1,11 @@
 import { AppHandoffBanner } from "@/components/app-handoff-banner";
 import { CookieConsent } from "@/components/cookie-consent";
+import { SiteDisclaimer } from "@/components/site-disclaimer";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
 /**
- * Public acquisition chrome (Screens 01–20).
+ * Public acquisition chrome.
  * Owns discovery, pricing, promos, and join — not day-to-day member utility.
  */
 export default function WebLayout({
@@ -20,6 +21,7 @@ export default function WebLayout({
       >
         Skip to content
       </a>
+      <SiteDisclaimer />
       <SiteHeader />
       <main id="main" className="pb-12">
         {children}

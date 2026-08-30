@@ -47,8 +47,8 @@ export default function EquipmentPage() {
         <MemberCard className="space-y-3 text-center">
           <p className="font-semibold text-pf-ink">Camera permission</p>
           <p className="text-sm text-pf-ink/65">
-            This demo simulates camera access. Production would request
-            <code className="mx-1 rounded bg-pf-mist px-1">getUserMedia</code>.
+            Allow camera access to scan equipment QR codes, or continue and
+            pick a machine from the list.
           </p>
           <Button variant="purple" className="w-full" onClick={() => setPhase("scan")}>
             Allow camera

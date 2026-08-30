@@ -6,13 +6,14 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MemberCard, MemberScreen } from "@/components/member/member-ui";
-import { DEMO_MEMBER_PASSWORD } from "@/lib/auth-shared";
+import { isDemoAuthEnabled } from "@/lib/auth-shared";
 
 export function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const next = searchParams.get("next") || "/app";
   const reason = searchParams.get("reason");
+  const demoAuth = isDemoAuthEnabled();
 
   const [mode, setMode] = useState<"login" | "register" | "forgot">("login");
   const [email, setEmail] = useState("");
@@ -42,9 +43,8 @@ export function LoginForm() {
         };
         if (!response.ok) throw new Error(data.error ?? "Request failed.");
         setInfo(
-          data.resetUrl
-            ? `${data.message} Open: ${data.resetUrl}`
-            : data.message ?? "Check your email."
+          data.message ??
+            "If an account exists for that email, password reset instructions will be sent."
         );
         return;
       }
@@ -87,10 +87,10 @@ export function LoginForm() {
       }
       subtitle={
         reason === "expired"
-          ? "Screen 84 — sign in again to keep using check-in and your keytag."
+          ? "Sign in again to keep using check-in and your keytag."
           : reason === "update"
-            ? "Screen 85 — this build needs a refresh before member tools unlock."
-            : "Hashed local accounts + session cookies. Demo password still works for quick QA."
+            ? "This build needs a refresh before member tools unlock."
+            : "Use the email and password from your membership account."
       }
     >
       <MemberCard>
@@ -195,10 +195,11 @@ export function LoginForm() {
               {mode === "forgot" ? "Back to sign in" : "Forgot password"}
             </button>
           </div>
-          <p className="text-center text-xs text-pf-ink/55">
-            QA shortcut password:{" "}
-            <code className="rounded bg-pf-mist px-1">{DEMO_MEMBER_PASSWORD}</code>
-          </p>
+          {demoAuth ? (
+            <p className="text-center text-xs text-pf-ink/55">
+              Local QA auth is enabled for this environment.
+            </p>
+          ) : null}
           <p className="text-center text-xs text-pf-ink/55">
             New member?{" "}
             <Link href="/join" className="font-semibold text-pf-purple underline">

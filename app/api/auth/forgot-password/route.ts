@@ -21,13 +21,20 @@ export async function POST(request: Request) {
     process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
     new URL(request.url).origin;
 
-  // In production this would email. For the demo we return the reset path when found.
+  const resetUrl = token
+    ? `${origin}/app/login/reset?token=${token}`
+    : null;
+
+  // Never reveal whether the email exists. In non-production, optionally
+  // return the reset URL so local QA can complete the flow without SMTP.
+  const exposeResetUrl =
+    process.env.NODE_ENV !== "production" &&
+    process.env.EXPOSE_PASSWORD_RESET_URL === "true";
+
   return NextResponse.json({
     ok: true,
     message:
-      "If that email has an account, a reset link is ready. (Demo returns the link when found.)",
-    resetUrl: token
-      ? `${origin}/app/login/reset?token=${token}`
-      : null,
+      "If an account exists for that email, password reset instructions will be sent.",
+    ...(exposeResetUrl && resetUrl ? { resetUrl } : {}),
   });
 }

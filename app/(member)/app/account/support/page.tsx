@@ -22,7 +22,7 @@ export default function SupportChatPage() {
       { from: "you", text },
       {
         from: "agent",
-        text: "Got it — a specialist will follow up in this demo thread.",
+        text: "Got it — a specialist will follow up in this thread.",
       },
     ]);
     setDraft("");

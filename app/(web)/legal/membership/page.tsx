@@ -13,8 +13,8 @@ export default function MembershipAgreementPage() {
       </p>
       <h1 className="mt-2 font-display text-4xl">Membership Agreement</h1>
       <p className="mt-3 text-sm text-pf-ink/65">
-        Join funnel consents reference this version. Swap for franchise-approved
-        language before production.
+        Join funnel consents reference agreement version 2026-08-01. Substitute
+        franchise-approved language before commercial use.
       </p>
       <ol className="mt-8 list-decimal space-y-3 pl-5 text-sm text-pf-ink/80">
         <li>

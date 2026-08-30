@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { HOME_CLUB } from "@/lib/home-club";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -14,8 +15,9 @@ export default function PrivacyPage() {
       </p>
       <h1 className="mt-2 font-display text-4xl">Privacy Policy</h1>
       <p className="mt-3 text-sm text-pf-ink/65">
-        Last updated August 1, 2026 · Demo policy for this acquisition + member
-        app project. Replace with franchise counsel copy before launch.
+        Last updated August 29, 2026 · Applies to this {HOME_CLUB.name} concept
+        site and member utility. Replace with franchise counsel copy before a
+        commercial launch.
       </p>
       <div className="prose prose-sm mt-8 max-w-none space-y-4 text-pf-ink/80">
         <p>
@@ -32,8 +34,8 @@ export default function PrivacyPage() {
           events update membership status and dunning state.
         </p>
         <p>
-          Contact your home club or use in-app support for access/deletion
-          requests in a production deployment.
+          For access or deletion requests, contact your home club or use in-app
+          support.
         </p>
       </div>
       <p className="mt-8 text-sm">

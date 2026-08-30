@@ -1,59 +1,61 @@
-# Planet Fitness Ecosystem
+# Planet Fitness Stratham — Club Acquisition + Member Utility
 
-Production-oriented acquisition website + member utility app shell.
+Concept product for **Planet Fitness Stratham, NH**: a local acquisition website and a focused member app. Independent exploration — **not affiliated with or endorsed by Planet Fitness Franchising, LLC**.
 
-## Architectural boundaries
+## Problem
 
-| Surface | Owns | Route root |
-|---------|------|------------|
-| **Web** | Club locator, pricing, promos, Summer Pass, join checkout | `/` `(web)` |
-| **App** | Check-in, keytag, Crowd Meter, workouts, billing, account | `/app` `(member)` |
+National gym sites optimize for brand reach. A local franchise needs a clearer path: find the Stratham club, compare Classic vs Black Card with transparent fees, join online, then use a small set of member tools (check-in, keytag, crowd, billing).
 
-## Directory map
+## Surfaces
 
-```text
-app/
-  layout.tsx                 # fonts + globals only
-  (web)/                     # Screens 01–20 acquisition chrome
-    layout.tsx               # SiteHeader + SiteFooter
-    page.tsx                 # Home (locator + pricing + promos)
-    join/                    # Multi-step checkout
-    gyms/[slug]/             # Club detail pages
-    screens/                 # Master screen registry UI
-  (member)/app/              # Screens 21–85 member shell
-    layout.tsx               # Mobile MemberShell + tab bar
-    login|check-in|keytag|workouts|billing|…
-  api/                       # clubs + memberships APIs
-components/
-  member/                    # App UI primitives
-  *.tsx                      # Web acquisition components
-lib/
-  screens.ts                 # Master 01–85 registry
-```
+| Surface | Owns | Root |
+|---------|------|------|
+| **Web** | Discovery, pricing, Summer Pass, join | `/` |
+| **App** | Auth, check-in, keytag, Crowd Meter, billing, account | `/app` |
 
-## Getting started
+Product map (core vs roadmap): `/screens`
+
+## Stack
+
+- Next.js App Router + TypeScript + Tailwind
+- Optional Stripe Checkout / Elements + webhooks
+- Durable local store under `.data/` (swap for Postgres before multi-instance deploy)
+
+## Setup
 
 ```bash
 npm install
 cp .env.example .env.local
+# Required for production: AUTH_SECRET, ACCESS_CONTROL_SECRET, NEXT_PUBLIC_SITE_URL
 npm run dev
 ```
 
 - Website: http://localhost:3000  
 - Member app: http://localhost:3000/app  
-- Screen registry: http://localhost:3000/screens  
 
-## Priority foundation (done)
+### Environment notes
 
-1. Route-group separation for web vs member app  
-2. Web layout templates (header/footer/consent)  
-3. Interactive club locator + multi-step join checkout  
-4. Member shell with core utility scaffolds  
+| Variable | Purpose |
+|----------|---------|
+| `AUTH_SECRET` | Session signing (**required in production**) |
+| `ACCESS_CONTROL_SECRET` | Door / keytag HMAC |
+| `STRIPE_*` | Live/test payments; without keys, join uses local test authorization |
+| `CLUBS_API_URL` | Remote club inventory; otherwise Seacoast seed clubs |
+| `ALLOW_DEMO_AUTH=true` | Local QA only — **never on in production** |
+| `NEXT_PUBLIC_SHOW_SCREEN_IDS=true` | Show internal screen chrome in staging |
 
-## Next build waves
+## Launch posture
 
-- App auth/session (real)  
-- Check-in state machine + offline keytag  
-- Stripe Checkout / Elements  
-- Live club inventory API  
-- Screens 66–85 edge cases  
+**Core (ship first):** STRONG hero → Explore Clubs → Memberships → Summer Pass → Join → confirmation → member sign-in / check-in / keytag / crowd / billing.
+
+**Roadmap:** remaining `/screens` entries (perks, spa booking, health sync, etc.).
+
+## Case study framing
+
+- **Audience:** Seacoast NH prospects + Stratham members  
+- **Constraint:** Unofficial brand exploration; pricing and legal must be franchise-confirmed before commercial use  
+- **Decision:** Prefer depth on the join funnel over 85 equally polished utility screens  
+
+## License / brand
+
+Planet Fitness names, marks, and campaign lines are used for conceptual product design only. Obtain franchise or corporate approval before any public commercial deployment.

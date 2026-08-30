@@ -160,25 +160,28 @@ export async function POST(request: Request) {
     },
   });
 
-  // Provision a member-app login (demo password) so join → app is seamless.
-  let appLoginHint: string | null = null;
+  // Provision member-app login with a one-time random password.
+  // Callers should use forgot-password / reset flow to set a real credential.
+  let appLoginEmail: string | null = null;
   try {
+    const { randomBytes } = await import("crypto");
     const { createUser, getUserByEmail, updateUser } = await import("@/lib/users");
-    const { DEMO_MEMBER_PASSWORD } = await import("@/lib/auth-shared");
     const email = record.member.email;
     const existing = await getUserByEmail(email);
     if (existing) {
       await updateUser(existing.id, { membershipId: record.id });
+      appLoginEmail = email;
     } else {
+      const tempPassword = randomBytes(18).toString("base64url");
       await createUser({
         email,
-        password: DEMO_MEMBER_PASSWORD,
+        password: tempPassword,
         firstName: record.member.firstName,
         lastName: record.member.lastName,
         phone: record.member.phone,
         membershipId: record.id,
       });
-      appLoginHint = DEMO_MEMBER_PASSWORD;
+      appLoginEmail = email;
     }
   } catch {
     /* non-fatal */
@@ -208,8 +211,11 @@ export async function POST(request: Request) {
         createdAt: record.createdAt,
       },
       paymentsMode: paymentsConfigured() ? "stripe" : "test",
-      appLogin: appLoginHint
-        ? { email: record.member.email, demoPassword: appLoginHint }
+      appLogin: appLoginEmail
+        ? {
+            email: appLoginEmail,
+            nextStep: "Use Sign in → Forgot password to set your app password.",
+          }
         : null,
     },
     { status: 201 }

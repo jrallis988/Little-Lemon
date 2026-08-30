@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { SESSION_COOKIE } from "@/lib/auth-shared";
 import type { MembershipTier } from "@/lib/pricing";
 
-export { DEMO_MEMBER_PASSWORD, SESSION_COOKIE, verifyDemoPassword } from "@/lib/auth-shared";
+export { DEMO_MEMBER_PASSWORD, SESSION_COOKIE, isDemoAuthEnabled, verifyDemoPassword } from "@/lib/auth-shared";
 
 const SESSION_TTL_SECONDS = 60 * 60 * 24 * 14; // 14 days
 
@@ -23,11 +23,17 @@ export type SessionPayload = SessionUser & {
 };
 
 function authSecret() {
-  return (
+  const secret =
     process.env.AUTH_SECRET ||
     process.env.STRIPE_SECRET_KEY ||
-    "pf-dev-auth-secret-change-me"
-  );
+    "";
+  if (!secret) {
+    if (process.env.NODE_ENV === "production") {
+      throw new Error("AUTH_SECRET must be set in production.");
+    }
+    return "pf-dev-auth-secret-change-me";
+  }
+  return secret;
 }
 
 function encode(payload: SessionPayload): string {

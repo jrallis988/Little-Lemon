@@ -119,12 +119,13 @@ export function SiteFooter() {
     <footer className="bg-white text-pf-ink">
       <div className="border-t border-pf-line px-4 py-6 md:px-6">
         <p className="mx-auto max-w-5xl text-xs leading-relaxed text-pf-ink/60">
-          This site highlights {HOME_CLUB.name} ({HOME_CLUB.address},{" "}
+          Unofficial concept site for {HOME_CLUB.name} ({HOME_CLUB.address},{" "}
           {HOME_CLUB.city}, {HOME_CLUB.state} {HOME_CLUB.zip} · {HOME_CLUB.phone}
-          ). Membership dues, enrollment, and annual fees vary by club and are
-          confirmed before you join. Classic and PF Black Card® starting rates
-          shown are starting ranges. Check-in, digital keytag, Crowd Meter, and
-          workout guides live in the Planet Fitness app.
+          ). Not affiliated with or endorsed by Planet Fitness Franchising, LLC.
+          Membership dues, enrollment, and annual fees vary by club and are
+          confirmed before you join. Starting rates shown are illustrative until
+          franchise-confirmed. Member tools (check-in, keytag, Crowd Meter) live
+          in the app segment.
         </p>
       </div>
 

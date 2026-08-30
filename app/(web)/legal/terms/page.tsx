@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { HOME_CLUB } from "@/lib/home-club";
 
 export const metadata: Metadata = {
   title: "Terms of Use",
@@ -13,8 +14,8 @@ export default function TermsPage() {
       </p>
       <h1 className="mt-2 font-display text-4xl">Terms of Use</h1>
       <p className="mt-3 text-sm text-pf-ink/65">
-        Demo terms for this website and member utility. Not official Planet
-        Fitness franchise terms.
+        Terms for this {HOME_CLUB.name} concept website and member utility. Not
+        official Planet Fitness Franchising, LLC terms.
       </p>
       <div className="mt-8 space-y-4 text-sm text-pf-ink/80">
         <p>
@@ -23,9 +24,9 @@ export default function TermsPage() {
           in the member app.
         </p>
         <p>
-          Accounts require accurate information. Demo environments may use the
-          shared QA password; production must enforce unique credentials and MFA
-          where required.
+          Accounts require accurate information and unique credentials.
+          Production deployments must set strong session secrets and disable
+          local QA auth shortcuts.
         </p>
         <p>
           Club hours, amenities, and local dues can vary by franchise location.

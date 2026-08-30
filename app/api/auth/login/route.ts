@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import {
-  DEMO_MEMBER_PASSWORD,
   SESSION_COOKIE,
   createSessionToken,
   sessionCookieOptions,
@@ -40,7 +39,7 @@ export async function POST(request: Request) {
   let user = await authenticateUser(email, password);
   const membership = await getMembershipByEmail(email);
 
-  // Demo fallback: password pfmember provisions/upgrades a local account.
+  // Optional local QA path — only when ALLOW_DEMO_AUTH=true (never production).
   if (!user && verifyDemoPassword(password)) {
     const existing = await getUserByEmail(email);
     if (existing) {
@@ -48,7 +47,7 @@ export async function POST(request: Request) {
     } else {
       user = await createUser({
         email,
-        password: DEMO_MEMBER_PASSWORD,
+        password,
         firstName: membership?.member.firstName || email.split("@")[0] || "Member",
         lastName: membership?.member.lastName || "",
         phone: membership?.member.phone,

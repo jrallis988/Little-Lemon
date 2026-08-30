@@ -29,8 +29,8 @@ export default function CancelGuidePage() {
         {step === "confirm" ? (
           <>
             <p>
-              This demo records a cancellation request. Production clubs often
-              require in-club or franchise-specific steps.
+              This records a cancellation request. Your club may still require
+              an in-club or franchise-specific step before the membership ends.
             </p>
             <div className="flex gap-2">
               <Button variant="outline" className="flex-1" onClick={() => setStep("guide")}>

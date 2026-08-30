@@ -72,7 +72,7 @@ export default function ProfileEditPage() {
             />
           </div>
           {saved ? (
-            <p className="text-sm font-semibold text-emerald-700">Profile saved (demo).</p>
+            <p className="text-sm font-semibold text-emerald-700">Profile saved.</p>
           ) : null}
           <Button type="submit" variant="purple" className="w-full">
             Save changes

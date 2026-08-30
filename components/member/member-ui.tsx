@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
 import { ChevronRight } from "lucide-react";
+import { showScreenChrome } from "@/lib/runtime";
 import { cn } from "@/lib/utils";
 
 export function MemberScreen({
@@ -16,9 +17,10 @@ export function MemberScreen({
   children?: React.ReactNode;
   className?: string;
 }) {
+  const showEyebrow = Boolean(eyebrow && showScreenChrome());
   return (
     <section className={cn("px-4 py-5", className)}>
-      {eyebrow ? (
+      {showEyebrow ? (
         <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-pf-purple">
           {eyebrow}
         </p>
