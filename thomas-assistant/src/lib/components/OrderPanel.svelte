@@ -235,7 +235,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.85rem;
-    padding-bottom: 0.5rem;
+    padding-bottom: var(--scroll-end-pad);
   }
 
   .order-list {

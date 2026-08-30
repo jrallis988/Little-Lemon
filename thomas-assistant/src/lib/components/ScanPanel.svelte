@@ -154,11 +154,11 @@
     <div class="scroll-body">
       <section class="health" aria-label="Cellar health">
         <article class="health-card">
-          <span class="label">All set</span>
+          <span class="label">Matched expected</span>
           <strong>{health.exact}</strong>
         </article>
         <article class="health-card warn">
-          <span class="label">Needs look</span>
+          <span class="label">Need recount</span>
           <strong>{health.attention}</strong>
         </article>
         <article class="health-card low">
@@ -177,9 +177,9 @@
         <div class="filters" role="group" aria-label="Filter products">
           {#each [
             ["all", "All"],
-            ["attention", "Attention"],
-            ["low", "Low"],
-            ["exact", "Exact"],
+            ["attention", "Need recount"],
+            ["low", "Running low"],
+            ["exact", "Matched"],
           ] as [id, label]}
             <button
               type="button"
@@ -432,7 +432,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    padding-bottom: 0.5rem;
+    padding-bottom: var(--scroll-end-pad);
   }
 
   .health {

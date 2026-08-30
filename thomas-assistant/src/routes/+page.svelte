@@ -6,6 +6,7 @@
   import OrderPanel from "$lib/components/OrderPanel.svelte";
   import ChatDrawer from "$lib/components/ChatDrawer.svelte";
   import AppHeader from "$lib/components/AppHeader.svelte";
+  import SplashScreen from "$lib/components/SplashScreen.svelte";
   import { appState, setActiveTab, setMobileScreen } from "$lib/stores/app.svelte";
   import { TAB_LABELS } from "$lib/thomas-persona";
   import type { MobileScreen, WorkflowTab } from "$lib/types";
@@ -28,6 +29,7 @@
   ];
 
   let isMobile = $state(false);
+  let showSplash = $state(true);
 
   $effect(() => {
     const mq = window.matchMedia("(max-width: 768px)");
@@ -40,7 +42,16 @@
   });
 </script>
 
-<div class="app-shell" class:mobile={isMobile} class:business={appState.mode === "business"}>
+{#if showSplash}
+  <SplashScreen onComplete={() => (showSplash = false)} />
+{/if}
+
+<div
+  class="app-shell"
+  class:mobile={isMobile}
+  class:business={appState.mode === "business"}
+  class:booting={showSplash}
+>
   <AppHeader compact={isMobile} />
 
   {#if appState.error}
@@ -114,6 +125,13 @@
     overflow: hidden;
     background: var(--bg);
     color: var(--text);
+    padding-top: var(--safe-top);
+    padding-left: var(--safe-left);
+    padding-right: var(--safe-right);
+  }
+
+  .app-shell.booting {
+    visibility: hidden;
   }
 
   .error-banner {
@@ -159,7 +177,7 @@
   }
 
   .mobile .workflow-panel {
-    padding: 0.75rem 1rem;
+    padding: 0.75rem 1rem 0.35rem;
   }
 
   .tab-nav {
@@ -198,21 +216,28 @@
   .bottom-nav {
     display: flex;
     flex-shrink: 0;
+    align-items: stretch;
     border-top: 1px solid var(--border);
     background: var(--surface);
-    padding-bottom: env(safe-area-inset-bottom, 0);
+    padding: 0.35rem 0.15rem var(--bottom-nav-pad);
+    /* Keep labels clear of mobile browser chrome */
+    min-height: var(--bottom-nav-height);
+    box-shadow: 0 -4px 16px rgba(8, 21, 35, 0.04);
+    z-index: 20;
   }
 
   .bottom-nav button {
     flex: 1;
-    min-height: 50px;
+    min-height: 48px;
     border: none;
     background: transparent;
     color: var(--text-muted);
-    font-size: 0.62rem;
+    font-size: 0.68rem;
     font-weight: 600;
+    letter-spacing: 0.01em;
     cursor: pointer;
-    padding: 0.4rem 0.1rem;
+    padding: 0.45rem 0.15rem 0.55rem;
+    line-height: 1.15;
   }
 
   .bottom-nav button.active {

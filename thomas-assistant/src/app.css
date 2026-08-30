@@ -30,4 +30,21 @@
   --chat-text: #081523;
   --chat-muted: #5c6573;
   --placeholder: #7a8494;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --bottom-nav-pad: calc(0.55rem + var(--safe-bottom));
+  --bottom-nav-height: calc(3.35rem + var(--safe-bottom));
+  --scroll-end-pad: 1.25rem;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-text-size-adjust: 100%;
 }

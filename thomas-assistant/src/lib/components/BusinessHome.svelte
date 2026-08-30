@@ -88,18 +88,22 @@
 <section class="panel">
   <header class="panel-header">
     <div>
-      <h2>What needs attention</h2>
-      <p class="lead">Thomas knows the house — here’s what he’s noticed from your counts and closes.</p>
+      <h2>Shift Overview</h2>
+      <p class="lead">
+        Counts, close status, and action items from today’s floor activity.
+      </p>
     </div>
   </header>
 
   <div class="scroll-body">
     <section class="snapshot" aria-label="House snapshot">
       <article class="snap-card">
-        <span class="snap-label">Inventory</span>
-        <strong>{snapshot.inventoryExact} exact</strong>
+        <span class="snap-label">Inventory counts</span>
+        <strong
+          >{snapshot.inventoryExact} matched expected</strong
+        >
         <span class="snap-meta">
-          {snapshot.inventoryMinor} minor · {snapshot.inventoryAttention} attention
+          {snapshot.inventoryMinor} need review · {snapshot.inventoryAttention} need recount
         </span>
       </article>
       <article class="snap-card">
@@ -108,9 +112,13 @@
         <span class="snap-meta">REG-01 ready when you are</span>
       </article>
       <article class="snap-card">
-        <span class="snap-label">Discrepancies</span>
-        <strong>{snapshot.recentDiscrepancies} recent</strong>
-        <span class="snap-meta">{snapshot.runningLow} running low</span>
+        <span class="snap-label">Open discrepancies</span>
+        <strong
+          >{snapshot.recentDiscrepancies} open</strong
+        >
+        <span class="snap-meta"
+          >{snapshot.runningLow} products running low</span
+        >
       </article>
     </section>
 
@@ -201,7 +209,7 @@
     display: flex;
     flex-direction: column;
     gap: 1.1rem;
-    padding-bottom: 0.5rem;
+    padding-bottom: var(--scroll-end-pad);
     -webkit-overflow-scrolling: touch;
   }
 

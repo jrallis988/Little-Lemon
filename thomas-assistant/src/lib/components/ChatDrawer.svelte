@@ -584,6 +584,11 @@
     border-top: 1px solid var(--chat-border);
   }
 
+  /* Mobile fullscreen sits above the tab bar — tab bar owns the safe-area inset */
+  .chat-panel.fullscreen .composer {
+    padding-bottom: 0.65rem;
+  }
+
   .composer-field {
     display: flex;
     align-items: flex-end;

@@ -346,6 +346,7 @@
     flex: 1;
     overflow-y: auto;
     min-height: 0;
+    padding-bottom: var(--scroll-end-pad);
   }
 
   .count {

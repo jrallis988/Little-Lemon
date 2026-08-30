@@ -301,7 +301,11 @@
   .nav-row .btn-primary,
   .nav-row .btn-secondary { flex: 1; }
 
-  .log-list { flex: 1; overflow-y: auto; }
+  .log-list {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: var(--scroll-end-pad);
+  }
 
   .log-list h3 {
     margin: 0 0 0.65rem;
