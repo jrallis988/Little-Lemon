@@ -20,6 +20,7 @@ import { matchBrowserReply } from "./thomas-persona";
 import { chatViaOllama, checkOllamaAvailable } from "./chat-engine";
 import { countGapLabel, productName, tillGapLabel } from "./product-catalog";
 import type { ChatMessage } from "./types";
+import { getUserArea } from "./browser-storage";
 
 export { checkOllamaAvailable } from "./chat-engine";
 
@@ -171,7 +172,7 @@ export async function chatWithAssistant(
     const live = await chatViaOllama(message, context, history);
     if (live) return live;
     await new Promise((r) => setTimeout(r, 120));
-    return matchBrowserReply(message, context, history);
+    return matchBrowserReply(message, context, history, getUserArea());
   }
   return invoke("chat_with_assistant", { message, context });
 }

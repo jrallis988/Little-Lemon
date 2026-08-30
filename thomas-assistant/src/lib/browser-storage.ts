@@ -18,6 +18,7 @@ interface HouseData {
   signoffPin: string | null;
   chatMessages: ChatMessage[];
   seedVersion: number | null;
+  userArea: string | null;
 }
 
 const empty: HouseData = {
@@ -28,6 +29,7 @@ const empty: HouseData = {
   signoffPin: null,
   chatMessages: [],
   seedVersion: null,
+  userArea: null,
 };
 
 function read(): HouseData {
@@ -44,6 +46,7 @@ function read(): HouseData {
       signoffPin: parsed.signoffPin ?? null,
       chatMessages: parsed.chatMessages ?? [],
       seedVersion: parsed.seedVersion ?? null,
+      userArea: parsed.userArea ?? null,
     };
   } catch {
     return { ...empty };
@@ -83,6 +86,7 @@ export function ensureHouseSeed(): boolean {
     signoffPin: cache.signoffPin,
     chatMessages: cache.chatMessages,
     seedVersion: SEED_VERSION,
+    userArea: cache.userArea,
   };
   write(cache);
   return true;
@@ -101,6 +105,7 @@ export function resetHouseToSeed(): void {
     signoffPin: null,
     chatMessages: [],
     seedVersion: SEED_VERSION,
+    userArea: null,
   };
   write(cache);
 }
@@ -176,4 +181,13 @@ export function appendAudit(trail: Omit<AuditTrail, "id"> & { id?: number }): Au
   cache.audits = [full, ...cache.audits];
   write(cache);
   return full;
+}
+
+export function getUserArea(): string | null {
+  return cache.userArea;
+}
+
+export function setUserArea(area: string | null) {
+  cache.userArea = area?.trim() || null;
+  write(cache);
 }

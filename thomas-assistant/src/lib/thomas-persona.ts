@@ -1,5 +1,9 @@
 import { productName } from "./product-catalog";
 import type { ChatMessage } from "./types";
+import {
+  formatRetailReply,
+  isRetailIntent,
+} from "./retail-locator";
 
 export const STAFF_FIRST_NAME = "James";
 
@@ -28,9 +32,9 @@ export const THOMAS_POSITIONING = "Thomas is your own personal bartender";
 
 export const suggestedPrompts = [
   "What pairs with grilled steak?",
-  "Find me a wine for salmon",
+  "Where can I buy a bold red near me?",
   "Best IPA for a beginner?",
-  "Something light for a cookout",
+  "Find whiskey shops in my area",
 ] as const;
 
 export function butlerScanNote(
@@ -161,6 +165,10 @@ const THREADS: Record<Topic, string[]> = {
 
 function detectTopic(message: string): Topic {
   const lower = message.toLowerCase();
+
+  if (isRetailIntent(message)) {
+    return "general"; // handled in matchBrowserReply
+  }
 
   if (
     lower.includes("pair") ||
@@ -350,8 +358,21 @@ export function matchBrowserReply(
   message: string,
   context: string,
   history: ChatMessage[] = [],
+  userArea: string | null = null,
 ): string {
   const lower = message.toLowerCase();
+
+  if (isRetailIntent(message)) {
+    const area =
+      userArea ??
+      context.match(/Guest area:\s*([^.\n]+)/)?.[1]?.trim() ??
+      null;
+    if (!area) {
+      return "I'd love to point you somewhere local — tell me your city or ZIP (or tap Set area above the chat), and what you're hunting: wine, beer, or spirits.";
+    }
+    return formatRetailReply(message, area);
+  }
+
   let topic = detectTopic(message);
 
   // Follow-ups like "Something from our tap list?" stay on the prior thread

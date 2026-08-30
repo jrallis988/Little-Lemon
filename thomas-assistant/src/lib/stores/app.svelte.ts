@@ -10,8 +10,11 @@ import {
   getChatMessages,
   getScans,
   getShifts,
+  getUserArea,
   setChatMessages,
+  setUserArea,
 } from "../browser-storage";
+import { retailContextForLlm } from "../retail-locator";
 
 export const currentUser = STAFF_FIRST_NAME;
 
@@ -45,6 +48,7 @@ export const appState = $state({
   auditTrails: [] as import("../types").AuditTrail[],
   summary: null as import("../types").InventorySummary | null,
   chatMessages: initialChatMessages() as ChatMessage[],
+  userArea: isBrowserMode ? getUserArea() : null,
   chatOpen: true,
   loading: false,
   error: null as string | null,
@@ -96,13 +100,21 @@ export function toggleChat() {
   appState.chatOpen = !appState.chatOpen;
 }
 
+export function saveUserArea(area: string | null) {
+  const trimmed = area?.trim() || null;
+  appState.userArea = trimmed;
+  if (isBrowserMode) setUserArea(trimmed);
+}
+
 export function buildChatContext(): string {
   const summary = appState.summary;
   const latestScan = appState.inventoryScans[0];
   const latestShift = appState.shiftLogs[0];
   const latestAudit = appState.auditTrails[0];
 
-  const base = butlerSessionContext({
+  const parts: string[] = [];
+
+  const house = butlerSessionContext({
     totalScans: summary?.total_scans,
     needsAttention: summary?.critical_variances,
     latestProduct: latestScan?.sku,
@@ -110,8 +122,13 @@ export function buildChatContext(): string {
     latestTill: latestShift?.register_id,
     latestTillGap: latestShift?.variance,
   });
+  if (house) parts.push(house);
 
-  if (!latestAudit) return base;
-  const note = ` Latest in The Record: ${latestAudit.details}`;
-  return base ? `${base}${note}` : note.trim();
+  if (latestAudit) {
+    parts.push(`Latest in The Record: ${latestAudit.details}`);
+  }
+
+  parts.push(retailContextForLlm(appState.userArea));
+
+  return parts.join(" ");
 }

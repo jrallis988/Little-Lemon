@@ -6,8 +6,13 @@
     appState,
     addChatMessage,
     buildChatContext,
+    saveUserArea,
     toggleChat,
   } from "$lib/stores/app.svelte";
+  import {
+    extractAreaFromMessage,
+    reverseGeocodeArea,
+  } from "$lib/retail-locator";
 
   interface Props {
     fullscreen?: boolean;
@@ -18,6 +23,9 @@
   let input = $state("");
   let sending = $state(false);
   let liveAi = $state<boolean | null>(null);
+  let editingArea = $state(false);
+  let areaDraft = $state("");
+  let locating = $state(false);
   let messagesEl: HTMLDivElement | undefined = $state();
   let inputEl: HTMLTextAreaElement | undefined = $state();
 
@@ -36,6 +44,9 @@
   async function sendMessage(text?: string) {
     const message = (text ?? input).trim();
     if (!message || sending) return;
+
+    const extracted = extractAreaFromMessage(message);
+    if (extracted) saveUserArea(extracted);
 
     addChatMessage("user", message);
     input = "";
@@ -70,6 +81,65 @@
       liveAi = ok;
     });
   });
+
+  function openAreaEdit() {
+    areaDraft = appState.userArea ?? "";
+    editingArea = true;
+  }
+
+  function commitArea() {
+    saveUserArea(areaDraft);
+    editingArea = false;
+  }
+
+  type MessagePart = { type: "text" | "link"; value: string };
+
+  function linkifyMessage(content: string): MessagePart[] {
+    const parts: MessagePart[] = [];
+    const urlRe = /https?:\/\/[^\s]+/g;
+    let lastIndex = 0;
+    for (const match of content.matchAll(urlRe)) {
+      const index = match.index ?? 0;
+      if (index > lastIndex) {
+        parts.push({ type: "text", value: content.slice(lastIndex, index) });
+      }
+      parts.push({ type: "link", value: match[0] });
+      lastIndex = index + match[0].length;
+    }
+    if (lastIndex < content.length) {
+      parts.push({ type: "text", value: content.slice(lastIndex) });
+    }
+    return parts.length > 0 ? parts : [{ type: "text", value: content }];
+  }
+
+  async function useMyLocation() {
+    if (!navigator.geolocation) {
+      appState.error = "Location isn’t available in this browser.";
+      return;
+    }
+    locating = true;
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        const label = await reverseGeocodeArea(
+          pos.coords.latitude,
+          pos.coords.longitude,
+        );
+        if (label) {
+          saveUserArea(label);
+          areaDraft = label;
+          editingArea = false;
+        } else {
+          appState.error = "Couldn’t resolve your area — try city or ZIP.";
+        }
+        locating = false;
+      },
+      () => {
+        appState.error = "Location permission denied — enter city or ZIP manually.";
+        locating = false;
+      },
+      { timeout: 12000 },
+    );
+  }
 </script>
 
 <aside
@@ -103,6 +173,37 @@
     {/if}
 
     <div class="chat-body">
+      <div class="area-bar" aria-label="Your area for local recommendations">
+        {#if editingArea}
+          <input
+            type="text"
+            bind:value={areaDraft}
+            placeholder="City or ZIP — e.g. Austin, TX"
+            aria-label="Your area"
+          />
+          <button type="button" class="area-btn primary" onclick={commitArea}>Save</button>
+          <button type="button" class="area-btn" onclick={() => (editingArea = false)}>Cancel</button>
+        {:else}
+          <span class="area-label">
+            {#if appState.userArea}
+              Near <strong>{appState.userArea}</strong> — local picks enabled
+            {:else}
+              Set your area for where-to-buy recommendations
+            {/if}
+          </span>
+          <button type="button" class="area-btn" onclick={openAreaEdit}>Set area</button>
+          <button
+            type="button"
+            class="area-btn"
+            disabled={locating}
+            onclick={useMyLocation}
+            title="Use my location"
+          >
+            {locating ? "…" : "📍"}
+          </button>
+        {/if}
+      </div>
+
       <div class="messages" bind:this={messagesEl}>
         {#each appState.chatMessages as msg, i (i)}
           <div class="exchange {msg.role}">
@@ -110,7 +211,20 @@
               <ThomasLogo variant="mark" width={32} height={32} />
             {/if}
             <div class="bubble">
-              <p>{msg.content}</p>
+              <p class="message-text">
+                {#each linkifyMessage(msg.content) as part}
+                  {#if part.type === "link"}
+                    <a href={part.value} target="_blank" rel="noopener noreferrer">
+                      Open in Maps
+                    </a>
+                  {:else}
+                    {part.value}
+                  {/if}
+                {/each}
+              </p>
+              {#if msg.role === "assistant" && msg.content.includes("https://")}
+                <p class="maps-hint">Tap Open in Maps for directions near your area.</p>
+              {/if}
             </div>
           </div>
         {/each}
@@ -279,6 +393,64 @@
     min-height: 0;
   }
 
+  .area-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.45rem 0.75rem;
+    background: var(--surface);
+    border-bottom: 1px solid var(--chat-border);
+    flex-shrink: 0;
+  }
+
+  .area-label {
+    flex: 1;
+    min-width: 8rem;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    line-height: 1.3;
+  }
+
+  .area-label strong {
+    color: var(--midnight);
+  }
+
+  .area-bar input {
+    flex: 1;
+    min-width: 8rem;
+    min-height: 36px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0 0.55rem;
+    font-size: 16px;
+  }
+
+  .area-btn {
+    min-height: 34px;
+    padding: 0 0.55rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--midnight);
+    cursor: pointer;
+  }
+
+  .area-btn.primary {
+    background: var(--cognac);
+    border-color: var(--cognac);
+    color: #fff;
+  }
+
+  .maps-hint {
+    margin: 0.35rem 0 0;
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
   .messages {
     flex: 1;
     overflow-y: auto;
@@ -309,6 +481,21 @@
 
   .bubble p {
     margin: 0;
+  }
+
+  .message-text {
+    white-space: pre-wrap;
+  }
+
+  .bubble a {
+    color: var(--cognac);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .exchange.user .bubble a {
+    color: #fff;
   }
 
   .exchange.assistant .bubble {
