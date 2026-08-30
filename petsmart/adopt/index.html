@@ -32,10 +32,16 @@
           <h2 id="pets-heading">Adoptable pets near you</h2>
           <p>These pets are available through partner shelters at PetSmart adoption events. Profiles are sample data for this redesign concept.</p>
         </div>
-        <div style="display:flex; flex-wrap:wrap; gap:var(--space-2); margin-bottom:var(--space-8);" role="group" aria-label="Filter by species">
+        <div style="display:flex; flex-wrap:wrap; gap:var(--space-2); margin-bottom:var(--space-4);" role="group" aria-label="Filter by species">
           <button class="chip" aria-pressed="true" data-species="all">All</button>
           <button class="chip" aria-pressed="false" data-species="Dog">Dogs</button>
           <button class="chip" aria-pressed="false" data-species="Cat">Cats</button>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:var(--space-2); margin-bottom:var(--space-8);" role="group" aria-label="Filter by size">
+          <button class="chip" aria-pressed="true" data-size="all">Any size</button>
+          <button class="chip" aria-pressed="false" data-size="Small">Small</button>
+          <button class="chip" aria-pressed="false" data-size="Medium">Medium</button>
+          <button class="chip" aria-pressed="false" data-size="Large">Large</button>
         </div>
         <div class="grid-3" id="pets-grid"></div>
       </div>
@@ -66,15 +72,23 @@
   <script src="../js/app.js"></script>
   <script>
     let species = 'all';
+    let size = 'all';
     const grid = document.getElementById('pets-grid');
     function render() {
-      PetSmartUI.renderPetGrid(grid, PetSmartData.getPets({ species }), '../');
+      PetSmartUI.renderPetGrid(grid, PetSmartData.getPets({ species, size }), '../');
       document.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-visible'));
     }
     document.querySelectorAll('[data-species]').forEach((chip) => {
       chip.addEventListener('click', () => {
         species = chip.dataset.species;
         document.querySelectorAll('[data-species]').forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+        render();
+      });
+    });
+    document.querySelectorAll('[data-size]').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        size = chip.dataset.size;
+        document.querySelectorAll('[data-size]').forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
         render();
       });
     });

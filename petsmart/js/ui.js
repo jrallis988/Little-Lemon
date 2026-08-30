@@ -81,16 +81,18 @@ const PetSmartUI = (() => {
     const store = PetSmartData.getStore(pet.store);
     return `
       <article class="pet-card reveal">
-        <div class="pet-card__media">
-          <img src="${pet.image}" alt="${pet.name}, ${pet.breed}" loading="lazy" width="400" height="300">
-          <span class="badge badge--red pet-card__badge">${pet.species}</span>
-        </div>
+        <a href="${basePath}adopt/pet.html?id=${pet.id}" class="card__link" style="display:contents; text-decoration:none; color:inherit;">
+          <div class="pet-card__media">
+            <img src="${pet.image}" alt="${pet.name}, ${pet.breed}" loading="lazy" width="400" height="300">
+            <span class="badge badge--red pet-card__badge">${pet.species}</span>
+          </div>
+        </a>
         <div class="pet-card__body">
-          <h3 class="pet-card__name">${pet.name}</h3>
+          <h3 class="pet-card__name"><a href="${basePath}adopt/pet.html?id=${pet.id}" style="text-decoration:none; color:inherit;">${pet.name}</a></h3>
           <p class="pet-card__meta">${pet.breed} · ${pet.age} · ${pet.gender}</p>
           <p class="pet-card__story">${pet.story}</p>
           <p class="text-small text-muted">${store ? store.name : 'Local partner shelter'}</p>
-          <a class="btn btn-primary btn-sm" href="${basePath}stores/detail.html?id=${pet.store}" style="margin-top:var(--space-4);">Meet at store</a>
+          <a class="btn btn-primary btn-sm" href="${basePath}adopt/pet.html?id=${pet.id}" style="margin-top:var(--space-4);">Meet ${pet.name}</a>
         </div>
       </article>
     `;

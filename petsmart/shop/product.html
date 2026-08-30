@@ -15,6 +15,14 @@
       <ol class="breadcrumb"><li><a href="../index.html">Home</a></li><li><a href="index.html">Shop</a></li><li id="crumb-product">Product</li></ol>
     </div>
     <div class="product-detail" id="product-detail"></div>
+
+    <section class="section" id="reviews-section">
+      <div class="container container--narrow">
+        <h2 style="margin-bottom:var(--space-6);">Customer reviews</h2>
+        <div id="reviews-list"></div>
+      </div>
+    </section>
+
     <section class="section section--pale">
       <div class="container">
         <h2 style="margin-bottom:var(--space-8);">You may also like</h2>
@@ -22,6 +30,16 @@
       </div>
     </section>
   </main>
+
+  <div class="sticky-atc" id="sticky-atc" hidden>
+    <div class="sticky-atc__inner">
+      <div>
+        <strong id="sticky-name"></strong>
+        <span id="sticky-price" class="text-muted text-small"></span>
+      </div>
+      <button class="btn btn-primary" type="button" id="sticky-add">Add to cart</button>
+    </div>
+  </div>
 
   <div id="ps-footer" data-base="../"></div>
   <script src="../js/chrome.js"></script>
@@ -37,9 +55,16 @@
     } else {
       document.title = `${product.name} — PetSmart`;
       document.getElementById('crumb-product').textContent = product.name;
-      const price = product.salePrice || product.price;
-      const hasSale = product.salePrice && product.salePrice < product.price;
+      const variants = product.variants || [{ id: 'default', label: 'Standard', price: product.salePrice || product.price }];
+      let selected = variants[0];
       const saved = PetSmartFavorites.has(product.id);
+
+      function renderPrice() {
+        const priceEl = document.getElementById('live-price');
+        if (priceEl) priceEl.textContent = PetSmartData.formatPrice(selected.price);
+        document.getElementById('sticky-price').textContent = PetSmartData.formatPrice(selected.price);
+      }
+
       container.innerHTML = `
         <div class="product-gallery">
           <img src="${product.image}" alt="${product.name}" width="500" height="500">
@@ -47,13 +72,31 @@
         <div>
           <p class="text-muted text-small" style="text-transform:uppercase; letter-spacing:0.04em;">${product.brand}</p>
           <h1 style="margin:var(--space-3) 0 var(--space-4);">${product.name}</h1>
-          <p aria-label="Rated ${product.rating} out of 5">${PetSmartData.renderStars(product.rating)} · ${product.reviews.toLocaleString()} reviews</p>
-          <p style="font-size:var(--text-3xl); font-weight:700; margin:var(--space-6) 0; color:${hasSale ? 'var(--ps-red)' : 'inherit'};">
-            ${PetSmartData.formatPrice(price)}
-            ${hasSale ? `<span style="font-size:var(--text-lg); color:var(--ps-gray); text-decoration:line-through; font-weight:400;">${PetSmartData.formatPrice(product.price)}</span>` : ''}
+          <p aria-label="Rated ${product.rating} out of 5">
+            <a href="#reviews-section" style="text-decoration:none; color:inherit;">
+              ${PetSmartData.renderStars(product.rating)} · ${product.reviews.toLocaleString()} reviews
+            </a>
           </p>
-          <p class="text-muted" style="margin-bottom:var(--space-6);">Free shipping on orders over $49. Pick up in store available at participating locations.</p>
-          <div style="display:flex; align-items:center; gap:var(--space-4); flex-wrap:wrap; margin-bottom:var(--space-6);">
+          <p style="font-size:var(--text-3xl); font-weight:700; margin:var(--space-6) 0; color:var(--ps-red);">
+            <span id="live-price">${PetSmartData.formatPrice(selected.price)}</span>
+            ${product.salePrice ? `<span style="font-size:var(--text-lg); color:var(--ps-gray); text-decoration:line-through; font-weight:400; margin-left:var(--space-2);">${PetSmartData.formatPrice(product.price)}</span>` : ''}
+          </p>
+          <p style="margin-bottom:var(--space-5); color:var(--ps-slate); line-height:1.65;">${product.description || ''}</p>
+
+          <fieldset class="variant-group">
+            <legend>Size / option</legend>
+            <div class="variant-options" id="variant-options">
+              ${variants.map((v, i) => `
+                <label class="variant-chip ${i === 0 ? 'is-selected' : ''}">
+                  <input type="radio" name="variant" value="${v.id}" ${i === 0 ? 'checked' : ''}>
+                  ${v.label}
+                </label>
+              `).join('')}
+            </div>
+          </fieldset>
+
+          <p class="text-muted text-small" style="margin:var(--space-5) 0;">Free shipping on orders over $49. Pickup available at participating stores.</p>
+          <div style="display:flex; align-items:center; gap:var(--space-4); flex-wrap:wrap; margin-bottom:var(--space-6);" id="primary-atc">
             <div class="qty-stepper" role="group" aria-label="Quantity">
               <button type="button" id="qty-minus" aria-label="Decrease quantity">−</button>
               <input type="number" id="product-qty" min="1" value="1" aria-label="Quantity">
@@ -64,15 +107,58 @@
           </div>
           <div style="padding:var(--space-5); background:var(--ps-blue-pale); border-radius:var(--radius-lg);">
             <h2 style="font-size:var(--text-lg); margin-bottom:var(--space-2);">Product details</h2>
-            <p class="text-muted text-small">Premium quality ${product.brand} product. Formulated for everyday nutrition and wellness. See packaging for feeding guidelines.</p>
+            <p class="text-muted text-small">${product.description || `Premium quality ${product.brand} product.`}</p>
           </div>
         </div>
       `;
+
+      document.getElementById('variant-options').addEventListener('change', (e) => {
+        selected = variants.find(v => v.id === e.target.value) || variants[0];
+        document.querySelectorAll('.variant-chip').forEach(chip => {
+          chip.classList.toggle('is-selected', chip.querySelector('input').value === selected.id);
+        });
+        renderPrice();
+      });
+
       const qty = document.getElementById('product-qty');
       document.getElementById('qty-minus').addEventListener('click', () => { qty.value = Math.max(1, (parseInt(qty.value, 10) || 1) - 1); });
       document.getElementById('qty-plus').addEventListener('click', () => { qty.value = (parseInt(qty.value, 10) || 1) + 1; });
-      const related = PetSmartData.getProducts({ category: product.category }).filter(p => p.id !== product.id).slice(0, 4);
-      PetSmartUI.renderProductGrid(document.getElementById('related-products'), related, '../');
+
+      const reviews = product.reviewSnippets || [];
+      document.getElementById('reviews-list').innerHTML = reviews.length
+        ? reviews.map(r => `
+            <article class="review-card">
+              <p class="review-card__rating" aria-label="${r.rating} out of 5">${PetSmartData.renderStars(r.rating)}</p>
+              <p class="review-card__text">“${r.text}”</p>
+              <p class="review-card__author">— ${r.author}</p>
+            </article>
+          `).join('')
+        : '<p class="text-muted">No written reviews yet.</p>';
+
+      PetSmartUI.renderProductGrid(
+        document.getElementById('related-products'),
+        PetSmartData.getProducts({ category: product.category }).filter(p => p.id !== product.id).slice(0, 4),
+        '../'
+      );
+
+      document.getElementById('sticky-name').textContent = product.name;
+      document.getElementById('sticky-price').textContent = PetSmartData.formatPrice(selected.price);
+      document.getElementById('sticky-add').addEventListener('click', () => {
+        const q = Math.max(1, parseInt(document.getElementById('product-qty').value, 10) || 1);
+        PetSmartCart.add(product.id, q);
+        const btn = document.getElementById('sticky-add');
+        btn.textContent = 'Added!';
+        setTimeout(() => { btn.textContent = 'Add to cart'; }, 1200);
+      });
+
+      const sticky = document.getElementById('sticky-atc');
+      const primary = document.getElementById('primary-atc');
+      if ('IntersectionObserver' in window && primary) {
+        const io = new IntersectionObserver(([entry]) => {
+          sticky.hidden = entry.isIntersecting;
+        }, { threshold: 0 });
+        io.observe(primary);
+      }
     }
   </script>
 </body>

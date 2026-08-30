@@ -29,7 +29,7 @@
   <script src="../js/chrome.js"></script>
   <script src="../js/data.js"></script><script src="../js/ui.js"></script><script src="../js/app.js"></script>
   <script>
-    const links = { grooming: 'grooming.html', training: 'training.html', 'day-camp': 'day-camp.html', vet: 'vet.html' };
+    const links = { grooming: 'book.html?service=grooming', training: 'book.html?service=training', 'day-camp': 'book.html?service=day-camp', vet: 'vet.html' };
     document.getElementById('services-grid').innerHTML = PetSmartData.services.map(s => `
       <article class="card reveal">
         <div class="card__media"><img src="${s.image}" alt="" loading="lazy"></div>

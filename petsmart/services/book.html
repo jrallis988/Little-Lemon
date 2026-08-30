@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book a Service — PetSmart</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div id="ps-header" data-base="../" data-active="services"></div>
+
+  <main id="main">
+    <div class="page-hero">
+      <div class="page-hero__inner container">
+        <ol class="breadcrumb"><li><a href="../index.html">Home</a></li><li><a href="index.html">Services</a></li><li>Book</li></ol>
+        <h1 id="book-title">Book a service</h1>
+        <p id="book-lead">Choose your service, store, and time — we’ll confirm your appointment.</p>
+      </div>
+    </div>
+
+    <div class="container" style="max-width:var(--container-lg); padding:var(--space-8) var(--space-4);">
+      <ol class="stepper" id="book-stepper" aria-label="Booking steps">
+        <li class="is-active" data-step-label="1">Service</li>
+        <li data-step-label="2">Store &amp; time</li>
+        <li data-step-label="3">Pet &amp; contact</li>
+        <li data-step-label="4">Confirm</li>
+      </ol>
+
+      <form id="book-form" class="booking-form" novalidate>
+        <section class="booking-panel is-active" data-panel="1" aria-labelledby="step1-h">
+          <h2 id="step1-h">Choose a service</h2>
+          <div class="grid-3" id="service-options" style="margin-top:var(--space-6);"></div>
+          <div class="booking-actions">
+            <button type="button" class="btn btn-primary" data-next>Continue</button>
+          </div>
+        </section>
+
+        <section class="booking-panel" data-panel="2" hidden aria-labelledby="step2-h">
+          <h2 id="step2-h">Store &amp; appointment time</h2>
+          <div class="form-group" style="margin-top:var(--space-6);">
+            <label class="form-label" for="store">Preferred store</label>
+            <select class="form-select" id="store" required></select>
+          </div>
+          <div class="grid-2">
+            <div class="form-group">
+              <label class="form-label" for="date">Date</label>
+              <input class="form-input" type="date" id="date" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="time">Time</label>
+              <select class="form-select" id="time" required>
+                <option value="09:00">9:00 AM</option>
+                <option value="10:30">10:30 AM</option>
+                <option value="12:00">12:00 PM</option>
+                <option value="14:00">2:00 PM</option>
+                <option value="16:00">4:00 PM</option>
+                <option value="17:30">5:30 PM</option>
+              </select>
+            </div>
+          </div>
+          <div class="booking-actions">
+            <button type="button" class="btn btn-ghost" data-back>Back</button>
+            <button type="button" class="btn btn-primary" data-next>Continue</button>
+          </div>
+        </section>
+
+        <section class="booking-panel" data-panel="3" hidden aria-labelledby="step3-h">
+          <h2 id="step3-h">Pet &amp; contact details</h2>
+          <div class="grid-2" style="margin-top:var(--space-6);">
+            <div class="form-group"><label class="form-label" for="pet-name">Pet name</label><input class="form-input" id="pet-name" required></div>
+            <div class="form-group"><label class="form-label" for="pet-type">Pet type</label>
+              <select class="form-select" id="pet-type"><option>Dog</option><option>Cat</option></select>
+            </div>
+          </div>
+          <div class="grid-2">
+            <div class="form-group"><label class="form-label" for="owner">Your name</label><input class="form-input" id="owner" required autocomplete="name"></div>
+            <div class="form-group"><label class="form-label" for="phone">Phone</label><input class="form-input" id="phone" type="tel" required autocomplete="tel"></div>
+          </div>
+          <div class="form-group"><label class="form-label" for="notes">Notes (optional)</label><textarea class="form-textarea" id="notes" placeholder="Allergies, temperament, preferred stylist…"></textarea></div>
+          <div class="booking-actions">
+            <button type="button" class="btn btn-ghost" data-back>Back</button>
+            <button type="button" class="btn btn-primary" data-next>Review</button>
+          </div>
+        </section>
+
+        <section class="booking-panel" data-panel="4" hidden aria-labelledby="step4-h">
+          <h2 id="step4-h">Confirm your booking</h2>
+          <div class="cart-summary" id="booking-summary" style="margin-top:var(--space-6);"></div>
+          <div class="booking-actions">
+            <button type="button" class="btn btn-ghost" data-back>Back</button>
+            <button type="submit" class="btn btn-primary">Confirm booking</button>
+          </div>
+          <p class="form-hint">Demo booking — no appointment is submitted to a live system.</p>
+        </section>
+      </form>
+    </div>
+  </main>
+
+  <div id="ps-footer" data-base="../"></div>
+  <script src="../js/chrome.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    const serviceParam = PetSmartParams.get('service') || 'grooming';
+    const serviceMeta = PetSmartData.services.find(s => s.id === serviceParam) || PetSmartData.services[0];
+    document.title = `Book ${serviceMeta.name} — PetSmart`;
+    document.getElementById('book-title').textContent = `Book ${serviceMeta.name}`;
+    document.getElementById('book-lead').textContent = serviceMeta.description;
+
+    const options = PetSmartData.getBookingOptions(serviceMeta.id);
+    let selectedOption = options[0]?.id || '';
+    let step = 1;
+
+    const storeSelect = document.getElementById('store');
+    PetSmartData.stores.forEach(s => {
+      storeSelect.insertAdjacentHTML('beforeend', `<option value="${s.id}">${s.name} — ${s.city}</option>`);
+    });
+
+    const dateInput = document.getElementById('date');
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    dateInput.min = tomorrow.toISOString().slice(0, 10);
+    dateInput.value = dateInput.min;
+
+    const optionsEl = document.getElementById('service-options');
+    optionsEl.innerHTML = options.map(o => `
+      <label class="option-card ${o.id === selectedOption ? 'is-selected' : ''}">
+        <input type="radio" name="option" value="${o.id}" ${o.id === selectedOption ? 'checked' : ''}>
+        <strong>${o.name}</strong>
+        <span class="text-muted text-small">${o.duration}</span>
+        <span class="option-card__price">From ${PetSmartData.formatPrice(o.price)}</span>
+      </label>
+    `).join('');
+    optionsEl.addEventListener('change', (e) => {
+      selectedOption = e.target.value;
+      optionsEl.querySelectorAll('.option-card').forEach(card => {
+        card.classList.toggle('is-selected', card.querySelector('input').value === selectedOption);
+      });
+    });
+
+    const panels = [...document.querySelectorAll('.booking-panel')];
+    const stepper = [...document.querySelectorAll('#book-stepper li')];
+
+    function showStep(n) {
+      step = n;
+      panels.forEach(p => {
+        const active = Number(p.dataset.panel) === n;
+        p.hidden = !active;
+        p.classList.toggle('is-active', active);
+      });
+      stepper.forEach((li, i) => {
+        li.classList.toggle('is-active', i + 1 === n);
+        li.classList.toggle('is-done', i + 1 < n);
+      });
+      if (n === 4) renderSummary();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderSummary() {
+      const opt = options.find(o => o.id === selectedOption);
+      const store = PetSmartData.getStore(storeSelect.value);
+      document.getElementById('booking-summary').innerHTML = `
+        <h3 style="margin-bottom:var(--space-4);">${serviceMeta.name}</h3>
+        <p><strong>${opt?.name || ''}</strong> · ${PetSmartData.formatPrice(opt?.price || 0)}</p>
+        <p class="text-muted text-small">${opt?.duration || ''}</p>
+        <hr style="border:none;border-top:var(--border);margin:var(--space-4) 0;">
+        <p>${store?.name}<br>${store?.address}, ${store?.city}</p>
+        <p>${dateInput.value} at ${document.getElementById('time').selectedOptions[0].textContent}</p>
+        <hr style="border:none;border-top:var(--border);margin:var(--space-4) 0;">
+        <p><strong>${document.getElementById('pet-name').value}</strong> (${document.getElementById('pet-type').value})</p>
+        <p>${document.getElementById('owner').value} · ${document.getElementById('phone').value}</p>
+      `;
+    }
+
+    document.querySelectorAll('[data-next]').forEach(btn => btn.addEventListener('click', () => {
+      if (step === 1 && !selectedOption) return alert('Select a service option');
+      if (step === 2 && (!storeSelect.value || !dateInput.value)) return alert('Choose a store and date');
+      if (step === 3) {
+        if (!document.getElementById('pet-name').value || !document.getElementById('owner').value || !document.getElementById('phone').value) {
+          return alert('Please complete pet and contact details');
+        }
+      }
+      showStep(step + 1);
+    }));
+    document.querySelectorAll('[data-back]').forEach(btn => btn.addEventListener('click', () => showStep(step - 1)));
+
+    document.getElementById('book-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const opt = options.find(o => o.id === selectedOption);
+      const payload = {
+        service: serviceMeta.id,
+        option: opt?.id,
+        store: storeSelect.value,
+        date: dateInput.value,
+        time: document.getElementById('time').value,
+        pet: document.getElementById('pet-name').value,
+      };
+      sessionStorage.setItem('petsmart-booking', JSON.stringify(payload));
+      window.location.href = 'booking-confirmed.html';
+    });
+  </script>
+</body>
+</html>

@@ -39,10 +39,13 @@ petsmart/
 
 - Shared header/footer via `chrome.js` across all pages
 - Working category filters (price + brand) with mobile filter drawer
-- Product quantity stepper + real favorites (localStorage)
-- Adoptable pets grid on Adopt (filter Dogs / Cats)
+- Product quantity stepper, variants, reviews, sticky add-to-cart
+- Multi-step checkout (shipping → delivery → payment)
+- Bookable services flow (grooming / training / day camp) + confirmation
+- Adoptable pets grid + pet detail pages (species + size filters)
 - Veterinary services page
-- Checkout confirmation page
+- Styled store map visual
+- Hero motion + pathway hover polish
 - Linked from Artistic Fountain portfolio homepage
 
 ## Pages
@@ -63,7 +66,10 @@ petsmart/
 | 11 | Training | `/petsmart/services/training.html` |
 | 12 | Doggie Day Camp | `/petsmart/services/day-camp.html` |
 | 12b | Veterinary | `/petsmart/services/vet.html` |
+| 12c | Book service | `/petsmart/services/book.html?service=grooming` |
+| 12d | Booking confirmed | `/petsmart/services/booking-confirmed.html` |
 | 13 | Adoption | `/petsmart/adopt/` |
+| 13b | Pet detail | `/petsmart/adopt/pet.html?id=pet1` |
 | 14 | Pet Care hub | `/petsmart/care/` |
 | 15 | Pet Care article | `/petsmart/care/article.html?id=bringing-home` |
 | 16 | Store locator | `/petsmart/stores/` |

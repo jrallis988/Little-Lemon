@@ -40,13 +40,14 @@
             <h2 style="font-size:var(--text-lg); margin-bottom:var(--space-3);">Services at this store</h2>
             <ul>${store.services.map(s => `<li>${s}</li>`).join('')}</ul>
             <div style="margin-top:var(--space-6); display:flex; flex-wrap:wrap; gap:var(--space-3);">
-              <a class="btn btn-primary" href="../services/grooming.html">Book grooming</a>
+              <a class="btn btn-primary" href="../services/book.html?service=grooming">Book grooming</a>
               <a class="btn btn-outline" href="../adopt/index.html">Adoption events</a>
             </div>
           </div></div>
         </div>
-        <div style="background:var(--ps-mist); border-radius:var(--radius-lg); height:280px; display:flex; align-items:center; justify-content:center; color:var(--ps-gray);">
-          Map placeholder — ${store.city}, ${store.state}
+        <div class="store-map" role="img" aria-label="Map showing ${store.city}, ${store.state}">
+          <span class="store-map__pin" aria-hidden="true"></span>
+          <span class="store-map__label">${store.city}, ${store.state}</span>
         </div>
       `;
     }
