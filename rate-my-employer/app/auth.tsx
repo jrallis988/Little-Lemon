@@ -20,6 +20,7 @@ export default function AuthScreen() {
   const { signIn, signUp, continueAsGuest } = useApp();
   const [mode, setMode] = useState<'signin' | 'register'>('signin');
   const [displayName, setDisplayName] = useState('');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [busy, setBusy] = useState(false);
@@ -29,78 +30,90 @@ export default function AuthScreen() {
     const error =
       mode === 'signin'
         ? await signIn({ email, password })
-        : await signUp({ email, password, displayName });
+        : await signUp({ email, password, displayName, username });
     setBusy(false);
     if (error) {
       Alert.alert('Account', error);
       return;
     }
-    router.replace(mode === 'register' ? '/verify-work' : '/(tabs)/explore');
+    router.replace('/(tabs)/home');
   };
 
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.content}>
-        <Text style={styles.brand}>Rate My Employer</Text>
+        <Text style={styles.brand}>RME</Text>
         <Text style={styles.title}>
-          {mode === 'signin' ? 'Welcome back' : 'Create your account'}
+          {mode === 'signin' ? 'Welcome back!' : 'Create Account'}
         </Text>
         <Text style={styles.copy}>
-          Sign in to contribute reviews and salary signals — or browse as a guest.
+          {mode === 'signin'
+            ? 'Sign in to share experiences and save employers.'
+            : 'Join to post reviews, interviews, and salary signals.'}
         </Text>
 
         {mode === 'register' ? (
-          <TextInput
-            style={styles.input}
-            placeholder="Display name"
-            placeholderTextColor={colors.inkSoft}
-            value={displayName}
-            onChangeText={setDisplayName}
-          />
+          <>
+            <TextInput
+              style={styles.input}
+              placeholder="Display name"
+              placeholderTextColor={colors.inkSoft}
+              value={displayName}
+              onChangeText={setDisplayName}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Username (e.g. PurpleBunny75)"
+              placeholderTextColor={colors.inkSoft}
+              autoCapitalize="none"
+              value={username}
+              onChangeText={setUsername}
+            />
+          </>
         ) : null}
 
         <TextInput
           style={styles.input}
           placeholder="Email"
           placeholderTextColor={colors.inkSoft}
-          value={email}
-          onChangeText={setEmail}
           autoCapitalize="none"
           keyboardType="email-address"
+          value={email}
+          onChangeText={setEmail}
         />
         <TextInput
           style={styles.input}
           placeholder="Password"
           placeholderTextColor={colors.inkSoft}
+          secureTextEntry
           value={password}
           onChangeText={setPassword}
-          secureTextEntry
         />
 
+        {mode === 'signin' ? (
+          <Pressable onPress={() => Alert.alert('Reset', 'Password reset will plug in here.')}>
+            <Text style={styles.forgot}>Forgot password?</Text>
+          </Pressable>
+        ) : null}
+
         <PrimaryButton
-          label={busy ? 'Working…' : mode === 'signin' ? 'Sign In' : 'Register'}
+          label={busy ? 'Working…' : mode === 'signin' ? 'Sign In' : 'Create Account'}
           onPress={onSubmit}
           disabled={busy}
         />
 
         <Pressable onPress={() => setMode((m) => (m === 'signin' ? 'register' : 'signin'))}>
           <Text style={styles.switch}>
-            {mode === 'signin' ? 'Need an account? Register' : 'Have an account? Sign In'}
+            {mode === 'signin' ? 'Need an account? Create Account' : 'Have an account? Sign In'}
           </Text>
         </Pressable>
 
         <View style={styles.oauthRow}>
-          <Pressable
-            style={styles.oauth}
-            onPress={() => Alert.alert('Coming soon', 'Apple Sign In will plug in here.')}
-          >
+          <Pressable style={styles.oauth} onPress={() => Alert.alert('Coming soon', 'Apple Sign In')}>
             <Ionicons name="logo-apple" size={18} color={colors.ink} />
             <Text style={styles.oauthText}>Apple</Text>
           </Pressable>
-          <Pressable
-            style={styles.oauth}
-            onPress={() => Alert.alert('Coming soon', 'Google Sign In will plug in here.')}
-          >
+          <Pressable style={styles.oauth} onPress={() => Alert.alert('Coming soon', 'Google Sign In')}>
             <Ionicons name="logo-google" size={18} color={colors.ink} />
             <Text style={styles.oauthText}>Google</Text>
           </Pressable>
@@ -111,7 +124,7 @@ export default function AuthScreen() {
           variant="ghost"
           onPress={async () => {
             await continueAsGuest();
-            router.replace('/(tabs)/explore');
+            router.replace('/(tabs)/home');
           }}
         />
       </View>
@@ -122,22 +135,13 @@ export default function AuthScreen() {
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.surface },
   content: { padding: spacing.lg, gap: spacing.md },
-  brand: {
-    fontFamily: typography.displaySemi,
-    fontSize: 16,
-    color: colors.inkSoft,
-  },
-  title: {
-    fontFamily: typography.display,
-    fontSize: 32,
-    color: colors.ink,
-  },
+  brand: { fontFamily: typography.bodyBold, fontSize: 16, color: colors.navy },
+  title: { fontFamily: typography.display, fontSize: 30, color: colors.ink },
   copy: {
     fontFamily: typography.body,
     fontSize: 15,
     lineHeight: 22,
     color: colors.inkMuted,
-    marginBottom: spacing.xs,
   },
   input: {
     backgroundColor: colors.surfaceRaised,
@@ -149,6 +153,12 @@ const styles = StyleSheet.create({
     fontFamily: typography.body,
     fontSize: 16,
     color: colors.ink,
+  },
+  forgot: {
+    alignSelf: 'flex-end',
+    fontFamily: typography.bodyMedium,
+    fontSize: 13,
+    color: colors.blue,
   },
   switch: {
     textAlign: 'center',
@@ -166,12 +176,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surfaceRaised,
     borderWidth: 1,
     borderColor: colors.border,
-    borderRadius: radii.sm,
+    borderRadius: radii.md,
     paddingVertical: 12,
   },
-  oauthText: {
-    fontFamily: typography.bodySemi,
-    fontSize: 14,
-    color: colors.ink,
-  },
+  oauthText: { fontFamily: typography.bodySemi, fontSize: 14, color: colors.ink },
 });

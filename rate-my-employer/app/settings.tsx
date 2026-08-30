@@ -12,34 +12,31 @@ export default function SettingsScreen() {
   return (
     <View style={styles.content}>
       <Text style={styles.title}>Settings</Text>
-      <Text style={styles.copy}>
-        {user ? `Signed in as ${user.email}` : 'Not signed in'}
-      </Text>
-
+      <Text style={styles.copy}>{user ? `Signed in as ${user.email}` : 'Not signed in'}</Text>
+      <PrimaryButton
+        label="Edit profile"
+        variant="secondary"
+        onPress={() => Alert.alert('Edit profile', 'Coming soon.')}
+      />
+      <PrimaryButton
+        label="Change password"
+        variant="secondary"
+        onPress={() => Alert.alert('Password', 'Coming soon.')}
+      />
       <PrimaryButton
         label="Notification preferences"
-        variant="ghost"
-        onPress={() => Alert.alert('Notifications', 'Push preferences will live here.')}
+        variant="secondary"
+        onPress={() => Alert.alert('Notifications', 'Coming soon.')}
       />
       <PrimaryButton
-        label="Terms of service"
-        variant="ghost"
-        onPress={() => Alert.alert('Terms', 'Terms & conditions placeholder.')}
+        label="Theme · System"
+        variant="secondary"
+        onPress={() => Alert.alert('Theme', 'System default.')}
       />
-      <PrimaryButton
-        label="Privacy policy"
-        variant="ghost"
-        onPress={() => Alert.alert('Privacy', 'Privacy policy placeholder.')}
-      />
-      <PrimaryButton
-        label="Verify work email"
-        variant="ghost"
-        onPress={() => router.push('/verify-work')}
-      />
+      <PrimaryButton label="Community guidelines" variant="ghost" onPress={() => router.push('/guidelines')} />
       {user ? (
         <PrimaryButton
           label="Log out"
-          variant="ink"
           onPress={async () => {
             await signOut();
             router.replace('/auth');
@@ -52,6 +49,6 @@ export default function SettingsScreen() {
 
 const styles = StyleSheet.create({
   content: { flex: 1, padding: spacing.lg, gap: spacing.md, backgroundColor: colors.surface },
-  title: { fontFamily: typography.display, fontSize: 30, color: colors.ink },
+  title: { fontFamily: typography.display, fontSize: 28, color: colors.ink },
   copy: { fontFamily: typography.body, fontSize: 15, color: colors.inkMuted, marginBottom: spacing.sm },
 });

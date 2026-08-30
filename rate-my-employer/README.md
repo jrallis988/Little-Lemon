@@ -1,41 +1,21 @@
-# Rate My Employer
+# Rate My Employer (RME)
 
-Cross-platform mobile app for crowdsourced workplace ratings.
+Cross-platform mobile app for crowdsourced workplace ratings — **Employer → Workplace** model.
 
 ## Stack
 
-- **Frontend:** React Native + Expo (TypeScript), Expo Router
-- **Styling:** Clean StyleSheet + theme tokens
-- **Backend:** Node.js / Express + PostgreSQL (`server/db/schema.sql`)
+- Frontend: React Native + Expo (TypeScript), Expo Router
+- Styling: Clean StyleSheet, navy/blue RME theme
+- Backend scaffold: Node.js / Express + PostgreSQL (`server/`)
 
-## Screen directory
+## Navigation
 
-### Onboarding & authentication
-| Screen | Route |
-| --- | --- |
-| SplashScreen | `app/splash.tsx` |
-| ValueCarouselScreen | `app/onboarding.tsx` |
-| AuthScreen | `app/auth.tsx` |
-| WorkVerificationScreen | `app/verify-work.tsx` |
+**Tabs:** Home · Search · Write (+) · Activity · Profile
 
-### Bottom tabs
-| Tab | Screen | Route |
-| --- | --- | --- |
-| Explore | ExploreScreen | `app/(tabs)/explore.tsx` |
-| Search | SearchDirectoryScreen | `app/(tabs)/search.tsx` |
-| Contribute (+) | ContributeScreen (5-step wizard) | `app/(tabs)/contribute.tsx` |
-| Compare | CompareScreen | `app/(tabs)/compare.tsx` |
-| Profile | ProfileScreen | `app/(tabs)/profile.tsx` |
+## Key flows
 
-### Stack / modals
-| Screen | Route |
-| --- | --- |
-| CompanyDetailScreen | `app/company/[id].tsx` |
-| ReviewDetailScreen | `app/review/[id].tsx` |
-| SubmitSalaryScreen | `app/salary/submit.tsx` |
-| SettingsScreen | `app/settings.tsx` |
-
-Contribute wizard steps: SelectCompany → Ratings → WrittenFeedback → Tagging → SalaryOptional.
+- Discover employers → choose workplace/location → reviews, interviews, salaries
+- Write wizard: Type → Employer → Workplace → Role → Rate → Write → Preview & Submit
 
 ## Run
 
@@ -43,8 +23,4 @@ Contribute wizard steps: SelectCompany → Ratings → WrittenFeedback → Taggi
 cd rate-my-employer
 npm install
 npm run web
-
-cd server
-npm install
-npm run dev
 ```

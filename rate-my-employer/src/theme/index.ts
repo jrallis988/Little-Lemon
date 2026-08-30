@@ -1,22 +1,27 @@
 /**
- * Minimalist, high-utility visual tokens.
- * High contrast ink on cool surface; lime accent for primary actions only.
+ * RME visual tokens — navy/blue system matching the refined UI kit.
  */
 export const colors = {
-  ink: '#0B1210',
-  inkMuted: '#3A4A44',
-  inkSoft: '#6A7A73',
-  surface: '#F2F4F3',
+  navy: '#0B2C5F',
+  navyDeep: '#071E42',
+  blue: '#1E6BFF',
+  blueSoft: '#E8F0FF',
+  ink: '#111827',
+  inkMuted: '#4B5563',
+  inkSoft: '#9CA3AF',
+  surface: '#F5F7FB',
   surfaceRaised: '#FFFFFF',
-  mist: '#D9E2DD',
-  accent: '#C8F031',
-  accentDeep: '#8FB512',
+  mist: '#E5EAF2',
+  accent: '#1E6BFF',
+  accentDeep: '#1554CC',
   warning: '#D97706',
-  danger: '#B42318',
-  star: '#D97706',
-  border: '#C5D0CA',
-  tabBar: '#0B1210',
-  tabInactive: '#8FA098',
+  danger: '#DC2626',
+  success: '#059669',
+  star: '#F59E0B',
+  border: '#D7DEEA',
+  tabBar: '#FFFFFF',
+  tabInactive: '#9CA3AF',
+  tabActive: '#1E6BFF',
 };
 
 export const spacing = {
@@ -31,13 +36,15 @@ export const spacing = {
 export const radii = {
   sm: 8,
   md: 12,
-  lg: 20,
+  lg: 16,
+  xl: 24,
   pill: 999,
 } as const;
 
+/** Clean sans-serif only (kit uses unified sans stack) */
 export const typography = {
-  display: 'Fraunces_700Bold',
-  displaySemi: 'Fraunces_600SemiBold',
+  display: 'DMSans_700Bold',
+  displaySemi: 'DMSans_600SemiBold',
   body: 'DMSans_400Regular',
   bodyMedium: 'DMSans_500Medium',
   bodySemi: 'DMSans_600SemiBold',

@@ -9,14 +9,11 @@ export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
-        headerStyle: { backgroundColor: colors.ink },
-        headerTintColor: colors.surface,
-        headerTitleStyle: {
-          fontFamily: typography.bodySemi,
-          fontSize: 16,
-        },
+        headerStyle: { backgroundColor: colors.navy },
+        headerTintColor: '#FFFFFF',
+        headerTitleStyle: { fontFamily: typography.bodySemi, fontSize: 16 },
         tabBarStyle: styles.tabBar,
-        tabBarActiveTintColor: colors.accent,
+        tabBarActiveTintColor: colors.tabActive,
         tabBarInactiveTintColor: colors.tabInactive,
         tabBarLabelStyle: styles.tabLabel,
       }}
@@ -31,14 +28,13 @@ export default function TabsLayout() {
             tabBarIcon: ({ color, focused, size }) => {
               if (tab.prominent) {
                 return (
-                  <View style={styles.contributeWrap}>
-                    <View style={styles.contributeButton}>
-                      <Ionicons name="add" size={28} color={colors.ink} />
+                  <View style={styles.writeWrap}>
+                    <View style={styles.writeButton}>
+                      <Ionicons name="add" size={28} color="#FFFFFF" />
                     </View>
                   </View>
                 );
               }
-
               return (
                 <Ionicons
                   name={(focused ? tab.iconFocused : tab.icon) as keyof typeof Ionicons.glyphMap}
@@ -57,7 +53,7 @@ export default function TabsLayout() {
 const styles = StyleSheet.create({
   tabBar: {
     backgroundColor: colors.tabBar,
-    borderTopColor: colors.ink,
+    borderTopColor: colors.border,
     height: 64,
     paddingTop: 6,
     paddingBottom: 8,
@@ -66,16 +62,16 @@ const styles = StyleSheet.create({
     fontFamily: typography.bodyMedium,
     fontSize: 11,
   },
-  contributeWrap: {
+  writeWrap: {
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: -18,
   },
-  contributeButton: {
+  writeButton: {
     width: 52,
     height: 52,
     borderRadius: 26,
-    backgroundColor: colors.accent,
+    backgroundColor: colors.blue,
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 3,

@@ -5,7 +5,7 @@ import { colors, radii, typography } from '../../theme';
 type Props = {
   label: string;
   onPress?: () => void;
-  variant?: 'accent' | 'ink' | 'ghost';
+  variant?: 'primary' | 'secondary' | 'ghost';
   disabled?: boolean;
   style?: ViewStyle;
 };
@@ -13,7 +13,7 @@ type Props = {
 export function PrimaryButton({
   label,
   onPress,
-  variant = 'accent',
+  variant = 'primary',
   disabled,
   style,
 }: Props) {
@@ -23,8 +23,8 @@ export function PrimaryButton({
       disabled={disabled}
       style={[
         styles.base,
-        variant === 'accent' && styles.accent,
-        variant === 'ink' && styles.ink,
+        variant === 'primary' && styles.primary,
+        variant === 'secondary' && styles.secondary,
         variant === 'ghost' && styles.ghost,
         disabled && styles.disabled,
         style,
@@ -33,7 +33,7 @@ export function PrimaryButton({
       <Text
         style={[
           styles.label,
-          variant === 'ink' && styles.labelOnInk,
+          variant === 'secondary' && styles.labelSecondary,
           variant === 'ghost' && styles.labelGhost,
         ]}
       >
@@ -45,12 +45,16 @@ export function PrimaryButton({
 
 const styles = StyleSheet.create({
   base: {
-    borderRadius: radii.sm,
+    borderRadius: radii.md,
     paddingVertical: 14,
     alignItems: 'center',
   },
-  accent: { backgroundColor: colors.accent },
-  ink: { backgroundColor: colors.ink },
+  primary: { backgroundColor: colors.blue },
+  secondary: {
+    backgroundColor: colors.surfaceRaised,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
   ghost: {
     backgroundColor: 'transparent',
     borderWidth: 1,
@@ -60,8 +64,8 @@ const styles = StyleSheet.create({
   label: {
     fontFamily: typography.bodyBold,
     fontSize: 15,
-    color: colors.ink,
+    color: '#FFFFFF',
   },
-  labelOnInk: { color: colors.accent },
+  labelSecondary: { color: colors.ink },
   labelGhost: { color: colors.inkMuted },
 });

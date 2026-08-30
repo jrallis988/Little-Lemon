@@ -7,10 +7,17 @@ type Props = {
   onChange?: (value: number) => void;
   size?: 'sm' | 'md' | 'lg';
   label?: string;
+  showValue?: boolean;
 };
 
-export function StarRating({ value, onChange, size = 'md', label }: Props) {
-  const fontSize = size === 'sm' ? 16 : size === 'lg' ? 28 : 22;
+export function StarRating({
+  value,
+  onChange,
+  size = 'md',
+  label,
+  showValue = true,
+}: Props) {
+  const fontSize = size === 'sm' ? 16 : size === 'lg' ? 30 : 22;
 
   return (
     <View style={styles.wrap}>
@@ -19,17 +26,11 @@ export function StarRating({ value, onChange, size = 'md', label }: Props) {
         {[1, 2, 3, 4, 5].map((star) => {
           const filled = star <= Math.round(value);
           const starEl = (
-            <Text
-              style={[styles.star, { fontSize, color: filled ? colors.star : colors.border }]}
-            >
+            <Text style={[styles.star, { fontSize, color: filled ? colors.star : colors.border }]}>
               ★
             </Text>
           );
-
-          if (!onChange) {
-            return <View key={star}>{starEl}</View>;
-          }
-
+          if (!onChange) return <View key={star}>{starEl}</View>;
           return (
             <Pressable
               key={star}
@@ -42,29 +43,23 @@ export function StarRating({ value, onChange, size = 'md', label }: Props) {
             </Pressable>
           );
         })}
-        <Text style={styles.value}>{value ? value.toFixed(1) : '—'}</Text>
+        {showValue ? (
+          <Text style={styles.value}>{value ? value.toFixed(1) : '—'}</Text>
+        ) : null}
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  wrap: {
-    gap: spacing.xs,
-  },
+  wrap: { gap: spacing.xs },
   label: {
     color: colors.inkMuted,
     fontFamily: typography.bodyMedium,
     fontSize: 13,
   },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 2,
-  },
-  star: {
-    lineHeight: 30,
-  },
+  row: { flexDirection: 'row', alignItems: 'center', gap: 2 },
+  star: { lineHeight: 32 },
   value: {
     marginLeft: spacing.sm,
     color: colors.ink,

@@ -4,9 +4,7 @@ import type { Review } from '../../types';
 import { colors, radii, spacing, typography } from '../../theme';
 import { StarRating } from '../ui/StarRating';
 
-type Props = {
-  review: Review;
-};
+type Props = { review: Review };
 
 export function ReviewCard({ review }: Props) {
   return (
@@ -17,10 +15,11 @@ export function ReviewCard({ review }: Props) {
       </View>
       <Text style={styles.meta}>
         {review.authorName} · {review.role} ·{' '}
-        {review.employmentStatus === 'current' ? 'Current' : 'Former'} ·{' '}
-        {review.wouldRecommend ? 'Recommends' : 'Does not recommend'}
+        {review.employmentStatus === 'current' ? 'Current' : 'Former'}
       </Text>
-      <Text style={styles.body}>{review.body}</Text>
+      <Text style={styles.body} numberOfLines={3}>
+        {review.body}
+      </Text>
     </View>
   );
 }
@@ -34,12 +33,10 @@ const styles = StyleSheet.create({
     padding: spacing.md,
     gap: spacing.sm,
   },
-  header: {
-    gap: spacing.xs,
-  },
+  header: { gap: spacing.xs },
   title: {
     fontFamily: typography.displaySemi,
-    fontSize: 18,
+    fontSize: 16,
     color: colors.ink,
   },
   meta: {
@@ -49,8 +46,8 @@ const styles = StyleSheet.create({
   },
   body: {
     fontFamily: typography.body,
-    fontSize: 15,
-    lineHeight: 22,
+    fontSize: 14,
+    lineHeight: 20,
     color: colors.inkMuted,
   },
 });

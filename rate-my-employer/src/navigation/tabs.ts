@@ -1,26 +1,24 @@
 import type { Href } from 'expo-router';
 
-export type TabKey = 'explore' | 'search' | 'contribute' | 'compare' | 'profile';
+export type TabKey = 'home' | 'search' | 'write' | 'activity' | 'profile';
 
 export type TabDefinition = {
   key: TabKey;
   title: string;
   href: Href;
-  /** Ionicons glyph name */
   icon: string;
   iconFocused: string;
-  /** Center “+” contribute tab gets distinct styling */
   prominent?: boolean;
 };
 
-/** Bottom tab bar: Explore, Search, Contribute/+, Compare, Profile */
+/** Bottom tab bar matching refined kit: Home · Search · + · Activity · Profile */
 export const TABS: TabDefinition[] = [
   {
-    key: 'explore',
-    title: 'Explore',
-    href: '/(tabs)/explore',
-    icon: 'compass-outline',
-    iconFocused: 'compass',
+    key: 'home',
+    title: 'Home',
+    href: '/(tabs)/home',
+    icon: 'home-outline',
+    iconFocused: 'home',
   },
   {
     key: 'search',
@@ -30,19 +28,19 @@ export const TABS: TabDefinition[] = [
     iconFocused: 'search',
   },
   {
-    key: 'contribute',
-    title: 'Contribute',
-    href: '/(tabs)/contribute',
+    key: 'write',
+    title: 'Write',
+    href: '/(tabs)/write',
     icon: 'add',
     iconFocused: 'add',
     prominent: true,
   },
   {
-    key: 'compare',
-    title: 'Compare',
-    href: '/(tabs)/compare',
-    icon: 'git-compare-outline',
-    iconFocused: 'git-compare',
+    key: 'activity',
+    title: 'Activity',
+    href: '/(tabs)/activity',
+    icon: 'notifications-outline',
+    iconFocused: 'notifications',
   },
   {
     key: 'profile',
