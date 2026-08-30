@@ -5,3 +5,11 @@ node_modules/
 *.log
 dist/
 .cache/
+
+# Java / Maven (Lattice checkers)
+checkers/target/
+*.class
+*.jar
+*.war
+*.ear
+hs_err_pid*
