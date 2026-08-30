@@ -18,6 +18,7 @@ import {
 } from "./browser-storage";
 import { matchBrowserReply } from "./thomas-persona";
 import { countGapLabel, productName, tillGapLabel } from "./product-catalog";
+import type { ChatMessage } from "./types";
 
 export const isBrowserMode =
   typeof window !== "undefined" && !("__TAURI_INTERNALS__" in window);
@@ -161,10 +162,11 @@ export async function getInventorySummary(): Promise<InventorySummary> {
 export async function chatWithAssistant(
   message: string,
   context: string,
+  history: ChatMessage[] = [],
 ): Promise<string> {
   if (isBrowserMode) {
     await new Promise((r) => setTimeout(r, 120));
-    return matchBrowserReply(message, context);
+    return matchBrowserReply(message, context, history);
   }
   return invoke("chat_with_assistant", { message, context });
 }

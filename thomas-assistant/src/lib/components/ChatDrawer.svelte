@@ -43,7 +43,8 @@
 
     try {
       const context = buildChatContext();
-      const reply = await chatWithAssistant(message, context);
+      const history = appState.chatMessages;
+      const reply = await chatWithAssistant(message, context, history);
       addChatMessage("assistant", reply);
     } catch {
       addChatMessage(
