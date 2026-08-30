@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { chatWithAssistant } from "$lib/api";
+  import { chatWithAssistant, checkOllamaAvailable } from "$lib/api";
   import ThomasLogo from "$lib/components/ThomasLogo.svelte";
   import { suggestedPrompts } from "$lib/thomas-persona";
   import {
@@ -17,6 +17,7 @@
 
   let input = $state("");
   let sending = $state(false);
+  let liveAi = $state<boolean | null>(null);
   let messagesEl: HTMLDivElement | undefined = $state();
   let inputEl: HTMLTextAreaElement | undefined = $state();
 
@@ -63,6 +64,12 @@
       messagesEl?.scrollTo({ top: messagesEl.scrollHeight });
     });
   });
+
+  $effect(() => {
+    checkOllamaAvailable().then((ok) => {
+      liveAi = ok;
+    });
+  });
 </script>
 
 <aside
@@ -73,11 +80,26 @@
   {#if fullscreen || appState.chatOpen}
     {#if !fullscreen}
       <header class="chat-header">
-        <ThomasLogo variant="mark" width={36} height={36} />
+        <div class="chat-title">
+          <ThomasLogo variant="mark" width={36} height={36} />
+          {#if liveAi === true}
+            <span class="ai-pill live">● Live AI</span>
+          {:else if liveAi === false}
+            <span class="ai-pill offline">○ Offline</span>
+          {/if}
+        </div>
         <button type="button" class="toggle" onclick={toggleChat} aria-label="Toggle chat">
           {appState.chatOpen ? "→" : "←"}
         </button>
       </header>
+    {:else if liveAi !== null}
+      <div class="mobile-ai-bar">
+        {#if liveAi}
+          <span class="ai-pill live">● Live AI — Thomas is listening</span>
+        {:else}
+          <span class="ai-pill offline">○ Offline — start Ollama for live chat</span>
+        {/if}
+      </div>
     {/if}
 
     <div class="chat-body">
@@ -192,7 +214,42 @@
     padding: 0.55rem 0.85rem;
     border-bottom: 1px solid var(--chat-border);
     background: var(--surface);
+  }
+
+  .chat-title {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-width: 0;
+  }
+
+  .mobile-ai-bar {
+    padding: 0.35rem 0.85rem;
+    background: var(--surface);
+    border-bottom: 1px solid var(--chat-border);
     flex-shrink: 0;
+  }
+
+  .ai-pill {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.45rem;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .ai-pill.live {
+    color: var(--green);
+    background: var(--green-bg);
+    border: 1px solid rgba(45, 138, 94, 0.22);
+  }
+
+  .ai-pill.offline {
+    color: var(--text-muted);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
   }
 
   .chat-header.collapsed-only {

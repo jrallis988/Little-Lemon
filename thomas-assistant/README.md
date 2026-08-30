@@ -90,11 +90,26 @@ cloudflared tunnel --url http://localhost:4173
 npm run tauri build
 ```
 
-## Ollama Setup (Optional)
+## Ollama Setup (Live chat)
+
+Browser and Tauri chat use **Ollama** when it's running locally. Without it, Thomas falls back to offline rule-based replies.
 
 ```bash
-ollama pull llama3
-ollama serve   # runs on localhost:11434 by default
+# Install (once): https://ollama.com
+ollama pull llama3.2:1b    # fast default; or: ollama pull llama3
+
+# Terminal 1 — model server
+ollama serve
+
+# Terminal 2 — Thomas (Vite proxies /api/ollama → localhost:11434)
+cd thomas-assistant
+npm run dev          # or: npm run build && npm run preview
 ```
 
-Without Ollama, Thomas runs in offline mode with rule-based assistant responses.
+Chat shows **● Live AI** when Ollama is reachable. Override model:
+
+```bash
+VITE_OLLAMA_MODEL=llama3 npm run dev
+```
+
+For `npm run tauri dev`, Ollama is called from Rust (`src-tauri/src/ai.rs`, default model `llama3`).
