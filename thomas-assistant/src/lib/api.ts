@@ -14,6 +14,7 @@ import {
   setAudits,
   setScans,
   setShifts,
+  appendAudit,
 } from "./browser-storage";
 import { matchBrowserReply } from "./thomas-persona";
 import { countGapLabel, productName, tillGapLabel } from "./product-catalog";
@@ -166,4 +167,20 @@ export async function chatWithAssistant(
     return matchBrowserReply(message, context);
   }
   return invoke("chat_with_assistant", { message, context });
+}
+
+/** Log an approved restock (never auto-sends to a vendor). */
+export async function recordRestockApproval(
+  summary: string,
+  userId: string,
+): Promise<AuditTrail> {
+  if (isBrowserMode) {
+    return appendAudit({
+      action_type: "restock_order",
+      details: `Restock approved (pending proprietor): ${summary}`,
+      user_id: userId,
+      timestamp: formatTimestamp(),
+    });
+  }
+  return invoke("record_restock_approval", { summary, userId });
 }

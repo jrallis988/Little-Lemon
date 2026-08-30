@@ -1,40 +1,50 @@
 <script lang="ts">
   import ThomasLogo from "$lib/components/ThomasLogo.svelte";
   import {
-    BUSINESS_NOTICES,
-    BUSINESS_SNAPSHOT,
-    BUSINESS_SUGGESTED_ACTIONS,
-  } from "$lib/business-notices";
+    buildHouseSnapshot,
+    buildNotices,
+    buildSuggestedActions,
+  } from "$lib/business-intelligence";
+  import {
+    listInventoryScans,
+    listShiftLogs,
+    getInventorySummary,
+  } from "$lib/api";
   import {
     addChatMessage,
+    appState,
     setMobileScreen,
     setActiveTab,
   } from "$lib/stores/app.svelte";
   import type { MobileScreen, NoticeAction, WorkflowTab } from "$lib/types";
 
   let dismissed = $state<Set<string>>(new Set());
+  let ready = $state(false);
 
-  const visibleNotices = $derived(
-    BUSINESS_NOTICES.filter((n) => !dismissed.has(n.id)),
+  const snapshot = $derived(
+    buildHouseSnapshot(appState.inventoryScans, appState.shiftLogs),
   );
+  const notices = $derived(
+    buildNotices(appState.inventoryScans, appState.shiftLogs),
+  );
+  const visibleNotices = $derived(
+    notices.filter((n) => !dismissed.has(n.id)),
+  );
+  const suggested = $derived(buildSuggestedActions(snapshot));
+
+  async function refresh() {
+    appState.inventoryScans = await listInventoryScans(100);
+    appState.shiftLogs = await listShiftLogs(50);
+    appState.summary = await getInventorySummary();
+    ready = true;
+  }
 
   function runAction(action: NoticeAction, noticeTitle: string) {
     if (action.target === "chat") {
-      addChatMessage(
-        "user",
-        `Tell me more about this: ${noticeTitle}`,
-      );
+      addChatMessage("user", `Tell me more about this: ${noticeTitle}`);
       addChatMessage(
         "assistant",
-        `Certainly. Regarding “${noticeTitle}” — I can walk you through the particulars, or we can act on it from Cellar Check, The Record, or tonight’s close.`,
-      );
-      setMobileScreen("chat");
-      return;
-    }
-    if (action.label === "Prepare order") {
-      addChatMessage(
-        "assistant",
-        `I’ve noted that for a restock suggestion. The Order screen is coming next — for now, ask me what to bring in and I’ll reason from the house’s movement.`,
+        `Certainly. Regarding “${noticeTitle}” — I can walk you through the particulars from Cellar Check, Restock, The Record, or tonight’s close.`,
       );
       setMobileScreen("chat");
       return;
@@ -44,16 +54,21 @@
       action.target === "home" ||
       action.target === "inventory" ||
       action.target === "shift" ||
-      action.target === "audit"
+      action.target === "audit" ||
+      action.target === "order"
     ) {
       setActiveTab(action.target as WorkflowTab);
     }
   }
 
-  function goSuggested(target: "inventory" | "shift" | "chat") {
+  function goSuggested(target: "inventory" | "shift" | "chat" | "order") {
     setMobileScreen(target);
     if (target !== "chat") setActiveTab(target);
   }
+
+  $effect(() => {
+    refresh();
+  });
 </script>
 
 <section class="panel">
@@ -61,7 +76,7 @@
     <div>
       <p class="eyebrow">Thomas for Business</p>
       <h2>What needs attention</h2>
-      <p class="lead">Thomas knows the house — here’s what he’s noticed today.</p>
+      <p class="lead">Thomas knows the house — here’s what he’s noticed from your counts and closes.</p>
     </div>
   </header>
 
@@ -69,20 +84,20 @@
     <section class="snapshot" aria-label="House snapshot">
       <article class="snap-card">
         <span class="snap-label">Inventory</span>
-        <strong>{BUSINESS_SNAPSHOT.inventoryExact} exact</strong>
+        <strong>{snapshot.inventoryExact} exact</strong>
         <span class="snap-meta">
-          {BUSINESS_SNAPSHOT.inventoryMinor} minor · {BUSINESS_SNAPSHOT.inventoryAttention} attention
+          {snapshot.inventoryMinor} minor · {snapshot.inventoryAttention} attention
         </span>
       </article>
       <article class="snap-card">
         <span class="snap-label">Tonight’s close</span>
-        <strong>{BUSINESS_SNAPSHOT.tonightClose}</strong>
+        <strong>{snapshot.tonightClose}</strong>
         <span class="snap-meta">REG-01 ready when you are</span>
       </article>
       <article class="snap-card">
         <span class="snap-label">Discrepancies</span>
-        <strong>{BUSINESS_SNAPSHOT.recentDiscrepancies} recent</strong>
-        <span class="snap-meta">{BUSINESS_SNAPSHOT.runningLow} running low</span>
+        <strong>{snapshot.recentDiscrepancies} recent</strong>
+        <span class="snap-meta">{snapshot.runningLow} running low</span>
       </article>
     </section>
 
@@ -92,7 +107,9 @@
         <h3 id="notices-heading">Thomas noticed</h3>
       </div>
 
-      {#if visibleNotices.length === 0}
+      {#if !ready}
+        <p class="empty">Reading the house…</p>
+      {:else if visibleNotices.length === 0}
         <p class="empty">The house looks quiet. I’ll speak up when something needs you.</p>
       {:else}
         {#each visibleNotices as notice (notice.id)}
@@ -107,7 +124,9 @@
                 <button
                   type="button"
                   class="action"
-                  class:primary={action.target === "chat" || action.label.includes("Review")}
+                  class:primary={action.target === "chat" ||
+                    action.label.includes("Review") ||
+                    action.label.includes("Prepare")}
                   onclick={() => runAction(action, notice.title)}
                 >
                   {action.label}
@@ -122,7 +141,7 @@
     <section class="suggested" aria-label="Suggested actions">
       <h3>Suggested actions</h3>
       <div class="suggested-row">
-        {#each BUSINESS_SUGGESTED_ACTIONS as item}
+        {#each suggested as item}
           <button type="button" class="suggested-btn" onclick={() => goSuggested(item.target)}>
             {item.label}
             <span aria-hidden="true">→</span>

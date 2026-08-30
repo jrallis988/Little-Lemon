@@ -7,6 +7,7 @@ export const THOMAS_GREETING = `Good evening, ${STAFF_FIRST_NAME}. What shall we
 export const TAB_LABELS = {
   home: "Home",
   inventory: "Cellar Check",
+  order: "Restock",
   shift: "Close the Night",
   audit: "The Record",
 } as const;
@@ -130,6 +131,15 @@ export function matchBrowserReply(message: string, context: string): string {
 
   if (lower.includes("light") || lower.includes("summer") || lower.includes("cookout")) {
     return lightReply;
+  }
+
+  if (
+    lower.includes("order") ||
+    lower.includes("restock") ||
+    lower.includes("bring in") ||
+    lower.includes("reorder")
+  ) {
+    return "I’ve drafted a restock from today’s cellar picture. Open Restock to adjust quantities — nothing ships until you approve and your proprietor confirms.";
   }
 
   if (

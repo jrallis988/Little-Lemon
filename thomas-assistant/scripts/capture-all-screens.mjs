@@ -44,16 +44,18 @@ async function shot(page, name) {
 }
 
 async function go(page) {
+  await page.addInitScript(() => {
+    localStorage.removeItem("thomas-house-data");
+  });
   await page.goto(BASE, { waitUntil: "networkidle" });
-  await page.waitForTimeout(600);
+  await page.waitForTimeout(700);
 }
 
 async function seedChat(page) {
   await page.addInitScript((messages) => {
-    const existing = localStorage.getItem("thomas-house-data");
-    const data = existing ? JSON.parse(existing) : {};
-    data.chatMessages = messages;
-    localStorage.setItem("thomas-house-data", JSON.stringify(data));
+    localStorage.removeItem("thomas-house-data");
+    // Leave empty so house seed runs, then inject chat after first paint via reload pattern
+    window.__THOMAS_PREVIEW_CHAT__ = messages;
   }, previewMessages);
 }
 
@@ -73,6 +75,10 @@ await mkdir(OUT, { recursive: true });
   await page.getByRole("button", { name: "Cellar" }).click();
   await page.waitForTimeout(400);
   await shot(page, "screen-mobile-02-cellar");
+
+  await page.getByRole("button", { name: "Order" }).click();
+  await page.waitForTimeout(500);
+  await shot(page, "screen-mobile-08-order");
 
   await page.getByRole("button", { name: "Close" }).click();
   await page.waitForTimeout(400);
@@ -97,8 +103,19 @@ await mkdir(OUT, { recursive: true });
 // --- Mobile conversation ---
 {
   const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
-  await seedChat(page);
-  await go(page);
+  await page.addInitScript((messages) => {
+    localStorage.removeItem("thomas-house-data");
+  }, previewMessages);
+  await page.goto(BASE, { waitUntil: "networkidle" });
+  await page.waitForTimeout(500);
+  await page.evaluate((messages) => {
+    const raw = localStorage.getItem("thomas-house-data");
+    const data = raw ? JSON.parse(raw) : {};
+    data.chatMessages = messages;
+    localStorage.setItem("thomas-house-data", JSON.stringify(data));
+  }, previewMessages);
+  await page.reload({ waitUntil: "networkidle" });
+  await page.waitForTimeout(500);
   await page.getByRole("button", { name: "Chat" }).click();
   await page.waitForTimeout(500);
   await shot(page, "screen-mobile-07-chat-conversation");
@@ -115,6 +132,10 @@ await mkdir(OUT, { recursive: true });
   await page.waitForTimeout(400);
   await shot(page, "screen-desktop-01-cellar-chat");
 
+  await page.getByRole("button", { name: "Restock" }).click();
+  await page.waitForTimeout(500);
+  await shot(page, "screen-desktop-05-order");
+
   await page.getByRole("button", { name: "Close the Night" }).click();
   await page.waitForTimeout(400);
   await shot(page, "screen-desktop-02-close");
@@ -128,8 +149,19 @@ await mkdir(OUT, { recursive: true });
 // --- Desktop conversation ---
 {
   const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
-  await seedChat(page);
-  await go(page);
+  await page.addInitScript(() => {
+    localStorage.removeItem("thomas-house-data");
+  });
+  await page.goto(BASE, { waitUntil: "networkidle" });
+  await page.waitForTimeout(500);
+  await page.evaluate((messages) => {
+    const raw = localStorage.getItem("thomas-house-data");
+    const data = raw ? JSON.parse(raw) : {};
+    data.chatMessages = messages;
+    localStorage.setItem("thomas-house-data", JSON.stringify(data));
+  }, previewMessages);
+  await page.reload({ waitUntil: "networkidle" });
+  await page.waitForTimeout(500);
   await page.getByRole("button", { name: "Cellar Check" }).click().catch(() => {});
   await page.waitForTimeout(500);
   await shot(page, "screen-desktop-04-chat-conversation");

@@ -5,9 +5,22 @@ import {
   STAFF_FIRST_NAME,
 } from "../thomas-persona";
 import { isBrowserMode } from "../api";
-import { getChatMessages, setChatMessages } from "../browser-storage";
+import {
+  ensureHouseSeed,
+  getChatMessages,
+  getScans,
+  getShifts,
+  setChatMessages,
+} from "../browser-storage";
 
 export const currentUser = STAFF_FIRST_NAME;
+
+/** Personal mode parked — Business-only for this phase. */
+export const PERSONAL_MODE_ENABLED = false;
+
+if (typeof window !== "undefined" && isBrowserMode) {
+  ensureHouseSeed();
+}
 
 function initialChatMessages(): ChatMessage[] {
   if (isBrowserMode) {
@@ -27,8 +40,8 @@ export const appState = $state({
   mode: "business" as ProductMode,
   activeTab: "home" as WorkflowTab,
   mobileScreen: "home" as MobileScreen,
-  inventoryScans: [] as import("../types").InventoryScan[],
-  shiftLogs: [] as import("../types").ShiftLog[],
+  inventoryScans: isBrowserMode ? getScans() : ([] as import("../types").InventoryScan[]),
+  shiftLogs: isBrowserMode ? getShifts() : ([] as import("../types").ShiftLog[]),
   auditTrails: [] as import("../types").AuditTrail[],
   summary: null as import("../types").InventorySummary | null,
   chatMessages: initialChatMessages() as ChatMessage[],
@@ -38,6 +51,7 @@ export const appState = $state({
 });
 
 export function setMode(mode: ProductMode) {
+  if (!PERSONAL_MODE_ENABLED && mode === "personal") return;
   appState.mode = mode;
   if (mode === "business") {
     appState.activeTab = "home";
@@ -45,17 +59,25 @@ export function setMode(mode: ProductMode) {
   }
 }
 
+const workflowScreens: WorkflowTab[] = [
+  "home",
+  "inventory",
+  "shift",
+  "audit",
+  "order",
+];
+
 export function setActiveTab(tab: WorkflowTab) {
   appState.activeTab = tab;
-  if (tab === "home" || tab === "inventory" || tab === "shift" || tab === "audit") {
+  if (workflowScreens.includes(tab)) {
     appState.mobileScreen = tab;
   }
 }
 
 export function setMobileScreen(screen: MobileScreen) {
   appState.mobileScreen = screen;
-  if (screen === "inventory" || screen === "shift" || screen === "audit" || screen === "home") {
-    appState.activeTab = screen;
+  if ((workflowScreens as string[]).includes(screen)) {
+    appState.activeTab = screen as WorkflowTab;
   }
 }
 

@@ -1,5 +1,12 @@
 import type { AuditTrail, InventoryScan, ShiftLog } from "./types";
 import type { ChatMessage } from "./types";
+import {
+  SEED_VERSION,
+  buildSeedAudits,
+  buildSeedScans,
+  buildSeedShifts,
+  maxSeedId,
+} from "./house-seed";
 
 const STORAGE_KEY = "thomas-house-data";
 
@@ -10,6 +17,7 @@ interface HouseData {
   nextId: number;
   signoffPin: string | null;
   chatMessages: ChatMessage[];
+  seedVersion: number | null;
 }
 
 const empty: HouseData = {
@@ -19,6 +27,7 @@ const empty: HouseData = {
   nextId: 0,
   signoffPin: null,
   chatMessages: [],
+  seedVersion: null,
 };
 
 function read(): HouseData {
@@ -34,6 +43,7 @@ function read(): HouseData {
       nextId: parsed.nextId ?? 0,
       signoffPin: parsed.signoffPin ?? null,
       chatMessages: parsed.chatMessages ?? [],
+      seedVersion: parsed.seedVersion ?? null,
     };
   } catch {
     return { ...empty };
@@ -46,6 +56,54 @@ function write(data: HouseData) {
 }
 
 let cache = read();
+
+/**
+ * First visit (or empty house): load a believable demo night
+ * so Home / Order / validation have real signals to work from.
+ */
+export function ensureHouseSeed(): boolean {
+  if (typeof window === "undefined") return false;
+  const hasData =
+    cache.scans.length > 0 ||
+    cache.shifts.length > 0 ||
+    cache.audits.length > 0;
+  if (hasData && cache.seedVersion === SEED_VERSION) return false;
+  if (hasData && cache.seedVersion != null) return false;
+  // Empty house → seed. Also seed if never marked (legacy empty).
+  if (hasData) return false;
+
+  const scans = buildSeedScans();
+  const shifts = buildSeedShifts();
+  const audits = buildSeedAudits(scans, shifts);
+  cache = {
+    scans,
+    shifts,
+    audits,
+    nextId: maxSeedId(scans, shifts, audits),
+    signoffPin: cache.signoffPin,
+    chatMessages: cache.chatMessages,
+    seedVersion: SEED_VERSION,
+  };
+  write(cache);
+  return true;
+}
+
+/** Clear operational data and re-seed for a fresh validation night. */
+export function resetHouseToSeed(): void {
+  const scans = buildSeedScans();
+  const shifts = buildSeedShifts();
+  const audits = buildSeedAudits(scans, shifts);
+  cache = {
+    scans,
+    shifts,
+    audits,
+    nextId: maxSeedId(scans, shifts, audits),
+    signoffPin: null,
+    chatMessages: [],
+    seedVersion: SEED_VERSION,
+  };
+  write(cache);
+}
 
 export function formatTimestamp(date = new Date()): string {
   return date.toLocaleString(undefined, {
@@ -105,4 +163,17 @@ export function getAudits(): AuditTrail[] {
 export function setAudits(audits: AuditTrail[]) {
   cache.audits = audits;
   write(cache);
+}
+
+export function appendAudit(trail: Omit<AuditTrail, "id"> & { id?: number }): AuditTrail {
+  const full: AuditTrail = {
+    id: trail.id ?? nextRecordId(),
+    action_type: trail.action_type,
+    details: trail.details,
+    user_id: trail.user_id,
+    timestamp: trail.timestamp,
+  };
+  cache.audits = [full, ...cache.audits];
+  write(cache);
+  return full;
 }

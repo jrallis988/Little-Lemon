@@ -9,6 +9,7 @@
     close_night: "Close the night",
     inventory_scan: "Cellar check",
     shift_close: "Close the night",
+    restock_order: "Restock order",
   };
 
   async function loadTrails() {

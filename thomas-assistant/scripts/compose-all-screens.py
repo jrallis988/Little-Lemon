@@ -14,18 +14,20 @@ MOBILE = [
     ("screen-mobile-01-chat.png", "2 · Chat"),
     ("screen-mobile-07-chat-conversation.png", "3 · Conversation"),
     ("screen-mobile-02-cellar.png", "4 · Cellar Check"),
-    ("screen-mobile-03-close-step1.png", "5 · Close — Cash"),
-    ("screen-mobile-04-close-step2.png", "6 · Close — Cellar"),
-    ("screen-mobile-05-close-step3.png", "7 · Close — Sign-off"),
-    ("screen-mobile-06-record.png", "8 · The Record"),
+    ("screen-mobile-08-order.png", "5 · Restock Order"),
+    ("screen-mobile-03-close-step1.png", "6 · Close — Cash"),
+    ("screen-mobile-04-close-step2.png", "7 · Close — Cellar"),
+    ("screen-mobile-05-close-step3.png", "8 · Close — Sign-off"),
+    ("screen-mobile-06-record.png", "9 · The Record"),
 ]
 
 DESKTOP = [
-    ("screen-desktop-00-home.png", "9 · Desktop Home"),
-    ("screen-desktop-01-cellar-chat.png", "10 · Cellar + Chat"),
-    ("screen-desktop-02-close.png", "11 · Close the Night"),
-    ("screen-desktop-03-record.png", "12 · The Record"),
-    ("screen-desktop-04-chat-conversation.png", "13 · Conversation"),
+    ("screen-desktop-00-home.png", "10 · Desktop Home"),
+    ("screen-desktop-01-cellar-chat.png", "11 · Cellar + Chat"),
+    ("screen-desktop-05-order.png", "12 · Restock"),
+    ("screen-desktop-02-close.png", "13 · Close the Night"),
+    ("screen-desktop-03-record.png", "14 · The Record"),
+    ("screen-desktop-04-chat-conversation.png", "15 · Conversation"),
 ]
 
 BG = (8, 21, 35)  # midnight navy
@@ -93,16 +95,16 @@ def main():
     top = 120
     label_h = 28
 
-    # Mobile row: 4 + 4
-    row1 = mobile_imgs[:4]
-    row2 = mobile_imgs[4:]
+    # Mobile row: 5 + 4
+    row1 = mobile_imgs[:5]
+    row2 = mobile_imgs[5:]
     mw = max(im.width for im, _ in mobile_imgs)
     mh = max(im.height for im, _ in mobile_imgs)
 
-    mobile_row_w = 4 * mw + 3 * gap
+    mobile_row_w = 5 * mw + 4 * gap
     mobile_block_h = 2 * (mh + label_h + 8) + gap + 40
 
-    # Desktop: 3 on first row, 2 on second (or all in a wrap)
+    # Desktop: 3 per row
     dw = max(im.width for im, _ in desktop_imgs)
     dh = max(im.height for im, _ in desktop_imgs)
     desk_cols = 3
@@ -122,7 +124,7 @@ def main():
     draw.text((side, 36), title, fill=CREAM, font=title_f)
     draw.text(
         (side, 82),
-        "Mobile (8)  ·  Desktop (5)  ·  Screens 13–19 not built yet",
+        "Mobile (9)  ·  Desktop (6)  ·  Live notices + Restock  ·  Personal parked",
         fill=MUTED,
         font=sub_f,
     )

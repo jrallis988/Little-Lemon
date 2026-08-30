@@ -3,6 +3,7 @@
   import ReconcilePanel from "$lib/components/ReconcilePanel.svelte";
   import AuditPanel from "$lib/components/AuditPanel.svelte";
   import BusinessHome from "$lib/components/BusinessHome.svelte";
+  import OrderPanel from "$lib/components/OrderPanel.svelte";
   import ChatDrawer from "$lib/components/ChatDrawer.svelte";
   import AppHeader from "$lib/components/AppHeader.svelte";
   import { appState, setActiveTab, setMobileScreen } from "$lib/stores/app.svelte";
@@ -12,6 +13,7 @@
   const tabs: { id: WorkflowTab; label: string }[] = [
     { id: "home", label: TAB_LABELS.home },
     { id: "inventory", label: TAB_LABELS.inventory },
+    { id: "order", label: TAB_LABELS.order },
     { id: "shift", label: TAB_LABELS.shift },
     { id: "audit", label: TAB_LABELS.audit },
   ];
@@ -20,6 +22,7 @@
     { id: "home", label: "Home" },
     { id: "chat", label: "Chat" },
     { id: "inventory", label: "Cellar" },
+    { id: "order", label: "Order" },
     { id: "shift", label: "Close" },
     { id: "audit", label: "Record" },
   ];
@@ -69,6 +72,8 @@
             <BusinessHome />
           {:else if appState.activeTab === "inventory"}
             <ScanPanel />
+          {:else if appState.activeTab === "order"}
+            <OrderPanel />
           {:else if appState.activeTab === "shift"}
             <ReconcilePanel />
           {:else}
@@ -159,15 +164,17 @@
 
   .tab-nav {
     display: flex;
-    gap: 0.45rem;
+    gap: 0.35rem;
     margin-bottom: 1rem;
     flex-shrink: 0;
+    flex-wrap: wrap;
   }
 
   .tab-nav button {
     flex: 1;
-    min-height: 48px;
-    font-size: 0.88rem;
+    min-width: 5.5rem;
+    min-height: 44px;
+    font-size: 0.8rem;
     font-weight: 600;
     border: 1px solid var(--border);
     border-radius: 8px;
@@ -202,10 +209,10 @@
     border: none;
     background: transparent;
     color: var(--text-muted);
-    font-size: 0.7rem;
+    font-size: 0.62rem;
     font-weight: 600;
     cursor: pointer;
-    padding: 0.45rem 0.15rem;
+    padding: 0.4rem 0.1rem;
   }
 
   .bottom-nav button.active {

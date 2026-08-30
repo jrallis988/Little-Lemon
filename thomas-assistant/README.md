@@ -57,7 +57,18 @@ npm run dev          # http://localhost:1420
 npm run build && npm run preview   # production build at :4173
 ```
 
-Browser mode persists cellar counts, closings, and chat to local storage. On first close, you'll set your own four-digit sign-off code.
+Browser mode persists cellar counts, closings, chat, and restock approvals to local storage. On first visit, Thomas seeds a believable house night so Home notices and Restock have real signals. On first close, you'll set your own four-digit sign-off code.
+
+**Thomas for Business (this phase):** Home notices from live counts/closes → Cellar Check → Restock (approve/export, never auto-order) → Close the Night → The Record. Personal mode is parked.
+
+### Reset demo house
+
+In the browser console:
+
+```js
+localStorage.removeItem("thomas-house-data");
+location.reload();
+```
 
 ### Deploy to Cloudflare Pages
 

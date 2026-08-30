@@ -1,11 +1,9 @@
 <script lang="ts">
   import ThomasLogo from "$lib/components/ThomasLogo.svelte";
   import { isCloudDemo } from "$lib/api";
-  import { appState } from "$lib/stores/app.svelte";
   import {
     BUSINESS_PRODUCT_LINE,
     BUSINESS_SUPPORTING,
-    PERSONAL_POSITIONING,
   } from "$lib/thomas-persona";
 
   interface Props {
@@ -13,34 +11,23 @@
   }
 
   let { compact = false }: Props = $props();
-
-  const productLine = $derived(
-    appState.mode === "business" ? BUSINESS_PRODUCT_LINE : "Personal",
-  );
-  const supporting = $derived(
-    appState.mode === "business" ? BUSINESS_SUPPORTING : PERSONAL_POSITIONING,
-  );
 </script>
 
 <header class="app-header" class:compact>
   <div class="header-main" class:desktop-brand={!compact}>
-    <ThomasLogo variant="full" mode={appState.mode} />
+    <ThomasLogo variant="full" mode="business" />
     {#if compact}
-      <span class="product-line">{productLine}</span>
-      <span class="supporting">{supporting}</span>
+      <span class="product-line">{BUSINESS_PRODUCT_LINE}</span>
+      <span class="supporting">{BUSINESS_SUPPORTING}</span>
     {:else}
       <div class="desktop-meta">
-        <span class="product-line">{productLine}</span>
-        <span class="supporting">{supporting}</span>
+        <span class="product-line">{BUSINESS_PRODUCT_LINE}</span>
+        <span class="supporting">{BUSINESS_SUPPORTING}</span>
       </div>
     {/if}
   </div>
   <div class="status-group">
-    {#if appState.mode === "business"}
-      <span class="mode-pill business">Business</span>
-    {:else}
-      <span class="mode-pill personal">Personal</span>
-    {/if}
+    <span class="mode-pill business">Business</span>
     <span class="status on-premise">● On-Premise</span>
     {#if isCloudDemo}
       <span class="status cloud">☁ Cloud Demo</span>
@@ -127,12 +114,6 @@
     color: var(--midnight);
     background: var(--accent-light);
     border: 1px solid rgba(199, 138, 44, 0.35);
-  }
-
-  .mode-pill.personal {
-    color: var(--cognac);
-    background: var(--accent-light);
-    border: 1px solid rgba(199, 138, 44, 0.25);
   }
 
   .status {

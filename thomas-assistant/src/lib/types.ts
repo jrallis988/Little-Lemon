@@ -39,8 +39,14 @@ export interface ChatMessage {
 }
 
 export type ProductMode = "personal" | "business";
-export type WorkflowTab = "home" | "inventory" | "shift" | "audit";
-export type MobileScreen = "home" | "chat" | "inventory" | "shift" | "audit";
+export type WorkflowTab = "home" | "inventory" | "shift" | "audit" | "order";
+export type MobileScreen =
+  | "home"
+  | "chat"
+  | "inventory"
+  | "shift"
+  | "audit"
+  | "order";
 export type VarianceLevel = "exact" | "minor" | "critical";
 
 export type NoticeSeverity = "info" | "watch" | "urgent";
@@ -64,6 +70,17 @@ export interface BusinessSnapshot {
   tonightClose: string;
   recentDiscrepancies: number;
   runningLow: number;
+}
+
+/** Suggested restock line — staff must approve; never auto-ordered. */
+export interface OrderLine {
+  sku: string;
+  name: string;
+  unit: string;
+  onHand: number;
+  expected: number;
+  suggestedQty: number;
+  reason: string;
 }
 
 export function varianceLevel(variance: number): VarianceLevel {
