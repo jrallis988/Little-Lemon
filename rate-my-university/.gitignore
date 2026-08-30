@@ -1,0 +1,29 @@
+# Rate My University
+
+Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# Node / Expo
+node_modules/
+.expo/
+dist/
+web-build/
+*.jks
+*.p8
+*.p12
+*.mobileprovision
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+
+# Docker
+rmu_pgdata/

@@ -1,0 +1,4 @@
+# Seed script dependencies (run independently of the API container)
+psycopg[binary]==3.2.3
+python-dotenv==1.0.1
+PyYAML==6.0.2

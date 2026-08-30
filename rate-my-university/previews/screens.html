@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rate My University — Full Screen Map</title>
+  <style>
+    :root {
+      --navy: #0B1F33;
+      --ink: #142433;
+      --slate: #3D5163;
+      --mist: #E8EEF3;
+      --paper: #F7FAFC;
+      --accent: #C45C26;
+      --accent-soft: #F3D9C8;
+      --border: #D5DEE7;
+      --white: #FFFFFF;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #1a2330;
+      color: var(--ink);
+      padding: 36px 28px 60px;
+    }
+    h1.page-title { color: #fff; font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+    p.page-sub { color: #9aabba; font-size: 14px; margin-bottom: 28px; max-width: 720px; line-height: 1.45; }
+    .row-label {
+      color: #c8d4de; font-size: 12px; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; margin: 28px 0 14px;
+    }
+    .gallery { display: flex; flex-wrap: wrap; gap: 28px; }
+    .phone-wrap { width: 280px; }
+    .phone-label {
+      color: #c8d4de; font-size: 12px; font-weight: 600;
+      margin-bottom: 10px; text-align: center;
+    }
+    .phone {
+      width: 280px; height: 580px; background: var(--paper);
+      border-radius: 32px; overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+      border: 3px solid #2a3544;
+      display: flex; flex-direction: column;
+    }
+    .notch {
+      height: 22px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .notch-bar { width: 72px; height: 5px; background: #c5ced6; border-radius: 99px; }
+    .screen { flex: 1; overflow: hidden; display: flex; flex-direction: column; }
+    .tabbar {
+      height: 56px; background: var(--white); border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-around;
+      padding-bottom: 6px; flex-shrink: 0;
+    }
+    .tab { display: flex; flex-direction: column; align-items: center; gap: 1px; font-size: 10px; color: var(--slate); font-weight: 500; }
+    .tab.active { color: var(--accent); font-weight: 700; }
+    .tab .icon { font-size: 14px; }
+
+    .hero { background: var(--navy); padding: 22px 18px 18px; }
+    .brand { color: #fff; font-size: 20px; font-weight: 700; letter-spacing: -0.4px; margin-bottom: 6px; }
+    .headline { color: var(--accent-soft); font-size: 14px; font-weight: 700; margin-bottom: 6px; line-height: 1.3; }
+    .sub-hero { color: var(--mist); font-size: 11px; line-height: 1.4; }
+    .section-title { font-size: 13px; font-weight: 700; color: var(--ink); padding: 14px 18px 6px; }
+    .campus { padding: 10px 18px; border-bottom: 1px solid var(--border); }
+    .campus-name { font-size: 13px; font-weight: 700; color: var(--navy); }
+    .campus-meta { font-size: 10px; color: var(--slate); margin-top: 2px; }
+
+    .pad { padding: 20px 18px 0; flex: 1; overflow: hidden; }
+    .title { font-size: 18px; font-weight: 700; color: var(--navy); }
+    .caption { font-size: 11px; color: var(--slate); margin-top: 3px; margin-bottom: 10px; line-height: 1.35; }
+    .input { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 9px 12px; font-size: 13px; color: var(--ink); }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 6px; }
+    .chip { padding: 4px 10px; border-radius: 999px; background: var(--mist); font-size: 10px; font-weight: 500; color: var(--slate); }
+    .chip.active { background: var(--navy); color: #fff; }
+    .row { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .kind { font-size: 9px; text-transform: uppercase; color: var(--accent); font-weight: 600; width: 58px; flex-shrink: 0; padding-top: 2px; }
+    .row-label-t { font-size: 13px; font-weight: 600; color: var(--ink); }
+    .row-sub { font-size: 10px; color: var(--slate); margin-top: 2px; }
+    .link { color: var(--accent); font-size: 12px; font-weight: 600; margin-bottom: 8px; }
+    .eyebrow { font-size: 10px; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 3px; }
+    .metric { margin-bottom: 10px; }
+    .metric-head { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 12px; font-weight: 600; }
+    .metric-val { color: var(--accent); font-size: 11px; font-weight: 700; }
+    .segments { display: flex; gap: 5px; }
+    .seg { flex: 1; text-align: center; padding: 6px 0; border-radius: 6px; background: var(--mist); color: var(--slate); font-size: 11px; font-weight: 600; }
+    .seg.on { background: var(--accent); color: #fff; }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 10px; }
+    .tag { border: 1px solid var(--border); border-radius: 6px; padding: 3px 8px; font-size: 10px; color: var(--slate); background: #fff; }
+    .tag.on { background: var(--navy); color: #fff; border-color: var(--navy); }
+    .comment { min-height: 48px; border: 1px solid var(--border); border-radius: 10px; padding: 10px; background: #fff; color: var(--slate); font-size: 12px; }
+    .cta { margin: 10px 18px; background: var(--accent); color: #fff; text-align: center; padding: 11px; border-radius: 10px; font-weight: 700; font-size: 13px; }
+    .body-text { font-size: 12px; color: var(--slate); line-height: 1.4; margin-bottom: 14px; }
+    .block { padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .label { font-size: 9px; text-transform: uppercase; color: var(--slate); font-weight: 500; margin-bottom: 3px; }
+    .value { font-size: 13px; font-weight: 600; color: var(--ink); }
+    .back { font-size: 11px; color: var(--accent); margin-bottom: 8px; }
+    .list-item { padding: 10px 18px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .list-item .t { font-size: 13px; font-weight: 700; color: var(--navy); }
+    .list-item .s { font-size: 10px; color: var(--slate); margin-top: 2px; }
+    .chev { color: var(--slate); font-size: 18px; }
+    .agg { padding: 0 18px 12px; }
+    .agg-line { display: flex; justify-content: space-between; font-size: 12px; padding: 4px 0; }
+    .agg-line .k { color: var(--slate); text-transform: capitalize; }
+    .agg-line .v { color: var(--accent); font-weight: 700; }
+    .review-snip { padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 12px; color: var(--ink); }
+    .review-meta { font-size: 10px; color: var(--slate); margin-bottom: 3px; }
+    .no-tab .tabbar { display: none; }
+    .phone.detail { height: 580px; }
+  </style>
+</head>
+<body>
+  <h1 class="page-title">Rate My University — Full screen map</h1>
+  <p class="page-sub">
+    Four root tabs plus five hierarchy detail screens.
+    Flow: Home/Directory → University → Department → Professor/Course, or University → Dorm.
+  </p>
+
+  <div class="row-label">Root tabs</div>
+  <div class="gallery">
+    <!-- 1 HOME -->
+    <div class="phone-wrap" id="home">
+      <div class="phone-label">1 · Home</div>
+      <div class="phone">
+        <div class="notch"><div class="notch-bar"></div></div>
+        <div class="screen">
+          <div class="hero">
+            <div class="brand">Rate My University</div>
+            <div class="headline">The student utility for every layer of campus.</div>
+            <div class="sub-hero">Rate professors, advisors, courses, dorms, and the university itself.</div>
+          </div>
+          <div class="section-title">Campuses</div>
+          <div class="campus"><div class="campus-name">University of New Hampshire</div><div class="campus-meta">Durham, NH · @unh.edu</div></div>
+          <div class="campus"><div class="campus-name">UMass Amherst</div><div class="campus-meta">Amherst, MA · @umass.edu</div></div>
+          <div class="campus"><div class="campus-name">Northeastern University</div><div class="campus-meta">Boston, MA · @northeastern.edu</div></div>
+          <div class="campus"><div class="campus-name">Boston University</div><div class="campus-meta">Boston, MA · @bu.edu</div></div>
+        </div>
+        <div class="tabbar">
+          <div class="tab active"><span class="icon">⌂</span>Home</div>
+          <div class="tab"><span class="icon">⌕</span>Directory</div>
+          <div class="tab"><span class="icon">＋</span>Add</div>
+          <div class="tab"><span class="icon">◎</span>Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2 DIRECTORY -->
+    <div class="phone-wrap" id="directory">
+      <div class="phone-label">2 · Directory</div>
+      <div class="phone">
+        <div class="notch"><div class="notch-bar"></div></div>
+        <div class="screen">
+          <div class="pad">
+            <div class="title">Directory</div>
+            <div class="caption">University → Department → Professor, Course, or Dorm.</div>
+            <div class="input">algorithms</div>
+            <div class="chips">
+              <span class="chip">All</span><span class="chip active">People</span><span class="chip">Courses</span><span class="chip">Housing</span>
+            </div>
+            <div class="row"><div class="kind">professor</div><div><div class="row-label-t">Dr. Maya Chen</div><div class="row-sub">Computer Science</div></div></div>
+            <div class="row"><div class="kind">course</div><div><div class="row-label-t">CS-420 — Algorithms</div><div class="row-sub">Computer Science</div></div></div>
+            <div class="row"><div class="kind">professor</div><div><div class="row-label-t">Prof. James Okonkwo</div><div class="row-sub">Mathematics</div></div></div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab"><span class="icon">⌂</span>Home</div>
+          <div class="tab active"><span class="icon">⌕</span>Directory</div>
+          <div class="tab"><span class="icon">＋</span>Add</div>
+          <div class="tab"><span class="icon">◎</span>Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 ADD -->
+    <div class="phone-wrap" id="add">
+      <div class="phone-label">3 · Add / Rate</div>
+      <div class="phone">
+        <div class="notch"><div class="notch-bar"></div></div>
+        <div class="screen">
+          <div class="pad" style="padding-top:14px;">
+            <div class="back">← Back</div>
+            <div class="eyebrow">professor</div>
+            <div class="title" style="font-size:16px;">Dr. Maya Chen</div>
+            <div class="caption">Rate each dimension 1–5.</div>
+            <div class="metric"><div class="metric-head"><span>Clarity</span><span class="metric-val">4</span></div><div class="segments"><div class="seg on">1</div><div class="seg on">2</div><div class="seg on">3</div><div class="seg on">4</div><div class="seg">5</div></div></div>
+            <div class="metric"><div class="metric-head"><span>Helpfulness</span><span class="metric-val">5</span></div><div class="segments"><div class="seg on">1</div><div class="seg on">2</div><div class="seg on">3</div><div class="seg on">4</div><div class="seg on">5</div></div></div>
+            <div style="font-size:12px;font-weight:700;margin:4px 0;">Tags</div>
+            <div class="tags"><span class="tag on">engaging</span><span class="tag">tough-grader</span><span class="tag on">caring</span></div>
+            <div class="comment">What should other students know?</div>
+          </div>
+          <div class="cta" style="margin-top:auto;">Submit review</div>
+        </div>
+        <div class="tabbar">
+          <div class="tab"><span class="icon">⌂</span>Home</div>
+          <div class="tab"><span class="icon">⌕</span>Directory</div>
+          <div class="tab active"><span class="icon">＋</span>Add</div>
+          <div class="tab"><span class="icon">◎</span>Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 PROFILE -->
+    <div class="phone-wrap" id="profile">
+      <div class="phone-label">4 · Profile</div>
+      <div class="phone">
+        <div class="notch"><div class="notch-bar"></div></div>
+        <div class="screen">
+          <div class="pad">
+            <div class="title">Profile</div>
+            <div class="body-text" style="margin-top:8px;">Reviews use an anonymous device token (SHA-256 hashed). Campus email verification can plug in later.</div>
+            <div class="block"><div class="label">Identity</div><div class="value">Anonymous student</div></div>
+            <div class="block"><div class="label">Home campus</div><div class="value">Not set</div></div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab"><span class="icon">⌂</span>Home</div>
+          <div class="tab"><span class="icon">⌕</span>Directory</div>
+          <div class="tab"><span class="icon">＋</span>Add</div>
+          <div class="tab active"><span class="icon">◎</span>Profile</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row-label">Hierarchy detail screens</div>
+  <div class="gallery">
+    <!-- 5 UNIVERSITY -->
+    <div class="phone-wrap" id="university">
+      <div class="phone-label">5 · University detail</div>
+      <div class="phone detail no-tab">
+        <div class="notch"><div class="notch-bar"></div></div>
+        <div class="screen">
+          <div class="pad" style="padding-top:14px;">
+            <div class="back">← Back</div>
+            <div class="eyebrow">University</div>
+            <div class="title" style="font-size:16px;">University of New Hampshire</div>
+            <div class="caption">Durham, NH, USA · @unh.edu</div>
+          </div>
+          <div class="cta">Rate this university</div>
+          <div class="agg">
+            <div style="font-size:13px;font-weight:700;margin-bottom:6px;">Ratings · 128 reviews</div>
+            <div class="agg-line"><span class="k">academics</span><span class="v">4.2</span></div>
+            <div class="agg-line"><span class="k">campus life</span><span class="v">4.5</span></div>
+            <div class="agg-line"><span class="k">resources</span><span class="v">4.0</span></div>
+          </div>
+          <div class="section-title">Departments</div>
+          <div class="list-item"><div><div class="t">Computer Science</div><div class="s">CS</div></div><span class="chev">›</span></div>
+          <div class="list-item"><div><div class="t">Biology</div><div class="s">BIO</div></div><span class="chev">›</span></div>
+          <div class="section-title">Housing</div>
+          <div class="list-item"><div><div class="t">Stoke Hall</div><div class="s">Main Campus</div></div><span class="chev">›</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6 DEPARTMENT -->
+    <div class="phone-wrap" id="department">
+      <div class="phone-label">6 · Department detail</div>
+      <div class="phone detail no-tab">
+        <div class="notch"><div class="notch-bar"></div></div>
+        <div class="screen">
+          <div class="pad" style="padding-top:14px;">
+            <div class="back">← Back</div>
+            <div class="eyebrow">Department</div>
+            <div class="title" style="font-size:16px;">Computer Science</div>
+            <div class="caption">Professors, advisors, and courses</div>
+          </div>
+          <div class="section-title">People</div>
+          <div class="list-item"><div><div class="t">Dr. Maya Chen</div><div class="s">Associate Professor</div></div><span class="chev">›</span></div>
+          <div class="list-item"><div><div class="t">Alex Rivera</div><div class="s">advisor</div></div><span class="chev">›</span></div>
+          <div class="section-title">Courses</div>
+          <div class="list-item"><div><div class="t">CS-420 — Algorithms</div><div class="s">4 credits</div></div><span class="chev">›</span></div>
+          <div class="list-item"><div><div class="t">CS-515 — Advanced Algorithms</div><div class="s">3 credits</div></div><span class="chev">›</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7 PROFESSOR -->
+    <div class="phone-wrap" id="professor">
+      <div class="phone-label">7 · Professor detail</div>
+      <div class="phone detail no-tab">
+        <div class="notch"><div class="notch-bar"></div></div>
+        <div class="screen">
+          <div class="pad" style="padding-top:14px;">
+            <div class="back">← Back</div>
+            <div class="eyebrow">Professor / advisor</div>
+            <div class="title" style="font-size:16px;">Dr. Maya Chen</div>
+            <div class="caption">Multi-metric ratings from students</div>
+          </div>
+          <div class="cta">Write a review</div>
+          <div class="agg">
+            <div style="font-size:13px;font-weight:700;margin-bottom:6px;">Ratings · 42 reviews</div>
+            <div class="agg-line"><span class="k">clarity</span><span class="v">4.4</span></div>
+            <div class="agg-line"><span class="k">helpfulness</span><span class="v">4.7</span></div>
+            <div class="agg-line"><span class="k">difficulty</span><span class="v">3.2</span></div>
+            <div class="tags" style="margin-top:8px;"><span class="tag on">engaging</span><span class="tag on">clear-lectures</span></div>
+            <div style="font-size:13px;font-weight:700;margin:14px 0 6px;">Recent reviews</div>
+            <div class="review-snip"><div class="review-meta">clarity 5 · helpfulness 5</div>Explains proofs clearly and holds great office hours.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8 COURSE -->
+    <div class="phone-wrap" id="course">
+      <div class="phone-label">8 · Course detail</div>
+      <div class="phone detail no-tab">
+        <div class="notch"><div class="notch-bar"></div></div>
+        <div class="screen">
+          <div class="pad" style="padding-top:14px;">
+            <div class="back">← Back</div>
+            <div class="eyebrow">Course</div>
+            <div class="title" style="font-size:16px;">CS-420 — Algorithms</div>
+            <div class="caption">Workload, interest, organization, grading</div>
+          </div>
+          <div class="cta">Rate this course</div>
+          <div class="agg">
+            <div style="font-size:13px;font-weight:700;margin-bottom:6px;">Ratings · 67 reviews</div>
+            <div class="agg-line"><span class="k">workload</span><span class="v">3.8</span></div>
+            <div class="agg-line"><span class="k">interest</span><span class="v">4.6</span></div>
+            <div class="agg-line"><span class="k">organization</span><span class="v">4.1</span></div>
+            <div class="agg-line"><span class="k">grading fairness</span><span class="v">4.0</span></div>
+            <div class="tags" style="margin-top:8px;"><span class="tag on">project-based</span><span class="tag on">practical</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 9 DORM -->
+    <div class="phone-wrap" id="dorm">
+      <div class="phone-label">9 · Dorm detail</div>
+      <div class="phone detail no-tab">
+        <div class="notch"><div class="notch-bar"></div></div>
+        <div class="screen">
+          <div class="pad" style="padding-top:14px;">
+            <div class="back">← Back</div>
+            <div class="eyebrow">Housing</div>
+            <div class="title" style="font-size:16px;">Stoke Hall</div>
+            <div class="caption">Cleanliness, location, community, value</div>
+          </div>
+          <div class="cta">Rate this dorm</div>
+          <div class="agg">
+            <div style="font-size:13px;font-weight:700;margin-bottom:6px;">Ratings · 31 reviews</div>
+            <div class="agg-line"><span class="k">cleanliness</span><span class="v">3.5</span></div>
+            <div class="agg-line"><span class="k">location</span><span class="v">4.8</span></div>
+            <div class="agg-line"><span class="k">community</span><span class="v">4.2</span></div>
+            <div class="agg-line"><span class="k">value</span><span class="v">3.9</span></div>
+            <div class="tags" style="margin-top:8px;"><span class="tag on">social</span><span class="tag on">good-location</span></div>
+            <div style="font-size:13px;font-weight:700;margin:14px 0 6px;">Recent reviews</div>
+            <div class="review-snip"><div class="review-meta">location 5 · community 4</div>Loud but close to everything on main campus.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
