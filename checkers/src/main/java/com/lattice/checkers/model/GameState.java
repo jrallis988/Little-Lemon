@@ -5,8 +5,6 @@ import java.util.Optional;
 
 /**
  * Mutable match state: board, side to move, status, and optional mid-jump context.
- *
- * <p>Phase 1: structure only. Rules mutations live in {@code engine} (Phase 3).
  */
 public final class GameState {
 
@@ -23,7 +21,7 @@ public final class GameState {
     }
 
     public static GameState newGame() {
-        throw new UnsupportedOperationException("Phase 2: construct initial GameState");
+        return new GameState(Board.initial(), Side.DARK, GameStatus.IN_PROGRESS);
     }
 
     public Board board() {

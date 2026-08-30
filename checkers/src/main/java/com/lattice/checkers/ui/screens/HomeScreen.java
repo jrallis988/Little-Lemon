@@ -9,7 +9,7 @@ import javafx.scene.layout.VBox;
 import java.util.function.Consumer;
 
 /**
- * Home — Play / Analysis / AI Lab entry points (visual stub for Phase 1 preview).
+ * Home — Play / Analysis / AI Lab entry points.
  */
 public final class HomeScreen {
 
@@ -26,25 +26,34 @@ public final class HomeScreen {
         Label tagline = new Label("American checkers — play, analyze, understand.");
         tagline.getStyleClass().add("tagline");
 
-        Label phase = new Label("Phase 1 — architecture scaffold");
+        Label phase = new Label("Playable board · Human vs Human");
         phase.getStyleClass().add("phase-note");
 
-        VBox hero = new VBox(12, brand, tagline, phase);
+        VBox hero = new VBox(10, brand, tagline, phase);
         hero.setAlignment(Pos.CENTER);
+
+        Button play = new Button("Play now");
+        play.getStyleClass().add("primary-cta");
+        play.setOnAction(e -> {
+            if (onNavigate != null) {
+                onNavigate.accept("new-game");
+            }
+        });
 
         HBox destinations = new HBox(12);
         destinations.setAlignment(Pos.CENTER);
         destinations.getChildren().addAll(
-                destinationButton("Play", "New game", "new-game", onNavigate),
-                destinationButton("Analysis", "Past matches", "match-analysis", onNavigate),
-                destinationButton("AI Lab", "Profile vs profile", "ai-lab", onNavigate)
+                destinationButton("New Game", "Human vs Human", "new-game", onNavigate),
+                destinationButton("Analysis", "After matches", "match-analysis", onNavigate),
+                destinationButton("AI Lab", "Coming soon", "ai-lab", onNavigate)
         );
 
-        Label hint = ScreenStub.muted("Focus, X-Ray, and Developer Mode layer onto the game board.");
+        Label hint = ScreenStub.muted(
+                "Kings are stacked discs. Captures are mandatory. Focus, X-Ray, and Developer Mode come later.");
         hint.setAlignment(Pos.CENTER);
-        hint.setMaxWidth(420);
+        hint.setMaxWidth(460);
 
-        root = new VBox(36, hero, destinations, hint);
+        root = new VBox(28, hero, play, destinations, hint);
         root.setAlignment(Pos.CENTER);
         root.setPadding(new Insets(48));
         root.getStyleClass().addAll("screen-root", "home-root");
@@ -74,7 +83,7 @@ public final class HomeScreen {
         Button button = new Button();
         button.setGraphic(content);
         button.getStyleClass().add("dest-button");
-        button.setPrefWidth(160);
+        button.setPrefWidth(168);
         button.setOnAction(e -> {
             if (onNavigate != null) {
                 onNavigate.accept(target);
@@ -82,5 +91,4 @@ public final class HomeScreen {
         });
         return button;
     }
-
 }

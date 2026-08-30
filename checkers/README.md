@@ -2,18 +2,18 @@
 
 American checkers for the desktop — play, analyze, and inspect the engine.
 
-> **Phase 1:** Project setup and architecture only.
-> The rules engine, AI, and JavaFX board are not implemented yet.
+> **Status:** Playable Human vs Human board with American checkers rules.
+> AI, Focus/X-Ray, analysis, and Developer Mode are still stubbed for later phases.
 
 ## Why this exists
 
 Lattice is a portfolio project demonstrating Java craft beyond a playable board:
 
 - Object-oriented separation of **engine** and **UI**
-- Complete American checkers rules (planned) with heavy JUnit coverage
-- Profile-driven minimax AI (Aggressor / Defender / Strategist)
-- Match history, analysis, and “What If?” branching from real game data
-- Developer Mode and AI Lab that surface live engine telemetry
+- Complete American checkers rules with JUnit coverage
+- Profile-driven minimax AI (Aggressor / Defender / Strategist) — *next*
+- Match history, analysis, and “What If?” branching — *later*
+- Developer Mode and AI Lab — *later*
 
 It is built to look and behave like a product, not a tutorial assignment.
 
@@ -100,13 +100,11 @@ Or from the app chrome: **All screens** opens the gallery.
 
 ## Status honesty
 
-| Capability | Phase 1 |
+| Capability | Now |
 | --- | --- |
 | Maven + package architecture | Yes |
-| Class contracts / stubs | Yes |
-| Playable checkers | No |
-| AI / analysis / Developer Mode | No |
-| Screenshots | Not yet |
-
-Do not treat stub methods as finished features. Implementation follows the phase
-order in `docs/ARCHITECTURE.md`, starting with the domain model (Phase 2).
+| American checkers rules engine | Yes (mandatory captures, multi-jump, kings, win/resign) |
+| Human vs Human playable board | Yes |
+| Polished Graphite Lattice UI | In progress (single visual system) |
+| AI / Focus / X-Ray / Analysis / AI Lab | Not yet |
+| Screenshots | See PR / artifacts |

@@ -19,6 +19,11 @@ public final class GameHistory {
     private final List<MoveRecord> records = new ArrayList<>();
     private BoardSnapshot initial;
 
+    public void clear() {
+        records.clear();
+        initial = null;
+    }
+
     public void setInitial(BoardSnapshot initial) {
         if (!records.isEmpty()) {
             throw new IllegalStateException("cannot replace initial snapshot after moves exist");

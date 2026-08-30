@@ -1,7 +1,9 @@
 package com.lattice.checkers.ui.screens;
 
+import com.lattice.checkers.controller.GameController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -12,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-import javafx.scene.Node;
 
 /**
  * Phase 1 preview: all planned screens as tiles so they can be reviewed at once.
@@ -90,9 +91,12 @@ public final class ScreenGallery {
 
     public static Map<String, Supplier<Node>> screenFactories() {
         Map<String, Supplier<Node>> map = new LinkedHashMap<>();
+        GameController previewController = new GameController();
+        previewController.startHumanVsHuman("Dark", "Light");
         map.put(HomeScreen.screenId(), () -> new HomeScreen().getRoot());
         map.put(NewGameScreen.screenId(), () -> new NewGameScreen().getRoot());
-        map.put(GameBoardScreen.screenId(), () -> new GameBoardScreen().getRoot());
+        map.put(GameBoardScreen.screenId(),
+                () -> new GameBoardScreen(previewController, id -> { }, true).getRoot());
         map.put(MatchCompleteScreen.screenId(), () -> new MatchCompleteScreen().getRoot());
         map.put(MatchAnalysisScreen.screenId(), () -> new MatchAnalysisScreen().getRoot());
         map.put(AiLabScreen.screenId(), () -> new AiLabScreen().getRoot());

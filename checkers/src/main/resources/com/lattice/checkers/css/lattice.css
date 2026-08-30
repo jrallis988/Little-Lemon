@@ -1,6 +1,6 @@
-/* Graphite Lattice — Phase 1 baseline tokens. Expanded in later UI phases. */
+/* Graphite Lattice — single visual system */
 .root {
-    -fx-font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+    -fx-font-family: "Outfit";
     -fx-background-color: #12141A;
     -fx-text-fill: #F2F3F5;
 }
@@ -10,27 +10,29 @@
 }
 
 .app-chrome {
-    -fx-background-color: #1A1D26;
+    -fx-background-color: rgba(26, 29, 38, 0.96);
     -fx-border-color: transparent transparent #2A303C transparent;
     -fx-border-width: 0 0 1 0;
 }
 
 .chrome-button {
-    -fx-background-color: #2A303C;
+    -fx-background-color: #242936;
     -fx-text-fill: #F2F3F5;
-    -fx-background-radius: 4;
-    -fx-padding: 6 12 6 12;
+    -fx-background-radius: 5;
+    -fx-padding: 7 13 7 13;
     -fx-cursor: hand;
+    -fx-font-family: "Outfit";
+    -fx-font-size: 12px;
 }
 
 .chrome-button:hover {
-    -fx-background-color: #3A4150;
+    -fx-background-color: #333A4A;
 }
 
 .chrome-button:focused {
     -fx-border-color: #D4A15A;
     -fx-border-width: 2;
-    -fx-border-radius: 4;
+    -fx-border-radius: 5;
 }
 
 .chrome-label {
@@ -39,39 +41,42 @@
 }
 
 .screen-root {
-    -fx-background-color: linear-gradient(to bottom, #1A1D26, #12141A);
+    -fx-background-color: linear-gradient(to bottom, #1B1F2A 0%, #12141A 55%, #0E1016 100%);
 }
 
 .home-root {
-    -fx-background-color: linear-gradient(to bottom, #1A1D26, #12141A);
+    -fx-background-color: radial-gradient(center 50% 18%, radius 85%, #2A3142 0%, #12141A 55%, #0A0C10 100%);
 }
 
 .brand {
-    -fx-font-size: 48px;
+    -fx-font-family: "Fraunces";
+    -fx-font-size: 56px;
     -fx-font-weight: bold;
     -fx-text-fill: #F2F3F5;
-    -fx-letter-spacing: 2px;
 }
 
 .brand-small {
-    -fx-font-size: 22px;
+    -fx-font-family: "Fraunces";
+    -fx-font-size: 26px;
     -fx-font-weight: bold;
     -fx-text-fill: #F2F3F5;
-    -fx-letter-spacing: 1px;
 }
 
 .tagline {
+    -fx-font-family: "Outfit";
     -fx-font-size: 16px;
     -fx-text-fill: #9AA3B2;
 }
 
 .phase-note {
+    -fx-font-family: "Outfit";
     -fx-font-size: 13px;
     -fx-text-fill: #D4A15A;
 }
 
 .screen-title {
-    -fx-font-size: 28px;
+    -fx-font-family: "Fraunces";
+    -fx-font-size: 32px;
     -fx-font-weight: bold;
     -fx-text-fill: #F2F3F5;
 }
@@ -94,10 +99,10 @@
 }
 
 .preview-panel {
-    -fx-background-color: rgba(42, 48, 60, 0.65);
-    -fx-background-radius: 6;
-    -fx-border-color: #2A303C;
-    -fx-border-radius: 6;
+    -fx-background-color: rgba(36, 41, 54, 0.88);
+    -fx-background-radius: 8;
+    -fx-border-color: #32384A;
+    -fx-border-radius: 8;
     -fx-min-width: 180;
 }
 
@@ -111,20 +116,22 @@
 }
 
 .dest-button {
-    -fx-background-color: #2A303C;
-    -fx-background-radius: 6;
+    -fx-background-color: #242936;
+    -fx-background-radius: 8;
     -fx-padding: 14 16 14 16;
     -fx-cursor: hand;
+    -fx-border-color: #32384A;
+    -fx-border-radius: 8;
 }
 
 .dest-button:hover {
-    -fx-background-color: #3A4150;
+    -fx-background-color: #2E3545;
+    -fx-border-color: #D4A15A;
 }
 
 .dest-button:focused {
     -fx-border-color: #D4A15A;
     -fx-border-width: 2;
-    -fx-border-radius: 6;
 }
 
 .dest-title {
@@ -136,6 +143,173 @@
 .dest-subtitle {
     -fx-font-size: 12px;
     -fx-text-fill: #9AA3B2;
+}
+
+.primary-cta {
+    -fx-background-color: #D4A15A;
+    -fx-text-fill: #12141A;
+    -fx-font-family: "Outfit";
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6;
+    -fx-padding: 12 22 12 22;
+    -fx-cursor: hand;
+}
+
+.primary-cta:hover {
+    -fx-background-color: #E0B36E;
+}
+
+.primary-cta:focused {
+    -fx-border-color: #F2F3F5;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+}
+
+.action-button {
+    -fx-background-color: #242936;
+    -fx-text-fill: #F2F3F5;
+    -fx-background-radius: 6;
+    -fx-padding: 9 12 9 12;
+    -fx-cursor: hand;
+    -fx-border-color: #32384A;
+    -fx-border-radius: 6;
+}
+
+.action-button:hover {
+    -fx-background-color: #333A4A;
+}
+
+.action-button:focused {
+    -fx-border-color: #D4A15A;
+    -fx-border-width: 2;
+}
+
+.board-view {
+    -fx-background-color: linear-gradient(to bottom, #151922, #0B0D12);
+    -fx-padding: 14;
+    -fx-background-radius: 12;
+    -fx-border-color: #4A5366;
+    -fx-border-radius: 12;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.55), 28, 0.25, 0, 12);
+}
+
+.board-square {
+    -fx-cursor: hand;
+}
+
+.square-dark {
+    -fx-fill: #323A48;
+}
+
+.square-light {
+    -fx-fill: #D5DBE6;
+}
+
+.square-selected {
+    -fx-border-color: #D4A15A;
+    -fx-border-width: 2;
+    -fx-border-radius: 0;
+}
+
+.square-destination .destination-marker {
+    -fx-fill: #D4A15A;
+    -fx-opacity: 0.9;
+}
+
+.square-capture .capture-marker {
+    -fx-fill: transparent;
+    -fx-stroke: #E07060;
+    -fx-stroke-width: 2.5;
+    -fx-stroke-dash-array: 4 3;
+}
+
+.square-keyboard-focus {
+    -fx-border-color: #F2F3F5;
+    -fx-border-width: 2;
+}
+
+.status-line {
+    -fx-font-family: "Outfit";
+    -fx-font-size: 18px;
+    -fx-text-fill: #F2F3F5;
+}
+
+.turn-pill {
+    -fx-padding: 4 10 4 10;
+    -fx-background-radius: 4;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.turn-dark {
+    -fx-background-color: #141821;
+    -fx-text-fill: #C8CED8;
+    -fx-border-color: #8B93A7;
+    -fx-border-width: 1;
+    -fx-border-radius: 4;
+}
+
+.turn-light {
+    -fx-background-color: #EDE6D9;
+    -fx-text-fill: #141821;
+    -fx-border-color: #2A303C;
+    -fx-border-width: 1;
+    -fx-border-radius: 4;
+}
+
+.force-pill {
+    -fx-padding: 4 10 4 10;
+    -fx-background-radius: 4;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.force-on {
+    -fx-background-color: rgba(224, 112, 96, 0.18);
+    -fx-text-fill: #E07060;
+    -fx-border-color: #E07060;
+    -fx-border-width: 1;
+    -fx-border-radius: 4;
+}
+
+.force-off {
+    -fx-background-color: rgba(154, 163, 178, 0.12);
+    -fx-text-fill: #9AA3B2;
+}
+
+.board-side {
+    -fx-background-color: rgba(26, 29, 38, 0.9);
+    -fx-background-radius: 10;
+    -fx-border-color: #2A303C;
+    -fx-border-radius: 10;
+    -fx-padding: 14;
+    -fx-pref-width: 210;
+}
+
+.move-history {
+    -fx-background-color: #12141A;
+    -fx-border-color: #2A303C;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-control-inner-background: #12141A;
+}
+
+.move-history .list-cell {
+    -fx-text-fill: #C8CED8;
+    -fx-font-family: "Outfit";
+    -fx-font-size: 12px;
+    -fx-padding: 6 8 6 8;
+}
+
+.move-history .list-cell:filled:selected {
+    -fx-background-color: #2A303C;
+}
+
+.hint-line {
+    -fx-text-fill: #7E8798;
+    -fx-font-size: 12px;
 }
 
 .board-silhouette {
@@ -170,13 +344,6 @@
     -fx-background-radius: 8;
     -fx-border-color: #2A303C;
     -fx-border-radius: 8;
-}
-
-.gallery-preview {
-    -fx-background-color: #0E1016;
-    -fx-background-radius: 4;
-    -fx-border-color: #2A303C;
-    -fx-border-radius: 4;
 }
 
 .gallery-open {

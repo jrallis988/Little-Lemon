@@ -6,8 +6,6 @@ import java.util.Optional;
 
 /**
  * 8×8 occupancy grid. Only dark squares hold pieces in American checkers.
- *
- * <p>Phase 1: storage and copy helpers. Initial setup and mutations arrive in Phase 2–3.
  */
 public final class Board {
 
@@ -40,9 +38,19 @@ public final class Board {
         return get(position).isEmpty();
     }
 
-    /**
-     * Deep copy suitable for search trees and history snapshots.
-     */
+    public int count(Side side) {
+        int count = 0;
+        for (int r = 0; r < Position.BOARD_SIZE; r++) {
+            for (int c = 0; c < Position.BOARD_SIZE; c++) {
+                Piece piece = squares[r][c];
+                if (piece != null && piece.side() == side) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
     public Board copy() {
         Piece[][] clone = new Piece[Position.BOARD_SIZE][Position.BOARD_SIZE];
         for (int r = 0; r < Position.BOARD_SIZE; r++) {
@@ -52,9 +60,24 @@ public final class Board {
     }
 
     /**
-     * Standard American checkers opening layout. Implemented in Phase 2.
+     * Standard American checkers opening: dark on rows 0–2, light on rows 5–7,
+     * pieces only on dark squares. Dark moves toward increasing row.
      */
     public static Board initial() {
-        throw new UnsupportedOperationException("Phase 2: initial board setup");
+        Board board = new Board();
+        for (int r = 0; r < Position.BOARD_SIZE; r++) {
+            for (int c = 0; c < Position.BOARD_SIZE; c++) {
+                if ((r + c) % 2 != 1) {
+                    continue;
+                }
+                Position pos = new Position(r, c);
+                if (r <= 2) {
+                    board.set(pos, new Piece(Side.DARK, PieceRank.MAN));
+                } else if (r >= 5) {
+                    board.set(pos, new Piece(Side.LIGHT, PieceRank.MAN));
+                }
+            }
+        }
+        return board;
     }
 }
