@@ -25,9 +25,7 @@ export function CompareWithPharmacy({
   livePharmacyPricing = false,
 }: CompareWithPharmacyProps) {
   const [pharmacyId, setPharmacyId] = useState<string>("cvs");
-  const [currentPay, setCurrentPay] = useState(
-    suggestedRetail ? String(Math.round(suggestedRetail * 100) / 100) : ""
-  );
+  const [currentPay, setCurrentPay] = useState("");
 
   const pharmacyLabel =
     PHARMACIES.find((p) => p.id === pharmacyId)?.label ?? "Your pharmacy";
@@ -51,9 +49,18 @@ export function CompareWithPharmacy({
       </h2>
       <p className="mt-1 text-sm text-muted-foreground">
         Is TrumpRx cheaper than what you currently pay for {medicationLabel}?
+        Enter what you paid recently (receipt, pharmacy quote, or insurance
+        EOB)
         {livePharmacyPricing
-          ? " Enter what you pay today if your pharmacy price is not shown live."
-          : " Enter what you pay today — live per-pharmacy pricing is not enabled in this launch."}
+          ? " if a live pharmacy quote is not shown."
+          : " — live per-pharmacy quotes are not enabled in this launch."}
+        {suggestedRetail != null ? (
+          <>
+            {" "}
+            Estimated cash retail without a program is often around{" "}
+            {formatCurrency(suggestedRetail)}; do not treat that as your price.
+          </>
+        ) : null}
       </p>
 
       <div className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -90,7 +97,7 @@ export function CompareWithPharmacy({
               inputMode="decimal"
               value={currentPay}
               onChange={(e) => setCurrentPay(e.target.value)}
-              placeholder="0.00"
+              placeholder="What you paid"
               className="h-10 w-full rounded-md border border-input bg-background pl-7 pr-3 text-sm tabular-nums"
             />
           </div>

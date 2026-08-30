@@ -69,8 +69,8 @@ export default function AdminPage() {
       <div>
         <h1 className="font-display text-3xl font-semibold">Ops overview</h1>
         <p className="mt-1 text-muted-foreground">
-          Inventory counts, coupon volume, and Smart Switch analytics. Extend
-          with full CRUD when ops needs it.
+          Formulary counts, support queues, and launch gates for the current
+          mode.
         </p>
         <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2">
           <Link
@@ -85,12 +85,14 @@ export default function AdminPage() {
           >
             Support tickets →
           </Link>
-          <Link
-            href="/admin/transfers"
-            className="inline-flex text-sm font-medium text-primary underline-offset-2 hover:underline"
-          >
-            Rx transfers →
-          </Link>
+          {data.launch.membershipEnabled === true && (
+            <Link
+              href="/admin/transfers"
+              className="inline-flex text-sm font-medium text-primary underline-offset-2 hover:underline"
+            >
+              Rx transfers →
+            </Link>
+          )}
           <Link
             href="/admin/pharmacies"
             className="inline-flex text-sm font-medium text-primary underline-offset-2 hover:underline"

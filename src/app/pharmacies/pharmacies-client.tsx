@@ -10,28 +10,9 @@ import { PharmacyCard } from "@/components/pharmacy/pharmacy-card";
 import { CouponModal } from "@/components/coupon/coupon-modal";
 import { formatCurrency } from "@/lib/pricing";
 import { useLocationStore } from "@/lib/store/location-store";
-import type {
-  Drug,
-  Pharmacy,
-  PharmacyPriceOffer,
-  PriceComparisonRow,
-} from "@/lib/types";
+import type { Drug, Pharmacy, PharmacyPriceOffer } from "@/lib/types";
 import { buttonVariants } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-
-type SortMode = "distance" | "price";
-
-interface PharmacyResult {
-  pharmacy: Pharmacy;
-  row?: PriceComparisonRow;
-}
 
 const DEFAULT_DRUG_ID = "atorvastatin";
 
@@ -39,15 +20,27 @@ export function PharmaciesClient() {
   const searchParams = useSearchParams();
   const drugId = searchParams.get("drug")?.trim() || DEFAULT_DRUG_ID;
   const location = useLocationStore((s) => s.location);
-  const [sort, setSort] = useState<SortMode>("distance");
   const [sampleDrug, setSampleDrug] = useState<Drug | null>(null);
-  const [results, setResults] = useState<PharmacyResult[]>([]);
+  const [pharmacies, setPharmacies] = useState<Pharmacy[]>([]);
+  const [livePharmacyPricing, setLivePharmacyPricing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [couponTarget, setCouponTarget] = useState<{
     pharmacy: Pharmacy;
     offer: PharmacyPriceOffer;
   } | null>(null);
+
+  useEffect(() => {
+    fetch("/api/config")
+      .then(async (res) => {
+        if (!res.ok) return;
+        const data = (await res.json()) as {
+          launch?: { livePharmacyPricing?: boolean };
+        };
+        setLivePharmacyPricing(Boolean(data.launch?.livePharmacyPricing));
+      })
+      .catch(() => setLivePharmacyPricing(false));
+  }, []);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -74,42 +67,20 @@ export function PharmaciesClient() {
         }
 
         const { drug } = (await drugResponse.json()) as { drug: Drug };
-        const { pharmacies } = (await pharmacyResponse.json()) as {
+        const { pharmacies: nearby } = (await pharmacyResponse.json()) as {
           pharmacies: Pharmacy[];
         };
-        const strength = drug.strengths[1] ?? drug.strengths[0];
-        if (!strength) throw new Error("Medication has no strength data.");
-
-        const priceParams = new URLSearchParams({
-          drugId: drug.id,
-          strengthId: strength.id,
-          quantity: "30",
-          supplyDays: "30",
-          zip: location.zip,
-          sortBy: "price",
-        });
-        const priceResponse = await fetch(`/api/prices?${priceParams}`, {
-          signal: controller.signal,
-        });
-        if (!priceResponse.ok) {
-          throw new Error("Could not load sample prices.");
-        }
-        const { rows } = (await priceResponse.json()) as {
-          rows: PriceComparisonRow[];
-        };
-        const prices = new Map(rows.map((row) => [row.pharmacy.id, row]));
 
         setSampleDrug(drug);
-        setResults(
-          pharmacies.map((pharmacy) => ({
-            pharmacy,
-            row: prices.get(pharmacy.id),
-          }))
+        setPharmacies(
+          [...nearby].sort(
+            (a, b) => (a.distanceMiles ?? 99) - (b.distanceMiles ?? 99)
+          )
         );
       } catch (caught) {
         if (caught instanceof DOMException && caught.name === "AbortError") return;
         setSampleDrug(null);
-        setResults([]);
+        setPharmacies([]);
         setError(
           caught instanceof Error
             ? caught.message
@@ -124,24 +95,38 @@ export function PharmaciesClient() {
     return () => controller.abort();
   }, [location.zip, drugId]);
 
-  const strengthLabel = useMemo(() => {
+  const strength = useMemo(() => {
     if (!sampleDrug) return null;
-    const strength = sampleDrug.strengths[1] ?? sampleDrug.strengths[0];
-    return strength?.label ?? null;
+    return sampleDrug.strengths[1] ?? sampleDrug.strengths[0] ?? null;
   }, [sampleDrug]);
 
-  const pharmacies = useMemo(
-    () =>
-      [...results].sort((a, b) => {
-        if (sort === "price") {
-          return (
-            (a.row?.offer.couponPrice ?? 999) - (b.row?.offer.couponPrice ?? 999)
-          );
-        }
-        return (a.pharmacy.distanceMiles ?? 99) - (b.pharmacy.distanceMiles ?? 99);
-      }),
-    [results, sort]
-  );
+  const programPrice = sampleDrug?.program?.programPrice30 ?? null;
+
+  function openProgramInfo(pharmacy: Pharmacy) {
+    if (!sampleDrug || !strength || programPrice == null) return;
+    setCouponTarget({
+      pharmacy,
+      offer: {
+        id: `${pharmacy.id}:${sampleDrug.id}:${strength.id}:30:30`,
+        pharmacyId: pharmacy.id,
+        drugId: sampleDrug.id,
+        strengthId: strength.id,
+        quantity: 30,
+        supplyDays: 30,
+        couponPrice: programPrice,
+        retailPrice: sampleDrug.retailCashPrice30,
+        coupon: {
+          bin: "610020",
+          pcn: "TRUMPRX",
+          group: "TRXSAVE",
+          memberId: "PENDING",
+          barcodeValue: "PENDING",
+        },
+        lastUpdatedIso: new Date().toISOString(),
+        inStock: true,
+      },
+    });
+  }
 
   return (
     <div className="min-h-[70dvh] bg-background">
@@ -157,12 +142,32 @@ export function PharmaciesClient() {
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/40" />
         <div className="relative mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-7">
           <h1 className="font-display text-3xl font-semibold tracking-tight md:text-4xl">
-            Pharmacies near you
+            Participating pharmacies near you
           </h1>
           <p className="mt-1.5 max-w-xl text-base text-muted-foreground">
-            {sampleDrug && strengthLabel
-              ? `Sorted by distance or sample program price for ${sampleDrug.brandName} (${sampleDrug.genericName}) ${strengthLabel}. Confirm the final price at the counter.`
-              : "Find participating pharmacies near you. Open a store for hours and program acceptance."}
+            {sampleDrug && strength && programPrice != null ? (
+              <>
+                For{" "}
+                <span className="font-medium text-foreground">
+                  {sampleDrug.genericName}
+                </span>
+                {sampleDrug.brandName.toLowerCase() !==
+                sampleDrug.genericName.toLowerCase()
+                  ? ` (generic for ${sampleDrug.brandName})`
+                  : ""}{" "}
+                {strength.label}: typical TrumpRx program price{" "}
+                <span className="font-semibold text-foreground">
+                  {formatCurrency(programPrice)}
+                </span>{" "}
+                for a common 30-day fill. Confirm the final price at the counter
+                {!livePharmacyPricing
+                  ? " — live per-pharmacy quotes are not enabled yet"
+                  : ""}
+                .
+              </>
+            ) : (
+              "Find pharmacies that may accept TrumpRx program information. Confirm acceptance and price before you fill."
+            )}
           </p>
         </div>
       </div>
@@ -171,27 +176,6 @@ export function PharmaciesClient() {
         <div className="grid gap-4 lg:grid-cols-[18rem_1fr]">
           <aside className="space-y-3">
             <LocationPicker />
-            <div className="space-y-1.5 rounded-xl border border-border bg-card p-3.5">
-              <p className="text-sm font-semibold">Sort pharmacies</p>
-              <Select
-                value={sort}
-                onValueChange={(v) => setSort((v as SortMode) ?? "distance")}
-              >
-                <SelectTrigger className="h-11 w-full text-base">
-                  <SelectValue>
-                    {(value: string | null) =>
-                      value === "price"
-                        ? "Lowest sample price"
-                        : "Nearest first"
-                    }
-                  </SelectValue>
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="distance">Nearest first</SelectItem>
-                  <SelectItem value="price">Lowest sample price</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl ring-1 ring-border">
               <Image
                 src="/images/pharmacist-helping.webp"
@@ -224,23 +208,22 @@ export function PharmaciesClient() {
               </div>
             ) : (
               <div className="grid gap-3 sm:grid-cols-2">
-                {pharmacies.map(({ pharmacy, row }, index) => (
+                {pharmacies.map((pharmacy) => (
                   <PharmacyCard
                     key={pharmacy.id}
                     pharmacy={pharmacy}
-                    highlighted={index === 0 && sort === "price"}
                     priceLabel={
-                      row ? formatCurrency(row.offer.couponPrice) : undefined
-                    }
-                    onSelectCoupon={
-                      row
-                        ? () =>
-                            setCouponTarget({
-                              pharmacy,
-                              offer: row.offer,
-                            })
+                      programPrice != null
+                        ? formatCurrency(programPrice)
                         : undefined
                     }
+                    priceCaption="typical program · confirm at fill"
+                    onSelectCoupon={
+                      programPrice != null
+                        ? () => openProgramInfo(pharmacy)
+                        : undefined
+                    }
+                    selectLabel="Get program information"
                   />
                 ))}
               </div>
@@ -265,11 +248,7 @@ export function PharmaciesClient() {
           drug={sampleDrug}
           pharmacy={couponTarget.pharmacy}
           offer={couponTarget.offer}
-          strengthLabel={
-            sampleDrug.strengths.find(
-              (s) => s.id === couponTarget.offer.strengthId
-            )?.label ?? strengthLabel ?? "tablet"
-          }
+          strengthLabel={strength?.label ?? "tablet"}
         />
       )}
     </div>

@@ -26,8 +26,8 @@ export default async function CheckoutRedirectPage({ searchParams }: PageProps) 
       </h1>
       <p className="mt-3 text-muted-foreground">
         There is no shopping-cart checkout here. If a medication is included,
-        use <strong>Get this price</strong> on the medication page to follow the
-        correct pathway — participating pharmacy or manufacturer-direct.
+        use <strong>See how to get this option</strong> on the medication page
+        for the pharmacy pickup pathway. Confirm the final price at the counter.
       </p>
       <div className="mt-6 flex flex-wrap gap-3 text-sm font-medium">
         <Link href="/search" className="text-primary underline-offset-2 hover:underline">

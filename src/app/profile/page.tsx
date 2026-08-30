@@ -122,8 +122,8 @@ export default function ProfilePage() {
       <div className="mx-auto max-w-xl px-4 py-12 text-center">
         <h1 className="font-display text-3xl font-semibold">Sign in to view your account</h1>
         <p className="mt-2 text-muted-foreground">
-          Saved medications, preferred pharmacies, alerts, and membership are
-          stored securely with your account.
+          Saved medications, preferred pharmacies, alerts, and program
+          information are stored with your account.
         </p>
         <Link
           href="/login"
@@ -148,17 +148,18 @@ export default function ProfilePage() {
       <div className="mx-auto max-w-3xl space-y-6 px-4 py-6 sm:px-6">
         <header className="space-y-1.5">
           <h1 className="font-display text-3xl font-semibold tracking-tight md:text-4xl">
-            My medications
+            My tools
           </h1>
           <p className="text-base text-muted-foreground sm:text-lg">
-            Manage your saved prescriptions, pharmacies, alerts, and membership.
+            Manage saved prescriptions, pharmacies, alerts, and program
+            information.
           </p>
         </header>
 
         <TrustCallout title="Caregiver-friendly controls">
           Use larger text or high contrast below. Your signed-in account keeps
           saved information available across devices.
-          {launch?.membership !== false && (
+          {launch?.membership === true && (
             <>
               {" "}
               Manage plan options on the{" "}
@@ -178,20 +179,20 @@ export default function ProfilePage() {
             {
               href: "/profile/prescriptions",
               title: "Refill tracker",
-              body: "Active prescriptions and coupon history",
+              body: "Active prescriptions and program information history",
               show: true,
             },
             {
               href: "/profile/family",
               title: "Family & dependents",
-              body: "Plus household profiles",
-              show: launch?.familyProfiles !== false,
+              body: "Household profiles",
+              show: launch?.familyProfiles === true,
             },
             {
               href: "/profile/billing",
               title: "Subscription & billing",
-              body: "Upgrade, invoices, or cancel Plus",
-              show: launch?.membership !== false,
+              body: "Membership billing",
+              show: launch?.membership === true,
             },
             {
               href: "/profile/insurance",
@@ -208,14 +209,14 @@ export default function ProfilePage() {
             {
               href: "/tools/insurance-calculator",
               title: "Insurance calculator",
-              body: "Compare copay vs cash coupon",
+              body: "Compare copay vs cash program option",
               show: true,
             },
             {
               href: "/transfer",
               title: "Transfer a prescription",
               body: "Move an Rx to a network pharmacy",
-              show: launch?.transfer !== false,
+              show: launch?.transfer === true,
             },
           ]
             .filter((item) => item.show)
@@ -235,21 +236,23 @@ export default function ProfilePage() {
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div>
               <h2 className="text-lg font-semibold">
-                {profile.name || "Trump RX member"}
+                {profile.name || "TrumpRx account"}
               </h2>
               <p className="text-sm text-muted-foreground">{profile.email}</p>
             </div>
-            <div className="rounded-lg bg-secondary px-3 py-2 text-sm">
-              <span className="font-semibold capitalize">
-                {profile.membershipTier}
-              </span>
-              {profile.membershipStatus && (
-                <span className="text-muted-foreground">
-                  {" "}
-                  · {profile.membershipStatus}
+            {launch?.membership === true && (
+              <div className="rounded-lg bg-secondary px-3 py-2 text-sm">
+                <span className="font-semibold capitalize">
+                  {profile.membershipTier}
                 </span>
-              )}
-            </div>
+                {profile.membershipStatus && (
+                  <span className="text-muted-foreground">
+                    {" "}
+                    · {profile.membershipStatus}
+                  </span>
+                )}
+              </div>
+            )}
           </div>
           <div className="flex items-center justify-between gap-4 rounded-xl bg-muted/60 px-3 py-3">
             <div>
@@ -305,9 +308,9 @@ export default function ProfilePage() {
             <EmptyState
               icon={BookmarkX}
               title="No saved medications yet"
-              description="Search a drug and tap Save medication to track prices here."
+              description="Check coverage for an included medication, then save it from the medication page to track it here."
               actionHref="/search"
-              actionLabel="Search medications"
+              actionLabel="Check coverage"
             />
           ) : (
             <ul className="space-y-2.5">

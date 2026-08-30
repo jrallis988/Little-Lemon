@@ -9,7 +9,7 @@ import { AccessPathwayClient } from "@/components/access/access-pathway-client";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Get this price",
+  title: "See how to get this option",
   description:
     "Confirm eligibility and follow the TrumpRx pharmacy pickup access pathway for included medications.",
 };
@@ -30,11 +30,11 @@ export default async function AccessPage({ searchParams }: PageProps) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
         <h1 className="font-display text-3xl font-semibold uppercase tracking-tight">
-          Get this price
+          See how to get this option
         </h1>
         <p className="mt-2 text-muted-foreground">
-          First confirm whether your medication is included, then choose how to
-          access the savings option.
+          First confirm whether your medication is included, then follow the
+          pharmacy pickup pathway.
         </p>
         <div className="mt-6 flex flex-wrap gap-2">
           <Link
@@ -71,15 +71,16 @@ export default async function AccessPage({ searchParams }: PageProps) {
             Access pathway
           </p>
           <h1 className="mt-1 font-display text-3xl font-semibold uppercase tracking-tight">
-            Get this price
+            See how to get this option
           </h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            TrumpRx does not sell or dispense {drug.brandName}. You will work
+            TrumpRx does not sell or dispense {drug.genericName}. You will work
             with a participating pharmacy
             {features.manufacturerPathway
               ? " or the manufacturer program"
               : ""}{" "}
-            — we show you which path applies and what to do next.
+            — we show you which path applies and what to do next. Confirm the
+            final price at fill.
           </p>
         </div>
       </div>

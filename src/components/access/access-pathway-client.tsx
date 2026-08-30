@@ -34,12 +34,14 @@ export function AccessPathwayClient({
   return (
     <div className="space-y-5">
       <section className="rounded-lg border border-border bg-card p-4 sm:p-5">
-        <h2 className="font-display text-lg font-semibold uppercase tracking-tight">
-          {brandName}{" "}
-          <span className="font-sans text-base font-normal normal-case text-muted-foreground">
-            ({genericName})
-          </span>
-        </h2>
+          <h2 className="font-display text-lg font-semibold uppercase tracking-tight">
+            {genericName}{" "}
+            <span className="font-sans text-base font-normal normal-case text-muted-foreground">
+              {brandName.toLowerCase() !== genericName.toLowerCase()
+                ? `(generic for ${brandName})`
+                : "generic"}
+            </span>
+          </h2>
         <p className="mt-1 text-sm text-muted-foreground">
           Pathway: {fulfillmentLabel}
         </p>
@@ -115,7 +117,7 @@ export function AccessPathwayClient({
           {(path === "pharmacy" || !allowManufacturerPathway
             ? [
                 "Confirm eligibility notes on the medication page",
-                "Get program / coupon information for the counter",
+                "Get program information for the counter",
                 "Choose a participating pharmacy",
                 "Present information at the pharmacy with your prescription",
                 "Fill — payment happens at the pharmacy, not on TrumpRx",

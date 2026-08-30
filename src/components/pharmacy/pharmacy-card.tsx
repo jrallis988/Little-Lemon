@@ -12,16 +12,20 @@ import Link from "next/link";
 interface PharmacyCardProps {
   pharmacy: Pharmacy;
   priceLabel?: string;
+  priceCaption?: string;
   highlighted?: boolean;
   onSelectCoupon?: () => void;
+  selectLabel?: string;
   className?: string;
 }
 
 export function PharmacyCard({
   pharmacy,
   priceLabel,
+  priceCaption = "typical program · confirm at fill",
   highlighted = false,
   onSelectCoupon,
+  selectLabel = "Get program information",
   className,
 }: PharmacyCardProps) {
   const { isPreferred, togglePreferred, message } = usePreferredPharmacy(false);
@@ -65,7 +69,7 @@ export function PharmacyCard({
             <span className="block font-display text-2xl font-semibold tabular-nums text-primary">
               {priceLabel}
             </span>
-            <span className="text-xs text-muted-foreground">with coupon</span>
+            <span className="text-xs text-muted-foreground">{priceCaption}</span>
           </p>
         )}
       </div>
@@ -106,18 +110,20 @@ export function PharmacyCard({
       <div className="mt-3 flex flex-wrap gap-2">
         {pharmacy.acceptsTrumpRxCoupon ? (
           <Badge variant="secondary" className="font-medium">
-            Accepts Trump RX coupon
+            May accept TrumpRx program
           </Badge>
         ) : (
-          <Badge variant="outline">Call to confirm discount</Badge>
+          <Badge variant="outline">Call to confirm acceptance</Badge>
         )}
-        {highlighted && <Badge className="bg-savings text-savings-foreground">Lowest nearby</Badge>}
+        {highlighted && (
+          <Badge className="bg-savings text-savings-foreground">Nearest</Badge>
+        )}
       </div>
 
       <div className="mt-4 flex flex-wrap gap-2">
         {onSelectCoupon && (
           <Button onClick={onSelectCoupon} className="min-h-11 flex-1 sm:flex-none">
-            Show coupon
+            {selectLabel}
           </Button>
         )}
         <Button

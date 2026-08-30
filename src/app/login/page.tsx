@@ -47,7 +47,8 @@ export default function LoginPage() {
         </div>
         <h1 className="mt-4 font-display text-3xl font-semibold">Welcome back</h1>
         <p className="mt-1 text-muted-foreground">
-          Sign in to manage medications, alerts, and membership.
+          Sign in to manage saved medications, preferred pharmacies, and program
+          information.
         </p>
 
         <form onSubmit={submit} className="mt-6 space-y-4">

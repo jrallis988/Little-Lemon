@@ -63,14 +63,14 @@ export function buildAssistReply(visitorText: string): string | null {
   }
   if (/(how do i get|fulfillment|pickup|ship|who ships|where is my order|delivery)/.test(t)) {
     return limited
-      ? "Limited v1 is pharmacy pickup only. Use How can I get it? on the medication page, then Get this price. TrumpRx does not sell or ship medications."
-      : "Use How can I get it? on the medication page, then Get this price for the pathway. TrumpRx does not sell or ship medications — the pharmacy or manufacturer program does.";
+      ? "Limited v1 is pharmacy pickup only. Use How can I get it? on the medication page, then See how to get this option. TrumpRx does not sell or ship medications."
+      : "Use How can I get it? on the medication page, then See how to get this option for the pathway. TrumpRx does not sell or ship medications — the pharmacy or manufacturer program does.";
   }
   if (/(report|incorrect information|broken link)/.test(t)) {
     return "Use Report an issue on medication, pharmacy, pricing, or access screens. You’ll get a reference number after you submit.";
   }
   if (/(coupon|barcode|bin|pcn|pharmacist|counter)/.test(t)) {
-    return "After you review eligibility, use Get this price → pharmacy pathway (or Find participating pharmacies) to obtain program information for the counter (barcode / BIN / PCN when applicable). Ask the pharmacist to process it as a discount program, not as insurance.";
+    return "After you review eligibility, use See how to get this option → pharmacy pathway (or Find participating pharmacies) to obtain program information for the counter (barcode / BIN / PCN when applicable). Ask the pharmacist to process it as a discount program, not as insurance.";
   }
   if (/(membership|plus|stripe|billing|subscription|do i have to pay trump)/.test(t)) {
     return limited

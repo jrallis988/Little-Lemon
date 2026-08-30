@@ -115,7 +115,7 @@ export function FulfillmentSection({
           "mt-5 inline-flex min-h-11 gap-1.5"
         )}
       >
-        Get this price
+        Get this option
         <ArrowRight className="size-4" aria-hidden />
       </Link>
     </section>

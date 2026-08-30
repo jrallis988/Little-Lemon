@@ -7,7 +7,6 @@ import { LimitedBetaBanner } from "@/components/layout/limited-beta-banner";
 import { getLaunchFeatures } from "@/lib/launch-mode";
 import { SessionProvider } from "@/components/providers/session-provider";
 import { ToastProvider } from "@/components/providers/toast-provider";
-import { CartHydrator } from "@/components/providers/cart-hydrator";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { SupportChatWidget } from "@/components/chat/support-chat-widget";
 import "./globals.css";
@@ -73,7 +72,6 @@ export default function RootLayout({
         <SessionProvider>
           <ToastProvider>
             <TooltipProvider>
-              <CartHydrator />
               <a
                 href="#main-content"
                 className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"

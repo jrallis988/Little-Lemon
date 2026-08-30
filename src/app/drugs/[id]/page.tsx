@@ -42,8 +42,8 @@ export async function generateMetadata({
   const drug = await getDrugById(id);
   if (!drug) return { title: "Medication" };
   return {
-    title: `${drug.brandName} (${drug.genericName}) — TrumpRx option`,
-    description: `See whether a TrumpRx savings option is available for ${drug.brandName}, compare costs, review eligibility, and learn how to access it.`,
+    title: `${drug.genericName} — TrumpRx option`,
+    description: `See whether a TrumpRx savings option is available for ${drug.genericName}, compare costs, review eligibility, and learn how to access it at a participating pharmacy.`,
   };
 }
 
@@ -58,6 +58,8 @@ export default async function DrugDetailPage({ params }: PageProps) {
   const program = getProgramMeta(drug.id);
   const features = getLaunchFeatures();
   const forms = Array.from(new Set(drug.strengths.map((s) => s.form)));
+  const brandDiffers =
+    drug.brandName.toLowerCase() !== drug.genericName.toLowerCase();
 
   return (
     <div className="min-h-[70dvh] bg-background">
@@ -67,14 +69,21 @@ export default async function DrugDetailPage({ params }: PageProps) {
             Included medication
           </p>
           <h1 className="mt-1 font-display text-3xl font-semibold uppercase tracking-tight md:text-4xl">
-            {drug.brandName}
+            {drug.genericName}
           </h1>
           <p className="mt-1 text-base text-muted-foreground">
-            Generic name: <span className="text-foreground">{drug.genericName}</span>
+            {brandDiffers ? (
+              <>
+                Generic for{" "}
+                <span className="text-foreground">{drug.brandName}</span>
+              </>
+            ) : (
+              <>Generic medication</>
+            )}
             {program ? (
               <>
                 {" "}
-                · Manufacturer:{" "}
+                ·{" "}
                 <span className="text-foreground">{program.manufacturer}</span>
               </>
             ) : null}
@@ -102,7 +111,7 @@ export default async function DrugDetailPage({ params }: PageProps) {
               href={`/access?drug=${drug.id}`}
               className={cn(buttonVariants({ size: "lg" }), "min-h-11 gap-1.5")}
             >
-              Get this price
+              See how to get this option
               <ArrowRight className="size-4" aria-hidden />
             </Link>
             <Link
@@ -157,12 +166,12 @@ export default async function DrugDetailPage({ params }: PageProps) {
           <>
             <section className="rounded-lg border border-border bg-card p-4 sm:p-5">
               <h2 className="font-display text-xl font-semibold uppercase tracking-tight">
-                TrumpRx price
+                Typical TrumpRx program price
               </h2>
               <p className="mt-1 text-sm text-muted-foreground">
                 {features.livePharmacyPricing
                   ? "Program cash option for a common 30-day fill. Confirm at the pharmacy before you fill."
-                  : "Program price for a common 30-day fill. Live per-pharmacy quotes are not enabled — confirm final price at the counter."}
+                  : "Typical program price for a common 30-day fill. Live per-pharmacy quotes are not enabled — confirm the final price at the counter."}
               </p>
               <p className="mt-3 font-display text-4xl font-semibold tabular-nums text-primary">
                 {formatCurrency(program.programPrice30)}
@@ -174,7 +183,7 @@ export default async function DrugDetailPage({ params }: PageProps) {
             </section>
 
             <CompareWithPharmacy
-              medicationLabel={`${drug.brandName} (${drug.genericName})`}
+              medicationLabel={`${drug.genericName}${brandDiffers ? ` (generic for ${drug.brandName})` : ""}`}
               trumpRxPrice={program.programPrice30}
               suggestedRetail={drug.retailCashPrice30}
               livePharmacyPricing={features.livePharmacyPricing}

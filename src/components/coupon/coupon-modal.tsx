@@ -9,7 +9,7 @@ import {
   MessageSquare,
   Printer,
   ShieldAlert,
-  ShoppingBag,
+  Bookmark,
   X,
 } from "lucide-react";
 import {
@@ -23,7 +23,6 @@ import { Separator } from "@/components/ui/separator";
 import { TrustCallout } from "@/components/design/trust-callout";
 import { SmartSwitchBadge } from "@/components/coupon/smart-switch-badge";
 import { formatCurrency } from "@/lib/pricing";
-import { useCheckoutCartStore } from "@/lib/store/checkout-cart-store";
 import { useToast } from "@/components/providers/toast-provider";
 import type {
   CouponBinDetails,
@@ -33,6 +32,7 @@ import type {
 } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 interface CouponModalProps {
   open: boolean;
@@ -143,9 +143,9 @@ export function CouponModal({
   const [issueError, setIssueError] = useState<string | null>(null);
   const [pharmacistMode, setPharmacistMode] = useState(false);
   const [sharedMsg, setSharedMsg] = useState<string | null>(null);
-  const [addedToCheckout, setAddedToCheckout] = useState(false);
-  const addItem = useCheckoutCartStore((s) => s.addItem);
+  const [saved, setSaved] = useState(false);
   const { toast } = useToast();
+  const { status } = useSession();
 
   useEffect(() => {
     if (!open) {
@@ -153,7 +153,7 @@ export function CouponModal({
       setIssueError(null);
       setPharmacistMode(false);
       setSharedMsg(null);
-      setAddedToCheckout(false);
+      setSaved(false);
       return;
     }
 
@@ -182,13 +182,15 @@ export function CouponModal({
           error?: string;
         };
         if (!response.ok || !data.coupon) {
-          throw new Error(data.error ?? "Could not issue this coupon.");
+          throw new Error(data.error ?? "Could not issue program information.");
         }
         setCoupon(data.coupon);
       } catch (caught) {
         if (caught instanceof DOMException && caught.name === "AbortError") return;
         setIssueError(
-          caught instanceof Error ? caught.message : "Could not issue this coupon."
+          caught instanceof Error
+            ? caught.message
+            : "Could not issue program information."
         );
       } finally {
         if (!controller.signal.aborted) setIssuing(false);
@@ -211,12 +213,12 @@ export function CouponModal({
   const summary = `${drug.genericName} · ${strengthLabel} · Qty ${offer.quantity} · ${offer.supplyDays}-day`;
   const shareBody = coupon
     ? [
-        `Trump RX coupon for ${pharmacy.name}`,
+        `TrumpRx program information for ${pharmacy.name}`,
         summary,
-        `Price: ${formatCurrency(offer.couponPrice)}`,
+        `Typical program price: ${formatCurrency(offer.couponPrice)} (confirm at fill)`,
         `BIN ${coupon.bin} · PCN ${coupon.pcn} · Group ${coupon.group} · Member ${coupon.memberId}`,
         `Expires ${new Date(coupon.expiresAt).toLocaleDateString()}`,
-        "Not insurance — compare with your plan copay.",
+        "Not insurance — compare with your plan copay. TrumpRx does not sell medications.",
       ].join("\n")
     : "";
 
@@ -230,7 +232,7 @@ export function CouponModal({
   }
 
   function onEmail() {
-    window.location.href = `mailto:?subject=${encodeURIComponent("Trump RX coupon")}&body=${encodeURIComponent(shareBody)}`;
+    window.location.href = `mailto:?subject=${encodeURIComponent("TrumpRx program information")}&body=${encodeURIComponent(shareBody)}`;
     setSharedMsg("Opening email…");
   }
 
@@ -240,37 +242,23 @@ export function CouponModal({
     );
   }
 
-  async function onAddToCheckout() {
-    const result = await addItem({
-      drugId: drug.id,
-      genericName: drug.genericName,
-      brandName: drug.brandName,
-      strengthId: offer.strengthId,
-      strengthLabel,
-      quantity: offer.quantity,
-      supplyDays: offer.supplyDays,
-      pharmacyId: pharmacy.id,
-      pharmacyName: pharmacy.name,
-      pharmacyAddress: `${pharmacy.address}, ${pharmacy.city}`,
-      couponPrice: offer.couponPrice,
-      retailPrice: offer.retailPrice,
-      coupon: coupon ?? undefined,
-    });
-    if (!result.ok) {
+  function onSaveHint() {
+    setSaved(true);
+    if (status === "authenticated") {
+      setSharedMsg("Screenshot or print this screen for the counter. Account save tools are on My tools.");
       toast({
-        title: "Could not save program information",
-        description: result.error,
-        tone: "error",
+        title: "Program information ready",
+        description: "Show BIN / PCN / Member ID at the pharmacy — confirm final price at fill.",
+        tone: "success",
       });
-      return;
+    } else {
+      setSharedMsg("Sign in to keep saved tools across devices, or screenshot this screen now.");
+      toast({
+        title: "Program information ready",
+        description: "TrumpRx does not sell medications — the pharmacy fills your prescription.",
+        tone: "success",
+      });
     }
-    setAddedToCheckout(true);
-    setSharedMsg("Program information saved to your account tools.");
-    toast({
-      title: "Program information saved",
-      description: "Show this at the pharmacy counter — TrumpRx does not sell medications.",
-      tone: "success",
-    });
   }
 
   return (
@@ -294,7 +282,9 @@ export function CouponModal({
           <div className="no-print flex items-start justify-between gap-3">
             <div>
               <DialogTitle className="font-display text-2xl">
-                {pharmacistMode ? "Show this to the pharmacist" : "Get coupon"}
+                {pharmacistMode
+                  ? "Show this to the pharmacist"
+                  : "Program information"}
               </DialogTitle>
               <DialogDescription
                 id="coupon-instructions"
@@ -302,7 +292,7 @@ export function CouponModal({
               >
                 {pharmacistMode
                   ? `${pharmacy.name} · scan barcode or enter BIN / PCN / Group / Member ID`
-                  : `Ready for ${pharmacy.name}. Open pharmacist mode at the counter.`}
+                  : `For ${pharmacy.name}. Typical program price — confirm at fill. Open pharmacist mode at the counter.`}
               </DialogDescription>
             </div>
             {pharmacistMode && (
@@ -320,7 +310,7 @@ export function CouponModal({
 
           {issuing && (
             <div className="rounded-xl bg-muted p-4 text-center text-sm text-muted-foreground">
-              Issuing your secure coupon…
+              Preparing program information…
             </div>
           )}
           {issueError && (
@@ -334,20 +324,21 @@ export function CouponModal({
 
           {coupon && (
             <>
-          <TrustCallout variant="warning" title="Not insurance — compare your copay">
-            Ask the pharmacist which is lower: this coupon or your insurance.
-            Coupons generally cannot be combined with insurance.
+          <TrustCallout variant="warning" title="Not insurance — confirm at fill">
+            Ask the pharmacist which is lower: this program cash option or your
+            insurance. These generally cannot be combined. Final price is set at
+            the pharmacy.
           </TrustCallout>
 
           <div className="rounded-2xl bg-primary px-4 py-5 text-primary-foreground">
-            <p className="text-sm opacity-90">Counter price (show this)</p>
+            <p className="text-sm opacity-90">Typical program price (confirm at fill)</p>
             <p className="font-display text-4xl font-semibold tabular-nums sm:text-5xl">
               {formatCurrency(offer.couponPrice)}
             </p>
             <p className="mt-2 text-base leading-snug">{summary}</p>
             <p className="mt-1 text-sm opacity-85">
-              Est. retail {formatCurrency(offer.retailPrice)} — you save{" "}
-              {formatCurrency(offer.retailPrice - offer.couponPrice)}
+              Estimated cash retail without program:{" "}
+              {formatCurrency(offer.retailPrice)}
             </p>
           </div>
 
@@ -423,25 +414,21 @@ export function CouponModal({
                   Email
                 </Button>
               </div>
-                <Button
+              <Button
                 type="button"
-                variant={addedToCheckout ? "secondary" : "default"}
+                variant={saved ? "secondary" : "default"}
                 className="no-print min-h-11 w-full"
-                onClick={() => void onAddToCheckout()}
+                onClick={onSaveHint}
               >
-                <ShoppingBag />
-                {addedToCheckout
-                  ? "Saved program information"
-                  : "Save program information"}
+                <Bookmark />
+                {saved ? "Ready for the counter" : "Keep this for the counter"}
               </Button>
-              {addedToCheckout && (
-                <Link
-                  href={`/access?drug=${encodeURIComponent(drug.id)}&path=pharmacy`}
-                  className="no-print block text-center text-sm font-medium text-primary underline-offset-2 hover:underline"
-                >
-                  Continue access pathway →
-                </Link>
-              )}
+              <Link
+                href={`/access?drug=${encodeURIComponent(drug.id)}&path=pharmacy`}
+                className="no-print block text-center text-sm font-medium text-primary underline-offset-2 hover:underline"
+              >
+                Review access pathway →
+              </Link>
               <Button
                 type="button"
                 variant="ghost"
@@ -457,8 +444,8 @@ export function CouponModal({
               )}
               <Separator className="no-print" />
               <p className="no-print text-sm leading-relaxed text-muted-foreground">
-                Ask the pharmacist to process this as a discount card. Trump RX
-                does not charge you at the pharmacy.
+                Ask the pharmacist to process this as a discount program — not as
+                insurance. TrumpRx does not charge you and does not sell medications.
               </p>
               <Button
                 type="button"
