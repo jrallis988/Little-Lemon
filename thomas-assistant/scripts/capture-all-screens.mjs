@@ -76,11 +76,11 @@ await mkdir(OUT, { recursive: true });
   await page.waitForTimeout(400);
   await shot(page, "screen-mobile-02-cellar");
 
-  await page.getByRole("button", { name: "Order" }).click();
+  await page.getByRole("button", { name: "Order", exact: true }).click();
   await page.waitForTimeout(500);
   await shot(page, "screen-mobile-08-order");
 
-  await page.getByRole("button", { name: "Close" }).click();
+  await page.getByRole("button", { name: "Close", exact: true }).click();
   await page.waitForTimeout(400);
   await shot(page, "screen-mobile-03-close-step1");
 
@@ -94,7 +94,7 @@ await mkdir(OUT, { recursive: true });
   await page.waitForTimeout(300);
   await shot(page, "screen-mobile-05-close-step3");
 
-  await page.getByRole("button", { name: "Record" }).click();
+  await page.getByRole("button", { name: "Record", exact: true }).click();
   await page.waitForTimeout(400);
   await shot(page, "screen-mobile-06-record");
   await page.close();
