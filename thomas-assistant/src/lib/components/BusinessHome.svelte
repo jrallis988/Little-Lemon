@@ -10,10 +10,12 @@
     listShiftLogs,
     listAuditTrails,
     getInventorySummary,
+    chatWithAssistant,
   } from "$lib/api";
   import {
     addChatMessage,
     appState,
+    buildChatContext,
     setMobileScreen,
     setActiveTab,
   } from "$lib/stores/app.svelte";
@@ -41,14 +43,24 @@
     ready = true;
   }
 
-  function runAction(action: NoticeAction, noticeTitle: string) {
+  async function runAction(action: NoticeAction, noticeTitle: string) {
     if (action.target === "chat") {
-      addChatMessage("user", `Tell me more about this: ${noticeTitle}`);
-      addChatMessage(
-        "assistant",
-        `Certainly. Regarding “${noticeTitle}” — I can walk you through the particulars from Cellar Check, Restock, The Record, or tonight’s close.`,
-      );
+      const userMsg = `Tell me more about this: ${noticeTitle}`;
+      addChatMessage("user", userMsg);
       setMobileScreen("chat");
+      try {
+        const reply = await chatWithAssistant(
+          userMsg,
+          buildChatContext(),
+          appState.chatMessages,
+        );
+        addChatMessage("assistant", reply);
+      } catch {
+        addChatMessage(
+          "assistant",
+          "Forgive me — one moment. Ask again from Chat and I’ll pick up the thread.",
+        );
+      }
       return;
     }
     setMobileScreen(action.target as MobileScreen);
@@ -76,7 +88,6 @@
 <section class="panel">
   <header class="panel-header">
     <div>
-      <p class="eyebrow">Thomas for Business</p>
       <h2>What needs attention</h2>
       <p class="lead">Thomas knows the house — here’s what he’s noticed from your counts and closes.</p>
     </div>
@@ -165,15 +176,7 @@
 
   .panel-header {
     flex-shrink: 0;
-  }
-
-  .eyebrow {
-    margin: 0 0 0.25rem;
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--cognac);
+    padding-top: 0.15rem;
   }
 
   h2 {

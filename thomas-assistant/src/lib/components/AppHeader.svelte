@@ -17,8 +17,7 @@
   <div class="header-main" class:desktop-brand={!compact}>
     <ThomasLogo variant="full" mode="business" />
     {#if compact}
-      <span class="product-line">{BUSINESS_PRODUCT_LINE}</span>
-      <span class="supporting">{BUSINESS_SUPPORTING}</span>
+      <span class="supporting mobile-tagline">{BUSINESS_SUPPORTING}</span>
     {:else}
       <div class="desktop-meta">
         <span class="product-line">{BUSINESS_PRODUCT_LINE}</span>
@@ -27,7 +26,9 @@
     {/if}
   </div>
   <div class="status-group">
-    <span class="mode-pill business">Business</span>
+    {#if !compact}
+      <span class="mode-pill business">Business</span>
+    {/if}
     <span class="status on-premise">● On-Premise</span>
     {#if isCloudDemo}
       <span class="status cloud">☁ Cloud Demo</span>
@@ -48,8 +49,27 @@
   }
 
   .app-header.compact {
-    padding: 0.4rem 0.85rem;
+    padding: 0.35rem 0.75rem 0.4rem;
+    align-items: flex-start;
+  }
+
+  .app-header.compact .header-main {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .app-header.compact .status-group {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
     align-items: center;
+    gap: 0.25rem;
+    max-width: 42%;
+  }
+
+  .app-header.compact .status {
+    font-size: 0.58rem;
+    padding: 0.15rem 0.38rem;
   }
 
   .header-main {
@@ -90,6 +110,14 @@
   .desktop-brand .supporting {
     text-align: left;
     align-self: flex-start;
+  }
+
+  .mobile-tagline {
+    font-size: 0.68rem;
+    margin-top: 0.1rem;
+    align-self: center;
+    text-align: center;
+    width: 100%;
   }
 
   .status-group {
