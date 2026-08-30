@@ -23,7 +23,7 @@ export default function WebLayout({
       </a>
       <SiteDisclaimer />
       <SiteHeader />
-      <main id="main" className="pb-12">
+      <main id="main" className="min-h-[50vh] bg-white pb-12">
         {children}
       </main>
       <SiteFooter />

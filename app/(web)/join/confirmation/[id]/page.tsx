@@ -45,7 +45,8 @@ export default async function JoinConfirmationPage({ params }: PageProps) {
   const club = getClubById(membership.clubId);
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-10 md:px-6">
+    <div className="bg-white text-pf-ink">
+      <div className="mx-auto max-w-2xl px-4 py-10 md:px-6">
       <p className="inline-flex items-center gap-2 rounded-full bg-emerald-500/15 px-3 py-1 text-sm font-semibold text-emerald-700">
         <Check className="h-4 w-4" aria-hidden />
         Membership active
@@ -144,6 +145,7 @@ export default async function JoinConfirmationPage({ params }: PageProps) {
         <Button asChild variant="outline">
           <Link href="/">Back home</Link>
         </Button>
+      </div>
       </div>
     </div>
   );
