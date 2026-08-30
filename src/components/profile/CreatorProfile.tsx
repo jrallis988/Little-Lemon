@@ -4,6 +4,7 @@ import type { Creator, Post } from '#/domain/oj-types'
 import { Avatar } from '#/components/ui/Avatar'
 import { ContentTile } from '#/components/feed/ContentTile'
 import { useSupport } from '#/lib/support'
+import { useMembership } from '#/lib/membership'
 
 export function CreatorProfile({
   creator,
@@ -13,6 +14,8 @@ export function CreatorProfile({
   posts: Post[]
 }) {
   const { openSubscribe, openTip } = useSupport()
+  const { isUnlocked } = useMembership()
+  const unlocked = isUnlocked(creator.id)
 
   return (
     <div>
@@ -55,7 +58,9 @@ export function CreatorProfile({
               onClick={() => openSubscribe(creator)}
               className="rounded-xl bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-[var(--on-accent)] hover:opacity-95"
             >
-              {creator.tierName} · ${creator.tierPriceMonthly}/mo
+              {unlocked
+                ? `${creator.tierName} · member`
+                : `${creator.tierName} · $${creator.tierPriceMonthly}/mo`}
             </button>
           </div>
         </div>
@@ -112,7 +117,9 @@ export function CreatorProfile({
             </h2>
           </div>
           <p className="max-w-[9rem] text-right text-xs text-[var(--muted)]">
-            Frosted tiles = supporter tier
+            {unlocked
+              ? 'Your tier is active on this device'
+              : 'Frosted tiles = supporter tier'}
           </p>
         </div>
 

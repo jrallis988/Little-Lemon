@@ -2,19 +2,26 @@
 
 import { useEffect, useId, useState } from 'react'
 import { X } from 'lucide-react'
-import { tipPresets } from '#/lib/mock/oj'
+import { tipPresets } from '#/lib/oj/catalog'
 import { useSupport } from '#/lib/support'
+import { useMembership } from '#/lib/membership'
+import { demoCheckout } from '#/lib/payments'
 
 export function UnlockSheet() {
   const { target, close } = useSupport()
+  const { subscribe, tip, isUnlocked } = useMembership()
   const titleId = useId()
   const [customAmount, setCustomAmount] = useState('5')
   const [selectedTip, setSelectedTip] = useState(tipPresets[1]?.id ?? 't2')
-  const [done, setDone] = useState(false)
+  const [status, setStatus] = useState<'idle' | 'working' | 'done' | 'error'>(
+    'idle',
+  )
+  const [message, setMessage] = useState<string | null>(null)
 
   useEffect(() => {
     if (!target) {
-      setDone(false)
+      setStatus('idle')
+      setMessage(null)
       return
     }
     const onKey = (e: KeyboardEvent) => {
@@ -28,10 +35,59 @@ export function UnlockSheet() {
 
   const { mode, creator, post } = target
   const isSubscribe = mode === 'subscribe'
+  const alreadyUnlocked = isUnlocked(creator.id)
 
-  function confirm() {
-    setDone(true)
-    window.setTimeout(() => close(), 900)
+  async function confirm() {
+    setStatus('working')
+    setMessage(null)
+
+    if (isSubscribe) {
+      const result = await demoCheckout({
+        kind: 'subscribe',
+        creatorId: creator.id,
+        creatorName: creator.displayName,
+        amount: creator.tierPriceMonthly,
+        label: creator.tierName,
+      })
+      if (result.status !== 'demo_ok') {
+        setStatus('error')
+        setMessage(result.message)
+        return
+      }
+      subscribe(creator.id, creator.tierName, creator.tierPriceMonthly)
+      setStatus('done')
+      setMessage(`${creator.tierName} unlocked. Locked posts are open on this device.`)
+      window.setTimeout(() => close(), 1100)
+      return
+    }
+
+    const preset = tipPresets.find((p) => p.id === selectedTip)
+    const amount =
+      selectedTip === 't4'
+        ? Number(customAmount)
+        : (preset?.amount ?? 0)
+    if (!amount || amount <= 0) {
+      setStatus('error')
+      setMessage('Enter a tip amount.')
+      return
+    }
+
+    const result = await demoCheckout({
+      kind: 'tip',
+      creatorId: creator.id,
+      creatorName: creator.displayName,
+      amount,
+      label: preset?.label ?? 'Custom',
+    })
+    if (result.status !== 'demo_ok') {
+      setStatus('error')
+      setMessage(result.message)
+      return
+    }
+    tip(creator.id, amount, preset?.label ?? 'Custom')
+    setStatus('done')
+    setMessage(`$${amount} tip sent to ${creator.displayName}.`)
+    window.setTimeout(() => close(), 1100)
   }
 
   return (
@@ -58,7 +114,9 @@ export function UnlockSheet() {
             </h2>
             <p className="mt-1 text-sm text-[var(--muted)]">
               {isSubscribe
-                ? `Unlock raw memos, full specials, and exclusive shorts from ${creator.displayName}.`
+                ? alreadyUnlocked
+                  ? `You already unlocked ${creator.tierName} on this device.`
+                  : `Unlock raw memos, full specials, and exclusive shorts from ${creator.displayName}.`
                 : post
                   ? `Support “${post.title}” directly — no platform algorithm tax theater.`
                   : `Send a tip straight to ${creator.displayName}.`}
@@ -73,24 +131,40 @@ export function UnlockSheet() {
           </button>
         </div>
 
-        {done ? (
-          <p className="animate-rise rounded-xl bg-white/15 px-3 py-4 text-center text-sm font-medium text-[var(--ink)]">
-            {isSubscribe ? 'Backstage unlocked (demo).' : 'Tip sent (demo).'}
+        {status === 'done' || status === 'error' ? (
+          <p
+            className={`animate-rise rounded-xl px-3 py-4 text-center text-sm font-medium ${
+              status === 'done'
+                ? 'bg-white/15 text-[var(--ink)]'
+                : 'bg-[#fb7185]/15 text-[#ffe4e8]'
+            }`}
+          >
+            {message}
           </p>
         ) : isSubscribe ? (
           <div className="space-y-4">
             <ul className="divide-y divide-[var(--hairline)] text-sm text-[var(--ink-soft)]">
-              <li className="py-2.5 first:pt-0">Full specials + uncut crowdwork</li>
-              <li className="py-2.5">Writing-lab audio memos</li>
-              <li className="py-2.5 last:pb-0">Exclusive animated shorts</li>
+              {creator.tierPerks.map((perk) => (
+                <li key={perk} className="py-2.5 first:pt-0 last:pb-0">
+                  {perk}
+                </li>
+              ))}
             </ul>
             <button
               type="button"
-              onClick={confirm}
-              className="w-full rounded-xl bg-[var(--accent)] py-3.5 text-sm font-semibold text-[var(--on-accent)] hover:opacity-95"
+              onClick={() => void confirm()}
+              disabled={status === 'working' || alreadyUnlocked}
+              className="w-full rounded-xl bg-[var(--accent)] py-3.5 text-sm font-semibold text-[var(--on-accent)] hover:opacity-95 disabled:opacity-60"
             >
-              Unlock {creator.tierName} · ${creator.tierPriceMonthly}/mo
+              {alreadyUnlocked
+                ? 'Already unlocked'
+                : status === 'working'
+                  ? 'Processing…'
+                  : `Unlock ${creator.tierName} · $${creator.tierPriceMonthly}/mo`}
             </button>
+            <p className="text-center text-[11px] text-[var(--muted)]">
+              Demo checkout — Stripe hooks in when STRIPE_SECRET_KEY is set.
+            </p>
           </div>
         ) : (
           <div className="space-y-4">
@@ -134,10 +208,11 @@ export function UnlockSheet() {
             ) : null}
             <button
               type="button"
-              onClick={confirm}
-              className="w-full rounded-xl bg-[var(--accent)] py-3.5 text-sm font-semibold text-[var(--on-accent)] hover:opacity-95"
+              onClick={() => void confirm()}
+              disabled={status === 'working'}
+              className="w-full rounded-xl bg-[var(--accent)] py-3.5 text-sm font-semibold text-[var(--on-accent)] hover:opacity-95 disabled:opacity-60"
             >
-              Send tip
+              {status === 'working' ? 'Sending…' : 'Send tip'}
             </button>
           </div>
         )}

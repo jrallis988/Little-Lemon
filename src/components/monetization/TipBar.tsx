@@ -3,6 +3,7 @@
 import { HeartHandshake } from 'lucide-react'
 import type { Creator, Post } from '#/domain/oj-types'
 import { useSupport } from '#/lib/support'
+import { useMembership } from '#/lib/membership'
 
 export function TipBar({
   creator,
@@ -14,7 +15,11 @@ export function TipBar({
   tipTotal?: number
 }) {
   const { openTip, openSubscribe } = useSupport()
-  const locked = post?.access === 'supporters'
+  const { isUnlocked, tipTotalsByCreator } = useMembership()
+  const unlocked = isUnlocked(creator.id)
+  const locked = post?.access === 'supporters' && !unlocked
+  const liveTips =
+    (tipTotal ?? 0) + (tipTotalsByCreator[creator.id] ?? 0)
 
   return (
     <div className="mt-3 flex items-center gap-2">
@@ -45,18 +50,16 @@ export function TipBar({
           >
             <HeartHandshake className="h-4 w-4 text-[var(--tint)]" />
             Tip
-            {typeof tipTotal === 'number' ? (
-              <span className="font-mono text-xs text-[var(--muted)]">
-                ${tipTotal}
-              </span>
-            ) : null}
+            <span className="font-mono text-xs text-[var(--muted)]">
+              ${liveTips}
+            </span>
           </button>
           <button
             type="button"
             onClick={() => openSubscribe(creator)}
             className="inline-flex flex-1 items-center justify-center rounded-xl bg-[var(--accent)] px-3 py-2.5 text-sm font-semibold text-[var(--on-accent)] transition hover:opacity-95"
           >
-            Unlock ${creator.tierPriceMonthly}/mo
+            {unlocked ? 'Member' : `Unlock $${creator.tierPriceMonthly}/mo`}
           </button>
         </>
       )}

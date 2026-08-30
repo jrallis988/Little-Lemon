@@ -1,3 +1,5 @@
+import { avatarDataUri } from '#/lib/oj/visuals'
+
 export function Avatar({
   initials,
   hue,
@@ -17,15 +19,11 @@ export function Avatar({
           : 'h-11 w-11 text-xs'
 
   return (
-    <div
-      className={`inline-flex shrink-0 items-center justify-center rounded-full font-display tracking-wide text-white ring-2 ring-white/55 ${dim}`}
-      style={{
-        background: `linear-gradient(145deg, hsl(${hue} 68% 48%), hsl(${hue} 55% 22%) 55%, #046a9e)`,
-        boxShadow: '0 8px 20px rgba(0, 94, 140, 0.28)',
-      }}
+    <img
+      src={avatarDataUri({ initials, hue })}
+      alt=""
+      className={`inline-flex shrink-0 rounded-full object-cover ring-2 ring-white/55 ${dim}`}
       aria-hidden
-    >
-      {initials}
-    </div>
+    />
   )
 }

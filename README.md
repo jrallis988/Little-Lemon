@@ -9,49 +9,43 @@ Creator-subscription comedy platform for stand-ups, comedy animators, and fans. 
 - TanStack Start + Vite
 - Cloudflare Workers
 - Tailwind CSS v4
-- Drizzle schema retained for later persistence
-- Mock creator/monetization data for UI shell
+- Drizzle schema (core + OJ monetization tables)
+- Demo auth + membership on-device until `DATABASE_URL` / Stripe are connected
 
 ## Core views
 
 | Route | Purpose |
 |-------|---------|
 | `/` | Brand landing |
+| `/onboarding` | Product tour → fan/creator signup |
+| `/auth` | Demo sign up / sign in |
 | `/discover` | Chronological public discovery feed |
+| `/creators` | Creator directory |
 | `/c/$username` | Creator profile (public + locked tiles) |
-| `/messages` | Backstage DMs (stub) |
-| `/settings` | Account / creator settings (stub) |
+| `/messages` | Backstage inbox |
+| `/settings` | Account, role switch, tier pricing |
 
-## Component map
-
-```
-src/components/
-  brand/Logo.tsx
-  layout/AppShell.tsx          # header + mobile bottom nav
-  feed/DiscoveryFeed.tsx
-  feed/ContentTile.tsx         # feed + grid variants
-  media/MediaStage.tsx         # video/audio/animation stage + frost lock
-  monetization/TipBar.tsx
-  monetization/UnlockSheet.tsx # subscribe + tip bottom sheet
-  profile/CreatorProfile.tsx
-  ui/Avatar.tsx
-```
-
-## Aesthetic
-
-Brand palette from the OJ mark: vibrant sky blue (`#00AFF0`), pastel tint (`#BEE1F9`), and crisp white (`#FFFFFF`). Bebas Neue display + Space Grotesk UI.
-
-## Develop
+## Local develop
 
 ```bash
 npm install
 npm run dev
 ```
 
+Without `DATABASE_URL`, the UI uses demo auth and local membership (localStorage). Unlocking a tier or sending a tip persists on-device and opens locked posts.
+
+## Production wiring
+
+1. Postgres (`DATABASE_URL`) + migrate Drizzle schema (`oj_*` tables)
+2. Better Auth secrets
+3. Stripe Checkout / Connect for live unlock + tips
+4. R2 for real media uploads (SVG posters are temporary)
+5. `npx wrangler deploy` with a permanent Cloudflare account
+
 ## Deploy (Cloudflare)
 
 ```bash
-npm run deploy
-# or temporary preview:
 npm run build && npx wrangler deploy --temporary
+# or permanent:
+npm run deploy
 ```

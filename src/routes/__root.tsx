@@ -4,7 +4,11 @@ import {
   createRootRouteWithContext,
 } from '@tanstack/react-router'
 import { SupportProvider } from '#/lib/support'
+import { MembershipProvider } from '#/lib/membership'
+import { DemoAuthProvider } from '#/lib/demo-auth'
+import { PlayerProvider } from '#/lib/player'
 import { UnlockSheet } from '#/components/monetization/UnlockSheet'
+import { PlaySheet } from '#/components/media/PlaySheet'
 import appCss from '../styles.css?url'
 import type { QueryClient } from '@tanstack/react-query'
 
@@ -42,10 +46,17 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body className="min-h-dvh bg-[var(--bg)] font-sans text-[var(--ink)] antialiased">
-        <SupportProvider>
-          {children}
-          <UnlockSheet />
-        </SupportProvider>
+        <DemoAuthProvider>
+          <MembershipProvider>
+            <PlayerProvider>
+              <SupportProvider>
+                {children}
+                <UnlockSheet />
+                <PlaySheet />
+              </SupportProvider>
+            </PlayerProvider>
+          </MembershipProvider>
+        </DemoAuthProvider>
         <Scripts />
       </body>
     </html>

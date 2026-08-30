@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Link } from '@tanstack/react-router'
-import { Compass, HeartHandshake, Sparkles } from 'lucide-react'
+import { Compass, HeartHandshake, Sparkles, UserRound } from 'lucide-react'
 import { Logo } from '#/components/brand/Logo'
 
 const steps = [
@@ -24,6 +24,12 @@ const steps = [
     title: 'Subscribe backstage or send a micro-tip',
     body: 'Unlock supporter tiers for raw memos and full specials, or tip a set fee after a killer crowdwork bit.',
   },
+  {
+    icon: UserRound,
+    eyebrow: 'Join',
+    title: 'Pick fan or creator, then make an account',
+    body: 'Fans unlock tiers and tip. Creators set pricing and open Backstage. You can skip and browse first.',
+  },
 ] as const
 
 export function OnboardingScreen() {
@@ -40,10 +46,6 @@ export function OnboardingScreen() {
       />
       <div
         className="pointer-events-none absolute -right-10 top-8 h-44 w-44 rounded-full bg-white/25 blur-2xl"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute bottom-32 left-1/3 h-40 w-40 rounded-full bg-[#BEE1F9]/40 blur-3xl"
         aria-hidden
       />
 
@@ -63,15 +65,6 @@ export function OnboardingScreen() {
             className="animate-rise relative overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--bg-panel)] p-6 shadow-[0_18px_50px_color-mix(in_srgb,#0094d4_28%,transparent)]"
             key={step}
           >
-            <div
-              className="pointer-events-none absolute -right-6 -top-6 h-28 w-28 rounded-full bg-white/35"
-              aria-hidden
-            />
-            <div
-              className="pointer-events-none absolute -bottom-10 -left-4 h-24 w-24 rounded-full bg-[#00AFF0]/25"
-              aria-hidden
-            />
-
             <div className="relative">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--line-strong)] bg-[var(--sky)] text-[var(--ink)]">
                 <Icon className="h-6 w-6" strokeWidth={1.8} />
@@ -108,12 +101,28 @@ export function OnboardingScreen() {
 
         <footer className="mt-auto flex flex-col gap-3 pt-10">
           {isLast ? (
-            <Link
-              to="/discover"
-              className="rounded-xl bg-[var(--accent)] px-5 py-3.5 text-center text-sm font-semibold text-[var(--on-accent)] no-underline shadow-[0_10px_30px_color-mix(in_srgb,#0094d4_35%,transparent)] hover:opacity-95"
-            >
-              Open discovery
-            </Link>
+            <>
+              <Link
+                to="/auth"
+                search={{ mode: 'signup', role: 'fan' }}
+                className="rounded-xl bg-[var(--accent)] px-5 py-3.5 text-center text-sm font-semibold text-[var(--on-accent)] no-underline shadow-[0_10px_30px_color-mix(in_srgb,#0094d4_35%,transparent)] hover:opacity-95"
+              >
+                Continue as fan
+              </Link>
+              <Link
+                to="/auth"
+                search={{ mode: 'signup', role: 'creator' }}
+                className="rounded-xl border border-[var(--line-strong)] bg-white/15 px-5 py-3.5 text-center text-sm font-semibold text-[var(--ink)] no-underline hover:bg-white/25"
+              >
+                Continue as creator
+              </Link>
+              <Link
+                to="/discover"
+                className="text-center text-sm font-medium text-[var(--ink-soft)] no-underline hover:text-[var(--ink)]"
+              >
+                Browse without an account
+              </Link>
+            </>
           ) : (
             <button
               type="button"
@@ -123,15 +132,6 @@ export function OnboardingScreen() {
               Continue
             </button>
           )}
-          {isLast ? (
-            <Link
-              to="/c/$username"
-              params={{ username: 'maya.kill' }}
-              className="text-center text-sm font-medium text-[var(--ink-soft)] no-underline hover:text-[var(--ink)]"
-            >
-              Or peek at a creator profile
-            </Link>
-          ) : null}
         </footer>
       </div>
     </main>

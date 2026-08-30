@@ -10,7 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthIndexRouteImport } from './routes/auth/index'
 import { Route as CUsernameRouteImport } from './routes/c/$username'
+import { Route as CreatorsIndexRouteImport } from './routes/creators/index'
 import { Route as DiscoverIndexRouteImport } from './routes/discover/index'
 import { Route as MessagesIndexRouteImport } from './routes/messages/index'
 import { Route as OnboardingIndexRouteImport } from './routes/onboarding/index'
@@ -22,9 +24,19 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthIndexRoute = AuthIndexRouteImport.update({
+  id: '/auth/',
+  path: '/auth/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CUsernameRoute = CUsernameRouteImport.update({
   id: '/c/$username',
   path: '/c/$username',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CreatorsIndexRoute = CreatorsIndexRouteImport.update({
+  id: '/creators/',
+  path: '/creators/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DiscoverIndexRoute = DiscoverIndexRouteImport.update({
@@ -56,6 +68,8 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/c/$username': typeof CUsernameRoute
+  '/auth/': typeof AuthIndexRoute
+  '/creators/': typeof CreatorsIndexRoute
   '/discover/': typeof DiscoverIndexRoute
   '/messages/': typeof MessagesIndexRoute
   '/onboarding/': typeof OnboardingIndexRoute
@@ -65,6 +79,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/c/$username': typeof CUsernameRoute
+  '/auth': typeof AuthIndexRoute
+  '/creators': typeof CreatorsIndexRoute
   '/discover': typeof DiscoverIndexRoute
   '/messages': typeof MessagesIndexRoute
   '/onboarding': typeof OnboardingIndexRoute
@@ -75,6 +91,8 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/c/$username': typeof CUsernameRoute
+  '/auth/': typeof AuthIndexRoute
+  '/creators/': typeof CreatorsIndexRoute
   '/discover/': typeof DiscoverIndexRoute
   '/messages/': typeof MessagesIndexRoute
   '/onboarding/': typeof OnboardingIndexRoute
@@ -86,6 +104,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/c/$username'
+    | '/auth/'
+    | '/creators/'
     | '/discover/'
     | '/messages/'
     | '/onboarding/'
@@ -95,6 +115,8 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/c/$username'
+    | '/auth'
+    | '/creators'
     | '/discover'
     | '/messages'
     | '/onboarding'
@@ -104,6 +126,8 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/c/$username'
+    | '/auth/'
+    | '/creators/'
     | '/discover/'
     | '/messages/'
     | '/onboarding/'
@@ -114,6 +138,8 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CUsernameRoute: typeof CUsernameRoute
+  AuthIndexRoute: typeof AuthIndexRoute
+  CreatorsIndexRoute: typeof CreatorsIndexRoute
   DiscoverIndexRoute: typeof DiscoverIndexRoute
   MessagesIndexRoute: typeof MessagesIndexRoute
   OnboardingIndexRoute: typeof OnboardingIndexRoute
@@ -130,11 +156,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth/': {
+      id: '/auth/'
+      path: '/auth'
+      fullPath: '/auth/'
+      preLoaderRoute: typeof AuthIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/c/$username': {
       id: '/c/$username'
       path: '/c/$username'
       fullPath: '/c/$username'
       preLoaderRoute: typeof CUsernameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/creators/': {
+      id: '/creators/'
+      path: '/creators'
+      fullPath: '/creators/'
+      preLoaderRoute: typeof CreatorsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/discover/': {
@@ -178,6 +218,8 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CUsernameRoute: CUsernameRoute,
+  AuthIndexRoute: AuthIndexRoute,
+  CreatorsIndexRoute: CreatorsIndexRoute,
   DiscoverIndexRoute: DiscoverIndexRoute,
   MessagesIndexRoute: MessagesIndexRoute,
   OnboardingIndexRoute: OnboardingIndexRoute,

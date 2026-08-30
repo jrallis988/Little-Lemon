@@ -2,7 +2,7 @@
 
 import type { Post } from '#/domain/oj-types'
 import { ContentTile } from '#/components/feed/ContentTile'
-import { getCreator } from '#/lib/mock/oj'
+import { getCreator } from '#/lib/oj/catalog'
 
 export function DiscoveryFeed({ posts }: { posts: Post[] }) {
   return (

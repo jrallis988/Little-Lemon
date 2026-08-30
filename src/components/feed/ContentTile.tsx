@@ -7,6 +7,8 @@ import { Avatar } from '#/components/ui/Avatar'
 import { MediaStage } from '#/components/media/MediaStage'
 import { TipBar } from '#/components/monetization/TipBar'
 import { useSupport } from '#/lib/support'
+import { useMembership } from '#/lib/membership'
+import { usePlayer } from '#/lib/player'
 
 export function ContentTile({
   post,
@@ -17,23 +19,33 @@ export function ContentTile({
   creator: Creator
   variant?: 'feed' | 'grid'
 }) {
-  const locked = post.access === 'supporters'
   const { openSubscribe } = useSupport()
+  const { isUnlocked } = useMembership()
+  const { openPlayer } = usePlayer()
+  const locked = post.access === 'supporters' && !isUnlocked(creator.id)
+
+  function onMediaClick() {
+    if (locked) {
+      openSubscribe(creator)
+      return
+    }
+    if (post.kind !== 'text') openPlayer(creator, post)
+  }
 
   if (variant === 'grid') {
     return (
       <button
         type="button"
-        onClick={() => {
-          if (locked) openSubscribe(creator)
-        }}
+        onClick={onMediaClick}
         className="group block w-full overflow-hidden text-left"
       >
         <MediaStage
           tone={post.mediaTone}
           kind={post.kind}
+          title={post.title}
           durationLabel={post.durationLabel}
           locked={locked}
+          seed={creator.visualSeed}
         />
         <div className="pt-2.5">
           <p className="line-clamp-2 text-sm font-medium leading-snug text-[var(--ink)]">
@@ -42,6 +54,8 @@ export function ContentTile({
           <p className="mt-1 text-[10px] uppercase tracking-[0.14em] text-[var(--muted)]">
             {locked ? (
               <span className="lock-tag rounded px-1.5 py-0.5">Locked</span>
+            ) : post.access === 'supporters' ? (
+              'Unlocked'
             ) : (
               'Public'
             )}
@@ -80,18 +94,14 @@ export function ContentTile({
       </p>
 
       {post.kind !== 'text' ? (
-        <button
-          type="button"
-          className="mt-3 block w-full"
-          onClick={() => {
-            if (locked) openSubscribe(creator)
-          }}
-        >
+        <button type="button" className="mt-3 block w-full" onClick={onMediaClick}>
           <MediaStage
             tone={post.mediaTone}
             kind={post.kind}
+            title={post.title}
             durationLabel={post.durationLabel}
             locked={locked}
+            seed={creator.visualSeed}
           />
         </button>
       ) : null}

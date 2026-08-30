@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { AppShell } from '#/components/layout/AppShell'
 import { DiscoveryFeed } from '#/components/feed/DiscoveryFeed'
-import { getPublicFeed } from '#/lib/mock/oj'
+import { getPublicFeed } from '#/lib/oj/catalog'
 
 export const Route = createFileRoute('/discover/')({
   component: DiscoverPage,

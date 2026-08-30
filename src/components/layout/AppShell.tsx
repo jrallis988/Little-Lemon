@@ -1,30 +1,40 @@
+"use client"
+
 import { Link } from '@tanstack/react-router'
 import { Compass, MessageSquare, Radio, UserRound } from 'lucide-react'
 import { Logo } from '#/components/brand/Logo'
+import { useDemoAuth } from '#/lib/demo-auth'
 
 const nav = [
   { to: '/discover', label: 'Discover', icon: Compass },
   { to: '/messages', label: 'Backstage', icon: MessageSquare },
-  {
-    to: '/c/$username',
-    params: { username: 'maya.kill' },
-    label: 'Creators',
-    icon: Radio,
-  },
+  { to: '/creators', label: 'Creators', icon: Radio },
   { to: '/settings', label: 'You', icon: UserRound },
 ] as const
 
 export function Header() {
+  const { user, ready } = useDemoAuth()
+
   return (
     <header className="sticky top-0 z-40 border-b border-[var(--hairline)] bg-[var(--header)] backdrop-blur-md">
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-3">
         <Logo size="sm" />
-        <Link
-          to="/onboarding"
-          className="text-sm font-medium text-[var(--ink-soft)] no-underline hover:text-[var(--ink)]"
-        >
-          New here?
-        </Link>
+        {ready && user ? (
+          <Link
+            to="/settings"
+            className="max-w-[9rem] truncate text-sm font-medium text-[var(--ink-soft)] no-underline hover:text-[var(--ink)]"
+          >
+            {user.name}
+          </Link>
+        ) : (
+          <Link
+            to="/auth"
+            search={{ mode: 'signup', role: 'fan' }}
+            className="text-sm font-medium text-[var(--ink-soft)] no-underline hover:text-[var(--ink)]"
+          >
+            Sign in
+          </Link>
+        )}
       </div>
     </header>
   )
@@ -39,15 +49,10 @@ export function BottomNav() {
       <ul className="mx-auto flex max-w-lg items-stretch justify-between px-1 py-1.5">
         {nav.map((item) => {
           const Icon = item.icon
-          const linkProps =
-            'params' in item
-              ? { to: item.to, params: item.params }
-              : { to: item.to }
-
           return (
             <li key={item.label} className="flex-1">
               <Link
-                {...linkProps}
+                to={item.to}
                 className="flex flex-col items-center gap-0.5 px-1 py-2 text-[10px] uppercase tracking-[0.14em] text-[var(--muted)] no-underline transition-colors"
                 activeProps={{
                   className:

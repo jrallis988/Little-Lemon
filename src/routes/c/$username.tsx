@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { AppShell } from '#/components/layout/AppShell'
 import { CreatorProfile } from '#/components/profile/CreatorProfile'
-import { getCreatorByUsername, getPostsByCreator } from '#/lib/mock/oj'
+import { getCreatorByUsername, getPostsByCreator } from '#/lib/oj/catalog'
 
 export const Route = createFileRoute('/c/$username')({
   component: CreatorPage,

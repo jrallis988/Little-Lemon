@@ -1,5 +1,6 @@
 import { Clapperboard, Film, Lock, Mic, Play, Type } from 'lucide-react'
 import type { MediaKind } from '#/domain/oj-types'
+import { posterDataUri } from '#/lib/oj/visuals'
 
 const icons = {
   video: Clapperboard,
@@ -30,34 +31,33 @@ export function MediaKindBadge({ kind }: { kind: MediaKind }) {
 export function MediaStage({
   tone,
   kind,
+  title,
   durationLabel,
   locked,
+  seed,
 }: {
   tone: number
   kind: MediaKind
+  title?: string
   durationLabel?: string
   locked?: boolean
+  seed?: number
 }) {
+  const poster = posterDataUri({
+    tone,
+    title: title ?? kind,
+    kind,
+    seed,
+  })
+
   return (
-    <div
-      className="relative aspect-[16/10] w-full overflow-hidden rounded-xl"
-      style={{
-        background: `
-          radial-gradient(ellipse 70% 60% at 30% 20%, hsl(${tone} 70% 48% / 0.55), transparent 55%),
-          radial-gradient(ellipse 50% 45% at 85% 75%, #00AFF0 0%, transparent 50%),
-          linear-gradient(155deg, hsl(${tone} 42% 22%), #041828 70%, #020c14)
-        `,
-      }}
-    >
-      <div className="absolute inset-0 bg-[linear-gradient(transparent_35%,rgba(0,0,0,0.45)_100%)]" />
-      <div
-        className="pointer-events-none absolute inset-0 opacity-30"
-        style={{
-          backgroundImage:
-            'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 3px)',
-        }}
-        aria-hidden
+    <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-[#041828]">
+      <img
+        src={poster}
+        alt=""
+        className={`h-full w-full object-cover transition ${locked ? 'scale-105 blur-[2px]' : ''}`}
       />
+      <div className="absolute inset-0 bg-[linear-gradient(transparent_35%,rgba(0,0,0,0.45)_100%)]" />
 
       {locked ? (
         <div className="frost-lock absolute inset-0 flex flex-col items-center justify-center gap-2 bg-[var(--blur-frost)]">
@@ -68,13 +68,13 @@ export function MediaStage({
             Supporters only
           </p>
         </div>
-      ) : (
+      ) : kind !== 'text' ? (
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="animate-play flex h-14 w-14 items-center justify-center rounded-full border border-white/35 bg-white/20 shadow-[0_10px_30px_rgba(0,0,0,0.3)] backdrop-blur-sm">
             <Play className="ml-0.5 h-6 w-6 fill-white text-white" />
           </div>
         </div>
-      )}
+      ) : null}
 
       <div className="absolute left-2 top-2">
         <MediaKindBadge kind={kind} />
