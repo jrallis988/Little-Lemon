@@ -181,7 +181,7 @@ export function buildNotices(
     notices.push(
       notice(
         "discrepancies",
-        `${critical.length} inventor${critical.length === 1 ? "y" : "ies"} need${critical.length === 1 ? "s" : ""} attention`,
+        `${critical.length} product${critical.length === 1 ? "" : "s"} need${critical.length === 1 ? "s" : ""} a recount`,
         `${label} ${critical.length === 1 ? "is" : "are"} still flagged from today’s cellar checks.`,
         "urgent",
         [
