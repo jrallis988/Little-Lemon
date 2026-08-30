@@ -1,0 +1,50 @@
+:root {
+  --ivory: #f6f0e7;
+  --midnight: #081523;
+  --slate-navy: #172434;
+  --cognac: #c78a2c;
+  --espresso: #211610;
+  --bg: #f6f0e7;
+  --surface: #ffffff;
+  --surface-2: #fbf8f3;
+  --border: #e2dbd0;
+  --border-strong: #cfc6b8;
+  --text: #081523;
+  --text-muted: #4a5568;
+  --accent: #c78a2c;
+  --accent-dark: #a87324;
+  --accent-light: #f8edd9;
+  --accent-text: #ffffff;
+  --green: #2d8a5e;
+  --green-bg: #e8f5ee;
+  --yellow: #c78a2c;
+  --yellow-bg: #fdf3e8;
+  --red: #c44a4a;
+  --red-bg: #fceaea;
+  --cloud-blue: #6b8fa8;
+  --cloud-bg: #f3f6f8;
+  --chat-bg: #f6f0e7;
+  --chat-border: #e2dbd0;
+  --chat-bubble-user: #c78a2c;
+  --chat-bubble-assistant: #ffffff;
+  --chat-text: #081523;
+  --chat-muted: #5c6573;
+  --placeholder: #7a8494;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --bottom-nav-pad: calc(0.55rem + var(--safe-bottom));
+  --bottom-nav-height: calc(3.35rem + var(--safe-bottom));
+  --scroll-end-pad: 1.25rem;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-text-size-adjust: 100%;
+}

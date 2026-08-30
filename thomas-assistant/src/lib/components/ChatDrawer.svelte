@@ -1,0 +1,676 @@
+<script lang="ts">
+  import { chatWithAssistant, checkOllamaAvailable } from "$lib/api";
+  import ThomasLogo from "$lib/components/ThomasLogo.svelte";
+  import { suggestedPrompts } from "$lib/thomas-persona";
+  import {
+    appState,
+    addChatMessage,
+    buildChatContext,
+    saveUserArea,
+    toggleChat,
+  } from "$lib/stores/app.svelte";
+  import {
+    extractAreaFromMessage,
+    reverseGeocodeArea,
+  } from "$lib/retail-locator";
+
+  interface Props {
+    fullscreen?: boolean;
+  }
+
+  let { fullscreen = false }: Props = $props();
+
+  let input = $state("");
+  let sending = $state(false);
+  let liveAi = $state<boolean | null>(null);
+  let editingArea = $state(false);
+  let areaDraft = $state("");
+  let locating = $state(false);
+  let messagesEl: HTMLDivElement | undefined = $state();
+  let inputEl: HTMLTextAreaElement | undefined = $state();
+
+  const showSuggestions = $derived(
+    !sending &&
+      appState.chatMessages.length === 1 &&
+      appState.chatMessages[0]?.role === "assistant",
+  );
+
+  function resizeInput() {
+    if (!inputEl) return;
+    inputEl.style.height = "auto";
+    inputEl.style.height = `${Math.min(inputEl.scrollHeight, 120)}px`;
+  }
+
+  async function sendMessage(text?: string) {
+    const message = (text ?? input).trim();
+    if (!message || sending) return;
+
+    const extracted = extractAreaFromMessage(message);
+    if (extracted) saveUserArea(extracted);
+
+    addChatMessage("user", message);
+    input = "";
+    resizeInput();
+    sending = true;
+
+    try {
+      const context = buildChatContext();
+      const history = appState.chatMessages;
+      const reply = await chatWithAssistant(message, context, history);
+      addChatMessage("assistant", reply);
+    } catch {
+      addChatMessage(
+        "assistant",
+        "Forgive me — something unexpected arose. Might you try once more?",
+      );
+    } finally {
+      sending = false;
+      messagesEl?.scrollTo({ top: messagesEl.scrollHeight, behavior: "smooth" });
+    }
+  }
+
+  $effect(() => {
+    appState.chatMessages;
+    requestAnimationFrame(() => {
+      messagesEl?.scrollTo({ top: messagesEl.scrollHeight });
+    });
+  });
+
+  $effect(() => {
+    checkOllamaAvailable().then((ok) => {
+      liveAi = ok;
+    });
+  });
+
+  function openAreaEdit() {
+    areaDraft = appState.userArea ?? "";
+    editingArea = true;
+  }
+
+  function commitArea() {
+    saveUserArea(areaDraft);
+    editingArea = false;
+  }
+
+  type MessagePart = { type: "text" | "link"; value: string };
+
+  function linkifyMessage(content: string): MessagePart[] {
+    const parts: MessagePart[] = [];
+    const urlRe = /https?:\/\/[^\s]+/g;
+    let lastIndex = 0;
+    for (const match of content.matchAll(urlRe)) {
+      const index = match.index ?? 0;
+      if (index > lastIndex) {
+        parts.push({ type: "text", value: content.slice(lastIndex, index) });
+      }
+      parts.push({ type: "link", value: match[0] });
+      lastIndex = index + match[0].length;
+    }
+    if (lastIndex < content.length) {
+      parts.push({ type: "text", value: content.slice(lastIndex) });
+    }
+    return parts.length > 0 ? parts : [{ type: "text", value: content }];
+  }
+
+  async function useMyLocation() {
+    if (!navigator.geolocation) {
+      appState.error = "Location isn’t available in this browser.";
+      return;
+    }
+    locating = true;
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        const label = await reverseGeocodeArea(
+          pos.coords.latitude,
+          pos.coords.longitude,
+        );
+        if (label) {
+          saveUserArea(label);
+          areaDraft = label;
+          editingArea = false;
+        } else {
+          appState.error = "Couldn’t resolve your area — try city or ZIP.";
+        }
+        locating = false;
+      },
+      () => {
+        appState.error = "Location permission denied — enter city or ZIP manually.";
+        locating = false;
+      },
+      { timeout: 12000 },
+    );
+  }
+</script>
+
+<aside
+  class="chat-panel"
+  class:collapsed={!fullscreen && !appState.chatOpen}
+  class:fullscreen
+>
+  {#if fullscreen || appState.chatOpen}
+    {#if !fullscreen}
+      <header class="chat-header">
+        <div class="chat-title">
+          <ThomasLogo variant="mark" width={36} height={36} />
+          {#if liveAi === true}
+            <span class="ai-pill live">● Live AI</span>
+          {:else if liveAi === false}
+            <span class="ai-pill offline">○ Offline</span>
+          {/if}
+        </div>
+        <button type="button" class="toggle" onclick={toggleChat} aria-label="Toggle chat">
+          {appState.chatOpen ? "→" : "←"}
+        </button>
+      </header>
+    {:else if liveAi !== null}
+      <div class="mobile-ai-bar">
+        {#if liveAi}
+          <span class="ai-pill live">● Live AI — Thomas is listening</span>
+        {:else}
+          <span class="ai-pill offline">○ Offline — start Ollama for live chat</span>
+        {/if}
+      </div>
+    {/if}
+
+    <div class="chat-body">
+      <div class="area-bar" aria-label="Your area for local recommendations">
+        {#if editingArea}
+          <input
+            type="text"
+            bind:value={areaDraft}
+            placeholder="City or ZIP — e.g. Austin, TX"
+            aria-label="Your area"
+          />
+          <button type="button" class="area-btn primary" onclick={commitArea}>Save</button>
+          <button type="button" class="area-btn" onclick={() => (editingArea = false)}>Cancel</button>
+        {:else}
+          <span class="area-label">
+            {#if appState.userArea}
+              Near <strong>{appState.userArea}</strong> — local picks enabled
+            {:else}
+              Set your area for where-to-buy recommendations
+            {/if}
+          </span>
+          <button type="button" class="area-btn" onclick={openAreaEdit}>Set area</button>
+          <button
+            type="button"
+            class="area-btn"
+            disabled={locating}
+            onclick={useMyLocation}
+            title="Use my location"
+          >
+            {locating ? "…" : "📍"}
+          </button>
+        {/if}
+      </div>
+
+      <div class="messages" bind:this={messagesEl}>
+        {#each appState.chatMessages as msg, i (i)}
+          <div class="exchange {msg.role}">
+            {#if msg.role === "assistant"}
+              <ThomasLogo variant="mark" width={32} height={32} />
+            {/if}
+            <div class="bubble">
+              <p class="message-text">
+                {#each linkifyMessage(msg.content) as part}
+                  {#if part.type === "link"}
+                    <a href={part.value} target="_blank" rel="noopener noreferrer">
+                      Open in Maps
+                    </a>
+                  {:else}
+                    {part.value}
+                  {/if}
+                {/each}
+              </p>
+              {#if msg.role === "assistant" && msg.content.includes("https://")}
+                <p class="maps-hint">Tap Open in Maps for directions near your area.</p>
+              {/if}
+            </div>
+          </div>
+        {/each}
+
+        {#if showSuggestions}
+          <div class="suggestions">
+            <span class="suggestions-label">Try asking</span>
+            <div class="suggestion-chips">
+              {#each suggestedPrompts as prompt}
+                <button type="button" class="chip" onclick={() => sendMessage(prompt)}>
+                  <span class="chip-text">{prompt}</span>
+                  <span class="chip-arrow" aria-hidden="true">→</span>
+                </button>
+              {/each}
+            </div>
+          </div>
+        {/if}
+
+        {#if sending}
+          <div class="exchange assistant typing">
+            <ThomasLogo variant="mark" width={32} height={32} />
+            <div class="bubble">
+              <p>One moment…</p>
+            </div>
+          </div>
+        {/if}
+      </div>
+
+      <form
+        class="composer"
+        onsubmit={(e) => {
+          e.preventDefault();
+          sendMessage();
+        }}
+      >
+        <div class="composer-field">
+          <textarea
+            bind:this={inputEl}
+            bind:value={input}
+            rows="1"
+            placeholder="Ask Thomas anything…"
+            disabled={sending}
+            aria-label="Message to Thomas"
+            oninput={resizeInput}
+            onkeydown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+              }
+            }}
+          ></textarea>
+          <button
+            type="submit"
+            class="send"
+            disabled={sending || !input.trim()}
+            aria-label="Send message"
+          >
+            ➤
+          </button>
+        </div>
+      </form>
+    </div>
+  {:else}
+    <header class="chat-header collapsed-only">
+      <ThomasLogo variant="mark" width={32} height={32} />
+      <button type="button" class="toggle" onclick={toggleChat} aria-label="Open chat">
+        ←
+      </button>
+    </header>
+  {/if}
+</aside>
+
+<style>
+  .chat-panel {
+    display: flex;
+    flex-direction: column;
+    width: 380px;
+    min-width: 320px;
+    background: var(--chat-bg);
+    border-left: 1px solid var(--chat-border);
+    min-height: 0;
+  }
+
+  .chat-panel.collapsed {
+    width: 52px;
+    min-width: 52px;
+  }
+
+  .chat-panel.fullscreen {
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+    border-left: none;
+  }
+
+  .chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.65rem;
+    padding: 0.55rem 0.85rem;
+    border-bottom: 1px solid var(--chat-border);
+    background: var(--surface);
+  }
+
+  .chat-title {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-width: 0;
+  }
+
+  .mobile-ai-bar {
+    padding: 0.35rem 0.85rem;
+    background: var(--surface);
+    border-bottom: 1px solid var(--chat-border);
+    flex-shrink: 0;
+  }
+
+  .ai-pill {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.45rem;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .ai-pill.live {
+    color: var(--green);
+    background: var(--green-bg);
+    border: 1px solid rgba(45, 138, 94, 0.22);
+  }
+
+  .ai-pill.offline {
+    color: var(--text-muted);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+  }
+
+  .chat-header.collapsed-only {
+    flex-direction: column;
+    justify-content: center;
+    padding: 0.5rem 0.35rem;
+    gap: 0.35rem;
+  }
+
+  .toggle {
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .chat-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  .area-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.45rem 0.75rem;
+    background: var(--surface);
+    border-bottom: 1px solid var(--chat-border);
+    flex-shrink: 0;
+  }
+
+  .area-label {
+    flex: 1;
+    min-width: 8rem;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    line-height: 1.3;
+  }
+
+  .area-label strong {
+    color: var(--midnight);
+  }
+
+  .area-bar input {
+    flex: 1;
+    min-width: 8rem;
+    min-height: 36px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0 0.55rem;
+    font-size: 16px;
+  }
+
+  .area-btn {
+    min-height: 34px;
+    padding: 0 0.55rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--midnight);
+    cursor: pointer;
+  }
+
+  .area-btn.primary {
+    background: var(--cognac);
+    border-color: var(--cognac);
+    color: #fff;
+  }
+
+  .maps-hint {
+    margin: 0.35rem 0 0;
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  .exchange {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-end;
+  }
+
+  .exchange.user {
+    flex-direction: row-reverse;
+  }
+
+  .bubble {
+    max-width: min(85%, 28rem);
+    padding: 0.65rem 0.8rem;
+    border-radius: 14px;
+    line-height: 1.38;
+  }
+
+  .bubble p {
+    margin: 0;
+  }
+
+  .message-text {
+    white-space: pre-wrap;
+  }
+
+  .bubble a {
+    color: var(--cognac);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .exchange.user .bubble a {
+    color: #fff;
+  }
+
+  .exchange.assistant .bubble {
+    background: var(--chat-bubble-assistant);
+    border: 1px solid var(--chat-border);
+    color: var(--chat-text);
+    border-bottom-left-radius: 4px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.0625rem;
+    box-shadow: 0 1px 2px rgba(8, 21, 35, 0.04);
+  }
+
+  .exchange.user .bubble {
+    background: var(--cognac);
+    color: #fff;
+    border-bottom-right-radius: 4px;
+    font-size: 0.95rem;
+    line-height: 1.35;
+  }
+
+  .exchange.typing .bubble p {
+    opacity: 0.6;
+    font-style: italic;
+  }
+
+  .suggestions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding-top: 0.1rem;
+  }
+
+  .suggestions-label {
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--chat-muted);
+  }
+
+  .suggestion-chips {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .chip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.65rem;
+    text-align: left;
+    padding: 0.5rem 0.7rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.72);
+    color: var(--midnight);
+    font-size: 0.86rem;
+    line-height: 1.32;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(8, 21, 35, 0.03);
+  }
+
+  .chip-text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .chip-arrow {
+    flex-shrink: 0;
+    color: var(--cognac);
+    font-size: 0.9rem;
+    opacity: 0.75;
+  }
+
+  .chip:active {
+    border-color: rgba(199, 138, 44, 0.45);
+    background: var(--accent-light);
+  }
+
+  .composer {
+    flex-shrink: 0;
+    padding: 0.5rem 0.75rem;
+    padding-bottom: calc(0.5rem + env(safe-area-inset-bottom, 0));
+    background: var(--surface);
+    border-top: 1px solid var(--chat-border);
+  }
+
+  /* Mobile fullscreen sits above the tab bar — tab bar owns the safe-area inset */
+  .chat-panel.fullscreen .composer {
+    padding-bottom: 0.65rem;
+  }
+
+  .composer-field {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.3rem;
+    padding: 0.22rem 0.22rem 0.22rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface-2);
+  }
+
+  .composer-field:focus-within {
+    border-color: var(--cognac);
+    box-shadow: 0 0 0 2px rgba(199, 138, 44, 0.14);
+  }
+
+  .composer-field textarea {
+    flex: 1;
+    min-width: 0;
+    min-height: 22px;
+    max-height: 120px;
+    padding: 0.38rem 0;
+    border: none;
+    background: transparent;
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.35;
+    resize: none;
+    font-family: inherit;
+  }
+
+  .composer-field textarea:focus {
+    outline: none;
+  }
+
+  .composer-field textarea::placeholder {
+    color: var(--placeholder);
+  }
+
+  .send {
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 50%;
+    background: var(--cognac);
+    color: #fff;
+    font-size: 0.9rem;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    box-shadow: 0 1px 3px rgba(199, 138, 44, 0.35);
+  }
+
+  .send:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .chat-panel:not(.fullscreen) {
+      width: 320px;
+      min-width: 280px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .messages {
+      padding: 0.7rem 0.75rem;
+      gap: 0.6rem;
+    }
+
+    .exchange.assistant .bubble {
+      font-size: 1.0625rem;
+      line-height: 1.36;
+      padding: 0.6rem 0.75rem;
+    }
+
+    .chip {
+      padding: 0.48rem 0.65rem;
+      font-size: 0.84rem;
+    }
+  }
+</style>
