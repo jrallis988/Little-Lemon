@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Find adoptable pets through PetSmart Charities at events in stores near you.">
+  <title>Adopt — PetSmart Charities</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div id="ps-header" data-base="../" data-active="adopt"></div>
+
+  <main id="main">
+    <section class="hero" style="min-height:420px;">
+      <div class="hero__media"><img src="https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=1920&q=85" alt="Adoptable dog with a hopeful expression"></div>
+      <div class="hero__scrim"></div>
+      <div class="hero__content">
+        <p class="hero__eyebrow">PetSmart Charities</p>
+        <h1 class="hero__title" style="max-width:20ch;">Give a pet a loving home</h1>
+        <p class="hero__text">PetSmart Charities partners with local shelters to host adoption events in stores. Meet dogs and cats ready for their forever family.</p>
+        <div class="hero__actions">
+          <a class="btn btn-primary btn-lg" href="#adoptable">Browse adoptable pets</a>
+          <a class="btn btn-white btn-lg" href="../stores/index.html">Find an event</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="adoptable" aria-labelledby="pets-heading">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2 id="pets-heading">Adoptable pets near you</h2>
+          <p>These pets are available through partner shelters at PetSmart adoption events. Profiles are sample data for this redesign concept.</p>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:var(--space-2); margin-bottom:var(--space-4);" role="group" aria-label="Filter by species">
+          <button class="chip" aria-pressed="true" data-species="all">All</button>
+          <button class="chip" aria-pressed="false" data-species="Dog">Dogs</button>
+          <button class="chip" aria-pressed="false" data-species="Cat">Cats</button>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:var(--space-2); margin-bottom:var(--space-8);" role="group" aria-label="Filter by size">
+          <button class="chip" aria-pressed="true" data-size="all">Any size</button>
+          <button class="chip" aria-pressed="false" data-size="Small">Small</button>
+          <button class="chip" aria-pressed="false" data-size="Medium">Medium</button>
+          <button class="chip" aria-pressed="false" data-size="Large">Large</button>
+        </div>
+        <div class="grid-3" id="pets-grid"></div>
+      </div>
+    </section>
+
+    <section class="section section--pale">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2>How adoption works</h2>
+          <p>Every adoption supports PetSmart Charities' mission to find lifelong homes for pets in need.</p>
+        </div>
+        <div class="grid-3">
+          <div class="card reveal"><div class="card__body"><span class="card__eyebrow">Step 1</span><h3>Find an event</h3><p class="card__text">Search stores near you hosting adoption events this week.</p></div></div>
+          <div class="card reveal"><div class="card__body"><span class="card__eyebrow">Step 2</span><h3>Meet your match</h3><p class="card__text">Spend time with adoptable pets and talk with shelter partners about fit and care needs.</p></div></div>
+          <div class="card reveal"><div class="card__body"><span class="card__eyebrow">Step 3</span><h3>Bring them home</h3><p class="card__text">Complete adoption paperwork and get a new-pet checklist to start off right.</p></div></div>
+        </div>
+        <p class="text-center" style="margin-top:var(--space-10);">
+          <a class="btn btn-secondary" href="../care/article.html?id=bringing-home">New pet checklist</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <div id="ps-footer" data-base="../"></div>
+  <script src="../js/chrome.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    let species = 'all';
+    let size = 'all';
+    const grid = document.getElementById('pets-grid');
+    function render() {
+      PetSmartUI.renderPetGrid(grid, PetSmartData.getPets({ species, size }), '../');
+      document.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-visible'));
+    }
+    document.querySelectorAll('[data-species]').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        species = chip.dataset.species;
+        document.querySelectorAll('[data-species]').forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+        render();
+      });
+    });
+    document.querySelectorAll('[data-size]').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        size = chip.dataset.size;
+        document.querySelectorAll('[data-size]').forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+        render();
+      });
+    });
+    render();
+  </script>
+</body>
+</html>

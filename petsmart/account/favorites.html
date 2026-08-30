@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saved Items — PetSmart Account</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div id="ps-header" data-base="../" data-active=""></div>
+
+  <main id="main">
+    <div class="page-hero"><div class="page-hero__inner container"><h1>Saved items</h1><p>Products you've saved for later.</p></div></div>
+    <div class="container" style="padding:var(--space-8) var(--space-4);">
+      <div class="grid-4" id="favorites-grid"></div>
+    </div>
+  </main>
+
+  <div id="ps-footer" data-base="../"></div>
+  <script src="../js/chrome.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    const ids = PetSmartFavorites.get();
+    const products = ids.map((id) => PetSmartData.getProduct(id)).filter(Boolean);
+    const grid = document.getElementById('favorites-grid');
+    if (!products.length) {
+      grid.innerHTML = '<div class="empty-state"><h3>No saved items yet</h3><p>Tap “Save for later” on any product to build your list.</p><a class="btn btn-primary" href="../shop/index.html">Browse shop</a></div>';
+    } else {
+      PetSmartUI.renderProductGrid(grid, products, '../');
+    }
+  </script>
+</body>
+</html>

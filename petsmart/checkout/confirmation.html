@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirmed — PetSmart</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div id="ps-header" data-base="../" data-active="shop"></div>
+
+  <main id="main">
+    <div class="confirm-panel">
+      <div class="confirm-panel__icon" aria-hidden="true">✓</div>
+      <h1>Thank you for your order</h1>
+      <p class="text-muted" style="margin:var(--space-4) 0 var(--space-8);">
+        This is a demo checkout — no payment was processed.
+        Your order number is <strong id="order-id">PS-DEMO</strong>.
+      </p>
+      <div style="display:flex; gap:var(--space-4); justify-content:center; flex-wrap:wrap;">
+        <a class="btn btn-primary" href="../account/orders.html">View orders</a>
+        <a class="btn btn-outline" href="../shop/index.html">Continue shopping</a>
+      </div>
+    </div>
+  </main>
+
+  <div id="ps-footer" data-base="../"></div>
+  <script src="../js/chrome.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    document.getElementById('order-id').textContent =
+      'PS-' + Math.floor(10000 + Math.random() * 90000);
+  </script>
+</body>
+</html>
