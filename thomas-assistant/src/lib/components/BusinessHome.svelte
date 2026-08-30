@@ -8,6 +8,7 @@
   import {
     listInventoryScans,
     listShiftLogs,
+    listAuditTrails,
     getInventorySummary,
   } from "$lib/api";
   import {
@@ -35,6 +36,7 @@
   async function refresh() {
     appState.inventoryScans = await listInventoryScans(100);
     appState.shiftLogs = await listShiftLogs(50);
+    appState.auditTrails = await listAuditTrails(100);
     appState.summary = await getInventorySummary();
     ready = true;
   }

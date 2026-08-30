@@ -100,8 +100,9 @@ export function buildChatContext(): string {
   const summary = appState.summary;
   const latestScan = appState.inventoryScans[0];
   const latestShift = appState.shiftLogs[0];
+  const latestAudit = appState.auditTrails[0];
 
-  return butlerSessionContext({
+  const base = butlerSessionContext({
     totalScans: summary?.total_scans,
     needsAttention: summary?.critical_variances,
     latestProduct: latestScan?.sku,
@@ -109,4 +110,8 @@ export function buildChatContext(): string {
     latestTill: latestShift?.register_id,
     latestTillGap: latestShift?.variance,
   });
+
+  if (!latestAudit) return base;
+  const note = ` Latest in The Record: ${latestAudit.details}`;
+  return base ? `${base}${note}` : note.trim();
 }

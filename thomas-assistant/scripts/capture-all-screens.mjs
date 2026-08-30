@@ -72,9 +72,16 @@ await mkdir(OUT, { recursive: true });
   await page.waitForTimeout(400);
   await shot(page, "screen-mobile-01-chat");
 
-  await page.getByRole("button", { name: "Cellar" }).click();
-  await page.waitForTimeout(400);
+  await page.getByRole("button", { name: "Cellar", exact: true }).click();
+  await page.waitForTimeout(500);
   await shot(page, "screen-mobile-02-cellar");
+
+  // Cellar count view
+  await page.getByRole("button", { name: "New count" }).click();
+  await page.waitForTimeout(400);
+  await shot(page, "screen-mobile-02b-cellar-count");
+  await page.getByRole("button", { name: "Back to overview" }).click().catch(() => {});
+  await page.waitForTimeout(200);
 
   await page.getByRole("button", { name: "Order", exact: true }).click();
   await page.waitForTimeout(500);
@@ -128,8 +135,8 @@ await mkdir(OUT, { recursive: true });
   await go(page);
   await shot(page, "screen-desktop-00-home");
 
-  await page.getByRole("button", { name: "Cellar Check" }).click();
-  await page.waitForTimeout(400);
+  await page.getByRole("button", { name: "Cellar" }).click();
+  await page.waitForTimeout(500);
   await shot(page, "screen-desktop-01-cellar-chat");
 
   await page.getByRole("button", { name: "Restock" }).click();
@@ -141,7 +148,7 @@ await mkdir(OUT, { recursive: true });
   await shot(page, "screen-desktop-02-close");
 
   await page.getByRole("button", { name: "The Record" }).click();
-  await page.waitForTimeout(400);
+  await page.waitForTimeout(500);
   await shot(page, "screen-desktop-03-record");
   await page.close();
 }
@@ -162,7 +169,7 @@ await mkdir(OUT, { recursive: true });
   }, previewMessages);
   await page.reload({ waitUntil: "networkidle" });
   await page.waitForTimeout(500);
-  await page.getByRole("button", { name: "Cellar Check" }).click().catch(() => {});
+  await page.getByRole("button", { name: "Cellar" }).click().catch(() => {});
   await page.waitForTimeout(500);
   await shot(page, "screen-desktop-04-chat-conversation");
   await page.close();

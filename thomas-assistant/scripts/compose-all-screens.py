@@ -13,7 +13,7 @@ MOBILE = [
     ("screen-mobile-00-home.png", "1 · Business Home"),
     ("screen-mobile-01-chat.png", "2 · Chat"),
     ("screen-mobile-07-chat-conversation.png", "3 · Conversation"),
-    ("screen-mobile-02-cellar.png", "4 · Cellar Check"),
+    ("screen-mobile-02-cellar.png", "4 · Cellar Overview"),
     ("screen-mobile-08-order.png", "5 · Restock Order"),
     ("screen-mobile-03-close-step1.png", "6 · Close — Cash"),
     ("screen-mobile-04-close-step2.png", "7 · Close — Cellar"),

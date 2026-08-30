@@ -7,7 +7,7 @@ export const THOMAS_GREETING = `Good evening, ${STAFF_FIRST_NAME}. What shall we
 
 export const TAB_LABELS = {
   home: "Home",
-  inventory: "Cellar Check",
+  inventory: "Cellar",
   order: "Restock",
   shift: "Close the Night",
   audit: "The Record",

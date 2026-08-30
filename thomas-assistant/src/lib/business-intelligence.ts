@@ -5,6 +5,7 @@ import type {
   OrderLine,
   ShiftLog,
   ThomasNotice,
+  VarianceLevel,
 } from "./types";
 import {
   countGapLabel,
@@ -13,6 +14,21 @@ import {
   tillLabel,
 } from "./product-catalog";
 import { varianceLevel } from "./types";
+
+export type CellarFilter = "all" | "attention" | "low" | "exact";
+
+export interface CellarProductRow {
+  sku: string;
+  name: string;
+  unit: string;
+  onHand: number;
+  expected: number;
+  variance: number;
+  level: VarianceLevel;
+  runningLow: boolean;
+  lastChecked: string;
+  history: InventoryScan[];
+}
 
 /** Latest scan per SKU (first occurrence wins — scans are newest-first). */
 export function latestScansBySku(scans: InventoryScan[]): InventoryScan[] {
@@ -25,6 +41,63 @@ export function latestScansBySku(scans: InventoryScan[]): InventoryScan[] {
     latest.push(scan);
   }
   return latest;
+}
+
+export function buildCellarRows(scans: InventoryScan[]): CellarProductRow[] {
+  const bySku = new Map<string, InventoryScan[]>();
+  for (const scan of scans) {
+    const key = scan.sku.toUpperCase();
+    const list = bySku.get(key) ?? [];
+    list.push(scan);
+    bySku.set(key, list);
+  }
+
+  const rows: CellarProductRow[] = [];
+  for (const [, history] of bySku) {
+    const latest = history[0];
+    const level = varianceLevel(latest.variance);
+    const runningLow =
+      latest.expected_qty > 0 &&
+      (latest.actual_qty / latest.expected_qty <= 0.35 || latest.variance <= -5);
+    rows.push({
+      sku: latest.sku,
+      name: productName(latest.sku),
+      unit: productUnit(latest.sku),
+      onHand: latest.actual_qty,
+      expected: latest.expected_qty,
+      variance: latest.variance,
+      level,
+      runningLow,
+      lastChecked: latest.timestamp,
+      history,
+    });
+  }
+
+  return rows.sort((a, b) => {
+    const rank = { critical: 0, minor: 1, exact: 2 } as const;
+    const d = rank[a.level] - rank[b.level];
+    if (d !== 0) return d;
+    return a.name.localeCompare(b.name);
+  });
+}
+
+export function filterCellarRows(
+  rows: CellarProductRow[],
+  filter: CellarFilter,
+  query: string,
+): CellarProductRow[] {
+  const q = query.trim().toLowerCase();
+  return rows.filter((row) => {
+    if (filter === "attention" && row.level === "exact") return false;
+    if (filter === "low" && !row.runningLow) return false;
+    if (filter === "exact" && row.level !== "exact") return false;
+    if (!q) return true;
+    return (
+      row.name.toLowerCase().includes(q) ||
+      row.sku.toLowerCase().includes(q) ||
+      row.unit.toLowerCase().includes(q)
+    );
+  });
 }
 
 export function buildHouseSnapshot(
