@@ -59,9 +59,18 @@ export const LANDING_HEALTH: LandingHealthStory[] = [
   {
     id: "flu",
     title: "Plan ahead for flu season",
-    description: "Flu shot appointments are available at your neighborhood pharmacy.",
+    description:
+      "Flu shot appointments are available — walk in or schedule online.",
     href: "/pharmacy/schedule?service=svc-flu",
     cta: "Schedule a flu shot",
+  },
+  {
+    id: "weight",
+    title: "Weight-loss medication consults",
+    description:
+      "Explore GLP-1 options with a clinician visit in select states.",
+    href: "/pharmacy/schedule?service=svc-weight",
+    cta: "Learn about visits",
   },
   {
     id: "alerts",
@@ -71,11 +80,12 @@ export const LANDING_HEALTH: LandingHealthStory[] = [
     cta: "Track a prescription",
   },
   {
-    id: "testing",
-    title: "Testing & clinical care",
-    description: "Strep, flu testing, and pharmacist-led care when you need answers fast.",
-    href: "/pharmacy/schedule?service=svc-test",
-    cta: "Explore services",
+    id: "chat",
+    title: "Pharmacy Chat & screening kits",
+    description:
+      "Ask a pharmacy expert or request at-home screening information.",
+    href: "/help",
+    cta: "Get health help",
   },
 ];
 
@@ -121,5 +131,12 @@ export const LANDING_CATEGORIES: LandingCategory[] = [
     href: "/photo",
     imageUrl: "/images/health-flu.jpg",
     imageAlt: "Neighborhood drugstore services including photo and care",
+  },
+  {
+    id: "contacts",
+    name: "Contacts & eye",
+    href: "/shop?category=contacts",
+    imageUrl: "/images/vitamins-aisle.jpg",
+    imageAlt: "Eye care and contact lens essentials on a drugstore shelf",
   },
 ];

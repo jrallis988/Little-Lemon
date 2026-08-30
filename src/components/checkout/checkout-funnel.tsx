@@ -18,6 +18,7 @@ import { findCoupon, getCouponDiscount } from "@/lib/data/coupons";
 import { formatCurrency, formatPoints } from "@/lib/pharmacy";
 import { useAuth, DEMO_ACCOUNT } from "@/lib/store/auth";
 import { useCart } from "@/lib/store/cart";
+import { useCouponWallet } from "@/lib/store/coupon-wallet";
 import { useOrders } from "@/lib/store/orders";
 import { useSelectedStore } from "@/lib/store/store-selection";
 import type { CheckoutMode, FulfillmentMethod, PlacedOrder } from "@/lib/types";
@@ -41,6 +42,7 @@ export function CheckoutFunnel() {
   const { addOrder } = useOrders();
   const { store } = useSelectedStore();
   const { user, signIn } = useAuth();
+  const { clipped } = useCouponWallet();
 
   const [mode, setMode] = useState<CheckoutMode>(user ? "member" : "guest");
   const [email, setEmail] = useState(user?.email ?? "");
@@ -111,7 +113,7 @@ export function CheckoutFunnel() {
     const coupon = findCoupon(couponInput);
     if (!coupon) {
       setAppliedCouponCode(null);
-      setCouponMessage("That code isn’t valid. Try FAST15 or STOCKUP25.");
+      setCouponMessage("That code isn’t valid. Try AUG10, FAST15, or DEAL20.");
       return;
     }
     const discount = getCouponDiscount(coupon, totals.subtotal);
@@ -597,13 +599,56 @@ export function CheckoutFunnel() {
                 id="coupon"
                 value={couponInput}
                 onChange={(event) => setCouponInput(event.target.value)}
-                placeholder="FAST15"
+                placeholder="AUG10"
                 className="uppercase"
               />
               <Button type="button" variant="outline" onClick={applyCoupon}>
                 Apply
               </Button>
             </div>
+            {clipped.length > 0 ? (
+              <div className="flex flex-wrap gap-2 pt-1">
+                {clipped.map((code) => (
+                  <button
+                    key={code}
+                    type="button"
+                    className={cn(
+                      "rounded-full border px-2.5 py-1 text-xs font-medium transition-colors",
+                      appliedCouponCode === code
+                        ? "border-brand bg-brand/10 text-brand"
+                        : "border-border text-muted-foreground hover:border-brand/40 hover:text-foreground",
+                    )}
+                    onClick={() => {
+                      setCouponInput(code);
+                      const coupon = findCoupon(code);
+                      if (!coupon) return;
+                      const discount = getCouponDiscount(coupon, totals.subtotal);
+                      if (discount <= 0) {
+                        setAppliedCouponCode(null);
+                        setCouponMessage(
+                          `Add more to your cart to use ${coupon.code} (min $${coupon.minSubtotal ?? 0}).`,
+                        );
+                        return;
+                      }
+                      setAppliedCouponCode(coupon.code);
+                      setCouponMessage(
+                        `Applied ${coupon.code}: ${coupon.description}`,
+                      );
+                    }}
+                  >
+                    {code}
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <p className="text-xs text-muted-foreground">
+                Clip codes on{" "}
+                <Link href="/deals" className="text-brand underline-offset-2 hover:underline">
+                  Weekly deals
+                </Link>{" "}
+                to fill your wallet.
+              </p>
+            )}
             {couponMessage ? (
               <p className="text-xs text-muted-foreground">{couponMessage}</p>
             ) : null}

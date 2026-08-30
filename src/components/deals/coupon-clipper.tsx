@@ -1,48 +1,43 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Check } from "lucide-react";
 
 import { COUPONS } from "@/lib/data/coupons";
+import { useCouponWallet } from "@/lib/store/coupon-wallet";
 import { Button } from "@/components/ui/button";
 
-const STORAGE_KEY = "walgreens-clipped-coupons-v1";
-
 export function CouponClipper() {
-  const [clipped, setClipped] = useState<string[]>([]);
-
-  useEffect(() => {
-    try {
-      const raw = window.localStorage.getItem(STORAGE_KEY);
-      if (raw) setClipped(JSON.parse(raw) as string[]);
-    } catch {
-      // ignore
-    }
-  }, []);
-
-  function clip(code: string) {
-    setClipped((current) => {
-      const next = current.includes(code) ? current : [...current, code];
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-      return next;
-    });
-  }
+  const { clipped, clip, isClipped } = useCouponWallet();
 
   return (
     <section aria-labelledby="coupons-heading" className="mt-12">
-      <h2
-        id="coupons-heading"
-        className="font-display text-2xl font-semibold tracking-tight"
-      >
-        Clip a code
-      </h2>
-      <p className="mt-2 text-sm text-muted-foreground">
-        Codes apply at checkout. Clipped codes are remembered in this browser.
-      </p>
-      <ul className="mt-6 grid gap-4 sm:grid-cols-3">
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h2
+            id="coupons-heading"
+            className="font-display text-2xl font-semibold tracking-tight"
+          >
+            Coupon wallet
+          </h2>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Clip codes here — they show up at checkout ready to apply.{" "}
+            {clipped.length > 0
+              ? `${clipped.length} clipped in this browser.`
+              : "Nothing clipped yet."}
+          </p>
+        </div>
+        <Button
+          className="bg-brand text-brand-foreground hover:bg-brand/90"
+          nativeButton={false}
+          render={<Link href="/checkout" />}
+        >
+          Go to checkout
+        </Button>
+      </div>
+      <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {COUPONS.map((coupon) => {
-          const isClipped = clipped.includes(coupon.code);
+          const clippedNow = isClipped(coupon.code);
           return (
             <li
               key={coupon.code}
@@ -57,10 +52,10 @@ export function CouponClipper() {
               </p>
               <Button
                 className="mt-4 w-full"
-                variant={isClipped ? "outline" : "default"}
+                variant={clippedNow ? "outline" : "default"}
                 onClick={() => clip(coupon.code)}
               >
-                {isClipped ? (
+                {clippedNow ? (
                   <>
                     <Check className="size-4" aria-hidden />
                     Clipped
@@ -73,13 +68,6 @@ export function CouponClipper() {
           );
         })}
       </ul>
-      <Button
-        className="mt-6 bg-brand text-brand-foreground hover:bg-brand/90"
-        nativeButton={false}
-        render={<Link href="/checkout" />}
-      >
-        Go to checkout
-      </Button>
     </section>
   );
 }

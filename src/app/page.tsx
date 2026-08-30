@@ -9,6 +9,7 @@ import {
   HomeQuickPaths,
   HomeShopPreview,
 } from "@/components/home/home-sections";
+import { HomeForYou } from "@/components/home/home-for-you";
 
 export default function HomePage() {
   return (
@@ -16,6 +17,7 @@ export default function HomePage() {
       <HomeHero />
       <HomeQuickPaths />
       <HomeDeals />
+      <HomeForYou />
       <HomeHealthMatters />
       <HomeCategories />
       <HomePharmacyPreview />

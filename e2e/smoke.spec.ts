@@ -49,7 +49,7 @@ test.describe("Walgreens RX smoke flows", () => {
     await expect(page.getByRole("heading", { name: "Weekly deals" })).toBeVisible();
     await page.goto("/photo");
     await expect(
-      page.getByRole("heading", { name: "Make summer memories" }),
+      page.getByRole("heading", { name: "Bring big moments to life" }),
     ).toBeVisible();
     await page.goto("/stores");
     await expect(page.getByRole("heading", { name: "Find a store" })).toBeVisible();

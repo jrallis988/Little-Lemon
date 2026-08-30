@@ -2,12 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowLeft, Check, Star } from "lucide-react";
 
 import { getReviewsForProduct } from "@/lib/data/reviews";
 import { formatCurrency } from "@/lib/pharmacy";
 import { useCart } from "@/lib/store/cart";
+import { useRecentlyViewed } from "@/lib/store/recently-viewed";
 import type { Product } from "@/lib/types";
 import { getProductDescription } from "@/lib/products";
 import { Badge } from "@/components/ui/badge";
@@ -22,9 +23,14 @@ export function ProductDetail({
   related: Product[];
 }) {
   const { addProduct } = useCart();
+  const { trackView } = useRecentlyViewed();
   const [quantity, setQuantity] = useState(1);
   const [justAdded, setJustAdded] = useState(false);
   const reviews = getReviewsForProduct(product.id);
+
+  useEffect(() => {
+    trackView(product.id);
+  }, [product.id, trackView]);
 
   function handleAdd() {
     addProduct(product, quantity);

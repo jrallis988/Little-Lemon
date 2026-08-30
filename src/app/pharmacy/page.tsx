@@ -52,7 +52,7 @@ export default function PharmacyPage() {
             Schedule vaccines and testing without leaving the pharmacy experience.
           </p>
         </div>
-        <ul className="grid gap-4 md:grid-cols-3">
+        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CLINICAL_SERVICES.map((service) => (
             <li
               key={service.id}

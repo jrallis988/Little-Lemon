@@ -12,9 +12,9 @@ import {
 
 import {
   LANDING_CATEGORIES,
-  LANDING_DEALS,
   LANDING_HEALTH,
 } from "@/lib/data/landing";
+import { WEEKLY_AD } from "@/lib/data/coupons";
 import { PRESCRIPTIONS, REWARDS } from "@/lib/data/catalog";
 import { formatPoints } from "@/lib/pharmacy";
 import { Button } from "@/components/ui/button";
@@ -154,7 +154,7 @@ export function HomeDeals() {
 
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 text-brand-foreground sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
         <div>
-          <p className="text-sm font-medium text-white/80">Summer savings now</p>
+          <p className="text-sm font-medium text-white/80">Deals of the week</p>
           <h2
             id="deals-heading"
             className="mt-2 font-display text-3xl font-semibold tracking-tight sm:text-4xl"
@@ -162,21 +162,21 @@ export function HomeDeals() {
             Deals worth stopping for
           </h2>
           <p className="mt-3 max-w-md text-white/85">
-            Pickup discounts, seasonal essentials, and myWalgreens exclusive
-            offers — inspired by what&apos;s live on Walgreens.com.
+            Circular-style savings, BOGOs, and myWalgreens exclusives — clip
+            codes on the deals page and apply them at checkout.
           </p>
           <Button
             className="mt-6 bg-white text-brand hover:bg-white/90"
             nativeButton={false}
-            render={<Link href="/shop" />}
+            render={<Link href="/deals" />}
           >
-            Shop all deals
+            Open weekly ad
             <ArrowRight className="size-4" aria-hidden />
           </Button>
         </div>
 
         <ul className="divide-y divide-white/20 border-y border-white/20">
-          {LANDING_DEALS.map((deal) => (
+          {WEEKLY_AD.slice(0, 5).map((deal) => (
             <li key={deal.id}>
               <Link
                 href={deal.href}
@@ -502,7 +502,7 @@ export function HomeShopPreview() {
       </div>
 
       <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {PRODUCTS.slice(0, 4).map((product) => (
+        {PRODUCTS.slice(0, 8).map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
