@@ -16,14 +16,14 @@ const nav = [
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-40 border-b border-[var(--line)] bg-[var(--header)] backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b border-[var(--hairline)] bg-[var(--header)] backdrop-blur-md">
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-3">
         <Logo size="sm" />
         <Link
-          to="/discover"
-          className="rounded-md bg-[var(--accent)] px-3 py-1.5 text-sm font-semibold text-[var(--on-accent)] no-underline hover:opacity-90"
+          to="/onboarding"
+          className="text-sm font-medium text-[var(--ink-soft)] no-underline hover:text-[var(--ink)]"
         >
-          Discover
+          New here?
         </Link>
       </div>
     </header>
@@ -33,7 +33,7 @@ export function Header() {
 export function BottomNav() {
   return (
     <nav
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-[var(--line)] bg-[var(--header)] backdrop-blur-md sm:hidden"
+      className="fixed inset-x-0 bottom-0 z-40 border-t border-[var(--hairline)] bg-[var(--header)] backdrop-blur-md sm:hidden"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
       <ul className="mx-auto flex max-w-lg items-stretch justify-between px-1 py-1.5">
@@ -48,10 +48,10 @@ export function BottomNav() {
             <li key={item.label} className="flex-1">
               <Link
                 {...linkProps}
-                className="flex flex-col items-center gap-0.5 px-1 py-2 text-[10px] uppercase tracking-[0.14em] text-[var(--muted)] no-underline"
+                className="flex flex-col items-center gap-0.5 px-1 py-2 text-[10px] uppercase tracking-[0.14em] text-[var(--muted)] no-underline transition-colors"
                 activeProps={{
                   className:
-                    'flex flex-col items-center gap-0.5 px-1 py-2 text-[10px] uppercase tracking-[0.14em] text-[var(--ice)] no-underline',
+                    'flex flex-col items-center gap-0.5 px-1 py-2 text-[10px] uppercase tracking-[0.14em] text-[var(--ink)] no-underline',
                 }}
               >
                 <Icon className="h-5 w-5" strokeWidth={1.8} />

@@ -14,27 +14,52 @@ export function TipBar({
   tipTotal?: number
 }) {
   const { openTip, openSubscribe } = useSupport()
+  const locked = post?.access === 'supporters'
 
   return (
     <div className="mt-3 flex items-center gap-2">
-      <button
-        type="button"
-        onClick={() => openTip(creator, post)}
-        className="inline-flex flex-1 items-center justify-center gap-2 rounded-md border border-[var(--line)] bg-[var(--bg-panel)] px-3 py-2 text-sm font-semibold text-[var(--ink)] transition hover:border-[var(--ice)]/50"
-      >
-        <HeartHandshake className="h-4 w-4 text-[var(--ice)]" />
-        Tip
-        {typeof tipTotal === 'number' ? (
-          <span className="font-mono text-xs text-[var(--muted)]">${tipTotal}</span>
-        ) : null}
-      </button>
-      <button
-        type="button"
-        onClick={() => openSubscribe(creator)}
-        className="inline-flex flex-1 items-center justify-center rounded-md bg-[var(--accent)] px-3 py-2 text-sm font-semibold text-[var(--on-accent)] transition hover:opacity-90"
-      >
-        Unlock ${creator.tierPriceMonthly}/mo
-      </button>
+      {locked ? (
+        <>
+          <button
+            type="button"
+            onClick={() => openSubscribe(creator)}
+            className="inline-flex flex-[1.4] items-center justify-center rounded-xl bg-[var(--accent)] px-3 py-2.5 text-sm font-semibold text-[var(--on-accent)] transition hover:opacity-95"
+          >
+            Unlock ${creator.tierPriceMonthly}/mo
+          </button>
+          <button
+            type="button"
+            onClick={() => openTip(creator, post)}
+            className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-[var(--line-strong)] px-3 py-2.5 text-sm font-semibold text-[var(--ink)] transition hover:bg-white/10"
+          >
+            <HeartHandshake className="h-4 w-4" />
+            Tip
+          </button>
+        </>
+      ) : (
+        <>
+          <button
+            type="button"
+            onClick={() => openTip(creator, post)}
+            className="inline-flex flex-[1.4] items-center justify-center gap-2 rounded-xl border border-[var(--line-strong)] bg-white/15 px-3 py-2.5 text-sm font-semibold text-[var(--ink)] transition hover:bg-white/25"
+          >
+            <HeartHandshake className="h-4 w-4 text-[var(--tint)]" />
+            Tip
+            {typeof tipTotal === 'number' ? (
+              <span className="font-mono text-xs text-[var(--muted)]">
+                ${tipTotal}
+              </span>
+            ) : null}
+          </button>
+          <button
+            type="button"
+            onClick={() => openSubscribe(creator)}
+            className="inline-flex flex-1 items-center justify-center rounded-xl bg-[var(--accent)] px-3 py-2.5 text-sm font-semibold text-[var(--on-accent)] transition hover:opacity-95"
+          >
+            Unlock ${creator.tierPriceMonthly}/mo
+          </button>
+        </>
+      )}
     </div>
   )
 }

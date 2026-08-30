@@ -6,12 +6,12 @@ import { getCreator } from '#/lib/mock/oj'
 
 export function DiscoveryFeed({ posts }: { posts: Post[] }) {
   return (
-    <div className="space-y-3">
+    <div>
       {posts.map((post, index) => {
         const creator = getCreator(post.creatorId)
         if (!creator) return null
         return (
-          <div key={post.id} style={{ animationDelay: `${index * 50}ms` }}>
+          <div key={post.id} style={{ animationDelay: `${index * 45}ms` }}>
             <ContentTile post={post} creator={creator} />
           </div>
         )

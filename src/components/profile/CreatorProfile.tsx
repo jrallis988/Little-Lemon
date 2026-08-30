@@ -17,24 +17,22 @@ export function CreatorProfile({
   return (
     <div>
       <div
-        className="relative h-40 w-full sm:h-52"
+        className="relative h-36 w-full sm:h-48"
         style={{
-          background: `linear-gradient(120deg, hsl(${creator.bannerHue} 48% 42%), #00AFF0 52%, #BEE1F9 100%)`,
+          background: `linear-gradient(120deg, hsl(${creator.bannerHue} 55% 45%), #00AFF0 48%, #BEE1F9 100%)`,
         }}
       >
-        <div className="absolute inset-0 bg-[linear-gradient(transparent,rgba(0,175,240,0.82))]" />
+        <div className="absolute inset-0 bg-[linear-gradient(transparent_20%,rgba(0,175,240,0.88))]" />
       </div>
 
       <div className="relative mx-auto max-w-3xl px-4">
         <div className="-mt-12 flex flex-col gap-4 sm:-mt-14 sm:flex-row sm:items-end sm:justify-between">
           <div className="flex items-end gap-4">
-            <div className="rounded-full border-4 border-[var(--bg)]">
-              <Avatar
-                initials={creator.avatarInitials}
-                hue={creator.bannerHue}
-                size="xl"
-              />
-            </div>
+            <Avatar
+              initials={creator.avatarInitials}
+              hue={creator.bannerHue}
+              size="xl"
+            />
             <div className="pb-1">
               <h1 className="font-display text-4xl text-[var(--ink)]">
                 {creator.displayName}
@@ -48,14 +46,14 @@ export function CreatorProfile({
             <button
               type="button"
               onClick={() => openTip(creator)}
-              className="rounded-md border border-[var(--line-strong)] px-4 py-2 text-sm font-semibold text-[var(--ice-bright)]"
+              className="rounded-xl border border-[var(--line-strong)] px-4 py-2.5 text-sm font-semibold text-[var(--ink)] hover:bg-white/10"
             >
               Tip
             </button>
             <button
               type="button"
               onClick={() => openSubscribe(creator)}
-              className="rounded-md bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-[var(--on-accent)] hover:opacity-90"
+              className="rounded-xl bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-[var(--on-accent)] hover:opacity-95"
             >
               {creator.tierName} · ${creator.tierPriceMonthly}/mo
             </button>
@@ -70,19 +68,19 @@ export function CreatorProfile({
           {creator.tags.map((tag) => (
             <li
               key={tag}
-              className="rounded-md bg-[var(--bg-panel)] px-2.5 py-1 text-[11px] uppercase tracking-[0.14em] text-[var(--muted)]"
+              className="rounded-full bg-white/15 px-2.5 py-1 text-[11px] uppercase tracking-[0.14em] text-[var(--ink)]"
             >
               #{tag}
             </li>
           ))}
         </ul>
 
-        <dl className="mt-6 grid grid-cols-3 gap-2 border border-[var(--line)] bg-[var(--bg-elevated)] p-3 text-center">
+        <dl className="mt-6 grid grid-cols-3 gap-3 border-y border-[var(--hairline)] py-4 text-center">
           <div>
             <dt className="text-[10px] uppercase tracking-[0.16em] text-[var(--muted)]">
               Supporters
             </dt>
-            <dd className="font-display text-3xl text-[var(--ice)]">
+            <dd className="mt-1 font-display text-3xl text-[var(--ink)]">
               {creator.supporters.toLocaleString()}
             </dd>
           </div>
@@ -90,7 +88,7 @@ export function CreatorProfile({
             <dt className="text-[10px] uppercase tracking-[0.16em] text-[var(--muted)]">
               Posts
             </dt>
-            <dd className="font-display text-3xl text-[var(--ink)]">
+            <dd className="mt-1 font-display text-3xl text-[var(--ink)]">
               {creator.posts}
             </dd>
           </div>
@@ -98,7 +96,7 @@ export function CreatorProfile({
             <dt className="text-[10px] uppercase tracking-[0.16em] text-[var(--muted)]">
               Clips
             </dt>
-            <dd className="font-display text-3xl text-[var(--ice-bright)]">
+            <dd className="mt-1 font-display text-3xl text-[var(--ink)]">
               {creator.clips}
             </dd>
           </div>
@@ -106,17 +104,19 @@ export function CreatorProfile({
 
         <div className="mt-8 flex items-end justify-between gap-3">
           <div>
-            <p className="text-[11px] uppercase tracking-[0.2em] text-[var(--ice)]">
+            <p className="text-[11px] uppercase tracking-[0.2em] text-[var(--tint)]">
               Library
             </p>
-            <h2 className="font-display text-3xl">Public + locked</h2>
+            <h2 className="font-display text-3xl text-[var(--ink)]">
+              Public + locked
+            </h2>
           </div>
-          <p className="text-xs text-[var(--muted)]">
+          <p className="max-w-[9rem] text-right text-xs text-[var(--muted)]">
             Frosted tiles = supporter tier
           </p>
         </div>
 
-        <div className="mt-4 grid grid-cols-2 gap-3 pb-8 sm:grid-cols-3">
+        <div className="mt-4 grid grid-cols-2 gap-x-3 gap-y-5 pb-8 sm:grid-cols-3">
           {posts.map((post) => (
             <ContentTile
               key={post.id}

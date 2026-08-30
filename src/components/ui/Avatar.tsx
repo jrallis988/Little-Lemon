@@ -18,10 +18,10 @@ export function Avatar({
 
   return (
     <div
-      className={`inline-flex shrink-0 items-center justify-center rounded-full font-display tracking-wide text-[var(--ink)] ${dim}`}
+      className={`inline-flex shrink-0 items-center justify-center rounded-full font-display tracking-wide text-white ring-2 ring-white/55 ${dim}`}
       style={{
-        background: `linear-gradient(145deg, hsl(${hue} 70% 42%), hsl(${hue} 55% 18%))`,
-        boxShadow: 'inset 0 0 0 1px rgba(244,241,234,0.16)',
+        background: `linear-gradient(145deg, hsl(${hue} 68% 48%), hsl(${hue} 55% 22%) 55%, #046a9e)`,
+        boxShadow: '0 8px 20px rgba(0, 94, 140, 0.28)',
       }}
       aria-hidden
     >

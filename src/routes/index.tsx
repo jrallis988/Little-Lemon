@@ -6,7 +6,7 @@ export const Route = createFileRoute('/')({ component: LandingPage })
 function LandingPage() {
   return (
     <main className="relative min-h-dvh overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,color-mix(in_srgb,#BEE1F9_45%,transparent),transparent_52%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,color-mix(in_srgb,#ffffff_32%,transparent),transparent_55%)]" />
       <div className="relative mx-auto flex min-h-dvh max-w-3xl flex-col px-4 pb-10 pt-8">
         <header className="flex items-center justify-between">
           <Logo size="sm" />
@@ -34,21 +34,21 @@ function LandingPage() {
             corporate censorship. Direct support. No algorithm tax theater.
           </p>
           <div
-            className="animate-rise mt-8 flex flex-wrap gap-3"
+            className="animate-rise mt-8 flex flex-col items-start gap-3 sm:flex-row sm:items-center"
             style={{ animationDelay: '180ms' }}
           >
             <Link
               to="/discover"
-              className="rounded-md bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-[var(--on-accent)] no-underline hover:opacity-90"
+              className="rounded-xl bg-[var(--accent)] px-6 py-3.5 text-sm font-semibold text-[var(--on-accent)] no-underline shadow-[0_12px_32px_color-mix(in_srgb,#007eb8_35%,transparent)] hover:opacity-95"
             >
               Open discovery
             </Link>
             <Link
               to="/c/$username"
               params={{ username: 'maya.kill' }}
-              className="rounded-md border border-[var(--line-strong)] bg-[var(--bg-panel)] px-5 py-3 text-sm font-semibold text-[var(--ink)] no-underline"
+              className="px-1 text-sm font-medium text-[var(--ink-soft)] no-underline underline-offset-4 hover:text-[var(--ink)] hover:underline"
             >
-              See a creator
+              Or see a creator
             </Link>
           </div>
         </section>

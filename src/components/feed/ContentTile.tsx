@@ -27,7 +27,7 @@ export function ContentTile({
         onClick={() => {
           if (locked) openSubscribe(creator)
         }}
-        className="group block w-full overflow-hidden rounded-md border border-[var(--line)] bg-[var(--bg-panel)] text-left"
+        className="group block w-full overflow-hidden text-left"
       >
         <MediaStage
           tone={post.mediaTone}
@@ -35,8 +35,10 @@ export function ContentTile({
           durationLabel={post.durationLabel}
           locked={locked}
         />
-        <div className="p-2.5">
-          <p className="line-clamp-2 text-sm font-medium text-[var(--ink)]">{post.title}</p>
+        <div className="pt-2.5">
+          <p className="line-clamp-2 text-sm font-medium leading-snug text-[var(--ink)]">
+            {post.title}
+          </p>
           <p className="mt-1 text-[10px] uppercase tracking-[0.14em] text-[var(--muted)]">
             {locked ? (
               <span className="lock-tag rounded px-1.5 py-0.5">Locked</span>
@@ -50,7 +52,7 @@ export function ContentTile({
   }
 
   return (
-    <article className="animate-rise border border-[var(--line)] bg-[var(--bg-elevated)] p-3 sm:p-4">
+    <article className="animate-rise border-b border-[var(--hairline)] py-5 first:pt-1">
       <div className="mb-3 flex items-center gap-3">
         <Link to="/c/$username" params={{ username: creator.username }}>
           <Avatar initials={creator.avatarInitials} hue={creator.bannerHue} />
@@ -59,7 +61,7 @@ export function ContentTile({
           <Link
             to="/c/$username"
             params={{ username: creator.username }}
-            className="font-semibold text-[var(--ink)] no-underline hover:text-[var(--ice)]"
+            className="font-semibold text-[var(--ink)] no-underline hover:text-[var(--tint)]"
           >
             {creator.displayName}
           </Link>
@@ -70,8 +72,12 @@ export function ContentTile({
         </div>
       </div>
 
-      <h2 className="font-display text-2xl text-[var(--ink)]">{post.title}</h2>
-      <p className="mt-1 text-sm leading-relaxed text-[var(--ink-soft)]">{post.body}</p>
+      <h2 className="text-lg font-semibold leading-snug tracking-tight text-[var(--ink)] sm:text-xl">
+        {post.title}
+      </h2>
+      <p className="mt-1.5 text-sm leading-relaxed text-[var(--ink-soft)]">
+        {post.body}
+      </p>
 
       {post.kind !== 'text' ? (
         <button

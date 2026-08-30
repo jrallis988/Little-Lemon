@@ -26,10 +26,11 @@ Dual-sided creator monetization network for stand-up comics and comedy animators
 
 | Token | Value | Role |
 |-------|-------|------|
-| `--bg` / `--navy` | `#000A5B` | Deep navy stage |
-| `--accent` | `#77ACF1` | Cornflower logo accent (O + Jokes) |
-| `--ink` | `#FFFFFF` | Crisp white type |
-| `--on-accent` | `#000A5B` | Type on accent fills |
+| `--bg` / `--sky` | `#00AFF0` | Primary sky stage |
+| `--tint` / `--bg-panel` | `#BEE1F9` | Soft panels / secondary |
+| `--ink` | `#FFFFFF` | Primary type on sky |
+| `--accent` | `#FFFFFF` | Primary CTA fills |
+| `--on-accent` / `--panel-ink` | `#00AFF0` / `#046A9E` | Type on white / tint |
 
 ## Next persistence slice
 
