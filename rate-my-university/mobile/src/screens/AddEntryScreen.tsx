@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   Alert,
   Pressable,
@@ -8,12 +8,17 @@ import {
   View,
 } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
+import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
 import { api } from '../api/client';
 import { LayeredSearch } from '../components/LayeredSearch';
 import { StructuredRatingForm } from '../components/StructuredRatingForm';
 import { colors, spacing, typography } from '../constants/theme';
-import type { DirectorySearchResult, ReviewTargetType } from '../types';
+import type {
+  DirectorySearchResult,
+  ReviewTargetType,
+  RootTabParamList,
+} from '../types';
 
 const KIND_TO_TARGET: Partial<Record<DirectorySearchResult['kind'], ReviewTargetType>> = {
   professor: 'professor',
@@ -32,22 +37,61 @@ async function getUserToken(): Promise<string> {
   return token;
 }
 
+type Props = BottomTabScreenProps<RootTabParamList, 'AddEntry'>;
+
 /**
  * Add Entry tab: find an existing entity or invent a new one, then rate it.
+ * Detail screens can deep-link here via `prefill` route params.
  */
-export function AddEntryScreen() {
-  const [mode, setMode] = useState<'search' | 'create' | 'rate'>('search');
-  const [selected, setSelected] = useState<DirectorySearchResult | null>(null);
+export function AddEntryScreen({ route }: Props) {
+  const prefill = route.params?.prefill;
+  const [mode, setMode] = useState<'search' | 'create' | 'rate'>(
+    prefill ? 'rate' : 'search'
+  );
+  const [selected, setSelected] = useState<DirectorySearchResult | null>(
+    prefill
+      ? {
+          kind:
+            prefill.targetType === 'advisor' ? 'professor' : (prefill.targetType as DirectorySearchResult['kind']),
+          id: prefill.targetId,
+          label: prefill.targetLabel,
+          subtitle: null,
+          university_id: null,
+          department_id: null,
+        }
+      : null
+  );
   const [createType, setCreateType] = useState<ReviewTargetType>('professor');
   const [createName, setCreateName] = useState('');
   const [createDept, setCreateDept] = useState('');
   const [createUniversityId, setCreateUniversityId] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [prefillType, setPrefillType] = useState<ReviewTargetType | null>(
+    prefill?.targetType ?? null
+  );
+
+  useEffect(() => {
+    if (!prefill) return;
+    setPrefillType(prefill.targetType);
+    setSelected({
+      kind:
+        prefill.targetType === 'advisor'
+          ? 'professor'
+          : (prefill.targetType as DirectorySearchResult['kind']),
+      id: prefill.targetId,
+      label: prefill.targetLabel,
+      subtitle: null,
+      university_id: null,
+      department_id: null,
+    });
+    setMode('rate');
+  }, [prefill]);
 
   const targetType: ReviewTargetType = useMemo(() => {
+    if (prefillType) return prefillType;
     if (selected) return KIND_TO_TARGET[selected.kind] ?? 'professor';
     return createType;
-  }, [selected, createType]);
+  }, [selected, createType, prefillType]);
 
   const targetLabel = selected?.label ?? (createName || 'New entry');
 

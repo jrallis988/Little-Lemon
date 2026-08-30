@@ -1,3 +1,5 @@
+import type { NavigatorScreenParams } from '@react-navigation/native';
+
 export type ReviewTargetType =
   | 'professor'
   | 'advisor'
@@ -66,6 +68,25 @@ export interface PaginatedResponse<T> {
   offset: number;
 }
 
+export interface ReviewAggregate {
+  target_type: ReviewTargetType;
+  target_id: string;
+  review_count: number;
+  avg_ratings: Record<string, number>;
+  top_tags: string[];
+}
+
+export interface Review {
+  id: string;
+  target_type: ReviewTargetType;
+  target_id: string;
+  ratings: Record<string, number>;
+  qualitative_tags: string[];
+  comment: string | null;
+  created_at: string;
+  target_created: boolean;
+}
+
 export interface ReviewCreatePayload {
   target_type: ReviewTargetType;
   target_id?: string;
@@ -94,9 +115,30 @@ export interface ReviewCreatePayload {
   };
 }
 
+export type ReviewPrefill = {
+  targetType: ReviewTargetType;
+  targetId: string;
+  targetLabel: string;
+};
+
+/** Bottom tab routes */
 export type RootTabParamList = {
   Home: undefined;
   Search: undefined;
-  AddEntry: undefined;
+  AddEntry: { prefill?: ReviewPrefill } | undefined;
   Profile: undefined;
+};
+
+/** Root stack: tabs + hierarchy detail screens */
+export type RootStackParamList = {
+  Tabs: NavigatorScreenParams<RootTabParamList> | undefined;
+  UniversityDetail: { universityId: string; name?: string };
+  DepartmentDetail: {
+    departmentId: string;
+    name?: string;
+    universityId?: string;
+  };
+  ProfessorDetail: { professorId: string; name?: string };
+  CourseDetail: { courseId: string; label?: string };
+  DormDetail: { dormId: string; name?: string };
 };

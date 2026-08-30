@@ -7,13 +7,25 @@ import {
   Text,
   View,
 } from 'react-native';
+import type { CompositeScreenProps } from '@react-navigation/native';
+import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { api } from '../api/client';
 import { colors, spacing, typography } from '../constants/theme';
-import type { University } from '../types';
+import type {
+  RootStackParamList,
+  RootTabParamList,
+  University,
+} from '../types';
+
+type Props = CompositeScreenProps<
+  BottomTabScreenProps<RootTabParamList, 'Home'>,
+  NativeStackScreenProps<RootStackParamList>
+>;
 
 /** Home: brand-forward campus feed — pick a school to dive into the hierarchy. */
-export function HomeScreen() {
+export function HomeScreen({ navigation }: Props) {
   const [universities, setUniversities] = useState<University[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -61,7 +73,15 @@ export function HomeScreen() {
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.list}
         renderItem={({ item }) => (
-          <Pressable style={styles.campusRow}>
+          <Pressable
+            style={styles.campusRow}
+            onPress={() =>
+              navigation.navigate('UniversityDetail', {
+                universityId: item.id,
+                name: item.name,
+              })
+            }
+          >
             <Text style={styles.campusName}>{item.name}</Text>
             <Text style={styles.campusMeta}>
               {item.location} · {item.domain}

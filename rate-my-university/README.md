@@ -31,9 +31,9 @@ rate-my-university/
 └── mobile/                     # Expo React Native app
     ├── App.tsx
     └── src/
-        ├── navigation/         # Tab navigator (Home, Directory, Add, Profile)
-        ├── screens/
-        ├── components/         # LayeredSearch + RatingSlider + form
+        ├── navigation/         # Tabs + stack (hierarchy detail screens)
+        ├── screens/            # Home, Directory, Add, Profile + 5 detail screens
+        ├── components/         # LayeredSearch, RatingSlider, AggregateReviews…
         ├── api/
         ├── types/
         └── constants/
