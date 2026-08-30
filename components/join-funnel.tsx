@@ -189,7 +189,7 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [membershipId, setMembershipId] = useState<string | null>(null);
-  const [paymentMode, setPaymentMode] = useState<"test" | "stripe">("test");
+  const [, setPaymentMode] = useState<"test" | "stripe">("test");
   const [stripeReady, setStripeReady] = useState(false);
   const [payPath, setPayPath] = useState<"test" | "checkout" | "elements">(
     "test"
@@ -804,36 +804,37 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
                   <span className="font-semibold text-pf-purple">
                     {membershipId}
                   </span>
-                  . Payment mode:{" "}
-                  <span className="font-semibold">
-                    {paymentMode === "stripe" ? "Stripe" : "test authorization"}
-                  </span>
                   .
                 </p>
-                <p className="text-sm text-pf-ink/65">
-                  Download the Planet Fitness app for check-in and your digital
-                  keytag—those stay in the app.
-                </p>
+                <ol className="space-y-2 rounded-2xl border border-pf-line bg-[#faf8fc] p-4 text-left text-sm text-pf-ink/75">
+                  <li>
+                    <span className="font-semibold text-pf-ink">1.</span> Open
+                    confirmation for your receipt and next steps.
+                  </li>
+                  <li>
+                    <span className="font-semibold text-pf-ink">2.</span> Set an
+                    app password via Sign in → Forgot password (use{" "}
+                    <span className="font-semibold">{identity.email || "your email"}</span>
+                    ).
+                  </li>
+                  <li>
+                    <span className="font-semibold text-pf-ink">3.</span> Check in
+                    and open your digital card in the member app.
+                  </li>
+                </ol>
                 <div className="flex flex-wrap justify-center gap-2 pt-2 sm:justify-start">
                   {membershipId ? (
                     <Button asChild variant="purple">
                       <Link href={`/join/confirmation/${membershipId}`}>
-                        View confirmation
+                        View confirmation &amp; next steps
                       </Link>
                     </Button>
                   ) : null}
-                  <Button asChild variant="app" className="bg-pf-btn text-white hover:brightness-110">
-                    <a
-                      href="https://www.planetfitness.com/mobileapp"
-                      target="_blank"
-                      rel="noreferrer"
-                      onClick={() => track("app_banner_click", { source: "join_done" })}
-                    >
-                      Download the PF App
-                    </a>
+                  <Button asChild variant="outline">
+                    <Link href="/app/login">Set app password</Link>
                   </Button>
                   <Button asChild variant="outline">
-                    <Link href="/">Back to clubs</Link>
+                    <Link href="/">Back home</Link>
                   </Button>
                 </div>
               </div>

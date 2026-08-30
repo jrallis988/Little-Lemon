@@ -164,9 +164,25 @@ export function ExploreClubsNearYou() {
         </ul>
 
         {filtered.length === 0 ? (
-          <p className="mt-8 text-center font-sans text-sm text-white/85">
-            No clubs match that search. Try Stratham, Portsmouth, or 03885.
-          </p>
+          <div
+            className="mt-8 rounded-2xl border border-white/25 bg-white/10 px-6 py-8 text-center backdrop-blur-sm"
+            role="status"
+          >
+            <p className="font-sans text-base font-semibold text-white">
+              No clubs match that search
+            </p>
+            <p className="mt-2 font-sans text-sm text-white/85">
+              Try Stratham, Portsmouth, or ZIP 03885 — or clear the search to
+              see nearby Seacoast clubs.
+            </p>
+            <button
+              type="button"
+              className="mt-4 inline-flex h-10 items-center justify-center rounded-full border border-white px-5 text-sm font-semibold text-white transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              onClick={() => setQuery("")}
+            >
+              Clear search
+            </button>
+          </div>
         ) : null}
 
         {filtered.length > 0 ? (

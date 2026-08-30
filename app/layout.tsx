@@ -39,10 +39,10 @@ export const metadata: Metadata = {
       "Your home club in Stratham, NH. Compare memberships, explore Seacoast clubs, and join with transparent local pricing.",
     images: [
       {
-        url: "/images/hero-gym.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Planet Fitness Stratham gym floor",
+        url: "/images/strong-hero.jpg",
+        width: 1536,
+        height: 1024,
+        alt: "Members training together at Planet Fitness Stratham",
       },
     ],
   },
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     title: "Planet Fitness Stratham, NH — Join Online",
     description:
       "Your home club in Stratham, NH. Compare memberships and join with transparent local pricing.",
-    images: ["/images/hero-gym.jpg"],
+    images: ["/images/strong-hero.jpg"],
   },
   robots: { index: true, follow: true },
   manifest: "/manifest.json",

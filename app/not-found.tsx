@@ -13,9 +13,12 @@ export default function NotFound() {
       <p className="mt-2 text-sm text-pf-ink/65">
         Check the link, or head back to Planet Fitness Stratham.
       </p>
-      <div className="mt-5 flex gap-2">
+      <div className="mt-5 flex flex-wrap justify-center gap-2">
         <Button asChild variant="purple">
-          <Link href="/#clubs">Our Club</Link>
+          <Link href="/#clubs">Explore clubs</Link>
+        </Button>
+        <Button asChild variant="outline">
+          <Link href="/join">Join now</Link>
         </Button>
         <Button asChild variant="outline">
           <Link href="/">Home</Link>

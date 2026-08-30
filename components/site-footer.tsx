@@ -201,6 +201,32 @@ export function SiteFooter() {
           </div>
 
           <div className="mt-10 flex flex-col gap-5 border-t border-white/25 pt-8">
+            <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
+              <li>
+                <Link
+                  href="/product"
+                  className="text-white/90 transition hover:text-white hover:underline"
+                >
+                  Product overview
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/screens"
+                  className="text-white/90 transition hover:text-white hover:underline"
+                >
+                  Screen map
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/legal/privacy"
+                  className="text-white/90 transition hover:text-white hover:underline"
+                >
+                  Concept privacy
+                </Link>
+              </li>
+            </ul>
             <ul className="flex flex-wrap items-center gap-5">
               <li>
                 <a

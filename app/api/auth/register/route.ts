@@ -9,6 +9,11 @@ import { HOME_CLUB } from "@/lib/home-club";
 import { getMembershipByEmail } from "@/lib/memberships";
 import { ensureWelcomeNotifications } from "@/lib/notifications";
 import { createUser } from "@/lib/users";
+import {
+  normalizeEmail,
+  normalizePhone,
+  requireNonEmpty,
+} from "@/lib/validation";
 
 export const dynamic = "force-dynamic";
 
@@ -28,17 +33,25 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid JSON body." }, { status: 400 });
   }
 
-  const email = body.email?.trim().toLowerCase() ?? "";
-  const password = body.password ?? "";
-  const firstName = body.firstName?.trim() ?? "";
-  const lastName = body.lastName?.trim() ?? "";
+  const email = normalizeEmail(body.email);
+  const password = typeof body.password === "string" ? body.password : "";
+  const firstName = requireNonEmpty(body.firstName, 60);
+  const lastName = requireNonEmpty(body.lastName, 60);
+  const phone = body.phone ? normalizePhone(body.phone) : null;
 
-  if (!email.includes("@") || password.length < 8 || !firstName || !lastName) {
+  if (!email || password.length < 8 || !firstName || !lastName) {
     return NextResponse.json(
       {
         error:
           "First name, last name, email, and a password of at least 8 characters are required.",
       },
+      { status: 400 }
+    );
+  }
+
+  if (body.phone && !phone) {
+    return NextResponse.json(
+      { error: "Enter a valid phone number." },
       { status: 400 }
     );
   }
@@ -50,7 +63,7 @@ export async function POST(request: Request) {
       password,
       firstName,
       lastName,
-      phone: body.phone,
+      phone: phone ?? undefined,
       membershipId: membership?.id ?? null,
     });
     await ensureWelcomeNotifications(user.id);

@@ -53,7 +53,7 @@ export function LandingHero() {
             alt="Members training together at Planet Fitness"
             fill
             priority
-            className="object-cover object-[60%_center]"
+            className="object-cover object-[60%_center] motion-safe:animate-[hero-zoom_1.4s_ease-out_forwards]"
             sizes="54vw"
           />
         </div>
@@ -66,7 +66,7 @@ export function LandingHero() {
             alt="Members training together at Planet Fitness"
             fill
             priority
-            className="object-cover object-[center_28%]"
+            className="object-cover object-[center_28%] motion-safe:animate-[hero-zoom_1.4s_ease-out_forwards]"
             sizes="100vw"
           />
           <div
@@ -77,10 +77,12 @@ export function LandingHero() {
       </div>
 
       <div className="relative z-10 mx-auto flex min-h-[min(74vh,40rem)] max-w-[1200px] items-center px-5 pb-16 pt-6 sm:px-8 lg:px-12 lg:py-24">
-        <div className="w-full max-w-[34rem]">
+        <div className="w-full max-w-[34rem] motion-safe:animate-[hero-rise_0.7s_ease-out_both]">
           <h1 id="landing-hero-heading" className="text-white">
             <span className="pf-type-hero-line block">We&apos;re all</span>
-            <span className="pf-type-hero-strong mt-0.5 block">Strong</span>
+            <span className="pf-type-hero-strong mt-0.5 block motion-safe:animate-[hero-strong_0.85s_ease-out_0.12s_both]">
+              Strong
+            </span>
             <span className="pf-type-hero-line mt-0.5 block">
               On this planet
               <sup className="ml-0.5 text-[0.28em] font-bold tracking-normal">
@@ -89,9 +91,14 @@ export function LandingHero() {
             </span>
           </h1>
 
-          <p className="pf-type-hero-sub mt-6">Join the club today!</p>
+          <p className="pf-type-hero-sub mt-6 motion-safe:animate-[hero-rise_0.7s_ease-out_0.2s_both]">
+            Join the club today!
+          </p>
 
-          <form onSubmit={goToClubs} className="mt-8 w-full max-w-[28rem]">
+          <form
+            onSubmit={goToClubs}
+            className="mt-8 w-full max-w-[28rem] motion-safe:animate-[hero-rise_0.7s_ease-out_0.32s_both]"
+          >
             <label htmlFor="landing-club-search" className="sr-only">
               Search clubs by address, city, or ZIP
             </label>

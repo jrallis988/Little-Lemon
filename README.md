@@ -13,13 +13,15 @@ National gym sites optimize for brand reach. A local franchise needs a clearer p
 | **Web** | Discovery, pricing, Summer Pass, join | `/` |
 | **App** | Auth, check-in, keytag, Crowd Meter, billing, account | `/app` |
 
-Product map (core vs roadmap): `/screens`
+Product map (core vs roadmap): `/screens` · Product case study: `/product`
 
 ## Stack
 
 - Next.js App Router + TypeScript + Tailwind
 - Optional Stripe Checkout / Elements + webhooks
 - Durable local store under `.data/` (swap for Postgres before multi-instance deploy)
+- Vitest unit tests + GitHub Actions CI (`npm run typecheck` / `lint` / `test` / `build`)
+- Health probe: `GET /api/health`
 
 ## Setup
 

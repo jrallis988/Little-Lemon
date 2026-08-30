@@ -11,6 +11,7 @@ const NAV = [
   { href: "/#welcome", label: "Why PF", dropdown: true },
   { href: "/#workout-guides", label: "Work Out With Us", dropdown: true },
   { href: "/#summer-pass", label: "PF Store", dropdown: false },
+  { href: "/product", label: "Product", dropdown: false },
 ];
 
 function UsFlag({ className }: { className?: string }) {
@@ -43,7 +44,7 @@ export function SiteHeader() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="inline-flex items-center gap-1 rounded-full px-3 py-2 text-sm font-medium text-pf-ink/85 transition hover:bg-pf-mist hover:text-pf-purple"
+                className="inline-flex items-center gap-1 rounded-full px-3 py-2 text-sm font-medium text-pf-ink/85 transition hover:bg-pf-mist hover:text-pf-purple focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pf-purple"
               >
                 {item.label}
                 {item.dropdown ? (

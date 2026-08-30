@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createPasswordReset } from "@/lib/users";
+import { normalizeEmail } from "@/lib/validation";
 
 export const dynamic = "force-dynamic";
 
@@ -11,8 +12,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid JSON body." }, { status: 400 });
   }
 
-  const email = body.email?.trim().toLowerCase() ?? "";
-  if (!email.includes("@")) {
+  const email = normalizeEmail(body.email);
+  if (!email) {
     return NextResponse.json({ error: "Valid email required." }, { status: 400 });
   }
 

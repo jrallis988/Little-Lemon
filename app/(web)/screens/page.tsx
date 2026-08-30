@@ -71,7 +71,12 @@ export default function ScreenRegistryPage() {
       </h1>
       <p className="mt-2 max-w-2xl text-sm text-pf-ink/65">
         {SCREENS.length} screens total. Launch focus is the acquisition funnel
-        and a small member-utility set — not every scaffold route.
+        and a small member-utility set — not every scaffold route. For the
+        product story, see{" "}
+        <Link href="/product" className="font-semibold text-pf-purple hover:underline">
+          Product overview
+        </Link>
+        .
       </p>
 
       <section className="mt-8">

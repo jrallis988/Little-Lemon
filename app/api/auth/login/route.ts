@@ -10,6 +10,7 @@ import { HOME_CLUB } from "@/lib/home-club";
 import { getMembershipByEmail } from "@/lib/memberships";
 import { ensureWelcomeNotifications } from "@/lib/notifications";
 import { authenticateUser, createUser, getUserByEmail } from "@/lib/users";
+import { normalizeEmail } from "@/lib/validation";
 
 export const dynamic = "force-dynamic";
 
@@ -26,10 +27,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid JSON body." }, { status: 400 });
   }
 
-  const email = body.email?.trim().toLowerCase() ?? "";
-  const password = body.password ?? "";
+  const email = normalizeEmail(body.email);
+  const password = typeof body.password === "string" ? body.password : "";
 
-  if (!email.includes("@") || !password) {
+  if (!email || !password) {
     return NextResponse.json(
       { error: "Email and password are required." },
       { status: 400 }

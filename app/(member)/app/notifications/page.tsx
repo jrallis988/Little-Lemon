@@ -68,7 +68,14 @@ export default function NotificationsPage() {
       <div className="space-y-2">
         {notifications.length === 0 ? (
           <MemberCard>
-            <p className="text-sm text-pf-ink/55">Inbox is empty.</p>
+            <p className="font-semibold text-pf-ink">You’re all caught up</p>
+            <p className="mt-1 text-sm text-pf-ink/55">
+              Billing, crowd, and perk alerts will show up here when something
+              needs your attention.
+            </p>
+            <Button asChild variant="outline" className="mt-4">
+              <Link href="/app">Back to home</Link>
+            </Button>
           </MemberCard>
         ) : (
           notifications.map((item) => (

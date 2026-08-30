@@ -9,6 +9,13 @@ import {
   stripePublishableKey,
 } from "@/lib/payments";
 import { dueToday, getLocalPricing, type MembershipTier } from "@/lib/pricing";
+import {
+  isMembershipTier,
+  normalizeEmail,
+  normalizePhone,
+  parseClubId,
+  requireNonEmpty,
+} from "@/lib/validation";
 
 export const dynamic = "force-dynamic";
 
@@ -58,13 +65,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid JSON body." }, { status: 400 });
   }
 
-  const clubId = body.clubId?.trim();
-  const plan = body.plan;
+  const clubId = parseClubId(body.clubId);
+  const plan = isMembershipTier(body.plan) ? body.plan : null;
   const member = body.member;
   const consents = body.consents;
   const mode = body.mode ?? preferredStripeMode();
 
-  if (!clubId || (plan !== "classic" && plan !== "black-card")) {
+  if (!clubId || !plan) {
     return NextResponse.json(
       { error: "Club and plan are required." },
       { status: 400 }
@@ -84,13 +91,12 @@ export async function POST(request: Request) {
     );
   }
 
-  if (
-    !member?.firstName?.trim() ||
-    !member?.lastName?.trim() ||
-    !member?.email?.trim() ||
-    !member?.phone?.trim() ||
-    !member.email.includes("@")
-  ) {
+  const firstName = requireNonEmpty(member?.firstName, 60);
+  const lastName = requireNonEmpty(member?.lastName, 60);
+  const email = normalizeEmail(member?.email);
+  const phone = normalizePhone(member?.phone);
+
+  if (!firstName || !lastName || !email || !phone) {
     return NextResponse.json(
       { error: "Complete member identity fields." },
       { status: 400 }
@@ -113,7 +119,7 @@ export async function POST(request: Request) {
 
   const amountDue = dueToday(pricing);
   const amountCents = Math.round(amountDue * 100) || 50;
-  const fullName = `${member.firstName.trim()} ${member.lastName.trim()}`;
+  const fullName = `${firstName} ${lastName}`;
   const description = `${plan} membership · ${club.name}`;
 
   // Pending membership — activated after Checkout/Elements success.
@@ -127,10 +133,10 @@ export async function POST(request: Request) {
     annualFee: pricing.annualFee,
     dueToday: amountDue,
     member: {
-      firstName: member.firstName.trim(),
-      lastName: member.lastName.trim(),
-      email: member.email.trim().toLowerCase(),
-      phone: member.phone.trim(),
+      firstName,
+      lastName,
+      email,
+      phone,
     },
     consents: {
       membershipAgreement: true,
@@ -162,7 +168,7 @@ export async function POST(request: Request) {
   if (mode === "elements") {
     const intent = await createElementsPaymentIntent({
       amountCents,
-      customerEmail: member.email.trim(),
+      customerEmail: email,
       description,
       metadata,
     });
@@ -181,7 +187,7 @@ export async function POST(request: Request) {
 
   const session = await createCheckoutSession({
     amountCents,
-    customerEmail: member.email.trim(),
+    customerEmail: email,
     customerName: fullName,
     description,
     successUrl: `${origin}/join/checkout/success?session_id={CHECKOUT_SESSION_ID}&membershipId=${pending.id}`,
