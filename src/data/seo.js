@@ -79,6 +79,11 @@ export const pageMeta = {
     description:
       "Find hours, directions, and contact details for WMCC’s Berlin, Littleton, and North Conway locations.",
   },
+  "/search": {
+    title: `Search | ${SITE}`,
+    description:
+      "Search White Mountains Community College programs, campuses, and key site pages.",
+  },
   "/sitemap": {
     title: `Sitemap | ${SITE}`,
     description: `A full list of pages and programs on the ${SITE} website.`,

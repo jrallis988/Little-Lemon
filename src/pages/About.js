@@ -87,6 +87,7 @@ function About() {
             <img
               src="/images/littleton.jpg"
               alt="Learning spaces at White Mountains Community College"
+              loading="lazy"
             />
           </figure>
           <div className="split-copy">

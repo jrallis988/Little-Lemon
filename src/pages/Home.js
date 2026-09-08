@@ -45,6 +45,7 @@ function Home() {
             <img
               src="/images/campus-exterior.jpg"
               alt="Berlin campus of White Mountains Community College"
+              loading="lazy"
             />
           </figure>
         </div>
@@ -116,6 +117,7 @@ function Home() {
             <img
               src="/images/graduation.jpg"
               alt="White Mountains Community College graduate at commencement"
+              loading="lazy"
             />
           </figure>
         </div>

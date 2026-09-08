@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { APPLY_URL } from "../data/links";
+
+const MYWMCC_URL = "https://sis.ccsnh.edu/";
 
 const navItems = [
   {
@@ -43,6 +45,8 @@ const navItems = [
 function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -57,6 +61,13 @@ function Header() {
       document.body.style.overflow = "";
     };
   }, [open]);
+
+  const submitSearch = (event) => {
+    event.preventDefault();
+    const next = query.trim();
+    setOpen(false);
+    navigate(next ? `/search?q=${encodeURIComponent(next)}` : "/search");
+  };
 
   return (
     <header className={`site-header ${scrolled ? "is-scrolled" : ""}`}>
@@ -74,7 +85,7 @@ function Header() {
           </a>
           <a
             className="utility-portal"
-            href="https://sis.ccsnh.edu/"
+            href={MYWMCC_URL}
             target="_blank"
             rel="noreferrer"
           >
@@ -94,24 +105,55 @@ function Header() {
           />
         </Link>
 
-        <button
-          className={`nav-toggle ${open ? "is-open" : ""}`}
-          type="button"
-          aria-expanded={open}
-          aria-controls="primary-nav"
-          onClick={() => setOpen((value) => !value)}
-        >
-          <span className="sr-only">Menu</span>
-          <span />
-          <span />
-          <span />
-        </button>
+        <div className="header-actions-mobile">
+          <a
+            className="utility-portal mobile-portal"
+            href={MYWMCC_URL}
+            target="_blank"
+            rel="noreferrer"
+          >
+            MyWMCC
+          </a>
+          <button
+            className={`nav-toggle ${open ? "is-open" : ""}`}
+            type="button"
+            aria-expanded={open}
+            aria-controls="primary-nav"
+            onClick={() => setOpen((value) => !value)}
+          >
+            <span className="sr-only">Menu</span>
+            <span />
+            <span />
+            <span />
+          </button>
+        </div>
 
         <nav
           id="primary-nav"
           className={`primary-nav ${open ? "is-open" : ""}`}
           aria-label="Primary"
         >
+          <form
+            className="header-search"
+            role="search"
+            onSubmit={submitSearch}
+          >
+            <label className="sr-only" htmlFor="site-search">
+              Search programs and pages
+            </label>
+            <input
+              id="site-search"
+              type="search"
+              name="q"
+              placeholder="Search programs…"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+            />
+            <button className="btn btn-primary" type="submit">
+              Search
+            </button>
+          </form>
+
           <ul className="nav-list">
             {navItems.map((item) => (
               <li
@@ -135,6 +177,30 @@ function Header() {
               </li>
             ))}
           </ul>
+
+          <div className="mobile-utility-links">
+            <Link to="/contact" onClick={() => setOpen(false)}>
+              Contact
+            </Link>
+            <a
+              href="https://www.wmcc.edu/current-students/"
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => setOpen(false)}
+            >
+              Current Students
+            </a>
+            <a
+              className="utility-portal"
+              href={MYWMCC_URL}
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => setOpen(false)}
+            >
+              MyWMCC
+            </a>
+          </div>
+
           <a
             className="btn btn-gold header-apply"
             href={APPLY_URL}

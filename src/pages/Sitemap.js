@@ -7,6 +7,7 @@ const siteSections = [
     title: "Main",
     links: [
       { label: "Home", to: "/" },
+      { label: "Search", to: "/search" },
       { label: "News", to: "/news" },
       { label: "Contact / Hours & Directions", to: "/contact" },
     ],

@@ -91,3 +91,22 @@ test("sets nursing program SEO title", async () => {
     expect(document.title).toMatch(/Registered Nursing \(AS\) Program/i);
   });
 });
+
+test("site search finds nursing program results", async () => {
+  render(
+    <MemoryRouter initialEntries={["/search?q=nursing"]}>
+      <App />
+    </MemoryRouter>
+  );
+
+  expect(
+    screen.getByRole("heading", { name: /Find programs and pages/i })
+  ).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: /^Nursing$/i })).toHaveAttribute(
+    "href",
+    "/academics/programs/nursing"
+  );
+  await waitFor(() => {
+    expect(document.title).toMatch(/^Search \|/i);
+  });
+});

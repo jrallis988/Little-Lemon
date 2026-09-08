@@ -47,6 +47,7 @@ function StudentExperience() {
             <img
               src="/images/graduation.jpg"
               alt="White Mountains Community College students celebrating campus community"
+              loading="lazy"
             />
           </figure>
         </div>

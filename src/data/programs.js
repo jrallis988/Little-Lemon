@@ -196,6 +196,13 @@ const programOverrides = {
     ],
     format: "Lab-intensive AAS pathway on the Berlin campus",
     locations: ["Berlin"],
+    details: [
+      "Credential: Associate in Applied Science",
+      "Campus: Berlin Main Campus (production kitchens and labs)",
+      "Focus: professional cooking, food production, and hospitality operations",
+      "Related pathways: Baking and Pastry Arts AAS and Food Service Essentials certificate",
+      "Catalog: catalog.wmcc.edu culinary arts page",
+    ],
   },
   "baking-and-pastry-arts": {
     summary:
@@ -218,6 +225,13 @@ const programOverrides = {
     ],
     format: "Certificate coursework with flexible delivery options",
     locations: ["Berlin", "Online"],
+    details: [
+      "Credential: Certificate",
+      "Campus: Berlin with online / hybrid options",
+      "Industry alignment: CompTIA partnership for current cybersecurity training",
+      "Focus: defensive practices, security fundamentals, and workplace readiness",
+      "Catalog: catalog.wmcc.edu IT Cybersecurity page",
+    ],
   },
   "medical-assistant": {
     summary:
@@ -229,6 +243,13 @@ const programOverrides = {
     ],
     format: "Littleton Academic Center certificate pathway",
     locations: ["Littleton"],
+    details: [
+      "Credential: Certificate",
+      "Campus: Littleton Academic Center",
+      "Focus: clinical assisting, administrative support, and patient-care workflows",
+      "Pathway into regional clinics and ambulatory care settings",
+      "Catalog: catalog.wmcc.edu Medical Assistant page",
+    ],
   },
   "commercial-driver-training": {
     summary:
@@ -284,6 +305,13 @@ const programOverrides = {
     ],
     format: "Shop-based AAS training on the Berlin campus",
     locations: ["Berlin"],
+    details: [
+      "Credential: Associate in Applied Science",
+      "Campus: Berlin Main Campus automotive shops",
+      "Focus: diagnostics, service, and maintenance of modern vehicle systems",
+      "Related pathway: Automotive Technology certificate and Electric Vehicle Technician certificate",
+      "Catalog: catalog.wmcc.edu Automotive Technology AAS page",
+    ],
   },
   "diesel-heavy-equipment-degree": {
     summary:
@@ -295,6 +323,31 @@ const programOverrides = {
     ],
     format: "Hands-on labs on the Berlin campus",
     locations: ["Berlin"],
+    details: [
+      "Credential: Associate in Science",
+      "Campus: Berlin Main Campus diesel / heavy equipment labs",
+      "Focus: diagnostics, repair, and preventive maintenance for diesel systems",
+      "Related pathway: Diesel Heavy Equipment Technology certificate",
+      "Catalog: catalog.wmcc.edu Diesel Heavy Equipment Technology page",
+    ],
+  },
+  "liberal-arts": {
+    summary:
+      "Build a flexible Associate in Arts foundation for transfer or career exploration across the humanities, social sciences, and general studies.",
+    outcomes: [
+      "Complete transfer-ready coursework aligned with four-year pathways",
+      "Strengthen writing, research, and critical-thinking skills",
+      "Work with advisors to map majors and transfer destinations",
+    ],
+    format: "Berlin, Littleton, North Conway, and online / hybrid options by course",
+    locations: ["Berlin", "Littleton", "North Conway", "Online"],
+    details: [
+      "Credential: Associate in Arts",
+      "Campus: Multi-campus with online options",
+      "Focus: flexible transfer foundation across arts, humanities, and general studies",
+      "Advising support for major selection and four-year pathways",
+      "Catalog: catalog.wmcc.edu Liberal Arts page",
+    ],
   },
 };
 
