@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { MotionPreview, type MotionKind } from "../components/MotionPreview";
+import { MotionReel } from "../components/MotionReel";
 import { LowerThird } from "../components/LowerThird";
 import { VideoFrame } from "../components/VideoFrame";
 import { photos } from "../data/brand";
 import "./Packages.css";
+import "./StatisticsSystem.css";
 
 const kinds: MotionKind[] = [
   "intro",
@@ -31,7 +33,7 @@ export function MotionIdentity() {
         <h2 className="section__title">Built for digital video</h2>
         <p className="section__lede">
           A complete sting vocabulary — intro, ID, lower thirds, stats, scores,
-          transitions, chapters, end cards — not one lonely motion board.
+          transitions, chapters, end cards — plus a drop-in slot for your AE reel.
         </p>
 
         <div className="stat-rules" style={{ marginBottom: "1.25rem" }}>
@@ -42,6 +44,8 @@ export function MotionIdentity() {
             </article>
           ))}
         </div>
+
+        <MotionReel />
 
         <div className="thumb-compare__controls" style={{ marginBottom: "1rem" }}>
           {kinds.map((k) => (

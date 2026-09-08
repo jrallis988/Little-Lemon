@@ -30,11 +30,22 @@ Static output: `courtside/dist/`. Serve the repo and open `/courtside/dist/`.
 - [x] Compress photography assets for web
 - [x] Open Graph + Twitter meta tags (`og-image.jpg`)
 - [x] Remove unused legacy section files
+- [x] Motion sequence demo + AE reel drop-in slot
+- [x] Absolute OG URL support via `COURTSIDE_SITE_URL` at build time
 - [ ] Merge PR and deploy host
-- [ ] Set absolute `og:image` URL for your live domain (social crawlers need absolute URLs)
-- [ ] Smoke-test live: photos, compare tool, motion replay, mobile nav
+- [ ] Set `COURTSIDE_SITE_URL` to your live case-study URL, rebuild, redeploy
+- [ ] Smoke-test live: photos, compare tool, motion sequence, mobile nav
+- [ ] Optional: drop `public/assets/motion/courtside-reel.mp4` (AE → Premiere export)
 - [ ] Optional: replace generated photos / logo with Photoshop + Illustrator exports
-- [ ] Optional: embed a short After Effects motion reel
+
+### Absolute share URLs
+
+```bash
+# example
+COURTSIDE_SITE_URL=https://yourdomain.com/courtside/dist npm run build
+```
+
+See `.env.example`.
 
 ## Replaceable assets
 
@@ -42,6 +53,7 @@ Static output: `courtside/dist/`. Serve the repo and open `/courtside/dist/`.
 | --- | --- |
 | Photography / Photoshop thumbs | `public/assets/photos/` |
 | Brand marks (Illustrator) | `public/assets/brand/` |
+| Motion reel (AE → Premiere) | `public/assets/motion/courtside-reel.mp4` |
 | Share image | `public/og-image.jpg` |
 | Content + series copy | `src/data/brand.ts` |
 | Motion timings (AE reference) | `src/components/MotionPreview.tsx` |
