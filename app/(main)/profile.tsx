@@ -70,11 +70,18 @@ export default function ProfileScreen() {
             <Text style={styles.name}>{profile.displayName}</Text>
             <Text style={styles.email}>{profile.email}</Text>
             {profile.role === 'artist' ? (
-              <Link href={`/artist/${profile.id}`} asChild>
-                <Pressable style={styles.secondary}>
-                  <Text style={styles.secondaryText}>View artist page</Text>
-                </Pressable>
-              </Link>
+              <>
+                <Link href="/(main)/studio" asChild>
+                  <Pressable style={styles.cta}>
+                    <Text style={styles.ctaText}>Open artist studio</Text>
+                  </Pressable>
+                </Link>
+                <Link href={`/artist/${profile.id}`} asChild>
+                  <Pressable style={styles.secondary}>
+                    <Text style={styles.secondaryText}>View artist page</Text>
+                  </Pressable>
+                </Link>
+              </>
             ) : null}
             <Pressable
               style={styles.signOut}

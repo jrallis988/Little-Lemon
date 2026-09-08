@@ -38,7 +38,13 @@
         }
       ],
       "expo-secure-store",
-      "expo-font"
+      "expo-font",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow StaticVolume to access photos for artist artwork uploads."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

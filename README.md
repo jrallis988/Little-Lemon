@@ -21,6 +21,7 @@ Read those before changing layout or product surfaces.
 | **Artists** | A–Z directory + quick filter; link to full search |
 | **Find** | Brand-new / unsigned stumble-upon lane |
 | **Open on Spotify** | Catalog artist/track pages hand listening to Spotify (deep links). Add to Spotify = in-Spotify save hand-off until OAuth. |
+| **Artist Studio** | Phase 2 upload UI (`/(main)/studio`) — audio, artwork, bio, releases → Supabase Storage + Postgres (after migration). |
 | **Spotify sync** (later) | Metadata ingest via `EXPO_PUBLIC_SPOTIFY_CLIENT_ID` + backend token route — no Spotify audio. |
 
 Demo seed includes emerging friend-group acts **and** a slice of recognizable contemporary catalog. Full Spotify-scale sync is the backend follow-up.
@@ -91,7 +92,16 @@ npx expo start
 
 ## Auth notes
 
-Signup stores `display_name` and `role` (`artist` | `listener`) in Supabase Auth user metadata. Session persistence uses SecureStore on native and AsyncStorage on web.
+Signup stores `display_name` and `role` (`artist` | `listener`) in Supabase Auth user metadata. The Phase 2 migration also creates a `profiles` row via trigger. Session persistence uses SecureStore on native and AsyncStorage on web.
+
+## Artist uploads (Phase 2)
+
+1. Apply `supabase/migrations/20260328000000_phase2_artist_uploads.sql` (see `supabase/README.md`).
+2. Sign up / sign in as **artist**.
+3. Open **You → Open artist studio**.
+4. Upload profile/header images, track audio + artwork, and album/EP artwork.
+
+Limits: audio ≤ 50MB; images ≤ 5–8MB. Artists can only mutate their own Storage paths (`{userId}/…`) and rows (RLS).
 
 ## Visual identity
 

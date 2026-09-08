@@ -95,6 +95,14 @@ export default function MainLayout() {
             tabBarIcon: () => null,
           }}
         />
+        <Tabs.Screen
+          name="studio"
+          options={{
+            title: 'Studio',
+            href: null,
+            headerShown: true,
+          }}
+        />
       </Tabs>
     </View>
   );

@@ -59,7 +59,13 @@ Expo SDK 57 · Expo Router · TypeScript · Supabase · Zustand · TanStack Quer
 
 ## Demo vs production
 
-Scaffold still uses rich demo/seed data for Find + catalog. Supabase auth is wired. Phase 1 outbound Spotify deep links are live on catalog artist/track pages (`lib/spotify.ts`, `components/spotify/SpotifyOutboundActions.tsx`). Prefer extending existing patterns over inventing parallel design systems.
+Scaffold still uses rich demo/seed data for Find + catalog browse. Supabase auth is wired. Phase 1 outbound Spotify deep links are live on catalog artist/track pages. **Phase 2 upload infrastructure** is in-repo:
+
+- SQL + Storage RLS: `supabase/migrations/20260328000000_phase2_artist_uploads.sql`
+- Client API: `lib/artistUploads.ts`, `lib/uploadLimits.ts`
+- Artist Studio UI: `app/(main)/studio.tsx` (from You → Open artist studio)
+
+Apply the migration in your Supabase project before uploads will persist. Prefer extending existing patterns over inventing parallel design systems.
 
 ## Artwork & media sources
 
