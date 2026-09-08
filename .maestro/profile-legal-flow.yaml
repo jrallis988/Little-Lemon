@@ -1,0 +1,26 @@
+appId: com.biocross.app
+---
+# Profile add-item + legal disclaimer flow
+- launchApp
+- tapOn: "Get Started"
+- assertVisible: "Create Your Health Profile"
+- back
+- tapOn: "I already have an account"
+- tapOn: "Fill demo credentials"
+- tapOn: "Sign In"
+- runFlow:
+    when:
+      visible: "Home"
+    commands:
+      - tapOn: "Profile"
+      - tapOn: "Conditions"
+      - tapOn: "Add condition"
+      - assertVisible: "Add condition"
+      - back
+      - back
+      - tapOn: "Profile"
+      - scrollUntilVisible:
+          element: "Sign Out"
+      - tapOn: "Privacy & Security"
+      - tapOn: "Privacy Policy"
+      - assertVisible: "Privacy Policy"

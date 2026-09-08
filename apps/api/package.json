@@ -1,0 +1,29 @@
+{
+  "name": "@biocross/api",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "build": "tsc -p tsconfig.json && cp src/db/schema.sql dist/db/schema.sql",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "smoke": "tsx scripts/smoke.ts"
+  },
+  "dependencies": {
+    "@fastify/cors": "^10.0.2",
+    "fastify": "^5.2.1",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.14.1"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/node": "^22.13.10",
+    "@types/pg": "^8.11.11",
+    "tsx": "^4.19.3",
+    "typescript": "~5.9.2"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

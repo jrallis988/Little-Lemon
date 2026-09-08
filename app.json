@@ -1,0 +1,65 @@
+{
+  "expo": {
+    "name": "BioCross",
+    "slug": "biocross",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "biocross",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFFFFF"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.biocross.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "BioCross uses the camera to scan supplement barcodes and labels.",
+        "NSPhotoLibraryUsageDescription": "BioCross needs photo access to upload supplement labels and health records.",
+        "NSMicrophoneUsageDescription": "BioCross does not record audio."
+      }
+    },
+    "android": {
+      "package": "com.biocross.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#E8F1FF",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "permissions": [
+        "CAMERA",
+        "READ_MEDIA_IMAGES",
+        "READ_EXTERNAL_STORAGE"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      "expo-secure-store",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "BioCross uses the camera to scan supplement barcodes and photograph Supplement Facts labels.",
+          "recordAudioAndroid": false
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow BioCross to access your photos to upload supplement labels and health records."
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

@@ -1,0 +1,61 @@
+CREATE TABLE IF NOT EXISTS users (
+  id TEXT PRIMARY KEY,
+  email TEXT NOT NULL UNIQUE,
+  full_name TEXT NOT NULL,
+  password_hash TEXT NOT NULL,
+  date_of_birth TEXT,
+  biological_sex TEXT,
+  country TEXT,
+  onboarding_completed BOOLEAN NOT NULL DEFAULT FALSE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS profiles (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL UNIQUE REFERENCES users(id) ON DELETE CASCADE,
+  readiness TEXT NOT NULL,
+  readiness_note TEXT NOT NULL,
+  last_updated_at TIMESTAMPTZ NOT NULL,
+  items JSONB NOT NULL DEFAULT '[]'::jsonb
+);
+
+CREATE TABLE IF NOT EXISTS checks (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  payload JSONB NOT NULL,
+  checked_at TIMESTAMPTZ NOT NULL,
+  risk_level TEXT NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS checks_user_id_idx ON checks(user_id);
+
+CREATE TABLE IF NOT EXISTS alerts (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  payload JSONB NOT NULL,
+  is_read BOOLEAN NOT NULL DEFAULT FALSE
+);
+
+CREATE TABLE IF NOT EXISTS preferences (
+  user_id TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+  payload JSONB NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS documents (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  payload JSONB NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS extracted_items (
+  id TEXT PRIMARY KEY,
+  document_id TEXT NOT NULL,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  payload JSONB NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS password_resets (
+  token TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  expires_at TIMESTAMPTZ NOT NULL
+);
