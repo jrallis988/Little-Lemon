@@ -791,6 +791,12 @@ a:hover { opacity: 0.8; }
 }
 
 /* Palette-matched previews per project */
+.portfolio-image--nickjr {
+    background:
+        linear-gradient(160deg, rgba(91, 44, 157, 0.75) 0%, rgba(255, 122, 26, 0.45) 100%),
+        url('nick-jr/images/hero-playroom.jpg') center / cover;
+}
+
 .portfolio-image--nhdmv {
     background:
         linear-gradient(160deg, rgba(0, 38, 58, 0.82) 0%, rgba(31, 92, 69, 0.55) 100%),
