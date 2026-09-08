@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920" fill="none">
+  <defs>
+    <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-18)">
+      <line x1="0" y1="0" x2="0" y2="8" stroke="rgba(234,232,227,0.12)" stroke-width="1"/>
+    </pattern>
+    <pattern id="grain" width="4" height="4" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="0.6" fill="rgba(255,255,255,0.08)"/>
+      <circle cx="3" cy="2.5" r="0.4" fill="rgba(0,0,0,0.15)"/>
+    </pattern>
+  </defs>
+  <rect width="1080" height="1920" fill="#0d0d0d"/>
+  <rect width="1080" height="1920" fill="url(#hatch)"/>
+  <rect x="0" y="0" width="1080" height="120" fill="#FF3B1F"/>
+  <rect x="0" y="1800" width="1080" height="120" fill="#D4FF00"/>
+  <g fill="#1a1a1a">
+    <ellipse cx="200" cy="1400" rx="100" ry="120"/><rect x="130" y="1480" width="140" height="320"/>
+    <ellipse cx="540" cy="1350" rx="120" ry="140"/><rect x="450" y="1450" width="180" height="370"/>
+    <ellipse cx="880" cy="1420" rx="110" ry="130"/><rect x="800" y="1500" width="160" height="300"/>
+  </g>
+  <text x="48" y="1880" fill="rgba(17,17,17,0.5)" font-family="IBM Plex Mono, monospace" font-size="22" letter-spacing="3">NIGHT CROWD · REPLACE</text>
+
+</svg>

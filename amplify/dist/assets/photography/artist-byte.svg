@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000" fill="none">
+  <defs>
+    <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-18)">
+      <line x1="0" y1="0" x2="0" y2="8" stroke="rgba(234,232,227,0.12)" stroke-width="1"/>
+    </pattern>
+    <pattern id="grain" width="4" height="4" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="0.6" fill="rgba(255,255,255,0.08)"/>
+      <circle cx="3" cy="2.5" r="0.4" fill="rgba(0,0,0,0.15)"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="1000" fill="#101418"/>
+  <rect width="800" height="1000" fill="url(#hatch)"/>
+  <rect width="800" height="1000" fill="url(#grain)"/>
+  <!-- stage bar -->
+  <rect x="0" y="820" width="800" height="180" fill="#FF3B1F" opacity="0.85"/>
+  <!-- figure block — editorial crop -->
+  <ellipse cx="400" cy="380" rx="140" ry="160" fill="#2a2a2a"/>
+  <rect x="260" y="480" width="280" height="360" fill="#222"/>
+  <rect x="200" y="520" width="80" height="240" fill="#2e2e2e"/>
+  <rect x="520" y="500" width="90" height="280" fill="#2e2e2e"/>
+  <!-- mic / stand suggestion -->
+  <rect x="390" y="300" width="20" height="200" fill="#FF3B1F" opacity="0.7"/>
+  <circle cx="400" cy="290" r="28" fill="#FF3B1F"/>
+  <!-- crop frame -->
+  <rect x="40" y="40" width="720" height="920" stroke="rgba(234,232,227,0.25)" stroke-width="2"/>
+  <text x="56" y="960" fill="rgba(17,17,17,0.55)" font-family="IBM Plex Mono, monospace" font-size="22" letter-spacing="4">BYTE · REPLACE JPG</text>
+
+</svg>

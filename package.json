@@ -5,6 +5,8 @@
   "description": "Artistic Fountain — strategic design studio portfolio",
   "scripts": {
     "start": "npx --yes serve -l 3000",
-    "dev": "npx --yes serve -l 3000"
+    "dev": "npx --yes serve -l 3000",
+    "build:amplify": "npm --prefix amplify run build",
+    "dev:amplify": "npm --prefix amplify run dev"
   }
 }

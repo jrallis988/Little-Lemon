@@ -18,6 +18,7 @@ Static site: HTML, CSS, and vanilla JS (built in Cursor). Custom typefaces (Arca
 ## Pages
 
 - `index.html` — home (hero, designer, services, portfolio, blog, contact)
+- `amplify/` — AMPLIFY Instagram campaign case study (React/TS; serve `amplify/dist/`)
 - `nh-dmv/` — conceptual redesign of the New Hampshire DMV website (civic UX case study)
 - `services/` — detail pages for each service offering
 - `blog/` — blog index and post pages (content can be drafted in Blaze AI)
@@ -32,6 +33,13 @@ npm start
 ```
 
 Opens a local static server at [http://localhost:3000](http://localhost:3000).
+
+AMPLIFY case study (Vite):
+
+```bash
+npm run dev:amplify    # http://localhost:5173
+npm run build:amplify  # writes amplify/dist/
+```
 
 Or open `index.html` directly in a browser.
 

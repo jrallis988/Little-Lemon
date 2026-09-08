@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" fill="none">
+  <defs>
+    <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-18)">
+      <line x1="0" y1="0" x2="0" y2="8" stroke="rgba(234,232,227,0.12)" stroke-width="1"/>
+    </pattern>
+    <pattern id="grain" width="4" height="4" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="0.6" fill="rgba(255,255,255,0.08)"/>
+      <circle cx="3" cy="2.5" r="0.4" fill="rgba(0,0,0,0.15)"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="800" fill="#111"/>
+  <rect width="1200" height="800" fill="url(#hatch)"/>
+  <rect width="1200" height="800" fill="url(#grain)"/>
+  <!-- crowd silhouettes -->
+  <g fill="#1e1e1e">
+    <ellipse cx="120" cy="620" rx="70" ry="90"/><rect x="70" y="680" width="100" height="160"/>
+    <ellipse cx="280" cy="600" rx="80" ry="100"/><rect x="220" y="670" width="120" height="180"/>
+    <ellipse cx="480" cy="580" rx="90" ry="110"/><rect x="410" y="660" width="140" height="200"/>
+    <ellipse cx="700" cy="610" rx="75" ry="95"/><rect x="640" y="680" width="120" height="170"/>
+    <ellipse cx="900" cy="590" rx="85" ry="105"/><rect x="835" y="665" width="130" height="190"/>
+    <ellipse cx="1080" cy="630" rx="70" ry="85"/><rect x="1030" y="690" width="100" height="150"/>
+  </g>
+  <!-- stage wash as hard shapes, not glow -->
+  <polygon points="0,0 400,0 600,800 0,800" fill="#FF3B1F" opacity="0.18"/>
+  <polygon points="800,0 1200,0 1200,800 700,800" fill="#D4FF00" opacity="0.12"/>
+  <rect x="0" y="0" width="1200" height="48" fill="#FF3B1F"/>
+  <text x="40" y="760" fill="rgba(234,232,227,0.4)" font-family="IBM Plex Mono, monospace" font-size="20" letter-spacing="3">CROWD · REPLACE</text>
+
+</svg>
