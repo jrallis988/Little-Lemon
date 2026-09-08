@@ -48,6 +48,50 @@ async def get_university(
     return UniversityOut.model_validate(uni)
 
 
+@router.get("/departments/{department_id}", response_model=DepartmentOut)
+async def get_department(
+    department_id: UUID,
+    db: AsyncSession = Depends(get_db),
+) -> DepartmentOut:
+    dept = await hierarchy.get_department(db, department_id)
+    if not dept:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "Department not found")
+    return DepartmentOut.model_validate(dept)
+
+
+@router.get("/professors/{professor_id}", response_model=ProfessorOut)
+async def get_professor(
+    professor_id: UUID,
+    db: AsyncSession = Depends(get_db),
+) -> ProfessorOut:
+    person = await hierarchy.get_professor(db, professor_id)
+    if not person:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "Professor/advisor not found")
+    return ProfessorOut.model_validate(person)
+
+
+@router.get("/courses/{course_id}", response_model=CourseOut)
+async def get_course(
+    course_id: UUID,
+    db: AsyncSession = Depends(get_db),
+) -> CourseOut:
+    course = await hierarchy.get_course(db, course_id)
+    if not course:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "Course not found")
+    return CourseOut.model_validate(course)
+
+
+@router.get("/dorms/{dorm_id}", response_model=DormOut)
+async def get_dorm(
+    dorm_id: UUID,
+    db: AsyncSession = Depends(get_db),
+) -> DormOut:
+    dorm = await hierarchy.get_dorm(db, dorm_id)
+    if not dorm:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "Dorm not found")
+    return DormOut.model_validate(dorm)
+
+
 @router.get(
     "/universities/{university_id}/departments",
     response_model=PaginatedResponse,

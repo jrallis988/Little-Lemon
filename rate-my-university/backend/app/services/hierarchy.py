@@ -41,6 +41,24 @@ async def get_university(db: AsyncSession, university_id: UUID) -> University | 
     return await db.get(University, university_id)
 
 
+async def get_department(db: AsyncSession, department_id: UUID) -> Department | None:
+    return await db.get(Department, department_id)
+
+
+async def get_professor(
+    db: AsyncSession, professor_id: UUID
+) -> ProfessorAdvisor | None:
+    return await db.get(ProfessorAdvisor, professor_id)
+
+
+async def get_course(db: AsyncSession, course_id: UUID) -> Course | None:
+    return await db.get(Course, course_id)
+
+
+async def get_dorm(db: AsyncSession, dorm_id: UUID) -> DormHousing | None:
+    return await db.get(DormHousing, dorm_id)
+
+
 async def list_departments(
     db: AsyncSession,
     university_id: UUID,

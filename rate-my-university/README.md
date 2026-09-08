@@ -60,7 +60,8 @@ python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 export DATABASE_URL=postgresql://rmu:rmu_dev_password@localhost:5432/rate_my_university
 python seed.py
-# or: python seed.py --university unh --only departments
+# or: python seed.py --university unh
+# or: python seed.py --only professors
 ```
 
 ### 3. Mobile app
@@ -121,4 +122,13 @@ Omit `target_id` and supply the matching `create_*` payload. Example for a newly
 - **Polymorphic reviews** via `(target_type, target_id)` keep rating logic uniform across the hierarchy.
 - **JSONB multi-metric ratings** are validated against per-type metric keys in `backend/app/core/constants.py`.
 - **`is_verified`** distinguishes seed/catalog entities from student-submitted auto-creates.
-- **Mobile tabs**: Home · Directory (layered search) · Add Entry · Profile.
+- **Mobile screens**: 4 root tabs (Home · Directory · Add Entry · Profile) plus hierarchy detail screens (University · Department · Professor · Course · Dorm). Preview: `previews/screens.html`.
+
+## Tests
+
+```bash
+cd backend
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+PYTHONPATH=. pytest -q
+```

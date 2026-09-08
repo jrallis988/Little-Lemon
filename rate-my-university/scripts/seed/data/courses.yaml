@@ -1,0 +1,60 @@
+# Sample courses keyed by university slug + department name.
+
+by_university:
+  unh:
+    - department: Computer Science
+      course_code: CS-420
+      course_name: Algorithms
+      credits: 4
+    - department: Computer Science
+      course_code: CS-515
+      course_name: Advanced Algorithms
+      credits: 3
+    - department: Computer Science
+      course_code: CS-520
+      course_name: Operating Systems
+      credits: 4
+    - department: Mathematics
+      course_code: MATH-528
+      course_name: Real Analysis
+      credits: 4
+    - department: Biology
+      course_code: BIOL-411
+      course_name: Genetics
+      credits: 4
+  umass:
+    - department: Computer Science
+      course_code: COMPSCI-311
+      course_name: Introduction to Algorithms
+      credits: 4
+    - department: Psychology
+      course_code: PSYCH-380
+      course_name: Cognitive Psychology
+      credits: 3
+  northeastern:
+    - department: Khoury College of Computer Sciences
+      course_code: CS-5800
+      course_name: Algorithms
+      credits: 4
+    - department: Khoury College of Computer Sciences
+      course_code: CS-5004
+      course_name: Object-Oriented Design
+      credits: 4
+  bu:
+    - department: Computer Science
+      course_code: CAS-CS-330
+      course_name: Introduction to Analysis of Algorithms
+      credits: 4
+    - department: College of Communication
+      course_code: COM-CM-301
+      course_name: Introduction to Public Relations
+      credits: 4
+  uvm:
+    - department: Computer Science
+      course_code: CS-224
+      course_name: Algorithm Design & Analysis
+      credits: 3
+    - department: Rubenstein School of Environment
+      course_code: ENSC-001
+      course_name: Intro to Environmental Studies
+      credits: 3

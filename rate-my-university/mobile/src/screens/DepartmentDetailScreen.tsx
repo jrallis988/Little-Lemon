@@ -12,12 +12,18 @@ import { api } from '../api/client';
 import { ListRow } from '../components/ListRow';
 import { ScreenHeader } from '../components/ScreenHeader';
 import { colors, spacing, typography } from '../constants/theme';
-import type { Course, Professor, RootStackParamList } from '../types';
+import type {
+  Course,
+  Department,
+  Professor,
+  RootStackParamList,
+} from '../types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'DepartmentDetail'>;
 
 export function DepartmentDetailScreen({ route, navigation }: Props) {
   const { departmentId, name } = route.params;
+  const [department, setDepartment] = useState<Department | null>(null);
   const [professors, setProfessors] = useState<Professor[]>([]);
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
@@ -27,11 +33,13 @@ export function DepartmentDetailScreen({ route, navigation }: Props) {
     let cancelled = false;
     (async () => {
       try {
-        const [people, classes] = await Promise.all([
+        const [dept, people, classes] = await Promise.all([
+          api.getDepartment(departmentId),
           api.listProfessors({ departmentId }),
           api.listCourses({ departmentId }),
         ]);
         if (cancelled) return;
+        setDepartment(dept);
         setProfessors(people.items);
         setCourses(classes.items);
       } catch (err) {
@@ -59,8 +67,12 @@ export function DepartmentDetailScreen({ route, navigation }: Props) {
     <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
       <ScreenHeader
         eyebrow="Department"
-        title={name ?? 'Department'}
-        subtitle="Professors, advisors, and courses in this department"
+        title={department?.name ?? name ?? 'Department'}
+        subtitle={
+          department?.code
+            ? `Code ${department.code} · professors, advisors, and courses`
+            : 'Professors, advisors, and courses in this department'
+        }
         onBack={() => navigation.goBack()}
       />
       {error ? <Text style={styles.error}>{error}</Text> : null}

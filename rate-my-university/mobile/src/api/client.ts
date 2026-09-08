@@ -42,6 +42,22 @@ export const api = {
     return request<University>(`/universities/${id}`);
   },
 
+  getDepartment(id: string) {
+    return request<Department>(`/departments/${id}`);
+  },
+
+  getProfessor(id: string) {
+    return request<Professor>(`/professors/${id}`);
+  },
+
+  getCourse(id: string) {
+    return request<Course>(`/courses/${id}`);
+  },
+
+  getDorm(id: string) {
+    return request<Dorm>(`/dorms/${id}`);
+  },
+
   listDepartments(universityId: string, q?: string) {
     const query = q ? `?q=${encodeURIComponent(q)}` : '';
     return request<PaginatedResponse<Department>>(

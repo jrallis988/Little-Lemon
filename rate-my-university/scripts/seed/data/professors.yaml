@@ -1,0 +1,61 @@
+# Sample professors / advisors keyed by university slug + department name.
+# Used to warm the directory beyond empty department shells.
+
+by_university:
+  unh:
+    - department: Computer Science
+      name: Dr. Maya Chen
+      type: professor
+      title: Associate Professor
+    - department: Computer Science
+      name: Alex Rivera
+      type: advisor
+      title: Academic Advisor
+    - department: Mathematics
+      name: Prof. James Okonkwo
+      type: both
+      title: Professor & Undergraduate Advisor
+    - department: Biology
+      name: Dr. Priya Natarajan
+      type: professor
+      title: Assistant Professor
+  umass:
+    - department: Computer Science
+      name: Dr. Elena Voss
+      type: professor
+      title: Professor
+    - department: Psychology
+      name: Dr. Marcus Hale
+      type: professor
+      title: Associate Professor
+    - department: Isenberg School of Management
+      name: Jordan Lee
+      type: advisor
+      title: Career Advisor
+  northeastern:
+    - department: Khoury College of Computer Sciences
+      name: Dr. Samir Patel
+      type: professor
+      title: Professor
+    - department: Khoury College of Computer Sciences
+      name: Casey Nguyen
+      type: advisor
+      title: Academic Advisor
+  bu:
+    - department: Computer Science
+      name: Dr. Hannah Brooks
+      type: professor
+      title: Associate Professor
+    - department: College of Communication
+      name: Prof. Theo Martinez
+      type: professor
+      title: Professor
+  uvm:
+    - department: Computer Science
+      name: Dr. Nora Feldman
+      type: professor
+      title: Assistant Professor
+    - department: Rubenstein School of Environment
+      name: Dr. Liam Ortega
+      type: both
+      title: Lecturer & Advisor
