@@ -50,7 +50,10 @@ export default function RootLayout() {
         <Stack.Screen name="company/[id]/workplaces" options={{ title: 'Choose workplace' }} />
         <Stack.Screen name="workplace/[id]/index" options={{ title: 'Workplace' }} />
         <Stack.Screen name="review/[id]" options={{ title: 'Review' }} />
+        <Stack.Screen name="review/edit/[id]" options={{ title: 'Edit review' }} />
         <Stack.Screen name="interview/[id]" options={{ title: 'Interview' }} />
+        <Stack.Screen name="submit-success" options={{ headerShown: false }} />
+        <Stack.Screen name="my-reviews" options={{ title: 'My reviews' }} />
         <Stack.Screen name="saved" options={{ title: 'Saved employers' }} />
         <Stack.Screen name="settings" options={{ title: 'Settings' }} />
         <Stack.Screen name="guidelines" options={{ title: 'Community guidelines' }} />

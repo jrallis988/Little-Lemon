@@ -8,6 +8,7 @@ CREATE TYPE employment_status AS ENUM ('current', 'former');
 CREATE TYPE employment_type AS ENUM ('full_time', 'part_time', 'contract', 'intern', 'freelance');
 CREATE TYPE tag_sentiment AS ENUM ('positive', 'neutral', 'negative');
 CREATE TYPE tag_category AS ENUM ('culture', 'pay', 'management', 'process', 'other');
+CREATE TYPE interview_outcome AS ENUM ('positive', 'neutral', 'negative');
 
 CREATE TABLE users (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -105,7 +106,44 @@ CREATE TABLE employer_responses (
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
+CREATE TABLE workplaces (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  company_id UUID NOT NULL REFERENCES companies(id) ON DELETE CASCADE,
+  name TEXT NOT NULL,
+  store_code TEXT,
+  address TEXT NOT NULL,
+  city TEXT NOT NULL,
+  state TEXT NOT NULL,
+  zip TEXT NOT NULL DEFAULT '',
+  is_remote_or_corporate BOOLEAN NOT NULL DEFAULT FALSE,
+  summary TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE interviews (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  company_id UUID NOT NULL REFERENCES companies(id) ON DELETE CASCADE,
+  workplace_id UUID REFERENCES workplaces(id) ON DELETE SET NULL,
+  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  author_name TEXT NOT NULL,
+  role TEXT NOT NULL,
+  rating NUMERIC(2,1) NOT NULL CHECK (rating BETWEEN 1 AND 5),
+  outcome interview_outcome NOT NULL DEFAULT 'neutral',
+  body TEXT NOT NULL,
+  questions JSONB NOT NULL DEFAULT '[]'::jsonb,
+  interview_date DATE,
+  helpful_count INT NOT NULL DEFAULT 0,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+ALTER TABLE reviews ADD COLUMN IF NOT EXISTS workplace_id UUID REFERENCES workplaces(id) ON DELETE SET NULL;
+ALTER TABLE salaries ADD COLUMN IF NOT EXISTS workplace_id UUID REFERENCES workplaces(id) ON DELETE SET NULL;
+
 CREATE INDEX idx_companies_name ON companies USING gin (to_tsvector('english', name));
 CREATE INDEX idx_reviews_company ON reviews(company_id, created_at DESC);
 CREATE INDEX idx_salaries_company ON salaries(company_id, role);
 CREATE INDEX idx_employer_responses_company ON employer_responses(company_id);
+CREATE INDEX idx_workplaces_company ON workplaces(company_id, city);
+CREATE INDEX idx_interviews_company ON interviews(company_id, created_at DESC);

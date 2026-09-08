@@ -39,7 +39,11 @@ export default function ProfileScreen() {
         <Stat label="Interviews" value={String(myInterviews.length)} />
       </View>
 
-      <PrimaryButton label="My Reviews" variant="secondary" onPress={() => {}} />
+      <PrimaryButton
+        label="My Reviews"
+        variant="secondary"
+        onPress={() => router.push('/my-reviews')}
+      />
       <PrimaryButton label="Saved Employers" variant="secondary" onPress={() => router.push('/saved')} />
       <PrimaryButton label="Account Settings" variant="secondary" onPress={() => router.push('/settings')} />
       <PrimaryButton label="Community Guidelines" variant="ghost" onPress={() => router.push('/guidelines')} />
@@ -52,16 +56,25 @@ export default function ProfileScreen() {
           <View key={review.id} style={styles.block}>
             <Text style={styles.company}>{getCompany(review.companyId)?.name}</Text>
             <ReviewCard review={review} />
-            <PrimaryButton
-              label="Delete"
-              variant="ghost"
-              onPress={() =>
-                Alert.alert('Delete review?', undefined, [
-                  { text: 'Cancel', style: 'cancel' },
-                  { text: 'Delete', style: 'destructive', onPress: () => deleteReview(review.id) },
-                ])
-              }
-            />
+            <View style={styles.row}>
+              <PrimaryButton
+                label="Edit"
+                variant="secondary"
+                style={{ flex: 1 }}
+                onPress={() => router.push(`/review/edit/${review.id}`)}
+              />
+              <PrimaryButton
+                label="Delete"
+                variant="ghost"
+                style={{ flex: 1 }}
+                onPress={() =>
+                  Alert.alert('Delete review?', undefined, [
+                    { text: 'Cancel', style: 'cancel' },
+                    { text: 'Delete', style: 'destructive', onPress: () => deleteReview(review.id) },
+                  ])
+                }
+              />
+            </View>
           </View>
         ))
       )}
@@ -118,6 +131,7 @@ const styles = StyleSheet.create({
   },
   empty: { fontFamily: typography.body, fontSize: 14, color: colors.inkSoft },
   block: { gap: spacing.sm },
+  row: { flexDirection: 'row', gap: spacing.sm },
   company: { fontFamily: typography.bodySemi, fontSize: 14, color: colors.inkMuted },
   missing: {
     flex: 1,

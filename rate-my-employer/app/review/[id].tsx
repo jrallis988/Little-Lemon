@@ -8,11 +8,12 @@ import { colors, radii, spacing, typography } from '../../src/theme';
 export default function ReviewDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
-  const { getReview, getCompany, getWorkplace, getTagsForReview, voteReview } = useApp();
+  const { getReview, getCompany, getWorkplace, getTagsForReview, voteReview, user } = useApp();
   const review = getReview(id);
   const company = review ? getCompany(review.companyId) : undefined;
   const workplace = review?.workplaceId ? getWorkplace(review.workplaceId) : undefined;
   const tags = review ? getTagsForReview(review) : [];
+  const isOwner = Boolean(user && review && review.userId === user.id);
 
   if (!review || !company) {
     return (
@@ -67,6 +68,13 @@ export default function ReviewDetailScreen() {
             onPress={() => voteReview(review.id, 'down')}
           />
         </View>
+        {isOwner ? (
+          <PrimaryButton
+            label="Edit review"
+            variant="secondary"
+            onPress={() => router.push(`/review/edit/${review.id}`)}
+          />
+        ) : null}
         <PrimaryButton
           label="Write a Review"
           onPress={() => router.push('/(tabs)/write')}

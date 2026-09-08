@@ -31,6 +31,7 @@ export interface SearchCompaniesParams {
 
 export interface CreateReviewInput {
   companyId: string;
+  workplaceId?: string | null;
   title: string;
   body: string;
   role: string;
@@ -41,6 +42,8 @@ export interface CreateReviewInput {
   scores: Review['scores'];
   tagIds?: string[];
   isAnonymous?: boolean;
+  authorName?: string;
+  userId?: string;
 }
 
 export interface CreateSalaryInput {

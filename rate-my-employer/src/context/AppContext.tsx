@@ -19,6 +19,7 @@ import {
   seedWorkplaces,
 } from '../data/seed';
 import { averageReviews } from '../lib/averages';
+import * as reviewService from '../services/reviewService';
 import type {
   ActivityItem,
   Company,
@@ -110,6 +111,22 @@ type AppContextValue = {
   signOut: () => Promise<void>;
   submitWorkReview: (draft: WriteDraft) => Promise<string | null>;
   submitInterview: (draft: WriteDraft) => Promise<string | null>;
+  updateReview: (
+    reviewId: string,
+    input: {
+      title: string;
+      body: string;
+      pros?: string;
+      cons?: string;
+      role: string;
+      overall: number;
+      scores: ReviewScores;
+      employmentStatus: EmploymentStatus;
+      employmentType: EmploymentType;
+      tagIds: string[];
+      isAnonymous: boolean;
+    },
+  ) => Promise<string | null>;
   deleteReview: (reviewId: string) => Promise<string | null>;
   voteReview: (reviewId: string, direction: 'up' | 'down') => void;
 };
@@ -424,6 +441,23 @@ export function AppProvider({ children }: { children: ReactNode }) {
           createdAt: new Date().toISOString(),
         };
         await persistReviews([next, ...reviews]);
+        void reviewService
+          .createReview({
+            companyId: next.companyId,
+            workplaceId: next.workplaceId,
+            title: next.title,
+            body: next.body,
+            role: next.role,
+            employmentStatus: next.employmentStatus,
+            employmentType: next.employmentType,
+            wouldRecommend: next.wouldRecommend,
+            scores: next.scores,
+            tagIds: next.tagIds,
+            isAnonymous: next.isAnonymous,
+            authorName: next.authorName,
+            userId: next.userId,
+          })
+          .catch(() => undefined);
         return null;
       },
       submitInterview: async (draft) => {
@@ -449,6 +483,66 @@ export function AppProvider({ children }: { children: ReactNode }) {
           createdAt: new Date().toISOString(),
         };
         await persistInterviews([next, ...interviews]);
+        void reviewService
+          .createInterview({
+            companyId: next.companyId,
+            workplaceId: next.workplaceId,
+            role: next.role,
+            rating: next.rating,
+            outcome: next.outcome,
+            body: next.body,
+            questions: next.questions,
+            authorName: next.authorName,
+            userId: next.userId,
+          })
+          .catch(() => undefined);
+        return null;
+      },
+      updateReview: async (reviewId, input) => {
+        if (!user) return 'Sign in to edit a review.';
+        const target = reviews.find((item) => item.id === reviewId);
+        if (!target || target.userId !== user.id) return 'Review not found.';
+        if (!input.role.trim() || !input.body.trim()) {
+          return 'Role and review text are required.';
+        }
+        if (!input.overall) return 'Add an overall rating.';
+        const next = reviews.map((item) => {
+          if (item.id !== reviewId) return item;
+          return {
+            ...item,
+            title: input.title.trim() || `${input.role.trim()} experience`,
+            body: input.body.trim(),
+            pros: input.pros?.trim() || undefined,
+            cons: input.cons?.trim() || undefined,
+            role: input.role.trim(),
+            employmentStatus: input.employmentStatus,
+            employmentType: input.employmentType,
+            wouldRecommend: input.overall >= 3,
+            scores: { ...input.scores, overall: input.overall },
+            tagIds: input.tagIds,
+            isAnonymous: input.isAnonymous,
+            authorName: input.isAnonymous ? 'Anonymous' : user.displayName,
+            updatedAt: new Date().toISOString(),
+          };
+        });
+        await persistReviews(next);
+        const updated = next.find((item) => item.id === reviewId);
+        if (updated) {
+          void reviewService
+            .updateReviewRemote(reviewId, {
+              title: updated.title,
+              body: updated.body,
+              role: updated.role,
+              employmentStatus: updated.employmentStatus,
+              employmentType: updated.employmentType,
+              wouldRecommend: updated.wouldRecommend,
+              scores: updated.scores,
+              tagIds: updated.tagIds,
+              isAnonymous: updated.isAnonymous,
+              authorName: updated.authorName,
+            })
+            .catch(() => undefined);
+        }
         return null;
       },
       deleteReview: async (reviewId) => {

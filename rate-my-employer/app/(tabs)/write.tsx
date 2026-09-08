@@ -97,19 +97,15 @@ export default function WriteScreen() {
       Alert.alert('Could not submit', error);
       return;
     }
-    Alert.alert('Submitted', 'Thanks for sharing your experience.', [
-      {
-        text: 'Done',
-        onPress: () => {
-          const target = draft.workplaceId
-            ? `/workplace/${draft.workplaceId}`
-            : `/company/${draft.companyId}`;
-          setDraft(emptyDraft());
-          setStep(0);
-          router.push(target as never);
-        },
-      },
-    ]);
+    const type = draft.experienceType;
+    const companyId = draft.companyId;
+    const workplaceId = draft.workplaceId ?? '';
+    setDraft(emptyDraft());
+    setStep(0);
+    router.replace({
+      pathname: '/submit-success',
+      params: { type, companyId, workplaceId },
+    });
   };
 
   return (
