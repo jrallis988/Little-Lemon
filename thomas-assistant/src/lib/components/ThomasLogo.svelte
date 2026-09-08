@@ -7,9 +7,16 @@
     width?: number;
     height?: number;
     mode?: ProductMode;
+    showTagline?: boolean;
   }
 
-  let { variant = "full", width, height, mode = "business" }: Props = $props();
+  let {
+    variant = "full",
+    width,
+    height,
+    mode = "business",
+    showTagline = true,
+  }: Props = $props();
 
   const markSrc = "/thomas-mark.svg";
   const markSize = $derived(width ?? height ?? 36);
@@ -38,7 +45,9 @@
       </svg>
       <span class="line"></span>
     </span>
-    <span class="tagline">{tagline}</span>
+    {#if showTagline}
+      <span class="tagline">{tagline}</span>
+    {/if}
   </div>
 {:else}
   <img

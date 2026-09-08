@@ -58,7 +58,7 @@
     <div class="mark-wrap">
       <ThomasLogo variant="mark" width={88} height={88} />
     </div>
-    <ThomasLogo variant="full" mode={chooseMode ? "business" : currentMode} />
+    <ThomasLogo variant="full" mode={currentMode} showTagline={!chooseMode} />
     {#if chooseMode}
       <p class="product-line">Choose how Thomas should meet you</p>
       <div class="mode-choices">
