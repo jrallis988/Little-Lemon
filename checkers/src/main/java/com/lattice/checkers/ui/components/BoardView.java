@@ -10,7 +10,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -24,27 +23,37 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 /**
- * Interactive 8×8 board drawn over the Crossing illustrated artwork.
- * Labels A–H / 1–8 live in the art; the overlay is aligned to the inner grid.
+ * Interactive board over the Crossing artwork.
+ *
+ * <p>The painting is labeled A–H / 1–8. Rank heights follow the painted
+ * terrain (goal, river, median, two road lanes, starting meadow) rather
+ * than a uniform 8-way split.
  */
 public final class BoardView extends StackPane {
 
-    public static final double BOARD_SIZE = 560;
+    public static final double BOARD_SIZE = 620;
 
-    /** Source art is 1254×1254; playable grid sits inside the gold frame. */
     private static final double ART_SIZE = 1254.0;
-    private static final double INNER_LEFT = 45.0 / ART_SIZE;
-    private static final double INNER_TOP = 52.0 / ART_SIZE;
-    private static final double INNER_WIDTH = 1164.0 / ART_SIZE;
-    private static final double INNER_HEIGHT = 1140.0 / ART_SIZE;
+    /** Inner gold frame, art pixels. */
+    private static final double ART_LEFT = 45;
+    private static final double ART_RIGHT = 1209;
+    /**
+     * Horizontal edges of engine rows 0–8 (top → bottom) in art pixels.
+     * Row 0 = rank 8 (goal), row 7 = rank 1 (starting meadow).
+     */
+    private static final double[] ART_ROW_EDGES = {
+            52, 212, 331, 449, 568, 708, 824, 940, 1193
+    };
     private static final String ART_PATH = "/com/lattice/checkers/images/crossing-board.jpg";
 
     private final GameController controller;
     private final Consumer<Void> onChanged;
     private final StackPane[][] cells = new StackPane[8][8];
+    private final double[] cellX = new double[8];
+    private final double[] cellY = new double[8];
+    private final double[] cellW = new double[8];
+    private final double[] cellH = new double[8];
     private final boolean reducedMotion;
-    private final double cellWidth;
-    private final double cellHeight;
     private int focusRow;
     private int focusCol = 1;
 
@@ -52,8 +61,6 @@ public final class BoardView extends StackPane {
         this.controller = controller;
         this.onChanged = onChanged;
         this.reducedMotion = reducedMotion;
-        this.cellWidth = BOARD_SIZE * INNER_WIDTH / 8.0;
-        this.cellHeight = BOARD_SIZE * INNER_HEIGHT / 8.0;
 
         getStyleClass().add("board-view");
         setPrefSize(BOARD_SIZE, BOARD_SIZE);
@@ -68,31 +75,34 @@ public final class BoardView extends StackPane {
         art.setPreserveRatio(false);
         art.setSmooth(true);
         art.setMouseTransparent(true);
-        art.getStyleClass().add("board-art");
 
-        GridPane overlay = new GridPane();
-        overlay.setHgap(0);
-        overlay.setVgap(0);
-        overlay.setMouseTransparent(false);
+        Pane overlay = new Pane();
+        overlay.setPrefSize(BOARD_SIZE, BOARD_SIZE);
+        overlay.setMinSize(BOARD_SIZE, BOARD_SIZE);
+        overlay.setMaxSize(BOARD_SIZE, BOARD_SIZE);
         overlay.getStyleClass().add("board-overlay");
 
+        double scale = BOARD_SIZE / ART_SIZE;
+        double fileWidth = (ART_RIGHT - ART_LEFT) / 8.0;
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
-                StackPane cell = createCell(r, c);
+                double x = ART_LEFT + c * fileWidth;
+                double y = ART_ROW_EDGES[r];
+                double w = fileWidth;
+                double h = ART_ROW_EDGES[r + 1] - ART_ROW_EDGES[r];
+                cellX[c] = x * scale;
+                cellY[r] = y * scale;
+                cellW[c] = w * scale;
+                cellH[r] = h * scale;
+
+                StackPane cell = createCell(r, c, cellW[c], cellH[r]);
                 cells[r][c] = cell;
-                overlay.add(cell, c, r);
+                cell.relocate(cellX[c], cellY[r]);
+                overlay.getChildren().add(cell);
             }
         }
 
-        Pane overlayHost = new Pane(overlay);
-        overlayHost.setPrefSize(BOARD_SIZE, BOARD_SIZE);
-        overlayHost.setMinSize(BOARD_SIZE, BOARD_SIZE);
-        overlayHost.setMaxSize(BOARD_SIZE, BOARD_SIZE);
-        overlayHost.setMouseTransparent(false);
-        overlay.setLayoutX(BOARD_SIZE * INNER_LEFT);
-        overlay.setLayoutY(BOARD_SIZE * INNER_TOP);
-
-        getChildren().addAll(art, overlayHost);
+        getChildren().addAll(art, overlay);
 
         setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.UP) {
@@ -146,28 +156,31 @@ public final class BoardView extends StackPane {
                         "square-selected", "square-destination", "square-capture",
                         "square-keyboard-focus", "square-forced");
 
+                double width = cellW[c];
+                double height = cellH[r];
+
                 if (selected.isPresent() && selected.get().equals(pos)) {
                     cell.getStyleClass().add("square-selected");
-                    Rectangle wash = new Rectangle(cellWidth, cellHeight);
+                    Rectangle wash = new Rectangle(width, height);
                     wash.setFill(Color.rgb(212, 161, 90, 0.28));
                     wash.setMouseTransparent(true);
-                    wash.setUserData("overlay");
                     cell.getChildren().add(wash);
                 }
                 if (destinations.contains(pos)) {
+                    double marker = Math.min(width, height);
                     if (captureLandings.contains(pos)) {
                         cell.getStyleClass().add("square-capture");
-                        Circle ring = new Circle(Math.min(cellWidth, cellHeight) * 0.18);
+                        Circle ring = new Circle(marker * 0.18);
                         ring.getStyleClass().add("capture-marker");
                         ring.setStrokeType(StrokeType.OUTSIDE);
                         ring.setMouseTransparent(true);
                         cell.getChildren().add(ring);
                     } else {
                         cell.getStyleClass().add("square-destination");
-                        Circle halo = new Circle(Math.min(cellWidth, cellHeight) * 0.14);
+                        Circle halo = new Circle(marker * 0.14);
                         halo.setFill(Color.rgb(18, 20, 26, 0.45));
                         halo.setMouseTransparent(true);
-                        Circle dot = new Circle(Math.min(cellWidth, cellHeight) * 0.10);
+                        Circle dot = new Circle(marker * 0.10);
                         dot.getStyleClass().add("destination-marker");
                         dot.setMouseTransparent(true);
                         cell.getChildren().addAll(halo, dot);
@@ -175,17 +188,16 @@ public final class BoardView extends StackPane {
                 }
                 if (r == focusRow && c == focusCol && isFocused()) {
                     cell.getStyleClass().add("square-keyboard-focus");
-                    Rectangle focus = new Rectangle(cellWidth - 4, cellHeight - 4);
+                    Rectangle focus = new Rectangle(Math.max(8, width - 4), Math.max(8, height - 4));
                     focus.setFill(Color.TRANSPARENT);
                     focus.setStroke(Color.web("#F2F3F5"));
                     focus.setStrokeWidth(2);
                     focus.setMouseTransparent(true);
-                    focus.setUserData("overlay");
                     cell.getChildren().add(focus);
                 }
 
                 board.get(pos).ifPresent(piece -> {
-                    PieceView pieceView = new PieceView(piece, Math.min(cellWidth, cellHeight) * 0.34);
+                    PieceView pieceView = new PieceView(piece, Math.min(width, height) * 0.34);
                     pieceView.setReducedMotion(reducedMotion);
                     cell.getChildren().add(pieceView);
                     if (selected.isPresent() && selected.get().equals(pos)) {
@@ -196,16 +208,16 @@ public final class BoardView extends StackPane {
         }
     }
 
-    private StackPane createCell(int row, int col) {
-        Rectangle hit = new Rectangle(cellWidth, cellHeight);
+    private StackPane createCell(int row, int col, double width, double height) {
+        Rectangle hit = new Rectangle(width, height);
         hit.setFill(Color.TRANSPARENT);
         hit.setStroke(Color.TRANSPARENT);
         hit.setUserData("hit");
 
         StackPane cell = new StackPane(hit);
-        cell.setPrefSize(cellWidth, cellHeight);
-        cell.setMinSize(cellWidth, cellHeight);
-        cell.setMaxSize(cellWidth, cellHeight);
+        cell.setPrefSize(width, height);
+        cell.setMinSize(width, height);
+        cell.setMaxSize(width, height);
         cell.setPickOnBounds(true);
         cell.getStyleClass().add("board-square");
         cell.setOnMouseClicked(e -> {

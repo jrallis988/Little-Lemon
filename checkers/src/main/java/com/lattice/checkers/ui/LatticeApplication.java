@@ -65,7 +65,7 @@ public final class LatticeApplication extends Application {
 
         shell.setTop(chrome);
 
-        Scene scene = new Scene(shell, 1180, 860);
+        Scene scene = new Scene(shell, 1240, 920);
         LatticeTheme.apply(scene);
 
         stage.setTitle(APP_NAME + " — American Checkers");
