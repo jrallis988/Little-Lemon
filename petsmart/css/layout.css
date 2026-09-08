@@ -989,3 +989,40 @@ body.high-contrast {
 .pathway-card:hover {
   transform: translateY(-4px);
 }
+
+/* Charities impact */
+.impact-grid {
+  display: grid;
+  gap: var(--space-6);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .impact-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.impact-stat {
+  background: var(--ps-white);
+  border: var(--border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8) var(--space-6);
+  text-align: center;
+  box-shadow: var(--shadow-card);
+}
+
+.impact-stat strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
+  color: var(--ps-blue-deep);
+  margin-bottom: var(--space-3);
+  letter-spacing: -0.02em;
+}
+
+.impact-stat span {
+  color: var(--ps-slate);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+}

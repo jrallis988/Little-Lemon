@@ -98,6 +98,7 @@ const PetSmartChrome = (() => {
         <h3>Adopt &amp; Care</h3>
         <ul>
           <li><a href="${base}adopt/index.html">Find a pet</a></li>
+          <li><a href="${base}adopt/charities.html">PetSmart Charities</a></li>
           <li><a href="${base}care/index.html">Pet care hub</a></li>
           <li><a href="${base}stores/index.html">Store locator</a></li>
         </ul>
@@ -107,6 +108,7 @@ const PetSmartChrome = (() => {
         <ul>
           <li><a href="${base}account/index.html">Sign in</a></li>
           <li><a href="${base}account/orders.html">Order history</a></li>
+          <li><a href="${base}account/appointments.html">Appointments</a></li>
           <li><a href="${base}account/favorites.html">Saved items</a></li>
         </ul>
       </div>

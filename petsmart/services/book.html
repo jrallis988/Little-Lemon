@@ -197,6 +197,7 @@
         pet: document.getElementById('pet-name').value,
       };
       sessionStorage.setItem('petsmart-booking', JSON.stringify(payload));
+      if (window.PetSmartAppointments) PetSmartAppointments.add(payload);
       window.location.href = 'booking-confirmed.html';
     });
   </script>

@@ -99,7 +99,7 @@
           <p>From adoption to everyday care — explore the destinations that matter most.</p>
         </div>
         <div class="grid-2" style="gap: var(--space-4);">
-          <a href="adopt/index.html" class="eco-link eco-link--featured reveal">
+          <a href="adopt/charities.html" class="eco-link eco-link--featured reveal">
             <div class="eco-link__icon" aria-hidden="true">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21c-4-4-7-7.5-7-11a4 4 0 018 0 4 4 0 018 0c0 3.5-3 7-7 11z"/></svg>
             </div>
@@ -157,6 +157,20 @@
       </div>
     </section>
 
+    <!-- Featured adoptable pets -->
+    <section class="section section--pale" aria-labelledby="adopt-preview-heading">
+      <div class="container">
+        <div class="section-header reveal" style="display:flex; flex-wrap:wrap; align-items:end; justify-content:space-between; gap:var(--space-4);">
+          <div>
+            <h2 id="adopt-preview-heading">Looking for a friend?</h2>
+            <p>Meet a few adoptable pets available through PetSmart Charities partner events.</p>
+          </div>
+          <a class="btn btn-outline" href="adopt/index.html">See all adoptable pets</a>
+        </div>
+        <div class="grid-3" id="featured-pets"></div>
+      </div>
+    </section>
+
     <!-- Featured products teaser -->
     <section class="section" aria-labelledby="featured-heading">
       <div class="container">
@@ -193,6 +207,10 @@
   <script src="js/ui.js"></script>
   <script src="js/app.js"></script>
   <script>
+    PetSmartUI.renderPetGrid(
+      document.getElementById('featured-pets'),
+      PetSmartData.getPets().slice(0, 3)
+    );
     PetSmartUI.renderProductGrid(
       document.getElementById('featured-products'),
       PetSmartData.getProducts({ sort: 'rating', limit: 4 })

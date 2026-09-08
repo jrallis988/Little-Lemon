@@ -105,6 +105,34 @@
     },
   };
 
+  /* Appointments (from service booking demo) */
+  const APPT_KEY = 'petsmart-appointments';
+  function getAppointments() {
+    try {
+      return JSON.parse(localStorage.getItem(APPT_KEY)) || [];
+    } catch {
+      return [];
+    }
+  }
+  function saveAppointments(items) {
+    localStorage.setItem(APPT_KEY, JSON.stringify(items));
+  }
+  window.PetSmartAppointments = {
+    get: getAppointments,
+    add(appt) {
+      const items = getAppointments();
+      items.unshift({
+        id: `a${Date.now()}`,
+        createdAt: new Date().toISOString(),
+        ...appt,
+      });
+      saveAppointments(items.slice(0, 20));
+    },
+    remove(id) {
+      saveAppointments(getAppointments().filter((a) => a.id !== id));
+    },
+  };
+
   updateCartBadge();
 
   /* Event delegation for dynamic product actions */
