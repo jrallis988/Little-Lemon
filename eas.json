@@ -26,13 +26,15 @@
         "buildType": "apk"
       },
       "env": {
-        "EXPO_PUBLIC_API_MODE": "mock"
+        "EXPO_PUBLIC_API_MODE": "remote",
+        "EXPO_PUBLIC_API_URL": "https://YOUR-API-HOST.example.com"
       }
     },
     "production": {
       "autoIncrement": true,
       "env": {
-        "EXPO_PUBLIC_API_MODE": "remote"
+        "EXPO_PUBLIC_API_MODE": "remote",
+        "EXPO_PUBLIC_API_URL": "https://YOUR-API-HOST.example.com"
       }
     }
   },
