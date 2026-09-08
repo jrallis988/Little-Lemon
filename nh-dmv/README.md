@@ -23,6 +23,8 @@ Residents should understand what to do, whether it can be done online, what docu
 | `fees.html` | Searchable fees by service |
 | `records.html` | My DMV records |
 | `america-250.html` | America’s 250th commemorative cover plate |
+| `plates.html` | Vanity, moose, parks, decal, and veteran plate fees |
+| `motorcycle.html` | Motorcycle rider training path |
 | `appointments.html#how-to-video` | Appointment how-to video + booking |
 
 Homepage also features the America 250 plate and the appointment how-to video (same topic as the official mm.nh.gov announcement).

@@ -700,6 +700,21 @@
       .join('');
   }
 
+  function initNews() {
+    const grid = $('#news-grid');
+    if (!grid || !window.NHDMV?.news) return;
+    grid.innerHTML = window.NHDMV.news
+      .map(
+        (n) => `<a class="news-card" href="${n.href}">
+          <p class="section-kicker">${n.kicker}</p>
+          <h3>${n.title}</h3>
+          <p>${n.body}</p>
+          <span class="more">${n.cta}</span>
+        </a>`
+      )
+      .join('');
+  }
+
   function initScamPopup() {
     const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
     const file = !path || path === 'nh-dmv' ? 'index.html' : path.includes('.html') ? path : `${path}.html`;
@@ -1518,10 +1533,11 @@
           'first-license.html',
           'service.html',
           'change-address.html',
-          'new-resident.html'
+          'new-resident.html',
+          'motorcycle.html'
         ]
       },
-      { href: 'vehicle.html', label: 'Vehicle', match: ['vehicle.html', 'america-250.html'] },
+      { href: 'vehicle.html', label: 'Vehicle', match: ['vehicle.html', 'america-250.html', 'plates.html'] },
       { href: 'records.html', label: 'Records', match: ['records.html'] },
       { href: 'appointments.html', label: 'Appointments', match: ['appointments.html', 'confirmation.html'] },
       { href: 'branches.html', label: 'Branches', match: ['branches.html', 'branch.html', 'locations.html'] }
@@ -1540,6 +1556,8 @@
       { href: 'first-license.html', label: 'First license' },
       { href: 'new-resident.html', label: 'New resident' },
       { href: 'america-250.html', label: 'America 250 plate' },
+      { href: 'plates.html', label: 'Specialty plates' },
+      { href: 'motorcycle.html', label: 'Motorcycle training' },
       { href: 'appointments.html#how-to-video', label: 'Appointment video' },
       { href: 'scam-alert.html', label: 'Scam alert' },
       { href: 'change-address.html', label: 'Change address' },
@@ -1687,6 +1705,7 @@
   initRecordsActions();
   initMyRecords();
   initNotices();
+  initNews();
   initScamPopup();
   initFeesPage();
   initServiceDetail();

@@ -83,7 +83,12 @@ window.NHDMV = {
       { name: 'Replacement plate (one)', amount: '$4.00' },
       { name: 'Replacement plate set (both)', amount: '$8.00' },
       { name: 'Replacement decal', amount: '$5.00' },
-      { name: 'America’s 250th commemorative cover plate', amount: '$25.00 + $4.95 shipping' }
+      { name: 'America’s 250th commemorative cover plate', amount: '$25.00 + $4.95 shipping' },
+      { name: 'Vanity plate (12 months, prorated)', amount: '$60.00' },
+      { name: 'Conservation (Moose) plate', amount: '$30.00 / year (not prorated)' },
+      { name: 'State Park plate', amount: '$85.00 / year (not prorated)' },
+      { name: 'Decal plate (passenger or veteran)', amount: '$15.00 / year' },
+      { name: 'Mid-cycle plate change', amount: '$28.00' }
     ]
   },
 
@@ -180,7 +185,7 @@ window.NHDMV = {
     { id: 'non-driver', category: 'license', group: 'first', name: 'Apply for non-driver ID', blurb: 'State photo ID without driving privileges — $20.00', ways: ['appt'], href: 'service.html#non-driver', fee: '$20' },
     { id: 'knowledge', category: 'license', group: 'testing', name: 'Schedule knowledge test', blurb: 'Driver, CDL, and motorcycle knowledge tests are appointment-only', ways: ['appt'], href: 'service.html#knowledge' },
     { id: 'road', category: 'license', group: 'testing', name: 'Book road skills test', blurb: 'Schedule after successful knowledge test completion', ways: ['appt'], href: 'service.html#road' },
-    { id: 'motorcycle', category: 'license', group: 'testing', name: 'Motorcycle rider training', blurb: 'Season calendar and registration via motorcycle training path', ways: ['online', 'appt'], href: 'service.html#motorcycle' },
+    { id: 'motorcycle', category: 'license', group: 'testing', name: 'Motorcycle rider training', blurb: 'Season calendar and registration via motorcycle training path', ways: ['online', 'appt'], href: 'motorcycle.html' },
     { id: 'duplicate', category: 'license', group: 'updates', name: 'Duplicate license or ID', blurb: 'Replace lost, stolen, or damaged credentials — $20.00', ways: ['online', 'drop', 'appt'], href: 'service.html#duplicate', fee: '$20' },
     { id: 'address', category: 'license', group: 'updates', name: 'Update address', blurb: 'Address change reprint — $10.00 · drop box friendly', ways: ['drop'], href: 'change-address.html', fee: '$10' },
     { id: 'name-change', category: 'license', group: 'updates', name: 'Name or gender change', blurb: 'Bring certified court or vital records to your appointment', ways: ['appt'], href: 'service.html#name-change' },
@@ -192,7 +197,7 @@ window.NHDMV = {
     { id: 'title', category: 'vehicle', group: 'titles', name: 'Certificate of title', blurb: 'New title processing with ownership documents', ways: ['drop', 'appt'], href: 'vehicle.html#title' },
     { id: 'dup-title', category: 'vehicle', group: 'titles', name: 'Duplicate title', blurb: 'Replace a lost or damaged title via drop box or appointment', ways: ['drop', 'appt'], href: 'vehicle.html#dup-title' },
     { id: 'america-250', category: 'vehicle', group: 'specialty', name: 'America’s 250th commemorative plate', blurb: 'Cover plate $25 + $4.95 shipping · display Jan 1, 2026 – Jul 4, 2027 · LCHIP proceeds', ways: ['online'], href: 'america-250.html', fee: '$25 + $4.95 ship' },
-    { id: 'vanity', category: 'vehicle', group: 'specialty', name: 'Vanity plates', blurb: 'Personalized plate combinations and other specialty designs', ways: ['online', 'appt'], href: 'vehicle.html#vanity' },
+    { id: 'vanity', category: 'vehicle', group: 'specialty', name: 'Vanity plates', blurb: 'Personalized plate combinations and other specialty designs', ways: ['online', 'appt'], href: 'plates.html' },
     { id: 'placard', category: 'vehicle', group: 'specialty', name: 'Walking disability placard', blurb: 'Accessible parking placard applications', ways: ['drop', 'appt'], href: 'vehicle.html#placard' },
     { id: 'mvr', category: 'records', group: 'records', name: 'Request your driving record', blurb: 'Your own record only online · third-party requests must go to Concord', ways: ['online', 'drop', 'appt'], href: 'records.html#mvr', fee: '$20 research' },
     { id: 'accident', category: 'records', group: 'records', name: 'Request accident report', blurb: 'Drop-box request for crash reports', ways: ['drop'], href: 'records.html#accident' },
@@ -328,7 +333,43 @@ window.NHDMV = {
     { id: 'first', label: 'Get my first license', href: 'first-license.html', hint: 'Guided journey' },
     { id: 'road', label: 'Schedule a road test', href: 'service.html#road', hint: 'Appointment' },
     { id: 'branch', label: 'Find a DMV location', href: 'branches.html', hint: 'Map + list' },
-    { id: 'america-250', label: 'Order America 250 plate', href: 'america-250.html', hint: 'Online' }
+    { id: 'america-250', label: 'Order America 250 plate', href: 'america-250.html', hint: 'Online' },
+    { id: 'motorcycle', label: 'Motorcycle training', href: 'motorcycle.html', hint: 'Seasonal' }
+  ],
+
+  news: [
+    {
+      id: 'america-250',
+      kicker: 'Celebrate America',
+      title: 'America’s 250th commemorative plate is available to order',
+      body: '$25 + $4.95 shipping. Front cover plate · display Jan 1, 2026 – Jul 4, 2027 · LCHIP proceeds.',
+      href: 'america-250.html',
+      cta: 'Order plate'
+    },
+    {
+      id: 'appointments',
+      kicker: 'Visits',
+      title: 'In-person services are appointment-based',
+      body: 'Hold a time before you travel. Same-day slots release daily when available.',
+      href: 'appointments.html',
+      cta: 'Book now'
+    },
+    {
+      id: 'motorcycle',
+      kicker: 'Training',
+      title: 'Motorcycle rider training season',
+      body: 'Register for seasonal training, then complete knowledge and skills testing.',
+      href: 'motorcycle.html',
+      cta: 'See training'
+    },
+    {
+      id: 'fees-2026',
+      kicker: 'Fees',
+      title: 'Fee schedule as of January 1, 2026',
+      body: 'Review operator, REAL ID, plate, and records fees before you start a transaction.',
+      href: 'fees.html',
+      cta: 'Search fees'
+    }
   ],
 
   onlineGuide: [
@@ -340,6 +381,7 @@ window.NHDMV = {
     { id: 'mvr', title: 'Order records', status: 'online', blurb: 'Your own driving record can be requested online', href: 'records.html#mvr' },
     { id: 'real-id', title: 'REAL ID', status: 'visit', blurb: 'Requires an in-person visit with original documents', href: 'service.html#real-id' },
     { id: 'title', title: 'Transfer title', status: 'partial', blurb: 'Start paperwork online; finish by drop box or appointment', href: 'vehicle.html#title' },
+    { id: 'motorcycle', title: 'Motorcycle training', status: 'partial', blurb: 'Register for seasonal training — tests still require a visit', href: 'motorcycle.html' },
     { id: 'road', title: 'Road test', status: 'visit', blurb: 'Requires an in-person skills test appointment', href: 'service.html#road' }
   ],
 
@@ -483,7 +525,7 @@ window.NHDMV = {
       process: ['Review season calendar', 'Register', 'Complete training / testing'],
       appointment: true,
       where: 'Training sites and DMV testing locations',
-      primaryCta: { label: 'Start registration', href: 'appointments.html#service=motorcycle' },
+      primaryCta: { label: 'Motorcycle training', href: 'motorcycle.html' },
       secondaryCta: { label: 'See fees', href: 'fees.html' },
       beforeBegin: ['Check season dates', 'Confirm eligibility age'],
       related: ['knowledge']
@@ -623,11 +665,11 @@ window.NHDMV = {
       online: 'partial',
       onlineLabel: 'Start online — some types need documents or an appointment',
       docs: ['Registration information', 'Eligibility docs for veteran / specialty types when required'],
-      cost: 'Varies by plate type — see fees',
-      process: ['Choose plate type', 'Check availability', 'Submit order or book if documents required'],
+      cost: 'Vanity $60.00 / 12 months (prorated) + $8 first-time plate · Moose $30/yr · Parks $85/yr · Decal $15/yr',
+      process: ['Choose plate type', 'Check availability / character rules', 'Pay municipal + state + specialty fees', 'Receive plates'],
       appointment: false,
-      where: 'Online · appointment when eligibility review is needed',
-      primaryCta: { label: 'Specialty plates', href: 'vehicle.html#specialty' },
+      where: 'Online when eligible · appointment when eligibility review is needed',
+      primaryCta: { label: 'Specialty plates', href: 'plates.html' },
       secondaryCta: { label: 'America’s 250th plate', href: 'america-250.html' },
       beforeBegin: ['Decide vanity vs commemorative vs specialty design'],
       related: ['america-250', 'reg-new']
@@ -664,7 +706,8 @@ window.NHDMV = {
     { phrases: ['location', 'branch', 'office', 'hours', 'near me'], title: 'Find a DMV location', blurb: 'Map and list of 15 branches.', href: 'branches.html', badge: 'Locations' },
     { phrases: ['fee', 'cost', 'price', 'how much'], title: 'What will this cost?', blurb: 'Search common DMV fees by service.', href: 'fees.html', badge: 'Fees' },
     { phrases: ['america', '250', 'commemorative', 'cover plate', 'celebrate america', 'lchip', 'specialty plate'], title: 'America’s 250th commemorative plate', blurb: 'Order the cover plate online — $25 + shipping.', href: 'america-250.html', badge: 'Online' },
-    { phrases: ['vanity', 'personalized plate', 'custom plate', 'moose plate', 'parks plate'], title: 'Vanity & specialty plates', blurb: 'Personalized and specialty plate options.', href: 'vehicle.html#specialty', badge: 'Plates' },
+    { phrases: ['vanity', 'personalized plate', 'custom plate', 'moose plate', 'parks plate'], title: 'Vanity & specialty plates', blurb: 'Personalized and specialty plate options.', href: 'plates.html', badge: 'Plates' },
+    { phrases: ['motorcycle', 'bike', 'rider training', 'motorcycle permit', 'endorsement'], title: 'Motorcycle rider training', blurb: 'Seasonal training, permit, and endorsement path.', href: 'motorcycle.html', badge: 'Training' },
     { phrases: ['video', 'how to appointment', 'how to make an appointment', 'appointment video'], title: 'How to make an appointment', blurb: 'Short how-to video with transcript, then book.', href: 'appointments.html#how-to-video', badge: 'Video' }
   ],
 
