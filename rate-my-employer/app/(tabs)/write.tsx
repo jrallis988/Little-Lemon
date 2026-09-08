@@ -110,7 +110,11 @@ export default function WriteScreen() {
 
   return (
     <SafeAreaView style={styles.safe} edges={['bottom']}>
-      <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+      <ScrollView
+        style={styles.scroll}
+        contentContainerStyle={styles.content}
+        keyboardShouldPersistTaps="handled"
+      >
         <Text style={styles.title}>Write</Text>
         <Text style={styles.stepLabel}>
           Step {step + 1} of {STEPS.length} · {STEPS[step]}
@@ -387,48 +391,50 @@ export default function WriteScreen() {
           </View>
         ) : null}
 
-        <View style={styles.navRow}>
-          {step > 0 ? (
-            <PrimaryButton label="Back" variant="ghost" onPress={back} style={styles.half} />
-          ) : (
-            <View style={styles.half} />
-          )}
-          {step < STEPS.length - 1 ? (
-            <PrimaryButton
-              label="Next"
-              style={styles.half}
-              onPress={() => {
-                if (step === 1 && !draft.companyId) {
-                  Alert.alert('Pick an employer');
-                  return;
-                }
-                if (step === 3 && !draft.role.trim()) {
-                  Alert.alert('Add your role');
-                  return;
-                }
-                if (step === 4 && !draft.overall) {
-                  Alert.alert('Add an overall rating');
-                  return;
-                }
-                if (step === 5 && !draft.body.trim()) {
-                  Alert.alert('Write your experience');
-                  return;
-                }
-                next();
-              }}
-            />
-          ) : (
-            <PrimaryButton label="Submit Review" onPress={onSubmit} style={styles.half} />
-          )}
-        </View>
       </ScrollView>
+
+      <View style={styles.navRow}>
+        {step > 0 ? (
+          <PrimaryButton label="Back" variant="ghost" onPress={back} style={styles.half} />
+        ) : (
+          <View style={styles.half} />
+        )}
+        {step < STEPS.length - 1 ? (
+          <PrimaryButton
+            label="Next"
+            style={styles.half}
+            onPress={() => {
+              if (step === 1 && !draft.companyId) {
+                Alert.alert('Pick an employer');
+                return;
+              }
+              if (step === 3 && !draft.role.trim()) {
+                Alert.alert('Add your role');
+                return;
+              }
+              if (step === 4 && !draft.overall) {
+                Alert.alert('Add an overall rating');
+                return;
+              }
+              if (step === 5 && !draft.body.trim()) {
+                Alert.alert('Write your experience');
+                return;
+              }
+              next();
+            }}
+          />
+        ) : (
+          <PrimaryButton label="Submit Review" onPress={onSubmit} style={styles.half} />
+        )}
+      </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.surface },
-  content: { padding: spacing.lg, paddingBottom: spacing.xxl, gap: spacing.md },
+  scroll: { flex: 1 },
+  content: { padding: spacing.lg, paddingBottom: spacing.lg, gap: spacing.md },
   gated: { padding: spacing.lg, gap: spacing.md },
   title: { fontFamily: typography.display, fontSize: 28, color: colors.ink },
   stepLabel: {
@@ -493,6 +499,15 @@ const styles = StyleSheet.create({
   previewTitle: { fontFamily: typography.bodyBold, fontSize: 16, color: colors.ink },
   previewBody: { fontFamily: typography.body, fontSize: 15, lineHeight: 22, color: colors.inkMuted },
   meta: { fontFamily: typography.body, fontSize: 13, color: colors.inkSoft },
-  navRow: { flexDirection: 'row', gap: spacing.sm, marginTop: spacing.sm },
+  navRow: {
+    flexDirection: 'row',
+    gap: spacing.sm,
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.sm,
+    paddingBottom: spacing.sm,
+    borderTopWidth: 1,
+    borderTopColor: colors.border,
+    backgroundColor: colors.surfaceRaised,
+  },
   half: { flex: 1 },
 });
