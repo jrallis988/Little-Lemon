@@ -38,6 +38,7 @@ export default function FeaturesPage() {
                 title={feature.title}
                 description={feature.description}
                 kind="feature"
+                eyebrow="Platform"
                 items={[...feature.items]}
                 imageSrc={feature.imageSrc}
                 imageAlt={feature.imageAlt}

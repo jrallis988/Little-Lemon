@@ -1,7 +1,12 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import type { LeadType } from "@/lib/leads";
+import {
+  normalizePlanInterest,
+  planInterestOptions,
+  type LeadType,
+} from "@/lib/leads";
+import { site } from "@/lib/site";
 
 type LeadFormProps = {
   type: LeadType;
@@ -9,8 +14,6 @@ type LeadFormProps = {
   submitLabel?: string;
   defaultPlan?: string;
 };
-
-const planOptions = ["Classroom", "School", "District", "Not sure yet"];
 
 export function LeadForm({
   type,
@@ -22,9 +25,12 @@ export function LeadForm({
     "idle",
   );
   const [message, setMessage] = useState("");
+  const selectedPlan = normalizePlanInterest(defaultPlan);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (status === "loading") return;
+
     setStatus("loading");
     setMessage("");
 
@@ -40,6 +46,7 @@ export function LeadForm({
       planInterest: String(formData.get("planInterest") ?? ""),
       phone: String(formData.get("phone") ?? ""),
       message: String(formData.get("message") ?? ""),
+      website: String(formData.get("website") ?? ""),
     };
 
     try {
@@ -48,7 +55,10 @@ export function LeadForm({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      const data = (await response.json()) as { error?: string; message?: string };
+      const data = (await response.json()) as {
+        error?: string;
+        message?: string;
+      };
 
       if (!response.ok) {
         setStatus("error");
@@ -65,13 +75,55 @@ export function LeadForm({
     }
   }
 
+  if (status === "success") {
+    return (
+      <div className="rounded bg-white p-6 shadow-card sm:p-8">
+        {title ? (
+          <h2 className="text-2xl font-bold tracking-tight text-navy">{title}</h2>
+        ) : null}
+        <div
+          className="mt-6 rounded border border-navy/15 bg-paper-warm p-5"
+          role="status"
+        >
+          <p className="text-lg font-bold text-navy">Request received</p>
+          <p className="mt-2 text-base leading-relaxed text-ink-soft">{message}</p>
+          <p className="mt-4 text-sm text-mute">
+            Prefer email? Reach sales at{" "}
+            <a className="font-semibold text-link hover:text-navy" href={`mailto:${site.email}`}>
+              {site.email}
+            </a>
+            .
+          </p>
+          <button
+            type="button"
+            className="btn-outline mt-6 !py-2"
+            onClick={() => {
+              setStatus("idle");
+              setMessage("");
+            }}
+          >
+            Submit another request
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="rounded bg-white p-6 shadow-card sm:p-8">
       {title ? (
         <h2 className="text-2xl font-bold tracking-tight text-navy">{title}</h2>
       ) : null}
 
-      <form onSubmit={onSubmit} className="mt-6 space-y-4">
+      <form onSubmit={onSubmit} className="mt-6 space-y-4" noValidate={false}>
+        {/* Honeypot — hidden from people, filled by many bots */}
+        <div aria-hidden className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+          <label>
+            Website
+            <input tabIndex={-1} autoComplete="off" name="website" type="text" />
+          </label>
+        </div>
+
         <div className="grid gap-4 sm:grid-cols-2">
           <label className="block text-sm font-semibold text-ink">
             Full name
@@ -122,10 +174,10 @@ export function LeadForm({
             Plan interest
             <select
               name="planInterest"
-              defaultValue={defaultPlan}
+              defaultValue={selectedPlan}
               className="mt-1.5 w-full rounded border border-line bg-white px-3 py-2.5 text-sm font-normal text-ink outline-none transition focus:border-navy"
             >
-              {planOptions.map((option) => (
+              {planInterestOptions.map((option) => (
                 <option key={option} value={option}>
                   {option}
                 </option>
@@ -167,13 +219,8 @@ export function LeadForm({
           {status === "loading" ? "Sending…" : submitLabel}
         </button>
 
-        {message ? (
-          <p
-            className={`text-sm ${
-              status === "success" ? "text-accent-deep" : "text-accent"
-            }`}
-            role="status"
-          >
+        {status === "error" && message ? (
+          <p className="text-sm font-medium text-accent-deep" role="alert">
             {message}
           </p>
         ) : null}

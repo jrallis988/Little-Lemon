@@ -140,3 +140,75 @@ export const testimonials = [
       "The purchasing path was simple: classroom pilot first, then school rollout. Sales understood our timeline and seat counts.",
   },
 ] as const;
+
+export const planComparison = [
+  {
+    feature: "Teacher seats",
+    classroom: "1",
+    school: "Campus pack",
+    district: "Multi-school",
+  },
+  {
+    feature: "Student profiles",
+    classroom: "Up to 35",
+    school: "Scaled by seats",
+    district: "District-wide",
+  },
+  {
+    feature: "Shared student records",
+    classroom: "—",
+    school: "Included",
+    district: "Included",
+  },
+  {
+    feature: "Campus / district reporting",
+    classroom: "Class only",
+    school: "Campus",
+    district: "Cross-school",
+  },
+  {
+    feature: "Implementation support",
+    classroom: "Email",
+    school: "Guide + email",
+    district: "Onboarding included",
+  },
+  {
+    feature: "Purchase path",
+    classroom: "Self-serve quote",
+    school: "Quoted annually",
+    district: "PO / volume license",
+  },
+] as const;
+
+export const faqs = [
+  {
+    question: "Can we pilot before a full campus purchase?",
+    answer:
+      "Yes. Many schools start with Classroom seats or a first-semester School pilot. Sales can recommend a scope that matches your evaluation window.",
+  },
+  {
+    question: "How does School pricing work beyond the $2,400 starting point?",
+    answer:
+      "School plans are quoted by teacher seats and rollout scope. Typical campuses land between $2,400 and $6,000 per year. Share your seat count for a firm quote.",
+  },
+  {
+    question: "How long does implementation take?",
+    answer:
+      "Most Classroom teachers are productive in under 30 minutes. School and District rollouts usually include a short onboarding window for accounts, training, and first diagnostics.",
+  },
+  {
+    question: "How do purchasing and billing work?",
+    answer:
+      "Classroom can be billed annually. School and District are quoted annually and can run through purchase order, invoice, or your preferred procurement process.",
+  },
+  {
+    question: "Is this site the student product, and what about student data?",
+    answer:
+      "This website is the sales and information site. Student learning data lives in the product application after purchase. Contact sales for product privacy, security, and district IT questions.",
+  },
+  {
+    question: "What happens after I request a demo or pricing?",
+    answer:
+      "Sales follows up within one business day to confirm goals, timeline, and the right license tier—then schedules a walkthrough, sends pricing guidance, or both.",
+  },
+] as const;

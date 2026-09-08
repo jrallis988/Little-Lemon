@@ -6,6 +6,27 @@ import { site } from "@/lib/site";
 
 export const runtime = "nodejs";
 
+const RATE_LIMIT_WINDOW_MS = 60_000;
+const RATE_LIMIT_MAX = 8;
+const rateBuckets = new Map<string, { count: number; resetAt: number }>();
+
+function clientKey(request: Request) {
+  const forwarded = request.headers.get("x-forwarded-for");
+  if (forwarded) return forwarded.split(",")[0]?.trim() || "unknown";
+  return request.headers.get("x-real-ip") ?? "unknown";
+}
+
+function isRateLimited(key: string) {
+  const now = Date.now();
+  const bucket = rateBuckets.get(key);
+  if (!bucket || now >= bucket.resetAt) {
+    rateBuckets.set(key, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    return false;
+  }
+  bucket.count += 1;
+  return bucket.count > RATE_LIMIT_MAX;
+}
+
 async function persistLead(record: LeadRecord) {
   const dataDir = path.join(process.cwd(), "data");
   await mkdir(dataDir, { recursive: true });
@@ -41,7 +62,8 @@ async function forwardResend(record: LeadRecord) {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) return false;
 
-  const from = process.env.RESEND_FROM_EMAIL ?? "Morgan Bright <onboarding@resend.dev>";
+  const from =
+    process.env.RESEND_FROM_EMAIL ?? "Morgan Bright <onboarding@resend.dev>";
   const subject = `Morgan Bright ${record.type} request from ${record.name}`;
   const text = [
     `Type: ${record.type}`,
@@ -78,8 +100,19 @@ async function forwardResend(record: LeadRecord) {
   return true;
 }
 
+function hasDeliveryConfigured() {
+  return Boolean(process.env.FORM_WEBHOOK_URL || process.env.RESEND_API_KEY);
+}
+
 export async function POST(request: Request) {
   try {
+    if (isRateLimited(clientKey(request))) {
+      return NextResponse.json(
+        { error: "Too many requests. Please wait a minute and try again." },
+        { status: 429 },
+      );
+    }
+
     const body = (await request.json()) as Partial<
       Parameters<typeof validateLead>[0]
     >;
@@ -90,7 +123,24 @@ export async function POST(request: Request) {
     }
 
     const record = createLeadRecord(validated.data);
-    await persistLead(record);
+
+    // Local file is useful in development; Vercel disks are ephemeral.
+    try {
+      await persistLead(record);
+    } catch {
+      // Continue — delivery channels are the source of truth in production.
+    }
+
+    const isProduction = process.env.NODE_ENV === "production";
+    if (isProduction && !hasDeliveryConfigured()) {
+      return NextResponse.json(
+        {
+          error:
+            "Lead delivery is not configured. Please email us directly or try again later.",
+        },
+        { status: 503 },
+      );
+    }
 
     let forwarded = false;
     const channels: string[] = [];
@@ -101,7 +151,7 @@ export async function POST(request: Request) {
         channels.push("webhook");
       }
     } catch {
-      // Continue to other delivery channels.
+      // Try the next channel.
     }
 
     try {
@@ -110,7 +160,17 @@ export async function POST(request: Request) {
         channels.push("resend");
       }
     } catch {
-      // Local persistence still succeeded.
+      // Evaluated below if production delivery is required.
+    }
+
+    if (isProduction && hasDeliveryConfigured() && !forwarded) {
+      return NextResponse.json(
+        {
+          error:
+            "We could not deliver your request right now. Please email us or try again.",
+        },
+        { status: 502 },
+      );
     }
 
     return NextResponse.json({
@@ -118,12 +178,13 @@ export async function POST(request: Request) {
       id: record.id,
       forwarded,
       channels,
+      // Do not expose internal delivery errors to the client.
       message:
         record.type === "pricing"
-          ? "Thanks — our sales team will follow up with pricing guidance."
+          ? "Thanks — our sales team will follow up with pricing guidance within one business day."
           : record.type === "demo"
-            ? "Thanks — we will schedule your demo follow-up shortly."
-            : "Thanks — we received your message and will reply soon.",
+            ? "Thanks — we will schedule your demo follow-up within one business day."
+            : "Thanks — we received your message and will reply within one business day.",
     });
   } catch {
     return NextResponse.json(

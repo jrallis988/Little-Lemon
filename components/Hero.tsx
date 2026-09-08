@@ -26,15 +26,15 @@ export function Hero() {
             className="mt-4 animate-fade-up text-4xl font-bold leading-[1.1] tracking-tight text-balance sm:text-5xl md:text-6xl"
             style={{ animationDelay: "0.08s" }}
           >
-            Buy the learning platform teachers use when one approach is not enough.
+            Morgan Bright
           </h1>
           <p
             className="mt-5 max-w-xl animate-fade-up text-lg leading-relaxed text-white/90 sm:text-xl"
             style={{ animationDelay: "0.16s" }}
           >
-            Morgan Bright helps educators diagnose individual learning hurdles,
-            adapt instruction to different learning styles, and track progress
-            in one classroom-ready software platform.
+            Buy the learning platform teachers use when one approach is not
+            enough—diagnose learning hurdles, adapt instruction, and track
+            progress in one classroom-ready software platform.
           </p>
           <div
             className="mt-8 flex animate-fade-up flex-wrap gap-3"

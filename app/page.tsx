@@ -101,6 +101,7 @@ export default function HomePage() {
                 title={card.title}
                 description={card.description}
                 kind="feature"
+                eyebrow="Platform"
                 items={[...card.items]}
                 imageSrc={card.imageSrc}
                 imageAlt={card.imageAlt}

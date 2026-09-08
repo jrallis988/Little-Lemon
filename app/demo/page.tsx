@@ -1,13 +1,8 @@
 import type { Metadata } from "next";
+import { FaqSection } from "@/components/FaqSection";
 import { LeadForm } from "@/components/LeadForm";
 import { PageHero } from "@/components/PageHero";
-import type { LeadType } from "@/lib/leads";
-
-export const metadata: Metadata = {
-  title: "Request a Demo",
-  description:
-    "Request a Morgan Bright product demo or pricing conversation for your classroom, school, or district.",
-};
+import { normalizePlanInterest, type LeadType } from "@/lib/leads";
 
 type DemoPageProps = {
   searchParams?: Promise<{
@@ -16,10 +11,23 @@ type DemoPageProps = {
   }>;
 };
 
+export async function generateMetadata({
+  searchParams,
+}: DemoPageProps): Promise<Metadata> {
+  const params = (await searchParams) ?? {};
+  const isPricing = params.type === "pricing";
+  return {
+    title: isPricing ? "Get Pricing" : "Request a Demo",
+    description: isPricing
+      ? "Request Morgan Bright pricing guidance for Classroom, School, or District licenses."
+      : "Request a Morgan Bright product demo for your classroom, school, or district.",
+  };
+}
+
 export default async function DemoPage({ searchParams }: DemoPageProps) {
   const params = (await searchParams) ?? {};
   const type: LeadType = params.type === "pricing" ? "pricing" : "demo";
-  const defaultPlan = params.plan ?? "Not sure yet";
+  const defaultPlan = normalizePlanInterest(params.plan);
 
   return (
     <>
@@ -50,7 +58,8 @@ export default async function DemoPage({ searchParams }: DemoPageProps) {
               <li>
                 <span className="font-semibold text-navy">2. Sales follow-up</span>
                 {" — "}
-                we confirm goals, timeline, and the right license tier.
+                we confirm goals, timeline, and the right license tier within one
+                business day.
               </li>
               <li>
                 <span className="font-semibold text-navy">3. Demo or quote</span>
@@ -70,6 +79,8 @@ export default async function DemoPage({ searchParams }: DemoPageProps) {
           />
         </div>
       </section>
+
+      <FaqSection className="bg-paper-warm" />
     </>
   );
 }

@@ -80,7 +80,7 @@ export function Navbar() {
           <Link href="/plans" className="btn-outline !py-2">
             Compare plans
           </Link>
-          <Link href="/demo" className="btn-primary !py-2">
+          <Link href="/demo?type=pricing" className="btn-primary !py-2">
             Get pricing
           </Link>
         </div>
@@ -131,7 +131,7 @@ export function Navbar() {
             <Link href="/plans" className="btn-outline">
               Compare plans
             </Link>
-            <Link href="/demo" className="btn-primary">
+            <Link href="/demo?type=pricing" className="btn-primary">
               Get pricing
             </Link>
           </div>

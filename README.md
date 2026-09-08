@@ -35,9 +35,11 @@ Forms POST to `/api/leads`.
 
 Delivery options:
 
-1. Local file: `data/leads.jsonl`
+1. Local file: `data/leads.jsonl` (development convenience; ephemeral on Vercel)
 2. `FORM_WEBHOOK_URL` → Zapier / Make / CRM
 3. `RESEND_API_KEY` → email to `NEXT_PUBLIC_SALES_EMAIL`
+
+In production, at least one of webhook or Resend must be configured and succeed, or the API returns an error. Forms also include a honeypot field and basic IP rate limiting.
 
 ## Analytics
 
@@ -51,8 +53,9 @@ Set either:
 1. Push this repo and import it in Vercel
 2. Add env vars from `.env.example`
 3. Set `NEXT_PUBLIC_SITE_URL` to your live domain
-4. Deploy
-5. Point your domain DNS to Vercel
+4. Configure `FORM_WEBHOOK_URL` and/or `RESEND_API_KEY` so leads are delivered
+5. Deploy
+6. Point your domain DNS to Vercel
 
 ```bash
 npm run build

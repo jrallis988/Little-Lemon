@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import Link from "next/link";
+import { KeyboardEvent, useState } from "react";
 import { CurriculumCard } from "@/components/CurriculumCard";
 
 type Plan = {
@@ -14,6 +15,7 @@ type Plan = {
     title: string;
     description: string;
     kind: "feature" | "plan" | "workflow";
+    eyebrow: string;
     items: string[];
     href: string;
     imageSrc: string;
@@ -37,12 +39,13 @@ const plans: Plan[] = [
         description:
           "Set up classes, assign diagnostics, and launch lessons from one simple teacher dashboard.",
         kind: "plan",
+        eyebrow: "Classroom license",
         items: [
           "1 teacher seat",
           "Up to 35 student profiles",
           "Class-level reporting",
         ],
-        href: "/plans",
+        href: "/plans#classroom",
         imageSrc: "/images/card-diagnostic.jpg",
         imageAlt: "Teacher reviewing student progress on academic software",
         ctaLabel: "See classroom plan",
@@ -52,6 +55,7 @@ const plans: Plan[] = [
         description:
           "Assign modules that present the same skill through visual, auditory, kinesthetic, and verbal pathways.",
         kind: "feature",
+        eyebrow: "Instruction",
         items: [
           "Ready-to-assign lesson paths",
           "Built-in practice checks",
@@ -67,6 +71,7 @@ const plans: Plan[] = [
         description:
           "See who is stuck, why they are stuck, and which instructional path is working best.",
         kind: "workflow",
+        eyebrow: "Daily workflow",
         items: [
           "Mastery checkpoints",
           "Barrier tags",
@@ -93,12 +98,13 @@ const plans: Plan[] = [
         description:
           "Equip classroom teachers and interventionists with shared tools, consistent workflows, and aligned reporting.",
         kind: "plan",
+        eyebrow: "School license",
         items: [
           "Multiple teacher seats",
           "Shared student records",
           "Campus implementation guide",
         ],
-        href: "/plans",
+        href: "/plans#school",
         imageSrc: "/images/card-diagnostic.jpg",
         imageAlt: "School staff collaborating around instructional software",
         ctaLabel: "See school plan",
@@ -108,6 +114,7 @@ const plans: Plan[] = [
         description:
           "Coordinate pull-out support, regrouping decisions, and reteach cycles without rebuilding the process each week.",
         kind: "workflow",
+        eyebrow: "Team workflow",
         items: [
           "Group and individual assignment",
           "Regrouping recommendations",
@@ -123,6 +130,7 @@ const plans: Plan[] = [
         description:
           "Give administrators a clear view of usage, student movement, and where support is making an impact.",
         kind: "feature",
+        eyebrow: "Reporting",
         items: [
           "School-wide dashboards",
           "Teacher activity overview",
@@ -149,12 +157,13 @@ const plans: Plan[] = [
         description:
           "Manage schools, seats, and permissions from one district control layer while keeping classroom tools simple for teachers.",
         kind: "plan",
+        eyebrow: "District license",
         items: [
           "Multi-school provisioning",
           "Role-based access",
           "District onboarding support",
         ],
-        href: "/plans",
+        href: "/plans#district",
         imageSrc: "/images/card-diagnostic.jpg",
         imageAlt: "District team reviewing academic software rollout",
         ctaLabel: "See district plan",
@@ -164,12 +173,13 @@ const plans: Plan[] = [
         description:
           "Get rollout guidance, training pathways, and adoption support so schools start strong and stay consistent.",
         kind: "workflow",
+        eyebrow: "Rollout",
         items: [
           "Training for teachers and coaches",
           "Rollout timeline guidance",
           "Ongoing success check-ins",
         ],
-        href: "/plans",
+        href: "/plans#district",
         imageSrc: "/images/card-modules.jpg",
         imageAlt: "Educators in software training session",
         ctaLabel: "Ask about rollout",
@@ -179,6 +189,7 @@ const plans: Plan[] = [
         description:
           "Compare schools, monitor adoption, and identify where learning-style-based intervention is closing gaps.",
         kind: "feature",
+        eyebrow: "Leadership",
         items: [
           "Cross-school reporting",
           "Adoption and usage metrics",
@@ -196,6 +207,23 @@ const plans: Plan[] = [
 export function AudiencePathways() {
   const [activeId, setActiveId] = useState(plans[0].id);
   const active = plans.find((plan) => plan.id === activeId) ?? plans[0];
+  const activeIndex = plans.findIndex((plan) => plan.id === active.id);
+
+  function onTabKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) {
+      return;
+    }
+    event.preventDefault();
+    let nextIndex = activeIndex;
+    if (event.key === "ArrowRight") nextIndex = (activeIndex + 1) % plans.length;
+    if (event.key === "ArrowLeft") {
+      nextIndex = (activeIndex - 1 + plans.length) % plans.length;
+    }
+    if (event.key === "Home") nextIndex = 0;
+    if (event.key === "End") nextIndex = plans.length - 1;
+    setActiveId(plans[nextIndex].id);
+    document.getElementById(`tab-${plans[nextIndex].id}`)?.focus();
+  }
 
   return (
     <section id="plans" className="bg-white">
@@ -204,6 +232,7 @@ export function AudiencePathways() {
           className="mx-auto flex max-w-site gap-1 overflow-x-auto px-5 sm:px-8"
           role="tablist"
           aria-label="Software plans"
+          onKeyDown={onTabKeyDown}
         >
           {plans.map((plan) => {
             const selected = plan.id === active.id;
@@ -213,6 +242,7 @@ export function AudiencePathways() {
                 type="button"
                 role="tab"
                 aria-selected={selected}
+                tabIndex={selected ? 0 : -1}
                 id={`tab-${plan.id}`}
                 aria-controls={`panel-${plan.id}`}
                 className={`shrink-0 border-b-4 px-4 py-4 text-sm font-bold transition-colors sm:px-6 sm:text-base ${
@@ -245,9 +275,12 @@ export function AudiencePathways() {
               {active.description}
             </p>
           </div>
-          <a href={active.cta.href} className="btn-primary shrink-0 self-start lg:self-auto">
+          <Link
+            href={active.cta.href}
+            className="btn-primary shrink-0 self-start lg:self-auto"
+          >
             {active.cta.label}
-          </a>
+          </Link>
         </div>
 
         <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">

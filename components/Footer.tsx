@@ -7,9 +7,9 @@ const columns = [
     title: "Product",
     links: [
       { href: "/features", label: "Platform features" },
-      { href: "/plans", label: "Classroom plan" },
-      { href: "/plans", label: "School plan" },
-      { href: "/plans", label: "District plan" },
+      { href: "/plans#classroom", label: "Classroom plan" },
+      { href: "/plans#school", label: "School plan" },
+      { href: "/plans#district", label: "District plan" },
     ],
   },
   {

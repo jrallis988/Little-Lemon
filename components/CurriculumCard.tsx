@@ -1,9 +1,11 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export type CurriculumCardProps = {
   title: string;
   description: string;
-  kind: "feature" | "plan" | "workflow";
+  kind?: "feature" | "plan" | "workflow";
+  eyebrow?: string;
   items?: string[];
   href?: string;
   imageSrc?: string;
@@ -11,16 +13,10 @@ export type CurriculumCardProps = {
   ctaLabel?: string;
 };
 
-const kindLabel: Record<CurriculumCardProps["kind"], string> = {
-  feature: "Feature",
-  plan: "Plan",
-  workflow: "Workflow",
-};
-
 export function CurriculumCard({
   title,
   description,
-  kind,
+  eyebrow,
   items = [],
   href = "/features",
   imageSrc,
@@ -28,7 +24,7 @@ export function CurriculumCard({
   ctaLabel = "Learn more",
 }: CurriculumCardProps) {
   return (
-    <a
+    <Link
       href={href}
       className="group flex h-full flex-col overflow-hidden rounded bg-white shadow-card transition-shadow duration-200 hover:shadow-card-hover"
     >
@@ -38,7 +34,7 @@ export function CurriculumCard({
             src={imageSrc}
             alt={imageAlt}
             fill
-            className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
             sizes="(max-width: 768px) 100vw, 33vw"
           />
         </div>
@@ -47,10 +43,16 @@ export function CurriculumCard({
       )}
 
       <div className="flex flex-1 flex-col p-5 sm:p-6">
-        <span className="text-xs font-bold uppercase tracking-[0.1em] text-accent">
-          {kindLabel[kind]}
-        </span>
-        <h3 className="mt-2 text-xl font-bold leading-snug tracking-tight text-navy">
+        {eyebrow ? (
+          <span className="text-xs font-bold uppercase tracking-[0.1em] text-accent">
+            {eyebrow}
+          </span>
+        ) : null}
+        <h3
+          className={`text-xl font-bold leading-snug tracking-tight text-navy ${
+            eyebrow ? "mt-2" : ""
+          }`}
+        >
           {title}
         </h3>
         <p className="mt-2 flex-1 text-base leading-relaxed text-mute">
@@ -69,11 +71,14 @@ export function CurriculumCard({
 
         <span className="link-arrow mt-5">
           {ctaLabel}
-          <span aria-hidden className="transition-transform duration-200 group-hover:translate-x-0.5">
+          <span
+            aria-hidden
+            className="transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transition-none"
+          >
             →
           </span>
         </span>
       </div>
-    </a>
+    </Link>
   );
 }
