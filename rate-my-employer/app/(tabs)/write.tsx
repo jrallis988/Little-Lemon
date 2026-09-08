@@ -145,10 +145,6 @@ export default function WriteScreen() {
             <View key={STEPS[i]} style={[styles.bar, i <= step && styles.barOn]} />
           ))}
         </View>
-        <PrimaryButton
-          label={step < STEPS.length - 1 ? 'Continue' : 'Submit Review'}
-          onPress={step < STEPS.length - 1 ? advance : onSubmit}
-        />
 
         {step === 0 ? (
           <View style={styles.block}>
