@@ -1,0 +1,30 @@
+.cs-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--cs-ink);
+}
+
+.cs-logo--inv {
+  color: var(--cs-white);
+}
+
+.cs-logo__mark {
+  width: 2.4rem;
+  height: 2.4rem;
+  flex-shrink: 0;
+}
+
+.cs-logo--mark .cs-logo__mark {
+  width: 3rem;
+  height: 3rem;
+}
+
+.cs-logo__word {
+  font-size: 1.55rem;
+  letter-spacing: -0.04em;
+}
+
+.cs-logo--wordmark .cs-logo__word {
+  font-size: clamp(2rem, 6vw, 3.5rem);
+}

@@ -1,0 +1,67 @@
+.l3 {
+  display: inline-flex;
+  align-items: stretch;
+  max-width: min(100%, 28rem);
+  background: rgba(8, 8, 9, 0.88);
+  color: var(--cs-white);
+  backdrop-filter: blur(8px);
+  overflow: hidden;
+}
+
+.l3__accent {
+  width: 4px;
+  flex-shrink: 0;
+  background: var(--cs-orange);
+}
+
+.l3--coach .l3__accent {
+  background: var(--cs-signal);
+}
+
+.l3--reporter .l3__accent {
+  background: var(--cs-white);
+}
+
+.l3--location .l3__accent {
+  background: var(--series-lab);
+}
+
+.l3--statistic .l3__accent {
+  background: var(--cs-signal);
+}
+
+.l3__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.1rem;
+  padding: 0.55rem 0.9rem 0.6rem;
+}
+
+.l3__primary {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.l3__secondary {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.l3--statistic .l3__primary {
+  font-size: 1.45rem;
+  color: var(--cs-signal);
+}
+
+.l3__stat-mark {
+  width: 2.4rem;
+  background: linear-gradient(180deg, var(--cs-signal), transparent);
+  opacity: 0.25;
+}

@@ -1,0 +1,107 @@
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: rgba(8, 8, 9, 0.72);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid transparent;
+  color: var(--cs-white);
+}
+
+.site-nav--scrolled {
+  border-bottom-color: var(--cs-line-bright);
+}
+
+.site-nav__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 3.5rem;
+  padding-block: 0.35rem;
+}
+
+.site-nav__brand {
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-nav__brand .cs-logo__word {
+  font-size: 1.15rem;
+}
+
+.site-nav__toggle {
+  display: inline-flex;
+}
+
+@media (min-width: 1100px) {
+  .site-nav__toggle {
+    display: none;
+  }
+}
+
+.site-nav__panel {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  background: rgba(8, 8, 9, 0.96);
+  border-bottom: 1px solid var(--cs-line-bright);
+  padding: 0.75rem 1rem 1rem;
+  max-height: min(70vh, 480px);
+  overflow: auto;
+}
+
+.site-nav__panel.is-open {
+  display: block;
+}
+
+.site-nav__panel ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.75rem;
+}
+
+.site-nav__panel a {
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.site-nav__panel a:hover {
+  color: var(--cs-signal);
+}
+
+@media (min-width: 1100px) {
+  .site-nav__bar {
+    position: relative;
+  }
+
+  .site-nav__panel {
+    display: block;
+    position: static;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .site-nav__panel ul {
+    flex-wrap: nowrap;
+    gap: 0.55rem;
+    justify-content: flex-end;
+  }
+
+  .site-nav__panel a {
+    font-size: 0.68rem;
+  }
+}

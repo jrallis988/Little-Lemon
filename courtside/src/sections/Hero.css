@@ -1,0 +1,78 @@
+.hero {
+  position: relative;
+  min-height: min(92vh, 820px);
+  display: flex;
+  align-items: flex-end;
+  color: var(--cs-white);
+  overflow: hidden;
+  background: var(--cs-ink);
+}
+
+.hero__media {
+  position: absolute;
+  inset: 0;
+}
+
+.hero__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+}
+
+.hero__grade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(8, 8, 9, 0.88) 0%, rgba(8, 8, 9, 0.35) 55%, rgba(8, 8, 9, 0.55) 100%),
+    linear-gradient(0deg, rgba(8, 8, 9, 0.92) 0%, transparent 48%),
+    linear-gradient(180deg, rgba(255, 59, 0, 0.18) 0%, transparent 35%);
+}
+
+.hero__content {
+  position: relative;
+  z-index: 1;
+  padding-block: var(--space-8) var(--space-7);
+}
+
+.hero__kicker {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cs-signal);
+  margin-bottom: var(--space-4);
+}
+
+.hero__logo .cs-logo__word {
+  font-size: clamp(3.2rem, 12vw, 7.5rem);
+}
+
+.hero__tag {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1rem, 2.5vw, 1.35rem);
+  letter-spacing: 0.14em;
+  color: var(--cs-orange);
+  margin: var(--space-4) 0 var(--space-5);
+}
+
+.hero__lede {
+  max-width: 34rem;
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.72);
+  margin-bottom: var(--space-5);
+}
+
+.hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
