@@ -1,8 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import {
-  Alert,
   Pressable,
   StyleSheet,
   Text,
@@ -23,17 +22,33 @@ export default function AuthScreen() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const emailRef = useRef(email);
+  const passwordRef = useRef(password);
+  const displayNameRef = useRef(displayName);
+  const usernameRef = useRef(username);
+  emailRef.current = email;
+  passwordRef.current = password;
+  displayNameRef.current = displayName;
+  usernameRef.current = username;
 
   const onSubmit = async () => {
     setBusy(true);
-    const error =
+    setError(null);
+    const payload = {
+      email: emailRef.current.trim(),
+      password: passwordRef.current,
+      displayName: displayNameRef.current,
+      username: usernameRef.current,
+    };
+    const result =
       mode === 'signin'
-        ? await signIn({ email, password })
-        : await signUp({ email, password, displayName, username });
+        ? await signIn({ email: payload.email, password: payload.password })
+        : await signUp(payload);
     setBusy(false);
-    if (error) {
-      Alert.alert('Account', error);
+    if (result) {
+      setError(result);
       return;
     }
     router.replace('/(tabs)/home');
@@ -78,6 +93,8 @@ export default function AuthScreen() {
           placeholderTextColor={colors.inkSoft}
           autoCapitalize="none"
           keyboardType="email-address"
+          autoComplete="email"
+          textContentType="emailAddress"
           value={email}
           onChangeText={setEmail}
         />
@@ -86,12 +103,16 @@ export default function AuthScreen() {
           placeholder="Password"
           placeholderTextColor={colors.inkSoft}
           secureTextEntry
+          autoComplete={mode === 'signin' ? 'password' : 'new-password'}
+          textContentType="password"
           value={password}
           onChangeText={setPassword}
         />
 
+        {error ? <Text style={styles.error}>{error}</Text> : null}
+
         {mode === 'signin' ? (
-          <Pressable onPress={() => Alert.alert('Reset', 'Password reset will plug in here.')}>
+          <Pressable onPress={() => setError('Password reset will plug in with the API auth layer.')}>
             <Text style={styles.forgot}>Forgot password?</Text>
           </Pressable>
         ) : null}
@@ -102,18 +123,29 @@ export default function AuthScreen() {
           disabled={busy}
         />
 
-        <Pressable onPress={() => setMode((m) => (m === 'signin' ? 'register' : 'signin'))}>
+        <Pressable
+          onPress={() => {
+            setMode((m) => (m === 'signin' ? 'register' : 'signin'));
+            setError(null);
+          }}
+        >
           <Text style={styles.switch}>
             {mode === 'signin' ? 'Need an account? Create Account' : 'Have an account? Sign In'}
           </Text>
         </Pressable>
 
         <View style={styles.oauthRow}>
-          <Pressable style={styles.oauth} onPress={() => Alert.alert('Coming soon', 'Apple Sign In')}>
+          <Pressable
+            style={styles.oauth}
+            onPress={() => setError('Apple Sign In is coming soon.')}
+          >
             <Ionicons name="logo-apple" size={18} color={colors.ink} />
             <Text style={styles.oauthText}>Apple</Text>
           </Pressable>
-          <Pressable style={styles.oauth} onPress={() => Alert.alert('Coming soon', 'Google Sign In')}>
+          <Pressable
+            style={styles.oauth}
+            onPress={() => setError('Google Sign In is coming soon.')}
+          >
             <Ionicons name="logo-google" size={18} color={colors.ink} />
             <Text style={styles.oauthText}>Google</Text>
           </Pressable>
@@ -153,6 +185,11 @@ const styles = StyleSheet.create({
     fontFamily: typography.body,
     fontSize: 16,
     color: colors.ink,
+  },
+  error: {
+    fontFamily: typography.bodyMedium,
+    fontSize: 14,
+    color: colors.danger,
   },
   forgot: {
     alignSelf: 'flex-end',

@@ -394,8 +394,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
         return null;
       },
       signIn: async ({ email, password }) => {
+        const normalized = normalizeEmail(email);
+        if (!normalized || !password) return 'Email and password are required.';
         const match = accounts.find(
-          (item) => item.email === normalizeEmail(email) && item.password === password,
+          (item) => item.email === normalized && item.password === password,
         );
         if (!match) return 'Invalid email or password.';
         setUser(toPublicUser(match));
@@ -411,7 +413,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       signOut: async () => {
         setUser(null);
         setIsGuest(false);
-        await AsyncStorage.multiRemove([STORAGE_KEYS.session, STORAGE_KEYS.guest]);
+        await AsyncStorage.multiSet([[STORAGE_KEYS.guest, '0']]);
+        await AsyncStorage.removeItem(STORAGE_KEYS.session);
       },
       submitWorkReview: async (draft) => {
         if (!user) return 'Sign in to submit a review.';
