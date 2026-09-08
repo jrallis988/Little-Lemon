@@ -357,3 +357,143 @@
     -fx-border-width: 2;
     -fx-border-radius: 4;
 }
+
+.arcade-root {
+    -fx-background-color: #101218;
+}
+
+.arcade-title {
+    -fx-font-family: "Fraunces";
+    -fx-font-size: 34px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #7CDE3A;
+}
+
+.arcade-kicker {
+    -fx-font-size: 11px;
+    -fx-text-fill: #9AA3B2;
+    -fx-letter-spacing: 1px;
+}
+
+.arcade-stage {
+    -fx-alignment: center;
+}
+
+.playfield {
+    -fx-border-color: #C4A15A;
+    -fx-border-width: 3;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.55), 24, 0.2, 0, 8);
+}
+
+.board-view {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-background-radius: 0;
+    -fx-effect: none;
+}
+
+.board-coord {
+    -fx-text-fill: #7CDE3A;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.faction-hud {
+    -fx-background-color: rgba(22, 24, 30, 0.92);
+    -fx-background-radius: 10;
+    -fx-padding: 14 12 14 12;
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+}
+
+.hud-frog {
+    -fx-border-color: #6FD12A;
+}
+
+.hud-traffic {
+    -fx-border-color: #F4A024;
+}
+
+.hud-faction-name {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.hud-frog .hud-faction-name, .hud-frog .hud-score, .status-frog .status-player, .status-frog .your-turn {
+    -fx-text-fill: #7CDE3A;
+}
+
+.hud-traffic .hud-faction-name, .hud-traffic .hud-score, .status-traffic .status-player, .status-traffic .your-turn {
+    -fx-text-fill: #F4A024;
+}
+
+.hud-player-label, .hud-caption {
+    -fx-font-size: 10px;
+    -fx-text-fill: #9AA3B2;
+}
+
+.hud-score {
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+}
+
+.hud-stat {
+    -fx-font-size: 12px;
+    -fx-text-fill: #D5DBE6;
+}
+
+.status-bar {
+    -fx-background-color: rgba(22, 24, 30, 0.94);
+    -fx-background-radius: 8;
+    -fx-padding: 10 14 10 14;
+    -fx-border-color: #2A303C;
+    -fx-border-radius: 8;
+}
+
+.status-section {
+    -fx-min-width: 120;
+}
+
+.status-value, .status-player {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #F2F3F5;
+}
+
+.your-turn {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.score-banner {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #7CDE3A;
+}
+
+.score-points {
+    -fx-font-size: 13px;
+    -fx-text-fill: #E4C36A;
+}
+
+.bar-button {
+    -fx-background-color: #242936;
+    -fx-text-fill: #F2F3F5;
+    -fx-background-radius: 6;
+    -fx-padding: 8 10 8 10;
+    -fx-cursor: hand;
+}
+
+.bar-button:hover {
+    -fx-background-color: #333A4A;
+}
+
+.destination-marker {
+    -fx-fill: #E4C36A;
+}
+
+.capture-marker {
+    -fx-fill: transparent;
+    -fx-stroke: #E07060;
+    -fx-stroke-width: 2.5;
+}

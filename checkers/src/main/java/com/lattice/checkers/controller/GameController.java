@@ -9,13 +9,18 @@ import com.lattice.checkers.engine.RulesEngine;
 import com.lattice.checkers.history.BoardSnapshot;
 import com.lattice.checkers.history.GameHistory;
 import com.lattice.checkers.history.MoveRecord;
+import com.lattice.checkers.model.Faction;
 import com.lattice.checkers.model.GameState;
 import com.lattice.checkers.model.GameStatus;
 import com.lattice.checkers.model.Move;
 import com.lattice.checkers.model.Piece;
+import com.lattice.checkers.model.PieceRank;
 import com.lattice.checkers.model.Player;
 import com.lattice.checkers.model.Position;
 import com.lattice.checkers.model.Side;
+import com.lattice.checkers.score.ScoreEvent;
+import com.lattice.checkers.score.ScoreManager;
+import com.lattice.checkers.score.ScoreState;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -37,12 +42,26 @@ public final class GameController {
     private CheckersAI computerOpponent;
     private Position selected;
     private final List<Move> moveLog = new ArrayList<>();
+    private final ScoreManager scoreManager = new ScoreManager();
+    private List<ScoreEvent> lastScoreEvents = List.of();
 
     public GameController() {
         this.rulesEngine = new RulesEngine();
         this.history = new GameHistory();
         this.appMode = new AppMode();
         this.xRayAnalyzer = new XRayAnalyzer(rulesEngine);
+    }
+
+    public ScoreManager scoreManager() {
+        return scoreManager;
+    }
+
+    public ScoreState scoreState() {
+        return scoreManager.state();
+    }
+
+    public List<ScoreEvent> lastScoreEvents() {
+        return lastScoreEvents;
     }
 
     public RulesEngine rulesEngine() {
@@ -82,8 +101,8 @@ public final class GameController {
     }
 
     public void startHumanVsHuman(String darkName, String lightName) {
-        darkPlayer = Player.human(Side.DARK, darkName == null || darkName.isBlank() ? "Dark" : darkName);
-        lightPlayer = Player.human(Side.LIGHT, lightName == null || lightName.isBlank() ? "Light" : lightName);
+        darkPlayer = Player.human(Side.DARK, darkName == null || darkName.isBlank() ? Faction.FROG.displayName() : darkName);
+        lightPlayer = Player.human(Side.LIGHT, lightName == null || lightName.isBlank() ? Faction.TRAFFIC.displayName() : lightName);
         computerOpponent = null;
         beginNewGame();
     }
@@ -106,6 +125,8 @@ public final class GameController {
         state = GameState.newGame();
         selected = null;
         moveLog.clear();
+        lastScoreEvents = List.of();
+        scoreManager.reset();
         history.clear();
         history.setInitial(new BoardSnapshot(
                 state.board().copy(), state.sideToMove(), state.status(), 0));
@@ -177,11 +198,45 @@ public final class GameController {
                 new BoardSnapshot(state.board().copy(), state.sideToMove(), state.status(), ply + 1)
         ));
 
+        recordScore(before, move, state);
+
         if (state.continuationFrom().isPresent()) {
             selected = state.continuationFrom().get();
         } else {
             selected = null;
         }
+    }
+
+    private void recordScore(GameState before, Move move, GameState after) {
+        List<Position> captured = move.capturedSquares(before.board());
+        int manCaptures = 0;
+        int kingCaptures = 0;
+        for (Position square : captured) {
+            Optional<Piece> victim = before.board().get(square);
+            if (victim.isEmpty()) {
+                continue;
+            }
+            if (victim.get().rank() == PieceRank.KING) {
+                kingCaptures++;
+            } else {
+                manCaptures++;
+            }
+        }
+        boolean promoted = before.board().get(move.from()).map(p -> !p.isKing()).orElse(false)
+                && after.board().get(move.to()).map(Piece::isKing).orElse(false);
+        boolean turnComplete = after.continuationFrom().isEmpty();
+        boolean matchWon = after.status().isTerminal()
+                && winningSide(after.status()).filter(side -> side == before.sideToMove()).isPresent();
+        lastScoreEvents = scoreManager.recordPly(
+                before.sideToMove(), manCaptures, kingCaptures, promoted, turnComplete, matchWon);
+    }
+
+    private static Optional<Side> winningSide(GameStatus status) {
+        return switch (status) {
+            case DARK_WINS, RESIGNED_LIGHT -> Optional.of(Side.DARK);
+            case LIGHT_WINS, RESIGNED_DARK -> Optional.of(Side.LIGHT);
+            default -> Optional.empty();
+        };
     }
 
     public void resign(Side side) {
@@ -190,6 +245,8 @@ public final class GameController {
         }
         state = rulesEngine.resign(state, side);
         selected = null;
+        winningSide(state.status()).ifPresent(winner ->
+                lastScoreEvents = scoreManager.recordPly(winner, 0, 0, false, true, true));
     }
 
     public void resign(Player player) {
@@ -227,7 +284,7 @@ public final class GameController {
         return switch (state.status()) {
             case NOT_STARTED -> "Not started";
             case IN_PROGRESS -> {
-                String side = state.sideToMove() == Side.DARK ? "Dark" : "Light";
+                String side = Faction.of(state.sideToMove()).displayName();
                 if (state.continuationFrom().isPresent()) {
                     yield side + " must continue capture";
                 }
@@ -236,11 +293,31 @@ public final class GameController {
                 }
                 yield side + " to move";
             }
-            case DARK_WINS -> "Dark wins";
-            case LIGHT_WINS -> "Light wins";
-            case RESIGNED_DARK -> "Light wins (Dark resigned)";
-            case RESIGNED_LIGHT -> "Dark wins (Light resigned)";
+            case DARK_WINS -> "Frog wins";
+            case LIGHT_WINS -> "Traffic wins";
+            case RESIGNED_DARK -> "Traffic wins (Frog resigned)";
+            case RESIGNED_LIGHT -> "Frog wins (Traffic resigned)";
         };
+    }
+
+    public void hint() {
+        if (state == null || state.status() != GameStatus.IN_PROGRESS) {
+            return;
+        }
+        List<Move> legal = rulesEngine.legalMoves(state);
+        if (legal.isEmpty()) {
+            return;
+        }
+        Move capture = legal.stream().filter(Move::isJump).findFirst().orElse(legal.getFirst());
+        selected = capture.from();
+    }
+
+    public int remaining(Side side) {
+        return state == null ? 12 : state.board().count(side);
+    }
+
+    public int capturedCount(Side attacker) {
+        return 12 - remaining(attacker.opposite());
     }
 
     private Optional<Move> findMoveTo(Position from, Position clicked) {

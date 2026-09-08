@@ -24,13 +24,13 @@ public final class NewGameScreen {
         Label title = new Label("New Game");
         title.getStyleClass().add("screen-title");
 
-        Label subtitle = new Label("Start a local match. Computer profiles arrive with the AI phase.");
+        Label subtitle = new Label("Frog vs Traffic. Local match — computer profiles arrive with the AI phase.");
         subtitle.getStyleClass().add("screen-subtitle");
         subtitle.setWrapText(true);
 
         Button hvh = primaryButton("Human vs Human", () -> {
             if (controller != null) {
-                controller.startHumanVsHuman("Dark", "Light");
+                controller.startHumanVsHuman("Frog", "Traffic");
             }
             if (onNavigate != null) {
                 onNavigate.accept("game-board");

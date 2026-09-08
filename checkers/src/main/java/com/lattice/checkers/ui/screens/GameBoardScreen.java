@@ -1,14 +1,14 @@
 package com.lattice.checkers.ui.screens;
 
 import com.lattice.checkers.controller.GameController;
-import com.lattice.checkers.model.Move;
-import com.lattice.checkers.model.Side;
+import com.lattice.checkers.model.Faction;
+import com.lattice.checkers.model.GameStatus;
 import com.lattice.checkers.ui.components.BoardView;
+import com.lattice.checkers.ui.components.FactionHud;
+import com.lattice.checkers.ui.components.StatusBar;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -16,105 +16,61 @@ import javafx.scene.layout.VBox;
 import java.util.function.Consumer;
 
 /**
- * Primary playable game board experience.
+ * Arcade Game Board: Frog HUD · Crossing world · Traffic HUD · status bar.
  */
 public final class GameBoardScreen {
 
     private final BorderPane root;
     private final GameController controller;
     private final BoardView boardView;
-    private final Label statusLabel;
-    private final Label turnLabel;
-    private final Label forceLabel;
-    private final ListView<String> historyList;
-    private final Label darkCaptured;
-    private final Label lightCaptured;
+    private final FactionHud frogHud;
+    private final FactionHud trafficHud;
+    private final StatusBar statusBar;
+    private final boolean reducedMotion;
+    private final Consumer<String> onNavigate;
 
     public GameBoardScreen(GameController controller, Consumer<String> onNavigate, boolean reducedMotion) {
         this.controller = controller;
+        this.onNavigate = onNavigate;
+        this.reducedMotion = reducedMotion;
         if (controller.state().isEmpty()) {
-            controller.startHumanVsHuman("Dark", "Light");
+            controller.startHumanVsHuman("Frog", "Traffic");
         }
 
-        Label brand = new Label("Lattice");
-        brand.getStyleClass().add("brand-small");
+        Label brand = new Label("LATTICE");
+        brand.getStyleClass().add("arcade-title");
+        Label tag = new Label("AMERICAN CHECKERS  ·  PLAY, ANALYZE, UNDERSTAND");
+        tag.getStyleClass().add("arcade-kicker");
+        VBox header = new VBox(2, brand, tag);
+        header.setAlignment(Pos.CENTER_LEFT);
+        header.setPadding(new Insets(8, 18, 4, 18));
 
-        statusLabel = new Label();
-        statusLabel.getStyleClass().add("status-line");
+        boardView = new BoardView(controller, ignored -> afterChange(), reducedMotion);
+        frogHud = new FactionHud(controller, Faction.FROG);
+        trafficHud = new FactionHud(controller, Faction.TRAFFIC);
 
-        turnLabel = new Label();
-        turnLabel.getStyleClass().add("turn-pill");
+        HBox stage = new HBox(16, frogHud, boardView, trafficHud);
+        stage.setAlignment(Pos.TOP_CENTER);
+        stage.getStyleClass().add("arcade-stage");
+        HBox.setHgrow(boardView, Priority.ALWAYS);
 
-        forceLabel = new Label();
-        forceLabel.getStyleClass().add("force-pill");
-
-        HBox topMeta = new HBox(12, turnLabel, forceLabel);
-        topMeta.setAlignment(Pos.CENTER_LEFT);
-
-        VBox header = new VBox(8, brand, statusLabel, topMeta);
-        header.getStyleClass().add("board-header");
-
-        boardView = new BoardView(controller, ignored -> refreshChrome(), reducedMotion);
-
-        historyList = new ListView<>();
-        historyList.getStyleClass().add("move-history");
-        historyList.setFocusTraversable(false);
-        historyList.setPrefWidth(176);
-        historyList.setPlaceholder(new Label("No moves yet"));
-
-        darkCaptured = new Label();
-        lightCaptured = new Label();
-        darkCaptured.getStyleClass().add("muted-copy");
-        lightCaptured.getStyleClass().add("muted-copy");
-
-        Label historyTitle = new Label("Move history");
-        historyTitle.getStyleClass().add("panel-heading");
-
-        Button restart = actionButton("Restart", () -> {
-            controller.restart();
-            boardView.refresh();
-            refreshChrome();
-        });
-        Button resign = actionButton("Resign", () -> {
-            controller.state().ifPresent(state -> controller.resign(state.sideToMove()));
-            boardView.refresh();
-            refreshChrome();
-        });
-        Button home = actionButton("Home", () -> {
-            if (onNavigate != null) {
-                onNavigate.accept("home");
-            }
-        });
-
-        VBox side = new VBox(14,
-                historyTitle,
-                historyList,
-                darkCaptured,
-                lightCaptured,
-                new VBox(8, restart, resign, home)
+        statusBar = new StatusBar(
+                controller,
+                this::restart,
+                this::resign,
+                this::hint,
+                onNavigate,
+                reducedMotion
         );
-        side.getStyleClass().add("board-side");
-        side.setPadding(new Insets(8, 4, 8, 8));
-        VBox.setVgrow(historyList, Priority.ALWAYS);
 
-        HBox center = new HBox(28, boardView, side);
-        center.setAlignment(Pos.TOP_CENTER);
-        center.getStyleClass().add("board-stage");
-        center.setPadding(new Insets(8, 0, 16, 0));
-
-        Label hint = new Label(
-                "Select a piece, then a marked square. Captures are mandatory. Keyboard: arrows + Enter.");
-        hint.getStyleClass().add("hint-line");
-        hint.setWrapText(true);
-
-        VBox body = new VBox(18, header, center, hint);
-        body.setPadding(new Insets(28, 36, 28, 36));
-        body.getStyleClass().add("screen-root");
+        VBox body = new VBox(10, header, stage, statusBar);
+        body.getStyleClass().addAll("screen-root", "arcade-root");
+        body.setPadding(new Insets(10, 16, 14, 16));
+        VBox.setVgrow(stage, Priority.ALWAYS);
 
         root = new BorderPane(body);
         root.getStyleClass().add("game-board-screen");
-        refreshChrome();
-        boardView.refresh();
+        afterChange();
     }
 
     public BorderPane getRoot() {
@@ -129,44 +85,33 @@ public final class GameBoardScreen {
         return "Game Board";
     }
 
-    private void refreshChrome() {
-        statusLabel.setText(controller.statusText());
-        controller.state().ifPresentOrElse(state -> {
-            boolean dark = state.sideToMove() == Side.DARK;
-            turnLabel.setText(dark ? "DARK" : "LIGHT");
-            turnLabel.getStyleClass().setAll("turn-pill", dark ? "turn-dark" : "turn-light");
-            boolean forced = state.status().name().equals("IN_PROGRESS")
-                    && controller.rulesEngine().hasForcedCapture(state);
-            forceLabel.setText(forced ? "CAPTURE REQUIRED" : "OPEN TURN");
-            forceLabel.getStyleClass().setAll("force-pill", forced ? "force-on" : "force-off");
-
-            int lightLeft = state.board().count(Side.LIGHT);
-            int darkLeft = state.board().count(Side.DARK);
-            darkCaptured.setText("Captured by Dark  ·  " + (12 - lightLeft));
-            lightCaptured.setText("Captured by Light  ·  " + (12 - darkLeft));
-        }, () -> {
-            turnLabel.setText("—");
-            forceLabel.setText("");
-            darkCaptured.setText("Captured by Dark  ·  0");
-            lightCaptured.setText("Captured by Light  ·  0");
-        });
-
-        historyList.getItems().clear();
-        int i = 1;
-        for (Move move : controller.moveLog()) {
-            historyList.getItems().add(i + ". " + move.notation());
-            i++;
-        }
-        if (!historyList.getItems().isEmpty()) {
-            historyList.scrollTo(historyList.getItems().size() - 1);
-        }
+    private void restart() {
+        controller.restart();
+        boardView.refresh();
+        afterChange();
     }
 
-    private static Button actionButton(String text, Runnable action) {
-        Button button = new Button(text);
-        button.getStyleClass().add("action-button");
-        button.setMaxWidth(Double.MAX_VALUE);
-        button.setOnAction(e -> action.run());
-        return button;
+    private void resign() {
+        controller.state().ifPresent(state -> controller.resign(state.sideToMove()));
+        boardView.refresh();
+        afterChange();
+    }
+
+    private void hint() {
+        controller.hint();
+        boardView.refresh();
+        afterChange();
+    }
+
+    private void afterChange() {
+        frogHud.refresh();
+        trafficHud.refresh();
+        statusBar.refresh(reducedMotion);
+        controller.state().ifPresent(state -> {
+            if (state.status() != GameStatus.IN_PROGRESS && onNavigate != null
+                    && state.status().isTerminal()) {
+                // stay on board; Match Complete is available from chrome
+            }
+        });
     }
 }

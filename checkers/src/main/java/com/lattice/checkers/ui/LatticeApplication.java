@@ -65,7 +65,7 @@ public final class LatticeApplication extends Application {
 
         shell.setTop(chrome);
 
-        Scene scene = new Scene(shell, 1240, 920);
+        Scene scene = new Scene(shell, 1480, 960);
         LatticeTheme.apply(scene);
 
         stage.setTitle(APP_NAME + " — American Checkers");
@@ -81,7 +81,7 @@ public final class LatticeApplication extends Application {
             case "home" -> new HomeScreen(this::show).getRoot();
             case "new-game" -> new NewGameScreen(controller, this::show).getRoot();
             case "game-board" -> new GameBoardScreen(controller, this::show, reducedMotion).getRoot();
-            case "match-complete" -> new MatchCompleteScreen().getRoot();
+            case "match-complete" -> new MatchCompleteScreen(controller, this::show).getRoot();
             case "match-analysis" -> new MatchAnalysisScreen().getRoot();
             case "ai-lab" -> new AiLabScreen().getRoot();
             default -> new StackPane(new Label("Unknown screen: " + id));
