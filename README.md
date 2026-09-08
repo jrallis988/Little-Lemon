@@ -1,53 +1,41 @@
-# Artistic Fountain
+# Civic Bound
 
-Independent design venture portfolio — digital media, graphic design, visual identity, and creative media projects.
+A multi-page marketing site for Civic Bound — a nonprofit, youth-centered community support network.
 
-## Dual-track separation
+## Positioning
 
-| Track | Home | Houses |
-| --- | --- | --- |
-| **Creative** | Artistic Fountain (this repo) | Visual media, graphic identity, conceptual design, client design services |
-| **Engineering** | Developer portfolio (separate) | Back-end systems, Python/FastAPI, AI/RAG applications |
+- Child and student centered (not PTA / school-board bureaucracy)
+- Community-embedded developmental support for life direction and re-entry
+- Hybrid ethos: community-hub accessibility + mission-driven mentorship + character-building youth programming
 
-See `STATUS.md` for the full status report.
+## Site map
 
-## Stack
+| Route | Page |
+| --- | --- |
+| `/` | Homepage marketing core |
+| `/hubs` | Hub locator & space explorer |
+| `/get-support` | Find Your Track 3-step navigator |
+| `/stories` | Community voices & impact stories |
+| `/volunteers` | Volunteer boundary & responsibility framework |
+| `/partners` | Village Network partner portal |
+| `/leadership` | Youth Advisory Board |
+| `/news` | Latest news |
+| `/contact` | Contact & hub hours |
+| `/privacy` | Privacy policy |
 
-Static site: HTML, CSS, and vanilla JS (built in Cursor). Custom typefaces (Arcanite Slab, Goudy Heavyface) plus Inter for body copy.
+## Palette (high-trust light)
 
-## Pages
+- Paper background (`#F7F8FA`)
+- Charcoal body text (`#334155`)
+- Violet CTAs only (`#5B2BB3`)
+- Chartreuse micro-accents only (`#A8C92A`)
 
-- `index.html` — home (hero, designer, services, portfolio, blog, contact)
-- `nh-dmv/` — conceptual redesign of the New Hampshire DMV website (civic UX case study)
-- `services/` — detail pages for each service offering
-- `blog/` — blog index and post pages (content can be drafted in Blaze AI)
-- `privacy.html` — privacy policy
-- `terms.html` — terms & conditions
-- `resume.pdf` — downloadable resume
+## Scripts
 
-## Develop
+- `npm start` — run the development server
+- `npm run build` — create a production build
+- `npm test` — run tests
 
-```bash
-npm start
-```
+## Deploy
 
-Opens a local static server at [http://localhost:3000](http://localhost:3000).
-
-Or open `index.html` directly in a browser.
-
-## Structure
-
-```
-.
-├── index.html
-├── privacy.html
-├── terms.html
-├── styles.css
-├── STATUS.md
-├── favicon.svg
-├── resume.pdf
-├── services/
-├── blog/
-├── images/
-└── *.otf          # brand fonts
-```
+Cloudflare Pages: build command `npm run build`, output directory `build`. SPA redirects live in `public/_redirects`.
