@@ -91,7 +91,7 @@ export function UniversityDetailScreen({ route, navigation }: Props) {
                 targetLabel: university?.name ?? 'University',
               },
             },
-          } as never)
+          })
         }
       />
 
