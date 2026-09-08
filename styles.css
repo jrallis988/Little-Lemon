@@ -791,6 +791,12 @@ a:hover { opacity: 0.8; }
 }
 
 /* Palette-matched previews per project */
+.portfolio-image--petsmart {
+    background:
+        linear-gradient(155deg, rgba(0, 75, 135, 0.88) 0%, rgba(227, 24, 55, 0.55) 100%),
+        url('https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=800&q=80') center / cover;
+}
+
 .portfolio-image--nhdmv {
     background:
         linear-gradient(160deg, rgba(0, 38, 58, 0.82) 0%, rgba(31, 92, 69, 0.55) 100%),

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout — PetSmart</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div id="ps-header" data-base="../" data-active="shop"></div>
+
+  <main id="main">
+    <div class="page-hero"><div class="page-hero__inner container"><h1>Checkout</h1></div></div>
+    <div class="container" style="max-width:var(--container-lg); padding:var(--space-8) var(--space-4);">
+      <ol class="stepper" id="checkout-stepper" aria-label="Checkout steps">
+        <li class="is-active">Shipping</li>
+        <li>Delivery</li>
+        <li>Payment</li>
+      </ol>
+
+      <form id="checkout-form">
+        <section class="booking-panel is-active" data-panel="1">
+          <h2 style="margin-bottom:var(--space-6);">Shipping address</h2>
+          <div class="grid-2">
+            <div class="form-group"><label class="form-label" for="first">First name</label><input class="form-input" id="first" required autocomplete="given-name"></div>
+            <div class="form-group"><label class="form-label" for="last">Last name</label><input class="form-input" id="last" required autocomplete="family-name"></div>
+          </div>
+          <div class="form-group"><label class="form-label" for="address">Address</label><input class="form-input" id="address" required autocomplete="street-address"></div>
+          <div class="grid-2">
+            <div class="form-group"><label class="form-label" for="city">City</label><input class="form-input" id="city" required autocomplete="address-level2"></div>
+            <div class="form-group"><label class="form-label" for="zip">ZIP</label><input class="form-input" id="zip" required autocomplete="postal-code"></div>
+          </div>
+          <div class="booking-actions">
+            <button type="button" class="btn btn-primary" data-next>Continue to delivery</button>
+          </div>
+        </section>
+
+        <section class="booking-panel" data-panel="2" hidden>
+          <h2 style="margin-bottom:var(--space-6);">Delivery method</h2>
+          <label class="option-card is-selected" style="margin-bottom:var(--space-3);">
+            <input type="radio" name="ship" value="standard" checked>
+            <strong>Standard shipping</strong>
+            <span class="text-muted text-small">3–5 business days · Free over $49</span>
+            <span class="option-card__price">$5.99</span>
+          </label>
+          <label class="option-card" style="margin-bottom:var(--space-3);">
+            <input type="radio" name="ship" value="express">
+            <strong>Express shipping</strong>
+            <span class="text-muted text-small">1–2 business days</span>
+            <span class="option-card__price">$12.99</span>
+          </label>
+          <label class="option-card">
+            <input type="radio" name="ship" value="pickup">
+            <strong>Store pickup</strong>
+            <span class="text-muted text-small">Ready same day at select locations</span>
+            <span class="option-card__price">Free</span>
+          </label>
+          <div class="booking-actions">
+            <button type="button" class="btn btn-ghost" data-back>Back</button>
+            <button type="button" class="btn btn-primary" data-next>Continue to payment</button>
+          </div>
+        </section>
+
+        <section class="booking-panel" data-panel="3" hidden>
+          <h2 style="margin-bottom:var(--space-6);">Payment</h2>
+          <div class="form-group"><label class="form-label" for="card">Card number</label><input class="form-input" id="card" inputmode="numeric" placeholder="1234 5678 9012 3456" required autocomplete="cc-number"></div>
+          <div class="grid-2">
+            <div class="form-group"><label class="form-label" for="exp">Expiration</label><input class="form-input" id="exp" placeholder="MM/YY" required autocomplete="cc-exp"></div>
+            <div class="form-group"><label class="form-label" for="cvv">CVV</label><input class="form-input" id="cvv" inputmode="numeric" required autocomplete="cc-csc"></div>
+          </div>
+          <aside class="cart-summary" style="margin-top:var(--space-6);">
+            <h2 style="font-size:var(--text-xl); margin-bottom:var(--space-4);">Order summary</h2>
+            <p style="display:flex; justify-content:space-between; margin-bottom:var(--space-2);"><span>Subtotal</span><span id="checkout-subtotal">$0.00</span></p>
+            <p style="display:flex; justify-content:space-between; margin-bottom:var(--space-2);"><span>Shipping</span><span id="checkout-shipping">$5.99</span></p>
+            <p style="display:flex; justify-content:space-between; font-weight:700; font-size:var(--text-lg); margin-bottom:var(--space-6);"><span>Total</span><span id="checkout-total">$0.00</span></p>
+            <button class="btn btn-primary" type="submit" style="width:100%;">Place order</button>
+            <p class="form-hint" style="margin-top:var(--space-3);">Demo checkout — no payment is processed.</p>
+          </aside>
+          <div class="booking-actions">
+            <button type="button" class="btn btn-ghost" data-back>Back</button>
+          </div>
+        </section>
+      </form>
+    </div>
+  </main>
+
+  <div id="ps-footer" data-base="../"></div>
+  <script src="../js/chrome.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    let step = 1;
+    let subtotal = 0;
+    PetSmartCart.get().forEach(item => {
+      const p = PetSmartData.getProduct(item.id);
+      if (p) subtotal += (p.salePrice || p.price) * item.qty;
+    });
+    document.getElementById('checkout-subtotal').textContent = PetSmartData.formatPrice(subtotal);
+
+    const shipCosts = { standard: 5.99, express: 12.99, pickup: 0 };
+    function shippingCost() {
+      const method = document.querySelector('input[name="ship"]:checked')?.value || 'standard';
+      return subtotal >= 49 && method === 'standard' ? 0 : shipCosts[method];
+    }
+    function updateTotals() {
+      const ship = shippingCost();
+      document.getElementById('checkout-shipping').textContent = ship === 0 ? 'Free' : PetSmartData.formatPrice(ship);
+      document.getElementById('checkout-total').textContent = PetSmartData.formatPrice(subtotal + ship);
+    }
+    updateTotals();
+    document.querySelectorAll('input[name="ship"]').forEach(el => {
+      el.addEventListener('change', () => {
+        document.querySelectorAll('.option-card').forEach(c => c.classList.remove('is-selected'));
+        el.closest('.option-card').classList.add('is-selected');
+        updateTotals();
+      });
+    });
+
+    const panels = [...document.querySelectorAll('.booking-panel')];
+    const stepper = [...document.querySelectorAll('#checkout-stepper li')];
+    function showStep(n) {
+      step = n;
+      panels.forEach(p => {
+        const active = Number(p.dataset.panel) === n;
+        p.hidden = !active;
+        p.classList.toggle('is-active', active);
+      });
+      stepper.forEach((li, i) => {
+        li.classList.toggle('is-active', i + 1 === n);
+        li.classList.toggle('is-done', i + 1 < n);
+      });
+    }
+    document.querySelectorAll('[data-next]').forEach(btn => btn.addEventListener('click', () => {
+      if (step === 1) {
+        const required = ['first','last','address','city','zip'];
+        if (required.some(id => !document.getElementById(id).value.trim())) return alert('Please complete shipping fields');
+      }
+      showStep(step + 1);
+    }));
+    document.querySelectorAll('[data-back]').forEach(btn => btn.addEventListener('click', () => showStep(step - 1)));
+    document.getElementById('checkout-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      PetSmartCart.clear();
+      window.location.href = 'confirmation.html';
+    });
+  </script>
+</body>
+</html>
