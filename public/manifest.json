@@ -8,6 +8,11 @@
       "type": "image/x-icon"
     },
     {
+      "src": "brand/nhti-seal-256.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
       "src": "logo192.png",
       "type": "image/png",
       "sizes": "192x192"

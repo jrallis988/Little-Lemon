@@ -160,6 +160,20 @@ test("footer includes CCSNH, social, and policy links", () => {
   expect(screen.getAllByRole("link", { name: /apply now/i }).length).toBeGreaterThan(0);
 });
 
+test("unknown routes show a helpful 404 page", () => {
+  render(
+    <MemoryRouter initialEntries={["/this-page-does-not-exist"]}>
+      <App />
+    </MemoryRouter>
+  );
+
+  expect(
+    screen.getByRole("heading", { name: /this page took a wrong turn/i })
+  ).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: /back to home/i })).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: /browse programs/i })).toBeInTheDocument();
+});
+
 test("shows student life shirts photo on campus page", () => {
   render(
     <MemoryRouter initialEntries={["/campus"]}>

@@ -2086,6 +2086,14 @@ button:focus:not(:focus-visible) {
   margin: 0;
 }
 
+.not-found-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  width: var(--container);
+  margin: 0 auto 2rem;
+}
+
 /* Responsive */
 @media (max-width: 900px) {
   .pathway-link {

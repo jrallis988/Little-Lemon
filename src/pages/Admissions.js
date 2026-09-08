@@ -191,7 +191,7 @@ function Admissions() {
               <p className="form-success__note">
                 {delivery === "network"
                   ? "Your inquiry was submitted to Admissions."
-                  : "Saved locally for this demo session; configure REACT_APP_FORM_EMAIL to enable live email delivery."}
+                  : "Saved on this device for now. Set REACT_APP_FORM_EMAIL in production (see .env.example) so inquiries email Admissions."}
               </p>
               {submitError ? <p className="form-success__note">{submitError}</p> : null}
               <button

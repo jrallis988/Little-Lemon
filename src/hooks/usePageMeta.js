@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 
 const SITE = "NHTI – Concord's Community College";
+const DEFAULT_OG_IMAGE = "/media/og-share.jpg";
 
-export default function usePageMeta({ title, description }) {
+export default function usePageMeta({ title, description, image }) {
   useEffect(() => {
     const fullTitle = title ? `${title} | ${SITE}` : SITE;
     document.title = fullTitle;
@@ -31,11 +32,45 @@ export default function usePageMeta({ title, description }) {
         property: "og:description",
         content: description,
       });
+      ensureMeta('meta[name="twitter:description"]', {
+        name: "twitter:description",
+        content: description,
+      });
     }
 
     ensureMeta('meta[property="og:title"]', {
       property: "og:title",
       content: fullTitle,
     });
-  }, [title, description]);
+    ensureMeta('meta[property="og:type"]', {
+      property: "og:type",
+      content: "website",
+    });
+    ensureMeta('meta[property="og:site_name"]', {
+      property: "og:site_name",
+      content: SITE,
+    });
+
+    const imagePath = image || DEFAULT_OG_IMAGE;
+    const absoluteImage = imagePath.startsWith("http")
+      ? imagePath
+      : `${window.location.origin}${imagePath}`;
+
+    ensureMeta('meta[property="og:image"]', {
+      property: "og:image",
+      content: absoluteImage,
+    });
+    ensureMeta('meta[name="twitter:card"]', {
+      name: "twitter:card",
+      content: "summary_large_image",
+    });
+    ensureMeta('meta[name="twitter:title"]', {
+      name: "twitter:title",
+      content: fullTitle,
+    });
+    ensureMeta('meta[name="twitter:image"]', {
+      name: "twitter:image",
+      content: absoluteImage,
+    });
+  }, [title, description, image]);
 }

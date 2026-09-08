@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
+# Update this host to match production if not deploying on www.nhti.edu
 Sitemap: https://www.nhti.edu/sitemap.xml
