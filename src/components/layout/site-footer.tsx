@@ -6,6 +6,8 @@ import { NAV_CATEGORIES } from "@/lib/data/catalog";
 
 const SUPPORT_LINKS = [
   { href: "/help", label: "Help center & FAQ" },
+  { href: "/pharmacy/chat", label: "Pharmacy chat" },
+  { href: "/wishlist", label: "Wishlist" },
   { href: "/account", label: "Account & orders" },
   { href: "/pharmacy-notice", label: "Pharmacy notice" },
   { href: "/privacy", label: "Privacy Policy" },

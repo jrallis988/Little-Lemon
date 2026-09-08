@@ -3,12 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ArrowLeft, Check, Star } from "lucide-react";
+import { ArrowLeft, Check, Heart, Star } from "lucide-react";
 
 import { getReviewsForProduct } from "@/lib/data/reviews";
 import { formatCurrency } from "@/lib/pharmacy";
 import { useCart } from "@/lib/store/cart";
 import { useRecentlyViewed } from "@/lib/store/recently-viewed";
+import { useWishlist } from "@/lib/store/wishlist";
 import type { Product } from "@/lib/types";
 import { getProductDescription } from "@/lib/products";
 import { Badge } from "@/components/ui/badge";
@@ -24,6 +25,8 @@ export function ProductDetail({
 }) {
   const { addProduct } = useCart();
   const { trackView } = useRecentlyViewed();
+  const { isSaved, toggle } = useWishlist();
+  const saved = isSaved(product.id);
   const [quantity, setQuantity] = useState(1);
   const [justAdded, setJustAdded] = useState(false);
   const reviews = getReviewsForProduct(product.id);
@@ -138,6 +141,25 @@ export function ProductDetail({
               ) : (
                 "Add to cart"
               )}
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => toggle(product.id)}
+              aria-pressed={saved}
+            >
+              <Heart
+                className="size-4"
+                fill={saved ? "currentColor" : "none"}
+                aria-hidden
+              />
+              {saved ? "Saved" : "Save for later"}
+            </Button>
+            <Button
+              variant="outline"
+              nativeButton={false}
+              render={<Link href="/pharmacy/chat" />}
+            >
+              Ask pharmacy
             </Button>
           </div>
 

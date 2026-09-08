@@ -53,5 +53,22 @@ test.describe("Walgreens RX smoke flows", () => {
     ).toBeVisible();
     await page.goto("/stores");
     await expect(page.getByRole("heading", { name: "Find a store" })).toBeVisible();
+    await page.getByLabel("Search by ZIP, city, or store").fill("94102");
+    await expect(page.getByText(/Showing \d+ of \d+ nearby stores/i)).toBeVisible();
+  });
+
+  test("wishlist save and pharmacy chat respond", async ({ page }) => {
+    await page.goto("/shop/cerave-moisturizing-cream");
+    await page.getByRole("button", { name: "Save for later" }).click();
+    await expect(page.getByRole("button", { name: "Saved" })).toBeVisible();
+    await page.goto("/wishlist");
+    await expect(page.getByRole("heading", { name: "Wishlist" })).toBeVisible();
+    await expect(page.getByText(/1 saved item/i)).toBeVisible();
+
+    await page.goto("/pharmacy/chat");
+    await expect(page.getByRole("heading", { name: "Pharmacy Chat" })).toBeVisible();
+    await page.getByLabel("Chat message").fill("When is my refill ready?");
+    await page.getByRole("button", { name: "Send" }).click();
+    await expect(page.getByText(/Pharmacy dashboard/i).first()).toBeVisible();
   });
 });

@@ -9,6 +9,7 @@ import { OrdersProvider } from "@/lib/store/orders";
 import { PharmacyProvider } from "@/lib/store/pharmacy";
 import { RecentlyViewedProvider } from "@/lib/store/recently-viewed";
 import { StoreSelectionProvider } from "@/lib/store/store-selection";
+import { WishlistProvider } from "@/lib/store/wishlist";
 
 export function AppProviders({ children }: { children: ReactNode }) {
   return (
@@ -18,7 +19,9 @@ export function AppProviders({ children }: { children: ReactNode }) {
           <OrdersProvider>
             <CouponWalletProvider>
               <RecentlyViewedProvider>
-                <PharmacyProvider>{children}</PharmacyProvider>
+                <WishlistProvider>
+                  <PharmacyProvider>{children}</PharmacyProvider>
+                </WishlistProvider>
               </RecentlyViewedProvider>
             </CouponWalletProvider>
           </OrdersProvider>

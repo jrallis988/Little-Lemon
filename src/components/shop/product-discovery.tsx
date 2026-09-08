@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Check, Star } from "lucide-react";
 
+import { AISLE_COPY, CONCERN_TAG_MAP } from "@/lib/data/aisles";
 import { PRODUCT_FILTERS, PRODUCTS, REWARDS } from "@/lib/data/catalog";
 import { formatCurrency, formatPoints } from "@/lib/pharmacy";
 import { useCart } from "@/lib/store/cart";
@@ -21,24 +22,34 @@ function matchesPrice(product: Product, range: string): boolean {
   return product.price >= min && product.price <= max;
 }
 
+function matchesConcern(product: Product, concern: string): boolean {
+  const needles = CONCERN_TAG_MAP[concern] ?? [concern];
+  const haystack = `${product.name} ${product.tags.join(" ")}`.toLowerCase();
+  return needles.some((needle) => haystack.includes(needle.toLowerCase()));
+}
+
 export function CategoryFilters({
   selectedCategories,
   selectedBrands,
   selectedPrices,
   selectedFulfillment,
+  selectedConcerns,
   onToggleCategory,
   onToggleBrand,
   onTogglePrice,
   onToggleFulfillment,
+  onToggleConcern,
 }: {
   selectedCategories: string[];
   selectedBrands: string[];
   selectedPrices: string[];
   selectedFulfillment: string[];
+  selectedConcerns: string[];
   onToggleCategory: (value: string) => void;
   onToggleBrand: (value: string) => void;
   onTogglePrice: (value: string) => void;
   onToggleFulfillment: (value: string) => void;
+  onToggleConcern: (value: string) => void;
 }) {
   const groups = [
     {
@@ -60,6 +71,12 @@ export function CategoryFilters({
       onToggle: onTogglePrice,
     },
     {
+      title: "Need / concern",
+      options: PRODUCT_FILTERS.concerns,
+      selected: selectedConcerns,
+      onToggle: onToggleConcern,
+    },
+    {
       title: "Fulfillment",
       options: PRODUCT_FILTERS.fulfillment,
       selected: selectedFulfillment,
@@ -77,7 +94,7 @@ export function CategoryFilters({
           Filters
         </h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          Narrow health and beauty finds without clutter.
+          Narrow the drugstore aisles without clutter.
         </p>
       </div>
       {groups.map((group) => (
@@ -230,6 +247,7 @@ export function ProductDiscoveryGrid() {
   const [brands, setBrands] = useState<string[]>([]);
   const [prices, setPrices] = useState<string[]>([]);
   const [fulfillment, setFulfillment] = useState<string[]>([]);
+  const [concerns, setConcerns] = useState<string[]>([]);
 
   useEffect(() => {
     if (categoryParam) {
@@ -262,6 +280,9 @@ export function ProductDiscoveryGrid() {
     });
   }
 
+  const activeAisle =
+    categories.length === 1 ? AISLE_COPY[categories[0]] : undefined;
+
   const products = useMemo(() => {
     const normalizedQuery = query.toLowerCase();
     return PRODUCTS.filter((product) => {
@@ -284,15 +305,22 @@ export function ProductDiscoveryGrid() {
       ) {
         return false;
       }
+      if (
+        concerns.length &&
+        !concerns.some((concern) => matchesConcern(product, concern))
+      ) {
+        return false;
+      }
       if (normalizedQuery) {
-        const haystack = `${product.name} ${product.brand} ${product.tags.join(" ")}`.toLowerCase();
+        const haystack =
+          `${product.name} ${product.brand} ${product.tags.join(" ")}`.toLowerCase();
         if (!haystack.includes(normalizedQuery)) {
           return false;
         }
       }
       return true;
     });
-  }, [brands, categories, fulfillment, prices, query]);
+  }, [brands, categories, concerns, fulfillment, prices, query]);
 
   return (
     <section aria-labelledby="shop-heading" className="space-y-6">
@@ -301,18 +329,30 @@ export function ProductDiscoveryGrid() {
           id="shop-heading"
           className="font-display text-3xl font-semibold tracking-tight sm:text-4xl"
         >
-          Shop the drugstore
+          {activeAisle?.title ?? "Shop the drugstore"}
         </h1>
         <p className="mt-2 max-w-xl text-muted-foreground">
-          Beauty, OTC, household, baby, snacks — plus pickup-ready essentials.
+          {activeAisle?.description ??
+            "Beauty, OTC, household, baby, snacks — plus pickup-ready essentials."}
           {query ? (
             <>
               {" "}
-              Showing results for <span className="font-medium text-foreground">“{query}”</span>.
+              Showing results for{" "}
+              <span className="font-medium text-foreground">“{query}”</span>.
             </>
           ) : null}
         </p>
       </div>
+
+      {activeAisle ? (
+        <div className="rounded-2xl border border-brand/20 bg-brand/5 px-5 py-4">
+          <p className="text-sm font-medium text-brand">Aisle spotlight</p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Browsing {activeAisle.title.toLowerCase()}. Clear the category filter
+            to see the full store.
+          </p>
+        </div>
+      ) : null}
 
       <RewardsBanner />
 
@@ -322,10 +362,12 @@ export function ProductDiscoveryGrid() {
           selectedBrands={brands}
           selectedPrices={prices}
           selectedFulfillment={fulfillment}
+          selectedConcerns={concerns}
           onToggleCategory={(value) => toggle(setCategories, value, true)}
           onToggleBrand={(value) => toggle(setBrands, value)}
           onTogglePrice={(value) => toggle(setPrices, value)}
           onToggleFulfillment={(value) => toggle(setFulfillment, value)}
+          onToggleConcern={(value) => toggle(setConcerns, value)}
         />
 
         <div>
@@ -344,7 +386,8 @@ export function ProductDiscoveryGrid() {
                 {query ? (
                   <>
                     {" "}
-                    for <span className="font-medium text-foreground">“{query}”</span>
+                    for{" "}
+                    <span className="font-medium text-foreground">“{query}”</span>
                   </>
                 ) : null}
                 . Clear filters or try a broader search.
@@ -358,6 +401,7 @@ export function ProductDiscoveryGrid() {
                     setBrands([]);
                     setPrices([]);
                     setFulfillment([]);
+                    setConcerns([]);
                     router.replace("/shop");
                   }}
                 >

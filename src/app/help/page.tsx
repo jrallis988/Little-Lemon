@@ -27,6 +27,10 @@ const FAQS = [
     q: "How do I contact support?",
     a: "Email support@walgreensrx.demo (demo address) or call your selected store from the Find a store page.",
   },
+  {
+    q: "Can I talk to a pharmacist online?",
+    a: "Open Pharmacy chat for a guided demo consult about refills, vaccines, and pickup. Live messaging would connect here in a production build.",
+  },
 ];
 
 export default function HelpPage() {
@@ -49,7 +53,14 @@ export default function HelpPage() {
       </ul>
 
       <p className="mt-8 text-sm text-muted-foreground">
-        Need legal details? Read our{" "}
+        Prefer chat? Try{" "}
+        <Link
+          href="/pharmacy/chat"
+          className="text-brand underline-offset-2 hover:underline"
+        >
+          Pharmacy chat
+        </Link>
+        . Need legal details? Read our{" "}
         <Link href="/privacy" className="text-brand underline-offset-2 hover:underline">
           Privacy Policy
         </Link>

@@ -422,7 +422,7 @@ export const CLINICAL_SERVICES: ClinicalService[] = [
     id: "svc-chat",
     name: "Pharmacy Chat",
     description: "Free prescription and general health questions, 24/7 style demo.",
-    href: "/help",
+    href: "/pharmacy/chat",
     durationMinutes: 5,
     availableToday: true,
   },

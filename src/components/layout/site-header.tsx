@@ -1,13 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { MapPin, Menu, UserRound } from "lucide-react";
+import { Heart, MapPin, Menu, UserRound } from "lucide-react";
 
 import { SITE_NAME } from "@/lib/brand";
 import { NAV_CATEGORIES, REWARDS } from "@/lib/data/catalog";
 import { formatPoints } from "@/lib/pharmacy";
 import { useAuth } from "@/lib/store/auth";
 import { useSelectedStore } from "@/lib/store/store-selection";
+import { useWishlist } from "@/lib/store/wishlist";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -23,6 +24,7 @@ import { SmartSearch } from "@/components/layout/smart-search";
 export function SiteHeader() {
   const { store } = useSelectedStore();
   const { user } = useAuth();
+  const { count: wishlistCount } = useWishlist();
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/70 bg-surface-elevated/90 backdrop-blur-md">
@@ -77,6 +79,19 @@ export function SiteHeader() {
                   </Link>
                 ))}
                 <Link
+                  href="/wishlist"
+                  className="rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-muted"
+                >
+                  Wishlist
+                  {wishlistCount > 0 ? ` (${wishlistCount})` : ""}
+                </Link>
+                <Link
+                  href="/pharmacy/chat"
+                  className="rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-muted"
+                >
+                  Pharmacy chat
+                </Link>
+                <Link
                   href="/account"
                   className="rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-muted"
                 >
@@ -105,6 +120,25 @@ export function SiteHeader() {
           </div>
 
           <div className="ml-auto flex items-center gap-0.5 sm:gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="relative size-8"
+              nativeButton={false}
+              render={<Link href="/wishlist" />}
+              aria-label={
+                wishlistCount
+                  ? `Wishlist, ${wishlistCount} items`
+                  : "Wishlist"
+              }
+            >
+              <Heart className="size-4" aria-hidden />
+              {wishlistCount > 0 ? (
+                <span className="absolute -top-0.5 -right-0.5 flex size-4 items-center justify-center rounded-full bg-brand text-[10px] font-bold text-brand-foreground">
+                  {wishlistCount > 9 ? "9+" : wishlistCount}
+                </span>
+              ) : null}
+            </Button>
             <Button
               variant="ghost"
               size="sm"
