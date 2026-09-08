@@ -21,12 +21,15 @@ export function PrimaryButton({
     <Pressable
       onPress={onPress}
       disabled={disabled}
-      style={[
+      accessibilityRole="button"
+      accessibilityLabel={label}
+      style={({ pressed }) => [
         styles.base,
         variant === 'primary' && styles.primary,
         variant === 'secondary' && styles.secondary,
         variant === 'ghost' && styles.ghost,
         disabled && styles.disabled,
+        pressed && !disabled && styles.pressed,
         style,
       ]}
     >
@@ -48,6 +51,7 @@ const styles = StyleSheet.create({
     borderRadius: radii.md,
     paddingVertical: 14,
     alignItems: 'center',
+    cursor: 'pointer',
   },
   primary: { backgroundColor: colors.blue },
   secondary: {
@@ -61,6 +65,7 @@ const styles = StyleSheet.create({
     borderColor: colors.border,
   },
   disabled: { opacity: 0.55 },
+  pressed: { opacity: 0.88 },
   label: {
     fontFamily: typography.bodyBold,
     fontSize: 15,

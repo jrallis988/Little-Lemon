@@ -88,6 +88,26 @@ export default function WriteScreen() {
   const next = () => setStep((s) => Math.min(s + 1, STEPS.length - 1));
   const back = () => setStep((s) => Math.max(s - 1, 0));
 
+  const advance = () => {
+    if (step === 1 && !draft.companyId) {
+      Alert.alert('Pick an employer');
+      return;
+    }
+    if (step === 3 && !draft.role.trim()) {
+      Alert.alert('Add your role');
+      return;
+    }
+    if (step === 4 && !draft.overall) {
+      Alert.alert('Add an overall rating');
+      return;
+    }
+    if (step === 5 && !draft.body.trim()) {
+      Alert.alert('Write your experience');
+      return;
+    }
+    next();
+  };
+
   const onSubmit = async () => {
     const error =
       draft.experienceType === 'work'
@@ -124,6 +144,10 @@ export default function WriteScreen() {
             <View key={STEPS[i]} style={[styles.bar, i <= step && styles.barOn]} />
           ))}
         </View>
+        <PrimaryButton
+          label={step < STEPS.length - 1 ? 'Continue' : 'Submit Review'}
+          onPress={step < STEPS.length - 1 ? advance : onSubmit}
+        />
 
         {step === 0 ? (
           <View style={styles.block}>
@@ -400,29 +424,7 @@ export default function WriteScreen() {
           <View style={styles.half} />
         )}
         {step < STEPS.length - 1 ? (
-          <PrimaryButton
-            label="Next"
-            style={styles.half}
-            onPress={() => {
-              if (step === 1 && !draft.companyId) {
-                Alert.alert('Pick an employer');
-                return;
-              }
-              if (step === 3 && !draft.role.trim()) {
-                Alert.alert('Add your role');
-                return;
-              }
-              if (step === 4 && !draft.overall) {
-                Alert.alert('Add an overall rating');
-                return;
-              }
-              if (step === 5 && !draft.body.trim()) {
-                Alert.alert('Write your experience');
-                return;
-              }
-              next();
-            }}
-          />
+          <PrimaryButton label="Next" style={styles.half} onPress={advance} />
         ) : (
           <PrimaryButton label="Submit Review" onPress={onSubmit} style={styles.half} />
         )}
@@ -508,6 +510,8 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: colors.border,
     backgroundColor: colors.surfaceRaised,
+    zIndex: 20,
+    elevation: 8,
   },
   half: { flex: 1 },
 });

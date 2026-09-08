@@ -65,12 +65,12 @@ const styles = StyleSheet.create({
   writeWrap: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: -18,
+    marginTop: -8,
   },
   writeButton: {
-    width: 52,
-    height: 52,
-    borderRadius: 26,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
     backgroundColor: colors.blue,
     alignItems: 'center',
     justifyContent: 'center',
