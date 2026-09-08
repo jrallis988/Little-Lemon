@@ -95,7 +95,7 @@ export function NicktaneBox() {
   const tryCode = (event) => {
     event.preventDefault()
     const normalized = code.trim().toUpperCase()
-    if (['SLIME', 'NICK2004', 'GOO', 'ORBITZ'].includes(normalized)) {
+    if (['SLIME', 'NICK2004', 'GOO', 'ORBITZ', 'WEEKEND'].includes(normalized)) {
       setUnlocked(true)
       setMessage(`Code ${normalized} accepted — bonus room open!`)
     } else {

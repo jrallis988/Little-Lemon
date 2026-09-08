@@ -1,6 +1,10 @@
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { orbitzTrips } from '../data/content'
 
 export function Orbitz() {
+  const [openId, setOpenId] = useState(null)
+
   return (
     <div className="section-page">
       <header className="section-hero section-hero--orbitz">
@@ -13,15 +17,38 @@ export function Orbitz() {
       </header>
 
       <div className="hub-grid">
-        {orbitzTrips.map((trip) => (
-          <article key={trip.id} className="hub-card hub-card--orbitz">
-            <h2>{trip.title}</h2>
-            <p>{trip.blurb}</p>
-            <button type="button" className="btn-nick btn-nick--small">
-              Explore
-            </button>
-          </article>
-        ))}
+        {orbitzTrips.map((trip) => {
+          const open = openId === trip.id
+          return (
+            <article
+              key={trip.id}
+              className={`hub-card hub-card--orbitz${open ? ' is-open' : ''}`}
+            >
+              <h2>{trip.title}</h2>
+              <p>{trip.blurb}</p>
+              <div className="hub-card__actions">
+                <button
+                  type="button"
+                  className="btn-nick btn-nick--small"
+                  onClick={() => setOpenId(open ? null : trip.id)}
+                  aria-expanded={open}
+                >
+                  {open ? 'Hide pack list' : 'Explore'}
+                </button>
+                <Link className="btn-nick btn-nick--ghost btn-nick--small" to="/weekenders">
+                  Pair with Weekenders
+                </Link>
+              </div>
+              {open ? (
+                <ul className="pack-list">
+                  {trip.pack.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              ) : null}
+            </article>
+          )
+        })}
       </div>
     </div>
   )

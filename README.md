@@ -28,11 +28,11 @@ Try clicking empty space (slime pops), smash the “Too basic?” button, and un
 | `/shows` | Toon + live-action hubs |
 | `/video` | Chunk player + clip rail |
 | `/fan` | Sticker lab, poll, web-lab toys |
-| `/nick-jr` | Preschool destination |
-| `/nick-news` | Kids current-events hub |
-| `/weekenders` | Specials and weekend promos |
-| `/orbitz` | Family vacation / partner travel |
-| `/more` | Shop extras |
+| `/nick-jr` | Preschool destination with play activities |
+| `/nick-news` | Kids news desk with readable stories |
+| `/weekenders` | Weekend calendar you can save to a list |
+| `/orbitz` | Family travel trips with pack lists |
+| `/more` | Shop extras that open + parent/help links |
 
 Primary nav: **Home**, Games, Shows, Video, Your World, More. Music is removed.
 

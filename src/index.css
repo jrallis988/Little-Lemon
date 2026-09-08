@@ -697,6 +697,168 @@ button {
 .hub-card--week { background: #fef9c3; }
 .hub-card--orbitz { background: #e0f2fe; }
 
+.hub-card.is-open {
+  outline: 3px solid #111;
+  outline-offset: 2px;
+}
+
+.hub-card__emoji {
+  display: block;
+  font-size: 2rem;
+  margin-bottom: 6px;
+}
+
+.hub-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.hub-card__detail {
+  margin: 12px 0 0 !important;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 2px dashed #000;
+  border-radius: 10px;
+  color: var(--ink) !important;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.hub-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+  gap: var(--gap);
+}
+
+.hub-strip__chip {
+  display: grid;
+  gap: 4px;
+  text-align: left;
+  padding: 14px;
+  background: #fff;
+  border: 3px solid #000;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow);
+}
+
+.hub-strip__chip strong {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+}
+
+.hub-strip__chip span {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.hub-strip__chip:hover {
+  background: #ffe566;
+  transform: translateY(-2px);
+}
+
+.hub-status {
+  margin: 0;
+  padding: 10px 14px;
+  background: #111;
+  color: #7cff4a;
+  border: 2px solid #000;
+  border-radius: 10px;
+  font-weight: 800;
+}
+
+.desk-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(240px, 0.8fr);
+  gap: var(--gap);
+  align-items: start;
+}
+
+.story-panel {
+  position: sticky;
+  top: 12px;
+  padding: clamp(16px, 2vw, 22px);
+  background: #fff;
+  border: 3px solid #000;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow);
+}
+
+.story-panel h2 {
+  margin: 6px 0 10px;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+}
+
+.story-panel p {
+  margin: 0 0 14px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+.pack-list {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.pack-list li {
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 2px solid #000;
+  border-radius: 8px;
+  font-weight: 800;
+}
+
+.info-body {
+  display: grid;
+  gap: var(--gap);
+}
+
+.info-block {
+  padding: clamp(16px, 2vw, 22px);
+  background: #fff;
+  border: 3px solid #000;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow);
+}
+
+.info-block h2 {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+}
+
+.info-block p {
+  margin: 0 0 8px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+.info-block p:last-child {
+  margin-bottom: 0;
+}
+
+.info-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.info-disclaimer {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  font-weight: 700;
+}
+
+.more-card.is-open {
+  outline: 3px solid #111;
+  outline-offset: 2px;
+}
+
 .blob--bug {
   animation: floaty 2.4s ease-in-out infinite reverse;
   font-size: 2.4rem;
@@ -1939,7 +2101,8 @@ button {
   .portal-cols,
   .video-stage,
   .boredom,
-  .arcade-banner {
+  .arcade-banner,
+  .desk-layout {
     grid-template-columns: 1fr;
   }
 
