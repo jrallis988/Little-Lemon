@@ -5,15 +5,16 @@ import com.lattice.checkers.model.Faction;
 import com.lattice.checkers.model.GameStatus;
 import com.lattice.checkers.ui.components.BoardView;
 import com.lattice.checkers.ui.components.FactionHud;
+import com.lattice.checkers.ui.components.HowToPlayOverlay;
 import com.lattice.checkers.ui.components.StatusBar;
 import javafx.animation.PauseTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import java.util.function.Consumer;
@@ -23,12 +24,13 @@ import java.util.function.Consumer;
  */
 public final class GameBoardScreen {
 
-    private final BorderPane root;
+    private final StackPane root;
     private final GameController controller;
     private final BoardView boardView;
     private final FactionHud frogHud;
     private final FactionHud trafficHud;
     private final StatusBar statusBar;
+    private final HowToPlayOverlay howToPlay;
     private final boolean reducedMotion;
     private final Consumer<String> onNavigate;
     private boolean matchCompleteScheduled;
@@ -45,11 +47,19 @@ public final class GameBoardScreen {
         brand.getStyleClass().add("arcade-title");
         Label tag = new Label("AMERICAN CHECKERS  ·  PLAY, ANALYZE, UNDERSTAND");
         tag.getStyleClass().add("arcade-kicker");
-        VBox header = new VBox(2, brand, tag);
+        VBox headerText = new VBox(2, brand, tag);
+        headerText.setAlignment(Pos.CENTER_LEFT);
+
+        boardView = new BoardView(controller, ignored -> afterChange(), reducedMotion);
+        howToPlay = new HowToPlayOverlay(this::resumeMatch, reducedMotion);
+
+        Region headerSpacer = new Region();
+        HBox.setHgrow(headerSpacer, Priority.ALWAYS);
+        HBox header = new HBox(12, headerText, headerSpacer,
+                HowToPlayOverlay.openButton(this::openHowToPlay));
         header.setAlignment(Pos.CENTER_LEFT);
         header.setPadding(new Insets(4, 8, 2, 8));
 
-        boardView = new BoardView(controller, ignored -> afterChange(), reducedMotion);
         frogHud = new FactionHud(controller, Faction.FROG);
         trafficHud = new FactionHud(controller, Faction.TRAFFIC);
         VBox.setVgrow(frogHud, Priority.ALWAYS);
@@ -78,12 +88,12 @@ public final class GameBoardScreen {
         body.setPadding(new Insets(8, 14, 12, 14));
         VBox.setVgrow(stage, Priority.ALWAYS);
 
-        root = new BorderPane(body);
+        root = new StackPane(body, howToPlay);
         root.getStyleClass().add("game-board-screen");
         afterChange();
     }
 
-    public BorderPane getRoot() {
+    public StackPane getRoot() {
         return root;
     }
 
@@ -95,7 +105,20 @@ public final class GameBoardScreen {
         return "Game Board";
     }
 
+    private void openHowToPlay() {
+        boardView.setInputEnabled(false);
+        howToPlay.show();
+    }
+
+    private void resumeMatch() {
+        boardView.setInputEnabled(true);
+        boardView.requestFocus();
+    }
+
     private void restart() {
+        if (howToPlay.isShowing()) {
+            return;
+        }
         matchCompleteScheduled = false;
         controller.restart();
         boardView.refresh();
@@ -103,12 +126,18 @@ public final class GameBoardScreen {
     }
 
     private void resign() {
+        if (howToPlay.isShowing()) {
+            return;
+        }
         controller.state().ifPresent(state -> controller.resign(state.sideToMove()));
         boardView.refresh();
         afterChange();
     }
 
     private void hint() {
+        if (howToPlay.isShowing()) {
+            return;
+        }
         controller.hint();
         boardView.refresh();
         afterChange();
@@ -119,7 +148,8 @@ public final class GameBoardScreen {
         trafficHud.refresh();
         statusBar.refresh(reducedMotion);
         controller.state().ifPresent(state -> {
-            if (state.status().isTerminal() && onNavigate != null && !matchCompleteScheduled) {
+            if (state.status().isTerminal() && onNavigate != null && !matchCompleteScheduled
+                    && !howToPlay.isShowing()) {
                 matchCompleteScheduled = true;
                 PauseTransition pause = new PauseTransition(Duration.millis(reducedMotion ? 80 : 900));
                 pause.setOnFinished(e -> onNavigate.accept("match-complete"));

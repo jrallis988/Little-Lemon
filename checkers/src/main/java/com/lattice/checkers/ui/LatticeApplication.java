@@ -4,6 +4,7 @@ import com.lattice.checkers.controller.GameController;
 import com.lattice.checkers.ui.screens.AiLabScreen;
 import com.lattice.checkers.ui.screens.GameBoardScreen;
 import com.lattice.checkers.ui.screens.HomeScreen;
+import com.lattice.checkers.ui.screens.HowToPlayScreen;
 import com.lattice.checkers.ui.screens.MatchAnalysisScreen;
 import com.lattice.checkers.ui.screens.MatchCompleteScreen;
 import com.lattice.checkers.ui.screens.NewGameScreen;
@@ -81,12 +82,13 @@ public final class LatticeApplication extends Application {
     private void show(String id) {
         Node content = switch (id) {
             case "gallery" -> new ScreenGallery(this::show).getRoot();
-            case "home" -> new HomeScreen(controller, this::show).getRoot();
-            case "new-game" -> new NewGameScreen(controller, this::show).getRoot();
+            case "home" -> new HomeScreen(controller, this::show, reducedMotion).getRoot();
+            case "new-game" -> new NewGameScreen(controller, this::show, reducedMotion).getRoot();
             case "game-board" -> new GameBoardScreen(controller, this::show, reducedMotion).getRoot();
             case "match-complete" -> new MatchCompleteScreen(controller, this::show).getRoot();
             case "match-analysis" -> new MatchAnalysisScreen().getRoot();
             case "ai-lab" -> new AiLabScreen().getRoot();
+            case "how-to-play" -> new HowToPlayScreen(this::show, reducedMotion).getRoot();
             default -> new StackPane(new Label("Unknown screen: " + id));
         };
 
