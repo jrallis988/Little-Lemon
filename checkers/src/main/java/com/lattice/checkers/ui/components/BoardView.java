@@ -49,6 +49,7 @@ public final class BoardView extends VBox {
     private int focusCol = 1;
     private Move pendingTravel;
     private boolean pendingPromotion;
+    private boolean inputEnabled = true;
 
     public BoardView(GameController controller, Consumer<Void> onChanged, boolean reducedMotion) {
         this.controller = controller;
@@ -110,6 +111,10 @@ public final class BoardView extends VBox {
         getChildren().addAll(files, boardRow);
         setFocusTraversable(true);
         setOnKeyPressed(e -> {
+            if (!inputEnabled) {
+                e.consume();
+                return;
+            }
             if (e.getCode() == KeyCode.UP) {
                 focusRow = Math.max(0, focusRow - 1);
             } else if (e.getCode() == KeyCode.DOWN) {
@@ -132,6 +137,14 @@ public final class BoardView extends VBox {
             e.consume();
         });
         refresh();
+    }
+
+    public void setInputEnabled(boolean inputEnabled) {
+        this.inputEnabled = inputEnabled;
+    }
+
+    public boolean isInputEnabled() {
+        return inputEnabled;
     }
 
     public void refresh() {
@@ -313,6 +326,10 @@ public final class BoardView extends VBox {
         cell.setPickOnBounds(true);
         cell.getStyleClass().add("board-square");
         cell.setOnMouseClicked(e -> {
+            if (!inputEnabled) {
+                e.consume();
+                return;
+            }
             if (e.getButton() == MouseButton.PRIMARY) {
                 focusRow = row;
                 focusCol = col;
@@ -324,6 +341,9 @@ public final class BoardView extends VBox {
     }
 
     private void handleClick(int row, int col) {
+        if (!inputEnabled) {
+            return;
+        }
         int before = controller.moveLog().size();
         controller.selectSquare(new Position(row, col));
         if (controller.moveLog().size() > before) {

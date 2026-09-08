@@ -5,6 +5,7 @@ import com.lattice.checkers.model.Piece;
 import com.lattice.checkers.model.PieceRank;
 import com.lattice.checkers.model.Side;
 import com.lattice.checkers.ui.components.CrossingWorld;
+import com.lattice.checkers.ui.components.HowToPlayOverlay;
 import com.lattice.checkers.ui.components.PieceView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -20,17 +21,21 @@ import java.util.function.Consumer;
  */
 public final class HomeScreen {
 
-    private final VBox root;
+    private final StackPane root;
 
     public HomeScreen() {
-        this(null, null);
+        this(null, null, true);
     }
 
     public HomeScreen(Consumer<String> onNavigate) {
-        this(null, onNavigate);
+        this(null, onNavigate, true);
     }
 
     public HomeScreen(GameController controller, Consumer<String> onNavigate) {
+        this(controller, onNavigate, true);
+    }
+
+    public HomeScreen(GameController controller, Consumer<String> onNavigate, boolean reducedMotion) {
         Label brand = new Label("LATTICE");
         brand.getStyleClass().add("arcade-title");
         brand.getStyleClass().add("home-wordmark");
@@ -62,6 +67,8 @@ public final class HomeScreen {
         Label crossing = new Label("An environmental crossing. The strategy is still American checkers.");
         crossing.getStyleClass().add("phase-note");
 
+        HowToPlayOverlay overlay = new HowToPlayOverlay(null, reducedMotion);
+
         Button play = new Button("PLAY NOW");
         play.getStyleClass().add("primary-cta");
         play.setOnAction(e -> {
@@ -73,6 +80,9 @@ public final class HomeScreen {
             }
         });
 
+        HBox actions = new HBox(12, play, HowToPlayOverlay.openButton(overlay::show));
+        actions.setAlignment(Pos.CENTER);
+
         HBox destinations = new HBox(12);
         destinations.setAlignment(Pos.CENTER);
         destinations.getChildren().addAll(
@@ -81,13 +91,15 @@ public final class HomeScreen {
                 destinationButton("AI Lab", "Coming soon", "ai-lab", onNavigate)
         );
 
-        root = new VBox(16, brand, tagline, worldFrame, matchup, crossing, play, destinations);
-        root.setAlignment(Pos.CENTER);
-        root.setPadding(new Insets(28, 40, 32, 40));
-        root.getStyleClass().addAll("screen-root", "home-root");
+        VBox page = new VBox(16, brand, tagline, worldFrame, matchup, crossing, actions, destinations);
+        page.setAlignment(Pos.CENTER);
+        page.setPadding(new Insets(28, 40, 32, 40));
+        page.getStyleClass().addAll("screen-root", "home-root");
+
+        root = new StackPane(page, overlay);
     }
 
-    public VBox getRoot() {
+    public StackPane getRoot() {
         return root;
     }
 

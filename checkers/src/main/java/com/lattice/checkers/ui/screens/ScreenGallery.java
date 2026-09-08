@@ -41,9 +41,10 @@ public final class ScreenGallery {
         grid.getStyleClass().add("gallery-grid");
 
         List<TileSpec> tiles = List.of(
-                new TileSpec(HomeScreen.screenId(), "Home", "Play · Analysis · AI Lab", "Phase 1"),
+                new TileSpec(HomeScreen.screenId(), "Home", "Play · How to Play · AI Lab", "Phase 1"),
                 new TileSpec(NewGameScreen.screenId(), "New Game", "Human/Computer · AI profiles", "Phases 5–7"),
                 new TileSpec(GameBoardScreen.screenId(), "Game Board", "Board · Focus · X-Ray · Dev", "Phases 5–6"),
+                new TileSpec(HowToPlayScreen.screenId(), "How to Play", "In-app checkers guide", "Help"),
                 new TileSpec(MatchCompleteScreen.screenId(), "Match Complete", "Result · basic stats", "Phases 6 / 10"),
                 new TileSpec(MatchAnalysisScreen.screenId(), "Match Analysis", "Timeline · What If?", "Phases 9–10"),
                 new TileSpec(AiLabScreen.screenId(), "AI Lab", "Profile vs profile · telemetry", "Phase 12")
@@ -97,10 +98,12 @@ public final class ScreenGallery {
         GameController finished = new GameController();
         finished.startHumanVsHuman("Frog", "Traffic");
         finished.resign(Side.LIGHT);
-        map.put(HomeScreen.screenId(), () -> new HomeScreen(live, id -> { }).getRoot());
-        map.put(NewGameScreen.screenId(), () -> new NewGameScreen(live, id -> { }).getRoot());
+        map.put(HomeScreen.screenId(), () -> new HomeScreen(live, id -> { }, true).getRoot());
+        map.put(NewGameScreen.screenId(), () -> new NewGameScreen(live, id -> { }, true).getRoot());
         map.put(GameBoardScreen.screenId(),
                 () -> new GameBoardScreen(live, id -> { }, true).getRoot());
+        map.put(HowToPlayScreen.screenId(),
+                () -> new HowToPlayScreen(id -> { }, true).getRoot());
         map.put(MatchCompleteScreen.screenId(),
                 () -> new MatchCompleteScreen(finished, id -> { }).getRoot());
         map.put(MatchAnalysisScreen.screenId(), () -> new MatchAnalysisScreen().getRoot());
@@ -113,6 +116,7 @@ public final class ScreenGallery {
             case "home" -> HomeScreen.displayName();
             case "new-game" -> NewGameScreen.displayName();
             case "game-board" -> GameBoardScreen.displayName();
+            case "how-to-play" -> HowToPlayScreen.displayName();
             case "match-complete" -> MatchCompleteScreen.displayName();
             case "match-analysis" -> MatchAnalysisScreen.displayName();
             case "ai-lab" -> AiLabScreen.displayName();

@@ -2,7 +2,8 @@ package com.lattice.checkers.controller;
 
 /**
  * Optional overlays on the game board. Focus / X-Ray / Developer are modes,
- * not separate navigation destinations.
+ * not separate navigation destinations. A future LEARN TO PLAY tutorial would
+ * also be a mode here; see {@link com.lattice.checkers.learn.LearnToPlayScript}.
  */
 public final class AppMode {
 

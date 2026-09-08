@@ -4,12 +4,14 @@ import com.lattice.checkers.controller.GameController;
 import com.lattice.checkers.model.Piece;
 import com.lattice.checkers.model.PieceRank;
 import com.lattice.checkers.model.Side;
+import com.lattice.checkers.ui.components.HowToPlayOverlay;
 import com.lattice.checkers.ui.components.PieceView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import java.util.function.Consumer;
 
@@ -18,13 +20,17 @@ import java.util.function.Consumer;
  */
 public final class NewGameScreen {
 
-    private final VBox root;
+    private final StackPane root;
 
     public NewGameScreen() {
-        this(null, null);
+        this(null, null, true);
     }
 
     public NewGameScreen(GameController controller, Consumer<String> onNavigate) {
+        this(controller, onNavigate, true);
+    }
+
+    public NewGameScreen(GameController controller, Consumer<String> onNavigate, boolean reducedMotion) {
         Label title = new Label("NEW GAME");
         title.getStyleClass().add("arcade-title");
 
@@ -32,6 +38,8 @@ public final class NewGameScreen {
         subtitle.getStyleClass().add("screen-subtitle");
         subtitle.setWrapText(true);
         subtitle.setAlignment(Pos.CENTER);
+
+        HowToPlayOverlay overlay = new HowToPlayOverlay(null, reducedMotion);
 
         Label frog = new Label("FROG");
         frog.getStyleClass().addAll("hud-faction-name", "home-frog");
@@ -62,13 +70,16 @@ public final class NewGameScreen {
         modes.setAlignment(Pos.CENTER);
         modes.setMaxWidth(420);
 
-        root = new VBox(22, title, subtitle, matchup, modes);
-        root.setAlignment(Pos.CENTER);
-        root.setPadding(new Insets(36, 40, 36, 40));
-        root.getStyleClass().addAll("screen-root", "new-game-root");
+        VBox page = new VBox(22, title, subtitle, matchup, modes,
+                HowToPlayOverlay.openButton(overlay::show));
+        page.setAlignment(Pos.CENTER);
+        page.setPadding(new Insets(36, 40, 36, 40));
+        page.getStyleClass().addAll("screen-root", "new-game-root");
+
+        root = new StackPane(page, overlay);
     }
 
-    public VBox getRoot() {
+    public StackPane getRoot() {
         return root;
     }
 
