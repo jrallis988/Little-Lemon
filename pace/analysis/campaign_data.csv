@@ -1,0 +1,33 @@
+content_id,platform,format,content_pillar,campaign_stage,creative_approach,publish_date,title,reach,impressions,views,likes,comments,shares,saves,watch_time_hours,avg_view_duration_sec,completion_rate,link_clicks,ctr,three_sec_retention
+IG-001,Instagram,Reel,Culture,Tease,People-led,2025-09-01,Sunrise pace tease,184200,221000,198500,12400,840,3200,4100,820,18.4,0.42,890,0.0040,0.71
+IG-002,Instagram,Carousel,Product,Tease,Product-led,2025-09-02,Silhouette of PACE ONE,96500,118000,0,4200,210,380,1900,0,0,0,620,0.0053,0
+IG-003,Instagram,Story,Culture,Tease,Community,2025-09-03,Countdown stickers,72000,89000,0,0,0,1200,0,0,0,0,410,0.0046,0
+IG-004,Instagram,Carousel,Product,Reveal,Product-led,2025-09-08,PACE ONE feature carousel,156000,198000,0,9800,640,1100,5200,0,0,0,4100,0.0207,0
+IG-005,Instagram,Reel,People,Reveal,People-led,2025-09-08,Find Your Pace launch reel,312000,365000,342000,28600,2100,8900,7600,1680,22.1,0.51,5200,0.0142,0.78
+IG-006,Instagram,Feed,Product,Reveal,Product-led,2025-09-09,Hero product still,128000,152000,0,6100,290,420,2800,0,0,0,2900,0.0191,0
+IG-007,Instagram,Reel,Training,Educate,Educational,2025-09-15,How to find easy pace,245000,278000,261000,19200,1600,5400,14200,1420,24.8,0.58,3800,0.0137,0.74
+IG-008,Instagram,Carousel,Training,Educate,Educational,2025-09-16,5 pacing cues carousel,178000,210000,0,11400,980,2100,11800,0,0,0,2900,0.0138,0
+IG-009,Instagram,Reel,People,Engage,People-led,2025-09-17,Maya's first 10K story,268000,301000,289000,24100,3200,7200,6100,1510,26.2,0.55,2100,0.0070,0.76
+IG-010,Instagram,Story,Community,Engage,Community,2025-09-18,City run RSVP stickers,94000,112000,0,0,0,2800,0,0,0,0,3600,0.0321,0
+IG-011,Instagram,Reel,Community,Engage,Community,2025-09-19,Saturday group run recap,221000,255000,238000,19800,2400,9100,4800,1180,19.6,0.48,1800,0.0071,0.69
+IG-012,Instagram,Carousel,Product,Convert,Product-led,2025-09-22,Why PACE ONE fits daily miles,142000,176000,0,7800,410,680,3900,0,0,0,6200,0.0352,0
+IG-013,Instagram,Reel,Culture,Evergreen,People-led,2025-09-24,Find your Tuesday pace,198000,224000,211000,15600,1100,4600,5200,980,20.4,0.46,1600,0.0071,0.72
+IG-014,Instagram,Feed,People,Evergreen,People-led,2025-09-25,Community portrait series,112000,134000,0,8400,620,980,3400,0,0,0,980,0.0073,0
+TT-001,TikTok,TikTok,Culture,Tease,People-led,2025-09-01,POV: before the shoe drops,412000,478000,456000,48200,2100,18600,9200,1240,14.2,0.38,1200,0.0025,0.68
+TT-002,TikTok,TikTok,Product,Tease,Product-led,2025-09-03,Close-up foam tease,198000,241000,228000,12400,480,3200,4100,520,9.8,0.28,890,0.0037,0.52
+TT-003,TikTok,TikTok,Product,Reveal,Product-led,2025-09-08,Meet the new PACE ONE,286000,340000,318000,22100,980,6400,5800,780,11.1,0.31,4100,0.0121,0.54
+TT-004,TikTok,TikTok,People,Reveal,People-led,2025-09-08,I ran 50 miles in these,624000,710000,685000,81200,5400,28400,14600,2180,21.6,0.49,7800,0.0110,0.79
+TT-005,TikTok,TikTok,Training,Educate,Educational,2025-09-15,Easy pace in 20 seconds,538000,602000,574000,56800,4200,19200,22400,1960,19.8,0.52,5200,0.0086,0.76
+TT-006,TikTok,TikTok,Training,Educate,Educational,2025-09-16,Recovery tip after tempo,421000,478000,455000,41200,3100,14800,18600,1480,17.4,0.47,3100,0.0065,0.71
+TT-007,TikTok,TikTok,Community,Engage,Community,2025-09-18,Join the pace challenge,487000,545000,521000,62400,6800,31200,9800,1620,16.9,0.44,6400,0.0117,0.73
+TT-008,TikTok,TikTok,People,Engage,People-led,2025-09-19,First race nerves POV,512000,568000,548000,58600,7200,24600,11200,1780,18.2,0.46,2400,0.0042,0.75
+TT-009,TikTok,TikTok,Product,Convert,Product-led,2025-09-22,PACE ONE fit demo,356000,402000,381000,28400,1600,8200,7600,1120,14.8,0.39,9200,0.0229,0.61
+TT-010,TikTok,TikTok,Culture,Evergreen,Community,2025-09-25,Running joke of the week,398000,445000,426000,45200,3800,19800,6400,1080,13.6,0.36,1100,0.0025,0.70
+YT-001,YouTube,Video,Product,Reveal,Product-led,2025-09-08,PACE ONE launch film,186000,245000,128000,8400,620,1200,2100,18400,186,0.41,8900,0.0363,0.62
+YT-002,YouTube,Short,Culture,Reveal,People-led,2025-09-09,Find Your Pace short,278000,312000,295000,18600,980,4200,3100,980,28.4,0.58,2100,0.0067,0.74
+YT-003,YouTube,Video,People,Educate,People-led,2025-09-15,Athlete feature: Jordan,142000,188000,98000,7200,840,980,2600,16200,214,0.48,4200,0.0223,0.68
+YT-004,YouTube,Video,Training,Educate,Educational,2025-09-16,Build your weekly pace plan,168000,214000,112000,9100,1200,1600,5400,19800,228,0.52,6100,0.0285,0.71
+YT-005,YouTube,Short,Training,Engage,Educational,2025-09-18,Cadence tip short,224000,256000,241000,14200,760,2800,4800,760,24.1,0.54,1800,0.0070,0.72
+YT-006,YouTube,Video,Community,Engage,Community,2025-09-19,City run documentary cut,98000,132000,64000,5400,920,1400,1800,9800,168,0.39,2800,0.0212,0.58
+YT-007,YouTube,Short,Product,Convert,Product-led,2025-09-22,PACE ONE in 45 seconds,198000,228000,212000,11200,420,1600,2900,620,21.8,0.49,5400,0.0237,0.66
+YT-008,YouTube,Video,People,Evergreen,People-led,2025-09-25,Why we run: community film,121000,156000,82000,6800,1100,1800,3200,14600,198,0.45,2400,0.0154,0.64
