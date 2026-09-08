@@ -130,7 +130,19 @@ npm test
 
 ```bash
 cd apps/api && npm install && npm run dev
+# health: http://localhost:3001/health
+# demo: demo@biocross.app / demo1234
 ```
+
+Point the app at it:
+
+```bash
+EXPO_PUBLIC_API_MODE=remote
+EXPO_PUBLIC_API_URL=http://localhost:3001
+```
+
+Postgres via Docker: `cd apps/api && docker compose up --build`  
+Deploy notes: `apps/api/README.md` (Railway / Fly / Render).
 
 ## What's included in this build
 

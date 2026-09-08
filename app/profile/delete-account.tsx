@@ -22,6 +22,12 @@ export default function DeleteAccountScreen() {
           style: 'destructive',
           onPress: async () => {
             setLoading(true);
+            try {
+              const { biocrossApi } = await import('../../src/api');
+              await biocrossApi.deleteAccount();
+            } catch {
+              /* local/mock — still sign out */
+            }
             await signOut();
             setLoading(false);
             router.replace('/onboarding/welcome');

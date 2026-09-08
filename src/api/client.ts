@@ -173,4 +173,21 @@ export const biocrossApi = {
 
   completeOnboarding: () =>
     apiRequest<import('../domain/models').User>('/onboarding/complete', { method: 'POST' }),
+
+  forgotPassword: (email: string) =>
+    apiRequest<{ ok: true; message?: string }>('/auth/forgot-password', {
+      method: 'POST',
+      body: { email },
+      auth: false,
+    }),
+
+  resetPassword: (token: string, password: string) =>
+    apiRequest<{ ok: true }>('/auth/reset-password', {
+      method: 'POST',
+      body: { token, password },
+      auth: false,
+    }),
+
+  deleteAccount: () =>
+    apiRequest<{ ok: true }>('/auth/account', { method: 'DELETE' }),
 };

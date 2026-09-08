@@ -16,6 +16,7 @@ import {
   InfoCallout,
   ScreenTitle,
 } from '../../src/design-system';
+import { biocrossApi } from '../../src/api';
 import { colors, radii, spacing, typography } from '../../src/design-system/tokens';
 
 export default function ForgotPasswordScreen() {
@@ -27,7 +28,11 @@ export default function ForgotPasswordScreen() {
   const submit = async () => {
     if (!email.trim()) return;
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 600));
+    try {
+      await biocrossApi.forgotPassword(email.trim());
+    } catch {
+      // Still show success UI to avoid account enumeration in UI
+    }
     setLoading(false);
     setSent(true);
   };

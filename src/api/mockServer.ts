@@ -207,6 +207,27 @@ export async function mockApiRequest<T>(
     return session as T;
   }
 
+  if (method === 'POST' && path === '/auth/forgot-password') {
+    return { ok: true, message: 'If an account exists, a reset link would be emailed.' } as T;
+  }
+
+  if (method === 'POST' && path === '/auth/reset-password') {
+    return { ok: true } as T;
+  }
+
+  if (method === 'DELETE' && path === '/auth/account') {
+    const session = resolveSession(store, accessToken);
+    store.users = store.users.filter((u) => u.id !== session.userId);
+    store.sessions = store.sessions.filter((s) => s.userId !== session.userId);
+    delete store.profiles[session.userId];
+    delete store.checks[session.userId];
+    delete store.alerts[session.userId];
+    delete store.preferences[session.userId];
+    delete store.documents[session.userId];
+    await saveStore(store);
+    return { ok: true } as T;
+  }
+
   const session = resolveSession(store, accessToken);
   const userId = session.userId;
 
