@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import ContactForm from "../components/ContactForm";
+import usePageMeta from "../hooks/usePageMeta";
 
 const needs = [
   {
@@ -36,6 +38,13 @@ const guarantees = [
 ];
 
 function GetSupportPage() {
+  usePageMeta({
+    title: "Get Support",
+    description:
+      "Find your track with Civic Bound — free, confidential, voluntary youth support with no paperwork maze.",
+    path: "/get-support",
+  });
+
   const [step, setStep] = useState(1);
   const [needId, setNeedId] = useState(null);
   const [ready, setReady] = useState(false);
@@ -201,6 +210,12 @@ function GetSupportPage() {
                 </Link>{" "}
                 to see how others found their footing.
               </p>
+
+              <ContactForm
+                className="mt-10"
+                heading="Want someone to follow up?"
+                context="support"
+              />
             </div>
           )}
         </div>

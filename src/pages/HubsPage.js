@@ -1,10 +1,18 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { hubs, hubOfferings } from "../data/hubs";
+import usePageMeta from "../hooks/usePageMeta";
 
 const WEEK_DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 function HubsPage() {
+  usePageMeta({
+    title: "Hubs",
+    description:
+      "Find a Neighborhood Resource Hub near you — open doors, local rhythms, practical support.",
+    path: "/hubs",
+  });
+
   const [query, setQuery] = useState("");
 
   const results = useMemo(() => {

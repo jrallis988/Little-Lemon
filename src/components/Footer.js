@@ -44,11 +44,19 @@ function Footer() {
         </div>
       </div>
       <div className="border-t border-paper-line">
-        <div className="container flex flex-col gap-2 py-5 font-body text-xs text-charcoal-soft md:flex-row md:justify-between">
+        <div className="container flex flex-col gap-2 py-5 font-body text-xs text-charcoal-soft md:flex-row md:items-center md:justify-between">
           <p>
             © {new Date().getFullYear()} Civic Bound. A nonprofit organization.
           </p>
-          <p>Youth-centered. Community-rooted. Dignity first.</p>
+          <div className="flex flex-wrap gap-4">
+            <Link to="/privacy" className="hover:text-violet">
+              Privacy
+            </Link>
+            <Link to="/terms" className="hover:text-violet">
+              Terms
+            </Link>
+            <span>Youth-centered. Community-rooted. Dignity first.</span>
+          </div>
         </div>
       </div>
     </footer>

@@ -51,12 +51,20 @@ function Pillars() {
                   index % 2 === 1 ? "md:order-2" : ""
                 }`}
               >
-                <img
-                  src={pillar.image}
-                  alt={pillar.alt}
-                  className="aspect-[4/3] h-full w-full object-cover transition duration-700 hover:scale-[1.03]"
-                  loading="lazy"
-                />
+                <picture>
+                  <source
+                    srcSet={pillar.image.replace(/\.jpg$/i, ".webp")}
+                    type="image/webp"
+                  />
+                  <img
+                    src={pillar.image}
+                    alt={pillar.alt}
+                    className="aspect-[4/3] h-full w-full object-cover transition duration-700 hover:scale-[1.03]"
+                    loading="lazy"
+                    width="1200"
+                    height="800"
+                  />
+                </picture>
               </div>
               <div>
                 <p className="micro-label text-chartreuse">{pillar.label}</p>

@@ -6,12 +6,18 @@ function Hero() {
       id="top"
       className="relative flex min-h-[min(100vh,52rem)] items-end overflow-hidden text-white"
     >
-      <img
-        src="/images/hero-community.jpg"
-        alt=""
-        className="absolute inset-0 h-full w-full scale-105 object-cover object-[center_35%] animate-fade"
-        aria-hidden="true"
-      />
+      <picture>
+        <source srcSet="/images/hero-community.webp" type="image/webp" />
+        <img
+          src="/images/hero-community.jpg"
+          alt=""
+          className="absolute inset-0 h-full w-full scale-105 object-cover object-[center_35%] animate-fade"
+          aria-hidden="true"
+          width="1536"
+          height="1024"
+          fetchPriority="high"
+        />
+      </picture>
       <div
         className="absolute inset-0 bg-gradient-to-t from-charcoal-deep/90 via-charcoal-deep/45 to-charcoal-deep/35"
         aria-hidden="true"

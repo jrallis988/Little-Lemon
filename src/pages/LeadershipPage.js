@@ -1,7 +1,15 @@
 import { Link } from "react-router-dom";
 import { leaders } from "../data/leaders";
+import usePageMeta from "../hooks/usePageMeta";
 
 function LeadershipPage() {
+  usePageMeta({
+    title: "Leadership",
+    description:
+      "Youth-led governance at Civic Bound — advisory board and peer leaders shaping the network.",
+    path: "/leadership",
+  });
+
   return (
     <>
       <section className="border-b border-paper-line bg-paper pb-14 pt-28 md:pb-16 md:pt-32">

@@ -1,7 +1,15 @@
 import { Link } from "react-router-dom";
 import { newsItems } from "../data/news";
+import usePageMeta from "../hooks/usePageMeta";
 
 function NewsPage() {
+  usePageMeta({
+    title: "News",
+    description:
+      "Recent updates from Civic Bound hubs, cohorts, and youth-led priorities.",
+    path: "/news",
+  });
+
   return (
     <>
       <section className="border-b border-paper-line bg-paper pb-14 pt-28 md:pb-16 md:pt-32">

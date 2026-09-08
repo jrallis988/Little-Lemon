@@ -30,3 +30,17 @@ npm start          # http://localhost:3000
 npm run build      # production build → build/
 npx wrangler deploy --temporary   # Cloudflare Workers preview (after build)
 ```
+
+## Launch checklist (in progress)
+
+Done in this branch:
+- Image compression (JPEG + WebP)
+- Privacy & Terms pages
+- Per-route SEO / Open Graph titles
+- Demo lead-capture forms (localStorage only)
+
+Still before a real public launch:
+- Claim Cloudflare account / custom domain
+- Replace sample hub & story content
+- Wire forms to email/CRM
+- Analytics

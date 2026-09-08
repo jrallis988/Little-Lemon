@@ -4,8 +4,16 @@ import {
   volunteerRoles,
   volunteerSafeguards,
 } from "../data/volunteers";
+import usePageMeta from "../hooks/usePageMeta";
 
 function VolunteersPage() {
+  usePageMeta({
+    title: "Volunteers",
+    description:
+      "Volunteer with Civic Bound — hub-centered roles with clear boundaries, no court-ordered model.",
+    path: "/volunteers",
+  });
+
   return (
     <>
       <section className="border-b border-paper-line bg-paper pb-14 pt-28 md:pb-16 md:pt-32">

@@ -1,7 +1,15 @@
 import { Link } from "react-router-dom";
 import { partnerCategories } from "../data/partners";
+import usePageMeta from "../hooks/usePageMeta";
 
 function PartnersPage() {
+  usePageMeta({
+    title: "Partners",
+    description:
+      "Partner with Civic Bound to strengthen neighborhood hubs, mentorship, and youth pathways.",
+    path: "/partners",
+  });
+
   return (
     <>
       <section className="border-b border-paper-line bg-paper pb-14 pt-28 md:pb-16 md:pt-32">

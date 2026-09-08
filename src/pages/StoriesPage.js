@@ -1,7 +1,15 @@
 import { Link } from "react-router-dom";
 import { stories } from "../data/stories";
+import usePageMeta from "../hooks/usePageMeta";
 
 function StoriesPage() {
+  usePageMeta({
+    title: "Stories",
+    description:
+      "Peer narratives of direction, re-entry, and stability from Civic Bound youth, mentors, and families.",
+    path: "/stories",
+  });
+
   return (
     <>
       <section className="border-b border-paper-line bg-paper pb-14 pt-28 md:pb-16 md:pt-32">
