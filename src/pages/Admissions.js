@@ -4,6 +4,7 @@ import PageHero from "../components/PageHero";
 import useReveal from "../hooks/useReveal";
 import {
   admissionsTeam,
+  applyUrl,
   contact,
   filterOptions,
   formspreeClaimUrl,
@@ -120,8 +121,6 @@ export default function Admissions() {
     }
   }
 
-  const applyLink = portalLinks.find((link) => link.label === "Apply online");
-
   return (
     <div ref={revealRef}>
       <Seo
@@ -138,7 +137,7 @@ export default function Admissions() {
       >
         <div className="flex flex-wrap gap-3">
           <a
-            href={applyLink.href}
+            href={applyUrl}
             target="_blank"
             rel="noreferrer"
             className="btn-primary"

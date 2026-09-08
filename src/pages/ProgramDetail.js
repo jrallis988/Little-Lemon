@@ -2,7 +2,12 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import PageHero from "../components/PageHero";
 import Seo from "../components/Seo";
 import useReveal from "../hooks/useReveal";
-import { getProgram, images, programs } from "../data/content";
+import {
+  applyUrl,
+  getProgram,
+  images,
+  programs,
+} from "../data/content";
 
 export default function ProgramDetail() {
   const { slug } = useParams();
@@ -70,8 +75,16 @@ export default function ProgramDetail() {
         imageAlt={heroAlt}
       >
         <div className="flex flex-wrap gap-3">
-          <Link to="/admissions" className="btn-primary">
-            Start admissions
+          <a
+            href={applyUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="btn-primary"
+          >
+            Apply now
+          </a>
+          <Link to="/admissions" className="btn-secondary">
+            Request information
           </Link>
           <a
             href={officialHref}
@@ -209,8 +222,16 @@ export default function ProgramDetail() {
             </div>
           </dl>
           <div className="mt-8 flex flex-col gap-3">
-            <Link to="/admissions" className="btn-primary w-full text-center">
-              Talk with admissions
+            <a
+              href={applyUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="btn-primary w-full text-center"
+            >
+              Apply now
+            </a>
+            <Link to="/admissions" className="btn-ghost w-full text-center">
+              Request information
             </Link>
             <a
               href={officialHref}

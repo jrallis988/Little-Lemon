@@ -15,8 +15,14 @@ test("renders River Valley brand and soar headline", () => {
   expect(
     screen.getByRole("heading", { name: /soar into your future/i })
   ).toBeInTheDocument();
-  expect(screen.getByRole("link", { name: /apply now/i })).toBeInTheDocument();
+  const applyNow = screen.getByRole("link", { name: /apply now/i });
+  expect(applyNow).toBeInTheDocument();
+  expect(applyNow).toHaveAttribute(
+    "href",
+    "https://www.rivervalley.edu/admissions/welcome/"
+  );
   expect(screen.getByText(/what’s happening/i)).toBeInTheDocument();
+  expect(screen.getByText(/digital x-ray lab/i)).toBeInTheDocument();
 });
 
 test("renders a rich program detail page", () => {
@@ -32,7 +38,12 @@ test("renders a rich program detail page", () => {
   expect(screen.getByText(/typical length/i)).toBeInTheDocument();
   expect(screen.getByText(/before you begin/i)).toBeInTheDocument();
   expect(screen.getByText(/where this pathway can lead/i)).toBeInTheDocument();
-  expect(screen.getAllByRole("link", { name: /official requirements/i }).length).toBeGreaterThan(0);
+  expect(
+    screen.getAllByRole("link", { name: /official requirements/i }).length
+  ).toBeGreaterThan(0);
+  expect(
+    screen.getAllByRole("link", { name: /^apply now$/i }).length
+  ).toBeGreaterThan(0);
 });
 
 test("filters programs by campus", () => {
@@ -43,7 +54,9 @@ test("filters programs by campus", () => {
   );
 
   expect(screen.getByText(/showing/i)).toBeInTheDocument();
-  expect(screen.getByRole("heading", { name: /find the pathway/i })).toBeInTheDocument();
+  expect(
+    screen.getByRole("heading", { name: /find the pathway/i })
+  ).toBeInTheDocument();
 });
 
 test("renders tuition estimate tools", () => {
@@ -53,11 +66,15 @@ test("renders tuition estimate tools", () => {
     </MemoryRouter>
   );
 
-  expect(screen.getByText(/rough annual tuition calculator/i)).toBeInTheDocument();
+  expect(
+    screen.getByText(/rough annual tuition calculator/i)
+  ).toBeInTheDocument();
   expect(
     screen.getByRole("heading", { name: /school code 007560/i })
   ).toBeInTheDocument();
-  expect(screen.getAllByText(/new hampshire resident/i).length).toBeGreaterThan(0);
+  expect(
+    screen.getAllByText(/new hampshire resident/i).length
+  ).toBeGreaterThan(0);
 });
 
 test("renders expanded catalog pathways", () => {
@@ -83,11 +100,29 @@ test("renders CCSNH portal links on student life", () => {
     </MemoryRouter>
   );
 
-  expect(screen.getAllByRole("link", { name: /my rvcc/i }).length).toBeGreaterThan(0);
+  expect(
+    screen.getAllByRole("link", { name: /my rvcc/i }).length
+  ).toBeGreaterThan(0);
   expect(
     screen.getAllByRole("link", { name: /ccsnh online resources/i }).length
   ).toBeGreaterThan(0);
   expect(
     screen.getByRole("heading", { name: /easylogin · register · pay/i })
+  ).toBeInTheDocument();
+});
+
+test("renders a helpful 404 page", () => {
+  render(
+    <MemoryRouter initialEntries={["/this-page-does-not-exist"]}>
+      <App />
+    </MemoryRouter>
+  );
+
+  expect(
+    screen.getByRole("heading", { name: /this page isn’t here/i })
+  ).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: /back home/i })).toBeInTheDocument();
+  expect(
+    screen.getByRole("link", { name: /browse programs/i })
   ).toBeInTheDocument();
 });

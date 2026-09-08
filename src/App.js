@@ -9,6 +9,7 @@ import About from "./pages/About";
 import Admissions from "./pages/Admissions";
 import FinancialAid from "./pages/FinancialAid";
 import StudentLife from "./pages/StudentLife";
+import NotFound from "./pages/NotFound";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -39,6 +40,7 @@ export default function App() {
           <Route path="/admissions" element={<Admissions />} />
           <Route path="/financial-aid" element={<FinancialAid />} />
           <Route path="/student-life" element={<StudentLife />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       <Footer />

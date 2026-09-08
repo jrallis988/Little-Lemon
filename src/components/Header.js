@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import { navLinks, programs, utilityLinks } from "../data/content";
+import { applyUrl, navLinks, programs, utilityLinks } from "../data/content";
 import Logo from "./Logo";
 
 export default function Header() {
@@ -127,9 +127,14 @@ export default function Header() {
           >
             Search
           </button>
-          <Link to="/admissions" className="btn-primary !px-4 !py-2.5">
+          <a
+            href={applyUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="btn-primary !px-4 !py-2.5"
+          >
             Apply
-          </Link>
+          </a>
         </nav>
 
         <div className="flex items-center gap-2 lg:hidden">
@@ -250,9 +255,14 @@ export default function Header() {
                 </Link>
               )
             )}
-            <Link to="/admissions" className="btn-primary w-fit">
+            <a
+              href={applyUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="btn-primary w-fit"
+            >
               Apply
-            </Link>
+            </a>
           </nav>
         </div>
       ) : null}

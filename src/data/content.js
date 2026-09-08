@@ -45,6 +45,9 @@ export const portalLinks = [
   },
 ];
 
+/** Official free application — use for primary Apply CTAs */
+export const applyUrl = "https://www.rivervalley.edu/admissions/welcome/";
+
 /** Claim this Formspree form, then paste the /f/{id} into REACT_APP_FORMSPREE_ID */
 export const formspreeClaimUrl =
   "https://formspree.io/claim?name=RVCC+Admissions+Inquiry&project=river-valley-website&field.name=text,required,maxlength:100,prettyName:Full+name&field.email=email,required&field.phone=text,maxlength:40,prettyName:Phone&field.interest=text,maxlength:100,prettyName:Area+of+interest&field.campus=text,maxlength:40,prettyName:Preferred+campus&field.startTerm=text,maxlength:40,prettyName:Preferred+start+term&field.message=text,maxlength:2000&action.email=jjrallis%40unh.edu";
@@ -148,16 +151,16 @@ export const images = {
 
 export const happening = [
   {
-    title: "New Student Orientation",
-    detail: "Keene — Tue, Aug 25 · 11 AM · Claremont — Thu, Aug 27 · 11 AM",
-    cta: "Let us know you’re coming",
-    to: "/admissions",
-  },
-  {
     title: "A&P I Prep Course",
     detail: "Non-credit prep to get ready for Anatomy & Physiology I",
     cta: "Ask admissions",
     to: "/admissions",
+  },
+  {
+    title: "Digital X-ray Lab",
+    detail: "Radiologic Technology’s energized lab is open for imaging students",
+    cta: "Explore Rad Tech",
+    to: "/programs/radiologic-technology",
   },
   {
     title: "Scholarships & Aid",

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Seo from "../components/Seo";
 import useReveal from "../hooks/useReveal";
 import {
+  applyUrl,
   campuses,
   getProgramsForArea,
   happening,
@@ -43,9 +44,14 @@ export default function Home() {
               with real labs, real support, and people who know your name.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
-              <Link to="/admissions" className="btn-primary">
+              <a
+                href={applyUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="btn-primary"
+              >
                 Apply now
-              </Link>
+              </a>
               <Link to="/programs" className="btn-secondary">
                 Explore programs
               </Link>
@@ -306,8 +312,16 @@ export default function Home() {
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <Link to="/admissions" className="btn-primary">
+            <a
+              href={applyUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="btn-primary"
+            >
               Start your application
+            </a>
+            <Link to="/admissions" className="btn-ghost">
+              Request information
             </Link>
             <Link to="/financial-aid" className="btn-ghost">
               Explore financial aid
