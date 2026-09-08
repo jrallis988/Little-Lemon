@@ -30,7 +30,7 @@ public final class ScreenGallery {
         heading.getStyleClass().add("screen-title");
 
         Label note = new Label(
-                "Phase 1 visual stubs — layout placeholders only. Rules and play arrive later.");
+                "Playable American checkers. Game Board is the arcade Crossing world. Analysis and AI Lab remain later work.");
         note.getStyleClass().add("tagline");
         note.setWrapText(true);
 
@@ -92,12 +92,13 @@ public final class ScreenGallery {
     public static Map<String, Supplier<Node>> screenFactories() {
         Map<String, Supplier<Node>> map = new LinkedHashMap<>();
         GameController previewController = new GameController();
-        previewController.startHumanVsHuman("Dark", "Light");
-        map.put(HomeScreen.screenId(), () -> new HomeScreen().getRoot());
-        map.put(NewGameScreen.screenId(), () -> new NewGameScreen().getRoot());
+        previewController.startHumanVsHuman("Frog", "Traffic");
+        map.put(HomeScreen.screenId(), () -> new HomeScreen(previewController, id -> { }).getRoot());
+        map.put(NewGameScreen.screenId(), () -> new NewGameScreen(previewController, id -> { }).getRoot());
         map.put(GameBoardScreen.screenId(),
                 () -> new GameBoardScreen(previewController, id -> { }, true).getRoot());
-        map.put(MatchCompleteScreen.screenId(), () -> new MatchCompleteScreen().getRoot());
+        map.put(MatchCompleteScreen.screenId(),
+                () -> new MatchCompleteScreen(previewController, id -> { }).getRoot());
         map.put(MatchAnalysisScreen.screenId(), () -> new MatchAnalysisScreen().getRoot());
         map.put(AiLabScreen.screenId(), () -> new AiLabScreen().getRoot());
         return map;

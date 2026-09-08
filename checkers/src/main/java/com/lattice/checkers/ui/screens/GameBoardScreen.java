@@ -6,13 +6,16 @@ import com.lattice.checkers.model.GameStatus;
 import com.lattice.checkers.ui.components.BoardView;
 import com.lattice.checkers.ui.components.FactionHud;
 import com.lattice.checkers.ui.components.StatusBar;
+import javafx.animation.PauseTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import java.util.function.Consumer;
 
 /**
@@ -28,6 +31,7 @@ public final class GameBoardScreen {
     private final StatusBar statusBar;
     private final boolean reducedMotion;
     private final Consumer<String> onNavigate;
+    private boolean matchCompleteScheduled;
 
     public GameBoardScreen(GameController controller, Consumer<String> onNavigate, boolean reducedMotion) {
         this.controller = controller;
@@ -43,16 +47,22 @@ public final class GameBoardScreen {
         tag.getStyleClass().add("arcade-kicker");
         VBox header = new VBox(2, brand, tag);
         header.setAlignment(Pos.CENTER_LEFT);
-        header.setPadding(new Insets(8, 18, 4, 18));
+        header.setPadding(new Insets(4, 8, 2, 8));
 
         boardView = new BoardView(controller, ignored -> afterChange(), reducedMotion);
         frogHud = new FactionHud(controller, Faction.FROG);
         trafficHud = new FactionHud(controller, Faction.TRAFFIC);
+        VBox.setVgrow(frogHud, Priority.ALWAYS);
+        VBox.setVgrow(trafficHud, Priority.ALWAYS);
 
-        HBox stage = new HBox(16, frogHud, boardView, trafficHud);
+        Region leftPad = new Region();
+        Region rightPad = new Region();
+        HBox.setHgrow(leftPad, Priority.SOMETIMES);
+        HBox.setHgrow(rightPad, Priority.SOMETIMES);
+        HBox stage = new HBox(18, leftPad, frogHud, boardView, trafficHud, rightPad);
         stage.setAlignment(Pos.TOP_CENTER);
         stage.getStyleClass().add("arcade-stage");
-        HBox.setHgrow(boardView, Priority.ALWAYS);
+        HBox.setHgrow(boardView, Priority.NEVER);
 
         statusBar = new StatusBar(
                 controller,
@@ -63,9 +73,9 @@ public final class GameBoardScreen {
                 reducedMotion
         );
 
-        VBox body = new VBox(10, header, stage, statusBar);
+        VBox body = new VBox(8, header, stage, statusBar);
         body.getStyleClass().addAll("screen-root", "arcade-root");
-        body.setPadding(new Insets(10, 16, 14, 16));
+        body.setPadding(new Insets(8, 14, 12, 14));
         VBox.setVgrow(stage, Priority.ALWAYS);
 
         root = new BorderPane(body);
@@ -86,6 +96,7 @@ public final class GameBoardScreen {
     }
 
     private void restart() {
+        matchCompleteScheduled = false;
         controller.restart();
         boardView.refresh();
         afterChange();
@@ -108,9 +119,11 @@ public final class GameBoardScreen {
         trafficHud.refresh();
         statusBar.refresh(reducedMotion);
         controller.state().ifPresent(state -> {
-            if (state.status() != GameStatus.IN_PROGRESS && onNavigate != null
-                    && state.status().isTerminal()) {
-                // stay on board; Match Complete is available from chrome
+            if (state.status().isTerminal() && onNavigate != null && !matchCompleteScheduled) {
+                matchCompleteScheduled = true;
+                PauseTransition pause = new PauseTransition(Duration.millis(reducedMotion ? 80 : 900));
+                pause.setOnFinished(e -> onNavigate.accept("match-complete"));
+                pause.play();
             }
         });
     }

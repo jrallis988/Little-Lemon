@@ -1,11 +1,13 @@
 package com.lattice.checkers.ui.components;
 
 import com.lattice.checkers.controller.GameController;
+import com.lattice.checkers.history.MoveRecord;
 import com.lattice.checkers.model.Board;
 import com.lattice.checkers.model.Faction;
 import com.lattice.checkers.model.GameState;
 import com.lattice.checkers.model.Move;
 import com.lattice.checkers.model.Position;
+import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -13,14 +15,19 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeType;
 import javafx.util.Duration;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -30,16 +37,18 @@ import java.util.function.Consumer;
  */
 public final class BoardView extends VBox {
 
-    public static final double CELL = 76;
+    public static final double CELL = 90;
 
     private final GameController controller;
     private final Consumer<Void> onChanged;
     private final StackPane[][] cells = new StackPane[8][8];
     private final boolean reducedMotion;
     private final GridPane grid = new GridPane();
+    private final Pane lastMoveLayer = new Pane();
     private int focusRow;
     private int focusCol = 1;
-    private Position lastFrom;
+    private Move pendingTravel;
+    private boolean pendingPromotion;
 
     public BoardView(GameController controller, Consumer<Void> onChanged, boolean reducedMotion) {
         this.controller = controller;
@@ -48,7 +57,7 @@ public final class BoardView extends VBox {
 
         getStyleClass().add("board-view");
         setAlignment(Pos.CENTER);
-        setSpacing(4);
+        setSpacing(2);
 
         HBox files = new HBox();
         files.setAlignment(Pos.CENTER);
@@ -86,7 +95,13 @@ public final class BoardView extends VBox {
                 grid.add(cell, c, r);
             }
         }
-        StackPane playfield = new StackPane(world, grid);
+        lastMoveLayer.setPrefSize(CELL * 8, CELL * 8);
+        lastMoveLayer.setMinSize(CELL * 8, CELL * 8);
+        lastMoveLayer.setMaxSize(CELL * 8, CELL * 8);
+        lastMoveLayer.setMouseTransparent(true);
+        lastMoveLayer.getStyleClass().add("last-move-layer");
+
+        StackPane playfield = new StackPane(world, lastMoveLayer, grid);
         playfield.getStyleClass().add("playfield");
         playfield.setMaxSize(CELL * 8, CELL * 8);
 
@@ -141,6 +156,13 @@ public final class BoardView extends VBox {
             }
         }
 
+        paintLastMove();
+
+        Move travel = pendingTravel;
+        boolean promote = pendingPromotion;
+        pendingTravel = null;
+        pendingPromotion = false;
+
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
                 Position pos = new Position(r, c);
@@ -159,23 +181,23 @@ public final class BoardView extends VBox {
                             return created;
                         });
                 tint.setFill(playable
-                        ? Color.rgb(10, 14, 10, 0.18)
-                        : Color.rgb(255, 255, 255, 0.06));
+                        ? Color.rgb(8, 12, 8, 0.20)
+                        : Color.rgb(255, 255, 255, 0.05));
 
                 if (selected.isPresent() && selected.get().equals(pos)) {
                     Color glow = Faction.of(state.sideToMove()) == Faction.FROG
-                            ? Color.web("#7CDE3A", 0.38)
-                            : Color.web("#F4A024", 0.38);
+                            ? Color.web("#7CDE3A", 0.40)
+                            : Color.web("#F4A024", 0.40);
                     Rectangle wash = new Rectangle(CELL, CELL);
                     wash.setFill(glow);
                     wash.setMouseTransparent(true);
                     cell.getChildren().add(wash);
                 }
                 if (forcedOrigins.contains(pos) && selected.isEmpty()) {
-                    Rectangle force = new Rectangle(CELL - 6, CELL - 6);
+                    Rectangle force = new Rectangle(CELL - 8, CELL - 8);
                     force.setFill(Color.TRANSPARENT);
                     force.setStroke(Color.web("#E07060"));
-                    force.setStrokeWidth(2.2);
+                    force.setStrokeWidth(2.4);
                     force.setMouseTransparent(true);
                     cell.getChildren().add(force);
                 }
@@ -187,8 +209,8 @@ public final class BoardView extends VBox {
                         ring.setMouseTransparent(true);
                         cell.getChildren().add(ring);
                     } else {
-                        Circle halo = new Circle(CELL * 0.12);
-                        halo.setFill(Color.rgb(12, 16, 12, 0.45));
+                        Circle halo = new Circle(CELL * 0.13);
+                        halo.setFill(Color.rgb(12, 16, 12, 0.42));
                         halo.setMouseTransparent(true);
                         Circle dot = new Circle(CELL * 0.08);
                         dot.getStyleClass().add("destination-marker");
@@ -206,35 +228,78 @@ public final class BoardView extends VBox {
                 }
 
                 board.get(pos).ifPresent(piece -> {
-                    PieceView pieceView = new PieceView(piece, CELL * 0.36);
+                    PieceView pieceView = new PieceView(piece, CELL * 0.38);
                     pieceView.setReducedMotion(reducedMotion);
                     cell.getChildren().add(pieceView);
                     if (selected.isPresent() && selected.get().equals(pos)) {
                         pieceView.playSelectPulse();
                     }
-                    if (!reducedMotion && lastFrom != null && pos.equals(moveTo()) && pieceView != null) {
-                        animateHop(pieceView, lastFrom, pos);
+                    if (travel != null && pos.equals(travel.to())) {
+                        animateTravel(pieceView, travel);
+                        if (promote) {
+                            pieceView.playPromoteFlash();
+                        }
                     }
                 });
             }
         }
-        lastFrom = null;
     }
 
-    private Position moveTo() {
-        var log = controller.moveLog();
-        return log.isEmpty() ? null : log.get(log.size() - 1).to();
+    private void paintLastMove() {
+        lastMoveLayer.getChildren().clear();
+        List<Move> log = controller.moveLog();
+        if (log.isEmpty()) {
+            return;
+        }
+        Move move = log.get(log.size() - 1);
+        List<Position> points = new ArrayList<>();
+        points.add(move.from());
+        points.addAll(move.path());
+        for (int i = 0; i < points.size() - 1; i++) {
+            Position a = points.get(i);
+            Position b = points.get(i + 1);
+            Line line = new Line(centerX(a), centerY(a), centerX(b), centerY(b));
+            line.setStroke(Color.web("#E8D48A", 0.42));
+            line.setStrokeWidth(3.2);
+            line.setStrokeLineCap(StrokeLineCap.ROUND);
+            line.setMouseTransparent(true);
+            lastMoveLayer.getChildren().add(line);
+        }
+        Circle origin = new Circle(centerX(move.from()), centerY(move.from()), 5);
+        origin.setFill(Color.web("#E8D48A", 0.55));
+        Circle dest = new Circle(centerX(move.to()), centerY(move.to()), 5);
+        dest.setFill(Color.web("#E8D48A", 0.55));
+        lastMoveLayer.getChildren().addAll(origin, dest);
     }
 
-    private void animateHop(PieceView pieceView, Position from, Position to) {
-        double dx = (from.col() - to.col()) * CELL;
-        double dy = (from.row() - to.row()) * CELL;
-        pieceView.setTranslateX(dx);
-        pieceView.setTranslateY(dy);
-        TranslateTransition tt = new TranslateTransition(Duration.millis(160), pieceView);
-        tt.setToX(0);
-        tt.setToY(0);
-        tt.play();
+    private static double centerX(Position p) {
+        return p.col() * CELL + CELL / 2.0;
+    }
+
+    private static double centerY(Position p) {
+        return p.row() * CELL + CELL / 2.0;
+    }
+
+    private void animateTravel(PieceView pieceView, Move move) {
+        if (reducedMotion) {
+            return;
+        }
+        List<Position> points = new ArrayList<>();
+        points.add(move.from());
+        points.addAll(move.path());
+        Position end = move.to();
+        SequentialTransition sequence = new SequentialTransition();
+        double duration = move.isJump() ? 170 : 140;
+        pieceView.setTranslateX((move.from().col() - end.col()) * CELL);
+        pieceView.setTranslateY((move.from().row() - end.row()) * CELL);
+        for (int i = 1; i < points.size(); i++) {
+            Position step = points.get(i);
+            TranslateTransition hop = new TranslateTransition(Duration.millis(duration), pieceView);
+            hop.setToX((step.col() - end.col()) * CELL);
+            hop.setToY((step.row() - end.row()) * CELL);
+            sequence.getChildren().add(hop);
+        }
+        sequence.play();
     }
 
     private StackPane createCell(int row, int col) {
@@ -259,11 +324,12 @@ public final class BoardView extends VBox {
     }
 
     private void handleClick(int row, int col) {
-        Optional<Position> before = controller.selected();
+        int before = controller.moveLog().size();
         controller.selectSquare(new Position(row, col));
-        if (before.isPresent() && controller.moveLog().stream().reduce((a, b) -> b)
-                .map(m -> m.from().equals(before.get())).orElse(false)) {
-            lastFrom = before.get();
+        if (controller.moveLog().size() > before) {
+            pendingTravel = controller.moveLog().get(controller.moveLog().size() - 1);
+            List<MoveRecord> records = controller.history().records();
+            pendingPromotion = !records.isEmpty() && records.get(records.size() - 1).promoted();
         }
         refresh();
         if (onChanged != null) {

@@ -38,7 +38,8 @@ public final class ScreenExport extends Application {
 
         for (Map.Entry<String, Supplier<Parent>> entry : screens.entrySet()) {
             Parent root = entry.getValue().get();
-            Scene scene = new Scene(root, 960, 640);
+            boolean board = "game-board".equals(entry.getKey());
+            Scene scene = new Scene(root, board ? 1520 : 1100, board ? 980 : 720);
             LatticeTheme.apply(scene);
             stage.setScene(scene);
             stage.show();

@@ -257,7 +257,7 @@ public final class GameController {
 
     public void restart() {
         if (darkPlayer == null || lightPlayer == null) {
-            startHumanVsHuman("Dark", "Light");
+            startHumanVsHuman("Frog", "Traffic");
             return;
         }
         beginNewGame();

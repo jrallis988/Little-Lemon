@@ -1,6 +1,10 @@
 package com.lattice.checkers.ui.screens;
 
 import com.lattice.checkers.controller.GameController;
+import com.lattice.checkers.model.Piece;
+import com.lattice.checkers.model.PieceRank;
+import com.lattice.checkers.model.Side;
+import com.lattice.checkers.ui.components.PieceView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -10,7 +14,7 @@ import javafx.scene.layout.VBox;
 import java.util.function.Consumer;
 
 /**
- * New Game configuration — starts a human vs human match (AI vs human later).
+ * New Game — Frog vs Traffic matchup, not a settings form.
  */
 public final class NewGameScreen {
 
@@ -21,14 +25,29 @@ public final class NewGameScreen {
     }
 
     public NewGameScreen(GameController controller, Consumer<String> onNavigate) {
-        Label title = new Label("New Game");
-        title.getStyleClass().add("screen-title");
+        Label title = new Label("NEW GAME");
+        title.getStyleClass().add("arcade-title");
 
         Label subtitle = new Label("Frog vs Traffic. Local match — computer profiles arrive with the AI phase.");
         subtitle.getStyleClass().add("screen-subtitle");
         subtitle.setWrapText(true);
+        subtitle.setAlignment(Pos.CENTER);
 
-        Button hvh = primaryButton("Human vs Human", () -> {
+        Label frog = new Label("FROG");
+        frog.getStyleClass().addAll("hud-faction-name", "home-frog");
+        Label traffic = new Label("TRAFFIC");
+        traffic.getStyleClass().addAll("hud-faction-name", "home-traffic");
+        Label vs = new Label("VS");
+        vs.getStyleClass().add("home-vs");
+        VBox frogCol = new VBox(8, new PieceView(new Piece(Side.DARK, PieceRank.MAN), 36), frog);
+        VBox trafficCol = new VBox(8, new PieceView(new Piece(Side.LIGHT, PieceRank.MAN), 36), traffic);
+        frogCol.setAlignment(Pos.CENTER);
+        trafficCol.setAlignment(Pos.CENTER);
+        HBox matchup = new HBox(28, frogCol, vs, trafficCol);
+        matchup.setAlignment(Pos.CENTER);
+        matchup.getStyleClass().add("matchup-row");
+
+        Button hvh = modeButton("HUMAN VS HUMAN", "Two players on this machine", true, () -> {
             if (controller != null) {
                 controller.startHumanVsHuman("Frog", "Traffic");
             }
@@ -36,23 +55,17 @@ public final class NewGameScreen {
                 onNavigate.accept("game-board");
             }
         });
+        Button hvc = modeButton("HUMAN VS COMPUTER", "Aggressor · Defender · Strategist — next", false, () -> { });
+        Button lab = modeButton("AI LAB", "Watch profiles play each other — next", false, () -> { });
 
-        VBox modes = new VBox(12,
-                hvh,
-                disabledCard("Human vs Computer", "Aggressor · Defender · Strategist — coming next"),
-                disabledCard("AI Lab matchup", "Open from Home once AI Lab ships")
-        );
+        VBox modes = new VBox(12, hvh, hvc, lab);
+        modes.setAlignment(Pos.CENTER);
+        modes.setMaxWidth(420);
 
-        HBox profiles = ScreenStub.chipRow("AGGRESSOR", "DEFENDER", "STRATEGIST");
-        Label profilesLabel = new Label("AI profiles (preview)");
-        profilesLabel.getStyleClass().add("panel-heading");
-        VBox profileBlock = new VBox(8, profilesLabel, profiles);
-        profileBlock.getStyleClass().add("preview-panel");
-        profileBlock.setPadding(new Insets(16));
-
-        root = new VBox(22, title, subtitle, modes, profileBlock);
+        root = new VBox(22, title, subtitle, matchup, modes);
+        root.setAlignment(Pos.CENTER);
         root.setPadding(new Insets(36, 40, 36, 40));
-        root.getStyleClass().add("screen-root");
+        root.getStyleClass().addAll("screen-root", "new-game-root");
     }
 
     public VBox getRoot() {
@@ -67,17 +80,19 @@ public final class NewGameScreen {
         return "New Game";
     }
 
-    private static Button primaryButton(String text, Runnable action) {
-        Button button = new Button(text);
-        button.getStyleClass().add("primary-cta");
+    private static Button modeButton(String title, String detail, boolean enabled, Runnable action) {
+        Label heading = new Label(title);
+        heading.getStyleClass().add("dest-title");
+        Label copy = new Label(detail);
+        copy.getStyleClass().add("dest-subtitle");
+        VBox content = new VBox(4, heading, copy);
+        content.setAlignment(Pos.CENTER_LEFT);
+        Button button = new Button();
+        button.setGraphic(content);
+        button.getStyleClass().add(enabled ? "mode-button" : "mode-button-disabled");
         button.setMaxWidth(Double.MAX_VALUE);
+        button.setDisable(!enabled);
         button.setOnAction(e -> action.run());
         return button;
-    }
-
-    private static VBox disabledCard(String heading, String detail) {
-        VBox box = ScreenStub.panel(heading, detail);
-        box.setOpacity(0.55);
-        return box;
     }
 }

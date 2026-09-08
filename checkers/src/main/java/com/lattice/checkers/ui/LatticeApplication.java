@@ -31,6 +31,7 @@ public final class LatticeApplication extends Application {
 
     private Stage stage;
     private BorderPane shell;
+    private HBox chrome;
     private Label screenLabel;
     private GameController controller;
     private boolean reducedMotion;
@@ -55,7 +56,7 @@ public final class LatticeApplication extends Application {
         HBox left = new HBox(8, play, home, gallery);
         left.setAlignment(Pos.CENTER_LEFT);
 
-        HBox chrome = new HBox(16, left, screenLabel);
+        chrome = new HBox(16, left, screenLabel);
         chrome.setAlignment(Pos.CENTER_LEFT);
         chrome.setPadding(new Insets(10, 16, 10, 16));
         chrome.getStyleClass().add("app-chrome");
@@ -65,11 +66,13 @@ public final class LatticeApplication extends Application {
 
         shell.setTop(chrome);
 
-        Scene scene = new Scene(shell, 1480, 960);
+        Scene scene = new Scene(shell, 1520, 980);
         LatticeTheme.apply(scene);
 
         stage.setTitle(APP_NAME + " — American Checkers");
         stage.setScene(scene);
+        stage.setMinWidth(1280);
+        stage.setMinHeight(860);
         stage.show();
 
         show("home");
@@ -78,7 +81,7 @@ public final class LatticeApplication extends Application {
     private void show(String id) {
         Node content = switch (id) {
             case "gallery" -> new ScreenGallery(this::show).getRoot();
-            case "home" -> new HomeScreen(this::show).getRoot();
+            case "home" -> new HomeScreen(controller, this::show).getRoot();
             case "new-game" -> new NewGameScreen(controller, this::show).getRoot();
             case "game-board" -> new GameBoardScreen(controller, this::show, reducedMotion).getRoot();
             case "match-complete" -> new MatchCompleteScreen(controller, this::show).getRoot();
@@ -87,6 +90,8 @@ public final class LatticeApplication extends Application {
             default -> new StackPane(new Label("Unknown screen: " + id));
         };
 
+        boolean hideChrome = "game-board".equals(id) || "match-complete".equals(id);
+        shell.setTop(hideChrome ? null : chrome);
         shell.setCenter(content);
         screenLabel.setText(ScreenGallery.displayName(id));
         stage.setTitle(APP_NAME + " — " + ScreenGallery.displayName(id));

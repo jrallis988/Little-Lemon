@@ -1,71 +1,89 @@
 package com.lattice.checkers.ui.screens;
 
+import com.lattice.checkers.controller.GameController;
 import com.lattice.checkers.model.Piece;
 import com.lattice.checkers.model.PieceRank;
 import com.lattice.checkers.model.Side;
+import com.lattice.checkers.ui.components.CrossingWorld;
 import com.lattice.checkers.ui.components.PieceView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import java.util.function.Consumer;
 
 /**
- * Home — introduces Frog vs Traffic and the crossing concept.
+ * Home — introduces Frog vs Traffic and the crossing world.
  */
 public final class HomeScreen {
 
     private final VBox root;
 
     public HomeScreen() {
-        this(null);
+        this(null, null);
     }
 
     public HomeScreen(Consumer<String> onNavigate) {
+        this(null, onNavigate);
+    }
+
+    public HomeScreen(GameController controller, Consumer<String> onNavigate) {
         Label brand = new Label("LATTICE");
         brand.getStyleClass().add("arcade-title");
+        brand.getStyleClass().add("home-wordmark");
 
         Label tagline = new Label("American checkers — play, analyze, understand.");
         tagline.getStyleClass().add("tagline");
 
+        CrossingWorld world = new CrossingWorld(360, 360);
+        world.getStyleClass().add("home-world");
+        StackPane worldFrame = new StackPane(world);
+        worldFrame.getStyleClass().add("home-world-frame");
+
+        Label frogName = labeled("FROG", "hud-faction-name home-frog");
+        Label trafficName = labeled("TRAFFIC", "hud-faction-name home-traffic");
         Label vs = new Label("VS");
-        vs.getStyleClass().add("hud-caption");
-        HBox matchup = new HBox(18,
-                new VBox(6, new PieceView(new Piece(Side.DARK, PieceRank.MAN), 28), labeled("FROG")),
+        vs.getStyleClass().add("home-vs");
+        HBox matchup = new HBox(22,
+                new VBox(8, new PieceView(new Piece(Side.DARK, PieceRank.MAN), 34), frogName),
                 vs,
-                new VBox(6, new PieceView(new Piece(Side.LIGHT, PieceRank.MAN), 28), labeled("TRAFFIC"))
+                new VBox(8, new PieceView(new Piece(Side.LIGHT, PieceRank.MAN), 34), trafficName)
         );
         matchup.setAlignment(Pos.CENTER);
+        matchup.getChildren().forEach(node -> {
+            if (node instanceof VBox box) {
+                box.setAlignment(Pos.CENTER);
+            }
+        });
 
-        Label phase = new Label("Checkers rules  ·  Crossing world");
-        phase.getStyleClass().add("phase-note");
+        Label crossing = new Label("An environmental crossing. The strategy is still American checkers.");
+        crossing.getStyleClass().add("phase-note");
 
-        Button play = new Button("Play now");
+        Button play = new Button("PLAY NOW");
         play.getStyleClass().add("primary-cta");
         play.setOnAction(e -> {
+            if (controller != null) {
+                controller.startHumanVsHuman("Frog", "Traffic");
+            }
             if (onNavigate != null) {
-                onNavigate.accept("new-game");
+                onNavigate.accept("game-board");
             }
         });
 
         HBox destinations = new HBox(12);
         destinations.setAlignment(Pos.CENTER);
         destinations.getChildren().addAll(
-                destinationButton("New Game", "Frog vs Traffic", "new-game", onNavigate),
+                destinationButton("New Game", "Choose a matchup", "new-game", onNavigate),
                 destinationButton("Analysis", "After matches", "match-analysis", onNavigate),
                 destinationButton("AI Lab", "Coming soon", "ai-lab", onNavigate)
         );
 
-        Label hint = ScreenStub.muted(
-                "An environmental crossing — the strategy is still American checkers.");
-        hint.setAlignment(Pos.CENTER);
-        hint.setMaxWidth(480);
-
-        root = new VBox(22, brand, tagline, matchup, phase, play, destinations, hint);
+        root = new VBox(16, brand, tagline, worldFrame, matchup, crossing, play, destinations);
         root.setAlignment(Pos.CENTER);
-        root.setPadding(new Insets(40));
+        root.setPadding(new Insets(28, 40, 32, 40));
         root.getStyleClass().addAll("screen-root", "home-root");
     }
 
@@ -81,9 +99,9 @@ public final class HomeScreen {
         return "Home";
     }
 
-    private static Label labeled(String text) {
+    private static Label labeled(String text, String styleClasses) {
         Label label = new Label(text);
-        label.getStyleClass().add("hud-faction-name");
+        label.getStyleClass().addAll(styleClasses.split(" "));
         return label;
     }
 
