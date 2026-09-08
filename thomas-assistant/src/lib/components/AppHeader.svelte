@@ -4,33 +4,59 @@
   import {
     BUSINESS_PRODUCT_LINE,
     BUSINESS_SUPPORTING,
+    PERSONAL_POSITIONING,
+    PERSONAL_TAGLINE,
   } from "$lib/thomas-persona";
+  import { appState, setMode } from "$lib/stores/app.svelte";
 
   interface Props {
     compact?: boolean;
   }
 
   let { compact = false }: Props = $props();
+
+  const personal = $derived(appState.mode === "personal");
 </script>
 
 <header class="app-header" class:compact>
   <div class="header-main" class:desktop-brand={!compact}>
-    <ThomasLogo variant="full" mode="business" />
+    <ThomasLogo variant="full" mode={appState.mode} />
     {#if compact}
-      <span class="supporting mobile-tagline">{BUSINESS_SUPPORTING}</span>
+      <span class="supporting mobile-tagline">
+        {personal ? PERSONAL_POSITIONING : BUSINESS_SUPPORTING}
+      </span>
     {:else}
       <div class="desktop-meta">
-        <span class="product-line">{BUSINESS_PRODUCT_LINE}</span>
-        <span class="supporting">{BUSINESS_SUPPORTING}</span>
+        <span class="product-line">
+          {personal ? PERSONAL_TAGLINE : BUSINESS_PRODUCT_LINE}
+        </span>
+        <span class="supporting">
+          {personal ? PERSONAL_POSITIONING : BUSINESS_SUPPORTING}
+        </span>
       </div>
     {/if}
   </div>
   <div class="status-group">
+    <div class="mode-switch" role="group" aria-label="Product mode">
+      <button
+        type="button"
+        class:active={personal}
+        onclick={() => setMode("personal")}
+      >
+        Personal
+      </button>
+      <button
+        type="button"
+        class:active={!personal}
+        onclick={() => setMode("business")}
+      >
+        Business
+      </button>
+    </div>
     {#if !compact}
-      <span class="mode-pill business">Business</span>
+      <span class="status on-premise">● On-Premise</span>
     {/if}
-    <span class="status on-premise">● On-Premise</span>
-    {#if isCloudDemo}
+    {#if isCloudDemo && !compact}
       <span class="status cloud">☁ Cloud Demo</span>
     {/if}
   </div>
@@ -64,12 +90,7 @@
     justify-content: flex-end;
     align-items: center;
     gap: 0.25rem;
-    max-width: 42%;
-  }
-
-  .app-header.compact .status {
-    font-size: 0.58rem;
-    padding: 0.15rem 0.38rem;
+    max-width: 48%;
   }
 
   .header-main {
@@ -128,20 +149,29 @@
     flex-shrink: 0;
   }
 
-  .mode-pill {
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    padding: 0.18rem 0.45rem;
+  .mode-switch {
+    display: flex;
+    border: 1px solid var(--border);
     border-radius: 999px;
-    line-height: 1.2;
+    overflow: hidden;
+    background: var(--surface-2);
   }
 
-  .mode-pill.business {
-    color: var(--midnight);
+  .mode-switch button {
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.28rem 0.55rem;
+    cursor: pointer;
+  }
+
+  .mode-switch button.active {
     background: var(--accent-light);
-    border: 1px solid rgba(199, 138, 44, 0.35);
+    color: var(--midnight);
   }
 
   .status {
@@ -177,7 +207,7 @@
     }
 
     .status,
-    .mode-pill {
+    .mode-switch button {
       font-size: 0.72rem;
       padding: 0.28rem 0.65rem;
     }

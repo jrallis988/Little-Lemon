@@ -59,7 +59,9 @@ npm run build && npm run preview   # production build at :4173
 
 Browser mode persists cellar counts, closings, chat, and restock approvals to local storage. On first visit, Thomas seeds a believable house night so Home notices and Restock have real signals. On first close, you'll set your own four-digit sign-off code.
 
-**Thomas for Business (this phase):** Home notices from live counts/closes → Cellar Check → Restock (approve/export, never auto-order) → Close the Night → The Record. Personal mode is parked.
+**Thomas for Business:** Home notices from live counts/closes → Cellar Check → Restock (approve/export, never auto-order) → Close the Night → The Record.
+
+**Thomas Personal:** My Bar, Discover, History, and Chat — including where-to-buy recommendations by area. Switch modes from the header or on first launch.
 
 ### Reset demo house
 

@@ -8,6 +8,8 @@ import {
 export const STAFF_FIRST_NAME = "James";
 
 export const THOMAS_GREETING = `Good evening, ${STAFF_FIRST_NAME}. What shall we pour?`;
+export const PERSONAL_GREETING =
+  "Good evening. What shall we pour at home tonight?";
 
 export const TAB_LABELS = {
   home: "Home",
@@ -15,6 +17,12 @@ export const TAB_LABELS = {
   order: "Restock",
   shift: "Close the Night",
   audit: "The Record",
+} as const;
+
+export const PERSONAL_TAB_LABELS = {
+  home: "My Bar",
+  discover: "Discover",
+  history: "History",
 } as const;
 
 /** Personal product positioning */
@@ -35,6 +43,13 @@ export const suggestedPrompts = [
   "Where can I buy a bold red near me?",
   "Best IPA for a beginner?",
   "Find whiskey shops in my area",
+] as const;
+
+export const personalSuggestedPrompts = [
+  "What should I pour from my bar tonight?",
+  "Where can I buy a bold red near me?",
+  "What pairs with roast chicken?",
+  "Find a whiskey shop in my area",
 ] as const;
 
 export function butlerScanNote(

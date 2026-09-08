@@ -1,7 +1,10 @@
 <script lang="ts">
   import { chatWithAssistant, checkOllamaAvailable } from "$lib/api";
   import ThomasLogo from "$lib/components/ThomasLogo.svelte";
-  import { suggestedPrompts } from "$lib/thomas-persona";
+  import {
+    personalSuggestedPrompts,
+    suggestedPrompts,
+  } from "$lib/thomas-persona";
   import {
     appState,
     addChatMessage,
@@ -28,6 +31,10 @@
   let locating = $state(false);
   let messagesEl: HTMLDivElement | undefined = $state();
   let inputEl: HTMLTextAreaElement | undefined = $state();
+
+  const prompts = $derived(
+    appState.mode === "personal" ? personalSuggestedPrompts : suggestedPrompts,
+  );
 
   const showSuggestions = $derived(
     !sending &&
@@ -80,6 +87,13 @@
     checkOllamaAvailable().then((ok) => {
       liveAi = ok;
     });
+  });
+
+  $effect(() => {
+    const pending = appState.pendingPrompt;
+    if (!pending || sending) return;
+    appState.pendingPrompt = null;
+    void sendMessage(pending);
   });
 
   function openAreaEdit() {
@@ -233,7 +247,7 @@
           <div class="suggestions">
             <span class="suggestions-label">Try asking</span>
             <div class="suggestion-chips">
-              {#each suggestedPrompts as prompt}
+              {#each prompts as prompt}
                 <button type="button" class="chip" onclick={() => sendMessage(prompt)}>
                   <span class="chip-text">{prompt}</span>
                   <span class="chip-arrow" aria-hidden="true">→</span>

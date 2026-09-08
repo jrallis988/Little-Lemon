@@ -4,14 +4,23 @@
   import AuditPanel from "$lib/components/AuditPanel.svelte";
   import BusinessHome from "$lib/components/BusinessHome.svelte";
   import OrderPanel from "$lib/components/OrderPanel.svelte";
+  import PersonalBar from "$lib/components/PersonalBar.svelte";
+  import PersonalDiscover from "$lib/components/PersonalDiscover.svelte";
+  import PersonalHistory from "$lib/components/PersonalHistory.svelte";
   import ChatDrawer from "$lib/components/ChatDrawer.svelte";
   import AppHeader from "$lib/components/AppHeader.svelte";
   import SplashScreen from "$lib/components/SplashScreen.svelte";
-  import { appState, setActiveTab, setMobileScreen } from "$lib/stores/app.svelte";
-  import { TAB_LABELS } from "$lib/thomas-persona";
-  import type { MobileScreen, WorkflowTab } from "$lib/types";
+  import { getProductMode } from "$lib/browser-storage";
+  import {
+    appState,
+    setActiveTab,
+    setMobileScreen,
+    setMode,
+  } from "$lib/stores/app.svelte";
+  import { PERSONAL_TAB_LABELS, TAB_LABELS } from "$lib/thomas-persona";
+  import type { MobileScreen, ProductMode, WorkflowTab } from "$lib/types";
 
-  const tabs: { id: WorkflowTab; label: string }[] = [
+  const businessTabs: { id: WorkflowTab; label: string }[] = [
     { id: "home", label: TAB_LABELS.home },
     { id: "inventory", label: TAB_LABELS.inventory },
     { id: "order", label: TAB_LABELS.order },
@@ -19,7 +28,13 @@
     { id: "audit", label: TAB_LABELS.audit },
   ];
 
-  const mobileNav: { id: MobileScreen; label: string }[] = [
+  const personalTabs: { id: WorkflowTab; label: string }[] = [
+    { id: "home", label: PERSONAL_TAB_LABELS.home },
+    { id: "discover", label: PERSONAL_TAB_LABELS.discover },
+    { id: "history", label: PERSONAL_TAB_LABELS.history },
+  ];
+
+  const businessMobileNav: { id: MobileScreen; label: string }[] = [
     { id: "home", label: "Home" },
     { id: "chat", label: "Chat" },
     { id: "inventory", label: "Cellar" },
@@ -28,10 +43,33 @@
     { id: "audit", label: "Record" },
   ];
 
+  const personalMobileNav: { id: MobileScreen; label: string }[] = [
+    { id: "home", label: "My Bar" },
+    { id: "chat", label: "Chat" },
+    { id: "discover", label: "Discover" },
+    { id: "history", label: "History" },
+  ];
+
+  const tabs = $derived(
+    appState.mode === "personal" ? personalTabs : businessTabs,
+  );
+  const mobileNav = $derived(
+    appState.mode === "personal" ? personalMobileNav : businessMobileNav,
+  );
+
   let isMobile = $state(false);
   let showSplash = $state(true);
+  let needsModeChoice = $state(false);
+  let splashReady = $state(false);
+
+  function finishSplash(mode: ProductMode) {
+    setMode(mode);
+    showSplash = false;
+  }
 
   $effect(() => {
+    needsModeChoice = getProductMode() == null;
+    splashReady = true;
     const mq = window.matchMedia("(max-width: 768px)");
     const update = () => {
       isMobile = mq.matches;
@@ -43,7 +81,12 @@
 </script>
 
 {#if showSplash}
-  <SplashScreen onComplete={() => (showSplash = false)} />
+  <SplashScreen
+    chooseMode={needsModeChoice}
+    currentMode={appState.mode}
+    ready={splashReady}
+    onComplete={finishSplash}
+  />
 {/if}
 
 <div
@@ -79,7 +122,15 @@
         {/if}
 
         <div class="tab-content">
-          {#if appState.activeTab === "home"}
+          {#if appState.mode === "personal"}
+            {#if appState.activeTab === "discover"}
+              <PersonalDiscover />
+            {:else if appState.activeTab === "history"}
+              <PersonalHistory />
+            {:else}
+              <PersonalBar />
+            {/if}
+          {:else if appState.activeTab === "home"}
             <BusinessHome />
           {:else if appState.activeTab === "inventory"}
             <ScanPanel />

@@ -39,14 +39,40 @@ export interface ChatMessage {
 }
 
 export type ProductMode = "personal" | "business";
-export type WorkflowTab = "home" | "inventory" | "shift" | "audit" | "order";
+export type AlcoholKind = "wine" | "beer" | "spirits" | "bubbles";
+export type WorkflowTab =
+  | "home"
+  | "inventory"
+  | "shift"
+  | "audit"
+  | "order"
+  | "discover"
+  | "history";
 export type MobileScreen =
   | "home"
   | "chat"
   | "inventory"
   | "shift"
   | "audit"
-  | "order";
+  | "order"
+  | "discover"
+  | "history";
+
+export interface PersonalBottle {
+  id: number;
+  name: string;
+  kind: AlcoholKind;
+  notes: string;
+  addedAt: string;
+}
+
+export interface PersonalEvent {
+  id: number;
+  kind: "bottle" | "ask";
+  title: string;
+  detail: string;
+  timestamp: string;
+}
 export type VarianceLevel = "exact" | "minor" | "critical";
 
 export type NoticeSeverity = "info" | "watch" | "urgent";

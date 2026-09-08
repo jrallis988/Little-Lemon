@@ -1,5 +1,12 @@
-import type { AuditTrail, InventoryScan, ShiftLog } from "./types";
-import type { ChatMessage } from "./types";
+import type {
+  AuditTrail,
+  ChatMessage,
+  InventoryScan,
+  PersonalBottle,
+  PersonalEvent,
+  ProductMode,
+  ShiftLog,
+} from "./types";
 import {
   SEED_VERSION,
   buildSeedAudits,
@@ -19,6 +26,9 @@ interface HouseData {
   chatMessages: ChatMessage[];
   seedVersion: number | null;
   userArea: string | null;
+  productMode: ProductMode | null;
+  personalBottles: PersonalBottle[];
+  personalEvents: PersonalEvent[];
 }
 
 const empty: HouseData = {
@@ -30,6 +40,9 @@ const empty: HouseData = {
   chatMessages: [],
   seedVersion: null,
   userArea: null,
+  productMode: null,
+  personalBottles: [],
+  personalEvents: [],
 };
 
 function read(): HouseData {
@@ -47,6 +60,9 @@ function read(): HouseData {
       chatMessages: parsed.chatMessages ?? [],
       seedVersion: parsed.seedVersion ?? null,
       userArea: parsed.userArea ?? null,
+      productMode: parsed.productMode ?? null,
+      personalBottles: parsed.personalBottles ?? [],
+      personalEvents: parsed.personalEvents ?? [],
     };
   } catch {
     return { ...empty };
@@ -87,6 +103,9 @@ export function ensureHouseSeed(): boolean {
     chatMessages: cache.chatMessages,
     seedVersion: SEED_VERSION,
     userArea: cache.userArea,
+    productMode: cache.productMode,
+    personalBottles: cache.personalBottles,
+    personalEvents: cache.personalEvents,
   };
   write(cache);
   return true;
@@ -106,6 +125,9 @@ export function resetHouseToSeed(): void {
     chatMessages: [],
     seedVersion: SEED_VERSION,
     userArea: null,
+    productMode: cache.productMode,
+    personalBottles: cache.personalBottles,
+    personalEvents: cache.personalEvents,
   };
   write(cache);
 }
@@ -190,4 +212,46 @@ export function getUserArea(): string | null {
 export function setUserArea(area: string | null) {
   cache.userArea = area?.trim() || null;
   write(cache);
+}
+
+export function getProductMode(): ProductMode | null {
+  return cache.productMode;
+}
+
+export function setProductMode(mode: ProductMode) {
+  cache.productMode = mode;
+  write(cache);
+}
+
+export function getPersonalBottles(): PersonalBottle[] {
+  return cache.personalBottles;
+}
+
+export function setPersonalBottles(bottles: PersonalBottle[]) {
+  cache.personalBottles = bottles;
+  write(cache);
+}
+
+export function getPersonalEvents(): PersonalEvent[] {
+  return cache.personalEvents;
+}
+
+export function setPersonalEvents(events: PersonalEvent[]) {
+  cache.personalEvents = events;
+  write(cache);
+}
+
+export function appendPersonalEvent(
+  event: Omit<PersonalEvent, "id"> & { id?: number },
+): PersonalEvent {
+  const full: PersonalEvent = {
+    id: event.id ?? nextRecordId(),
+    kind: event.kind,
+    title: event.title,
+    detail: event.detail,
+    timestamp: event.timestamp,
+  };
+  cache.personalEvents = [full, ...cache.personalEvents];
+  write(cache);
+  return full;
 }
