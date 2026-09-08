@@ -9,9 +9,9 @@
     <version>0.1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>Lattice</name>
+    <name>Frogger Checkers</name>
     <description>
-        Lattice — a polished American checkers desktop application.
+        Frogger Checkers — a polished American checkers desktop game.
         Engine, AI, analysis, and JavaFX UI are separated so the game
         is fully playable and testable without a graphical interface.
     </description>

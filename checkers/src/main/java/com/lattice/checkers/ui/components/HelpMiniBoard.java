@@ -138,7 +138,7 @@ public final class HelpMiniBoard extends VBox {
 
     private VBox scoreBoard() {
         HBox factions = new HBox(28,
-                labeledPiece(new PieceView(frog(false), 20), "FROG"),
+                labeledPiece(new PieceView(frog(false), 20), "FROGGER"),
                 labeledPiece(new PieceView(traffic(false), 20), "TRAFFIC")
         );
         factions.setAlignment(Pos.CENTER);

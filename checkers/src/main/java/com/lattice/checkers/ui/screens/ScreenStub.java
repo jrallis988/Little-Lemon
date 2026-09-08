@@ -1,5 +1,6 @@
 package com.lattice.checkers.ui.screens;
 
+import com.lattice.checkers.ui.LatticeApplication;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -20,6 +21,9 @@ final class ScreenStub {
     }
 
     static VBox page(String title, String subtitle, String phaseHint, Node body) {
+        Label brand = new Label(LatticeApplication.WORDMARK);
+        brand.getStyleClass().add("arcade-kicker");
+
         Label titleLabel = new Label(title);
         titleLabel.getStyleClass().add("screen-title");
 
@@ -30,7 +34,7 @@ final class ScreenStub {
         Label phaseLabel = new Label(phaseHint);
         phaseLabel.getStyleClass().add("phase-note");
 
-        VBox header = new VBox(8, titleLabel, subtitleLabel, phaseLabel);
+        VBox header = new VBox(8, brand, titleLabel, subtitleLabel, phaseLabel);
         header.getStyleClass().add("screen-header");
 
         VBox root = new VBox(24, header, body);

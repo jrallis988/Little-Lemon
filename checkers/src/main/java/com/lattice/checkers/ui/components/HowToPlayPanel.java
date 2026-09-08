@@ -2,6 +2,7 @@ package com.lattice.checkers.ui.components;
 
 import com.lattice.checkers.learn.HowToPlayGuide;
 import com.lattice.checkers.learn.HowToPlaySection;
+import com.lattice.checkers.ui.LatticeApplication;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -39,9 +40,11 @@ public final class HowToPlayPanel extends VBox {
         setMaxWidth(720);
         setMaxHeight(640);
 
+        Label brand = new Label(LatticeApplication.WORDMARK);
+        brand.getStyleClass().add("arcade-kicker");
         Label heading = new Label("HOW TO PLAY");
         heading.getStyleClass().add("how-to-play-heading");
-        Label subtitle = new Label("American checkers — Lattice’s rules are the same. Score is extra.");
+        Label subtitle = new Label("American checkers — Frogger Checkers uses the same rules. Score is extra.");
         subtitle.getStyleClass().add("how-to-play-subtitle");
         subtitle.setWrapText(true);
 
@@ -78,7 +81,7 @@ public final class HowToPlayPanel extends VBox {
         HBox nav = new HBox(10, back, spacer, close, next);
         nav.setAlignment(Pos.CENTER);
 
-        getChildren().addAll(heading, subtitle, kicker, title, bullets, diagramHost, dots, nav);
+        getChildren().addAll(brand, heading, subtitle, kicker, title, bullets, diagramHost, dots, nav);
         show(0);
     }
 

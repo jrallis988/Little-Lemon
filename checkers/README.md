@@ -1,13 +1,13 @@
-# Lattice
+# Frogger Checkers
 
-American checkers for the desktop — play, analyze, and inspect the engine.
+American checkers for the desktop — Frogger vs Traffic.
 
-> **Status:** Playable Human vs Human board with American checkers rules.
-> AI, Focus/X-Ray, analysis, and Developer Mode are still stubbed for later phases.
+> **Status:** Playable Human vs Human and Human vs Computer with American checkers rules.
+> Focus/X-Ray, analysis, and Developer Mode are still stubbed for later phases.
 
 ## Why this exists
 
-Lattice is a portfolio project demonstrating Java craft beyond a playable board:
+Frogger Checkers is a portfolio project demonstrating Java craft beyond a playable board:
 
 - Object-oriented separation of **engine** and **UI**
 - Complete American checkers rules with JUnit coverage
@@ -105,6 +105,6 @@ Or from the app chrome: **All screens** opens the gallery.
 | Maven + package architecture | Yes |
 | American checkers rules engine | Yes (mandatory captures, multi-jump, kings, win/resign) |
 | Human vs Human playable board | Yes (Crossing illustrated board) |
-| Polished Graphite Lattice UI | In progress (single visual system) |
+| Frogger Checkers UI | In progress (single visual system) |
 | AI / Focus / X-Ray / Analysis / AI Lab | Not yet |
 | Screenshots | See PR / artifacts |

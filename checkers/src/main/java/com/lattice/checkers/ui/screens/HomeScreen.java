@@ -1,9 +1,11 @@
 package com.lattice.checkers.ui.screens;
 
 import com.lattice.checkers.controller.GameController;
+import com.lattice.checkers.model.Faction;
 import com.lattice.checkers.model.Piece;
 import com.lattice.checkers.model.PieceRank;
 import com.lattice.checkers.model.Side;
+import com.lattice.checkers.ui.LatticeApplication;
 import com.lattice.checkers.ui.components.CrossingWorld;
 import com.lattice.checkers.ui.components.HowToPlayOverlay;
 import com.lattice.checkers.ui.components.PieceView;
@@ -17,7 +19,7 @@ import javafx.scene.layout.VBox;
 import java.util.function.Consumer;
 
 /**
- * Home — introduces Frog vs Traffic and the crossing world.
+ * Home — introduces Frogger Checkers: Frogger vs Traffic.
  */
 public final class HomeScreen {
 
@@ -36,11 +38,11 @@ public final class HomeScreen {
     }
 
     public HomeScreen(GameController controller, Consumer<String> onNavigate, boolean reducedMotion) {
-        Label brand = new Label("LATTICE");
+        Label brand = new Label(LatticeApplication.WORDMARK);
         brand.getStyleClass().add("arcade-title");
         brand.getStyleClass().add("home-wordmark");
 
-        Label tagline = new Label("American checkers — play, analyze, understand.");
+        Label tagline = new Label("American checkers. Frogger vs Traffic.");
         tagline.getStyleClass().add("tagline");
 
         CrossingWorld world = new CrossingWorld(360, 360);
@@ -48,7 +50,7 @@ public final class HomeScreen {
         StackPane worldFrame = new StackPane(world);
         worldFrame.getStyleClass().add("home-world-frame");
 
-        Label frogName = labeled("FROG", "hud-faction-name home-frog");
+        Label frogName = labeled(Faction.FROG.displayName(), "hud-faction-name home-frog");
         Label trafficName = labeled("TRAFFIC", "hud-faction-name home-traffic");
         Label vs = new Label("VS");
         vs.getStyleClass().add("home-vs");
@@ -73,7 +75,7 @@ public final class HomeScreen {
         play.getStyleClass().add("primary-cta");
         play.setOnAction(e -> {
             if (controller != null) {
-                controller.startHumanVsHuman("Frog", "Traffic");
+                controller.startHumanVsHuman("Frogger", "Traffic");
             }
             if (onNavigate != null) {
                 onNavigate.accept("game-board");

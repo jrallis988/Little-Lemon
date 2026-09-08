@@ -29,7 +29,7 @@ public final class AiLabScreen {
 
         root = ScreenStub.page(
                 "AI Lab",
-                "Watch two AI profiles play each other and inspect search telemetry.",
+                "AI vs AI — a development lab to watch two computer profiles play Frogger Checkers.",
                 "Phase 12",
                 body
         );

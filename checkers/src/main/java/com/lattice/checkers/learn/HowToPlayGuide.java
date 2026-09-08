@@ -27,7 +27,7 @@ public final class HowToPlayGuide {
                                 "Capture all of your opponent's pieces, or leave them with no legal moves.",
                                 "The board is 8×8. Each side has 12 pieces.",
                                 "Pieces start on the playable squares of the first three rows.",
-                                "Frog (green) and Traffic (orange) replace the usual two checker colors."
+                                "Frogger (green) and Traffic (orange) replace the usual two checker colors."
                         ),
                         HowToPlayDiagram.SETUP
                 ),
@@ -82,9 +82,9 @@ public final class HowToPlayGuide {
                 ),
                 new HowToPlaySection(
                         HowToPlayTopic.SCORE,
-                        "Lattice Score System",
+                        "Score System",
                         List.of(
-                                "Frog is Player One (green). Traffic is Player Two (orange).",
+                                "Frogger is Player One (green). Traffic is Player Two (orange).",
                                 "Match Score is arcade points earned during play.",
                                 "The highest score does not determine the winner. Checkers rules do.",
                                 "A regular capture is +" + table.capture()
