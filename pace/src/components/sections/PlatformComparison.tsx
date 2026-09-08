@@ -1,33 +1,33 @@
 const platforms = [
   {
     name: 'TikTok',
-    role: 'Challenge',
+    role: 'Participation + Discovery',
     worked:
-      'Proof-led hooks, BPM challenges, and Card payoffs drove discovery and shares. Native pacing beat polished intros.',
+      'Named-track hooks, final-mile song challenges, and playlist CTAs drove discovery into Spotify.',
     didnt:
-      '“Meet PACE on Spotify” openings lost early retention. Overproduced session demos felt like ads too soon.',
+      'Brand-first “Meet PACE” openings lost early retention. Runner-only clips without music cues under-converted.',
     change:
-      'Standardize tension-first hooks. Keep weekly educational tips. Treat challenges as growth engines.',
+      'Open on a song. End on a playlist. Keep weekly listening tips native.',
   },
   {
     name: 'Instagram',
-    role: 'Identity',
+    role: 'Identity + Sharing',
     worked:
-      'PACE Cards, runner stories, and state carousels carried identity. Stories stickers converted share intent.',
+      'Music-first PACE Cards, playlist Stories, and album-art Reels carried share identity.',
     didnt:
-      'UI-only feed stills under-indexed on engagement as cold awareness.',
+      'Runner photography without artwork or track titles engaged but weakly opened Spotify.',
     change:
-      'Lead awareness with runners + Cards. Keep polished UI for consideration. Expand Card Stories.',
+      'Put album art, BPM, and Open Spotify in the first frame of awareness creative.',
   },
   {
     name: 'YouTube',
-    role: 'Stories',
+    role: 'Storytelling',
     worked:
-      'Athlete music diaries, training long-form, and Shorts bridges built watch time and Spotify clicks.',
+      'Music diaries, playlist experiment films, and Shorts with named tracks built watch time and clicks.',
     didnt:
-      'UI-only thumbnails depressed CTR. Community cuts under-retained without a tighter narrative spine.',
+      'UI-only thumbnails depressed CTR. Stories without soundtrack chapters felt generic.',
     change:
-      'Default athlete + Card packaging. Chapter training films. Use Shorts to feed long-form.',
+      'Default athlete + album art packaging. Chapter films by playlist state.',
   },
 ]
 
@@ -36,10 +36,10 @@ export function PlatformComparison() {
     <section className="section" id="platform-compare">
       <div className="shell">
         <p className="section-kicker">16 — Platform comparison</p>
-        <h2 className="section-title">Creative decisions—not just platform tallies.</h2>
+        <h2 className="section-title">Every surface should point back to listening.</h2>
         <p className="section-lede">
-          What to keep, stop, and change on each surface—while Spotify remains
-          the experience destination.
+          Creative decisions by platform—measured against Spotify engagement, not
+          vanity alone.
         </p>
         <div className="grid-3">
           {platforms.map((p) => (

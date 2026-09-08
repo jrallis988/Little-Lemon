@@ -82,7 +82,7 @@ export function PerformanceOverview() {
                 <YAxis tick={{ fontSize: 12 }} />
                 <Tooltip />
                 <Bar dataKey="reach" fill="#1A1C1E" name="Reach (K)" radius={[3, 3, 0, 0]} />
-                <Bar dataKey="engagement" fill="#C5FF3D" name="Eng. %" radius={[3, 3, 0, 0]} />
+                <Bar dataKey="engagement" fill="#1DB954" name="Eng. %" radius={[3, 3, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>

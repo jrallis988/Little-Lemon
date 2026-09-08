@@ -13,6 +13,7 @@ import { PlatformRoles } from './components/sections/PlatformRoles'
 import { ContentCalendar } from './components/sections/ContentCalendar'
 import { VisualSystem } from './components/sections/VisualSystem'
 import { CreativeWorld } from './components/sections/CreativeWorld'
+import { SpotifyDestination } from './components/sections/SpotifyDestination'
 import { Measurement } from './components/sections/Measurement'
 import { PerformanceOverview } from './components/sections/PerformanceOverview'
 import { CreativePerformance } from './components/sections/CreativePerformance'
@@ -59,6 +60,7 @@ export default function App() {
           <VisualSystem />
           <ContentCalendar />
           <CreativeWorld />
+          <SpotifyDestination />
         </Chapter>
 
         <Chapter

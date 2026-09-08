@@ -11,18 +11,24 @@ export function CreativeWorld() {
         <p className="section-kicker">11 — Campaign executions</p>
         <h2 className="section-title">Experience the campaign before the charts.</h2>
         <p className="section-lede">
-          TikTok, Instagram, YouTube, Spotify, paid, motion, Cards, playlists,
-          challenges, and outdoor—enough surface area to feel the system in the
-          real world.
+          Every execution should feel like Spotify—album art, track titles, BPM,
+          waveforms, playlist covers, and playback UI—not a running brand with a
+          music sponsorship.
         </p>
         <div className="exec-grid">
           {creativeExecutions.map((ex) => (
             <article className={`exec-tile ${stateClass(ex.state)}`} key={ex.id}>
-              <div className="exec-visual" aria-hidden>
-                <div className="exec-marks">
-                  <span className="exec-mile">MI</span>
-                  <span className="exec-bpm">BPM</span>
-                  <span className="exec-route" />
+              <div className={`exec-visual exec-visual--${ex.visual}`} aria-hidden>
+                <div className="exec-album" />
+                <div className="exec-wave-bars">
+                  <i /><i /><i /><i /><i /><i /><i /><i />
+                </div>
+                <div className="exec-nowplaying">
+                  <span className="exec-eq" />
+                  <span>
+                    {ex.track}
+                    <em>{ex.artist}</em>
+                  </span>
                 </div>
               </div>
               <div className="exec-body">
@@ -31,7 +37,10 @@ export function CreativeWorld() {
                 </div>
                 <h3>{ex.title}</h3>
                 <p>{ex.note}</p>
-                <span className="tag tag-lime">{ex.state}</span>
+                <div className="tag-row">
+                  <span className="tag tag-lime">{ex.state}</span>
+                  <span className="tag">BPM {ex.bpm}</span>
+                </div>
               </div>
             </article>
           ))}
