@@ -46,6 +46,14 @@ export class EventLedger {
     return [...this.tickets.values()].map((t) => ({ ...t }))
   }
 
+  /** Restore durable state (e.g. from SQLite) without publishing events. */
+  hydrate(tickets: TicketRecord[], events: LedgerEvent[]) {
+    this.tickets.clear()
+    for (const ticket of tickets) this.tickets.set(ticket.ticketId, { ...ticket })
+    this.events = events.map((e) => ({ ...e, payload: { ...e.payload } }))
+    this.tipHash = this.events.at(-1)?.hash ?? GENESIS_HASH
+  }
+
   async issueTicket(input: IssueInput): Promise<{ ticket: TicketRecord; event: LedgerEvent }> {
     const now = new Date().toISOString()
     const ticketId = randomId('tkt')

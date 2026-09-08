@@ -1,14 +1,21 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CheckoutPanel } from './components/CheckoutPanel'
 import { IdentityPanel } from './components/IdentityPanel'
 import { LedgerPanel } from './components/LedgerPanel'
-import { createDemoPlatform } from './lib/demoStore'
+import { api } from './lib/apiClient'
 
 type Tab = 'ledger' | 'identity' | 'checkout'
 
 export default function App() {
-  const platform = useMemo(() => createDemoPlatform(), [])
   const [tab, setTab] = useState<Tab>('ledger')
+  const [apiStatus, setApiStatus] = useState<'checking' | 'up' | 'down'>('checking')
+
+  useEffect(() => {
+    api
+      .health()
+      .then(() => setApiStatus('up'))
+      .catch(() => setApiStatus('down'))
+  }, [])
 
   return (
     <div className="app-shell">
@@ -21,6 +28,12 @@ export default function App() {
           Event-driven ledger verification, passkey transfer handshakes, and test-hardened
           checkout — a single source of truth against forged PDFs, ATO dumps, and flash-sale
           double-issues.
+        </p>
+        <p className="status-line">
+          API:{' '}
+          <span className={`badge ${apiStatus === 'up' ? 'good' : apiStatus === 'down' ? 'bad' : 'warn'}`}>
+            {apiStatus === 'checking' ? 'checking' : apiStatus === 'up' ? 'connected' : 'offline'}
+          </span>
         </p>
       </header>
 
@@ -48,9 +61,9 @@ export default function App() {
         </button>
       </nav>
 
-      {tab === 'ledger' && <LedgerPanel platform={platform} />}
-      {tab === 'identity' && <IdentityPanel platform={platform} />}
-      {tab === 'checkout' && <CheckoutPanel platform={platform} />}
+      {tab === 'ledger' && <LedgerPanel />}
+      {tab === 'identity' && <IdentityPanel />}
+      {tab === 'checkout' && <CheckoutPanel />}
     </div>
   )
 }
