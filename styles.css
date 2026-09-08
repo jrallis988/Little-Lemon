@@ -926,6 +926,19 @@ a:hover { opacity: 0.8; }
     margin-bottom: 0.4rem;
 }
 
+.portfolio-flag {
+    display: inline-block;
+    margin-left: 0.5rem;
+    padding: 0.12rem 0.45rem;
+    border-radius: 999px;
+    letter-spacing: 0.08em;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--cream);
+    background: rgba(255, 107, 53, 0.85);
+    vertical-align: middle;
+}
+
 .portfolio-info h3 {
     font-family: 'Arcanite Slab', serif;
     font-size: 1.15rem;
