@@ -14,7 +14,6 @@ type VibeNavItem = {
   label: string;
   icon: LucideIcon;
   badge?: "messages";
-  match?: (pathname: string | null) => boolean;
 };
 
 const items: VibeNavItem[] = [
@@ -31,21 +30,27 @@ const items: VibeNavItem[] = [
 export function VibeBottomNav({
   currentUser,
   unreadMessages = 0,
+  chrome = "light",
   className,
 }: {
   currentUser: Profile;
   unreadMessages?: number;
   unreadNotifications?: number;
+  chrome?: "light" | "dark";
   className?: string;
 }) {
   const pathname = usePathname();
   const profileHref = `/profile/${currentUser.username}`;
   const profileActive = pathname?.startsWith(profileHref);
+  const dark = chrome === "dark";
 
   return (
     <nav
       className={cn(
-        "fixed inset-x-0 bottom-0 z-40 border-t border-orange-200/70 bg-white/95 text-navy-800 shadow-[0_-10px_30px_rgba(255,122,24,0.18)] backdrop-blur md:hidden",
+        "fixed inset-x-0 bottom-0 z-40 backdrop-blur md:hidden",
+        dark
+          ? "border-t border-white/10 bg-zinc-950/95 text-white shadow-[0_-10px_30px_rgba(0,0,0,0.45)]"
+          : "border-t border-orange-200/70 bg-white/95 text-navy-800 shadow-[0_-10px_30px_rgba(255,122,24,0.18)]",
         className
       )}
       aria-label="Vibe mobile navigation"
@@ -57,12 +62,16 @@ export function VibeBottomNav({
             item={item}
             active={pathname?.startsWith(item.href) ?? false}
             badgeCount={item.badge === "messages" ? unreadMessages : 0}
+            dark={dark}
           />
         ))}
 
         <Link
           href="/vibe/new"
-          className="relative mx-auto -mt-6 grid h-16 w-16 place-items-center rounded-full border-4 border-white bg-brand text-white shadow-[0_10px_30px_rgba(255,122,24,0.4)] transition hover:bg-brand-dark hover:no-underline"
+          className={cn(
+            "relative mx-auto -mt-6 grid h-16 w-16 place-items-center rounded-full border-4 bg-brand text-white shadow-[0_10px_30px_rgba(255,122,24,0.4)] transition hover:bg-brand-dark hover:no-underline",
+            dark ? "border-zinc-950" : "border-white"
+          )}
           aria-label="Start a vibe"
         >
           <Plus className="h-8 w-8" aria-hidden />
@@ -72,13 +81,20 @@ export function VibeBottomNav({
           item={items[2]}
           active={pathname?.startsWith("/messages") ?? false}
           badgeCount={unreadMessages}
+          dark={dark}
         />
 
         <Link
           href={profileHref}
           className={cn(
-            "relative flex flex-col items-center gap-1 rounded-[16px] px-1 py-2 text-[10px] font-black uppercase tracking-wide text-navy-400 transition hover:text-brand hover:no-underline",
-            profileActive && "bg-brand-soft text-brand-dark"
+            "relative flex flex-col items-center gap-1 rounded-[16px] px-1 py-2 text-[10px] font-black uppercase tracking-wide transition hover:no-underline",
+            dark
+              ? "text-zinc-400 hover:text-brand-light"
+              : "text-navy-400 hover:text-brand",
+            profileActive &&
+              (dark
+                ? "bg-white/10 text-brand-light"
+                : "bg-brand-soft text-brand-dark")
           )}
         >
           <UserCircle className="h-5 w-5" aria-hidden />
@@ -93,10 +109,12 @@ function VibeNavLink({
   item,
   active,
   badgeCount,
+  dark,
 }: {
   item: VibeNavItem;
   active: boolean;
   badgeCount: number;
+  dark: boolean;
 }) {
   const Icon = item.icon;
 
@@ -104,14 +122,25 @@ function VibeNavLink({
     <Link
       href={item.href}
       className={cn(
-        "relative flex flex-col items-center gap-1 rounded-[16px] px-1 py-2 text-[10px] font-black uppercase tracking-wide text-navy-400 transition hover:text-brand hover:no-underline",
-        active && "bg-brand-soft text-brand-dark"
+        "relative flex flex-col items-center gap-1 rounded-[16px] px-1 py-2 text-[10px] font-black uppercase tracking-wide transition hover:no-underline",
+        dark
+          ? "text-zinc-400 hover:text-brand-light"
+          : "text-navy-400 hover:text-brand",
+        active &&
+          (dark
+            ? "bg-white/10 text-brand-light"
+            : "bg-brand-soft text-brand-dark")
       )}
     >
       <Icon className="h-5 w-5" aria-hidden />
       <span>{item.label}</span>
       {badgeCount > 0 ? (
-        <Badge className="absolute right-1 top-1 border-white bg-brand px-1 text-[9px] text-white">
+        <Badge
+          className={cn(
+            "absolute right-1 top-1 px-1 text-[9px] text-white",
+            dark ? "border-zinc-950 bg-brand" : "border-white bg-brand"
+          )}
+        >
           {badgeCount > 99 ? "99+" : badgeCount}
         </Badge>
       ) : null}

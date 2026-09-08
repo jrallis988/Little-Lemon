@@ -15,6 +15,7 @@ export interface AppShellProps {
   children: React.ReactNode;
   mainClassName?: string;
   showMobileNavigation?: boolean;
+  chrome?: "light" | "dark";
 }
 
 export function AppShell({
@@ -25,9 +26,15 @@ export function AppShell({
   children,
   mainClassName,
   showMobileNavigation = true,
+  chrome = "light",
 }: AppShellProps) {
   return (
-    <div className="sunset-shell min-h-screen text-navy-900">
+    <div
+      className={cn(
+        "min-h-screen text-navy-900",
+        chrome === "dark" ? "bg-zinc-950" : "sunset-shell"
+      )}
+    >
       <a
         href="#main-content"
         className="sr-only z-50 rounded-card bg-white px-3 py-2 text-sm font-bold text-brand focus:not-sr-only focus:fixed focus:left-3 focus:top-3"
@@ -54,6 +61,7 @@ export function AppShell({
           currentUser={currentUser}
           unreadNotifications={unreadNotifications}
           unreadMessages={unreadMessages}
+          chrome={chrome}
         />
       ) : null}
     </div>

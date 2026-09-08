@@ -121,9 +121,22 @@ function GroupsContent() {
           <div className="rounded-[24px] border border-dashed border-surface-border bg-white p-8 text-center">
             <Compass className="mx-auto h-10 w-10 text-brand" aria-hidden />
             <h3 className="mt-3 font-display text-2xl font-black text-navy-900">
-              No groups yet
+              {tab === "mine" ? "No groups joined yet" : "No groups yet"}
             </h3>
-            <p className="mt-2 text-navy-600">Join a group from All to see it here.</p>
+            <p className="mt-2 text-navy-600">
+              {tab === "mine"
+                ? "Browse All and join a circle that fits your vibe."
+                : "Check back soon — school clubs and hangouts show up here."}
+            </p>
+            {tab === "mine" ? (
+              <button
+                type="button"
+                onClick={() => setTab("all")}
+                className="mt-4 inline-flex rounded-full border border-brand bg-brand px-5 py-2 text-sm font-black text-white hover:bg-brand-dark"
+              >
+                Browse all groups
+              </button>
+            ) : null}
           </div>
         ) : null}
       </div>

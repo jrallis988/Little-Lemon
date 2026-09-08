@@ -129,7 +129,7 @@ function LoopHomeContent() {
                       className="rounded-[18px] border border-white/10 bg-black/25 p-3 text-left transition hover:border-brand-light/70"
                       onClick={() => notify(`${activity.label} vibes moved up in your Loop.`)}
                     >
-                      <span className="text-[10px] font-black text-[#FF8D4D]">
+                      <span className="text-[10px] font-black text-brand-light">
                         {activity.emoji}
                       </span>
                       <span className="mt-1 block text-sm font-black text-white">
@@ -150,7 +150,7 @@ function LoopHomeContent() {
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="text-xs font-black uppercase tracking-[0.24em] text-[#FF8D4D]">
+            <p className="text-xs font-black uppercase tracking-[0.24em] text-brand-light">
               Loop feed
             </p>
             <h2 className="font-display text-3xl font-black text-white">
@@ -178,7 +178,7 @@ function LoopHomeContent() {
           <section className="rounded-[24px] border border-white/10 bg-white/[0.04] p-4 sm:p-5">
             <div className="mb-4 flex items-center justify-between gap-3">
               <div>
-                <p className="text-xs font-black uppercase tracking-[0.24em] text-[#FF8D4D]">
+                <p className="text-xs font-black uppercase tracking-[0.24em] text-brand-light">
                   Up next
                 </p>
                 <h2 className="font-display text-2xl font-black text-white">
@@ -187,7 +187,7 @@ function LoopHomeContent() {
               </div>
               <Link
                 href="/events"
-                className="text-sm font-black text-[#FF8D4D] hover:text-brand-soft"
+                className="text-sm font-black text-brand-light hover:text-white"
               >
                 See events
               </Link>
@@ -201,7 +201,7 @@ function LoopHomeContent() {
 
           <section className="rounded-[24px] border border-white/10 bg-white/[0.04] p-4 sm:p-5">
             <div className="mb-4">
-              <p className="text-xs font-black uppercase tracking-[0.24em] text-[#FF8D4D]">
+              <p className="text-xs font-black uppercase tracking-[0.24em] text-brand-light">
                 Around your school
               </p>
               <h2 className="font-display text-2xl font-black text-white">
@@ -245,7 +245,7 @@ function LoopHomeContent() {
         <section className="rounded-[24px] border border-white/10 bg-white/[0.04] p-5">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p className="flex items-center gap-2 text-xs font-black uppercase tracking-[0.24em] text-[#FF8D4D]">
+              <p className="flex items-center gap-2 text-xs font-black uppercase tracking-[0.24em] text-brand-light">
                 <Sparkles className="h-4 w-4" aria-hidden />
                 Not a copy-paste feed
               </p>

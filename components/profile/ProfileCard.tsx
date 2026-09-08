@@ -42,7 +42,7 @@ export function ProfileCard({
           />
         </div>
       ) : (
-        <div className="h-16 border-b border-surface-border bg-[linear-gradient(135deg,#0c1624,#2b5a9e)]" />
+        <div className="h-16 border-b border-surface-border bg-gradient-to-br from-brand to-accent" />
       )}
       <CardContent className="-mt-8">
         <div className="flex items-end gap-3">

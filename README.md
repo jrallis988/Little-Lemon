@@ -58,7 +58,7 @@ Invite code during onboarding: `VIBE2026`
 | `/groups`, `/groups/[id]` | Circles & clubs |
 | `/events`, `/music` | Events & music discovery |
 | `/profile/[username]`, `/profile/edit` | Personal page + theme editor |
-| `/friends`, `/messages`, `/search`, `/notifications`, `/settings` | Social + safety |
+| `/friends`, `/browse`, `/messages`, `/search`, `/notifications`, `/settings` | Social + safety |
 
 ## Folder structure
 

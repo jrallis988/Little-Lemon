@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
 import { Archive } from "lucide-react";
 
@@ -13,6 +14,7 @@ export interface EmptyStateProps extends React.HTMLAttributes<HTMLDivElement> {
   description?: string;
   actionLabel?: string;
   onAction?: () => void;
+  actionHref?: string;
 }
 
 export function EmptyState({
@@ -21,9 +23,21 @@ export function EmptyState({
   description,
   actionLabel,
   onAction,
+  actionHref,
   className,
   ...props
 }: EmptyStateProps) {
+  const action =
+    actionLabel && actionHref ? (
+      <Link href={actionHref} className="mt-4 inline-flex hover:no-underline">
+        <Button size="sm">{actionLabel}</Button>
+      </Link>
+    ) : actionLabel && onAction ? (
+      <Button className="mt-4" size="sm" onClick={onAction}>
+        {actionLabel}
+      </Button>
+    ) : null;
+
   return (
     <div
       className={cn(
@@ -41,11 +55,7 @@ export function EmptyState({
           {description}
         </p>
       ) : null}
-      {actionLabel && onAction ? (
-        <Button className="mt-4" size="sm" onClick={onAction}>
-          {actionLabel}
-        </Button>
-      ) : null}
+      {action}
     </div>
   );
 }

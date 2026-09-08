@@ -726,7 +726,7 @@ function NowPlaying({
           <h3 className="truncate text-lg font-black text-navy-900">{featured.title}</h3>
           <p className="truncate text-sm text-navy-600">{featured.artist}</p>
           <div className="mt-3 h-2 overflow-hidden rounded-full bg-navy-100">
-            <div className="h-full w-2/3 bg-[linear-gradient(90deg,#2b5a9e,#1bb6a8)]" />
+            <div className="h-full w-2/3 bg-gradient-to-r from-brand to-friend" />
           </div>
           {profile.nowPlaying?.externalUrl ? (
             <a

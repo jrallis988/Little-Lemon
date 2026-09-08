@@ -12,6 +12,7 @@ import {
   Search,
   Settings,
   UserCircle,
+  Users,
   UsersRound,
   X,
 } from "lucide-react";
@@ -40,7 +41,8 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   { href: "/search", label: "Search", icon: Search },
-  { href: "/groups", label: "Friends/Groups", icon: UsersRound },
+  { href: "/browse", label: "People", icon: Users },
+  { href: "/groups", label: "Groups", icon: UsersRound },
   { href: "/events", label: "Events", icon: CalendarDays },
   { href: "/music", label: "Music", icon: Music2 },
   { href: "/messages", label: "Messages", icon: MessageSquare, badge: "messages" },
@@ -86,7 +88,7 @@ export function AppHeader({
               <Link
                 key={item.href}
                 href={item.href}
-                className="relative inline-flex items-center gap-1.5 border-x border-transparent px-3 text-xs font-bold uppercase tracking-wide text-white/95 transition hover:border-white/20 hover:bg-white/15"
+                className="relative inline-flex items-center gap-1.5 border-x border-transparent px-2.5 text-[11px] font-bold uppercase tracking-wide text-white/95 transition hover:border-white/20 hover:bg-white/15 lg:px-3 lg:text-xs"
               >
                 <Icon className="h-4 w-4" aria-hidden />
                 {item.label}
@@ -131,6 +133,15 @@ export function AppHeader({
                   <UserCircle className="h-4 w-4" aria-hidden />
                   View profile
                 </Link>
+                <Link
+                  href="/friends"
+                  role="menuitem"
+                  className="flex items-center gap-2 px-3 py-2 hover:bg-brand-soft"
+                  onClick={closeMenus}
+                >
+                  <UsersRound className="h-4 w-4" aria-hidden />
+                  Friends
+                </Link>
                 <button
                   type="button"
                   role="menuitem"
@@ -168,7 +179,7 @@ export function AppHeader({
       <div
         id="mobile-header-menu"
         className={cn(
-          "border-t border-navy-800 bg-navy-900 md:hidden",
+          "border-t border-white/20 bg-gradient-to-b from-brand-dark to-accent-dark md:hidden",
           mobileOpen ? "block" : "hidden"
         )}
       >
@@ -180,7 +191,7 @@ export function AppHeader({
               <Link
                 key={item.href}
                 href={item.href}
-                className="flex items-center justify-between rounded-card border border-navy-700 bg-navy-800 px-3 py-2 text-sm font-semibold text-white"
+                className="flex items-center justify-between rounded-card border border-white/15 bg-white/10 px-3 py-2 text-sm font-semibold text-white"
                 onClick={closeMenus}
               >
                 <span className="flex items-center gap-2">
@@ -195,8 +206,18 @@ export function AppHeader({
               </Link>
             );
           })}
+          <Link
+            href="/friends"
+            className="flex items-center justify-between rounded-card border border-white/15 bg-white/10 px-3 py-2 text-sm font-semibold text-white"
+            onClick={closeMenus}
+          >
+            <span className="flex items-center gap-2">
+              <UsersRound className="h-4 w-4" aria-hidden />
+              Friends
+            </span>
+          </Link>
         </nav>
-        <div className="flex items-center gap-3 border-t border-navy-800 p-3">
+        <div className="flex items-center gap-3 border-t border-white/15 p-3">
           <Avatar name={currentUser.displayName} src={currentUser.avatarUrl} size="sm" />
           <Link
             href={`/profile/${currentUser.username}`}
@@ -204,7 +225,7 @@ export function AppHeader({
             onClick={closeMenus}
           >
             <span className="block truncate">{currentUser.displayName}</span>
-            <span className="block truncate text-xs font-normal text-navy-200">
+            <span className="block truncate text-xs font-normal text-white/70">
               @{currentUser.username}
             </span>
           </Link>

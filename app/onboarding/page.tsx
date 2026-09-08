@@ -197,7 +197,7 @@ function OnboardingContent() {
     <main className="min-h-screen bg-[#f7f0df] px-4 py-8 text-navy-900">
       <form onSubmit={finish} className="mx-auto max-w-4xl animate-slide-up">
         <Card className="overflow-hidden border-brand/20 shadow-xl">
-          <CardHeader className="bg-[linear-gradient(135deg,#2456a4,#3d73c0)] text-white">
+          <CardHeader className="bg-gradient-to-br from-brand to-accent text-white">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
                 <CardTitle className="text-white">Verified Student Onboarding</CardTitle>

@@ -132,7 +132,7 @@ function MusicContent() {
                 className="rounded-[24px] border border-surface-border bg-white p-4 shadow-card sm:p-5"
               >
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-center">
-                  <div className="grid h-16 w-16 place-items-center rounded-[20px] bg-zinc-950 text-[#FF8D4D]">
+                  <div className="grid h-16 w-16 place-items-center rounded-[20px] bg-zinc-950 text-brand-light">
                     <span className="font-display text-2xl font-black">
                       {String(index + 1).padStart(2, "0")}
                     </span>
@@ -190,6 +190,13 @@ function MusicContent() {
             <p className="mt-2 text-navy-600">
               Like tracks from Trending and they will appear here.
             </p>
+            <button
+              type="button"
+              onClick={() => setTab("trending")}
+              className="mt-4 inline-flex rounded-full border border-brand bg-brand px-5 py-2 text-sm font-black text-white hover:bg-brand-dark"
+            >
+              Browse trending
+            </button>
           </div>
         ) : null}
       </div>

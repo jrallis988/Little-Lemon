@@ -69,7 +69,9 @@ export function FeaturedFriends({
         ) : (
           <EmptyState
             title="No featured friends yet"
-            description="When friends are featured, they will appear in this tidy top-friends grid."
+            description="Pick classmates from Friends to feature on your page."
+            actionLabel="Manage friends"
+            actionHref="/friends"
           />
         )}
       </CardContent>

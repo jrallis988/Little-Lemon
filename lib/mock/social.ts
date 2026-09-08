@@ -77,6 +77,35 @@ export function friendProfiles(state: MockStoreState, userId: string) {
   return state.profiles.filter((profile) => ids.has(profile.userId));
 }
 
+/** Count distinct conversations with unread message notifications. */
+export function unreadMessageConversationCount(
+  state: MockStoreState,
+  userId: string
+) {
+  const conversationHrefs = new Set<string>();
+  for (const notification of state.notifications) {
+    if (
+      notification.userId !== userId ||
+      notification.type !== "message" ||
+      notification.read ||
+      !notification.href?.startsWith("/messages/")
+    ) {
+      continue;
+    }
+    conversationHrefs.add(notification.href);
+  }
+  return conversationHrefs.size;
+}
+
+export function unreadNotificationCount(state: MockStoreState, userId: string) {
+  return state.notifications.filter(
+    (notification) =>
+      notification.userId === userId &&
+      !notification.read &&
+      notification.type !== "message"
+  ).length;
+}
+
 export function mutualFriendCount(
   friendships: Friendship[],
   userId: string,

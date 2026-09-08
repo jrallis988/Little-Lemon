@@ -143,7 +143,9 @@ function MessagesContent() {
               ) : (
                 <EmptyState
                   title="No friends yet"
-                  description="Add friends before starting new messages."
+                  description="Find classmates and add friends before starting new messages."
+                  actionLabel="Find people"
+                  actionHref="/browse"
                 />
               )}
             </CardContent>
