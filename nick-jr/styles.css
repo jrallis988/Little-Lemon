@@ -1868,3 +1868,61 @@ main,
     display: none;
   }
 }
+
+/* Case-study notes on kids home */
+.concept-notes {
+  max-width: var(--max);
+  margin: 0 auto 1.5rem;
+}
+
+.concept-notes-inner {
+  background: white;
+  border-radius: 24px;
+  padding: 1.35rem 1.4rem 1.45rem;
+  box-shadow: var(--shadow-soft);
+  border: 2px solid rgba(107, 63, 191, 0.08);
+}
+
+.concept-notes--a11y .concept-notes-inner {
+  border-color: rgba(46, 196, 182, 0.2);
+}
+
+.concept-notes h2 {
+  margin: 0 0 0.45rem;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: var(--purple-deep);
+}
+
+.concept-notes--a11y h2 {
+  color: #0f766e;
+}
+
+.concept-notes p {
+  margin: 0;
+  font-weight: 700;
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+  max-width: 52rem;
+}
+
+.concept-points {
+  margin: 0.9rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.concept-points li {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--ink);
+  padding: 0.55rem 0.75rem;
+  border-radius: 12px;
+  background: #f8f5ff;
+}
+
+.concept-points strong {
+  color: var(--purple-deep);
+}

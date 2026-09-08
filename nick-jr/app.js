@@ -150,6 +150,14 @@
     });
   });
 
+  /* Footer concept stubs */
+  document.querySelectorAll("[data-toast]").forEach((el) => {
+    el.addEventListener("click", (event) => {
+      event.preventDefault();
+      showToast(el.getAttribute("data-toast") || "Coming soon in this concept.");
+    });
+  });
+
   /* Keyboard carousel */
   document.addEventListener("keydown", (event) => {
     if (event.target.matches("input, textarea, select, button")) return;

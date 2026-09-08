@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Nick Jr. — watch, play, explore, and create. A conceptual kids entertainment homepage redesign by Artistic Fountain.">
   <meta name="theme-color" content="#5B2C9D">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Nick Jr. — Watch, Play, Explore &amp; Create">
+  <meta property="og:description" content="Conceptual kids entertainment homepage redesign — hero carousel, activity launchers, Adventure Sprouts, and Grown-Ups area.">
+  <meta property="og:image" content="images/og-share.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Nick Jr. — Watch, Play, Explore &amp; Create">
+  <meta name="twitter:description" content="Conceptual kids entertainment homepage redesign by Artistic Fountain.">
+  <meta name="twitter:image" content="images/og-share.jpg">
   <title>Nick Jr. — Watch, Play, Explore &amp; Create</title>
   <base href="/nick-jr/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -420,6 +428,33 @@
           </section>
         </aside>
       </div>
+
+      <section class="concept-notes" id="about" aria-labelledby="about-heading">
+        <div class="concept-notes-inner">
+          <h2 id="about-heading">About this concept</h2>
+          <p>
+            A portfolio redesign exploring how a preschool brand can lead with joy first —
+            clear activity paths (Watch, Play, Explore, Create), soft motion, and a dedicated
+            Grown-Ups area for caregivers. Not affiliated with Paramount or Nickelodeon.
+          </p>
+          <ul class="concept-points">
+            <li><strong>Kids path:</strong> one job per section, large touch targets, color-coded launchers</li>
+            <li><strong>Caregiver path:</strong> tips, ages &amp; stages, and a sample schedule</li>
+            <li><strong>Stack:</strong> static HTML, CSS, and vanilla JS — no backend required</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="concept-notes concept-notes--a11y" id="a11y" aria-labelledby="a11y-heading">
+        <div class="concept-notes-inner">
+          <h2 id="a11y-heading">Accessibility notes</h2>
+          <p>
+            This prototype includes skip links, labeled controls, keyboard carousel arrows,
+            reduced-motion support, and focusable nav/search. Real production work would add
+            deeper captioning, parental gates, and audited contrast across every asset.
+          </p>
+        </div>
+      </section>
     </main>
 
     <footer class="site-footer">
@@ -433,10 +468,10 @@
         <nav aria-label="Footer">
           <ul class="footer-nav">
             <li><a href="#about">About Nick Jr.</a></li>
-            <li><a href="#help">Help</a></li>
-            <li><a href="#schedule">TV Schedule</a></li>
-            <li><a href="#apps">Apps</a></li>
-            <li><a href="#shop">Shop</a></li>
+            <li><a href="#help" data-toast="Help is a concept stub — try Grown-Ups for caregiver tips.">Help</a></li>
+            <li><a href="grown-ups.html#schedule">TV Schedule</a></li>
+            <li><a href="#apps" data-toast="Apps are not part of this concept demo.">Apps</a></li>
+            <li><a href="#shop" data-toast="Shop is not part of this concept demo.">Shop</a></li>
             <li><a href="../privacy.html">Privacy</a></li>
             <li><a href="../terms.html">Terms of Use</a></li>
             <li><a href="#a11y">Accessibility</a></li>
