@@ -41,6 +41,12 @@ function Footer() {
           <Link to="/get-support" className="hover:text-violet">
             Get Support
           </Link>
+          <Link to="/contact" className="hover:text-violet">
+            Contact
+          </Link>
+          <Link to="/privacy" className="hover:text-violet">
+            Privacy
+          </Link>
         </div>
       </div>
       <div className="border-t border-paper-line">
@@ -48,7 +54,17 @@ function Footer() {
           <p>
             © {new Date().getFullYear()} Civic Bound. A nonprofit organization.
           </p>
-          <p>Youth-centered. Community-rooted. Dignity first.</p>
+          <p>
+            <Link to="/privacy" className="hover:text-violet">
+              Privacy Policy
+            </Link>
+            {" · "}
+            <Link to="/contact" className="hover:text-violet">
+              Contact
+            </Link>
+            {" · "}
+            Youth-centered. Community-rooted. Dignity first.
+          </p>
         </div>
       </div>
     </footer>

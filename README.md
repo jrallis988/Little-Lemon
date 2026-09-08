@@ -19,6 +19,9 @@ A multi-page marketing site for Civic Bound — a nonprofit, youth-centered comm
 | `/volunteers` | Volunteer boundary & responsibility framework |
 | `/partners` | Village Network partner portal |
 | `/leadership` | Youth Advisory Board |
+| `/news` | Latest news |
+| `/contact` | Contact & hub hours |
+| `/privacy` | Privacy policy |
 
 ## Palette (high-trust light)
 
@@ -32,3 +35,7 @@ A multi-page marketing site for Civic Bound — a nonprofit, youth-centered comm
 - `npm start` — run the development server
 - `npm run build` — create a production build
 - `npm test` — run tests
+
+## Deploy
+
+Cloudflare Pages: build command `npm run build`, output directory `build`. SPA redirects live in `public/_redirects`.

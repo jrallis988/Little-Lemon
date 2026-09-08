@@ -31,3 +31,21 @@ test("renders volunteer boundaries page", () => {
   );
   expect(screen.getByText(/What volunteers are not/i)).toBeInTheDocument();
 });
+
+test("renders contact page", () => {
+  render(
+    <MemoryRouter initialEntries={["/contact"]}>
+      <App />
+    </MemoryRouter>
+  );
+  expect(screen.getByText(/Talk with Civic Bound/i)).toBeInTheDocument();
+});
+
+test("renders privacy policy page", () => {
+  render(
+    <MemoryRouter initialEntries={["/privacy"]}>
+      <App />
+    </MemoryRouter>
+  );
+  expect(screen.getByRole("heading", { name: /Privacy Policy/i })).toBeInTheDocument();
+});
