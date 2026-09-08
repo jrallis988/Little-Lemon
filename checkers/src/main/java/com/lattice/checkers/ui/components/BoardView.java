@@ -4,34 +4,47 @@ import com.lattice.checkers.controller.GameController;
 import com.lattice.checkers.model.Board;
 import com.lattice.checkers.model.GameState;
 import com.lattice.checkers.model.Move;
-import com.lattice.checkers.model.Piece;
 import com.lattice.checkers.model.Position;
 import javafx.geometry.Pos;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
 
 /**
- * Interactive 8×8 board. Non-color cues: selection ring, destination dots, capture rings.
+ * Interactive 8×8 board drawn over the Crossing illustrated artwork.
+ * Labels A–H / 1–8 live in the art; the overlay is aligned to the inner grid.
  */
-public final class BoardView extends GridPane {
+public final class BoardView extends StackPane {
 
-    public static final double CELL = 64;
+    public static final double BOARD_SIZE = 560;
+
+    /** Source art is 1254×1254; playable grid sits inside the gold frame. */
+    private static final double ART_SIZE = 1254.0;
+    private static final double INNER_LEFT = 45.0 / ART_SIZE;
+    private static final double INNER_TOP = 52.0 / ART_SIZE;
+    private static final double INNER_WIDTH = 1164.0 / ART_SIZE;
+    private static final double INNER_HEIGHT = 1140.0 / ART_SIZE;
+    private static final String ART_PATH = "/com/lattice/checkers/images/crossing-board.jpg";
 
     private final GameController controller;
     private final Consumer<Void> onChanged;
     private final StackPane[][] cells = new StackPane[8][8];
     private final boolean reducedMotion;
+    private final double cellWidth;
+    private final double cellHeight;
     private int focusRow;
     private int focusCol = 1;
 
@@ -39,19 +52,47 @@ public final class BoardView extends GridPane {
         this.controller = controller;
         this.onChanged = onChanged;
         this.reducedMotion = reducedMotion;
+        this.cellWidth = BOARD_SIZE * INNER_WIDTH / 8.0;
+        this.cellHeight = BOARD_SIZE * INNER_HEIGHT / 8.0;
+
         getStyleClass().add("board-view");
-        setHgap(0);
-        setVgap(0);
+        setPrefSize(BOARD_SIZE, BOARD_SIZE);
+        setMinSize(BOARD_SIZE, BOARD_SIZE);
+        setMaxSize(BOARD_SIZE, BOARD_SIZE);
         setFocusTraversable(true);
-        setAlignment(Pos.CENTER);
+        setAlignment(Pos.TOP_LEFT);
+
+        ImageView art = new ImageView(loadArt());
+        art.setFitWidth(BOARD_SIZE);
+        art.setFitHeight(BOARD_SIZE);
+        art.setPreserveRatio(false);
+        art.setSmooth(true);
+        art.setMouseTransparent(true);
+        art.getStyleClass().add("board-art");
+
+        GridPane overlay = new GridPane();
+        overlay.setHgap(0);
+        overlay.setVgap(0);
+        overlay.setMouseTransparent(false);
+        overlay.getStyleClass().add("board-overlay");
 
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
                 StackPane cell = createCell(r, c);
                 cells[r][c] = cell;
-                add(cell, c, r);
+                overlay.add(cell, c, r);
             }
         }
+
+        Pane overlayHost = new Pane(overlay);
+        overlayHost.setPrefSize(BOARD_SIZE, BOARD_SIZE);
+        overlayHost.setMinSize(BOARD_SIZE, BOARD_SIZE);
+        overlayHost.setMaxSize(BOARD_SIZE, BOARD_SIZE);
+        overlayHost.setMouseTransparent(false);
+        overlay.setLayoutX(BOARD_SIZE * INNER_LEFT);
+        overlay.setLayoutY(BOARD_SIZE * INNER_TOP);
+
+        getChildren().addAll(art, overlayHost);
 
         setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.UP) {
@@ -69,7 +110,6 @@ public final class BoardView extends GridPane {
             } else {
                 return;
             }
-            // Snap keyboard focus to dark squares when possible
             if ((focusRow + focusCol) % 2 == 0) {
                 focusCol = Math.min(7, focusCol + 1);
             }
@@ -100,11 +140,7 @@ public final class BoardView extends GridPane {
             for (int c = 0; c < 8; c++) {
                 Position pos = new Position(r, c);
                 StackPane cell = cells[r][c];
-                cell.getChildren().removeIf(n -> !(n instanceof Rectangle));
-
-                boolean darkSquare = pos.isDarkSquare();
-                Rectangle base = (Rectangle) cell.getChildren().get(0);
-                base.getStyleClass().setAll(darkSquare ? "square-dark" : "square-light");
+                cell.getChildren().removeIf(n -> !"hit".equals(n.getUserData()));
 
                 cell.getStyleClass().removeAll(
                         "square-selected", "square-destination", "square-capture",
@@ -112,29 +148,44 @@ public final class BoardView extends GridPane {
 
                 if (selected.isPresent() && selected.get().equals(pos)) {
                     cell.getStyleClass().add("square-selected");
+                    Rectangle wash = new Rectangle(cellWidth, cellHeight);
+                    wash.setFill(Color.rgb(212, 161, 90, 0.28));
+                    wash.setMouseTransparent(true);
+                    wash.setUserData("overlay");
+                    cell.getChildren().add(wash);
                 }
                 if (destinations.contains(pos)) {
                     if (captureLandings.contains(pos)) {
                         cell.getStyleClass().add("square-capture");
-                        Circle ring = new Circle(CELL * 0.18);
+                        Circle ring = new Circle(Math.min(cellWidth, cellHeight) * 0.18);
                         ring.getStyleClass().add("capture-marker");
                         ring.setStrokeType(StrokeType.OUTSIDE);
                         ring.setMouseTransparent(true);
                         cell.getChildren().add(ring);
                     } else {
                         cell.getStyleClass().add("square-destination");
-                        Circle dot = new Circle(CELL * 0.1);
+                        Circle halo = new Circle(Math.min(cellWidth, cellHeight) * 0.14);
+                        halo.setFill(Color.rgb(18, 20, 26, 0.45));
+                        halo.setMouseTransparent(true);
+                        Circle dot = new Circle(Math.min(cellWidth, cellHeight) * 0.10);
                         dot.getStyleClass().add("destination-marker");
                         dot.setMouseTransparent(true);
-                        cell.getChildren().add(dot);
+                        cell.getChildren().addAll(halo, dot);
                     }
                 }
                 if (r == focusRow && c == focusCol && isFocused()) {
                     cell.getStyleClass().add("square-keyboard-focus");
+                    Rectangle focus = new Rectangle(cellWidth - 4, cellHeight - 4);
+                    focus.setFill(Color.TRANSPARENT);
+                    focus.setStroke(Color.web("#F2F3F5"));
+                    focus.setStrokeWidth(2);
+                    focus.setMouseTransparent(true);
+                    focus.setUserData("overlay");
+                    cell.getChildren().add(focus);
                 }
 
                 board.get(pos).ifPresent(piece -> {
-                    PieceView pieceView = new PieceView(piece, CELL * 0.36);
+                    PieceView pieceView = new PieceView(piece, Math.min(cellWidth, cellHeight) * 0.34);
                     pieceView.setReducedMotion(reducedMotion);
                     cell.getChildren().add(pieceView);
                     if (selected.isPresent() && selected.get().equals(pos)) {
@@ -146,15 +197,15 @@ public final class BoardView extends GridPane {
     }
 
     private StackPane createCell(int row, int col) {
-        Rectangle base = new Rectangle(CELL, CELL);
-        base.setStroke(Color.TRANSPARENT);
-        boolean dark = (row + col) % 2 == 1;
-        base.getStyleClass().add(dark ? "square-dark" : "square-light");
+        Rectangle hit = new Rectangle(cellWidth, cellHeight);
+        hit.setFill(Color.TRANSPARENT);
+        hit.setStroke(Color.TRANSPARENT);
+        hit.setUserData("hit");
 
-        StackPane cell = new StackPane(base);
-        cell.setPrefSize(CELL, CELL);
-        cell.setMinSize(CELL, CELL);
-        cell.setMaxSize(CELL, CELL);
+        StackPane cell = new StackPane(hit);
+        cell.setPrefSize(cellWidth, cellHeight);
+        cell.setMinSize(cellWidth, cellHeight);
+        cell.setMaxSize(cellWidth, cellHeight);
         cell.setPickOnBounds(true);
         cell.getStyleClass().add("board-square");
         cell.setOnMouseClicked(e -> {
@@ -174,5 +225,11 @@ public final class BoardView extends GridPane {
         if (onChanged != null) {
             onChanged.accept(null);
         }
+    }
+
+    private static Image loadArt() {
+        var stream = BoardView.class.getResourceAsStream(ART_PATH);
+        Objects.requireNonNull(stream, "Missing board art: " + ART_PATH);
+        return new Image(stream);
     }
 }

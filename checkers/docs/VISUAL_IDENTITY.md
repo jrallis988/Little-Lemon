@@ -22,8 +22,9 @@ The board is the hero. Typography and hierarchy carry secondary information.
 | --- | --- | --- |
 | `--surface` | App chrome | Near-black graphite `#12141A` |
 | `--surface-raised` | Panels | `#1A1D26` |
-| `--board-dark` | Dark squares | `#2A303C` |
-| `--board-light` | Light squares | `#C8CED8` |
+| `--board` | Playable surface | Crossing illustrated 8×8 (grass, road, river, goal) |
+| `--board-dark` | Playable (odd) squares | Terrain in the Crossing art |
+| `--board-light` | Non-playable squares | Terrain in the Crossing art |
 | `--piece-dark` | Dark pieces | Deep ink `#0E1016` + light rim |
 | `--piece-light` | Light pieces | Warm porcelain `#E8E2D6` + ink rim |
 | `--signal` | Selection / focus / CTA | Muted amber `#D4A15A` |

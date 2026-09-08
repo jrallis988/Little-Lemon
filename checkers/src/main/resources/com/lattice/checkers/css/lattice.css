@@ -186,12 +186,9 @@
 }
 
 .board-view {
-    -fx-background-color: linear-gradient(to bottom, #151922, #0B0D12);
-    -fx-padding: 14;
-    -fx-background-radius: 12;
-    -fx-border-color: #4A5366;
-    -fx-border-radius: 12;
-    -fx-border-width: 1;
+    -fx-background-color: #0B0D12;
+    -fx-padding: 0;
+    -fx-background-radius: 4;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.55), 28, 0.25, 0, 12);
 }
 
@@ -200,11 +197,11 @@
 }
 
 .square-dark {
-    -fx-fill: #323A48;
+    -fx-fill: transparent;
 }
 
 .square-light {
-    -fx-fill: #D5DBE6;
+    -fx-fill: transparent;
 }
 
 .square-selected {

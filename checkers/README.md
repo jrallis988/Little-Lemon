@@ -104,7 +104,7 @@ Or from the app chrome: **All screens** opens the gallery.
 | --- | --- |
 | Maven + package architecture | Yes |
 | American checkers rules engine | Yes (mandatory captures, multi-jump, kings, win/resign) |
-| Human vs Human playable board | Yes |
+| Human vs Human playable board | Yes (Crossing illustrated board) |
 | Polished Graphite Lattice UI | In progress (single visual system) |
 | AI / Focus / X-Ray / Analysis / AI Lab | Not yet |
 | Screenshots | See PR / artifacts |
