@@ -1,10 +1,10 @@
-# FORGE ATHLETICS — Brand Identity Case Study
+# FORGE ATHLETICS — Campaign Case Study
 
 Fictional self-initiated portfolio project for **Artistic Fountain**.
 
-**Concept:** BUILT THROUGH WORK.
+**Campaign:** BUILT THROUGH WORK.
 
-A restrained React + TypeScript presentation of a full brand identity and standards system for a performance training company. Cursor is the presentation layer; production identity work is specified for Illustrator / InDesign / Photoshop.
+A React + TypeScript presentation of a connected athletic campaign — not a brand-guidelines deck. Narrative: problem → insight → strategy → big idea → identity → campaign → real-world execution.
 
 ## Run
 
@@ -20,14 +20,12 @@ npm run dev
 npm run build
 ```
 
-Output: `presentation/` (relative asset paths for subdirectory hosting).
+Output: `presentation/` (static hosting).
 
-## Structure
+## Connective tissue
 
-- `src/brand/` — tokens, SVG logo system, graphic-language primitives
-- `src/components/` — logo switcher, color/type viewers, mockups, photo direction
-- `src/App.tsx` — case-study narrative (challenge → final system)
+Maya · 5:12 A.M. · Session 184 · 327 Reps · Work Code · Forge Orange · BUILT THROUGH ____
 
 ## Note
 
-FORGE ATHLETICS is fictional. Created to demonstrate brand identity, graphic design, art direction, and professional brand-standards development.
+FORGE ATHLETICS is fictional. Created to demonstrate campaign strategy, art direction, identity, and execution.

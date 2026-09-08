@@ -1,14 +1,17 @@
 /**
- * FORGE ATHLETICS — Brand Tokens
- * Specs for digital presentation of the identity system.
- * Production artwork is authored in Illustrator / InDesign / Photoshop.
+ * FORGE ATHLETICS — Campaign Tokens
+ * BUILT THROUGH WORK. — presentation layer for the campaign case study.
  */
 
 export const brand = {
   name: 'FORGE ATHLETICS',
   tagline: 'BUILT THROUGH WORK.',
-  pillars: ['DISCIPLINE', 'PROGRESS', 'STRENGTH', 'PRECISION', 'WORK'] as const,
+  campaign: 'BUILT THROUGH WORK.',
+  platform: 'BUILT THROUGH ____',
 } as const
+
+/** Signature campaign color — strongest artificial color in the system */
+export const forgeOrange = '#E85A1C'
 
 export type ColorSpec = {
   name: string
@@ -19,44 +22,42 @@ export type ColorSpec = {
   usage: string
 }
 
-/** Primary palette — structural colors used across all applications */
 export const primaryPalette: ColorSpec[] = [
   {
+    name: 'Forge Orange',
+    role: 'Signature',
+    hex: forgeOrange,
+    rgb: '232, 90, 28',
+    cmyk: '0, 61, 88, 9',
+    usage: 'Energy, work, emphasis, action — the recognizable signature',
+  },
+  {
     name: 'Forge Black',
-    role: 'Primary',
+    role: 'Foundation',
     hex: '#121212',
     rgb: '18, 18, 18',
     cmyk: '0, 0, 0, 93',
-    usage: 'Primary logo, headlines, large fields, apparel dark grounds',
+    usage: 'Strength, primary foundation, large fields, apparel',
   },
   {
     name: 'Bone',
-    role: 'Primary',
+    role: 'Neutral',
     hex: '#F0EDE6',
     rgb: '240, 237, 230',
     cmyk: '0, 1, 4, 6',
-    usage: 'Light grounds, reversed logo field, print paper reference',
+    usage: 'Editorial neutral, light grounds, print paper',
   },
   {
     name: 'Steel',
-    role: 'Primary',
+    role: 'Secondary',
     hex: '#6E7276',
     rgb: '110, 114, 118',
     cmyk: '7, 3, 0, 54',
-    usage: 'Secondary type, rules, utility labels, muted UI chrome',
+    usage: 'Technical secondary — Work Code support, labels',
   },
 ]
 
-/** Secondary palette — accent and support; never replace primary structure */
 export const secondaryPalette: ColorSpec[] = [
-  {
-    name: 'Iron Oxide',
-    role: 'Accent',
-    hex: '#A84828',
-    rgb: '168, 72, 40',
-    cmyk: '0, 57, 76, 34',
-    usage: 'Campaign emphasis, CTAs, zone markers — sparingly',
-  },
   {
     name: 'Graphite',
     role: 'Secondary',
@@ -71,96 +72,157 @@ export const secondaryPalette: ColorSpec[] = [
     hex: '#D4D0C8',
     rgb: '212, 208, 200',
     cmyk: '0, 2, 6, 17',
-    usage: 'Subtle fills, training docs, soft dividers',
-  },
-  {
-    name: 'Concrete',
-    role: 'Secondary',
-    hex: '#9A968E',
-    rgb: '154, 150, 142',
-    cmyk: '0, 3, 8, 40',
-    usage: 'Captions, metadata, secondary rules',
+    usage: 'Subtle fills, soft dividers',
   },
 ]
 
 export const accessibilityPairs = [
   { fg: 'Forge Black', bg: 'Bone', ratio: '16.4:1', pass: 'AAA' },
   { fg: 'Bone', bg: 'Forge Black', ratio: '16.4:1', pass: 'AAA' },
-  { fg: 'Forge Black', bg: 'Mist', ratio: '11.2:1', pass: 'AAA' },
-  { fg: 'Bone', bg: 'Graphite', ratio: '13.1:1', pass: 'AAA' },
-  { fg: 'Iron Oxide', bg: 'Bone', ratio: '5.1:1', pass: 'AA (large / UI)' },
-  { fg: 'Steel', bg: 'Bone', ratio: '4.6:1', pass: 'AA (body caution)' },
+  { fg: 'Bone', bg: 'Forge Orange', ratio: '3.2:1', pass: 'AA large only' },
+  { fg: 'Forge Orange', bg: 'Bone', ratio: '3.8:1', pass: 'AA large / UI' },
+  { fg: 'Forge Orange', bg: 'Forge Black', ratio: '5.4:1', pass: 'AA' },
 ] as const
 
-export const typeScale = {
-  display: {
-    family: 'Barlow Condensed',
-    weight: 700,
-    size: 'clamp(3.5rem, 10vw, 7.5rem)',
-    tracking: '0.04em',
-    leading: 0.92,
-    case: 'uppercase' as const,
-    use: 'Campaign headlines, environmental statements',
+/** Expandable campaign messaging — each line is evidence, not a slogan */
+export const campaignStatements = [
+  {
+    line: 'BUILT THROUGH 5:12 A.M.',
+    evidence: 'Maya’s alarm. Empty track. Session 184 starts before the sun.',
   },
-  headline: {
-    family: 'Barlow Condensed',
-    weight: 600,
-    size: 'clamp(1.75rem, 4vw, 3rem)',
-    tracking: '0.06em',
-    leading: 1.05,
-    case: 'uppercase' as const,
-    use: 'Section titles, promotional blocks',
+  {
+    line: 'BUILT THROUGH 327 REPS.',
+    evidence: 'Same session. Strength block after speed work. Counted, not estimated.',
   },
-  body: {
-    family: 'IBM Plex Sans',
-    weight: 400,
-    size: '1.0625rem',
-    tracking: '0',
-    leading: 1.55,
-    case: 'sentence' as const,
-    use: 'Long-form communication, guidelines copy',
+  {
+    line: 'BUILT THROUGH THE LAST SET.',
+    evidence: 'When form breaks and discipline doesn’t.',
   },
-  utility: {
-    family: 'IBM Plex Mono',
-    weight: 500,
-    size: '0.75rem',
-    tracking: '0.14em',
-    leading: 1.4,
-    case: 'uppercase' as const,
-    use: 'Stats, labels, schedules, specs, captions',
+  {
+    line: 'BUILT THROUGH FAILURE.',
+    evidence: 'Missed blocks, false starts, times that don’t make the board.',
   },
+  {
+    line: 'BUILT THROUGH ONE MORE.',
+    evidence: 'The rep after the plan ends.',
+  },
+  {
+    line: 'BUILT THROUGH 1,000 MISSES.',
+    evidence: 'Jordan’s shooting hour. Empty gym. No highlight reel.',
+  },
+  {
+    line: 'BUILT THROUGH WORK.',
+    evidence: 'The platform. Everything above is proof.',
+  },
+] as const
+
+export type WorkCodeEntry = {
+  label: string
+  value: string
+}
+
+export type Athlete = {
+  id: string
+  name: string
+  age: number
+  sport: string
+  role: string
+  session: string
+  time: string
+  protocol: string
+  duration: string
+  goal: string
+  day: string
+  totalReps: string
+  tone: string
+  story: string
+}
+
+/** Primary campaign athlete — appears throughout */
+export const maya: Athlete = {
+  id: 'maya',
+  name: 'MAYA',
+  age: 19,
+  sport: 'SPRINTER',
+  role: 'Primary athlete',
+  session: 'SESSION 184',
+  time: '05:12 AM',
+  protocol: '8 × 200 M',
+  duration: '42 MINUTES',
+  goal: '1 GOAL',
+  day: 'DAY 064',
+  totalReps: '12,481',
+  tone: 'tone-maya',
+  story:
+    'Maya trains alone before the facility opens. Session 184 is speed, then strength. The clock starts at 5:12. The work doesn’t end when the stopwatch does.',
+}
+
+/** Second athlete — proves the idea scales across sports */
+export const jordan: Athlete = {
+  id: 'jordan',
+  name: 'JORDAN',
+  age: 22,
+  sport: 'BASKETBALL',
+  role: 'Second athlete',
+  session: 'SESSION 091',
+  time: '06:40 AM',
+  protocol: '1,000 MISSES',
+  duration: '68 MINUTES',
+  goal: 'MAKE RATE ↑',
+  day: 'DAY 112',
+  totalReps: '94,200',
+  tone: 'tone-jordan',
+  story:
+    'Jordan’s hour is empty-gym shooting. Misses are logged. Makes are secondary. The campaign line is literal: built through 1,000 misses.',
+}
+
+export const athletes = [maya, jordan] as const
+
+export function workCodeFor(athlete: Athlete): WorkCodeEntry[] {
+  return [
+    { label: 'ATHLETE', value: `${athlete.name} / ${athlete.sport}` },
+    { label: 'TIME', value: athlete.time },
+    { label: 'SESSION', value: athlete.session },
+    { label: 'PROTOCOL', value: athlete.protocol },
+    { label: 'DAY', value: athlete.day },
+  ]
+}
+
+export const mayaWorkCodeCompact = '05:12 AM / SESSION 184 / STRENGTH'
+export const mayaTrackCode = '05:12 / SESSION 184 / TRACK'
+
+export const photoRules = {
+  do: [
+    'Chalked hands',
+    'Taped wrists and ankles',
+    'Sweat',
+    'Empty tracks and empty gyms',
+    'Early mornings',
+    'Failed attempts',
+    'Recovery',
+    'Repetition',
+    'Worn equipment',
+    'Athletes catching their breath',
+    'Preparation',
+    'Training alone',
+    'Moments immediately before and after effort',
+  ],
+  dont: [
+    'Podium celebrations',
+    'Trophy poses',
+    'Heroic flex portraits',
+    'Confetti and fireworks',
+    'Manufactured victory lighting',
+  ],
+  rule: 'NEVER PHOTOGRAPH THE PODIUM. PHOTOGRAPH WHAT BUILT IT.',
 } as const
 
-export const logoRules = {
-  clearSpace: 'Equal to the height of the symbol’s vertical stem (1× stem)',
-  minPrint: {
-    symbol: '12 mm',
-    wordmark: '28 mm wide',
-    primaryHorizontal: '40 mm wide',
-  },
-  minDigital: {
-    symbol: '24 px',
-    wordmark: '96 px wide',
-    primaryHorizontal: '140 px wide',
-  },
-} as const
-
-export const voiceDo = [
-  'Direct',
-  'Focused',
-  'Confident',
-  'Motivating',
-] as const
-
-export const voiceDont = [
-  'Aggressive',
-  'Cheesy',
-  'Overly inspirational',
-] as const
-
-export const voiceExamples = [
-  { good: 'BUILT THROUGH WORK.', bad: 'Unleash the beast inside.' },
-  { good: 'ONE MORE.', bad: 'No pain, no gain!' },
-  { good: 'PROGRESS IS EARNED.', bad: 'Dream big. Crush goals.' },
-  { good: 'SHOW UP. TRAIN. REPEAT.', bad: 'Be your best self every day.' },
+export const socialSequence = [
+  { frame: '01', title: '5:12 AM', detail: 'Alarm. Dark. Keys.' },
+  { frame: '02', title: 'ARRIVAL', detail: 'Maya at the facility gate.' },
+  { frame: '03', title: 'REP 01', detail: 'First 200. Clock starts.' },
+  { frame: '04', title: 'WORK', detail: 'Training footage — mid-session.' },
+  { frame: '05', title: 'REP 327', detail: 'Strength block. Counted.' },
+  { frame: '06', title: 'AFTER', detail: 'Exhausted. Alone. Still here.' },
+  { frame: '07', title: 'BUILT THROUGH WORK.', detail: 'Close. Forge mark.' },
 ] as const

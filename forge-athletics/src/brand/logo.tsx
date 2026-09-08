@@ -31,6 +31,7 @@ type LogoProps = {
 
 const BLACK = '#121212'
 const BONE = '#F0EDE6'
+const ORANGE = '#E85A1C'
 
 /** Symbol — geometric F with anvil plate on 64×64 artboard */
 export function ForgeSymbol({
@@ -384,7 +385,7 @@ export function LogoConstruction({ className }: { className?: string }) {
         <rect x={u} y={u} width={2 * u} height={5 * u} fill="#121212" opacity="0.92" />
         <rect x={u} y={u} width={6 * u} height={1.5 * u} fill="#121212" opacity="0.92" />
         <rect x={u} y={3.5 * u} width={4.5 * u} height={1.5 * u} fill="#121212" opacity="0.92" />
-        <rect x={u} y={6.5 * u} width={6 * u} height={0.5 * u} fill="#A84828" />
+        <rect x={u} y={6.5 * u} width={6 * u} height={0.5 * u} fill={ORANGE} />
       </g>
       {/* Dimension labels */}
       <text
