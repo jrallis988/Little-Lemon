@@ -181,21 +181,21 @@ export const homeEvents = [
     dateLabel: "7.29.26",
     time: "12:00pm – 1:00pm",
     title: "Nursing Info Session – July 29",
-    to: "/admissions/visit",
+    to: "/events/nursing-info",
   },
   {
     id: "express-august",
     dateLabel: "8.11.26",
     time: "9:00am – 4:00pm",
     title: "Express Admissions Day August 2026",
-    to: "/admissions/visit",
+    to: "/events/express-august",
   },
   {
     id: "business-info",
     dateLabel: "7.30.26",
     time: "4:00pm – 6:00pm",
     title: "Business Programs Info Night",
-    to: "/admissions/visit",
+    to: "/events/business-info",
   },
 ];
 
@@ -329,3 +329,109 @@ export const legalLinks = [
     href: "https://www.greatbay.edu/about/consumer-information/",
   },
 ];
+
+
+export const newsBodies = {
+  "early-college-advocate": [
+    "Jaclyn Chisholm of Portsmouth High School was recognized by the Governor as Great Bay Community College’s Early College Advocate.",
+    "The honor highlights advocacy, innovation, and a sustained commitment to helping high school students earn college credit early.",
+    "Early College pathways remain one of Great Bay’s strongest bridges between Seacoast high schools and affordable degree progress.",
+  ],
+  "nonprofit-of-the-year": [
+    "The Greater Rochester Chamber of Commerce named Great Bay Community College its 2026 Nonprofit of the Year.",
+    "The award recognizes leadership, partnership, and sustained community impact across Strafford and Rockingham counties.",
+    "College leaders accepted the honor on behalf of faculty, staff, and students who make regional opportunity possible every day.",
+  ],
+  "graduates-2026": [
+    "Great Bay celebrated the Class of 2026 with recognition for graduates and academic award recipients.",
+    "Commencement ceremonies highlighted career launches, transfer plans, and the support networks that carried students to the finish line.",
+  ],
+  "career-path-success": [
+    "New graduates pointed to clearer career paths, real-world experience, and personal support as defining parts of their GBCC journey.",
+    "Clinical placements, advising, and flexible scheduling were frequently cited as the difference-makers.",
+  ],
+  "commencement-80-years": [
+    "The 2026 commencement marked both a new graduating class and eight decades of transforming futures on the Seacoast.",
+    "Since 1945, Great Bay has expanded access to affordable higher education for nearly 90,000 learners.",
+  ],
+  "nursing-pinning": [
+    "Nursing graduates were celebrated in a pinning ceremony recognizing clinical readiness and professional commitment.",
+    "Faculty and clinical partners joined families to honor the transition from student nurse to practice-ready graduate.",
+  ],
+  "welding-lab": [
+    "Great Bay opened a new Welding Technologies facility that expands hands-on capacity for Industry and Transportation students.",
+    "The lab supports skills development across major welding processes and employer-aligned certification preparation.",
+  ],
+  "ashley-vatcher": [
+    "Veterinary Technology student Ashley Vatcher shares how clinical learning and campus support shaped her path at Great Bay.",
+    "Her story reflects the college’s broader commitment to applied learning and one-on-one guidance.",
+  ],
+};
+
+
+export const eventItems = [
+  {
+    id: "nursing-info",
+    dateLabel: "7.29.26",
+    date: "July 29, 2026",
+    time: "12:00pm – 1:00pm",
+    title: "Nursing Info Session",
+    location: "Portsmouth Campus / Zoom options available",
+    summary: "Learn about nursing pathways, prerequisites, clinical expectations, and upcoming start dates.",
+    body: [
+      "Join Great Bay faculty and admissions for a focused Nursing Information Session.",
+      "You will review program requirements, clinical partnerships, and how to prepare a competitive application.",
+      "Bring questions about timelines, financial aid, and what a typical week looks like for nursing students.",
+    ],
+  },
+  {
+    id: "express-august",
+    dateLabel: "8.11.26",
+    date: "August 11, 2026",
+    time: "9:00am – 4:00pm",
+    title: "Express Admissions Day",
+    location: "Welcome Center, Portsmouth Campus",
+    summary: "On-the-spot admissions, advising, and registration so you can leave ready for the next term.",
+    body: [
+      "Express Admissions Day compresses key enrollment steps into one visit.",
+      "Meet admissions counselors, complete advising conversations, and register for available seats.",
+      "Arrive with transcripts if possible, and plan for a full morning or afternoon on campus.",
+    ],
+  },
+  {
+    id: "business-info",
+    dateLabel: "7.30.26",
+    date: "July 30, 2026",
+    time: "4:00pm – 6:00pm",
+    title: "Business Programs Info Night",
+    location: "Great Bay Community College, Portsmouth",
+    summary: "Meet faculty and alumni, learn about scholarships, and apply on the spot for fall classes.",
+    body: [
+      "Explore marketing, accounting, management, and related business pathways in a welcoming evening format.",
+      "Talk with faculty about online, in-person, and hyflex options that fit work schedules.",
+      "Refreshments will be served and admissions staff will be available for on-the-spot applications.",
+    ],
+  },
+  {
+    id: "open-house-oct",
+    dateLabel: "10.22.26",
+    date: "October 22, 2026",
+    time: "4:00pm – 6:00pm",
+    title: "Fall Open House",
+    location: "Portsmouth Campus",
+    summary: "Tour labs and classrooms, meet faculty, and learn about credit and non-credit programs.",
+    body: [
+      "Open House is designed for prospective students and families exploring Great Bay for the first time.",
+      "Stop by program tables, tour signature labs, and ask about transfer and workforce pathways.",
+      "Financial aid counselors will also be available to discuss FAFSA and scholarship timing.",
+    ],
+  },
+];
+
+export function getEventById(id) {
+  return eventItems.find((event) => event.id === id);
+}
+
+export function getNewsById(id) {
+  return newsItems.find((item) => item.id === id);
+}

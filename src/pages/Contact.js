@@ -1,25 +1,43 @@
+import { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useState } from "react";
 import { Link } from "react-router-dom";
+import { submitInquiry } from "../services/inquiries";
 
 function Contact() {
-  const [submitted, setSubmitted] = useState(false);
+  const [result, setResult] = useState(null);
+  const [submitError, setSubmitError] = useState("");
 
   const formik = useFormik({
     initialValues: {
       name: "",
       email: "",
+      phone: "",
       topic: "",
       message: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please enter your name"),
       email: Yup.string().email("Enter a valid email").required("Please enter your email"),
+      phone: Yup.string(),
       topic: Yup.string().required("Select a topic"),
       message: Yup.string().required("Please include a short message"),
     }),
-    onSubmit: () => setSubmitted(true),
+    onSubmit: async (values, helpers) => {
+      setSubmitError("");
+      try {
+        const inquiry = await submitInquiry({
+          ...values,
+          form: "contact",
+        });
+        setResult(inquiry);
+        helpers.resetForm({ values });
+      } catch (error) {
+        setSubmitError(error.message || "Unable to send your message. Please try again.");
+      } finally {
+        helpers.setSubmitting(false);
+      }
+    },
   });
 
   return (
@@ -76,23 +94,41 @@ function Contact() {
                 <li><Link to="/directory">Faculty &amp; Staff Directory</Link></li>
                 <li><Link to="/academics/calendar">Academic Calendar &amp; Schedule</Link></li>
                 <li><Link to="/admissions/visit">Visit Campus</Link></li>
+                <li><Link to="/events">Events calendar</Link></li>
               </ul>
             </div>
           </div>
 
           <div className="contact-form-wrap">
-            {submitted ? (
+            {result ? (
               <div className="form-success" role="status">
-                <h3>Message sent.</h3>
-                <p>Thanks for reaching out. A member of the Great Bay team will get back to you shortly.</p>
+                <h3>Message received.</h3>
+                <p>
+                  Thanks, {result.name}. Your inquiry was queued for the Great Bay team
+                  and assigned reference <strong>{result.id}</strong>.
+                </p>
                 <div className="submitted-summary">
-                  <p><strong>Topic:</strong> {formik.values.topic}</p>
-                  <p><strong>Email:</strong> {formik.values.email}</p>
+                  <p><strong>Topic:</strong> {result.topic}</p>
+                  <p><strong>Email:</strong> {result.email}</p>
+                  <p><strong>Routed to:</strong> {result.destination}</p>
                 </div>
+                <button
+                  className="btn btn-navy"
+                  type="button"
+                  onClick={() => {
+                    setResult(null);
+                    formik.resetForm();
+                  }}
+                >
+                  Send another message
+                </button>
               </div>
             ) : (
               <form className="info-form" onSubmit={formik.handleSubmit} noValidate>
-                <h2>Send a message</h2>
+                <h2>Send a message / request info</h2>
+                <p className="fine-print">
+                  Submissions are validated, stored securely in this demo session, and prepared for CRM handoff.
+                </p>
                 <label>
                   Full name
                   <input name="name" type="text" autoComplete="name" value={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur} />
@@ -104,10 +140,15 @@ function Contact() {
                   {formik.touched.email && formik.errors.email ? <span className="field-error">{formik.errors.email}</span> : null}
                 </label>
                 <label>
+                  Phone <span className="optional">(optional)</span>
+                  <input name="phone" type="tel" autoComplete="tel" value={formik.values.phone} onChange={formik.handleChange} onBlur={formik.handleBlur} />
+                </label>
+                <label>
                   Topic
                   <select name="topic" value={formik.values.topic} onChange={formik.handleChange} onBlur={formik.handleBlur}>
                     <option value="">Select one</option>
                     <option value="Admissions">Admissions</option>
+                    <option value="Request Information">Request Information</option>
                     <option value="Financial Aid">Financial Aid</option>
                     <option value="Academic Programs">Academic Programs</option>
                     <option value="Campus Visit">Campus Visit</option>
@@ -120,7 +161,10 @@ function Contact() {
                   <textarea name="message" rows="5" value={formik.values.message} onChange={formik.handleChange} onBlur={formik.handleBlur} />
                   {formik.touched.message && formik.errors.message ? <span className="field-error">{formik.errors.message}</span> : null}
                 </label>
-                <button className="btn btn-gold" type="submit">Send Message</button>
+                {submitError ? <p className="field-error" role="alert">{submitError}</p> : null}
+                <button className="btn btn-gold" type="submit" disabled={formik.isSubmitting}>
+                  {formik.isSubmitting ? "Sending…" : "Send Message"}
+                </button>
               </form>
             )}
           </div>

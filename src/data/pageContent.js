@@ -23,50 +23,6 @@ function page(partial) {
 }
 
 export const pages = {
-  "/academics/course-descriptions": page({
-    brand: "Academics",
-    title: "Course descriptions",
-    copy: "Browse credit courses alphabetically and plan the classes that move you toward your degree or certificate.",
-    image: img.lab,
-    icon: "book",
-    sections: [
-      {
-        heading: "Find the right course",
-        body: "Course descriptions outline credits, prerequisites, and learning outcomes so you can build a schedule with confidence.",
-        bullets: [
-          "Alphabetical course listings by subject",
-          "Prerequisite and co-requisite guidance",
-          "Credit hours and typical offerings",
-        ],
-      },
-    ],
-    links: [
-      { to: "/academics/course-schedule", label: "View course schedule" },
-      { to: "/academics/catalog", label: "Open college catalog" },
-    ],
-  }),
-  "/academics/course-schedule": page({
-    brand: "Academics",
-    title: "Course schedule & offerings",
-    copy: "See what is offered each term — day, evening, online, and hyflex options designed to fit your life.",
-    image: img.lobby,
-    icon: "calendar",
-    sections: [
-      {
-        heading: "Plan your semester",
-        body: "Use the schedule with advising to lock in required courses early. Popular clinical and lab sections fill quickly.",
-        bullets: [
-          "Filter by term, modality, and subject",
-          "Coordinate with placement and prerequisites",
-          "Register during published windows",
-        ],
-      },
-    ],
-    links: [
-      { to: "/academics/registration", label: "Registration steps" },
-      { to: "/academics/calendar", label: "Academic calendar" },
-    ],
-  }),
   "/academics/catalog": page({
     brand: "Academics",
     title: "College catalog",
@@ -357,34 +313,6 @@ export const pages = {
     icon: "shield",
   }),
 
-  "/athletics": page({
-    brand: "Student Experience",
-    title: "Athletics — Compete as a Heron",
-    copy: "GBCC is a member of the Yankee Small College Conference (YSCC) within the USCAA. In 2025 the men’s basketball team won the conference championship.",
-    image: img.students,
-    icon: "trophy",
-    sections: [
-      {
-        heading: "Varsity teams",
-        bullets: [
-          "Men’s Basketball",
-          "Women’s Basketball",
-          "Baseball",
-          "Volleyball",
-          "Golf (Men & Women)",
-          "Track & Field (Men & Women)",
-        ],
-      },
-      {
-        heading: "Contact athletics",
-        body: "(603) 427-7733 · greatbayathletics@ccsnh.edu",
-      },
-    ],
-    links: [
-      { to: "/student-experience/clubs", label: "Clubs & intramurals" },
-      { to: "/student-experience/wellness", label: "Fitness & wellness" },
-    ],
-  }),
   "/student-experience/clubs": page({
     brand: "Student Experience",
     title: "Clubs & organizations",
@@ -613,28 +541,6 @@ export const pages = {
     title: "Institutional closings",
     copy: "Weather-related and emergency closing announcements for the Portsmouth campus.",
     icon: "calendar",
-  }),
-  "/events": page({
-    brand: "Campus",
-    title: "Events",
-    copy: "Express Admissions days, info sessions, open houses, and campus happenings.",
-    icon: "calendar",
-    image: img.lobby,
-    sections: [
-      {
-        heading: "Upcoming highlights",
-        bullets: [
-          "Nursing Info Session",
-          "Express Admissions Day",
-          "Business Programs Info Night",
-          "Campus open houses",
-        ],
-      },
-    ],
-    links: [
-      { to: "/admissions/visit", label: "Visit & admissions events" },
-      { to: "/news", label: "News" },
-    ],
   }),
 };
 

@@ -21,23 +21,23 @@ function News() {
                   <span>{item.category}</span>
                   <span>{item.date}</span>
                 </p>
-                <h2>{item.title}</h2>
+                <h2>
+                  <Link to={`/news/${item.id}`}>{item.title}</Link>
+                </h2>
                 <p>{item.summary}</p>
+                <Link className="text-link" to={`/news/${item.id}`}>
+                  Read full article
+                </Link>
               </article>
             ))}
           </div>
 
-          <div className="section-cta">
-            <a
-              className="btn btn-navy"
-              href="https://www.greatbay.edu/news"
-              target="_blank"
-              rel="noreferrer"
-            >
-              More on greatbay.edu
-            </a>
-            <Link className="btn btn-gold" to="/admissions/visit" style={{ marginLeft: "0.75rem" }}>
-              Upcoming Visit Events
+          <div className="section-cta left">
+            <Link className="btn btn-navy" to="/events">
+              View events calendar
+            </Link>
+            <Link className="btn btn-gold" to="/admissions/visit">
+              Visit campus
             </Link>
           </div>
         </div>

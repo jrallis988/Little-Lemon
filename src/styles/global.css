@@ -2166,3 +2166,232 @@ main {
     display: grid;
   }
 }
+
+
+/* ===== Depth pass: courses, news, events, directory, athletics ===== */
+.course-filters,
+.directory-search,
+.schedule-toolbar {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr auto;
+  gap: 1rem;
+  align-items: end;
+  margin-bottom: 1.5rem;
+  padding: 1.25rem;
+  background: var(--navy);
+  color: var(--white);
+}
+
+.directory-search {
+  grid-template-columns: 1fr auto;
+}
+
+.schedule-toolbar {
+  grid-template-columns: 220px 1fr;
+}
+
+.course-filters label,
+.directory-search label,
+.schedule-toolbar label {
+  display: grid;
+  gap: 0.4rem;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.course-filters input,
+.course-filters select,
+.directory-search input,
+.schedule-toolbar select {
+  border: 0;
+  padding: 0.7rem 0.85rem;
+  background: var(--white);
+  color: var(--navy);
+}
+
+.course-count,
+.schedule-toolbar .fine-print,
+.directory-search .fine-print {
+  color: rgba(255,255,255,0.8);
+  margin: 0;
+  font-family: var(--font-ui);
+}
+
+.course-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.course-card {
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.course-card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.35rem;
+}
+
+.course-code,
+.course-credits,
+.course-subject {
+  font-family: var(--font-ui);
+  margin: 0;
+}
+
+.course-code {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.course-credits {
+  color: var(--muted);
+}
+
+.course-subject {
+  color: var(--muted);
+  margin-bottom: 0.55rem;
+}
+
+.schedule-table-wrap {
+  overflow-x: auto;
+}
+
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-ui);
+}
+
+.schedule-table th,
+.schedule-table td {
+  text-align: left;
+  padding: 0.85rem 0.75rem;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+.schedule-table th {
+  color: var(--navy);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.schedule-table td span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin-top: 0.2rem;
+}
+
+.article-layout {
+  display: grid;
+  grid-template-columns: 1.4fr 0.75fr;
+  gap: 2rem;
+}
+
+.article-main .lede {
+  font-size: 1.15rem;
+  color: var(--navy);
+}
+
+.article-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.article-aside h2,
+.article-aside h3 {
+  margin-bottom: 0.85rem;
+}
+
+.related-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.events-list {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.event-card {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.event-date-block {
+  display: grid;
+  gap: 0.25rem;
+  color: var(--accent);
+  font-family: var(--font-ui);
+  font-weight: 700;
+}
+
+.event-location {
+  color: var(--muted);
+  font-family: var(--font-ui);
+  margin-bottom: 0.5rem;
+}
+
+.athletics-layout {
+  display: grid;
+  grid-template-columns: 1.3fr 0.8fr;
+  gap: 2rem;
+}
+
+.athletics-teams {
+  margin: 1.25rem 0 1.5rem;
+}
+
+.athletics-aside {
+  display: grid;
+  gap: 1rem;
+}
+
+.athletics-note {
+  padding: 1.25rem;
+  border: 1px solid var(--line);
+  background: var(--mist);
+}
+
+.light-list li {
+  color: rgba(255,255,255,0.9);
+}
+
+.light-list li::before {
+  background: var(--gold);
+}
+
+.optional {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.info-form .fine-print {
+  margin-top: -0.35rem;
+  margin-bottom: 0.85rem;
+}
+
+@media (max-width: 960px) {
+  .course-filters,
+  .directory-search,
+  .schedule-toolbar,
+  .article-layout,
+  .event-card,
+  .athletics-layout {
+    grid-template-columns: 1fr;
+  }
+}

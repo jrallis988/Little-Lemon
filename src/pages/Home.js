@@ -89,7 +89,7 @@ function Home() {
                   <p className="home-news-tag">In the News</p>
                   <h3>{item.title}</h3>
                   <p>{item.summary}</p>
-                  <Link className="text-link" to="/news">
+                  <Link className="text-link" to={`/news/${item.id}`}>
                     Read the full article
                   </Link>
                 </article>
