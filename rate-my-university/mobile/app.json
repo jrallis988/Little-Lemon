@@ -1,0 +1,26 @@
+{
+  "expo": {
+    "name": "Rate My University",
+    "slug": "rate-my-university",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#0B1F33"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ratemyuniversity.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#0B1F33"
+      },
+      "package": "com.ratemyuniversity.app"
+    },
+    "plugins": [
+      "expo-secure-store"
+    ]
+  }
+}

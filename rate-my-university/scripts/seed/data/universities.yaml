@@ -1,0 +1,24 @@
+# Foundational university domains for cold-start seeding.
+# domain must match the email suffix students use (prefixed with @).
+
+universities:
+  - name: University of New Hampshire
+    domain: "@unh.edu"
+    location: Durham, NH, USA
+    slug: unh
+  - name: University of Massachusetts Amherst
+    domain: "@umass.edu"
+    location: Amherst, MA, USA
+    slug: umass
+  - name: Northeastern University
+    domain: "@northeastern.edu"
+    location: Boston, MA, USA
+    slug: northeastern
+  - name: Boston University
+    domain: "@bu.edu"
+    location: Boston, MA, USA
+    slug: bu
+  - name: University of Vermont
+    domain: "@uvm.edu"
+    location: Burlington, VT, USA
+    slug: uvm

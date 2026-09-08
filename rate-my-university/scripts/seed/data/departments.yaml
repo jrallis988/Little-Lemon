@@ -1,0 +1,61 @@
+# Department catalogs keyed by university slug.
+# Shared STEM / liberal-arts defaults plus campus-specific overrides.
+
+defaults:
+  - name: Computer Science
+    code: CS
+  - name: Mathematics
+    code: MATH
+  - name: Biology
+    code: BIO
+  - name: Chemistry
+    code: CHEM
+  - name: Physics
+    code: PHYS
+  - name: English
+    code: ENGL
+  - name: Psychology
+    code: PSY
+  - name: Business Administration
+    code: BUS
+  - name: Mechanical Engineering
+    code: ME
+  - name: Electrical Engineering
+    code: EE
+  - name: History
+    code: HIST
+  - name: Economics
+    code: ECON
+  - name: Political Science
+    code: POLI
+  - name: Nursing
+    code: NURS
+  - name: Education
+    code: EDUC
+
+by_university:
+  unh:
+    - name: Natural Resources
+      code: NR
+    - name: Marine Sciences
+      code: MARI
+  umass:
+    - name: Isenberg School of Management
+      code: SCH-MGMT
+    - name: Public Health
+      code: PUBHLTH
+  northeastern:
+    - name: Khoury College of Computer Sciences
+      code: CS
+    - name: D'Amore-McKim School of Business
+      code: BUSN
+  bu:
+    - name: College of Communication
+      code: COM
+    - name: Questrom School of Business
+      code: QST
+  uvm:
+    - name: Rubenstein School of Environment
+      code: RSENR
+    - name: Larner College of Medicine
+      code: MED

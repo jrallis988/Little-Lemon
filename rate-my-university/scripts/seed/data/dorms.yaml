@@ -1,0 +1,41 @@
+# Optional starter dorm / housing listings keyed by university slug.
+
+by_university:
+  unh:
+    - building_name: Stoke Hall
+      campus_zone: Main Campus
+      capacity: 400
+    - building_name: Hubbard Hall
+      campus_zone: Main Campus
+      capacity: 300
+    - building_name: The Gables
+      campus_zone: South Campus
+      capacity: 250
+  umass:
+    - building_name: Southwest Residential Area
+      campus_zone: Southwest
+      capacity: 5500
+    - building_name: Orchard Hill
+      campus_zone: Orchard Hill
+      capacity: 1200
+  northeastern:
+    - building_name: Speare Place
+      campus_zone: West Campus
+      capacity: 500
+    - building_name: International Village
+      campus_zone: East Campus
+      capacity: 800
+  bu:
+    - building_name: Warren Towers
+      campus_zone: East Campus
+      capacity: 1800
+    - building_name: Myles Standish Hall
+      campus_zone: West Campus
+      capacity: 700
+  uvm:
+    - building_name: Living/Learning Center
+      campus_zone: Central Campus
+      capacity: 600
+    - building_name: Harris-Millis Complex
+      campus_zone: Redstone Campus
+      capacity: 900
