@@ -36,9 +36,9 @@ public final class FactionHud extends VBox {
         getStyleClass().addAll("faction-hud", faction == Faction.FROG ? "hud-frog" : "hud-traffic");
         setAlignment(Pos.TOP_LEFT);
         setSpacing(12);
-        setPrefWidth(200);
-        setMinWidth(188);
-        setMaxWidth(220);
+        setPrefWidth(214);
+        setMinWidth(204);
+        setMaxWidth(240);
 
         PieceView emblem = new PieceView(new Piece(faction.side(), PieceRank.MAN), 24);
         Label name = new Label(faction.displayName());

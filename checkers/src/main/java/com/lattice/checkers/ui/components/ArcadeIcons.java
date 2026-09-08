@@ -22,16 +22,24 @@ public final class ArcadeIcons {
     }
 
     public static Node hint() {
-        Circle bulb = new Circle(0, -1, 6.2);
-        bulb.setFill(Color.TRANSPARENT);
+        Circle bulb = new Circle(0, -1.2, 6.4);
+        bulb.setFill(Color.web("#F4E38A", 0.22));
         bulb.setStroke(INK);
         bulb.setStrokeWidth(1.6);
-        Rectangle base = new Rectangle(-3.2, 5.2, 6.4, 2.4);
+        Line rayL = new Line(-9.2, -1.2, -7.2, -1.2);
+        Line rayR = new Line(7.2, -1.2, 9.2, -1.2);
+        Line rayT = new Line(0, -10.4, 0, -8.4);
+        for (Line ray : new Line[] {rayL, rayR, rayT}) {
+            ray.setStroke(INK);
+            ray.setStrokeWidth(1.3);
+            ray.setStrokeLineCap(StrokeLineCap.ROUND);
+        }
+        Rectangle base = new Rectangle(-3.2, 5.4, 6.4, 2.6);
         base.setFill(INK);
-        Line filament = new Line(0, 3.4, 0, 5.0);
+        Line filament = new Line(0, 3.6, 0, 5.2);
         filament.setStroke(INK);
         filament.setStrokeWidth(1.4);
-        return boxed(new Group(bulb, filament, base));
+        return boxed(new Group(rayL, rayR, rayT, bulb, filament, base));
     }
 
     public static Node restart() {

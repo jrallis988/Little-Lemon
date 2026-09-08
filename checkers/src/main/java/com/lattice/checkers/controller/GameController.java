@@ -246,7 +246,7 @@ public final class GameController {
         state = rulesEngine.resign(state, side);
         selected = null;
         winningSide(state.status()).ifPresent(winner ->
-                lastScoreEvents = scoreManager.recordPly(winner, 0, 0, false, true, true));
+                lastScoreEvents = scoreManager.recordPly(winner, 0, 0, false, false, true));
     }
 
     public void resign(Player player) {

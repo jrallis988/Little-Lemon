@@ -1,6 +1,7 @@
 package com.lattice.checkers.ui.screens;
 
 import com.lattice.checkers.controller.GameController;
+import com.lattice.checkers.model.Side;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -91,14 +92,17 @@ public final class ScreenGallery {
 
     public static Map<String, Supplier<Node>> screenFactories() {
         Map<String, Supplier<Node>> map = new LinkedHashMap<>();
-        GameController previewController = new GameController();
-        previewController.startHumanVsHuman("Frog", "Traffic");
-        map.put(HomeScreen.screenId(), () -> new HomeScreen(previewController, id -> { }).getRoot());
-        map.put(NewGameScreen.screenId(), () -> new NewGameScreen(previewController, id -> { }).getRoot());
+        GameController live = new GameController();
+        live.startHumanVsHuman("Frog", "Traffic");
+        GameController finished = new GameController();
+        finished.startHumanVsHuman("Frog", "Traffic");
+        finished.resign(Side.LIGHT);
+        map.put(HomeScreen.screenId(), () -> new HomeScreen(live, id -> { }).getRoot());
+        map.put(NewGameScreen.screenId(), () -> new NewGameScreen(live, id -> { }).getRoot());
         map.put(GameBoardScreen.screenId(),
-                () -> new GameBoardScreen(previewController, id -> { }, true).getRoot());
+                () -> new GameBoardScreen(live, id -> { }, true).getRoot());
         map.put(MatchCompleteScreen.screenId(),
-                () -> new MatchCompleteScreen(previewController, id -> { }).getRoot());
+                () -> new MatchCompleteScreen(finished, id -> { }).getRoot());
         map.put(MatchAnalysisScreen.screenId(), () -> new MatchAnalysisScreen().getRoot());
         map.put(AiLabScreen.screenId(), () -> new AiLabScreen().getRoot());
         return map;

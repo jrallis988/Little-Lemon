@@ -86,15 +86,15 @@ public final class CrossingWorld extends Canvas {
         g.strokeLine(0, y + h - 3.5, w, y + h - 3.5);
 
         if (doubleYellow) {
-            g.setStroke(Color.web("#E6C84A"));
-            g.setLineWidth(2.4);
+            g.setStroke(Color.web("#F0D24A"));
+            g.setLineWidth(3.0);
             g.setLineDashes();
-            g.strokeLine(0, y + h * 0.38, w, y + h * 0.38);
-            g.strokeLine(0, y + h * 0.48, w, y + h * 0.48);
-            g.setStroke(Color.web("#F4F6F8", 0.92));
-            g.setLineWidth(2.6);
+            g.strokeLine(0, y + h * 0.34, w, y + h * 0.34);
+            g.strokeLine(0, y + h * 0.46, w, y + h * 0.46);
+            g.setStroke(Color.web("#F4F6F8", 0.95));
+            g.setLineWidth(2.8);
             g.setLineDashes(18, 14);
-            g.strokeLine(10, y + h * 0.72, w - 10, y + h * 0.72);
+            g.strokeLine(10, y + h * 0.70, w - 10, y + h * 0.70);
             g.setLineDashes();
         } else {
             g.setStroke(Color.web("#F4F6F8", 0.94));
