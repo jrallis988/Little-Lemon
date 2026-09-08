@@ -26,7 +26,7 @@ class GameControllerScoreTest {
         controller.startHumanVsHuman("Frog", "Traffic");
         controller.resign(Side.LIGHT);
         assertEquals(GameStatus.RESIGNED_LIGHT, controller.state().orElseThrow().status());
-        assertEquals("Frog wins (Traffic resigned)", controller.statusText());
+        assertEquals("Frogger wins (Traffic resigned)", controller.statusText());
         assertEquals(500, controller.scoreState().score(Side.DARK));
         assertEquals(0, controller.scoreState().score(Side.LIGHT));
         assertEquals(ScoreEventType.MATCH_WIN, controller.scoreState().lastEvent().orElseThrow().type());

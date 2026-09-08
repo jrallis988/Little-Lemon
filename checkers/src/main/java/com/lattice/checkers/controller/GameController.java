@@ -277,7 +277,7 @@ public final class GameController {
 
     public void restart() {
         if (darkPlayer == null || lightPlayer == null) {
-            startHumanVsHuman("Frog", "Traffic");
+            startHumanVsHuman("Frogger", "Traffic");
             return;
         }
         beginNewGame();
@@ -313,10 +313,10 @@ public final class GameController {
                 }
                 yield side + " to move";
             }
-            case DARK_WINS -> "Frog wins";
+            case DARK_WINS -> "Frogger wins";
             case LIGHT_WINS -> "Traffic wins";
-            case RESIGNED_DARK -> "Traffic wins (Frog resigned)";
-            case RESIGNED_LIGHT -> "Frog wins (Traffic resigned)";
+            case RESIGNED_DARK -> "Traffic wins (Frogger resigned)";
+            case RESIGNED_LIGHT -> "Frogger wins (Traffic resigned)";
         };
     }
 

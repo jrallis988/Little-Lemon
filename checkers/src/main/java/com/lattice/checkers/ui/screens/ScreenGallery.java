@@ -2,6 +2,7 @@ package com.lattice.checkers.ui.screens;
 
 import com.lattice.checkers.controller.GameController;
 import com.lattice.checkers.model.Side;
+import com.lattice.checkers.ui.LatticeApplication;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -24,7 +25,7 @@ public final class ScreenGallery {
     private final ScrollPane root;
 
     public ScreenGallery(Consumer<String> onOpenScreen) {
-        Label brand = new Label("Lattice");
+        Label brand = new Label(LatticeApplication.WORDMARK);
         brand.getStyleClass().add("brand-small");
 
         Label heading = new Label("Screen previews");
@@ -94,9 +95,9 @@ public final class ScreenGallery {
     public static Map<String, Supplier<Node>> screenFactories() {
         Map<String, Supplier<Node>> map = new LinkedHashMap<>();
         GameController live = new GameController();
-        live.startHumanVsHuman("Frog", "Traffic");
+        live.startHumanVsHuman("Frogger", "Traffic");
         GameController finished = new GameController();
-        finished.startHumanVsHuman("Frog", "Traffic");
+        finished.startHumanVsHuman("Frogger", "Traffic");
         finished.resign(Side.LIGHT);
         map.put(HomeScreen.screenId(), () -> new HomeScreen(live, id -> { }, true).getRoot());
         map.put(NewGameScreen.screenId(), () -> new NewGameScreen(live, id -> { }, true).getRoot());

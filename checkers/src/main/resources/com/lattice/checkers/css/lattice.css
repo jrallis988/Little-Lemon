@@ -1,4 +1,4 @@
-/* Graphite Lattice — single visual system */
+/* Frogger Checkers — single visual system */
 .root {
     -fx-font-family: "Outfit";
     -fx-background-color: #12141A;
@@ -370,7 +370,13 @@
 }
 
 .home-wordmark {
-    -fx-font-size: 56px;
+    -fx-font-size: 42px;
+    -fx-letter-spacing: 1px;
+}
+
+.board-wordmark {
+    -fx-font-size: 26px;
+    -fx-letter-spacing: 1px;
 }
 
 .arcade-kicker {

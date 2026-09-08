@@ -2,10 +2,10 @@ package com.lattice.checkers.model;
 
 /**
  * Arcade identity layered on engine sides.
- * Dark still moves first (American checkers). Frog is Player One.
+ * Dark still moves first (American checkers). Frogger is Player One.
  */
 public enum Faction {
-    FROG(Side.DARK, "FROG", "PLAYER ONE"),
+    FROG(Side.DARK, "FROGGER", "PLAYER ONE"),
     TRAFFIC(Side.LIGHT, "TRAFFIC", "PLAYER TWO");
 
     private final Side side;

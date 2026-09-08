@@ -6,6 +6,7 @@ import com.lattice.checkers.model.Piece;
 import com.lattice.checkers.model.PieceRank;
 import com.lattice.checkers.model.Side;
 import com.lattice.checkers.score.ScoreState;
+import com.lattice.checkers.ui.LatticeApplication;
 import com.lattice.checkers.ui.components.PieceView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -56,6 +57,9 @@ public final class MatchCompleteScreen {
 
         VBox identity = new VBox(10);
         identity.setAlignment(Pos.CENTER);
+        Label brand = new Label(LatticeApplication.WORDMARK);
+        brand.getStyleClass().addAll("arcade-kicker");
+        identity.getChildren().add(brand);
         if (winner != null) {
             identity.getChildren().add(new PieceView(new Piece(winner, PieceRank.KING), 32));
         }

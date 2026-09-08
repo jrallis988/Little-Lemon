@@ -2,9 +2,11 @@ package com.lattice.checkers.ui.screens;
 
 import com.lattice.checkers.ai.AIDifficulty;
 import com.lattice.checkers.controller.GameController;
+import com.lattice.checkers.model.Faction;
 import com.lattice.checkers.model.Piece;
 import com.lattice.checkers.model.PieceRank;
 import com.lattice.checkers.model.Side;
+import com.lattice.checkers.ui.LatticeApplication;
 import com.lattice.checkers.ui.components.HowToPlayOverlay;
 import com.lattice.checkers.ui.components.PieceView;
 import javafx.geometry.Insets;
@@ -17,7 +19,7 @@ import javafx.scene.layout.VBox;
 import java.util.function.Consumer;
 
 /**
- * New Game — Frog vs Traffic, Human vs Human or Human vs Computer.
+ * New Game — Frogger vs Traffic, Human vs Human or Human vs Computer.
  */
 public final class NewGameScreen {
 
@@ -36,19 +38,21 @@ public final class NewGameScreen {
     }
 
     public NewGameScreen(GameController controller, Consumer<String> onNavigate, boolean reducedMotion) {
+        Label brand = new Label(LatticeApplication.WORDMARK);
+        brand.getStyleClass().addAll("arcade-title", "board-wordmark");
         Label title = new Label("NEW GAME");
-        title.getStyleClass().add("arcade-title");
+        title.getStyleClass().add("screen-title");
 
-        Label subtitle = new Label("Frog vs Traffic. Difficulty changes the computer — not the rules.");
+        Label subtitle = new Label("Frogger vs Traffic. Difficulty changes the computer — not the rules.");
         subtitle.getStyleClass().add("screen-subtitle");
         subtitle.setWrapText(true);
         subtitle.setAlignment(Pos.CENTER);
 
         HowToPlayOverlay overlay = new HowToPlayOverlay(null, reducedMotion);
 
-        Label frog = new Label("FROG");
+        Label frog = new Label(Faction.FROG.displayName());
         frog.getStyleClass().addAll("hud-faction-name", "home-frog");
-        Label traffic = new Label("TRAFFIC");
+        Label traffic = new Label(Faction.TRAFFIC.displayName());
         traffic.getStyleClass().addAll("hud-faction-name", "home-traffic");
         Label vs = new Label("VS");
         vs.getStyleClass().add("home-vs");
@@ -60,25 +64,25 @@ public final class NewGameScreen {
         matchup.setAlignment(Pos.CENTER);
         matchup.getStyleClass().add("matchup-row");
 
-        Button hvh = modeButton("HUMAN VS HUMAN", "Two players on this machine", true, () -> {
+        Button hvh = modeButton("HUMAN VS. HUMAN", "Two players on this machine", true, () -> {
             computerMatch = false;
             refreshDifficulty();
             if (controller != null) {
-                controller.startHumanVsHuman("Frog", "Traffic");
+                controller.startHumanVsHuman("Frogger", "Traffic");
             }
             if (onNavigate != null) {
                 onNavigate.accept("game-board");
             }
         });
-        Button hvc = modeButton("HUMAN VS COMPUTER", "Easy · Medium · Hard — same checkers rules", true, () -> {
+        Button hvc = modeButton("HUMAN VS. COMPUTER", "Easy · Medium · Hard — same checkers rules", true, () -> {
             computerMatch = true;
             refreshDifficulty();
         });
-        Button lab = modeButton("AI LAB", "Watch profiles play each other — next", false, () -> { });
+        Button lab = modeButton("AI VS. AI", "Development lab — coming soon", false, () -> { });
 
         Label choose = new Label("CHOOSE DIFFICULTY");
         choose.getStyleClass().add("panel-heading");
-        Label youPlay = new Label("You play Frog. The computer plays Traffic.");
+        Label youPlay = new Label("You play Frogger. The computer plays Traffic.");
         youPlay.getStyleClass().add("muted-copy");
         HBox difficulties = new HBox(10,
                 difficultyButton(AIDifficulty.EASY),
@@ -90,7 +94,7 @@ public final class NewGameScreen {
         startComputer.getStyleClass().add("primary-cta");
         startComputer.setOnAction(e -> {
             if (controller != null) {
-                controller.startHumanVsComputer("Frog", difficulty, true);
+                controller.startHumanVsComputer("Frogger", difficulty, true);
             }
             if (onNavigate != null) {
                 onNavigate.accept("game-board");
@@ -105,7 +109,7 @@ public final class NewGameScreen {
         modes.setAlignment(Pos.CENTER);
         modes.setMaxWidth(480);
 
-        VBox page = new VBox(22, title, subtitle, matchup, modes,
+        VBox page = new VBox(22, brand, title, subtitle, matchup, modes,
                 HowToPlayOverlay.openButton(overlay::show));
         page.setAlignment(Pos.CENTER);
         page.setPadding(new Insets(36, 40, 36, 40));

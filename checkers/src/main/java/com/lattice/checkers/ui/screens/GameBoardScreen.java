@@ -4,6 +4,7 @@ import com.lattice.checkers.controller.GameController;
 import com.lattice.checkers.model.Faction;
 import com.lattice.checkers.model.GameStatus;
 import com.lattice.checkers.model.Move;
+import com.lattice.checkers.ui.LatticeApplication;
 import com.lattice.checkers.ui.components.BoardView;
 import com.lattice.checkers.ui.components.FactionHud;
 import com.lattice.checkers.ui.components.HowToPlayOverlay;
@@ -45,12 +46,12 @@ public final class GameBoardScreen {
         this.onNavigate = onNavigate;
         this.reducedMotion = reducedMotion;
         if (controller.state().isEmpty()) {
-            controller.startHumanVsHuman("Frog", "Traffic");
+            controller.startHumanVsHuman("Frogger", "Traffic");
         }
 
-        Label brand = new Label("LATTICE");
-        brand.getStyleClass().add("arcade-title");
-        Label tag = new Label("AMERICAN CHECKERS  ·  PLAY, ANALYZE, UNDERSTAND");
+        Label brand = new Label(LatticeApplication.WORDMARK);
+        brand.getStyleClass().addAll("arcade-title", "board-wordmark");
+        Label tag = new Label("AMERICAN CHECKERS  ·  FROGGER VS TRAFFIC");
         tag.getStyleClass().add("arcade-kicker");
         VBox headerText = new VBox(2, brand, tag);
         headerText.setAlignment(Pos.CENTER_LEFT);

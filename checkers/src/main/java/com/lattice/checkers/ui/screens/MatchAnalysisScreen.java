@@ -24,7 +24,7 @@ public final class MatchAnalysisScreen {
         VBox body = new VBox(16, timeline, lower);
         root = ScreenStub.page(
                 "Match Analysis",
-                "Inspect how the match unfolded — every statistic comes from recorded state.",
+                "Inspect how the Frogger Checkers match unfolded — every statistic comes from recorded state.",
                 "Phases 9–10",
                 body
         );

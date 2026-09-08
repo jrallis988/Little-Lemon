@@ -24,11 +24,12 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
- * JavaFX entry point for Lattice.
+ * JavaFX entry point. Player-facing title is Frogger Checkers.
  */
 public final class LatticeApplication extends Application {
 
-    public static final String APP_NAME = "Lattice";
+    public static final String APP_NAME = "Frogger Checkers";
+    public static final String WORDMARK = "FROGGER CHECKERS";
 
     private Stage stage;
     private BorderPane shell;
@@ -70,7 +71,7 @@ public final class LatticeApplication extends Application {
         Scene scene = new Scene(shell, 1520, 980);
         LatticeTheme.apply(scene);
 
-        stage.setTitle(APP_NAME + " — American Checkers");
+        stage.setTitle(APP_NAME);
         stage.setScene(scene);
         stage.setMinWidth(1280);
         stage.setMinHeight(860);
