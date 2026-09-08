@@ -1,0 +1,7 @@
+# Copied to .dev.vars for `wrangler` / OpenNext local preview.
+# Do not commit real secrets in .dev.vars.
+NEXTJS_ENV=development
+AUTH_SECRET=dev-auth-secret-change-me
+ACCESS_CONTROL_SECRET=dev-access-secret-change-me
+NEXT_PUBLIC_SITE_URL=http://localhost:8787
+USE_MEMORY_STORE=true

@@ -169,8 +169,37 @@ const EMPTY: StoreShape = {
 };
 
 let writeChain: Promise<void> = Promise.resolve();
+let memoryStore: StoreShape | null = null;
+
+/** Workers (and optional local flag) use in-memory store — no durable FS. */
+export function isMemoryStore(): boolean {
+  if (process.env.USE_MEMORY_STORE === "true") return true;
+  const versions = process.versions as NodeJS.ProcessVersions & {
+    workerd?: string;
+  };
+  return Boolean(versions.workerd);
+}
+
+function cloneEmpty(): StoreShape {
+  return {
+    users: [],
+    memberships: [],
+    invoices: [],
+    guestPasses: [],
+    checkIns: [],
+    accessTokens: [],
+    notifications: [],
+    passwordResets: [],
+    occupancy: [],
+  };
+}
 
 async function ensureStore() {
+  if (isMemoryStore()) {
+    if (!memoryStore) memoryStore = cloneEmpty();
+    return;
+  }
+
   await fs.mkdir(DATA_DIR, { recursive: true });
   try {
     await fs.access(STORE_PATH);
@@ -205,6 +234,10 @@ async function ensureStore() {
 
 export async function readStore(): Promise<StoreShape> {
   await ensureStore();
+  if (isMemoryStore()) {
+    return memoryStore ?? cloneEmpty();
+  }
+
   const raw = await fs.readFile(STORE_PATH, "utf8");
   try {
     const parsed = JSON.parse(raw) as Partial<StoreShape>;
@@ -230,6 +263,10 @@ export async function updateStore(
   const run = writeChain.then(async () => {
     const store = await readStore();
     await mutator(store);
+    if (isMemoryStore()) {
+      memoryStore = store;
+      return store;
+    }
     await fs.writeFile(STORE_PATH, JSON.stringify(store, null, 2), "utf8");
     return store;
   });

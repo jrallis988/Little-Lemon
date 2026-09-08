@@ -19,7 +19,8 @@ Product map (core vs roadmap): `/screens` · Product case study: `/product`
 
 - Next.js App Router + TypeScript + Tailwind
 - Optional Stripe Checkout / Elements + webhooks
-- Durable local store under `.data/` (swap for Postgres before multi-instance deploy)
+- Local JSON store under `.data/` (in-memory on Cloudflare Workers)
+- OpenNext + Wrangler for Cloudflare Workers deploy
 - Vitest unit tests + GitHub Actions CI (`npm run typecheck` / `lint` / `test` / `build`)
 - Health probe: `GET /api/health`
 
@@ -45,6 +46,38 @@ npm run dev
 | `CLUBS_API_URL` | Remote club inventory; otherwise Seacoast seed clubs |
 | `ALLOW_DEMO_AUTH=true` | Local QA only — **never on in production** |
 | `NEXT_PUBLIC_SHOW_SCREEN_IDS=true` | Show internal screen chrome in staging |
+| `USE_MEMORY_STORE=true` | In-memory data (auto on Cloudflare Workers) |
+
+## Deploy on Cloudflare
+
+Connect this repo in the Cloudflare dashboard:
+
+1. **Workers & Pages → Create → Connect to Git**
+2. Repository: `https://github.com/jrallis988/Little-Lemon`
+3. Branch: `cursor/planet-fitness-club-pricing-2f73`
+4. Build command: `npx opennextjs-cloudflare build`
+5. Deploy command: `npx wrangler deploy`
+6. Set secrets / vars:
+   - `AUTH_SECRET`
+   - `ACCESS_CONTROL_SECRET`
+   - `NEXT_PUBLIC_SITE_URL` (your `*.workers.dev` or custom domain URL)
+   - `USE_MEMORY_STORE=true` (already set in `wrangler.jsonc`)
+
+Local Workers preview (requires Cloudflare auth for some features):
+
+```bash
+cp .dev.vars.example .dev.vars
+npm run preview
+```
+
+CLI deploy (after `wrangler login`):
+
+```bash
+npm run deploy
+```
+
+Worker name: `planet-fitness-stratham` → preview URL shape  
+`https://planet-fitness-stratham.<your-subdomain>.workers.dev`
 
 ## Launch posture
 

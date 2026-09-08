@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
-import { paymentsConfigured } from "@/lib/payments";
 import { isDemoAuthEnabled } from "@/lib/auth-shared";
+import { isMemoryStore } from "@/lib/db";
+import { paymentsConfigured } from "@/lib/payments";
 
 export const dynamic = "force-dynamic";
 
@@ -21,6 +22,7 @@ export async function GET() {
       demoAuthEnabled: isDemoAuthEnabled(),
       clubsApiConfigured: Boolean(process.env.CLUBS_API_URL?.trim()),
       siteUrlConfigured: Boolean(process.env.NEXT_PUBLIC_SITE_URL?.trim()),
+      memoryStore: isMemoryStore(),
     },
   });
 }
