@@ -1,5 +1,6 @@
 import type { Artist } from '../data/campaign'
 import { brand } from '../data/campaign'
+import { PhotoSlot } from './PhotoSlot'
 
 interface ArtistCardProps {
   artist: Artist
@@ -12,20 +13,22 @@ export function ArtistCard({ artist, showCta = true }: ArtistCardProps) {
       className={`artist-card artist-card--${artist.tier}`}
       aria-label={`${artist.tier} announcement: ${artist.name}`}
     >
-      <div
-        className="artist-card__photo"
-        data-label={`Replace: assets/photography/${artist.photoSlot}.jpg`}
+      <PhotoSlot
+        slot={artist.photoSlot}
+        className="artist-card__photo artist-card__photo--filled"
+        alt=""
       />
       <div className="artist-card__overlay" aria-hidden="true" />
       <div className="artist-card__body">
         <span className="artist-card__tier">{tierLabel(artist.tier)}</span>
         <span className="artist-card__brand">{brand.name}</span>
+        <p className="artist-card__genre">{artist.genre}</p>
         <h3 className="artist-card__name">{artist.name}</h3>
         <p className="artist-card__meta">
           {artist.day.slice(0, 3).toUpperCase()} · {artist.stage.toUpperCase()} · {artist.time}
         </p>
         {showCta && (
-          <p className="artist-card__meta" style={{ marginTop: '0.75rem', opacity: 0.9 }}>
+          <p className="artist-card__meta artist-card__cta">
             {artist.tier === 'headliner'
               ? 'Get tickets →'
               : artist.tier === 'featured'

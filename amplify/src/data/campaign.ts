@@ -364,7 +364,7 @@ export const infoCarousel: CarouselSlide[] = [
     kicker: 'Festival Map',
     title: 'FIND YOUR STAGE',
     body: 'Main · North · River · Signal Tent · Market Row',
-    footer: '[Map artwork placeholder]',
+    footer: 'assets/graphics/festival-map.svg',
     tone: 'steel',
     layout: 'map',
   },

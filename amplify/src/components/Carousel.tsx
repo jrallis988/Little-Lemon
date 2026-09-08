@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { CarouselSlide } from '../data/campaign'
+import { graphicUrl } from './PhotoSlot'
 
 interface CarouselProps {
   slides: CarouselSlide[]
@@ -69,8 +70,12 @@ function SlideView({ slide }: { slide: CarouselSlide }) {
         </ul>
       )}
       {layout === 'map' && (
-        <div className="slide__map" aria-hidden="true">
-          Map artwork placeholder
+        <div className="slide__map">
+          <img
+            src={graphicUrl('festival-map')}
+            alt="Festival map: Main, North, River, and Signal Tent stages"
+            className="slide__map-img"
+          />
         </div>
       )}
       {slide.footer && <p className="slide__footer">{slide.footer}</p>}

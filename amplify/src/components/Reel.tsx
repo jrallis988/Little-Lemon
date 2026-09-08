@@ -12,6 +12,11 @@ export function Reel({ playing, showSafeAreas = false }: ReelProps) {
 
   useEffect(() => {
     if (!root.current) return
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduce) {
+      gsap.set(root.current.querySelector('.reel-step--hook'), { autoAlpha: 1, y: 0 })
+      return
+    }
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ repeat: playing ? -1 : 0, paused: !playing })
       gsap.set('.reel-step', { autoAlpha: 0, y: 18 })

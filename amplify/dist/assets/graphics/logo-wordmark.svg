@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" width="600" height="200" fill="none">
+  <defs>
+    <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-18)">
+      <line x1="0" y1="0" x2="0" y2="8" stroke="rgba(234,232,227,0.12)" stroke-width="1"/>
+    </pattern>
+    <pattern id="grain" width="4" height="4" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="0.6" fill="rgba(255,255,255,0.08)"/>
+      <circle cx="3" cy="2.5" r="0.4" fill="rgba(0,0,0,0.15)"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="200" fill="#111"/>
+  <text x="24" y="140" fill="#EAE8E3" font-family="Bebas Neue, Impact, sans-serif" font-size="120" letter-spacing="4">AMPLIFY</text>
+  <rect x="540" y="40" width="16" height="120" fill="#D4FF00"/>
+
+</svg>

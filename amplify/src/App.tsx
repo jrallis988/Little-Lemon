@@ -181,12 +181,21 @@ export default function App() {
             <div className="identity-board">
               <div className="id-panel id-panel--logo">
                 <span className="cap">Festival logo / wordmark</span>
-                <p className="mark">{brand.name}</p>
-                <p>Replace with final Illustrator lockup</p>
+                <img
+                  src={`${import.meta.env.BASE_URL}assets/graphics/logo-wordmark.svg`}
+                  alt="AMPLIFY wordmark"
+                  className="id-panel__img"
+                />
+                <p>Swap file: assets/graphics/logo-wordmark.svg</p>
               </div>
               <div className="id-panel id-panel--campaign">
                 <span className="cap">Campaign wordmark</span>
-                <p className="mark">{brand.campaign}</p>
+                <img
+                  src={`${import.meta.env.BASE_URL}assets/graphics/campaign-wordmark.svg`}
+                  alt="TURN IT UP. campaign lockup"
+                  className="id-panel__img"
+                />
+                <p>Swap file: assets/graphics/campaign-wordmark.svg</p>
               </div>
               <div className="id-panel id-panel--motion">
                 <span className="cap">Motion principles</span>
@@ -194,10 +203,20 @@ export default function App() {
               </div>
               <div className="id-panel id-panel--photo">
                 <span className="cap">Photography</span>
-                <p>High-contrast performance crops · crowd atmosphere · daylight + night duality</p>
+                <img
+                  src={`${import.meta.env.BASE_URL}assets/photography/crowd-wide.svg`}
+                  alt=""
+                  className="id-panel__img id-panel__img--cover"
+                />
+                <p>High-contrast performance crops · crowd atmosphere</p>
               </div>
               <div className="id-panel id-panel--pattern">
                 <span className="cap">Patterns / textures</span>
+                <img
+                  src={`${import.meta.env.BASE_URL}assets/textures/hatch.svg`}
+                  alt=""
+                  className="id-panel__img id-panel__img--cover"
+                />
                 <p>Hatch · paper grain · frequency bars · hard editorial frames</p>
               </div>
             </div>

@@ -1,5 +1,6 @@
 import type { FeedPost } from '../data/campaign'
 import { brand } from '../data/campaign'
+import { PhotoSlot } from './PhotoSlot'
 
 interface SocialPostProps {
   post: FeedPost
@@ -33,7 +34,11 @@ function PostArtwork({ post }: { post: FeedPost }) {
   if (post.variant === 'headliner') {
     return (
       <div className={base}>
-        <div className="post__photo" data-label={`Photo: ${post.photoSlot ?? 'headliner'}`} />
+        {post.photoSlot ? (
+          <PhotoSlot slot={post.photoSlot} className="post__photo post__photo--filled" alt="" />
+        ) : (
+          <div className="post__photo" />
+        )}
         <div className="post__content">
           <span className="post__meta">{post.meta}</span>
           <span className="post__brand">{brand.name}</span>
@@ -48,11 +53,11 @@ function PostArtwork({ post }: { post: FeedPost }) {
   if (post.variant === 'artist') {
     return (
       <div className={base}>
-        <div
-          className="post__photo"
-          data-label={`Photo: ${post.photoSlot ?? 'artist'}`}
-          aria-hidden="true"
-        />
+        {post.photoSlot ? (
+          <PhotoSlot slot={post.photoSlot} className="post__photo post__photo--filled" alt="" />
+        ) : (
+          <div className="post__photo" aria-hidden="true" />
+        )}
         <span className="post__brand">{brand.name}</span>
         <span className="post__meta">{post.meta}</span>
         <div className="post__rule" />
@@ -63,11 +68,60 @@ function PostArtwork({ post }: { post: FeedPost }) {
     )
   }
 
+  if (post.variant === 'announcement') {
+    return (
+      <div className={base}>
+        {post.photoSlot && (
+          <PhotoSlot slot={post.photoSlot} className="post__photo post__photo--bg" alt="" />
+        )}
+        <div className="post__scrim" aria-hidden="true" />
+        <span className="post__brand">{brand.name}</span>
+        <span className="post__meta">{post.meta}</span>
+        <div className="post__bars" aria-hidden="true">
+          {Array.from({ length: 7 }).map((_, i) => (
+            <span key={i} />
+          ))}
+        </div>
+        <h3 className="post__title">{post.title}</h3>
+        {post.subtitle && <p className="post__subtitle">{post.subtitle}</p>}
+      </div>
+    )
+  }
+
+  if (post.variant === 'lineup') {
+    return (
+      <div className={base}>
+        <span className="post__brand">{brand.name}</span>
+        <span className="post__meta">{post.meta}</span>
+        <div className="post__lineup-marks" aria-hidden="true">
+          <span /><span /><span /><span />
+        </div>
+        <h3 className="post__title">{post.title}</h3>
+        {post.subtitle && <p className="post__subtitle">{post.subtitle}</p>}
+      </div>
+    )
+  }
+
+  if (post.variant === 'tickets') {
+    return (
+      <div className={base}>
+        <span className="post__brand">{brand.name}</span>
+        <span className="post__meta">{post.meta}</span>
+        <div className="post__ticket-stub" aria-hidden="true">
+          <span className="post__ticket-perf" />
+        </div>
+        <h3 className="post__title">{post.title}</h3>
+        {post.subtitle && <p className="post__subtitle">{post.subtitle}</p>}
+        {post.cta && <span className="post__cta">{post.cta}</span>}
+      </div>
+    )
+  }
+
   return (
     <div className={base}>
       <span className="post__brand">{brand.name}</span>
       <span className="post__meta">{post.meta}</span>
-      {(post.variant === 'announcement' || post.variant === 'campaign' || post.variant === 'countdown') && (
+      {(post.variant === 'campaign' || post.variant === 'countdown' || post.variant === 'finale') && (
         <div className="post__bars" aria-hidden="true">
           {Array.from({ length: 7 }).map((_, i) => (
             <span key={i} />
@@ -77,11 +131,6 @@ function PostArtwork({ post }: { post: FeedPost }) {
       <h3 className="post__title">{post.title}</h3>
       {post.subtitle && <p className="post__subtitle">{post.subtitle}</p>}
       {post.cta && <span className="post__cta">{post.cta}</span>}
-      {post.photoSlot && post.variant === 'announcement' && (
-        <span className="visually-slot" data-slot={post.photoSlot} hidden>
-          {post.photoSlot}
-        </span>
-      )}
     </div>
   )
 }

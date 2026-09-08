@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000" fill="none">
+  <defs>
+    <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-18)">
+      <line x1="0" y1="0" x2="0" y2="8" stroke="rgba(234,232,227,0.12)" stroke-width="1"/>
+    </pattern>
+    <pattern id="grain" width="4" height="4" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="0.6" fill="rgba(255,255,255,0.08)"/>
+      <circle cx="3" cy="2.5" r="0.4" fill="rgba(0,0,0,0.15)"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="1000" fill="#2C2C2C"/>
+  <rect width="800" height="1000" fill="url(#hatch)"/>
+  <!-- grounds -->
+  <rect x="60" y="80" width="680" height="840" stroke="#EAE8E3" stroke-width="2" fill="rgba(234,232,227,0.04)"/>
+  <!-- stages -->
+  <rect x="250" y="120" width="300" height="100" fill="#FF3B1F"/>
+  <text x="320" y="180" fill="#111" font-family="Bebas Neue, Impact, sans-serif" font-size="36">MAIN</text>
+  <rect x="80" y="320" width="200" height="80" fill="#D4FF00"/>
+  <text x="110" y="370" fill="#111" font-family="Bebas Neue, Impact, sans-serif" font-size="28">NORTH</text>
+  <rect x="520" y="320" width="200" height="80" fill="#EAE8E3"/>
+  <text x="555" y="370" fill="#111" font-family="Bebas Neue, Impact, sans-serif" font-size="28">RIVER</text>
+  <rect x="280" y="520" width="240" height="70" fill="transparent" stroke="#D4FF00" stroke-width="2"/>
+  <text x="310" y="565" fill="#D4FF00" font-family="Bebas Neue, Impact, sans-serif" font-size="26">SIGNAL TENT</text>
+  <!-- market -->
+  <rect x="100" y="700" width="600" height="50" fill="rgba(234,232,227,0.15)"/>
+  <text x="300" y="733" fill="#EAE8E3" font-family="IBM Plex Mono, monospace" font-size="18" letter-spacing="2">MARKET ROW</text>
+  <!-- gates -->
+  <text x="100" y="880" fill="rgba(234,232,227,0.6)" font-family="IBM Plex Mono, monospace" font-size="16">GATE A</text>
+  <text x="600" y="880" fill="rgba(234,232,227,0.6)" font-family="IBM Plex Mono, monospace" font-size="16">GATE B</text>
+  <text x="60" y="60" fill="rgba(234,232,227,0.45)" font-family="IBM Plex Mono, monospace" font-size="14" letter-spacing="3">RIVERSIDE GROUNDS · MAP</text>
+
+</svg>

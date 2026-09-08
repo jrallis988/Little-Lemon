@@ -1,5 +1,6 @@
 import type { StoryConcept } from '../data/campaign'
 import { brand } from '../data/campaign'
+import { PhotoSlot } from './PhotoSlot'
 
 interface StoryProps {
   story: StoryConcept
@@ -15,7 +16,7 @@ export function Story({ story, showSafeAreas = false, showCaption = true }: Stor
     >
       {showSafeAreas && <div className="social-frame__safe" aria-hidden="true" />}
       {story.photoSlot && (
-        <div className="story__photo" data-label={story.photoSlot} aria-hidden="true" />
+        <PhotoSlot slot={story.photoSlot} className="story__photo story__photo--filled" alt="" />
       )}
       <div className="story__inner">
         <span className="story__brand">{brand.name}</span>

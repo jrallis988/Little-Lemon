@@ -12,9 +12,15 @@ export function MotionTypography({ playing }: MotionTypographyProps) {
 
   useEffect(() => {
     if (!root.current) return
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
     const ctx = gsap.context(() => {
       const words = gsap.utils.toArray<HTMLElement>('.type-proto__word')
+      if (reduce) {
+        gsap.set(words, { autoAlpha: 0 })
+        gsap.set(words[words.length - 1], { autoAlpha: 1, scale: 1, y: 0 })
+        return
+      }
       gsap.set(words, { autoAlpha: 0, scale: 0.92, y: 20 })
 
       const tl = gsap.timeline({ repeat: playing ? -1 : 0, paused: !playing })

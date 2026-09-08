@@ -25,17 +25,30 @@ Built files land in `amplify/dist/` and are linked from the portfolio at `/ampli
 
 ## Replacing placeholder artwork
 
-Place final exports under `public/assets/` (copied to `dist/assets/` on build):
+Editorial SVG stand-ins ship in `public/assets/`. Drop finished exports with the **same filenames** (JPG/PNG preferred for photography) and update the extension in `src/components/PhotoSlot.tsx` helpers if needed — or keep `.svg` and overwrite the files.
 
 ```
 public/assets/
-  photography/     # artist + atmosphere stills
-  graphics/        # Illustrator / Photoshop social frames
-  textures/        # grain, hatch, halftone
-  motion/          # AE stills or Lottie if needed
+  photography/     # artist-echo, artist-nova, crowd-wide, crowd-night, …
+  graphics/        # logo-wordmark, campaign-wordmark, festival-map
+  textures/        # hatch, frequency-bars
+  motion/          # AE stills / Lottie (optional)
 ```
 
-Update paths in `src/data/campaign.ts` and wire `<img>` slots inside the post/artist components when ready. Template regions are labeled with `data-label` attributes for easy targeting.
+`photoSlot` values in `src/data/campaign.ts` map 1:1 to photography filenames.
+
+### Export checklist (Photoshop / Illustrator / Figma / AE)
+
+**Feed (9)** — 1080×1080 and 1080×1350  
+1. Festival announcement · 2. TURN IT UP. · 3. Artist · 4. Headliner · 5. Lineup · 6. Tickets · 7. Info · 8. Countdown · 9. Finale  
+
+**Artist system** — Headliner / Featured / Emerging frames for each performer  
+
+**Carousels** — 8 lineup + 8 info (4:5) · map → `festival-map`  
+
+**Stories** — 8 concepts at 1080×1920 (safe-area aware)  
+
+**Motion** — 15s Reel + LOUD/LIVE/TOGETHER type sequence in AE/Premiere  
 
 ## Note
 
