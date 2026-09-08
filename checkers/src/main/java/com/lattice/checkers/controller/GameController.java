@@ -1,5 +1,6 @@
 package com.lattice.checkers.controller;
 
+import com.lattice.checkers.ai.AIDifficulty;
 import com.lattice.checkers.ai.AIProfile;
 import com.lattice.checkers.ai.CheckersAI;
 import com.lattice.checkers.ai.SearchStats;
@@ -107,18 +108,34 @@ public final class GameController {
         beginNewGame();
     }
 
-    public void startHumanVsComputer(String humanName, AIProfile profile, boolean humanIsDark) {
-        Objects.requireNonNull(profile);
-        String name = humanName == null || humanName.isBlank() ? "You" : humanName;
+    public void startHumanVsComputer(String humanName, AIDifficulty difficulty, boolean humanIsDark) {
+        Objects.requireNonNull(difficulty);
+        String name = humanName == null || humanName.isBlank()
+                ? (humanIsDark ? Faction.FROG.displayName() : Faction.TRAFFIC.displayName())
+                : humanName;
+        String computerName = (humanIsDark ? Faction.TRAFFIC.displayName() : Faction.FROG.displayName())
+                + " · " + difficulty.displayName();
         if (humanIsDark) {
             darkPlayer = Player.human(Side.DARK, name);
+            lightPlayer = Player.computer(Side.LIGHT, computerName, difficulty);
+        } else {
+            darkPlayer = Player.computer(Side.DARK, computerName, difficulty);
+            lightPlayer = Player.human(Side.LIGHT, name);
+        }
+        computerOpponent = new CheckersAI(rulesEngine, difficulty);
+        beginNewGame();
+    }
+
+    public void startHumanVsComputer(String humanName, AIProfile profile, boolean humanIsDark) {
+        Objects.requireNonNull(profile);
+        startHumanVsComputer(humanName, AIDifficulty.MEDIUM, humanIsDark);
+        String name = humanName == null || humanName.isBlank() ? "You" : humanName;
+        if (humanIsDark) {
             lightPlayer = Player.computer(Side.LIGHT, profile.displayName(), profile);
         } else {
             darkPlayer = Player.computer(Side.DARK, profile.displayName(), profile);
-            lightPlayer = Player.human(Side.LIGHT, name);
         }
-        computerOpponent = new CheckersAI(rulesEngine, profile, 4);
-        beginNewGame();
+        computerOpponent = new CheckersAI(rulesEngine, profile, AIDifficulty.MEDIUM.searchDepth());
     }
 
     private void beginNewGame() {
@@ -135,6 +152,9 @@ public final class GameController {
     public void selectSquare(Position position) {
         Objects.requireNonNull(position);
         if (state == null || state.status() != GameStatus.IN_PROGRESS) {
+            return;
+        }
+        if (isComputerToMove()) {
             return;
         }
 
@@ -300,8 +320,33 @@ public final class GameController {
         };
     }
 
+    public boolean isComputerToMove() {
+        if (state == null || computerOpponent == null || state.status() != GameStatus.IN_PROGRESS) {
+            return false;
+        }
+        Player player = state.sideToMove() == Side.DARK ? darkPlayer : lightPlayer;
+        return player != null && player.isComputer();
+    }
+
+    public Optional<AIDifficulty> computerDifficulty() {
+        if (computerOpponent == null) {
+            return Optional.empty();
+        }
+        return Optional.of(computerOpponent.difficulty());
+    }
+
+    /**
+     * Search only. Caller applies the move so UI can animate on the JavaFX thread.
+     */
+    public Optional<Move> chooseComputerMove() {
+        if (!isComputerToMove()) {
+            return Optional.empty();
+        }
+        return computerOpponent.chooseMove(state);
+    }
+
     public void hint() {
-        if (state == null || state.status() != GameStatus.IN_PROGRESS) {
+        if (state == null || state.status() != GameStatus.IN_PROGRESS || isComputerToMove()) {
             return;
         }
         List<Move> legal = rulesEngine.legalMoves(state);
