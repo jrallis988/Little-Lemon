@@ -50,6 +50,7 @@ public final class BoardView extends VBox {
     private Move pendingTravel;
     private boolean pendingPromotion;
     private boolean inputEnabled = true;
+    private int seenMoves;
 
     public BoardView(GameController controller, Consumer<Void> onChanged, boolean reducedMotion) {
         this.controller = controller;
@@ -153,6 +154,13 @@ public final class BoardView extends VBox {
             return;
         }
         GameState state = optional.get();
+        List<Move> log = controller.moveLog();
+        if (log.size() > seenMoves) {
+            pendingTravel = log.get(log.size() - 1);
+            List<MoveRecord> records = controller.history().records();
+            pendingPromotion = !records.isEmpty() && records.get(records.size() - 1).promoted();
+        }
+        seenMoves = log.size();
         Board board = state.board();
         Optional<Position> selected = controller.selected();
         Set<Position> destinations = new HashSet<>(controller.legalDestinations());
@@ -232,12 +240,17 @@ public final class BoardView extends VBox {
                     }
                 }
                 if (r == focusRow && c == focusCol && isFocused()) {
-                    Rectangle focus = new Rectangle(CELL - 6, CELL - 6);
-                    focus.setFill(Color.TRANSPARENT);
-                    focus.setStroke(Color.web("#F2F3F5"));
-                    focus.setStrokeWidth(2);
-                    focus.setMouseTransparent(true);
-                    cell.getChildren().add(focus);
+                    boolean opponent = board.get(pos)
+                            .filter(p -> p.side() != state.sideToMove())
+                            .isPresent();
+                    if (!opponent) {
+                        Rectangle focus = new Rectangle(CELL - 6, CELL - 6);
+                        focus.setFill(Color.TRANSPARENT);
+                        focus.setStroke(Color.web("#F2F3F5"));
+                        focus.setStrokeWidth(2);
+                        focus.setMouseTransparent(true);
+                        cell.getChildren().add(focus);
+                    }
                 }
 
                 board.get(pos).ifPresent(piece -> {

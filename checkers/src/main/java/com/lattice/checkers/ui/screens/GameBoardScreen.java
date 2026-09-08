@@ -3,11 +3,13 @@ package com.lattice.checkers.ui.screens;
 import com.lattice.checkers.controller.GameController;
 import com.lattice.checkers.model.Faction;
 import com.lattice.checkers.model.GameStatus;
+import com.lattice.checkers.model.Move;
 import com.lattice.checkers.ui.components.BoardView;
 import com.lattice.checkers.ui.components.FactionHud;
 import com.lattice.checkers.ui.components.HowToPlayOverlay;
 import com.lattice.checkers.ui.components.StatusBar;
 import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -17,6 +19,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 /**
@@ -34,6 +37,8 @@ public final class GameBoardScreen {
     private final boolean reducedMotion;
     private final Consumer<String> onNavigate;
     private boolean matchCompleteScheduled;
+    private boolean computerBusy;
+    private int computerJob;
 
     public GameBoardScreen(GameController controller, Consumer<String> onNavigate, boolean reducedMotion) {
         this.controller = controller;
@@ -111,8 +116,11 @@ public final class GameBoardScreen {
     }
 
     private void resumeMatch() {
-        boardView.setInputEnabled(true);
+        if (!controller.isComputerToMove() && !computerBusy) {
+            boardView.setInputEnabled(true);
+        }
         boardView.requestFocus();
+        maybePlayComputer();
     }
 
     private void restart() {
@@ -120,6 +128,7 @@ public final class GameBoardScreen {
             return;
         }
         matchCompleteScheduled = false;
+        cancelComputer();
         controller.restart();
         boardView.refresh();
         afterChange();
@@ -129,6 +138,7 @@ public final class GameBoardScreen {
         if (howToPlay.isShowing()) {
             return;
         }
+        cancelComputer();
         controller.state().ifPresent(state -> controller.resign(state.sideToMove()));
         boardView.refresh();
         afterChange();
@@ -141,6 +151,60 @@ public final class GameBoardScreen {
         controller.hint();
         boardView.refresh();
         afterChange();
+    }
+
+    private void cancelComputer() {
+        computerJob++;
+        computerBusy = false;
+    }
+
+    private void maybePlayComputer() {
+        if (howToPlay.isShowing() || computerBusy || matchCompleteScheduled) {
+            return;
+        }
+        if (!controller.isComputerToMove()) {
+            boardView.setInputEnabled(true);
+            return;
+        }
+        computerBusy = true;
+        boardView.setInputEnabled(false);
+        final int job = computerJob;
+        PauseTransition pause = new PauseTransition(Duration.millis(reducedMotion ? 40 : 280));
+        pause.setOnFinished(e -> {
+            if (job != computerJob) {
+                return;
+            }
+            Thread worker = new Thread(() -> {
+                Optional<Move> move;
+                try {
+                    move = controller.chooseComputerMove();
+                } catch (RuntimeException ex) {
+                    Platform.runLater(() -> {
+                        if (job == computerJob) {
+                            computerBusy = false;
+                            boardView.setInputEnabled(!controller.isComputerToMove());
+                        }
+                    });
+                    return;
+                }
+                Platform.runLater(() -> {
+                    if (job != computerJob) {
+                        return;
+                    }
+                    if (howToPlay.isShowing()) {
+                        computerBusy = false;
+                        return;
+                    }
+                    move.ifPresent(controller::applyMove);
+                    computerBusy = false;
+                    boardView.refresh();
+                    afterChange();
+                });
+            }, "lattice-ai");
+            worker.setDaemon(true);
+            worker.start();
+        });
+        pause.play();
     }
 
     private void afterChange() {
@@ -156,5 +220,8 @@ public final class GameBoardScreen {
                 pause.play();
             }
         });
+        if (!controller.state().map(s -> s.status().isTerminal()).orElse(true)) {
+            maybePlayComputer();
+        }
     }
 }

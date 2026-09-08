@@ -565,13 +565,24 @@
     -fx-border-color: #7CDE3A;
 }
 
-.mode-button-disabled {
-    -fx-background-color: #1A1D26;
+.difficulty-button {
+    -fx-background-color: #242936;
     -fx-background-radius: 8;
-    -fx-padding: 14 18 14 18;
-    -fx-opacity: 0.55;
-    -fx-border-color: #2A303C;
+    -fx-padding: 12 10 12 10;
+    -fx-cursor: hand;
+    -fx-border-color: #32384A;
     -fx-border-radius: 8;
+}
+
+.difficulty-button:hover {
+    -fx-background-color: #2E3545;
+    -fx-border-color: #7CDE3A;
+}
+
+.difficulty-button-selected {
+    -fx-border-color: #7CDE3A;
+    -fx-border-width: 2;
+    -fx-background-color: #1E2A1C;
 }
 
 .matchup-row {
