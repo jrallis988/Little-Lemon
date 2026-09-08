@@ -5,3 +5,7 @@ node_modules/
 *.log
 dist/
 .cache/
+thomas-assistant/node_modules/
+thomas-assistant/build/
+thomas-assistant/.svelte-kit/
+thomas-assistant/src-tauri/target/

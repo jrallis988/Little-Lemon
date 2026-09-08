@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 100" fill="none" aria-hidden="true">
+  <text
+    x="140"
+    y="44"
+    text-anchor="middle"
+    font-family="'Pinyon Script', Georgia, 'Brush Script MT', cursive"
+    font-size="56"
+    fill="#081523"
+  >Thomas</text>
+  <path
+    d="M 68 54 C 100 62, 180 62, 212 54"
+    stroke="#C78A2C"
+    stroke-width="3.5"
+    stroke-linecap="round"
+    fill="none"
+  />
+  <g transform="translate(140, 67)">
+    <path
+      d="M-9,-3.5 L-3.5,-7 L0,-1.5 L3.5,-7 L9,-3.5 L3.5,0 L9,3.5 L3.5,7 L0,1.5 L-3.5,7 L-9,3.5 L-3.5,0 Z"
+      fill="#C78A2C"
+    />
+    <rect x="-1.2" y="-2" width="2.4" height="4" rx="0.5" fill="#081523"/>
+  </g>
+  <line x1="44" y1="67" x2="112" y2="67" stroke="#C78A2C" stroke-width="0.75"/>
+  <line x1="168" y1="67" x2="236" y2="67" stroke="#C78A2C" stroke-width="0.75"/>
+  <text
+    x="140"
+    y="90"
+    text-anchor="middle"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="7.5"
+    font-weight="600"
+    letter-spacing="0.22em"
+    fill="#C78A2C"
+  >YOUR OWN PERSONAL BARTENDER</text>
+</svg>
