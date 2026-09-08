@@ -9,10 +9,21 @@ import {
   PlayerArt,
 } from "../components/Illustrations";
 import ContentRow from "../components/ContentRow";
+import { useLibrary } from "../library/LibraryContext";
 
 export default function AcademyRock() {
   const [activeId, setActiveId] = useState(academyEpisodes[0].id);
   const active = academyEpisodes.find((ep) => ep.id === activeId) || academyEpisodes[0];
+  const { isInWatchlist, toggleWatchlist, markProgress, getProgress } = useLibrary();
+  const saved = isInWatchlist("academy-rock");
+
+  const playEpisode = (ep) => {
+    setActiveId(ep.id);
+    // Progress climbs with later episodes so Continue Watching feels real
+    const progress = Math.min(0.92, 0.18 + ep.number * 0.14);
+    markProgress("academy-rock", progress);
+    document.getElementById("player")?.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
 
   return (
     <>
@@ -33,13 +44,19 @@ export default function AcademyRock() {
             <button
               type="button"
               className="btn btn-play"
-              onClick={() => {
-                document.getElementById("episodes")?.scrollIntoView({ behavior: "smooth" });
-              }}
+              onClick={() => playEpisode(academyEpisodes[0])}
             >
               <PlayIcon /> Play Episode 1
             </button>
-            <Link to="/" className="btn btn-details">
+            <button
+              type="button"
+              className="btn btn-details"
+              onClick={() => toggleWatchlist("academy-rock")}
+              aria-pressed={saved}
+            >
+              {saved ? "In Watchlist" : "+ Watchlist"}
+            </button>
+            <Link to="/search" className="btn btn-details">
               More Like This
             </Link>
           </div>
@@ -61,7 +78,7 @@ export default function AcademyRock() {
                 key={ep.id}
                 type="button"
                 className={`episode${ep.id === activeId ? " active" : ""}`}
-                onClick={() => setActiveId(ep.id)}
+                onClick={() => playEpisode(ep)}
                 aria-pressed={ep.id === activeId}
               >
                 <span className="episode-num">{ep.number}</span>
@@ -79,7 +96,7 @@ export default function AcademyRock() {
             ))}
           </div>
 
-          <div className="player-panel" aria-live="polite">
+          <div className="player-panel" id="player" aria-live="polite">
             <div className="player-stage">
               <PlayerArt color={active.color} />
               <div className="player-label">
@@ -124,7 +141,7 @@ export default function AcademyRock() {
             "little-harbor",
             "count-with-coco",
             "starlight-story",
-          ])}
+          ]).map((s) => ({ ...s, progress: getProgress(s.id) ?? s.progress }))}
         />
       </div>
     </>

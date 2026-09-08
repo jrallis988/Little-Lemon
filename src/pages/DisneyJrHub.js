@@ -3,12 +3,15 @@ import { disneyJrHubRows, getShowsByIds } from "../data/content";
 import { HeroStageArt, PlayIcon } from "../components/Illustrations";
 import BrandRow from "../components/BrandRow";
 import ContentRow from "../components/ContentRow";
+import { useLibrary } from "../library/LibraryContext";
 
 /**
  * Standalone Disney Jr hub — preschool-first carousels,
  * reached directly from the top-level Disney Jr brand tile.
  */
 export default function DisneyJrHub() {
+  const { continueShows, getProgress } = useLibrary();
+
   return (
     <>
       <section className="hero hub-hero" aria-label="Disney Jr hub">
@@ -41,14 +44,16 @@ export default function DisneyJrHub() {
       <div className="catalog">
         <BrandRow activeId="disney-jr" />
 
-        {disneyJrHubRows.map((row) => (
-          <ContentRow
-            key={row.id}
-            id={row.id}
-            title={row.title}
-            shows={getShowsByIds(row.showIds)}
-          />
-        ))}
+        {disneyJrHubRows.map((row) => {
+          const shows =
+            row.id === "jr-continue" && continueShows.length
+              ? continueShows
+              : getShowsByIds(row.showIds).map((s) => ({
+                  ...s,
+                  progress: getProgress(s.id) ?? s.progress,
+                }));
+          return <ContentRow key={row.id} id={row.id} title={row.title} shows={shows} />;
+        })}
       </div>
     </>
   );

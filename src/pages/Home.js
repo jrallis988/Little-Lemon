@@ -3,8 +3,32 @@ import { getShowsByIds, homeRows } from "../data/content";
 import { HeroStageArt, PlayIcon } from "../components/Illustrations";
 import BrandRow from "../components/BrandRow";
 import ContentRow from "../components/ContentRow";
+import { useLibrary } from "../library/LibraryContext";
 
 export default function Home() {
+  const { continueShows, getProgress } = useLibrary();
+
+  const rows = homeRows.map((row) => {
+    if (row.id === "continue") {
+      return {
+        ...row,
+        shows: continueShows.length
+          ? continueShows
+          : getShowsByIds(row.showIds).map((s) => ({
+              ...s,
+              progress: getProgress(s.id) ?? s.progress,
+            })),
+      };
+    }
+    return {
+      ...row,
+      shows: getShowsByIds(row.showIds).map((s) => ({
+        ...s,
+        progress: getProgress(s.id) ?? s.progress,
+      })),
+    };
+  });
+
   return (
     <>
       <section className="hero" aria-label="Featured: Academy Rock">
@@ -33,13 +57,8 @@ export default function Home() {
       <div className="catalog">
         <BrandRow />
 
-        {homeRows.map((row) => (
-          <ContentRow
-            key={row.id}
-            id={row.id}
-            title={row.title}
-            shows={getShowsByIds(row.showIds)}
-          />
+        {rows.map((row) => (
+          <ContentRow key={row.id} id={row.id} title={row.title} shows={row.shows} />
         ))}
       </div>
     </>

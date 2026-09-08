@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useLibrary } from "../library/LibraryContext";
 
 const links = [
   {
@@ -13,7 +14,7 @@ const links = [
     ),
   },
   {
-    to: "/disney-jr",
+    to: "/search",
     label: "Search",
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -23,7 +24,7 @@ const links = [
     ),
   },
   {
-    to: "/disney-jr",
+    to: "/watchlist",
     label: "Watchlist",
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -63,6 +64,7 @@ const links = [
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const { watchlist } = useLibrary();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -90,6 +92,11 @@ export default function Navbar() {
                   <NavLink to={link.to} end={link.end}>
                     <span className="nav-icon">{link.icon}</span>
                     {link.label}
+                    {link.label === "Watchlist" && watchlist.length > 0 && (
+                      <span className="nav-badge" aria-label={`${watchlist.length} saved`}>
+                        {watchlist.length}
+                      </span>
+                    )}
                   </NavLink>
                 )}
               </li>

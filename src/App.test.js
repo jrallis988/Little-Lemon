@@ -1,6 +1,11 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import App from "./App";
+import { clearLibraryStorage } from "./library/storage";
+
+beforeEach(() => {
+  clearLibraryStorage();
+});
 
 test("renders Disney+ brand hubs including Disney Jr tile", () => {
   render(
@@ -61,4 +66,28 @@ test("renders Academy Rock show page", () => {
   expect(screen.getByRole("heading", { level: 1, name: /Academy Rock/i })).toBeInTheDocument();
   expect(screen.getAllByText(/First Day Jams/i).length).toBeGreaterThan(0);
   expect(screen.getByRole("button", { name: /Play Episode 1/i })).toBeInTheDocument();
+});
+
+test("search page filters shows by query", () => {
+  render(
+    <MemoryRouter initialEntries={["/search"]}>
+      <App />
+    </MemoryRouter>
+  );
+  expect(screen.getByRole("heading", { name: /Find a show/i })).toBeInTheDocument();
+  const input = screen.getByPlaceholderText(/Titles, characters/i);
+  fireEvent.change(input, { target: { value: "Academy Rock" } });
+  expect(screen.getByLabelText(/^Academy Rock$/i)).toBeInTheDocument();
+  expect(screen.queryByLabelText(/^Sunny Paws$/i)).not.toBeInTheDocument();
+});
+
+test("watchlist can add Academy Rock from title page", () => {
+  render(
+    <MemoryRouter initialEntries={["/academy-rock"]}>
+      <App />
+    </MemoryRouter>
+  );
+  const addBtn = screen.getByRole("button", { name: /\+ Watchlist/i });
+  fireEvent.click(addBtn);
+  expect(screen.getByRole("button", { name: /In Watchlist/i })).toBeInTheDocument();
 });
