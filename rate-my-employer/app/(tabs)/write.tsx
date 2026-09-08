@@ -94,7 +94,8 @@ export default function WriteScreen() {
       return;
     }
     if (step === 3 && !draft.role.trim()) {
-      Alert.alert('Add your role');
+      setDraft((d) => ({ ...d, role: POPULAR_ROLES[0] }));
+      setStep((s) => Math.min(s + 1, STEPS.length - 1));
       return;
     }
     if (step === 4 && !draft.overall) {
@@ -236,24 +237,27 @@ export default function WriteScreen() {
 
         {step === 3 ? (
           <View style={styles.block}>
+            <Text style={styles.copy}>What role are you writing about?</Text>
             <TextInput
               style={styles.input}
               placeholder="Your role / job title"
               placeholderTextColor={colors.inkSoft}
               value={draft.role}
               onChangeText={(role) => setDraft((d) => ({ ...d, role }))}
+              autoCapitalize="words"
             />
             <Text style={styles.sub}>Popular roles</Text>
-            <View style={styles.wrap}>
-              {POPULAR_ROLES.map((role) => (
-                <Chip
-                  key={role}
-                  label={role}
-                  active={draft.role === role}
-                  onPress={() => setDraft((d) => ({ ...d, role }))}
-                />
-              ))}
-            </View>
+            {POPULAR_ROLES.map((role) => (
+              <Pressable
+                key={role}
+                style={[styles.option, draft.role === role && styles.optionOn]}
+                onPress={() => setDraft((d) => ({ ...d, role }))}
+              >
+                <Text style={[styles.optionTitle, draft.role === role && styles.optionTitleOn]}>
+                  {role}
+                </Text>
+              </Pressable>
+            ))}
             {draft.experienceType === 'work' ? (
               <View style={styles.wrap}>
                 <Chip
