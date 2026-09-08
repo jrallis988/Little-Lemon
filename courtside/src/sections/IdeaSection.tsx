@@ -1,5 +1,5 @@
 import { brand } from "../data/brand";
-import "./CaseFrame.css";
+import "./IdeaSection.css";
 
 export function IdeaSection() {
   return (
