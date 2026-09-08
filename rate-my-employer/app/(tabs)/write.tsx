@@ -415,6 +415,10 @@ export default function WriteScreen() {
           </View>
         ) : null}
 
+        <PrimaryButton
+          label={step < STEPS.length - 1 ? 'Continue' : 'Submit Review'}
+          onPress={step < STEPS.length - 1 ? advance : onSubmit}
+        />
       </ScrollView>
 
       <View style={styles.navRow}>
