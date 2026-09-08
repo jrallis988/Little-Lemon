@@ -183,14 +183,21 @@ export function AppProvider({ children }: { children: ReactNode }) {
         if (map[STORAGE_KEYS.interviews]) setInterviews(JSON.parse(map[STORAGE_KEYS.interviews]!));
         if (map[STORAGE_KEYS.salaries]) setSalaries(JSON.parse(map[STORAGE_KEYS.salaries]!));
         setHasOnboarded(map[STORAGE_KEYS.onboarded] === '1');
-        setIsGuest(map[STORAGE_KEYS.guest] === '1');
         if (map[STORAGE_KEYS.saved]) setSavedCompanyIds(JSON.parse(map[STORAGE_KEYS.saved]!));
         if (map[STORAGE_KEYS.recentSearches]) {
           setRecentSearches(JSON.parse(map[STORAGE_KEYS.recentSearches]!));
         }
-        if (map[STORAGE_KEYS.session]) {
-          const match = parsedUsers.find((item) => item.id === map[STORAGE_KEYS.session]);
-          setUser(match ? toPublicUser(match) : null);
+        const guest = map[STORAGE_KEYS.guest] === '1';
+        const sessionId = map[STORAGE_KEYS.session];
+        const sessionUser = sessionId
+          ? parsedUsers.find((item) => item.id === sessionId)
+          : undefined;
+        if (sessionUser) {
+          setUser(toPublicUser(sessionUser));
+          setIsGuest(false);
+        } else {
+          setUser(null);
+          setIsGuest(guest);
         }
       } finally {
         if (mounted) setReady(true);
@@ -368,7 +375,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
           return 'Name, email, and password are required.';
         }
         if (password.length < 6) return 'Password must be at least 6 characters.';
-        if (accounts.some((item) => item.email === normalized)) {
+        const stored = await AsyncStorage.getItem(STORAGE_KEYS.users);
+        const existing: LocalAccount[] = stored ? JSON.parse(stored) : accounts;
+        if (existing.some((item) => item.email === normalized)) {
           return 'An account with that email already exists.';
         }
         const now = new Date().toISOString();
@@ -382,7 +391,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
           createdAt: now,
           updatedAt: now,
         };
-        await persistAccounts([...accounts, nextUser]);
+        const nextAccounts = [...existing, nextUser];
+        await persistAccounts(nextAccounts);
         setUser(toPublicUser(nextUser));
         setIsGuest(false);
         setHasOnboarded(true);
@@ -396,10 +406,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
       signIn: async ({ email, password }) => {
         const normalized = normalizeEmail(email);
         if (!normalized || !password) return 'Email and password are required.';
-        const match = accounts.find(
+        const stored = await AsyncStorage.getItem(STORAGE_KEYS.users);
+        const existing: LocalAccount[] = stored ? JSON.parse(stored) : accounts;
+        const match = existing.find(
           (item) => item.email === normalized && item.password === password,
         );
         if (!match) return 'Invalid email or password.';
+        if (existing !== accounts) setAccounts(existing);
         setUser(toPublicUser(match));
         setIsGuest(false);
         setHasOnboarded(true);
