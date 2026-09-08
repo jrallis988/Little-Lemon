@@ -240,12 +240,17 @@ public final class BoardView extends VBox {
                     }
                 }
                 if (r == focusRow && c == focusCol && isFocused()) {
-                    Rectangle focus = new Rectangle(CELL - 6, CELL - 6);
-                    focus.setFill(Color.TRANSPARENT);
-                    focus.setStroke(Color.web("#F2F3F5"));
-                    focus.setStrokeWidth(2);
-                    focus.setMouseTransparent(true);
-                    cell.getChildren().add(focus);
+                    boolean opponent = board.get(pos)
+                            .filter(p -> p.side() != state.sideToMove())
+                            .isPresent();
+                    if (!opponent) {
+                        Rectangle focus = new Rectangle(CELL - 6, CELL - 6);
+                        focus.setFill(Color.TRANSPARENT);
+                        focus.setStroke(Color.web("#F2F3F5"));
+                        focus.setStrokeWidth(2);
+                        focus.setMouseTransparent(true);
+                        cell.getChildren().add(focus);
+                    }
                 }
 
                 board.get(pos).ifPresent(piece -> {
