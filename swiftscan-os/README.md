@@ -40,6 +40,6 @@ make iso      # GRUB rescue ISO
 5. Demo injects a UPC and ~454 g weight so HAL paths update under QEMU without hardware.
 
 Scanner and scale drivers stay in simulation until platform ports are enabled
-(`-DSWIFTSCAN_SCANNER_HW` for `inb` on `0x3F8`/`0x3F9`). QEMU uses
-`scanner_inject()` to feed CR-terminated barcode bytes through the same
-`scanner_poll()` assembler.
+(`-DSWIFTSCAN_SCANNER_HW` for scanner `0x3F8`/`0x3F9`, `-DSWIFTSCAN_SCALE_HW`
+for scale `0x3FA`/`0x3FB`). QEMU uses `scanner_inject()` / `scale_inject_grams()`
+to feed the same poll/read paths.

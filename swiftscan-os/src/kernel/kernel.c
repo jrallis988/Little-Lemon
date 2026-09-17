@@ -39,23 +39,6 @@ static void u32_to_dec(uint32_t value, char *buf, size_t buflen)
     buf[n] = '\0';
 }
 
-static void i32_to_dec(int32_t value, char *buf, size_t buflen)
-{
-    if (buflen == 0)
-        return;
-
-    if (value < 0) {
-        buf[0] = '-';
-        if (buflen == 1) {
-            buf[0] = '\0';
-            return;
-        }
-        u32_to_dec((uint32_t)(-value), buf + 1, buflen - 1);
-    } else {
-        u32_to_dec((uint32_t)value, buf, buflen);
-    }
-}
-
 static void draw_operator_labels(void)
 {
     /* Header branding on black bar (row ~2 → y≈16). */
@@ -65,7 +48,7 @@ static void draw_operator_labels(void)
     /* Workspace card labels (white panel starts ~x50,y100 → col≥7,row≥13). */
     fb_write(8, 14, "Scan workspace", COLOR_NAVY, COLOR_WHITE);
     fb_write(8, 16, "Scanner : waiting...", COLOR_BLACK, COLOR_WHITE);
-    fb_write(8, 18, "Scale   : 0 mg", COLOR_BLACK, COLOR_WHITE);
+    fb_write(8, 18, "Scale   : 0 g", COLOR_BLACK, COLOR_WHITE);
 
     /* Side panel totals */
     fb_write(74, 14, "TOTALS", COLOR_BLACK, COLOR_LIGHT_GRAY);
@@ -76,7 +59,7 @@ static void draw_operator_labels(void)
 void kernel_main(uint32_t magic, struct multiboot_info *mbi)
 {
     const char *scan;
-    struct scale_reading weight;
+    uint32_t grams;
     char line[64];
     char num[16];
     uint32_t ticks = 0;
@@ -87,7 +70,7 @@ void kernel_main(uint32_t magic, struct multiboot_info *mbi)
     scale_init();
 
     scanner_inject("012345678905");
-    scale_inject_mg(454000);
+    scale_inject_grams(454); /* ~1.00 lb produce */
 
     fb_render_ui_shell();
     draw_operator_labels();
@@ -114,24 +97,24 @@ void kernel_main(uint32_t magic, struct multiboot_info *mbi)
             fb_write(74, 16, "Items: 1", COLOR_BLACK, COLOR_LIGHT_GRAY);
         }
 
-        if (scale_read(&weight) == SCALE_OK) {
+        if (scale_data_ready()) {
+            grams = scale_read_weight_grams();
             for (i = 0; i < sizeof(line); i++)
                 line[i] = '\0';
             line[0] = 'S'; line[1] = 'c'; line[2] = 'a'; line[3] = 'l';
             line[4] = 'e'; line[5] = ' '; line[6] = ' '; line[7] = ' ';
             line[8] = ':'; line[9] = ' ';
-            i32_to_dec(weight.milligrams, num, sizeof(num));
+            u32_to_dec(grams, num, sizeof(num));
             for (i = 0; num[i] && (10 + i) < 40; i++)
                 line[10 + i] = num[i];
             line[10 + i] = ' ';
-            line[11 + i] = 'm';
-            line[12 + i] = 'g';
-            if (weight.stable) {
-                line[13 + i] = ' ';
-                line[14 + i] = '[';
-                line[15 + i] = 'o';
-                line[16 + i] = 'k';
-                line[17 + i] = ']';
+            line[11 + i] = 'g';
+            if (scale_is_stable()) {
+                line[12 + i] = ' ';
+                line[13 + i] = '[';
+                line[14 + i] = 'o';
+                line[15 + i] = 'k';
+                line[16 + i] = ']';
             }
             fb_write(8, 18, line, COLOR_BLACK, COLOR_WHITE);
         }
