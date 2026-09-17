@@ -33,9 +33,10 @@ make iso      # GRUB rescue ISO
 
 ## Boot contract
 
-1. GRUB / QEMU Multiboot loads the ELF at `0x00100000`.
+1. GRUB / QEMU Multiboot loads the ELF at `0x00100000` and (when possible) sets **800×600×32** linear graphics via the Multiboot video request + `gfxpayload`.
 2. `boot.asm` clears `.bss`, sets a 16 KiB stack, calls `kernel_main(magic, mbi)`.
-3. Kernel initializes framebuffer (Multiboot FB or VGA text `0xB8000`), scanner HAL, and scale HAL.
-4. Demo injects a UPC and ~454 g weight so the operator UI updates under QEMU without hardware.
+3. `framebuffer_init` binds the Multiboot linear FB (or VGA text fallback).
+4. `fb_render_ui_shell` draws the navy operator chrome: black header, white scan workspace, light-gray totals panel.
+5. Demo injects a UPC and ~454 g weight so HAL paths update under QEMU without hardware.
 
-Scanner and scale drivers stay in simulation until platform MMIO bases are mapped.
+Platform builds that map a VBE BAR at `0xFD000000` can compile with `-DSWIFTSCAN_USE_DEFAULT_FB`.

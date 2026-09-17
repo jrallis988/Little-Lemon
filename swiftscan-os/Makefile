@@ -48,17 +48,17 @@ $(KERNEL): $(OBJS) linker.ld
 iso: $(KERNEL)
 	@mkdir -p $(ISO_DIR)/boot/grub
 	cp $(KERNEL) $(ISO_DIR)/boot/$(TARGET).bin
-	printf 'set timeout=0\nset default=0\nmenuentry "SwiftScan OS" {\n  multiboot /boot/$(TARGET).bin\n  boot\n}\n' \
+	printf 'set timeout=0\nset default=0\ninsmod all_video\nset gfxpayload=800x600x32\nmenuentry "SwiftScan OS" {\n  multiboot /boot/$(TARGET).bin\n  boot\n}\n' \
 		> $(ISO_DIR)/boot/grub/grub.cfg
 	grub-mkrescue -o $(ISO) $(ISO_DIR)
 
-# Headless boot smoke test (exits after a few seconds via timeout).
-run: $(KERNEL)
-	timeout 3 $(QEMU) $(QEMUFLAGS) || true
+# Headless Multiboot smoke test (prefers ISO so GRUB can set 800x600x32).
+run: iso
+	timeout 4 $(QEMU) -cdrom $(ISO) -display none -no-reboot -no-shutdown || true
 
-# Interactive VGA session (requires a display).
-run-vga: $(KERNEL)
-	$(QEMU) -kernel $(KERNEL) -serial stdio
+# Interactive graphical session (requires a display).
+run-vga: iso
+	$(QEMU) -cdrom $(ISO) -serial stdio
 
 tree:
 	@find . -path ./build -prune -o -path ./.git -prune -o -print | sort

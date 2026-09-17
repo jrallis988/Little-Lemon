@@ -1,9 +1,7 @@
 /*
  * SwiftScan OS — kernel entry
  *
- * Boot path: Multiboot1 → _start (boot.asm) → kernel_main.
- * Brings up display, bi-optic scanner HAL, and load-cell scale HAL,
- * then runs a simple operator UI loop.
+ * Boots Multiboot → framebuffer UI shell → scanner/scale HAL loop.
  */
 
 #include "framebuffer.h"
@@ -58,68 +56,66 @@ static void i32_to_dec(int32_t value, char *buf, size_t buflen)
     }
 }
 
-static void draw_chrome(void)
+static void draw_operator_labels(void)
 {
-    const uint32_t bg  = fb_rgb(12, 18, 28);
-    const uint32_t fg  = fb_rgb(220, 230, 240);
-    const uint32_t acc = fb_rgb(0, 180, 160);
+    /* Header branding on black bar (row ~2 → y≈16). */
+    fb_write(2, 2, "SWIFT SCAN OS", COLOR_GREEN, COLOR_BLACK);
+    fb_write(20, 2, "Bi-optic POS", COLOR_WHITE, COLOR_BLACK);
 
-    fb_clear(bg);
-    fb_write(2, 1, "SWIFTSCAN OS", acc, bg);
-    fb_write(2, 2, "Bi-optic POS kernel (freestanding)", fg, bg);
-    fb_write(2, 4, "Scanner : waiting...", fg, bg);
-    fb_write(2, 5, "Scale   : 0 mg (tare)", fg, bg);
-    fb_write(2, 7, "Status  : ready", fg, bg);
+    /* Workspace card labels (white panel starts ~x50,y100 → col≥7,row≥13). */
+    fb_write(8, 14, "Scan workspace", COLOR_NAVY, COLOR_WHITE);
+    fb_write(8, 16, "Scanner : waiting...", COLOR_BLACK, COLOR_WHITE);
+    fb_write(8, 18, "Scale   : 0 mg", COLOR_BLACK, COLOR_WHITE);
+
+    /* Side panel totals */
+    fb_write(74, 14, "TOTALS", COLOR_BLACK, COLOR_LIGHT_GRAY);
+    fb_write(74, 16, "Items: 0", COLOR_BLACK, COLOR_LIGHT_GRAY);
+    fb_write(74, 18, "Ready", COLOR_GREEN, COLOR_LIGHT_GRAY);
 }
 
 void kernel_main(uint32_t magic, struct multiboot_info *mbi)
 {
     struct scan_event scan;
     struct scale_reading weight;
-    char line[80];
+    char line[64];
     char num[16];
     uint32_t ticks = 0;
-    const uint32_t bg  = fb_rgb(12, 18, 28);
-    const uint32_t fg  = fb_rgb(220, 230, 240);
-    const uint32_t acc = fb_rgb(0, 180, 160);
-    const uint32_t warn = fb_rgb(220, 160, 40);
+    size_t i;
 
-    fb_init((magic == MULTIBOOT_BOOTLOADER_MAGIC) ? mbi : NULL);
+    framebuffer_init((magic == MULTIBOOT_BOOTLOADER_MAGIC) ? mbi : NULL);
     scanner_init();
     scale_init();
 
-    /* Demo stimuli so QEMU boots show live HAL paths without hardware. */
     scanner_inject("012345678905");
-    scale_inject_mg(454000); /* ~1.00 lb produce */
+    scale_inject_mg(454000);
 
-    draw_chrome();
+    fb_render_ui_shell();
+    draw_operator_labels();
 
     if (magic != MULTIBOOT_BOOTLOADER_MAGIC) {
-        fb_write(2, 7, "Status  : bad Multiboot magic", warn, bg);
+        fb_write(2, 5, "bad Multiboot magic", COLOR_GREEN, COLOR_BLACK);
+    } else if (!fb_is_pixel_mode()) {
+        fb_write(2, 5, "VGA text fallback", COLOR_GREEN, COLOR_BLACK);
     }
 
     for (;;) {
         ticks++;
 
         if (scanner_poll(&scan) == SCANNER_OK) {
-            size_t i;
             for (i = 0; i < sizeof(line); i++)
                 line[i] = '\0';
-
             line[0] = 'S'; line[1] = 'c'; line[2] = 'a'; line[3] = 'n';
             line[4] = 'n'; line[5] = 'e'; line[6] = 'r'; line[7] = ' ';
             line[8] = ':'; line[9] = ' ';
             for (i = 0; i < scan.length && (10 + i) < sizeof(line) - 1; i++)
                 line[10 + i] = scan.code[i];
-
-            fb_write(2, 4, line, acc, bg);
+            fb_write(8, 16, line, COLOR_BLACK, COLOR_WHITE);
+            fb_write(74, 16, "Items: 1", COLOR_BLACK, COLOR_LIGHT_GRAY);
         }
 
         if (scale_read(&weight) == SCALE_OK) {
-            size_t i;
             for (i = 0; i < sizeof(line); i++)
                 line[i] = '\0';
-
             line[0] = 'S'; line[1] = 'c'; line[2] = 'a'; line[3] = 'l';
             line[4] = 'e'; line[5] = ' '; line[6] = ' '; line[7] = ' ';
             line[8] = ':'; line[9] = ' ';
@@ -132,23 +128,17 @@ void kernel_main(uint32_t magic, struct multiboot_info *mbi)
             if (weight.stable) {
                 line[13 + i] = ' ';
                 line[14 + i] = '[';
-                line[15 + i] = 's';
-                line[16 + i] = 't';
-                line[17 + i] = 'a';
-                line[18 + i] = 'b';
-                line[19 + i] = 'l';
-                line[20 + i] = 'e';
-                line[21 + i] = ']';
+                line[15 + i] = 'o';
+                line[16 + i] = 'k';
+                line[17 + i] = ']';
             }
-            fb_write(2, 5, line, fg, bg);
+            fb_write(8, 18, line, COLOR_BLACK, COLOR_WHITE);
         }
 
-        /* Heartbeat so the operator knows the loop is alive. */
-        if ((ticks & 0x3FFFFu) == 0) {
-            fb_write(2, 7, "Status  : ready          ", fg, bg);
-        } else if ((ticks & 0x3FFFFu) == 0x20000u) {
-            fb_write(2, 7, "Status  : ready *        ", acc, bg);
-        }
+        if ((ticks & 0x3FFFFu) == 0)
+            fb_write(74, 18, "Ready  ", COLOR_GREEN, COLOR_LIGHT_GRAY);
+        else if ((ticks & 0x3FFFFu) == 0x20000u)
+            fb_write(74, 18, "Ready *", COLOR_GREEN, COLOR_LIGHT_GRAY);
 
         __asm__ __volatile__("pause");
     }

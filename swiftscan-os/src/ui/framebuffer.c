@@ -1,30 +1,32 @@
 /*
- * Direct screen rendering
+ * Swift Scan OS — Direct-to-Framebuffer Graphics Driver
  *
- * Prefers Multiboot linear framebuffer when GRUB provides one; otherwise
- * falls back to classic VGA text mode at 0xB8000 (reliable under QEMU -kernel).
+ * Target mode: 800x600x32 linear framebuffer (ARGB). Prefers Multiboot
+ * graphics info. Falls back to FB_DEFAULT_PHYSICAL_ADDRESS only when the
+ * platform is known to map it; otherwise uses VGA text so QEMU without a
+ * Multiboot FB does not fault on an unmapped BAR.
  */
 
 #include "framebuffer.h"
 
-#define VGA_TEXT_BASE  ((volatile uint16_t *)0xB8000)
-#define VGA_COLS       80u
-#define VGA_ROWS       25u
+#define VGA_TEXT_BASE ((volatile uint16_t *)0xB8000)
+#define VGA_COLS      80u
+#define VGA_ROWS      25u
 
 struct fb_state {
-    bool     pixel_mode;
-    uint8_t *addr;
-    uint32_t pitch;
-    uint32_t width;
-    uint32_t height;
-    uint8_t  bpp;
+    bool      pixel_mode;
+    uint32_t *screen;   /* 32-bpp packed view when pitch == width * 4 */
+    uint8_t  *bytes;
+    uint32_t  pitch;
+    uint32_t  width;
+    uint32_t  height;
+    uint8_t   bpp;
 };
 
 static struct fb_state fb;
 
-/* Tiny 8x8 font for ASCII 32..127 (bit rows, MSB left). */
 static const uint8_t font8x8[96][8] = {
-    {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}, /* space */
+    {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00},
     {0x18,0x3C,0x3C,0x18,0x18,0x00,0x18,0x00},
     {0x36,0x36,0x00,0x00,0x00,0x00,0x00,0x00},
     {0x36,0x36,0x7F,0x36,0x7F,0x36,0x36,0x00},
@@ -40,7 +42,7 @@ static const uint8_t font8x8[96][8] = {
     {0x00,0x00,0x00,0x3F,0x00,0x00,0x00,0x00},
     {0x00,0x00,0x00,0x00,0x00,0x0C,0x0C,0x00},
     {0x60,0x30,0x18,0x0C,0x06,0x03,0x01,0x00},
-    {0x3E,0x63,0x73,0x7B,0x6F,0x67,0x3E,0x00}, /* 0 */
+    {0x3E,0x63,0x73,0x7B,0x6F,0x67,0x3E,0x00},
     {0x0C,0x0E,0x0C,0x0C,0x0C,0x0C,0x3F,0x00},
     {0x1E,0x33,0x30,0x1C,0x06,0x33,0x3F,0x00},
     {0x1E,0x33,0x30,0x1C,0x30,0x33,0x1E,0x00},
@@ -57,7 +59,7 @@ static const uint8_t font8x8[96][8] = {
     {0x06,0x0C,0x18,0x30,0x18,0x0C,0x06,0x00},
     {0x1E,0x33,0x30,0x18,0x0C,0x00,0x0C,0x00},
     {0x3E,0x63,0x7B,0x7B,0x7B,0x03,0x1E,0x00},
-    {0x0C,0x1E,0x33,0x33,0x3F,0x33,0x33,0x00}, /* A */
+    {0x0C,0x1E,0x33,0x33,0x3F,0x33,0x33,0x00},
     {0x3F,0x66,0x66,0x3E,0x66,0x66,0x3F,0x00},
     {0x3C,0x66,0x03,0x03,0x03,0x66,0x3C,0x00},
     {0x1F,0x36,0x66,0x66,0x66,0x36,0x1F,0x00},
@@ -89,7 +91,7 @@ static const uint8_t font8x8[96][8] = {
     {0x08,0x1C,0x36,0x63,0x00,0x00,0x00,0x00},
     {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xFF},
     {0x0C,0x0C,0x18,0x00,0x00,0x00,0x00,0x00},
-    {0x00,0x00,0x1E,0x30,0x3E,0x33,0x6E,0x00}, /* a */
+    {0x00,0x00,0x1E,0x30,0x3E,0x33,0x6E,0x00},
     {0x07,0x06,0x06,0x3E,0x66,0x66,0x3B,0x00},
     {0x00,0x00,0x1E,0x33,0x03,0x33,0x1E,0x00},
     {0x38,0x30,0x30,0x3e,0x33,0x33,0x6E,0x00},
@@ -122,70 +124,102 @@ static const uint8_t font8x8[96][8] = {
     {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00},
 };
 
-static uint8_t vga_color_from_rgb(uint32_t rgb)
+static uint8_t vga_color_from_argb(uint32_t argb)
 {
-    /* Map coarse luminance / channel dominance to a 16-color VGA attribute. */
-    uint8_t r = (uint8_t)((rgb >> 16) & 0xFF);
-    uint8_t g = (uint8_t)((rgb >> 8) & 0xFF);
-    uint8_t b = (uint8_t)(rgb & 0xFF);
+    uint8_t r = (uint8_t)((argb >> 16) & 0xFF);
+    uint8_t g = (uint8_t)((argb >> 8) & 0xFF);
+    uint8_t b = (uint8_t)(argb & 0xFF);
     uint8_t bright = (r > 160 || g > 160 || b > 160) ? 8 : 0;
 
     if (r < 40 && g < 40 && b < 40)
         return 0;
+    if (b > r + 20 && b > g + 20)
+        return (uint8_t)(1 | bright);
     if (g > r && g > b)
-        return (uint8_t)(2 | bright); /* green / cyan-ish */
-    if (b > r && b > g)
-        return (uint8_t)(1 | bright); /* blue */
-    if (r > g && r > b)
-        return (uint8_t)(4 | bright); /* red */
+        return (uint8_t)(2 | bright);
     if (r > 180 && g > 180 && b > 180)
         return 15;
     return (uint8_t)(7 | bright);
 }
 
-uint32_t fb_rgb(uint8_t r, uint8_t g, uint8_t b)
+static void fb_bind_linear(uint8_t *addr, uint32_t pitch, uint32_t width,
+                           uint32_t height, uint8_t bpp)
 {
-    return ((uint32_t)r << 16) | ((uint32_t)g << 8) | (uint32_t)b;
+    fb.pixel_mode = true;
+    fb.bytes = addr;
+    fb.pitch = pitch;
+    fb.width = width;
+    fb.height = height;
+    fb.bpp = bpp;
+    fb.screen = NULL;
+    if (bpp == 32 && pitch == width * 4u)
+        fb.screen = (uint32_t *)addr;
 }
 
-void fb_init(const struct multiboot_info *mbi)
+uint32_t fb_rgb(uint8_t r, uint8_t g, uint8_t b)
+{
+    return 0xFF000000u | ((uint32_t)r << 16) | ((uint32_t)g << 8) | (uint32_t)b;
+}
+
+uint32_t fb_width(void)  { return fb.width; }
+uint32_t fb_height(void) { return fb.height; }
+uint32_t fb_addr(void)   { return (uint32_t)fb.bytes; }
+bool     fb_is_pixel_mode(void) { return fb.pixel_mode; }
+
+void framebuffer_init(const struct multiboot_info *mbi)
 {
     fb.pixel_mode = false;
-    fb.addr = NULL;
+    fb.screen = NULL;
+    fb.bytes = NULL;
     fb.pitch = 0;
-    fb.width = VGA_COLS;
-    fb.height = VGA_ROWS;
-    fb.bpp = 0;
+    fb.width = FB_WIDTH;
+    fb.height = FB_HEIGHT;
+    fb.bpp = FB_BPP;
 
     if (mbi && (mbi->flags & MULTIBOOT_INFO_FRAMEBUFFER) &&
         mbi->framebuffer_type == 1 &&
         mbi->framebuffer_bpp >= 24 &&
         mbi->framebuffer_addr != 0) {
-        fb.pixel_mode = true;
-        fb.addr = (uint8_t *)(uint32_t)mbi->framebuffer_addr;
-        fb.pitch = mbi->framebuffer_pitch;
-        fb.width = mbi->framebuffer_width;
-        fb.height = mbi->framebuffer_height;
-        fb.bpp = mbi->framebuffer_bpp;
+        fb_bind_linear((uint8_t *)(uint32_t)mbi->framebuffer_addr,
+                       mbi->framebuffer_pitch,
+                       mbi->framebuffer_width,
+                       mbi->framebuffer_height,
+                       mbi->framebuffer_bpp);
+        return;
     }
+
+#if defined(SWIFTSCAN_USE_DEFAULT_FB)
+    /* Hardware builds where VBE/PCI maps a linear FB at this BAR. */
+    fb_bind_linear((uint8_t *)FB_DEFAULT_PHYSICAL_ADDRESS,
+                   FB_WIDTH * (FB_BPP / 8),
+                   FB_WIDTH, FB_HEIGHT, FB_BPP);
+#else
+    /* QEMU / no Multiboot graphics: stay on VGA text until gfxpayload works. */
+    fb.width = VGA_COLS;
+    fb.height = VGA_ROWS;
+    fb.bpp = 0;
+#endif
 }
 
-uint32_t fb_width(void)  { return fb.width; }
-uint32_t fb_height(void) { return fb.height; }
-bool     fb_is_pixel_mode(void) { return fb.pixel_mode; }
-
-void fb_put_pixel(uint32_t x, uint32_t y, uint32_t color)
+void fb_draw_pixel(int x, int y, uint32_t color)
 {
     uint8_t *pixel;
-    if (!fb.pixel_mode || x >= fb.width || y >= fb.height || !fb.addr)
+
+    if (!fb.pixel_mode || x < 0 || y < 0 ||
+        (uint32_t)x >= fb.width || (uint32_t)y >= fb.height || !fb.bytes)
         return;
 
-    pixel = fb.addr + y * fb.pitch + x * (fb.bpp / 8u);
+    if (fb.screen) {
+        fb.screen[(uint32_t)y * fb.width + (uint32_t)x] = color;
+        return;
+    }
+
+    pixel = fb.bytes + (uint32_t)y * fb.pitch + (uint32_t)x * (fb.bpp / 8u);
     if (fb.bpp == 32) {
         pixel[0] = (uint8_t)(color & 0xFF);
         pixel[1] = (uint8_t)((color >> 8) & 0xFF);
         pixel[2] = (uint8_t)((color >> 16) & 0xFF);
-        pixel[3] = 0;
+        pixel[3] = (uint8_t)((color >> 24) & 0xFF);
     } else if (fb.bpp == 24) {
         pixel[0] = (uint8_t)(color & 0xFF);
         pixel[1] = (uint8_t)((color >> 8) & 0xFF);
@@ -193,36 +227,58 @@ void fb_put_pixel(uint32_t x, uint32_t y, uint32_t color)
     }
 }
 
-void fb_fill_rect(uint32_t x, uint32_t y, uint32_t w, uint32_t h, uint32_t color)
+void fb_draw_rect(int x, int y, int width, int height, uint32_t color)
 {
-    uint32_t yi, xi;
-    if (!fb.pixel_mode)
+    int j, i;
+
+    if (!fb.pixel_mode || width <= 0 || height <= 0)
         return;
-    for (yi = y; yi < y + h && yi < fb.height; yi++)
-        for (xi = x; xi < x + w && xi < fb.width; xi++)
-            fb_put_pixel(xi, yi, color);
+
+    for (j = 0; j < height; j++) {
+        for (i = 0; i < width; i++)
+            fb_draw_pixel(x + i, y + j, color);
+    }
 }
 
-void fb_clear(uint32_t color)
+void fb_clear_screen(uint32_t color)
 {
-    if (fb.pixel_mode) {
-        fb_fill_rect(0, 0, fb.width, fb.height, color);
+    uint32_t i;
+    uint32_t count;
+
+    if (!fb.pixel_mode || !fb.bytes)
+        return;
+
+    if (fb.screen) {
+        count = fb.width * fb.height;
+        for (i = 0; i < count; i++)
+            fb.screen[i] = color;
         return;
     }
 
-    {
+    fb_draw_rect(0, 0, (int)fb.width, (int)fb.height, color);
+}
+
+void fb_render_ui_shell(void)
+{
+    if (!fb.pixel_mode) {
         uint32_t i;
-        uint8_t attr = (uint8_t)(vga_color_from_rgb(color) << 4);
-        uint16_t cell = (uint16_t)((attr << 8) | ' ');
         for (i = 0; i < VGA_COLS * VGA_ROWS; i++)
-            VGA_TEXT_BASE[i] = cell;
+            VGA_TEXT_BASE[i] = (uint16_t)((0x10 << 8) | ' ');
+        for (i = 0; i < VGA_COLS; i++)
+            VGA_TEXT_BASE[i] = (uint16_t)((0x00 << 8) | ' ');
+        return;
     }
+
+    fb_clear_screen(COLOR_NAVY);
+    fb_draw_rect(0, 0, (int)fb.width, 60, COLOR_BLACK);
+    fb_draw_rect(50, 100, 500, 450, COLOR_WHITE);
+    fb_draw_rect(580, 100, 170, 450, COLOR_LIGHT_GRAY);
 }
 
-static void fb_draw_glyph(uint32_t col, uint32_t row, char ch, uint32_t fg, uint32_t bg)
+static void fb_draw_glyph_px(int px, int py, char ch, uint32_t fg, uint32_t bg)
 {
     const uint8_t *glyph;
-    uint32_t gx, gy;
+    int gx, gy;
     unsigned idx;
 
     if ((unsigned char)ch < 32 || (unsigned char)ch > 127)
@@ -233,8 +289,8 @@ static void fb_draw_glyph(uint32_t col, uint32_t row, char ch, uint32_t fg, uint
     for (gy = 0; gy < 8; gy++) {
         uint8_t bits = glyph[gy];
         for (gx = 0; gx < 8; gx++) {
-            uint32_t color = (bits & (0x80u >> gx)) ? fg : bg;
-            fb_put_pixel(col * 8u + gx, row * 8u + gy, color);
+            uint32_t color = (bits & (uint8_t)(0x80u >> gx)) ? fg : bg;
+            fb_draw_pixel(px + gx, py + gy, color);
         }
     }
 }
@@ -246,8 +302,8 @@ void fb_write(uint32_t col, uint32_t row, const char *text, uint32_t fg, uint32_
         return;
 
     if (!fb.pixel_mode) {
-        uint8_t attr = (uint8_t)((vga_color_from_rgb(bg) << 4) |
-                                 (vga_color_from_rgb(fg) & 0x0F));
+        uint8_t attr = (uint8_t)((vga_color_from_argb(bg) << 4) |
+                                 (vga_color_from_argb(fg) & 0x0F));
         while (text[i] != '\0' && col + i < VGA_COLS && row < VGA_ROWS) {
             VGA_TEXT_BASE[row * VGA_COLS + col + i] =
                 (uint16_t)((attr << 8) | (uint8_t)text[i]);
@@ -257,7 +313,8 @@ void fb_write(uint32_t col, uint32_t row, const char *text, uint32_t fg, uint32_
     }
 
     while (text[i] != '\0') {
-        fb_draw_glyph(col + i, row, text[i], fg, bg);
+        fb_draw_glyph_px((int)(col * 8u), (int)(row * 8u), text[i], fg, bg);
+        col++;
         i++;
     }
 }
