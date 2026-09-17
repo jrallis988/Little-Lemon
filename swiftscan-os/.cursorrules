@@ -1,0 +1,41 @@
+# SwiftScan OS — Cursor Rules (Bare-Metal C / ASM)
+
+You are working on a freestanding Multiboot i386 kernel for a bi-optic POS
+scanner appliance (barcode imager + load-cell scale + operator display).
+
+## Hard constraints
+
+- No hosted libc. Do not `#include <stdio.h>`, `<stdlib.h>`, `<string.h>`, etc.
+- No floating point in freestanding paths unless soft-float is explicitly wired.
+- No dynamic allocation unless a heap allocator already exists in-tree.
+- Prefer explicit widths: `uint8_t`, `uint16_t`, `uint32_t` from local headers.
+- Keep interrupts disabled until a real IDT/PIC path is introduced.
+- Never assume Linux syscalls, POSIX, or ELF dynamic linking.
+
+## Language & ABI
+
+- Boot path: NASM, Multiboot1, 32-bit protected mode.
+- Kernel & HAL: freestanding C (`-ffreestanding -fno-builtin -fno-stack-protector`).
+- Link with `linker.ld`; load address is 1 MiB (`0x00100000`).
+- Export symbols with C linkage from ASM (`global` / `extern`).
+- Match calling convention: System V i386 (args on stack, EAX return).
+
+## Memory & hardware
+
+- Do not relocate sections without updating `linker.ld` and the Multiboot header.
+- MMIO / port I/O only through HAL helpers (`outb`/`inb` or mapped bases).
+- Scanner and scale drivers must tolerate missing hardware (QEMU stubs OK).
+- Framebuffer code must handle both Multiboot graphics info and VGA text fallback.
+
+## Style
+
+- Small, reviewable modules under `src/boot`, `src/kernel`, `src/hal`, `src/ui`.
+- Public APIs in `include/*.h`; keep drivers behind stable HAL entry points.
+- Comments explain *why* (hardware quirks, Multiboot contracts), not narration.
+- When adding features, update the Makefile objects list and keep `make run` working.
+
+## Build / test expectation
+
+- `make` must produce `build/swiftscan.bin` (and ISO when GRUB tools exist).
+- Prefer QEMU (`make run`) over claiming physical hardware support.
+- Do not commit build artifacts under `build/` or `iso/`.
