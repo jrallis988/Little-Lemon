@@ -39,4 +39,7 @@ make iso      # GRUB rescue ISO
 4. `fb_render_ui_shell` draws the navy operator chrome: black header, white scan workspace, light-gray totals panel.
 5. Demo injects a UPC and ~454 g weight so HAL paths update under QEMU without hardware.
 
-Platform builds that map a VBE BAR at `0xFD000000` can compile with `-DSWIFTSCAN_USE_DEFAULT_FB`.
+Scanner and scale drivers stay in simulation until platform ports are enabled
+(`-DSWIFTSCAN_SCANNER_HW` for `inb` on `0x3F8`/`0x3F9`). QEMU uses
+`scanner_inject()` to feed CR-terminated barcode bytes through the same
+`scanner_poll()` assembler.

@@ -1,93 +1,119 @@
 /*
- * Bi-optic scanner HAL
+ * Swift Scan OS — Bi-Optic Scanner Peripheral Driver
  *
- * Production path would MMIO a decode engine (USB HID wedge / serial OEM).
- * QEMU path keeps a one-deep software queue filled by scanner_inject().
+ * Polls a serial / USB-HID wedge style byte stream, assembling UPC packets
+ * terminated by CR/LF. Hardware uses SCANNER_PORT_STATUS / SCANNER_PORT_DATA
+ * (enable with -DSWIFTSCAN_SCANNER_HW). QEMU uses a soft RX FIFO filled by
+ * scanner_inject() so floating I/O ports are never polled by default.
  */
 
 #include "scanner.h"
 
-/* Placeholder MMIO base for a future PCI / platform device. */
-#define SCANNER_MMIO_BASE 0xFEDC0000u
-#define SCANNER_REG_STATUS 0x00u
-#define SCANNER_REG_DATA   0x04u
+static char current_barcode[MAX_BARCODE_LENGTH];
+static int barcode_index;
 
-static struct scan_event pending;
-static bool has_pending;
-static bool mmio_present;
+/* Soft RX ring — models bytes arriving from the bi-optic decode engine. */
+#define RX_QUEUE_SIZE 128
+static uint8_t rx_queue[RX_QUEUE_SIZE];
+static unsigned rx_head;
+static unsigned rx_tail;
+static unsigned rx_count;
 
-static size_t cstr_len(const char *s)
+#if defined(SWIFTSCAN_SCANNER_HW)
+static inline uint8_t inb(unsigned short port)
 {
-    size_t n = 0;
-    if (!s)
-        return 0;
-    while (s[n] != '\0')
-        n++;
-    return n;
+    uint8_t ret;
+    __asm__ volatile("inb %1, %0" : "=a"(ret) : "Nd"(port));
+    return ret;
+}
+#endif
+
+static void rx_push(uint8_t b)
+{
+    if (rx_count >= RX_QUEUE_SIZE)
+        return;
+    rx_queue[rx_tail] = b;
+    rx_tail = (rx_tail + 1u) % RX_QUEUE_SIZE;
+    rx_count++;
 }
 
-static void cstr_copy(char *dst, size_t dst_len, const char *src)
+static int rx_pop(uint8_t *out)
 {
-    size_t i = 0;
-    if (dst_len == 0)
-        return;
-    if (!src) {
-        dst[0] = '\0';
-        return;
-    }
-    while (src[i] != '\0' && i + 1 < dst_len) {
-        dst[i] = src[i];
-        i++;
-    }
-    dst[i] = '\0';
+    if (rx_count == 0)
+        return 0;
+    *out = rx_queue[rx_head];
+    rx_head = (rx_head + 1u) % RX_QUEUE_SIZE;
+    rx_count--;
+    return 1;
 }
 
 void scanner_init(void)
 {
-    volatile uint32_t *status =
-        (volatile uint32_t *)(SCANNER_MMIO_BASE + SCANNER_REG_STATUS);
+    int i;
 
-    has_pending = false;
-    pending.length = 0;
-    pending.symbology = 0;
-    pending.code[0] = '\0';
+    barcode_index = 0;
+    rx_head = 0;
+    rx_tail = 0;
+    rx_count = 0;
 
-    /*
-     * Probe: real silicon would return a non-zero identity. On QEMU this
-     * address is unmapped; we treat any access as "absent" and stay in sim.
-     * Avoid actually touching the address here to keep QEMU quiet — mark
-     * absent until a platform map is provided.
-     */
-    (void)status;
-    mmio_present = false;
+    for (i = 0; i < MAX_BARCODE_LENGTH; i++)
+        current_barcode[i] = '\0';
 }
 
-enum scanner_status scanner_poll(struct scan_event *out)
+int scanner_data_ready(void)
 {
-    if (!out)
-        return SCANNER_ERROR;
+    if (rx_count > 0)
+        return 1;
 
-    if (mmio_present) {
-        /* Future: drain FIFO from SCANNER_REG_DATA. */
-        return SCANNER_EMPTY;
+#if defined(SWIFTSCAN_SCANNER_HW)
+    /* Status register bit 0 = incoming data ready. */
+    return (inb(SCANNER_PORT_STATUS) & 0x01) != 0;
+#else
+    return 0;
+#endif
+}
+
+char scanner_read_byte(void)
+{
+    uint8_t b;
+
+    if (rx_pop(&b))
+        return (char)b;
+
+#if defined(SWIFTSCAN_SCANNER_HW)
+    return (char)inb(SCANNER_PORT_DATA);
+#else
+    return '\0';
+#endif
+}
+
+const char *scanner_poll(void)
+{
+    while (scanner_data_ready()) {
+        char c = scanner_read_byte();
+
+        /* Carriage return or newline ends a barcode scan packet. */
+        if (c == '\n' || c == '\r') {
+            if (barcode_index > 0) {
+                current_barcode[barcode_index] = '\0';
+                barcode_index = 0;
+                return current_barcode;
+            }
+        } else if (barcode_index < MAX_BARCODE_LENGTH - 1) {
+            current_barcode[barcode_index++] = c;
+        }
     }
-
-    if (!has_pending)
-        return SCANNER_EMPTY;
-
-    *out = pending;
-    has_pending = false;
-    return SCANNER_OK;
+    return (const char *)0;
 }
 
 void scanner_inject(const char *code)
 {
-    size_t n = cstr_len(code);
-    if (n == 0 || n >= SCANNER_CODE_MAX)
+    size_t i;
+
+    if (!code)
         return;
 
-    cstr_copy(pending.code, SCANNER_CODE_MAX, code);
-    pending.length = (uint32_t)n;
-    pending.symbology = 0;
-    has_pending = true;
+    for (i = 0; code[i] != '\0'; i++)
+        rx_push((uint8_t)code[i]);
+    rx_push((uint8_t)'\n');
 }

@@ -75,7 +75,7 @@ static void draw_operator_labels(void)
 
 void kernel_main(uint32_t magic, struct multiboot_info *mbi)
 {
-    struct scan_event scan;
+    const char *scan;
     struct scale_reading weight;
     char line[64];
     char num[16];
@@ -101,14 +101,15 @@ void kernel_main(uint32_t magic, struct multiboot_info *mbi)
     for (;;) {
         ticks++;
 
-        if (scanner_poll(&scan) == SCANNER_OK) {
+        scan = scanner_poll();
+        if (scan) {
             for (i = 0; i < sizeof(line); i++)
                 line[i] = '\0';
             line[0] = 'S'; line[1] = 'c'; line[2] = 'a'; line[3] = 'n';
             line[4] = 'n'; line[5] = 'e'; line[6] = 'r'; line[7] = ' ';
             line[8] = ':'; line[9] = ' ';
-            for (i = 0; i < scan.length && (10 + i) < sizeof(line) - 1; i++)
-                line[10 + i] = scan.code[i];
+            for (i = 0; scan[i] && (10 + i) < sizeof(line) - 1; i++)
+                line[10 + i] = scan[i];
             fb_write(8, 16, line, COLOR_BLACK, COLOR_WHITE);
             fb_write(74, 16, "Items: 1", COLOR_BLACK, COLOR_LIGHT_GRAY);
         }
