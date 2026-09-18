@@ -1,44 +1,35 @@
-# SwiftScan Board — Advanced Peripherals
+# SwiftScan Board — Hardware Package
 
-KiCad 7 schematic + PCB for the custom scanning board add-on region:
+KiCad 7 schematic + PCB for the custom ESP32-S3 scanning board.
 
-1. **ATECC608A** secure element (I2C) with 4.7 kΩ pull-ups  
-2. **VCNL4040** ambient light / proximity sensor (I2C), placed near the camera  
-3. **I2S digital microphone** breakout header on ESP32-S3 I2S pins  
+## Blocks
 
-## Open in KiCad
+1. **ATECC608A** — I2C secure element + 4.7 kΩ pull-ups  
+2. **VCNL4040** — ALS / proximity near camera  
+3. **I2S mic header** — GPIO14/15/16  
+4. **MAX17048** — I2C LiPo fuel gauge across `VBATT`  
+5. **BME280** — I2C temp / humidity / pressure  
+6. **J2** — 10-pin GPIO utility breakout  
+7. **H1–H4** — M3 grounded mounting holes + clearance rings  
+
+## Open
 
 ```bash
 cd swiftscan-os/hardware/swiftscan-board
 kicad swiftscan-board.kicad_pro
 ```
 
-## Files
+## Docs
 
-| File | Role |
+| File | Contents |
 | --- | --- |
-| `swiftscan-board.kicad_sch` | Schematic (ESP32-S3 I2C/I2S excerpt + 3 peripherals + power/decap) |
-| `swiftscan-board.kicad_pcb` | Layout (80×55 mm region, placement, sample routes, GND pour) |
-| `libs/SwiftScanPeriph.kicad_sym` | Custom symbols |
-| `docs/pinmap.md` | ESP32-S3 GPIO map |
-| `docs/design-rules.md` | Clearances, power, decoupling, routing |
+| `docs/pinmap.md` | GPIO / I2C / battery map |
+| `docs/design-rules.md` | Clearances, widths, decap, placement |
 | `docs/bom.csv` | Bill of materials |
 | `exports/` | SVG / netlist / BOM exports |
 
-## Power & decoupling
+## Power summary
 
-- Shared **+3V3** / **GND** from the main scanning board regulator  
-- Each IC / header: **100 nF + 1 µF** within ≤2 mm of VDD  
-- I2C pull-ups **R1/R2 = 4.7 kΩ** to +3V3 (single pair for the bus)  
-- VCNL4040 **IR_A** tied to +3V3; optical FOV kept clear of silk/metal  
-
-## Net classes (PCB)
-
-| Class | Width | Clearance | Nets |
-| --- | --- | --- | --- |
-| Power | 0.40 mm | 0.20 mm | `+3V3`, `GND` |
-| I2C | 0.20 mm | 0.15 mm | `I2C_SDA`, `I2C_SCL` |
-| I2S | 0.20 mm | 0.15 mm | `I2S_BCLK`, `I2S_WS`, `I2S_DIN` |
-| Default | 0.20 mm | 0.15 mm | other |
-
-See `docs/design-rules.md` for full clearance / keepout notes.
+- `+3V3` / `GND` — logic rail (0.40 mm / 0.20 mm clearance)  
+- `VBATT` / `GND` — LiPo island for MAX17048 (0.50 mm / 0.25 mm clearance)  
+- Local **100 nF + 1 µF** at every IC / powered header  

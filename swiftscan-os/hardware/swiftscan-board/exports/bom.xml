@@ -2,17 +2,17 @@
 <export version="E">
   <design>
     <source>/workspace/swiftscan-os/hardware/swiftscan-board/swiftscan-board.kicad_sch</source>
-    <date>Fri 18 Sep 2026 06:52:45 AM UTC</date>
+    <date>Fri 18 Sep 2026 07:01:33 AM UTC</date>
     <tool>Eeschema 7.0.11+dfsg-1build4</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
-        <title>SwiftScan Board — Advanced Peripherals</title>
+        <title>SwiftScan Board — Peripherals + Utilities</title>
         <company>SwiftScan OS</company>
-        <rev>A</rev>
+        <rev>B</rev>
         <date>2026-09-18</date>
         <source>swiftscan-board.kicad_sch</source>
-        <comment number="1" value="ATECC608A + VCNL4040 on I2C0; I2S mic header on ESP32-S3"/>
-        <comment number="2" value="3V3 rail with local 100nF+1uF decoupling; 4.7k I2C pull-ups"/>
+        <comment number="1" value="MAX17048 fuel gauge, BME280, GPIO breakout, M3 mounting holes"/>
+        <comment number="2" value="Shared I2C pull-ups; VBATT + 3V3 decoupling"/>
         <comment number="3" value=""/>
         <comment number="4" value=""/>
         <comment number="5" value=""/>
@@ -33,7 +33,7 @@
       <property name="ki_description" value="Unpolarized capacitor"/>
       <property name="ki_keywords" value="cap capacitor"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>a2a07aa0-bc91-4416-8d01-bdd6e44162f2</tstamps>
+      <tstamps>e74bf81f-1246-4464-a042-578d8ebc5f82</tstamps>
     </comp>
     <comp ref="C2">
       <value>1uF</value>
@@ -44,7 +44,7 @@
       <property name="ki_description" value="Unpolarized capacitor"/>
       <property name="ki_keywords" value="cap capacitor"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>0922e108-29cc-4ad6-b1df-6781d272c2dc</tstamps>
+      <tstamps>e7d56fdf-2e5d-455d-98b7-203fc2fb4203</tstamps>
     </comp>
     <comp ref="C3">
       <value>100nF</value>
@@ -55,7 +55,7 @@
       <property name="ki_description" value="Unpolarized capacitor"/>
       <property name="ki_keywords" value="cap capacitor"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>974fbe16-620f-401c-be79-2ab02c8ad236</tstamps>
+      <tstamps>25a954c4-c5eb-4950-9df2-f45f778c982b</tstamps>
     </comp>
     <comp ref="C4">
       <value>1uF</value>
@@ -66,7 +66,7 @@
       <property name="ki_description" value="Unpolarized capacitor"/>
       <property name="ki_keywords" value="cap capacitor"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>db33dc67-0e64-4a91-9012-17ae18014ebf</tstamps>
+      <tstamps>deddd6bd-281c-4170-9a7f-426f5e525728</tstamps>
     </comp>
     <comp ref="C5">
       <value>100nF</value>
@@ -77,7 +77,7 @@
       <property name="ki_description" value="Unpolarized capacitor"/>
       <property name="ki_keywords" value="cap capacitor"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>3207e5a3-5852-4335-93b4-c701a55c9e0b</tstamps>
+      <tstamps>28f28e01-f17f-4189-8add-a6e53075c29a</tstamps>
     </comp>
     <comp ref="C6">
       <value>1uF</value>
@@ -88,7 +88,95 @@
       <property name="ki_description" value="Unpolarized capacitor"/>
       <property name="ki_keywords" value="cap capacitor"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>5acbca8a-16c8-43db-bc61-be87f8625f41</tstamps>
+      <tstamps>a3f0d187-f347-47e6-8080-5bd86a3348c6</tstamps>
+    </comp>
+    <comp ref="C7">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="swiftscan-board.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>5de7e1c4-faed-44c2-9c87-43f06890f96b</tstamps>
+    </comp>
+    <comp ref="C8">
+      <value>1uF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="swiftscan-board.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>24e2df58-20a1-4984-9d12-49b55d5aa4d8</tstamps>
+    </comp>
+    <comp ref="C9">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="swiftscan-board.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>a6b9f5d0-d2ef-408e-9a4d-1e2850e2a349</tstamps>
+    </comp>
+    <comp ref="C10">
+      <value>1uF</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="swiftscan-board.kicad_sch"/>
+      <property name="ki_description" value="Unpolarized capacitor"/>
+      <property name="ki_keywords" value="cap capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>aa9a4b1d-1b97-40d3-94b9-e3094dbef196</tstamps>
+    </comp>
+    <comp ref="H1">
+      <value>M3</value>
+      <footprint>MountingHole:MountingHole_3.2mm_M3_Pad_TopBottom</footprint>
+      <libsource lib="Mechanical" part="MountingHole" description="Mounting Hole without connection"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="swiftscan-board.kicad_sch"/>
+      <property name="ki_description" value="Mounting Hole without connection"/>
+      <property name="ki_keywords" value="mounting hole"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>89e142c2-e059-4a53-86ef-16dd58294fba</tstamps>
+    </comp>
+    <comp ref="H2">
+      <value>M3</value>
+      <footprint>MountingHole:MountingHole_3.2mm_M3_Pad_TopBottom</footprint>
+      <libsource lib="Mechanical" part="MountingHole" description="Mounting Hole without connection"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="swiftscan-board.kicad_sch"/>
+      <property name="ki_description" value="Mounting Hole without connection"/>
+      <property name="ki_keywords" value="mounting hole"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>0883d0b6-b491-4072-accd-de57274bd8fd</tstamps>
+    </comp>
+    <comp ref="H3">
+      <value>M3</value>
+      <footprint>MountingHole:MountingHole_3.2mm_M3_Pad_TopBottom</footprint>
+      <libsource lib="Mechanical" part="MountingHole" description="Mounting Hole without connection"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="swiftscan-board.kicad_sch"/>
+      <property name="ki_description" value="Mounting Hole without connection"/>
+      <property name="ki_keywords" value="mounting hole"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>50760e43-6999-43ea-bf6c-dea04bf16443</tstamps>
+    </comp>
+    <comp ref="H4">
+      <value>M3</value>
+      <footprint>MountingHole:MountingHole_3.2mm_M3_Pad_TopBottom</footprint>
+      <libsource lib="Mechanical" part="MountingHole" description="Mounting Hole without connection"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="swiftscan-board.kicad_sch"/>
+      <property name="ki_description" value="Mounting Hole without connection"/>
+      <property name="ki_keywords" value="mounting hole"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8db08760-70cb-4014-9e4e-22ce40beba55</tstamps>
     </comp>
     <comp ref="J1">
       <value>I2S_MIC</value>
@@ -97,7 +185,25 @@
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="swiftscan-board.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>f55bc111-0ce1-453c-8c21-b41075a841d6</tstamps>
+      <tstamps>ac77b0ba-5f1d-49fb-a334-2e02bac86de0</tstamps>
+    </comp>
+    <comp ref="J2">
+      <value>GPIO_BREAKOUT</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x10_P2.54mm_Vertical</footprint>
+      <libsource lib="SwiftScanPeriph" part="GPIO_HDR10" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="swiftscan-board.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>b58339fc-266a-4fa2-ba44-bd1a33035d57</tstamps>
+    </comp>
+    <comp ref="J3">
+      <value>LiPo</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical</footprint>
+      <libsource lib="SwiftScanPeriph" part="VBATT_CONN" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="swiftscan-board.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>c2240d52-fe16-4f30-bd23-ce7efb7615f3</tstamps>
     </comp>
     <comp ref="R1">
       <value>4.7k</value>
@@ -108,7 +214,7 @@
       <property name="ki_description" value="Resistor"/>
       <property name="ki_keywords" value="R res resistor"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>ba652766-c1b9-41ff-88ed-4d05df27152a</tstamps>
+      <tstamps>514432ea-7057-4835-876a-6db4bb951f44</tstamps>
     </comp>
     <comp ref="R2">
       <value>4.7k</value>
@@ -119,7 +225,7 @@
       <property name="ki_description" value="Resistor"/>
       <property name="ki_keywords" value="R res resistor"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>0b90bb02-5cdb-4e63-a71e-8d35164ca12e</tstamps>
+      <tstamps>95e26143-dbd0-4b37-a835-be90d6922b1c</tstamps>
     </comp>
     <comp ref="U1">
       <value>ATECC608A</value>
@@ -128,7 +234,7 @@
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="swiftscan-board.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>6c16c363-f167-4646-8efb-cb32ae9afe78</tstamps>
+      <tstamps>54a09641-7881-4551-b9e0-8ec780f3e1f3</tstamps>
     </comp>
     <comp ref="U2">
       <value>VCNL4040</value>
@@ -137,7 +243,7 @@
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="swiftscan-board.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>de069679-3e8a-4013-8392-bbe8e5d0a20f</tstamps>
+      <tstamps>60a80970-b0cd-40d4-92e3-d7302f6d376e</tstamps>
     </comp>
     <comp ref="U3">
       <value>ESP32-S3</value>
@@ -145,7 +251,25 @@
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="swiftscan-board.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>66669e0d-553d-4c99-9fe0-5e26be538646</tstamps>
+      <tstamps>e60fd415-4bc7-4c84-aa2d-70108e870152</tstamps>
+    </comp>
+    <comp ref="U4">
+      <value>MAX17048</value>
+      <footprint>Package_DFN_QFN:TDFN-8-1EP_2x2mm_P0.5mm_EP0.8x1.2mm</footprint>
+      <libsource lib="SwiftScanPeriph" part="MAX17048" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="swiftscan-board.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>5a39c0ec-677e-4180-ada0-0ff3b5a47b20</tstamps>
+    </comp>
+    <comp ref="U5">
+      <value>BME280</value>
+      <footprint>Package_LGA:Bosch_LGA-8_2.5x2.5mm_P0.65mm_ClockwisePinNumbering</footprint>
+      <libsource lib="SwiftScanPeriph" part="BME280" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="swiftscan-board.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>2cf1bc6c-7573-49cf-9191-7624f635b858</tstamps>
     </comp>
   </components>
   <libparts>
@@ -181,6 +305,18 @@
         <pin num="2" name="" type="passive"/>
       </pins>
     </libpart>
+    <libpart lib="Mechanical" part="MountingHole">
+      <description>Mounting Hole without connection</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>MountingHole*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">H</field>
+        <field name="Value">MountingHole</field>
+        <field name="Datasheet">~</field>
+      </fields>
+    </libpart>
     <libpart lib="SwiftScanPeriph" part="ATECC608A">
       <docs>https://ww1.microchip.com/downloads/en/DeviceDoc/ATECC608A-TFLXTLS-CryptoAuthentication-Data-Sheet-DS40002144.pdf</docs>
       <fields>
@@ -199,6 +335,26 @@
         <pin num="6" name="SCL" type="input"/>
         <pin num="7" name="NC" type="passive"/>
         <pin num="8" name="VCC" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="SwiftScanPeriph" part="BME280">
+      <docs>https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bme280-ds002.pdf</docs>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">BME280</field>
+        <field name="Footprint">Package_LGA:Bosch_LGA-8_2.5x2.5mm_P0.65mm_ClockwisePinNumbering</field>
+        <field name="Datasheet">https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bme280-ds002.pdf</field>
+        <field name="Description">I2C temperature humidity pressure</field>
+      </fields>
+      <pins>
+        <pin num="1" name="VDD" type="power_in"/>
+        <pin num="2" name="VDDIO" type="power_in"/>
+        <pin num="3" name="GND" type="power_in"/>
+        <pin num="4" name="CSB" type="passive"/>
+        <pin num="5" name="SDI" type="bidirectional"/>
+        <pin num="6" name="SCK" type="input"/>
+        <pin num="7" name="SDO" type="passive"/>
+        <pin num="8" name="GND" type="power_in"/>
       </pins>
     </libpart>
     <libpart lib="SwiftScanPeriph" part="ESP32S3_IF">
@@ -220,6 +376,28 @@
         <pin num="16" name="GPIO16_DIN" type="input"/>
       </pins>
     </libpart>
+    <libpart lib="SwiftScanPeriph" part="GPIO_HDR10">
+      <docs>~</docs>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">GPIO_BREAKOUT</field>
+        <field name="Footprint">Connector_PinHeader_2.54mm:PinHeader_1x10_P2.54mm_Vertical</field>
+        <field name="Datasheet">~</field>
+        <field name="Description">10-pin utility breakout</field>
+      </fields>
+      <pins>
+        <pin num="1" name="3V3" type="power_in"/>
+        <pin num="2" name="GND" type="power_in"/>
+        <pin num="3" name="GPIO1" type="bidirectional"/>
+        <pin num="4" name="GPIO2" type="bidirectional"/>
+        <pin num="5" name="GPIO3" type="bidirectional"/>
+        <pin num="6" name="GPIO5" type="bidirectional"/>
+        <pin num="7" name="GPIO6" type="bidirectional"/>
+        <pin num="8" name="GPIO7" type="bidirectional"/>
+        <pin num="9" name="GPIO10" type="bidirectional"/>
+        <pin num="10" name="GPIO11" type="bidirectional"/>
+      </pins>
+    </libpart>
     <libpart lib="SwiftScanPeriph" part="I2S_MIC_HDR">
       <docs>~</docs>
       <fields>
@@ -238,12 +416,47 @@
         <pin num="6" name="SEL" type="passive"/>
       </pins>
     </libpart>
+    <libpart lib="SwiftScanPeriph" part="MAX17048">
+      <docs>https://www.analog.com/media/en/technical-documentation/data-sheets/MAX17048-MAX17049.pdf</docs>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">MAX17048</field>
+        <field name="Footprint">Package_DFN_QFN:TDFN-8-1EP_2x2mm_P0.5mm_EP0.8x1.2mm</field>
+        <field name="Datasheet">https://www.analog.com/media/en/technical-documentation/data-sheets/MAX17048-MAX17049.pdf</field>
+        <field name="Description">I2C LiPo fuel gauge</field>
+      </fields>
+      <pins>
+        <pin num="1" name="CELL" type="power_in"/>
+        <pin num="2" name="SDA" type="bidirectional"/>
+        <pin num="3" name="SCL" type="input"/>
+        <pin num="4" name="ALRT" type="output"/>
+        <pin num="5" name="GND" type="power_in"/>
+        <pin num="6" name="VDD" type="power_in"/>
+        <pin num="7" name="NC" type="passive"/>
+        <pin num="8" name="NC" type="passive"/>
+        <pin num="9" name="EP" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="SwiftScanPeriph" part="VBATT_CONN">
+      <docs>~</docs>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">LiPo</field>
+        <field name="Footprint">Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical</field>
+        <field name="Datasheet">~</field>
+        <field name="Description">LiPo battery input</field>
+      </fields>
+      <pins>
+        <pin num="1" name="VBATT" type="power_out"/>
+        <pin num="2" name="GND" type="power_in"/>
+      </pins>
+    </libpart>
     <libpart lib="SwiftScanPeriph" part="VCNL4040">
       <docs>https://www.vishay.com/docs/84274/vcnl4040.pdf</docs>
       <fields>
         <field name="Reference">U</field>
         <field name="Value">VCNL4040</field>
-        <field name="Footprint">Package_DFN_QFN:DFN-8-1EP_3x3mm_P0.65mm_EP1.7x2.05mm</field>
+        <field name="Footprint">Package_DFN_QFN:DFN-8_3x3mm_P0.65mm</field>
         <field name="Datasheet">https://www.vishay.com/docs/84274/vcnl4040.pdf</field>
         <field name="Description">I2C ambient light + proximity</field>
       </fields>
@@ -267,85 +480,166 @@
   <nets>
     <net code="1" name="+3V3">
       <node ref="C1" pin="2" pintype="passive"/>
+      <node ref="C10" pin="2" pintype="passive"/>
       <node ref="C2" pin="2" pintype="passive"/>
       <node ref="C3" pin="2" pintype="passive"/>
       <node ref="C4" pin="2" pintype="passive"/>
       <node ref="C5" pin="2" pintype="passive"/>
       <node ref="C6" pin="2" pintype="passive"/>
+      <node ref="C9" pin="2" pintype="passive"/>
       <node ref="R1" pin="2" pintype="passive"/>
       <node ref="R2" pin="2" pintype="passive"/>
-      <node ref="U1" pin="4" pinfunction="GND" pintype="power_in"/>
-      <node ref="U2" pin="5" pinfunction="GND" pintype="power_in"/>
-      <node ref="U2" pin="6" pinfunction="GND" pintype="power_in"/>
+      <node ref="U5" pin="3" pinfunction="GND" pintype="power_in"/>
+      <node ref="U5" pin="5" pinfunction="SDI" pintype="bidirectional"/>
+      <node ref="U5" pin="8" pinfunction="GND" pintype="power_in"/>
     </net>
-    <net code="2" name="GND">
+    <net code="2" name="FUEL_ALRT">
+      <node ref="U4" pin="3" pinfunction="SCL" pintype="input"/>
+    </net>
+    <net code="3" name="GND">
       <node ref="C1" pin="1" pintype="passive"/>
+      <node ref="C10" pin="1" pintype="passive"/>
       <node ref="C2" pin="1" pintype="passive"/>
       <node ref="C3" pin="1" pintype="passive"/>
       <node ref="C4" pin="1" pintype="passive"/>
       <node ref="C5" pin="1" pintype="passive"/>
       <node ref="C6" pin="1" pintype="passive"/>
-      <node ref="J1" pin="3" pinfunction="WS" pintype="input"/>
-      <node ref="U1" pin="8" pinfunction="VCC" pintype="power_in"/>
-      <node ref="U2" pin="1" pinfunction="IR_A" pintype="passive"/>
-      <node ref="U2" pin="2" pinfunction="VDD" pintype="power_in"/>
+      <node ref="C7" pin="1" pintype="passive"/>
+      <node ref="C8" pin="1" pintype="passive"/>
+      <node ref="C9" pin="1" pintype="passive"/>
+      <node ref="J3" pin="1" pinfunction="VBATT" pintype="power_out"/>
+      <node ref="U4" pin="1" pinfunction="CELL" pintype="power_in"/>
+      <node ref="U4" pin="8" pinfunction="NC" pintype="passive"/>
+      <node ref="U5" pin="1" pinfunction="VDD" pintype="power_in"/>
+      <node ref="U5" pin="2" pinfunction="VDDIO" pintype="power_in"/>
+      <node ref="U5" pin="6" pinfunction="SCK" pintype="input"/>
     </net>
-    <net code="3" name="I2C_SCL">
+    <net code="5" name="GPIO2">
+      <node ref="J2" pin="10" pinfunction="GPIO11" pintype="bidirectional"/>
+    </net>
+    <net code="6" name="GPIO3">
+      <node ref="J2" pin="9" pinfunction="GPIO10" pintype="bidirectional"/>
+    </net>
+    <net code="7" name="GPIO5">
+      <node ref="J2" pin="8" pinfunction="GPIO7" pintype="bidirectional"/>
+    </net>
+    <net code="8" name="GPIO6">
+      <node ref="J2" pin="7" pinfunction="GPIO6" pintype="bidirectional"/>
+    </net>
+    <net code="9" name="GPIO7">
+      <node ref="J2" pin="6" pinfunction="GPIO5" pintype="bidirectional"/>
+    </net>
+    <net code="10" name="GPIO10">
+      <node ref="J2" pin="5" pinfunction="GPIO3" pintype="bidirectional"/>
+    </net>
+    <net code="11" name="GPIO11">
+      <node ref="J2" pin="4" pinfunction="GPIO2" pintype="bidirectional"/>
+    </net>
+    <net code="12" name="I2C_SCL">
       <node ref="R2" pin="1" pintype="passive"/>
       <node ref="U1" pin="5" pinfunction="SDA" pintype="bidirectional"/>
       <node ref="U2" pin="7" pinfunction="SDA" pintype="bidirectional"/>
       <node ref="U3" pin="14" pinfunction="GPIO14_BCLK" pintype="output"/>
+      <node ref="U4" pin="4" pinfunction="ALRT" pintype="output"/>
+      <node ref="U5" pin="7" pinfunction="SDO" pintype="passive"/>
     </net>
-    <net code="4" name="I2C_SDA">
+    <net code="13" name="I2C_SDA">
       <node ref="R1" pin="1" pintype="passive"/>
       <node ref="U1" pin="6" pinfunction="SCL" pintype="input"/>
       <node ref="U2" pin="4" pinfunction="SCL" pintype="input"/>
       <node ref="U3" pin="15" pinfunction="GPIO15_WS" pintype="output"/>
+      <node ref="U4" pin="7" pinfunction="NC" pintype="passive"/>
+      <node ref="U5" pin="4" pinfunction="CSB" pintype="passive"/>
     </net>
-    <net code="5" name="I2S_BCLK">
+    <net code="14" name="I2S_BCLK">
       <node ref="J1" pin="5" pinfunction="DOUT" pintype="output"/>
       <node ref="U3" pin="9" pinfunction="GPIO9_SCL" pintype="output"/>
     </net>
-    <net code="6" name="I2S_DIN">
+    <net code="15" name="I2S_DIN">
       <node ref="J1" pin="4" pinfunction="BCLK" pintype="input"/>
     </net>
-    <net code="7" name="I2S_WS">
+    <net code="16" name="I2S_WS">
       <node ref="J1" pin="6" pinfunction="SEL" pintype="passive"/>
       <node ref="U3" pin="8" pinfunction="GPIO8_SDA" pintype="bidirectional"/>
     </net>
-    <net code="8" name="VCNL_INT">
+    <net code="17" name="VBATT">
+      <node ref="C7" pin="2" pintype="passive"/>
+      <node ref="C8" pin="2" pintype="passive"/>
+      <node ref="J3" pin="2" pinfunction="GND" pintype="power_in"/>
+      <node ref="U4" pin="5" pinfunction="GND" pintype="power_in"/>
+    </net>
+    <net code="18" name="VCNL_INT">
       <node ref="U2" pin="8" pinfunction="NC" pintype="passive"/>
       <node ref="U3" pin="4" pinfunction="GPIO4_INT" pintype="input"/>
     </net>
-    <net code="9" name="unconnected-(J1-3V3-Pad1)">
+    <net code="19" name="unconnected-(J1-3V3-Pad1)">
       <node ref="J1" pin="1" pinfunction="3V3" pintype="power_in"/>
     </net>
-    <net code="10" name="unconnected-(J1-GND-Pad2)">
+    <net code="20" name="unconnected-(J1-GND-Pad2)">
       <node ref="J1" pin="2" pinfunction="GND" pintype="power_in"/>
     </net>
-    <net code="11" name="unconnected-(U1-NC-Pad1)">
+    <net code="21" name="unconnected-(J1-WS-Pad3)">
+      <node ref="J1" pin="3" pinfunction="WS" pintype="input"/>
+    </net>
+    <net code="22" name="unconnected-(J2-3V3-Pad1)">
+      <node ref="J2" pin="1" pinfunction="3V3" pintype="power_in"/>
+    </net>
+    <net code="23" name="unconnected-(J2-GND-Pad2)">
+      <node ref="J2" pin="2" pinfunction="GND" pintype="power_in"/>
+    </net>
+    <net code="24" name="unconnected-(J2-GPIO1-Pad3)">
+      <node ref="J2" pin="3" pinfunction="GPIO1" pintype="bidirectional"/>
+    </net>
+    <net code="25" name="unconnected-(U1-GND-Pad4)">
+      <node ref="U1" pin="4" pinfunction="GND" pintype="power_in"/>
+    </net>
+    <net code="26" name="unconnected-(U1-NC-Pad1)">
       <node ref="U1" pin="1" pinfunction="NC" pintype="passive"/>
     </net>
-    <net code="12" name="unconnected-(U1-NC-Pad2)">
+    <net code="27" name="unconnected-(U1-NC-Pad2)">
       <node ref="U1" pin="2" pinfunction="NC" pintype="passive"/>
     </net>
-    <net code="13" name="unconnected-(U1-NC-Pad3)">
+    <net code="28" name="unconnected-(U1-NC-Pad3)">
       <node ref="U1" pin="3" pinfunction="NC" pintype="passive"/>
     </net>
-    <net code="14" name="unconnected-(U1-NC-Pad7)">
+    <net code="29" name="unconnected-(U1-NC-Pad7)">
       <node ref="U1" pin="7" pinfunction="NC" pintype="passive"/>
     </net>
-    <net code="15" name="unconnected-(U2-INT-Pad3)">
+    <net code="30" name="unconnected-(U1-VCC-Pad8)">
+      <node ref="U1" pin="8" pinfunction="VCC" pintype="power_in"/>
+    </net>
+    <net code="31" name="unconnected-(U2-GND-Pad5)">
+      <node ref="U2" pin="5" pinfunction="GND" pintype="power_in"/>
+    </net>
+    <net code="32" name="unconnected-(U2-GND-Pad6)">
+      <node ref="U2" pin="6" pinfunction="GND" pintype="power_in"/>
+    </net>
+    <net code="33" name="unconnected-(U2-INT-Pad3)">
       <node ref="U2" pin="3" pinfunction="INT" pintype="output"/>
     </net>
-    <net code="16" name="unconnected-(U3-3V3-Pad1)">
+    <net code="34" name="unconnected-(U2-IR_A-Pad1)">
+      <node ref="U2" pin="1" pinfunction="IR_A" pintype="passive"/>
+    </net>
+    <net code="35" name="unconnected-(U2-VDD-Pad2)">
+      <node ref="U2" pin="2" pinfunction="VDD" pintype="power_in"/>
+    </net>
+    <net code="36" name="unconnected-(U3-3V3-Pad1)">
       <node ref="U3" pin="1" pinfunction="3V3" pintype="power_in"/>
     </net>
-    <net code="17" name="unconnected-(U3-GND-Pad2)">
+    <net code="37" name="unconnected-(U3-GND-Pad2)">
       <node ref="U3" pin="2" pinfunction="GND" pintype="power_in"/>
     </net>
-    <net code="18" name="unconnected-(U3-GPIO16_DIN-Pad16)">
+    <net code="38" name="unconnected-(U3-GPIO16_DIN-Pad16)">
       <node ref="U3" pin="16" pinfunction="GPIO16_DIN" pintype="input"/>
+    </net>
+    <net code="39" name="unconnected-(U4-EP-Pad9)">
+      <node ref="U4" pin="9" pinfunction="EP" pintype="passive"/>
+    </net>
+    <net code="40" name="unconnected-(U4-SDA-Pad2)">
+      <node ref="U4" pin="2" pinfunction="SDA" pintype="bidirectional"/>
+    </net>
+    <net code="41" name="unconnected-(U4-VDD-Pad6)">
+      <node ref="U4" pin="6" pinfunction="VDD" pintype="power_in"/>
     </net>
   </nets>
 </export>
