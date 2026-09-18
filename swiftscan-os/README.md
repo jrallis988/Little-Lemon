@@ -46,11 +46,14 @@ to feed the same poll/read paths.
 
 ## Hardware (ESP32-S3 scanning board)
 
-Schematic / PCB for advanced peripherals lives in [`hardware/swiftscan-board/`](hardware/swiftscan-board/):
+Schematic / PCB for board peripherals lives in [`hardware/swiftscan-board/`](hardware/swiftscan-board/):
 
 - ATECC608A (I2C secure element) + 4.7 kΩ pull-ups  
 - VCNL4040 (ALS / proximity) near camera  
-- I2S mic breakout header on GPIO14/15/16  
+- I2S mic breakout on GPIO14/15/16  
+- MAX17048 LiPo fuel gauge on `VBATT`  
+- BME280 temp / humidity  
+- 10-pin GPIO utility header + four grounded M3 mounting holes  
 - Power net classes, local 100 nF+1 µF decoupling, routing clearances  
 
 Open `hardware/swiftscan-board/swiftscan-board.kicad_pro` in KiCad 7+.
