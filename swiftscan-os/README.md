@@ -43,3 +43,14 @@ Scanner and scale drivers stay in simulation until platform ports are enabled
 (`-DSWIFTSCAN_SCANNER_HW` for scanner `0x3F8`/`0x3F9`, `-DSWIFTSCAN_SCALE_HW`
 for scale `0x3FA`/`0x3FB`). QEMU uses `scanner_inject()` / `scale_inject_grams()`
 to feed the same poll/read paths.
+
+## Hardware (ESP32-S3 scanning board)
+
+Schematic / PCB for advanced peripherals lives in [`hardware/swiftscan-board/`](hardware/swiftscan-board/):
+
+- ATECC608A (I2C secure element) + 4.7 kΩ pull-ups  
+- VCNL4040 (ALS / proximity) near camera  
+- I2S mic breakout header on GPIO14/15/16  
+- Power net classes, local 100 nF+1 µF decoupling, routing clearances  
+
+Open `hardware/swiftscan-board/swiftscan-board.kicad_pro` in KiCad 7+.

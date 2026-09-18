@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "SwiftScanPeriph")(type "KiCad")(uri "${KIPRJMOD}/libs/SwiftScanPeriph.kicad_sym")(options "")(descr "SwiftScan peripheral symbols"))
+)

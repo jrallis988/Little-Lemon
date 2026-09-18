@@ -1,0 +1,12 @@
+Reference,Qty,Value,Footprint,MPN,Description
+U1,1,ATECC608A,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,ATECC608A-MAHDA-T,I2C secure element (confirm address vs VCNL)
+U2,1,VCNL4040,Package_DFN_QFN:DFN-8-1EP_3x3mm_P0.65mm_EP1.7x2.05mm,VCNL4040M3OE,ALS + proximity (use Vishay land pattern for fab)
+J1,1,I2S_MIC,Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical,,I2S digital microphone breakout header
+R1,1,4.7k,Resistor_SMD:R_0603_1608Metric,,I2C SDA pull-up to +3V3
+R2,1,4.7k,Resistor_SMD:R_0603_1608Metric,,I2C SCL pull-up to +3V3
+C1,1,100nF,Capacitor_SMD:C_0603_1608Metric,,ATECC VCC decoupling
+C2,1,1uF,Capacitor_SMD:C_0603_1608Metric,,ATECC VCC bulk
+C3,1,100nF,Capacitor_SMD:C_0603_1608Metric,,VCNL VDD decoupling
+C4,1,1uF,Capacitor_SMD:C_0603_1608Metric,,VCNL VDD bulk
+C5,1,100nF,Capacitor_SMD:C_0603_1608Metric,,Mic header VDD decoupling
+C6,1,1uF,Capacitor_SMD:C_0603_1608Metric,,Mic header VDD bulk
