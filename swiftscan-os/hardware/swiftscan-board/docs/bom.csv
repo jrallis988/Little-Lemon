@@ -1,0 +1,21 @@
+Reference,Qty,Value,Footprint,MPN,Description
+U1,1,ATECC608A,Package_SO:SOIC-8_3.9x4.9mm_P1.27mm,ATECC608A-MAHDA-T,I2C secure element
+U2,1,VCNL4040,Package_DFN_QFN:DFN-8-1EP_3x3mm_P0.65mm_EP1.7x2.05mm,VCNL4040M3OE,ALS + proximity (Vishay land pattern for fab)
+U4,1,MAX17048,Package_DFN_QFN:TDFN-8-1EP_2x2mm_P0.5mm_EP0.8x1.2mm,MAX17048G+T10U,I2C LiPo fuel gauge
+U5,1,BME280,Package_LGA:Bosch_LGA-8_2.5x2.5mm_P0.65mm_ClockwisePinNumbering,BME280,I2C temp/humidity/pressure
+J1,1,I2S_MIC,Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical,,I2S microphone breakout
+J2,1,GPIO_BREAKOUT,Connector_PinHeader_2.54mm:PinHeader_1x10_P2.54mm_Vertical,,10-pin utility GPIO header
+J3,1,LiPo,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,,LiPo battery input
+H1-H4,4,M3,MountingHole:MountingHole_3.2mm_M3_Pad_TopBottom,,Corner mounting holes grounded pads
+R1,1,4.7k,Resistor_SMD:R_0603_1608Metric,,I2C SDA pull-up
+R2,1,4.7k,Resistor_SMD:R_0603_1608Metric,,I2C SCL pull-up
+C1,1,100nF,Capacitor_SMD:C_0603_1608Metric,,ATECC +3V3 decap
+C2,1,1uF,Capacitor_SMD:C_0603_1608Metric,,ATECC +3V3 bulk
+C3,1,100nF,Capacitor_SMD:C_0603_1608Metric,,VCNL +3V3 decap
+C4,1,1uF,Capacitor_SMD:C_0603_1608Metric,,VCNL +3V3 bulk
+C5,1,100nF,Capacitor_SMD:C_0603_1608Metric,,Mic +3V3 decap
+C6,1,1uF,Capacitor_SMD:C_0603_1608Metric,,Mic +3V3 bulk
+C7,1,100nF,Capacitor_SMD:C_0603_1608Metric,,MAX17048 VBATT decap
+C8,1,1uF,Capacitor_SMD:C_0603_1608Metric,,MAX17048 VBATT bulk
+C9,1,100nF,Capacitor_SMD:C_0603_1608Metric,,BME280 +3V3 decap
+C10,1,1uF,Capacitor_SMD:C_0603_1608Metric,,BME280 +3V3 bulk

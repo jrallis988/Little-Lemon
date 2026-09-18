@@ -1,0 +1,12 @@
+# SwiftScan OS local build artifacts
+build/
+*.o
+*.bin
+*.iso
+*.img
+.DS_Store
+# KiCad
+*-backups/
+*.kicad_prl
+fp-info-cache
+~*
