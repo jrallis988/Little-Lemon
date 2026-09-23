@@ -1,8 +1,8 @@
 const links = [
+  { href: '#card-builder', label: 'Try Card' },
   { href: '#gallery', label: 'Creative' },
   { href: '#chapter-performance', label: 'Performance' },
   { href: '#chapter-reflection', label: 'Reflection' },
-  { href: '#explorer', label: 'Explorer' },
 ]
 
 export function CaseNav() {

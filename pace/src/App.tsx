@@ -9,13 +9,13 @@ import { WhySpotify } from './components/sections/WhySpotify'
 import { Audience } from './components/sections/Audience'
 import { PaceStates } from './components/sections/PaceStates'
 import { PaceCard } from './components/sections/PaceCard'
+import { PaceCardBuilder } from './components/sections/PaceCardBuilder'
 import { CreativeGallery } from './components/sections/CreativeGallery'
 import { BehavioralJourney } from './components/sections/BehavioralJourney'
 import { PlatformRoles } from './components/sections/PlatformRoles'
 import { ContentCalendar } from './components/sections/ContentCalendar'
 import { VisualSystem } from './components/sections/VisualSystem'
 import { MotionBoard } from './components/sections/MotionBoard'
-import { CreativeWorld } from './components/sections/CreativeWorld'
 import { SpotifyDestination } from './components/sections/SpotifyDestination'
 import { Measurement } from './components/sections/Measurement'
 import { PerformanceOverview } from './components/sections/PerformanceOverview'
@@ -24,6 +24,7 @@ import { ABTests } from './components/sections/ABTests'
 import { FeedbackLoop } from './components/sections/FeedbackLoop'
 import { PlatformComparison } from './components/sections/PlatformComparison'
 import { PerformanceExplorer } from './components/sections/PerformanceExplorer'
+import { ResultsSnapshot } from './components/sections/ResultsSnapshot'
 import { Optimization } from './components/sections/Optimization'
 import { WhatWeLearned } from './components/sections/WhatWeLearned'
 
@@ -61,12 +62,12 @@ export default function App() {
           title="Soundtrack first. Running culture as context."
         >
           <PaceCard />
+          <PaceCardBuilder />
           <CreativeGallery />
           <MotionBoard />
           <SpotifyDestination />
           <VisualSystem />
           <ContentCalendar />
-          <CreativeWorld />
         </Chapter>
 
         <Chapter
@@ -90,6 +91,7 @@ export default function App() {
           kicker="Chapter 04 — Results + Reflection"
           title="Yes—analytics can make the next creative decision better."
         >
+          <ResultsSnapshot />
           <Optimization />
           <WhatWeLearned />
         </Chapter>
