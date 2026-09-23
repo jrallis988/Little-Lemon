@@ -1,34 +1,40 @@
 # Go live — Little Lemon
 
-## Done on this branch
-- Eight homepage layouts + `layouts.html` gallery
-- Menu / about / reserve / order
-- Images under `images/` (no Unsplash hotlinks)
-- Forms → Formsubmit → `jjrallis@unh.edu`
-- `index.html` is the production homepage
-- Pages workflow: `.github/workflows/deploy-pages.yml`
+The site is **code-complete**. Publishing needs one click from you (the agent cannot enable hosting on this repo).
 
-## Blocked on you (cannot be done from the agent)
+## Option A — GitHub Pages (already wired)
 
-### 1. Enable GitHub Pages
-The last deploy run **built successfully** but **skipped publishing** because Pages is not enabled:
+Workflow: `.github/workflows/deploy-pages.yml` (builds successfully; **publish is skipped** until Pages is on).
 
-1. Open https://github.com/jrallis988/Little-Lemon/settings/pages  
-2. Set **Source → GitHub Actions**  
+1. Open **https://github.com/jrallis988/Little-Lemon/settings/pages**
+2. Set **Source → GitHub Actions**
 3. Re-run: https://github.com/jrallis988/Little-Lemon/actions/workflows/deploy-pages.yml  
+4. Site: `https://jrallis988.github.io/Little-Lemon/`
 
-Expected URL: `https://jrallis988.github.io/Little-Lemon/`
+**Conflict:** Seascape / beach-motel also deploy to the same Pages site. Pause those workflows if you want Little Lemon to stay live.
 
-**Heads-up:** Other branches (e.g. Seascape / beach motel) also deploy to the same GitHub Pages site. Whichever workflow runs last wins the live URL. Pause or delete those workflows if you want Little Lemon to stay up.
+## Option B — Netlify (drop-in)
 
-### 2. Activate Formsubmit (one-time)
-1. Submit a test reservation or newsletter signup on the live (or local) site  
-2. Open the activation email at `jjrallis@unh.edu` and click **Activate**  
-3. Submit one more test to confirm delivery  
+`netlify.toml` is included. In Netlify: **Add new site → Import from Git** → this repo → branch `cursor/little-lemon-multi-index-bc64`. Build uses the included command; publish dir `dist`.
 
-Change the inbox anytime in `app.js` (`FORMSUBMIT`).
+Or: `npm i -g netlify-cli && netlify deploy --prod`
 
-### 3. Optional
+## Option C — Vercel (drop-in)
+
+`vercel.json` is included. In Vercel: **Import** this repo → branch `cursor/little-lemon-multi-index-bc64` → Framework **Other** → output root `.`
+
+Or: `npx vercel --prod`
+
+## After the site is public
+
+### Activate Formsubmit (one-time)
+1. Open the live site and submit a test **Reserve** or newsletter signup  
+2. In `jjrallis@unh.edu`, open Formsubmit’s email and click **Activate**  
+3. Submit once more to confirm delivery  
+
+Change the inbox in `app.js` (`FORM_ACTION`).
+
+### Optional
 - Replace Capstone demo phone / address / hours  
 - Custom domain  
 - Analytics  
@@ -37,3 +43,4 @@ Change the inbox anytime in `app.js` (`FORMSUBMIT`).
 ```bash
 npm start
 ```
+Open http://localhost:3000 — try `/layouts.html`, `/reserve.html`, `/order.html`.

@@ -5,6 +5,7 @@
   "description": "Little Lemon — Mediterranean restaurant with eight homepage layout demos",
   "scripts": {
     "start": "npx --yes serve -l 3000",
-    "dev": "npx --yes serve -l 3000"
+    "dev": "npx --yes serve -l 3000",
+    "build": "mkdir -p dist && cp -r *.html *.css *.js *.svg *.txt *.xml *.md images package.json dist/"
   }
 }
