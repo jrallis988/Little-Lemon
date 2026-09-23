@@ -62,12 +62,14 @@ uvicorn supplement_checker.api.main:app --reload --port 8000
 
 Key routes:
 
+- `POST /legal/accept` — Gaps & Knowledge Limits acceptance
 - `POST /profiles` — ingest history (always starts unverified)
-- `POST /profiles/{id}/documents` — attach R2 medical PDF metadata
-- `POST /profiles/{id}/health-sync` — HealthKit / Health Connect
+- `POST /profiles/{id}/documents/upload` — medical file → object store
 - `POST /profiles/{id}/verify` — flip `profile_verified` when complete
-- `POST /labels/scan/{id}` — **403 unless verified**
-- `POST /compare/{id}` — **403 unless verified**
+- `POST /labels/scan/{id}` — vision OCR (multipart image; demo without API keys)
+- `POST /compare/{id}` — literature-gated profile comparison
+- `GET /literature/{id}?query=` — PubMed search
+- `GET /jobs/{id}` — analysis job status
 
 ## Streamlit prototype
 
