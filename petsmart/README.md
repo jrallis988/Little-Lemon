@@ -20,6 +20,9 @@ PetSmart is more than an online pet-supply store. The experience unifies four pi
 ```
 petsmart/
 ├── index.html
+├── case-study.html   # portfolio narrative
+├── robots.txt
+├── sitemap.xml
 ├── css/          # tokens, base, components, layout
 ├── js/
 │   ├── chrome.js # shared header / footer
@@ -31,7 +34,7 @@ petsmart/
 ├── adopt/        # charities + adoptable pets grid
 ├── care/         # learning hub + articles
 ├── stores/       # locator + detail
-├── account/      # sign in, orders, favorites
+├── account/      # sign in, orders, favorites, appointments
 └── checkout/     # checkout + confirmation
 ```
 
@@ -47,6 +50,9 @@ petsmart/
 - Adoptable pets grid + pet detail pages (species + size filters)
 - Homepage featured adoptable pets section
 - Care articles with author/date meta + related resources
+- Case study write-up page for the portfolio
+- SEO basics: Open Graph tags, robots.txt, sitemap.xml
+- Mobile polish for steppers, sticky ATC, hero CTAs
 - Veterinary services page
 - Styled store map visual
 - Hero motion + pathway hover polish
@@ -56,6 +62,7 @@ petsmart/
 
 | # | Page | Path |
 | --- | --- | --- |
+| 0 | Case study | `/petsmart/case-study.html` |
 | 1 | Homepage | `/petsmart/` |
 | 2 | Shop landing | `/petsmart/shop/` |
 | 3 | Category | `/petsmart/shop/category.html?cat=dog-food` |

@@ -75,6 +75,7 @@ const PetSmartChrome = (() => {
           <span class="brand-text"><span class="pet">Pet</span><span class="smart">Smart</span></span>
         </a>
         <p>Everything for pets — adoption, shopping, services, and trusted care resources in one modern experience.</p>
+        <p style="margin-top:var(--space-3);"><a href="${base}case-study.html">Read the case study</a></p>
       </div>
       <div class="footer-col">
         <h3>Shop</h3>

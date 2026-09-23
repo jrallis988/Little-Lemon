@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>/petsmart/</loc></url>
+  <url><loc>/petsmart/case-study.html</loc></url>
+  <url><loc>/petsmart/shop/</loc></url>
+  <url><loc>/petsmart/shop/category.html?cat=dog-food</loc></url>
+  <url><loc>/petsmart/shop/product.html?id=p1</loc></url>
+  <url><loc>/petsmart/shop/cart.html</loc></url>
+  <url><loc>/petsmart/checkout/</loc></url>
+  <url><loc>/petsmart/services/</loc></url>
+  <url><loc>/petsmart/services/grooming.html</loc></url>
+  <url><loc>/petsmart/services/training.html</loc></url>
+  <url><loc>/petsmart/services/day-camp.html</loc></url>
+  <url><loc>/petsmart/services/vet.html</loc></url>
+  <url><loc>/petsmart/services/book.html?service=grooming</loc></url>
+  <url><loc>/petsmart/adopt/</loc></url>
+  <url><loc>/petsmart/adopt/charities.html</loc></url>
+  <url><loc>/petsmart/adopt/pet.html?id=pet1</loc></url>
+  <url><loc>/petsmart/care/</loc></url>
+  <url><loc>/petsmart/care/article.html?id=bringing-home</loc></url>
+  <url><loc>/petsmart/stores/</loc></url>
+  <url><loc>/petsmart/stores/detail.html?id=s1</loc></url>
+  <url><loc>/petsmart/account/</loc></url>
+  <url><loc>/petsmart/account/orders.html</loc></url>
+  <url><loc>/petsmart/account/appointments.html</loc></url>
+  <url><loc>/petsmart/account/favorites.html</loc></url>
+</urlset>
