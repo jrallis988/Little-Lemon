@@ -5,7 +5,6 @@ import { X } from 'lucide-react'
 import { tipPresets } from '#/lib/oj/catalog'
 import { useSupport } from '#/lib/support'
 import { useMembership } from '#/lib/membership'
-import { demoCheckout } from '#/lib/payments'
 
 export function UnlockSheet() {
   const { target, close } = useSupport()
@@ -37,21 +36,47 @@ export function UnlockSheet() {
   const isSubscribe = mode === 'subscribe'
   const alreadyUnlocked = isUnlocked(creator.id)
 
+  async function runCheckout(input: {
+    kind: 'subscribe' | 'tip'
+    amount: number
+    label: string
+  }) {
+    const res = await fetch('/api/stripe/checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        kind: input.kind,
+        creatorId: creator.id,
+        creatorName: creator.displayName,
+        amount: input.amount,
+        label: input.label,
+      }),
+    })
+    return (await res.json()) as {
+      status: string
+      receiptId?: string
+      url?: string
+      message?: string
+    }
+  }
+
   async function confirm() {
     setStatus('working')
     setMessage(null)
 
     if (isSubscribe) {
-      const result = await demoCheckout({
+      const result = await runCheckout({
         kind: 'subscribe',
-        creatorId: creator.id,
-        creatorName: creator.displayName,
         amount: creator.tierPriceMonthly,
         label: creator.tierName,
       })
+      if (result.status === 'stripe_session' && result.url) {
+        window.location.href = result.url
+        return
+      }
       if (result.status !== 'demo_ok') {
         setStatus('error')
-        setMessage(result.message)
+        setMessage(result.message ?? 'Checkout failed')
         return
       }
       subscribe(creator.id, creator.tierName, creator.tierPriceMonthly)
@@ -72,16 +97,18 @@ export function UnlockSheet() {
       return
     }
 
-    const result = await demoCheckout({
+    const result = await runCheckout({
       kind: 'tip',
-      creatorId: creator.id,
-      creatorName: creator.displayName,
       amount,
       label: preset?.label ?? 'Custom',
     })
+    if (result.status === 'stripe_session' && result.url) {
+      window.location.href = result.url
+      return
+    }
     if (result.status !== 'demo_ok') {
       setStatus('error')
-      setMessage(result.message)
+      setMessage(result.message ?? 'Tip failed')
       return
     }
     tip(creator.id, amount, preset?.label ?? 'Custom')

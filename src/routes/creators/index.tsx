@@ -3,16 +3,19 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { AppShell } from '#/components/layout/AppShell'
 import { Avatar } from '#/components/ui/Avatar'
-import { listCreators } from '#/lib/oj/catalog'
+import { SiteFooter } from '#/components/layout/SiteFooter'
 import { useSafety } from '#/lib/oj/safety-store'
+import { loadCreators } from '#/server/oj'
 
 export const Route = createFileRoute('/creators/')({
+  loader: () => loadCreators(),
   component: CreatorsPage,
 })
 
 function CreatorsPage() {
+  const creators = Route.useLoaderData()
   const { isBlocked } = useSafety()
-  const creators = listCreators().filter((c) => !isBlocked(c.id))
+  const visible = creators.filter((c) => !isBlocked(c.id))
 
   return (
     <AppShell>
@@ -29,7 +32,7 @@ function CreatorsPage() {
         </header>
 
         <ul className="divide-y divide-[var(--hairline)]">
-          {creators.map((creator) => (
+          {visible.map((creator) => (
             <li key={creator.id}>
               <Link
                 to="/c/$username"
@@ -64,6 +67,7 @@ function CreatorsPage() {
           ))}
         </ul>
       </div>
+      <SiteFooter />
     </AppShell>
   )
 }

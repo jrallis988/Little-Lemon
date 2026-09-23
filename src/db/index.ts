@@ -1,8 +1,13 @@
+import { neon } from '@neondatabase/serverless'
+import { drizzle as drizzleNeon } from 'drizzle-orm/neon-http'
+import type { NeonHttpDatabase } from 'drizzle-orm/neon-http'
 import { drizzle as drizzleNode } from 'drizzle-orm/node-postgres'
 import type { NodePgDatabase } from 'drizzle-orm/node-postgres'
 import * as schema from './schema/index.ts'
 
-export type Database = NodePgDatabase<typeof schema>
+export type Database =
+  | NeonHttpDatabase<typeof schema>
+  | NodePgDatabase<typeof schema>
 
 let _db: Database | null = null
 
@@ -12,10 +17,19 @@ export function hasDatabase() {
 }
 
 /**
+ * Prefer Neon HTTP on Workers / neon.tech URLs (no TCP socket).
+ * Override with DATABASE_DRIVER=neon-http | node-postgres.
+ */
+export function shouldUseNeonHttp(url = process.env.DATABASE_URL ?? '') {
+  const driver = process.env.DATABASE_DRIVER
+  if (driver === 'neon-http') return true
+  if (driver === 'node-postgres') return false
+  return /neon\.tech/i.test(url) || Boolean(process.env.CF_PAGES || process.env.WORKER)
+}
+
+/**
  * Lazy Drizzle client.
- * - Local / Node: `node-postgres` via DATABASE_URL
- * - Cloudflare Workers: prefer Neon HTTP or Hyperdrive binding; until then
- *   the app falls back to the in-memory OJ catalog + on-device stores.
+ * Falls back to the in-memory OJ catalog when DATABASE_URL is unset.
  */
 export function getDb(): Database {
   if (_db) return _db
@@ -23,8 +37,24 @@ export function getDb(): Database {
   if (!url) {
     throw new Error('DATABASE_URL is not set')
   }
-  _db = drizzleNode(url, { schema })
+
+  if (shouldUseNeonHttp(url)) {
+    const sql = neon(url)
+    _db = drizzleNeon(sql, { schema })
+  } else {
+    _db = drizzleNode(url, { schema })
+  }
   return _db
+}
+
+/** Safe getter — returns null when no database is configured. */
+export function tryGetDb(): Database | null {
+  if (!hasDatabase()) return null
+  try {
+    return getDb()
+  } catch {
+    return null
+  }
 }
 
 /** @deprecated Prefer getDb() so Workers bundles stay lazy */

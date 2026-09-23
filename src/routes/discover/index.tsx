@@ -1,14 +1,16 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { AppShell } from '#/components/layout/AppShell'
 import { DiscoveryFeed } from '#/components/feed/DiscoveryFeed'
-import { getPublicFeed } from '#/lib/oj/catalog'
+import { SiteFooter } from '#/components/layout/SiteFooter'
+import { loadPublicFeed } from '#/server/oj'
 
 export const Route = createFileRoute('/discover/')({
+  loader: () => loadPublicFeed(),
   component: DiscoverPage,
 })
 
 function DiscoverPage() {
-  const feed = getPublicFeed()
+  const feed = Route.useLoaderData()
 
   return (
     <AppShell>
@@ -25,6 +27,7 @@ function DiscoverPage() {
         </header>
         <DiscoveryFeed posts={feed} />
       </div>
+      <SiteFooter />
     </AppShell>
   )
 }

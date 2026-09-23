@@ -1,13 +1,14 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { Logo } from '#/components/brand/Logo'
+import { SiteFooter } from '#/components/layout/SiteFooter'
 
 export const Route = createFileRoute('/')({ component: LandingPage })
 
 function LandingPage() {
   return (
-    <main className="relative min-h-dvh overflow-hidden">
+    <main className="relative flex min-h-dvh flex-col overflow-hidden">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,color-mix(in_srgb,#ffffff_32%,transparent),transparent_55%)]" />
-      <div className="relative mx-auto flex min-h-dvh max-w-3xl flex-col px-4 pb-10 pt-8">
+      <div className="relative mx-auto flex w-full max-w-3xl flex-1 flex-col px-4 pb-6 pt-8">
         <header className="flex items-center justify-between">
           <Logo size="sm" />
           <Link
@@ -52,6 +53,9 @@ function LandingPage() {
             </Link>
           </div>
         </section>
+      </div>
+      <div className="relative">
+        <SiteFooter />
       </div>
     </main>
   )

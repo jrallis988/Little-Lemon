@@ -36,8 +36,19 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
           'Unfiltered stand-up, raw road work, and animated comedy without corporate censorship.',
       },
       { name: 'theme-color', content: '#00AFF0' },
+      { property: 'og:title', content: 'only Jokes' },
+      {
+        property: 'og:description',
+        content:
+          'Unfiltered stand-up, raw road work, and animated comedy without corporate censorship.',
+      },
+      { property: 'og:image', content: '/og.svg' },
+      { name: 'twitter:card', content: 'summary_large_image' },
     ],
-    links: [{ rel: 'stylesheet', href: appCss }],
+    links: [
+      { rel: 'stylesheet', href: appCss },
+      { rel: 'icon', href: '/og.svg' },
+    ],
   }),
   shellComponent: RootDocument,
 })

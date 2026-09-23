@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiStatusRouteImport } from './routes/api/status'
 import { Route as AuthIndexRouteImport } from './routes/auth/index'
 import { Route as CUsernameRouteImport } from './routes/c/$username'
 import { Route as CreatorsIndexRouteImport } from './routes/creators/index'
@@ -20,11 +21,18 @@ import { Route as PrivacyIndexRouteImport } from './routes/privacy/index'
 import { Route as SettingsIndexRouteImport } from './routes/settings/index'
 import { Route as TermsIndexRouteImport } from './routes/terms/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as ApiMediaUploadRouteImport } from './routes/api/media/upload'
+import { Route as ApiStripeCheckoutRouteImport } from './routes/api/stripe/checkout'
 import { Route as ApiStripeWebhookRouteImport } from './routes/api/stripe/webhook'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiStatusRoute = ApiStatusRouteImport.update({
+  id: '/api/status',
+  path: '/api/status',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthIndexRoute = AuthIndexRouteImport.update({
@@ -77,6 +85,16 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiMediaUploadRoute = ApiMediaUploadRouteImport.update({
+  id: '/api/media/upload',
+  path: '/api/media/upload',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiStripeCheckoutRoute = ApiStripeCheckoutRouteImport.update({
+  id: '/api/stripe/checkout',
+  path: '/api/stripe/checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiStripeWebhookRoute = ApiStripeWebhookRouteImport.update({
   id: '/api/stripe/webhook',
   path: '/api/stripe/webhook',
@@ -85,6 +103,7 @@ const ApiStripeWebhookRoute = ApiStripeWebhookRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/status': typeof ApiStatusRoute
   '/c/$username': typeof CUsernameRoute
   '/auth/': typeof AuthIndexRoute
   '/creators/': typeof CreatorsIndexRoute
@@ -95,10 +114,13 @@ export interface FileRoutesByFullPath {
   '/settings/': typeof SettingsIndexRoute
   '/terms/': typeof TermsIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/media/upload': typeof ApiMediaUploadRoute
+  '/api/stripe/checkout': typeof ApiStripeCheckoutRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/status': typeof ApiStatusRoute
   '/c/$username': typeof CUsernameRoute
   '/auth': typeof AuthIndexRoute
   '/creators': typeof CreatorsIndexRoute
@@ -109,11 +131,14 @@ export interface FileRoutesByTo {
   '/settings': typeof SettingsIndexRoute
   '/terms': typeof TermsIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/media/upload': typeof ApiMediaUploadRoute
+  '/api/stripe/checkout': typeof ApiStripeCheckoutRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api/status': typeof ApiStatusRoute
   '/c/$username': typeof CUsernameRoute
   '/auth/': typeof AuthIndexRoute
   '/creators/': typeof CreatorsIndexRoute
@@ -124,12 +149,15 @@ export interface FileRoutesById {
   '/settings/': typeof SettingsIndexRoute
   '/terms/': typeof TermsIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/media/upload': typeof ApiMediaUploadRoute
+  '/api/stripe/checkout': typeof ApiStripeCheckoutRoute
   '/api/stripe/webhook': typeof ApiStripeWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/api/status'
     | '/c/$username'
     | '/auth/'
     | '/creators/'
@@ -140,10 +168,13 @@ export interface FileRouteTypes {
     | '/settings/'
     | '/terms/'
     | '/api/auth/$'
+    | '/api/media/upload'
+    | '/api/stripe/checkout'
     | '/api/stripe/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/api/status'
     | '/c/$username'
     | '/auth'
     | '/creators'
@@ -154,10 +185,13 @@ export interface FileRouteTypes {
     | '/settings'
     | '/terms'
     | '/api/auth/$'
+    | '/api/media/upload'
+    | '/api/stripe/checkout'
     | '/api/stripe/webhook'
   id:
     | '__root__'
     | '/'
+    | '/api/status'
     | '/c/$username'
     | '/auth/'
     | '/creators/'
@@ -168,11 +202,14 @@ export interface FileRouteTypes {
     | '/settings/'
     | '/terms/'
     | '/api/auth/$'
+    | '/api/media/upload'
+    | '/api/stripe/checkout'
     | '/api/stripe/webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiStatusRoute: typeof ApiStatusRoute
   CUsernameRoute: typeof CUsernameRoute
   AuthIndexRoute: typeof AuthIndexRoute
   CreatorsIndexRoute: typeof CreatorsIndexRoute
@@ -183,6 +220,8 @@ export interface RootRouteChildren {
   SettingsIndexRoute: typeof SettingsIndexRoute
   TermsIndexRoute: typeof TermsIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  ApiMediaUploadRoute: typeof ApiMediaUploadRoute
+  ApiStripeCheckoutRoute: typeof ApiStripeCheckoutRoute
   ApiStripeWebhookRoute: typeof ApiStripeWebhookRoute
 }
 
@@ -193,6 +232,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/status': {
+      id: '/api/status'
+      path: '/api/status'
+      fullPath: '/api/status'
+      preLoaderRoute: typeof ApiStatusRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth/': {
@@ -265,6 +311,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/media/upload': {
+      id: '/api/media/upload'
+      path: '/api/media/upload'
+      fullPath: '/api/media/upload'
+      preLoaderRoute: typeof ApiMediaUploadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/stripe/checkout': {
+      id: '/api/stripe/checkout'
+      path: '/api/stripe/checkout'
+      fullPath: '/api/stripe/checkout'
+      preLoaderRoute: typeof ApiStripeCheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/stripe/webhook': {
       id: '/api/stripe/webhook'
       path: '/api/stripe/webhook'
@@ -277,6 +337,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiStatusRoute: ApiStatusRoute,
   CUsernameRoute: CUsernameRoute,
   AuthIndexRoute: AuthIndexRoute,
   CreatorsIndexRoute: CreatorsIndexRoute,
@@ -287,6 +348,8 @@ const rootRouteChildren: RootRouteChildren = {
   SettingsIndexRoute: SettingsIndexRoute,
   TermsIndexRoute: TermsIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
+  ApiMediaUploadRoute: ApiMediaUploadRoute,
+  ApiStripeCheckoutRoute: ApiStripeCheckoutRoute,
   ApiStripeWebhookRoute: ApiStripeWebhookRoute,
 }
 export const routeTree = rootRouteImport
