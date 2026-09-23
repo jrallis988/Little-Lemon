@@ -80,10 +80,13 @@ export function createServerPlatform(dbPath: string): ServerPlatform {
     for (const seat of seats) inventory.seedSeat(seat)
   }
 
-  const payments = new StripePaymentProvider(
-    process.env.STRIPE_WEBHOOK_SECRET ?? 'whsec_gateledger_demo',
-    process.env.STRIPE_SECRET_KEY,
-  )
+  const payments = new StripePaymentProvider({
+    webhookSecret: process.env.STRIPE_WEBHOOK_SECRET ?? 'whsec_gateledger_demo',
+    secretKey: process.env.STRIPE_SECRET_KEY,
+    allowTestConfirm:
+      process.env.STRIPE_ALLOW_TEST_CONFIRM !== 'false' &&
+      process.env.NODE_ENV !== 'production',
+  })
   const checkout = new CheckoutService(inventory, ledger, payments)
   const webauthn = new WebAuthnService('littlelemon.local', 'Little Lemon GateLedger')
   webauthn.hydrate(loadCredentials(db))

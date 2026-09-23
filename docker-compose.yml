@@ -1,0 +1,19 @@
+services:
+  gateledger:
+    build: .
+    ports:
+      - "8787:8787"
+    environment:
+      NODE_ENV: production
+      PORT: "8787"
+      # Optional live Stripe (omit for offline demo mode):
+      # STRIPE_SECRET_KEY: sk_test_...
+      # STRIPE_PUBLISHABLE_KEY: pk_test_...
+      # STRIPE_WEBHOOK_SECRET: whsec_...
+      # STRIPE_ALLOW_TEST_CONFIRM: "true"
+    volumes:
+      - gateledger-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  gateledger-data:

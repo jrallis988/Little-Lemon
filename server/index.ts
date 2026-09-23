@@ -1,8 +1,9 @@
 import { serve } from '@hono/node-server'
+import { serveStatic } from '@hono/node-server/serve-static'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { streamSSE } from 'hono/streaming'
-import { mkdirSync } from 'node:fs'
+import { existsSync, mkdirSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { TICKET_CHANNEL } from '../src/lib/ledger/pubsub'
 import { staleToken } from '../src/lib/ledger/rotatingBarcode'
@@ -20,9 +21,39 @@ app.get('/api/health', (c) =>
   c.json({
     ok: true,
     service: 'gateledger-api',
+    status: 'healthy',
     chainTip: platform.ledger.chainTip.slice(0, 16),
     tickets: platform.ledger.listTickets().length,
     payments: platform.payments.mode,
+    env: process.env.NODE_ENV ?? 'development',
+  }),
+)
+
+app.get('/api/ready', (c) => {
+  try {
+    const tickets = platform.ledger.listTickets().length
+    void tickets
+    platform.db.prepare('SELECT 1').get()
+    return c.json({ ok: true, status: 'ready', payments: platform.payments.mode })
+  } catch (err) {
+    return c.json(
+      {
+        ok: false,
+        status: 'not_ready',
+        error: err instanceof Error ? err.message : 'DB_UNAVAILABLE',
+      },
+      503,
+    )
+  }
+})
+
+app.get('/api/payments/config', (c) =>
+  c.json({
+    mode: platform.payments.mode,
+    publishableKey: process.env.STRIPE_PUBLISHABLE_KEY ?? null,
+    allowTestConfirm:
+      process.env.STRIPE_ALLOW_TEST_CONFIRM !== 'false' &&
+      process.env.NODE_ENV !== 'production',
   }),
 )
 
@@ -288,9 +319,8 @@ app.post('/api/payments/webhook', async (c) => {
   try {
     const event = await platform.payments.verifyAndParseWebhook(rawBody, signature)
     if (event.type === 'payment_intent.succeeded') {
-      await platform.payments.confirmIntent(event.intentId)
-      const intent = platform.payments.getIntent(event.intentId)
-      if (intent) upsertPaymentIntent(platform.db, intent)
+      const intent = await platform.payments.confirmIntent(event.intentId)
+      upsertPaymentIntent(platform.db, intent)
       const result = await platform.checkout.finalizePaidIntent(event.intentId)
       persistInventory(platform)
       return c.json({ received: true, result })
@@ -328,8 +358,23 @@ app.post('/api/checkout/race', async (c) => {
   })
 })
 
+// Production: serve the Vite build from the same origin as the API.
+const distRoot = resolve(process.cwd(), 'dist')
+if (existsSync(distRoot)) {
+  app.use(
+    '/*',
+    serveStatic({
+      root: './dist',
+    }),
+  )
+  app.get('*', async (c, next) => {
+    if (c.req.path.startsWith('/api/')) return next()
+    return serveStatic({ root: './dist', path: 'index.html' })(c, next)
+  })
+}
+
 const port = Number(process.env.PORT ?? 8787)
 console.log(
-  `GateLedger API listening on http://127.0.0.1:${port} (payments=${platform.payments.mode})`,
+  `GateLedger API listening on http://127.0.0.1:${port} (payments=${platform.payments.mode}${existsSync(distRoot) ? ', static=dist' : ''})`,
 )
 serve({ fetch: app.fetch, port })

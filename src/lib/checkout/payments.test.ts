@@ -40,7 +40,7 @@ describe('Stripe-shaped payment flow', () => {
   })
 
   it('rejects webhooks with bad signatures and accepts signed payment_intent.succeeded', async () => {
-    const payments = new StripePaymentProvider('whsec_test')
+    const payments = new StripePaymentProvider({ webhookSecret: 'whsec_test' })
     const intent = await payments.createIntent({
       holdId: 'hold_1',
       buyerUserId: 'buyer_1',
@@ -62,5 +62,10 @@ describe('Stripe-shaped payment flow', () => {
       await payments.signWebhook(body),
     )
     expect(parsed).toEqual({ type: 'payment_intent.succeeded', intentId: intent.id })
+  })
+
+  it('reports demo mode without a secret key', () => {
+    const payments = new StripePaymentProvider({ webhookSecret: 'whsec_x' })
+    expect(payments.mode).toBe('demo')
   })
 })

@@ -1,39 +1,59 @@
 # GateLedger · Little Lemon transactional security
 
-Runnable foundation for anti-fraud ticketing controls:
+Anti-fraud ticketing foundation: cryptographic ledger, rotating QR codes, passkey
+transfer MFA, inventory race locks, and Stripe PaymentIntents.
 
-1. **Cryptographic event-driven ledger** — hash-chained append-only log, SSE pub/sub, and **15s rotating QR tokens** so screenshots expire.
-2. **Secure identity handshakes** — WebAuthn/FIDO2 scaffolding + device-bound sessions persisted in SQLite.
-3. **Checkout TDD** — inventory locking, race tests, and **Stripe-shaped PaymentIntents** (demo HMAC webhooks; set `STRIPE_SECRET_KEY` / `STRIPE_WEBHOOK_SECRET` for live keys).
-
-## Stack
-
-- Vite + React 19 + TypeScript (UI)
-- Hono API on Node (`server/`) with SQLite (`data/gateledger.sqlite`)
-- Vitest for domain + persistence + payment tests
-- PostgreSQL reference schema in `schemas/postgres_ledger.sql`
-- GitHub Actions CI
-
-## Scripts
+## Quick start (local)
 
 ```bash
 npm install
 npm run dev:all   # API :8787 + Vite :5173 (proxies /api)
-npm test
-npm run build
 ```
 
-## Env (optional)
+## Production (single process)
+
+```bash
+npm run build
+npm start         # serves API + dist/ on PORT (default 8787)
+```
+
+## Docker
+
+```bash
+docker compose up --build
+# → http://localhost:8787
+curl http://localhost:8787/api/ready
+```
+
+## Env
+
+See `.env.example`.
 
 | Variable | Purpose |
 |----------|---------|
-| `STRIPE_SECRET_KEY` | When set, payments mode reports `stripe` (wire REST next) |
-| `STRIPE_WEBHOOK_SECRET` | HMAC secret for `POST /api/payments/webhook` (default demo secret) |
-| `PORT` | API port (default `8787`) |
+| `STRIPE_SECRET_KEY` | Enables live Stripe PaymentIntents via official SDK |
+| `STRIPE_PUBLISHABLE_KEY` | Exposed at `GET /api/payments/config` for Stripe.js |
+| `STRIPE_WEBHOOK_SECRET` | Webhook signing (`whsec_…`); demo HMAC if unset |
+| `STRIPE_ALLOW_TEST_CONFIRM` | Server-side `pm_card_visa` confirm (off in `NODE_ENV=production`) |
+| `PORT` | Listen port (default `8787`) |
 
-## Notable API routes
+## Features
 
-- `GET /api/ledger/tickets/:id/code` — current rotating QR
-- `POST /api/ledger/scan` — `{ presentedToken }` or `{ staleSteps }` for screenshot demos
+1. **Ledger** — hash chain + SSE; **15s rotating QR**; scan revokes clones
+2. **Identity** — WebAuthn scaffolding + device sessions in SQLite
+3. **Checkout** — inventory locks, race TDD, PaymentIntent → confirm/webhook → ticket
+
+## API highlights
+
+- `GET /api/health`, `GET /api/ready`
+- `GET /api/payments/config`
+- `GET /api/ledger/tickets/:id/code`
 - `POST /api/checkout/intent` → `POST /api/checkout/confirm`
-- `POST /api/payments/webhook` — signed `payment_intent.succeeded`
+- `POST /api/payments/webhook`
+
+## Still before full production
+
+- Stripe.js Elements in the UI (publishable key endpoint is ready)
+- Real IdP + `@simplewebauthn/server`
+- Postgres + Redis/Kafka (see `schemas/postgres_ledger.sql`)
+- Merge draft PR and point a host at the Docker image

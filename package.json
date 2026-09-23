@@ -8,6 +8,7 @@
     "dev:api": "tsx server/index.ts",
     "dev:all": "concurrently -k -n api,web -c teal,magenta \"npm:dev:api\" \"npm:dev\"",
     "build": "tsc -b && vite build",
+    "start": "NODE_ENV=production tsx server/index.ts",
     "lint": "oxlint",
     "preview": "vite preview",
     "test": "vitest run",
@@ -19,7 +20,8 @@
     "concurrently": "^10.0.5",
     "hono": "^4.13.7",
     "react": "^19.2.7",
-    "react-dom": "^19.2.7"
+    "react-dom": "^19.2.7",
+    "stripe": "^22.6.2"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^9.6.0",
