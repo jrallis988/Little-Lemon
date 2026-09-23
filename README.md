@@ -15,6 +15,7 @@ See **[LAUNCH.md](LAUNCH.md)** — enable GitHub Pages (Actions) and activate Fo
 | File | Role |
 | --- | --- |
 | `index.html` | **Primary** homepage |
+| `layouts.html` | Gallery of all homepage demos |
 | `index-two.html` … `index-eight.html` | Alternate layouts |
 | `menu.html` / `about.html` / `reserve.html` / `order.html` | Core flows |
 | `privacy.html` / `terms.html` | Policies |

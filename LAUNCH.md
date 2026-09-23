@@ -1,37 +1,39 @@
 # Go live — Little Lemon
 
-## What’s already done on this branch
-- Eight homepage layouts + menu / about / reserve / order
-- Images hosted locally under `images/` (no Unsplash hotlinks)
-- Forms (reserve, newsletter, order) POST to **Formsubmit** → `jjrallis@unh.edu`
-- `index.html` is the primary homepage (demo bar removed; other layouts still linked)
-- GitHub Pages workflow: `.github/workflows/deploy-pages.yml`
+## Done on this branch
+- Eight homepage layouts + `layouts.html` gallery
+- Menu / about / reserve / order
+- Images under `images/` (no Unsplash hotlinks)
+- Forms → Formsubmit → `jjrallis@unh.edu`
+- `index.html` is the production homepage
+- Pages workflow: `.github/workflows/deploy-pages.yml`
 
-## What you still need to do
+## Blocked on you (cannot be done from the agent)
 
 ### 1. Enable GitHub Pages
-1. Merge or keep using branch `cursor/little-lemon-multi-index-bc64`
-2. **Settings → Pages → Source: GitHub Actions**
-3. Re-run the **Deploy Little Lemon to GitHub Pages** workflow
-4. Site URL (typical): `https://jrallis988.github.io/Little-Lemon/`
+The last deploy run **built successfully** but **skipped publishing** because Pages is not enabled:
 
-> Note: `main` is still the Artistic Fountain portfolio. This workflow deploys **only** from the Little Lemon branch so the two don’t collide.
+1. Open https://github.com/jrallis988/Little-Lemon/settings/pages  
+2. Set **Source → GitHub Actions**  
+3. Re-run: https://github.com/jrallis988/Little-Lemon/actions/workflows/deploy-pages.yml  
+
+Expected URL: `https://jrallis988.github.io/Little-Lemon/`
+
+**Heads-up:** Other branches (e.g. Seascape / beach motel) also deploy to the same GitHub Pages site. Whichever workflow runs last wins the live URL. Pause or delete those workflows if you want Little Lemon to stay up.
 
 ### 2. Activate Formsubmit (one-time)
-1. Submit a test reservation or newsletter signup on the live site
-2. Open the confirmation email Formsubmit sends to `jjrallis@unh.edu` and click **Activate**
-3. Submit one more live test to confirm delivery
+1. Submit a test reservation or newsletter signup on the live (or local) site  
+2. Open the activation email at `jjrallis@unh.edu` and click **Activate**  
+3. Submit one more test to confirm delivery  
 
-To change the inbox, edit `FORMSUBMIT` in `app.js`.
+Change the inbox anytime in `app.js` (`FORMSUBMIT`).
 
-### 3. Optional polish
-- Replace Capstone demo phone / address / hours with real venue details
-- Drop or keep alternate layouts (`index-two.html` … `index-eight.html`)
-- Add a custom domain (CNAME + DNS) if you want something other than `*.github.io`
-- Add analytics (Plausible / GA) if desired
+### 3. Optional
+- Replace Capstone demo phone / address / hours  
+- Custom domain  
+- Analytics  
 
 ## Local preview
 ```bash
 npm start
 ```
-Open http://localhost:3000
