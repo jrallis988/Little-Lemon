@@ -106,12 +106,15 @@ supplement_checker/
   access_control.py        ← profile_verified gate
   legal_notice.py          ← Gaps & Knowledge Limits acceptance
   data_gaps.py             ← unindexed ingredient hard stop
+  auth.py                  ← email/password sessions + bearer tokens
   storage.py               ← SQLite / D1-compatible persistence
   object_store.py          ← local R2 stand-in
   vision_ocr.py            ← multimodal label OCR
   literature.py            ← PubMed / NCBI lookup
   compare_engine.py        ← profile × ingredient findings
   api/                     ← FastAPI application
+  dashboard/               ← clinical card console (web)
+  tests/                   ← pytest suite
   cloudflare/              ← D1 schema, wrangler, R2 notes
   streamlit_app.py         ← local prototype UI (gated)
   pages/                   ← prototype screens (gated)

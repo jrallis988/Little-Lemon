@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Supplement Research — Clinical Console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/dashboard/assets/styles.css" />
+</head>
+<body>
+  <div class="atmosphere" aria-hidden="true"></div>
+  <header class="topbar">
+    <div>
+      <p class="brand">ClearDose Research</p>
+      <p class="tagline">Clinical literature console — not a medical device</p>
+    </div>
+    <div class="topbar-meta" id="sessionMeta">Signed out</div>
+  </header>
+
+  <main class="console">
+    <section class="card" id="cardAuth">
+      <h2>1 · Account</h2>
+      <p class="lede">Register or sign in to bind terms, profiles, and scans to your session.</p>
+      <div class="grid-2">
+        <label>Email <input id="email" type="email" autocomplete="username" placeholder="you@clinic.org" /></label>
+        <label>Password <input id="password" type="password" autocomplete="current-password" placeholder="min 8 chars" /></label>
+      </div>
+      <label>Display name <input id="displayName" type="text" placeholder="Optional" /></label>
+      <div class="actions">
+        <button type="button" id="btnRegister" class="btn">Register</button>
+        <button type="button" id="btnLogin" class="btn btn-secondary">Sign in</button>
+        <button type="button" id="btnLogout" class="btn btn-ghost">Sign out</button>
+      </div>
+      <p class="status" id="authStatus"></p>
+    </section>
+
+    <section class="card locked" id="cardTerms">
+      <h2>2 · Gaps &amp; Knowledge Limits</h2>
+      <p class="lede">Un-skippable acceptance before medical history or scan access.</p>
+      <pre class="notice" id="noticeBody">Loading notice…</pre>
+      <label class="check">
+        <input type="checkbox" id="termsCheck" />
+        <span>I have read and agree. This platform is not a medical device; missing literature means no evaluation.</span>
+      </label>
+      <div class="actions">
+        <button type="button" id="btnAcceptTerms" class="btn" disabled>I agree — continue</button>
+      </div>
+      <p class="status" id="termsStatus"></p>
+    </section>
+
+    <section class="card locked" id="cardProfile">
+      <h2>3 · Health history</h2>
+      <p class="lede">Mandatory profile before any product analysis (<code>profile_verified</code> lock).</p>
+      <div class="actions">
+        <button type="button" id="btnSeedProfile" class="btn">Load demo clinical profile</button>
+        <button type="button" id="btnVerify" class="btn btn-secondary">Verify profile</button>
+      </div>
+      <div class="metrics" id="profileMetrics"></div>
+      <p class="status" id="profileStatus"></p>
+    </section>
+
+    <section class="card locked" id="cardScan">
+      <h2>4 · Label scan</h2>
+      <p class="lede">Vision OCR of Supplement Facts. Demo mode without API keys.</p>
+      <label class="file">
+        <input type="file" id="labelFile" accept="image/*" />
+        <span>Choose label image (optional)</span>
+      </label>
+      <div class="actions">
+        <button type="button" id="btnScan" class="btn">Run OCR scan</button>
+      </div>
+      <div class="ingredient-grid" id="ingredientGrid"></div>
+      <p class="status" id="scanStatus"></p>
+    </section>
+
+    <section class="card locked" id="cardCompare">
+      <h2>5 · Literature comparison</h2>
+      <p class="lede">Indexed ingredients only. Unindexed items hard-stop with Data Gap Identified.</p>
+      <div class="actions">
+        <button type="button" id="btnCompare" class="btn">Compare to profile</button>
+      </div>
+      <div id="findings" class="findings"></div>
+      <div id="gaps" class="gaps"></div>
+      <p class="status" id="compareStatus"></p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    Research aggregation for informational/educational use only. Always consult a qualified clinician.
+  </footer>
+  <script src="/dashboard/assets/app.js"></script>
+</body>
+</html>

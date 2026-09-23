@@ -13,10 +13,13 @@ Objects: local filesystem stand-in for R2.
 from __future__ import annotations
 
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any
 
 from fastapi import Depends, FastAPI, File, Form, Header, HTTPException, UploadFile, status
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field, field_validator
 
 from supplement_checker.access_control import (
@@ -25,6 +28,15 @@ from supplement_checker.access_control import (
     apply_verification_state,
     assert_profile_verified,
     evaluate_verification,
+)
+from supplement_checker.auth import (
+    AuthError,
+    AuthUser,
+    auth_disabled,
+    login as auth_login,
+    register as auth_register,
+    resolve_bearer_token,
+    revoke_token,
 )
 from supplement_checker.compare_engine import compare_profile_to_ingredients
 from supplement_checker.legal_notice import (
@@ -58,9 +70,9 @@ app = FastAPI(
     description=(
         "Clinical-grade research and data-aggregation API. "
         "Not a medical device or diagnostic tool. "
-        "Requires Gaps & Knowledge Limits acceptance, then profile_verified=True."
+        "Requires auth, Gaps & Knowledge Limits acceptance, then profile_verified=True."
     ),
-    version="0.3.0",
+    version="0.4.0",
 )
 
 app.add_middleware(
@@ -70,6 +82,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+DASHBOARD_DIR = Path(__file__).resolve().parents[1] / "dashboard"
+if DASHBOARD_DIR.is_dir():
+    app.mount("/dashboard/assets", StaticFiles(directory=DASHBOARD_DIR), name="dashboard-assets")
 
 
 class DocumentMetadataIn(BaseModel):
@@ -107,31 +123,43 @@ class CompareIn(BaseModel):
 
 class TermsAcceptIn(BaseModel):
     accepted: bool
-    client_id: str = Field(..., min_length=1, max_length=128)
+    client_id: str | None = Field(
+        default=None,
+        description="Optional when authenticated; required only if AUTH_DISABLED.",
+        max_length=128,
+    )
 
 
 class ProfileCreateIn(BaseModel):
-    client_id: str = Field(..., min_length=1, max_length=128)
     profile: dict[str, Any]
+    client_id: str | None = Field(default=None, max_length=128)
 
 
-def _client_id(
+class AuthRegisterIn(BaseModel):
+    email: str
+    password: str = Field(min_length=8)
+    display_name: str | None = None
+
+
+class AuthLoginIn(BaseModel):
+    email: str
+    password: str
+
+
+def require_user(
+    authorization: str | None = Header(default=None),
     x_client_id: str | None = Header(default=None, alias="X-Client-Id"),
-    client_id: str | None = None,
-) -> str:
-    value = client_id or x_client_id
-    if not value:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="X-Client-Id header (or client_id) is required for terms binding.",
-        )
-    return value
+) -> AuthUser:
+    try:
+        return resolve_bearer_token(authorization, x_client_id=x_client_id)
+    except AuthError as exc:
+        raise HTTPException(status_code=exc.status_code, detail=str(exc)) from exc
 
 
-def require_terms(client_id: str = Depends(_client_id)) -> TermsAcceptance:
+def require_terms(user: AuthUser = Depends(require_user)) -> TermsAcceptance:
     store = get_store()
     try:
-        return assert_terms_accepted(store.get_terms(client_id))
+        return assert_terms_accepted(store.get_terms(user.client_id))
     except TermsNotAcceptedError as exc:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
@@ -165,13 +193,68 @@ def require_verified_profile(profile_id: str) -> HealthProfile:
         ) from exc
 
 
+@app.get("/")
+def root() -> dict[str, str]:
+    return {
+        "service": "supplement-research-api",
+        "dashboard": "/dashboard",
+        "docs": "/docs",
+        "health": "/health",
+    }
+
+
+@app.get("/dashboard")
+def dashboard_page() -> FileResponse:
+    index = DASHBOARD_DIR / "index.html"
+    if not index.is_file():
+        raise HTTPException(status_code=404, detail="Dashboard not found")
+    return FileResponse(index)
+
+
 @app.get("/health")
 def health() -> dict[str, Any]:
     return {
         "status": "ok",
         "service": "supplement-research-api",
-        "version": "0.3.0",
+        "version": "0.4.0",
         "persistence": "sqlite",
+        "auth_disabled": auth_disabled(),
+    }
+
+
+@app.post("/auth/register")
+def register(body: AuthRegisterIn) -> dict[str, Any]:
+    try:
+        return auth_register(
+            email=body.email,
+            password=body.password,
+            display_name=body.display_name,
+        )
+    except AuthError as exc:
+        raise HTTPException(status_code=exc.status_code, detail=str(exc)) from exc
+
+
+@app.post("/auth/login")
+def login(body: AuthLoginIn) -> dict[str, Any]:
+    try:
+        return auth_login(email=body.email, password=body.password)
+    except AuthError as exc:
+        raise HTTPException(status_code=exc.status_code, detail=str(exc)) from exc
+
+
+@app.post("/auth/logout")
+def logout(authorization: str | None = Header(default=None)) -> dict[str, bool]:
+    revoke_token(authorization)
+    return {"revoked": True}
+
+
+@app.get("/auth/me")
+def me(user: AuthUser = Depends(require_user)) -> dict[str, Any]:
+    return {
+        "user_id": user.user_id,
+        "email": user.email,
+        "display_name": user.display_name,
+        "client_id": user.client_id,
     }
 
 
@@ -181,7 +264,13 @@ def get_legal_notice() -> dict[str, Any]:
 
 
 @app.post("/legal/accept")
-def accept_legal_notice(body: TermsAcceptIn) -> dict[str, Any]:
+def accept_legal_notice(
+    body: TermsAcceptIn,
+    user: AuthUser = Depends(require_user),
+) -> dict[str, Any]:
+    client_id = user.client_id
+    if auth_disabled() and body.client_id:
+        client_id = body.client_id
     try:
         acceptance = build_terms_acceptance(
             accepted=body.accepted,
@@ -193,20 +282,26 @@ def accept_legal_notice(body: TermsAcceptIn) -> dict[str, Any]:
             detail={"error": "terms_checkbox_required", "message": str(exc)},
         ) from exc
     record = acceptance.model_dump(mode="json")
-    get_store().save_terms(body.client_id, record)
+    get_store().save_terms(client_id, record)
     return {
         "accepted": True,
         "notice_version": NOTICE_VERSION,
-        "client_id": body.client_id,
+        "client_id": client_id,
         "record": record,
     }
 
 
 @app.post("/profiles", status_code=201)
-def create_profile(body: ProfileCreateIn) -> dict[str, Any]:
+def create_profile(
+    body: ProfileCreateIn,
+    user: AuthUser = Depends(require_user),
+) -> dict[str, Any]:
     store = get_store()
+    client_id = user.client_id
+    if auth_disabled() and body.client_id:
+        client_id = body.client_id
     try:
-        assert_terms_accepted(store.get_terms(body.client_id))
+        assert_terms_accepted(store.get_terms(client_id))
     except TermsNotAcceptedError as exc:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
@@ -229,7 +324,7 @@ def create_profile(body: ProfileCreateIn) -> dict[str, Any]:
     if ok:
         profile.verification_status = VerificationStatus.PENDING_REVIEW
 
-    store.save_profile(profile)
+    store.save_profile(profile, user_id=user.user_id)
     return {
         "profile": profile.summary(),
         "analysis_allowed": analysis_allowed(profile),

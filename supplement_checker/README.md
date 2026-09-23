@@ -20,7 +20,17 @@ Unindexed OCR ingredients hard-stop via `data_gaps.py` with:
 
 > Data Gap Identified: This ingredient or dosage lacks sufficient indexed human research literature...
 
-## Intelligence pipeline (v0.3)
+## Clinical console (v0.4)
+
+Card-based web dashboard served by FastAPI:
+
+```bash
+uvicorn supplement_checker.api.main:app --reload --port 8000
+# open http://127.0.0.1:8000/dashboard
+```
+
+Auth: `POST /auth/register` · `POST /auth/login` · bearer tokens  
+Set `SUPPLEMENT_AUTH_DISABLED=true` only for local smoke tests.
 
 | Module | Role |
 | --- | --- |

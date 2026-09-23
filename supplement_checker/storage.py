@@ -29,9 +29,7 @@ DEFAULT_DB_PATH = Path(
     )
 )
 
-MIGRATIONS_PATH = (
-    Path(__file__).resolve().parent / "cloudflare" / "migrations" / "0001_init.sql"
-)
+MIGRATIONS_DIR = Path(__file__).resolve().parent / "cloudflare" / "migrations"
 
 
 def _utc_now() -> str:
@@ -61,9 +59,16 @@ class ProfileStore:
             conn.close()
 
     def _init_schema(self) -> None:
-        sql = MIGRATIONS_PATH.read_text(encoding="utf-8")
         with self._conn() as conn:
-            conn.executescript(sql)
+            for path in sorted(MIGRATIONS_DIR.glob("*.sql")):
+                conn.executescript(path.read_text(encoding="utf-8"))
+            # Additive column for profile ownership (safe if already present).
+            cols = {
+                row["name"]
+                for row in conn.execute("PRAGMA table_info(profiles)").fetchall()
+            }
+            if "user_id" not in cols:
+                conn.execute("ALTER TABLE profiles ADD COLUMN user_id TEXT")
 
     # ------------------------------------------------------------------ terms
     def save_terms(self, client_id: str, record: dict[str, Any]) -> None:
@@ -104,7 +109,12 @@ class ProfileStore:
         }
 
     # ---------------------------------------------------------------- profiles
-    def save_profile(self, profile: HealthProfile | dict[str, Any]) -> HealthProfile:
+    def save_profile(
+        self,
+        profile: HealthProfile | dict[str, Any],
+        *,
+        user_id: str | None = None,
+    ) -> HealthProfile:
         if isinstance(profile, dict):
             profile = ingest_profile(profile, trust_verified_flag=True)
         data = profile_to_storage_dict(profile)
@@ -133,8 +143,8 @@ class ProfileStore:
                 INSERT INTO profiles (
                   profile_id, display_name, profile_verified, verification_status,
                   allergies_reviewed, demographics_json, clinical_json,
-                  verification_gaps_json, notes, created_at, updated_at
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                  verification_gaps_json, notes, created_at, updated_at, user_id
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT(profile_id) DO UPDATE SET
                   display_name = excluded.display_name,
                   profile_verified = excluded.profile_verified,
@@ -144,7 +154,8 @@ class ProfileStore:
                   clinical_json = excluded.clinical_json,
                   verification_gaps_json = excluded.verification_gaps_json,
                   notes = excluded.notes,
-                  updated_at = excluded.updated_at
+                  updated_at = excluded.updated_at,
+                  user_id = COALESCE(excluded.user_id, profiles.user_id)
                 """,
                 (
                     profile.profile_id,
@@ -158,6 +169,7 @@ class ProfileStore:
                     profile.notes,
                     data.get("created_at") or _utc_now(),
                     data.get("updated_at") or _utc_now(),
+                    user_id,
                 ),
             )
             conn.execute(
@@ -298,6 +310,80 @@ class ProfileStore:
             "created_at": row["created_at"],
             "updated_at": row["updated_at"],
         }
+
+    # ------------------------------------------------------------------- auth
+    def create_user(
+        self,
+        *,
+        user_id: str,
+        email: str,
+        password_hash: str,
+        display_name: str | None = None,
+    ) -> None:
+        with self._conn() as conn:
+            conn.execute(
+                """
+                INSERT INTO users (user_id, email, password_hash, display_name, created_at)
+                VALUES (?, ?, ?, ?, ?)
+                """,
+                (user_id, email, password_hash, display_name, _utc_now()),
+            )
+
+    def get_user(self, user_id: str) -> dict[str, Any] | None:
+        with self._conn() as conn:
+            row = conn.execute(
+                "SELECT * FROM users WHERE user_id = ?",
+                (user_id,),
+            ).fetchone()
+        return dict(row) if row else None
+
+    def get_user_by_email(self, email: str) -> dict[str, Any] | None:
+        with self._conn() as conn:
+            row = conn.execute(
+                "SELECT * FROM users WHERE email = ?",
+                (email,),
+            ).fetchone()
+        return dict(row) if row else None
+
+    def create_session(
+        self,
+        *,
+        user_id: str,
+        client_id: str,
+        token_hash: str,
+        expires_at: str,
+    ) -> dict[str, Any]:
+        created = _utc_now()
+        with self._conn() as conn:
+            conn.execute(
+                """
+                INSERT INTO sessions
+                  (token_hash, user_id, client_id, created_at, expires_at, revoked)
+                VALUES (?, ?, ?, ?, ?, 0)
+                """,
+                (token_hash, user_id, client_id, created, expires_at),
+            )
+        return {
+            "user_id": user_id,
+            "client_id": client_id,
+            "created_at": created,
+            "expires_at": expires_at,
+        }
+
+    def get_session_by_token_hash(self, token_hash: str) -> dict[str, Any] | None:
+        with self._conn() as conn:
+            row = conn.execute(
+                "SELECT * FROM sessions WHERE token_hash = ?",
+                (token_hash,),
+            ).fetchone()
+        return dict(row) if row else None
+
+    def revoke_session(self, token_hash: str) -> None:
+        with self._conn() as conn:
+            conn.execute(
+                "UPDATE sessions SET revoked = 1 WHERE token_hash = ?",
+                (token_hash,),
+            )
 
 
 # Process-wide default store (tests can construct ProfileStore with temp path).
