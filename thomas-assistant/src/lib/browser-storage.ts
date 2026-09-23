@@ -7,6 +7,8 @@ import type {
   ProductMode,
   ShiftLog,
 } from "./types";
+import type { Product } from "./product-catalog";
+import { cloneDefaultCatalog, setLiveCatalog } from "./product-catalog";
 import {
   SEED_VERSION,
   buildSeedAudits,
@@ -29,6 +31,7 @@ interface HouseData {
   productMode: ProductMode | null;
   personalBottles: PersonalBottle[];
   personalEvents: PersonalEvent[];
+  products: Product[] | null;
 }
 
 const empty: HouseData = {
@@ -43,6 +46,7 @@ const empty: HouseData = {
   productMode: null,
   personalBottles: [],
   personalEvents: [],
+  products: null,
 };
 
 function read(): HouseData {
@@ -63,6 +67,7 @@ function read(): HouseData {
       productMode: parsed.productMode ?? null,
       personalBottles: parsed.personalBottles ?? [],
       personalEvents: parsed.personalEvents ?? [],
+      products: parsed.products ?? null,
     };
   } catch {
     return { ...empty };
@@ -94,6 +99,8 @@ export function hasHouseActivity(): boolean {
 
 /** Load the demo cellar/close night. Keeps area, PIN, mode, and Personal bar. */
 export function loadSampleHouse(): void {
+  const products = cloneDefaultCatalog();
+  setLiveCatalog(products);
   const scans = buildSeedScans();
   const shifts = buildSeedShifts();
   const audits = buildSeedAudits(scans, shifts);
@@ -109,6 +116,7 @@ export function loadSampleHouse(): void {
     productMode: cache.productMode,
     personalBottles: cache.personalBottles,
     personalEvents: cache.personalEvents,
+    products,
   };
   write(cache);
 }
@@ -256,3 +264,16 @@ export function appendPersonalEvent(
   write(cache);
   return full;
 }
+
+export function getProducts(): Product[] {
+  if (cache.products == null) return cloneDefaultCatalog();
+  return cache.products;
+}
+
+export function setProducts(products: Product[]) {
+  cache.products = products.map((p) => ({ ...p }));
+  write(cache);
+  setLiveCatalog(cache.products);
+}
+
+setLiveCatalog(getProducts());

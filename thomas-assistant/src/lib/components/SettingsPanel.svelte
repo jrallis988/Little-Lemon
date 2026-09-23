@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getSignoffPin, setSignoffPin } from "$lib/browser-storage";
+  import HouseLineup from "$lib/components/HouseLineup.svelte";
   import {
     appState,
     clearHouseSignoff,
@@ -139,6 +139,10 @@
         {/if}
       </div>
     </article>
+
+    {#if appState.mode === "business"}
+      <HouseLineup />
+    {/if}
 
     <article class="card">
       <h3>House data</h3>

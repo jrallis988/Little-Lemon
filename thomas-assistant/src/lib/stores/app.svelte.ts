@@ -23,6 +23,7 @@ import {
   getPersonalBottles,
   getPersonalEvents,
   getProductMode,
+  getProducts,
   getScans,
   getShifts,
   getSignoffPin,
@@ -33,9 +34,17 @@ import {
   setChatMessages,
   setPersonalBottles,
   setProductMode as persistProductMode,
+  setProducts as persistProducts,
   setUserArea,
 } from "../browser-storage";
 import { retailContextForLlm } from "../retail-locator";
+import {
+  catalogNames,
+  cloneDefaultCatalog,
+  nextHouseSku,
+  setLiveCatalog,
+  type Product,
+} from "../product-catalog";
 
 export const currentUser = STAFF_FIRST_NAME;
 
@@ -75,6 +84,7 @@ export const appState = $state({
   userArea: isBrowserMode ? getUserArea() : null,
   personalBottles: isBrowserMode ? getPersonalBottles() : ([] as PersonalBottle[]),
   personalEvents: isBrowserMode ? getPersonalEvents() : ([] as PersonalEvent[]),
+  products: (isBrowserMode ? getProducts() : cloneDefaultCatalog()) as Product[],
   chatOpen: true,
   loading: false,
   error: null as string | null,
@@ -115,6 +125,8 @@ export function hydrateFromStorage() {
   appState.userArea = getUserArea();
   appState.personalBottles = getPersonalBottles();
   appState.personalEvents = getPersonalEvents();
+  appState.products = getProducts();
+  setLiveCatalog(appState.products);
 }
 
 export function loadSampleHouse() {
@@ -133,6 +145,46 @@ export function houseHasActivity(): boolean {
 
 export function signoffIsSet(): boolean {
   return isBrowserMode ? getSignoffPin() != null : false;
+}
+
+export function saveCatalog(products: Product[]) {
+  appState.products = products.map((p) => ({ ...p }));
+  setLiveCatalog(appState.products);
+  if (isBrowserMode) persistProducts(appState.products);
+}
+
+export function addHouseProduct(input: {
+  name: string;
+  unit: string;
+  par?: number;
+}): Product | null {
+  const name = input.name.trim();
+  if (!name) return null;
+  const sku = nextHouseSku(appState.products);
+  const product: Product = {
+    sku,
+    name,
+    unit: input.unit || "units",
+    par: input.par && input.par > 0 ? input.par : undefined,
+  };
+  saveCatalog([...appState.products, product]);
+  return product;
+}
+
+export function updateHouseProduct(sku: string, patch: Partial<Product>) {
+  saveCatalog(
+    appState.products.map((p) =>
+      p.sku === sku ? { ...p, ...patch, sku: p.sku } : p,
+    ),
+  );
+}
+
+export function removeHouseProduct(sku: string) {
+  saveCatalog(appState.products.filter((p) => p.sku !== sku));
+}
+
+export function restoreDefaultCatalog() {
+  saveCatalog(cloneDefaultCatalog());
 }
 
 export function clearHouseSignoff() {
@@ -264,6 +316,8 @@ export function buildChatContext(): string {
     if (latestAudit) {
       parts.push(`Latest in The Record: ${latestAudit.details}`);
     }
+
+    parts.push(`House lineup: ${catalogNames(appState.products)}.`);
   }
 
   parts.push(retailContextForLlm(appState.userArea));

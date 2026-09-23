@@ -18,10 +18,11 @@
   } from "$lib/stores/app.svelte";
   import { butlerScanNote } from "$lib/thomas-persona";
   import {
-    PRODUCT_CATALOG,
     countGapLabel,
     lookupProduct,
+    lookupProductByName,
     productName,
+    productPar,
     productUnit,
     statusBadgeLabel,
   } from "$lib/product-catalog";
@@ -48,12 +49,16 @@
   });
 
   function resolveSku(input: string): string {
-    const trimmed = input.trim().toUpperCase();
-    const byName = PRODUCT_CATALOG.find(
-      (p) => p.name.toLowerCase() === input.trim().toLowerCase(),
-    );
+    const byName = lookupProductByName(input);
     if (byName) return byName.sku;
-    return trimmed;
+    return input.trim().toUpperCase();
+  }
+
+  function onProductInput() {
+    const found = lookupProductByName(productInput) ?? lookupProduct(productInput);
+    if (found?.par != null && expectedQty === 0) {
+      expectedQty = found.par;
+    }
   }
 
   async function loadScans() {
@@ -65,7 +70,7 @@
     view = "count";
     if (sku) {
       productInput = productName(sku);
-      expectedQty = expected ?? 0;
+      expectedQty = expected ?? productPar(sku) ?? 0;
       actualQty = 0;
     }
   }
@@ -195,13 +200,25 @@
       {#if visible.length === 0}
         <p class="empty">
           {rows.length === 0
-            ? "Nothing counted yet — start a cellar check."
+            ? "Nothing counted yet — start a cellar check, or edit the house lineup in Settings."
             : "No products match that filter."}
         </p>
         {#if rows.length === 0}
-          <button type="button" class="btn-primary" onclick={() => startCount()}>
-            Start a count
-          </button>
+          <div class="empty-actions">
+            <button type="button" class="btn-primary" onclick={() => startCount()}>
+              Start a count
+            </button>
+            <button
+              type="button"
+              class="btn-ghost"
+              onclick={() => {
+                setActiveTab("settings");
+                setMobileScreen("settings");
+              }}
+            >
+              Edit lineup
+            </button>
+          </div>
         {/if}
       {:else}
         <ul class="product-list">
@@ -295,9 +312,10 @@
           placeholder="Scan or type — e.g. House Porter"
           list="product-suggestions"
           autocomplete="off"
+          oninput={onProductInput}
         />
         <datalist id="product-suggestions">
-          {#each PRODUCT_CATALOG as product}
+          {#each appState.products as product}
             <option value={product.name}>{product.sku}</option>
           {/each}
         </datalist>
@@ -737,6 +755,13 @@
     margin: 0;
     font-size: 0.9rem;
     font-style: italic;
+  }
+
+  .empty-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.65rem;
   }
 
   .scan-card {

@@ -1,6 +1,5 @@
 import type { AuditTrail, InventoryScan, ShiftLog } from "./types";
-import { PRODUCT_CATALOG } from "./product-catalog";
-import { countGapLabel, productName, tillGapLabel } from "./product-catalog";
+import { catalogNames, countGapLabel, productName, tillGapLabel } from "./product-catalog";
 
 /** Believable house state for demo / validation night. */
 export const SEED_VERSION = 1;
@@ -161,5 +160,5 @@ export function maxSeedId(
 }
 
 export function catalogHint(): string {
-  return PRODUCT_CATALOG.map((p) => p.name).join(", ");
+  return catalogNames();
 }
