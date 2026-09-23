@@ -6,6 +6,7 @@ import Work from "../components/Work";
 import CaseStudy from "../components/CaseStudy";
 import Playground from "../components/Playground";
 import About from "../components/About";
+import DesignCraft from "../components/DesignCraft";
 import Experience from "../components/Experience";
 import Bring from "../components/Bring";
 import Skills from "../components/Skills";
@@ -41,6 +42,7 @@ export default function Home() {
         <CaseStudy />
         <Playground />
         <About />
+        <DesignCraft />
         <Experience />
         <Bring />
         <Skills />

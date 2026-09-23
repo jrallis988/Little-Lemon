@@ -20,6 +20,11 @@ test("renders contact form fields", () => {
   expect(screen.getByLabelText(/^Message$/i)).toBeInTheDocument();
 });
 
+test("renders design craft section", () => {
+  render(<App />);
+  expect(screen.getByText(/From visual systems to shipped UI/i)).toBeInTheDocument();
+});
+
 test("renders Little Lemon case study", () => {
   render(<App />);
   expect(screen.getByText(/Little Lemon — booking without the clutter/i)).toBeInTheDocument();

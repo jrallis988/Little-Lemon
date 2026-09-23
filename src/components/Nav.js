@@ -12,6 +12,7 @@ const links = [
 
 const moreLinks = [
   { to: "/about", label: "About (full)" },
+  { to: "/#design", label: "Design craft" },
   { to: "/resume", label: "Resume" },
   { to: "/#play", label: "Play" },
   { to: "/#experience", label: "Experience" },

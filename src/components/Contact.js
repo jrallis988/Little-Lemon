@@ -11,6 +11,35 @@ const schema = Yup.object({
   message: Yup.string().trim().min(12, "A bit more detail helps").required("Message is required"),
 });
 
+const FORMSPREE_ENDPOINT = process.env.REACT_APP_FORMSPREE_ENDPOINT || "";
+
+async function submitInquiry(values) {
+  if (FORMSPREE_ENDPOINT) {
+    const response = await fetch(FORMSPREE_ENDPOINT, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: values.name,
+        email: values.email,
+        message: values.message,
+        _subject: `Portfolio inquiry from ${values.name}`,
+      }),
+    });
+    if (!response.ok) {
+      throw new Error("Form submission failed");
+    }
+    return "formspree";
+  }
+
+  const subject = encodeURIComponent(`Portfolio inquiry from ${values.name}`);
+  const body = encodeURIComponent(`${values.message}\n\n— ${values.name}\n${values.email}`);
+  window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
+  return "mailto";
+}
+
 export default function Contact() {
   const [formStatus, setFormStatus] = useState("idle");
 
@@ -60,12 +89,7 @@ export default function Contact() {
                 setFormStatus("sending");
                 setStatus(undefined);
                 try {
-                  await new Promise((resolve) => window.setTimeout(resolve, 500));
-                  const subject = encodeURIComponent(`Portfolio inquiry from ${values.name}`);
-                  const body = encodeURIComponent(
-                    `${values.message}\n\n— ${values.name}\n${values.email}`
-                  );
-                  window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
+                  await submitInquiry(values);
                   resetForm();
                   setFormStatus("success");
                 } catch (error) {

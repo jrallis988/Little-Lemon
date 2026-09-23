@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-label="Design to code translation">
+  <rect width="1200" height="720" fill="#0a1218"/>
+  <!-- left wire -->
+  <rect x="60" y="80" width="500" height="560" rx="12" fill="#132029" stroke="#3ecfbe" stroke-width="2" stroke-dasharray="8 6"/>
+  <rect x="100" y="130" width="200" height="24" rx="4" fill="#1c2e3a"/>
+  <rect x="100" y="180" width="360" height="36" rx="4" fill="#1c2e3a"/>
+  <rect x="100" y="250" width="420" height="80" rx="4" fill="transparent" stroke="#7fe3d5" stroke-width="2"/>
+  <rect x="100" y="360" width="180" height="44" rx="4" fill="#3ecfbe"/>
+  <text x="100" y="580" font-family="Arial, sans-serif" font-size="18" fill="#7fe3d5">Design structure</text>
+  <!-- arrow -->
+  <path d="M590 360 L640 360" stroke="#7fe3d5" stroke-width="4" stroke-linecap="round"/>
+  <path d="M625 345 L645 360 L625 375" fill="none" stroke="#7fe3d5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- right UI -->
+  <rect x="680" y="80" width="460" height="560" rx="12" fill="#132029" stroke="#3ecfbe55" stroke-width="2"/>
+  <text x="720" y="150" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#7fe3d5">Built UI</text>
+  <text x="720" y="190" font-family="Arial, sans-serif" font-size="16" fill="#9eb0bc">Components · tokens · responsive rules</text>
+  <rect x="720" y="240" width="380" height="100" rx="10" fill="#0a1218" stroke="#3ecfbe44" stroke-width="2"/>
+  <rect x="740" y="270" width="140" height="18" rx="4" fill="#3ecfbe"/>
+  <rect x="740" y="300" width="240" height="12" rx="3" fill="#d9e2e855"/>
+  <rect x="720" y="370" width="160" height="44" rx="8" fill="#3ecfbe"/>
+  <rect x="900" y="370" width="140" height="44" rx="8" fill="transparent" stroke="#d9e2e855" stroke-width="2"/>
+  <text x="720" y="580" font-family="Arial, sans-serif" font-size="18" fill="#7fe3d5">Front-end implementation</text>
+</svg>

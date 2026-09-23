@@ -31,10 +31,13 @@ export default function About() {
             When I sit down to build something, the goal is simple: make it fast,
             make it clean, and get out of the user&apos;s way.
           </p>
-          <div className="reveal mt-8">
+          <div className="reveal mt-8 flex flex-wrap gap-3">
             <Link to="/about" className="btn-primary">
               Learn more about me
             </Link>
+            <a href="#design" className="btn-ghost">
+              Design craft
+            </a>
           </div>
         </div>
 

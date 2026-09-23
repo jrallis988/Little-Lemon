@@ -37,3 +37,16 @@ No `homepage` field is set in `package.json` so Vercel builds with asset paths a
 ## Stack
 
 React · React Router · Tailwind CSS · Formik/Yup
+
+## Contact form (optional)
+
+By default the contact form opens the visitor’s email client (`mailto`).
+
+To send messages through [Formspree](https://formspree.io) instead, set:
+
+```bash
+REACT_APP_FORMSPREE_ENDPOINT=https://formspree.io/f/your-form-id
+```
+
+in your environment (local `.env` or host env vars) before building.
+

@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
-
 export default function Hero() {
+  const heroSrc = `${process.env.PUBLIC_URL || ""}/projects/hero-brand.svg`;
+
   return (
     <section
       id="top"
@@ -9,15 +9,12 @@ export default function Hero() {
     >
       <div className="absolute inset-0 hero-wash" aria-hidden="true" />
       <div
-        className="absolute inset-0 animate-drift bg-cover bg-center opacity-45"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=2400&q=80')",
-        }}
+        className="absolute inset-0 animate-drift bg-cover bg-center opacity-55"
+        style={{ backgroundImage: `url('${heroSrc}')` }}
         aria-hidden="true"
       />
       <div
-        className="absolute inset-0 bg-gradient-to-r from-ink via-ink/80 to-ink/35"
+        className="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/40"
         aria-hidden="true"
       />
       <div className="grain" aria-hidden="true" />
@@ -40,8 +37,8 @@ export default function Hero() {
             className="mt-5 max-w-xl text-base leading-relaxed text-sand/90 sm:text-lg animate-fade-up"
             style={{ animationDelay: "0.3s" }}
           >
-            I build accessible, performance-focused web interfaces using modern
-            frontend tools—clean UI, responsive layouts, and UX-driven design systems.
+            I build front-end interfaces where design craft and accessibility meet—
+            from reservation flows to interactive prototypes.
           </p>
           <div
             className="mt-9 flex flex-wrap gap-3 animate-fade-up"
@@ -50,9 +47,9 @@ export default function Hero() {
             <a href="#work" className="btn-primary">
               View selected work
             </a>
-            <Link to="/resume" className="btn-ghost">
-              View resume
-            </Link>
+            <a href="#design" className="btn-ghost">
+              Design → code
+            </a>
           </div>
         </div>
       </div>

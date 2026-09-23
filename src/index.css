@@ -279,3 +279,40 @@ a {
     background: rgba(217, 226, 232, 0.12);
   }
 }
+
+@media print {
+  header,
+  footer,
+  .grain,
+  .hero-wash,
+  .btn-ghost,
+  nav {
+    display: none !important;
+  }
+
+  body {
+    background: #fff !important;
+    color: #0a1218 !important;
+  }
+
+  .bg-ink,
+  .bg-ink-soft,
+  .min-h-screen {
+    background: #fff !important;
+  }
+
+  .text-chalk,
+  .text-foam,
+  .text-foam-soft,
+  .text-sand\/85,
+  .text-sand\/75,
+  .text-sand\/70,
+  .text-sand\/65,
+  .text-sand\/60 {
+    color: #0a1218 !important;
+  }
+
+  a {
+    color: #0a1218 !important;
+  }
+}

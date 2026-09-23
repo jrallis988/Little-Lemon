@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2400 1400" role="img" aria-label="">
+  <defs>
+    <radialGradient id="g1" cx="70%" cy="35%" r="55%">
+      <stop offset="0%" stop-color="#3ecfbe" stop-opacity="0.45"/>
+      <stop offset="55%" stop-color="#1fa896" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#0a1218" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g2" cx="18%" cy="80%" r="45%">
+      <stop offset="0%" stop-color="#1fa896" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#0a1218" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#132029"/>
+      <stop offset="100%" stop-color="#0a1218"/>
+    </linearGradient>
+  </defs>
+  <rect width="2400" height="1400" fill="#0a1218"/>
+  <rect width="2400" height="1400" fill="url(#g1)"/>
+  <rect width="2400" height="1400" fill="url(#g2)"/>
+  <!-- UI frame suggestion -->
+  <rect x="1180" y="220" width="980" height="640" rx="24" fill="url(#panel)" stroke="#3ecfbe55" stroke-width="2"/>
+  <rect x="1230" y="280" width="280" height="28" rx="6" fill="#3ecfbe" opacity="0.85"/>
+  <rect x="1230" y="340" width="560" height="22" rx="5" fill="#d9e2e8" opacity="0.35"/>
+  <rect x="1230" y="380" width="420" height="16" rx="4" fill="#d9e2e8" opacity="0.22"/>
+  <rect x="1230" y="440" width="880" height="120" rx="12" fill="#1c2e3a"/>
+  <rect x="1230" y="600" width="200" height="48" rx="8" fill="#3ecfbe"/>
+  <rect x="1460" y="600" width="160" height="48" rx="8" fill="transparent" stroke="#d9e2e855" stroke-width="2"/>
+  <!-- abstract code lines -->
+  <g opacity="0.35" stroke="#7fe3d5" stroke-width="3" stroke-linecap="round">
+    <line x1="180" y1="520" x2="520" y2="520"/>
+    <line x1="180" y1="560" x2="640" y2="560"/>
+    <line x1="180" y1="600" x2="460" y2="600"/>
+    <line x1="180" y1="640" x2="700" y2="640"/>
+    <line x1="180" y1="680" x2="380" y2="680"/>
+  </g>
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-label="Artistic Fountain brand system exploration">
+  <rect width="1200" height="720" fill="#0a1218"/>
+  <rect x="60" y="60" width="1080" height="600" rx="16" fill="#132029" stroke="#3ecfbe44" stroke-width="2"/>
+  <text x="100" y="140" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#7fe3d5">Artistic Fountain</text>
+  <text x="100" y="180" font-family="Arial, sans-serif" font-size="18" fill="#9eb0bc">Brand system · type · color · component rhythm</text>
+  <!-- color chips -->
+  <rect x="100" y="240" width="96" height="96" rx="12" fill="#0a1218" stroke="#3ecfbe" stroke-width="2"/>
+  <rect x="220" y="240" width="96" height="96" rx="12" fill="#132029"/>
+  <rect x="340" y="240" width="96" height="96" rx="12" fill="#3ecfbe"/>
+  <rect x="460" y="240" width="96" height="96" rx="12" fill="#7fe3d5"/>
+  <rect x="580" y="240" width="96" height="96" rx="12" fill="#f3f7f9"/>
+  <text x="100" y="380" font-family="Arial, sans-serif" font-size="16" fill="#9eb0bc">Ink · Mist · Foam · Soft · Chalk</text>
+  <!-- type scale -->
+  <text x="100" y="460" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#f3f7f9">Display</text>
+  <text x="100" y="510" font-family="Arial, sans-serif" font-size="24" font-weight="600" fill="#7fe3d5">Section title</text>
+  <text x="100" y="555" font-family="Arial, sans-serif" font-size="18" fill="#d9e2e8">Body copy for interface storytelling and UX clarity.</text>
+  <!-- component stubs -->
+  <rect x="720" y="240" width="340" height="48" rx="8" fill="#3ecfbe"/>
+  <rect x="720" y="310" width="340" height="48" rx="8" fill="transparent" stroke="#d9e2e855" stroke-width="2"/>
+  <rect x="720" y="390" width="340" height="120" rx="8" fill="#0a1218" stroke="#3ecfbe55" stroke-width="2"/>
+  <text x="740" y="450" font-family="Arial, sans-serif" font-size="16" fill="#9eb0bc">Reusable UI block</text>
+</svg>
