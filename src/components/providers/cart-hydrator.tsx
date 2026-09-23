@@ -1,16 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
-import { useCheckoutCartStore } from "@/lib/store/checkout-cart-store";
-
-/** Hydrate server-backed checkout cart once per app session. */
+/**
+ * Legacy cart hydrator — intentionally a no-op.
+ * Limited v1 does not use ecommerce checkout; root layout no longer mounts this.
+ * Kept so older imports do not crash if referenced during a full-mode revival.
+ */
 export function CartHydrator() {
-  const hydrate = useCheckoutCartStore((s) => s.hydrate);
-  const hydrated = useCheckoutCartStore((s) => s.hydrated);
-
-  useEffect(() => {
-    if (!hydrated) void hydrate();
-  }, [hydrate, hydrated]);
-
   return null;
 }

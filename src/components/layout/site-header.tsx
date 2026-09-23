@@ -18,7 +18,7 @@ import { LocationPicker } from "@/components/pharmacy/location-picker";
 
 const ALL_NAV = [
   { href: "/search", label: "Check coverage", always: true },
-  { href: "/medications", label: "Included meds", always: true },
+  { href: "/medications", label: "Included list", always: true },
   { href: "/pharmacies", label: "Pharmacies", always: true },
   { href: "/faq", label: "FAQ", always: true },
   { href: "/help", label: "Help", always: true },

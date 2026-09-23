@@ -75,6 +75,28 @@ Public feature flags are exposed at `GET /api/config` under `launch`.
 | `STRIPE_*` | Plus membership (`full` mode) |
 | `TELEHEALTH_PARTNER_URL` / `MAIL_ORDER_PARTNER_URL` | Extra fulfillment CTAs |
 
+## Feature gating (honest UI)
+
+`GET /api/config` exposes:
+
+| Flag | Shown when |
+|------|------------|
+| `launch.membership` / `transfer` / `providers` | `NEXT_PUBLIC_LAUNCH_MODE=full` |
+| `launch.livePharmacyPricing` | `PRICING_PROVIDER=external` + `PRICING_API_URL` |
+| `alerts.refillReminders` | Resend **or** Twilio configured |
+| `alerts.priceAlerts` | Cron secret **and** (Resend or Twilio) |
+
+If those are false, account toggles and price-alert UI stay hidden — no dead switches.
+
+## Primary user path
+
+1. Home / **Check coverage** (`/search`) — is it included?
+2. Medication detail (`/drugs/[id]`) — typical price, compare, eligibility
+3. **See how to get this option** (`/access`) → participating pharmacies
+4. Program information at the counter (confirm final price at fill)
+
+**Included list** (`/medications`) is the A–Z directory only.
+
 ## Ops queues
 
 Staff medication-request and issue-report queues:
@@ -87,9 +109,18 @@ Requires sign-in with an email in `ADMIN_EMAILS`.
 ## Legal / product sign-off (manual)
 
 - Formulary list approved by program owner
-- Pricing disclaimers reviewed (“confirmed at fill”)
-- Privacy / terms updated for limited scope
+- Real program prices signed off (replace prototype catalog numbers)
+- At least some pharmacies confirmed to accept BIN/PCN program info
+- Privacy / terms reviewed by counsel
 - No copy implying universal pharmacy coverage
+
+## Deploy smoke test
+
+1. `prisma migrate deploy`
+2. Hit `/api/health` (or homepage) over HTTPS
+3. Sign in as an `ADMIN_EMAILS` user → open both ops queues
+4. Coverage-check a v1 med end-to-end; confirm ozempic/etc. 404 from `/api/drugs`
+5. Confirm membership/transfer/providers are hidden in limited mode
 
 ## Upgrading to full mode
 

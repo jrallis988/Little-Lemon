@@ -56,6 +56,15 @@ export async function GET() {
     alerts: {
       email: peek.ok ? isResendConfigured() : false,
       sms: peek.ok ? isTwilioConfigured() : false,
+      cron: Boolean(process.env.ALERTS_CRON_SECRET),
+      /** True only when reminder/alert delivery can actually fire. */
+      refillReminders:
+        (peek.ok ? isResendConfigured() : false) ||
+        (peek.ok ? isTwilioConfigured() : false),
+      priceAlerts:
+        Boolean(process.env.ALERTS_CRON_SECRET) &&
+        ((peek.ok ? isResendConfigured() : false) ||
+          (peek.ok ? isTwilioConfigured() : false)),
     },
     binRouting: {
       bin: process.env.TRUMPRX_BIN ?? "610020",

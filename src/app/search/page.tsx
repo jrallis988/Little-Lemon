@@ -59,11 +59,14 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
               Included in TrumpRx
             </p>
             <h2 className="mt-1 font-display text-2xl font-semibold uppercase tracking-tight">
-              {coverage.drug.brandName}
+              {coverage.drug.genericName}
             </h2>
             <p className="text-sm text-muted-foreground">
-              Generic: {coverage.drug.genericName} ·{" "}
-              {coverage.drug.therapeuticClass}
+              {coverage.drug.brandName.toLowerCase() !==
+              coverage.drug.genericName.toLowerCase()
+                ? `Generic for ${coverage.drug.brandName}`
+                : "Generic medication"}{" "}
+              · {coverage.drug.therapeuticClass}
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               <Link
@@ -76,7 +79,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                 href={`/access?drug=${coverage.drug.id}`}
                 className="inline-flex min-h-10 items-center border border-border px-4 text-sm font-medium hover:bg-muted"
               >
-                Get this price
+                See how to get this option
               </Link>
               <ReportIssueButton drugId={coverage.drug.id} />
             </div>

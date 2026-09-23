@@ -17,6 +17,9 @@ interface LaunchConfig {
     transfer: boolean;
     familyProfiles: boolean;
   };
+  alerts?: {
+    priceAlerts?: boolean;
+  };
 }
 
 interface ProfileData {
@@ -62,6 +65,7 @@ export default function ProfilePage() {
   const [highContrast, setHighContrast] = useState(false);
   const [largeText, setLargeText] = useState(false);
   const [launch, setLaunch] = useState<LaunchConfig["launch"] | null>(null);
+  const [priceAlertsAvailable, setPriceAlertsAvailable] = useState(false);
 
   useEffect(() => {
     fetch("/api/config")
@@ -69,8 +73,14 @@ export default function ProfilePage() {
         if (!res.ok) return null;
         return res.json() as Promise<LaunchConfig>;
       })
-      .then((data) => setLaunch(data?.launch ?? null))
-      .catch(() => setLaunch(null));
+      .then((data) => {
+        setLaunch(data?.launch ?? null);
+        setPriceAlertsAvailable(Boolean(data?.alerts?.priceAlerts));
+      })
+      .catch(() => {
+        setLaunch(null);
+        setPriceAlertsAvailable(false);
+      });
   }, []);
 
   useEffect(() => {
@@ -337,13 +347,13 @@ export default function ProfilePage() {
                     </div>
                     <div className="mt-3">
                       <Link
-                        href={`/search?drug=${med.drug.id}`}
+                        href={`/drugs/${med.drug.id}`}
                         className={cn(
                           buttonVariants({ variant: "secondary" }),
                           "min-h-10"
                         )}
                       >
-                        View prices
+                        View medication
                       </Link>
                     </div>
                   </li>
@@ -393,36 +403,38 @@ export default function ProfilePage() {
           )}
         </section>
 
-        <section className="space-y-3">
-          <h2 className="font-display text-2xl font-semibold">Price alerts</h2>
-          {profile.priceAlerts.length === 0 ? (
-            <p className="text-muted-foreground">
-              No active alerts. Set an alert while comparing medication prices.
-            </p>
-          ) : (
-            <ul className="space-y-2">
-              {profile.priceAlerts.map((alert) => (
-                <li
-                  key={alert.id}
-                  className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3"
-                >
-                  <Bell className="size-4 shrink-0 text-primary" />
-                  <div>
-                    <p className="font-medium capitalize">
-                      {alert.drug.genericName}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      Baseline {formatCurrency(alert.baselinePrice)}
-                      {alert.targetPrice
-                        ? ` · Target ${formatCurrency(alert.targetPrice)}`
-                        : ""}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
-        </section>
+        {priceAlertsAvailable && (
+          <section className="space-y-3">
+            <h2 className="font-display text-2xl font-semibold">Price alerts</h2>
+            {profile.priceAlerts.length === 0 ? (
+              <p className="text-muted-foreground">
+                No active alerts yet.
+              </p>
+            ) : (
+              <ul className="space-y-2">
+                {profile.priceAlerts.map((alert) => (
+                  <li
+                    key={alert.id}
+                    className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3"
+                  >
+                    <Bell className="size-4 shrink-0 text-primary" />
+                    <div>
+                      <p className="font-medium capitalize">
+                        {alert.drug.genericName}
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Baseline {formatCurrency(alert.baselinePrice)}
+                        {alert.targetPrice
+                          ? ` · Target ${formatCurrency(alert.targetPrice)}`
+                          : ""}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+        )}
 
         <SavedPassesSection />
       </div>

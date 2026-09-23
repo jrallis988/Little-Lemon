@@ -48,6 +48,7 @@ export default function PrescriptionsPage() {
   const [refillReminders, setRefillReminders] = useState(true);
   const [reminderSaving, setReminderSaving] = useState(false);
   const [transferEnabled, setTransferEnabled] = useState(false);
+  const [remindersAvailable, setRemindersAvailable] = useState(false);
 
   async function load() {
     const res = await fetch("/api/me/prescriptions");
@@ -67,10 +68,17 @@ export default function PrescriptionsPage() {
     fetch("/api/config")
       .then(async (res) => {
         if (!res.ok) return;
-        const data = (await res.json()) as { launch?: { transfer?: boolean } };
+        const data = (await res.json()) as {
+          launch?: { transfer?: boolean };
+          alerts?: { refillReminders?: boolean };
+        };
         setTransferEnabled(Boolean(data.launch?.transfer));
+        setRemindersAvailable(Boolean(data.alerts?.refillReminders));
       })
-      .catch(() => setTransferEnabled(false));
+      .catch(() => {
+        setTransferEnabled(false);
+        setRemindersAvailable(false);
+      });
     load()
       .catch((err: Error) => setError(err.message))
       .finally(() => setLoading(false));
@@ -175,32 +183,38 @@ export default function PrescriptionsPage() {
           </h1>
           <p className="text-muted-foreground">
             Organize included medications you care about and optional refill
-            reminders. TrumpRx is not your pharmacy of record and does not own
-            or fill these prescriptions — confirm everything with your pharmacy
-            or manufacturer program.
+            tracking. TrumpRx is not your pharmacy of record and does not fill
+            these prescriptions — confirm everything with your pharmacy.
           </p>
         </header>
 
-        <TrustCallout title="Reminders are guidance only">
-          TrumpRx does not dispense medication. When enabled, email/SMS reminders
-          fire a few days before a tracked next refill date (requires Resend/Twilio
-          in production).
+        <TrustCallout title="Guidance only">
+          TrumpRx does not dispense medication. Track next refill dates here for
+          your own planning — confirm everything with your pharmacy.
         </TrustCallout>
 
-        <div className="flex items-center justify-between gap-4 rounded-2xl border border-border bg-card px-4 py-3">
-          <div>
-            <p className="font-medium">Email & SMS refill reminders</p>
-            <p className="text-sm text-muted-foreground">
-              Account-wide toggle for active medications with a next refill date.
-            </p>
+        {remindersAvailable ? (
+          <div className="flex items-center justify-between gap-4 rounded-2xl border border-border bg-card px-4 py-3">
+            <div>
+              <p className="font-medium">Email & SMS refill reminders</p>
+              <p className="text-sm text-muted-foreground">
+                Account-wide toggle for active medications with a next refill
+                date.
+              </p>
+            </div>
+            <Switch
+              checked={refillReminders}
+              disabled={reminderSaving}
+              onCheckedChange={(v) => void toggleAccountReminders(v)}
+              aria-label="Enable refill reminders"
+            />
           </div>
-          <Switch
-            checked={refillReminders}
-            disabled={reminderSaving}
-            onCheckedChange={(v) => void toggleAccountReminders(v)}
-            aria-label="Enable refill reminders"
-          />
-        </div>
+        ) : (
+          <p className="rounded-2xl border border-border bg-card px-4 py-3 text-sm text-muted-foreground">
+            Automated email/SMS refill reminders are not enabled in this
+            environment yet. You can still track next refill dates below.
+          </p>
+        )}
 
         {error && (
           <p className="rounded-xl border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive">
@@ -210,7 +224,7 @@ export default function PrescriptionsPage() {
 
         <div className="flex flex-wrap gap-2">
           <Link href="/search" className={cn(buttonVariants())}>
-            Find prices
+            Check coverage
           </Link>
           {transferEnabled && (
             <Link

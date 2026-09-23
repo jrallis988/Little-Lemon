@@ -93,29 +93,24 @@ export default async function HomePage() {
             compare it with what you currently pay, understand eligibility, and
             see exactly how to obtain the medication.
           </p>
-          <ol className="mt-6 grid gap-4 sm:grid-cols-4">
+          <ol className="mt-6 grid gap-4 sm:grid-cols-3">
             {[
               {
                 n: "01",
                 t: "Check coverage",
-                d: "See if your medication is in the select program.",
+                d: "Search to see if your medication is in the select program.",
               },
               {
                 n: "02",
-                t: "Compare cost",
-                d: "Stack the TrumpRx option against what you pay today.",
+                t: "Compare & eligibility",
+                d: "Stack the typical program price against what you pay, then review who may qualify.",
               },
               {
                 n: "03",
-                t: "Review eligibility",
-                d: "Understand who may qualify — and who decides.",
-              },
-              {
-                n: "04",
-                t: "Access path",
+                t: "Pharmacy pickup",
                 d: limited
-                  ? "Participating pharmacy pickup — clearly labeled."
-                  : "Pharmacy pickup or manufacturer-direct — clearly labeled.",
+                  ? "Get program information and fill at a participating pharmacy."
+                  : "Follow the labeled access path — pharmacy or manufacturer-direct.",
               },
             ].map((s) => (
               <li key={s.n} className="border border-border bg-card p-4">
@@ -163,9 +158,11 @@ export default async function HomePage() {
                   href={`/drugs/${d.id}`}
                   className="flex h-full flex-col border border-border bg-card px-3 py-3 transition-colors hover:border-primary/40 hover:bg-accent"
                 >
-                  <span className="font-semibold">{d.brandName}</span>
+                  <span className="font-semibold">{d.genericName}</span>
                   <span className="text-sm text-muted-foreground">
-                    {d.genericName}
+                    {d.brandName.toLowerCase() !== d.genericName.toLowerCase()
+                      ? `Generic for ${d.brandName}`
+                      : d.therapeuticClass}
                   </span>
                 </Link>
               </li>
