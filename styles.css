@@ -1213,3 +1213,202 @@ p {
   text-decoration: underline;
   text-underline-offset: 2px;
 }
+
+/* Integrations */
+.integrations {
+  background: var(--ink);
+  color: var(--paper);
+  border-bottom: 2px solid var(--ink);
+}
+
+.integrations .eyebrow {
+  color: var(--signal);
+}
+
+.integrations .section-lede {
+  color: rgba(240, 244, 248, 0.72);
+}
+
+.integration-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.75rem;
+}
+
+.integration-grid li {
+  display: grid;
+  place-items: center;
+  min-height: 3.4rem;
+  padding: 0.7rem 0.85rem;
+  border: 2px solid rgba(240, 244, 248, 0.35);
+  border-radius: 12px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  background: rgba(240, 244, 248, 0.04);
+  transition: background 180ms var(--ease), border-color 180ms var(--ease), transform 180ms var(--ease);
+}
+
+.integration-grid li:hover {
+  background: rgba(200, 245, 66, 0.12);
+  border-color: var(--signal);
+  transform: translateY(-2px);
+}
+
+.integration-note {
+  margin-top: 1.25rem;
+  color: rgba(240, 244, 248, 0.55);
+  font-size: 0.95rem;
+}
+
+/* Social proof */
+.proof {
+  background: var(--paper);
+  border-bottom: 2px solid var(--ink);
+}
+
+.proof-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.proof-card {
+  margin: 0;
+  padding: 1.25rem 1.3rem 1.35rem;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--white);
+  box-shadow: 4px 4px 0 transparent;
+  transition: transform 220ms var(--ease), box-shadow 220ms var(--ease);
+}
+
+.proof-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.proof-card blockquote {
+  margin: 0 0 1rem;
+  font-size: 1.05rem;
+  line-height: 1.45;
+  font-weight: 600;
+}
+
+.proof-card figcaption {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Pricing */
+.pricing {
+  background: var(--white);
+  border-bottom: 2px solid var(--ink);
+}
+
+.price-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.price-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 1.35rem 1.3rem 1.45rem;
+  border: 2px solid var(--ink);
+  border-radius: calc(var(--radius) + 2px);
+  background: var(--paper);
+}
+
+.price-card--featured {
+  background: var(--signal);
+  box-shadow: 6px 6px 0 var(--ink);
+  transform: translateY(-4px);
+}
+
+.price-tier {
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  color: var(--steel);
+}
+
+.price-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  letter-spacing: -0.02em;
+}
+
+.price-amount {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 2rem;
+  letter-spacing: -0.03em;
+}
+
+.price-amount span {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.price-note {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin-bottom: 0.35rem;
+}
+
+.price-card ul {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0.35rem 0 0.85rem;
+  flex: 1;
+}
+
+.price-card li {
+  position: relative;
+  padding-left: 1.15rem;
+  font-size: 0.95rem;
+}
+
+.price-card li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.45rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  background: var(--signal);
+  border: 1.5px solid var(--ink);
+  border-radius: 2px;
+}
+
+.price-card--featured li::before {
+  background: var(--white);
+}
+
+.price-card .btn {
+  align-self: stretch;
+}
+
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  height: 0;
+  overflow: hidden;
+}
+
+@media (max-width: 960px) {
+  .proof-grid,
+  .price-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .price-card--featured {
+    transform: none;
+  }
+}

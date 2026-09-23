@@ -4,19 +4,16 @@ SHIFT / WORKING INTELLIGENCE: STATUS REPORT
 
 1. PROJECT OVERVIEW & SCOPE
 • Venture: Shift by Working Intelligence.
-• Focus: Marblism-inspired features marketing site for workforce ops
-  (recruiting, scheduling, HR, onboarding, management coaching, compliance).
+• Focus: Workforce-ops marketing site (Marblism-inspired structure).
 
-2. BUILD & DEVELOPMENT STATUS
-• Tech Stack: Static front-end (HTML, CSS, vanilla JS).
-• Design System: Cool paper + ink with signal chartreuse accent; Syne + Figtree.
-• Landing: hero, pain points, AI workforce carousel, day timeline, platform,
-  FAQ, CTA, waitlist form.
-• Pre-launch: privacy/terms, OG image, robots/sitemap, first-party analytics.
+2. BUILD STATUS
+• Landing: hero, pain, workforce carousel, day timeline, platform,
+  integrations, discovery proof, pricing, FAQ, waitlist.
+• Pre-launch: privacy/terms, OG, robots/sitemap, analytics, Netlify/Vercel config.
+• Waitlist: Netlify Forms attributes + Formspree hook via config.js + mailto fallback.
 
-3. STILL NEEDED FOR FULL LAUNCH
-• Merge PR + deploy + domain
-• Backend for waitlist (Formspree/API) instead of localStorage
-• Pricing / integrations / testimonials (credibility)
-• Product app auth + integrations behind the marketing site
+3. REMAINING FOR FULL LAUNCH
+• Merge PR + connect domain on Netlify/Vercel
+• Set formspreeEndpoint (or rely on Netlify Forms after deploy)
+• Product app (auth, billing, live integrations) behind this site
 --------------------------------------------------------------------------------

@@ -1,0 +1,22 @@
+# Netlify deploy for Shift marketing site
+[build]
+  publish = "."
+  command = "echo 'Static site — no build step'"
+
+[[redirects]]
+  from = "/home"
+  to = "/"
+  status = 301
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"

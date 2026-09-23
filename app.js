@@ -2,6 +2,8 @@
   const year = document.getElementById("year");
   if (year) year.textContent = String(new Date().getFullYear());
 
+  const config = window.SHIFT_CONFIG || {};
+
   // Mobile nav
   const toggle = document.querySelector(".nav-toggle");
   const nav = document.getElementById("site-nav");
@@ -32,16 +34,16 @@
   // Role carousel
   const carousel = document.querySelector("[data-carousel]");
   if (carousel) {
-    const track = carousel.querySelector(".role-track");
+    const trackEl = carousel.querySelector(".role-track");
     const prev = carousel.querySelector(".carousel-btn.prev");
     const next = carousel.querySelector(".carousel-btn.next");
-    const scrollBy = () => Math.min(320, track.clientWidth * 0.85);
+    const scrollBy = () => Math.min(320, trackEl.clientWidth * 0.85);
 
     prev?.addEventListener("click", () => {
-      track.scrollBy({ left: -scrollBy(), behavior: "smooth" });
+      trackEl.scrollBy({ left: -scrollBy(), behavior: "smooth" });
     });
     next?.addEventListener("click", () => {
-      track.scrollBy({ left: scrollBy(), behavior: "smooth" });
+      trackEl.scrollBy({ left: scrollBy(), behavior: "smooth" });
     });
   }
 
@@ -55,7 +57,6 @@
     });
   });
 
-  // Auto-advance timeline gently
   if (items.length > 1 && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     let index = 0;
     setInterval(() => {
@@ -84,13 +85,74 @@
   const status = document.getElementById("waitlist-status");
   if (form && success) {
     const fields = ["name", "email", "company", "role"].map((name) => form.elements.namedItem(name));
+    const submitBtn = form.querySelector('button[type="submit"]');
 
     const setInvalid = (el, invalid) => {
       if (!(el instanceof HTMLElement)) return;
       el.classList.toggle("is-invalid", invalid);
     };
 
-    form.addEventListener("submit", (event) => {
+    const persistLocal = (entry) => {
+      try {
+        const key = "shift_waitlist_v1";
+        const existing = JSON.parse(localStorage.getItem(key) || "[]");
+        existing.push(entry);
+        localStorage.setItem(key, JSON.stringify(existing));
+      } catch {
+        /* ignore */
+      }
+    };
+
+    const showSuccess = (data) => {
+      if (typeof window.shiftTrack === "function") {
+        window.shiftTrack("waitlist_success", { role: String(data.role || "") });
+      }
+      form.hidden = true;
+      success.hidden = false;
+      if (status) status.hidden = true;
+      success.focus();
+    };
+
+    const postFormspree = async (data) => {
+      const endpoint = config.formspreeEndpoint;
+      if (!endpoint) return { ok: false, skipped: true };
+
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...data,
+          _subject: `Shift waitlist: ${data.company || data.email}`,
+        }),
+      });
+
+      return { ok: response.ok, status: response.status };
+    };
+
+    const openMailto = (data) => {
+      if (config.mailtoFallback === false) return;
+      const to = config.waitlistEmail || "hello@workingintelligence.com";
+      const subject = encodeURIComponent(`Shift waitlist — ${data.company || data.name}`);
+      const body = encodeURIComponent(
+        [
+          `Name: ${data.name}`,
+          `Email: ${data.email}`,
+          `Company: ${data.company}`,
+          `Role: ${data.role}`,
+          `Sites: ${data.sites || "—"}`,
+          `Submitted: ${new Date().toISOString()}`,
+        ].join("\n")
+      );
+      // Prefer not to navigate away during automated tests / headless
+      if (!window.__SHIFT_TEST__) {
+        window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+      }
+    };
+
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
 
       let ok = true;
@@ -112,29 +174,51 @@
       }
 
       const data = Object.fromEntries(new FormData(form).entries());
+      delete data["bot-field"];
+      delete data["form-name"];
+
       const entry = {
         ...data,
         submittedAt: new Date().toISOString(),
-        source: location.pathname,
+        source: location.pathname + location.hash,
       };
+      persistLocal(entry);
+
+      if (submitBtn instanceof HTMLButtonElement) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Sending…";
+      }
+      if (status) {
+        status.hidden = false;
+        status.textContent = "";
+      }
 
       try {
-        const key = "shift_waitlist_v1";
-        const existing = JSON.parse(localStorage.getItem(key) || "[]");
-        existing.push(entry);
-        localStorage.setItem(key, JSON.stringify(existing));
-      } catch {
-        /* still show success — submission is captured client-side for demo */
+        const result = await postFormspree(data);
+        if (result.skipped) {
+          // No Formspree configured: mailto draft + local success
+          openMailto(data);
+          showSuccess(data);
+          return;
+        }
+        if (!result.ok) {
+          throw new Error(`Formspree status ${result.status}`);
+        }
+        showSuccess(data);
+      } catch (error) {
+        console.warn("Waitlist submit failed, falling back to mailto", error);
+        openMailto(data);
+        showSuccess(data);
+        if (status) {
+          status.hidden = false;
+          status.textContent = "Saved locally. If your email client opened, send the draft to finish.";
+        }
+      } finally {
+        if (submitBtn instanceof HTMLButtonElement) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Request early access";
+        }
       }
-
-      if (typeof window.shiftTrack === "function") {
-        window.shiftTrack("waitlist_success", { role: String(data.role || "") });
-      }
-
-      form.hidden = true;
-      success.hidden = false;
-      if (status) status.hidden = true;
-      success.focus?.();
     });
   }
 })();

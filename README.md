@@ -12,17 +12,28 @@ Static site: HTML, CSS, and vanilla JS.
 npm start
 ```
 
-Opens a local static server at [http://localhost:3000](http://localhost:3000).
+Opens [http://localhost:3000](http://localhost:3000).
 
-## Pages
+## Deploy
 
-- `index.html` — features / landing + waitlist
-- `privacy.html` — privacy policy
-- `terms.html` — terms of use
-- `robots.txt` / `sitemap.xml` — SEO basics
-- `images/og.png` — Open Graph share image
+- **Netlify:** connect the repo; `netlify.toml` publishes the root (Forms enabled on the waitlist).
+- **Vercel:** import the repo; `vercel.json` sets headers/clean URLs.
+- Set `formspreeEndpoint` in `config.js` to receive waitlist emails if you are not on Netlify Forms.
 
-## Waitlist & analytics
+## Pages & sections
 
-- Waitlist submissions are validated client-side and stored in `localStorage` (`shift_waitlist_v1`) for this static demo. Wire the form to Formspree, Basin, or your API before production.
-- First-party analytics live in `analytics.js` (events in `shift_analytics_v1`). Optional Plausible: set `window.SHIFT_ANALYTICS = { plausibleDomain: "your.domain" }` before the script.
+- `index.html` — landing (workforce, day, platform, integrations, proof, pricing, FAQ, waitlist)
+- `privacy.html` / `terms.html`
+- `robots.txt` / `sitemap.xml`
+- `images/og.png` — Open Graph image
+
+## Config
+
+Edit `config.js`:
+
+| Key | Purpose |
+| --- | --- |
+| `formspreeEndpoint` | Formspree URL for waitlist POSTs |
+| `waitlistEmail` | Mailto fallback address |
+| `mailtoFallback` | Open email draft when Formspree is unset/fails |
+| `SHIFT_ANALYTICS.plausibleDomain` | Optional Plausible domain |
