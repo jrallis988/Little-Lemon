@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Résumé — James, designer at Artistic Fountain. Brand, UX, web, motion, and campaign work from a New Hampshire studio.">
+    <meta name="theme-color" content="#FF6B35">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <title>Résumé — James · Artistic Fountain</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <header class="header">
+        <div class="logo">
+            <a href="index.html" class="logo-mark" aria-label="Artistic Fountain — home">
+                <span class="logo-line-1">Artistic</span>
+                <span class="logo-line-2">Fountain</span>
+            </a>
+        </div>
+        <nav aria-label="Primary">
+            <ul class="nav" id="main-nav">
+                <li><a href="designer.html">The Designer</a></li>
+                <li><a href="services/index.html">Services</a></li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="blog/index.html">Blog</a></li>
+                <li><a href="resume.html" class="nav-resume" aria-current="page">Resume</a></li>
+            </ul>
+        </nav>
+        <div class="header-right">
+            <button class="nav-toggle" onclick="toggleNav()" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="main-nav">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main id="main" class="resume-page">
+        <article class="resume-sheet">
+            <p class="page-kicker">Résumé</p>
+            <header class="resume-masthead">
+                <div>
+                    <h1>James</h1>
+                    <p class="resume-role">Designer · Artistic Fountain</p>
+                </div>
+                <p class="resume-meta">Hampton, New Hampshire<br>
+                    <a href="index.html#contact-form">Contact</a><br>
+                    <a href="portfolio.html">Portfolio</a></p>
+            </header>
+
+            <p class="resume-summary">One-person studio designer working across brand systems, product UX, and launch-ready web. Strategy first, then shipping — institutional identity, local studios, and clearly labeled concept pitches.</p>
+
+            <section class="resume-block">
+                <h2>Experience</h2>
+                <div class="resume-job">
+                    <div class="resume-job-head">
+                        <h3>Artistic Fountain</h3>
+                        <p>Designer (solo studio) · New Hampshire · Present</p>
+                    </div>
+                    <ul>
+                        <li>Lead brand, UX, web, motion, packaging, and social campaigns end-to-end for studio clients and speculative pitches.</li>
+                        <li>Build production HTML/CSS sites and design systems meant to ship, not sit in a deck.</li>
+                        <li>Run discovery through launch: research, IA, identity, high-fidelity UI, and asset handoff.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="resume-block">
+                <h2>Selected work</h2>
+                <ul class="resume-work">
+                    <li><a href="work/flote.html"><strong>Seacoast Flōte</strong></a> — Identity and booking UX for a float studio; WCAG 2.1 AAA and family content variants.</li>
+                    <li><a href="work/nhti.html"><strong>NHTI Identity Restoration</strong></a> — Editorial web system restoring the Lynx mark and <em>Scientia cum manu</em> in maroon &amp; gold.</li>
+                    <li><a href="work/hannaford.html"><strong>Hannaford: Checkout-First</strong></a> <span class="resume-flag">Concept</span> — Grocery app strategy pitch; concierge checkout and Fresh Pass tier.</li>
+                    <li><a href="work/aveeno.html"><strong>Aveeno: The Oat Standard</strong></a> <span class="resume-flag">Concept</span> — Campaign system positioning oat heritage as the category standard.</li>
+                </ul>
+            </section>
+
+            <section class="resume-block">
+                <h2>Skills</h2>
+                <div class="resume-skills">
+                    <p><strong>UI / UX</strong> — Figma, Builder.io, Webflow; wireframes, prototypes, user flows, IA, design systems, accessibility.</p>
+                    <p><strong>Graphic design</strong> — Photoshop, Illustrator, InDesign, InCopy, Lightroom, Dimension; identity, editorial, packaging, typography.</p>
+                    <p><strong>Motion &amp; animation</strong> — After Effects, Premiere Pro, Toon Boom Harmony, Storyboard Pro; 2D pipeline, social video.</p>
+                    <p><strong>3D</strong> — Rhino, AutoCAD, Blender, Maya, 3ds Max, Dimension.</p>
+                    <p><strong>Marketing</strong> — Social strategy, content systems, campaign planning, SEO fundamentals, digital advertising.</p>
+                </div>
+            </section>
+
+            <div class="resume-actions">
+                <a href="index.html#contact-form" class="cta-btn">Start a Project</a>
+                <a href="portfolio.html" class="cta-btn cta-btn--soft">View work</a>
+                <button type="button" class="cta-btn cta-btn--soft" onclick="window.print()">Print / Save PDF</button>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <nav class="footer-nav">
+                <a href="designer.html">The Designer</a>
+                <a href="services/index.html">Services</a>
+                <a href="portfolio.html">Portfolio</a>
+                <a href="blog/index.html">Blog</a>
+                <a href="index.html#faq">FAQ</a>
+                <a href="index.html#contact-form">Contact</a>
+            </nav>
+            <div class="footer-copyright">
+                © 2026 Artistic Fountain™ — All rights reserved. <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms &amp; Conditions</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleNav() {
+            const nav = document.querySelector('.nav');
+            const toggle = document.querySelector('.nav-toggle');
+            const isOpen = nav.classList.toggle('active');
+            toggle.classList.toggle('active', isOpen);
+            toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        }
+        document.querySelectorAll('.nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                const nav = document.querySelector('.nav');
+                const toggle = document.querySelector('.nav-toggle');
+                nav.classList.remove('active');
+                toggle.classList.remove('active');
+                toggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+    </script>
+</body>
+</html>
