@@ -27,7 +27,19 @@ exports/
 ## Naming
 
 Prefer: `roam-{sku}-{view}.{ext}`  
-Examples: `roam-north-front.png`, `roam-east-dieline.pdf`, `roam-winter-poster-large.png`
+Examples: `roam-north-front.png`, `roam-east-dieline.png`, `roam-winter-pos.png`
+
+## Auto-swap
+
+The Package Viewer looks for:
+
+| File | Replaces |
+| --- | --- |
+| `02-packaging/roam-{north\|east\|south\|west}-front.png` | Bag front SVG |
+| `02-packaging/roam-{…}-back.png` | Bag back SVG |
+| `02-packaging/roam-{…}-dieline.png` | Dieline SVG |
+
+The Tools → Export status panel lists every expected slot and whether it is present.
 
 ## Note
 

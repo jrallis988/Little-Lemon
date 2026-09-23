@@ -26,6 +26,7 @@ import {
   PreflightChecklist,
   ProcessTimeline,
 } from './components/sections/Process';
+import { ExportStatusPanel } from './components/sections/ExportStatus';
 import { brand, caseStudyNav, rtdProducts, varieties } from './data/brand';
 
 function Section({
@@ -433,6 +434,9 @@ export default function App() {
         <AdobeWorkflow />
         <div style={{ marginTop: '1.25rem' }}>
           <ExportManifest />
+        </div>
+        <div style={{ marginTop: '1.25rem' }}>
+          <ExportStatusPanel />
         </div>
       </Section>
 

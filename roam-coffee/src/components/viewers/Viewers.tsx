@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { rtdProducts, varieties } from '../../data/brand';
+import { exportUrl, packagingExports } from '../../data/exports';
 import { FamilyPresentation } from '../packaging/GiftBox';
 import { RtdCan } from '../packaging/RtdCan';
 import { WallMenu, PrintedMenu, Storefront, InteriorGraphics } from '../packaging/Retail';
@@ -14,6 +15,7 @@ import {
 } from '../packaging/Pos';
 import { CoffeeBag } from '../packaging/CoffeeBag';
 import { BagDieline } from '../packaging/BagDieline';
+import { ExportImage } from '../ui/ExportImage';
 
 export function FamilyViewer() {
   const [id, setId] = useState(varieties[0].id);
@@ -101,6 +103,10 @@ export function RetailViewer() {
 export function ProductionViewer() {
   const [mode, setMode] = useState<'flat' | 'finished'>('flat');
   const variety = varieties[1];
+  const files = packagingExports[variety.id];
+  const flatSrc = exportUrl('02-packaging', files.dieline);
+  const finishedSrc = exportUrl('02-packaging', files.front);
+
   return (
     <div className="viewer">
       <div className="viewer-bar" role="tablist" aria-label="Production">
@@ -112,7 +118,21 @@ export function ProductionViewer() {
         </button>
       </div>
       <div className="viewer-stage">
-        {mode === 'flat' ? <BagDieline variety={variety} width={580} /> : <CoffeeBag variety={variety} width={260} />}
+        {mode === 'flat' ? (
+          <ExportImage
+            src={flatSrc}
+            alt={`${variety.name} flat dieline`}
+            maxWidth={640}
+            fallback={<BagDieline variety={variety} width={580} />}
+          />
+        ) : (
+          <ExportImage
+            src={finishedSrc}
+            alt={`${variety.name} finished package`}
+            maxWidth={280}
+            fallback={<CoffeeBag variety={variety} width={260} />}
+          />
+        )}
       </div>
       <div className="viewer-note">
         Production view — dieline with bleed, trim, safe, fold, and seal versus the finished bag.
