@@ -8,6 +8,7 @@ import { WhySpotify } from './components/sections/WhySpotify'
 import { Audience } from './components/sections/Audience'
 import { PaceStates } from './components/sections/PaceStates'
 import { PaceCard } from './components/sections/PaceCard'
+import { CreativeGallery } from './components/sections/CreativeGallery'
 import { BehavioralJourney } from './components/sections/BehavioralJourney'
 import { PlatformRoles } from './components/sections/PlatformRoles'
 import { ContentCalendar } from './components/sections/ContentCalendar'
@@ -57,10 +58,11 @@ export default function App() {
           title="Soundtrack first. Running culture as context."
         >
           <PaceCard />
-          <VisualSystem />
-          <ContentCalendar />
-          <CreativeWorld />
+          <CreativeGallery />
           <SpotifyDestination />
+          <VisualSystem />
+          <CreativeWorld />
+          <ContentCalendar />
         </Chapter>
 
         <Chapter

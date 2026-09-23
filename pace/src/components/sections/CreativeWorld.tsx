@@ -11,9 +11,8 @@ export function CreativeWorld() {
         <p className="section-kicker">11 — Campaign executions</p>
         <h2 className="section-title">Experience the campaign before the charts.</h2>
         <p className="section-lede">
-          Every execution should feel like Spotify—album art, track titles, BPM,
-          waveforms, playlist covers, and playback UI—not a running brand with a
-          music sponsorship.
+          Extended surface map across TikTok, Instagram, YouTube, Spotify, paid,
+          and OOH—each with track metadata so the campaign stays music-owned.
         </p>
         <div className="exec-grid">
           {creativeExecutions.map((ex) => (
