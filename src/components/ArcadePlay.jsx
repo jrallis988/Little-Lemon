@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
-const TARGETS = ['🟢', '🟠', '🫧', '⭐', '🧽', '💥']
+const FALLBACK_TARGETS = ['🟢', '🟠', '🫧', '⭐', '🧽', '💥']
 
 function loadHighScore(gameId) {
   try {
@@ -19,8 +19,12 @@ function saveHighScore(gameId, score) {
 }
 
 export function ArcadePlay({ game, onClose }) {
+  const targets = game.targets?.length ? game.targets : FALLBACK_TARGETS
+  const points = game.points || 10
+  const seconds = game.seconds || 15
+
   const [score, setScore] = useState(0)
-  const [timeLeft, setTimeLeft] = useState(15)
+  const [timeLeft, setTimeLeft] = useState(seconds)
   const [running, setRunning] = useState(false)
   const [finished, setFinished] = useState(false)
   const [high, setHigh] = useState(() => loadHighScore(game.id))
@@ -35,7 +39,7 @@ export function ArcadePlay({ game, onClose }) {
     const maxY = Math.max(8, board.clientHeight - size - 8)
     setBlob({
       id: `${Date.now()}-${Math.random()}`,
-      emoji: TARGETS[Math.floor(Math.random() * TARGETS.length)],
+      emoji: targets[Math.floor(Math.random() * targets.length)],
       x: 8 + Math.random() * maxX,
       y: 8 + Math.random() * maxY,
     })
@@ -43,7 +47,7 @@ export function ArcadePlay({ game, onClose }) {
 
   const start = () => {
     setScore(0)
-    setTimeLeft(15)
+    setTimeLeft(seconds)
     setFinished(false)
     setRunning(true)
     spawn()
@@ -77,7 +81,7 @@ export function ArcadePlay({ game, onClose }) {
 
   const splat = () => {
     if (!running) return
-    setScore((s) => s + 10)
+    setScore((s) => s + points)
     spawn()
   }
 
@@ -94,7 +98,10 @@ export function ArcadePlay({ game, onClose }) {
           </button>
         </header>
 
-        <p className="arcade-modal__blurb">{game.blurb} Smash the blobs before time runs out.</p>
+        <p className="arcade-modal__blurb">
+          {game.blurb} {game.tip || 'Smash the targets before time runs out.'} (+{points} pts each ·{' '}
+          {seconds}s)
+        </p>
 
         <div className="arcade-modal__hud">
           <span>Score: {score}</span>
@@ -116,7 +123,7 @@ export function ArcadePlay({ game, onClose }) {
           {finished ? (
             <div className="arcade-board__end">
               <strong>{score >= high && score > 0 ? 'New high score!' : 'Round over!'}</strong>
-              <p>You scored {score} splat points.</p>
+              <p>You scored {score} points in {game.title}.</p>
               <button type="button" className="btn-nick" onClick={start}>
                 Play Again
               </button>

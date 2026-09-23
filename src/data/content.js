@@ -40,6 +40,10 @@ export const games = [
     show: 'Nick Classic',
     blurb: 'Bounce through goo and rack up splat points.',
     accent: '#7CFF4A',
+    targets: ['🟢', '🟠', '🫧', '💥'],
+    points: 10,
+    seconds: 15,
+    tip: 'Smash every goo blob you see.',
   },
   {
     id: 'orbit-lap',
@@ -47,6 +51,10 @@ export const games = [
     show: 'SpongeBob',
     blurb: 'Race jellyfish before Squidward wakes up.',
     accent: '#FFE566',
+    targets: ['🪼', '🧽', '⭐', '🍍'],
+    points: 12,
+    seconds: 12,
+    tip: 'Faster round — jelly first, then the sponge.',
   },
   {
     id: 'fun-house',
@@ -54,6 +62,10 @@ export const games = [
     show: 'Jimmy Neutron',
     blurb: 'Hack gadgets and dodge giant bugs.',
     accent: '#7EC8FF',
+    targets: ['🧠', '🐛', '🛸', '⚡'],
+    points: 15,
+    seconds: 14,
+    tip: 'Brainiac hits score bigger.',
   },
   {
     id: 'catapult',
@@ -61,6 +73,10 @@ export const games = [
     show: 'Catscratch',
     blurb: 'Launch Waffle across the backyard.',
     accent: '#C4A1FF',
+    targets: ['🐱', '🧇', '🧶', '🌳'],
+    points: 11,
+    seconds: 16,
+    tip: 'Launch Waffle — miss the trees if you can.',
   },
   {
     id: 'avatar-bender',
@@ -68,6 +84,10 @@ export const games = [
     show: 'Avatar',
     blurb: 'Master water, earth, fire, and air drills.',
     accent: '#5AD0FF',
+    targets: ['💧', '🪨', '🔥', '💨'],
+    points: 14,
+    seconds: 18,
+    tip: 'Hit all four elements before time runs out.',
   },
   {
     id: 'loud-labyrinth',
@@ -75,7 +95,35 @@ export const games = [
     show: 'The Loud House',
     blurb: 'Find Lincoln before the sisters do.',
     accent: '#FF8A3D',
+    targets: ['🏠', '🎧', '👟', '📢'],
+    points: 13,
+    seconds: 13,
+    tip: 'Find Lincoln’s trail before the sisters close in.',
   },
+]
+
+/** Lightweight search index for the sidebar Go box */
+export const searchIndex = [
+  { q: 'home nick portal', to: '/', label: 'Home' },
+  { q: 'games arcade slime play cabinet', to: '/games', label: 'Games arcade' },
+  { q: 'shows toons live action', to: '/shows', label: 'Shows' },
+  { q: 'video clips player stream', to: '/video', label: 'Video' },
+  { q: 'fan your world sticker poll', to: '/fan', label: 'Your World' },
+  { q: 'more shop slime kit magazine', to: '/more', label: 'More / Shop' },
+  { q: 'nick jr preschool paw patrol dora blue clues bubble guppies', to: '/nick-jr', label: 'Nick Jr.' },
+  { q: 'nick news kids vote town hall', to: '/nick-news', label: 'Nick News' },
+  { q: 'weekenders weekend slime saturday marathon', to: '/weekenders', label: 'Nick Weekenders' },
+  { q: 'orbitz travel vacation resort cruise staycation', to: '/orbitz', label: 'Nick Orbitz' },
+  { q: 'parents guidelines safety', to: '/parents', label: 'Parent Guidelines' },
+  { q: 'help nicktane codes slime', to: '/help', label: 'Help Center' },
+  { q: 'spongebob squarepants', to: '/shows#spongebob', label: 'SpongeBob' },
+  { q: 'jimmy neutron fun house', to: '/shows#jimmy', label: 'Jimmy Neutron' },
+  { q: 'avatar airbender', to: '/shows#avatar', label: 'Avatar' },
+  { q: 'drake josh', to: '/shows#drake', label: 'Drake & Josh' },
+  { q: 'icarly', to: '/shows#icarly', label: 'iCarly' },
+  { q: 'hey arnold', to: '/shows#hey-arnold', label: 'Hey Arnold!' },
+  { q: 'loud house', to: '/shows#loud', label: 'The Loud House' },
+  { q: 'catscratch', to: '/shows#catscratch', label: 'Catscratch' },
 ]
 
 export const shows = [

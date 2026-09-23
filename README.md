@@ -17,7 +17,7 @@ npm run dev
 
 Opens at [http://localhost:8081](http://localhost:8081).
 
-Try clicking empty space (slime pops), smash the “Too basic?” button, and unlock codes like `SLIME` or `NICK2004`.
+Try clicking empty space (slime pops), smash the “Too basic?” button, unlock codes like `SLIME` or `NICK2004`, search the sidebar, and log into **See My Nick** (local pretend session).
 
 ## Sections
 

@@ -1,11 +1,11 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { shows } from '../data/content'
 
 const EPISODES = {
   spongebob: ['Band Geeks', 'Chocolate with Nuts', 'Graveyard Shift'],
   jimmy: ['Brobot', 'The Eggpire Strikes Back', 'Stranded'],
-    catscratch: ["Bringin' Down the Mouse", 'Off the Leash'],
+  catscratch: ["Bringin' Down the Mouse", 'Off the Leash'],
   avatar: ['The Boy in the Iceberg', 'The Avatar Returns'],
   drake: ['Pilot', 'Foam Finger', 'Theater Thug'],
   unfabulous: ['The Perfect Moment', 'The Little Sister'],
@@ -15,6 +15,17 @@ const EPISODES = {
 
 export function Shows() {
   const [openId, setOpenId] = useState(null)
+  const { hash } = useLocation()
+
+  useEffect(() => {
+    if (!hash) return
+    const id = hash.replace('#', '')
+    const el = document.getElementById(id)
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      setOpenId(id)
+    }
+  }, [hash])
 
   return (
     <div className="section-page">

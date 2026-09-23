@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { BoredomBuster, NicktaneBox } from '../components/Chaos'
 import { games, latelyRows, poll, shopBits, shows, videos } from '../data/content'
@@ -6,6 +6,38 @@ import { games, latelyRows, poll, shopBits, shows, videos } from '../data/conten
 export function Home() {
   const [vote, setVote] = useState(poll.options[0])
   const [voted, setVoted] = useState(false)
+  const [clip, setClip] = useState(videos[0])
+  const [playing, setPlaying] = useState(false)
+  const [progress, setProgress] = useState(0)
+
+  useEffect(() => {
+    if (!playing) return undefined
+    const id = window.setInterval(() => {
+      setProgress((p) => {
+        if (p >= 100) {
+          setPlaying(false)
+          return 100
+        }
+        return Math.min(100, p + 5)
+      })
+    }, 200)
+    return () => window.clearInterval(id)
+  }, [playing])
+
+  const playClip = (v) => {
+    setClip(v)
+    setProgress(0)
+    setPlaying(true)
+  }
+
+  const toggleHomeVideo = () => {
+    if (progress >= 100) {
+      setProgress(0)
+      setPlaying(true)
+      return
+    }
+    setPlaying((on) => !on)
+  }
 
   return (
     <div className="portal">
@@ -131,9 +163,9 @@ export function Home() {
                 <article key={bit.id} className="also-card">
                   <h3>{bit.title}</h3>
                   <p>{bit.blurb}</p>
-                  <button type="button" className="btn-nick btn-nick--small">
+                  <Link className="btn-nick btn-nick--small" to="/more">
                     Check it out
-                  </button>
+                  </Link>
                 </article>
               ))}
             </div>
@@ -143,16 +175,28 @@ export function Home() {
         <aside className="portal-cols__side">
           <section className="video-box">
             <h2 className="panel-title panel-title--sm">Video</h2>
-            <div className="video-box__screen" role="img" aria-label="Video player preview">
-              <button type="button" className="video-box__play" aria-label="Play preview">
-                ▶
+            <div
+              className={`video-box__screen${playing ? ' is-playing' : ''}`}
+              role="region"
+              aria-label="Home video preview"
+            >
+              <button
+                type="button"
+                className="video-box__play"
+                aria-label={playing ? 'Pause' : `Play ${clip.title}`}
+                onClick={toggleHomeVideo}
+              >
+                {playing ? '❚❚' : '▶'}
               </button>
-              <span>Drake &amp; Josh · New clip</span>
+              <span>{clip.title}</span>
+              <div className="video-box__bar" aria-hidden="true">
+                <span style={{ width: `${progress}%` }} />
+              </div>
             </div>
             <ul className="video-box__list">
               {videos.slice(0, 3).map((v) => (
                 <li key={v.id}>
-                  <button type="button">
+                  <button type="button" onClick={() => playClip(v)}>
                     <span className="thumb" aria-hidden="true" />
                     <span>
                       <strong>{v.title}</strong>
@@ -162,6 +206,9 @@ export function Home() {
                 </li>
               ))}
             </ul>
+            <Link className="video-box__more" to="/video">
+              Open full Video stage →
+            </Link>
           </section>
 
           <section className="poll-box">
