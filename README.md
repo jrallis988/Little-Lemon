@@ -2,44 +2,38 @@
 
 Runnable foundation for anti-fraud ticketing controls:
 
-1. **Cryptographic event-driven ledger** — hash-chained append-only log for issuance, scan, transfer, and invalidation, with SSE pub/sub fan-out. Gate scans revoke barcode validity for every subscriber so PDF/screenshot clones fail.
-2. **Secure identity handshakes** — WebAuthn/FIDO2 scaffolding, device-bound session tokens, OAuth/OIDC+PKCE stubs, and out-of-band biometric confirmation for high-value transfers.
-3. **Checkout TDD** — inventory locking, idempotency, currency/price tamper checks, plus Vitest suites covering concurrent flash-sale races.
+1. **Cryptographic event-driven ledger** — hash-chained append-only log, SSE pub/sub, and **15s rotating QR tokens** so screenshots expire.
+2. **Secure identity handshakes** — WebAuthn/FIDO2 scaffolding + device-bound sessions persisted in SQLite.
+3. **Checkout TDD** — inventory locking, race tests, and **Stripe-shaped PaymentIntents** (demo HMAC webhooks; set `STRIPE_SECRET_KEY` / `STRIPE_WEBHOOK_SECRET` for live keys).
 
 ## Stack
 
 - Vite + React 19 + TypeScript (UI)
-- Hono API on Node (`server/`) with SQLite persistence (`data/gateledger.sqlite`)
-- Vitest for domain + persistence tests
-- PostgreSQL reference schema in `schemas/postgres_ledger.sql` (production target)
-- GitHub Actions CI (lint, test, build)
+- Hono API on Node (`server/`) with SQLite (`data/gateledger.sqlite`)
+- Vitest for domain + persistence + payment tests
+- PostgreSQL reference schema in `schemas/postgres_ledger.sql`
+- GitHub Actions CI
 
 ## Scripts
 
 ```bash
 npm install
 npm run dev:all   # API :8787 + Vite :5173 (proxies /api)
-npm run dev:api   # API only
-npm run dev       # UI only (needs API for live actions)
 npm test
 npm run build
 ```
 
-## Module map
+## Env (optional)
 
-| Path | Role |
-|------|------|
-| `src/lib/ledger/` | Event ledger, hash chain, pub/sub |
-| `src/lib/identity/` | WebAuthn, sessions, transfer MFA, OIDC |
-| `src/lib/checkout/` | Inventory locks + checkout orchestration |
-| `src/lib/apiClient.ts` | Browser client for REST + SSE |
-| `server/` | Hono API, SQLite store, platform wiring |
-| `schemas/postgres_ledger.sql` | Durable Postgres schema for tickets, ledger, holds |
+| Variable | Purpose |
+|----------|---------|
+| `STRIPE_SECRET_KEY` | When set, payments mode reports `stripe` (wire REST next) |
+| `STRIPE_WEBHOOK_SECRET` | HMAC secret for `POST /api/payments/webhook` (default demo secret) |
+| `PORT` | API port (default `8787`) |
 
-## API surface
+## Notable API routes
 
-- `GET /api/health`, `GET /api/ledger/tickets|events|verify`
-- `POST /api/ledger/issue`, `POST /api/ledger/scan`
-- `GET /api/ledger/stream` (SSE)
-- `POST /api/identity/passkey/register`, `session`, `transfer/start|approve`
-- `GET /api/checkout/inventory`, `POST /api/checkout`, `POST /api/checkout/race`
+- `GET /api/ledger/tickets/:id/code` — current rotating QR
+- `POST /api/ledger/scan` — `{ presentedToken }` or `{ staleSteps }` for screenshot demos
+- `POST /api/checkout/intent` → `POST /api/checkout/confirm`
+- `POST /api/payments/webhook` — signed `payment_intent.succeeded`

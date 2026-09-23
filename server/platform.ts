@@ -1,5 +1,6 @@
 import { CheckoutService } from '../src/lib/checkout/checkoutService'
 import { InventoryLockService } from '../src/lib/checkout/inventoryLock'
+import { StripePaymentProvider } from '../src/lib/checkout/payments'
 import { OidcClient } from '../src/lib/identity/oauth'
 import { DeviceSessionService } from '../src/lib/identity/sessionTokens'
 import { TransferHandshakeService } from '../src/lib/identity/transferHandshake'
@@ -10,12 +11,16 @@ import { TICKET_CHANNEL } from '../src/lib/ledger/pubsub'
 import type { LedgerEvent } from '../src/lib/ledger/types'
 import {
   insertLedgerEvent,
+  loadCredentials,
   loadEvents,
   loadSeats,
+  loadSessions,
   loadTickets,
   openDatabase,
   syncTicketFromLedger,
+  upsertCredential,
   upsertSeat,
+  upsertSession,
   type GateLedgerDb,
 } from './db'
 
@@ -41,12 +46,15 @@ export interface ServerPlatform {
   ledger: EventLedger
   inventory: InventoryLockService
   checkout: CheckoutService
+  payments: StripePaymentProvider
   webauthn: WebAuthnService
   sessions: DeviceSessionService
   handshakes: TransferHandshakeService
   oidc: OidcClient
   users: typeof users
   eventId: string
+  persistCredential: (credentialId: string) => void
+  persistSession: (sessionId: string) => void
 }
 
 export function createServerPlatform(dbPath: string): ServerPlatform {
@@ -72,9 +80,15 @@ export function createServerPlatform(dbPath: string): ServerPlatform {
     for (const seat of seats) inventory.seedSeat(seat)
   }
 
-  const checkout = new CheckoutService(inventory, ledger)
+  const payments = new StripePaymentProvider(
+    process.env.STRIPE_WEBHOOK_SECRET ?? 'whsec_gateledger_demo',
+    process.env.STRIPE_SECRET_KEY,
+  )
+  const checkout = new CheckoutService(inventory, ledger, payments)
   const webauthn = new WebAuthnService('littlelemon.local', 'Little Lemon GateLedger')
+  webauthn.hydrate(loadCredentials(db))
   const sessions = new DeviceSessionService()
+  sessions.hydrate(loadSessions(db))
   const handshakes = new TransferHandshakeService(webauthn, sessions)
   const oidc = new OidcClient()
   oidc.registerUser(users.alice)
@@ -90,12 +104,23 @@ export function createServerPlatform(dbPath: string): ServerPlatform {
     ledger,
     inventory,
     checkout,
+    payments,
     webauthn,
     sessions,
     handshakes,
     oidc,
     users,
     eventId: EVENT_ID,
+    persistCredential(credentialId: string) {
+      const credential = webauthn
+        .exportCredentials()
+        .find((c) => c.credentialId === credentialId)
+      if (credential) upsertCredential(db, credential)
+    },
+    persistSession(sessionId: string) {
+      const session = sessions.exportSessions().find((s) => s.sessionId === sessionId)
+      if (session) upsertSession(db, session)
+    },
   }
 }
 

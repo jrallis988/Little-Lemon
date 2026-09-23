@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { api, subscribeLedger } from '../lib/apiClient'
 import { statusLabel } from '../lib/ledger/eventLedger'
+import type { LiveBarcode } from '../lib/ledger/rotatingBarcode'
 import type { LedgerEvent, TicketRecord } from '../lib/ledger/types'
 
 export function LedgerPanel() {
@@ -11,6 +12,8 @@ export function LedgerPanel() {
   const [chainOk, setChainOk] = useState(true)
   const [liveFeed, setLiveFeed] = useState<string[]>([])
   const [apiUp, setApiUp] = useState(true)
+  const [liveCode, setLiveCode] = useState<LiveBarcode | null>(null)
+  const [frozenShot, setFrozenShot] = useState<string | null>(null)
 
   const refresh = async () => {
     try {
@@ -38,11 +41,37 @@ export function LedgerPanel() {
     })
   }, [])
 
+  useEffect(() => {
+    if (!selectedId) {
+      setLiveCode(null)
+      return
+    }
+    let active = true
+    const pull = async () => {
+      try {
+        const code = await api.liveCode(selectedId)
+        if (active) setLiveCode(code)
+      } catch {
+        if (active) setLiveCode(null)
+      }
+    }
+    void pull()
+    const timer = window.setInterval(() => void pull(), 1000)
+    return () => {
+      active = false
+      window.clearInterval(timer)
+    }
+  }, [selectedId])
+
   const issue = async () => {
     try {
-      const { ticket } = await api.issueTicket(`A-${tickets.length + 1}`)
+      const { ticket, live } = await api.issueTicket(`A-${tickets.length + 1}`)
       setSelectedId(ticket.ticketId)
-      setStatus(`Issued ${ticket.ticketId} for seat ${ticket.seatLabel}`)
+      if (live) {
+        setLiveCode(live)
+        setFrozenShot(live.token)
+      }
+      setStatus(`Issued ${ticket.ticketId} — rotating QR active`)
       await refresh()
     } catch (err) {
       setStatus(err instanceof Error ? err.message : 'Issue failed')
@@ -55,7 +84,11 @@ export function LedgerPanel() {
       return
     }
     try {
-      const result = await api.scanTicket(selectedId, 'gate-main')
+      const code = liveCode ?? (await api.liveCode(selectedId))
+      setFrozenShot(code.token)
+      const result = await api.scanTicket(selectedId, 'gate-main', {
+        presentedToken: code.token,
+      })
       setStatus(
         result.ok
           ? 'Scan accepted — barcode revoked across all clients'
@@ -73,7 +106,13 @@ export function LedgerPanel() {
       return
     }
     try {
-      const result = await api.scanTicket(selectedId, 'gate-clone')
+      // Prefer an explicitly frozen token; otherwise force a token from 2 steps ago.
+      const result = frozenShot
+        ? await api.scanTicket(selectedId, 'gate-clone', {
+            presentedToken: frozenShot,
+            staleSteps: 2,
+          })
+        : await api.scanTicket(selectedId, 'gate-clone', { staleSteps: 2 })
       setStatus(
         result.ok
           ? 'Unexpected accept'
@@ -94,12 +133,13 @@ export function LedgerPanel() {
     <section className="panel">
       <h2>Cryptographic event ledger</h2>
       <p className="lede">
-        Every issuance, transfer, scan, and invalidation appends a hash-chained event and
-        fans out over pub/sub so copied barcodes die the moment a gate accepts the original.
-        State is persisted in SQLite via the GateLedger API.
+        Rotating QR tokens (15s) + hash-chained ledger events. Screenshots die when the
+        window advances; a successful gate scan revokes the ticket everywhere via SSE.
       </p>
       {!apiUp && (
-        <p className="status-line">API offline — start with `npm run dev:api` or `npm run dev:all`.</p>
+        <p className="status-line">
+          API offline — start with `npm run dev:api` or `npm run dev:all`.
+        </p>
       )}
       <div className="grid-2">
         <div className="stack">
@@ -111,7 +151,7 @@ export function LedgerPanel() {
               type="button"
               className="secondary"
               onClick={() => void scan()}
-              disabled={!selected}
+              disabled={!selected || !live}
             >
               Scan at gate
             </button>
@@ -129,7 +169,10 @@ export function LedgerPanel() {
             <select
               id="ticket-select"
               value={selectedId}
-              onChange={(e) => setSelectedId(e.target.value)}
+              onChange={(e) => {
+                setSelectedId(e.target.value)
+                setFrozenShot(null)
+              }}
             >
               <option value="">Select…</option>
               {tickets.map((t) => (
@@ -154,8 +197,11 @@ export function LedgerPanel() {
               <div className="meta">
                 <span>ticket: {selected.ticketId}</span>
                 <span>owner: {selected.ownerUserId}</span>
-                <span>barcode: {selected.barcodeSecret}</span>
-                <span>live for clients: {live ? 'yes' : 'no'}</span>
+                <span>
+                  live QR:{' '}
+                  {liveCode ? `${liveCode.token.slice(0, 12)}… (${Math.ceil(liveCode.validForMs / 1000)}s)` : '—'}
+                </span>
+                <span>wallet live: {live ? 'yes' : 'no'}</span>
               </div>
             </div>
           )}

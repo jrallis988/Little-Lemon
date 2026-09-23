@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import { EventLedger } from './eventLedger'
 import { TICKET_CHANNEL } from './pubsub'
+import { BARCODE_STEP_MS, staleToken } from './rotatingBarcode'
 
 describe('EventLedger cryptographic chain', () => {
   it('issues tickets and links events with a verifiable hash chain', async () => {
@@ -30,23 +31,25 @@ describe('EventLedger cryptographic chain', () => {
     ledger.broker.subscribe(TICKET_CHANNEL, listener)
     ledger.broker.subscribe(`ticket:${ticket.ticketId}`, listener)
 
-    expect(ledger.isBarcodeLive(ticket.ticketId, ticket.barcodeSecret)).toBe(true)
+    const live = await ledger.liveBarcode(ticket.ticketId)
+    expect(live).toBeTruthy()
+    await expect(ledger.isBarcodeLive(ticket.ticketId, live!.token)).resolves.toBe(true)
 
-    const first = await ledger.scanAtGate(ticket.ticketId, ticket.barcodeSecret, 'gate-north')
+    const first = await ledger.scanAtGate(ticket.ticketId, live!.token, 'gate-north')
     expect(first.ok).toBe(true)
     expect(listener).toHaveBeenCalled()
-    expect(ledger.isBarcodeLive(ticket.ticketId, ticket.barcodeSecret)).toBe(false)
+    await expect(ledger.isBarcodeLive(ticket.ticketId, live!.token)).resolves.toBe(false)
 
     const clonedScreenshot = await ledger.scanAtGate(
       ticket.ticketId,
-      ticket.barcodeSecret,
+      live!.token,
       'gate-south',
     )
     expect(clonedScreenshot.ok).toBe(false)
     expect(clonedScreenshot.reason).toBe('ALREADY_SCANNED')
   })
 
-  it('rejects forged barcodes and detects chain tampering', async () => {
+  it('rejects forged and stale screenshot barcodes', async () => {
     const ledger = new EventLedger()
     const { ticket } = await ledger.issueTicket({
       eventId: 'evt_jazz',
@@ -56,6 +59,11 @@ describe('EventLedger cryptographic chain', () => {
 
     const forged = await ledger.scanAtGate(ticket.ticketId, 'bc_forged_pdf_clone', 'gate-1')
     expect(forged).toEqual({ ok: false, reason: 'BARCODE_MISMATCH' })
+
+    const now = Date.now()
+    const frozen = await staleToken(ticket.barcodeSecret, 2, now)
+    const stale = await ledger.scanAtGate(ticket.ticketId, frozen, 'gate-1', now)
+    expect(stale).toEqual({ ok: false, reason: 'BARCODE_MISMATCH' })
 
     const live = (
       ledger as unknown as { events: Array<{ payload: Record<string, unknown> }> }
@@ -73,7 +81,8 @@ describe('EventLedger cryptographic chain', () => {
       ownerUserId: 'user_a',
       seatLabel: 'D-4',
     })
-    await ledger.scanAtGate(ticket.ticketId, ticket.barcodeSecret, 'gate-1')
+    const live = await ledger.liveBarcode(ticket.ticketId)
+    await ledger.scanAtGate(ticket.ticketId, live!.token, 'gate-1')
     await expect(
       ledger.transferTicket({
         ticketId: ticket.ticketId,
@@ -82,5 +91,24 @@ describe('EventLedger cryptographic chain', () => {
         handshakeId: 'hs_x',
       }),
     ).rejects.toThrow(/TRANSFER_FORBIDDEN/)
+  })
+
+  it('accepts a live rotating token after the display window advances within skew', async () => {
+    const ledger = new EventLedger()
+    const { ticket } = await ledger.issueTicket({
+      eventId: 'evt_jazz',
+      ownerUserId: 'user_a',
+      seatLabel: 'E-5',
+    })
+    const t0 = 1_700_000_000_000
+    const code = await ledger.liveBarcode(ticket.ticketId, t0)
+    // Within ±1 step skew at gate clocks
+    const result = await ledger.scanAtGate(
+      ticket.ticketId,
+      code!.token,
+      'gate-1',
+      t0 + BARCODE_STEP_MS,
+    )
+    expect(result.ok).toBe(true)
   })
 })

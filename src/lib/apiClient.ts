@@ -1,10 +1,12 @@
 import type { CheckoutResult } from './checkout/types'
+import type { PaymentIntent } from './checkout/payments'
 import type {
   DeviceSession,
   TransferChallenge,
   WebAuthnCredential,
 } from './identity/types'
 import type { LedgerEvent, ScanResult, TicketRecord } from './ledger/types'
+import type { LiveBarcode } from './ledger/rotatingBarcode'
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(path, {
@@ -26,19 +28,34 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 }
 
 export const api = {
-  health: () => request<{ ok: boolean; tickets: number }>('/api/health'),
+  health: () =>
+    request<{ ok: boolean; tickets: number; payments: string }>('/api/health'),
   listTickets: () => request<{ tickets: TicketRecord[] }>('/api/ledger/tickets'),
   listEvents: () => request<{ events: LedgerEvent[] }>('/api/ledger/events'),
   verifyChain: () => request<{ valid: boolean; brokenAt?: number }>('/api/ledger/verify'),
+  liveCode: (ticketId: string) =>
+    request<{ ticketId: string } & LiveBarcode>(`/api/ledger/tickets/${ticketId}/code`),
   issueTicket: (seatLabel?: string) =>
-    request<{ ticket: TicketRecord; event: LedgerEvent }>('/api/ledger/issue', {
-      method: 'POST',
-      body: JSON.stringify({ seatLabel }),
-    }),
-  scanTicket: (ticketId: string, gateId = 'gate-main') =>
+    request<{ ticket: TicketRecord; event: LedgerEvent; live?: LiveBarcode }>(
+      '/api/ledger/issue',
+      {
+        method: 'POST',
+        body: JSON.stringify({ seatLabel }),
+      },
+    ),
+  scanTicket: (
+    ticketId: string,
+    gateId = 'gate-main',
+    opts?: { presentedToken?: string; staleSteps?: number },
+  ) =>
     request<ScanResult>('/api/ledger/scan', {
       method: 'POST',
-      body: JSON.stringify({ ticketId, gateId }),
+      body: JSON.stringify({
+        ticketId,
+        gateId,
+        presentedToken: opts?.presentedToken,
+        staleSteps: opts?.staleSteps,
+      }),
     }),
   registerPasskey: () =>
     request<{
@@ -82,6 +99,7 @@ export const api = {
         currency: string
       }>
       ticketsIssued: number
+      paymentsMode: string
     }>('/api/checkout/inventory'),
   checkout: (input: {
     seatLabel: string
@@ -91,6 +109,23 @@ export const api = {
     request<CheckoutResult>('/api/checkout', {
       method: 'POST',
       body: JSON.stringify(input),
+    }),
+  beginIntent: (input: {
+    seatLabel: string
+    offeredPriceCents: number
+    currency: string
+  }) =>
+    request<
+      | { ok: true; holdId: string; intent: PaymentIntent }
+      | CheckoutResult
+    >('/api/checkout/intent', {
+      method: 'POST',
+      body: JSON.stringify(input),
+    }),
+  confirmIntent: (intentId: string) =>
+    request<CheckoutResult>('/api/checkout/confirm', {
+      method: 'POST',
+      body: JSON.stringify({ intentId }),
     }),
   race: (seatLabel = 'B-1', contenders = 8) =>
     request<{

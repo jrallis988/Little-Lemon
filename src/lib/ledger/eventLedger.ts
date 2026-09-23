@@ -1,5 +1,10 @@
 import { randomId, sha256Hex } from '../crypto/hash'
 import { EventBroker, TICKET_CHANNEL } from './pubsub'
+import {
+  rotatingToken,
+  verifyRotatingToken,
+  type LiveBarcode,
+} from './rotatingBarcode'
 import type {
   LedgerEvent,
   LedgerEventType,
@@ -96,18 +101,28 @@ export class EventLedger {
     return { ticket: { ...ticket }, event }
   }
 
+  /** Current rotating QR token for the ticket wallet UI (never expose barcodeSecret). */
+  async liveBarcode(ticketId: string, atMs = Date.now()): Promise<LiveBarcode | undefined> {
+    const ticket = this.tickets.get(ticketId)
+    if (!ticket) return undefined
+    if (ticket.status !== 'ISSUED' && ticket.status !== 'TRANSFERRED') return undefined
+    return rotatingToken(ticket.barcodeSecret, atMs)
+  }
+
   /**
-   * Gate scan: first valid presentation wins. Ledger append + pub/sub
-   * instantly revoke validity for every connected client.
+   * Gate scan: first valid *rotating* presentation wins. Stale screenshots
+   * fail BARCODE_MISMATCH; ledger append + pub/sub revoke validity everywhere.
    */
   async scanAtGate(
     ticketId: string,
     presentedBarcode: string,
     gateId: string,
+    atMs = Date.now(),
   ): Promise<ScanResult> {
     const ticket = this.tickets.get(ticketId)
     if (!ticket) return { ok: false, reason: 'UNKNOWN_TICKET' }
-    if (ticket.barcodeSecret !== presentedBarcode) {
+    const tokenOk = await verifyRotatingToken(ticket.barcodeSecret, presentedBarcode, atMs)
+    if (!tokenOk) {
       return { ok: false, reason: 'BARCODE_MISMATCH' }
     }
     if (ticket.status === 'SCANNED') {
@@ -151,11 +166,15 @@ export class EventLedger {
     return { valid: true }
   }
 
-  isBarcodeLive(ticketId: string, presentedBarcode: string): boolean {
+  async isBarcodeLive(
+    ticketId: string,
+    presentedBarcode: string,
+    atMs = Date.now(),
+  ): Promise<boolean> {
     const ticket = this.tickets.get(ticketId)
     if (!ticket) return false
-    if (ticket.barcodeSecret !== presentedBarcode) return false
-    return ticket.status === 'ISSUED' || ticket.status === 'TRANSFERRED'
+    if (ticket.status !== 'ISSUED' && ticket.status !== 'TRANSFERRED') return false
+    return verifyRotatingToken(ticket.barcodeSecret, presentedBarcode, atMs)
   }
 
   private requireTicket(ticketId: string): TicketRecord {

@@ -3,6 +3,8 @@ import { mkdirSync } from 'node:fs'
 import { dirname } from 'node:path'
 import type { LedgerEvent, TicketRecord } from '../src/lib/ledger/types'
 import type { SeatInventory } from '../src/lib/checkout/types'
+import type { DeviceSession, WebAuthnCredential } from '../src/lib/identity/types'
+import type { PaymentIntent } from '../src/lib/checkout/payments'
 
 export function openDatabase(path: string) {
   mkdirSync(dirname(path), { recursive: true })
@@ -40,6 +42,35 @@ export function openDatabase(path: string) {
       currency TEXT NOT NULL,
       available INTEGER NOT NULL,
       PRIMARY KEY (event_id, seat_label)
+    );
+
+    CREATE TABLE IF NOT EXISTS webauthn_credentials (
+      credential_id TEXT PRIMARY KEY,
+      user_id TEXT NOT NULL,
+      public_key_pem TEXT NOT NULL,
+      sign_count INTEGER NOT NULL DEFAULT 0,
+      device_label TEXT NOT NULL,
+      created_at TEXT NOT NULL
+    );
+
+    CREATE TABLE IF NOT EXISTS device_sessions (
+      session_id TEXT PRIMARY KEY,
+      user_id TEXT NOT NULL,
+      device_id TEXT NOT NULL,
+      token TEXT NOT NULL,
+      expires_at TEXT NOT NULL,
+      revoked_at TEXT
+    );
+
+    CREATE TABLE IF NOT EXISTS payment_intents (
+      intent_id TEXT PRIMARY KEY,
+      hold_id TEXT NOT NULL,
+      buyer_user_id TEXT NOT NULL,
+      amount_cents INTEGER NOT NULL,
+      currency TEXT NOT NULL,
+      status TEXT NOT NULL,
+      client_secret TEXT NOT NULL,
+      created_at TEXT NOT NULL
     );
   `)
   return db
@@ -144,3 +175,67 @@ export function loadSeats(db: GateLedgerDb): SeatInventory[] {
 export function syncTicketFromLedger(db: GateLedgerDb, ticket: TicketRecord | undefined) {
   if (ticket) upsertTicket(db, ticket)
 }
+
+export function loadCredentials(db: GateLedgerDb): WebAuthnCredential[] {
+  return db
+    .prepare(
+      `SELECT credential_id as credentialId, user_id as userId, public_key_pem as publicKeyPem,
+              sign_count as signCount, device_label as deviceLabel, created_at as createdAt
+       FROM webauthn_credentials`,
+    )
+    .all() as WebAuthnCredential[]
+}
+
+export function upsertCredential(db: GateLedgerDb, credential: WebAuthnCredential) {
+  db.prepare(
+    `INSERT INTO webauthn_credentials (
+      credential_id, user_id, public_key_pem, sign_count, device_label, created_at
+    ) VALUES (
+      @credentialId, @userId, @publicKeyPem, @signCount, @deviceLabel, @createdAt
+    )
+    ON CONFLICT(credential_id) DO UPDATE SET
+      sign_count = excluded.sign_count,
+      device_label = excluded.device_label`,
+  ).run(credential)
+}
+
+export function loadSessions(db: GateLedgerDb): DeviceSession[] {
+  return db
+    .prepare(
+      `SELECT session_id as sessionId, user_id as userId, device_id as deviceId,
+              token, expires_at as expiresAt, revoked_at as revokedAt
+       FROM device_sessions`,
+    )
+    .all() as DeviceSession[]
+}
+
+export function upsertSession(db: GateLedgerDb, session: DeviceSession) {
+  db.prepare(
+    `INSERT INTO device_sessions (
+      session_id, user_id, device_id, token, expires_at, revoked_at
+    ) VALUES (
+      @sessionId, @userId, @deviceId, @token, @expiresAt, @revokedAt
+    )
+    ON CONFLICT(session_id) DO UPDATE SET
+      token = excluded.token,
+      expires_at = excluded.expires_at,
+      revoked_at = excluded.revoked_at`,
+  ).run({
+    ...session,
+    revokedAt: session.revokedAt ?? null,
+  })
+}
+
+export function upsertPaymentIntent(db: GateLedgerDb, intent: PaymentIntent) {
+  db.prepare(
+    `INSERT INTO payment_intents (
+      intent_id, hold_id, buyer_user_id, amount_cents, currency,
+      status, client_secret, created_at
+    ) VALUES (
+      @id, @holdId, @buyerUserId, @amountCents, @currency,
+      @status, @clientSecret, @createdAt
+    )
+    ON CONFLICT(intent_id) DO UPDATE SET status = excluded.status`,
+  ).run(intent)
+}
+

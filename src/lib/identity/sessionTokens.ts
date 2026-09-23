@@ -44,6 +44,15 @@ export class DeviceSessionService {
     if (session) session.revokedAt = new Date().toISOString()
   }
 
+  hydrate(sessions: DeviceSession[]) {
+    this.sessions.clear()
+    for (const session of sessions) this.sessions.set(session.sessionId, { ...session })
+  }
+
+  exportSessions(): DeviceSession[] {
+    return [...this.sessions.values()].map((s) => ({ ...s }))
+  }
+
   async tokenFingerprint(token: string): Promise<string> {
     return sha256Hex(token)
   }

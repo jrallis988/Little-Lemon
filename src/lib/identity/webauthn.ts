@@ -145,6 +145,17 @@ export class WebAuthnService {
       .map((c) => ({ ...c }))
   }
 
+  hydrate(credentials: WebAuthnCredential[]) {
+    this.credentials.clear()
+    for (const credential of credentials) {
+      this.credentials.set(credential.credentialId, { ...credential })
+    }
+  }
+
+  exportCredentials(): WebAuthnCredential[] {
+    return [...this.credentials.values()].map((c) => ({ ...c }))
+  }
+
   async buildAssertionDigest(credentialId: string, challenge: string): Promise<string> {
     const credential = this.credentials.get(credentialId)
     if (!credential) throw new Error('UNKNOWN_CREDENTIAL')

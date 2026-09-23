@@ -5,6 +5,8 @@ import { streamSSE } from 'hono/streaming'
 import { mkdirSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { TICKET_CHANNEL } from '../src/lib/ledger/pubsub'
+import { staleToken } from '../src/lib/ledger/rotatingBarcode'
+import { upsertPaymentIntent } from './db'
 import { createServerPlatform, persistInventory, users } from './platform'
 
 const dataDir = resolve(process.cwd(), 'data')
@@ -20,6 +22,7 @@ app.get('/api/health', (c) =>
     service: 'gateledger-api',
     chainTip: platform.ledger.chainTip.slice(0, 16),
     tickets: platform.ledger.listTickets().length,
+    payments: platform.payments.mode,
   }),
 )
 
@@ -27,6 +30,7 @@ app.get('/api/meta', (c) =>
   c.json({
     eventId: platform.eventId,
     users,
+    paymentsMode: platform.payments.mode,
   }),
 )
 
@@ -35,6 +39,13 @@ app.get('/api/ledger/tickets', (c) => c.json({ tickets: platform.ledger.listTick
 app.get('/api/ledger/events', (c) => c.json({ events: platform.ledger.listEvents() }))
 
 app.get('/api/ledger/verify', async (c) => c.json(await platform.ledger.verifyChain()))
+
+app.get('/api/ledger/tickets/:ticketId/code', async (c) => {
+  const ticketId = c.req.param('ticketId')
+  const live = await platform.ledger.liveBarcode(ticketId)
+  if (!live) return c.json({ error: 'NO_LIVE_CODE' }, 404)
+  return c.json({ ticketId, ...live })
+})
 
 app.post('/api/ledger/issue', async (c) => {
   const body = await c.req.json<{ seatLabel?: string; ownerUserId?: string }>()
@@ -46,20 +57,36 @@ app.post('/api/ledger/issue', async (c) => {
     ownerUserId,
     seatLabel,
   })
-  return c.json(result)
+  const live = await platform.ledger.liveBarcode(result.ticket.ticketId)
+  return c.json({ ...result, live })
 })
 
 app.post('/api/ledger/scan', async (c) => {
   const body = await c.req.json<{
     ticketId: string
-    barcodeSecret?: string
+    presentedToken?: string
     gateId?: string
+    /** Demo: scan with a frozen screenshot from N steps ago (should fail). */
+    staleSteps?: number
   }>()
   const ticket = platform.ledger.getTicket(body.ticketId)
   if (!ticket) return c.json({ ok: false, reason: 'UNKNOWN_TICKET' }, 404)
+
+  let presented = body.presentedToken
+  if (body.staleSteps != null) {
+    presented = await staleToken(ticket.barcodeSecret, body.staleSteps)
+  }
+  if (!presented) {
+    const live = await platform.ledger.liveBarcode(body.ticketId)
+    presented = live?.token
+  }
+  if (!presented) {
+    return c.json({ ok: false, reason: 'NO_TOKEN' }, 400)
+  }
+
   const result = await platform.ledger.scanAtGate(
     body.ticketId,
-    body.barcodeSecret ?? ticket.barcodeSecret,
+    presented,
     body.gateId ?? 'gate-main',
   )
   return c.json(result)
@@ -100,6 +127,7 @@ app.post('/api/identity/passkey/register', async (c) => {
     options.challenge,
     btoa('alice-platform-authenticator'),
   )
+  platform.persistCredential(credential.credentialId)
   return c.json({ options, credential })
 })
 
@@ -108,6 +136,7 @@ app.post('/api/identity/session', async (c) => {
     users.alice.userId,
     users.alice.primaryDeviceId,
   )
+  platform.persistSession(session.sessionId)
   return c.json({ session })
 })
 
@@ -173,6 +202,7 @@ app.post('/api/identity/transfer/approve', async (c) => {
       signatureDigest: digest,
       signCount: body.signCount,
     })
+    platform.persistCredential(body.credentialId)
     const transfer = await platform.ledger.transferTicket({
       ticketId: handshake.ticketId,
       fromUserId: users.alice.userId,
@@ -195,6 +225,7 @@ app.get('/api/checkout/inventory', (c) => {
   return c.json({
     seats: seats.filter(Boolean),
     ticketsIssued: platform.ledger.listTickets().length,
+    paymentsMode: platform.payments.mode,
   })
 })
 
@@ -216,6 +247,61 @@ app.post('/api/checkout', async (c) => {
   })
   persistInventory(platform)
   return c.json(result)
+})
+
+app.post('/api/checkout/intent', async (c) => {
+  const body = await c.req.json<{
+    seatLabel: string
+    offeredPriceCents: number
+    currency: string
+    buyerUserId?: string
+    idempotencyKey?: string
+  }>()
+  const started = await platform.checkout.beginPaidCheckout({
+    eventId: platform.eventId,
+    seatLabel: body.seatLabel,
+    buyerUserId: body.buyerUserId ?? users.bob.userId,
+    offeredPriceCents: body.offeredPriceCents,
+    currency: body.currency,
+    idempotencyKey: body.idempotencyKey ?? `intent_${body.seatLabel}_${Date.now()}`,
+  })
+  persistInventory(platform)
+  if (started.ok && 'intent' in started) {
+    upsertPaymentIntent(platform.db, started.intent)
+  }
+  return c.json(started)
+})
+
+app.post('/api/checkout/confirm', async (c) => {
+  const body = await c.req.json<{ intentId: string }>()
+  await platform.payments.confirmIntent(body.intentId)
+  const intent = platform.payments.getIntent(body.intentId)
+  if (intent) upsertPaymentIntent(platform.db, intent)
+  const result = await platform.checkout.finalizePaidIntent(body.intentId)
+  persistInventory(platform)
+  return c.json(result)
+})
+
+app.post('/api/payments/webhook', async (c) => {
+  const rawBody = await c.req.text()
+  const signature = c.req.header('stripe-signature') ?? ''
+  try {
+    const event = await platform.payments.verifyAndParseWebhook(rawBody, signature)
+    if (event.type === 'payment_intent.succeeded') {
+      await platform.payments.confirmIntent(event.intentId)
+      const intent = platform.payments.getIntent(event.intentId)
+      if (intent) upsertPaymentIntent(platform.db, intent)
+      const result = await platform.checkout.finalizePaidIntent(event.intentId)
+      persistInventory(platform)
+      return c.json({ received: true, result })
+    }
+    return c.json({ received: true, ignored: event.type })
+  } catch (err) {
+    return c.json(
+      { error: err instanceof Error ? err.message : 'WEBHOOK_FAILED' },
+      400,
+    )
+  }
 })
 
 app.post('/api/checkout/race', async (c) => {
@@ -243,5 +329,7 @@ app.post('/api/checkout/race', async (c) => {
 })
 
 const port = Number(process.env.PORT ?? 8787)
-console.log(`GateLedger API listening on http://127.0.0.1:${port}`)
+console.log(
+  `GateLedger API listening on http://127.0.0.1:${port} (payments=${platform.payments.mode})`,
+)
 serve({ fetch: app.fetch, port })
