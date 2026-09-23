@@ -19,6 +19,7 @@ import {
   seedWorkplaces,
 } from '../data/seed';
 import { averageReviews } from '../lib/averages';
+import * as authService from '../services/authService';
 import * as reviewService from '../services/reviewService';
 import type {
   ActivityItem,
@@ -45,6 +46,7 @@ import type {
 const STORAGE_KEYS = {
   users: 'rme.users.v2',
   session: 'rme.session.v2',
+  accessToken: 'rme.accessToken.v2',
   reviews: 'rme.reviews.v2',
   interviews: 'rme.interviews.v2',
   salaries: 'rme.salaries.v2',
@@ -128,6 +130,14 @@ type AppContextValue = {
   }) => Promise<string | null>;
   signIn: (input: { email: string; password: string }) => Promise<string | null>;
   signOut: () => Promise<void>;
+  requestPasswordReset: (
+    email: string,
+  ) => Promise<{ error?: string; message?: string; resetToken?: string }>;
+  resetPassword: (input: {
+    email: string;
+    token: string;
+    password: string;
+  }) => Promise<string | null>;
   updateProfile: (input: {
     displayName: string;
     username?: string;
@@ -447,6 +457,46 @@ export function AppProvider({ children }: { children: ReactNode }) {
           return 'Name, email, and password are required.';
         }
         if (password.length < 6) return 'Password must be at least 6 characters.';
+
+        try {
+          const session = await authService.signUp({
+            email: normalized,
+            password,
+            displayName: (displayName || username || 'RME User').trim(),
+            username: username?.trim(),
+          });
+          const now = new Date().toISOString();
+          const nextUser: LocalAccount = {
+            id: session.user.id,
+            email: session.user.email,
+            displayName: session.user.displayName,
+            username: session.user.username,
+            role: session.user.role,
+            password,
+            createdAt: session.user.createdAt ?? now,
+            updatedAt: session.user.updatedAt ?? now,
+          };
+          const stored = await AsyncStorage.getItem(STORAGE_KEYS.users);
+          const existing: LocalAccount[] = stored ? JSON.parse(stored) : accounts;
+          const nextAccounts = [
+            ...existing.filter((item) => item.email !== normalized && item.id !== nextUser.id),
+            nextUser,
+          ];
+          await persistAccounts(nextAccounts);
+          setUser(toPublicUser(nextUser));
+          setIsGuest(false);
+          setHasOnboarded(true);
+          await AsyncStorage.multiSet([
+            [STORAGE_KEYS.session, nextUser.id],
+            [STORAGE_KEYS.accessToken, session.accessToken],
+            [STORAGE_KEYS.guest, '0'],
+            [STORAGE_KEYS.onboarded, '1'],
+          ]);
+          return null;
+        } catch {
+          // Fall through to local accounts when API is offline.
+        }
+
         const stored = await AsyncStorage.getItem(STORAGE_KEYS.users);
         const existing: LocalAccount[] = stored ? JSON.parse(stored) : accounts;
         if (existing.some((item) => item.email === normalized)) {
@@ -478,6 +528,41 @@ export function AppProvider({ children }: { children: ReactNode }) {
       signIn: async ({ email, password }) => {
         const normalized = normalizeEmail(email);
         if (!normalized || !password) return 'Email and password are required.';
+
+        try {
+          const session = await authService.signIn(normalized, password);
+          const now = new Date().toISOString();
+          const nextUser: LocalAccount = {
+            id: session.user.id,
+            email: session.user.email,
+            displayName: session.user.displayName,
+            username: session.user.username,
+            role: session.user.role,
+            password,
+            createdAt: session.user.createdAt ?? now,
+            updatedAt: session.user.updatedAt ?? now,
+          };
+          const stored = await AsyncStorage.getItem(STORAGE_KEYS.users);
+          const existing: LocalAccount[] = stored ? JSON.parse(stored) : accounts;
+          const nextAccounts = [
+            ...existing.filter((item) => item.email !== normalized && item.id !== nextUser.id),
+            nextUser,
+          ];
+          await persistAccounts(nextAccounts);
+          setUser(toPublicUser(nextUser));
+          setIsGuest(false);
+          setHasOnboarded(true);
+          await AsyncStorage.multiSet([
+            [STORAGE_KEYS.session, nextUser.id],
+            [STORAGE_KEYS.accessToken, session.accessToken],
+            [STORAGE_KEYS.guest, '0'],
+            [STORAGE_KEYS.onboarded, '1'],
+          ]);
+          return null;
+        } catch {
+          // Fall through to local accounts when API is offline.
+        }
+
         const stored = await AsyncStorage.getItem(STORAGE_KEYS.users);
         const existing: LocalAccount[] = stored ? JSON.parse(stored) : accounts;
         const match = existing.find(
@@ -499,7 +584,78 @@ export function AppProvider({ children }: { children: ReactNode }) {
         setUser(null);
         setIsGuest(false);
         await AsyncStorage.multiSet([[STORAGE_KEYS.guest, '0']]);
-        await AsyncStorage.removeItem(STORAGE_KEYS.session);
+        await AsyncStorage.multiRemove([STORAGE_KEYS.session, STORAGE_KEYS.accessToken]);
+      },
+      requestPasswordReset: async (email) => {
+        const normalized = normalizeEmail(email);
+        if (!normalized) return { error: 'Email is required.' };
+        try {
+          const result = await authService.requestPasswordReset(normalized);
+          return {
+            message: result.message,
+            resetToken: result.resetToken,
+          };
+        } catch {
+          const stored = await AsyncStorage.getItem(STORAGE_KEYS.users);
+          const existing: LocalAccount[] = stored ? JSON.parse(stored) : accounts;
+          const match = existing.find((item) => item.email === normalized);
+          if (!match) {
+            return { message: 'If that email exists, a reset code was issued.' };
+          }
+          const token = `local-${Date.now().toString(36)}`;
+          await AsyncStorage.setItem(
+            `rme.reset.${normalized}`,
+            JSON.stringify({ token, expiresAt: Date.now() + 1000 * 60 * 30 }),
+          );
+          return {
+            message: 'If that email exists, a reset code was issued.',
+            resetToken: token,
+          };
+        }
+      },
+      resetPassword: async ({ email, token, password }) => {
+        const normalized = normalizeEmail(email);
+        if (!normalized || !token || !password) {
+          return 'Email, reset code, and new password are required.';
+        }
+        if (password.length < 6) return 'Password must be at least 6 characters.';
+
+        let apiError: string | null = null;
+        try {
+          await authService.resetPassword({ email: normalized, token, password });
+          const stored = await AsyncStorage.getItem(STORAGE_KEYS.users);
+          const existing: LocalAccount[] = stored ? JSON.parse(stored) : accounts;
+          const nextAccounts = existing.map((account) =>
+            account.email === normalized
+              ? { ...account, password, updatedAt: new Date().toISOString() }
+              : account,
+          );
+          await persistAccounts(nextAccounts);
+          await AsyncStorage.removeItem(`rme.reset.${normalized}`);
+          return null;
+        } catch (error) {
+          apiError = error instanceof Error ? error.message : 'Reset failed.';
+        }
+
+        const raw = await AsyncStorage.getItem(`rme.reset.${normalized}`);
+        if (!raw) return apiError ?? 'Invalid or expired reset token.';
+        const entry = JSON.parse(raw) as { token: string; expiresAt: number };
+        if (entry.token !== token || entry.expiresAt < Date.now()) {
+          return apiError ?? 'Invalid or expired reset token.';
+        }
+        const stored = await AsyncStorage.getItem(STORAGE_KEYS.users);
+        const existing: LocalAccount[] = stored ? JSON.parse(stored) : accounts;
+        if (!existing.some((item) => item.email === normalized)) {
+          return 'User not found.';
+        }
+        const nextAccounts = existing.map((account) =>
+          account.email === normalized
+            ? { ...account, password, updatedAt: new Date().toISOString() }
+            : account,
+        );
+        await persistAccounts(nextAccounts);
+        await AsyncStorage.removeItem(`rme.reset.${normalized}`);
+        return null;
       },
       updateProfile: async ({ displayName, username, headline }) => {
         if (!user) return 'Sign in to edit your profile.';

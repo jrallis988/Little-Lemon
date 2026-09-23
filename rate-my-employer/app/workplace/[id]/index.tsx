@@ -1,6 +1,6 @@
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { Chip, PrimaryButton, ReviewCard, ScoreBars, StarRating } from '../../../src/components';
 import { useApp } from '../../../src/context/AppContext';
@@ -23,6 +23,7 @@ export default function WorkplaceScreen() {
   } = useApp();
   const [tab, setTab] = useState<TabKey>('overview');
   const [roleFilter, setRoleFilter] = useState<string | null>(null);
+  const [roleModalOpen, setRoleModalOpen] = useState(false);
   const workplace = getWorkplace(id);
   const company = workplace ? getCompany(workplace.companyId) : undefined;
 
@@ -37,14 +38,22 @@ export default function WorkplaceScreen() {
   const reviews = getCompanyReviews(company.id, workplace.id).filter((review) =>
     roleFilter ? review.role === roleFilter || review.department === roleFilter : true,
   );
-  const interviews = getCompanyInterviews(company.id, workplace.id);
-  const salaries = getCompanySalaries(company.id, workplace.id);
+  const interviews = getCompanyInterviews(company.id, workplace.id).filter((item) =>
+    roleFilter ? item.role === roleFilter : true,
+  );
+  const salaries = getCompanySalaries(company.id, workplace.id).filter((item) =>
+    roleFilter ? item.role === roleFilter : true,
+  );
   const averages = getCompanyAverages(company.id, workplace.id);
   const roles = Array.from(
     new Set(
-      getCompanyReviews(company.id, workplace.id).flatMap((review) =>
-        [review.role, review.department].filter(Boolean) as string[],
-      ),
+      [
+        ...getCompanyReviews(company.id, workplace.id).flatMap((review) =>
+          [review.role, review.department].filter(Boolean) as string[],
+        ),
+        ...getCompanyInterviews(company.id, workplace.id).map((item) => item.role),
+        ...getCompanySalaries(company.id, workplace.id).map((item) => item.role),
+      ].filter(Boolean),
     ),
   );
 
@@ -71,6 +80,11 @@ export default function WorkplaceScreen() {
               experiences
             </Text>
             <ScoreBars scores={averages} />
+            <PrimaryButton
+              label={roleFilter ? `Role · ${roleFilter}` : 'Filter by role'}
+              variant="secondary"
+              onPress={() => setRoleModalOpen(true)}
+            />
           </View>
 
           <View style={styles.tabs}>
@@ -93,40 +107,29 @@ export default function WorkplaceScreen() {
                 {workplace.summary ??
                   `${workplace.name} is a ${company.industry.toLowerCase()} location for ${company.name}.`}
               </Text>
-              {roles.length > 0 ? (
-                <>
-                  <Text style={[styles.section, { marginTop: spacing.md }]}>Filter by role</Text>
-                  <View style={styles.wrap}>
-                    <Chip
-                      label="All"
-                      active={!roleFilter}
-                      onPress={() => setRoleFilter(null)}
-                    />
-                    {roles.map((role) => (
-                      <Chip
-                        key={role}
-                        label={role}
-                        active={roleFilter === role}
-                        onPress={() => setRoleFilter(role)}
-                      />
-                    ))}
-                  </View>
-                </>
-              ) : null}
             </View>
           ) : null}
 
-          {tab === 'reviews'
-            ? reviews.map((review) => (
+          {tab === 'reviews' ? (
+            reviews.length === 0 ? (
+              <Text style={styles.empty}>No reviews{roleFilter ? ` for ${roleFilter}` : ''}.</Text>
+            ) : (
+              reviews.map((review) => (
                 <Pressable key={review.id} onPress={() => router.push(`/review/${review.id}`)}>
                   <ReviewCard review={review} />
                   <View style={{ height: spacing.md }} />
                 </Pressable>
               ))
-            : null}
+            )
+          ) : null}
 
-          {tab === 'interviews'
-            ? interviews.map((interview) => (
+          {tab === 'interviews' ? (
+            interviews.length === 0 ? (
+              <Text style={styles.empty}>
+                No interviews{roleFilter ? ` for ${roleFilter}` : ''}.
+              </Text>
+            ) : (
+              interviews.map((interview) => (
                 <Pressable
                   key={interview.id}
                   style={styles.card}
@@ -140,7 +143,8 @@ export default function WorkplaceScreen() {
                   </Text>
                 </Pressable>
               ))
-            : null}
+            )
+          ) : null}
 
           {tab === 'salaries' ? (
             salaries.length === 0 ? (
@@ -150,9 +154,7 @@ export default function WorkplaceScreen() {
                 <View style={styles.card}>
                   <Text style={styles.section}>Average pay</Text>
                   <Text style={styles.avg}>
-                    {averageHourly == null
-                      ? '—'
-                      : '$' + averageHourly.toFixed(2) + '/hr'}
+                    {averageHourly == null ? '—' : '$' + averageHourly.toFixed(2) + '/hr'}
                   </Text>
                   <Text style={styles.meta}>Based on {salaries.length} salaries</Text>
                 </View>
@@ -178,6 +180,54 @@ export default function WorkplaceScreen() {
           <Text style={styles.fabText}>Write a Review</Text>
         </Pressable>
       </View>
+
+      <Modal
+        visible={roleModalOpen}
+        animationType="slide"
+        transparent
+        onRequestClose={() => setRoleModalOpen(false)}
+      >
+        <View style={styles.modalBackdrop}>
+          <View style={styles.modalCard}>
+            <Text style={styles.modalTitle}>Filter by role</Text>
+            <Text style={styles.meta}>Narrow reviews, interviews, and salaries.</Text>
+            <ScrollView style={styles.modalList}>
+              <Pressable
+                style={[styles.modalOption, !roleFilter && styles.modalOptionOn]}
+                onPress={() => {
+                  setRoleFilter(null);
+                  setRoleModalOpen(false);
+                }}
+              >
+                <Text style={[styles.modalOptionText, !roleFilter && styles.modalOptionTextOn]}>
+                  All roles
+                </Text>
+              </Pressable>
+              {roles.map((role) => (
+                <Pressable
+                  key={role}
+                  style={[styles.modalOption, roleFilter === role && styles.modalOptionOn]}
+                  onPress={() => {
+                    setRoleFilter(role);
+                    setRoleModalOpen(false);
+                    if (tab === 'overview') setTab('reviews');
+                  }}
+                >
+                  <Text
+                    style={[
+                      styles.modalOptionText,
+                      roleFilter === role && styles.modalOptionTextOn,
+                    ]}
+                  >
+                    {role}
+                  </Text>
+                </Pressable>
+              ))}
+            </ScrollView>
+            <PrimaryButton label="Close" variant="ghost" onPress={() => setRoleModalOpen(false)} />
+          </View>
+        </View>
+      </Modal>
     </>
   );
 }
@@ -219,7 +269,6 @@ const styles = StyleSheet.create({
   body: { fontFamily: typography.body, fontSize: 15, lineHeight: 22, color: colors.inkMuted },
   cardTitle: { fontFamily: typography.bodySemi, fontSize: 16, color: colors.ink },
   avg: { fontFamily: typography.display, fontSize: 24, color: colors.ink },
-  wrap: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm, marginTop: spacing.sm },
   empty: { fontFamily: typography.body, fontSize: 14, color: colors.inkSoft },
   fab: {
     position: 'absolute',
@@ -234,4 +283,30 @@ const styles = StyleSheet.create({
   fabText: { fontFamily: typography.bodyBold, fontSize: 15, color: '#FFFFFF' },
   missing: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   missingText: { fontFamily: typography.bodyMedium, color: colors.inkMuted },
+  modalBackdrop: {
+    flex: 1,
+    backgroundColor: 'rgba(7, 30, 66, 0.45)',
+    justifyContent: 'flex-end',
+  },
+  modalCard: {
+    backgroundColor: colors.surfaceRaised,
+    borderTopLeftRadius: radii.xl,
+    borderTopRightRadius: radii.xl,
+    padding: spacing.lg,
+    gap: spacing.md,
+    maxHeight: '75%',
+  },
+  modalTitle: { fontFamily: typography.display, fontSize: 22, color: colors.ink },
+  modalList: { maxHeight: 320 },
+  modalOption: {
+    paddingVertical: 14,
+    paddingHorizontal: spacing.md,
+    borderRadius: radii.md,
+    borderWidth: 1,
+    borderColor: colors.border,
+    marginBottom: spacing.sm,
+  },
+  modalOptionOn: { borderColor: colors.blue, backgroundColor: colors.blueSoft },
+  modalOptionText: { fontFamily: typography.bodySemi, fontSize: 15, color: colors.ink },
+  modalOptionTextOn: { color: colors.blue },
 });

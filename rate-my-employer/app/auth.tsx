@@ -112,7 +112,7 @@ export default function AuthScreen() {
         {error ? <Text style={styles.error}>{error}</Text> : null}
 
         {mode === 'signin' ? (
-          <Pressable onPress={() => setError('Password reset will plug in with the API auth layer.')}>
+          <Pressable onPress={() => router.push('/forgot-password')}>
             <Text style={styles.forgot}>Forgot password?</Text>
           </Pressable>
         ) : null}
