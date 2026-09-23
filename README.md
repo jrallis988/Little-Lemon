@@ -18,6 +18,7 @@ Static site: HTML, CSS, and vanilla JS (built in Cursor). Custom typefaces (Arca
 ## Pages
 
 - `index.html` — home (hero, designer, services, portfolio, blog, contact)
+- `pace/` — PACE “Find Your Pace” social strategy & creative performance case study (React + TypeScript + Python/Pandas; fictional simulated data)
 - `nh-dmv/` — conceptual redesign of the New Hampshire DMV website (civic UX case study)
 - `services/` — detail pages for each service offering
 - `blog/` — blog index and post pages (content can be drafted in Blaze AI)
