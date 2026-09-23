@@ -1,7 +1,7 @@
 /* Little Lemon — shared interactions */
 (function () {
   const CART_KEY = "ll-cart";
-  const FORMSUBMIT = "https://formsubmit.co/ajax/jjrallis@unh.edu";
+  const FORM_ACTION = "https://formsubmit.co/jjrallis@unh.edu";
 
   function readCart() {
     try {
@@ -54,17 +54,32 @@
     btn.setAttribute("aria-expanded", open ? "true" : "false");
   }
 
-  async function postForm(payload) {
-    const res = await fetch(FORMSUBMIT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
-    if (!res.ok) throw new Error("submit failed");
-    return res.json().catch(() => ({}));
+  function absoluteNext(path) {
+    try {
+      return new URL(path, window.location.href).href;
+    } catch {
+      return path;
+    }
+  }
+
+  function ensureHidden(form, name, value) {
+    let input = form.querySelector(`input[name="${name}"]`);
+    if (!input) {
+      input = document.createElement("input");
+      input.type = "hidden";
+      input.name = name;
+      form.appendChild(input);
+    }
+    input.value = value;
+  }
+
+  function wireFormsubmitForm(form, subject, nextPath) {
+    form.setAttribute("action", FORM_ACTION);
+    form.setAttribute("method", "POST");
+    ensureHidden(form, "_subject", subject);
+    ensureHidden(form, "_captcha", "false");
+    ensureHidden(form, "_template", "table");
+    ensureHidden(form, "_next", absoluteNext(nextPath));
   }
 
   document.addEventListener("click", (e) => {
@@ -87,6 +102,18 @@
     const root = document.getElementById("order-root");
     if (!root) return;
 
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("sent") === "1") {
+      writeCart([]);
+      root.innerHTML = `
+        <div class="order-empty">
+          <h2>Order received</h2>
+          <p>Thanks — check your inbox for Formsubmit’s confirmation (activate it the first time).</p>
+          <a class="btn btn-primary" href="index.html">Back home</a>
+        </div>`;
+      return;
+    }
+
     const cart = readCart();
     if (!cart.length) {
       root.innerHTML = `
@@ -101,6 +128,9 @@
     const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
     const tax = subtotal * 0.08875;
     const total = subtotal + tax;
+    const line = cart
+      .map((i) => `${i.qty}× ${i.name} ($${(i.price * i.qty).toFixed(2)})`)
+      .join("\n");
 
     root.innerHTML = `
       <div class="order-layout">
@@ -133,9 +163,11 @@
             <label>Email<input type="email" name="email" required placeholder="you@email.com"></label>
             <label>Phone<input type="tel" name="phone" placeholder="(312) 555-0100"></label>
             <label>Pickup notes<textarea name="notes" placeholder="Allergy notes, timing…"></textarea></label>
+            <input type="hidden" name="order" value="">
+            <input type="hidden" name="subtotal" value="$${subtotal.toFixed(2)}">
+            <input type="hidden" name="total" value="$${total.toFixed(2)}">
             <button type="submit" class="btn btn-primary btn-block" id="place-order">Place order</button>
           </form>
-          <p id="order-success" class="muted" hidden></p>
         </div>
       </div>`;
 
@@ -157,102 +189,39 @@
     });
 
     const form = document.getElementById("order-form");
-    form?.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const btn = document.getElementById("place-order");
-      const data = new FormData(form);
-      const items = readCart();
-      const line = items
-        .map((i) => `${i.qty}× ${i.name} ($${(i.price * i.qty).toFixed(2)})`)
-        .join("\n");
-      const sub = items.reduce((s, i) => s + i.price * i.qty, 0);
-      btn.disabled = true;
-      btn.textContent = "Sending…";
-      try {
-        await postForm({
-          _subject: `Little Lemon order — ${data.get("name")}`,
-          name: data.get("name"),
-          email: data.get("email"),
-          phone: data.get("phone") || "",
-          notes: data.get("notes") || "",
-          order: line,
-          subtotal: `$${sub.toFixed(2)}`,
-          total: `$${(sub * 1.08875).toFixed(2)}`,
-        });
-        writeCart([]);
-        root.innerHTML = `
-          <div class="order-empty">
-            <h2>Order received</h2>
-            <p>We emailed the kitchen your pickup request. Grazie!</p>
-            <a class="btn btn-primary" href="index.html">Back home</a>
-          </div>`;
-        flashToast("Order sent — check your email confirmation from Formsubmit if first use");
-      } catch {
-        btn.disabled = false;
-        btn.textContent = "Place order";
-        flashToast("Could not send order — try again or call us");
-      }
+    form.querySelector('input[name="order"]').value = line;
+    wireFormsubmitForm(form, "Little Lemon pickup order", "order.html?sent=1");
+    form.addEventListener("submit", () => {
+      // Clear cart optimistically; confirmation page also clears.
+      writeCart([]);
     });
   }
 
   function wireReserveForm() {
     const form = document.getElementById("reserve-form");
     if (!form) return;
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const data = new FormData(form);
-      const name = data.get("name") || "Guest";
-      const btn = form.querySelector('[type="submit"]');
-      btn.disabled = true;
-      btn.textContent = "Sending…";
-      try {
-        await postForm({
-          _subject: `Little Lemon reservation — ${name}`,
-          name,
-          email: data.get("email"),
-          date: data.get("date"),
-          time: data.get("time"),
-          guests: data.get("guests"),
-          notes: data.get("notes") || "",
-        });
-        form.reset();
-        flashToast(`Table reserved for ${name}. See you soon!`);
-        const note = document.getElementById("reserve-success");
-        if (note) {
-          note.hidden = false;
-          note.textContent = `You're booked, ${name}. Confirmation will arrive by email once Formsubmit is activated.`;
-        }
-      } catch {
-        flashToast("Could not send reservation — try again");
-      } finally {
-        btn.disabled = false;
-        btn.textContent = "Confirm reservation";
+    wireFormsubmitForm(form, "Little Lemon reservation", "reserve.html?sent=1");
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("sent") === "1") {
+      const note = document.getElementById("reserve-success");
+      if (note) {
+        note.hidden = false;
+        note.textContent =
+          "Reservation sent. Check your email — activate Formsubmit the first time, then you’re set.";
       }
-    });
+      flashToast("Reservation submitted");
+    }
   }
 
   function wireNewsletterForms() {
     document.querySelectorAll(".newsletter-form").forEach((form) => {
       form.removeAttribute("onsubmit");
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const email = new FormData(form).get("email");
-        const btn = form.querySelector('[type="submit"]');
-        btn.disabled = true;
-        try {
-          await postForm({
-            _subject: "Little Lemon newsletter signup",
-            email,
-          });
-          form.reset();
-          flashToast("Subscribed — welcome to the table");
-        } catch {
-          flashToast("Could not subscribe — try again");
-        } finally {
-          btn.disabled = false;
-        }
-      });
+      wireFormsubmitForm(form, "Little Lemon newsletter signup", "index.html?subscribed=1");
     });
+    if (new URLSearchParams(window.location.search).get("subscribed") === "1") {
+      flashToast("Subscribed — welcome to the table");
+    }
   }
 
   document.addEventListener("DOMContentLoaded", () => {
