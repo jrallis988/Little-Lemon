@@ -22,7 +22,8 @@ Residents should understand what to do, whether it can be done online, what docu
 | `branches.html` / `branch.html#concord` | Map + list / branch detail |
 | `fees.html` | Searchable fees by service |
 | `records.html` | My DMV records |
-| `america-250.html` | America’s 250th commemorative cover plate |
+| `america-250.html#order` | America’s 250th commemorative cover plate checkout |
+| `vanity.html` | Vanity combination check + demo request |
 | `plates.html` | Vanity, moose, parks, decal, and veteran plate fees |
 | `motorcycle.html` | Motorcycle rider training path |
 | `appointments.html#how-to-video` | Appointment how-to video + booking |

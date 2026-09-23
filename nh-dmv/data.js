@@ -197,7 +197,7 @@ window.NHDMV = {
     { id: 'title', category: 'vehicle', group: 'titles', name: 'Certificate of title', blurb: 'New title processing with ownership documents', ways: ['drop', 'appt'], href: 'vehicle.html#title' },
     { id: 'dup-title', category: 'vehicle', group: 'titles', name: 'Duplicate title', blurb: 'Replace a lost or damaged title via drop box or appointment', ways: ['drop', 'appt'], href: 'vehicle.html#dup-title' },
     { id: 'america-250', category: 'vehicle', group: 'specialty', name: 'America’s 250th commemorative plate', blurb: 'Cover plate $25 + $4.95 shipping · display Jan 1, 2026 – Jul 4, 2027 · LCHIP proceeds', ways: ['online'], href: 'america-250.html', fee: '$25 + $4.95 ship' },
-    { id: 'vanity', category: 'vehicle', group: 'specialty', name: 'Vanity plates', blurb: 'Personalized plate combinations and other specialty designs', ways: ['online', 'appt'], href: 'plates.html' },
+    { id: 'vanity', category: 'vehicle', group: 'specialty', name: 'Vanity plates', blurb: 'Personalized plate combinations and other specialty designs', ways: ['online', 'appt'], href: 'vanity.html' },
     { id: 'placard', category: 'vehicle', group: 'specialty', name: 'Walking disability placard', blurb: 'Accessible parking placard applications', ways: ['drop', 'appt'], href: 'vehicle.html#placard' },
     { id: 'mvr', category: 'records', group: 'records', name: 'Request your driving record', blurb: 'Your own record only online · third-party requests must go to Concord', ways: ['online', 'drop', 'appt'], href: 'records.html#mvr', fee: '$20 research' },
     { id: 'accident', category: 'records', group: 'records', name: 'Request accident report', blurb: 'Drop-box request for crash reports', ways: ['drop'], href: 'records.html#accident' },
@@ -375,7 +375,7 @@ window.NHDMV = {
   onlineGuide: [
     { id: 'dl-renew', title: 'Renew license', status: 'online', blurb: 'Complete entirely online when eligible', href: 'service.html#dl-renew' },
     { id: 'duplicate', title: 'Replace license', status: 'online', blurb: 'Duplicate credential often available online or via drop box', href: 'service.html#duplicate' },
-    { id: 'america-250', title: 'America’s 250th plate', status: 'online', blurb: 'Order the commemorative cover plate online — ships to you', href: 'america-250.html' },
+    { id: 'america-250', title: 'America’s 250th plate', status: 'online', blurb: 'Order the commemorative cover plate online — ships to you', href: 'america-250.html#order' },
     { id: 'address', title: 'Change address', status: 'partial', blurb: 'Start online; reprint may use drop box ($10)', href: 'change-address.html' },
     { id: 'reg-renew', title: 'Renew registration', status: 'partial', blurb: 'Town/city fees first, then state portion online or drop box', href: 'vehicle.html#reg-renew' },
     { id: 'mvr', title: 'Order records', status: 'online', blurb: 'Your own driving record can be requested online', href: 'records.html#mvr' },
@@ -653,7 +653,7 @@ window.NHDMV = {
       process: ['Review plate details', 'Order online (up to 4 per order)', 'Allow up to 4 weeks for production & shipping', 'Display on front only with rear registration plate — or keep as souvenir'],
       appointment: false,
       where: 'Online order · ships to you · bulk 25+ at Concord',
-      primaryCta: { label: 'Plate details & order', href: 'america-250.html' },
+      primaryCta: { label: 'Order online', href: 'america-250.html#order' },
       secondaryCta: { label: 'Vehicle specialty hub', href: 'vehicle.html#specialty' },
       beforeBegin: ['Credit card only — purchases are non-refundable', 'Confirm front cover plate use (rear registration plate stays on)'],
       related: ['vanity', 'reg-renew']
@@ -669,8 +669,8 @@ window.NHDMV = {
       process: ['Choose plate type', 'Check availability / character rules', 'Pay municipal + state + specialty fees', 'Receive plates'],
       appointment: false,
       where: 'Online when eligible · appointment when eligibility review is needed',
-      primaryCta: { label: 'Specialty plates', href: 'plates.html' },
-      secondaryCta: { label: 'America’s 250th plate', href: 'america-250.html' },
+      primaryCta: { label: 'Check vanity availability', href: 'vanity.html' },
+      secondaryCta: { label: 'America’s 250th plate', href: 'america-250.html#order' },
       beforeBegin: ['Decide vanity vs commemorative vs specialty design'],
       related: ['america-250', 'reg-new']
     },
@@ -706,7 +706,7 @@ window.NHDMV = {
     { phrases: ['location', 'branch', 'office', 'hours', 'near me'], title: 'Find a DMV location', blurb: 'Map and list of 15 branches.', href: 'branches.html', badge: 'Locations' },
     { phrases: ['fee', 'cost', 'price', 'how much'], title: 'What will this cost?', blurb: 'Search common DMV fees by service.', href: 'fees.html', badge: 'Fees' },
     { phrases: ['america', '250', 'commemorative', 'cover plate', 'celebrate america', 'lchip', 'specialty plate'], title: 'America’s 250th commemorative plate', blurb: 'Order the cover plate online — $25 + shipping.', href: 'america-250.html', badge: 'Online' },
-    { phrases: ['vanity', 'personalized plate', 'custom plate', 'moose plate', 'parks plate'], title: 'Vanity & specialty plates', blurb: 'Personalized and specialty plate options.', href: 'plates.html', badge: 'Plates' },
+    { phrases: ['vanity', 'personalized plate', 'custom plate', 'moose plate', 'parks plate'], title: 'Vanity & specialty plates', blurb: 'Check a combination, then request the plate.', href: 'vanity.html', badge: 'Plates' },
     { phrases: ['motorcycle', 'bike', 'rider training', 'motorcycle permit', 'endorsement'], title: 'Motorcycle rider training', blurb: 'Seasonal training, permit, and endorsement path.', href: 'motorcycle.html', badge: 'Training' },
     { phrases: ['video', 'how to appointment', 'how to make an appointment', 'appointment video'], title: 'How to make an appointment', blurb: 'Short how-to video with transcript, then book.', href: 'appointments.html#how-to-video', badge: 'Video' }
   ],

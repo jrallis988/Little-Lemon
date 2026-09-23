@@ -69,8 +69,8 @@
           <li>Proceeds support <strong>LCHIP</strong> historic &amp; natural resource preservation</li>
         </ul>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="online.html#america-250">Order online</a>
-          <a class="btn btn-secondary" href="vehicle.html#specialty">All specialty plates</a>
+          <a class="btn btn-primary" href="america-250.html#order">Order online</a>
+          <a class="btn btn-secondary" href="plates.html">All specialty plates</a>
           <a class="btn btn-ghost" href="fees.html">See related fees</a>
         </div>
       </div>
@@ -106,13 +106,62 @@
       </div>
     </section>
 
+    <section class="panel" id="order" style="margin-top:1.25rem">
+      <h2>Order online (demo)</h2>
+      <p class="panel-lede">Credit card only · up to 4 plates · $4.95 shipping each · non-refundable. Nothing is charged — this stays in the concept portal.</p>
+      <form id="america-order-form">
+        <div class="field">
+          <label for="plate-qty">Quantity</label>
+          <select id="plate-qty" required>
+            <option value="1">1 plate</option>
+            <option value="2">2 plates</option>
+            <option value="3">3 plates</option>
+            <option value="4">4 plates</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="plate-name">Ship to (full name)</label>
+          <input id="plate-name" required autocomplete="name" value="Alex Morgan">
+        </div>
+        <div class="field">
+          <label for="plate-street">Street address</label>
+          <input id="plate-street" required autocomplete="street-address" value="12 Granite Street">
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="plate-city">City</label>
+            <input id="plate-city" required autocomplete="address-level2" value="Concord">
+          </div>
+          <div class="field">
+            <label for="plate-state">State</label>
+            <input id="plate-state" required maxlength="2" value="NH" autocomplete="address-level1">
+          </div>
+          <div class="field">
+            <label for="plate-zip">ZIP</label>
+            <input id="plate-zip" required inputmode="numeric" value="03301" autocomplete="postal-code">
+          </div>
+        </div>
+        <div class="field">
+          <label for="plate-email">Email for order updates</label>
+          <input id="plate-email" type="email" required autocomplete="email" value="alex.morgan@email.demo">
+        </div>
+        <label class="check-item" style="margin:0.5rem 0 1rem">
+          <input id="plate-terms" type="checkbox" required checked>
+          <div><h3>I understand this is non-refundable</h3><p>Cover plate for the front only · rear registration plate stays on.</p></div>
+        </label>
+        <div class="order-total" id="america-order-total" aria-live="polite">Total: $29.95</div>
+        <button class="btn btn-primary" type="submit">Place demo order</button>
+        <p class="field-hint">Allow up to 4 weeks for production &amp; shipping. Bulk 25+ still goes to Concord.</p>
+      </form>
+    </section>
+
     <section class="panel" style="margin-top:1.25rem">
       <h2>Also looking for vanity or other specialty plates?</h2>
       <p class="panel-lede">Vanity, conservation, parks, veteran, and other specialty options live under Vehicle → Specialty.</p>
       <div class="hero-actions">
-          <a class="btn btn-navy" href="plates.html">Plate types &amp; fees</a>
-        <a class="btn btn-secondary" href="vehicle.html#specialty">Specialty hub</a>
-        <a class="btn btn-secondary" href="search.html">Search tasks</a>
+        <a class="btn btn-navy" href="vanity.html">Check vanity availability</a>
+        <a class="btn btn-secondary" href="plates.html">Plate types &amp; fees</a>
+        <a class="btn btn-secondary" href="vehicle.html#specialty">Vehicle hub</a>
       </div>
     </section>
   </main>

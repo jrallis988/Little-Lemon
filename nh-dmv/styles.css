@@ -1878,3 +1878,19 @@ body.has-scam-popup {
     grid-template-columns: 1fr;
   }
 }
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1.4fr 0.5fr 0.7fr;
+  gap: 0.75rem;
+}
+.order-total {
+  font-family: var(--display);
+  font-weight: 800;
+  color: var(--navy);
+  margin: 0.35rem 0 1rem;
+  font-size: 1.05rem;
+}
+@media (max-width: 720px) {
+  .field-row { grid-template-columns: 1fr; }
+}

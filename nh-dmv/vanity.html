@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d3557">
+  <title>Vanity plate check — NH DMV</title>
+  <base href="/nh-dmv/">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-meta">
+        <span>Mon–Fri · most offices 8:00–4:30</span>
+        <span>603-227-4000</span>
+        <span>15 branches statewide</span>
+      </div>
+    </div>
+  </div>
+
+  <header class="app-header">
+    <div class="header-top">
+      <a class="brand" href="index.html" aria-label="NH DMV home">
+        <span class="brand-mark">NH</span>
+        <span class="brand-text">
+          <span class="brand-name">NH DMV</span>
+          <span class="brand-sub">Division of Motor Vehicles</span>
+        </span>
+      </a>
+      <nav class="life-nav" id="life-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="license.html">License &amp; ID</a>
+        <a href="vehicle.html" aria-current="page">Vehicle</a>
+        <a href="records.html">Records</a>
+        <a href="appointments.html">Appointments</a>
+        <a href="branches.html">Branches</a>
+      </nav>
+      <div class="header-tools">
+        <a class="btn btn-primary btn-sm" href="appointments.html">Book appointment</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="life-nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="page">
+    <header class="page-intro">
+      <p class="section-kicker">Specialty plates</p>
+      <h1>Check a vanity combination</h1>
+      <p>Passenger plates allow up to 7 characters. Demo availability is simulated — not a live DMV inventory check.</p>
+    </header>
+
+    <div class="flow-grid">
+      <form class="panel" id="vanity-check-form">
+        <h2>Availability</h2>
+        <div class="field">
+          <label for="vanity-combo">Combination</label>
+          <input id="vanity-combo" required maxlength="7" autocomplete="off" placeholder="e.g. GRANITE" aria-describedby="vanity-combo-hint">
+          <p class="field-hint" id="vanity-combo-hint">Letters and numbers · 2–7 characters · no spaces. Try GRANITE to see a taken result.</p>
+        </div>
+        <div class="field">
+          <label for="vanity-type">Plate type</label>
+          <select id="vanity-type">
+            <option value="passenger">Passenger vanity · $60 / 12 months (prorated)</option>
+            <option value="moose">Vanity + conservation (Moose) · $60 + $30/yr</option>
+            <option value="parks">Vanity + State Park · $60 + $85/yr</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" type="submit">Check availability</button>
+        <div class="result-box" id="vanity-result" hidden style="margin-top:1rem"></div>
+      </form>
+
+      <form class="panel" id="vanity-request-form" hidden>
+        <h2>Request this plate</h2>
+        <p class="panel-lede">If the combination is available, submit a demo request. Town/city registration fees still apply in real life.</p>
+        <div class="field">
+          <label for="vanity-reg">Current registration / plate</label>
+          <input id="vanity-reg" required value="NH 482-193">
+        </div>
+        <div class="field">
+          <label for="vanity-name">Name on registration</label>
+          <input id="vanity-name" required value="Alex Morgan">
+        </div>
+        <div class="field">
+          <label for="vanity-email">Email</label>
+          <input id="vanity-email" type="email" required value="alex.morgan@email.demo">
+        </div>
+        <button class="btn btn-primary" type="submit">Submit demo request</button>
+      </form>
+    </div>
+
+    <p style="margin-top:1.25rem"><a href="plates.html">← All plate types &amp; fees</a> · <a href="america-250.html">America 250 cover plate</a></p>
+  </main>
+
+  <footer class="app-footer"></footer>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

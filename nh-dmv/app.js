@@ -3,6 +3,7 @@
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
   const AUTH_KEY = 'nhdmv_demo_signed_in';
   const BOOKING_KEY = 'nhdmv_demo_booking';
+  const ORDER_KEY = 'nhdmv_demo_order';
 
   const isSignedIn = () => localStorage.getItem(AUTH_KEY) === '1';
   const setSignedIn = (on) => {
@@ -469,13 +470,91 @@
   function initConfirmation() {
     const root = $('#confirmation-root');
     if (!root) return;
+    const order = JSON.parse(sessionStorage.getItem(ORDER_KEY) || 'null');
     const booking = JSON.parse(sessionStorage.getItem(BOOKING_KEY) || 'null');
+
+    if (order?.kind === 'america-250') {
+      root.innerHTML = `
+        <div class="receipt" id="receipt">
+          <div class="receipt-banner">
+            <p class="section-kicker" style="color:var(--navy-mid)">Plate order</p>
+            <h1>America’s 250th order received</h1>
+            <p>Confirmation <strong>${order.confirmationId}</strong> · demo only — not billed</p>
+          </div>
+          <div class="receipt-grid">
+            <div>
+              <h2>Order</h2>
+              <div class="summary-row"><span>Item</span><span>Commemorative cover plate</span></div>
+              <div class="summary-row"><span>Quantity</span><span>${order.qty}</span></div>
+              <div class="summary-row"><span>Plates</span><span>$${order.platesTotal.toFixed(2)}</span></div>
+              <div class="summary-row"><span>Shipping</span><span>$${order.shipping.toFixed(2)}</span></div>
+              <div class="summary-row"><span>Total</span><span>$${order.total.toFixed(2)}</span></div>
+            </div>
+            <div>
+              <h2>Ships to</h2>
+              <div class="summary-row"><span>Name</span><span>${order.name}</span></div>
+              <div class="summary-row"><span>Address</span><span>${order.street}</span></div>
+              <div class="summary-row"><span>City</span><span>${order.city}, ${order.state} ${order.zip}</span></div>
+              <div class="summary-row"><span>Email</span><span>${order.email}</span></div>
+            </div>
+          </div>
+          <div class="result-box" style="margin-top:1.25rem">
+            <h3>What happens next</h3>
+            <p>Allow up to 4 weeks for production and shipping. Display on the front only from Jan 1, 2026 – Jul 4, 2027. Keep your rear registration plate on.</p>
+          </div>
+          <div class="hero-actions" style="margin-top:1.25rem">
+            <button type="button" class="btn btn-primary" onclick="window.print()">Print receipt</button>
+            <a class="btn btn-navy" href="dashboard.html">Dashboard</a>
+            <a class="btn btn-secondary" href="america-250.html">Order another</a>
+          </div>
+        </div>`;
+      return;
+    }
+
+    if (order?.kind === 'vanity') {
+      root.innerHTML = `
+        <div class="receipt" id="receipt">
+          <div class="receipt-banner">
+            <p class="section-kicker" style="color:var(--navy-mid)">Vanity plate request</p>
+            <h1>Request submitted</h1>
+            <p>Confirmation <strong>${order.confirmationId}</strong> · demo only — not billed</p>
+          </div>
+          <div class="receipt-grid">
+            <div>
+              <h2>Plate</h2>
+              <div class="summary-row"><span>Combination</span><span>${order.combo}</span></div>
+              <div class="summary-row"><span>Type</span><span>${order.typeLabel}</span></div>
+              <div class="summary-row"><span>Estimated add-on</span><span>${order.feeLabel}</span></div>
+            </div>
+            <div>
+              <h2>Registration</h2>
+              <div class="summary-row"><span>Current plate</span><span>${order.reg}</span></div>
+              <div class="summary-row"><span>Name</span><span>${order.name}</span></div>
+              <div class="summary-row"><span>Email</span><span>${order.email}</span></div>
+            </div>
+          </div>
+          <div class="result-box" style="margin-top:1.25rem">
+            <h3>Town/city fees still apply</h3>
+            <p>Vanity $60 / 12 months (prorated) plus any moose or parks add-on. Pay municipal permit fees before the state portion in production.</p>
+          </div>
+          <div class="hero-actions" style="margin-top:1.25rem">
+            <button type="button" class="btn btn-primary" onclick="window.print()">Print receipt</button>
+            <a class="btn btn-navy" href="plates.html">Plate types</a>
+            <a class="btn btn-secondary" href="vanity.html">Check another</a>
+          </div>
+        </div>`;
+      return;
+    }
+
     if (!booking) {
       root.innerHTML = `
         <div class="empty-state is-visible" style="display:block">
-          <strong>No appointment receipt found.</strong>
-          <p>Book a time first, then your printable confirmation will appear here.</p>
-          <p style="margin-top:1rem"><a class="btn btn-primary" href="appointments.html">Book appointment</a></p>
+          <strong>No receipt found.</strong>
+          <p>Book an appointment or complete a plate order first.</p>
+          <p style="margin-top:1rem" class="hero-actions">
+            <a class="btn btn-primary" href="appointments.html">Book appointment</a>
+            <a class="btn btn-secondary" href="america-250.html#order">Order America 250</a>
+          </p>
         </div>`;
       return;
     }
@@ -513,6 +592,117 @@
           <a class="btn btn-secondary" href="checklist.html">What to bring</a>
         </div>
       </div>`;
+  }
+
+  function money(n) {
+    return `$${n.toFixed(2)}`;
+  }
+
+  function initAmericaOrder() {
+    const form = $('#america-order-form');
+    if (!form) return;
+    const qtyEl = $('#plate-qty');
+    const totalEl = $('#america-order-total');
+    const UNIT = 25;
+    const SHIP = 4.95;
+    function updateTotal() {
+      const qty = Number(qtyEl.value) || 1;
+      const plates = qty * UNIT;
+      const shipping = qty * SHIP;
+      if (totalEl) totalEl.textContent = `Total: ${money(plates + shipping)}  (${qty} × $25.00 + ${qty} × $4.95 shipping)`;
+    }
+    qtyEl?.addEventListener('change', updateTotal);
+    updateTotal();
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const qty = Number(qtyEl.value) || 1;
+      const platesTotal = qty * UNIT;
+      const shipping = qty * SHIP;
+      const order = {
+        kind: 'america-250',
+        confirmationId: `NH250-${Date.now().toString().slice(-6)}`,
+        qty,
+        platesTotal,
+        shipping,
+        total: platesTotal + shipping,
+        name: $('#plate-name').value.trim(),
+        street: $('#plate-street').value.trim(),
+        city: $('#plate-city').value.trim(),
+        state: $('#plate-state').value.trim().toUpperCase(),
+        zip: $('#plate-zip').value.trim(),
+        email: $('#plate-email').value.trim(),
+        createdAt: new Date().toISOString()
+      };
+      sessionStorage.setItem(ORDER_KEY, JSON.stringify(order));
+      setSignedIn(true);
+      location.href = 'confirmation.html';
+    });
+  }
+
+  function initVanityCheck() {
+    const checkForm = $('#vanity-check-form');
+    if (!checkForm) return;
+    const TAKEN = new Set(['GRANITE', 'LIVEFREE', 'NHDMV', 'AMERICA', 'CONCORD', '482193']);
+    const result = $('#vanity-result');
+    const requestForm = $('#vanity-request-form');
+    let chosen = null;
+
+    const typeLabels = {
+      passenger: 'Passenger vanity',
+      moose: 'Vanity + conservation (Moose)',
+      parks: 'Vanity + State Park'
+    };
+    const feeLabels = {
+      passenger: '$60.00 / 12 months (prorated) + $8 first-time plate',
+      moose: '$60.00 vanity + $30.00 moose / year + $8 first-time plate',
+      parks: '$60.00 vanity + $85.00 parks / year + $8 first-time plate'
+    };
+
+    checkForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const raw = ($('#vanity-combo').value || '').trim().toUpperCase();
+      const combo = raw.replace(/\s+/g, '');
+      $('#vanity-combo').value = combo;
+      const type = $('#vanity-type').value;
+      result.hidden = false;
+      requestForm.hidden = true;
+      chosen = null;
+
+      if (!/^[A-Z0-9]{2,7}$/.test(combo)) {
+        result.innerHTML = `<h3>Not a valid combination</h3><p>Use 2–7 letters or numbers with no spaces or symbols (demo passenger rule).</p>`;
+        return;
+      }
+      if (TAKEN.has(combo)) {
+        result.innerHTML = `<h3>${combo} is already taken</h3><p>Try another combination. Town/city and state registration fees still apply on an available plate.</p>`;
+        return;
+      }
+      chosen = { combo, type };
+      result.innerHTML = `<h3>${combo} looks available</h3><p>${typeLabels[type]} · ${feeLabels[type]}. Confirm the request on the right — demo only.</p>`;
+      requestForm.hidden = false;
+    });
+
+    requestForm?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!chosen) {
+        toast('Check availability first');
+        return;
+      }
+      const order = {
+        kind: 'vanity',
+        confirmationId: `NHVAN-${Date.now().toString().slice(-6)}`,
+        combo: chosen.combo,
+        type: chosen.type,
+        typeLabel: typeLabels[chosen.type],
+        feeLabel: feeLabels[chosen.type],
+        reg: $('#vanity-reg').value.trim(),
+        name: $('#vanity-name').value.trim(),
+        email: $('#vanity-email').value.trim(),
+        createdAt: new Date().toISOString()
+      };
+      sessionStorage.setItem(ORDER_KEY, JSON.stringify(order));
+      setSignedIn(true);
+      location.href = 'confirmation.html';
+    });
   }
 
   function initWizard() {
@@ -1537,7 +1727,7 @@
           'motorcycle.html'
         ]
       },
-      { href: 'vehicle.html', label: 'Vehicle', match: ['vehicle.html', 'america-250.html', 'plates.html'] },
+      { href: 'vehicle.html', label: 'Vehicle', match: ['vehicle.html', 'america-250.html', 'plates.html', 'vanity.html'] },
       { href: 'records.html', label: 'Records', match: ['records.html'] },
       { href: 'appointments.html', label: 'Appointments', match: ['appointments.html', 'confirmation.html'] },
       { href: 'branches.html', label: 'Branches', match: ['branches.html', 'branch.html', 'locations.html'] }
@@ -1557,6 +1747,8 @@
       { href: 'new-resident.html', label: 'New resident' },
       { href: 'america-250.html', label: 'America 250 plate' },
       { href: 'plates.html', label: 'Specialty plates' },
+      { href: 'vanity.html', label: 'Vanity check' },
+      { href: 'america-250.html#order', label: 'Order America 250' },
       { href: 'motorcycle.html', label: 'Motorcycle training' },
       { href: 'appointments.html#how-to-video', label: 'Appointment video' },
       { href: 'scam-alert.html', label: 'Scam alert' },
@@ -1698,6 +1890,8 @@
   initBranchDetail();
   initAppointments();
   initConfirmation();
+  initAmericaOrder();
+  initVanityCheck();
   initWizard();
   initReadinessChecklist();
   initRealIdChecker();
