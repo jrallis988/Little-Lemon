@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Courier_Prime, Instrument_Serif, Manrope } from "next/font/google";
 import { company, writer } from "@/data/scripts";
+import { getSiteUrl } from "@/lib/site";
 import "./globals.css";
 
 const display = Instrument_Serif({
@@ -23,9 +24,7 @@ const body = Manrope({
   display: "swap",
 });
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
-  "http://localhost:3000";
+const siteUrl = getSiteUrl();
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -44,8 +43,10 @@ export const metadata: Metadata = {
     locale: "en_US",
     images: [
       {
-        url: company.logo,
-        alt: `${company.name} neon logo`,
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: `${company.name} — ${writer.name}`,
       },
     ],
   },
@@ -53,7 +54,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${company.name} — ${writer.name}`,
     description: writer.tagline,
-    images: [company.logo],
+    images: ["/og.png"],
   },
   icons: {
     icon: "/favicon-logo.png",

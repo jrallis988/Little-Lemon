@@ -46,11 +46,19 @@ Edit `src/data/scripts.ts` for:
 
 ### GitHub Pages (static)
 
+After merging to `main`, turn on Pages once:
+
+1. Repo **Settings → Pages → Build and deployment → Source: GitHub Actions**
+2. The workflow `.github/workflows/deploy-pages.yml` builds a static export and publishes to  
+   `https://jrallis988.github.io/Little-Lemon/`
+
+Local static build:
+
 ```bash
-GITHUB_PAGES=true npm run build
+npm run build:pages
 ```
 
-Serve the `out/` folder from the `gh-pages` branch (base path `/Little-Lemon`). Prefer Vercel for a clean root domain.
+Output lands in `out/`. Prefer Vercel for a clean root / custom domain.
 
 ## Structure
 
