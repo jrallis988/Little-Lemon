@@ -50,34 +50,54 @@ npm run dev
 
 ## Deploy on Cloudflare
 
-Connect this repo in the Cloudflare dashboard:
+Two paths — pick one.
 
-1. **Workers & Pages → Create → Connect to Git**
+### A) Cloudflare dashboard (Connect to Git)
+
+1. [Workers & Pages → Create → Connect to Git](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create)
 2. Repository: `https://github.com/jrallis988/Little-Lemon`
-3. Branch: `cursor/planet-fitness-club-pricing-2f73`
-4. Build command: `npx opennextjs-cloudflare build`
-5. Deploy command: `npx wrangler deploy`
-6. Set secrets / vars:
-   - `AUTH_SECRET`
-   - `ACCESS_CONTROL_SECRET`
-   - `NEXT_PUBLIC_SITE_URL` (your `*.workers.dev` or custom domain URL)
-   - `USE_MEMORY_STORE=true` (already set in `wrangler.jsonc`)
+3. Production branch: `cursor/planet-fitness-club-pricing-2f73`
+4. Build settings:
 
-Local Workers preview (requires Cloudflare auth for some features):
+| Setting | Value |
+|---------|-------|
+| Build command | `npx opennextjs-cloudflare build` |
+| Deploy command | `npx opennextjs-cloudflare deploy` |
+| Preview command | `npx opennextjs-cloudflare preview` |
+
+5. **Runtime** Variables & Secrets (Worker → Settings):
+
+| Name | Type |
+|------|------|
+| `AUTH_SECRET` | Secret |
+| `ACCESS_CONTROL_SECRET` | Secret |
+| `NEXT_PUBLIC_SITE_URL` | Text (your workers.dev URL after first deploy) |
+| `USE_MEMORY_STORE` | Text `true` (already in `wrangler.jsonc`) |
+
+6. Redeploy. Live URL shape:  
+   `https://planet-fitness-stratham.<your-subdomain>.workers.dev`
+
+### B) GitHub Actions (manual)
+
+Add these **GitHub repo secrets**, then run **Actions → deploy-cloudflare → Run workflow**:
+
+| Secret | Purpose |
+|--------|---------|
+| `CLOUDFLARE_API_TOKEN` | Token with Workers Scripts Edit |
+| `CLOUDFLARE_ACCOUNT_ID` | Cloudflare account id |
+| `AUTH_SECRET` | Session signing |
+| `ACCESS_CONTROL_SECRET` | Door / keytag HMAC |
+| `NEXT_PUBLIC_SITE_URL` | Optional until first URL is known |
+
+### Local CLI
 
 ```bash
 cp .dev.vars.example .dev.vars
-npm run preview
-```
-
-CLI deploy (after `wrangler login`):
-
-```bash
+npx wrangler login
 npm run deploy
 ```
 
-Worker name: `planet-fitness-stratham` → preview URL shape  
-`https://planet-fitness-stratham.<your-subdomain>.workers.dev`
+Worker name: `planet-fitness-stratham`
 
 ## Launch posture
 
