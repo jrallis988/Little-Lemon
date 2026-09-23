@@ -3,8 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Terms — Shift</title>
+  <meta name="description" content="Terms of Use for Shift by Working Intelligence.">
+  <title>Terms of Use — Shift</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta property="og:title" content="Terms of Use — Shift">
+  <meta property="og:image" content="images/og.png">
+  <link rel="canonical" href="https://shift.workingintelligence.com/terms.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
@@ -13,14 +17,53 @@
 <body>
   <header class="site-header">
     <a href="index.html" class="brand"><span class="brand-mark"></span><span class="brand-text">Shift</span></a>
-    <div class="header-actions"><a href="index.html" class="btn btn-primary">Back home</a></div>
+    <div class="header-actions"><a href="index.html#waitlist" class="btn btn-primary">Join waitlist</a></div>
   </header>
-  <main class="section">
+  <main class="section legal-page">
     <div class="section-inner narrow">
-      <h1 style="font-family:var(--font-display);letter-spacing:-0.03em;margin-bottom:1rem;">Terms</h1>
-      <p style="color:var(--muted);margin-bottom:1rem;">Shift is presented here as a design and product concept. Content on this site is illustrative and not an offer of service.</p>
-      <p style="color:var(--muted);">Working Intelligence reserves the right to update these terms when a production product launches.</p>
+      <h1>Terms of Use</h1>
+      <p class="legal-meta">Effective September 23, 2026 · Working Intelligence (“we”, “us”)</p>
+
+      <p>These Terms govern your use of the Shift marketing website and waitlist. They do not grant a license to use the Shift product until a separate customer agreement is executed.</p>
+
+      <h2>1. The site</h2>
+      <p>This site describes Shift, an AI workforce partners product from Working Intelligence. Features, roles, timelines, and screenshots are illustrative of intended capabilities and may change before general availability.</p>
+
+      <h2>2. Waitlist and early access</h2>
+      <ul>
+        <li>Joining the waitlist does not guarantee access, pricing, or a launch date.</li>
+        <li>You agree to provide accurate contact information and to receive related communications.</li>
+        <li>We may prioritize pilots based on industry, team size, and integration readiness.</li>
+      </ul>
+
+      <h2>3. Acceptable use</h2>
+      <p>You agree not to misuse the site, including attempting to disrupt it, scrape it aggressively, submit automated spam to the waitlist, or use it for unlawful purposes.</p>
+
+      <h2>4. Intellectual property</h2>
+      <p>Site content, branding, and design are owned by Working Intelligence or our licensors. You may not copy or redistribute materials for commercial use without permission.</p>
+
+      <h2>5. No warranties</h2>
+      <p>The site is provided “as is.” We make no warranties that content is complete, current, or error-free, or that described product capabilities will ship exactly as shown.</p>
+
+      <h2>6. Limitation of liability</h2>
+      <p>To the fullest extent permitted by law, Working Intelligence is not liable for indirect, incidental, or consequential damages arising from your use of this marketing site or reliance on its content.</p>
+
+      <h2>7. Privacy</h2>
+      <p>Our collection and use of personal information is described in the <a href="privacy.html">Privacy Policy</a>.</p>
+
+      <h2>8. Product terms</h2>
+      <p>If you become a Shift customer, a separate Order Form, Master Subscription Agreement, and Data Processing Addendum will control product use, including workforce data and integrations.</p>
+
+      <h2>9. Changes</h2>
+      <p>We may update these Terms by posting a revised version on this page. Continued use of the site after changes means you accept the updated Terms.</p>
+
+      <h2>10. Contact</h2>
+      <p>Questions: <a href="mailto:hello@workingintelligence.com">hello@workingintelligence.com</a></p>
     </div>
   </main>
+  <footer class="site-footer">
+    <p class="footer-copy">© <span id="year"></span> Working Intelligence. <a href="index.html">Home</a> · <a href="privacy.html">Privacy</a></p>
+  </footer>
+  <script>document.getElementById("year").textContent = String(new Date().getFullYear());</script>
 </body>
 </html>

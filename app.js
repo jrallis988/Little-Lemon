@@ -77,4 +77,64 @@
     };
     requestAnimationFrame(tick);
   }
+
+  // Waitlist form
+  const form = document.getElementById("waitlist-form");
+  const success = document.getElementById("waitlist-success");
+  const status = document.getElementById("waitlist-status");
+  if (form && success) {
+    const fields = ["name", "email", "company", "role"].map((name) => form.elements.namedItem(name));
+
+    const setInvalid = (el, invalid) => {
+      if (!(el instanceof HTMLElement)) return;
+      el.classList.toggle("is-invalid", invalid);
+    };
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      let ok = true;
+      fields.forEach((el) => {
+        if (!(el instanceof HTMLInputElement || el instanceof HTMLSelectElement)) return;
+        const valid = el.checkValidity();
+        setInvalid(el, !valid);
+        if (!valid) ok = false;
+      });
+
+      if (!ok) {
+        if (status) {
+          status.hidden = false;
+          status.textContent = "Please fill in the required fields with a valid work email.";
+        }
+        const firstInvalid = form.querySelector(".is-invalid");
+        if (firstInvalid instanceof HTMLElement) firstInvalid.focus();
+        return;
+      }
+
+      const data = Object.fromEntries(new FormData(form).entries());
+      const entry = {
+        ...data,
+        submittedAt: new Date().toISOString(),
+        source: location.pathname,
+      };
+
+      try {
+        const key = "shift_waitlist_v1";
+        const existing = JSON.parse(localStorage.getItem(key) || "[]");
+        existing.push(entry);
+        localStorage.setItem(key, JSON.stringify(existing));
+      } catch {
+        /* still show success — submission is captured client-side for demo */
+      }
+
+      if (typeof window.shiftTrack === "function") {
+        window.shiftTrack("waitlist_success", { role: String(data.role || "") });
+      }
+
+      form.hidden = true;
+      success.hidden = false;
+      if (status) status.hidden = true;
+      success.focus?.();
+    });
+  }
 })();

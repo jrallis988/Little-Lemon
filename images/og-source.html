@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shift OG</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body {
+      width: 1200px;
+      height: 630px;
+      font-family: Syne, Figtree, system-ui, sans-serif;
+      background:
+        radial-gradient(ellipse 60% 50% at 80% 30%, rgba(200,245,66,0.55), transparent 60%),
+        linear-gradient(145deg, #e8eef5 0%, #f0f4f8 40%, #c8f542 100%);
+      color: #0c1222;
+      overflow: hidden;
+      position: relative;
+    }
+    .grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(12,18,34,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(12,18,34,0.06) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .inner {
+      position: relative;
+      z-index: 1;
+      padding: 72px 80px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-weight: 800;
+      font-size: 42px;
+      letter-spacing: -0.04em;
+    }
+    .mark {
+      width: 36px; height: 36px;
+      background: #c8f542;
+      border: 3px solid #0c1222;
+      box-shadow: 4px 4px 0 #0c1222;
+      transform: rotate(12deg);
+    }
+    h1 {
+      font-size: 78px;
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+      max-width: 14ch;
+      font-weight: 800;
+    }
+    p {
+      font-size: 28px;
+      max-width: 28ch;
+      color: #3d5a80;
+      font-weight: 600;
+    }
+    .pill {
+      align-self: flex-start;
+      background: #0c1222;
+      color: #c8f542;
+      border: 3px solid #0c1222;
+      border-radius: 999px;
+      padding: 14px 28px;
+      font-weight: 800;
+      font-size: 22px;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Figtree:wght@600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="inner">
+    <div class="brand"><span class="mark"></span>Shift</div>
+    <div>
+      <h1>AI workforce partners for people ops</h1>
+      <p style="margin-top:24px">Hiring · Scheduling · HR · Onboarding · Compliance</p>
+    </div>
+    <div class="pill">Working Intelligence</div>
+  </div>
+</body>
+</html>

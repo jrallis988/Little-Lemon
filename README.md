@@ -16,6 +16,13 @@ Opens a local static server at [http://localhost:3000](http://localhost:3000).
 
 ## Pages
 
-- `index.html` — features / landing (hero, workforce roles, day-in-the-life, platform, FAQ, CTA)
+- `index.html` — features / landing + waitlist
 - `privacy.html` — privacy policy
-- `terms.html` — terms & conditions
+- `terms.html` — terms of use
+- `robots.txt` / `sitemap.xml` — SEO basics
+- `images/og.png` — Open Graph share image
+
+## Waitlist & analytics
+
+- Waitlist submissions are validated client-side and stored in `localStorage` (`shift_waitlist_v1`) for this static demo. Wire the form to Formspree, Basin, or your API before production.
+- First-party analytics live in `analytics.js` (events in `shift_analytics_v1`). Optional Plausible: set `window.SHIFT_ANALYTICS = { plausibleDomain: "your.domain" }` before the script.

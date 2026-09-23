@@ -9,8 +9,17 @@
   <title>Shift — AI Workforce Partners | Working Intelligence</title>
 
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Shift by Working Intelligence">
   <meta property="og:title" content="Shift — AI Workforce Partners">
   <meta property="og:description" content="Meet the AI team that runs hiring, scheduling, onboarding, HR, and compliance — so your people can do the work that matters.">
+  <meta property="og:image" content="images/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Shift — AI Workforce Partners">
+  <meta name="twitter:description" content="AI workforce partners for hiring, scheduling, onboarding, HR, and compliance.">
+  <meta name="twitter:image" content="images/og.png">
+  <link rel="canonical" href="https://shift.workingintelligence.com/">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,11 +40,12 @@
         <li><a href="#day">A Day</a></li>
         <li><a href="#platform">Platform</a></li>
         <li><a href="#faq">FAQ</a></li>
+        <li><a href="#waitlist">Waitlist</a></li>
       </ul>
     </nav>
     <div class="header-actions">
-      <a href="#cta" class="btn btn-ghost">Log in</a>
-      <a href="#cta" class="btn btn-primary">Get started</a>
+      <a href="#waitlist" class="btn btn-ghost" data-track="nav_login">Request access</a>
+      <a href="#waitlist" class="btn btn-primary" data-track="nav_get_started">Join waitlist</a>
       <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-nav">
         <span></span><span></span>
       </button>
@@ -55,8 +65,8 @@
         <h1 class="hero-title">The AI workforce that runs people ops with you</h1>
         <p class="hero-lede">Hiring, scheduling, onboarding, HR, and compliance — handled by specialists that never drop a shift.</p>
         <div class="hero-cta">
-          <a href="#workforce" class="btn btn-primary btn-lg">Meet your workforce</a>
-          <a href="#platform" class="btn btn-secondary btn-lg">See the platform</a>
+          <a href="#workforce" class="btn btn-primary btn-lg" data-track="hero_meet">Meet your workforce</a>
+          <a href="#waitlist" class="btn btn-secondary btn-lg" data-track="hero_waitlist">Join waitlist</a>
         </div>
       </div>
       <div class="hero-visual" aria-hidden="true">
@@ -362,12 +372,61 @@
       </div>
     </section>
 
-    <!-- Final CTA -->
+    <!-- Final CTA + waitlist -->
     <section class="cta" id="cta" aria-labelledby="cta-title">
       <div class="cta-burst" aria-hidden="true"></div>
       <div class="section-inner narrow cta-inner">
         <h2 id="cta-title">In the <span class="counter" id="seconds-counter">0</span> seconds it took you to get here, Shift could have covered a call-out.</h2>
-        <a href="#workforce" class="btn btn-dark btn-lg">Meet your AI workforce</a>
+        <a href="#waitlist" class="btn btn-dark btn-lg" data-track="cta_meet_workforce">Join the waitlist</a>
+      </div>
+    </section>
+
+    <section class="section waitlist" id="waitlist" aria-labelledby="waitlist-title">
+      <div class="section-inner narrow">
+        <div class="section-head">
+          <p class="eyebrow">Early access</p>
+          <h2 id="waitlist-title">Get Shift for your workforce</h2>
+          <p class="section-lede">Join the waitlist for pilot access. We’ll reach out with onboarding details for your sites and systems.</p>
+        </div>
+
+        <form class="waitlist-form" id="waitlist-form" novalidate>
+          <div class="form-row">
+            <label for="wl-name">Full name</label>
+            <input id="wl-name" name="name" type="text" autocomplete="name" required placeholder="Alex Rivera">
+          </div>
+          <div class="form-row">
+            <label for="wl-email">Work email</label>
+            <input id="wl-email" name="email" type="email" autocomplete="email" required placeholder="alex@company.com">
+          </div>
+          <div class="form-row">
+            <label for="wl-company">Company</label>
+            <input id="wl-company" name="company" type="text" autocomplete="organization" required placeholder="Northland Logistics">
+          </div>
+          <div class="form-row">
+            <label for="wl-role">Role</label>
+            <select id="wl-role" name="role" required>
+              <option value="" disabled selected>Select your role</option>
+              <option value="ops">Operations / scheduling</option>
+              <option value="hr">HR / people</option>
+              <option value="recruiting">Recruiting / talent</option>
+              <option value="store">Store / site leader</option>
+              <option value="exec">Founder / executive</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="wl-sites">Team size / sites</label>
+            <input id="wl-sites" name="sites" type="text" placeholder="e.g. 120 people across 4 locations">
+          </div>
+          <p class="form-note">By joining, you agree to our <a href="privacy.html">Privacy Policy</a> and <a href="terms.html">Terms</a>. No spam — pilot updates only.</p>
+          <button type="submit" class="btn btn-primary btn-lg" data-track="waitlist_submit">Request early access</button>
+          <p class="form-status" id="waitlist-status" role="status" aria-live="polite" hidden></p>
+        </form>
+
+        <div class="waitlist-success" id="waitlist-success" hidden>
+          <h3>You’re on the list.</h3>
+          <p>Thanks — we’ll email you when your workforce pilot is ready. Prefer a live walkthrough? <a href="mailto:hello@workingintelligence.com?subject=Shift%20demo%20request">Book a demo</a>.</p>
+        </div>
       </div>
     </section>
   </main>
@@ -398,6 +457,7 @@
           <ul>
             <li><a href="#platform">Platform</a></li>
             <li><a href="#day">A Day with Shift</a></li>
+            <li><a href="#waitlist">Waitlist</a></li>
             <li><a href="#faq">FAQ</a></li>
           </ul>
         </div>
@@ -410,9 +470,10 @@
         </div>
       </div>
     </div>
-    <p class="footer-copy">© <span id="year"></span> Working Intelligence. Shift is a product concept demo.</p>
+    <p class="footer-copy">© <span id="year"></span> Working Intelligence. All rights reserved.</p>
   </footer>
 
+  <script src="analytics.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
