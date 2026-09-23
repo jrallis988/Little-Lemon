@@ -26,6 +26,16 @@ npm run build
 npm run preview
 ```
 
+## Stakeholder demo
+
+Production builds hide `/design-system` and its nav links. To expose the contact sheet in a built preview:
+
+```bash
+VITE_SHOW_DESIGN_SYSTEM=1 npm run build
+```
+
+Local `npm run dev` always includes the design system.
+
 ## Brand direction
 
 - **Primary:** Marshalls Blue (`#003DA5`) for logo, promo accents, and CTAs
@@ -38,3 +48,5 @@ npm run preview
 - Catalog with faceted filters, sort, skeletons, empty state, and quick view
 - Product detail with thumbnails, size/color, store stock hint, sticky add-to-bag
 - Slide-over bag with promo codes (`FIND20`, `HAPPY10`) and savings metrics
+- Dedicated merch landings: `/designer-shop`, `/under-50`, `/clearance`
+- Store finder with preferred-store persistence, account, bag, and guest checkout
