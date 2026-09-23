@@ -3,7 +3,6 @@
   import {
     appState,
     clearHouseSignoff,
-    houseHasActivity,
     loadSampleHouse,
     saveUserArea,
     setMode,
@@ -15,6 +14,11 @@
   let pinDraft = $state("");
   let pinSet = $state(signoffIsSet());
   let notice = $state("");
+  const hasOps = $derived(
+    appState.inventoryScans.length > 0 ||
+      appState.shiftLogs.length > 0 ||
+      appState.auditTrails.length > 0,
+  );
 
   $effect(() => {
     areaDraft = appState.userArea ?? "";
@@ -139,7 +143,7 @@
     <article class="card">
       <h3>House data</h3>
       <p>
-        {houseHasActivity()
+        {hasOps
           ? "This device has cellar counts or closes on file."
           : "The house is empty — nothing has been counted or closed yet."}
       </p>
@@ -150,7 +154,7 @@
         <button type="button" class="primary" onclick={sample}>
           Load a sample night
         </button>
-        {#if houseHasActivity()}
+        {#if hasOps}
           <button type="button" class="ghost" onclick={emptyOps}>
             Clear counts & closes
           </button>
