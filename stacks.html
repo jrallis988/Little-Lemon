@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Programming languages and stacks across Artistic Fountain projects — from static sites to React, Next.js, Expo, Tauri, and Python.">
+    <meta name="theme-color" content="#FF6B35">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <title>Project Stacks — Artistic Fountain</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <header class="header">
+        <div class="logo">
+            <a href="index.html" class="logo-mark" aria-label="Artistic Fountain — home">
+                <span class="logo-line-1">Artistic</span>
+                <span class="logo-line-2">Fountain</span>
+            </a>
+        </div>
+        <nav aria-label="Primary">
+            <ul class="nav" id="main-nav">
+                <li><a href="index.html#about">The Designer</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#portfolio">Portfolio</a></li>
+                <li><a href="blog/index.html">Blog</a></li>
+                <li><a href="resume.pdf" download>Resume</a></li>
+            </ul>
+        </nav>
+        <div class="header-right">
+            <button class="nav-toggle" onclick="toggleNav()" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="main-nav">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main id="main" class="service-page stacks-page">
+        <div class="service-page-inner stacks-inner">
+            <a href="index.html#capabilities" class="service-back">← Capabilities</a>
+            <p class="service-kicker">Engineering</p>
+            <h1>Project stacks</h1>
+            <p class="service-lead">Seventy-one builds across this studio — grouped by how they ship. Creative sites stay lean; product work moves into TypeScript, native shells, and Python backends.</p>
+
+            <section class="service-block stack-group">
+                <h2>Static HTML / CSS / JavaScript <span class="stack-count">16</span></h2>
+                <p>Launch-ready marketing and concept sites without a framework. Includes Artistic Fountain, NH DMV, Little Lemon, Nick Jr, and PetSmart.</p>
+            </section>
+
+            <section class="service-block stack-group">
+                <h2>React <span class="stack-count">14</span></h2>
+                <p>JavaScript React apps — often with Tailwind. Includes Beach Motel, City Year, NHTI, Seascape Inn, Great Bay, and Nickelodeon.</p>
+            </section>
+
+            <section class="service-block stack-group">
+                <h2>React + TypeScript <span class="stack-count">13</span></h2>
+                <p>Typed React with Vite for campaigns and platforms. Includes Atelier Rack, Brewery, Weight Watchers, Working Intelligence, and Breakaway.</p>
+            </section>
+
+            <section class="service-block stack-group">
+                <h2>Next.js <span class="stack-count">9</span></h2>
+                <p>App Router product and brand sites. Includes ClearDose RX, MyPlace, Walgreens, Morgan Bright, NH Senate, and BCH Redesign.</p>
+            </section>
+
+            <section class="service-block stack-group">
+                <h2>React Native / Expo <span class="stack-count">4</span></h2>
+                <p>Mobile-first TypeScript screens and scaffolds — Expo tabs, onboarding flows, StaticVolume, and product revision passes.</p>
+            </section>
+
+            <section class="service-block stack-group">
+                <h2>TypeScript / TSX <span class="stack-count">5</span></h2>
+                <p>Typed front-ends without a single primary framework signal — Rate My Employer, Velocity Portfolio, Pulse Sports, Roam Coffee, The Next Chapter.</p>
+            </section>
+
+            <section class="service-block stack-group">
+                <h2>Desktop — Tauri / Rust <span class="stack-count">4</span></h2>
+                <p>Native shells with a React + TypeScript UI. Surf (kids browser) and Mailbox (student email) ship on Tauri with Rust backends.</p>
+            </section>
+
+            <section class="service-block stack-group">
+                <h2>Python <span class="stack-count">6</span></h2>
+                <p>Backend and AI-adjacent work — Thomas retail assistant, Pace Social, Rate My University, BioCross, and supplement profile ingestion.</p>
+            </section>
+
+            <p class="stacks-note">Full branch-level inventory lives in <code>STATUS.md</code> in the repository.</p>
+
+            <div class="service-page-cta">
+                <a href="index.html#portfolio" class="cta-btn">View Work</a>
+                <a href="index.html#contact-form" class="cta-btn cta-btn--soft">Start a Project</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <nav class="footer-nav">
+                <a href="index.html#about">About</a>
+                <a href="index.html#services">Services</a>
+                <a href="index.html#portfolio">Portfolio</a>
+                <a href="stacks.html">Stacks</a>
+                <a href="blog/index.html">Blog</a>
+                <a href="index.html#contact">Contact</a>
+            </nav>
+            <div class="footer-copyright">
+                © 2026 Artistic Fountain™ — All rights reserved. <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms &amp; Conditions</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleNav() {
+            const nav = document.querySelector('.nav');
+            const toggle = document.querySelector('.nav-toggle');
+            const isOpen = nav.classList.toggle('active');
+            toggle.classList.toggle('active', isOpen);
+            toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        }
+        document.querySelectorAll('.nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                const nav = document.querySelector('.nav');
+                const toggle = document.querySelector('.nav-toggle');
+                nav.classList.remove('active');
+                toggle.classList.remove('active');
+                toggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+    </script>
+</body>
+</html>

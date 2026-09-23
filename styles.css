@@ -678,6 +678,14 @@ a:hover { opacity: 0.8; }
     line-height: 1.65;
 }
 
+.capabilities-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
 .capabilities-cta .view-btn {
     text-decoration: none;
 }
@@ -1292,6 +1300,40 @@ a:hover { opacity: 0.8; }
 .service-page-cta .cta-btn {
     text-decoration: none;
     display: inline-block;
+}
+
+.service-page-cta .cta-btn + .cta-btn {
+    margin-left: 0.75rem;
+}
+
+.stacks-inner {
+    max-width: 720px;
+}
+
+.stack-group h2 {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.75rem;
+}
+
+.stack-count {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--orange);
+}
+
+.stacks-note {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin: 0.5rem 0 0;
+}
+
+.stacks-note code {
+    font-size: 0.9em;
+    color: var(--cream);
 }
 
 .service-other h2 {
