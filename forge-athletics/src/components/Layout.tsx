@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { brand } from '../brand/tokens'
 
 const links = [
@@ -18,25 +18,50 @@ const links = [
   { id: 'digital', label: 'Digital' },
   { id: 'physical', label: 'Physical' },
   { id: 'finale', label: 'Finale' },
+  { id: 'book', label: 'Book' },
 ]
 
 export function CaseNav() {
+  const [open, setOpen] = useState(false)
+
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth > 720) setOpen(false)
+    }
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
   return (
-    <nav className="case-nav" aria-label="Campaign case study sections">
-      <a href="#top" className="case-nav-brand">
+    <nav className={`case-nav ${open ? 'is-open' : ''}`} aria-label="Campaign case study sections">
+      <a href="#top" className="case-nav-brand" onClick={() => setOpen(false)}>
         <span className="case-nav-mark">F</span>
         <span className="case-nav-name">{brand.name}</span>
       </a>
-      <ul className="case-nav-list">
-        {links.map((l) => (
-          <li key={l.id}>
-            <a href={`#${l.id}`}>{l.label}</a>
-          </li>
-        ))}
-      </ul>
-      <a className="case-nav-back" href="../../index.html">
-        ← Portfolio
-      </a>
+      <button
+        type="button"
+        className="case-nav-toggle"
+        aria-expanded={open}
+        aria-controls="case-nav-panel"
+        onClick={() => setOpen((v) => !v)}
+      >
+        <span className="sr-only">{open ? 'Close menu' : 'Open menu'}</span>
+        <span aria-hidden>{open ? '✕' : 'Menu'}</span>
+      </button>
+      <div id="case-nav-panel" className="case-nav-panel">
+        <ul className="case-nav-list">
+          {links.map((l) => (
+            <li key={l.id}>
+              <a href={`#${l.id}`} onClick={() => setOpen(false)}>
+                {l.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <a className="case-nav-back" href="../../index.html">
+          ← Portfolio
+        </a>
+      </div>
     </nav>
   )
 }

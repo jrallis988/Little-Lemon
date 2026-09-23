@@ -1,5 +1,6 @@
-import type { ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 import { ForgeLogo, ForgeSymbol } from '../brand/logo'
+import { photos } from '../brand/photos'
 import {
   brand,
   campaignStatements,
@@ -46,17 +47,32 @@ export function WorkCode({
 
 export function PhotoPlate({
   tone = 'tone-maya',
+  image,
   children,
   className,
   label,
+  position = 'center',
 }: {
   tone?: string
+  image?: string
   children?: ReactNode
   className?: string
   label?: string
+  position?: string
 }) {
   return (
-    <div className={`photo-plate ${tone} ${className ?? ''}`}>
+    <div
+      className={`photo-plate ${tone} ${image ? 'has-photo' : ''} ${className ?? ''}`}
+      style={
+        image
+          ? {
+              backgroundImage: `linear-gradient(180deg, rgba(18,18,18,0.15) 0%, rgba(18,18,18,0.55) 45%, rgba(18,18,18,0.92) 100%), url(${image})`,
+              backgroundSize: 'cover',
+              backgroundPosition: position,
+            }
+          : undefined
+      }
+    >
       {label && <span className="photo-plate-edge">{label}</span>}
       <div className="photo-plate-grain" aria-hidden />
       <div className="photo-plate-content">{children}</div>
@@ -93,7 +109,13 @@ export function ScreenKicker({ n, label }: { n: string; label: string }) {
 export function CampaignHero() {
   return (
     <section id="top" className="camp-hero">
-      <PhotoPlate tone="tone-maya" className="camp-hero-plate" label="SESSION 184">
+      <PhotoPlate
+        tone="tone-maya"
+        image={photos.mayaTrack}
+        className="camp-hero-plate"
+        label="SESSION 184"
+        position="center 30%"
+      >
         <div className="camp-hero-inner">
           <WorkCode compact="05:12 AM / SESSION 184 / STRENGTH" />
           <div className="camp-hero-brand">
@@ -143,7 +165,13 @@ export function InsightScreen() {
   return (
     <section id="insight" className="camp-section camp-section--flush">
       <ScreenKicker n="03" label="The Insight" />
-      <PhotoPlate tone="tone-empty" className="insight-plate" label="05:12 AM · EMPTY TRACK">
+      <PhotoPlate
+        tone="tone-empty"
+        image={photos.emptyTrack}
+        className="insight-plate"
+        label="05:12 AM · EMPTY TRACK"
+        position="center"
+      >
         <div className="insight-copy">
           <p className="insight-line">EVERYONE SEES THE RESULT.</p>
           <p className="insight-line insight-line--accent">
@@ -247,7 +275,13 @@ export function AthleteScreen() {
         {maya.name} / {maya.age} / {maya.sport}
       </h2>
       <div className="athlete-layout">
-        <PhotoPlate tone="tone-maya" className="athlete-plate" label="TRAINING · NOT POSING">
+        <PhotoPlate
+          tone="tone-maya"
+          image={photos.mayaTrack}
+          className="athlete-plate"
+          label="TRAINING · NOT POSING"
+          position="center 25%"
+        >
           <div className="athlete-plate-copy">
             <span>{maya.session}</span>
             <span>{maya.time}</span>
@@ -261,6 +295,25 @@ export function AthleteScreen() {
             Following one athlete across executions keeps the campaign continuous — not a
             pile of unrelated mockups.
           </p>
+        </div>
+      </div>
+
+      <div className="athlete-secondary">
+        <p className="mock-label">Also in the campaign</p>
+        <div className="athlete-secondary-card">
+          <PhotoPlate
+            tone="tone-jordan"
+            image={photos.jordanGym}
+            className="athlete-secondary-photo"
+            label={`${jordan.name} · ${jordan.sport}`}
+          />
+          <div>
+            <h3 className="camp-headline" style={{ fontSize: '1.75rem' }}>
+              {jordan.name} / {jordan.age} / {jordan.sport}
+            </h3>
+            <AthleteStatGrid athlete={jordan} />
+            <p className="camp-lead">{jordan.story}</p>
+          </div>
         </div>
       </div>
     </section>
@@ -406,6 +459,12 @@ export function WorkCodeScreen() {
 /* ——— 11 Photography ——— */
 
 export function PhotoScreen() {
+  const examples = [
+    { t: 'CHALK', image: photos.chalk, tone: 'tone-detail' },
+    { t: 'EMPTY TRACK', image: photos.emptyTrack, tone: 'tone-empty' },
+    { t: 'AFTER EFFORT', image: photos.mayaAfter, tone: 'tone-maya' },
+    { t: 'ARRIVAL', image: photos.mayaArrival, tone: 'tone-recover' },
+  ]
   return (
     <section id="photo" className="camp-section">
       <ScreenKicker n="11" label="Photography Direction" />
@@ -429,12 +488,13 @@ export function PhotoScreen() {
         </div>
       </div>
       <div className="photo-examples">
-        {['CHALK', 'EMPTY TRACK', 'AFTER EFFORT', 'RECOVERY'].map((t, i) => (
+        {examples.map((ex) => (
           <PhotoPlate
-            key={t}
-            tone={['tone-detail', 'tone-empty', 'tone-maya', 'tone-recover'][i]}
+            key={ex.t}
+            tone={ex.tone}
+            image={ex.image}
             className="photo-ex"
-            label={t}
+            label={ex.t}
           />
         ))}
       </div>
@@ -451,6 +511,8 @@ export function CampaignAd({
   line2,
   tone,
   protocol,
+  image,
+  position,
 }: {
   id: string
   kicker: string
@@ -458,11 +520,19 @@ export function CampaignAd({
   line2: string
   tone: string
   protocol?: string
+  image?: string
+  position?: string
 }) {
   return (
     <section id={id} className="camp-section camp-section--flush">
       <ScreenKicker n={kicker} label={`Campaign Ad · ${athlete.name}`} />
-      <PhotoPlate tone={tone} className="ad-plate" label={athlete.session}>
+      <PhotoPlate
+        tone={tone}
+        image={image}
+        className="ad-plate"
+        label={athlete.session}
+        position={position}
+      >
         <div className="ad-inner">
           <WorkCode
             compact={`${athlete.name} / ${athlete.sport}  ·  ${athlete.session}${protocol ? `  ·  ${protocol}` : ''}`}
@@ -487,6 +557,8 @@ export function AdOne() {
       line2="5:12 A.M."
       tone="tone-maya"
       protocol="8 × 200M"
+      image={photos.mayaTrack}
+      position="center 28%"
     />
   )
 }
@@ -500,6 +572,8 @@ export function AdTwo() {
       line2="327 REPS."
       tone="tone-strength"
       protocol="REP 327"
+      image={photos.mayaStrength}
+      position="center 40%"
     />
   )
 }
@@ -513,6 +587,8 @@ export function AdThree() {
       line2="1,000 MISSES."
       tone="tone-jordan"
       protocol="EMPTY GYM"
+      image={photos.jordanGym}
+      position="center 35%"
     />
   )
 }
@@ -521,10 +597,30 @@ export function AdThree() {
 
 export function OohScreen() {
   const placements = [
-    { where: 'Bus Shelter', line: '5:12 A.M.', tone: 'tone-maya' },
-    { where: 'Billboard', line: '327 REPS.', tone: 'tone-strength' },
-    { where: 'Gym Poster', line: 'ONE MORE.', tone: 'tone-empty' },
-    { where: 'Street Poster', line: 'FAILURE.', tone: 'tone-recover' },
+    {
+      where: 'Bus Shelter',
+      line: '5:12 A.M.',
+      image: photos.mayaTrack,
+      env: 'ooh-shelter',
+    },
+    {
+      where: 'Billboard',
+      line: '327 REPS.',
+      image: photos.mayaStrength,
+      env: 'ooh-billboard',
+    },
+    {
+      where: 'Gym Poster',
+      line: 'ONE MORE.',
+      image: photos.chalk,
+      env: 'ooh-gym',
+    },
+    {
+      where: 'Street Poster',
+      line: 'FAILURE.',
+      image: photos.emptyTrack,
+      env: 'ooh-street',
+    },
   ]
   return (
     <section id="ooh" className="camp-section">
@@ -538,9 +634,18 @@ export function OohScreen() {
         {placements.map((p) => (
           <article key={p.where} className="ooh-card">
             <p className="mock-label">{p.where}</p>
-            <div className={`ooh-frame ${p.tone}`}>
-              <BuiltThrough line2={p.line} size="md" />
-              <span className="ooh-mark">FORGE</span>
+            <div className={`ooh-env ${p.env}`}>
+              <div
+                className="ooh-frame"
+                style={{
+                  backgroundImage: `linear-gradient(180deg, rgba(18,18,18,0.2), rgba(18,18,18,0.85)), url(${p.image})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              >
+                <BuiltThrough line2={p.line} size="md" />
+                <span className="ooh-mark">FORGE</span>
+              </div>
             </div>
           </article>
         ))}
@@ -551,6 +656,16 @@ export function OohScreen() {
 
 /* ——— 16 Social ——— */
 
+const socialImages = [
+  photos.emptyTrack,
+  photos.mayaArrival,
+  photos.mayaTrack,
+  photos.mayaStrength,
+  photos.chalk,
+  photos.mayaAfter,
+  photos.mayaTrack,
+]
+
 export function SocialScreen() {
   return (
     <section id="social" className="camp-section">
@@ -560,11 +675,21 @@ export function SocialScreen() {
         Stories follow the work — not resized print ads. Seven frames. One session. Maya.
       </p>
       <div className="social-sequence">
-        {socialSequence.map((f) => (
-          <article key={f.frame} className="social-frame">
+        {socialSequence.map((f, i) => (
+          <article
+            key={f.frame}
+            className="social-frame social-frame--photo"
+            style={{
+              backgroundImage: `linear-gradient(180deg, rgba(18,18,18,0.25) 0%, rgba(18,18,18,0.88) 100%), url(${socialImages[i]})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          >
             <span className="sf-n">{f.frame}</span>
-            <h3>{f.title}</h3>
-            <p>{f.detail}</p>
+            <div>
+              <h3>{f.title}</h3>
+              <p>{f.detail}</p>
+            </div>
           </article>
         ))}
       </div>
@@ -575,6 +700,9 @@ export function SocialScreen() {
 /* ——— 17 Digital ——— */
 
 export function DigitalScreen() {
+  const [active, setActive] = useState<Athlete>(maya)
+  const image = active.id === 'maya' ? photos.mayaTrack : photos.jordanGym
+
   return (
     <section id="digital" className="camp-section">
       <ScreenKicker n="17" label="Digital Experience" />
@@ -586,33 +714,43 @@ export function DigitalScreen() {
       <div className="digital-experience">
         <aside className="de-rail">
           <p className="mock-label">Athletes</p>
-          <button type="button" className="de-athlete is-active">
-            {maya.name}
-            <span>{maya.sport}</span>
-          </button>
-          <button type="button" className="de-athlete">
-            {jordan.name}
-            <span>{jordan.sport}</span>
-          </button>
+          {[maya, jordan].map((a) => (
+            <button
+              key={a.id}
+              type="button"
+              className={`de-athlete ${active.id === a.id ? 'is-active' : ''}`}
+              onClick={() => setActive(a)}
+            >
+              {a.name}
+              <span>{a.sport}</span>
+            </button>
+          ))}
         </aside>
         <div className="de-main">
-          <WorkCode compact={`${maya.day}  ·  ${maya.session}  ·  TOTAL REPS ${maya.totalReps}`} />
-          <PhotoPlate tone="tone-maya" className="de-photo" label="MAYA · PROFILE" />
+          <WorkCode
+            compact={`${active.day}  ·  ${active.session}  ·  TOTAL REPS ${active.totalReps}`}
+          />
+          <PhotoPlate
+            tone={active.tone}
+            image={image}
+            className="de-photo"
+            label={`${active.name} · PROFILE`}
+          />
           <div className="de-stats">
             <div>
               <span className="as-k">DAY</span>
-              <span className="as-v">{maya.day.replace('DAY ', '')}</span>
+              <span className="as-v">{active.day.replace('DAY ', '')}</span>
             </div>
             <div>
               <span className="as-k">SESSION</span>
-              <span className="as-v">184</span>
+              <span className="as-v">{active.session.replace('SESSION ', '')}</span>
             </div>
             <div>
               <span className="as-k">TOTAL REPS</span>
-              <span className="as-v">{maya.totalReps}</span>
+              <span className="as-v">{active.totalReps}</span>
             </div>
           </div>
-          <p className="de-story">{maya.story}</p>
+          <p className="de-story">{active.story}</p>
         </div>
       </div>
     </section>
@@ -654,7 +792,14 @@ export function PhysicalScreen() {
         </article>
         <article className="phys-card phys-span">
           <p className="mock-label">Facility Wall</p>
-          <div className="phys-wall">
+          <div
+            className="phys-wall phys-wall--photo"
+            style={{
+              backgroundImage: `linear-gradient(90deg, rgba(18,18,18,0.85), rgba(18,18,18,0.55)), url(${photos.emptyTrack})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          >
             <BuiltThrough line2="5:12 A.M." size="lg" />
             <WorkCode compact="TRACK · EAST HALL · FORGE" />
           </div>
@@ -684,7 +829,13 @@ export function FinaleScreen() {
   return (
     <section id="finale" className="camp-section camp-section--flush">
       <ScreenKicker n="19" label="Final Campaign System" />
-      <PhotoPlate tone="tone-after" className="finale-plate" label="AFTER · NOT PODIUM">
+      <PhotoPlate
+        tone="tone-after"
+        image={photos.mayaAfter}
+        className="finale-plate"
+        label="AFTER · NOT PODIUM"
+        position="center 40%"
+      >
         <div className="finale-inner">
           <WorkCode entries={workCodeFor(maya)} />
           <BuiltThrough line2="WORK." size="lg" />
@@ -703,6 +854,51 @@ export function FinaleScreen() {
         demonstrate campaign strategy, art direction, identity, and real-world execution —
         not a mood board, and not a traditional brand-guidelines deck.
       </p>
+    </section>
+  )
+}
+
+/* ——— Campaign book (InDesign stand-in pages) ——— */
+
+export function CampaignBookScreen() {
+  const pages = [
+    { n: '01', title: 'Cover', line: 'BUILT THROUGH WORK.' },
+    { n: '02', title: 'Challenge', line: 'Athletic brands show the result.' },
+    { n: '03', title: 'Insight', line: 'No one sees the 5:12 A.M. alarm.' },
+    { n: '04', title: 'Strategy', line: 'Document the work.' },
+    { n: '05', title: 'Platform', line: 'BUILT THROUGH ____' },
+    { n: '06', title: 'Maya', line: 'Session 184 · 8 × 200M' },
+    { n: '07', title: 'Work Code', line: '05:12 / SESSION 184 / TRACK' },
+    { n: '08', title: 'Ad System', line: '5:12 · 327 · 1,000 misses' },
+  ]
+  return (
+    <section id="book" className="camp-section">
+      <ScreenKicker n="20" label="Campaign Book" />
+      <h2 className="camp-headline">INDESIGN ARTIFACT STRUCTURE</h2>
+      <p className="camp-lead">
+        Production campaign book is authored in Adobe InDesign. This viewer mirrors the
+        chapter structure as a portfolio companion to the interactive case study.
+      </p>
+      <div className="book-spread">
+        <div className="book-cover">
+          <p className="mock-label">Cover</p>
+          <span className="camp-hero-forge">FORGE</span>
+          <BuiltThrough line2="WORK." size="md" />
+          <p className="book-meta">CAMPAIGN STANDARDS · 2026</p>
+        </div>
+        <div className="book-toc">
+          <p className="mock-label">Contents</p>
+          <ol>
+            {pages.map((p) => (
+              <li key={p.n}>
+                <span>{p.n}</span>
+                <strong>{p.title}</strong>
+                <em>{p.line}</em>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
     </section>
   )
 }

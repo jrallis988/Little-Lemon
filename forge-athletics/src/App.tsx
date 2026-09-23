@@ -19,6 +19,7 @@ import {
   DigitalScreen,
   PhysicalScreen,
   FinaleScreen,
+  CampaignBookScreen,
 } from './components/Campaign'
 import './App.css'
 
@@ -50,6 +51,7 @@ export default function App() {
       <DigitalScreen />
       <PhysicalScreen />
       <FinaleScreen />
+      <CampaignBookScreen />
 
       <footer className="case-footer">
         <a href="../../index.html">← Back to Artistic Fountain</a>
