@@ -25,6 +25,20 @@ RLS: artists can only insert/update/delete their own rows. Public can read rows 
 
 Storage object paths must start with `{auth.uid()}/…`.
 
+## Phase 3 — taste persistence
+
+Also run `migrations/20260328120000_phase3_taste_persistence.sql` to create:
+
+| Table | Purpose |
+| --- | --- |
+| `taste_logs` | Diary log + optional rating per user/track |
+| `taste_reviews` | Written reviews |
+| `taste_lists` / `taste_list_items` | User lists |
+| `follows` | Follow artists or listeners |
+| `track_downloads` / `track_reposts` | Public support signals |
+
+`track_id` / follow `target_id` are **text** so demo catalog ids and Postgres uuids both work.
+
 ## Soft disable (Phase 7 prep)
 
 Set `disabled_at` on a profile, track, release, or media_asset to hide it without deleting files or related social records.

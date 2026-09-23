@@ -1,4 +1,5 @@
 import { Link } from 'expo-router';
+import { useCallback, useEffect, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { ListCard } from '@/components/social/ListCard';
@@ -16,7 +17,9 @@ import {
   listsForUser,
 } from '@/lib/demoData';
 import { isSupabaseConfigured } from '@/lib/supabase';
+import { fetchDiaryForUser, fetchListsForUser } from '@/lib/tasteApi';
 import { useUserStore } from '@/store/useUserStore';
+import type { DiaryEntry, TasteList } from '@/types/models';
 
 /**
  * Taste archive — Letterboxd-style profile: diary, reviews, lists.
@@ -28,9 +31,37 @@ export default function ProfileScreen() {
 
   const sample = DEMO_LISTENERS[0];
   const showDemo = !session || !profile;
-  const diary = diaryForUser(sample.id);
-  const lists = showDemo ? listsForUser(sample.id) : DEMO_LISTS.slice(0, 2);
   const reviews = DEMO_REVIEWS.filter((r) => r.userId === sample.id);
+
+  const [diary, setDiary] = useState<DiaryEntry[]>(() => diaryForUser(sample.id));
+  const [lists, setLists] = useState<TasteList[]>(() =>
+    !session || !profile ? listsForUser(sample.id) : DEMO_LISTS.slice(0, 2),
+  );
+
+  const loadTaste = useCallback(async () => {
+    if (!session?.user?.id || !isSupabaseConfigured) {
+      setDiary(diaryForUser(sample.id));
+      setLists(
+        !session || !profile ? listsForUser(sample.id) : DEMO_LISTS.slice(0, 2),
+      );
+      return;
+    }
+    try {
+      const [remoteDiary, remoteLists] = await Promise.all([
+        fetchDiaryForUser(session.user.id),
+        fetchListsForUser(session.user.id),
+      ]);
+      setDiary(remoteDiary.length ? remoteDiary : diaryForUser(sample.id));
+      setLists(remoteLists.length ? remoteLists : DEMO_LISTS.slice(0, 2));
+    } catch {
+      setDiary(diaryForUser(sample.id));
+      setLists(DEMO_LISTS.slice(0, 2));
+    }
+  }, [profile, sample.id, session, session?.user?.id]);
+
+  useEffect(() => {
+    void loadTaste();
+  }, [loadTaste]);
 
   return (
     <StaticBackground>

@@ -103,6 +103,13 @@ Signup stores `display_name` and `role` (`artist` | `listener`) in Supabase Auth
 
 Limits: audio ≤ 50MB; images ≤ 5–8MB. Artists can only mutate their own Storage paths (`{userId}/…`) and rows (RLS).
 
+## Taste persistence (Phase 3)
+
+1. Apply `supabase/migrations/20260328120000_phase3_taste_persistence.sql`.
+2. Sign in, then log/rate/review on a track page — rows land in `taste_logs` / `taste_reviews`.
+3. Download / Repost on independent tracks; Follow on artist pages.
+4. Activity tab loads a chronological following feed when you follow people with UUID profile ids.
+
 ## Visual identity
 
 Light PureVolume-style portal: white / `#F0F0F0` surfaces, black header, blue links, Barlow / Barlow Condensed — editorial discovery with Letterboxd-style social taste, not streaming-app chrome.

@@ -65,7 +65,14 @@ Scaffold still uses rich demo/seed data for Find + catalog browse. Supabase auth
 - Client API: `lib/artistUploads.ts`, `lib/uploadLimits.ts`
 - Artist Studio UI: `app/(main)/studio.tsx` (from You → Open artist studio)
 
-Apply the migration in your Supabase project before uploads will persist. Prefer extending existing patterns over inventing parallel design systems.
+**Phase 3 taste persistence** is also in-repo:
+
+- SQL: `supabase/migrations/20260328120000_phase3_taste_persistence.sql`
+- Client: `lib/tasteApi.ts` + `store/useTasteStore.ts` (hydrates on auth)
+- Track page: log/rate/review/download/repost write to Supabase when signed in
+- Artist follow + chronological Following feed (falls back to demo until you follow people)
+
+Apply Phase 2 then Phase 3 migrations before persistence works. Prefer extending existing patterns over inventing parallel design systems.
 
 ## Artwork & media sources
 

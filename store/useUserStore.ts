@@ -8,6 +8,7 @@ import {
   signUpWithRole,
   supabase,
 } from '@/lib/supabase';
+import { useTasteStore } from '@/store/useTasteStore';
 import type { AccountRole, UserProfile } from '@/types/models';
 
 type UserState = {
@@ -70,12 +71,18 @@ export const useUserStore = create<UserState>((set) => ({
       profile: profileFromSession(data.session),
       isHydrated: true,
     });
+    void useTasteStore.getState().hydrate();
 
     supabase.auth.onAuthStateChange((_event, session) => {
       set({
         session,
         profile: profileFromSession(session),
       });
+      if (session) {
+        void useTasteStore.getState().hydrate();
+      } else {
+        useTasteStore.getState().clear();
+      }
     });
   },
 
@@ -100,6 +107,7 @@ export const useUserStore = create<UserState>((set) => ({
       session: data.session,
       profile: profileFromSession(data.session),
     });
+    void useTasteStore.getState().hydrate();
     return true;
   },
 
@@ -130,6 +138,7 @@ export const useUserStore = create<UserState>((set) => ({
       session: data.session,
       profile: profileFromSession(data.session),
     });
+    void useTasteStore.getState().hydrate();
     return true;
   },
 
@@ -138,6 +147,7 @@ export const useUserStore = create<UserState>((set) => ({
     if (isSupabaseConfigured) {
       await supabaseSignOut();
     }
+    useTasteStore.getState().clear();
     set({
       isLoading: false,
       session: null,

@@ -1,5 +1,5 @@
 import { useLocalSearchParams } from 'expo-router';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { ArtistArchiveMeta } from '@/components/artist/ArtistArchiveMeta';
 import { SpotifyOutboundActions } from '@/components/spotify/SpotifyOutboundActions';
@@ -10,6 +10,8 @@ import { colors, fonts, portalBox, spacing } from '@/constants/theme';
 import { useBottomInset } from '@/hooks/useBottomInset';
 import { DEMO_ARTISTS, DEMO_TRACKS, isBrandNew } from '@/lib/demoData';
 import { artistSpotifyTarget } from '@/lib/spotify';
+import { useTasteStore } from '@/store/useTasteStore';
+import { useUserStore } from '@/store/useUserStore';
 
 /**
  * Artist archive page — dossier + track listings (no player).
@@ -42,6 +44,11 @@ export default function ArtistScreen() {
     spotifyArtistId: artist.spotifyArtistId,
     displayName: artist.displayName,
   });
+
+  const session = useUserStore((s) => s.session);
+  const following = useTasteStore((s) => Boolean(s.followingIds[artist.id]));
+  const toggleFollow = useTasteStore((s) => s.toggleFollow);
+  const tasteError = useTasteStore((s) => s.error);
 
   const statusLabel = isCatalog
     ? 'Catalog artist'
@@ -85,6 +92,24 @@ export default function ArtistScreen() {
                 Metadata for discovery · listen on Spotify
               </Text>
             )}
+            <Pressable
+              style={[styles.followBtn, following && styles.followBtnOn]}
+              onPress={() => {
+                if (!session) return;
+                void toggleFollow(artist.id, 'artist');
+              }}
+            >
+              <Text
+                style={[styles.followBtnText, following && styles.followBtnTextOn]}
+              >
+                {!session
+                  ? 'Sign in to follow'
+                  : following
+                    ? 'Following'
+                    : 'Follow'}
+              </Text>
+            </Pressable>
+            {tasteError ? <Text style={styles.followError}>{tasteError}</Text> : null}
           </View>
         </View>
 
@@ -199,6 +224,32 @@ const styles = StyleSheet.create({
     fontFamily: fonts.sans,
     fontSize: 13,
     color: colors.textMuted,
+  },
+  followBtn: {
+    marginTop: 8,
+    alignSelf: 'flex-start',
+    borderWidth: 1,
+    borderColor: colors.link,
+    backgroundColor: colors.link,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  },
+  followBtnOn: {
+    backgroundColor: colors.surface,
+  },
+  followBtnText: {
+    fontFamily: fonts.sansBold,
+    fontSize: 13,
+    color: '#FFFFFF',
+  },
+  followBtnTextOn: {
+    color: colors.link,
+  },
+  followError: {
+    fontFamily: fonts.sans,
+    fontSize: 12,
+    color: colors.danger,
+    marginTop: 4,
   },
   sectionBox: {
     ...portalBox,

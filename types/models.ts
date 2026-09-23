@@ -118,7 +118,12 @@ export type TasteList = {
   ranked: boolean;
 };
 
-export type ActivityKind = 'logged' | 'reviewed' | 'listed';
+export type ActivityKind =
+  | 'logged'
+  | 'reviewed'
+  | 'listed'
+  | 'downloaded'
+  | 'reposted';
 
 export type ActivityItem = {
   id: string;

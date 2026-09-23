@@ -21,7 +21,9 @@ function formatDay(iso: string): string {
 
 function actionLabel(item: ActivityItem): string {
   if (item.kind === 'reviewed') return 'reviewed';
-  if (item.kind === 'listed') return `added to “${item.listTitle ?? 'a list'}”`;
+  if (item.kind === 'listed') return `updated list “${item.listTitle ?? 'a list'}”`;
+  if (item.kind === 'downloaded') return 'downloaded';
+  if (item.kind === 'reposted') return 'reposted';
   return 'logged';
 }
 
@@ -29,10 +31,37 @@ function actionLabel(item: ActivityItem): string {
  * Letterboxd-style activity row — person + action + track, no playback.
  */
 export function ActivityEntry({ item }: ActivityEntryProps) {
-  const track = getTrackById(item.trackId);
+  const track = item.trackId ? getTrackById(item.trackId) : null;
+
+  if (item.kind === 'listed') {
+    return (
+      <View style={styles.card}>
+        <View style={styles.header}>
+          <Text style={styles.who}>
+            <Text style={styles.name}>{item.displayName}</Text>
+            {' '}
+            {actionLabel(item)}
+          </Text>
+          <Text style={styles.when}>{formatDay(item.createdAt)}</Text>
+        </View>
+      </View>
+    );
+  }
 
   if (!track) {
-    return null;
+    return (
+      <View style={styles.card}>
+        <View style={styles.header}>
+          <Text style={styles.who}>
+            <Text style={styles.name}>{item.displayName}</Text>
+            {' '}
+            {actionLabel(item)}
+            {item.trackId ? ` · ${item.trackId}` : ''}
+          </Text>
+          <Text style={styles.when}>{formatDay(item.createdAt)}</Text>
+        </View>
+      </View>
+    );
   }
 
   return (
