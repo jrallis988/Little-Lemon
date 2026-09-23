@@ -1327,6 +1327,7 @@ address {
 }
 
 .inquiry-form {
+  position: relative;
   display: grid;
   gap: 0.9rem;
 }
