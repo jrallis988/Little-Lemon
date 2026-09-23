@@ -20,6 +20,7 @@ A multi-page marketing site for Civic Bound — a nonprofit, youth-centered comm
 | `/partners` | Village Network partner portal |
 | `/leadership` | Youth Advisory Board |
 | `/news` | Latest news |
+| `/donate` | Give / support hubs |
 | `/contact` | Contact & hub hours |
 | `/privacy` | Privacy policy |
 

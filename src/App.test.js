@@ -49,3 +49,14 @@ test("renders privacy policy page", () => {
   );
   expect(screen.getByRole("heading", { name: /Privacy Policy/i })).toBeInTheDocument();
 });
+
+test("renders donate page", () => {
+  render(
+    <MemoryRouter initialEntries={["/donate"]}>
+      <App />
+    </MemoryRouter>
+  );
+  expect(
+    screen.getByText(/Strengthen the network young people rely on/i)
+  ).toBeInTheDocument();
+});

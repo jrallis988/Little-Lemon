@@ -113,6 +113,18 @@ function ContactPage() {
                 className="mt-8 space-y-5"
                 onSubmit={(e) => {
                   e.preventDefault();
+                  const data = new FormData(e.currentTarget);
+                  const name = String(data.get("name") || "").trim();
+                  const email = String(data.get("email") || "").trim();
+                  const topic = String(data.get("topic") || "general");
+                  const message = String(data.get("message") || "").trim();
+                  const subject = encodeURIComponent(
+                    `[Civic Bound] ${topic} — ${name}`
+                  );
+                  const body = encodeURIComponent(
+                    `Name: ${name}\nEmail: ${email}\nTopic: ${topic}\n\n${message}`
+                  );
+                  window.location.href = `mailto:hello@civicbound.org?subject=${subject}&body=${body}`;
                   setSent(true);
                 }}
               >

@@ -41,6 +41,9 @@ function Footer() {
           <Link to="/get-support" className="hover:text-violet">
             Get Support
           </Link>
+          <Link to="/donate" className="hover:text-violet">
+            Give
+          </Link>
           <Link to="/contact" className="hover:text-violet">
             Contact
           </Link>
@@ -55,6 +58,10 @@ function Footer() {
             © {new Date().getFullYear()} Civic Bound. A nonprofit organization.
           </p>
           <p>
+            <Link to="/donate" className="hover:text-violet">
+              Give
+            </Link>
+            {" · "}
             <Link to="/privacy" className="hover:text-violet">
               Privacy Policy
             </Link>
