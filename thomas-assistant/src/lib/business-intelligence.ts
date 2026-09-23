@@ -280,7 +280,7 @@ export function buildNotices(
       notice(
         "empty-house",
         "The house is quiet so far",
-        "Run a cellar check or start tonight’s close — I’ll notice what needs you.",
+        "Nothing has been counted or closed yet. Start a cellar check, or load a sample night from Settings if you want to see how notices look.",
         "info",
         [
           { label: "Review count", target: "inventory" },

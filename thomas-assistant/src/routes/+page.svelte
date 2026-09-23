@@ -9,7 +9,7 @@
   import PersonalHistory from "$lib/components/PersonalHistory.svelte";
   import ChatDrawer from "$lib/components/ChatDrawer.svelte";
   import AppHeader from "$lib/components/AppHeader.svelte";
-  import SplashScreen from "$lib/components/SplashScreen.svelte";
+  import SettingsPanel from "$lib/components/SettingsPanel.svelte";
   import { getProductMode } from "$lib/browser-storage";
   import {
     appState,
@@ -122,7 +122,9 @@
         {/if}
 
         <div class="tab-content">
-          {#if appState.mode === "personal"}
+          {#if appState.activeTab === "settings" || appState.mobileScreen === "settings"}
+            <SettingsPanel />
+          {:else if appState.mode === "personal"}
             {#if appState.activeTab === "discover"}
               <PersonalDiscover />
             {:else if appState.activeTab === "history"}

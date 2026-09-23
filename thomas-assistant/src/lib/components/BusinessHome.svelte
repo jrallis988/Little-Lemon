@@ -16,6 +16,7 @@
     addChatMessage,
     appState,
     buildChatContext,
+    loadSampleHouse,
     setMobileScreen,
     setActiveTab,
   } from "$lib/stores/app.svelte";
@@ -34,6 +35,11 @@
     notices.filter((n) => !dismissed.has(n.id)),
   );
   const suggested = $derived(buildSuggestedActions(snapshot));
+  const emptyHouse = $derived(
+    ready &&
+      appState.inventoryScans.length === 0 &&
+      appState.shiftLogs.length === 0,
+  );
 
   async function refresh() {
     appState.inventoryScans = await listInventoryScans(100);
@@ -96,6 +102,7 @@
   </header>
 
   <div class="scroll-body">
+    {#if !emptyHouse}
     <section class="snapshot" aria-label="House snapshot">
       <article class="snap-card">
         <span class="snap-label">Inventory counts</span>
@@ -121,6 +128,7 @@
         >
       </article>
     </section>
+    {/if}
 
     <section class="notices" aria-labelledby="notices-heading">
       <div class="section-head">
@@ -130,6 +138,25 @@
 
       {#if !ready}
         <p class="empty">Reading the house…</p>
+      {:else if emptyHouse}
+        <p class="empty">
+          The house is quiet — nothing has been counted or closed on this device.
+        </p>
+        <div class="empty-actions">
+          <button
+            type="button"
+            class="action primary"
+            onclick={() => {
+              setActiveTab("inventory");
+              setMobileScreen("inventory");
+            }}
+          >
+            Start a cellar count
+          </button>
+          <button type="button" class="action" onclick={() => loadSampleHouse()}>
+            Load a sample night
+          </button>
+        </div>
       {:else if visibleNotices.length === 0}
         <p class="empty">The house looks quiet. I’ll speak up when something needs you.</p>
       {:else}
@@ -159,6 +186,7 @@
       {/if}
     </section>
 
+    {#if !emptyHouse}
     <section class="suggested" aria-label="Suggested actions">
       <h3>Suggested actions</h3>
       <div class="suggested-row">
@@ -170,6 +198,7 @@
         {/each}
       </div>
     </section>
+    {/if}
   </div>
 </section>
 
@@ -351,6 +380,13 @@
     font-style: italic;
     color: var(--text-muted);
     font-size: 0.9rem;
+  }
+
+  .empty-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.65rem;
   }
 
   .suggested h3 {

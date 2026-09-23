@@ -57,7 +57,7 @@ npm run dev          # http://localhost:1420
 npm run build && npm run preview   # production build at :4173
 ```
 
-Browser mode persists cellar counts, closings, chat, and restock approvals to local storage. On first visit, Thomas seeds a believable house night so Home notices and Restock have real signals. On first close, you'll set your own four-digit sign-off code.
+Browser mode persists cellar counts, closings, chat, and restock approvals to local storage. First visit is empty — nothing is auto-loaded. Use **Settings → Load a sample night** (or the same button on Shift Overview) if you want demo counts. On first close, you'll set your own four-digit sign-off code.
 
 **Thomas for Business:** Home notices from live counts/closes → Cellar Check → Restock (approve/export, never auto-order) → Close the Night → The Record.
 

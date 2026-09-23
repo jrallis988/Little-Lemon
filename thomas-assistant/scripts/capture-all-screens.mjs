@@ -45,10 +45,30 @@ async function shot(page, name) {
 
 async function go(page) {
   await page.addInitScript(() => {
-    localStorage.removeItem("thomas-house-data");
+    localStorage.setItem(
+      "thomas-house-data",
+      JSON.stringify({
+        scans: [],
+        shifts: [],
+        audits: [],
+        nextId: 0,
+        signoffPin: null,
+        chatMessages: [],
+        seedVersion: null,
+        userArea: null,
+        productMode: "business",
+        personalBottles: [],
+        personalEvents: [],
+      }),
+    );
   });
   await page.goto(BASE, { waitUntil: "networkidle" });
-  await page.waitForTimeout(700);
+  await page.waitForTimeout(2000);
+  const sample = page.getByRole("button", { name: "Load a sample night" });
+  if (await sample.count()) {
+    await sample.first().click();
+    await page.waitForTimeout(400);
+  }
 }
 
 async function seedChat(page) {

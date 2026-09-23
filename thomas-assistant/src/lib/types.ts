@@ -47,7 +47,8 @@ export type WorkflowTab =
   | "audit"
   | "order"
   | "discover"
-  | "history";
+  | "history"
+  | "settings";
 export type MobileScreen =
   | "home"
   | "chat"
@@ -56,7 +57,8 @@ export type MobileScreen =
   | "audit"
   | "order"
   | "discover"
-  | "history";
+  | "history"
+  | "settings";
 
 export interface PersonalBottle {
   id: number;

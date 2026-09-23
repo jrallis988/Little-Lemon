@@ -15,15 +15,20 @@ import {
 import { isBrowserMode } from "../api";
 import {
   appendPersonalEvent,
-  ensureHouseSeed,
+  clearHouseOperations,
+  clearSignoffPin,
   formatTimestamp,
+  getAudits,
   getChatMessages,
   getPersonalBottles,
   getPersonalEvents,
   getProductMode,
   getScans,
   getShifts,
+  getSignoffPin,
   getUserArea,
+  hasHouseActivity,
+  loadSampleHouse as persistSampleHouse,
   nextRecordId,
   setChatMessages,
   setPersonalBottles,
@@ -36,9 +41,6 @@ export const currentUser = STAFF_FIRST_NAME;
 
 export const PERSONAL_MODE_ENABLED = true;
 
-if (typeof window !== "undefined" && isBrowserMode) {
-  ensureHouseSeed();
-}
 
 function greetingFor(mode: ProductMode): string {
   return mode === "personal" ? PERSONAL_GREETING : THOMAS_GREETING;
@@ -79,11 +81,13 @@ export const appState = $state({
   pendingPrompt: null as string | null,
 });
 
-export function setMode(mode: ProductMode) {
+export function setMode(mode: ProductMode, options?: { keepScreen?: boolean }) {
   if (!PERSONAL_MODE_ENABLED && mode === "personal") return;
   appState.mode = mode;
-  appState.activeTab = "home";
-  appState.mobileScreen = "home";
+  if (!options?.keepScreen) {
+    appState.activeTab = "home";
+    appState.mobileScreen = "home";
+  }
   if (isBrowserMode) persistProductMode(mode);
 }
 
@@ -93,9 +97,47 @@ const businessScreens: WorkflowTab[] = [
   "shift",
   "audit",
   "order",
+  "settings",
 ];
 
-const personalScreens: WorkflowTab[] = ["home", "discover", "history"];
+const personalScreens: WorkflowTab[] = [
+  "home",
+  "discover",
+  "history",
+  "settings",
+];
+
+export function hydrateFromStorage() {
+  if (!isBrowserMode) return;
+  appState.inventoryScans = getScans();
+  appState.shiftLogs = getShifts();
+  appState.auditTrails = getAudits();
+  appState.userArea = getUserArea();
+  appState.personalBottles = getPersonalBottles();
+  appState.personalEvents = getPersonalEvents();
+}
+
+export function loadSampleHouse() {
+  persistSampleHouse();
+  hydrateFromStorage();
+}
+
+export function startEmptyHouse() {
+  clearHouseOperations();
+  hydrateFromStorage();
+}
+
+export function houseHasActivity(): boolean {
+  return isBrowserMode ? hasHouseActivity() : appState.inventoryScans.length > 0;
+}
+
+export function signoffIsSet(): boolean {
+  return isBrowserMode ? getSignoffPin() != null : false;
+}
+
+export function clearHouseSignoff() {
+  clearSignoffPin();
+}
 
 export function setActiveTab(tab: WorkflowTab) {
   appState.activeTab = tab;

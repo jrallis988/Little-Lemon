@@ -77,20 +77,23 @@ function write(data: HouseData) {
 let cache = read();
 
 /**
- * First visit (or empty house): load a believable demo night
- * so Home / Order / validation have real signals to work from.
+ * First visit stays empty. Sample nights are loaded only from Settings
+ * (or “Load a sample night” on Home) — never automatically.
  */
 export function ensureHouseSeed(): boolean {
-  if (typeof window === "undefined") return false;
-  const hasData =
+  return false;
+}
+
+export function hasHouseActivity(): boolean {
+  return (
     cache.scans.length > 0 ||
     cache.shifts.length > 0 ||
-    cache.audits.length > 0;
-  if (hasData && cache.seedVersion === SEED_VERSION) return false;
-  if (hasData && cache.seedVersion != null) return false;
-  // Empty house → seed. Also seed if never marked (legacy empty).
-  if (hasData) return false;
+    cache.audits.length > 0
+  );
+}
 
+/** Load the demo cellar/close night. Keeps area, PIN, mode, and Personal bar. */
+export function loadSampleHouse(): void {
   const scans = buildSeedScans();
   const shifts = buildSeedShifts();
   const audits = buildSeedAudits(scans, shifts);
@@ -98,7 +101,7 @@ export function ensureHouseSeed(): boolean {
     scans,
     shifts,
     audits,
-    nextId: maxSeedId(scans, shifts, audits),
+    nextId: Math.max(cache.nextId, maxSeedId(scans, shifts, audits)),
     signoffPin: cache.signoffPin,
     chatMessages: cache.chatMessages,
     seedVersion: SEED_VERSION,
@@ -108,27 +111,25 @@ export function ensureHouseSeed(): boolean {
     personalEvents: cache.personalEvents,
   };
   write(cache);
-  return true;
 }
 
-/** Clear operational data and re-seed for a fresh validation night. */
-export function resetHouseToSeed(): void {
-  const scans = buildSeedScans();
-  const shifts = buildSeedShifts();
-  const audits = buildSeedAudits(scans, shifts);
+/** @deprecated use loadSampleHouse */
+export const resetHouseToSeed = loadSampleHouse;
+
+/** Empty operational data; keep Personal bar, area, PIN, and mode. */
+export function clearHouseOperations(): void {
   cache = {
-    scans,
-    shifts,
-    audits,
-    nextId: maxSeedId(scans, shifts, audits),
-    signoffPin: null,
-    chatMessages: [],
-    seedVersion: SEED_VERSION,
-    userArea: null,
-    productMode: cache.productMode,
-    personalBottles: cache.personalBottles,
-    personalEvents: cache.personalEvents,
+    ...cache,
+    scans: [],
+    shifts: [],
+    audits: [],
+    seedVersion: 0,
   };
+  write(cache);
+}
+
+export function clearSignoffPin(): void {
+  cache.signoffPin = null;
   write(cache);
 }
 

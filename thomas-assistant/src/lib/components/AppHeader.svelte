@@ -7,7 +7,7 @@
     PERSONAL_POSITIONING,
     PERSONAL_TAGLINE,
   } from "$lib/thomas-persona";
-  import { appState, setMode } from "$lib/stores/app.svelte";
+  import { appState, setMode, setActiveTab, setMobileScreen } from "$lib/stores/app.svelte";
 
   interface Props {
     compact?: boolean;
@@ -59,6 +59,19 @@
     {#if isCloudDemo && !compact}
       <span class="status cloud">☁ Cloud Demo</span>
     {/if}
+    <button
+      type="button"
+      class="settings-btn"
+      class:active={appState.activeTab === "settings" ||
+        appState.mobileScreen === "settings"}
+      onclick={() => {
+        setActiveTab("settings");
+        setMobileScreen("settings");
+      }}
+      aria-label="Settings"
+    >
+      Settings
+    </button>
   </div>
 </header>
 
@@ -197,6 +210,24 @@
     opacity: 0.85;
   }
 
+  .settings-btn {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--midnight);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.28rem 0.55rem;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+
+  .settings-btn.active {
+    background: var(--accent-light);
+    border-color: rgba(199, 138, 44, 0.35);
+  }
+
   @media (min-width: 769px) {
     .status-group {
       flex-direction: row;
@@ -207,7 +238,8 @@
     }
 
     .status,
-    .mode-switch button {
+    .mode-switch button,
+    .settings-btn {
       font-size: 0.72rem;
       padding: 0.28rem 0.65rem;
     }
