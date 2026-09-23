@@ -9,6 +9,7 @@
   import PersonalHistory from "$lib/components/PersonalHistory.svelte";
   import ChatDrawer from "$lib/components/ChatDrawer.svelte";
   import AppHeader from "$lib/components/AppHeader.svelte";
+  import SplashScreen from "$lib/components/SplashScreen.svelte";
   import SettingsPanel from "$lib/components/SettingsPanel.svelte";
   import { getProductMode } from "$lib/browser-storage";
   import {
