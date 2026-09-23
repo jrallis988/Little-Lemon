@@ -22,6 +22,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { SearchTypeahead } from "@/components/layout/SearchTypeahead"
+import { showDesignSystem } from "@/lib/flags"
 import { cn } from "@/lib/utils"
 
 const PROMO_MESSAGES = [
@@ -119,12 +120,14 @@ export function SiteHeader() {
             >
               Gift cards
             </Link>
-            <Link
-              to="/design-system"
-              className="hidden text-muted-foreground no-underline hover:text-foreground md:inline"
-            >
-              Design system
-            </Link>
+            {showDesignSystem ? (
+              <Link
+                to="/design-system"
+                className="hidden text-muted-foreground no-underline hover:text-foreground md:inline"
+              >
+                Design system
+              </Link>
+            ) : null}
             <Link
               to="/account"
               className="text-muted-foreground no-underline hover:text-foreground"

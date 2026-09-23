@@ -74,7 +74,7 @@ export function AccountPage() {
           </h1>
           <p className="mt-2 text-sm text-muted-foreground">
             {phase === "sent"
-              ? `We sent a one-tap sign-in link to ${pendingEmail}. In this prototype, open it below — no password needed.`
+              ? `We sent a one-tap sign-in link to ${pendingEmail}. Open it below to continue — no password needed.`
               : "Enter your email and we’ll send a secure sign-in link. Saved on this device for faster checkout."}
           </p>
 
@@ -114,10 +114,7 @@ export function AccountPage() {
             <div className="mt-6 space-y-3">
               <div className="flex items-start gap-3 rounded-md border border-navy/20 bg-sky-soft px-3 py-3 text-sm">
                 <Mail className="mt-0.5 h-4 w-4 shrink-0 text-navy" />
-                <p>
-                  Link expires in 15 minutes. Demo tip: use card ending in{" "}
-                  <span className="font-semibold">0000</span> at checkout to simulate a decline.
-                </p>
+                <p>Link expires in 15 minutes. Tap below to open it on this device.</p>
               </div>
               <Button
                 type="button"

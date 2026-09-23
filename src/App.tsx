@@ -2,6 +2,7 @@ import { Suspense, useEffect } from "react"
 import { Navigate, Route, Routes, useLocation } from "react-router-dom"
 import { AppShell } from "@/components/layout/AppShell"
 import { track } from "@/lib/analytics"
+import { showDesignSystem } from "@/lib/flags"
 import {
   AccountPage,
   BagPage,
@@ -45,7 +46,7 @@ function AnalyticsListener() {
 /**
  * Routing map (21 core screens — see src/data/screens.ts)
  *
- * Global:     /design-system
+ * Global:     /design-system (dev / VITE_SHOW_DESIGN_SYSTEM only)
  * Home:       /
  * Catalog:    /catalog
  * PDP:        /product/:slug
@@ -67,7 +68,9 @@ export default function App() {
         <Routes>
           <Route element={<AppShell />}>
             <Route index element={<HomePage />} />
-            <Route path="design-system" element={<DesignSystemPage />} />
+            {showDesignSystem ? (
+              <Route path="design-system" element={<DesignSystemPage />} />
+            ) : null}
             <Route path="catalog" element={<CatalogPage />} />
             <Route path="product/:slug" element={<ProductDetailPage />} />
             <Route path="department/:slug" element={<DepartmentLandingPage />} />

@@ -16,8 +16,8 @@ export function ShippingReturnsPage() {
         Shipping & returns
       </h1>
       <p className="mt-3 max-w-2xl text-muted-foreground">
-        Straightforward policies for this Marshalls prototype — modeled on the live site’s
-        free-shipping threshold and in-store return flow.
+        Free shipping on qualifying orders, and easy in-store returns with your order
+        confirmation.
       </p>
 
       <div className="mt-10 grid gap-8 md:grid-cols-2">

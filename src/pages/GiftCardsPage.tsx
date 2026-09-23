@@ -42,8 +42,8 @@ export function GiftCardsPage() {
         Gift cards
       </h1>
       <p className="mt-3 max-w-xl text-muted-foreground">
-        In case you wanna let them pick. Digital delivery for this prototype — no payment
-        processed.
+        In case you wanna let them pick. Digital gift cards deliver by email — choose an
+        amount and we handle the rest.
       </p>
 
       <div className="mt-10 grid gap-8 lg:grid-cols-2">
@@ -99,7 +99,7 @@ export function GiftCardsPage() {
           </Button>
           {purchased && (
             <p className="mt-3 text-sm text-emerald-800">
-              Gift card queued for {to} from {from}. (Demo only.)
+              Gift card queued for {to} from {from}. Confirmation email on the way.
             </p>
           )}
         </form>

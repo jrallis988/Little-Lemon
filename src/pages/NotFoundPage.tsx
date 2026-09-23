@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import { Home, Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useDocumentMeta } from "@/hooks/useDocumentMeta"
+import { showDesignSystem } from "@/lib/flags"
 
 export function NotFoundPage() {
   useDocumentMeta({
@@ -37,9 +38,11 @@ export function NotFoundPage() {
         <Button asChild variant="outline">
           <Link to="/department/women">Women</Link>
         </Button>
-        <Button asChild variant="ghost">
-          <Link to="/design-system">All screens</Link>
-        </Button>
+        {showDesignSystem ? (
+          <Button asChild variant="ghost">
+            <Link to="/design-system">All screens</Link>
+          </Button>
+        ) : null}
       </div>
     </div>
   )

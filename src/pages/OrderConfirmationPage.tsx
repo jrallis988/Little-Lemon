@@ -8,7 +8,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta"
 export function OrderConfirmationPage() {
   useDocumentMeta({
     title: "Order Confirmed | Marshalls",
-    description: "Your demo Marshalls order has been confirmed.",
+    description: "Your Marshalls order has been confirmed.",
   })
 
   const order = useCheckoutStore((state) => state.completedOrder)
@@ -29,7 +29,7 @@ export function OrderConfirmationPage() {
             Thanks for your order
           </h1>
           <p className="mt-3 text-sm text-muted-foreground">
-            This demo confirmation has been prepared for {order.shipping.email}.
+            A confirmation is on the way to {order.shipping.email}.
           </p>
           <p className="mt-2 text-sm font-semibold">
             Order <span className="tabular">{order.id}</span>

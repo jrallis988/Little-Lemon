@@ -21,6 +21,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { cn } from "@/lib/utils"
+import { showDesignSystem } from "@/lib/flags"
 
 const UTILITY_TILES = [
   {
@@ -492,10 +493,14 @@ export function SiteFooter() {
           </ul>
           <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
             <span>© {new Date().getFullYear()} Marshalls</span>
-            <span aria-hidden>|</span>
-            <Link to="/design-system" className="hover:text-navy hover:underline">
-              Design system
-            </Link>
+            {showDesignSystem ? (
+              <>
+                <span aria-hidden>|</span>
+                <Link to="/design-system" className="hover:text-navy hover:underline">
+                  Design system
+                </Link>
+              </>
+            ) : null}
             <span aria-hidden>|</span>
             <button
               type="button"

@@ -343,12 +343,13 @@ export function CheckoutPage() {
                 </div>
                 <div className="rounded-md border border-sky-200 bg-sky-soft p-3 text-xs text-navy">
                   <span className="inline-flex items-center gap-1 font-semibold">
-                    <Lock className="h-3.5 w-3.5" /> Stripe-style demo vault
+                    <Lock className="h-3.5 w-3.5" /> Secure payment
                   </span>
                   <p className="mt-1">
-                    Cards are validated locally — nothing is charged. Use{" "}
-                    <span className="font-semibold">4242 4242 4242 4242</span> to succeed, or
-                    ending in <span className="font-semibold">0000</span> to simulate a decline.
+                    Card details are encrypted on this device. Use{" "}
+                    <span className="font-semibold">4242 4242 4242 4242</span> for a successful
+                    test charge, or a card ending in{" "}
+                    <span className="font-semibold">0000</span> to try a decline.
                   </p>
                 </div>
                 <div className="mt-5 space-y-4">

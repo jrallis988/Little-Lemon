@@ -89,7 +89,7 @@ export function MerchLandingPage() {
               Curated for this edit
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              Hand-picked assortment — not a catalog filter pass-through.
+              Hand-picked assortment for this edit.
             </p>
           </div>
           <p className="text-sm font-semibold text-navy" aria-live="polite">
