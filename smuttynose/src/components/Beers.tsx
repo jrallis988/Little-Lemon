@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { Beer } from "../data/beers";
 import { beerSlugFromName, getBeerBySlug } from "../data/beerDetails";
-import { links } from "../data/links";
 import { useInView } from "../hooks/useInView";
 import { useTapList } from "../hooks/useTapList";
 
@@ -110,22 +109,18 @@ export function Beers() {
             </p>
           </div>
           <div className="flex flex-wrap gap-3 self-start">
-            <a
-              href={links.beers}
-              target="_blank"
-              rel="noreferrer"
+            <Link
+              to="/beers"
               className="inline-flex bg-buoy px-5 py-3 text-sm font-semibold tracking-wide text-foam transition-transform duration-300 hover:-translate-y-0.5"
             >
               Full beer lineup
-            </a>
-            <a
-              href={links.releaseCalendar}
-              target="_blank"
-              rel="noreferrer"
+            </Link>
+            <Link
+              to="/releases"
               className="inline-flex border border-ink/20 px-5 py-3 text-sm font-semibold tracking-wide text-ink transition-colors hover:border-ink hover:bg-ink hover:text-foam"
             >
               Release calendar
-            </a>
+            </Link>
           </div>
         </div>
 

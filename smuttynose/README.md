@@ -2,7 +2,7 @@
 
 Marketing site for **Smuttynose Brewing** (Hampton, NH) — Towle Farm campus, Backyard events, tap list, food, shop, Suds Club, contact, and newsletter.
 
-**Live (after Pages is enabled):** https://jrallis988.github.io/Little-Lemon/
+**Live (after Pages is enabled):** https://jrallis988.github.io/Little-Lemon/smuttynose/
 
 ## Stack
 

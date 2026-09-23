@@ -23,14 +23,32 @@ jobs:
         with:
           node-version: "22"
           cache: npm
-      - run: npm ci
-      - name: Build
+          cache-dependency-path: smuttynose/package-lock.json
+      - name: Build Smuttynose site
+        working-directory: smuttynose
         env:
           VITE_CONTACT_EMAIL: ${{ secrets.VITE_CONTACT_EMAIL }}
-        run: npm run build
+          VITE_PLAUSIBLE_DOMAIN: ${{ secrets.VITE_PLAUSIBLE_DOMAIN }}
+          VITE_GA_MEASUREMENT_ID: ${{ secrets.VITE_GA_MEASUREMENT_ID }}
+        run: npm ci && npm run build
+      - name: Assemble Pages artifact
+        run: |
+          mkdir -p _site
+          # Portfolio / static site at repo root (everything except brewery app)
+          rsync -a \
+            --exclude '.git' \
+            --exclude '.github' \
+            --exclude 'smuttynose' \
+            --exclude '_site' \
+            --exclude 'node_modules' \
+            --exclude 'dist' \
+            ./ _site/
+          # Brewery Vite build under /smuttynose/
+          mkdir -p _site/smuttynose
+          rsync -a smuttynose/dist/ _site/smuttynose/
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: _site
 
   deploy:
     needs: build

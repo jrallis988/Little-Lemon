@@ -56,9 +56,12 @@ export function Footer() {
               Explore
             </p>
             <div className="mt-4 flex flex-col gap-2 text-sm text-foam/80">
-              <a href="/#beers" className="transition-colors hover:text-foam">
+              <Link to="/beers" className="transition-colors hover:text-foam">
                 Beers
-              </a>
+              </Link>
+              <Link to="/releases" className="transition-colors hover:text-foam">
+                Releases
+              </Link>
               <Link to="/shop" className="transition-colors hover:text-foam">
                 Shop
               </Link>
@@ -71,12 +74,15 @@ export function Footer() {
               >
                 Private events
               </Link>
-              <a href="/#visit" className="transition-colors hover:text-foam">
+              <Link to="/visit" className="transition-colors hover:text-foam">
                 Visit
-              </a>
+              </Link>
               <a href="/#contact" className="transition-colors hover:text-foam">
                 Contact
               </a>
+              <Link to="/be-kind" className="transition-colors hover:text-foam">
+                Be KIND
+              </Link>
             </div>
           </div>
 
@@ -85,22 +91,18 @@ export function Footer() {
               Official
             </p>
             <div className="mt-4 flex flex-col gap-2 text-sm text-foam/80">
-              <a
-                href={links.beers}
-                target="_blank"
-                rel="noreferrer"
+              <Link
+                to="/beers"
                 className="transition-colors hover:text-foam"
               >
                 Full lineup
-              </a>
-              <a
-                href={links.releaseCalendar}
-                target="_blank"
-                rel="noreferrer"
+              </Link>
+              <Link
+                to="/releases"
                 className="transition-colors hover:text-foam"
               >
                 Release calendar
-              </a>
+              </Link>
               <a
                 href={links.campusEvents}
                 target="_blank"

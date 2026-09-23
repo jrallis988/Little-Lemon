@@ -2,7 +2,7 @@
   "name": "smuttynose-brewing",
   "private": true,
   "version": "1.0.0",
-  "homepage": "https://jrallis988.github.io/Little-Lemon/",
+  "homepage": "https://jrallis988.github.io/Little-Lemon/smuttynose/",
   "type": "module",
   "scripts": {
     "dev": "vite",

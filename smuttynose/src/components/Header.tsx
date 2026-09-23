@@ -5,14 +5,15 @@ import { useCart } from "../context/CartContext";
 import { SealMark } from "./SealMark";
 
 const sectionLinks = [
-  { href: "/#beers", label: "Beers" },
+  { href: "/beers", label: "Beers", route: true },
   { href: "/#events", label: "Events" },
   { href: "/#food", label: "Food" },
-  { href: "/#visit", label: "Visit" },
+  { href: "/visit", label: "Visit", route: true },
   { href: "/#story", label: "Story" },
 ];
 
 const pageLinks = [
+  { to: "/releases", label: "Releases" },
   { to: "/shop", label: "Shop" },
   { to: "/finder", label: "Beer finder" },
   { to: "/be-kind", label: "Be KIND" },
@@ -85,15 +86,31 @@ export function Header({ solid = false, defaultMenuOpen = false }: HeaderProps) 
         </Link>
 
         <nav className="hidden items-center gap-5 lg:flex" aria-label="Primary">
-          {sectionLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-sm font-medium tracking-wide text-foam/85 transition-colors hover:text-foam"
-            >
-              {link.label}
-            </a>
-          ))}
+          {sectionLinks.map((link) =>
+            "route" in link && link.route ? (
+              <NavLink
+                key={link.href}
+                to={link.href}
+                className="text-sm font-medium tracking-wide text-foam/85 transition-colors hover:text-foam"
+              >
+                {link.label}
+              </NavLink>
+            ) : (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-sm font-medium tracking-wide text-foam/85 transition-colors hover:text-foam"
+              >
+                {link.label}
+              </a>
+            ),
+          )}
+          <NavLink
+            to="/releases"
+            className="text-sm font-medium tracking-wide text-foam/85 transition-colors hover:text-foam"
+          >
+            Releases
+          </NavLink>
           <NavLink
             to="/shop"
             className="text-sm font-medium tracking-wide text-foam/85 transition-colors hover:text-foam"
@@ -120,7 +137,7 @@ export function Header({ solid = false, defaultMenuOpen = false }: HeaderProps) 
             Cart{count > 0 ? ` (${count})` : ""}
           </button>
           <Link
-            to="/#visit"
+            to="/visit"
             className="bg-buoy px-4 py-2 text-sm font-semibold tracking-wide text-foam transition-transform duration-300 hover:-translate-y-0.5"
           >
             Plan a visit
@@ -185,16 +202,27 @@ export function Header({ solid = false, defaultMenuOpen = false }: HeaderProps) 
             Explore campus
           </p>
           <nav className="mt-4 flex flex-col gap-1" aria-label="Mobile">
-            {sectionLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="border-b border-foam/10 py-3 font-display text-3xl font-bold uppercase tracking-wide"
-                onClick={() => setOpen(false)}
-              >
-                {link.label}
-              </a>
-            ))}
+            {sectionLinks.map((link) =>
+              "route" in link && link.route ? (
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  className="border-b border-foam/10 py-3 font-display text-3xl font-bold uppercase tracking-wide"
+                  onClick={() => setOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              ) : (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="border-b border-foam/10 py-3 font-display text-3xl font-bold uppercase tracking-wide"
+                  onClick={() => setOpen(false)}
+                >
+                  {link.label}
+                </a>
+              ),
+            )}
             {pageLinks.map((link) =>
               "hash" in link && link.hash ? (
                 <a
@@ -220,7 +248,7 @@ export function Header({ solid = false, defaultMenuOpen = false }: HeaderProps) 
 
           <div className="mt-8 grid gap-3">
             <Link
-              to="/#visit"
+              to="/visit"
               className="bg-buoy px-4 py-3 text-center text-sm font-semibold text-foam"
               onClick={() => setOpen(false)}
             >

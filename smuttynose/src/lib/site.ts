@@ -1,7 +1,7 @@
 /** Canonical public URL — used for OG tags on interior routes. */
 export const siteUrl =
   (import.meta.env.VITE_SITE_URL as string | undefined)?.replace(/\/$/, "") ||
-  "https://jrallis988.github.io/Little-Lemon";
+  "https://jrallis988.github.io/Little-Lemon/smuttynose";
 
 export function absoluteUrl(path: string) {
   const base = siteUrl.replace(/\/$/, "");

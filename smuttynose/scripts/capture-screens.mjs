@@ -10,7 +10,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
 const outDir = path.join(root, "public/previews");
-const base = process.env.PREVIEW_URL || "http://127.0.0.1:4173/Little-Lemon";
+const base = process.env.PREVIEW_URL || "http://127.0.0.1:4173";
 
 const shots = [
   { file: "preview-age-gate.png", path: "/", width: 1280, height: 800, before: async (page) => {
