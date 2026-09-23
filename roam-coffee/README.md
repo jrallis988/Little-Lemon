@@ -25,7 +25,11 @@ npm run preview
 
 ## Case study structure
 
-Challenge → Concept → Identity → Product Architecture → Packaging → Dielines → Family → Labels → RTD → Gift Box → Cups → Merch → Retail → Menu → Shelf → POS → Posters → Hierarchy → Production → Gallery → Final System
+Challenge → Concept → Identity → Product Architecture → Packaging → Dielines → Family → Labels → RTD → Gift Box → Cups → Merch → Retail → Menu → Shelf → POS → Posters → Hierarchy → Process → Tools → Production → Gallery → Final System
+
+## Adobe exports
+
+Place final Illustrator / Photoshop / InDesign exports in `public/exports/` (see README there). The React viewers currently use SVG scaffolds; swap in real artwork when ready.
 
 ## Note
 

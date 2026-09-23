@@ -20,6 +20,12 @@ import {
 } from './components/packaging/Pos';
 import { BagDieline } from './components/packaging/BagDieline';
 import { CoffeeBag } from './components/packaging/CoffeeBag';
+import {
+  AdobeWorkflow,
+  ExportManifest,
+  PreflightChecklist,
+  ProcessTimeline,
+} from './components/sections/Process';
 import { brand, caseStudyNav, rtdProducts, varieties } from './data/brand';
 
 function Section({
@@ -410,12 +416,36 @@ export default function App() {
       </Section>
 
       <Section
+        id="process"
+        label="Process"
+        title="From positioning to press-ready thinking."
+        lead="A clear path from strategy through identity, packaging, retail, and production — ready for Adobe originals to replace presentation scaffolds."
+      >
+        <ProcessTimeline />
+      </Section>
+
+      <Section
+        id="tools"
+        label="Tools"
+        title="Illustrator first. Photoshop and InDesign where they belong."
+        lead="This React site presents the system. Final artwork lives in professional design applications."
+      >
+        <AdobeWorkflow />
+        <div style={{ marginTop: '1.25rem' }}>
+          <ExportManifest />
+        </div>
+      </Section>
+
+      <Section
         id="production"
         label="Production"
         title="Files that can go to press."
         lead="CMYK thinking, spot accents where useful, bleed, trim, safe areas, dielines, barcode placement, and preflight discipline."
       >
         <ProductionViewer />
+        <div style={{ marginTop: '1.25rem' }}>
+          <PreflightChecklist />
+        </div>
         <div className="grid-2" style={{ marginTop: '1.25rem' }}>
           <div className="panel-dark panel-pad prose">
             <p className="kicker" style={{ color: '#5A9A97' }}>

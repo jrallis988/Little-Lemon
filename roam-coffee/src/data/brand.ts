@@ -221,6 +221,8 @@ export const caseStudyNav = [
   { id: 'pos', label: 'Point of Sale' },
   { id: 'posters', label: 'Posters' },
   { id: 'hierarchy', label: 'Hierarchy' },
+  { id: 'process', label: 'Process' },
+  { id: 'tools', label: 'Tools' },
   { id: 'production', label: 'Production' },
   { id: 'gallery', label: 'Gallery' },
   { id: 'final', label: 'Final System' },
