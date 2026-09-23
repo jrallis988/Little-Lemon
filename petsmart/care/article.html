@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Article — PetSmart Pet Care</title>
+  <link rel="stylesheet" href="../css/main.css">
+  <style>
+    .article-body { max-width: 42rem; margin: 0 auto; padding: var(--space-8) var(--space-4); }
+    .article-body h2 { margin: var(--space-8) 0 var(--space-4); font-size: var(--text-2xl); }
+    .article-body p, .article-body li { color: var(--ps-slate); line-height: var(--leading-relaxed); margin-bottom: var(--space-4); }
+    .article-hero img { width: 100%; max-height: 420px; object-fit: cover; }
+    .article-meta { display: flex; flex-wrap: wrap; gap: var(--space-3); color: var(--ps-gray); font-size: var(--text-sm); margin: var(--space-3) 0 var(--space-6); }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div id="ps-header" data-base="../" data-active="care"></div>
+
+  <main id="main">
+    <article id="article-content">
+      <div class="article-hero" id="article-hero"></div>
+      <div class="article-body" id="article-body"></div>
+    </article>
+    <section class="section section--pale">
+      <div class="container">
+        <h2 style="margin-bottom:var(--space-6);">Related resources</h2>
+        <div class="grid-3" id="related-articles"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="ps-footer" data-base="../"></div>
+  <script src="../js/chrome.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    const id = PetSmartParams.get('id') || 'bringing-home';
+    const article = PetSmartData.getArticle(id);
+    const content = {
+      'bringing-home': `
+          <ol class="breadcrumb"><li><a href="../index.html">Home</a></li><li><a href="index.html">Pet Care</a></li><li>Article</li></ol>
+          <p class="badge badge--blue">New Pet</p>
+          <h1>Bringing Home a New Pet: Your First-Week Checklist</h1>
+          <div class="article-meta"><span>${article?.author || ''}</span><span>·</span><span>${article?.date || ''}</span><span>·</span><span>${article?.readTime || ''} read</span></div>
+          <p>The first week sets the tone. A calm environment, predictable routines, and the right supplies help your new companion feel safe.</p>
+          <h2>Before arrival</h2>
+          <p>Set up a quiet space with a bed, food and water bowls, and appropriate toys. Pet-proof cords, chemicals, and small objects. Decide where your pet will sleep and potty before they walk in the door.</p>
+          <h2>First 24 hours</h2>
+          <p>Keep introductions calm. Let your pet explore at their own pace. Stick to a consistent feeding schedule and establish a potty routine immediately. Short, positive interactions beat overwhelming play sessions.</p>
+          <h2>First vet visit</h2>
+          <p>Schedule a wellness exam within the first week. Bring adoption or breeder records. Ask about vaccinations, parasite prevention, microchipping, and nutrition for their life stage.</p>
+          <h2>Supplies checklist</h2>
+          <ul>
+            <li>Food appropriate for age and species</li>
+            <li>Collar, ID tag, and leash or carrier</li>
+            <li>Waste bags or litter box</li>
+            <li>Enrichment toys</li>
+            <li>Grooming basics</li>
+          </ul>`,
+      'nutrition-basics': `
+          <ol class="breadcrumb"><li><a href="../index.html">Home</a></li><li><a href="index.html">Pet Care</a></li><li>Article</li></ol>
+          <p class="badge badge--blue">Nutrition</p>
+          <h1>Pet Nutrition Basics: What to Look for on Labels</h1>
+          <div class="article-meta"><span>${article?.author || ''}</span><span>·</span><span>${article?.date || ''}</span><span>·</span><span>${article?.readTime || ''} read</span></div>
+          <h2>Reading labels</h2>
+          <p>Look for an AAFCO nutritional adequacy statement. The first ingredients should be recognizable protein sources. “Meal” ingredients can still be high quality — focus on completeness and life-stage fit.</p>
+          <h2>Life stages</h2>
+          <p>Puppies, kittens, adults, and seniors have different caloric and nutrient needs. Choose formulas matched to your pet’s life stage, and transition foods gradually over 7–10 days.</p>
+          <h2>When to ask a pro</h2>
+          <p>If your pet has allergies, chronic GI issues, or a medical condition, ask your veterinarian before switching diets.</p>`,
+      'grooming-at-home': `
+          <ol class="breadcrumb"><li><a href="../index.html">Home</a></li><li><a href="index.html">Pet Care</a></li><li>Article</li></ol>
+          <p class="badge badge--blue">Grooming</p>
+          <h1>At-Home Grooming: Brushing, Bathing &amp; Nail Care</h1>
+          <div class="article-meta"><span>${article?.author || ''}</span><span>·</span><span>${article?.date || ''}</span><span>·</span><span>${article?.readTime || ''} read</span></div>
+          <h2>Brushing</h2>
+          <p>Regular brushing reduces shedding and prevents mats. Frequency depends on coat type — daily for long coats, weekly for most short coats.</p>
+          <h2>Bathing</h2>
+          <p>Use pet-specific shampoo and lukewarm water. Rinse thoroughly. Dry completely to avoid skin irritation, especially for dense undercoats.</p>
+          <h2>Nail care</h2>
+          <p>Trim nails every 2–4 weeks. Use pet-specific clippers, go slowly, and reward calm behavior. If you’re unsure, book a salon nail trim.</p>`,
+      'puppy-training': `
+          <ol class="breadcrumb"><li><a href="../index.html">Home</a></li><li><a href="index.html">Pet Care</a></li><li>Article</li></ol>
+          <p class="badge badge--blue">Training</p>
+          <h1>Puppy Training Foundations: Start with Consistency</h1>
+          <div class="article-meta"><span>${article?.author || ''}</span><span>·</span><span>${article?.date || ''}</span><span>·</span><span>${article?.readTime || ''} read</span></div>
+          <h2>Consistency</h2>
+          <p>Use the same cues and rewards every time. Short, positive sessions (5–10 minutes) work better than long drills.</p>
+          <h2>Socialization</h2>
+          <p>Expose your puppy to new people, sounds, and environments during their critical socialization window — always at a pace they can handle.</p>
+          <h2>When to take a class</h2>
+          <p>Group classes build skills and confidence. Book puppy foundations if you want guided practice with a trainer.</p>`,
+      'seasonal-safety': `
+          <ol class="breadcrumb"><li><a href="../index.html">Home</a></li><li><a href="index.html">Pet Care</a></li><li>Article</li></ol>
+          <p class="badge badge--blue">Safety</p>
+          <h1>Seasonal Pet Safety: Heat, Cold &amp; Holiday Hazards</h1>
+          <div class="article-meta"><span>${article?.author || ''}</span><span>·</span><span>${article?.date || ''}</span><span>·</span><span>${article?.readTime || ''} read</span></div>
+          <h2>Heat</h2>
+          <p>Never leave pets in parked cars. Walk during cooler hours and provide plenty of water. Watch for excessive panting.</p>
+          <h2>Cold</h2>
+          <p>Limit outdoor time in freezing weather. Watch for shivering or lifting paws. Short-coated and small breeds may need coats.</p>
+          <h2>Holidays</h2>
+          <p>Chocolate, xylitol, grapes, and some decorations are toxic. Keep trash secured and guests informed about house rules.</p>`,
+      'senior-pet-care': `
+          <ol class="breadcrumb"><li><a href="../index.html">Home</a></li><li><a href="index.html">Pet Care</a></li><li>Article</li></ol>
+          <p class="badge badge--blue">Health</p>
+          <h1>Caring for Senior Pets: Comfort &amp; Quality of Life</h1>
+          <div class="article-meta"><span>${article?.author || ''}</span><span>·</span><span>${article?.date || ''}</span><span>·</span><span>${article?.readTime || ''} read</span></div>
+          <h2>Wellness visits</h2>
+          <p>Increase vet checkups to twice yearly. Early detection improves outcomes for age-related conditions like arthritis and dental disease.</p>
+          <h2>Comfort at home</h2>
+          <p>Orthopedic bedding, ramps, and non-slip rugs help senior pets stay mobile. Keep water accessible and routines predictable.</p>
+          <h2>Nutrition &amp; activity</h2>
+          <p>Ask about senior formulas and gentler exercise. Mental enrichment still matters — short walks, puzzle toys, and calm play.</p>`
+    };
+
+    if (article) {
+      document.title = `${article.title} — PetSmart`;
+      document.getElementById('article-hero').innerHTML = `<img src="${article.image}" alt="">`;
+      document.getElementById('article-body').innerHTML = content[id] || `<h1>${article.title}</h1><p>${article.excerpt}</p>`;
+      const related = PetSmartData.articles.filter(a => a.id !== id && a.topic === article.topic);
+      const fallback = PetSmartData.articles.filter(a => a.id !== id).slice(0, 3);
+      const list = (related.length ? related : fallback).slice(0, 3);
+      document.getElementById('related-articles').innerHTML = list.map(a => PetSmartUI.resourceCard(a, '../')).join('');
+    } else {
+      document.getElementById('article-body').innerHTML = '<div class="empty-state"><h3>Article not found</h3><a href="index.html">Back to hub</a></div>';
+    }
+  </script>
+</body>
+</html>

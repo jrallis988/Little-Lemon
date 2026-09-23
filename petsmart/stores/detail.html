@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Store Details — PetSmart</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div id="ps-header" data-base="../" data-active="stores"></div>
+
+  <main id="main">
+    <div class="container" style="padding:var(--space-8) var(--space-4); max-width:var(--container-lg);" id="store-detail"></div>
+  </main>
+
+  <div id="ps-footer" data-base="../"></div>
+  <script src="../js/chrome.js"></script>
+  <script src="../js/data.js"></script><script src="../js/app.js"></script>
+  <script>
+    const id = PetSmartParams.get('id') || 's1';
+    const store = PetSmartData.getStore(id);
+    const el = document.getElementById('store-detail');
+    if (!store) {
+      el.innerHTML = '<div class="empty-state"><h3>Store not found</h3><a href="index.html">Back to locator</a></div>';
+    } else {
+      document.title = `${store.name} — PetSmart`;
+      el.innerHTML = `
+        <ol class="breadcrumb"><li><a href="../index.html">Home</a></li><li><a href="index.html">Stores</a></li><li>${store.name}</li></ol>
+        <h1 style="margin-bottom:var(--space-4);">${store.name}</h1>
+        <p class="text-lg text-muted" style="margin-bottom:var(--space-6);">${store.address}<br>${store.city}, ${store.state} ${store.zip}</p>
+        <div class="grid-2" style="margin-bottom:var(--space-8);">
+          <div class="card"><div class="card__body">
+            <h2 style="font-size:var(--text-lg); margin-bottom:var(--space-3);">Hours</h2>
+            <p>${store.hours}</p>
+            <h2 style="font-size:var(--text-lg); margin:var(--space-6) 0 var(--space-3);">Phone</h2>
+            <p><a href="tel:${store.phone}">${store.phone}</a></p>
+          </div></div>
+          <div class="card"><div class="card__body">
+            <h2 style="font-size:var(--text-lg); margin-bottom:var(--space-3);">Services at this store</h2>
+            <ul>${store.services.map(s => `<li>${s}</li>`).join('')}</ul>
+            <div style="margin-top:var(--space-6); display:flex; flex-wrap:wrap; gap:var(--space-3);">
+              <a class="btn btn-primary" href="../services/book.html?service=grooming">Book grooming</a>
+              <a class="btn btn-outline" href="../adopt/index.html">Adoption events</a>
+            </div>
+          </div></div>
+        </div>
+        <div class="store-map" role="img" aria-label="Map showing ${store.city}, ${store.state}">
+          <span class="store-map__pin" aria-hidden="true"></span>
+          <span class="store-map__label">${store.city}, ${store.state}</span>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

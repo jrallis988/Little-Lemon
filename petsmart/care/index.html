@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Pet care guides on nutrition, grooming, training, health, and safety from PetSmart.">
+  <title>Pet Care Hub — PetSmart</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div id="ps-header" data-base="../" data-active="care"></div>
+
+  <main id="main">
+    <div class="page-hero">
+      <div class="page-hero__inner container">
+        <h1>Pet care hub</h1>
+        <p>Trustworthy guides and resources to help you make confident decisions for your companion — from nutrition to seasonal safety.</p>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="container">
+        <div style="display:flex; flex-wrap:wrap; gap:var(--space-2); margin-bottom:var(--space-8);" role="group" aria-label="Filter by topic">
+          <button class="chip" aria-pressed="true" data-topic="all">All topics</button>
+          <button class="chip" aria-pressed="false" data-topic="New Pet">New pet</button>
+          <button class="chip" aria-pressed="false" data-topic="Nutrition">Nutrition</button>
+          <button class="chip" aria-pressed="false" data-topic="Grooming">Grooming</button>
+          <button class="chip" aria-pressed="false" data-topic="Training">Training</button>
+          <button class="chip" aria-pressed="false" data-topic="Health">Health</button>
+          <button class="chip" aria-pressed="false" data-topic="Safety">Safety</button>
+        </div>
+        <div class="grid-3" id="articles-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="ps-footer" data-base="../"></div>
+  <script src="../js/chrome.js"></script>
+  <script src="../js/data.js"></script><script src="../js/ui.js"></script><script src="../js/app.js"></script>
+  <script>
+    const grid = document.getElementById('articles-grid');
+    let activeTopic = 'all';
+    function render() {
+      const articles = activeTopic === 'all'
+        ? PetSmartData.articles
+        : PetSmartData.articles.filter(a => a.topic === activeTopic);
+      grid.innerHTML = articles.map(a => PetSmartUI.resourceCard(a, '../')).join('');
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+    }
+    document.querySelectorAll('[data-topic]').forEach(chip => {
+      chip.addEventListener('click', () => {
+        activeTopic = chip.dataset.topic;
+        document.querySelectorAll('[data-topic]').forEach(c => c.setAttribute('aria-pressed', String(c === chip)));
+        render();
+      });
+    });
+    render();
+  </script>
+</body>
+</html>

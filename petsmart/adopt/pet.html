@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meet a Pet — PetSmart Adopt</title>
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div id="ps-header" data-base="../" data-active="adopt"></div>
+  <main id="main">
+    <div class="container" style="padding:var(--space-8) var(--space-4); max-width:var(--container-xl);" id="pet-detail"></div>
+  </main>
+  <div id="ps-footer" data-base="../"></div>
+  <script src="../js/chrome.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    const pet = PetSmartData.getPet(PetSmartParams.get('id') || 'pet1');
+    const el = document.getElementById('pet-detail');
+    if (!pet) {
+      el.innerHTML = '<div class="empty-state"><h3>Pet not found</h3><a class="btn btn-primary" href="index.html">Back to adopt</a></div>';
+    } else {
+      const store = PetSmartData.getStore(pet.store);
+      document.title = `Meet ${pet.name} — PetSmart`;
+      el.innerHTML = `
+        <ol class="breadcrumb"><li><a href="../index.html">Home</a></li><li><a href="index.html">Adopt</a></li><li>${pet.name}</li></ol>
+        <div class="product-detail">
+          <div class="product-gallery" style="padding:0; overflow:hidden;">
+            <img src="${pet.image}" alt="${pet.name}" style="width:100%; height:100%; object-fit:cover;">
+          </div>
+          <div>
+            <span class="badge badge--red">${pet.species}</span>
+            <h1 style="margin:var(--space-3) 0;">${pet.name}</h1>
+            <p class="text-lg" style="color:var(--ps-blue); font-weight:600;">${pet.breed} · ${pet.age} · ${pet.gender} · ${pet.size}</p>
+            <p style="margin:var(--space-6) 0; line-height:1.7;">${pet.story}</p>
+            <div style="display:flex; flex-wrap:wrap; gap:var(--space-2); margin-bottom:var(--space-6);">
+              ${(pet.traits || []).map(t => `<span class="chip" style="cursor:default;">${t}</span>`).join('')}
+            </div>
+            <div class="cart-summary">
+              <h2 style="font-size:var(--text-lg); margin-bottom:var(--space-3);">Available at</h2>
+              <p><strong>${store?.name || ''}</strong></p>
+              <p class="text-muted text-small">${store?.address}, ${store?.city}, ${store?.state}</p>
+              <p class="text-small" style="margin-top:var(--space-2);">${store?.hours}</p>
+              <div style="display:flex; gap:var(--space-3); flex-wrap:wrap; margin-top:var(--space-5);">
+                <a class="btn btn-primary" href="../stores/detail.html?id=${pet.store}">Visit this store</a>
+                <a class="btn btn-outline" href="../care/article.html?id=bringing-home">New pet checklist</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
