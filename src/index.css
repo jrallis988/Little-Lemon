@@ -81,6 +81,19 @@
     --chrome-offset: calc(
       var(--promo-height) + var(--utility-height) + var(--header-height) + var(--nav-rail-height)
     );
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --mobile-fab-clearance: calc(5.5rem + var(--safe-bottom));
+  }
+
+  @media (max-width: 767px) {
+    :root {
+      /* Mobile search row sits under the main header */
+      --mobile-search-height: 3.35rem;
+      --chrome-offset: calc(
+        var(--promo-height) + var(--utility-height) + var(--header-height) +
+          var(--mobile-search-height)
+      );
+    }
   }
 
   @media (min-width: 1024px) {
@@ -103,6 +116,7 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
     min-height: 100dvh;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
   }
 
   #root {
@@ -186,6 +200,14 @@
   .sticky-purchase {
     @apply sticky bottom-0 z-30 border-t border-border bg-surface/95 backdrop-blur-md;
     box-shadow: 0 -8px 24px hsl(220 20% 10% / 0.06);
+    padding-bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+  }
+
+  @media (min-width: 1024px) {
+    .sticky-purchase {
+      padding-bottom: 0;
+      box-shadow: none;
+    }
   }
 
   /* Official-inspired Marshalls wordmark: italic serif, tight tracking, brand blue */

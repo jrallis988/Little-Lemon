@@ -10,7 +10,7 @@ export function ToastHost() {
 
   return (
     <div
-      className="pointer-events-none fixed bottom-24 left-4 z-[70] flex w-[min(100%-2rem,22rem)] flex-col gap-2 sm:left-auto sm:right-6"
+      className="pointer-events-none fixed bottom-[calc(var(--mobile-fab-clearance)+3.5rem)] left-4 z-[70] flex w-[min(100%-2rem,22rem)] flex-col gap-2 sm:bottom-24 sm:left-auto sm:right-6"
       aria-live="polite"
     >
       {toasts.map((toast) => (

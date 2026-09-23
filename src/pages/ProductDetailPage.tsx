@@ -878,7 +878,7 @@ export function ProductDetailPage() {
               <StoreStockPanel product={product} stores={stores} size={selectedSize} />
             </div>
 
-            <div className="mt-8 space-y-3 pb-20 lg:pb-0">
+            <div className="mt-8 space-y-3 pb-[calc(6rem+env(safe-area-inset-bottom))] lg:pb-0">
               <h2 className="font-display text-base font-bold">Details</h2>
               <p className="text-sm leading-relaxed text-muted-foreground">
                 {product.description}

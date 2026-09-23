@@ -244,7 +244,7 @@ export function SiteHeader() {
             <div className="ml-auto flex flex-1 items-center justify-end gap-1 sm:gap-2">
               <SearchTypeahead className="hidden max-w-md flex-1 md:block" />
 
-              <Button variant="ghost" size="icon" className="relative hidden sm:inline-flex" asChild>
+              <Button variant="ghost" size="icon" className="relative" asChild>
                 <Link to="/wishlist" aria-label={`Wishlist, ${wishlistCount} items`}>
                   <Heart className="h-5 w-5" />
                   {wishlistCount > 0 && (
@@ -321,7 +321,10 @@ export function SiteHeader() {
           <DialogHeader className="border-b border-border px-5 py-4 pr-12">
             <DialogTitle className="font-display text-lg">Shop Marshalls</DialogTitle>
           </DialogHeader>
-          <nav className="flex flex-col p-2 pb-8" aria-label="Mobile">
+          <nav
+            className="flex flex-col p-2 pb-[max(2rem,env(safe-area-inset-bottom))]"
+            aria-label="Mobile"
+          >
             {SHOP_NAV.map((item) => (
               <Link
                 key={item.id}

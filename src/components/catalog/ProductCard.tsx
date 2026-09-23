@@ -91,7 +91,7 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
             <Heart className={cn("h-4 w-4", wished && "fill-current")} />
           </button>
 
-          <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-end justify-between gap-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-end justify-between gap-2 opacity-100 transition-opacity duration-300 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100">
             <Tooltip>
               <TooltipTrigger asChild>
                 <span className={cn("badge-inventory shadow-soft", inventory.className)}>
@@ -102,23 +102,25 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
             </Tooltip>
           </div>
 
-          <div className="absolute inset-x-0 bottom-0 translate-y-2 opacity-0 transition-all duration-300 ease-retail group-hover:translate-y-0 group-hover:opacity-100">
-            <div className="bg-gradient-to-t from-black/45 to-transparent p-3 pt-10">
-              <Button
-                type="button"
-                size="sm"
-                variant="secondary"
-                className="w-full bg-surface/95 shadow-lift backdrop-blur-sm"
-                onClick={(e) => {
-                  e.preventDefault()
-                  onQuickView?.(product)
-                }}
-              >
-                <Eye className="h-3.5 w-3.5" />
-                Quick view
-              </Button>
+          {onQuickView ? (
+            <div className="absolute inset-x-0 bottom-0 translate-y-0 opacity-100 transition-all duration-300 ease-retail [@media(hover:hover)]:translate-y-2 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:translate-y-0 [@media(hover:hover)]:group-hover:opacity-100">
+              <div className="bg-gradient-to-t from-black/45 to-transparent p-3 pt-10">
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="secondary"
+                  className="w-full bg-surface/95 shadow-lift backdrop-blur-sm"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    onQuickView(product)
+                  }}
+                >
+                  <Eye className="h-3.5 w-3.5" />
+                  Quick view
+                </Button>
+              </div>
             </div>
-          </div>
+          ) : null}
         </div>
       </Link>
 

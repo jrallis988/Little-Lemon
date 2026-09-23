@@ -248,10 +248,27 @@ export function BagPage() {
               </button>
             )}
 
-            <Button asChild className="mt-5 w-full bg-navy hover:bg-navy/90" size="lg">
+            <Button asChild className="mt-5 hidden w-full bg-navy hover:bg-navy/90 lg:inline-flex" size="lg">
               <Link to="/checkout">Checkout</Link>
             </Button>
           </aside>
+
+          <div className="sticky-purchase fixed inset-x-0 bottom-0 z-40 border-t border-border bg-surface/95 px-4 py-3 lg:hidden">
+            <div className="mx-auto flex max-w-lg items-center gap-3">
+              <div className="min-w-0 flex-1">
+                <p className="text-2xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  Estimated total
+                </p>
+                <p className="truncate text-base font-bold text-navy tabular">
+                  {formatCurrency(total)}
+                </p>
+              </div>
+              <Button asChild size="lg" className="shrink-0 bg-navy px-6 hover:bg-navy/90">
+                <Link to="/checkout">Checkout</Link>
+              </Button>
+            </div>
+          </div>
+          <div className="h-24 lg:hidden" aria-hidden />
         </div>
       )}
     </div>

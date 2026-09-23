@@ -243,7 +243,7 @@ export function SupportChat() {
   }
 
   return (
-    <div className="pointer-events-none fixed bottom-5 right-4 z-[60] flex flex-col items-end gap-3 sm:bottom-6 sm:right-6">
+    <div className="pointer-events-none fixed bottom-[var(--mobile-fab-clearance)] right-4 z-[60] flex flex-col items-end gap-3 sm:bottom-[max(1.5rem,env(safe-area-inset-bottom))] sm:right-6">
       {open && (
         <section
           className="pointer-events-auto flex h-[min(32rem,calc(100dvh-7rem))] w-[min(100vw-1.5rem,22rem)] flex-col overflow-hidden rounded-lg border border-border bg-surface shadow-drawer animate-fade-in"
