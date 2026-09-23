@@ -65,7 +65,7 @@ test("renders Academy Rock show page", () => {
     </MemoryRouter>
   );
   expect(screen.getByRole("heading", { level: 1, name: /Academy Rock/i })).toBeInTheDocument();
-  expect(screen.getAllByText(/First Day Jams/i).length).toBeGreaterThan(0);
+  expect(screen.getAllByText(/Three Is a Magic Beat/i).length).toBeGreaterThan(0);
   expect(screen.getByRole("button", { name: /Play Episode 1/i })).toBeInTheDocument();
 });
 

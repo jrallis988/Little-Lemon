@@ -1,122 +1,121 @@
 export function HeroStageArt() {
-  return (
-    <svg viewBox="0 0 1440 820" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <defs>
-        <linearGradient id="skyGrad" x1="0" y1="0" x2="0.8" y2="1">
-          <stop offset="0%" stopColor="#2a1248" />
-          <stop offset="40%" stopColor="#5c1d6e" />
-          <stop offset="75%" stopColor="#c43b6e" />
-          <stop offset="100%" stopColor="#1a0b2e" />
-        </linearGradient>
-        <radialGradient id="spot" cx="72%" cy="42%" r="38%">
-          <stop offset="0%" stopColor="#ffe082" stopOpacity="0.55" />
-          <stop offset="100%" stopColor="#ffe082" stopOpacity="0" />
-        </radialGradient>
-      </defs>
-      <rect width="1440" height="820" fill="url(#skyGrad)" />
-      <ellipse cx="1040" cy="320" rx="380" ry="240" fill="url(#spot)" />
-      <circle cx="1180" cy="140" r="64" fill="#fff3c4" opacity="0.85" />
-
-      <rect x="0" y="560" width="1440" height="260" fill="#0a0614" opacity="0.55" />
-      <rect x="700" y="520" width="520" height="18" rx="6" fill="#39e6c4" />
-      <rect x="730" y="470" width="70" height="50" rx="8" fill="#ff4d6d" />
-      <rect x="840" y="450" width="90" height="70" rx="10" fill="#00b4e4" />
-      <rect x="970" y="460" width="80" height="60" rx="10" fill="#ffc107" />
-      <rect x="1090" y="480" width="60" height="40" rx="8" fill="#ff1f7a" />
-
-      <g transform="translate(780,370)">
-        <circle cx="40" cy="40" r="34" fill="#ffb4a2" />
-        <rect x="18" y="72" width="44" height="55" rx="14" fill="#ff4d6d" />
-        <circle cx="28" cy="36" r="4" fill="#0c2340" />
-        <circle cx="52" cy="36" r="4" fill="#0c2340" />
-        <path d="M28 50 Q40 58 52 50" stroke="#0c2340" strokeWidth="3" fill="none" strokeLinecap="round" />
-      </g>
-      <g transform="translate(900,350)">
-        <circle cx="40" cy="40" r="34" fill="#ffccbc" />
-        <rect x="18" y="72" width="44" height="60" rx="14" fill="#39e6c4" />
-        <circle cx="28" cy="36" r="4" fill="#0c2340" />
-        <circle cx="52" cy="36" r="4" fill="#0c2340" />
-        <path d="M28 50 Q40 56 52 50" stroke="#0c2340" strokeWidth="3" fill="none" strokeLinecap="round" />
-        <ellipse cx="70" cy="100" rx="18" ry="12" fill="#1a0b2e" />
-      </g>
-      <g transform="translate(1030,360)">
-        <circle cx="40" cy="40" r="34" fill="#ffe0b2" />
-        <rect x="18" y="72" width="44" height="55" rx="14" fill="#00b4e4" />
-        <circle cx="28" cy="36" r="4" fill="#0c2340" />
-        <circle cx="52" cy="36" r="4" fill="#0c2340" />
-        <path d="M28 48 Q40 58 52 48" stroke="#0c2340" strokeWidth="3" fill="none" strokeLinecap="round" />
-      </g>
-
-      <g className="note" fill="#fff">
-        <text x="1120" y="280" fontSize="48" fontFamily="Outfit, sans-serif">♪</text>
-      </g>
-      <g className="note" fill="#39e6c4">
-        <text x="1200" y="360" fontSize="56" fontFamily="Outfit, sans-serif">♫</text>
-      </g>
-      <g className="note" fill="#ffc107">
-        <text x="1280" y="260" fontSize="40" fontFamily="Outfit, sans-serif">♪</text>
-      </g>
-    </svg>
-  );
+  return <AcademyStageArt />;
 }
 
+/** Schoolhouse Rock–inspired educational cartoon stage for Academy Rock */
 export function AcademyStageArt({ compact = false }) {
-  const h = compact ? 520 : 720;
+  const h = compact ? 520 : 820;
   return (
     <svg viewBox={`0 0 1440 ${h}`} xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
       <defs>
-        <linearGradient id="rockBg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#0a0614" />
-          <stop offset="45%" stopColor="#2a1248" />
-          <stop offset="100%" stopColor="#c43b6e" />
+        <linearGradient id="shrSky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#5ec8ff" />
+          <stop offset="55%" stopColor="#9ad8ff" />
+          <stop offset="100%" stopColor="#ffe082" />
         </linearGradient>
-        <radialGradient id="neonGlow" cx="68%" cy="40%" r="40%">
-          <stop offset="0%" stopColor="#39e6c4" stopOpacity="0.45" />
-          <stop offset="100%" stopColor="#39e6c4" stopOpacity="0" />
-        </radialGradient>
+        <pattern id="chalkDots" width="18" height="18" patternUnits="userSpaceOnUse">
+          <circle cx="2" cy="2" r="1.2" fill="#fff" opacity="0.18" />
+        </pattern>
       </defs>
-      <rect width="1440" height={h} fill="url(#rockBg)" />
-      <ellipse cx="1000" cy="260" rx="360" ry="220" fill="url(#neonGlow)" />
 
-      <g transform="translate(900,180)">
-        <rect x="0" y="80" width="120" height="160" rx="12" fill="#0d0618" stroke="#39e6c4" strokeWidth="4" />
-        <circle cx="60" cy="145" r="28" fill="none" stroke="#39e6c4" strokeWidth="5" className="pulse-ring" />
-        <circle cx="60" cy="145" r="10" fill="#39e6c4" />
-        <rect x="20" y="210" width="80" height="10" rx="3" fill="#ff4d6d" />
-      </g>
-      <g transform="translate(1060,140)">
-        <ellipse cx="50" cy="160" rx="48" ry="70" fill="#ff4d6d" />
-        <rect x="42" y="20" width="16" height="110" rx="6" fill="#ffc107" />
-        <circle cx="50" cy="150" r="16" fill="#1a0b2e" />
-        <rect x="38" y="0" width="24" height="28" rx="4" fill="#39e6c4" />
+      {/* Bright cartoon sky */}
+      <rect width="1440" height={h} fill="url(#shrSky)" />
+      <circle cx="1180" cy="120" r="78" fill="#ffeb3b" stroke="#f9a825" strokeWidth="8" />
+      <circle className="pulse-ring" cx="1180" cy="120" r="98" fill="none" stroke="#fff59d" strokeWidth="6" opacity="0.55" />
+
+      {/* Clouds — bold & simple */}
+      <g fill="#fff" stroke="#1a237e" strokeWidth="5" strokeLinejoin="round">
+        <ellipse cx="180" cy="110" rx="70" ry="32" />
+        <ellipse cx="230" cy="100" rx="48" ry="28" />
+        <ellipse cx="480" cy="150" rx="60" ry="26" />
+        <ellipse cx="980" cy="180" rx="55" ry="24" />
       </g>
 
-      <g transform="translate(640,220)">
-        <circle cx="50" cy="50" r="42" fill="#ffb4a2" />
-        <path d="M20 45 Q50 10 80 45" fill="#0c2340" />
-        <rect x="22" y="92" width="56" height="70" rx="16" fill="#ff4d6d" />
-        <circle cx="36" cy="48" r="5" fill="#0c2340" />
-        <circle cx="64" cy="48" r="5" fill="#0c2340" />
-        <path d="M36 66 Q50 76 64 66" stroke="#0c2340" strokeWidth="3" fill="none" strokeLinecap="round" />
-      </g>
-      <g transform="translate(760,200)">
-        <circle cx="50" cy="50" r="42" fill="#ffccbc" />
-        <rect x="22" y="92" width="56" height="78" rx="16" fill="#39e6c4" />
-        <circle cx="36" cy="48" r="5" fill="#0c2340" />
-        <circle cx="64" cy="48" r="5" fill="#0c2340" />
-        <path d="M36 66 Q50 74 64 66" stroke="#0c2340" strokeWidth="3" fill="none" strokeLinecap="round" />
-        <ellipse cx="90" cy="130" rx="22" ry="16" fill="#1a0b2e" stroke="#ffc107" strokeWidth="3" />
+      {/* Green hill */}
+      <ellipse cx="720" cy={h + 40} rx="900" ry="220" fill="#43a047" stroke="#1b5e20" strokeWidth="8" />
+
+      {/* Red schoolhouse */}
+      <g transform="translate(820,210)">
+        <rect x="40" y="120" width="280" height="200" fill="#e53935" stroke="#212121" strokeWidth="7" />
+        <polygon points="20,120 180,20 340,120" fill="#c62828" stroke="#212121" strokeWidth="7" strokeLinejoin="round" />
+        {/* Bell tower */}
+        <rect x="150" y="45" width="60" height="50" fill="#ffc107" stroke="#212121" strokeWidth="6" />
+        <polygon points="140,45 180,10 220,45" fill="#e53935" stroke="#212121" strokeWidth="6" strokeLinejoin="round" />
+        <ellipse cx="180" cy="70" rx="14" ry="16" fill="#ffeb3b" stroke="#212121" strokeWidth="4" />
+        {/* Door & windows */}
+        <rect x="145" y="220" width="70" height="100" fill="#6d4c41" stroke="#212121" strokeWidth="6" />
+        <circle cx="200" cy="275" r="6" fill="#ffeb3b" stroke="#212121" strokeWidth="3" />
+        <rect x="70" y="160" width="55" height="45" fill="#81d4fa" stroke="#212121" strokeWidth="5" />
+        <rect x="235" y="160" width="55" height="45" fill="#81d4fa" stroke="#212121" strokeWidth="5" />
+        <line x1="97" y1="160" x2="97" y2="205" stroke="#212121" strokeWidth="4" />
+        <line x1="70" y1="182" x2="125" y2="182" stroke="#212121" strokeWidth="4" />
+        <line x1="262" y1="160" x2="262" y2="205" stroke="#212121" strokeWidth="4" />
+        <line x1="235" y1="182" x2="290" y2="182" stroke="#212121" strokeWidth="4" />
       </g>
 
-      <g className="note" fill="#39e6c4">
-        <text x="560" y="180" fontSize="64" fontFamily="Outfit, sans-serif">♪</text>
-      </g>
-      <g className="note" fill="#ffc107">
-        <text x="1200" y="220" fontSize="52" fontFamily="Outfit, sans-serif">♫</text>
+      {/* Chalkboard */}
+      <g transform="translate(520,280)">
+        <rect x="0" y="0" width="260" height="170" rx="6" fill="#1b5e20" stroke="#5d4037" strokeWidth="14" />
+        <rect x="0" y="0" width="260" height="170" fill="url(#chalkDots)" />
+        <text x="28" y="70" fill="#fffde7" fontFamily="Bangers, Fredoka, sans-serif" fontSize="42">
+          A B C
+        </text>
+        <text x="28" y="120" fill="#fff59d" fontFamily="Bangers, Fredoka, sans-serif" fontSize="36">
+          1 2 3 ♪
+        </text>
+        <rect x="90" y="175" width="80" height="18" fill="#8d6e63" stroke="#212121" strokeWidth="4" />
       </g>
 
-      <rect x="0" y={h - 120} width="1440" height="120" fill="#040714" opacity="0.65" />
-      <rect x="540" y={h - 140} width="620" height="18" rx="6" fill="#39e6c4" />
+      {/* Cartoon kids with instruments — bold outlines */}
+      <g transform="translate(200,360)">
+        <circle cx="50" cy="48" r="38" fill="#ffcc80" stroke="#212121" strokeWidth="5" />
+        <path d="M18 40 Q50 8 82 40" fill="#5d4037" stroke="#212121" strokeWidth="4" />
+        <circle cx="38" cy="46" r="5" fill="#212121" />
+        <circle cx="62" cy="46" r="5" fill="#212121" />
+        <path d="M38 62 Q50 72 62 62" stroke="#212121" strokeWidth="4" fill="none" strokeLinecap="round" />
+        <rect x="22" y="88" width="56" height="70" rx="12" fill="#e53935" stroke="#212121" strokeWidth="5" />
+        {/* Tambourine */}
+        <circle cx="95" cy="120" r="22" fill="#ffeb3b" stroke="#212121" strokeWidth="5" />
+        <circle cx="95" cy="120" r="10" fill="none" stroke="#212121" strokeWidth="3" />
+      </g>
+
+      <g transform="translate(340,340)">
+        <circle cx="50" cy="48" r="38" fill="#ffe0b2" stroke="#212121" strokeWidth="5" />
+        <path d="M18 42 Q50 5 82 42" fill="#212121" />
+        <circle cx="38" cy="46" r="5" fill="#212121" />
+        <circle cx="62" cy="46" r="5" fill="#212121" />
+        <path d="M38 60 Q50 70 62 60" stroke="#212121" strokeWidth="4" fill="none" strokeLinecap="round" />
+        <rect x="22" y="88" width="56" height="78" rx="12" fill="#1e88e5" stroke="#212121" strokeWidth="5" />
+        {/* Drum */}
+        <ellipse cx="100" cy="130" rx="26" ry="18" fill="#8d6e63" stroke="#212121" strokeWidth="5" />
+        <ellipse cx="100" cy="122" rx="26" ry="12" fill="#ff8a65" stroke="#212121" strokeWidth="4" />
+      </g>
+
+      <g transform="translate(480,370)">
+        <circle cx="50" cy="48" r="36" fill="#ffccbc" stroke="#212121" strokeWidth="5" />
+        <path d="M20 42 Q50 12 80 42" fill="#6a1b9a" stroke="#212121" strokeWidth="3" />
+        <circle cx="38" cy="46" r="5" fill="#212121" />
+        <circle cx="62" cy="46" r="5" fill="#212121" />
+        <path d="M38 60 Q50 70 62 60" stroke="#212121" strokeWidth="4" fill="none" strokeLinecap="round" />
+        <rect x="24" y="86" width="52" height="68" rx="12" fill="#43a047" stroke="#212121" strokeWidth="5" />
+      </g>
+
+      {/* Floating letters & notes */}
+      <g className="note" fontFamily="Bangers, Fredoka, sans-serif" fontSize="52" fill="#e53935" stroke="#212121" strokeWidth="2">
+        <text x="160" y="250">A</text>
+      </g>
+      <g className="note" fontFamily="Bangers, Fredoka, sans-serif" fontSize="48" fill="#1e88e5" stroke="#212121" strokeWidth="2">
+        <text x="260" y="200">2</text>
+      </g>
+      <g className="note" fill="#f9a825" stroke="#212121" strokeWidth="2">
+        <text x="1280" y="280" fontSize="64" fontFamily="Bangers, Fredoka, sans-serif">♪</text>
+      </g>
+      <g className="note" fill="#e53935" stroke="#212121" strokeWidth="2">
+        <text x="1340" y="360" fontSize="52" fontFamily="Bangers, Fredoka, sans-serif">♫</text>
+      </g>
+      <g className="note" fontFamily="Bangers, Fredoka, sans-serif" fontSize="44" fill="#43a047" stroke="#212121" strokeWidth="2">
+        <text x="70" y="320">+</text>
+      </g>
     </svg>
   );
 }

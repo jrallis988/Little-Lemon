@@ -858,6 +858,84 @@ button {
   }
 }
 
+.schoolhouse-hero .schoolhouse-scrim {
+  background:
+    linear-gradient(90deg, rgba(4, 7, 20, 0.78) 0%, rgba(4, 7, 20, 0.35) 48%, transparent 78%),
+    linear-gradient(0deg, var(--dplus-bg) 0%, rgba(4, 7, 20, 0.25) 32%, transparent 58%);
+}
+
+.schoolhouse-eyebrow {
+  color: #ffeb3b !important;
+  letter-spacing: 0.14em;
+}
+
+.schoolhouse-title {
+  font-family: "Bangers", "Fredoka", system-ui, sans-serif !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase;
+  font-weight: 400 !important;
+  text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.35);
+}
+
+.schoolhouse-title span {
+  color: #ffeb3b;
+}
+
+.schoolhouse-content .hero-lede,
+.schoolhouse-content .hero-meta {
+  max-width: 40ch;
+}
+
+.btn-schoolhouse {
+  background: #ffeb3b !important;
+  color: #212121 !important;
+  box-shadow: 0 6px 0 #f9a825, 0 10px 24px rgba(249, 168, 37, 0.35);
+}
+
+.btn-schoolhouse:hover {
+  background: #fff59d !important;
+}
+
+.schoolhouse-section-title {
+  font-family: "Bangers", "Fredoka", system-ui, sans-serif;
+  letter-spacing: 0.04em;
+  font-weight: 400;
+  font-size: 1.55rem;
+}
+
+.chalk-card {
+  background: linear-gradient(180deg, rgba(27, 94, 32, 0.35), rgba(27, 94, 32, 0.18)) !important;
+  border: 2px solid rgba(255, 235, 59, 0.18) !important;
+  border-radius: 8px !important;
+}
+
+.chalk-card:hover,
+.chalk-card:focus-visible,
+.chalk-card.active {
+  background: linear-gradient(180deg, rgba(27, 94, 32, 0.55), rgba(27, 94, 32, 0.28)) !important;
+  border-color: rgba(255, 235, 59, 0.45) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.episode-subject {
+  display: inline-block;
+  margin: 0.2rem 0 0.35rem !important;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  background: rgba(255, 235, 59, 0.18);
+  color: #ffeb3b !important;
+  font-family: var(--font-display);
+  font-size: 0.72rem !important;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  -webkit-line-clamp: unset !important;
+}
+
+.schoolhouse-player {
+  border: 2px solid rgba(255, 235, 59, 0.22);
+  background: linear-gradient(145deg, #122018 0%, #0a1420 100%) !important;
+}
+
 .rail-sub {
   font-size: 0.78rem;
   color: var(--dplus-faint);

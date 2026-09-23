@@ -4,7 +4,7 @@ import { shows } from "../data/content";
 import { ShowPoster } from "../components/Illustrations";
 import { useLibrary } from "../library/LibraryContext";
 
-const SUGGESTIONS = ["Academy Rock", "music", "playlist", "learning", "Mia", "bedtime"];
+const SUGGESTIONS = ["Academy Rock", "numbers", "letters", "shapes", "Melody", "learning"];
 
 function matchesQuery(show, query) {
   if (!query) return true;

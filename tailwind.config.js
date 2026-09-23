@@ -17,6 +17,7 @@ module.exports = {
       fontFamily: {
         display: ['"Outfit"', "system-ui", "sans-serif"],
         body: ['"Manrope"', "system-ui", "sans-serif"],
+        schoolhouse: ['"Bangers"', '"Fredoka"', "system-ui", "sans-serif"],
       },
     },
   },

@@ -22,11 +22,10 @@ export default function AcademyRock() {
     setActiveId(ep.id);
     setAutoPlay(true);
     markProgress("academy-rock", Math.min(0.92, 0.12 + ep.number * 0.08));
-    document.getElementById("player")?.scrollIntoView({ behavior: "smooth", block: "center" });
+    document.getElementById("player")?.scrollIntoView?.({ behavior: "smooth", block: "center" });
   };
 
   const handleProgress = (ratio) => {
-    // Blend episode index with playback position for Continu Watching
     const base = (active.number - 1) / academyEpisodes.length;
     const within = ratio / academyEpisodes.length;
     markProgress("academy-rock", Math.min(0.95, base + within + 0.05));
@@ -34,23 +33,25 @@ export default function AcademyRock() {
 
   return (
     <>
-      <section className="hero title-hero" aria-label="Academy Rock">
+      <section className="hero title-hero schoolhouse-hero" aria-label="Academy Rock">
         <div className="hero-media">
           <AcademyStageArt />
         </div>
-        <div className="hero-scrim" />
-        <div className="hero-content">
-          <p className="hero-eyebrow">Disney Jr Original</p>
-          <h1 className="hero-title-logo">Academy Rock</h1>
-          <p className="hero-meta">2024 · 1 Season · 5 Episodes · Ages 2–5</p>
+        <div className="hero-scrim schoolhouse-scrim" />
+        <div className="hero-content schoolhouse-content">
+          <p className="hero-eyebrow schoolhouse-eyebrow">Disney Jr · Educational Musical</p>
+          <h1 className="hero-title-logo schoolhouse-title">
+            Academy <span>Rock</span>
+          </h1>
+          <p className="hero-meta">2024 · 1 Season · 5 Shorts · Ages 2–5 · Learn & Sing</p>
           <p className="hero-lede">
-            A music-filled series where kids find their voice, share the spotlight, and turn every
-            oops into an encore.
+            Catchy classroom anthems that stick — letters, numbers, shapes, and kindness, set to a
+            beat kids can’t stop humming.
           </p>
           <div className="hero-ctas">
             <button
               type="button"
-              className="btn btn-play"
+              className="btn btn-play btn-schoolhouse"
               onClick={() => playEpisode(academyEpisodes[0])}
             >
               <PlayIcon /> Play Episode 1
@@ -70,21 +71,21 @@ export default function AcademyRock() {
         </div>
       </section>
 
-      <div className="catalog title-catalog">
+      <div className="catalog title-catalog schoolhouse-catalog">
         <section className="section episodes-section" id="episodes" aria-labelledby="episodes-title">
           <div className="section-head">
-            <h2 className="content-row-title" id="episodes-title">
-              Episodes
+            <h2 className="content-row-title schoolhouse-section-title" id="episodes-title">
+              Lesson Songs
             </h2>
-            <p className="section-copy">Season 1 · Demo streams until licensed video is available</p>
+            <p className="section-copy">Season 1 · Short musical shorts for little learners</p>
           </div>
 
-          <div className="episode-list">
+          <div className="episode-list schoolhouse-episodes">
             {academyEpisodes.map((ep) => (
               <button
                 key={ep.id}
                 type="button"
-                className={`episode${ep.id === activeId ? " active" : ""}`}
+                className={`episode chalk-card${ep.id === activeId ? " active" : ""}`}
                 onClick={() => playEpisode(ep)}
                 aria-pressed={ep.id === activeId}
               >
@@ -97,13 +98,14 @@ export default function AcademyRock() {
                     <h3>{ep.title}</h3>
                     <span className="episode-meta">{ep.duration}</span>
                   </div>
+                  <p className="episode-subject">{ep.subject}</p>
                   <p>{ep.description}</p>
                 </div>
               </button>
             ))}
           </div>
 
-          <div className="player-panel" id="player" aria-live="polite">
+          <div className="player-panel schoolhouse-player" id="player" aria-live="polite">
             <div className="player-stage has-video">
               <VideoPlayer
                 key={active.id}
@@ -119,7 +121,7 @@ export default function AcademyRock() {
             </div>
             <div className="player-copy">
               <p className="player-ep-label">
-                Episode {active.number} · {active.duration}
+                {active.subject} · Episode {active.number} · {active.duration}
               </p>
               <h3>{active.title}</h3>
               <p>{active.description}</p>
@@ -129,8 +131,8 @@ export default function AcademyRock() {
 
         <section className="section" aria-labelledby="cast-title">
           <div className="section-head">
-            <h2 className="content-row-title" id="cast-title">
-              Suggested
+            <h2 className="content-row-title schoolhouse-section-title" id="cast-title">
+              Class Band
             </h2>
           </div>
           <div className="cast-row">
@@ -150,10 +152,10 @@ export default function AcademyRock() {
           id="more-like"
           title="More Like This"
           shows={getShowsByIds([
-            "sunny-paws",
-            "rainbow-bus",
-            "little-harbor",
             "count-with-coco",
+            "rainbow-bus",
+            "sunny-paws",
+            "garden-grove",
             "starlight-story",
           ]).map((s) => ({ ...s, progress: getProgress(s.id) ?? s.progress }))}
         />
