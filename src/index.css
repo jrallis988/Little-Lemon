@@ -278,6 +278,14 @@ button.danger {
   min-height: 1.2em;
 }
 
+.stripe-box {
+  margin-top: 0.5rem;
+  padding: 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.28);
+}
+
 @keyframes rise {
   from {
     opacity: 0;

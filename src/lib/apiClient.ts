@@ -127,6 +127,12 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ intentId }),
     }),
+  paymentsConfig: () =>
+    request<{
+      mode: 'demo' | 'stripe'
+      publishableKey: string | null
+      allowTestConfirm: boolean
+    }>('/api/payments/config'),
   race: (seatLabel = 'B-1', contenders = 8) =>
     request<{
       winners: CheckoutResult[]

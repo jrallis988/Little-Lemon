@@ -16,6 +16,8 @@
   },
   "dependencies": {
     "@hono/node-server": "^2.1.1",
+    "@stripe/react-stripe-js": "^6.11.0",
+    "@stripe/stripe-js": "^9.17.0",
     "better-sqlite3": "^13.0.3",
     "concurrently": "^10.0.5",
     "hono": "^4.13.7",

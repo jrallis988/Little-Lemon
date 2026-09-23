@@ -7,7 +7,11 @@ import { api } from './lib/apiClient'
 type Tab = 'ledger' | 'identity' | 'checkout'
 
 export default function App() {
-  const [tab, setTab] = useState<Tab>('ledger')
+  const initialTab = (() => {
+    const tab = new URLSearchParams(window.location.search).get('tab')
+    return tab === 'identity' || tab === 'checkout' || tab === 'ledger' ? tab : 'ledger'
+  })()
+  const [tab, setTab] = useState<Tab>(initialTab)
   const [apiStatus, setApiStatus] = useState<'checking' | 'up' | 'down'>('checking')
 
   useEffect(() => {
@@ -16,6 +20,12 @@ export default function App() {
       .then(() => setApiStatus('up'))
       .catch(() => setApiStatus('down'))
   }, [])
+
+  useEffect(() => {
+    const url = new URL(window.location.href)
+    url.searchParams.set('tab', tab)
+    window.history.replaceState({}, '', url.pathname + url.search + url.hash)
+  }, [tab])
 
   return (
     <div className="app-shell">

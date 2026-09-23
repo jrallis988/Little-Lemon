@@ -53,7 +53,15 @@ See `.env.example`.
 
 ## Still before full production
 
-- Stripe.js Elements in the UI (publishable key endpoint is ready)
 - Real IdP + `@simplewebauthn/server`
 - Postgres + Redis/Kafka (see `schemas/postgres_ledger.sql`)
 - Merge draft PR and point a host at the Docker image
+
+## Stripe.js checkout
+
+1. Set `STRIPE_SECRET_KEY` + `STRIPE_PUBLISHABLE_KEY` (+ webhook secret)
+2. `npm run dev:all`
+3. Checkout tab → **Create PaymentIntent** → Payment Element appears
+4. Use Stripe test card `4242…` — on success the API mints the ticket
+
+Without keys, demo confirm still works offline.
