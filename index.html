@@ -37,7 +37,7 @@
     <nav class="nav" id="site-nav" aria-label="Primary">
       <ul id="main-nav">
         <li><a href="#workforce">Workforce</a></li>
-        <li><a href="#day">A Day</a></li>
+        <li><a href="#demo">Demo</a></li>
         <li><a href="#integrations">Integrations</a></li>
         <li><a href="#pricing">Pricing</a></li>
         <li><a href="#waitlist">Waitlist</a></li>
@@ -316,8 +316,8 @@
             <li><strong>Approve / Snooze / Decline</strong> — nothing ships without your call</li>
           </ul>
         </div>
-        <div class="phone-wrap" aria-hidden="true">
-          <div class="phone">
+        <div class="phone-wrap">
+          <div class="phone" aria-hidden="true">
             <div class="phone-notch"></div>
             <div class="phone-screen">
               <header class="app-bar">
@@ -336,6 +336,71 @@
                 <li><span class="avatar av-riley">R</span><div><strong>Compliance</strong><p>Riley: Certs audited</p></div></li>
               </ul>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive demo -->
+    <section class="section demo" id="demo" aria-labelledby="demo-title">
+      <div class="section-inner">
+        <div class="section-head">
+          <p class="eyebrow">Interactive demo</p>
+          <h2 id="demo-title">Watch your AI workforce work</h2>
+          <p class="section-lede">Click through a 60-second loop — agents propose, you approve. Nothing employee-facing ships without you.</p>
+        </div>
+
+        <div class="demo-layout" data-demo>
+          <div class="demo-steps" role="tablist" aria-label="Demo scenarios">
+            <button type="button" class="demo-step is-active" role="tab" aria-selected="true" data-demo-step="0">
+              <span class="demo-step-num">01</span>
+              <span>
+                <strong>Coverage gap</strong>
+                <small>Calvin rebalances Friday night</small>
+              </span>
+            </button>
+            <button type="button" class="demo-step" role="tab" aria-selected="false" data-demo-step="1">
+              <span class="demo-step-num">02</span>
+              <span>
+                <strong>Interview slate</strong>
+                <small>Kate books three warehouse leads</small>
+              </span>
+            </button>
+            <button type="button" class="demo-step" role="tab" aria-selected="false" data-demo-step="2">
+              <span class="demo-step-num">03</span>
+              <span>
+                <strong>Leave request</strong>
+                <small>Holly drafts a policy-safe reply</small>
+              </span>
+            </button>
+            <button type="button" class="demo-step" role="tab" aria-selected="false" data-demo-step="3">
+              <span class="demo-step-num">04</span>
+              <span>
+                <strong>Cert renewal</strong>
+                <small>Riley flags expiring credentials</small>
+              </span>
+            </button>
+          </div>
+
+          <div class="demo-stage">
+            <article class="demo-card" aria-live="polite">
+              <header class="demo-card-top">
+                <span class="demo-agent" id="demo-agent">Calvin · Ops</span>
+                <span class="demo-status" id="demo-status">Needs approval</span>
+              </header>
+              <h3 id="demo-heading">Fill 2 open stations on Friday 6–11pm</h3>
+              <p id="demo-body">Two call-outs hit overnight. Calvin matched certified floaters, checked overtime rules, and queued shift offers.</p>
+              <ul class="demo-meta" id="demo-meta">
+                <li>Impact: floor coverage restored</li>
+                <li>Systems: 7shifts · ADP</li>
+              </ul>
+              <div class="demo-actions">
+                <button type="button" class="btn btn-primary" data-demo-action="approve" data-track="demo_approve">Approve</button>
+                <button type="button" class="btn btn-secondary" data-demo-action="snooze" data-track="demo_snooze">Snooze</button>
+                <button type="button" class="btn btn-ghost demo-decline" data-demo-action="decline" data-track="demo_decline">Decline</button>
+              </div>
+              <p class="demo-feedback" id="demo-feedback" role="status" aria-live="polite"></p>
+            </article>
           </div>
         </div>
       </div>
@@ -364,6 +429,44 @@
           <li>Slack</li>
         </ul>
         <p class="integration-note">Integration availability varies by pilot. Tell us what you use when you join the waitlist.</p>
+      </div>
+    </section>
+
+    <!-- Security / trust -->
+    <section class="section security" id="security" aria-labelledby="security-title">
+      <div class="section-inner">
+        <div class="section-head">
+          <p class="eyebrow">Trust &amp; control</p>
+          <h2 id="security-title">Workforce data deserves controlled agency</h2>
+          <p class="section-lede">Shift is built so AI can move work forward without quietly changing people’s jobs, pay, or records.</p>
+        </div>
+        <div class="security-grid">
+          <article class="security-card">
+            <h3>Human gate on sensitive actions</h3>
+            <p>Approve, Snooze, or Decline before messages send, schedules publish, or HR tickets close.</p>
+          </article>
+          <article class="security-card">
+            <h3>Connect, don’t clone</h3>
+            <p>Agents operate through your existing HRIS, ATS, and scheduling tools — not a shadow system of record.</p>
+          </article>
+          <article class="security-card">
+            <h3>Least privilege by role</h3>
+            <p>Managers, HR, and site leads see only the workflows their seat should control.</p>
+          </article>
+          <article class="security-card">
+            <h3>Audit-ready trail</h3>
+            <p>Every proposed and approved action is logged for review, coaching, and compliance export.</p>
+          </article>
+          <article class="security-card">
+            <h3>Customer data boundaries</h3>
+            <p>Product commitment: customer workforce data is not used to train public foundation models.</p>
+          </article>
+          <article class="security-card">
+            <h3>Enterprise path</h3>
+            <p>SSO/SCIM, DPA, and security review available on Enterprise pilots before production rollout.</p>
+          </article>
+        </div>
+        <p class="security-foot"><a href="privacy.html">Read the Privacy Policy</a> · <a href="mailto:hello@workingintelligence.com?subject=Shift%20security%20review">Request a security review</a></p>
       </div>
     </section>
 
@@ -575,10 +678,10 @@
           <h3>Product</h3>
           <ul>
             <li><a href="#platform">Platform</a></li>
-            <li><a href="#integrations">Integrations</a></li>
+            <li><a href="#demo">Demo</a></li>
+            <li><a href="#security">Security</a></li>
             <li><a href="#pricing">Pricing</a></li>
             <li><a href="#waitlist">Waitlist</a></li>
-            <li><a href="#faq">FAQ</a></li>
           </ul>
         </div>
         <div>

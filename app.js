@@ -221,4 +221,114 @@
       }
     });
   }
+
+  // Interactive demo
+  const demoRoot = document.querySelector("[data-demo]");
+  if (demoRoot) {
+    const scenarios = [
+      {
+        agent: "Calvin · Ops",
+        status: "Needs approval",
+        heading: "Fill 2 open stations on Friday 6–11pm",
+        body: "Two call-outs hit overnight. Calvin matched certified floaters, checked overtime rules, and queued shift offers.",
+        meta: ["Impact: floor coverage restored", "Systems: 7shifts · ADP"],
+      },
+      {
+        agent: "Kate · Talent",
+        status: "Needs approval",
+        heading: "Book interviews for 3 warehouse lead candidates",
+        body: "Kate screened overnight applicants, ranked fit against the job profile, and proposed calendar holds for tomorrow.",
+        meta: ["Impact: pipeline unblocked", "Systems: Greenhouse · Google Calendar"],
+      },
+      {
+        agent: "Holly · HR",
+        status: "Needs approval",
+        heading: "Reply to leave request with policy-safe options",
+        body: "Holly drafted a clear response with available PTO balance and coverage notes — waiting for your send.",
+        meta: ["Impact: manager time saved", "Systems: BambooHR · Slack"],
+      },
+      {
+        agent: "Riley · Compliance",
+        status: "Needs approval",
+        heading: "Renew 2 food-handler certs before Friday",
+        body: "Riley found expirations in the LMS, queued reminders to employees, and flagged the risk for site leads.",
+        meta: ["Impact: violation avoided", "Systems: Cornerstone · email"],
+      },
+    ];
+
+    const steps = Array.from(demoRoot.querySelectorAll("[data-demo-step]"));
+    const agentEl = document.getElementById("demo-agent");
+    const statusEl = document.getElementById("demo-status");
+    const headingEl = document.getElementById("demo-heading");
+    const bodyEl = document.getElementById("demo-body");
+    const metaEl = document.getElementById("demo-meta");
+    const feedbackEl = document.getElementById("demo-feedback");
+    let active = 0;
+    let autoTimer;
+
+    const render = (index) => {
+      active = index;
+      const scene = scenarios[index];
+      steps.forEach((step, i) => {
+        const on = i === index;
+        step.classList.toggle("is-active", on);
+        step.setAttribute("aria-selected", String(on));
+      });
+      if (agentEl) agentEl.textContent = scene.agent;
+      if (statusEl) {
+        statusEl.textContent = scene.status;
+        statusEl.dataset.state = "pending";
+      }
+      if (headingEl) headingEl.textContent = scene.heading;
+      if (bodyEl) bodyEl.textContent = scene.body;
+      if (metaEl) {
+        metaEl.innerHTML = scene.meta.map((item) => `<li>${item}</li>`).join("");
+      }
+      if (feedbackEl) feedbackEl.textContent = "";
+    };
+
+    const go = (index) => {
+      render((index + scenarios.length) % scenarios.length);
+    };
+
+    steps.forEach((step) => {
+      step.addEventListener("click", () => {
+        const index = Number(step.getAttribute("data-demo-step") || 0);
+        go(index);
+        restartAuto();
+      });
+    });
+
+    demoRoot.querySelectorAll("[data-demo-action]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const action = btn.getAttribute("data-demo-action");
+        if (!feedbackEl || !statusEl) return;
+        if (action === "approve") {
+          statusEl.textContent = "Approved";
+          statusEl.dataset.state = "approved";
+          feedbackEl.textContent = "Action queued to connected systems. Audit log updated.";
+        } else if (action === "snooze") {
+          statusEl.textContent = "Snoozed · 2h";
+          statusEl.dataset.state = "snoozed";
+          feedbackEl.textContent = "We’ll bring this back after the lunch rush.";
+        } else {
+          statusEl.textContent = "Declined";
+          statusEl.dataset.state = "declined";
+          feedbackEl.textContent = "No changes sent. Agent will revise with your notes.";
+        }
+      });
+    });
+
+    const restartAuto = () => {
+      clearInterval(autoTimer);
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      autoTimer = setInterval(() => {
+        if (document.hidden) return;
+        go(active + 1);
+      }, 7000);
+    };
+
+    render(0);
+    restartAuto();
+  }
 })();
