@@ -65,7 +65,7 @@ export function productPar(sku: string): number | undefined {
 export function nextHouseSku(existing: Product[] = liveCatalog): string {
   let max = 0;
   for (const p of existing) {
-    const m = p.sku.match(/(\d+)$/);
+    const m = p.sku.match(/^HOUSE-(\d+)$/i);
     if (m) max = Math.max(max, Number(m[1]));
   }
   return `HOUSE-${String(max + 1).padStart(3, "0")}`;

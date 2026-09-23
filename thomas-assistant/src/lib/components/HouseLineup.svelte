@@ -45,15 +45,18 @@
     {#each appState.products as product (product.sku)}
       <li>
         <div class="line">
-          <input
-            type="text"
-            value={product.name}
-            aria-label="Product name"
-            onchange={(e) =>
-              updateHouseProduct(product.sku, {
-                name: (e.currentTarget as HTMLInputElement).value,
-              })}
-          />
+          <div class="name-block">
+            <input
+              type="text"
+              value={product.name}
+              aria-label="Product name"
+              onchange={(e) =>
+                updateHouseProduct(product.sku, {
+                  name: (e.currentTarget as HTMLInputElement).value,
+                })}
+            />
+            <span class="sku">{product.sku}</span>
+          </div>
           <select
             value={product.unit}
             aria-label="Unit for {product.name}"
@@ -88,7 +91,6 @@
             Remove
           </button>
         </div>
-        <span class="sku">{product.sku}</span>
       </li>
     {/each}
   </ul>
@@ -191,11 +193,17 @@
     text-align: right;
   }
 
+  .name-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+
   .sku {
     display: block;
     font-size: 0.65rem;
     color: var(--text-muted);
-    margin-top: 0.15rem;
     letter-spacing: 0.04em;
   }
 
