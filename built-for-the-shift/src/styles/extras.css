@@ -309,15 +309,276 @@
 
 .social-card__copy strong {
   display: block;
-  font-size: 1rem;
+  font-size: 1.05rem;
   line-height: 0.95;
 }
 
-.social-card__copy .tech {
+.social-card__copy em {
   display: block;
-  margin-top: 0.25rem;
+  margin-top: 0.3rem;
+  font-style: normal;
+  font-size: 0.62rem;
+  color: var(--shift-frost);
+}
+
+.social-card__brand {
+  display: block;
+  margin-top: 0.35rem;
   font-size: 0.58rem;
   color: var(--shift-volt);
+}
+
+.social-card__bar {
+  position: absolute;
+  left: 0.55rem;
+  bottom: 4.2rem;
+  width: 28px;
+  height: 3px;
+  background: var(--shift-iceblue);
+  z-index: 2;
+}
+
+/* —— Film timeline / paid sting —— */
+.film-photo {
+  z-index: 0;
+}
+
+.film-timeline {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.4rem;
+  margin-top: 0.85rem;
+}
+
+@media (min-width: 700px) {
+  .film-timeline {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+.film-timeline__beat {
+  padding: 0.55rem 0.45rem;
+  border: 1px solid var(--shift-line);
+  background: var(--shift-panel);
+  text-align: left;
+  color: var(--shift-frost);
+}
+
+.film-timeline__beat .tech {
+  display: block;
+  font-size: 0.58rem;
+  color: var(--shift-slate);
+  margin-bottom: 0.2rem;
+}
+
+.film-timeline__beat .display {
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+.film-timeline__beat.is-active {
+  border-color: var(--shift-iceblue);
+  background: color-mix(in srgb, var(--shift-iceblue) 16%, var(--shift-panel));
+  color: var(--shift-white);
+}
+
+.film-timeline__beat.is-active .tech {
+  color: var(--shift-volt);
+}
+
+.sting-flash {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 138, 61, 0.35);
+  z-index: 4;
+  pointer-events: none;
+}
+
+.sting-impact {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 3;
+  font-size: clamp(3rem, 12vw, 6rem);
+  color: var(--shift-amber);
+}
+
+.sting-product {
+  position: absolute;
+  left: 8%;
+  bottom: 14%;
+  z-index: 3;
+  padding: 0.75rem 0.9rem;
+  background: rgba(18, 24, 32, 0.88);
+  border-left: 3px solid var(--shift-iceblue);
+}
+
+.sting-product strong {
+  display: block;
+  font-size: 2rem;
+}
+
+.sting-product em {
+  display: block;
+  font-style: normal;
+  color: var(--shift-volt);
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.sting-line {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 3;
+  font-size: clamp(1.8rem, 6vw, 3.2rem);
+  text-align: center;
+  background: rgba(18, 24, 32, 0.72);
+}
+
+/* —— PDP module —— */
+.pdp-shell {
+  display: grid;
+  gap: 0;
+  border: 1px solid color-mix(in srgb, var(--shift-line) 35%, transparent);
+  overflow: hidden;
+  background: var(--shift-white);
+}
+
+@media (min-width: 860px) {
+  .pdp-shell {
+    grid-template-columns: 1.1fr 0.9fr;
+  }
+}
+
+.pdp-media {
+  position: relative;
+  min-height: 280px;
+  background: var(--shift-steel);
+}
+
+.pdp-media .hockey-photo {
+  position: absolute;
+}
+
+.pdp-media__badge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 2;
+  padding: 0.3rem 0.5rem;
+  background: rgba(18, 24, 32, 0.85);
+  color: var(--shift-volt);
+  font-size: 0.65rem;
+}
+
+.pdp-copy {
+  padding: 1.35rem 1.25rem 1.5rem;
+  display: grid;
+  gap: 0.55rem;
+  align-content: center;
+}
+
+.pdp-copy .display {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+}
+
+.pdp-benefit {
+  color: var(--shift-iceblue);
+  letter-spacing: 0.12em;
+  font-size: 0.8rem;
+}
+
+.pdp-stat {
+  margin-top: 0.5rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid color-mix(in srgb, var(--shift-line) 30%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--shift-line) 30%, transparent);
+}
+
+.pdp-stat .num {
+  display: block;
+  font-size: 2rem;
+  color: var(--shift-ink);
+}
+
+.pdp-stat .tech {
+  font-size: 0.7rem;
+  color: var(--shift-slate);
+}
+
+.pdp-body {
+  font-size: 0.92rem;
+  color: var(--shift-slate);
+}
+
+.pdp-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+/* —— Sound timing —— */
+.sound {
+  padding: 1.1rem;
+  border: 1px solid var(--shift-line);
+  background: var(--shift-panel);
+  color: var(--shift-white);
+}
+
+.sound-rail {
+  position: relative;
+  height: 28px;
+  margin: 0.75rem 0 1rem;
+}
+
+.sound-rail__track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 3px;
+  background: var(--shift-line);
+  transform: translateY(-50%);
+}
+
+.sound-rail__mark {
+  position: absolute;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  background: var(--shift-volt);
+  transform: translate(-50%, -50%);
+  border: 2px solid var(--shift-panel);
+}
+
+.sound-list {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.sound-row {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--shift-line);
+}
+
+@media (min-width: 720px) {
+  .sound-row {
+    grid-template-columns: 4rem 10rem 1fr;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+}
+
+.sound-row p {
+  font-size: 0.88rem;
+  color: var(--shift-frost);
+  margin: 0;
 }
 
 /* —— Channel mockups —— */

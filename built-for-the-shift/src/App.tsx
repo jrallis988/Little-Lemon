@@ -15,6 +15,8 @@ import { StoryboardBoards } from './components/tools/StoryboardBoards'
 import { SocialFamilyGrid } from './components/tools/SocialFamilyGrid'
 import { ChannelMockups } from './components/tools/ChannelMockups'
 import { AeProcessPanels, DeliveryPackage } from './components/tools/AeProcess'
+import { WebPdpModule } from './components/tools/WebPdpModule'
+import { SoundTiming } from './components/tools/SoundTiming'
 import {
   aeTechniques,
   applications,
@@ -226,6 +228,8 @@ export default function App() {
                   </span>
                 ))}
               </div>
+              <div className="divider-line" />
+              <SoundTiming />
             </div>
           </div>
         </Section>
@@ -313,6 +317,11 @@ export default function App() {
             ))}
           </div>
           <ChannelMockups />
+          <div className="divider-line" />
+          <h3 className="display" style={{ fontSize: '2rem', marginBottom: '1rem' }}>
+            Web / PDP Module
+          </h3>
+          <WebPdpModule />
         </Section>
 
         <Section
