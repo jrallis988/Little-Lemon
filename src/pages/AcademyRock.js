@@ -6,23 +6,30 @@ import {
   CastAvatar,
   EpisodeThumb,
   PlayIcon,
-  PlayerArt,
 } from "../components/Illustrations";
 import ContentRow from "../components/ContentRow";
+import VideoPlayer from "../components/VideoPlayer";
 import { useLibrary } from "../library/LibraryContext";
 
 export default function AcademyRock() {
   const [activeId, setActiveId] = useState(academyEpisodes[0].id);
+  const [autoPlay, setAutoPlay] = useState(false);
   const active = academyEpisodes.find((ep) => ep.id === activeId) || academyEpisodes[0];
   const { isInWatchlist, toggleWatchlist, markProgress, getProgress } = useLibrary();
   const saved = isInWatchlist("academy-rock");
 
   const playEpisode = (ep) => {
     setActiveId(ep.id);
-    // Progress climbs with later episodes so Continue Watching feels real
-    const progress = Math.min(0.92, 0.18 + ep.number * 0.14);
-    markProgress("academy-rock", progress);
+    setAutoPlay(true);
+    markProgress("academy-rock", Math.min(0.92, 0.12 + ep.number * 0.08));
     document.getElementById("player")?.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+
+  const handleProgress = (ratio) => {
+    // Blend episode index with playback position for Continu Watching
+    const base = (active.number - 1) / academyEpisodes.length;
+    const within = ratio / academyEpisodes.length;
+    markProgress("academy-rock", Math.min(0.95, base + within + 0.05));
   };
 
   return (
@@ -69,7 +76,7 @@ export default function AcademyRock() {
             <h2 className="content-row-title" id="episodes-title">
               Episodes
             </h2>
-            <p className="section-copy">Season 1</p>
+            <p className="section-copy">Season 1 · Demo streams until licensed video is available</p>
           </div>
 
           <div className="episode-list">
@@ -97,16 +104,23 @@ export default function AcademyRock() {
           </div>
 
           <div className="player-panel" id="player" aria-live="polite">
-            <div className="player-stage">
-              <PlayerArt color={active.color} />
-              <div className="player-label">
-                <span className="btn btn-play player-play-badge">
-                  <PlayIcon /> Playing · Ep {active.number}
-                </span>
-                <span>{active.duration}</span>
-              </div>
+            <div className="player-stage has-video">
+              <VideoPlayer
+                key={active.id}
+                src={active.videoUrl}
+                title={`Academy Rock · ${active.title}`}
+                autoPlay={autoPlay}
+                onProgress={handleProgress}
+                onEnded={() => {
+                  const next = academyEpisodes.find((ep) => ep.number === active.number + 1);
+                  if (next) playEpisode(next);
+                }}
+              />
             </div>
             <div className="player-copy">
+              <p className="player-ep-label">
+                Episode {active.number} · {active.duration}
+              </p>
               <h3>{active.title}</h3>
               <p>{active.description}</p>
             </div>

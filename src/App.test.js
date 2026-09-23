@@ -5,6 +5,7 @@ import { clearLibraryStorage } from "./library/storage";
 
 beforeEach(() => {
   clearLibraryStorage();
+  Element.prototype.scrollIntoView = jest.fn();
 });
 
 test("renders Disney+ brand hubs including Disney Jr tile", () => {
@@ -66,6 +67,19 @@ test("renders Academy Rock show page", () => {
   expect(screen.getByRole("heading", { level: 1, name: /Academy Rock/i })).toBeInTheDocument();
   expect(screen.getAllByText(/First Day Jams/i).length).toBeGreaterThan(0);
   expect(screen.getByRole("button", { name: /Play Episode 1/i })).toBeInTheDocument();
+});
+
+test("Academy Rock player loads a video stream", () => {
+  render(
+    <MemoryRouter initialEntries={["/academy-rock"]}>
+      <App />
+    </MemoryRouter>
+  );
+  const video = document.querySelector("video.video-player-el");
+  expect(video).toBeTruthy();
+  expect(video.getAttribute("src")).toMatch(/\.mp4/);
+  fireEvent.click(screen.getByRole("button", { name: /Play Episode 1/i }));
+  expect(document.querySelector("video.video-player-el").getAttribute("src")).toMatch(/\.mp4/);
 });
 
 test("search page filters shows by query", () => {

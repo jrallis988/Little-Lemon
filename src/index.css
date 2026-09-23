@@ -609,9 +609,34 @@ button {
   position: relative;
 }
 
+.player-stage.has-video {
+  display: block;
+}
+
 .player-stage svg {
   width: 100%;
   height: 100%;
+}
+
+.video-player,
+.video-player-el {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: #000;
+}
+
+.video-player-el {
+  object-fit: contain;
+}
+
+.player-ep-label {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--dplus-faint);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .player-label {

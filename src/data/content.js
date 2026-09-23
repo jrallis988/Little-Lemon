@@ -199,6 +199,15 @@ export const disneyJrHubRows = [
   },
 ];
 
+/** Demo streams (public sample MP4s) — stand-ins until licensed Academy Rock videos exist. */
+const DEMO_STREAMS = {
+  bunny: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+  elephants: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+  fun: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+  joyrides: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+  sintel: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
+};
+
 export const academyEpisodes = [
   {
     id: "ep1",
@@ -208,6 +217,7 @@ export const academyEpisodes = [
       "Mia finds her courage—and her sparkly tambourine—on the first day at Academy Rock.",
     duration: "11 min",
     color: "#39e6c4",
+    videoUrl: DEMO_STREAMS.fun,
   },
   {
     id: "ep2",
@@ -217,6 +227,7 @@ export const academyEpisodes = [
       "When the drums feel too loud, Theo learns that soft rhythms can still rock the room.",
     duration: "11 min",
     color: "#ff4d6d",
+    videoUrl: DEMO_STREAMS.bunny,
   },
   {
     id: "ep3",
@@ -226,6 +237,7 @@ export const academyEpisodes = [
       "Lila and friends practice blending voices so every note feels like a hug.",
     duration: "12 min",
     color: "#ffc107",
+    videoUrl: DEMO_STREAMS.elephants,
   },
   {
     id: "ep4",
@@ -235,6 +247,7 @@ export const academyEpisodes = [
       "A broken spotlight turns into a glowing dance party under the moon lamp.",
     duration: "11 min",
     color: "#00b4e4",
+    videoUrl: DEMO_STREAMS.joyrides,
   },
   {
     id: "ep5",
@@ -244,6 +257,7 @@ export const academyEpisodes = [
       "Someone forgets their solo—so the whole academy shares the big finish.",
     duration: "12 min",
     color: "#ff1f7a",
+    videoUrl: DEMO_STREAMS.sintel,
   },
 ];
 
