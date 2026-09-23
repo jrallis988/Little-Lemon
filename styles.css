@@ -684,10 +684,14 @@ a:hover { opacity: 0.8; }
     gap: 0.85rem;
     justify-content: center;
     margin-top: 2rem;
+    position: relative;
+    z-index: 2;
 }
 
 .capabilities-cta .view-btn {
     text-decoration: none;
+    position: relative;
+    z-index: 2;
 }
 
 /* WORKFLOW */
