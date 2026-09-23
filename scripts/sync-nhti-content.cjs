@@ -67,8 +67,12 @@ for block in re.findall(r'<item>([\\s\\S]*?)</item>', xml)[:8]:
     if text: body=text[:1000]
   dt=parsedate_to_datetime(pub)
   items.append({'id':link.rstrip('/').split('/')[-1],'date':dt.strftime('%Y-%m-%d'),'displayDate':f"{dt.strftime('%B')} {dt.day}, {dt.strftime('%Y')}",'title':title,'summary':desc[:240],'body':body,'image':image,'sourceUrl':link})
-Path('${outDir}/news.generated.json').write_text(json.dumps(items, indent=2))
-print('programs', len(programs), 'news', len(items))
+news_path=Path('${outDir}/news.generated.json')
+if items:
+  news_path.write_text(json.dumps(items, indent=2))
+else:
+  print('news skipped (feed empty or blocked); keeping existing file')
+print('programs', len(programs), 'news', len(items) if items else 'unchanged')
 `;
 
 fs.writeFileSync("/tmp/nhti-sync-run.py", py);

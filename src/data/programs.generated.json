@@ -120,6 +120,46 @@
     "catalogUrl": "https://catalog.nhti.edu/hospitality/certificate/eventconference-management"
   },
   {
+    "id": "healthcare-management",
+    "name": "Healthcare Management",
+    "credential": "Certificate",
+    "focus": "arts",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Healthcare Management at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/healthcare-management/certificate/healthcare-management"
+  },
+  {
+    "id": "healthcare-management-2",
+    "name": "Healthcare Management",
+    "credential": "Associate of Science",
+    "focus": "arts",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Healthcare Management at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/healthcare-management/associate-of-science/healthcare-management"
+  },
+  {
     "id": "hospitality-and-tourism-management",
     "name": "Hospitality & Tourism Management",
     "credential": "Associate of Science",
@@ -220,7 +260,7 @@
     "catalogUrl": "https://catalog.nhti.edu/paralegal-studies/associate-of-science/paralegal-studies"
   },
   {
-    "id": "paralegal-studies-certificate",
+    "id": "paralegal-studies-2",
     "name": "Paralegal Studies",
     "credential": "Certificate",
     "focus": "business",
@@ -263,7 +303,7 @@
     "id": "sports-management",
     "name": "Sports Management",
     "credential": "Associate of Science",
-    "focus": "arts",
+    "focus": "business",
     "type": "degree",
     "online": false,
     "summary": "Study Sports Management at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
@@ -280,10 +320,10 @@
     "catalogUrl": "https://catalog.nhti.edu/sports-management/associate-of-science/sports-management"
   },
   {
-    "id": "sports-management-certificate",
+    "id": "sports-management-2",
     "name": "Sports Management",
     "credential": "Certificate",
-    "focus": "arts",
+    "focus": "business",
     "type": "certificate",
     "online": false,
     "summary": "Study Sports Management at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
@@ -460,7 +500,7 @@
     "catalogUrl": "https://catalog.nhti.edu/early-childhood-education/associate-of-science/early-childhood-education"
   },
   {
-    "id": "early-childhood-education-certificate",
+    "id": "early-childhood-education-2",
     "name": "Early Childhood Education",
     "credential": "Certificate",
     "focus": "public",
@@ -540,7 +580,7 @@
     "catalogUrl": "https://catalog.nhti.edu/education/associate-of-science/education"
   },
   {
-    "id": "education-certificate",
+    "id": "education-2",
     "name": "Education",
     "credential": "Certificate",
     "focus": "public",
@@ -700,6 +740,26 @@
     "catalogUrl": "https://catalog.nhti.edu/teacher-education-conversion-program/certificate/teacher-education-conversion-program-for-esol"
   },
   {
+    "id": "computed-tomography",
+    "name": "Computed Tomography",
+    "credential": "Certificate",
+    "focus": "arts",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Computed Tomography at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/computed-tomography/certificate/computed-tomography"
+  },
+  {
     "id": "diagnostic-medical-sonography",
     "name": "Diagnostic Medical Sonography",
     "credential": "Certificate",
@@ -740,26 +800,6 @@
     "catalogUrl": "https://catalog.nhti.edu/general-studies/associate-of-science/general-studies"
   },
   {
-    "id": "human-services",
-    "name": "Human Services",
-    "credential": "Certificate",
-    "focus": "public",
-    "type": "certificate",
-    "online": false,
-    "summary": "Study Human Services at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
-    "highlights": [
-      "Official catalog curriculum",
-      "Advising and transfer guidance",
-      "Flexible course formats where offered"
-    ],
-    "careers": [
-      "Direct-to-work pathways",
-      "Stackable credentials",
-      "Bachelor\u2019s transfer options"
-    ],
-    "catalogUrl": "https://catalog.nhti.edu/human-service/certificate/human-services"
-  },
-  {
     "id": "legal-nurse-consultant",
     "name": "Legal Nurse Consultant",
     "credential": "Certificate",
@@ -778,6 +818,26 @@
       "Bachelor\u2019s transfer options"
     ],
     "catalogUrl": "https://catalog.nhti.edu/legal-nurse-consultant/certificate/legal-nurse-consultant"
+  },
+  {
+    "id": "limited-xray-machine-operator-lxmo",
+    "name": "Limited Xray Machine Operator Lxmo",
+    "credential": "Certificate",
+    "focus": "arts",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Limited Xray Machine Operator Lxmo at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/limited-xray-machine-operator-lxmo/certificate/limited-xray-machine-operator-lxmo"
   },
   {
     "id": "orthopaedic-technology",
@@ -800,7 +860,7 @@
     "catalogUrl": "https://catalog.nhti.edu/orthopaedic-technology/certificate/orthopaedic-technology"
   },
   {
-    "id": "orthopaedic-technology-degree",
+    "id": "orthopaedic-technology-2",
     "name": "Orthopaedic Technology",
     "credential": "Associate of Science",
     "focus": "healthcare",
@@ -860,7 +920,7 @@
     "catalogUrl": "https://catalog.nhti.edu/radiation-therapy/certificate/radiation-therapy"
   },
   {
-    "id": "radiation-therapy-degree",
+    "id": "radiation-therapy-2",
     "name": "Radiation Therapy",
     "credential": "Associate of Science",
     "focus": "healthcare",
@@ -960,13 +1020,33 @@
     "catalogUrl": "https://catalog.nhti.edu/human-service/associate-of-science/human-service"
   },
   {
-    "id": "substance-use-disorder-treatment-sud-tx",
-    "name": "Substance Use Disorder Treatment (SUD-TX)",
+    "id": "human-services",
+    "name": "Human Services",
     "credential": "Certificate",
     "focus": "public",
     "type": "certificate",
     "online": false,
-    "summary": "Study Substance Use Disorder Treatment (SUD-TX) at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "summary": "Study Human Services at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/human-service/certificate/human-services"
+  },
+  {
+    "id": "substance-use-disorder-treatment-sud-tx",
+    "name": "Substance Use Disorder Treatment Sud Tx",
+    "credential": "Certificate",
+    "focus": "public",
+    "type": "certificate",
+    "online": false,
+    "summary": "Study Substance Use Disorder Treatment Sud Tx at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
     "highlights": [
       "Official catalog curriculum",
       "Advising and transfer guidance",
@@ -1160,26 +1240,6 @@
     "catalogUrl": "https://catalog.nhti.edu/information-technology/certificate/information-technology-network-associate"
   },
   {
-    "id": "information-technology-software-development-degree",
-    "name": "Information Technology Software Development",
-    "credential": "Associate of Science",
-    "focus": "stem",
-    "type": "degree",
-    "online": false,
-    "summary": "Study Information Technology Software Development at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
-    "highlights": [
-      "Official catalog curriculum",
-      "Advising and transfer guidance",
-      "Flexible course formats where offered"
-    ],
-    "careers": [
-      "Direct-to-work pathways",
-      "Stackable credentials",
-      "Bachelor\u2019s transfer options"
-    ],
-    "catalogUrl": "https://catalog.nhti.edu/information-technology/associate-of-science/information-technology-software-development"
-  },
-  {
     "id": "information-technology-tech-support",
     "name": "Information Technology Tech Support",
     "credential": "Certificate",
@@ -1198,26 +1258,6 @@
       "Bachelor\u2019s transfer options"
     ],
     "catalogUrl": "https://catalog.nhti.edu/information-technology/certificate/information-technology-tech-support"
-  },
-  {
-    "id": "landscape-and-environmental-design",
-    "name": "Landscape & Environmental Design",
-    "credential": "Associate of Science",
-    "focus": "arts",
-    "type": "degree",
-    "online": false,
-    "summary": "Study Landscape & Environmental Design at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
-    "highlights": [
-      "Official catalog curriculum",
-      "Advising and transfer guidance",
-      "Flexible course formats where offered"
-    ],
-    "careers": [
-      "Direct-to-work pathways",
-      "Stackable credentials",
-      "Bachelor\u2019s transfer options"
-    ],
-    "catalogUrl": "https://catalog.nhti.edu/landscape-design/associate-of-science/landscape-and-environmental-design"
   },
   {
     "id": "landscape-design",
@@ -1358,6 +1398,26 @@
       "Bachelor\u2019s transfer options"
     ],
     "catalogUrl": "https://catalog.nhti.edu/robotics-and-automation-engineering-technology/associate-of-science/robotics-and-automation"
+  },
+  {
+    "id": "software-development",
+    "name": "Software Development",
+    "credential": "Associate of Science",
+    "focus": "stem",
+    "type": "degree",
+    "online": false,
+    "summary": "Study Software Development at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "highlights": [
+      "Official catalog curriculum",
+      "Advising and transfer guidance",
+      "Flexible course formats where offered"
+    ],
+    "careers": [
+      "Direct-to-work pathways",
+      "Stackable credentials",
+      "Bachelor\u2019s transfer options"
+    ],
+    "catalogUrl": "https://catalog.nhti.edu/information-technology/associate-of-science/software-development"
   },
   {
     "id": "biology",
@@ -1501,12 +1561,12 @@
   },
   {
     "id": "nursing-lpn-to-rn-completion-option",
-    "name": "Nursing LPN to RN Completion Option",
+    "name": "Nursing Lpn To Rn Completion Option",
     "credential": "Associate of Science",
     "focus": "healthcare",
     "type": "degree",
     "online": false,
-    "summary": "Study Nursing LPN to RN Completion Option at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "summary": "Study Nursing Lpn To Rn Completion Option at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
     "highlights": [
       "Official catalog curriculum",
       "Advising and transfer guidance",
@@ -1521,12 +1581,12 @@
   },
   {
     "id": "nursing-paramedic-to-rn-completion",
-    "name": "Nursing Paramedic to RN Completion",
+    "name": "Nursing Paramedic To Rn Completion",
     "credential": "Associate of Science",
     "focus": "healthcare",
     "type": "degree",
     "online": false,
-    "summary": "Study Nursing Paramedic to RN Completion at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
+    "summary": "Study Nursing Paramedic To Rn Completion at NHTI \u2013 Concord\u2019s Community College. Open the catalog for course requirements, then work with advising on scheduling, transfer, and career planning.",
     "highlights": [
       "Official catalog curriculum",
       "Advising and transfer guidance",
