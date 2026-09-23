@@ -1,3 +1,5 @@
+import { siteConfig } from "../data/siteConfig";
+
 const STORAGE_KEY = "gbcc.inquiries.v1";
 
 function createReferenceId() {
@@ -14,13 +16,17 @@ export function listInquiries() {
   }
 }
 
+function persistLocally(inquiry) {
+  const existing = listInquiries();
+  existing.unshift(inquiry);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(existing.slice(0, 50)));
+}
+
 /**
- * Persists an inquiry locally and simulates an async CRM handoff.
- * In production, replace the body of this function with a POST to your form API.
+ * Submits an inquiry to the configured production endpoint when available,
+ * and always keeps a local confirmation record for the applicant.
  */
 export async function submitInquiry(payload) {
-  await new Promise((resolve) => setTimeout(resolve, 650));
-
   if (!payload?.email || !payload?.name) {
     throw new Error("Missing required inquiry fields.");
   }
@@ -29,13 +35,37 @@ export async function submitInquiry(payload) {
     id: createReferenceId(),
     createdAt: new Date().toISOString(),
     status: "queued",
-    destination: "askgreatbay@ccsnh.edu",
+    destination: siteConfig.formDestination,
+    transport: "local",
     ...payload,
   };
 
-  const existing = listInquiries();
-  existing.unshift(inquiry);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(existing.slice(0, 50)));
+  if (siteConfig.formEndpoint) {
+    const response = await fetch(siteConfig.formEndpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        ...inquiry,
+        _subject: `GBCC website inquiry — ${inquiry.topic || "General"}`,
+      }),
+    });
 
+    if (!response.ok) {
+      throw new Error("Unable to reach admissions right now. Please try again or call (603) 427-7600.");
+    }
+
+    inquiry.status = "submitted";
+    inquiry.transport = "api";
+  } else {
+    // Demo / staging fallback when no CRM endpoint is configured yet.
+    await new Promise((resolve) => setTimeout(resolve, 550));
+    inquiry.status = "queued-local";
+    inquiry.transport = "local";
+  }
+
+  persistLocally(inquiry);
   return inquiry;
 }

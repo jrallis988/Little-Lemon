@@ -29,6 +29,19 @@ test("renders athletics hub", () => {
   expect(
     screen.getByRole("heading", { name: /Athletics — Compete as a Heron/i })
   ).toBeInTheDocument();
+  expect(screen.getByText(/Upcoming schedule highlights/i)).toBeInTheDocument();
+});
+
+test("site search finds nursing content", () => {
+  render(
+    <MemoryRouter initialEntries={["/search?q=nursing"]}>
+      <App />
+    </MemoryRouter>
+  );
+  expect(
+    screen.getByRole("heading", { name: /Find programs, courses, and campus info/i })
+  ).toBeInTheDocument();
+  expect(screen.getAllByText(/Nursing/i).length).toBeGreaterThan(0);
 });
 
 test("contact form queues an inquiry with a reference id", async () => {

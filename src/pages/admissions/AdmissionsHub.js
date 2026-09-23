@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import PageHero from "../../components/PageHero";
 import SectionNav from "../../components/SectionNav";
+import ApplyButton from "../../components/ApplyButton";
 import { admissionsNav } from "./admissionsNav";
 
 const paths = [
@@ -77,7 +78,7 @@ function AdmissionsHub() {
               <li>Transfer pathways to UNH and colleges across New England</li>
               <li>No application fee for most students</li>
             </ul>
-            <Link className="btn btn-navy" to="/admissions/how-to-apply">Start Your Application</Link>
+            <ApplyButton>Start Your Application</ApplyButton>
           </div>
           <div className="info-panel">
             <h3>Talk with Admissions</h3>

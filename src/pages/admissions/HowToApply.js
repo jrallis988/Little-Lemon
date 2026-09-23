@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import PageHero from "../../components/PageHero";
 import SectionNav from "../../components/SectionNav";
+import ApplyButton from "../../components/ApplyButton";
 import { admissionsSteps } from "../../data/siteContent";
+import { siteConfig } from "../../data/siteConfig";
 import { admissionsNav } from "./admissionsNav";
 
 function HowToApply() {
@@ -16,6 +18,24 @@ function HowToApply() {
       <SectionNav label="Admissions section" items={admissionsNav} />
 
       <section className="section">
+        <div className="container callout-row apply-portal-callout">
+          <div>
+            <h2>Start your official application</h2>
+            <p>
+              Use the GBCC admissions portal to submit your application online.
+              Need help? Call Admissions at (603) 427-7632.
+            </p>
+          </div>
+          <div className="cta-actions">
+            <ApplyButton>Apply online now</ApplyButton>
+            <Link className="btn btn-navy" to="/contact">
+              Request info
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-tint">
         <div className="container">
           <ol className="content-steps">
             {admissionsSteps.map((step, index) => (
@@ -33,7 +53,7 @@ function HowToApply() {
         </div>
       </section>
 
-      <section className="section section-tint">
+      <section className="section">
         <div className="container support-grid">
           <div>
             <h2>Special applicant pathways</h2>
@@ -75,19 +95,17 @@ function HowToApply() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section section-tint">
         <div className="container callout-row">
           <div>
             <h2>Ready to move forward?</h2>
             <p>
               Explore programs, plan a visit, or start your FAFSA with school
-              code <strong>002583</strong>.
+              code <strong>{siteConfig.fafsaCode}</strong>.
             </p>
           </div>
           <div className="cta-actions">
-            <Link className="btn btn-gold" to="/academics">
-              Browse Programs
-            </Link>
+            <ApplyButton />
             <Link className="btn btn-navy" to="/admissions/financial-aid">
               Financial Aid
             </Link>

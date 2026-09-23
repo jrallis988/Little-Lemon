@@ -104,13 +104,20 @@ function Contact() {
               <div className="form-success" role="status">
                 <h3>Message received.</h3>
                 <p>
-                  Thanks, {result.name}. Your inquiry was queued for the Great Bay team
+                  Thanks, {result.name}. Your inquiry was
+                  {result.transport === "api"
+                    ? " submitted to Great Bay"
+                    : " queued for the Great Bay team"}{" "}
                   and assigned reference <strong>{result.id}</strong>.
                 </p>
                 <div className="submitted-summary">
                   <p><strong>Topic:</strong> {result.topic}</p>
                   <p><strong>Email:</strong> {result.email}</p>
                   <p><strong>Routed to:</strong> {result.destination}</p>
+                  <p>
+                    <strong>Status:</strong>{" "}
+                    {result.transport === "api" ? "Sent to admissions endpoint" : "Saved locally (set REACT_APP_FORM_ENDPOINT for live CRM handoff)"}
+                  </p>
                 </div>
                 <button
                   className="btn btn-navy"
@@ -127,7 +134,9 @@ function Contact() {
               <form className="info-form" onSubmit={formik.handleSubmit} noValidate>
                 <h2>Send a message / request info</h2>
                 <p className="fine-print">
-                  Submissions are validated, stored securely in this demo session, and prepared for CRM handoff.
+                  Messages are validated and prepared for CRM handoff. Configure
+                  <code> REACT_APP_FORM_ENDPOINT </code>
+                  for live delivery; otherwise a local confirmation ID is issued.
                 </p>
                 <label>
                   Full name

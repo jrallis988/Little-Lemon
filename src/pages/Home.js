@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import HeroCarousel from "../components/HeroCarousel";
+import ApplyButton from "../components/ApplyButton";
 import { iconMap } from "../components/Icons";
 import { highlights } from "../data/programs";
 import {
@@ -30,7 +31,7 @@ function Home() {
       <section className="quick-links">
         <div className="container quick-links-grid">
           <Link to="/admissions/visit">Visit</Link>
-          <Link to="/admissions/how-to-apply">Apply</Link>
+          <a href="https://www.greatbay.edu/admissions/apply/" target="_blank" rel="noreferrer">Apply</a>
           <Link to="/academics">Explore</Link>
           <Link to="/contact">Request Info</Link>
         </div>
@@ -197,9 +198,7 @@ function Home() {
             </p>
           </div>
           <div className="cta-actions">
-            <Link className="btn btn-gold" to="/admissions/how-to-apply">
-              Apply Now
-            </Link>
+            <ApplyButton />
             <Link className="btn btn-ghost-light" to="/contact">
               Request Info
             </Link>

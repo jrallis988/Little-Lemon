@@ -23,6 +23,7 @@ import EventDetail from "./pages/EventDetail";
 import Contact from "./pages/Contact";
 import Directory from "./pages/Directory";
 import Sitemap from "./pages/Sitemap";
+import SearchPage from "./pages/SearchPage";
 import ContentPage from "./pages/ContentPage";
 import { contentPagePaths } from "./data/pageContent";
 import {
@@ -85,6 +86,7 @@ function App() {
         <Route path="events/:eventId" element={<EventDetail />} />
         <Route path="contact" element={<Contact />} />
         <Route path="directory" element={<Directory />} />
+        <Route path="search" element={<SearchPage />} />
         <Route path="sitemap" element={<Sitemap />} />
         {contentRoutes.map((route) => (
           <Route key={route.path} path={route.path} element={route.element} />

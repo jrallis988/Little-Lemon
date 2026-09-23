@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { primaryNav } from "../data/navigation";
+import { IconSearch } from "./Icons";
+import ApplyButton from "./ApplyButton";
 
 function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -100,6 +104,31 @@ function Header() {
               </li>
             ))}
           </ul>
+
+          <form
+            className="header-search"
+            role="search"
+            onSubmit={(event) => {
+              event.preventDefault();
+              const q = query.trim();
+              setOpen(false);
+              navigate(q ? `/search?q=${encodeURIComponent(q)}` : "/search");
+            }}
+          >
+            <label htmlFor="header-search-input" className="sr-only">
+              Search
+            </label>
+            <IconSearch />
+            <input
+              id="header-search-input"
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Search"
+            />
+          </form>
+
+          <ApplyButton className="btn btn-gold header-apply" />
         </nav>
       </div>
     </header>

@@ -2395,3 +2395,120 @@ main {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* ===== Go-live pass: search, apply, a11y ===== */
+.header-search {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-left: 0.75rem;
+  padding: 0.35rem 0.65rem;
+  border: 1px solid var(--line);
+  background: var(--white);
+  min-width: 9.5rem;
+}
+
+.header-search .icon {
+  width: 1rem;
+  height: 1rem;
+  color: var(--muted);
+  flex: 0 0 auto;
+}
+
+.header-search input {
+  border: 0;
+  outline: none;
+  width: 100%;
+  min-width: 0;
+  background: transparent;
+  color: var(--navy);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+}
+
+.header-apply {
+  margin-left: 0.75rem;
+  white-space: nowrap;
+}
+
+.site-search-form {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: var(--navy);
+}
+
+.site-search-label {
+  color: var(--gold);
+  display: inline-flex;
+}
+
+.site-search-form input {
+  border: 0;
+  padding: 0.85rem 1rem;
+  font-family: var(--font-ui);
+}
+
+.search-results {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.search-result {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.search-type {
+  margin: 0 0 0.35rem;
+  color: var(--accent);
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.apply-portal-callout {
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  background: var(--mist);
+}
+
+:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.btn:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+
+@media (max-width: 1100px) {
+  .header-search {
+    min-width: 0;
+    width: 100%;
+    margin: 0.75rem 0 0;
+  }
+
+  .header-apply {
+    margin: 0.75rem 0 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  .site-search-form {
+    grid-template-columns: 1fr;
+  }
+}
