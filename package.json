@@ -1,10 +1,14 @@
 {
-  "name": "artistic-fountain-portfolio",
+  "name": "playhouse-animation-portfolio",
   "version": "1.0.0",
   "private": true,
-  "description": "Artistic Fountain — strategic design studio portfolio",
+  "description": "Playhouse Animation — 2D kids animation portfolio",
+  "type": "module",
   "scripts": {
     "start": "npx --yes serve -l 3000",
-    "dev": "npx --yes serve -l 3000"
+    "dev": "npx --yes serve -l 3000",
+    "check": "node scripts/check-launch.mjs",
+    "sitemap": "node scripts/write-sitemap.mjs",
+    "deploy": "npm run check && npm run sitemap && npx --yes wrangler@4 pages deploy . --project-name playhouse-animation"
   }
 }

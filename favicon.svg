@@ -1,17 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <defs>
-    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FF6B35"/>
-      <stop offset="50%" stop-color="#FF0080"/>
-      <stop offset="100%" stop-color="#0066FF"/>
-    </linearGradient>
-  </defs>
-  <rect width="64" height="64" rx="12" fill="url(#g)"/>
-  <text x="32" y="46"
-        font-family="Georgia, 'Times New Roman', serif"
-        font-size="44"
-        font-weight="900"
-        font-style="italic"
-        text-anchor="middle"
-        fill="#F8F8F8">A</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" rx="14" fill="#F7F4EC"/>
+  <rect x="10" y="28" width="44" height="26" rx="4" fill="#F4A04A" stroke="#2A2A2A" stroke-width="2.5"/>
+  <path d="M8 28 L32 12 L56 28 Z" fill="#E85D5D" stroke="#2A2A2A" stroke-width="2.5" stroke-linejoin="round"/>
+  <rect x="26" y="36" width="12" height="18" rx="2" fill="#F5C518" stroke="#2A2A2A" stroke-width="2"/>
+  <circle cx="22" cy="40" r="4" fill="#5BB8E0" stroke="#2A2A2A" stroke-width="2"/>
+  <circle cx="42" cy="40" r="4" fill="#7CBB4A" stroke="#2A2A2A" stroke-width="2"/>
 </svg>
