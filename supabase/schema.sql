@@ -617,3 +617,74 @@ create policy themes_upsert_own on public.profile_themes
       where p.id = profile_id and p.user_id = auth.uid()
     )
   );
+
+-- Social RLS: friendships, notifications, blocks, featured_friends
+alter table public.friendships enable row level security;
+alter table public.notifications enable row level security;
+alter table public.blocks enable row level security;
+alter table public.featured_friends enable row level security;
+
+drop policy if exists friendships_select_participants on public.friendships;
+create policy friendships_select_participants on public.friendships
+  for select using (auth.uid() = requester_id or auth.uid() = addressee_id);
+
+drop policy if exists friendships_insert_requester on public.friendships;
+create policy friendships_insert_requester on public.friendships
+  for insert with check (auth.uid() = requester_id);
+
+drop policy if exists friendships_update_participants on public.friendships;
+create policy friendships_update_participants on public.friendships
+  for update using (auth.uid() = requester_id or auth.uid() = addressee_id);
+
+drop policy if exists friendships_delete_participants on public.friendships;
+create policy friendships_delete_participants on public.friendships
+  for delete using (auth.uid() = requester_id or auth.uid() = addressee_id);
+
+drop policy if exists notifications_select_own on public.notifications;
+create policy notifications_select_own on public.notifications
+  for select using (auth.uid() = user_id);
+
+drop policy if exists notifications_insert_authenticated on public.notifications;
+create policy notifications_insert_authenticated on public.notifications
+  for insert with check (auth.uid() is not null);
+
+drop policy if exists notifications_update_own on public.notifications;
+create policy notifications_update_own on public.notifications
+  for update using (auth.uid() = user_id);
+
+drop policy if exists blocks_select_own on public.blocks;
+create policy blocks_select_own on public.blocks
+  for select using (auth.uid() = blocker_id);
+
+drop policy if exists blocks_insert_own on public.blocks;
+create policy blocks_insert_own on public.blocks
+  for insert with check (auth.uid() = blocker_id);
+
+drop policy if exists blocks_delete_own on public.blocks;
+create policy blocks_delete_own on public.blocks
+  for delete using (auth.uid() = blocker_id);
+
+drop policy if exists featured_select_visible on public.featured_friends;
+create policy featured_select_visible on public.featured_friends
+  for select using (
+    exists (
+      select 1 from public.profiles p
+      where p.id = profile_id
+        and (p.visibility = 'public' or p.user_id = auth.uid())
+    )
+  );
+
+drop policy if exists featured_manage_own on public.featured_friends;
+create policy featured_manage_own on public.featured_friends
+  for all using (
+    exists (
+      select 1 from public.profiles p
+      where p.id = profile_id and p.user_id = auth.uid()
+    )
+  )
+  with check (
+    exists (
+      select 1 from public.profiles p
+      where p.id = profile_id and p.user_id = auth.uid()
+    )
+  );

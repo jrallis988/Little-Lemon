@@ -14,8 +14,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "@/lib/auth/AuthProvider";
-import { mockApi } from "@/lib/mock/store";
-import { friendshipStatus, profileByUserId, useMockStore } from "@/lib/mock/social";
+import { getMockSnapshot, mockApi } from "@/lib/mock/store";
+import { profileByUserId } from "@/lib/mock/social";
+import { friendshipStatusFromData, socialApi } from "@/lib/social/api";
+import { useSocialStore } from "@/lib/social/useSocialStore";
 import { formatDate } from "@/lib/utils";
 import type { Profile } from "@/lib/types";
 
@@ -33,7 +35,7 @@ function SearchContent() {
   const params = useSearchParams();
   const router = useRouter();
   const { user } = useAuth();
-  const state = useMockStore();
+  const social = useSocialStore();
   const q = params.get("q") ?? "";
   const [draft, setDraft] = React.useState(q);
 
@@ -43,7 +45,7 @@ function SearchContent() {
 
   const query = q.toLowerCase().trim();
   const profileResults = query
-    ? state.profiles.filter((profile) =>
+    ? social.profiles.filter((profile) =>
         [
           profile.displayName,
           profile.username,
@@ -58,8 +60,10 @@ function SearchContent() {
           .includes(query)
       )
     : [];
+
+  const mockPosts = getMockSnapshot().blogPosts;
   const postResults = query
-    ? state.blogPosts.filter((post) =>
+    ? mockPosts.filter((post) =>
         [post.title, post.body, post.mood, post.currentlyListening]
           .filter(Boolean)
           .join(" ")
@@ -73,11 +77,13 @@ function SearchContent() {
     router.push(`/search?q=${encodeURIComponent(draft.trim())}`);
   };
 
-  const addFriend = (profile: Profile) => {
+  const addFriend = async (profile: Profile) => {
     try {
-      mockApi.sendFriendRequest(user.id, profile.userId);
+      await socialApi.sendFriendRequest(user.id, profile.userId);
+      await social.refresh();
+      social.mutate();
     } catch {
-      // The card already reflects accepted/pending state from the store.
+      // Card reflects accepted/pending state after refresh.
     }
   };
 
@@ -126,8 +132,8 @@ function SearchContent() {
                   <ProfileCard
                     key={profile.id}
                     profile={profile}
-                    friendshipStatus={friendshipStatus(
-                      state.friendships,
+                    friendshipStatus={friendshipStatusFromData(
+                      social.friendships,
                       user.id,
                       profile.userId
                     )}
@@ -149,7 +155,7 @@ function SearchContent() {
             {postResults.length ? (
               <div className="space-y-3">
                 {postResults.map((post) => {
-                  const author = profileByUserId(state.profiles, post.authorId);
+                  const author = profileByUserId(social.profiles, post.authorId);
                   return (
                     <Card key={post.id}>
                       <CardHeader>

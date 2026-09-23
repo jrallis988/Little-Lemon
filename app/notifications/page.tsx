@@ -11,8 +11,8 @@ import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { useAuth } from "@/lib/auth/AuthProvider";
-import { mockApi } from "@/lib/mock/store";
-import { profileByUserId, useMockStore } from "@/lib/mock/social";
+import { profileByUserIdFromData, socialApi } from "@/lib/social/api";
+import { useSocialStore } from "@/lib/social/useSocialStore";
 
 export default function NotificationsPage() {
   return (
@@ -26,7 +26,7 @@ export default function NotificationsPage() {
 
 function NotificationsContent() {
   const { user } = useAuth();
-  const state = useMockStore();
+  const state = useSocialStore();
   const [showUnreadOnly, setShowUnreadOnly] = React.useState(false);
 
   if (!user) return null;
@@ -40,6 +40,12 @@ function NotificationsContent() {
   const unreadCount = state.notifications.filter(
     (notification) => notification.userId === user.id && !notification.read
   ).length;
+
+  const markRead = async (ids?: string[]) => {
+    await socialApi.markNotificationsRead(user.id, ids);
+    await state.refresh();
+    state.mutate();
+  };
 
   return (
     <div className="space-y-5">
@@ -60,7 +66,7 @@ function NotificationsContent() {
           </Button>
           <Button
             variant="secondary"
-            onClick={() => mockApi.markNotificationsRead(user.id)}
+            onClick={() => void markRead()}
             disabled={unreadCount === 0}
           >
             <CheckCheck className="h-4 w-4" aria-hidden />
@@ -79,11 +85,9 @@ function NotificationsContent() {
               <NotificationItem
                 key={notification.id}
                 notification={notification}
-                actor={profileByUserId(state.profiles, notification.actorId)}
-                onOpen={(item) => mockApi.markNotificationsRead(user.id, [item.id])}
-                onMarkRead={(item) =>
-                  mockApi.markNotificationsRead(user.id, [item.id])
-                }
+                actor={profileByUserIdFromData(state.profiles, notification.actorId)}
+                onOpen={(item) => void markRead([item.id])}
+                onMarkRead={(item) => void markRead([item.id])}
               />
             ))
           ) : (

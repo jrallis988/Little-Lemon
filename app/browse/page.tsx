@@ -14,7 +14,8 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import { mockApi } from "@/lib/mock/store";
-import { friendshipStatus, useMockStore } from "@/lib/mock/social";
+import { friendshipStatusFromData, socialApi } from "@/lib/social/api";
+import { useSocialStore } from "@/lib/social/useSocialStore";
 import type { Profile } from "@/lib/types";
 
 export default function BrowsePage() {
@@ -29,7 +30,7 @@ export default function BrowsePage() {
 
 function BrowseContent() {
   const { user, profile } = useAuth();
-  const state = useMockStore();
+  const state = useSocialStore();
   const router = useRouter();
   const [filters, setFilters] = React.useState({
     text: "",
@@ -58,9 +59,11 @@ function BrowseContent() {
     .filter((item) => item.visibility === "public")
     .filter((item) => matchesFilters(item, filters));
 
-  const addFriend = (target: Profile) => {
+  const addFriend = async (target: Profile) => {
     try {
-      mockApi.sendFriendRequest(user.id, target.userId);
+      await socialApi.sendFriendRequest(user.id, target.userId);
+      await state.refresh();
+      state.mutate();
       setNotice(`Friend request sent to ${target.displayName}.`);
     } catch (error) {
       setNotice(error instanceof Error ? error.message : "Could not send request.");
@@ -182,7 +185,7 @@ function BrowseContent() {
             <ProfileCard
               key={result.id}
               profile={result}
-              friendshipStatus={friendshipStatus(
+              friendshipStatus={friendshipStatusFromData(
                 state.friendships,
                 user.id,
                 result.userId

@@ -4,15 +4,12 @@ import { useMemo } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import {
-  getMockSnapshot,
-  mockApi,
-  subscribeMockStore,
-} from "@/lib/mock/store";
-import {
-  unreadMessageConversationCount,
-  unreadNotificationCount,
-} from "@/lib/mock/social";
-import { useSyncExternalStore } from "react";
+  unreadMessageCount,
+  unreadNonMessageCount,
+  usingMockSocial,
+} from "@/lib/social/api";
+import { useSocialStore } from "@/lib/social/useSocialStore";
+import { mockApi } from "@/lib/mock/store";
 import { AppShell } from "@/components/layout/AppShell";
 
 export function AuthenticatedShell({
@@ -22,24 +19,20 @@ export function AuthenticatedShell({
   children: React.ReactNode;
   mainClassName?: string;
 }) {
-  const { profile, logout } = useAuth();
+  const { profile, logout, usingMock } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
-  const snap = useSyncExternalStore(
-    subscribeMockStore,
-    getMockSnapshot,
-    getMockSnapshot
-  );
+  const social = useSocialStore();
 
   const unreadNotifications = useMemo(() => {
     if (!profile) return 0;
-    return unreadNotificationCount(snap, profile.userId);
-  }, [snap, profile]);
+    return unreadNonMessageCount(social.notifications, profile.userId);
+  }, [social.notifications, profile]);
 
   const unreadMessages = useMemo(() => {
     if (!profile) return 0;
-    return unreadMessageConversationCount(snap, profile.userId);
-  }, [snap, profile]);
+    return unreadMessageCount(social.notifications, profile.userId);
+  }, [social.notifications, profile]);
 
   const chrome =
     pathname?.startsWith("/home") || pathname?.startsWith("/vibe")
@@ -57,7 +50,7 @@ export function AuthenticatedShell({
       chrome={chrome}
       onLogout={async () => {
         await logout();
-        mockApi.logout();
+        if (usingMock || usingMockSocial()) mockApi.logout();
         router.push("/");
       }}
     >

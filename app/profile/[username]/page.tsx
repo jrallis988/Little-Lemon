@@ -25,6 +25,7 @@ import {
   profilesByUserId,
   useMockStore,
 } from "@/lib/mock/social";
+import { socialApi } from "@/lib/social/api";
 import { themeToCssVars } from "@/lib/themes";
 import { cn, formatDate } from "@/lib/utils";
 import type {
@@ -175,8 +176,11 @@ export default function ProfilePage({
       return;
     }
     try {
-      mockApi.sendFriendRequest(currentProfile.userId, target.userId);
-      setNotice(`Friend request sent to ${target.displayName}.`);
+      void socialApi.sendFriendRequest(currentProfile.userId, target.userId).then(
+        () => setNotice(`Friend request sent to ${target.displayName}.`),
+        (error: unknown) =>
+          setNotice(error instanceof Error ? error.message : "Could not send request.")
+      );
     } catch (error) {
       setNotice(error instanceof Error ? error.message : "Could not send request.");
     }

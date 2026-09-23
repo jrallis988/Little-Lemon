@@ -56,7 +56,7 @@ Invite code during onboarding: `VIBE2026`
 3. In the Supabase SQL editor, run `supabase/schema.sql` (tables + auth trigger + RLS)
 4. Restart `npm run dev`
 
-When configured, signup/login/session/profile update use Supabase Auth. Friends, Loop, messages, and other social surfaces still use mock data until those APIs are wired.
+When configured, signup/login/session/profile update use Supabase Auth, and **friends / notifications / blocks / featured friends** use Supabase tables. Loop, groups, events, messages threads, and uploads remain mock until those APIs are wired.
 
 ## Key routes
 

@@ -16,13 +16,14 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { Input } from "@/components/ui/Input";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import { mockApi } from "@/lib/mock/store";
+import { mutualFriendCount } from "@/lib/mock/social";
 import {
-  friendProfiles,
-  friendshipStatus,
-  mutualFriendCount,
-  profileByUserId,
-  useMockStore,
-} from "@/lib/mock/social";
+  friendProfilesFromData,
+  friendshipStatusFromData,
+  profileByUserIdFromData,
+  socialApi,
+} from "@/lib/social/api";
+import { useSocialStore } from "@/lib/social/useSocialStore";
 import { formatRelativeTime } from "@/lib/utils";
 import type { Friendship, Profile } from "@/lib/types";
 
@@ -38,7 +39,7 @@ export default function FriendsPage() {
 
 function FriendsContent() {
   const { user, profile } = useAuth();
-  const state = useMockStore();
+  const state = useSocialStore();
   const router = useRouter();
   const [search, setSearch] = React.useState("");
   const [message, setMessage] = React.useState<string | null>(null);
@@ -48,7 +49,7 @@ function FriendsContent() {
   const incoming = state.friendships.filter(
     (friendship) => friendship.addresseeId === user.id && friendship.status === "pending"
   );
-  const accepted = friendProfiles(state, user.id).filter(
+  const accepted = friendProfilesFromData(state, user.id).filter(
     (friend) => !state.blockedIds.includes(friend.userId)
   );
   const acceptedFriendships = state.friendships.filter(
@@ -62,7 +63,7 @@ function FriendsContent() {
     )
     .slice(0, 6)
     .map((friendship) =>
-      profileByUserId(
+      profileByUserIdFromData(
         state.profiles,
         friendship.requesterId === user.id
           ? friendship.addresseeId
@@ -84,43 +85,53 @@ function FriendsContent() {
     router.push(`/messages/${conversation.id}`);
   };
 
-  const accept = (requester: Profile) => {
+  const accept = async (requester: Profile) => {
     const request = incoming.find((item) => item.requesterId === requester.userId);
     if (!request) return;
-    mockApi.respondFriendRequest(request.id, user.id, true);
+    await socialApi.respondFriendRequest(request.id, user.id, true);
+    await state.refresh();
+    state.mutate();
     setMessage(`${requester.displayName} is now your friend.`);
   };
 
-  const decline = (requester: Profile) => {
+  const decline = async (requester: Profile) => {
     const request = incoming.find((item) => item.requesterId === requester.userId);
     if (!request) return;
-    mockApi.respondFriendRequest(request.id, user.id, false);
+    await socialApi.respondFriendRequest(request.id, user.id, false);
+    await state.refresh();
+    state.mutate();
     setMessage(`Declined ${requester.displayName}'s friend request.`);
   };
 
-  const remove = (friend: Profile) => {
-    mockApi.removeFriend(user.id, friend.userId);
-    mockApi.updateFeaturedFriends(
+  const remove = async (friend: Profile) => {
+    await socialApi.removeFriend(user.id, friend.userId);
+    await socialApi.updateFeaturedFriends(
       profile.id,
       featuredIds.filter((id) => id !== friend.id)
     );
+    await state.refresh();
+    state.mutate();
     setMessage(`${friend.displayName} was removed from your friends.`);
   };
 
-  const block = (friend: Profile) => {
-    mockApi.blockUser(user.id, friend.userId);
-    mockApi.updateFeaturedFriends(
+  const block = async (friend: Profile) => {
+    await socialApi.blockUser(user.id, friend.userId);
+    await socialApi.updateFeaturedFriends(
       profile.id,
       featuredIds.filter((id) => id !== friend.id)
     );
+    await state.refresh();
+    state.mutate();
     setMessage(`${friend.displayName} was blocked.`);
   };
 
-  const toggleFeatured = (friend: Profile) => {
+  const toggleFeatured = async (friend: Profile) => {
     const next = featuredIds.includes(friend.id)
       ? featuredIds.filter((id) => id !== friend.id)
       : [...featuredIds, friend.id].slice(0, profile.featuredFriendCount);
-    mockApi.updateFeaturedFriends(profile.id, next);
+    await socialApi.updateFeaturedFriends(profile.id, next);
+    await state.refresh();
+    state.mutate();
   };
 
   return (
@@ -146,7 +157,7 @@ function FriendsContent() {
         {incoming.length ? (
           <div className="grid gap-3 md:grid-cols-2">
             {incoming.map((request) => {
-              const requester = profileByUserId(state.profiles, request.requesterId);
+              const requester = profileByUserIdFromData(state.profiles, request.requesterId);
               if (!requester) return null;
               return (
                 <FriendRequestCard
@@ -229,7 +240,7 @@ function FriendsContent() {
                   <ProfileCard
                     key={friend.id}
                     profile={friend}
-                    friendshipStatus={friendshipStatus(
+                    friendshipStatus={friendshipStatusFromData(
                       state.friendships,
                       user.id,
                       friend.userId
