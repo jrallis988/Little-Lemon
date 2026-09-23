@@ -21,13 +21,19 @@ A polished, responsive digital publishing experience built as the seasonal marke
 - Complete book detail pages (dynamic route)
 - Responsive layout across breakpoints
 
-## Phase 2 (Planned)
+## Phase 2 (Current)
 
-- Find Their Next Book recommendation flow
-- Fall Reading Week landing page
-- Educator & Library Hub
-- Newsletter editions (September, October, November)
+- Find Their Next Book recommendation flow (metadata-scored)
+- Fall Reading Week event landing page
+- Educator & Library Hub with downloadable resource placeholders
+- Newsletter archive + three seasonal editions (reusable modules)
+
+## Phase 3 (Planned)
+
+- Final book cover artwork
 - Print application concepts
+- Case study / campaign ecosystem page
+- Motion refinements
 
 ## Develop
 
@@ -53,10 +59,11 @@ npm start
 | `/` | Campaign homepage |
 | `/books` | Fall catalog with filters |
 | `/books/[slug]` | Individual book detail |
-| `/find-a-book` | Recommendation flow (Phase 2) |
-| `/fall-reading-week` | Campaign event (Phase 2) |
-| `/educators` | Educator resources (Phase 2) |
-| `/newsletter` | Newsletter archive (Phase 2) |
+| `/find-a-book` | Recommendation quiz |
+| `/fall-reading-week` | Campaign event landing |
+| `/educators` | Educator & library resources |
+| `/newsletter` | Newsletter archive |
+| `/newsletter/[issue]` | Individual newsletter edition |
 
 ## Stack
 
