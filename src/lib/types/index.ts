@@ -203,6 +203,21 @@ export interface PlacedOrderItem {
   imageUrl: string;
 }
 
+export type OrderStatus =
+  | "placed"
+  | "preparing"
+  | "ready"
+  | "picked_up"
+  | "packed"
+  | "out_for_delivery"
+  | "delivered";
+
+export interface OrderStatusUpdate {
+  status: OrderStatus;
+  at: string;
+  note: string;
+}
+
 export interface PlacedOrder {
   id: string;
   placedAt: string;
@@ -224,6 +239,9 @@ export interface PlacedOrder {
   paymentLast4: string;
   items: PlacedOrderItem[];
   receiptNote: string;
+  status: OrderStatus;
+  statusUpdatedAt: string;
+  updates: OrderStatusUpdate[];
 }
 
 export interface Coupon {

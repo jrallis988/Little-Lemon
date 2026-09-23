@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState, type FormEvent } from "react";
 
 import { REWARDS } from "@/lib/data/catalog";
+import { orderStatusLabel } from "@/lib/order-lifecycle";
 import { formatPoints } from "@/lib/pharmacy";
 import { DEMO_ACCOUNT, useAuth } from "@/lib/store/auth";
 import { useOrders } from "@/lib/store/orders";
@@ -215,7 +216,7 @@ export default function AccountPage() {
                   <p className="font-medium">#{order.id}</p>
                   <p className="text-muted-foreground">
                     {new Date(order.placedAt).toLocaleDateString()} ·{" "}
-                    {order.itemCount} items
+                    {order.itemCount} items · {orderStatusLabel(order.status)}
                   </p>
                 </div>
                 <p className="font-semibold">

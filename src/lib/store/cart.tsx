@@ -10,7 +10,7 @@ import {
   type ReactNode,
 } from "react";
 
-import type { CartItem, Product } from "@/lib/types";
+import type { CartItem, PlacedOrderItem, Product } from "@/lib/types";
 
 const STORAGE_KEY = "walgreens-cart-v1";
 
@@ -19,6 +19,7 @@ interface CartContextValue {
   itemCount: number;
   subtotal: number;
   addProduct: (product: Product, quantity?: number) => void;
+  addOrderItems: (items: PlacedOrderItem[]) => number;
   setQuantity: (itemId: string, quantity: number) => void;
   removeItem: (itemId: string) => void;
   clearCart: () => void;
@@ -82,6 +83,38 @@ export function CartProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
+  const addOrderItems = useCallback((orderItems: PlacedOrderItem[]) => {
+    setItems((current) => {
+      let next = [...current];
+      for (const orderItem of orderItems) {
+        const existing = next.find(
+          (item) => item.productId === orderItem.productId,
+        );
+        if (existing) {
+          next = next.map((item) =>
+            item.productId === orderItem.productId
+              ? { ...item, quantity: item.quantity + orderItem.quantity }
+              : item,
+          );
+        } else {
+          next.push({
+            id: `cart-${orderItem.productId}`,
+            productId: orderItem.productId,
+            name: orderItem.name,
+            brand: orderItem.brand,
+            quantity: orderItem.quantity,
+            unitPrice: orderItem.unitPrice,
+            imageUrl: orderItem.imageUrl,
+            fulfillment: "pickup",
+            rewardsPointsEarned: 0,
+          });
+        }
+      }
+      return next;
+    });
+    return orderItems.length;
+  }, []);
+
   const setQuantity = useCallback((itemId: string, quantity: number) => {
     setItems((current) => {
       if (quantity <= 0) {
@@ -110,11 +143,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
       itemCount,
       subtotal,
       addProduct,
+      addOrderItems,
       setQuantity,
       removeItem,
       clearCart,
     };
-  }, [addProduct, clearCart, items, removeItem, setQuantity]);
+  }, [addOrderItems, addProduct, clearCart, items, removeItem, setQuantity]);
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }

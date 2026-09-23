@@ -13,6 +13,7 @@ import {
   Zap,
 } from "lucide-react";
 
+import { createInitialUpdates } from "@/lib/order-lifecycle";
 import { REWARDS } from "@/lib/data/catalog";
 import { findCoupon, getCouponDiscount } from "@/lib/data/coupons";
 import { formatCurrency, formatPoints } from "@/lib/pharmacy";
@@ -23,6 +24,7 @@ import { useOrders } from "@/lib/store/orders";
 import { useSelectedStore } from "@/lib/store/store-selection";
 import type { CheckoutMode, FulfillmentMethod, PlacedOrder } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { OrderTracker } from "@/components/orders/order-tracker";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -39,7 +41,7 @@ function isValidEmail(value: string) {
 
 export function CheckoutFunnel() {
   const { items, itemCount, setQuantity, removeItem, clearCart } = useCart();
-  const { addOrder } = useOrders();
+  const { addOrder, getOrder, markPickedUp } = useOrders();
   const { store } = useSelectedStore();
   const { user, signIn } = useAuth();
   const { clipped } = useCouponWallet();
@@ -58,7 +60,8 @@ export function CheckoutFunnel() {
   const [couponMessage, setCouponMessage] = useState<string | null>(null);
   const [applyRewards, setApplyRewards] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [placedOrder, setPlacedOrder] = useState<PlacedOrder | null>(null);
+  const [placedOrderId, setPlacedOrderId] = useState<string | null>(null);
+  const placedOrder = placedOrderId ? getOrder(placedOrderId) ?? null : null;
 
   const appliedCoupon = appliedCouponCode
     ? findCoupon(appliedCouponCode)
@@ -216,11 +219,14 @@ export function CheckoutFunnel() {
         imageUrl: item.imageUrl,
       })),
       receiptNote: `A receipt was sent to ${receiptEmail} (demo — email is not actually delivered).`,
+      status: "placed",
+      statusUpdatedAt: new Date().toISOString(),
+      updates: createInitialUpdates(fulfillment, new Date().toISOString()),
     };
 
     addOrder(order);
     clearCart();
-    setPlacedOrder(order);
+    setPlacedOrderId(order.id);
   }
 
   if (placedOrder) {
@@ -246,6 +252,19 @@ export function CheckoutFunnel() {
             </p>
           </div>
         </div>
+
+        <OrderTracker order={placedOrder} />
+
+        {placedOrder.fulfillment === "pickup" &&
+        placedOrder.status === "ready" ? (
+          <Button
+            className="w-full bg-health text-health-foreground hover:bg-health/90"
+            onClick={() => markPickedUp(placedOrder.id)}
+          >
+            I picked this up
+          </Button>
+        ) : null}
+
         <dl className="space-y-2 text-sm">
           <div className="flex justify-between">
             <dt className="text-muted-foreground">Items</dt>

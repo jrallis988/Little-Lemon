@@ -22,6 +22,27 @@ test.describe("Walgreens RX smoke flows", () => {
     await expect(page.getByRole("heading", { name: "Checkout" })).toBeVisible();
     await page.getByRole("button", { name: /Place order/i }).click();
     await expect(page.getByRole("heading", { name: "Order placed" })).toBeVisible();
+    await expect(page.getByText("Order placed", { exact: true }).first()).toBeVisible();
+    await expect
+      .poll(async () => page.getByText("Ready for pickup").count(), {
+        timeout: 8000,
+      })
+      .toBeGreaterThan(0);
+    await page.getByRole("button", { name: "I picked this up" }).click();
+    await expect(page.getByText("Picked up", { exact: true }).first()).toBeVisible();
+  });
+
+  test("reorder from order history adds items to cart", async ({ page }) => {
+    await page.goto("/shop");
+    await page.getByRole("button", { name: "Add to cart" }).first().click();
+    await page.goto("/checkout");
+    await page.getByRole("button", { name: /Place order/i }).click();
+    await expect(page.getByRole("heading", { name: "Order placed" })).toBeVisible();
+    await page.getByRole("link", { name: "View order history" }).click();
+    await expect(page.getByRole("heading", { name: "Order history" })).toBeVisible();
+    await page.getByRole("button", { name: "Reorder" }).first().click();
+    await expect(page).toHaveURL(/\/checkout/);
+    await expect(page.getByRole("heading", { name: "Checkout" })).toBeVisible();
   });
 
   test("pharmacy refill advances tracker", async ({ page }) => {
