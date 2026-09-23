@@ -8,7 +8,9 @@ import { AccessibilityFab, AccessibilityPanel } from "@/components/a11y/Accessib
 import { CookieBanner } from "@/components/CookieBanner";
 import { DistrictGate } from "@/components/DistrictGate";
 import { StoreProvider } from "@/components/store/StoreProvider";
+import { CampaignJsonLd } from "@/components/CampaignJsonLd";
 import { candidate } from "@/lib/candidate";
+import { getSiteUrl } from "@/lib/site";
 import "./globals.css";
 
 const lexend = Lexend({
@@ -25,7 +27,7 @@ export const metadata: Metadata = {
   },
   description:
     "People Over Politics. Varga for Senate — an independent write-in campaign for U.S. Senate from New Hampshire, putting families first, not party bosses or donors.",
-  metadataBase: new URL("https://nickvarga.com"),
+  metadataBase: new URL(getSiteUrl()),
   icons: {
     icon: "/images/logo-mark.png",
     apple: "/images/logo-mark.png",
@@ -35,6 +37,7 @@ export const metadata: Metadata = {
     description: candidate.tagline,
     locale: "en_US",
     type: "website",
+    siteName: candidate.brandName,
     images: [
       {
         url: "/images/newmarket-hero.jpg",
@@ -74,6 +77,7 @@ export default function RootLayout({
     >
       <head>
         <ThemeStyles />
+        <CampaignJsonLd />
       </head>
       <body className="theme-neta">
         <AccessibilityProvider>

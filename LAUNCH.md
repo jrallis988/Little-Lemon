@@ -33,6 +33,7 @@ Hosting + domain, or send the phone/social/video details to drop into the site.
 1. Import the GitHub repo at [vercel.com/new](https://vercel.com/new).
 2. Framework preset: **Next.js** (see `vercel.json`).
 3. Add environment variables from `.env.example`:
+   - `SITE_URL` (your live campaign domain, e.g. `https://vargaforsenate.com`)
    - `FORM_WEBHOOK_URL` **or** `RESEND_API_KEY`
    - `FORM_NOTIFY_TO=vargaforsenate@gmail.com`
    - `FORM_FROM_EMAIL` (a verified Resend sender once you have a domain)

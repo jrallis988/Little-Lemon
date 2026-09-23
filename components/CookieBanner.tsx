@@ -5,11 +5,10 @@ import Link from "next/link";
 import { candidate } from "@/lib/candidate";
 
 /**
- * Cookie consent UI for demo/display purposes.
+ * Cookie consent UI.
  * Consent is stored in localStorage only.
  * No live analytics SDKs, pixels, or third-party tracking scripts are loaded
- * anywhere in this codebase — banner copy may still reference analytics for
- * Privacy Policy draft / future-state display.
+ * anywhere in this codebase — banner copy matches that reality.
  */
 
 export const COOKIE_CONSENT_KEY = "varga-cookie-consent";
@@ -77,33 +76,28 @@ export function CookieBanner() {
               Cookie notice
             </h2>
             <p id={descId} className="mt-3 text-sm leading-relaxed text-slate-text">
-              Notice: The {candidate.fullName} campaign uses cookies and similar
-              technologies to keep this site working, remember your accessibility
-              preferences, process form submissions, and understand how visitors
-              use the site through analytics tracking.
+              The {candidate.fullName} campaign uses essential cookies and similar
+              storage to keep this site working, remember your accessibility
+              preferences, and process form submissions. We are not currently
+              loading third-party analytics or advertising trackers.
             </p>
             <p className="mt-3 text-sm leading-relaxed text-slate-text">
               By choosing <strong className="font-semibold text-ink">Accept</strong>,
-              you agree to our use of cookies as outlined in our{" "}
+              you acknowledge our cookie practices as described in our{" "}
               <Link
                 href="/privacy"
                 className="font-semibold text-red underline underline-offset-2"
               >
                 Privacy Policy
               </Link>
-              . If you decline optional tracking, you can still browse with
-              essential cookies only.{" "}
-              <span className="text-slate-muted">
-                (Demo note: optional analytics scripts are not currently loaded on
-                this site.)
-              </span>
+              . You can also continue with essential storage only.
             </p>
             <div className="mt-5 flex flex-col gap-3 sm:flex-row">
               <button type="button" className="btn-primary flex-1" onClick={accept}>
                 Accept &amp; Continue
               </button>
               <button type="button" className="btn-secondary flex-1" onClick={decline}>
-                Decline Optional Cookies
+                Essential Only
               </button>
             </div>
           </>
@@ -113,10 +107,9 @@ export function CookieBanner() {
               Optional cookies declined
             </h2>
             <p id={descId} className="mt-3 text-sm leading-relaxed text-slate-text">
-              You declined optional tracking cookies. You can continue using this
-              site with essential cookies only (needed for basic function and
-              accessibility settings). Analytics and non-essential tracking will
-              stay off.
+              You chose essential storage only. Accessibility preferences and
+              basic site function still work. No analytics or advertising
+              trackers are loaded.
             </p>
             <p className="mt-3 text-sm leading-relaxed text-slate-text">
               Prefer to leave entirely? You can return to your previous page or

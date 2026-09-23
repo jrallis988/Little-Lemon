@@ -135,9 +135,28 @@ export const faqs: FaqItem[] = [
     question: "How can voters contact the campaign?",
     answer: [
       "Use the Contact page for questions, press, and general outreach. You can also email the campaign at the address listed there.",
-      "For quick website questions, the chat helper on this site can point you to the right page. For a human teammate, choose Live Campaign Support when available.",
+      "Join Team Varga on the homepage for updates, or sign up to volunteer if you want to help on the ground.",
     ],
-    links: [{ href: "/contact", label: "Contact the campaign" }],
+    links: [
+      { href: "/contact", label: "Contact the campaign" },
+      { href: "/#join", label: "Join Team Varga" },
+    ],
+  },
+  {
+    id: "fec-filings",
+    question: "Where can I find FEC filings for this campaign?",
+    answer: [
+      "The Transparency page summarizes how the campaign is funded and links to Federal Election Commission filings once a committee ID is posted.",
+      "Until the Statement of Organization is filed and the committee ID is published here, search public filings at fec.gov.",
+    ],
+    links: [
+      { href: "/transparency", label: "Transparency" },
+      {
+        href: "https://www.fec.gov",
+        label: "Federal Election Commission",
+        external: true,
+      },
+    ],
   },
   {
     id: "how-to-vote",
