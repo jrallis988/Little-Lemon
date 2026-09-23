@@ -93,14 +93,16 @@ function scoreBook(book: Book, answers: QuizAnswers): BookRecommendation {
 
   if (book.storyTones.includes(answers.tone)) {
     score += 25;
-    reasons.push(`Delivers a ${answers.tone.toLowerCase()} reading experience`);
+    reasons.unshift(
+      `Delivers a ${answers.tone.toLowerCase()} reading experience`
+    );
   }
 
   if (reasons.length === 0) {
     reasons.push(`A standout title from the Fall 2026 collection`);
   }
 
-  return { book, score, reasons: reasons.slice(0, 3) };
+  return { book, score, reasons: reasons.slice(0, 4) };
 }
 
 export function recommendBooks(

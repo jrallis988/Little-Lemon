@@ -32,20 +32,21 @@ export function Button({
   href,
   className = "",
   children,
+  disabled,
   ...props
 }: ButtonProps) {
-  const classes = `inline-flex items-center justify-center font-display font-bold uppercase tracking-wider transition-colors ${variantClasses[variant]} ${sizeClasses[size]} ${className}`;
+  const classes = `inline-flex items-center justify-center font-display font-bold uppercase tracking-wider transition-colors ${variantClasses[variant]} ${sizeClasses[size]} ${className} ${disabled ? "pointer-events-none opacity-40" : ""}`;
 
   if (href) {
     return (
-      <Link href={href} className={classes}>
+      <Link href={href} className={classes} aria-disabled={disabled}>
         {children}
       </Link>
     );
   }
 
   return (
-    <button className={classes} {...props}>
+    <button className={classes} disabled={disabled} {...props}>
       {children}
     </button>
   );

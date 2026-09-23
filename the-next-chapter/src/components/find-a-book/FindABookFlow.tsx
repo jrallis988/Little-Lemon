@@ -47,19 +47,30 @@ export function FindABookFlow({ books }: FindABookFlowProps) {
     return recommendBooks(books, answers as QuizAnswers, 3);
   }, [answers, books]);
 
-  const progress = ((step + 1) / 5) * 100;
-
   const restart = () => {
     setAnswers({});
     setStep(0);
   };
 
+  const goNext = () => {
+    if (step === 0 && answers.age) setStep(1);
+    else if (step === 1 && answers.readingLevel) setStep(2);
+    else if (step === 2 && answers.interest) setStep(3);
+    else if (step === 3 && answers.tone) setStep(4);
+  };
+
+  const canContinue =
+    (step === 0 && !!answers.age) ||
+    (step === 1 && !!answers.readingLevel) ||
+    (step === 2 && !!answers.interest) ||
+    (step === 3 && !!answers.tone);
+
   return (
     <div className="mx-auto max-w-3xl">
-      <div className="mb-10" aria-hidden={step === 4}>
+      <div className="mb-10">
         <div className="flex items-center justify-between gap-4">
           <p className="font-display text-xs font-bold uppercase tracking-wider text-ink-muted">
-            Step {Math.min(step + 1, 4)} of 4
+            {step < 4 ? `Step ${step + 1} of 4` : "Your matches"}
           </p>
           {step < 4 && (
             <p className="font-display text-xs font-bold uppercase tracking-wider text-burgundy">
@@ -70,7 +81,7 @@ export function FindABookFlow({ books }: FindABookFlowProps) {
         <div
           className="mt-3 h-1 w-full bg-line"
           role="progressbar"
-          aria-valuenow={step === 4 ? 100 : progress}
+          aria-valuenow={step === 4 ? 100 : (step / 4) * 100}
           aria-valuemin={0}
           aria-valuemax={100}
           aria-label="Quiz progress"
@@ -87,80 +98,97 @@ export function FindABookFlow({ books }: FindABookFlowProps) {
       </h2>
 
       {step === 0 && (
-        <OptionGrid
+        <StepOptions
           options={QUIZ_AGES.map((o) => ({
             value: o.value,
             label: o.label,
             hint: o.hint,
           }))}
           selected={answers.age}
-          onSelect={(age) => {
-            setAnswers((a) => ({ ...a, age: age as AgeRange }));
-            setStep(1);
-          }}
+          onSelect={(age) =>
+            setAnswers((a) => ({ ...a, age: age as AgeRange }))
+          }
         />
       )}
 
       {step === 1 && (
-        <OptionGrid
+        <StepOptions
           options={QUIZ_LEVELS.map((o) => ({
             value: o.value,
             label: o.label,
             hint: o.hint,
           }))}
           selected={answers.readingLevel}
-          onSelect={(readingLevel) => {
+          onSelect={(readingLevel) =>
             setAnswers((a) => ({
               ...a,
               readingLevel: readingLevel as ReadingLevel,
-            }));
-            setStep(2);
-          }}
-          onBack={() => setStep(0)}
+            }))
+          }
         />
       )}
 
       {step === 2 && (
-        <OptionGrid
+        <StepOptions
           options={QUIZ_INTERESTS.map((o) => ({
             value: o.value,
             label: o.label,
           }))}
           selected={answers.interest}
           columns={2}
-          onSelect={(interest) => {
+          onSelect={(interest) =>
             setAnswers((a) => ({
               ...a,
               interest: interest as QuizInterest,
-            }));
-            setStep(3);
-          }}
-          onBack={() => setStep(1)}
+            }))
+          }
         />
       )}
 
       {step === 3 && (
-        <OptionGrid
+        <StepOptions
           options={QUIZ_TONES.map((o) => ({
             value: o.value,
             label: o.label,
           }))}
           selected={answers.tone}
-          onSelect={(tone) => {
-            setAnswers((a) => ({ ...a, tone: tone as StoryTone }));
-            setStep(4);
-          }}
-          onBack={() => setStep(2)}
+          onSelect={(tone) =>
+            setAnswers((a) => ({ ...a, tone: tone as StoryTone }))
+          }
         />
+      )}
+
+      {step < 4 && (
+        <div className="mt-8 flex flex-wrap items-center gap-4">
+          {step > 0 && (
+            <button
+              type="button"
+              onClick={() => setStep((s) => (s - 1) as Step)}
+              className="font-display text-xs font-bold uppercase tracking-wider text-ink-muted underline-offset-2 hover:text-burgundy hover:underline"
+            >
+              ← Back
+            </button>
+          )}
+          <Button
+            type="button"
+            variant="primary"
+            size="md"
+            onClick={goNext}
+            disabled={!canContinue}
+            className={!canContinue ? "cursor-not-allowed opacity-40" : ""}
+          >
+            {step === 3 ? "See Recommendations" : "Continue"}
+          </Button>
+        </div>
       )}
 
       {step === 4 && (
         <div className="mt-8">
           <p className="text-base leading-relaxed text-ink-muted">
             Based on ages {answers.age}, a {answers.readingLevel?.toLowerCase()}{" "}
-            reader who likes {answers.interest?.toLowerCase()} and wants something{" "}
-            {answers.tone?.toLowerCase()} — here are three titles from our Fall
-            2026 collection.
+            reader who likes {answers.interest?.toLowerCase()} and wants
+            something {answers.tone?.toLowerCase()} — here are three titles from
+            our Fall 2026 collection.
           </p>
 
           {recommendations.length === 0 ? (
@@ -259,65 +287,53 @@ export function FindABookFlow({ books }: FindABookFlowProps) {
   );
 }
 
-function OptionGrid({
+function StepOptions({
   options,
   selected,
   onSelect,
-  onBack,
   columns = 1,
 }: {
   options: { value: string; label: string; hint?: string }[];
   selected?: string;
   onSelect: (value: string) => void;
-  onBack?: () => void;
   columns?: 1 | 2;
 }) {
   return (
-    <div className="mt-8">
-      <ul
-        className={`grid gap-3 ${columns === 2 ? "sm:grid-cols-2" : ""}`}
-        role="listbox"
-        aria-label="Answer options"
-      >
-        {options.map((option) => {
-          const isSelected = selected === option.value;
-          return (
-            <li key={option.value} role="option" aria-selected={isSelected}>
-              <button
-                type="button"
-                onClick={() => onSelect(option.value)}
-                className={`w-full border px-5 py-4 text-left transition-colors ${
-                  isSelected
-                    ? "border-burgundy bg-burgundy text-cream"
-                    : "border-line bg-paper text-ink hover:border-burgundy hover:bg-cream-dark"
-                }`}
-              >
-                <span className="font-display text-sm font-bold uppercase tracking-wider">
-                  {option.label}
+    <ul
+      className={`mt-8 grid gap-3 ${columns === 2 ? "sm:grid-cols-2" : ""}`}
+      role="radiogroup"
+    >
+      {options.map((option) => {
+        const isSelected = selected === option.value;
+        return (
+          <li key={option.value}>
+            <button
+              type="button"
+              role="radio"
+              aria-checked={isSelected}
+              onClick={() => onSelect(option.value)}
+              className={`w-full border px-5 py-4 text-left transition-colors ${
+                isSelected
+                  ? "border-burgundy bg-burgundy text-cream"
+                  : "border-line bg-paper text-ink hover:border-burgundy hover:bg-cream-dark"
+              }`}
+            >
+              <span className="font-display text-sm font-bold uppercase tracking-wider">
+                {option.label}
+              </span>
+              {option.hint && (
+                <span
+                  className={`mt-1 block text-sm leading-snug ${
+                    isSelected ? "text-cream/80" : "text-ink-muted"
+                  }`}
+                >
+                  {option.hint}
                 </span>
-                {option.hint && (
-                  <span
-                    className={`mt-1 block text-sm leading-snug ${
-                      isSelected ? "text-cream/80" : "text-ink-muted"
-                    }`}
-                  >
-                    {option.hint}
-                  </span>
-                )}
-              </button>
-            </li>
-          );
-        })}
-      </ul>
-      {onBack && (
-        <button
-          type="button"
-          onClick={onBack}
-          className="mt-6 font-display text-xs font-bold uppercase tracking-wider text-ink-muted underline-offset-2 hover:text-burgundy hover:underline"
-        >
-          ← Back
-        </button>
-      )}
-    </div>
+              )}
+            </button>
+          </li>
+        );
+      })}
+    </ul>
   );
 }
