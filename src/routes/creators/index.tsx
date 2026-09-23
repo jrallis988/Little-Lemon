@@ -1,14 +1,18 @@
+"use client"
+
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { AppShell } from '#/components/layout/AppShell'
 import { Avatar } from '#/components/ui/Avatar'
 import { listCreators } from '#/lib/oj/catalog'
+import { useSafety } from '#/lib/oj/safety-store'
 
 export const Route = createFileRoute('/creators/')({
   component: CreatorsPage,
 })
 
 function CreatorsPage() {
-  const creators = listCreators()
+  const { isBlocked } = useSafety()
+  const creators = listCreators().filter((c) => !isBlocked(c.id))
 
   return (
     <AppShell>

@@ -16,8 +16,11 @@ import { Route as CreatorsIndexRouteImport } from './routes/creators/index'
 import { Route as DiscoverIndexRouteImport } from './routes/discover/index'
 import { Route as MessagesIndexRouteImport } from './routes/messages/index'
 import { Route as OnboardingIndexRouteImport } from './routes/onboarding/index'
+import { Route as PrivacyIndexRouteImport } from './routes/privacy/index'
 import { Route as SettingsIndexRouteImport } from './routes/settings/index'
+import { Route as TermsIndexRouteImport } from './routes/terms/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as ApiStripeWebhookRouteImport } from './routes/api/stripe/webhook'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -54,14 +57,29 @@ const OnboardingIndexRoute = OnboardingIndexRouteImport.update({
   path: '/onboarding/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyIndexRoute = PrivacyIndexRouteImport.update({
+  id: '/privacy/',
+  path: '/privacy/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SettingsIndexRoute = SettingsIndexRouteImport.update({
   id: '/settings/',
   path: '/settings/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TermsIndexRoute = TermsIndexRouteImport.update({
+  id: '/terms/',
+  path: '/terms/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiStripeWebhookRoute = ApiStripeWebhookRouteImport.update({
+  id: '/api/stripe/webhook',
+  path: '/api/stripe/webhook',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -73,8 +91,11 @@ export interface FileRoutesByFullPath {
   '/discover/': typeof DiscoverIndexRoute
   '/messages/': typeof MessagesIndexRoute
   '/onboarding/': typeof OnboardingIndexRoute
+  '/privacy/': typeof PrivacyIndexRoute
   '/settings/': typeof SettingsIndexRoute
+  '/terms/': typeof TermsIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/stripe/webhook': typeof ApiStripeWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -84,8 +105,11 @@ export interface FileRoutesByTo {
   '/discover': typeof DiscoverIndexRoute
   '/messages': typeof MessagesIndexRoute
   '/onboarding': typeof OnboardingIndexRoute
+  '/privacy': typeof PrivacyIndexRoute
   '/settings': typeof SettingsIndexRoute
+  '/terms': typeof TermsIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/stripe/webhook': typeof ApiStripeWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -96,8 +120,11 @@ export interface FileRoutesById {
   '/discover/': typeof DiscoverIndexRoute
   '/messages/': typeof MessagesIndexRoute
   '/onboarding/': typeof OnboardingIndexRoute
+  '/privacy/': typeof PrivacyIndexRoute
   '/settings/': typeof SettingsIndexRoute
+  '/terms/': typeof TermsIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/stripe/webhook': typeof ApiStripeWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -109,8 +136,11 @@ export interface FileRouteTypes {
     | '/discover/'
     | '/messages/'
     | '/onboarding/'
+    | '/privacy/'
     | '/settings/'
+    | '/terms/'
     | '/api/auth/$'
+    | '/api/stripe/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -120,8 +150,11 @@ export interface FileRouteTypes {
     | '/discover'
     | '/messages'
     | '/onboarding'
+    | '/privacy'
     | '/settings'
+    | '/terms'
     | '/api/auth/$'
+    | '/api/stripe/webhook'
   id:
     | '__root__'
     | '/'
@@ -131,8 +164,11 @@ export interface FileRouteTypes {
     | '/discover/'
     | '/messages/'
     | '/onboarding/'
+    | '/privacy/'
     | '/settings/'
+    | '/terms/'
     | '/api/auth/$'
+    | '/api/stripe/webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -143,8 +179,11 @@ export interface RootRouteChildren {
   DiscoverIndexRoute: typeof DiscoverIndexRoute
   MessagesIndexRoute: typeof MessagesIndexRoute
   OnboardingIndexRoute: typeof OnboardingIndexRoute
+  PrivacyIndexRoute: typeof PrivacyIndexRoute
   SettingsIndexRoute: typeof SettingsIndexRoute
+  TermsIndexRoute: typeof TermsIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  ApiStripeWebhookRoute: typeof ApiStripeWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -198,6 +237,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OnboardingIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy/': {
+      id: '/privacy/'
+      path: '/privacy'
+      fullPath: '/privacy/'
+      preLoaderRoute: typeof PrivacyIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/settings/': {
       id: '/settings/'
       path: '/settings'
@@ -205,11 +251,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/terms/': {
+      id: '/terms/'
+      path: '/terms'
+      fullPath: '/terms/'
+      preLoaderRoute: typeof TermsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
       fullPath: '/api/auth/$'
       preLoaderRoute: typeof ApiAuthSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/stripe/webhook': {
+      id: '/api/stripe/webhook'
+      path: '/api/stripe/webhook'
+      fullPath: '/api/stripe/webhook'
+      preLoaderRoute: typeof ApiStripeWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -223,8 +283,11 @@ const rootRouteChildren: RootRouteChildren = {
   DiscoverIndexRoute: DiscoverIndexRoute,
   MessagesIndexRoute: MessagesIndexRoute,
   OnboardingIndexRoute: OnboardingIndexRoute,
+  PrivacyIndexRoute: PrivacyIndexRoute,
   SettingsIndexRoute: SettingsIndexRoute,
+  TermsIndexRoute: TermsIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
+  ApiStripeWebhookRoute: ApiStripeWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

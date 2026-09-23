@@ -3,10 +3,13 @@
 import { useEffect, useId } from 'react'
 import { Pause, X } from 'lucide-react'
 import { usePlayer } from '#/lib/player'
+import { useMembership } from '#/lib/membership'
+import { canAccessPost } from '#/lib/oj/access'
 import { posterDataUri } from '#/lib/oj/visuals'
 
 export function PlaySheet() {
   const { target, closePlayer } = usePlayer()
+  const { unlockedCreatorIds } = useMembership()
   const titleId = useId()
 
   useEffect(() => {
@@ -21,6 +24,14 @@ export function PlaySheet() {
   if (!target) return null
 
   const { post, creator } = target
+  if (
+    !canAccessPost(post, {
+      unlockedCreatorIds,
+      creatorId: creator.id,
+    })
+  ) {
+    return null
+  }
   const poster = posterDataUri({
     tone: post.mediaTone,
     title: post.title,

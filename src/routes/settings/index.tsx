@@ -5,7 +5,9 @@ import { Link, createFileRoute } from '@tanstack/react-router'
 import { AppShell } from '#/components/layout/AppShell'
 import { useDemoAuth } from '#/lib/demo-auth'
 import { useMembership } from '#/lib/membership'
-import { getCreator } from '#/lib/oj/catalog'
+import { usePublish } from '#/lib/oj/publish-store'
+import { getCreator, getCreatorByUsername } from '#/lib/oj/catalog'
+import type { AccessLevel, MediaKind } from '#/domain/oj-types'
 
 export const Route = createFileRoute('/settings/')({
   component: SettingsPage,
@@ -21,11 +23,17 @@ function SettingsPage() {
     updateCreatorSettings,
   } = useDemoAuth()
   const { unlockedCreatorIds, tipTotalsByCreator } = useMembership()
+  const { publish, postsForCreator } = usePublish()
   const [tierName, setTierName] = useState(creatorSettings.tierName)
   const [tierPrice, setTierPrice] = useState(
     String(creatorSettings.tierPriceMonthly),
   )
   const [saved, setSaved] = useState(false)
+  const [pubTitle, setPubTitle] = useState('')
+  const [pubBody, setPubBody] = useState('')
+  const [pubKind, setPubKind] = useState<MediaKind>('video')
+  const [pubAccess, setPubAccess] = useState<AccessLevel>('public')
+  const [publishedNote, setPublishedNote] = useState<string | null>(null)
 
   if (!ready) {
     return (
@@ -54,6 +62,10 @@ function SettingsPage() {
       </AppShell>
     )
   }
+
+  const creator =
+    getCreatorByUsername(user.creatorUsername ?? 'maya.kill') ??
+    getCreator('cr1')
 
   return (
     <AppShell>
@@ -91,50 +103,138 @@ function SettingsPage() {
           </button>
         </div>
 
-        {user.role === 'creator' ? (
-          <form
-            className="mt-8 space-y-3"
-            onSubmit={(e) => {
-              e.preventDefault()
-              updateCreatorSettings({
-                tierName,
-                tierPriceMonthly: Number(tierPrice) || 9,
-              })
-              setSaved(true)
-              window.setTimeout(() => setSaved(false), 1200)
-            }}
-          >
-            <p className="text-[11px] uppercase tracking-[0.18em] text-[var(--tint)]">
-              Tier pricing & perks
-            </p>
-            <label className="block text-sm text-[var(--muted)]">
-              Tier name
-              <input
-                value={tierName}
-                onChange={(e) => setTierName(e.target.value)}
-                className="mt-1 h-11 w-full rounded-xl border border-[var(--line)] bg-white/10 px-3 text-[var(--ink)] outline-none focus:border-white"
-              />
-            </label>
-            <label className="block text-sm text-[var(--muted)]">
-              Monthly price (USD)
-              <input
-                value={tierPrice}
-                onChange={(e) => setTierPrice(e.target.value)}
-                inputMode="decimal"
-                className="mt-1 h-11 w-full rounded-xl border border-[var(--line)] bg-white/10 px-3 text-[var(--ink)] outline-none focus:border-white"
-              />
-            </label>
-            <button
-              type="submit"
-              className="rounded-xl bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-[var(--on-accent)]"
+        {user.role === 'creator' && creator ? (
+          <>
+            <form
+              className="mt-8 space-y-3"
+              onSubmit={(e) => {
+                e.preventDefault()
+                updateCreatorSettings({
+                  tierName,
+                  tierPriceMonthly: Number(tierPrice) || 9,
+                })
+                setSaved(true)
+                window.setTimeout(() => setSaved(false), 1200)
+              }}
             >
-              {saved ? 'Saved' : 'Save tier'}
-            </button>
-            <p className="text-xs text-[var(--muted)]">
-              Payout destination: connect Stripe Connect when live keys are
-              available. Demo pricing stays on-device for now.
-            </p>
-          </form>
+              <p className="text-[11px] uppercase tracking-[0.18em] text-[var(--tint)]">
+                Tier pricing & perks
+              </p>
+              <label className="block text-sm text-[var(--muted)]">
+                Tier name
+                <input
+                  value={tierName}
+                  onChange={(e) => setTierName(e.target.value)}
+                  className="mt-1 h-11 w-full rounded-xl border border-[var(--line)] bg-white/10 px-3 text-[var(--ink)] outline-none focus:border-white"
+                />
+              </label>
+              <label className="block text-sm text-[var(--muted)]">
+                Monthly price (USD)
+                <input
+                  value={tierPrice}
+                  onChange={(e) => setTierPrice(e.target.value)}
+                  inputMode="decimal"
+                  className="mt-1 h-11 w-full rounded-xl border border-[var(--line)] bg-white/10 px-3 text-[var(--ink)] outline-none focus:border-white"
+                />
+              </label>
+              <button
+                type="submit"
+                className="rounded-xl bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-[var(--on-accent)]"
+              >
+                {saved ? 'Saved' : 'Save tier'}
+              </button>
+              <p className="text-xs text-[var(--muted)]">
+                Payout destination: connect Stripe Connect when live keys are
+                available. Demo pricing stays on-device for now.
+              </p>
+            </form>
+
+            <form
+              className="mt-10 space-y-3 border-t border-[var(--hairline)] pt-8"
+              onSubmit={(e) => {
+                e.preventDefault()
+                if (!pubTitle.trim()) return
+                const post = publish({
+                  creatorId: creator.id,
+                  title: pubTitle,
+                  body: pubBody || 'New drop from the road.',
+                  kind: pubKind,
+                  access: pubAccess,
+                  durationLabel: pubKind === 'text' ? undefined : '1:00',
+                })
+                setPublishedNote(`Published “${post.title}”`)
+                setPubTitle('')
+                setPubBody('')
+              }}
+            >
+              <p className="text-[11px] uppercase tracking-[0.18em] text-[var(--tint)]">
+                Publish
+              </p>
+              <p className="text-xs text-[var(--muted)]">
+                Demo publish lands in Discover / your library on this device.
+                Wire R2 + `oj_posts` when DATABASE_URL is set.
+              </p>
+              <label className="block text-sm text-[var(--muted)]">
+                Title
+                <input
+                  value={pubTitle}
+                  onChange={(e) => setPubTitle(e.target.value)}
+                  className="mt-1 h-11 w-full rounded-xl border border-[var(--line)] bg-white/10 px-3 text-[var(--ink)] outline-none focus:border-white"
+                  required
+                />
+              </label>
+              <label className="block text-sm text-[var(--muted)]">
+                Caption
+                <textarea
+                  value={pubBody}
+                  onChange={(e) => setPubBody(e.target.value)}
+                  rows={3}
+                  className="mt-1 w-full rounded-xl border border-[var(--line)] bg-white/10 px-3 py-2 text-[var(--ink)] outline-none focus:border-white"
+                />
+              </label>
+              <div className="grid grid-cols-2 gap-2">
+                <label className="block text-sm text-[var(--muted)]">
+                  Kind
+                  <select
+                    value={pubKind}
+                    onChange={(e) => setPubKind(e.target.value as MediaKind)}
+                    className="mt-1 h-11 w-full rounded-xl border border-[var(--line)] bg-[var(--bg-elevated)] px-3 text-[var(--ink)]"
+                  >
+                    <option value="video">Clip</option>
+                    <option value="audio">Memo</option>
+                    <option value="animation">Short</option>
+                    <option value="text">Note</option>
+                  </select>
+                </label>
+                <label className="block text-sm text-[var(--muted)]">
+                  Access
+                  <select
+                    value={pubAccess}
+                    onChange={(e) =>
+                      setPubAccess(e.target.value as AccessLevel)
+                    }
+                    className="mt-1 h-11 w-full rounded-xl border border-[var(--line)] bg-[var(--bg-elevated)] px-3 text-[var(--ink)]"
+                  >
+                    <option value="public">Public</option>
+                    <option value="supporters">Supporters</option>
+                  </select>
+                </label>
+              </div>
+              <button
+                type="submit"
+                className="rounded-xl bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-[var(--on-accent)]"
+              >
+                Publish post
+              </button>
+              {publishedNote ? (
+                <p className="text-sm text-[var(--tint)]">{publishedNote}</p>
+              ) : null}
+              <p className="text-xs text-[var(--muted)]">
+                Your publishes on this device:{' '}
+                {postsForCreator(creator.id).length}
+              </p>
+            </form>
+          </>
         ) : (
           <div className="mt-8">
             <p className="text-[11px] uppercase tracking-[0.18em] text-[var(--tint)]">
@@ -147,15 +247,15 @@ function SettingsPage() {
                 </li>
               ) : (
                 unlockedCreatorIds.map((id) => {
-                  const creator = getCreator(id)
+                  const c = getCreator(id)
                   return (
                     <li
                       key={id}
                       className="flex items-center justify-between py-3 text-sm text-[var(--ink-soft)]"
                     >
-                      <span>{creator?.displayName ?? id}</span>
+                      <span>{c?.displayName ?? id}</span>
                       <span className="text-[var(--tint)]">
-                        {creator?.tierName ?? 'Member'}
+                        {c?.tierName ?? 'Member'}
                       </span>
                     </li>
                   )
@@ -172,10 +272,19 @@ function SettingsPage() {
           </div>
         )}
 
+        <div className="mt-10 flex flex-wrap gap-4 text-sm text-[var(--muted)]">
+          <Link to="/terms" className="no-underline hover:text-[var(--ink)]">
+            Terms
+          </Link>
+          <Link to="/privacy" className="no-underline hover:text-[var(--ink)]">
+            Privacy
+          </Link>
+        </div>
+
         <button
           type="button"
           onClick={signOut}
-          className="mt-10 text-sm text-[var(--ink-soft)] underline-offset-4 hover:text-[var(--ink)] hover:underline"
+          className="mt-6 text-sm text-[var(--ink-soft)] underline-offset-4 hover:text-[var(--ink)] hover:underline"
         >
           Sign out
         </button>

@@ -9,6 +9,7 @@ import { TipBar } from '#/components/monetization/TipBar'
 import { useSupport } from '#/lib/support'
 import { useMembership } from '#/lib/membership'
 import { usePlayer } from '#/lib/player'
+import { accessLabel, canAccessPost } from '#/lib/oj/access'
 
 export function ContentTile({
   post,
@@ -20,9 +21,13 @@ export function ContentTile({
   variant?: 'feed' | 'grid'
 }) {
   const { openSubscribe } = useSupport()
-  const { isUnlocked } = useMembership()
+  const { isUnlocked, unlockedCreatorIds } = useMembership()
   const { openPlayer } = usePlayer()
-  const locked = post.access === 'supporters' && !isUnlocked(creator.id)
+  const unlocked = isUnlocked(creator.id)
+  const locked = !canAccessPost(post, {
+    unlockedCreatorIds,
+    creatorId: creator.id,
+  })
 
   function onMediaClick() {
     if (locked) {
@@ -54,10 +59,8 @@ export function ContentTile({
           <p className="mt-1 text-[10px] uppercase tracking-[0.14em] text-[var(--muted)]">
             {locked ? (
               <span className="lock-tag rounded px-1.5 py-0.5">Locked</span>
-            ) : post.access === 'supporters' ? (
-              'Unlocked'
             ) : (
-              'Public'
+              accessLabel(post.access, unlocked)
             )}
           </p>
         </div>

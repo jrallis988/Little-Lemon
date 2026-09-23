@@ -4,6 +4,7 @@ import { HeartHandshake } from 'lucide-react'
 import type { Creator, Post } from '#/domain/oj-types'
 import { useSupport } from '#/lib/support'
 import { useMembership } from '#/lib/membership'
+import { canAccessPost } from '#/lib/oj/access'
 
 export function TipBar({
   creator,
@@ -15,9 +16,14 @@ export function TipBar({
   tipTotal?: number
 }) {
   const { openTip, openSubscribe } = useSupport()
-  const { isUnlocked, tipTotalsByCreator } = useMembership()
+  const { isUnlocked, tipTotalsByCreator, unlockedCreatorIds } = useMembership()
   const unlocked = isUnlocked(creator.id)
-  const locked = post?.access === 'supporters' && !unlocked
+  const locked = post
+    ? !canAccessPost(post, {
+        unlockedCreatorIds,
+        creatorId: creator.id,
+      })
+    : false
   const liveTips =
     (tipTotal ?? 0) + (tipTotalsByCreator[creator.id] ?? 0)
 

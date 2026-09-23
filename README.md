@@ -22,10 +22,11 @@ Creator-subscription comedy platform for stand-ups, comedy animators, and fans. 
 | `/discover` | Chronological public discovery feed |
 | `/creators` | Creator directory |
 | `/c/$username` | Creator profile (public + locked tiles) |
-| `/messages` | Backstage inbox |
-| `/settings` | Account, role switch, tier pricing |
+| `/messages` | Backstage inbox + replies |
+| `/settings` | Account, tier pricing, publish |
+| `/terms` · `/privacy` | Legal drafts |
 
-## Local develop
+See `docs/PRODUCTION.md` for Postgres / Stripe / R2 wiring.
 
 ```bash
 npm install
