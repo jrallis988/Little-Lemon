@@ -1,42 +1,26 @@
 # Little Lemon
 
-Mediterranean restaurant website for **Little Lemon** (Chicago) with **eight homepage layout demos**, adapted from the uploaded Weiboo eCommerce index variants and rebranded for dining, ordering, and reservations.
+Mediterranean restaurant website for **Little Lemon** (Chicago) — eight homepage layout demos adapted from uploaded Weiboo index variants, plus menu, reservations, and pickup ordering.
 
-## Homepage layouts
-
-| File | Layout inspiration |
-| --- | --- |
-| `index.html` | Classic hero + hand-picked specials |
-| `index-two.html` | Featured promos + testimonials |
-| `index-three.html` | Split hero + course collections |
-| `index-four.html` | Craft / handmade categories |
-| `index-five.html` | Promo banners + lunch callouts |
-| `index-six.html` | Floating “today’s deal” card |
-| `index-seven.html` | Seasonal arrivals + blog teasers |
-| `index-eight.html` | Events / community nights |
-
-A layout switcher sits under the header on every homepage demo.
-
-## Other pages
-
-- `menu.html` — starters, mains, desserts with add-to-order
-- `about.html` — Mario & Adrian story
-- `reserve.html` — table reservation form
-- `order.html` — cart / pickup checkout (localStorage)
-- `privacy.html` / `terms.html`
-
-## Stack
-
-Static HTML, CSS, and vanilla JS. Brand fonts: **Markazi Text** + **Karla**. Palette from the Meta Little Lemon design system (`#495E57`, `#F4CE14`, `#EE9972`).
-
-## Develop
-
+## Quick start
 ```bash
 npm start
 ```
+Open [http://localhost:3000](http://localhost:3000).
 
-Opens [http://localhost:3000](http://localhost:3000).
+## Go live
+See **[LAUNCH.md](LAUNCH.md)** — enable GitHub Pages (Actions) and activate Formsubmit.
+
+## Pages
+| File | Role |
+| --- | --- |
+| `index.html` | **Primary** homepage |
+| `index-two.html` … `index-eight.html` | Alternate layouts |
+| `menu.html` / `about.html` / `reserve.html` / `order.html` | Core flows |
+| `privacy.html` / `terms.html` | Policies |
+
+## Stack
+Static HTML, CSS, vanilla JS. Brand fonts: Markazi Text + Karla. Capstone palette (`#495E57`, `#F4CE14`, `#EE9972`). Forms → Formsubmit (`jjrallis@unh.edu`). Images in `images/`.
 
 ## References
-
-Original uploaded Weiboo PHP homepage demos (incomplete without theme assets) are kept in `references/weiboo-homepages/` for layout provenance.
+Original Weiboo PHP demos (incomplete without theme assets): `references/weiboo-homepages/`.

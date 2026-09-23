@@ -1,6 +1,7 @@
 /* Little Lemon — shared interactions */
 (function () {
   const CART_KEY = "ll-cart";
+  const FORMSUBMIT = "https://formsubmit.co/ajax/jjrallis@unh.edu";
 
   function readCart() {
     try {
@@ -53,6 +54,19 @@
     btn.setAttribute("aria-expanded", open ? "true" : "false");
   }
 
+  async function postForm(payload) {
+    const res = await fetch(FORMSUBMIT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error("submit failed");
+    return res.json().catch(() => ({}));
+  }
+
   document.addEventListener("click", (e) => {
     const addBtn = e.target.closest("[data-add-cart]");
     if (addBtn) {
@@ -69,7 +83,6 @@
     }
   });
 
-  // Order page rendering
   function renderOrderPage() {
     const root = document.getElementById("order-root");
     if (!root) return;
@@ -86,35 +99,47 @@
     }
 
     const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    const tax = subtotal * 0.08875;
+    const total = subtotal + tax;
+
     root.innerHTML = `
-      <ul class="order-list">
-        ${cart
-          .map(
-            (i) => `
-          <li class="order-item" data-id="${i.id}">
-            <div>
-              <strong>${i.name}</strong>
-              <div class="muted">$${i.price.toFixed(2)} each</div>
-            </div>
-            <div class="order-qty">
-              <button type="button" data-qty="-1" aria-label="Decrease">−</button>
-              <span>${i.qty}</span>
-              <button type="button" data-qty="1" aria-label="Increase">+</button>
-            </div>
-            <div class="order-line">$${(i.price * i.qty).toFixed(2)}</div>
-            <button type="button" class="order-remove" data-remove aria-label="Remove">✕</button>
-          </li>`
-          )
-          .join("")}
-      </ul>
-      <div class="order-summary">
-        <div><span>Subtotal</span><strong>$${subtotal.toFixed(2)}</strong></div>
-        <div><span>Tax (est.)</span><strong>$${(subtotal * 0.08875).toFixed(2)}</strong></div>
-        <div class="order-total"><span>Total</span><strong>$${(subtotal * 1.08875).toFixed(2)}</strong></div>
-        <button type="button" class="btn btn-primary btn-block" id="place-order">Place order</button>
+      <div class="order-layout">
+        <ul class="order-list">
+          ${cart
+            .map(
+              (i) => `
+            <li class="order-item" data-id="${i.id}">
+              <div>
+                <strong>${i.name}</strong>
+                <div class="muted">$${i.price.toFixed(2)} each</div>
+              </div>
+              <div class="order-qty">
+                <button type="button" data-qty="-1" aria-label="Decrease">−</button>
+                <span>${i.qty}</span>
+                <button type="button" data-qty="1" aria-label="Increase">+</button>
+              </div>
+              <div class="order-line">$${(i.price * i.qty).toFixed(2)}</div>
+              <button type="button" class="order-remove" data-remove aria-label="Remove">✕</button>
+            </li>`
+            )
+            .join("")}
+        </ul>
+        <div class="order-summary">
+          <div><span>Subtotal</span><strong>$${subtotal.toFixed(2)}</strong></div>
+          <div><span>Tax (est.)</span><strong>$${tax.toFixed(2)}</strong></div>
+          <div class="order-total"><span>Total</span><strong>$${total.toFixed(2)}</strong></div>
+          <form id="order-form" class="form-grid" style="margin-top:1rem;max-width:none">
+            <label>Name<input name="name" required placeholder="Your name"></label>
+            <label>Email<input type="email" name="email" required placeholder="you@email.com"></label>
+            <label>Phone<input type="tel" name="phone" placeholder="(312) 555-0100"></label>
+            <label>Pickup notes<textarea name="notes" placeholder="Allergy notes, timing…"></textarea></label>
+            <button type="submit" class="btn btn-primary btn-block" id="place-order">Place order</button>
+          </form>
+          <p id="order-success" class="muted" hidden></p>
+        </div>
       </div>`;
 
-    root.addEventListener("click", (e) => {
+    root.querySelector(".order-list").addEventListener("click", (e) => {
       const row = e.target.closest(".order-item");
       if (!row) return;
       const id = row.dataset.id;
@@ -131,33 +156,102 @@
       renderOrderPage();
     });
 
-    document.getElementById("place-order")?.addEventListener("click", () => {
-      writeCart([]);
-      root.innerHTML = `
-        <div class="order-empty">
-          <h2>Order received</h2>
-          <p>Mario &amp; Adrian are preparing your Mediterranean feast. Grazie!</p>
-          <a class="btn btn-primary" href="index.html">Back home</a>
-        </div>`;
-      flashToast("Order placed — thank you!");
+    const form = document.getElementById("order-form");
+    form?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById("place-order");
+      const data = new FormData(form);
+      const items = readCart();
+      const line = items
+        .map((i) => `${i.qty}× ${i.name} ($${(i.price * i.qty).toFixed(2)})`)
+        .join("\n");
+      const sub = items.reduce((s, i) => s + i.price * i.qty, 0);
+      btn.disabled = true;
+      btn.textContent = "Sending…";
+      try {
+        await postForm({
+          _subject: `Little Lemon order — ${data.get("name")}`,
+          name: data.get("name"),
+          email: data.get("email"),
+          phone: data.get("phone") || "",
+          notes: data.get("notes") || "",
+          order: line,
+          subtotal: `$${sub.toFixed(2)}`,
+          total: `$${(sub * 1.08875).toFixed(2)}`,
+        });
+        writeCart([]);
+        root.innerHTML = `
+          <div class="order-empty">
+            <h2>Order received</h2>
+            <p>We emailed the kitchen your pickup request. Grazie!</p>
+            <a class="btn btn-primary" href="index.html">Back home</a>
+          </div>`;
+        flashToast("Order sent — check your email confirmation from Formsubmit if first use");
+      } catch {
+        btn.disabled = false;
+        btn.textContent = "Place order";
+        flashToast("Could not send order — try again or call us");
+      }
     });
   }
 
-  // Reservation form
   function wireReserveForm() {
     const form = document.getElementById("reserve-form");
     if (!form) return;
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const data = new FormData(form);
       const name = data.get("name") || "Guest";
-      form.reset();
-      flashToast(`Table reserved for ${name}. See you soon!`);
-      const note = document.getElementById("reserve-success");
-      if (note) {
-        note.hidden = false;
-        note.textContent = `You're booked, ${name}. We'll hold your table — Little Lemon, Chicago.`;
+      const btn = form.querySelector('[type="submit"]');
+      btn.disabled = true;
+      btn.textContent = "Sending…";
+      try {
+        await postForm({
+          _subject: `Little Lemon reservation — ${name}`,
+          name,
+          email: data.get("email"),
+          date: data.get("date"),
+          time: data.get("time"),
+          guests: data.get("guests"),
+          notes: data.get("notes") || "",
+        });
+        form.reset();
+        flashToast(`Table reserved for ${name}. See you soon!`);
+        const note = document.getElementById("reserve-success");
+        if (note) {
+          note.hidden = false;
+          note.textContent = `You're booked, ${name}. Confirmation will arrive by email once Formsubmit is activated.`;
+        }
+      } catch {
+        flashToast("Could not send reservation — try again");
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Confirm reservation";
       }
+    });
+  }
+
+  function wireNewsletterForms() {
+    document.querySelectorAll(".newsletter-form").forEach((form) => {
+      form.removeAttribute("onsubmit");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const email = new FormData(form).get("email");
+        const btn = form.querySelector('[type="submit"]');
+        btn.disabled = true;
+        try {
+          await postForm({
+            _subject: "Little Lemon newsletter signup",
+            email,
+          });
+          form.reset();
+          flashToast("Subscribed — welcome to the table");
+        } catch {
+          flashToast("Could not subscribe — try again");
+        } finally {
+          btn.disabled = false;
+        }
+      });
     });
   }
 
@@ -165,8 +259,8 @@
     updateCartBadge();
     renderOrderPage();
     wireReserveForm();
+    wireNewsletterForms();
 
-    // Reveal on scroll
     const reveals = document.querySelectorAll(".reveal");
     if (reveals.length && "IntersectionObserver" in window) {
       const io = new IntersectionObserver(

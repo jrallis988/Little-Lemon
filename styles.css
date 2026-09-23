@@ -1085,3 +1085,13 @@ p {
     margin-left: 1rem;
   }
 }
+
+
+.order-summary .form-grid label {
+  color: var(--mist);
+}
+
+.order-summary .form-grid input,
+.order-summary .form-grid textarea {
+  color: var(--ink);
+}
