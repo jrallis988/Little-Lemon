@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Update the host below to your production origin before go-live. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://www.nhti.edu/</loc></url>
+  <url><loc>https://www.nhti.edu/academics</loc></url>
+  <url><loc>https://www.nhti.edu/admissions</loc></url>
+  <url><loc>https://www.nhti.edu/financial-aid</loc></url>
+  <url><loc>https://www.nhti.edu/campus</loc></url>
+  <url><loc>https://www.nhti.edu/residence-life</loc></url>
+  <url><loc>https://www.nhti.edu/athletics</loc></url>
+  <url><loc>https://www.nhti.edu/workforce</loc></url>
+  <url><loc>https://www.nhti.edu/events</loc></url>
+  <url><loc>https://www.nhti.edu/news</loc></url>
+  <url><loc>https://www.nhti.edu/about</loc></url>
+  <url><loc>https://www.nhti.edu/contact</loc></url>
+</urlset>
