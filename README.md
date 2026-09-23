@@ -26,6 +26,39 @@ npm run build
 npm run preview
 ```
 
+## Deploy (stakeholder URL)
+
+This is a static SPA. Build output is `dist/`. SPA rewrites are configured for Vercel and Netlify so deep links (`/catalog`, `/product/...`) work.
+
+### Vercel
+
+1. Import the GitHub repo in [Vercel](https://vercel.com/new)
+2. Framework preset: **Vite** (uses `vercel.json`)
+3. Deploy — production builds hide `/design-system` by default
+
+```bash
+npx vercel --prod
+```
+
+### Netlify
+
+1. Import the repo in [Netlify](https://app.netlify.com/)
+2. Build command: `npm run build` · Publish directory: `dist`
+3. `public/_redirects` + `netlify.toml` handle SPA routing
+
+```bash
+npx netlify deploy --prod --dir=dist
+```
+
+### Any static host
+
+```bash
+npm run build
+# upload the contents of dist/
+```
+
+Serve `index.html` for unknown paths (SPA fallback).
+
 ## Stakeholder demo
 
 Production builds hide `/design-system` and its nav links. To expose the contact sheet in a built preview:

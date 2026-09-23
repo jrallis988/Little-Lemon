@@ -1,3 +1,7 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Allow: /
+
+# Internal contact sheet — keep out of search indexes when exposed
+User-agent: *
+Disallow: /design-system
