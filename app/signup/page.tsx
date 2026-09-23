@@ -21,7 +21,7 @@ import {
 
 export default function SignupPage() {
   const router = useRouter();
-  const { signup, profile, loading } = useAuth();
+  const { signup, profile, loading, usingMock } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -42,9 +42,11 @@ export default function SignupPage() {
     if (!isValidUsername(username)) {
       return "Use 3-24 lowercase letters, numbers, or underscores.";
     }
-    if (mockApi.isUsernameTaken(username)) return "That username is already taken.";
+    if (usingMock && mockApi.isUsernameTaken(username)) {
+      return "That username is already taken.";
+    }
     return "";
-  }, [submitted, username]);
+  }, [submitted, username, usingMock]);
 
   const birthdateError = useMemo(() => {
     if (!submitted && !birthdate) return "";
@@ -65,7 +67,7 @@ export default function SignupPage() {
       messages.push("Username is required.");
     } else if (!isValidUsername(username)) {
       messages.push("Use 3-24 lowercase letters, numbers, or underscores.");
-    } else if (mockApi.isUsernameTaken(username)) {
+    } else if (usingMock && mockApi.isUsernameTaken(username)) {
       messages.push("That username is already taken.");
     }
     setError(messages[0] || "");
@@ -85,15 +87,11 @@ export default function SignupPage() {
         password,
         username,
         displayName: displayName.trim(),
+        birthdate,
       });
-      const userId = mockApi.getSessionUserId();
-      if (userId) {
-        mockApi.updateProfile(userId, { birthdate, showAge: true });
-      }
       router.push("/onboarding");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unable to create your profile.");
-    } finally {
       setSubmitting(false);
     }
   };

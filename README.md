@@ -38,7 +38,9 @@ cp .env.example .env.local
 npm run dev
 ```
 
-### Demo login
+By default `NEXT_PUBLIC_USE_MOCK_DATA=true` keeps the app on the local Sarah demo (no Supabase required).
+
+### Demo login (mock mode)
 
 | Field | Value |
 |-------|--------|
@@ -46,6 +48,15 @@ npm run dev
 | Password | `demo1234` |
 
 Invite code during onboarding: `VIBE2026`
+
+### Enable real Supabase auth
+
+1. Create a Supabase project and copy URL + anon key into `.env.local`
+2. Set `NEXT_PUBLIC_USE_MOCK_DATA=false`
+3. In the Supabase SQL editor, run `supabase/schema.sql` (tables + auth trigger + RLS)
+4. Restart `npm run dev`
+
+When configured, signup/login/session/profile update use Supabase Auth. Friends, Loop, messages, and other social surfaces still use mock data until those APIs are wired.
 
 ## Key routes
 
@@ -70,9 +81,12 @@ components/
   layout/            # Header + VibeBottomNav (Home / Groups / + / Messages / Me)
   profile/           # Profile modules, bulletin, music, photos
 lib/
+  auth/              # AuthProvider (mock or Supabase)
   mock/              # Seed data + vibe-social (schools, moments, groups)
+  supabase/          # Browser/server clients, mappers, auth API
   types.ts           # Domain models
-supabase/schema.sql  # Postgres draft + RLS notes
+middleware.ts        # Supabase session refresh (no-op in mock mode)
+supabase/schema.sql  # Postgres tables, auth trigger, RLS starter policies
 ```
 
 ## Design notes

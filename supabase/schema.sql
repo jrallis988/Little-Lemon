@@ -430,3 +430,190 @@ create index if not exists photo_sets_profile_idx on public.photo_sets (profile_
 -- notifications: users can select/update/delete only their own notifications.
 -- blocks: blocker can manage their own block rows; policies should suppress blocked users from reads.
 -- reports: authenticated users can insert reports; only moderators/service role can select/update them.
+
+-- =============================================================================
+-- Auth bootstrap (run after creating tables in a fresh Supabase project)
+-- public.users.id must match auth.users.id
+-- =============================================================================
+
+alter table public.profiles
+  add column if not exists school_id uuid references public.schools(id),
+  add column if not exists school_name text,
+  add column if not exists grade text,
+  add column if not exists student_verified boolean not null default false,
+  add column if not exists verification_method text
+    check (verification_method is null or verification_method in ('school_email', 'code', 'demo')),
+  add column if not exists ghost_mode boolean not null default false,
+  add column if not exists school_only_boundary boolean not null default false,
+  add column if not exists mood text,
+  add column if not exists here_for text,
+  add column if not exists hometown text,
+  add column if not exists zodiac text,
+  add column if not exists gender_label text,
+  add column if not exists clubs text[] not null default '{}',
+  add column if not exists interest_map jsonb not null default '{}'::jsonb,
+  add column if not exists now_playing jsonb;
+
+-- Link app users to Supabase Auth identities (fresh projects only).
+-- If public.users already has non-auth UUIDs, migrate manually before applying.
+do $$
+begin
+  if not exists (
+    select 1
+    from information_schema.table_constraints
+    where table_schema = 'public'
+      and table_name = 'users'
+      and constraint_name = 'users_id_fkey'
+  ) then
+    begin
+      alter table public.users
+        add constraint users_id_fkey
+        foreign key (id) references auth.users(id) on delete cascade;
+    exception
+      when others then
+        raise notice 'Could not attach users.id to auth.users — migrate existing rows first.';
+    end;
+  end if;
+end $$;
+
+create or replace function public.handle_new_auth_user()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  uname text;
+  dname text;
+begin
+  uname := coalesce(
+    nullif(lower(new.raw_user_meta_data ->> 'username'), ''),
+    split_part(new.email, '@', 1),
+    'user_' || substr(new.id::text, 1, 8)
+  );
+  dname := coalesce(
+    nullif(new.raw_user_meta_data ->> 'display_name', ''),
+    nullif(new.raw_user_meta_data ->> 'displayName', ''),
+    uname
+  );
+
+  insert into public.users (id, email, username, created_at, updated_at, last_login_at, is_active, moderation_status)
+  values (new.id, new.email, uname, now(), now(), now(), true, 'ok')
+  on conflict (id) do update
+    set email = excluded.email,
+        updated_at = now();
+
+  insert into public.profiles (
+    user_id, username, display_name, show_age, online_status, last_active_at, member_since,
+    profile_views, friend_count, interests, favorite_music, details, featured_friend_count,
+    visibility, who_can_friend, who_can_message, who_can_comment, who_can_view_photos,
+    show_online_status, onboarding_complete
+  )
+  values (
+    new.id, uname, dname, false, 'online', now(), now(),
+    0, 0, '{}', '{}', '{"hiddenFields":[]}'::jsonb, 8,
+    'public', 'public', 'friends', 'friends', 'public',
+    true, false
+  )
+  on conflict (user_id) do nothing;
+
+  insert into public.profile_themes (
+    profile_id, preset, background_color, background_repeat, background_position,
+    primary_color, secondary_color, text_color, link_color, heading_font, body_font,
+    border_style, card_transparency, layout, module_order, music_player_style,
+    cursor_effect, stickers, display_mode
+  )
+  select
+    p.id, 'classic-blue', '#FFF7F0', 'no-repeat', 'center top',
+    '#FF7A18', '#7B61FF', '#222222', '#7B61FF',
+    'Syne, ''Trebuchet MS'', sans-serif', 'Figtree, ''Segoe UI'', sans-serif',
+    'solid', 0.96, 'classic',
+    array['about','details','interests','music','photos','blog','friends','comments'],
+    'compact', false, '{}', 'retro'
+  from public.profiles p
+  where p.user_id = new.id
+  on conflict (profile_id) do nothing;
+
+  return new;
+end;
+$$;
+
+drop trigger if exists on_auth_user_created on auth.users;
+create trigger on_auth_user_created
+  after insert on auth.users
+  for each row execute function public.handle_new_auth_user();
+
+-- Minimal RLS for auth-backed rows
+alter table public.users enable row level security;
+alter table public.profiles enable row level security;
+alter table public.profile_themes enable row level security;
+
+drop policy if exists users_select_own on public.users;
+create policy users_select_own on public.users
+  for select using (auth.uid() = id);
+
+drop policy if exists users_insert_own on public.users;
+create policy users_insert_own on public.users
+  for insert with check (auth.uid() = id);
+
+drop policy if exists users_update_own on public.users;
+create policy users_update_own on public.users
+  for update using (auth.uid() = id);
+
+drop policy if exists profiles_select_public_or_own on public.profiles;
+create policy profiles_select_public_or_own on public.profiles
+  for select using (
+    visibility = 'public'
+    or auth.uid() = user_id
+  );
+
+drop policy if exists profiles_insert_own on public.profiles;
+create policy profiles_insert_own on public.profiles
+  for insert with check (auth.uid() = user_id);
+
+drop policy if exists profiles_update_own on public.profiles;
+create policy profiles_update_own on public.profiles
+  for update using (auth.uid() = user_id);
+
+drop policy if exists themes_select_visible on public.profile_themes;
+create policy themes_select_visible on public.profile_themes
+  for select using (
+    exists (
+      select 1 from public.profiles p
+      where p.id = profile_id
+        and (p.visibility = 'public' or p.user_id = auth.uid())
+    )
+  );
+
+drop policy if exists themes_insert_own on public.profile_themes;
+create policy themes_insert_own on public.profile_themes
+  for insert with check (
+    exists (
+      select 1 from public.profiles p
+      where p.id = profile_id and p.user_id = auth.uid()
+    )
+  );
+
+drop policy if exists themes_update_own on public.profile_themes;
+create policy themes_update_own on public.profile_themes
+  for update using (
+    exists (
+      select 1 from public.profiles p
+      where p.id = profile_id and p.user_id = auth.uid()
+    )
+  );
+
+drop policy if exists themes_upsert_own on public.profile_themes;
+create policy themes_upsert_own on public.profile_themes
+  for all using (
+    exists (
+      select 1 from public.profiles p
+      where p.id = profile_id and p.user_id = auth.uid()
+    )
+  )
+  with check (
+    exists (
+      select 1 from public.profiles p
+      where p.id = profile_id and p.user_id = auth.uid()
+    )
+  );

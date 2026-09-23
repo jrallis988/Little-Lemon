@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { DEMO_CREDENTIALS } from "@/lib/mock/data";
-import { getMockSnapshot, mockApi } from "@/lib/mock/store";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import { APP_NAME } from "@/lib/utils";
 
@@ -52,14 +51,9 @@ export default function LoginPage() {
     setSubmitting(true);
     try {
       await login(email.trim(), password);
-      const signedIn = mockApi.getUserByEmail(email.trim());
-      const nextProfile = signedIn
-        ? getMockSnapshot().profiles.find((item) => item.userId === signedIn.id)
-        : null;
-      router.push(nextProfile?.onboardingComplete ? "/home" : "/onboarding");
+      // AuthProvider updates profile; effect routes when ready.
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unable to sign in.");
-    } finally {
       setSubmitting(false);
     }
   };
