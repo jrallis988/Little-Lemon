@@ -37,6 +37,8 @@ export const TOPIC_PACKS: TopicPack[] = [
       "usgs-plate-tectonics-intro",
       "natgeo-edu-plate-tectonics",
       "amnh-plate-tectonics",
+      "britannica-plate-tectonics",
+      "pbs-plate-tectonics",
     ],
   },
   {
@@ -59,7 +61,11 @@ export const TOPIC_PACKS: TopicPack[] = [
       "Where does rainwater go after it falls?",
       "How is the water cycle a closed system on Earth?",
     ],
-    suggestedSources: ["usgs-water-cycle", "nasa-water-cycle-kids"],
+    suggestedSources: [
+      "usgs-water-cycle",
+      "nasa-water-cycle-kids",
+      "epa-water-sense-kids",
+    ],
   },
   {
     id: "pack-weather",
@@ -79,6 +85,7 @@ export const TOPIC_PACKS: TopicPack[] = [
       "natgeo-kids-weather",
       "noaa-weather",
       "pbs-learning-media-weather",
+      "nws-weather-school",
     ],
   },
   {
@@ -95,7 +102,11 @@ export const TOPIC_PACKS: TopicPack[] = [
       "Why are coral reefs called underwater cities?",
       "What human actions help or harm reefs?",
     ],
-    suggestedSources: ["noaa-coral-reefs", "natgeo-kids-coral"],
+    suggestedSources: [
+      "noaa-coral-reefs",
+      "natgeo-kids-coral",
+      "noaa-ocean-acidification",
+    ],
   },
   {
     id: "pack-fractions",
@@ -117,7 +128,11 @@ export const TOPIC_PACKS: TopicPack[] = [
       "How can the same amount look like different fractions?",
       "When do we need a common denominator?",
     ],
-    suggestedSources: ["ck12-fractions", "khan-fractions"],
+    suggestedSources: [
+      "ck12-fractions",
+      "khan-fractions",
+      "illustrative-math-fractions",
+    ],
   },
   {
     id: "pack-photosynthesis",
@@ -155,7 +170,12 @@ export const TOPIC_PACKS: TopicPack[] = [
       "What makes a place a good habitat for one animal but not another?",
       "How do animals adapt when habitats change?",
     ],
-    suggestedSources: ["natgeo-kids-habitats", "si-ecosystems"],
+    suggestedSources: [
+      "natgeo-kids-habitats",
+      "si-ecosystems",
+      "nps-ecosystems",
+      "natgeo-kids-food-chain",
+    ],
   },
   {
     id: "pack-civil-rights",
@@ -177,7 +197,12 @@ export const TOPIC_PACKS: TopicPack[] = [
       "What can a primary source tell us that a summary cannot?",
       "How did ordinary people help change unfair laws?",
     ],
-    suggestedSources: ["loc-civil-rights", "nps-civil-rights", "loc-primary-sources"],
+    suggestedSources: [
+      "loc-civil-rights",
+      "nps-civil-rights",
+      "loc-primary-sources",
+      "loc-research-guides",
+    ],
   },
   {
     id: "pack-solar-system",
@@ -193,7 +218,12 @@ export const TOPIC_PACKS: TopicPack[] = [
       "Why do planets stay in orbit around the Sun?",
       "How are inner planets different from outer planets?",
     ],
-    suggestedSources: ["nasa-spaceplace-solar", "nasa-science-solar"],
+    suggestedSources: [
+      "nasa-spaceplace-solar",
+      "nasa-science-solar",
+      "nasa-mars",
+      "nasa-moon-phases",
+    ],
   },
   {
     id: "pack-inventors",
@@ -209,7 +239,167 @@ export const TOPIC_PACKS: TopicPack[] = [
       "What problem was an inventor trying to solve?",
       "How do we test whether an invention works?",
     ],
-    suggestedSources: ["si-inventors"],
+    suggestedSources: ["si-inventors", "si-simple-machines"],
+  },
+  {
+    id: "pack-volcanoes",
+    title: "Volcanoes & Earthquakes",
+    gradeMin: 2,
+    gradeMax: 8,
+    subject: "Earth Science",
+    summary:
+      "Connect plate motion to eruptions and shaking, then practice hazard-aware reading from USGS and Nat Geo Kids.",
+    searchPrompt: "volcanoes",
+    vocabulary: ["magma", "lava", "fault", "magnitude", "eruption"],
+    essentialQuestions: [
+      "What happens underground before a volcano erupts?",
+      "How do scientists know an earthquake is coming—or that one already happened?",
+    ],
+    suggestedSources: [
+      "usgs-volcanoes",
+      "usgs-earthquakes-kids",
+      "natgeo-kids-volcanoes",
+    ],
+  },
+  {
+    id: "pack-rocks",
+    title: "Rocks & the Rock Cycle",
+    gradeMin: 3,
+    gradeMax: 8,
+    subject: "Earth Science",
+    summary:
+      "Identify igneous, sedimentary, and metamorphic rocks and follow materials through the rock cycle.",
+    searchPrompt: "rock cycle",
+    vocabulary: ["igneous", "sedimentary", "metamorphic", "weathering", "mineral"],
+    essentialQuestions: [
+      "How can the same material become three different rock types?",
+      "What clues in a rock tell its story?",
+    ],
+    suggestedSources: ["usgs-rocks-minerals", "amnh-rock-cycle", "usgs-fossils"],
+  },
+  {
+    id: "pack-forces",
+    title: "Forces & Motion",
+    gradeMin: 2,
+    gradeMax: 7,
+    subject: "Physical Science",
+    summary:
+      "Explore push, pull, gravity, and friction with NASA Space Place and simple-machine connections.",
+    searchPrompt: "forces and motion",
+    vocabulary: ["force", "gravity", "friction", "motion", "lever"],
+    essentialQuestions: [
+      "What forces are acting when you kick a ball?",
+      "How do simple machines change the size of a force?",
+    ],
+    suggestedSources: [
+      "nasa-force-motion",
+      "si-simple-machines",
+      "pbs-electricity",
+    ],
+  },
+  {
+    id: "pack-energy-climate",
+    title: "Energy & Climate",
+    gradeMin: 3,
+    gradeMax: 8,
+    subject: "Earth / Environmental Science",
+    summary:
+      "Compare energy sources and use NASA Climate Kids plus EPA explainers to reason about Earth’s systems.",
+    searchPrompt: "climate",
+    vocabulary: ["renewable", "fossil fuel", "greenhouse gas", "climate", "conservation"],
+    essentialQuestions: [
+      "How is weather different from climate?",
+      "What energy choices reduce waste and protect ecosystems?",
+    ],
+    suggestedSources: [
+      "nasa-climate-kids",
+      "eia-energy-kids",
+      "epa-recycle-kids",
+    ],
+  },
+  {
+    id: "pack-life-cycles",
+    title: "Life Cycles & Food Chains",
+    gradeMin: 1,
+    gradeMax: 5,
+    subject: "Life Science",
+    summary:
+      "Trace metamorphosis and food-chain links so younger students can explain how energy moves through living systems.",
+    searchPrompt: "food chain",
+    vocabulary: [
+      "metamorphosis",
+      "producer",
+      "consumer",
+      "decomposer",
+      "predator",
+    ],
+    essentialQuestions: [
+      "What would happen if one link in a food chain disappeared?",
+      "How do life cycles help a species survive?",
+    ],
+    suggestedSources: [
+      "natgeo-kids-food-chain",
+      "natgeo-kids-life-cycle",
+      "si-insect-zoo",
+    ],
+  },
+  {
+    id: "pack-civics",
+    title: "Constitution & Government",
+    gradeMin: 4,
+    gradeMax: 8,
+    subject: "Civics",
+    summary:
+      "Read trusted civics sources about the Constitution and the three branches of government.",
+    searchPrompt: "U.S. Constitution",
+    vocabulary: [
+      "constitution",
+      "amendment",
+      "legislative",
+      "executive",
+      "judicial",
+    ],
+    essentialQuestions: [
+      "Why does the Constitution separate powers into branches?",
+      "What is an amendment, and why might people change a founding document?",
+    ],
+    suggestedSources: [
+      "loc-constitution",
+      "usa-gov-branches",
+      "nps-american-revolution",
+    ],
+  },
+  {
+    id: "pack-dinosaurs",
+    title: "Dinosaurs & Fossils",
+    gradeMin: 1,
+    gradeMax: 6,
+    subject: "Earth / Life Science",
+    summary:
+      "Use museum and USGS sources to connect fossils to ancient environments and paleontology skills.",
+    searchPrompt: "dinosaurs",
+    vocabulary: ["fossil", "paleontology", "extinct", "sedimentary", "era"],
+    essentialQuestions: [
+      "What can a fossil tell us that a drawing cannot?",
+      "Why do scientists find different fossils in different rock layers?",
+    ],
+    suggestedSources: ["amnh-dinosaurs", "usgs-fossils"],
+  },
+  {
+    id: "pack-maps",
+    title: "Maps & Geography",
+    gradeMin: 2,
+    gradeMax: 8,
+    subject: "Geography",
+    summary:
+      "Build map skills with National Geographic Education and USGS topographic map explainers.",
+    searchPrompt: "maps",
+    vocabulary: ["legend", "scale", "contour", "latitude", "longitude"],
+    essentialQuestions: [
+      "How does a map’s scale change what you can learn?",
+      "What story do contour lines tell about the land?",
+    ],
+    suggestedSources: ["natgeo-edu-maps", "usgs-topo-maps"],
   },
 ];
 

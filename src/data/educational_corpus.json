@@ -9,10 +9,25 @@
     "gradeMin": 6,
     "gradeMax": 12,
     "abstractText": "Plate tectonics is the unifying theory that Earth’s outer shell is divided into several plates that glide over the mantle. Plate motion explains earthquakes, volcanoes, mountain building, and the slow reshaping of continents and ocean basins over geologic time.",
-    "vocabulary": ["lithosphere", "mantle", "convergent boundary", "divergent boundary", "transform boundary"],
+    "vocabulary": [
+      "lithosphere",
+      "mantle",
+      "convergent boundary",
+      "divergent boundary",
+      "transform boundary"
+    ],
     "citation": "U.S. Geological Survey. \"What is Plate Tectonics?\" USGS FAQs.",
-    "topics": ["plate tectonics", "earth science", "geology"],
-    "keywords": ["plates", "earthquakes", "volcanoes", "continental drift"],
+    "topics": [
+      "plate tectonics",
+      "earth science",
+      "geology"
+    ],
+    "keywords": [
+      "plates",
+      "earthquakes",
+      "volcanoes",
+      "continental drift"
+    ],
     "baseLegitimacy": 96
   },
   {
@@ -25,10 +40,23 @@
     "gradeMin": 5,
     "gradeMax": 10,
     "abstractText": "A classroom-ready overview of plate tectonics: how Earth’s crust is broken into plates, what happens at plate boundaries, and why the theory replaced earlier ideas about fixed continents.",
-    "vocabulary": ["crust", "plate boundary", "Pangaea", "seafloor spreading"],
+    "vocabulary": [
+      "crust",
+      "plate boundary",
+      "Pangaea",
+      "seafloor spreading"
+    ],
     "citation": "National Geographic Society. \"Plate Tectonics.\" National Geographic Education.",
-    "topics": ["plate tectonics", "earth science"],
-    "keywords": ["plates", "boundaries", "pangaea", "geology"],
+    "topics": [
+      "plate tectonics",
+      "earth science"
+    ],
+    "keywords": [
+      "plates",
+      "boundaries",
+      "pangaea",
+      "geology"
+    ],
     "baseLegitimacy": 92
   },
   {
@@ -41,10 +69,23 @@
     "gradeMin": 4,
     "gradeMax": 9,
     "abstractText": "Museum educators explain how Earth’s plates collide, pull apart, and slide past each other—and how those motions build mountains, open oceans, and trigger earthquakes.",
-    "vocabulary": ["collision", "rift", "fault", "earthquake"],
+    "vocabulary": [
+      "collision",
+      "rift",
+      "fault",
+      "earthquake"
+    ],
     "citation": "American Museum of Natural History. \"Plate Tectonics.\"",
-    "topics": ["plate tectonics", "earthquakes"],
-    "keywords": ["plates", "mountains", "earthquakes", "museum"],
+    "topics": [
+      "plate tectonics",
+      "earthquakes"
+    ],
+    "keywords": [
+      "plates",
+      "mountains",
+      "earthquakes",
+      "museum"
+    ],
     "baseLegitimacy": 93
   },
   {
@@ -57,10 +98,25 @@
     "gradeMin": 3,
     "gradeMax": 10,
     "abstractText": "Coral reefs are underwater ecosystems built by colonies of tiny animals. NOAA describes how reefs form, why they matter for biodiversity and coastal protection, and what threatens them today.",
-    "vocabulary": ["polyp", "symbiosis", "biodiversity", "bleaching"],
+    "vocabulary": [
+      "polyp",
+      "symbiosis",
+      "biodiversity",
+      "bleaching"
+    ],
     "citation": "NOAA Ocean Service. \"What is a Coral Reef?\"",
-    "topics": ["coral reefs", "ocean", "ecology", "ecosystems"],
-    "keywords": ["coral", "reef", "ocean", "habitat"],
+    "topics": [
+      "coral reefs",
+      "ocean",
+      "ecology",
+      "ecosystems"
+    ],
+    "keywords": [
+      "coral",
+      "reef",
+      "ocean",
+      "habitat"
+    ],
     "baseLegitimacy": 95
   },
   {
@@ -73,10 +129,25 @@
     "gradeMin": 2,
     "gradeMax": 6,
     "abstractText": "A kid-friendly tour of coral reef habitats: colorful fish, how polyps build reefs, and why scientists work hard to protect these underwater cities.",
-    "vocabulary": ["coral", "reef", "habitat", "protect"],
+    "vocabulary": [
+      "coral",
+      "reef",
+      "habitat",
+      "protect"
+    ],
     "citation": "National Geographic Kids. \"Coral Reef.\"",
-    "topics": ["coral reefs", "animals", "ocean", "ecosystems"],
-    "keywords": ["coral", "reef", "fish", "kids"],
+    "topics": [
+      "coral reefs",
+      "animals",
+      "ocean",
+      "ecosystems"
+    ],
+    "keywords": [
+      "coral",
+      "reef",
+      "fish",
+      "kids"
+    ],
     "baseLegitimacy": 90
   },
   {
@@ -89,10 +160,26 @@
     "gradeMin": 1,
     "gradeMax": 8,
     "abstractText": "NASA Space Place introduces the Sun, planets, moons, and small bodies with age-appropriate explanations so elementary and middle-grade students can explore astronomy.",
-    "vocabulary": ["planet", "orbit", "moon", "asteroid", "gravity"],
+    "vocabulary": [
+      "planet",
+      "orbit",
+      "moon",
+      "asteroid",
+      "gravity"
+    ],
     "citation": "NASA Space Place. \"Solar System.\"",
-    "topics": ["solar system", "planets", "space", "astronomy"],
-    "keywords": ["planets", "sun", "space", "orbit"],
+    "topics": [
+      "solar system",
+      "planets",
+      "space",
+      "astronomy"
+    ],
+    "keywords": [
+      "planets",
+      "sun",
+      "space",
+      "orbit"
+    ],
     "baseLegitimacy": 94
   },
   {
@@ -105,10 +192,24 @@
     "gradeMin": 6,
     "gradeMax": 12,
     "abstractText": "NASA’s solar system science portal summarizes missions, planetary geology, and current research questions for students ready for deeper space science reading.",
-    "vocabulary": ["heliosphere", "terrestrial planet", "gas giant", "mission"],
+    "vocabulary": [
+      "heliosphere",
+      "terrestrial planet",
+      "gas giant",
+      "mission"
+    ],
     "citation": "NASA Science. \"Solar System Exploration.\"",
-    "topics": ["solar system", "planets", "space"],
-    "keywords": ["planets", "nasa", "exploration", "space"],
+    "topics": [
+      "solar system",
+      "planets",
+      "space"
+    ],
+    "keywords": [
+      "planets",
+      "nasa",
+      "exploration",
+      "space"
+    ],
     "baseLegitimacy": 97
   },
   {
@@ -121,10 +222,25 @@
     "gradeMin": 3,
     "gradeMax": 8,
     "abstractText": "USGS explains evaporation, condensation, precipitation, and runoff—the continuous path water takes through Earth’s atmosphere, land, and oceans.",
-    "vocabulary": ["evaporation", "condensation", "precipitation", "runoff", "groundwater"],
+    "vocabulary": [
+      "evaporation",
+      "condensation",
+      "precipitation",
+      "runoff",
+      "groundwater"
+    ],
     "citation": "U.S. Geological Survey. \"The Water Cycle.\"",
-    "topics": ["water cycle", "weather", "earth science"],
-    "keywords": ["water", "rain", "clouds", "cycle"],
+    "topics": [
+      "water cycle",
+      "weather",
+      "earth science"
+    ],
+    "keywords": [
+      "water",
+      "rain",
+      "clouds",
+      "cycle"
+    ],
     "baseLegitimacy": 96
   },
   {
@@ -137,10 +253,24 @@
     "gradeMin": 1,
     "gradeMax": 5,
     "abstractText": "A clear introduction to weather basics: temperature, wind, storms, and how scientists forecast what the sky will do next.",
-    "vocabulary": ["forecast", "temperature", "storm", "climate"],
+    "vocabulary": [
+      "forecast",
+      "temperature",
+      "storm",
+      "climate"
+    ],
     "citation": "National Geographic Kids. \"Weather.\"",
-    "topics": ["weather", "climate", "earth science"],
-    "keywords": ["weather", "rain", "wind", "storms"],
+    "topics": [
+      "weather",
+      "climate",
+      "earth science"
+    ],
+    "keywords": [
+      "weather",
+      "rain",
+      "wind",
+      "storms"
+    ],
     "baseLegitimacy": 90
   },
   {
@@ -153,10 +283,24 @@
     "gradeMin": 4,
     "gradeMax": 10,
     "abstractText": "NOAA education resources on weather systems, atmosphere layers, and how observations help communities prepare for hazards.",
-    "vocabulary": ["atmosphere", "front", "pressure", "hazard"],
+    "vocabulary": [
+      "atmosphere",
+      "front",
+      "pressure",
+      "hazard"
+    ],
     "citation": "NOAA. \"Weather & Atmosphere Education Resources.\"",
-    "topics": ["weather", "atmosphere", "climate"],
-    "keywords": ["weather", "atmosphere", "forecast", "storm"],
+    "topics": [
+      "weather",
+      "atmosphere",
+      "climate"
+    ],
+    "keywords": [
+      "weather",
+      "atmosphere",
+      "forecast",
+      "storm"
+    ],
     "baseLegitimacy": 96
   },
   {
@@ -169,10 +313,24 @@
     "gradeMin": 3,
     "gradeMax": 7,
     "abstractText": "Lessons on what fractions mean, how to compare them, and how to add and subtract with like and unlike denominators—built for classroom practice.",
-    "vocabulary": ["numerator", "denominator", "equivalent", "improper fraction"],
+    "vocabulary": [
+      "numerator",
+      "denominator",
+      "equivalent",
+      "improper fraction"
+    ],
     "citation": "CK-12 Foundation. \"Fractions.\"",
-    "topics": ["fractions", "math", "arithmetic"],
-    "keywords": ["fractions", "numerator", "denominator", "math"],
+    "topics": [
+      "fractions",
+      "math",
+      "arithmetic"
+    ],
+    "keywords": [
+      "fractions",
+      "numerator",
+      "denominator",
+      "math"
+    ],
     "baseLegitimacy": 87
   },
   {
@@ -185,10 +343,22 @@
     "gradeMin": 3,
     "gradeMax": 8,
     "abstractText": "Guided practice with fraction concepts, visual models, and step-by-step exercises so students build fluency without skipping understanding.",
-    "vocabulary": ["unit fraction", "mixed number", "simplify"],
+    "vocabulary": [
+      "unit fraction",
+      "mixed number",
+      "simplify"
+    ],
     "citation": "Khan Academy. \"Fraction arithmetic.\"",
-    "topics": ["fractions", "math"],
-    "keywords": ["fractions", "practice", "math", "arithmetic"],
+    "topics": [
+      "fractions",
+      "math"
+    ],
+    "keywords": [
+      "fractions",
+      "practice",
+      "math",
+      "arithmetic"
+    ],
     "baseLegitimacy": 89
   },
   {
@@ -201,10 +371,25 @@
     "gradeMin": 3,
     "gradeMax": 8,
     "abstractText": "Smithsonian educators explore how living things interact with habitats—from food webs to adaptations that help species survive.",
-    "vocabulary": ["ecosystem", "food web", "adaptation", "habitat"],
+    "vocabulary": [
+      "ecosystem",
+      "food web",
+      "adaptation",
+      "habitat"
+    ],
     "citation": "Smithsonian. \"Ocean life / ecosystems.\"",
-    "topics": ["ecosystems", "animals", "habitats", "ecology"],
-    "keywords": ["ecosystem", "habitat", "animals", "food web"],
+    "topics": [
+      "ecosystems",
+      "animals",
+      "habitats",
+      "ecology"
+    ],
+    "keywords": [
+      "ecosystem",
+      "habitat",
+      "animals",
+      "food web"
+    ],
     "baseLegitimacy": 94
   },
   {
@@ -217,10 +402,24 @@
     "gradeMin": 1,
     "gradeMax": 6,
     "abstractText": "Explore forests, deserts, oceans, and other habitats where plants and animals make their homes.",
-    "vocabulary": ["habitat", "desert", "forest", "species"],
+    "vocabulary": [
+      "habitat",
+      "desert",
+      "forest",
+      "species"
+    ],
     "citation": "National Geographic Kids. \"Habitats.\"",
-    "topics": ["habitats", "animals", "ecosystems"],
-    "keywords": ["habitat", "animals", "nature", "kids"],
+    "topics": [
+      "habitats",
+      "animals",
+      "ecosystems"
+    ],
+    "keywords": [
+      "habitat",
+      "animals",
+      "nature",
+      "kids"
+    ],
     "baseLegitimacy": 90
   },
   {
@@ -233,10 +432,24 @@
     "gradeMin": 5,
     "gradeMax": 12,
     "abstractText": "Primary sources and classroom materials from the Library of Congress help students study voices, documents, and events of the U.S. civil rights movement.",
-    "vocabulary": ["primary source", "civil rights", "protest", "equality"],
+    "vocabulary": [
+      "primary source",
+      "civil rights",
+      "protest",
+      "equality"
+    ],
     "citation": "Library of Congress. \"Civil Rights History Project.\"",
-    "topics": ["civil rights", "history", "primary sources"],
-    "keywords": ["civil rights", "history", "equality", "documents"],
+    "topics": [
+      "civil rights",
+      "history",
+      "primary sources"
+    ],
+    "keywords": [
+      "civil rights",
+      "history",
+      "equality",
+      "documents"
+    ],
     "baseLegitimacy": 97
   },
   {
@@ -249,10 +462,24 @@
     "gradeMin": 4,
     "gradeMax": 10,
     "abstractText": "Places and stories preserved by the National Park Service connect students to people and events that shaped the struggle for civil rights in America.",
-    "vocabulary": ["monument", "legacy", "justice", "movement"],
+    "vocabulary": [
+      "monument",
+      "legacy",
+      "justice",
+      "movement"
+    ],
     "citation": "National Park Service. \"Civil Rights.\"",
-    "topics": ["civil rights", "history", "american history"],
-    "keywords": ["civil rights", "history", "parks", "america"],
+    "topics": [
+      "civil rights",
+      "history",
+      "american history"
+    ],
+    "keywords": [
+      "civil rights",
+      "history",
+      "parks",
+      "america"
+    ],
     "baseLegitimacy": 95
   },
   {
@@ -265,10 +492,24 @@
     "gradeMin": 2,
     "gradeMax": 6,
     "abstractText": "NASA Climate Kids walks through the water cycle with diagrams and plain language for elementary researchers.",
-    "vocabulary": ["cycle", "vapor", "collection", "cloud"],
+    "vocabulary": [
+      "cycle",
+      "vapor",
+      "collection",
+      "cloud"
+    ],
     "citation": "NASA Climate Kids. \"Earth’s Water Cycle.\"",
-    "topics": ["water cycle", "weather", "climate"],
-    "keywords": ["water", "cycle", "nasa", "kids"],
+    "topics": [
+      "water cycle",
+      "weather",
+      "climate"
+    ],
+    "keywords": [
+      "water",
+      "cycle",
+      "nasa",
+      "kids"
+    ],
     "baseLegitimacy": 93
   },
   {
@@ -281,10 +522,25 @@
     "gradeMin": 3,
     "gradeMax": 8,
     "abstractText": "Britannica Kids explains how plants use sunlight, water, and carbon dioxide to make food and release oxygen—the process called photosynthesis.",
-    "vocabulary": ["photosynthesis", "chlorophyll", "carbon dioxide", "oxygen"],
+    "vocabulary": [
+      "photosynthesis",
+      "chlorophyll",
+      "carbon dioxide",
+      "oxygen"
+    ],
     "citation": "Britannica Kids. \"Photosynthesis.\"",
-    "topics": ["photosynthesis", "plants", "biology", "ecosystems"],
-    "keywords": ["plants", "sunlight", "oxygen", "photosynthesis"],
+    "topics": [
+      "photosynthesis",
+      "plants",
+      "biology",
+      "ecosystems"
+    ],
+    "keywords": [
+      "plants",
+      "sunlight",
+      "oxygen",
+      "photosynthesis"
+    ],
     "baseLegitimacy": 91
   },
   {
@@ -297,10 +553,23 @@
     "gradeMin": 5,
     "gradeMax": 9,
     "abstractText": "A structured biology lesson on light-dependent and light-independent reactions, with diagrams suited to upper-elementary and middle school.",
-    "vocabulary": ["chloroplast", "glucose", "stomata"],
+    "vocabulary": [
+      "chloroplast",
+      "glucose",
+      "stomata"
+    ],
     "citation": "CK-12 Foundation. \"Photosynthesis.\"",
-    "topics": ["photosynthesis", "biology", "plants"],
-    "keywords": ["photosynthesis", "plants", "biology", "energy"],
+    "topics": [
+      "photosynthesis",
+      "biology",
+      "plants"
+    ],
+    "keywords": [
+      "photosynthesis",
+      "plants",
+      "biology",
+      "energy"
+    ],
     "baseLegitimacy": 87
   },
   {
@@ -313,10 +582,24 @@
     "gradeMin": 3,
     "gradeMax": 8,
     "abstractText": "Smithsonian collections highlight inventors and the tools, experiments, and ideas that changed how people live and learn.",
-    "vocabulary": ["inventor", "innovation", "prototype", "patent"],
+    "vocabulary": [
+      "inventor",
+      "innovation",
+      "prototype",
+      "patent"
+    ],
     "citation": "Smithsonian. \"Inventors.\"",
-    "topics": ["inventors", "history", "engineering"],
-    "keywords": ["inventors", "ideas", "tools", "history"],
+    "topics": [
+      "inventors",
+      "history",
+      "engineering"
+    ],
+    "keywords": [
+      "inventors",
+      "ideas",
+      "tools",
+      "history"
+    ],
     "baseLegitimacy": 94
   },
   {
@@ -329,10 +612,24 @@
     "gradeMin": 4,
     "gradeMax": 12,
     "abstractText": "Teacher and student guides for analyzing photographs, letters, maps, and other primary sources with evidence-based questions.",
-    "vocabulary": ["primary source", "evidence", "analyze", "perspective"],
+    "vocabulary": [
+      "primary source",
+      "evidence",
+      "analyze",
+      "perspective"
+    ],
     "citation": "Library of Congress. \"Getting Started with Primary Sources.\"",
-    "topics": ["primary sources", "history", "research skills"],
-    "keywords": ["primary", "sources", "history", "research"],
+    "topics": [
+      "primary sources",
+      "history",
+      "research skills"
+    ],
+    "keywords": [
+      "primary",
+      "sources",
+      "history",
+      "research"
+    ],
     "baseLegitimacy": 97
   },
   {
@@ -345,10 +642,23 @@
     "gradeMin": 5,
     "gradeMax": 11,
     "abstractText": "NOAA explains how mapping the ocean floor revealed mid-ocean ridges and trenches—key evidence that plates diverge and converge beneath the sea.",
-    "vocabulary": ["trench", "mid-ocean ridge", "bathymetry", "divergent"],
+    "vocabulary": [
+      "trench",
+      "mid-ocean ridge",
+      "bathymetry",
+      "divergent"
+    ],
     "citation": "NOAA Ocean Service. \"Plate Boundaries.\"",
-    "topics": ["plate tectonics", "oceanography"],
-    "keywords": ["ocean", "ridges", "trenches", "plates"],
+    "topics": [
+      "plate tectonics",
+      "oceanography"
+    ],
+    "keywords": [
+      "ocean",
+      "ridges",
+      "trenches",
+      "plates"
+    ],
     "baseLegitimacy": 95
   },
   {
@@ -361,10 +671,23 @@
     "gradeMin": 7,
     "gradeMax": 12,
     "abstractText": "Earth’s tectonic plates are driven by heat from the planet’s interior. Convection, slab pull, and ridge push work together so plates creep a few centimeters each year.",
-    "vocabulary": ["convection", "subduction", "slab pull", "ridge push"],
+    "vocabulary": [
+      "convection",
+      "subduction",
+      "slab pull",
+      "ridge push"
+    ],
     "citation": "U.S. Geological Survey. \"How Do Plates Move?\" USGS FAQs.",
-    "topics": ["plate tectonics", "mantle convection"],
-    "keywords": ["plates", "move", "convection", "subduction"],
+    "topics": [
+      "plate tectonics",
+      "mantle convection"
+    ],
+    "keywords": [
+      "plates",
+      "move",
+      "convection",
+      "subduction"
+    ],
     "baseLegitimacy": 96
   },
   {
@@ -377,10 +700,24 @@
     "gradeMin": 9,
     "gradeMax": 12,
     "abstractText": "Peer-reviewed research on plate tectonics and mantle dynamics for advanced high-school research with teacher guidance.",
-    "vocabulary": ["mantle dynamics", "plume", "subduction zone", "peer review"],
+    "vocabulary": [
+      "mantle dynamics",
+      "plume",
+      "subduction zone",
+      "peer review"
+    ],
     "citation": "Nature. \"Tectonics / Earth science subject collection.\"",
-    "topics": ["plate tectonics", "geology", "mantle"],
-    "keywords": ["plates", "tectonics", "journal", "peer-reviewed"],
+    "topics": [
+      "plate tectonics",
+      "geology",
+      "mantle"
+    ],
+    "keywords": [
+      "plates",
+      "tectonics",
+      "journal",
+      "peer-reviewed"
+    ],
     "baseLegitimacy": 99
   },
   {
@@ -393,11 +730,1621 @@
     "gradeMin": 2,
     "gradeMax": 8,
     "abstractText": "Classroom videos and interactives that help students observe weather patterns and connect them to Earth’s systems.",
-    "vocabulary": ["pattern", "observation", "system", "climate"],
+    "vocabulary": [
+      "pattern",
+      "observation",
+      "system",
+      "climate"
+    ],
     "citation": "PBS LearningMedia. \"Weather and Climate.\"",
-    "topics": ["weather", "climate", "earth science"],
-    "keywords": ["weather", "climate", "pbs", "classroom"],
+    "topics": [
+      "weather",
+      "climate",
+      "earth science"
+    ],
+    "keywords": [
+      "weather",
+      "climate",
+      "pbs",
+      "classroom"
+    ],
     "baseLegitimacy": 90
+  },
+  {
+    "id": "usgs-volcanoes",
+    "title": "About Volcanoes — USGS",
+    "url": "https://www.usgs.gov/programs/VHP/about-volcanoes",
+    "domain": "usgs.gov",
+    "publisher": "U.S. Geological Survey",
+    "contentTier": "verified_reference",
+    "gradeMin": 4,
+    "gradeMax": 10,
+    "abstractText": "USGS explains how magma rises, why volcanoes erupt, and how scientists monitor volcanic hazards so communities can stay safer.",
+    "vocabulary": [
+      "magma",
+      "lava",
+      "eruption",
+      "vent",
+      "ash"
+    ],
+    "citation": "U.S. Geological Survey. \"About Volcanoes.\"",
+    "topics": [
+      "volcanoes",
+      "earth science",
+      "geology"
+    ],
+    "keywords": [
+      "volcano",
+      "eruption",
+      "magma",
+      "lava"
+    ],
+    "baseLegitimacy": 96
+  },
+  {
+    "id": "usgs-earthquakes-kids",
+    "title": "Earthquakes for Kids — USGS",
+    "url": "https://www.usgs.gov/programs/earthquake-hazards/earthquakes-kids",
+    "domain": "usgs.gov",
+    "publisher": "U.S. Geological Survey",
+    "contentTier": "educational_magazine",
+    "gradeMin": 2,
+    "gradeMax": 8,
+    "abstractText": "Kid-friendly USGS pages that explain what causes earthquakes, how seismometers work, and what to do during shaking.",
+    "vocabulary": [
+      "seismometer",
+      "fault",
+      "magnitude",
+      "tremor"
+    ],
+    "citation": "U.S. Geological Survey. \"Earthquakes for Kids.\"",
+    "topics": [
+      "earthquakes",
+      "earth science",
+      "safety"
+    ],
+    "keywords": [
+      "earthquake",
+      "fault",
+      "kids",
+      "safety"
+    ],
+    "baseLegitimacy": 95
+  },
+  {
+    "id": "natgeo-kids-volcanoes",
+    "title": "Volcanoes — Nat Geo Kids",
+    "url": "https://kids.nationalgeographic.com/science/article/volcano",
+    "domain": "kids.nationalgeographic.com",
+    "publisher": "National Geographic Kids",
+    "contentTier": "educational_magazine",
+    "gradeMin": 2,
+    "gradeMax": 6,
+    "abstractText": "A colorful introduction to volcanoes: how they form, what lava is, and why eruptions reshape landscapes.",
+    "vocabulary": [
+      "volcano",
+      "lava",
+      "crater",
+      "erupt"
+    ],
+    "citation": "National Geographic Kids. \"Volcano.\"",
+    "topics": [
+      "volcanoes",
+      "earth science"
+    ],
+    "keywords": [
+      "volcano",
+      "lava",
+      "kids",
+      "eruption"
+    ],
+    "baseLegitimacy": 90
+  },
+  {
+    "id": "usgs-rocks-minerals",
+    "title": "Rocks and Minerals — USGS",
+    "url": "https://www.usgs.gov/educational-resources/rocks-and-minerals",
+    "domain": "usgs.gov",
+    "publisher": "U.S. Geological Survey",
+    "contentTier": "verified_reference",
+    "gradeMin": 3,
+    "gradeMax": 9,
+    "abstractText": "Learn how igneous, sedimentary, and metamorphic rocks form, and how minerals help scientists read Earth’s history.",
+    "vocabulary": [
+      "igneous",
+      "sedimentary",
+      "metamorphic",
+      "mineral",
+      "crystal"
+    ],
+    "citation": "U.S. Geological Survey. \"Rocks and Minerals.\"",
+    "topics": [
+      "rocks",
+      "minerals",
+      "geology",
+      "earth science"
+    ],
+    "keywords": [
+      "rocks",
+      "minerals",
+      "geology",
+      "rock cycle"
+    ],
+    "baseLegitimacy": 95
+  },
+  {
+    "id": "amnh-rock-cycle",
+    "title": "The Rock Cycle — AMNH",
+    "url": "https://www.amnh.org/explore/ology/earth/the-rock-cycle",
+    "domain": "amnh.org",
+    "publisher": "American Museum of Natural History",
+    "contentTier": "educational_magazine",
+    "gradeMin": 3,
+    "gradeMax": 8,
+    "abstractText": "Museum educators walk through the rock cycle so students can see how heat, pressure, and weathering remake Earth’s materials.",
+    "vocabulary": [
+      "weathering",
+      "erosion",
+      "pressure",
+      "cycle"
+    ],
+    "citation": "American Museum of Natural History. \"The Rock Cycle.\"",
+    "topics": [
+      "rocks",
+      "geology",
+      "earth science"
+    ],
+    "keywords": [
+      "rock cycle",
+      "geology",
+      "museum"
+    ],
+    "baseLegitimacy": 93
+  },
+  {
+    "id": "nasa-moon-phases",
+    "title": "Moon Phases — NASA Space Place",
+    "url": "https://spaceplace.nasa.gov/moon-phases/en/",
+    "domain": "spaceplace.nasa.gov",
+    "publisher": "NASA Space Place",
+    "contentTier": "educational_magazine",
+    "gradeMin": 1,
+    "gradeMax": 6,
+    "abstractText": "NASA Space Place shows why the Moon looks different each night and how sunlight and orbit create the phases.",
+    "vocabulary": [
+      "phase",
+      "crescent",
+      "gibbous",
+      "orbit",
+      "reflect"
+    ],
+    "citation": "NASA Space Place. \"Moon Phases.\"",
+    "topics": [
+      "moon",
+      "astronomy",
+      "space",
+      "seasons"
+    ],
+    "keywords": [
+      "moon",
+      "phases",
+      "nasa",
+      "orbit"
+    ],
+    "baseLegitimacy": 94
+  },
+  {
+    "id": "nasa-seasons",
+    "title": "What Causes the Seasons? — NASA Space Place",
+    "url": "https://spaceplace.nasa.gov/seasons/en/",
+    "domain": "spaceplace.nasa.gov",
+    "publisher": "NASA Space Place",
+    "contentTier": "educational_magazine",
+    "gradeMin": 2,
+    "gradeMax": 7,
+    "abstractText": "A clear explanation of Earth’s tilt and orbit—and why that makes summer and winter for different hemispheres.",
+    "vocabulary": [
+      "axis",
+      "tilt",
+      "hemisphere",
+      "orbit",
+      "equinox"
+    ],
+    "citation": "NASA Space Place. \"What Causes the Seasons?\"",
+    "topics": [
+      "seasons",
+      "astronomy",
+      "earth science"
+    ],
+    "keywords": [
+      "seasons",
+      "tilt",
+      "earth",
+      "summer"
+    ],
+    "baseLegitimacy": 94
+  },
+  {
+    "id": "nasa-force-motion",
+    "title": "Forces and Motion — NASA Space Place",
+    "url": "https://spaceplace.nasa.gov/menu/forces/",
+    "domain": "spaceplace.nasa.gov",
+    "publisher": "NASA Space Place",
+    "contentTier": "educational_magazine",
+    "gradeMin": 2,
+    "gradeMax": 7,
+    "abstractText": "Explore push, pull, gravity, and friction with NASA activities that connect playground physics to spaceflight.",
+    "vocabulary": [
+      "force",
+      "gravity",
+      "friction",
+      "motion",
+      "push"
+    ],
+    "citation": "NASA Space Place. \"Forces and Motion.\"",
+    "topics": [
+      "forces",
+      "motion",
+      "physics",
+      "engineering"
+    ],
+    "keywords": [
+      "force",
+      "gravity",
+      "motion",
+      "physics"
+    ],
+    "baseLegitimacy": 93
+  },
+  {
+    "id": "si-simple-machines",
+    "title": "Simple Machines — Smithsonian",
+    "url": "https://www.si.edu/spotlight/simple-machines",
+    "domain": "si.edu",
+    "publisher": "Smithsonian Institution",
+    "contentTier": "educational_magazine",
+    "gradeMin": 2,
+    "gradeMax": 6,
+    "abstractText": "Smithsonian collections and explainers introduce levers, pulleys, wheels, and other tools that multiply force.",
+    "vocabulary": [
+      "lever",
+      "pulley",
+      "inclined plane",
+      "wedge",
+      "screw"
+    ],
+    "citation": "Smithsonian Institution. \"Simple Machines.\"",
+    "topics": [
+      "simple machines",
+      "engineering",
+      "physics"
+    ],
+    "keywords": [
+      "machines",
+      "lever",
+      "pulley",
+      "engineering"
+    ],
+    "baseLegitimacy": 92
+  },
+  {
+    "id": "eia-energy-kids",
+    "title": "Energy Kids — U.S. Energy Information Administration",
+    "url": "https://www.eia.gov/kids/",
+    "domain": "eia.gov",
+    "publisher": "U.S. Energy Information Administration",
+    "contentTier": "verified_reference",
+    "gradeMin": 3,
+    "gradeMax": 8,
+    "abstractText": "Government explainers on renewable and nonrenewable energy, electricity basics, and how the United States uses power.",
+    "vocabulary": [
+      "renewable",
+      "fossil fuel",
+      "electricity",
+      "watt",
+      "conservation"
+    ],
+    "citation": "U.S. Energy Information Administration. \"Energy Kids.\"",
+    "topics": [
+      "energy",
+      "electricity",
+      "climate",
+      "engineering"
+    ],
+    "keywords": [
+      "energy",
+      "electricity",
+      "renewable",
+      "kids"
+    ],
+    "baseLegitimacy": 94
+  },
+  {
+    "id": "nasa-climate-kids",
+    "title": "Climate Kids — NASA",
+    "url": "https://climatekids.nasa.gov/",
+    "domain": "climatekids.nasa.gov",
+    "publisher": "NASA Climate Kids",
+    "contentTier": "educational_magazine",
+    "gradeMin": 2,
+    "gradeMax": 8,
+    "abstractText": "NASA Climate Kids explains Earth’s climate system, greenhouse gases, and practical ways students can understand change.",
+    "vocabulary": [
+      "climate",
+      "atmosphere",
+      "greenhouse gas",
+      "carbon"
+    ],
+    "citation": "NASA. \"Climate Kids.\"",
+    "topics": [
+      "climate",
+      "atmosphere",
+      "earth science",
+      "energy"
+    ],
+    "keywords": [
+      "climate",
+      "nasa",
+      "greenhouse",
+      "kids"
+    ],
+    "baseLegitimacy": 95
+  },
+  {
+    "id": "natgeo-kids-food-chain",
+    "title": "Food Chain — Nat Geo Kids",
+    "url": "https://kids.nationalgeographic.com/nature/article/food-chain",
+    "domain": "kids.nationalgeographic.com",
+    "publisher": "National Geographic Kids",
+    "contentTier": "educational_magazine",
+    "gradeMin": 1,
+    "gradeMax": 5,
+    "abstractText": "Meet producers, consumers, and decomposers in a kid-friendly tour of food chains and why each link matters.",
+    "vocabulary": [
+      "producer",
+      "consumer",
+      "decomposer",
+      "predator",
+      "prey"
+    ],
+    "citation": "National Geographic Kids. \"Food Chain.\"",
+    "topics": [
+      "food chains",
+      "ecology",
+      "habitats",
+      "animals"
+    ],
+    "keywords": [
+      "food chain",
+      "predator",
+      "ecosystem",
+      "kids"
+    ],
+    "baseLegitimacy": 90
+  },
+  {
+    "id": "natgeo-kids-life-cycle",
+    "title": "Butterfly Life Cycle — Nat Geo Kids",
+    "url": "https://kids.nationalgeographic.com/animals/invertebrates/facts/butterfly",
+    "domain": "kids.nationalgeographic.com",
+    "publisher": "National Geographic Kids",
+    "contentTier": "educational_magazine",
+    "gradeMin": 1,
+    "gradeMax": 4,
+    "abstractText": "Follow egg, larva, pupa, and adult stages to understand metamorphosis in butterflies and other insects.",
+    "vocabulary": [
+      "metamorphosis",
+      "larva",
+      "pupa",
+      "insect",
+      "chrysalis"
+    ],
+    "citation": "National Geographic Kids. \"Butterfly.\"",
+    "topics": [
+      "life cycles",
+      "insects",
+      "biology",
+      "animals"
+    ],
+    "keywords": [
+      "butterfly",
+      "life cycle",
+      "metamorphosis",
+      "insects"
+    ],
+    "baseLegitimacy": 90
+  },
+  {
+    "id": "si-cells",
+    "title": "Cells — Smithsonian Ocean / Life Science",
+    "url": "https://ocean.si.edu/ocean-life/invertebrates/tiny-powerful-cells",
+    "domain": "ocean.si.edu",
+    "publisher": "Smithsonian Ocean",
+    "contentTier": "educational_magazine",
+    "gradeMin": 5,
+    "gradeMax": 9,
+    "abstractText": "An accessible look at cells as the building blocks of living things, with ocean examples that make microscopic life concrete.",
+    "vocabulary": [
+      "cell",
+      "nucleus",
+      "membrane",
+      "organism",
+      "microscope"
+    ],
+    "citation": "Smithsonian Ocean. \"Tiny, Powerful Cells.\"",
+    "topics": [
+      "cells",
+      "biology",
+      "life science"
+    ],
+    "keywords": [
+      "cells",
+      "biology",
+      "microscope",
+      "life"
+    ],
+    "baseLegitimacy": 91
+  },
+  {
+    "id": "cdc-hygiene-kids",
+    "title": "Handwashing & Germs — CDC",
+    "url": "https://www.cdc.gov/handwashing/when-how-handwashing.html",
+    "domain": "cdc.gov",
+    "publisher": "Centers for Disease Control and Prevention",
+    "contentTier": "verified_reference",
+    "gradeMin": 1,
+    "gradeMax": 6,
+    "abstractText": "Official guidance on when and how to wash hands so students can connect hygiene habits to stopping germs from spreading.",
+    "vocabulary": [
+      "germ",
+      "hygiene",
+      "bacteria",
+      "virus",
+      "sanitize"
+    ],
+    "citation": "CDC. \"When and How to Wash Your Hands.\"",
+    "topics": [
+      "health",
+      "germs",
+      "human body"
+    ],
+    "keywords": [
+      "handwashing",
+      "germs",
+      "health",
+      "cdc"
+    ],
+    "baseLegitimacy": 96
+  },
+  {
+    "id": "nih-body-systems",
+    "title": "Your Body Systems — NIH Kids / MedlinePlus",
+    "url": "https://medlineplus.gov/ency/article/002272.htm",
+    "domain": "medlineplus.gov",
+    "publisher": "MedlinePlus / National Library of Medicine",
+    "contentTier": "verified_reference",
+    "gradeMin": 4,
+    "gradeMax": 9,
+    "abstractText": "Trusted medical explainers introduce major body systems—circulation, digestion, respiration—and how they work together.",
+    "vocabulary": [
+      "organ",
+      "system",
+      "circulation",
+      "digestion",
+      "respiration"
+    ],
+    "citation": "MedlinePlus. \"Body Systems.\"",
+    "topics": [
+      "human body",
+      "health",
+      "biology"
+    ],
+    "keywords": [
+      "body",
+      "organs",
+      "systems",
+      "health"
+    ],
+    "baseLegitimacy": 94
+  },
+  {
+    "id": "nasa-states-of-matter",
+    "title": "States of Matter — NASA Space Place",
+    "url": "https://spaceplace.nasa.gov/ice-solid-liquid-gas/en/",
+    "domain": "spaceplace.nasa.gov",
+    "publisher": "NASA Space Place",
+    "contentTier": "educational_magazine",
+    "gradeMin": 2,
+    "gradeMax": 6,
+    "abstractText": "Solid, liquid, and gas explained with space examples so students can picture particles packing and moving.",
+    "vocabulary": [
+      "solid",
+      "liquid",
+      "gas",
+      "particle",
+      "freeze"
+    ],
+    "citation": "NASA Space Place. \"Solids, Liquids, and Gases.\"",
+    "topics": [
+      "states of matter",
+      "chemistry",
+      "physics"
+    ],
+    "keywords": [
+      "matter",
+      "solid",
+      "liquid",
+      "gas"
+    ],
+    "baseLegitimacy": 93
+  },
+  {
+    "id": "acs-chemistry-kids",
+    "title": "Adventures in Chemistry — American Chemical Society",
+    "url": "https://www.acs.org/education/resources/k-8.html",
+    "domain": "acs.org",
+    "publisher": "American Chemical Society",
+    "contentTier": "educational_magazine",
+    "gradeMin": 3,
+    "gradeMax": 8,
+    "abstractText": "Classroom-ready chemistry activities and explainers from ACS that keep experiments safe and standards-aligned.",
+    "vocabulary": [
+      "molecule",
+      "reaction",
+      "mixture",
+      "solution",
+      "element"
+    ],
+    "citation": "American Chemical Society. \"K–8 Chemistry Education Resources.\"",
+    "topics": [
+      "chemistry",
+      "states of matter",
+      "science practices"
+    ],
+    "keywords": [
+      "chemistry",
+      "molecules",
+      "acs",
+      "classroom"
+    ],
+    "baseLegitimacy": 92
+  },
+  {
+    "id": "noaa-tides",
+    "title": "What Are Tides? — NOAA",
+    "url": "https://oceanservice.noaa.gov/facts/tides.html",
+    "domain": "oceanservice.noaa.gov",
+    "publisher": "NOAA Ocean Service",
+    "contentTier": "verified_reference",
+    "gradeMin": 3,
+    "gradeMax": 9,
+    "abstractText": "NOAA explains how the Moon’s gravity pulls on Earth’s oceans to create high and low tides.",
+    "vocabulary": [
+      "tide",
+      "gravity",
+      "bulge",
+      "lunar",
+      "coast"
+    ],
+    "citation": "NOAA Ocean Service. \"What are Tides?\"",
+    "topics": [
+      "tides",
+      "ocean",
+      "astronomy",
+      "earth science"
+    ],
+    "keywords": [
+      "tides",
+      "moon",
+      "ocean",
+      "gravity"
+    ],
+    "baseLegitimacy": 95
+  },
+  {
+    "id": "noaa-ocean-acidification",
+    "title": "Ocean Acidification — NOAA",
+    "url": "https://oceanservice.noaa.gov/facts/acidification.html",
+    "domain": "oceanservice.noaa.gov",
+    "publisher": "NOAA Ocean Service",
+    "contentTier": "verified_reference",
+    "gradeMin": 6,
+    "gradeMax": 12,
+    "abstractText": "A clear government explainer on how extra carbon dioxide changes ocean chemistry and stresses shell-building animals.",
+    "vocabulary": [
+      "acidification",
+      "pH",
+      "carbon dioxide",
+      "shell",
+      "chemistry"
+    ],
+    "citation": "NOAA Ocean Service. \"What is Ocean Acidification?\"",
+    "topics": [
+      "ocean",
+      "climate",
+      "chemistry",
+      "coral reefs"
+    ],
+    "keywords": [
+      "acidification",
+      "ocean",
+      "carbon",
+      "climate"
+    ],
+    "baseLegitimacy": 96
+  },
+  {
+    "id": "nws-weather-school",
+    "title": "NWS JetStream — Online Weather School",
+    "url": "https://www.weather.gov/jetstream/",
+    "domain": "weather.gov",
+    "publisher": "National Weather Service",
+    "contentTier": "verified_reference",
+    "gradeMin": 5,
+    "gradeMax": 12,
+    "abstractText": "The National Weather Service JetStream modules teach atmosphere layers, clouds, winds, and forecasting tools.",
+    "vocabulary": [
+      "troposphere",
+      "jet stream",
+      "humidity",
+      "front",
+      "forecast"
+    ],
+    "citation": "National Weather Service. \"JetStream Online School for Weather.\"",
+    "topics": [
+      "weather",
+      "atmosphere",
+      "earth science"
+    ],
+    "keywords": [
+      "weather",
+      "jetstream",
+      "forecast",
+      "nws"
+    ],
+    "baseLegitimacy": 96
+  },
+  {
+    "id": "khan-decimals",
+    "title": "Decimals — Khan Academy",
+    "url": "https://www.khanacademy.org/math/arithmetic/arith-decimals",
+    "domain": "khanacademy.org",
+    "publisher": "Khan Academy",
+    "contentTier": "educational_magazine",
+    "gradeMin": 4,
+    "gradeMax": 7,
+    "abstractText": "Guided practice that connects place value, decimals, and fractions so students can compare and compute confidently.",
+    "vocabulary": [
+      "decimal",
+      "place value",
+      "tenths",
+      "hundredths"
+    ],
+    "citation": "Khan Academy. \"Decimals.\"",
+    "topics": [
+      "decimals",
+      "math",
+      "arithmetic"
+    ],
+    "keywords": [
+      "decimals",
+      "place value",
+      "math"
+    ],
+    "baseLegitimacy": 89
+  },
+  {
+    "id": "khan-geometry-basics",
+    "title": "Basic Geometry — Khan Academy",
+    "url": "https://www.khanacademy.org/math/basic-geo",
+    "domain": "khanacademy.org",
+    "publisher": "Khan Academy",
+    "contentTier": "educational_magazine",
+    "gradeMin": 3,
+    "gradeMax": 8,
+    "abstractText": "Angles, shapes, area, and perimeter lessons with practice problems for elementary and middle-grade geometry.",
+    "vocabulary": [
+      "angle",
+      "perimeter",
+      "area",
+      "polygon",
+      "parallel"
+    ],
+    "citation": "Khan Academy. \"Basic Geometry.\"",
+    "topics": [
+      "geometry",
+      "math"
+    ],
+    "keywords": [
+      "geometry",
+      "shapes",
+      "area",
+      "math"
+    ],
+    "baseLegitimacy": 89
+  },
+  {
+    "id": "ck12-ratios",
+    "title": "Ratios and Proportions — CK-12",
+    "url": "https://www.ck12.org/book/ck-12-middle-school-math-concepts-grade-6/section/4.1/",
+    "domain": "ck12.org",
+    "publisher": "CK-12 Foundation",
+    "contentTier": "educational_magazine",
+    "gradeMin": 5,
+    "gradeMax": 8,
+    "abstractText": "CK-12 lessons help students compare quantities with ratios, rates, and proportional reasoning.",
+    "vocabulary": [
+      "ratio",
+      "proportion",
+      "rate",
+      "equivalent"
+    ],
+    "citation": "CK-12 Foundation. \"Ratios and Proportions.\"",
+    "topics": [
+      "ratios",
+      "math",
+      "proportions"
+    ],
+    "keywords": [
+      "ratio",
+      "proportion",
+      "math",
+      "middle school"
+    ],
+    "baseLegitimacy": 88
+  },
+  {
+    "id": "illustrative-math-fractions",
+    "title": "Understanding Fractions — Illustrative Mathematics",
+    "url": "https://illustrativemathematics.org/",
+    "domain": "illustrativemathematics.org",
+    "publisher": "Illustrative Mathematics",
+    "contentTier": "educational_magazine",
+    "gradeMin": 3,
+    "gradeMax": 6,
+    "abstractText": "Problem-based tasks that deepen fraction sense with visual models and classroom discussion prompts.",
+    "vocabulary": [
+      "unit fraction",
+      "number line",
+      "equivalence",
+      "model"
+    ],
+    "citation": "Illustrative Mathematics. \"K–12 Curriculum Resources.\"",
+    "topics": [
+      "fractions",
+      "math"
+    ],
+    "keywords": [
+      "fractions",
+      "im",
+      "curriculum",
+      "math"
+    ],
+    "baseLegitimacy": 90
+  },
+  {
+    "id": "loc-constitution",
+    "title": "The U.S. Constitution — Library of Congress",
+    "url": "https://www.loc.gov/collections/united-states-constitution/about-this-collection/",
+    "domain": "loc.gov",
+    "publisher": "Library of Congress",
+    "contentTier": "verified_reference",
+    "gradeMin": 5,
+    "gradeMax": 12,
+    "abstractText": "Primary documents and educator notes that help students examine the Constitution as a living historical source.",
+    "vocabulary": [
+      "constitution",
+      "amendment",
+      "branch",
+      "ratify",
+      "bill of rights"
+    ],
+    "citation": "Library of Congress. \"United States Constitution Collection.\"",
+    "topics": [
+      "constitution",
+      "civics",
+      "american history",
+      "primary sources"
+    ],
+    "keywords": [
+      "constitution",
+      "loc",
+      "civics",
+      "government"
+    ],
+    "baseLegitimacy": 97
+  },
+  {
+    "id": "nps-american-revolution",
+    "title": "American Revolution — National Park Service",
+    "url": "https://www.nps.gov/subjects/americanrevolution/index.htm",
+    "domain": "nps.gov",
+    "publisher": "National Park Service",
+    "contentTier": "verified_reference",
+    "gradeMin": 4,
+    "gradeMax": 10,
+    "abstractText": "Place-based history from National Parks that connects Revolutionary War events to landscapes students can still visit.",
+    "vocabulary": [
+      "colony",
+      "independence",
+      "revolution",
+      "patriot",
+      "loyalist"
+    ],
+    "citation": "National Park Service. \"American Revolution.\"",
+    "topics": [
+      "american revolution",
+      "american history",
+      "primary sources"
+    ],
+    "keywords": [
+      "revolution",
+      "independence",
+      "nps",
+      "history"
+    ],
+    "baseLegitimacy": 94
+  },
+  {
+    "id": "si-american-history",
+    "title": "National Museum of American History — Learning Resources",
+    "url": "https://americanhistory.si.edu/learn",
+    "domain": "americanhistory.si.edu",
+    "publisher": "Smithsonian National Museum of American History",
+    "contentTier": "educational_magazine",
+    "gradeMin": 3,
+    "gradeMax": 10,
+    "abstractText": "Object-based lessons and stories that help students investigate American life through museum artifacts.",
+    "vocabulary": [
+      "artifact",
+      "exhibit",
+      "primary source",
+      "culture"
+    ],
+    "citation": "Smithsonian NMAH. \"Learn.\"",
+    "topics": [
+      "american history",
+      "museums",
+      "primary sources"
+    ],
+    "keywords": [
+      "smithsonian",
+      "history",
+      "museum",
+      "artifacts"
+    ],
+    "baseLegitimacy": 93
+  },
+  {
+    "id": "nps-indigenous-history",
+    "title": "Indigenous Heritage — National Park Service",
+    "url": "https://www.nps.gov/subjects/tellingallamericansstories/index.htm",
+    "domain": "nps.gov",
+    "publisher": "National Park Service",
+    "contentTier": "verified_reference",
+    "gradeMin": 4,
+    "gradeMax": 10,
+    "abstractText": "NPS resources that help classrooms encounter Indigenous histories and places with respect and accurate context.",
+    "vocabulary": [
+      "Indigenous",
+      "heritage",
+      "sovereignty",
+      "oral history"
+    ],
+    "citation": "National Park Service. \"Telling All Americans’ Stories.\"",
+    "topics": [
+      "indigenous history",
+      "american history",
+      "geography"
+    ],
+    "keywords": [
+      "indigenous",
+      "nps",
+      "heritage",
+      "history"
+    ],
+    "baseLegitimacy": 93
+  },
+  {
+    "id": "natgeo-edu-maps",
+    "title": "Map Skills — National Geographic Education",
+    "url": "https://education.nationalgeographic.org/resource/map/",
+    "domain": "education.nationalgeographic.org",
+    "publisher": "National Geographic Society",
+    "contentTier": "educational_magazine",
+    "gradeMin": 2,
+    "gradeMax": 8,
+    "abstractText": "Learn legend, scale, and compass directions so students can read maps as tools for geographic thinking.",
+    "vocabulary": [
+      "legend",
+      "scale",
+      "compass rose",
+      "latitude",
+      "longitude"
+    ],
+    "citation": "National Geographic Education. \"Maps.\"",
+    "topics": [
+      "maps",
+      "geography",
+      "earth science"
+    ],
+    "keywords": [
+      "maps",
+      "geography",
+      "skills",
+      "natgeo"
+    ],
+    "baseLegitimacy": 92
+  },
+  {
+    "id": "usgs-topo-maps",
+    "title": "Topographic Maps — USGS",
+    "url": "https://www.usgs.gov/educational-resources/what-topographic-map",
+    "domain": "usgs.gov",
+    "publisher": "U.S. Geological Survey",
+    "contentTier": "verified_reference",
+    "gradeMin": 5,
+    "gradeMax": 12,
+    "abstractText": "USGS explains contour lines and elevation so students can visualize landforms from a flat map.",
+    "vocabulary": [
+      "contour",
+      "elevation",
+      "topography",
+      "relief"
+    ],
+    "citation": "U.S. Geological Survey. \"What is a Topographic Map?\"",
+    "topics": [
+      "maps",
+      "geography",
+      "geology"
+    ],
+    "keywords": [
+      "topographic",
+      "maps",
+      "elevation",
+      "usgs"
+    ],
+    "baseLegitimacy": 95
+  },
+  {
+    "id": "loc-research-guides",
+    "title": "Getting Started with Primary Sources — LOC Teachers",
+    "url": "https://www.loc.gov/programs/teachers/getting-started-with-primary-sources/",
+    "domain": "loc.gov",
+    "publisher": "Library of Congress",
+    "contentTier": "verified_reference",
+    "gradeMin": 4,
+    "gradeMax": 12,
+    "abstractText": "Teacher-facing guidance students can also use to analyze photographs, letters, maps, and other primary sources.",
+    "vocabulary": [
+      "observe",
+      "reflect",
+      "question",
+      "source",
+      "evidence"
+    ],
+    "citation": "Library of Congress. \"Getting Started with Primary Sources.\"",
+    "topics": [
+      "research skills",
+      "primary sources",
+      "history"
+    ],
+    "keywords": [
+      "primary sources",
+      "research",
+      "loc",
+      "teachers"
+    ],
+    "baseLegitimacy": 97
+  },
+  {
+    "id": "pbs-media-literacy",
+    "title": "Media Literacy — PBS LearningMedia",
+    "url": "https://www.pbslearningmedia.org/collection/media-literacy/",
+    "domain": "pbslearningmedia.org",
+    "publisher": "PBS LearningMedia",
+    "contentTier": "educational_magazine",
+    "gradeMin": 4,
+    "gradeMax": 10,
+    "abstractText": "Classroom media that help students ask who made a message, why, and what evidence supports a claim.",
+    "vocabulary": [
+      "claim",
+      "evidence",
+      "bias",
+      "audience",
+      "source"
+    ],
+    "citation": "PBS LearningMedia. \"Media Literacy.\"",
+    "topics": [
+      "media literacy",
+      "research skills"
+    ],
+    "keywords": [
+      "media",
+      "literacy",
+      "evidence",
+      "pbs"
+    ],
+    "baseLegitimacy": 90
+  },
+  {
+    "id": "amnh-dinosaurs",
+    "title": "Dinosaurs — American Museum of Natural History",
+    "url": "https://www.amnh.org/dinosaurs",
+    "domain": "amnh.org",
+    "publisher": "American Museum of Natural History",
+    "contentTier": "educational_magazine",
+    "gradeMin": 1,
+    "gradeMax": 8,
+    "abstractText": "Museum galleries and explainers introduce fossils, paleontology, and what bones can tell us about ancient life.",
+    "vocabulary": [
+      "fossil",
+      "paleontology",
+      "extinct",
+      "skeleton",
+      "era"
+    ],
+    "citation": "American Museum of Natural History. \"Dinosaurs.\"",
+    "topics": [
+      "dinosaurs",
+      "fossils",
+      "earth science",
+      "biology"
+    ],
+    "keywords": [
+      "dinosaurs",
+      "fossils",
+      "museum",
+      "paleontology"
+    ],
+    "baseLegitimacy": 94
+  },
+  {
+    "id": "usgs-fossils",
+    "title": "Fossils — USGS",
+    "url": "https://www.usgs.gov/faqs/what-are-fossils",
+    "domain": "usgs.gov",
+    "publisher": "U.S. Geological Survey",
+    "contentTier": "verified_reference",
+    "gradeMin": 3,
+    "gradeMax": 9,
+    "abstractText": "USGS FAQs explain how fossils form and why they help scientists reconstruct past environments.",
+    "vocabulary": [
+      "fossil",
+      "sedimentary",
+      "preserve",
+      "organism"
+    ],
+    "citation": "U.S. Geological Survey. \"What are Fossils?\"",
+    "topics": [
+      "fossils",
+      "geology",
+      "earth science",
+      "dinosaurs"
+    ],
+    "keywords": [
+      "fossils",
+      "geology",
+      "usgs"
+    ],
+    "baseLegitimacy": 95
+  },
+  {
+    "id": "nps-ecosystems",
+    "title": "Ecosystems — National Park Service",
+    "url": "https://www.nps.gov/subjects/npseducators/ecosystems.htm",
+    "domain": "nps.gov",
+    "publisher": "National Park Service",
+    "contentTier": "educational_magazine",
+    "gradeMin": 2,
+    "gradeMax": 8,
+    "abstractText": "Park-based lessons on ecosystems help students connect living and nonliving parts of a place.",
+    "vocabulary": [
+      "ecosystem",
+      "biotic",
+      "abiotic",
+      "community"
+    ],
+    "citation": "National Park Service. \"Ecosystems for Educators.\"",
+    "topics": [
+      "ecosystems",
+      "habitats",
+      "ecology"
+    ],
+    "keywords": [
+      "ecosystem",
+      "parks",
+      "habitats",
+      "nps"
+    ],
+    "baseLegitimacy": 92
+  },
+  {
+    "id": "usda-plants-kids",
+    "title": "Plants for Kids — USDA / Forest Service learning",
+    "url": "https://www.fs.usda.gov/learn/kids",
+    "domain": "fs.usda.gov",
+    "publisher": "U.S. Forest Service",
+    "contentTier": "educational_magazine",
+    "gradeMin": 1,
+    "gradeMax": 6,
+    "abstractText": "Forest Service kid resources introduce trees, forests, and why healthy plants matter for air, soil, and wildlife.",
+    "vocabulary": [
+      "forest",
+      "canopy",
+      "root",
+      "soil",
+      "wildlife"
+    ],
+    "citation": "U.S. Forest Service. \"Learn — Kids.\"",
+    "topics": [
+      "plants",
+      "forests",
+      "habitats",
+      "ecology"
+    ],
+    "keywords": [
+      "trees",
+      "forest",
+      "plants",
+      "kids"
+    ],
+    "baseLegitimacy": 91
+  },
+  {
+    "id": "nasa-light",
+    "title": "What Is a Light Year? / Light Basics — NASA Space Place",
+    "url": "https://spaceplace.nasa.gov/light-year/en/",
+    "domain": "spaceplace.nasa.gov",
+    "publisher": "NASA Space Place",
+    "contentTier": "educational_magazine",
+    "gradeMin": 3,
+    "gradeMax": 8,
+    "abstractText": "NASA helps students picture how light travels and why astronomers measure huge distances with light-years.",
+    "vocabulary": [
+      "light",
+      "spectrum",
+      "wavelength",
+      "light-year"
+    ],
+    "citation": "NASA Space Place. \"What Is a Light-Year?\"",
+    "topics": [
+      "light",
+      "astronomy",
+      "physics"
+    ],
+    "keywords": [
+      "light",
+      "astronomy",
+      "nasa",
+      "physics"
+    ],
+    "baseLegitimacy": 93
+  },
+  {
+    "id": "pbs-electricity",
+    "title": "Electricity & Circuits — PBS LearningMedia",
+    "url": "https://www.pbslearningmedia.org/subjects/science/physical-science/electricity-and-magnetism/",
+    "domain": "pbslearningmedia.org",
+    "publisher": "PBS LearningMedia",
+    "contentTier": "educational_magazine",
+    "gradeMin": 3,
+    "gradeMax": 8,
+    "abstractText": "Videos and interactives that introduce circuits, conductors, and magnets for elementary and middle grades.",
+    "vocabulary": [
+      "circuit",
+      "conductor",
+      "insulator",
+      "magnet",
+      "current"
+    ],
+    "citation": "PBS LearningMedia. \"Electricity and Magnetism.\"",
+    "topics": [
+      "electricity",
+      "magnets",
+      "physics",
+      "engineering"
+    ],
+    "keywords": [
+      "electricity",
+      "circuits",
+      "magnets",
+      "pbs"
+    ],
+    "baseLegitimacy": 90
+  },
+  {
+    "id": "epa-recycle-kids",
+    "title": "Recycling Basics — EPA",
+    "url": "https://www.epa.gov/recycle/recycling-basics",
+    "domain": "epa.gov",
+    "publisher": "U.S. Environmental Protection Agency",
+    "contentTier": "verified_reference",
+    "gradeMin": 2,
+    "gradeMax": 8,
+    "abstractText": "EPA explains how recycling works and why reducing waste protects land, water, and energy resources.",
+    "vocabulary": [
+      "recycle",
+      "reuse",
+      "reduce",
+      "landfill",
+      "resource"
+    ],
+    "citation": "U.S. Environmental Protection Agency. \"Recycling Basics.\"",
+    "topics": [
+      "recycling",
+      "conservation",
+      "climate",
+      "ecology"
+    ],
+    "keywords": [
+      "recycling",
+      "epa",
+      "waste",
+      "environment"
+    ],
+    "baseLegitimacy": 95
+  },
+  {
+    "id": "epa-water-sense-kids",
+    "title": "WaterSense Kids — EPA",
+    "url": "https://www.epa.gov/watersense/watersense-kids",
+    "domain": "epa.gov",
+    "publisher": "U.S. Environmental Protection Agency",
+    "contentTier": "educational_magazine",
+    "gradeMin": 1,
+    "gradeMax": 6,
+    "abstractText": "Games and facts that help younger students understand why saving water matters at home and school.",
+    "vocabulary": [
+      "conservation",
+      "freshwater",
+      "drought",
+      "usage"
+    ],
+    "citation": "U.S. Environmental Protection Agency. \"WaterSense Kids.\"",
+    "topics": [
+      "water cycle",
+      "conservation",
+      "earth science"
+    ],
+    "keywords": [
+      "water",
+      "conservation",
+      "kids",
+      "epa"
+    ],
+    "baseLegitimacy": 93
+  },
+  {
+    "id": "britannica-plate-tectonics",
+    "title": "Plate Tectonics — Britannica Kids / Students",
+    "url": "https://kids.britannica.com/students/article/plate-tectonics/276480",
+    "domain": "kids.britannica.com",
+    "publisher": "Encyclopaedia Britannica",
+    "contentTier": "verified_reference",
+    "gradeMin": 5,
+    "gradeMax": 10,
+    "abstractText": "A structured encyclopedia article covering plate boundaries, evidence for plate motion, and key landforms.",
+    "vocabulary": [
+      "subduction",
+      "continental drift",
+      "mid-ocean ridge"
+    ],
+    "citation": "Encyclopaedia Britannica. \"Plate Tectonics.\"",
+    "topics": [
+      "plate tectonics",
+      "earth science",
+      "geology"
+    ],
+    "keywords": [
+      "plate tectonics",
+      "britannica",
+      "geology"
+    ],
+    "baseLegitimacy": 93
+  },
+  {
+    "id": "pbs-plate-tectonics",
+    "title": "Plate Tectonics Classroom Media — PBS LearningMedia",
+    "url": "https://www.pbslearningmedia.org/resource/ess05.sci.ess.earthsys.plateintro/plate-tectonics-an-introduction/",
+    "domain": "pbslearningmedia.org",
+    "publisher": "PBS LearningMedia",
+    "contentTier": "educational_magazine",
+    "gradeMin": 5,
+    "gradeMax": 9,
+    "abstractText": "Short classroom media that introduce plate motions and help students visualize Earth’s dynamic crust.",
+    "vocabulary": [
+      "crust",
+      "boundary",
+      "convection"
+    ],
+    "citation": "PBS LearningMedia. \"Plate Tectonics: An Introduction.\"",
+    "topics": [
+      "plate tectonics",
+      "earth science"
+    ],
+    "keywords": [
+      "plates",
+      "pbs",
+      "classroom",
+      "geology"
+    ],
+    "baseLegitimacy": 90
+  },
+  {
+    "id": "natgeo-kids-birds",
+    "title": "Birds — Nat Geo Kids",
+    "url": "https://kids.nationalgeographic.com/animals/birds",
+    "domain": "kids.nationalgeographic.com",
+    "publisher": "National Geographic Kids",
+    "contentTier": "educational_magazine",
+    "gradeMin": 1,
+    "gradeMax": 5,
+    "abstractText": "Species profiles that help young researchers compare beaks, feathers, and habitats across bird groups.",
+    "vocabulary": [
+      "beak",
+      "feather",
+      "migrate",
+      "nest",
+      "species"
+    ],
+    "citation": "National Geographic Kids. \"Birds.\"",
+    "topics": [
+      "birds",
+      "animals",
+      "habitats"
+    ],
+    "keywords": [
+      "birds",
+      "animals",
+      "kids",
+      "habitats"
+    ],
+    "baseLegitimacy": 90
+  },
+  {
+    "id": "si-insect-zoo",
+    "title": "Insects — Smithsonian / O. Orkin Insect Zoo context",
+    "url": "https://naturalhistory.si.edu/exhibits/oir-insect-zoo",
+    "domain": "naturalhistory.si.edu",
+    "publisher": "Smithsonian National Museum of Natural History",
+    "contentTier": "educational_magazine",
+    "gradeMin": 1,
+    "gradeMax": 6,
+    "abstractText": "Museum exhibits and notes that introduce insect diversity, life cycles, and why bugs matter in ecosystems.",
+    "vocabulary": [
+      "insect",
+      "antenna",
+      "exoskeleton",
+      "pollinator"
+    ],
+    "citation": "Smithsonian NMNH. \"O. Orkin Insect Zoo.\"",
+    "topics": [
+      "insects",
+      "animals",
+      "ecology",
+      "life cycles"
+    ],
+    "keywords": [
+      "insects",
+      "bugs",
+      "museum",
+      "pollinators"
+    ],
+    "baseLegitimacy": 92
+  },
+  {
+    "id": "khan-multiplication",
+    "title": "Multiplication and Division — Khan Academy",
+    "url": "https://www.khanacademy.org/math/arithmetic/arith-review-multiply-divide",
+    "domain": "khanacademy.org",
+    "publisher": "Khan Academy",
+    "contentTier": "educational_magazine",
+    "gradeMin": 2,
+    "gradeMax": 5,
+    "abstractText": "Practice sets and videos that build fluent multiplication and division strategies for elementary learners.",
+    "vocabulary": [
+      "factor",
+      "product",
+      "quotient",
+      "array"
+    ],
+    "citation": "Khan Academy. \"Multiplication and Division.\"",
+    "topics": [
+      "multiplication",
+      "math",
+      "arithmetic"
+    ],
+    "keywords": [
+      "multiplication",
+      "division",
+      "math",
+      "practice"
+    ],
+    "baseLegitimacy": 89
+  },
+  {
+    "id": "usa-gov-branches",
+    "title": "Branches of the U.S. Government — USA.gov",
+    "url": "https://www.usa.gov/branches-of-government",
+    "domain": "usa.gov",
+    "publisher": "USA.gov",
+    "contentTier": "verified_reference",
+    "gradeMin": 4,
+    "gradeMax": 10,
+    "abstractText": "A plain-language overview of legislative, executive, and judicial branches and how they check each other.",
+    "vocabulary": [
+      "legislative",
+      "executive",
+      "judicial",
+      "checks and balances"
+    ],
+    "citation": "USA.gov. \"Branches of the U.S. Government.\"",
+    "topics": [
+      "civics",
+      "government",
+      "constitution",
+      "american history"
+    ],
+    "keywords": [
+      "government",
+      "branches",
+      "civics",
+      "usa.gov"
+    ],
+    "baseLegitimacy": 95
+  },
+  {
+    "id": "pbs-sound",
+    "title": "Sound Waves — PBS LearningMedia",
+    "url": "https://www.pbslearningmedia.org/resource/phy03.sci.phys.energy.lp_sound/what-is-sound/",
+    "domain": "pbslearningmedia.org",
+    "publisher": "PBS LearningMedia",
+    "contentTier": "educational_magazine",
+    "gradeMin": 3,
+    "gradeMax": 7,
+    "abstractText": "Classroom media that explain vibration, pitch, and how sound travels through different materials.",
+    "vocabulary": [
+      "vibration",
+      "pitch",
+      "volume",
+      "wave",
+      "medium"
+    ],
+    "citation": "PBS LearningMedia. \"What Is Sound?\"",
+    "topics": [
+      "sound",
+      "physics"
+    ],
+    "keywords": [
+      "sound",
+      "waves",
+      "physics",
+      "pbs"
+    ],
+    "baseLegitimacy": 90
+  },
+  {
+    "id": "nasa-eclipse",
+    "title": "Eclipses — NASA Space Place",
+    "url": "https://spaceplace.nasa.gov/eclipses/en/",
+    "domain": "spaceplace.nasa.gov",
+    "publisher": "NASA Space Place",
+    "contentTier": "educational_magazine",
+    "gradeMin": 2,
+    "gradeMax": 8,
+    "abstractText": "Learn the difference between solar and lunar eclipses and why they don’t happen every month.",
+    "vocabulary": [
+      "eclipse",
+      "umbra",
+      "solar",
+      "lunar",
+      "shadow"
+    ],
+    "citation": "NASA Space Place. \"Eclipses.\"",
+    "topics": [
+      "eclipses",
+      "moon",
+      "astronomy",
+      "space"
+    ],
+    "keywords": [
+      "eclipse",
+      "moon",
+      "sun",
+      "nasa"
+    ],
+    "baseLegitimacy": 94
+  },
+  {
+    "id": "nasa-mars",
+    "title": "All About Mars — NASA Space Place",
+    "url": "https://spaceplace.nasa.gov/all-about-mars/en/",
+    "domain": "spaceplace.nasa.gov",
+    "publisher": "NASA Space Place",
+    "contentTier": "educational_magazine",
+    "gradeMin": 2,
+    "gradeMax": 8,
+    "abstractText": "A student-friendly Mars briefing covering climate, rovers, and why scientists search for signs of past water.",
+    "vocabulary": [
+      "rover",
+      "crater",
+      "atmosphere",
+      "mission"
+    ],
+    "citation": "NASA Space Place. \"All About Mars.\"",
+    "topics": [
+      "mars",
+      "planets",
+      "solar system",
+      "space"
+    ],
+    "keywords": [
+      "mars",
+      "rovers",
+      "nasa",
+      "planets"
+    ],
+    "baseLegitimacy": 94
+  },
+  {
+    "id": "science-org-education",
+    "title": "Science Education Collections — Science.org",
+    "url": "https://www.science.org/topic/article-type/education",
+    "domain": "science.org",
+    "publisher": "Science / AAAS",
+    "contentTier": "peer_reviewed_journal",
+    "gradeMin": 9,
+    "gradeMax": 12,
+    "abstractText": "Research and commentary on science learning for advanced students researching education or scientific literacy with teacher guidance.",
+    "vocabulary": [
+      "peer review",
+      "scientific literacy",
+      "evidence"
+    ],
+    "citation": "Science / AAAS. \"Education topic collection.\"",
+    "topics": [
+      "research skills",
+      "science practices"
+    ],
+    "keywords": [
+      "science",
+      "journal",
+      "education",
+      "aaas"
+    ],
+    "baseLegitimacy": 98
+  },
+  {
+    "id": "noaa-fisheries-ecosystems",
+    "title": "Marine Ecosystems — NOAA Fisheries",
+    "url": "https://www.fisheries.noaa.gov/insight/understanding-ecosystems",
+    "domain": "fisheries.noaa.gov",
+    "publisher": "NOAA Fisheries",
+    "contentTier": "authoritative_research",
+    "gradeMin": 6,
+    "gradeMax": 12,
+    "abstractText": "NOAA Fisheries explains ecosystem-based thinking: how species, habitats, and people interact in marine systems.",
+    "vocabulary": [
+      "ecosystem-based",
+      "fishery",
+      "habitat",
+      "stock"
+    ],
+    "citation": "NOAA Fisheries. \"Understanding Ecosystems.\"",
+    "topics": [
+      "ocean",
+      "ecosystems",
+      "ecology",
+      "coral reefs"
+    ],
+    "keywords": [
+      "marine",
+      "ecosystems",
+      "noaa",
+      "fisheries"
+    ],
+    "baseLegitimacy": 95
   },
   {
     "id": "farm-tectonics-spam",
@@ -409,10 +2356,18 @@
     "gradeMin": 1,
     "gradeMax": 12,
     "abstractText": "Sensationalized non-academic filler designed to be rejected by Surf’s legitimacy filter.",
-    "vocabulary": ["shock"],
+    "vocabulary": [
+      "shock"
+    ],
     "citation": "Content Farm Demo.",
-    "topics": ["plate tectonics"],
-    "keywords": ["plate", "tectonics", "crazy"],
+    "topics": [
+      "plate tectonics"
+    ],
+    "keywords": [
+      "plate",
+      "tectonics",
+      "crazy"
+    ],
     "baseLegitimacy": 10
   }
 ]

@@ -32,8 +32,8 @@ Surf is not a content feed, launcher, or game hub. Kids search, open curated edu
 
 ## Supporting systems
 
-- Academic search: shared grades 1–8+ corpus + OpenAlex merge + EBSCO Refine Results
-- Classroom topic packs on Explore (weather, fractions, civil rights, reefs, etc.)
+- Academic search: shared grades 1–8+ corpus (~70+ curated sources) + OpenAlex merge + EBSCO Refine Results
+- Classroom topic packs on Explore (weather, fractions, civil rights, reefs, volcanoes, civics, etc.)
 - Ask Milo with conversation memory + tutor quick actions
 - Always-on reader: Tauri fetch → Jina live reader → structured fallback
 - Research projects: compare sources, outline builder, export bibliography

@@ -166,6 +166,66 @@ pub const TRUSTED_DOMAINS: &[TrustedDomain] = &[
         score: 94,
         label: "Smithsonian Ocean",
     },
+    TrustedDomain {
+        host: "americanhistory.si.edu",
+        score: 93,
+        label: "Smithsonian American History",
+    },
+    TrustedDomain {
+        host: "naturalhistory.si.edu",
+        score: 93,
+        label: "Smithsonian Natural History",
+    },
+    TrustedDomain {
+        host: "weather.gov",
+        score: 96,
+        label: "National Weather Service",
+    },
+    TrustedDomain {
+        host: "fisheries.noaa.gov",
+        score: 95,
+        label: "NOAA Fisheries",
+    },
+    TrustedDomain {
+        host: "eia.gov",
+        score: 94,
+        label: "U.S. Energy Information Administration",
+    },
+    TrustedDomain {
+        host: "epa.gov",
+        score: 95,
+        label: "U.S. EPA",
+    },
+    TrustedDomain {
+        host: "cdc.gov",
+        score: 96,
+        label: "CDC",
+    },
+    TrustedDomain {
+        host: "medlineplus.gov",
+        score: 94,
+        label: "MedlinePlus",
+    },
+    TrustedDomain {
+        host: "acs.org",
+        score: 92,
+        label: "American Chemical Society",
+    },
+    TrustedDomain {
+        host: "usa.gov",
+        score: 95,
+        label: "USA.gov",
+    },
+    TrustedDomain {
+        host: "fs.usda.gov",
+        score: 91,
+        label: "U.S. Forest Service",
+    },
+    TrustedDomain {
+        host: "illustrativemathematics.org",
+        score: 90,
+        label: "Illustrative Mathematics",
+    },
 ];
 
 /// Known low-quality / content-farm patterns rejected by the legitimacy layer.
