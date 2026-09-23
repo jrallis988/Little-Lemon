@@ -20,6 +20,8 @@ Conceptual redesign of a Nick Jr.–style kids entertainment homepage by Artisti
 - “What do you want to do?” activity launchers
 - Adventure Sprouts, Make Something, Friends, Play & Learn, Grown-Ups
 - Dedicated **Grown-Ups** page with tips and a sample schedule
+- **Case study** page documenting challenge, approach, and IA
+- On-page search across shows, games, and activities
 - About + accessibility notes on the kids home
 - Open Graph share image for portfolio previews
 - Responsive layout for desktop and mobile
@@ -36,3 +38,10 @@ Then open:
 
 - Kids home: [http://localhost:3000/nick-jr/](http://localhost:3000/nick-jr/)
 - Grown-Ups: [http://localhost:3000/nick-jr/grown-ups.html](http://localhost:3000/nick-jr/grown-ups.html)
+- Case study: [http://localhost:3000/nick-jr/case-study.html](http://localhost:3000/nick-jr/case-study.html)
+
+## Go live
+
+1. Merge PR into `main`
+2. Deploy the static site (same host as Artistic Fountain)
+3. Smoke-test `/nick-jr/`, `/nick-jr/grown-ups.html`, and `/nick-jr/case-study.html`

@@ -43,6 +43,57 @@
   const searchBtn = document.querySelector(".search-btn");
   const searchPanel = document.getElementById("search-panel");
   const searchInput = document.getElementById("site-search");
+  const searchResults = document.getElementById("search-results");
+
+  const catalog = [
+    { label: "Blue’s Clues & You!", type: "Show", href: "#shows", keywords: "blue clues watch" },
+    { label: "Dora the Explorer", type: "Show", href: "#shows", keywords: "dora map spanish" },
+    { label: "Paw Patrol", type: "Show", href: "#shows", keywords: "paw chase pups rescue" },
+    { label: "Bubble Guppies", type: "Show", href: "#shows", keywords: "bubble guppies molly songs" },
+    { label: "Watch Something", type: "Activity", href: "#watch", keywords: "watch tv video" },
+    { label: "Play a Game", type: "Activity", href: "#play", keywords: "play game controller" },
+    { label: "Explore Something", type: "Activity", href: "#explore", keywords: "explore adventure sprouts ocean" },
+    { label: "Make Something", type: "Activity", href: "#create", keywords: "make craft coloring drawing music recipes" },
+    { label: "Dora’s Map Adventure", type: "Game", href: "#play", keywords: "dora map problem solving" },
+    { label: "Number Rescue", type: "Game", href: "#play", keywords: "numbers count rescue" },
+    { label: "Alphabet Skidoo", type: "Game", href: "#play", keywords: "letters alphabet blue" },
+    { label: "Bubble Lab", type: "Game", href: "#play", keywords: "science bubble lab" },
+    { label: "Grown-Ups Area", type: "Page", href: "grown-ups.html", keywords: "parents caregivers schedule tips" },
+    { label: "Case Study", type: "Page", href: "case-study.html", keywords: "about design portfolio case study" },
+    { label: "Adventure Sprouts", type: "Explore", href: "#explore", keywords: "ocean animals sky nature" },
+  ];
+
+  function renderSearchResults(query) {
+    if (!searchResults) return;
+    const q = query.trim().toLowerCase();
+    if (!q) {
+      searchResults.hidden = true;
+      searchResults.innerHTML = "";
+      return;
+    }
+
+    const matches = catalog.filter((item) => {
+      const hay = `${item.label} ${item.type} ${item.keywords}`.toLowerCase();
+      return hay.includes(q) || q.split(/\s+/).every((part) => hay.includes(part));
+    }).slice(0, 6);
+
+    if (!matches.length) {
+      searchResults.hidden = false;
+      searchResults.innerHTML = `<p class="search-empty">No matches for “${query.trim()}”. Try Blue, Dora, or games.</p>`;
+      return;
+    }
+
+    searchResults.hidden = false;
+    searchResults.innerHTML = matches
+      .map(
+        (item) =>
+          `<a class="search-result" role="option" href="${item.href}" data-search-hit>
+            <span class="search-result-type">${item.type}</span>
+            <span class="search-result-label">${item.label}</span>
+          </a>`
+      )
+      .join("");
+  }
 
   if (searchBtn && searchPanel && searchInput) {
     searchBtn.addEventListener("click", (event) => {
@@ -52,23 +103,45 @@
         searchPanel.removeAttribute("hidden");
         searchBtn.setAttribute("aria-expanded", "true");
         searchInput.focus();
+        renderSearchResults(searchInput.value);
       } else {
         searchPanel.setAttribute("hidden", "");
         searchBtn.setAttribute("aria-expanded", "false");
+        if (searchResults) {
+          searchResults.hidden = true;
+          searchResults.innerHTML = "";
+        }
       }
+    });
+
+    searchInput.addEventListener("input", () => {
+      renderSearchResults(searchInput.value);
     });
 
     searchInput.addEventListener("keydown", (event) => {
       if (event.key === "Enter") {
         event.preventDefault();
+        const first = searchResults?.querySelector(".search-result");
+        if (first) {
+          first.click();
+          return;
+        }
         const q = searchInput.value.trim();
-        showToast(q ? `Looking for “${q}”…` : "Try searching for a show or game!");
+        showToast(q ? `No exact match for “${q}”` : "Try searching for a show or game!");
       }
       if (event.key === "Escape") {
         searchPanel.setAttribute("hidden", "");
         searchBtn.setAttribute("aria-expanded", "false");
         searchBtn.focus();
       }
+    });
+
+    searchResults?.addEventListener("click", (event) => {
+      const hit = event.target.closest("[data-search-hit]");
+      if (!hit) return;
+      searchPanel.setAttribute("hidden", "");
+      searchBtn.setAttribute("aria-expanded", "false");
+      showToast(`Opening ${hit.querySelector(".search-result-label")?.textContent || "result"}…`);
     });
   }
 
