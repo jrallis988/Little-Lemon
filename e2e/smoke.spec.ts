@@ -80,8 +80,10 @@ test.describe("Walgreens RX smoke flows", () => {
     await expect(page.getByText(/Ready in ~\d+ min/i).first()).toBeVisible();
 
     await page.goto("/shop/cerave-moisturizing-cream");
-    await expect(page.getByText("Ready in ~30 min")).toBeVisible();
-    await expect(page.getByText(/Aisle 4/i)).toBeVisible();
+    await expect(
+      page.getByText("Ready in ~30 min", { exact: true }),
+    ).toBeVisible();
+    await expect(page.getByText(/Aisle 4/i).first()).toBeVisible();
 
     await page.goto("/stores");
     await page
@@ -91,6 +93,6 @@ test.describe("Walgreens RX smoke flows", () => {
       .click();
     await expect(page).toHaveURL(/\/pharmacy/);
     await page.goto("/shop/cerave-moisturizing-cream");
-    await expect(page.getByText(/Out at Mission/i)).toBeVisible();
+    await expect(page.getByText(/Out at Mission/i).first()).toBeVisible();
   });
 });
