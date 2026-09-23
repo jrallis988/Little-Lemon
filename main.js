@@ -1,4 +1,5 @@
 (() => {
+  const config = window.PLAYHOUSE_CONFIG || {};
   const header = document.querySelector("[data-header]");
   const nav = document.querySelector("[data-nav]");
   const toggle = document.querySelector("[data-nav-toggle]");
@@ -7,8 +8,20 @@
   const status = document.querySelector("[data-form-status]");
   const success = document.querySelector("[data-contact-success]");
   const resetBtn = document.querySelector("[data-contact-reset]");
+  const submitBtn = document.querySelector("[data-submit-btn]");
 
   if (year) year.textContent = String(new Date().getFullYear());
+
+  // Optional absolute OG image once siteUrl is set
+  if (config.siteUrl) {
+    const og = document.querySelector('meta[property="og:image"]');
+    if (og) {
+      const raw = og.getAttribute("content") || "";
+      if (raw && !/^https?:\/\//i.test(raw)) {
+        og.setAttribute("content", `${config.siteUrl.replace(/\/$/, "")}/${raw.replace(/^\//, "")}`);
+      }
+    }
+  }
 
   const onScroll = () => {
     if (!header) return;
@@ -71,6 +84,20 @@
     reveals.forEach((el) => el.classList.add("is-visible"));
   }
 
+  /* Apply config defaults to showreel buttons missing IDs */
+  document.querySelectorAll("[data-open-video]").forEach((btn) => {
+    if (!btn.getAttribute("data-youtube") && config.showreelYoutube) {
+      if ((btn.getAttribute("data-video-title") || "").toLowerCase().includes("showreel")) {
+        btn.setAttribute("data-youtube", config.showreelYoutube);
+      }
+    }
+    if (!btn.getAttribute("data-vimeo") && config.showreelVimeo) {
+      if ((btn.getAttribute("data-video-title") || "").toLowerCase().includes("showreel")) {
+        btn.setAttribute("data-vimeo", config.showreelVimeo);
+      }
+    }
+  });
+
   /* -------- Shared video modal -------- */
   let modal = document.querySelector("[data-video-modal]");
   if (!modal) {
@@ -89,7 +116,7 @@
             <div class="video-fallback-copy">
               <span class="video-fallback-play" aria-hidden="true"></span>
               <p data-video-message>Trailer coming soon</p>
-              <p class="video-fallback-hint">Drop a YouTube or Vimeo ID on the play button to go live.</p>
+              <p class="video-fallback-hint">Add your YouTube or Vimeo ID in config.js or on the play button.</p>
             </div>
           </div>
         </div>
@@ -114,7 +141,6 @@
     clearFrame();
     if (typeof modal.close === "function") modal.close();
     else modal.removeAttribute("open");
-    document.body.style.overflow = "";
   };
 
   const openModal = ({ title, youtube, vimeo, poster, message }) => {
@@ -175,11 +201,8 @@
     event.preventDefault();
     closeModal();
   });
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && modal.open) closeModal();
-  });
 
-  /* -------- Contact success state -------- */
+  /* -------- Contact success + Formspree -------- */
   if (form) {
     const showSuccess = () => {
       form.hidden = true;
@@ -194,10 +217,14 @@
     const showForm = () => {
       if (success) success.hidden = true;
       form.hidden = false;
-      form.querySelector("input, textarea")?.focus();
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Send a note";
+      }
+      form.querySelector("input:not(.hp-field), textarea")?.focus();
     };
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
       if (!form.checkValidity()) {
         if (status) {
@@ -207,9 +234,50 @@
         form.reportValidity();
         return;
       }
-      // Demo success — wire to Formspree / email API for production
-      showSuccess();
-      form.reset();
+
+      // Honeypot: bots that fill hidden field get a fake success
+      const gotcha = form.querySelector('[name="_gotcha"]');
+      if (gotcha && gotcha.value) {
+        showSuccess();
+        form.reset();
+        return;
+      }
+
+      const endpoint = (config.formEndpoint || "").trim();
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Sending…";
+      }
+
+      if (!endpoint) {
+        // Local/demo mode until Formspree endpoint is set in config.js
+        showSuccess();
+        form.reset();
+        return;
+      }
+
+      try {
+        const body = new FormData(form);
+        body.delete("_gotcha");
+        const res = await fetch(endpoint, {
+          method: "POST",
+          body,
+          headers: { Accept: "application/json" },
+        });
+        if (!res.ok) throw new Error(`Form error ${res.status}`);
+        showSuccess();
+        form.reset();
+      } catch (err) {
+        if (status) {
+          status.style.color = "var(--coral-deep)";
+          status.textContent = "Something went wrong sending your note. Please try again.";
+        }
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Send a note";
+        }
+        console.error(err);
+      }
     });
 
     resetBtn?.addEventListener("click", showForm);

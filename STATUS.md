@@ -1,3 +1,5 @@
 # Playhouse Animation — status
 
-Portfolio site with film detail pages, shared video modal, studio case studies (educators / partners / co-production), and contact success state. Swap placeholder trailers and stills for production media when ready; connect contact form to an email service for live submissions.
+Launch-ready static portfolio: film pages, video modal, studio case studies, contact success UI, compressed WebP/JPEG assets, robots/sitemap/404, and Cloudflare Pages config.
+
+**Before production:** add Formspree endpoint + video IDs in `config.js`, replace placeholder media with real art/reels, deploy to Pages with a custom domain.

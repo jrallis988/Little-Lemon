@@ -12,7 +12,7 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Playhouse Animation — Kids Animation Portfolio">
   <meta property="og:description" content="2D kids shorts, character worlds, and stories made for young audiences.">
-  <meta property="og:image" content="images/logo.png">
+  <meta property="og:image" content="images/hero-storybook.jpg">
   <meta name="twitter:card" content="summary_large_image">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,7 +44,10 @@
   <main id="main">
     <section class="hero" aria-label="Playhouse Animation introduction">
       <div class="hero-visual" aria-hidden="true">
-        <img src="images/hero-storybook.png" alt="" class="hero-img" width="1920" height="1080">
+        <picture>
+          <source srcset="images/hero-storybook.webp" type="image/webp">
+          <img src="images/hero-storybook.jpg" alt="" class="hero-img" width="1600" height="1067" fetchpriority="high">
+        </picture>
         <div class="hero-wash"></div>
         <div class="hero-shape shape-a" data-parallax></div>
         <div class="hero-shape shape-b" data-parallax></div>
@@ -73,7 +76,10 @@
           <article class="work-item" role="listitem" style="--accent:var(--coral)">
             <a href="films/lemon-friend.html" class="work-link">
               <div class="work-media">
-                <img src="images/work/work-lemon-friend.png" alt="Cheerful flat lemon character waving in a meadow" width="800" height="800" loading="lazy">
+                <picture>
+                  <source srcset="images/work/work-lemon-friend.webp" type="image/webp">
+                  <img src="images/work/work-lemon-friend.jpg" alt="Cheerful flat lemon character waving in a meadow" width="900" height="900" loading="lazy">
+                </picture>
                 <span class="work-play" aria-hidden="true"></span>
               </div>
               <div class="work-meta">
@@ -86,7 +92,10 @@
           <article class="work-item" role="listitem" style="--accent:var(--sky)">
             <a href="films/starry-friends.html" class="work-link">
               <div class="work-media">
-                <img src="images/work/work-starry-friends.png" alt="Flat fox and bunny under a starry night sky" width="800" height="800" loading="lazy">
+                <picture>
+                  <source srcset="images/work/work-starry-friends.webp" type="image/webp">
+                  <img src="images/work/work-starry-friends.jpg" alt="Flat fox and bunny under a starry night sky" width="900" height="900" loading="lazy">
+                </picture>
                 <span class="work-play" aria-hidden="true"></span>
               </div>
               <div class="work-meta">
@@ -99,7 +108,10 @@
           <article class="work-item" role="listitem" style="--accent:var(--orange)">
             <a href="films/lemon-bus.html" class="work-link">
               <div class="work-media">
-                <img src="images/work/work-lemon-bus.png" alt="Flat lemon-shaped school bus in a colorful town" width="800" height="800" loading="lazy">
+                <picture>
+                  <source srcset="images/work/work-lemon-bus.webp" type="image/webp">
+                  <img src="images/work/work-lemon-bus.jpg" alt="Flat lemon-shaped school bus in a colorful town" width="900" height="900" loading="lazy">
+                </picture>
                 <span class="work-play" aria-hidden="true"></span>
               </div>
               <div class="work-meta">
@@ -112,7 +124,10 @@
           <article class="work-item" role="listitem" style="--accent:var(--leaf)">
             <a href="films/storybook-magic.html" class="work-link">
               <div class="work-media">
-                <img src="images/work/work-storybook-magic.png" alt="Child opening a glowing storybook with flat magical creatures" width="800" height="800" loading="lazy">
+                <picture>
+                  <source srcset="images/work/work-storybook-magic.webp" type="image/webp">
+                  <img src="images/work/work-storybook-magic.jpg" alt="Child opening a glowing storybook with flat magical creatures" width="900" height="900" loading="lazy">
+                </picture>
                 <span class="work-play" aria-hidden="true"></span>
               </div>
               <div class="work-meta">
@@ -132,13 +147,16 @@
           <p>A quick taste of flat character acting, bold color, and kid-forward storytelling.</p>
         </header>
         <div class="reel-stage">
-          <img src="images/reel-banner.png" alt="Flat 2D showreel collage of kids animation frames" width="1600" height="900" loading="lazy">
+          <picture>
+            <source srcset="images/reel-banner.webp" type="image/webp">
+            <img src="images/reel-banner.jpg" alt="Flat 2D showreel collage of kids animation frames" width="1600" height="1067" loading="lazy">
+          </picture>
           <button
             type="button"
             class="reel-play"
             data-open-video
             data-video-title="Playhouse Animation Showreel"
-            data-poster="images/reel-banner.png"
+            data-poster="images/reel-banner.jpg"
             data-video-message="Showreel trailer"
             aria-label="Play showreel"
           >
@@ -150,7 +168,6 @@
             <span>2D · Character · Color · Joy · 2D · Character · Color · Joy ·</span>
           </div>
         </div>
-        <p class="reel-note">Tip: add <code>data-youtube="YOUR_ID"</code> or <code>data-vimeo="YOUR_ID"</code> on the Watch reel button to embed your real reel.</p>
       </div>
     </section>
 
@@ -247,6 +264,7 @@
         </div>
 
         <form class="contact-form" id="contact-form" novalidate>
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="hp-field" aria-hidden="true">
           <div class="field">
             <label for="name">Name</label>
             <input id="name" name="name" type="text" autocomplete="name" required placeholder="Your name">
@@ -259,7 +277,7 @@
             <label for="message">Project</label>
             <textarea id="message" name="message" rows="5" required placeholder="Age range, format, timeline, and the feeling you want…"></textarea>
           </div>
-          <button type="submit" class="btn btn-primary">Send a note</button>
+          <button type="submit" class="btn btn-primary" data-submit-btn>Send a note</button>
           <p class="form-status" data-form-status role="status" aria-live="polite"></p>
         </form>
       </div>
@@ -285,6 +303,7 @@
     </div>
   </footer>
 
+  <script src="config.js"></script>
   <script src="main.js"></script>
 </body>
 </html>

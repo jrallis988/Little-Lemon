@@ -5,6 +5,7 @@
   "description": "Playhouse Animation — 2D kids animation portfolio",
   "scripts": {
     "start": "npx --yes serve -l 3000",
-    "dev": "npx --yes serve -l 3000"
+    "dev": "npx --yes serve -l 3000",
+    "deploy": "npx --yes wrangler@4 pages deploy . --project-name playhouse-animation"
   }
 }

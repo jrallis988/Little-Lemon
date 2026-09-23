@@ -279,9 +279,13 @@ h1, h2, h3 {
   inset: 0;
 }
 
-.hero-img {
+.hero-img,
+.hero-visual picture {
   width: 100%;
   height: 100%;
+}
+
+.hero-img {
   object-fit: cover;
   object-position: center 45%;
   image-rendering: auto;
@@ -434,9 +438,13 @@ h1, h2, h3 {
   box-shadow: 0 6px 0 rgba(42, 42, 42, 0.12);
 }
 
-.work-media img {
+.work-media img,
+.work-media picture {
   width: 100%;
   height: 100%;
+}
+
+.work-media img {
   object-fit: cover;
   transition: transform 0.55s var(--ease);
 }
@@ -502,10 +510,13 @@ h1, h2, h3 {
   background: var(--ink);
 }
 
-.reel-stage > img {
+.reel-stage > img,
+.reel-stage > picture,
+.reel-stage > picture img {
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
+  display: block;
 }
 
 .reel-play {
@@ -782,6 +793,15 @@ h1, h2, h3 {
   font-weight: 800;
   color: var(--leaf);
   min-height: 1.4em;
+}
+
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .contact-success {
