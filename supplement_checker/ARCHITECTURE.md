@@ -104,6 +104,13 @@ supplement_checker/
   ARCHITECTURE.md          ← this file
   profile_ingestion.py     ← HealthProfile + history sources
   access_control.py        ← profile_verified gate
+  legal_notice.py          ← Gaps & Knowledge Limits acceptance
+  data_gaps.py             ← unindexed ingredient hard stop
+  storage.py               ← SQLite / D1-compatible persistence
+  object_store.py          ← local R2 stand-in
+  vision_ocr.py            ← multimodal label OCR
+  literature.py            ← PubMed / NCBI lookup
+  compare_engine.py        ← profile × ingredient findings
   api/                     ← FastAPI application
   cloudflare/              ← D1 schema, wrangler, R2 notes
   streamlit_app.py         ← local prototype UI (gated)

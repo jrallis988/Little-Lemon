@@ -20,15 +20,33 @@ Unindexed OCR ingredients hard-stop via `data_gaps.py` with:
 
 > Data Gap Identified: This ingredient or dosage lacks sufficient indexed human research literature...
 
+## Intelligence pipeline (v0.3)
+
+| Module | Role |
+| --- | --- |
+| `storage.py` | SQLite persistence matching D1 schema |
+| `object_store.py` | Local R2 stand-in for medical PDFs / label images |
+| `vision_ocr.py` | Label OCR (demo, or OpenAI / Anthropic with API keys) |
+| `literature.py` | PubMed/NCBI E-utilities + offline fallback |
+| `compare_engine.py` | Profile × ingredients findings with citations |
+
+```bash
+# optional live providers
+export OPENAI_API_KEY=...          # or ANTHROPIC_API_KEY
+export NCBI_EMAIL=you@example.com  # recommended for PubMed
+export SUPPLEMENT_OCR_MODE=demo    # force demo OCR
+```
+
 ## Stack
 
 | Layer | Tech |
 | --- | --- |
 | API | Python / FastAPI (`api/main.py`) |
 | Edge / data | Cloudflare Pages/Workers, D1, R2 (`cloudflare/`) |
+| Local persistence | SQLite + filesystem object store (D1/R2 stand-ins) |
 | Prototype UI | Streamlit multipage (gated) |
 | Production UI | React Native / Flutter clinical dashboard (planned) |
-| Intelligence | Vision LLMs + PubMed/NCBI (planned) |
+| Intelligence | Vision OCR + PubMed (live keys optional; demo fallback) |
 
 ## Setup
 

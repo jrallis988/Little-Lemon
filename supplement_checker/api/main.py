@@ -5,6 +5,9 @@ Gates (in order):
   1. Gaps & Knowledge Limits notice acceptance (before history upload / scan)
   2. profile_verified=True (before analysis)
   3. Data-gap hard stop for unindexed ingredients (no speculation)
+
+Persistence: SQLite (local) matching Cloudflare D1 schema.
+Objects: local filesystem stand-in for R2.
 """
 
 from __future__ import annotations
@@ -12,7 +15,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 from typing import Any
 
-from fastapi import Depends, FastAPI, Header, HTTPException, status
+from fastapi import Depends, FastAPI, File, Form, Header, HTTPException, UploadFile, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field, field_validator
 
@@ -23,10 +26,7 @@ from supplement_checker.access_control import (
     assert_profile_verified,
     evaluate_verification,
 )
-from supplement_checker.data_gaps import (
-    DATA_GAP_UI_MESSAGE,
-    evaluate_ingredients_with_gap_stops,
-)
+from supplement_checker.compare_engine import compare_profile_to_ingredients
 from supplement_checker.legal_notice import (
     NOTICE_VERSION,
     TermsAcceptance,
@@ -35,6 +35,8 @@ from supplement_checker.legal_notice import (
     build_terms_acceptance,
     terms_payload,
 )
+from supplement_checker.literature import query_literature
+from supplement_checker.object_store import get_object_store
 from supplement_checker.profile_ingestion import (
     HealthProfile,
     HistorySource,
@@ -45,6 +47,11 @@ from supplement_checker.profile_ingestion import (
     ingest_profile,
     profile_to_storage_dict,
 )
+from supplement_checker.storage import get_store
+from supplement_checker.vision_ocr import (
+    extract_label_from_bytes,
+    extraction_to_dicts,
+)
 
 app = FastAPI(
     title="Supplement Research Platform API",
@@ -53,7 +60,7 @@ app = FastAPI(
         "Not a medical device or diagnostic tool. "
         "Requires Gaps & Knowledge Limits acceptance, then profile_verified=True."
     ),
-    version="0.2.0",
+    version="0.3.0",
 )
 
 app.add_middleware(
@@ -63,10 +70,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-_PROFILES: dict[str, dict[str, Any]] = {}
-# session_id / client_id → TermsAcceptance dict
-_TERMS: dict[str, dict[str, Any]] = {}
 
 
 class DocumentMetadataIn(BaseModel):
@@ -97,12 +100,9 @@ class HealthSyncIn(BaseModel):
         return value
 
 
-class LabelScanIn(BaseModel):
-    r2_object_key: str = Field(..., description="R2 key for label image")
-
-
 class CompareIn(BaseModel):
     ingredients: list[dict[str, Any]] = Field(default_factory=list)
+    use_live_literature: bool = True
 
 
 class TermsAcceptIn(BaseModel):
@@ -129,8 +129,9 @@ def _client_id(
 
 
 def require_terms(client_id: str = Depends(_client_id)) -> TermsAcceptance:
+    store = get_store()
     try:
-        return assert_terms_accepted(_TERMS.get(client_id))
+        return assert_terms_accepted(store.get_terms(client_id))
     except TermsNotAcceptedError as exc:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
@@ -143,10 +144,10 @@ def require_terms(client_id: str = Depends(_client_id)) -> TermsAcceptance:
 
 
 def _get_profile_or_404(profile_id: str) -> HealthProfile:
-    raw = _PROFILES.get(profile_id)
-    if not raw:
+    profile = get_store().get_profile(profile_id)
+    if not profile:
         raise HTTPException(status_code=404, detail="Profile not found")
-    return ingest_profile(raw, trust_verified_flag=True)
+    return profile
 
 
 def require_verified_profile(profile_id: str) -> HealthProfile:
@@ -165,19 +166,22 @@ def require_verified_profile(profile_id: str) -> HealthProfile:
 
 
 @app.get("/health")
-def health() -> dict[str, str]:
-    return {"status": "ok", "service": "supplement-research-api"}
+def health() -> dict[str, Any]:
+    return {
+        "status": "ok",
+        "service": "supplement-research-api",
+        "version": "0.3.0",
+        "persistence": "sqlite",
+    }
 
 
 @app.get("/legal/notice")
 def get_legal_notice() -> dict[str, Any]:
-    """Public Gaps & Knowledge Limits notice for mandatory UI gate."""
     return terms_payload()
 
 
 @app.post("/legal/accept")
 def accept_legal_notice(body: TermsAcceptIn) -> dict[str, Any]:
-    """Record un-skippable notice acceptance for a client session."""
     try:
         acceptance = build_terms_acceptance(
             accepted=body.accepted,
@@ -188,20 +192,21 @@ def accept_legal_notice(body: TermsAcceptIn) -> dict[str, Any]:
             status_code=status.HTTP_400_BAD_REQUEST,
             detail={"error": "terms_checkbox_required", "message": str(exc)},
         ) from exc
-    _TERMS[body.client_id] = acceptance.model_dump(mode="json")
+    record = acceptance.model_dump(mode="json")
+    get_store().save_terms(body.client_id, record)
     return {
         "accepted": True,
         "notice_version": NOTICE_VERSION,
         "client_id": body.client_id,
-        "record": _TERMS[body.client_id],
+        "record": record,
     }
 
 
 @app.post("/profiles", status_code=201)
 def create_profile(body: ProfileCreateIn) -> dict[str, Any]:
-    """Create profile — blocked until Gaps & Knowledge Limits notice is accepted."""
+    store = get_store()
     try:
-        assert_terms_accepted(_TERMS.get(body.client_id))
+        assert_terms_accepted(store.get_terms(body.client_id))
     except TermsNotAcceptedError as exc:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
@@ -224,7 +229,7 @@ def create_profile(body: ProfileCreateIn) -> dict[str, Any]:
     if ok:
         profile.verification_status = VerificationStatus.PENDING_REVIEW
 
-    _PROFILES[profile.profile_id] = profile_to_storage_dict(profile)
+    store.save_profile(profile)
     return {
         "profile": profile.summary(),
         "analysis_allowed": analysis_allowed(profile),
@@ -247,7 +252,7 @@ def attach_document(
     body: DocumentMetadataIn,
     _: TermsAcceptance = Depends(require_terms),
 ) -> dict[str, Any]:
-    """Register medical PDF metadata — requires prior notice acceptance."""
+    store = get_store()
     profile = _get_profile_or_404(profile_id)
     profile.history_sources.append(
         HistorySource(
@@ -259,10 +264,52 @@ def attach_document(
     )
     profile.touch()
     profile.verification_status = VerificationStatus.PENDING_REVIEW
-    _PROFILES[profile.profile_id] = profile_to_storage_dict(profile)
+    store.save_profile(profile)
     return {
         "profile": profile.summary(),
         "history_sources": len(profile.history_sources),
+    }
+
+
+@app.post("/profiles/{profile_id}/documents/upload")
+async def upload_document(
+    profile_id: str,
+    _: TermsAcceptance = Depends(require_terms),
+    file: UploadFile = File(...),
+    label: str | None = None,
+) -> dict[str, Any]:
+    """Upload a medical PDF/file into the object store and attach metadata."""
+    store = get_store()
+    objects = get_object_store()
+    profile = _get_profile_or_404(profile_id)
+    data = await file.read()
+    if not data:
+        raise HTTPException(status_code=400, detail="Empty upload")
+    key = objects.put_bytes(
+        prefix="medical",
+        filename=file.filename or "record.pdf",
+        data=data,
+        profile_id=profile_id,
+    )
+    source_type = (
+        HistorySourceType.MEDICAL_PDF
+        if (file.filename or "").lower().endswith(".pdf")
+        else HistorySourceType.FILE_UPLOAD
+    )
+    profile.history_sources.append(
+        HistorySource(
+            source_type=source_type,
+            label=label or file.filename,
+            r2_object_key=key,
+        )
+    )
+    profile.touch()
+    profile.verification_status = VerificationStatus.PENDING_REVIEW
+    store.save_profile(profile)
+    return {
+        "profile": profile.summary(),
+        "r2_object_key": key,
+        "bytes": len(data),
     }
 
 
@@ -272,6 +319,7 @@ def health_sync(
     body: HealthSyncIn,
     _: TermsAcceptance = Depends(require_terms),
 ) -> dict[str, Any]:
+    store = get_store()
     profile = _get_profile_or_404(profile_id)
     profile.history_sources.append(
         HistorySource(
@@ -282,7 +330,7 @@ def health_sync(
         )
     )
     profile.touch()
-    _PROFILES[profile.profile_id] = profile_to_storage_dict(profile)
+    store.save_profile(profile)
     return {"profile": profile.summary(), "synced": body.provider.value}
 
 
@@ -291,9 +339,10 @@ def verify_profile(
     profile_id: str,
     _: TermsAcceptance = Depends(require_terms),
 ) -> dict[str, Any]:
+    store = get_store()
     profile = _get_profile_or_404(profile_id)
     profile = apply_verification_state(profile)
-    _PROFILES[profile.profile_id] = profile_to_storage_dict(profile)
+    store.save_profile(profile)
     if not profile.profile_verified:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
@@ -311,18 +360,83 @@ def verify_profile(
 
 
 @app.post("/labels/scan/{profile_id}")
-def scan_label_for_profile(
-    body: LabelScanIn,
+async def scan_label_for_profile(
+    profile_id: str,
     profile: HealthProfile = Depends(require_verified_profile),
     _: TermsAcceptance = Depends(require_terms),
+    file: UploadFile | None = File(default=None),
+    r2_object_key: str | None = Form(default=None),
 ) -> dict[str, Any]:
-    """Vision OCR entrypoint — requires terms + verified profile."""
-    return {
-        "status": "accepted",
-        "profile_id": profile.profile_id,
-        "r2_object_key": body.r2_object_key,
-        "message": "Vision OCR pipeline stub — legal + profile gates passed.",
-    }
+    """
+    Vision OCR entrypoint.
+
+    Accepts multipart image upload and/or an existing object key.
+    Without an API key, returns structured demo extraction.
+    """
+    store = get_store()
+    objects = get_object_store()
+    job_id = store.create_job(
+        profile_id=profile.profile_id,
+        job_type="label_scan",
+        input_data={"filename": file.filename if file else None},
+    )
+
+    try:
+        image_bytes: bytes | None = None
+        object_key: str | None = r2_object_key
+        content_type = file.content_type if file else None
+
+        if file is not None:
+            image_bytes = await file.read()
+            if not image_bytes:
+                raise HTTPException(status_code=400, detail="Empty label image")
+            object_key = objects.put_bytes(
+                prefix="labels",
+                filename=file.filename or "label.jpg",
+                data=image_bytes,
+                profile_id=profile.profile_id,
+            )
+        elif object_key:
+            image_bytes = objects.get_bytes(object_key)
+            if image_bytes is None:
+                raise HTTPException(status_code=404, detail="Label object not found")
+        else:
+            # No file provided — demo extraction still allowed for verified profiles.
+            image_bytes = b""
+
+        if image_bytes:
+            extraction = extract_label_from_bytes(
+                image_bytes,
+                filename=file.filename if file else object_key,
+                content_type=content_type,
+            )
+        else:
+            extraction = extract_label_from_bytes(b"", filename="demo")
+
+        result = {
+            "status": "completed",
+            "job_id": job_id,
+            "profile_id": profile.profile_id,
+            "r2_object_key": object_key,
+            "provider": extraction.provider,
+            "product_name": extraction.product_name,
+            "serving_size": extraction.serving_size,
+            "confidence": extraction.confidence,
+            "ingredients": extraction_to_dicts(extraction),
+            "message": (
+                "Vision OCR completed."
+                if extraction.provider != "demo"
+                else "Demo OCR used (set OPENAI_API_KEY or ANTHROPIC_API_KEY for live vision)."
+            ),
+        }
+        store.complete_job(job_id, result=result)
+        return result
+    except HTTPException:
+        store.complete_job(job_id, error="http_error")
+        raise
+    except Exception as exc:  # noqa: BLE001 — surface OCR failures cleanly
+        store.complete_job(job_id, error=str(exc))
+        raise HTTPException(status_code=502, detail=f"OCR failed: {exc}") from exc
 
 
 @app.post("/compare/{profile_id}")
@@ -331,49 +445,64 @@ def compare_ingredients(
     profile: HealthProfile = Depends(require_verified_profile),
     _: TermsAcceptance = Depends(require_terms),
 ) -> dict[str, Any]:
-    """
-    Literature-backed comparison.
-
-    Unindexed ingredients trigger a hard data-gap stop — no speculative
-    safety or mechanistic evaluation is returned for those items.
-    """
-    gap_result = evaluate_ingredients_with_gap_stops(body.ingredients)
-    return {
-        "status": "completed_with_gaps" if gap_result["data_gaps"] else "completed",
-        "profile_id": profile.profile_id,
-        "risk_tokens": sorted(profile.risk_tokens()),
-        "evaluable_ingredients": gap_result["evaluable_ingredients"],
-        "data_gaps": gap_result["data_gaps"],
-        "evaluation_blocked_for_gaps": gap_result["evaluation_blocked_for_gaps"],
-        "data_gap_notice": DATA_GAP_UI_MESSAGE if gap_result["data_gaps"] else None,
-        "message": (
-            "Comparison ran only on ingredients with sufficient indexed literature. "
-            "Unindexed items received an explicit Data Gap Identified hard stop."
-        ),
-    }
+    store = get_store()
+    job_id = store.create_job(
+        profile_id=profile.profile_id,
+        job_type="compare",
+        input_data={"ingredient_count": len(body.ingredients)},
+    )
+    result = compare_profile_to_ingredients(
+        profile,
+        body.ingredients,
+        use_live_literature=body.use_live_literature,
+    )
+    result["job_id"] = job_id
+    store.complete_job(job_id, result=result)
+    return result
 
 
-@app.post("/literature/{profile_id}")
+@app.get("/literature/{profile_id}")
 def literature_query(
+    profile_id: str,
     query: str,
     profile: HealthProfile = Depends(require_verified_profile),
     _: TermsAcceptance = Depends(require_terms),
 ) -> dict[str, Any]:
-    return {
-        "status": "accepted",
+    store = get_store()
+    job_id = store.create_job(
+        profile_id=profile.profile_id,
+        job_type="literature",
+        input_data={"query": query},
+    )
+    lit = query_literature(query)
+    result = {
+        "status": "completed",
+        "job_id": job_id,
         "profile_id": profile.profile_id,
-        "query": query,
-        "message": "PubMed/NCBI query stub — legal + profile gates passed.",
+        **lit,
+        "disclaimer": (
+            "Literature aggregation only — not a medical device or diagnostic tool."
+        ),
     }
+    store.complete_job(job_id, result=result)
+    return result
+
+
+@app.get("/jobs/{job_id}")
+def get_job(job_id: str) -> dict[str, Any]:
+    job = get_store().get_job(job_id)
+    if not job:
+        raise HTTPException(status_code=404, detail="Job not found")
+    return job
 
 
 @app.post("/demo/seed")
 def seed_demo(verified: bool = False) -> dict[str, Any]:
-    """Dev helper: seed example profile (does not bypass terms for other routes)."""
+    store = get_store()
     profile = example_profile()
     if verified:
         profile = apply_verification_state(profile)
-    _PROFILES[profile.profile_id] = profile_to_storage_dict(profile)
+    store.save_profile(profile)
     return {
         "profile": profile.summary(),
         "analysis_allowed": analysis_allowed(profile),
