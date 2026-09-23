@@ -30,6 +30,14 @@ Analytics scripts load only after the visitor accepts analytics cookies.
   - Send one real test inquiry from the live site
   - Complete Formsubmit’s confirmation email the first time
 
+## Next 3 steps (do these in order)
+
+1. **Enable Pages** → [Settings → Pages](https://github.com/jrallis988/Little-Lemon/settings/pages) → Source: **GitHub Actions** → Save  
+2. **Confirm deploy** → open `https://jrallis988.github.io/Little-Lemon/` (workflow already builds this motel branch)  
+3. **Test the contact form** → send an inquiry; activate Formsubmit from the email to `seascapeinn@hotmail.com` if asked  
+
+Then point DNS for `seascapeinnhamptonnh.com` when you’re ready to replace the old site.
+
 ## Launch checklist
 
 ### Important: do not overwrite the portfolio on `main`
