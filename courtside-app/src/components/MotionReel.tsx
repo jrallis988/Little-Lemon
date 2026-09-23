@@ -99,7 +99,8 @@ export function MotionReel() {
               className="motion-reel__video"
               controls
               playsInline
-              poster={photos.actionDrive}
+              preload="metadata"
+              poster="./assets/motion/courtside-reel-poster.jpg"
               src="./assets/motion/courtside-reel.mp4"
             >
               Your browser does not support the video tag.

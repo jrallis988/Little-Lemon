@@ -21,3 +21,6 @@ Suggested contents:
 4. Statistic reveal
 5. Score / transition wipe
 6. End card — EVERY POSSESSION HAS A STORY.
+
+A starter web reel (`courtside-reel.mp4`) is included from the interactive motion prototype.
+Replace it anytime with your After Effects → Premiere export (same filename).
