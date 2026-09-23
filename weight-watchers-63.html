@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Weight Watchers 63 — independent conceptual redesign and product vision portfolio case study.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <title>Weight Watchers 63 · Artistic Fountain Case Study</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .case-hero {
+            padding: 8rem 1.5rem 4rem;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+        .case-hero h1 {
+            font-family: "Goudy Heavyface W01", Georgia, serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            line-height: 1.1;
+            margin: 0.5rem 0 1rem;
+        }
+        .case-meta {
+            display: grid;
+            gap: 1rem;
+            margin: 2rem 0;
+            padding: 1.25rem 0;
+            border-top: 1px solid rgba(0,0,0,0.08);
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+        .case-meta dt {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: #FF6B35;
+            margin: 0;
+        }
+        .case-meta dd {
+            margin: 0.25rem 0 0;
+            color: #333;
+            line-height: 1.5;
+        }
+        .case-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 2rem;
+        }
+        .case-note {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.6;
+        }
+        code {
+            font-size: 0.85em;
+            background: #f4f4f4;
+            padding: 0.15em 0.4em;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <header class="header">
+        <div class="logo">
+            <a href="index.html" class="logo-mark" aria-label="Artistic Fountain — home">
+                <span class="logo-line-1">Artistic</span>
+                <span class="logo-line-2">Fountain</span>
+            </a>
+        </div>
+        <nav aria-label="Primary">
+            <ul class="nav" id="main-nav">
+                <li><a href="index.html#portfolio">Portfolio</a></li>
+                <li><a href="nh-dmv/index.html">NH DMV</a></li>
+                <li><a href="blog/index.html">Blog</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main" class="case-hero">
+        <p style="font-size:0.75rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#FF6B35;margin:0;">
+            Portfolio case study · Concept
+        </p>
+        <h1>Weight Watchers 63</h1>
+        <p style="font-size:1.25rem;line-height:1.5;color:#444;margin:0;">
+            63 Years of You — an independent campaign and product-vision redesign.
+            Customer needs first. A clear look at where Weight Watchers goes next.
+        </p>
+
+        <dl class="case-meta">
+            <div>
+                <dt>Role</dt>
+                <dd>Product design, brand narrative, interaction design, and front-end implementation</dd>
+            </div>
+            <div>
+                <dt>Stack</dt>
+                <dd>Vite · React 18 · TypeScript · Tailwind · React Router</dd>
+            </div>
+            <div>
+                <dt>What I owned</dt>
+                <dd>Campaign homepage, guided Pathways → Life → Kitchen journey, onboarding + plan matrix, Find Your Year, case study packaging, and deploy config</dd>
+            </div>
+        </dl>
+
+        <p style="line-height:1.65;color:#333;">
+            Thesis: <em>63 years taught us something: there is no single way to get healthy.
+            So we’re building the next Weight Watchers around you.</em>
+        </p>
+        <p style="line-height:1.65;color:#333;">
+            Not affiliated with or commissioned by WeightWatchers.
+        </p>
+
+        <div class="case-actions">
+            <a class="cta-btn" href="#run-locally">Run the interactive prototype</a>
+            <a class="cta-btn cta-btn--soft" href="index.html#portfolio">Back to portfolio</a>
+        </div>
+
+        <div class="case-note" id="run-locally">
+            <p><strong>Local demo</strong></p>
+            <p>
+                The full interactive site lives in <code>ww63/</code>. From the repo root:
+            </p>
+            <p><code>cd ww63 && npm install && npm run dev</code></p>
+            <p>
+                Then open the local Vite URL (usually <code>http://localhost:5173</code>).
+                For a permanent public URL, deploy the <code>ww63/</code> folder to Vercel or Netlify
+                (Root Directory: <code>ww63</code>, set <code>VITE_SITE_URL</code>).
+            </p>
+        </div>
+    </main>
+</body>
+</html>
