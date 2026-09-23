@@ -1,15 +1,26 @@
 import { posters } from '../data/posters'
-import { Poster } from './Poster'
 import type { PosterId } from '../data/posters'
 
 interface RuleBreakersProps {
   onOpen: (id: PosterId) => void
 }
 
-export function RuleBreakers({ onOpen }: RuleBreakersProps) {
-  const drive = posters[2]
-  const strike = posters[3]
+const intensity = [
+  {
+    id: 'running' as PosterId,
+    title: 'DRIVE — Overload',
+    image: '/velocity/dist/posters/finished/intensity-drive-overload.jpg',
+    body: 'Oversized type exits the frame. Motion blur, scoreboard numerals, and a handwritten coaching note collide. The sprint is felt before it is read.',
+  },
+  {
+    id: 'soccer' as PosterId,
+    title: 'STRIKE — Collision Edit',
+    image: '/velocity/dist/posters/finished/intensity-strike-collision.jpg',
+    body: 'Halftone pressure, hard crop through letterforms, overlapping statistics. Impact as visual violence — still inside the black / white / red system.',
+  },
+]
 
+export function RuleBreakers({ onOpen }: RuleBreakersProps) {
   return (
     <section className="section" id="rule-breakers">
       <div className="section__inner">
@@ -21,55 +32,30 @@ export function RuleBreakers({ onOpen }: RuleBreakersProps) {
         </p>
 
         <div className="breaker-grid">
-          <article className="breaker">
-            <div className="breaker__art">
-              <Poster poster={drive} onOpen={onOpen} variant="aggressive" className="breaker__poster" />
-              <div className="breaker__overlay" aria-hidden>
-                <p className="breaker__mega">DRI</p>
-                <p className="breaker__mega breaker__mega--offset">VE</p>
-                <p className="breaker__stack">
-                  00:09.81
-                  <br />
-                  214 SPM
-                  <br />
-                  LANE 04
-                </p>
-                <p className="breaker__note">// COACH — hold form through 60m</p>
+          {intensity.map((piece) => (
+            <article className="breaker" key={piece.title}>
+              <button
+                type="button"
+                className="breaker__art breaker__art--finished"
+                onClick={() => onOpen(piece.id)}
+                aria-label={`Open ${piece.title}`}
+              >
+                <img src={piece.image} alt="" />
+              </button>
+              <div className="breaker__meta">
+                <h3>{piece.title}</h3>
+                <p>{piece.body}</p>
               </div>
-            </div>
-            <div className="breaker__meta">
-              <h3>DRIVE — Overload</h3>
-              <p>
-                Oversized type exits the frame. Motion blur, scoreboard numerals, and a handwritten
-                coaching note collide. The sprint is felt before it is read.
-              </p>
-            </div>
-          </article>
-
-          <article className="breaker">
-            <div className="breaker__art">
-              <Poster poster={strike} onOpen={onOpen} variant="aggressive" className="breaker__poster" />
-              <div className="breaker__overlay breaker__overlay--strike" aria-hidden>
-                <p className="breaker__mega breaker__mega--strike">STRIKE</p>
-                <p className="breaker__halftone" />
-                <p className="breaker__stack breaker__stack--right">
-                  118 km/h
-                  <br />
-                  CONTACT 0.012s
-                  <br />
-                  SPIN 2400
-                </p>
-              </div>
-            </div>
-            <div className="breaker__meta">
-              <h3>STRIKE — Collision Edit</h3>
-              <p>
-                Halftone pressure, hard crop through letterforms, overlapping statistics. Impact as
-                visual violence — still inside the black / white / red system.
-              </p>
-            </div>
-          </article>
+            </article>
+          ))}
         </div>
+
+        <p className="section__lead" style={{ marginTop: '2rem', marginBottom: 0 }}>
+          Series posters also exist as finished exports in{' '}
+          <code style={{ color: 'var(--signal)' }}>posters/finished/</code> — ready for lookbook and
+          print mockups.
+        </p>
+        <p className="sr-only">{posters[0].concept}</p>
       </div>
     </section>
   )

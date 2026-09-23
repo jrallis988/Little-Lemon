@@ -26,6 +26,7 @@ export interface Poster {
   stat: string
   statLabel: string
   image: string
+  finished: string
   accent: string
   explore: string[]
   composition: string
@@ -97,6 +98,7 @@ export const posters: Poster[] = [
     stat: '97 MPH',
     statLabel: 'Shot Velocity',
     image: '/velocity/dist/posters/hockey.jpg',
+    finished: '/velocity/dist/posters/finished/01-hockey-release.jpg',
     accent: '#7eb8c9',
     explore: ['Stick movement', 'Ice texture', 'Directional lines', 'Puck trajectory', 'Large typography'],
     composition:
@@ -120,6 +122,7 @@ export const posters: Poster[] = [
     stat: '42"',
     statLabel: 'Vertical Leap',
     image: '/velocity/dist/posters/basketball.jpg',
+    finished: '/velocity/dist/posters/finished/02-basketball-rise.jpg',
     accent: '#e87722',
     explore: ['Vertical composition', 'Height', 'Player silhouette', 'Court geometry', 'Oversized typography'],
     composition:
@@ -143,6 +146,7 @@ export const posters: Poster[] = [
     stat: '00:09.81',
     statLabel: '100m Split',
     image: '/velocity/dist/posters/running.jpg',
+    finished: '/velocity/dist/posters/finished/03-running-drive.jpg',
     accent: '#c8102e',
     explore: ['Horizontal movement', 'Motion', 'Track markings', 'Timing/numbers', 'Cropped typography'],
     composition:
@@ -166,6 +170,7 @@ export const posters: Poster[] = [
     stat: '118 km/h',
     statLabel: 'Strike Speed',
     image: '/velocity/dist/posters/soccer.jpg',
+    finished: '/velocity/dist/posters/finished/04-soccer-strike.jpg',
     accent: '#2f6b4f',
     explore: ['Ball trajectory', 'Player movement', 'Field geometry', 'Directional composition'],
     composition:
@@ -189,6 +194,7 @@ export const posters: Poster[] = [
     stat: '127 MPH',
     statLabel: 'Serve Speed',
     image: '/velocity/dist/posters/tennis.jpg',
+    finished: '/velocity/dist/posters/finished/05-tennis-impact.jpg',
     accent: '#d4e157',
     explore: ['Ball position', 'Racket movement', 'Court lines', 'Controlled negative space'],
     composition:
@@ -212,6 +218,7 @@ export const posters: Poster[] = [
     stat: '28 ft',
     statLabel: 'Air Height',
     image: '/velocity/dist/posters/snowboard.jpg',
+    finished: '/velocity/dist/posters/finished/06-snowboard-air.jpg',
     accent: '#9bb5c8',
     explore: ['Scale', 'Environment', 'Negative space', 'Height', 'Dramatic photography'],
     composition:

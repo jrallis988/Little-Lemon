@@ -5,6 +5,8 @@ interface PosterProps {
   onOpen?: (id: PosterData['id']) => void
   className?: string
   variant?: 'default' | 'aggressive'
+  /** Show baked finished artwork instead of live CSS layers */
+  mode?: 'layered' | 'finished'
 }
 
 function Graphics({ poster }: { poster: PosterData }) {
@@ -143,13 +145,45 @@ function Graphics({ poster }: { poster: PosterData }) {
   }
 }
 
-export function Poster({ poster, onOpen, className = '', variant = 'default' }: PosterProps) {
+export function Poster({
+  poster,
+  onOpen,
+  className = '',
+  variant = 'default',
+  mode = 'layered',
+}: PosterProps) {
+  const interactive = Boolean(onOpen)
+
+  if (mode === 'finished') {
+    return (
+      <article
+        className={`poster poster--finished ${className}`}
+        role={interactive ? 'button' : undefined}
+        tabIndex={interactive ? 0 : undefined}
+        onClick={onOpen ? () => onOpen(poster.id) : undefined}
+        onKeyDown={
+          onOpen
+            ? (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  onOpen(poster.id)
+                }
+              }
+            : undefined
+        }
+        aria-label={`${poster.sport} poster — ${poster.concept}`}
+      >
+        <img className="poster__finished" src={poster.finished} alt="" />
+      </article>
+    )
+  }
+
   return (
     <article
       className={`poster poster--${poster.id} poster--${variant} ${className}`}
       style={{ containerType: 'inline-size' }}
-      role={onOpen ? 'button' : undefined}
-      tabIndex={onOpen ? 0 : undefined}
+      role={interactive ? 'button' : undefined}
+      tabIndex={interactive ? 0 : undefined}
       onClick={onOpen ? () => onOpen(poster.id) : undefined}
       onKeyDown={
         onOpen

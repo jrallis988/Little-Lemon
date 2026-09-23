@@ -142,7 +142,15 @@ export function GraphicSystem() {
         <h2 className="section__title">Functional marks</h2>
         <p className="section__lead">
           Court lines, brackets, measurements, and diagrams communicate athlete data and movement —
-          not decoration that looks technical.
+          not decoration that looks technical. Download the SVG pack for Illustrator placement.
+        </p>
+        <p style={{ margin: '-1rem 0 2rem' }}>
+          <a
+            href="/velocity/dist/graphics/trajectory.svg"
+            style={{ fontFamily: 'var(--condensed)', letterSpacing: '0.12em', textTransform: 'uppercase', fontSize: '0.85rem', borderBottom: '1px solid currentColor', paddingBottom: '0.2rem' }}
+          >
+            Browse SVG marks in /graphics →
+          </a>
         </p>
         <div className="graphic-grid">
           {tiles.map((t) => (

@@ -3131,3 +3131,37 @@ a {
     animation: none !important;
   }
 }
+
+.poster--finished {
+  background: #050505;
+  cursor: pointer;
+}
+
+.poster--finished .poster__finished {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.breaker__art--finished {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: #050505;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.breaker__art--finished img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.45s var(--ease);
+}
+
+.breaker__art--finished:hover img {
+  transform: scale(1.02);
+}

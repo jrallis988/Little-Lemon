@@ -15,7 +15,7 @@ export function FinalCollection({ onOpen }: FinalCollectionProps) {
 
         <div className="final-row">
           {posters.map((poster) => (
-            <Poster key={poster.id} poster={poster} onOpen={onOpen} />
+            <Poster key={poster.id} poster={poster} onOpen={onOpen} mode="finished" />
           ))}
         </div>
 

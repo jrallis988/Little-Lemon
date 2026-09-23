@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" fill="none">
+  <path d="M30 130 H120 V40" stroke="#0a0a0a" stroke-width="2"/>
+  <path d="M120 130 A70 70 0 0 0 70 70" stroke="#c8102e" stroke-width="2"/>
+  <text x="70" y="118" font-family="Arial Narrow, sans-serif" font-size="22" fill="#c8102e">18°</text>
+</svg>

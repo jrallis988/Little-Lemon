@@ -31,4 +31,4 @@ Open the printable lookbook at `/velocity/dist/lookbook.html`, then use **Print 
 
 ## Still needed off-site
 
-Finished Photoshop composites, Illustrator vector marks, and a true InDesign package remain the primary craft deliverables. Swap finished art into `public/posters/` and rebuild.
+True Adobe Photoshop layered PSD masters and Illustrator `.ai` files remain the gold-standard craft deliverables. This repo now includes **finished poster JPG exports** in `public/posters/finished/` and an **SVG graphic mark pack** in `public/graphics/` as presentation stand-ins until the Adobe masters are swapped in.

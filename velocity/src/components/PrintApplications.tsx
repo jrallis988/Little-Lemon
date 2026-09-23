@@ -65,11 +65,11 @@ export function PrintApplications({ onOpen }: PrintApplicationsProps) {
                     </div>
                   ) : app.id === 'social' ? (
                     <div className="app-social">
-                      <img src={poster.image} alt="" />
+                      <img src={poster.finished} alt="" />
                       <p>{poster.concept}</p>
                     </div>
                   ) : (
-                    <Poster poster={poster} onOpen={onOpen} />
+                    <Poster poster={poster} onOpen={onOpen} mode="finished" />
                   )}
                 </div>
                 <p className="app-card__adapt">{app.adapt}</p>

@@ -21,7 +21,7 @@ export function PosterSeries({ onOpen }: PosterSeriesProps) {
           {posters.map((poster) => (
             <article className="poster-entry" key={poster.id}>
               <div className="poster-entry__art">
-                <Poster poster={poster} onOpen={onOpen} />
+                <Poster poster={poster} onOpen={onOpen} mode="finished" />
               </div>
               <div className="poster-entry__meta">
                 <p className="poster-entry__num">Poster {poster.number}</p>

@@ -35,10 +35,10 @@ export function Lookbook() {
                 <h4>{p.title}</h4>
                 <p>{p.sub}</p>
               </div>
-              {i === 3 && (
+                  {i === 3 && (
                 <div className="lookbook__thumbs" aria-hidden>
                   {posters.slice(0, 3).map((poster) => (
-                    <img key={poster.id} src={poster.image} alt="" />
+                    <img key={poster.id} src={poster.finished} alt="" />
                   ))}
                 </div>
               )}

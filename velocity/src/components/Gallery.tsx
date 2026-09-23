@@ -19,7 +19,7 @@ export function Gallery({ onOpen }: GalleryProps) {
         <div className="gallery-grid">
           {posters.map((poster) => (
             <div className="gallery-item" key={poster.id}>
-              <Poster poster={poster} onOpen={onOpen} />
+              <Poster poster={poster} onOpen={onOpen} mode="finished" />
             </div>
           ))}
         </div>

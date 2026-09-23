@@ -37,7 +37,7 @@ export function Lightbox({ id, onClose }: LightboxProps) {
         Close ✕
       </button>
       <div onClick={(e) => e.stopPropagation()}>
-        <Poster poster={poster} />
+        <Poster poster={poster} mode="finished" />
       </div>
     </div>
   )
