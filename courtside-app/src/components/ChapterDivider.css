@@ -1,0 +1,31 @@
+.chapter {
+  padding-block: var(--space-7) var(--space-5);
+  background: var(--cs-paper);
+  border-top: 1px solid var(--cs-line);
+}
+
+.chapter__inner {
+  display: grid;
+  gap: 0.35rem;
+  max-width: 40rem;
+}
+
+.chapter__num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  color: var(--cs-orange);
+}
+
+.chapter__label {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  max-width: 12ch;
+}
+
+.chapter__lede {
+  margin-top: 0.5rem;
+  color: var(--cs-fog);
+  font-size: 1.05rem;
+  max-width: 36rem;
+}

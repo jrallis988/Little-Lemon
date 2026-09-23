@@ -1,0 +1,50 @@
+:root {
+  /* COURTSIDE brand tokens — replaceable design system */
+  --cs-ink: #0e0e10;
+  --cs-ink-soft: #1a1a1e;
+  --cs-paper: #f7f7f5;
+  --cs-paper-dim: #ecece8;
+  --cs-orange: #ff3b00;
+  --cs-orange-deep: #c92e00;
+  --cs-signal: #b8ff3c;
+  --cs-fog: #8a8a90;
+  --cs-line: rgba(14, 14, 16, 0.12);
+  --cs-line-bright: rgba(255, 255, 255, 0.14);
+  --cs-white: #ffffff;
+  --cs-video: #080809;
+
+  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-brand: "Syne", sans-serif;
+  --font-body: "Manrope", system-ui, sans-serif;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+  --space-9: 7rem;
+
+  --radius-sm: 2px;
+  --radius-md: 6px;
+  --max: 1180px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-snap: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* Series accent variations within one brand */
+  --series-player: #ff3b00;
+  --series-film: #b8ff3c;
+  --series-lab: #3ecfff;
+  --series-gear: #ffb020;
+  --series-gameday: #ff3b00;
+  --series-culture: #e04dff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ease-out: linear;
+    --ease-snap: linear;
+  }
+}

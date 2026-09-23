@@ -1,0 +1,45 @@
+.gear-cats {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 1.25rem;
+}
+
+@media (min-width: 800px) {
+  .gear-cats {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+.gear-cat {
+  background: var(--cs-ink);
+  color: var(--cs-white);
+  padding: 0.85rem;
+  border-top: 3px solid var(--series-gear);
+}
+
+.gear-cat span {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.gear-cat strong {
+  display: block;
+  font-size: 1.8rem;
+  color: var(--cs-signal);
+  margin: 0.2rem 0 0.45rem;
+}
+
+.gear-cat__bar {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.gear-cat__bar i {
+  display: block;
+  height: 100%;
+  background: var(--cs-signal);
+}
