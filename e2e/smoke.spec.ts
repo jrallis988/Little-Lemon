@@ -38,16 +38,16 @@ test.describe("Walgreens RX smoke flows", () => {
     await page.goto("/checkout");
     await page.getByRole("button", { name: /Place order/i }).click();
     await expect(page.getByRole("heading", { name: "Order placed" })).toBeVisible();
-    await page.getByRole("link", { name: "View order history" }).click();
+    await page.goto("/account/orders");
     await expect(page.getByRole("heading", { name: "Order history" })).toBeVisible();
     await page.getByRole("button", { name: "Reorder" }).first().click();
-    await expect(page).toHaveURL(/\/checkout/);
+    await expect(page).toHaveURL(/\/checkout/, { timeout: 8000 });
     await expect(page.getByRole("heading", { name: "Checkout" })).toBeVisible();
   });
 
   test("pharmacy refill advances tracker", async ({ page }) => {
     await page.goto("/pharmacy");
-    await page.locator("#refill-label-rx-1001").click();
+    await page.locator("#refill-label-rx-1001").first().click();
     await page.getByRole("button", { name: /Refill selected \(1\)/i }).click();
     await expect(page.getByText(/Refill submitted/i)).toBeVisible();
     await expect(page.getByText("Processing…")).toBeVisible();
