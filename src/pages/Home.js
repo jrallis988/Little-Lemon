@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import {
+  APPLY_URL,
   focusAreas,
   reasons,
   newsItems,
@@ -78,9 +79,14 @@ function Home() {
             transfer programs on a full riverside campus.
           </p>
           <div className="hero__actions reveal reveal--delay-3">
-            <Link to="/admissions" className="btn btn--solid">
+            <a
+              className="btn btn--solid"
+              href={APPLY_URL}
+              target="_blank"
+              rel="noreferrer"
+            >
               Apply now
-            </Link>
+            </a>
             <a
               className="btn btn--ghost"
               href="https://ccsnhmaps.college-tour.com/maps/map.php?ID=6"

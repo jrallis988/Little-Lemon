@@ -60,8 +60,8 @@ function Events() {
         <div className="cta-band__inner">
           <h2>Can&apos;t make an event?</h2>
           <p>
-            Schedule a campus visit or take the virtual tour anytime — Admissions
-            is ready when you are.
+            Schedule a campus visit or take the virtual tour anytime —
+            Admissions is ready to help you plan your next step.
           </p>
           <div className="hero__actions">
             <Link to="/admissions" className="btn btn--solid">

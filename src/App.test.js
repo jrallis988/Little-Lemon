@@ -289,4 +289,79 @@ test("submits a valid admissions inquiry", async () => {
     expect(screen.getByText(/inquiry received/i)).toBeInTheDocument();
   });
   expect(global.fetch).toHaveBeenCalled();
+  expect(screen.queryByText(/saved locally for this demo/i)).not.toBeInTheDocument();
+});
+
+test("shows an error when inquiry submission fails", async () => {
+  global.fetch = jest.fn(() => Promise.reject(new Error("Network down")));
+
+  render(
+    <MemoryRouter initialEntries={["/admissions"]}>
+      <App />
+    </MemoryRouter>
+  );
+
+  fireEvent.change(screen.getByLabelText(/^first name$/i), {
+    target: { value: "Alex" },
+  });
+  fireEvent.change(screen.getByLabelText(/^last name$/i), {
+    target: { value: "Rivera" },
+  });
+  fireEvent.change(screen.getByLabelText(/^email$/i), {
+    target: { value: "alex@example.com" },
+  });
+  fireEvent.change(screen.getByLabelText(/program interest/i), {
+    target: { value: "Nursing" },
+  });
+  fireEvent.click(screen.getByRole("button", { name: /submit inquiry/i }));
+
+  await waitFor(() => {
+    expect(screen.getByRole("alert")).toHaveTextContent(/network down/i);
+  });
+  expect(screen.queryByText(/inquiry received/i)).not.toBeInTheDocument();
+});
+
+test("apply now opens the official CCSNH application", () => {
+  render(
+    <MemoryRouter>
+      <App />
+    </MemoryRouter>
+  );
+
+  const apply = screen.getAllByRole("link", { name: /^apply now$/i })[0];
+  expect(apply).toHaveAttribute(
+    "href",
+    expect.stringContaining("ccsnh.my.site.com/apply")
+  );
+});
+
+test("unknown routes render a 404 page", () => {
+  render(
+    <MemoryRouter initialEntries={["/this-page-does-not-exist"]}>
+      <App />
+    </MemoryRouter>
+  );
+
+  expect(
+    screen.getByRole("heading", { name: /page not found/i })
+  ).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: /back to home/i })).toBeInTheDocument();
+  expect(
+    screen.getByRole("link", { name: /browse programs/i })
+  ).toBeInTheDocument();
+});
+
+test("events page shows synced live calendar items", () => {
+  render(
+    <MemoryRouter initialEntries={["/events"]}>
+      <App />
+    </MemoryRouter>
+  );
+
+  expect(
+    screen.getByRole("heading", { name: /red cross blood drive/i })
+  ).toBeInTheDocument();
+  expect(
+    screen.getByRole("heading", { name: /financial aid friday/i })
+  ).toBeInTheDocument();
 });

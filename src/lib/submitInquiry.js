@@ -2,25 +2,23 @@ const FORM_EMAIL =
   process.env.REACT_APP_FORM_EMAIL || "NHTIadmissions@ccsnh.edu";
 
 export async function submitInquiry(values) {
+  if (values.company) {
+    // Honeypot filled — treat as spam without contacting the endpoint.
+    return { ok: true, spam: true };
+  }
+
   const endpoint =
     process.env.REACT_APP_FORM_ENDPOINT ||
     `https://formsubmit.co/ajax/${FORM_EMAIL}`;
 
+  const { company, ...fields } = values;
   const payload = {
-    ...values,
-    _subject: `NHTI website inquiry — ${values.interest || "General"}`,
+    ...fields,
+    _subject: `NHTI website inquiry — ${fields.interest || "General"}`,
     _template: "table",
     _captcha: "false",
+    _honey: "",
   };
-
-  // Keep a local copy for demos / offline review.
-  try {
-    const existing = JSON.parse(localStorage.getItem("nhtiInquiries") || "[]");
-    existing.push({ ...values, submittedAt: new Date().toISOString() });
-    localStorage.setItem("nhtiInquiries", JSON.stringify(existing.slice(-25)));
-  } catch {
-    // Ignore storage failures (private mode, etc.)
-  }
 
   const response = await fetch(endpoint, {
     method: "POST",

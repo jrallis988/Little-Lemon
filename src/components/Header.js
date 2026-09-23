@@ -44,6 +44,10 @@ const navItems = [
     children: [
       { label: "How to Apply", to: "/admissions" },
       {
+        label: "Apply Online",
+        href: "https://ccsnh.my.site.com/apply/TX_SiteLogin?startURL=%2Fapply%2FTargetX_Portal__PB",
+      },
+      {
         label: "Admissions Events",
         href: "https://www.nhti.edu/admissions/events/",
       },

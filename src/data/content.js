@@ -2,6 +2,10 @@ import programsData from "./programs.generated.json";
 import newsData from "./news.generated.json";
 import eventsData from "./events.generated.json";
 
+/** Official CCSNH / NHTI online application portal */
+export const APPLY_URL =
+  "https://ccsnh.my.site.com/apply/TX_SiteLogin?startURL=%2Fapply%2FTargetX_Portal__PB";
+
 export const focusAreas = [
   {
     id: "healthcare",

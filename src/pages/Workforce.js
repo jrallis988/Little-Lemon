@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { APPLY_URL } from "../data/content";
 import usePageMeta from "../hooks/usePageMeta";
 
 const pathways = [
@@ -82,9 +83,14 @@ function Workforce() {
             <Link to="/academics" className="btn btn--solid">
               Academics
             </Link>
-            <Link to="/admissions" className="btn btn--ghost">
+            <a
+              className="btn btn--ghost"
+              href={APPLY_URL}
+              target="_blank"
+              rel="noreferrer"
+            >
               Apply now
-            </Link>
+            </a>
           </div>
         </div>
       </section>

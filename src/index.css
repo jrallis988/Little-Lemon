@@ -1448,6 +1448,29 @@ address {
   font-size: 0.95rem;
 }
 
+.form-error {
+  margin: 0 0 1rem;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid rgba(134, 38, 51, 0.35);
+  background: rgba(134, 38, 51, 0.08);
+  color: var(--maroon-deep);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.hp-field {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.page-hero__follow {
+  margin: 1rem 0 0;
+}
+
 .event-item__actions {
   display: grid;
   gap: 0.55rem;

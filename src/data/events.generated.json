@@ -1,62 +1,82 @@
 [
   {
-    "id": "open-house-fall",
-    "date": "2026-08-15",
-    "displayDate": "Aug 15, 2026",
-    "time": "10:00 a.m. \u2013 1:00 p.m.",
-    "title": "Fall Open House",
-    "location": "Student Center, Concord campus",
-    "summary": "Tour classrooms and residence halls, meet faculty, and get admissions and financial aid questions answered.",
-    "sourceUrl": "https://www.nhti.edu/events/"
+    "id": "red-cross-blood-drive",
+    "date": "2026-09-22",
+    "displayDate": "Sep 22, 2026",
+    "time": "12 p.m. \u2013 5 p.m.",
+    "title": "Red Cross Blood Drive",
+    "location": "Goldie Crocker Wellness Center Gymnasium",
+    "summary": "Please join us for a blood drive at NHTI in the Goldie Crocker Wellness Center Gymnasium. Sign up for an appointment.",
+    "sourceUrl": "https://www.nhti.edu/event/red-cross-blood-drive/"
   },
   {
-    "id": "nursing-info",
-    "date": "2026-08-27",
-    "displayDate": "Aug 27, 2026",
-    "time": "5:30 \u2013 6:30 p.m.",
-    "title": "Nursing Information Session",
-    "location": "Grappone Hall / Online hybrid",
-    "summary": "Learn about prerequisites, clinical expectations, and application timelines for Nursing pathways.",
-    "sourceUrl": "https://www.nhti.edu/events/"
+    "id": "paint-a-rock",
+    "date": "2026-09-23",
+    "displayDate": "Sep 23, 2026",
+    "time": "7:30 p.m. \u2013 8:30 p.m.",
+    "title": "Paint a Rock!",
+    "location": "NHTI Campus",
+    "summary": "Come hang out in the halls and paint a rock in Langley Upper B Lounge.",
+    "sourceUrl": "https://www.nhti.edu/event/paint-a-rock/"
   },
   {
-    "id": "lynx-welcome",
-    "date": "2026-09-03",
-    "displayDate": "Sep 3, 2026",
-    "time": "4:00 \u2013 6:00 p.m.",
-    "title": "Lynx Welcome Fair",
-    "location": "Campus Quad",
-    "summary": "Explore clubs, athletics, wellness resources, and student services as the semester begins.",
-    "sourceUrl": "https://www.nhti.edu/events/"
+    "id": "campus-manhunt-hide-n-seek",
+    "date": "2026-09-24",
+    "displayDate": "Sep 24, 2026",
+    "time": "8:30 p.m. \u2013 10 p.m.",
+    "title": "Campus \u201cManhunt\u201d (Hide n seek)",
+    "location": "NHTI campus",
+    "summary": "Students play a campus hide and seek game on 9/24 at 8:30PM. Meet in Parking Lot C (across from Langley). Chance to win a $25 Amazon Gift Card.",
+    "sourceUrl": "https://www.nhti.edu/event/campus-manhunt-hide-n-seek/"
   },
   {
-    "id": "transfer-day",
-    "date": "2026-09-18",
-    "displayDate": "Sep 18, 2026",
-    "time": "11:00 a.m. \u2013 2:00 p.m.",
-    "title": "Transfer Partner Day",
-    "location": "Little Hall",
-    "summary": "Meet representatives from UNH, SNHU, Plymouth State, Keene State, and other partner campuses.",
-    "sourceUrl": "https://www.nhti.edu/events/"
-  },
-  {
-    "id": "financial-aid-lab",
+    "id": "manhattan-short-film-festival",
     "date": "2026-09-25",
     "displayDate": "Sep 25, 2026",
-    "time": "3:00 \u2013 5:00 p.m.",
-    "title": "FAFSA & Financial Aid Lab",
-    "location": "Academic Center for Excellence",
-    "summary": "Get hands-on help completing FAFSA and understanding grants, scholarships, and award letters.",
-    "sourceUrl": "https://www.nhti.edu/events/"
+    "time": "12 a.m. \u2013 Sep 27",
+    "title": "Manhattan Short Film Festival",
+    "location": "NHTI Sweeney Auditorium",
+    "summary": "Film lovers are invited to the Sweeney Hall Auditorium on the NHTI campus to enjoy the Manhattan Short Film Festival and cast their votes for Best Film and Best Actor. Each screening includes all 10 finalist films and runs for approximately",
+    "sourceUrl": "https://www.nhti.edu/event/manhattan-short-film-festival/"
   },
   {
-    "id": "housing-preview",
-    "date": "2026-10-04",
-    "displayDate": "Oct 4, 2026",
-    "time": "1:00 \u2013 3:00 p.m.",
-    "title": "Residence Hall Preview",
-    "location": "Langley Hall",
-    "summary": "Walk through residence options and learn how on-campus living works at New Hampshire\u2019s only residential community college.",
-    "sourceUrl": "https://www.nhti.edu/events/"
+    "id": "2026-09-25",
+    "date": "2026-09-25",
+    "displayDate": "Sep 25, 2026",
+    "time": "9 a.m. \u2013 2 p.m.",
+    "title": "Financial Aid Friday",
+    "location": "Academic Center for Excellence (ACE)",
+    "summary": "Drop-in from 9 a.m. to 2 p.m. in the Academic Center for Excellence (ACE). No appointment required. Get help with the FAFSA, financial aid offers, and general financial aid questions with on-site support from Granite Edvance.",
+    "sourceUrl": "https://www.nhti.edu/event/financial-aid-friday-3/2026-09-25/"
+  },
+  {
+    "id": "diagnostic-medical-imaging-job-fair",
+    "date": "2026-10-01",
+    "displayDate": "Oct 1, 2026",
+    "time": "2 p.m. \u2013 4 p.m.",
+    "title": "Diagnostic Medical Imaging Job Fair",
+    "location": "Grappone Hall",
+    "summary": "This is a n etworking for prospective diagnostic medical imaging candidates. There will be representatives from local hospitals. Questions? Contact Halle Blomback at HBlomback@ccsnh.edu .",
+    "sourceUrl": "https://www.nhti.edu/event/diagnostic-medical-imaging-job-fair/"
+  },
+  {
+    "id": "white-lies-dance",
+    "date": "2026-10-01",
+    "displayDate": "Oct 1, 2026",
+    "time": "7 p.m. \u2013 9:30 p.m.",
+    "title": "White Lies Dance",
+    "location": "NHTI Student Center",
+    "summary": "Open to Commuters and Residents. On 10/1 at 7pm in the Student Center, come for music, pizza, dancing, and make your own \u201cwhite lies\u201d while supplies last!",
+    "sourceUrl": "https://www.nhti.edu/event/white-lies-dance/"
+  },
+  {
+    "id": "nhti-homecoming-golf-tournament",
+    "date": "2026-10-02",
+    "displayDate": "Oct 2, 2026",
+    "time": "1 p.m. \u2013 5 p.m.",
+    "title": "NHTI Homecoming Golf Tournament",
+    "location": "Beaver Meadow Golf Course",
+    "summary": "Join us for the NHTI Homecoming Golf Tournament on Friday, October 2 at Beaver Meadow Golf Course! Whether you\u2019re a seasoned golfer or simply looking for a fun afternoon with friends, all alumni, faculty, staff, students, and community memb",
+    "sourceUrl": "https://www.nhti.edu/event/nhti-homecoming-golf-tournament/"
   }
 ]

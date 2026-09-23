@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import {
+  APPLY_URL,
   admissionsSteps,
   aidChecklist,
   documentChecklist,
@@ -21,6 +22,7 @@ const initialForm = {
   housingInterest: "Not sure yet",
   visitInterest: "Yes — campus visit",
   message: "",
+  company: "",
 };
 
 function validate(values) {
@@ -52,7 +54,6 @@ function Admissions() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
-  const [delivery, setDelivery] = useState("network");
 
   const programOptions = useMemo(
     () => [...programs].sort((a, b) => a.name.localeCompare(b.name)),
@@ -74,15 +75,12 @@ function Admissions() {
     setSubmitting(true);
     try {
       await submitInquiry(values);
-      setDelivery("network");
       setSubmitted(true);
     } catch (error) {
-      // Still accept the inquiry locally so demos never hard-fail.
-      setDelivery("local");
-      setSubmitted(true);
+      setSubmitted(false);
       setSubmitError(
         error.message ||
-          "Network submit failed, so we saved your inquiry locally for follow-up."
+          "We couldn’t send your inquiry. Please try again or email NHTIadmissions@ccsnh.edu."
       );
     } finally {
       setSubmitting(false);
@@ -100,12 +98,17 @@ function Admissions() {
           real life.
         </p>
         <div className="hero__actions">
-          <a className="btn btn--solid" href="#inquiry-form">
-            Start an inquiry
+          <a
+            className="btn btn--solid"
+            href={APPLY_URL}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Apply now
           </a>
-          <Link to="/academics" className="btn btn--ghost-dark">
-            Find a program
-          </Link>
+          <a className="btn btn--ghost-dark" href="#inquiry-form">
+            Request info
+          </a>
         </div>
       </section>
 
@@ -168,11 +171,11 @@ function Admissions() {
             </ul>
             <a
               className="text-link"
-              href="https://www.nhti.edu/admissions/"
+              href={APPLY_URL}
               target="_blank"
               rel="noreferrer"
             >
-              Official NHTI application
+              Official CCSNH application
             </a>
           </div>
 
@@ -189,26 +192,51 @@ function Admissions() {
                 .
               </p>
               <p className="form-success__note">
-                {delivery === "network"
-                  ? "Your inquiry was submitted to Admissions."
-                  : "Saved locally for this demo session; configure REACT_APP_FORM_EMAIL to enable live email delivery."}
+                Your inquiry was submitted to Admissions. You can also finish the
+                official application anytime — still with a $0 fee.
               </p>
-              {submitError ? <p className="form-success__note">{submitError}</p> : null}
-              <button
-                type="button"
-                className="btn btn--solid"
-                onClick={() => {
-                  setSubmitted(false);
-                  setValues(initialForm);
-                  setErrors({});
-                  setSubmitError("");
-                }}
-              >
-                Submit another inquiry
-              </button>
+              <div className="hero__actions">
+                <a
+                  className="btn btn--solid"
+                  href={APPLY_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Continue to apply
+                </a>
+                <button
+                  type="button"
+                  className="btn btn--ghost-dark"
+                  onClick={() => {
+                    setSubmitted(false);
+                    setValues(initialForm);
+                    setErrors({});
+                    setSubmitError("");
+                  }}
+                >
+                  Submit another inquiry
+                </button>
+              </div>
             </div>
           ) : (
             <form className="inquiry-form" onSubmit={handleSubmit} noValidate>
+              <div className="hp-field" aria-hidden="true">
+                <label>
+                  Company
+                  <input
+                    tabIndex={-1}
+                    autoComplete="off"
+                    name="company"
+                    value={values.company}
+                    onChange={handleChange}
+                  />
+                </label>
+              </div>
+              {submitError ? (
+                <p className="form-error" role="alert">
+                  {submitError}
+                </p>
+              ) : null}
               <div className="form-row">
                 <label>
                   <span>First name</span>

@@ -3,7 +3,7 @@
  * Sync curated NHTI content snapshots.
  * Usage: node scripts/sync-nhti-content.mjs
  *
- * Pulls the public catalog degrees page + news RSS when reachable.
+ * Pulls catalog degrees, news RSS, and upcoming events from nhti.edu.
  */
 const fs = require("fs");
 const path = require("path");
@@ -16,12 +16,15 @@ function sh(cmd) {
   return execSync(cmd, { encoding: "utf8", maxBuffer: 20 * 1024 * 1024 });
 }
 
-console.log("Fetching catalog + news…");
+console.log("Fetching catalog + news + events…");
 sh(
   `curl -sL -A 'Mozilla/5.0' -o /tmp/nhti-degrees.html https://catalog.nhti.edu/degrees`
 );
 sh(
   `curl -sL -A 'Mozilla/5.0' -o /tmp/nhti-news.xml https://www.nhti.edu/news/feed/`
+);
+sh(
+  `curl -sL -A 'Mozilla/5.0 (compatible; NHTIBot/1.0)' -o /tmp/nhti-events.json "https://www.nhti.edu/wp-json/tribe/events/v1/events?per_page=8&status=publish"`
 );
 
 const py = `
@@ -68,7 +71,56 @@ for block in re.findall(r'<item>([\\s\\S]*?)</item>', xml)[:8]:
   dt=parsedate_to_datetime(pub)
   items.append({'id':link.rstrip('/').split('/')[-1],'date':dt.strftime('%Y-%m-%d'),'displayDate':f"{dt.strftime('%B')} {dt.day}, {dt.strftime('%Y')}",'title':title,'summary':desc[:240],'body':body,'image':image,'sourceUrl':link})
 Path('${outDir}/news.generated.json').write_text(json.dumps(items, indent=2))
-print('programs', len(programs), 'news', len(items))
+
+from datetime import datetime
+events_raw = json.loads(Path('/tmp/nhti-events.json').read_text(errors='ignore'))
+events = []
+for e in events_raw.get('events', [])[:8]:
+  title = html.unescape(e.get('title') or '').replace(chr(160), ' ').strip()
+  start = e.get('start_date') or ''
+  end = e.get('end_date') or start
+  try:
+    start_dt = datetime.strptime(start[:19], '%Y-%m-%d %H:%M:%S')
+  except Exception:
+    continue
+  try:
+    end_dt = datetime.strptime(end[:19], '%Y-%m-%d %H:%M:%S')
+  except Exception:
+    end_dt = start_dt
+  venue = e.get('venue') or {}
+  if isinstance(venue, list):
+    venue = venue[0] if venue else {}
+  location = (venue.get('venue') if isinstance(venue, dict) else '') or 'NHTI campus'
+  if isinstance(location, list) or not location:
+    location = 'NHTI campus'
+  summary = re.sub('<[^>]+>', ' ', html.unescape(e.get('description') or ''))
+  summary = re.sub(r'\s+', ' ', summary).strip()[:240]
+  def fmt_time(dt):
+    h = dt.strftime('%I').lstrip('0') or '0'
+    m = dt.strftime('%M')
+    ap = dt.strftime('%p').lower().replace('am','a.m.').replace('pm','p.m.')
+    return f'{h} {ap}' if m == '00' else f'{h}:{m} {ap}'
+  same_day = start_dt.date() == end_dt.date()
+  all_day = start_dt.hour == 0 and start_dt.minute == 0 and end_dt.hour == 23
+  if all_day and same_day:
+    time_label = 'All day'
+  elif same_day:
+    time_label = f'{fmt_time(start_dt)} – {fmt_time(end_dt)}'
+  else:
+    time_label = f'{fmt_time(start_dt)} – {end_dt.strftime("%b")} {end_dt.day}'
+  slug = (e.get('url') or title).rstrip('/').split('/')[-1] or f'event-{start_dt.strftime("%Y%m%d")}'
+  events.append({
+    'id': slug,
+    'date': start_dt.strftime('%Y-%m-%d'),
+    'displayDate': f'{start_dt.strftime("%b")} {start_dt.day}, {start_dt.year}',
+    'time': time_label,
+    'title': title,
+    'location': location,
+    'summary': summary or 'See the official NHTI events calendar for details.',
+    'sourceUrl': e.get('url') or 'https://www.nhti.edu/events/',
+  })
+Path('${outDir}/events.generated.json').write_text(json.dumps(events, indent=2))
+print('programs', len(programs), 'news', len(items), 'events', len(events))
 `;
 
 fs.writeFileSync("/tmp/nhti-sync-run.py", py);

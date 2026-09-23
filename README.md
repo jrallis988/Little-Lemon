@@ -29,7 +29,11 @@ REACT_APP_FORM_EMAIL=you@example.com
 REACT_APP_FORM_ENDPOINT=https://formsubmit.co/ajax/you@example.com
 ```
 
-On first live submit, FormSubmit may ask you to confirm the inbox.
+On first live submit, FormSubmit may ask you to confirm the inbox. Failed
+submissions surface an error in the form (no local demo fallback). A honeypot
+field filters basic spam.
+
+Primary **Apply now** buttons open the official CCSNH application portal.
 
 ## Deploy
 

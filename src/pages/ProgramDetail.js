@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import { getFocusTitle, getProgramById } from "../data/content";
+import { APPLY_URL, getFocusTitle, getProgramById } from "../data/content";
 import usePageMeta from "../hooks/usePageMeta";
 
 function ProgramDetail() {
@@ -34,22 +34,32 @@ function ProgramDetail() {
         <h1>{program.name}</h1>
         <p className="page-hero__lede">{program.summary}</p>
         <div className="hero__actions">
-          <Link
-            to="/admissions"
+          <a
             className="btn btn--solid"
+            href={APPLY_URL}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Apply now
+          </a>
+          <Link
+            to="/admissions#inquiry-form"
+            className="btn btn--ghost-dark"
             state={{ program: program.name }}
           >
-            Start application interest
+            Request info
           </Link>
+        </div>
+        <p className="page-hero__follow">
           <a
-            className="btn btn--ghost-dark"
+            className="text-link"
             href={program.catalogUrl}
             target="_blank"
             rel="noreferrer"
           >
             Official catalog
           </a>
-        </div>
+        </p>
       </section>
 
       <section className="section">
