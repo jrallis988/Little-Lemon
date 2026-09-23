@@ -204,8 +204,23 @@
 
   /* -------- Contact success + Formspree -------- */
   if (form) {
-    const showSuccess = () => {
+    const showSuccess = (mode = "live") => {
       form.hidden = true;
+      const title = success?.querySelector("[data-success-title]");
+      const body = success?.querySelector("[data-success-body]");
+      if (mode === "demo") {
+        if (title) title.textContent = "Got it — form is ready!";
+        if (body) {
+          body.textContent =
+            "Demo mode: your note wasn’t emailed yet. Add a Formspree URL to config.js → formEndpoint to deliver messages for real.";
+        }
+      } else {
+        if (title) title.textContent = "Note sent — thanks for writing!";
+        if (body) {
+          body.textContent =
+            "We’ll read your message and get back soon. In the meantime, peek at a film or the showreel.";
+        }
+      }
       if (success) {
         success.hidden = false;
         success.focus?.();
@@ -238,7 +253,7 @@
       // Honeypot: bots that fill hidden field get a fake success
       const gotcha = form.querySelector('[name="_gotcha"]');
       if (gotcha && gotcha.value) {
-        showSuccess();
+        showSuccess("live");
         form.reset();
         return;
       }
@@ -250,8 +265,7 @@
       }
 
       if (!endpoint) {
-        // Local/demo mode until Formspree endpoint is set in config.js
-        showSuccess();
+        showSuccess("demo");
         form.reset();
         return;
       }
@@ -265,7 +279,7 @@
           headers: { Accept: "application/json" },
         });
         if (!res.ok) throw new Error(`Form error ${res.status}`);
-        showSuccess();
+        showSuccess("live");
         form.reset();
       } catch (err) {
         if (status) {

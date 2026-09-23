@@ -1051,8 +1051,13 @@ h1, h2, h3 {
   background: var(--sky-soft);
 }
 
-.film-hero-media img {
+.film-hero-media img,
+.film-hero-media picture {
   width: 100%;
+  display: block;
+}
+
+.film-hero-media img {
   aspect-ratio: 1;
   object-fit: cover;
 }
@@ -1179,8 +1184,13 @@ h1, h2, h3 {
   box-shadow: 0 5px 0 rgba(42, 42, 42, 0.08);
 }
 
-.art-grid img {
+.art-grid img,
+.art-grid picture {
   width: 100%;
+  display: block;
+}
+
+.art-grid img {
   aspect-ratio: 1;
   object-fit: cover;
 }
@@ -1316,8 +1326,13 @@ h1, h2, h3 {
   font-size: 1.15rem;
 }
 
-.mini-film img {
+.mini-film img,
+.mini-film picture {
   width: 100%;
+  display: block;
+}
+
+.mini-film img {
   aspect-ratio: 1;
   object-fit: cover;
   border: 2.5px solid var(--outline);
