@@ -1,12 +1,20 @@
 import { SiteNav } from './components/layout/SiteNav'
 import { Section } from './components/layout/Section'
+import { CampaignMark, AdvertisingContrast } from './components/brand/CampaignMark'
 import { HeroFilm, CutdownSelector } from './components/motion/HeroFilm'
 import { AthleteIntro, PerformanceStat, ProductReveal } from './components/motion/AthleteProduct'
 import { AthleteProductBridge, KineticType, TransitionWipe } from './components/motion/BridgeType'
+import { ProductTurntable } from './components/motion/ProductTurntable'
 import { EndCard, SocialPromo } from './components/motion/Social'
 import { MotionPreviewer } from './components/tools/MotionPreviewer'
 import { AspectRatioPreviewer } from './components/tools/AspectRatioPreviewer'
 import { TemplateSystem } from './components/tools/TemplateSystem'
+import { TemplateStudio } from './components/tools/TemplateStudio'
+import { StyleFrameGallery } from './components/tools/StyleFrameGallery'
+import { StoryboardBoards } from './components/tools/StoryboardBoards'
+import { SocialFamilyGrid } from './components/tools/SocialFamilyGrid'
+import { ChannelMockups } from './components/tools/ChannelMockups'
+import { AeProcessPanels, DeliveryPackage } from './components/tools/AeProcess'
 import {
   aeTechniques,
   applications,
@@ -58,11 +66,13 @@ export default function App() {
           title="Challenge"
           lead="How do you communicate equipment performance through the actual experience of playing hockey?"
         >
+          <AdvertisingContrast />
+          <div className="divider-line" />
           <div className="grid-2">
             <p style={{ color: 'var(--shift-slate)', fontSize: '1.05rem' }}>
-              Sports motion often defaults to broadcast packaging — scores, lower thirds, network
-              opens. A hockey equipment brand needs something different: proof that gear answers
-              what happens during a shift.
+              Sports motion often defaults to broadcast packaging. A hockey equipment brand needs
+              proof that gear answers what happens during a shift — athlete action connected
+              directly to product benefit.
             </p>
             <div className="flow-chain" aria-label="Campaign relationship">
               <span>ATHLETE</span>
@@ -97,13 +107,14 @@ export default function App() {
           id="idea"
           kicker="03 · Campaign Idea"
           title="BUILT FOR THE SHIFT."
-          lead="Connect on-ice moments directly to athlete performance and equipment — acceleration, control, contact, shooting, recovery, immediate reaction."
+          lead="Connect on-ice moments directly to athlete performance and equipment."
         >
-          <div className="panel" style={{ padding: '1.25rem' }}>
-            <p className="tech" style={{ color: 'var(--shift-iceblue)', marginBottom: '0.75rem' }}>
+          <div className="panel panel--ink" style={{ padding: '1.25rem' }}>
+            <CampaignMark size="lg" />
+            <p className="tech" style={{ color: 'var(--shift-iceblue)', margin: '1.25rem 0 0.75rem' }}>
               CORE TRUTH
             </p>
-            <p style={{ fontSize: '1.15rem', maxWidth: '40rem' }}>
+            <p style={{ fontSize: '1.15rem', maxWidth: '40rem', color: 'var(--shift-frost)' }}>
               Every shift asks something different from the player. Their equipment has to answer
               every time.
             </p>
@@ -152,18 +163,19 @@ export default function App() {
               </p>
             </article>
             <article className="art-card">
-              <h3>Voice</h3>
-              <p>
-                Aggressive and athletic without defaulting to black-and-red broadcast chrome.
-              </p>
+              <h3>Campaign Lockup</h3>
+              <CampaignMark size="sm" />
             </article>
             <article className="art-card">
-              <h3>Brand Line</h3>
-              <div className="display" style={{ fontSize: '1.8rem' }}>
-                BUILT FOR THE SHIFT.
-              </div>
+              <h3>Voice</h3>
+              <p>Aggressive and athletic without defaulting to black-and-red broadcast chrome.</p>
             </article>
           </div>
+          <div className="divider-line" />
+          <h3 className="display" style={{ fontSize: '2rem', marginBottom: '1rem' }}>
+            Style Frames
+          </h3>
+          <StyleFrameGallery />
         </Section>
 
         <Section
@@ -241,9 +253,11 @@ export default function App() {
           id="product"
           kicker="09 · Product"
           title="Product Motion"
-          lead="Equipment as a campaign hero — rotation placeholders, macro detail, animated technical callouts."
+          lead="Equipment as a campaign hero — turntable, macro detail, exploded callouts."
         >
           <ProductReveal />
+          <div className="divider-line" />
+          <ProductTurntable />
         </Section>
 
         <Section
@@ -269,6 +283,8 @@ export default function App() {
               <span key={s}>{s}</span>
             ))}
           </div>
+          <SocialFamilyGrid />
+          <div className="divider-line" />
           <div className="grid-2">
             <SocialPromo ratio="9:16" />
             <EndCard />
@@ -287,7 +303,7 @@ export default function App() {
           lead="One creative idea expanded across a realistic media ecosystem."
           dark
         >
-          <div className="app-grid">
+          <div className="app-grid" style={{ marginBottom: '1.5rem' }}>
             {applications.map((a) => (
               <article key={a.id} className="app-item">
                 <span>CHANNEL</span>
@@ -296,6 +312,7 @@ export default function App() {
               </article>
             ))}
           </div>
+          <ChannelMockups />
         </Section>
 
         <Section
@@ -304,7 +321,7 @@ export default function App() {
           title="Storyboard"
           lead="Planning the athlete → product relationship before a single keyframe."
         >
-          <div className="story-flow">
+          <div className="story-flow" style={{ marginBottom: '1.25rem' }}>
             {storyboardBeats.map((b) => (
               <article key={b.step} className="story-beat">
                 <div className="step">{b.step}</div>
@@ -313,10 +330,11 @@ export default function App() {
               </article>
             ))}
           </div>
+          <StoryboardBoards />
           <div className="divider-line" />
           <div className="grid-2">
-            <div className="video-slot">Storyboard / style-frame placeholder</div>
             <div className="video-slot">Animatic placeholder · temp audio hits</div>
+            <div className="video-slot">AE export placeholder · shift_hero_30.mp4</div>
           </div>
         </Section>
 
@@ -334,10 +352,8 @@ export default function App() {
               </span>
             ))}
           </div>
-          <div className="grid-2">
-            <div className="video-slot">Timeline / Graph Editor capture placeholder</div>
-            <div className="video-slot">Tracking / mattes / pre-comp structure placeholder</div>
-          </div>
+          <AeProcessPanels />
+          <DeliveryPackage />
           <p className="placeholder-note">
             Premiere for edit assembly, audio, and final social/OLV exports. AE remains the primary
             motion application.
@@ -351,6 +367,8 @@ export default function App() {
           lead="Give me the athlete, footage, product, and performance story — the system builds around it."
         >
           <TemplateSystem />
+          <div className="divider-line" />
+          <TemplateStudio />
           <div className="divider-line" />
           <MotionPreviewer />
         </Section>
@@ -378,10 +396,8 @@ export default function App() {
           title="Everything originates from one line"
           lead="Hero film, social, athlete content, product video, paid, web, display, retail, arena, key art."
         >
-          <h3 className="display" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', marginBottom: '1rem' }}>
-            BUILT FOR THE SHIFT.
-          </h3>
-          <p style={{ color: 'var(--shift-slate)', maxWidth: '40rem' }}>
+          <CampaignMark size="lg" />
+          <p style={{ color: 'var(--shift-slate)', maxWidth: '40rem', marginTop: '1.25rem' }}>
             Prototypes here are structured for replacement with final After Effects and Premiere
             exports. Timing, hierarchy, and product storytelling stay consistent across every
             channel.
