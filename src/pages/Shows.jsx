@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { ShowPoster } from '../components/NickArt'
 import { shows } from '../data/content'
 
 const EPISODES = {
@@ -11,6 +12,17 @@ const EPISODES = {
   unfabulous: ['The Perfect Moment', 'The Little Sister'],
   icarly: ['iPilot', 'iWant More Viewers'],
   'hey-arnold': ['Downtown as Fruits', 'Helga on the Couch'],
+}
+
+const SHOW_EMOJI = {
+  spongebob: '🧽',
+  jimmy: '🧠',
+  catscratch: '🐱',
+  avatar: '🌀',
+  drake: '🎥',
+  unfabulous: '🎤',
+  icarly: '📱',
+  'hey-arnold': '🏈',
 }
 
 export function Shows() {
@@ -49,6 +61,11 @@ export function Shows() {
               className={`show-board__card${open ? ' is-open' : ''}`}
               style={{ background: show.tone }}
             >
+              <ShowPoster
+                title={show.title}
+                tone={show.tone}
+                emoji={SHOW_EMOJI[show.id] || '📺'}
+              />
               <span className="show-board__tag">{show.tag}</span>
               <h2>{show.title}</h2>
               <p>{show.blurb}</p>

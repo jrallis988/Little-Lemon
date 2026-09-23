@@ -1,7 +1,19 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { BoredomBuster, NicktaneBox } from '../components/Chaos'
+import { HeroMascot } from '../components/NickArt'
 import { games, latelyRows, poll, shopBits, shows, videos } from '../data/content'
+
+const SHOW_EMOJI_HOME = {
+  spongebob: '🧽',
+  jimmy: '🧠',
+  catscratch: '🐱',
+  avatar: '🌀',
+  drake: '🎥',
+  unfabulous: '🎤',
+  icarly: '📱',
+  'hey-arnold': '🏈',
+}
 
 export function Home() {
   const [vote, setVote] = useState(poll.options[0])
@@ -65,8 +77,8 @@ export function Home() {
           </div>
         </div>
         <div className="hero-feature__art" aria-hidden="true">
-          <span className="blob blob--brain">🧠</span>
-          <span className="blob blob--bug">🐛</span>
+          <HeroMascot kind="jimmy" />
+          <HeroMascot kind="slime" />
         </div>
       </section>
 
@@ -280,6 +292,9 @@ export function Home() {
             className="show-marquee__card"
             style={{ background: show.tone }}
           >
+            <span className="show-marquee__art" aria-hidden="true">
+              {SHOW_EMOJI_HOME[show.id] || '📺'}
+            </span>
             <span>{show.tag}</span>
             <strong>{show.title}</strong>
           </Link>

@@ -38,6 +38,6 @@ Primary nav: **Home**, Games, Shows, Video, Your World, More. Music is removed.
 
 ## Stack
 
-React 19 + Vite + React Router. Custom CSS (lime field, orange splat, rectangular yellow portal shell).
+React 19 + Vite + React Router. Custom CSS + SVG art (lime field, orange splat, rectangular yellow portal shell, character badges, arcade cabinets).
 
 Not affiliated with Paramount or Nickelodeon.

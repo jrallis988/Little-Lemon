@@ -212,10 +212,82 @@ button {
   height: 58px;
   margin: 0 auto 4px;
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #fff, var(--char-color));
-  border: 3px solid #000;
-  box-shadow: 2px 3px 0 #000;
+  background: transparent;
+  border: none;
+  box-shadow: none;
   font-size: 1.5rem;
+  overflow: visible;
+}
+
+.char-badge {
+  display: block;
+  filter: drop-shadow(2px 3px 0 #000);
+}
+
+.hero-mascot {
+  width: clamp(88px, 14vw, 140px);
+  height: auto;
+  filter: drop-shadow(3px 4px 0 #000);
+  animation: floaty 3s ease-in-out infinite;
+}
+
+.hero-mascot:nth-child(2) {
+  animation-delay: -1.2s;
+  width: clamp(72px, 11vw, 110px);
+  align-self: end;
+}
+
+.cabinet-art {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.play-card__screen--art {
+  padding: 8px;
+  background: #111 !important;
+  min-height: 120px;
+}
+
+.show-poster {
+  position: relative;
+  overflow: hidden;
+  height: 88px;
+  margin: -4px -4px 12px;
+  border: 3px solid #000;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+}
+
+.show-poster__emoji {
+  font-size: 2.4rem;
+  filter: drop-shadow(2px 2px 0 #000);
+  z-index: 1;
+}
+
+.show-poster__shine {
+  position: absolute;
+  inset: -20% 40% auto -10%;
+  height: 80%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: rotate(18deg);
+}
+
+.show-poster__label {
+  position: absolute;
+  left: 10px;
+  bottom: 6px;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: #fff;
+  text-shadow: 1px 1px 0 #000;
+}
+
+.show-marquee__art {
+  font-size: 1.6rem;
+  margin-bottom: 4px;
+  filter: drop-shadow(1px 1px 0 #000);
 }
 
 .char-strip__name {

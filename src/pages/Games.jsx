@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { ArcadePlay } from '../components/ArcadePlay'
+import { GameCabinetArt } from '../components/NickArt'
 import { games } from '../data/content'
 
 export function Games() {
@@ -21,8 +22,8 @@ export function Games() {
           <p className="arcade-banner__eyebrow">Featured cabinet</p>
           <h2>Slime Dash is live</h2>
           <p>
-            Pick any card and smash blobs for 15 seconds. High scores stick in
-            this browser — no beige leaderboards required.
+            Each cabinet has its own targets and timer. High scores stick in this
+            browser — no beige leaderboards required.
           </p>
         </div>
         <button
@@ -43,12 +44,15 @@ export function Games() {
           >
             <button
               type="button"
-              className="play-card__screen"
+              className="play-card__screen play-card__screen--art"
               onClick={() => setActive(game)}
               aria-label={`Open ${game.title}`}
             >
-              <span className="play-card__pulse" aria-hidden="true" />
-              <strong>{game.title}</strong>
+              <GameCabinetArt
+                accent={game.accent}
+                emoji={game.targets?.[0] || '🎮'}
+                title={game.title}
+              />
             </button>
             <p className="play-card__show">{game.show}</p>
             <p className="play-card__blurb">{game.blurb}</p>

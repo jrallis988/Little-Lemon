@@ -5,6 +5,7 @@ import { SlimeCursor } from './Chaos'
 
 const titles = {
   '/': 'Nickelodeon | Homepage',
+  '/home': 'Nickelodeon | Homepage',
   '/games': 'Nickelodeon | Games',
   '/shows': 'Nickelodeon | Shows',
   '/video': 'Nickelodeon | Video',
@@ -14,6 +15,16 @@ const titles = {
   '/nick-news': 'Nickelodeon | Nick News',
   '/weekenders': 'Nickelodeon | Nick Weekenders',
   '/orbitz': 'Nickelodeon | Nick Orbitz',
+  '/about': 'Nickelodeon | About',
+  '/press': 'Nickelodeon | Press',
+  '/jobs': 'Nickelodeon | Jobs',
+  '/investors': 'Nickelodeon | Investors',
+  '/terms': 'Nickelodeon | Terms',
+  '/privacy': 'Nickelodeon | Privacy',
+  '/parents': 'Nickelodeon | Parents',
+  '/help': 'Nickelodeon | Help',
+  '/paramount': 'Nickelodeon | Paramount',
+  '/global': 'Nickelodeon | Global Sites',
 }
 
 export function Layout() {

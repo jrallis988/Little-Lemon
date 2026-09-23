@@ -8,6 +8,7 @@ import {
   topTabs,
 } from '../data/content'
 import { NickSplat } from './Brand'
+import { CharBadge } from './NickArt'
 
 const NICK_USER_KEY = 'nick-see-my-nick'
 
@@ -50,7 +51,7 @@ export function CharacterStrip() {
           style={{ '--char-color': c.color }}
         >
           <span className="char-strip__bubble" aria-hidden="true">
-            {c.emoji}
+            <CharBadge id={c.id} color={c.color} emoji={c.emoji} size={52} />
           </span>
           <span className="char-strip__name">{c.name}</span>
         </Link>
@@ -234,8 +235,8 @@ export function BottomBar() {
     <footer className="site-footer">
       <div className="site-footer__chars">
         {characters.slice(0, 8).map((c) => (
-          <Link key={c.id} to="/shows" title={c.name} className="site-footer__char">
-            <span aria-hidden="true">{c.emoji}</span>
+          <Link key={c.id} to={`/shows#${c.id}`} title={c.name} className="site-footer__char">
+            <CharBadge id={c.id} color={c.color} emoji={c.emoji} size={28} />
           </Link>
         ))}
       </div>
