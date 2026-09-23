@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "description": "Playhouse Animation — 2D kids animation portfolio",
+  "type": "module",
   "scripts": {
     "start": "npx --yes serve -l 3000",
     "dev": "npx --yes serve -l 3000",
-    "deploy": "npx --yes wrangler@4 pages deploy . --project-name playhouse-animation"
+    "check": "node scripts/check-launch.mjs",
+    "sitemap": "node scripts/write-sitemap.mjs",
+    "deploy": "npm run check && npm run sitemap && npx --yes wrangler@4 pages deploy . --project-name playhouse-animation"
   }
 }

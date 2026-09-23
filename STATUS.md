@@ -1,5 +1,5 @@
 # Playhouse Animation — status
 
-Launch-ready static portfolio: film pages, video modal, studio case studies, contact success UI, compressed WebP/JPEG assets, robots/sitemap/404, and Cloudflare Pages config.
+Structurally launch-ready. Assets compressed, WebP wired, contact Formspree-ready, Pages headers + GitHub Actions deploy workflow in place.
 
-**Before production:** add Formspree endpoint + video IDs in `config.js`, replace placeholder media with real art/reels, deploy to Pages with a custom domain.
+**Blocked on you:** real media, `config.js` values (Formspree / video / siteUrl), Cloudflare auth for permanent hosting.
