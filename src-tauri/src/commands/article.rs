@@ -54,6 +54,9 @@ pub async fn fetch_article(url: String) -> Result<FetchedArticle, String> {
     if body.trim().is_empty() {
         return Err("No readable educational content was found on that page.".into());
     }
+    if looks_unreadable(&title, &body) {
+        return Err("That page looks like an error or empty result, not readable learning content.".into());
+    }
 
     let paragraphs = body
         .split("\n\n")
@@ -94,6 +97,28 @@ pub async fn fetch_article(url: String) -> Result<FetchedArticle, String> {
         estimated_minutes,
         fetched_live: true,
     })
+}
+
+fn looks_unreadable(title: &str, body: &str) -> bool {
+    let title_l = title.to_lowercase();
+    let body_l = body.to_lowercase();
+    let title_markers = ["404", "page not found", "not found", "access denied", "forbidden"];
+    if title_markers.iter().any(|m| title_l.contains(m)) {
+        return true;
+    }
+    let body_markers = [
+        "page not found",
+        "404 page",
+        "we can't find that page",
+        "this page does not exist",
+        "error 404",
+        "http 404",
+    ];
+    let hits = body_markers
+        .iter()
+        .filter(|m| body_l.contains(*m))
+        .count();
+    (hits >= 1 && body.trim().len() < 900) || hits >= 2
 }
 
 fn is_fetch_allowed(host: &str) -> bool {

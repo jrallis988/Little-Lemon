@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { BookOpen, Sparkles } from "lucide-react";
+import { BookOpen, Sparkles, TriangleAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigationStore } from "@/stores/navigationStore";
 import { ROUTES } from "@/routes/paths";
@@ -22,13 +22,16 @@ export function ArticleScreen() {
     );
   }
 
+  const live = article.readability === "live" || article.fetchedLive;
+  const structured = article.readability === "structured" || !live;
+
   return (
     <section className="mx-auto max-w-3xl animate-fade-in pb-20">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <div className="inline-flex items-center gap-2 rounded-full bg-navy-mist px-3 py-1 text-xs font-semibold text-navy">
           <BookOpen className="h-3.5 w-3.5 text-ocean" />
           Reader mode · ~{article.estimatedMinutes} min
-          {article.fetchedLive ? " · live fetch" : " · structured"}
+          {live ? " · live fetch" : " · structured card"}
         </div>
         <div className="flex gap-2">
           <Button variant="secondary" size="sm" onClick={() => setMiloOpen(true)}>
@@ -40,6 +43,16 @@ export function ArticleScreen() {
           </Button>
         </div>
       </div>
+
+      {structured && (
+        <div className="mb-4 flex items-start gap-3 rounded-2xl border border-orange/40 bg-orange/10 px-4 py-3 text-sm text-navy">
+          <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0 text-orange" />
+          <p>
+            {article.readabilityNote ??
+              "Surf couldn’t load a clean live copy of this page. You’re reading a structured research card from trusted search metadata instead of a broken or missing webpage."}
+          </p>
+        </div>
+      )}
 
       <article className="rounded-[2rem] border border-white/70 bg-white/85 p-8 shadow-soft md:p-12">
         <style>{`
@@ -87,7 +100,10 @@ export function ArticleScreen() {
             font-size: 0.9rem;
           }
         `}</style>
-        <div dangerouslySetInnerHTML={{ __html: article.contentHtml }} />
+        <div
+          className="surf-reader"
+          dangerouslySetInnerHTML={{ __html: article.contentHtml }}
+        />
       </article>
     </section>
   );

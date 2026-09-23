@@ -1,6 +1,7 @@
 mod academic;
 mod article;
 mod filter;
+mod milo;
 mod pin;
 mod storage;
 mod window;
@@ -8,6 +9,7 @@ mod window;
 pub use academic::academic_search;
 pub use article::fetch_article;
 pub use filter::check_url;
+pub use milo::ask_milo;
 pub use pin::verify_parent_pin;
 pub use storage::{secure_get, secure_set};
 pub use window::{close_window, minimize_window};

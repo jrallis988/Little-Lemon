@@ -1,5 +1,6 @@
 import type { AcademicSearchResponse, SanitizedArticle } from "@/types";
 import { MILO_NAME, MILO_SHORT_NAME } from "@/brand/identity";
+import { invokeCommand, isTauriRuntime } from "@/services/tauriBridge";
 
 export type MiloMessage = {
   role: "user" | "assistant";
@@ -41,7 +42,9 @@ function providerConfig() {
 }
 
 export function isMiloConfigured(): boolean {
-  return Boolean(providerConfig().key);
+  // Desktop: keys live in process env (checked at ask time via Tauri).
+  // Web/dev: optional Vite key remains a local-only fallback.
+  return true;
 }
 
 export async function askMilo(
@@ -56,6 +59,33 @@ export async function askMilo(
     };
   }
 
+  const system = `${TUTOR_SYSTEM}\n\n${contextBlock(context)}`;
+  const history = historyMessages(context);
+
+  if (await isTauriRuntime()) {
+    const native = await invokeCommand<{
+      reply: string;
+      live: boolean;
+      provider?: string;
+    }>("ask_milo", {
+      request: {
+        prompt: question,
+        system,
+        history,
+        provider: providerConfig().provider,
+        model: providerConfig().model,
+      },
+    });
+    if (native?.reply) {
+      return { reply: native.reply, live: Boolean(native.live) };
+    }
+    return {
+      reply: `${buildLocalTutorReply(question, context)}\n\n(Live ${MILO_NAME} needs SURF_AI_API_KEY in the Surf desktop environment.)`,
+      live: false,
+    };
+  }
+
+  // Web/dev fallback only — prefer Tauri/native keys in production builds.
   const { key, provider, model } = providerConfig();
   if (!key) {
     return { reply: buildLocalTutorReply(question, context), live: false };
@@ -251,7 +281,7 @@ function buildLocalTutorReply(question: string, context: MiloContext): string {
     "",
     "Try this: write one sentence in your own words, then list two facts you can cite.",
     "",
-    `(Offline tutor mode — set VITE_SURF_AI_API_KEY to enable live ${MILO_NAME}.)`,
+    `(Offline tutor mode — for live ${MILO_NAME} on desktop, set SURF_AI_API_KEY in the environment.)`,
   ]
     .filter(Boolean)
     .join("\n");

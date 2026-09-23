@@ -7,7 +7,7 @@ import {
   MILO_SHORT_NAME,
   MILO_TAGLINE,
 } from "@/brand/identity";
-import { askMilo, isMiloConfigured } from "@/services/miloAi";
+import { askMilo } from "@/services/miloAi";
 import { MILO_QUICK_ACTIONS, useMiloStore } from "@/stores/miloStore";
 import { useNavigationStore } from "@/stores/navigationStore";
 import { useProfileStore } from "@/stores/profileStore";
@@ -113,11 +113,7 @@ export function AskMiloPanel({ open, onClose, className }: Props) {
       <p className="mt-3 text-[11px] font-medium text-slate">
         Topic: {topic}
         {" · "}
-        {isMiloConfigured()
-          ? live
-            ? "Live tutor"
-            : "Live tutor ready"
-          : "Offline tutor mode"}
+        {live ? "Live tutor" : "Offline tutor mode (desktop uses SURF_AI_API_KEY)"}
       </p>
 
       <div className="mt-2 flex flex-wrap gap-1.5">

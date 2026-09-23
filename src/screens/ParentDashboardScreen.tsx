@@ -66,7 +66,7 @@ export function ParentDashboardScreen() {
     event.preventDefault();
     const ok = await unlock(pin);
     if (!ok) {
-      setError("Incorrect PIN. Default demo PIN is 0000.");
+      setError("Incorrect PIN. Ask a parent if you forgot it.");
       return;
     }
     setError("");
@@ -339,6 +339,10 @@ export function ParentDashboardScreen() {
               event.preventDefault();
               if (!isValidPinFormat(newPin)) {
                 setError("PIN must be 4–8 digits.");
+                return;
+              }
+              if (["0000", "1111", "1234", "9999"].includes(newPin)) {
+                setError("Choose a stronger PIN (not a common default).");
                 return;
               }
               await setPin(newPin);

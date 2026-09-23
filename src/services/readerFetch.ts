@@ -1,4 +1,4 @@
-import type { SanitizedArticle, SearchResult } from "@/types";
+import type { ArticleReadability, SanitizedArticle, SearchResult } from "@/types";
 import { extractDomain } from "@/lib/utils";
 import { invokeCommand, isTauriRuntime } from "@/services/tauriBridge";
 import { sanitizeArticleContent } from "@/services/contentSanitizer";
@@ -15,8 +15,32 @@ type FetchArticleResponse = {
   fetchedLive?: boolean;
 };
 
+const ERROR_TITLE_MARKERS = [
+  "404",
+  "page not found",
+  "not found",
+  "error",
+  "access denied",
+  "forbidden",
+  "unavailable",
+  "just a moment",
+];
+
+const ERROR_BODY_MARKERS = [
+  "page not found",
+  "404 page",
+  "we can't find that page",
+  "this page does not exist",
+  "http 404",
+  "error 404",
+  "access denied",
+  "enable javascript",
+  "checking your browser",
+];
+
 /**
  * Always-on reader: Tauri native fetch → Jina reader proxy → structured fallback.
+ * Rejects error/captcha pages so students never land on a raw 404 in reader mode.
  */
 export async function loadReadableArticle(input: {
   url: string;
@@ -30,16 +54,18 @@ export async function loadReadableArticle(input: {
     const raw = await invokeCommand<FetchArticleResponse>("fetch_article", {
       url: input.url,
     });
-    if (raw?.contentHtml || raw?.content_html) {
+    const html = raw?.contentHtml ?? raw?.content_html ?? "";
+    if (raw && html && !looksUnreadable(raw.title || input.title, html)) {
       return decorate(
         {
           url: raw.url || input.url,
           title: raw.title || input.title,
           source: raw.source || extractDomain(input.url),
-          contentHtml: raw.contentHtml ?? raw.content_html ?? "",
+          contentHtml: html,
           estimatedMinutes:
             raw.estimatedMinutes ?? raw.estimated_minutes ?? 4,
           fetchedLive: true,
+          readability: "live",
         },
         input,
       );
@@ -47,9 +73,32 @@ export async function loadReadableArticle(input: {
   }
 
   const jina = await fetchViaJina(input.url, input.title);
-  if (jina) return decorate(jina, input);
+  if (jina && jina.readability === "live") {
+    return decorate(jina, input);
+  }
 
-  return decorate(buildStructuredReader(input), input);
+  const structured = decorate(buildStructuredReader(input), input);
+  return {
+    ...structured,
+    readability: "structured",
+    readabilityNote:
+      "Surf couldn’t open a clean live copy of this page, so you’re seeing a structured research card from search metadata instead.",
+    fetchedLive: false,
+  };
+}
+
+export function looksUnreadable(title: string, body: string): boolean {
+  const hayTitle = title.toLowerCase();
+  const hayBody = body.toLowerCase();
+  if (ERROR_TITLE_MARKERS.some((marker) => hayTitle.includes(marker))) {
+    return true;
+  }
+  const hits = ERROR_BODY_MARKERS.filter((marker) => hayBody.includes(marker));
+  if (hits.length >= 1 && body.replace(/<[^>]+>/g, " ").trim().length < 900) {
+    return true;
+  }
+  if (hits.length >= 2) return true;
+  return false;
 }
 
 async function fetchViaJina(
@@ -77,10 +126,15 @@ async function fetchViaJina(
       .replace(/^Markdown Content:\s*/m, "")
       .trim();
 
+    if (looksUnreadable(title, body)) {
+      return null;
+    }
+
     const paragraphs = body
       .split(/\n{2,}/)
       .map((part) => part.trim())
       .filter((part) => part.length > 40)
+      .filter((part) => !looksLikeMarkdownChrome(part))
       .slice(0, 20)
       .map((part) => `<p>${escapeHtml(part.replace(/\n/g, " "))}</p>`)
       .join("");
@@ -107,10 +161,19 @@ async function fetchViaJina(
         Math.max(2, Math.ceil(body.split(/\s+/).length / 160)),
       ),
       fetchedLive: true,
+      readability: "live" satisfies ArticleReadability,
     };
   } catch {
     return null;
   }
+}
+
+function looksLikeMarkdownChrome(part: string): boolean {
+  return (
+    part.startsWith("![") ||
+    /^image\s+\d+/i.test(part) ||
+    part.includes("U.S. flag") && part.length < 80
+  );
 }
 
 export function buildStructuredReader(input: {
@@ -150,6 +213,7 @@ export function buildStructuredReader(input: {
     citation: input.citation,
     vocabulary: input.vocabulary,
     fetchedLive: false,
+    readability: "structured",
   };
 }
 

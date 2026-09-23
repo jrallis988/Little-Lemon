@@ -161,6 +161,7 @@ type ParentState = {
   setLearningModeEnabled: (enabled: boolean) => void;
   setAllowlistOnly: (enabled: boolean) => void;
   setPin: (pin: string) => Promise<void>;
+  completeParentSetup: () => void;
   unlock: (pin: string) => Promise<boolean>;
   lock: () => void;
   isUnlocked: () => boolean;
@@ -171,27 +172,15 @@ type ParentState = {
   recordBlockedAttempt: () => void;
 };
 
-async function createDefaultParentControls(): Promise<ParentControls> {
-  const seeded = await hashPin("0000", "surf-default-salt");
-  return {
-    pinHash: seeded.hash,
-    pinSalt: seeded.salt,
-    dailyLimitMinutes: DEFAULT_DAILY_LIMIT_MINUTES,
-    whitelist: [...DEFAULT_WHITELIST],
-    blocklist: [],
-    learningModeEnabled: true,
-    allowlistOnly: true,
-  };
-}
-
 const initialParentControls: ParentControls = {
   pinHash: "",
-  pinSalt: "surf-default-salt",
+  pinSalt: "",
   dailyLimitMinutes: DEFAULT_DAILY_LIMIT_MINUTES,
   whitelist: [...DEFAULT_WHITELIST],
   blocklist: [],
   learningModeEnabled: true,
   allowlistOnly: true,
+  pinConfigured: false,
 };
 
 export const useParentStore = create<ParentState>()(
@@ -272,11 +261,18 @@ export const useParentStore = create<ParentState>()(
             ...state.controls,
             pinHash: salted.hash,
             pinSalt: salted.salt,
+            pinConfigured: true,
           },
         }));
       },
+      completeParentSetup: () =>
+        set((state) => ({
+          controls: { ...state.controls, pinConfigured: true },
+          unlockedUntil: Date.now() + 15 * 60 * 1000,
+        })),
       unlock: async (pin) => {
         const { controls } = get();
+        if (!controls.pinConfigured || !controls.pinHash) return false;
         const attempt = await hashPin(pin, controls.pinSalt);
         if (attempt.hash !== controls.pinHash) return false;
         set({ unlockedUntil: Date.now() + 15 * 60 * 1000 });
@@ -374,28 +370,29 @@ export const useParentStore = create<ParentState>()(
       }),
       merge: (persisted, current) => {
         const raw = (persisted as Partial<ParentState> | undefined) ?? {};
-        const controls = {
+        const rawControls = raw.controls;
+        // Legacy installs seeded PIN 0000 without pinConfigured — force setup.
+        const legacyNeedsSetup =
+          Boolean(rawControls?.pinHash) &&
+          rawControls?.pinConfigured !== true;
+
+        const controls: ParentControls = {
           ...current.controls,
-          ...raw.controls,
-          blocklist: raw.controls?.blocklist ?? current.controls.blocklist ?? [],
+          ...rawControls,
+          blocklist: rawControls?.blocklist ?? current.controls.blocklist ?? [],
           whitelist:
-            raw.controls?.whitelist ??
+            rawControls?.whitelist ??
             current.controls.whitelist ??
             [...DEFAULT_WHITELIST],
+          pinConfigured: legacyNeedsSetup
+            ? false
+            : Boolean(rawControls?.pinConfigured),
         };
         return {
           ...current,
           ...raw,
           controls,
         };
-      },
-      onRehydrateStorage: () => (state) => {
-        if (!state) return;
-        if (!state.controls.pinHash) {
-          void createDefaultParentControls().then((controls) => {
-            useParentStore.setState({ controls });
-          });
-        }
       },
     },
   ),

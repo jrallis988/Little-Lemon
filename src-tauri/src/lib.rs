@@ -3,7 +3,7 @@ mod commands;
 mod state;
 
 use commands::{
-    academic_search, check_url, close_window, fetch_article, minimize_window, secure_get,
+    academic_search, ask_milo, check_url, close_window, fetch_article, minimize_window, secure_get,
     secure_set, verify_parent_pin,
 };
 use state::AppState;
@@ -16,6 +16,7 @@ pub fn run() {
         .manage(Mutex::new(AppState::default()))
         .invoke_handler(tauri::generate_handler![
             academic_search,
+            ask_milo,
             fetch_article,
             check_url,
             verify_parent_pin,

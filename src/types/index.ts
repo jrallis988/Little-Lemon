@@ -138,6 +138,11 @@ export type ParentControls = {
   allowlistOnly: boolean;
   /** Extra domains parents blocked explicitly */
   blocklist: string[];
+  /**
+   * False until a parent completes first-run setup with a real PIN.
+   * Surf stays locked on the setup screen until this is true.
+   */
+  pinConfigured: boolean;
 };
 
 export type SessionSnapshot = {
@@ -170,6 +175,8 @@ export type UrlCheckResult = {
   reason?: string;
 };
 
+export type ArticleReadability = "live" | "structured" | "unavailable";
+
 export type SanitizedArticle = {
   url: string;
   title: string;
@@ -179,6 +186,10 @@ export type SanitizedArticle = {
   citation?: string;
   vocabulary?: string[];
   fetchedLive?: boolean;
+  /** How readable the page was when opened */
+  readability?: ArticleReadability;
+  /** Human-readable note when live fetch failed */
+  readabilityNote?: string;
 };
 
 export type CitationStyle = "mla" | "apa";

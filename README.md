@@ -45,12 +45,30 @@ Surf is not a content feed, launcher, or game hub. Kids search, open curated edu
 
 ## Ask Milo setup
 
-Copy `.env.example` to `.env` and set:
+**Desktop (preferred):** set a process env var before launching Surf so the Rust
+backend can call the model — the key never enters the Vite bundle:
 
 ```bash
-VITE_SURF_AI_PROVIDER=anthropic
-VITE_SURF_AI_API_KEY=sk-...
+export SURF_AI_API_KEY=sk-...
+# optional: SURF_AI_PROVIDER=anthropic|openai
+npm run tauri:dev
 ```
+
+**Web/dev fallback only:** copy `.env.example` to `.env` and set
+`VITE_SURF_AI_API_KEY` for Vite-only previews. Prefer the desktop env path for
+family installs.
+
+Without a key, Milo still runs in offline tutor mode.
+
+## First-run parent setup
+
+Surf blocks the app until a parent creates a PIN (4–8 digits). Common defaults
+like `0000` / `1234` are rejected. Legacy installs that still have the old demo
+PIN are prompted to set a new one.
+
+## Default parent PIN
+
+None. Parents must create a PIN on first launch.
 
 ## Develop (web)
 
@@ -65,12 +83,18 @@ Requires Rust toolchain + platform Tauri dependencies.
 
 ```bash
 npm install
+export SURF_AI_API_KEY=sk-...   # optional live Milo
 npm run tauri:dev
 ```
 
-## Default parent PIN
+## Signing (family beta)
 
-`0000` (change immediately in Parent Dashboard)
+Packaged installs need platform code signing before wide distribution:
+
+- **macOS:** Apple Developer ID + notarization (`APPLE_ID`, `APPLE_PASSWORD`, `APPLE_TEAM_ID`)
+- **Windows:** Authenticode certificate via `tauri build` / signtool
+
+Unsigned local builds are fine for internal pilots.
 
 ## Project map
 
@@ -87,5 +111,5 @@ src/
   types/          Shared domain types (including academic search schema)
 src-tauri/
   src/academic/   EBSCO-style index, allowlist, grade/tier filters, search API
-  src/commands/   Tauri IPC (academic_search, check_url, PIN, store, window)
+  src/commands/   Tauri IPC (academic_search, ask_milo, fetch_article, PIN, store)
 ```
