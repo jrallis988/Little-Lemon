@@ -71,4 +71,26 @@ test.describe("Walgreens RX smoke flows", () => {
     await page.getByRole("button", { name: "Send" }).click();
     await expect(page.getByText(/Pharmacy dashboard/i).first()).toBeVisible();
   });
+
+  test("store inventory shows pickup ETA and changes by store", async ({
+    page,
+  }) => {
+    await page.goto("/shop");
+    await expect(page.getByText(/Pickup ETAs for/i)).toBeVisible();
+    await expect(page.getByText(/Ready in ~\d+ min/i).first()).toBeVisible();
+
+    await page.goto("/shop/cerave-moisturizing-cream");
+    await expect(page.getByText("Ready in ~30 min")).toBeVisible();
+    await expect(page.getByText(/Aisle 4/i)).toBeVisible();
+
+    await page.goto("/stores");
+    await page
+      .locator("li")
+      .filter({ hasText: "Mission & 16th" })
+      .getByRole("button", { name: /Use this store/i })
+      .click();
+    await expect(page).toHaveURL(/\/pharmacy/);
+    await page.goto("/shop/cerave-moisturizing-cream");
+    await expect(page.getByText(/Out at Mission/i)).toBeVisible();
+  });
 });

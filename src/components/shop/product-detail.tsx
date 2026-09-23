@@ -3,15 +3,22 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ArrowLeft, Check, Heart, Star } from "lucide-react";
+import { ArrowLeft, Check, Heart, MapPin, Star } from "lucide-react";
 
+import {
+  canShipProduct,
+  getStoreInventory,
+  storeAvailabilityDetail,
+} from "@/lib/data/inventory";
 import { getReviewsForProduct } from "@/lib/data/reviews";
 import { formatCurrency } from "@/lib/pharmacy";
 import { useCart } from "@/lib/store/cart";
 import { useRecentlyViewed } from "@/lib/store/recently-viewed";
+import { useSelectedStore } from "@/lib/store/store-selection";
 import { useWishlist } from "@/lib/store/wishlist";
 import type { Product } from "@/lib/types";
 import { getProductDescription } from "@/lib/products";
+import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/shop/product-discovery";
@@ -25,8 +32,13 @@ export function ProductDetail({
 }) {
   const { addProduct } = useCart();
   const { trackView } = useRecentlyViewed();
+  const { store } = useSelectedStore();
   const { isSaved, toggle } = useWishlist();
   const saved = isSaved(product.id);
+  const inventory = getStoreInventory(store.id, product);
+  const availability = storeAvailabilityDetail(inventory, store, product);
+  const availableHere = inventory.status !== "out";
+  const canAdd = availableHere || canShipProduct(product);
   const [quantity, setQuantity] = useState(1);
   const [justAdded, setJustAdded] = useState(false);
   const reviews = getReviewsForProduct(product.id);
@@ -36,6 +48,7 @@ export function ProductDetail({
   }, [product.id, trackView]);
 
   function handleAdd() {
+    if (!canAdd) return;
     addProduct(product, quantity);
     setJustAdded(true);
     window.setTimeout(() => setJustAdded(false), 1600);
@@ -99,9 +112,19 @@ export function ProductDetail({
 
           <dl className="mt-6 grid gap-3 text-sm sm:grid-cols-2">
             <div>
-              <dt className="text-muted-foreground">Availability</dt>
-              <dd className="font-medium">
-                {product.inStock ? "In stock" : "Out of stock"}
+              <dt className="text-muted-foreground">At your store</dt>
+              <dd
+                className={cn(
+                  "font-medium",
+                  availability.tone === "ok" && "text-health",
+                  availability.tone === "warn" && "text-brand",
+                  availability.tone === "bad" && "text-destructive",
+                )}
+              >
+                {availability.title}
+              </dd>
+              <dd className="mt-1 text-xs text-muted-foreground">
+                {availability.detail}
               </dd>
             </div>
             <div>
@@ -109,8 +132,31 @@ export function ProductDetail({
               <dd className="font-medium capitalize">
                 {product.fulfillment.join(" · ").replaceAll("_", " ")}
               </dd>
+              <dd className="mt-1 text-xs text-muted-foreground">
+                {availableHere
+                  ? `${inventory.aisle} · pickup or later delivery`
+                  : canShipProduct(product)
+                    ? "Pickup unavailable here · shipping still open"
+                    : "Not available for pickup or ship"}
+              </dd>
             </div>
           </dl>
+
+          <div className="mt-4 flex flex-wrap items-center gap-3 rounded-xl border border-border/80 bg-muted/40 px-4 py-3 text-sm">
+            <MapPin className="size-4 shrink-0 text-brand" aria-hidden />
+            <p className="min-w-0 flex-1 text-muted-foreground">
+              Checking{" "}
+              <span className="font-medium text-foreground">
+                {store.name.replace(/^Walgreens RX —\s*/, "")}
+              </span>
+            </p>
+            <Link
+              href="/stores"
+              className="shrink-0 font-medium text-brand underline-offset-2 hover:underline"
+            >
+              Change store
+            </Link>
+          </div>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <label className="flex items-center gap-2 text-sm">
@@ -130,7 +176,7 @@ export function ProductDetail({
             </label>
             <Button
               className="bg-brand text-brand-foreground hover:bg-brand/90"
-              disabled={!product.inStock}
+              disabled={!canAdd}
               onClick={handleAdd}
             >
               {justAdded ? (
@@ -138,8 +184,12 @@ export function ProductDetail({
                   <Check className="size-4" aria-hidden />
                   Added to cart
                 </>
-              ) : (
+              ) : !canAdd ? (
+                "Unavailable"
+              ) : availableHere ? (
                 "Add to cart"
+              ) : (
+                "Add for shipping"
               )}
             </Button>
             <Button
@@ -163,9 +213,21 @@ export function ProductDetail({
             </Button>
           </div>
 
-          {!product.inStock ? (
+          {!canAdd ? (
             <p className="mt-3 text-sm text-destructive" role="status">
-              This item is currently unavailable. Try a related product below.
+              This item is unavailable at your store and cannot ship. Try another
+              store or a related product below.
+            </p>
+          ) : !availableHere ? (
+            <p className="mt-3 text-sm text-muted-foreground" role="status">
+              Out of stock for pickup here — you can still add it for shipping, or{" "}
+              <Link
+                href="/stores"
+                className="font-medium text-brand underline-offset-2 hover:underline"
+              >
+                switch stores
+              </Link>
+              .
             </p>
           ) : null}
         </div>

@@ -13,9 +13,14 @@ import {
 
 import { PRODUCTS, SEARCH_SUGGESTIONS } from "@/lib/data/catalog";
 import {
+  formatPickupEta,
+  getStoreInventory,
+} from "@/lib/data/inventory";
+import {
   SEARCH_INTENT_DESCRIPTION,
   SEARCH_INTENT_LABEL,
 } from "@/lib/pharmacy";
+import { useSelectedStore } from "@/lib/store/store-selection";
 import type { SearchIntent, SearchSuggestion } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
@@ -35,7 +40,10 @@ const INTENT_STYLES: Record<SearchIntent, string> = {
   general: "bg-muted text-muted-foreground border-border",
 };
 
-function productSuggestions(query: string): SearchSuggestion[] {
+function productSuggestions(
+  query: string,
+  storeId: string,
+): SearchSuggestion[] {
   const normalized = query.trim().toLowerCase();
   if (!normalized) return [];
   return PRODUCTS.filter((product) => {
@@ -44,17 +52,29 @@ function productSuggestions(query: string): SearchSuggestion[] {
     return haystack.includes(normalized);
   })
     .slice(0, 4)
-    .map((product) => ({
-      id: `product-${product.id}`,
-      query: product.name,
-      label: `${product.brand} ${product.name}`,
-      intent: "retail" as const,
-      href: `/shop/${product.slug}`,
-      meta: product.inStock ? "In stock · view product" : "Currently unavailable",
-    }));
+    .map((product) => {
+      const inventory = getStoreInventory(storeId, product);
+      const meta =
+        inventory.status === "out"
+          ? "Out at your store · view product"
+          : inventory.status === "low"
+            ? `Low stock · ${formatPickupEta(inventory.pickupMinutes)}`
+            : `${formatPickupEta(inventory.pickupMinutes)} · view product`;
+      return {
+        id: `product-${product.id}`,
+        query: product.name,
+        label: `${product.brand} ${product.name}`,
+        intent: "retail" as const,
+        href: `/shop/${product.slug}`,
+        meta,
+      };
+    });
 }
 
-function filterSuggestions(query: string): SearchSuggestion[] {
+function filterSuggestions(
+  query: string,
+  storeId: string,
+): SearchSuggestion[] {
   const normalized = query.trim().toLowerCase();
   if (!normalized) {
     return SEARCH_SUGGESTIONS.slice(0, 5);
@@ -66,7 +86,7 @@ function filterSuggestions(query: string): SearchSuggestion[] {
       item.query.toLowerCase().includes(normalized) ||
       item.meta?.toLowerCase().includes(normalized),
   );
-  const products = productSuggestions(normalized);
+  const products = productSuggestions(normalized, storeId);
   const merged = [...products, ...curated];
   const seen = new Set<string>();
   return merged
@@ -80,11 +100,15 @@ function filterSuggestions(query: string): SearchSuggestion[] {
 
 export function SmartSearch({ className }: { className?: string }) {
   const router = useRouter();
+  const { store } = useSelectedStore();
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const results = useMemo(() => filterSuggestions(query), [query]);
+  const results = useMemo(
+    () => filterSuggestions(query, store.id),
+    [query, store.id],
+  );
 
   const intentCounts = useMemo(() => {
     return results.reduce(

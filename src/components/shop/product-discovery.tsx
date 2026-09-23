@@ -4,12 +4,19 @@ import { useEffect, useMemo, useState, type MouseEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Check, Star } from "lucide-react";
+import { Check, MapPin, Star } from "lucide-react";
 
 import { AISLE_COPY, CONCERN_TAG_MAP } from "@/lib/data/aisles";
 import { PRODUCT_FILTERS, PRODUCTS, REWARDS } from "@/lib/data/catalog";
+import {
+  canShipProduct,
+  getStoreInventory,
+  isAvailableAtStore,
+  storeAvailabilityLabel,
+} from "@/lib/data/inventory";
 import { formatCurrency, formatPoints } from "@/lib/pharmacy";
 import { useCart } from "@/lib/store/cart";
+import { useSelectedStore } from "@/lib/store/store-selection";
 import type { Product } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -34,22 +41,28 @@ export function CategoryFilters({
   selectedPrices,
   selectedFulfillment,
   selectedConcerns,
+  inStockAtStore,
+  storeShortName,
   onToggleCategory,
   onToggleBrand,
   onTogglePrice,
   onToggleFulfillment,
   onToggleConcern,
+  onToggleInStockAtStore,
 }: {
   selectedCategories: string[];
   selectedBrands: string[];
   selectedPrices: string[];
   selectedFulfillment: string[];
   selectedConcerns: string[];
+  inStockAtStore: boolean;
+  storeShortName: string;
   onToggleCategory: (value: string) => void;
   onToggleBrand: (value: string) => void;
   onTogglePrice: (value: string) => void;
   onToggleFulfillment: (value: string) => void;
   onToggleConcern: (value: string) => void;
+  onToggleInStockAtStore: () => void;
 }) {
   const groups = [
     {
@@ -97,6 +110,24 @@ export function CategoryFilters({
           Narrow the drugstore aisles without clutter.
         </p>
       </div>
+      <fieldset className="space-y-3">
+        <legend className="text-sm font-semibold text-foreground">
+          Your store
+        </legend>
+        <div className="flex items-center gap-2">
+          <Checkbox
+            id="filter-in-stock-store"
+            checked={inStockAtStore}
+            onCheckedChange={onToggleInStockAtStore}
+          />
+          <Label
+            htmlFor="filter-in-stock-store"
+            className="cursor-pointer text-sm font-normal"
+          >
+            In stock at {storeShortName}
+          </Label>
+        </div>
+      </fieldset>
       {groups.map((group) => (
         <fieldset key={group.title} className="space-y-3">
           <legend className="text-sm font-semibold text-foreground">
@@ -134,11 +165,16 @@ export function CategoryFilters({
 
 export function ProductCard({ product }: { product: Product }) {
   const { addProduct } = useCart();
+  const { store } = useSelectedStore();
+  const inventory = getStoreInventory(store.id, product);
+  const availableHere = inventory.status !== "out";
+  const canAdd = availableHere || canShipProduct(product);
   const [justAdded, setJustAdded] = useState(false);
 
   function handleAdd(event: MouseEvent) {
     event.preventDefault();
     event.stopPropagation();
+    if (!canAdd) return;
     addProduct(product);
     setJustAdded(true);
     window.setTimeout(() => setJustAdded(false), 1400);
@@ -155,6 +191,15 @@ export function ProductCard({ product }: { product: Product }) {
             className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
           />
+          {inventory.status === "out" ? (
+            <span className="absolute top-2 left-2 rounded-md bg-background/90 px-2 py-1 text-[10px] font-semibold text-muted-foreground">
+              Out at store
+            </span>
+          ) : inventory.status === "low" ? (
+            <span className="absolute top-2 left-2 rounded-md bg-background/90 px-2 py-1 text-[10px] font-semibold text-brand">
+              Low stock
+            </span>
+          ) : null}
         </div>
         <div className="mt-3">
           <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
@@ -168,6 +213,18 @@ export function ProductCard({ product }: { product: Product }) {
             <span>
               {product.rating.toFixed(1)} · {product.reviewCount} reviews
             </span>
+          </p>
+          <p
+            className={cn(
+              "mt-2 text-xs",
+              inventory.status === "out"
+                ? "text-muted-foreground"
+                : inventory.status === "low"
+                  ? "text-brand"
+                  : "text-health",
+            )}
+          >
+            {storeAvailabilityLabel(inventory, store)}
           </p>
           <div className="mt-3 flex items-end justify-between gap-2">
             <div>
@@ -195,6 +252,7 @@ export function ProductCard({ product }: { product: Product }) {
         className="mt-4 w-full bg-brand text-brand-foreground hover:bg-brand/90"
         size="sm"
         onClick={handleAdd}
+        disabled={!canAdd}
         aria-live="polite"
       >
         {justAdded ? (
@@ -202,8 +260,12 @@ export function ProductCard({ product }: { product: Product }) {
             <Check className="size-4" aria-hidden />
             Added
           </>
-        ) : (
+        ) : !canAdd ? (
+          "Unavailable"
+        ) : availableHere ? (
           "Add to cart"
+        ) : (
+          "Ship only"
         )}
       </Button>
     </article>
@@ -238,8 +300,10 @@ export function ProductDiscoveryGrid() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const { store } = useSelectedStore();
   const query = searchParams.get("q")?.trim() ?? "";
   const categoryParam = searchParams.get("category");
+  const storeShortName = store.name.replace(/^Walgreens RX —\s*/, "");
 
   const [categories, setCategories] = useState<string[]>(
     categoryParam ? [categoryParam] : [],
@@ -248,6 +312,7 @@ export function ProductDiscoveryGrid() {
   const [prices, setPrices] = useState<string[]>([]);
   const [fulfillment, setFulfillment] = useState<string[]>([]);
   const [concerns, setConcerns] = useState<string[]>([]);
+  const [inStockAtStore, setInStockAtStore] = useState(false);
 
   useEffect(() => {
     if (categoryParam) {
@@ -311,6 +376,9 @@ export function ProductDiscoveryGrid() {
       ) {
         return false;
       }
+      if (inStockAtStore && !isAvailableAtStore(store.id, product)) {
+        return false;
+      }
       if (normalizedQuery) {
         const haystack =
           `${product.name} ${product.brand} ${product.tags.join(" ")}`.toLowerCase();
@@ -320,7 +388,16 @@ export function ProductDiscoveryGrid() {
       }
       return true;
     });
-  }, [brands, categories, concerns, fulfillment, prices, query]);
+  }, [
+    brands,
+    categories,
+    concerns,
+    fulfillment,
+    inStockAtStore,
+    prices,
+    query,
+    store.id,
+  ]);
 
   return (
     <section aria-labelledby="shop-heading" className="space-y-6">
@@ -344,6 +421,25 @@ export function ProductDiscoveryGrid() {
         </p>
       </div>
 
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border/80 bg-surface-elevated/80 px-5 py-4">
+        <p className="flex items-start gap-2 text-sm text-muted-foreground">
+          <MapPin className="mt-0.5 size-4 shrink-0 text-brand" aria-hidden />
+          <span>
+            Pickup ETAs for{" "}
+            <span className="font-medium text-foreground">{storeShortName}</span>
+            . Switch stores to see different aisle stock.
+          </span>
+        </p>
+        <Button
+          variant="outline"
+          size="sm"
+          nativeButton={false}
+          render={<Link href="/stores" />}
+        >
+          Change store
+        </Button>
+      </div>
+
       {activeAisle ? (
         <div className="rounded-2xl border border-brand/20 bg-brand/5 px-5 py-4">
           <p className="text-sm font-medium text-brand">Aisle spotlight</p>
@@ -363,11 +459,14 @@ export function ProductDiscoveryGrid() {
           selectedPrices={prices}
           selectedFulfillment={fulfillment}
           selectedConcerns={concerns}
+          inStockAtStore={inStockAtStore}
+          storeShortName={storeShortName}
           onToggleCategory={(value) => toggle(setCategories, value, true)}
           onToggleBrand={(value) => toggle(setBrands, value)}
           onTogglePrice={(value) => toggle(setPrices, value)}
           onToggleFulfillment={(value) => toggle(setFulfillment, value)}
           onToggleConcern={(value) => toggle(setConcerns, value)}
+          onToggleInStockAtStore={() => setInStockAtStore((value) => !value)}
         />
 
         <div>
@@ -402,6 +501,7 @@ export function ProductDiscoveryGrid() {
                     setPrices([]);
                     setFulfillment([]);
                     setConcerns([]);
+                    setInStockAtStore(false);
                     router.replace("/shop");
                   }}
                 >
