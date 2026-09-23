@@ -37,6 +37,11 @@ export const writer = {
     "Family & inheritance",
     "Quiet suspense",
   ],
+  /** Optional industry URLs. Leave blank until the real profile is ready. */
+  links: {
+    imdb: "",
+    linkedin: "",
+  },
 };
 
 export const scripts: Script[] = [

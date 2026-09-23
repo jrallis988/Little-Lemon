@@ -23,14 +23,37 @@ const body = Manrope({
   display: "swap",
 });
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
+  "http://localhost:3000";
+
 export const metadata: Metadata = {
-  title: `${company.name} — ${writer.name}`,
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: `${company.name} — ${writer.name}`,
+    template: `%s · ${company.shortName}`,
+  },
   description: `${writer.name}, screenwriter for film and television at ${company.name}. ${writer.tagline}`,
+  applicationName: company.shortName,
+  authors: [{ name: writer.name, url: `mailto:${writer.email}` }],
   openGraph: {
     title: `${company.name} — ${writer.name}`,
     description: writer.tagline,
     type: "website",
-    images: [{ url: company.logo }],
+    siteName: company.name,
+    locale: "en_US",
+    images: [
+      {
+        url: company.logo,
+        alt: `${company.name} neon logo`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${company.name} — ${writer.name}`,
+    description: writer.tagline,
+    images: [company.logo],
   },
   icons: {
     icon: "/favicon-logo.png",

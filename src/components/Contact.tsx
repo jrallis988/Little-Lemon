@@ -10,12 +10,68 @@ const inquiryTypes = [
   "General Inquiry",
 ] as const;
 
-export default function Contact() {
-  const [submitted, setSubmitted] = useState(false);
+type Status = "idle" | "submitting" | "success" | "error";
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+const formspreeId = process.env.NEXT_PUBLIC_FORMSPREE_ID?.trim();
+
+function buildMailto(name: string, email: string, type: string, message: string) {
+  const subject = encodeURIComponent(`ECMCo inquiry — ${type}`);
+  const body = encodeURIComponent(
+    `Name: ${name}\nEmail: ${email}\nInquiry: ${type}\n\n${message}`,
+  );
+  return `mailto:${writer.email}?subject=${subject}&body=${body}`;
+}
+
+export default function Contact() {
+  const [status, setStatus] = useState<Status>("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSubmitted(true);
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    const name = String(data.get("name") ?? "").trim();
+    const email = String(data.get("email") ?? "").trim();
+    const type = String(data.get("type") ?? "").trim();
+    const message = String(data.get("message") ?? "").trim();
+
+    if (!name || !email || !type || !message) {
+      setStatus("error");
+      setErrorMessage("Please fill in every field.");
+      return;
+    }
+
+    setStatus("submitting");
+    setErrorMessage("");
+
+    if (formspreeId) {
+      try {
+        const response = await fetch(`https://formspree.io/f/${formspreeId}`, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+          },
+          body: data,
+        });
+
+        if (!response.ok) {
+          throw new Error("Form service rejected the submission.");
+        }
+
+        setStatus("success");
+        form.reset();
+        return;
+      } catch {
+        setStatus("error");
+        setErrorMessage(
+          "Could not send just now. Email me directly and I will get back to you.",
+        );
+        return;
+      }
+    }
+
+    window.location.href = buildMailto(name, email, type, message);
+    setStatus("success");
   }
 
   return (
@@ -47,7 +103,7 @@ export default function Contact() {
         </div>
 
         <div className="md:col-span-7">
-          {submitted ? (
+          {status === "success" ? (
             <div
               className="flex min-h-72 items-center border border-border bg-surface p-8"
               role="status"
@@ -57,11 +113,20 @@ export default function Contact() {
                   CUT TO:
                 </p>
                 <p className="mt-3 font-display text-3xl text-foreground">
-                  Message received.
+                  {formspreeId ? "Message received." : "Opening your email."}
                 </p>
                 <p className="mt-3 max-w-md text-muted">
-                  Thank you. I&apos;ll respond if there&apos;s a fit.
+                  {formspreeId
+                    ? "Thank you. I will respond if there is a fit."
+                    : "Your mail app should open with the inquiry filled in. If nothing opens, use the address on the left."}
                 </p>
+                <button
+                  type="button"
+                  onClick={() => setStatus("idle")}
+                  className="mt-8 text-sm tracking-[0.14em] text-accent uppercase transition-colors hover:text-foreground"
+                >
+                  Send another
+                </button>
               </div>
             </div>
           ) : (
@@ -131,15 +196,24 @@ export default function Contact() {
                 />
               </label>
 
+              {status === "error" ? (
+                <p className="text-sm text-neon-pink" role="alert">
+                  {errorMessage}
+                </p>
+              ) : null}
+
               <div className="flex flex-wrap items-center justify-between gap-4 pt-1">
                 <p className="max-w-sm text-xs leading-relaxed text-muted">
-                  Demo form—submissions stay in-browser.
+                  {formspreeId
+                    ? "Submissions go to my inbox."
+                    : "Opens your email app with this inquiry ready to send."}
                 </p>
                 <button
                   type="submit"
-                  className="inline-flex h-12 items-center justify-center bg-foreground px-7 text-sm tracking-[0.16em] text-background uppercase transition-opacity hover:opacity-85"
+                  disabled={status === "submitting"}
+                  className="inline-flex h-12 items-center justify-center bg-foreground px-7 text-sm tracking-[0.16em] text-background uppercase transition-opacity hover:opacity-85 disabled:cursor-wait disabled:opacity-60"
                 >
-                  Send Inquiry
+                  {status === "submitting" ? "Sending…" : "Send Inquiry"}
                 </button>
               </div>
             </form>

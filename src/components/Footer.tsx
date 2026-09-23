@@ -2,9 +2,14 @@ import Image from "next/image";
 import { company, writer } from "@/data/scripts";
 
 const links = [
-  { href: "https://www.imdb.com/", label: "IMDb" },
+  writer.links.imdb
+    ? { href: writer.links.imdb, label: "IMDb" }
+    : null,
+  writer.links.linkedin
+    ? { href: writer.links.linkedin, label: "LinkedIn" }
+    : null,
   { href: `mailto:${writer.email}`, label: "Email" },
-];
+].filter((item): item is { href: string; label: string } => item !== null);
 
 export default function Footer() {
   return (
