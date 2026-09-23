@@ -10,11 +10,13 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ActivityIndexRouteImport } from './routes/activity/index'
 import { Route as ApiStatusRouteImport } from './routes/api/status'
 import { Route as AuthIndexRouteImport } from './routes/auth/index'
 import { Route as CUsernameRouteImport } from './routes/c/$username'
 import { Route as CreatorsIndexRouteImport } from './routes/creators/index'
 import { Route as DiscoverIndexRouteImport } from './routes/discover/index'
+import { Route as LibraryIndexRouteImport } from './routes/library/index'
 import { Route as MessagesIndexRouteImport } from './routes/messages/index'
 import { Route as OnboardingIndexRouteImport } from './routes/onboarding/index'
 import { Route as PrivacyIndexRouteImport } from './routes/privacy/index'
@@ -28,6 +30,11 @@ import { Route as ApiStripeWebhookRouteImport } from './routes/api/stripe/webhoo
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ActivityIndexRoute = ActivityIndexRouteImport.update({
+  id: '/activity/',
+  path: '/activity/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiStatusRoute = ApiStatusRouteImport.update({
@@ -53,6 +60,11 @@ const CreatorsIndexRoute = CreatorsIndexRouteImport.update({
 const DiscoverIndexRoute = DiscoverIndexRouteImport.update({
   id: '/discover/',
   path: '/discover/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LibraryIndexRoute = LibraryIndexRouteImport.update({
+  id: '/library/',
+  path: '/library/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MessagesIndexRoute = MessagesIndexRouteImport.update({
@@ -105,9 +117,11 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/api/status': typeof ApiStatusRoute
   '/c/$username': typeof CUsernameRoute
+  '/activity/': typeof ActivityIndexRoute
   '/auth/': typeof AuthIndexRoute
   '/creators/': typeof CreatorsIndexRoute
   '/discover/': typeof DiscoverIndexRoute
+  '/library/': typeof LibraryIndexRoute
   '/messages/': typeof MessagesIndexRoute
   '/onboarding/': typeof OnboardingIndexRoute
   '/privacy/': typeof PrivacyIndexRoute
@@ -122,9 +136,11 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/api/status': typeof ApiStatusRoute
   '/c/$username': typeof CUsernameRoute
+  '/activity': typeof ActivityIndexRoute
   '/auth': typeof AuthIndexRoute
   '/creators': typeof CreatorsIndexRoute
   '/discover': typeof DiscoverIndexRoute
+  '/library': typeof LibraryIndexRoute
   '/messages': typeof MessagesIndexRoute
   '/onboarding': typeof OnboardingIndexRoute
   '/privacy': typeof PrivacyIndexRoute
@@ -140,9 +156,11 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/api/status': typeof ApiStatusRoute
   '/c/$username': typeof CUsernameRoute
+  '/activity/': typeof ActivityIndexRoute
   '/auth/': typeof AuthIndexRoute
   '/creators/': typeof CreatorsIndexRoute
   '/discover/': typeof DiscoverIndexRoute
+  '/library/': typeof LibraryIndexRoute
   '/messages/': typeof MessagesIndexRoute
   '/onboarding/': typeof OnboardingIndexRoute
   '/privacy/': typeof PrivacyIndexRoute
@@ -159,9 +177,11 @@ export interface FileRouteTypes {
     | '/'
     | '/api/status'
     | '/c/$username'
+    | '/activity/'
     | '/auth/'
     | '/creators/'
     | '/discover/'
+    | '/library/'
     | '/messages/'
     | '/onboarding/'
     | '/privacy/'
@@ -176,9 +196,11 @@ export interface FileRouteTypes {
     | '/'
     | '/api/status'
     | '/c/$username'
+    | '/activity'
     | '/auth'
     | '/creators'
     | '/discover'
+    | '/library'
     | '/messages'
     | '/onboarding'
     | '/privacy'
@@ -193,9 +215,11 @@ export interface FileRouteTypes {
     | '/'
     | '/api/status'
     | '/c/$username'
+    | '/activity/'
     | '/auth/'
     | '/creators/'
     | '/discover/'
+    | '/library/'
     | '/messages/'
     | '/onboarding/'
     | '/privacy/'
@@ -211,9 +235,11 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ApiStatusRoute: typeof ApiStatusRoute
   CUsernameRoute: typeof CUsernameRoute
+  ActivityIndexRoute: typeof ActivityIndexRoute
   AuthIndexRoute: typeof AuthIndexRoute
   CreatorsIndexRoute: typeof CreatorsIndexRoute
   DiscoverIndexRoute: typeof DiscoverIndexRoute
+  LibraryIndexRoute: typeof LibraryIndexRoute
   MessagesIndexRoute: typeof MessagesIndexRoute
   OnboardingIndexRoute: typeof OnboardingIndexRoute
   PrivacyIndexRoute: typeof PrivacyIndexRoute
@@ -232,6 +258,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/activity/': {
+      id: '/activity/'
+      path: '/activity'
+      fullPath: '/activity/'
+      preLoaderRoute: typeof ActivityIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/status': {
@@ -267,6 +300,13 @@ declare module '@tanstack/react-router' {
       path: '/discover'
       fullPath: '/discover/'
       preLoaderRoute: typeof DiscoverIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/library/': {
+      id: '/library/'
+      path: '/library'
+      fullPath: '/library/'
+      preLoaderRoute: typeof LibraryIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/messages/': {
@@ -339,9 +379,11 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApiStatusRoute: ApiStatusRoute,
   CUsernameRoute: CUsernameRoute,
+  ActivityIndexRoute: ActivityIndexRoute,
   AuthIndexRoute: AuthIndexRoute,
   CreatorsIndexRoute: CreatorsIndexRoute,
   DiscoverIndexRoute: DiscoverIndexRoute,
+  LibraryIndexRoute: LibraryIndexRoute,
   MessagesIndexRoute: MessagesIndexRoute,
   OnboardingIndexRoute: OnboardingIndexRoute,
   PrivacyIndexRoute: PrivacyIndexRoute,

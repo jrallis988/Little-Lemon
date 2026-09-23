@@ -5,10 +5,12 @@ import { X } from 'lucide-react'
 import { tipPresets } from '#/lib/oj/catalog'
 import { useSupport } from '#/lib/support'
 import { useMembership } from '#/lib/membership'
+import { useActivity } from '#/lib/oj/activity-store'
 
 export function UnlockSheet() {
   const { target, close } = useSupport()
   const { subscribe, tip, isUnlocked } = useMembership()
+  const { push: pushActivity } = useActivity()
   const titleId = useId()
   const [customAmount, setCustomAmount] = useState('5')
   const [selectedTip, setSelectedTip] = useState(tipPresets[1]?.id ?? 't2')
@@ -80,6 +82,12 @@ export function UnlockSheet() {
         return
       }
       subscribe(creator.id, creator.tierName, creator.tierPriceMonthly)
+      pushActivity({
+        kind: 'subscribe',
+        title: `${creator.tierName} unlocked`,
+        body: `You unlocked ${creator.displayName} · $${creator.tierPriceMonthly}/mo`,
+        href: '/library',
+      })
       setStatus('done')
       setMessage(`${creator.tierName} unlocked. Locked posts are open on this device.`)
       window.setTimeout(() => close(), 1100)
@@ -112,6 +120,12 @@ export function UnlockSheet() {
       return
     }
     tip(creator.id, amount, preset?.label ?? 'Custom')
+    pushActivity({
+      kind: 'tip',
+      title: `$${amount} tip sent`,
+      body: `${preset?.label ?? 'Custom'} → ${creator.displayName}`,
+      href: `/c/${creator.username}`,
+    })
     setStatus('done')
     setMessage(`$${amount} tip sent to ${creator.displayName}.`)
     window.setTimeout(() => close(), 1100)

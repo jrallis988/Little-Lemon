@@ -6,6 +6,7 @@ import { formatDistanceToNow } from 'date-fns'
 import { AppShell } from '#/components/layout/AppShell'
 import { useDemoAuth } from '#/lib/demo-auth'
 import { useInbox } from '#/lib/oj/inbox-store'
+import { useActivity } from '#/lib/oj/activity-store'
 
 export const Route = createFileRoute('/messages/')({
   component: MessagesPage,
@@ -14,6 +15,7 @@ export const Route = createFileRoute('/messages/')({
 function MessagesPage() {
   const { user, ready } = useDemoAuth()
   const { threads, openThread, reply, messagesFor } = useInbox()
+  const { push: pushActivity } = useActivity()
   const [activeId, setActiveId] = useState<string | null>(null)
   const [draft, setDraft] = useState('')
 
@@ -81,8 +83,16 @@ function MessagesPage() {
               className="mt-4 flex gap-2"
               onSubmit={(e) => {
                 e.preventDefault()
-                if (!user) return
-                reply(active.id, draft)
+                if (!user || !active) return
+                const body = draft.trim()
+                if (!body) return
+                reply(active.id, body)
+                pushActivity({
+                  kind: 'reply',
+                  title: `Replied to ${active.fromLabel}`,
+                  body: body.slice(0, 120),
+                  href: '/messages',
+                })
                 setDraft('')
               }}
             >

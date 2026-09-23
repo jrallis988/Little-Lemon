@@ -6,6 +6,12 @@ export function SiteFooter() {
       <div className="mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-3 text-xs text-[var(--muted)]">
         <p>only Jokes · uncensored creator comedy</p>
         <nav className="flex flex-wrap gap-4">
+          <Link to="/creators" className="no-underline hover:text-[var(--ink)]">
+            Creators
+          </Link>
+          <Link to="/library" className="no-underline hover:text-[var(--ink)]">
+            Library
+          </Link>
           <Link to="/terms" className="no-underline hover:text-[var(--ink)]">
             Terms
           </Link>

@@ -1,6 +1,7 @@
 "use client"
 
-import { HeartHandshake } from 'lucide-react'
+import { useState } from 'react'
+import { HeartHandshake, Share2 } from 'lucide-react'
 import type { Creator, Post } from '#/domain/oj-types'
 import { useSupport } from '#/lib/support'
 import { useMembership } from '#/lib/membership'
@@ -17,6 +18,7 @@ export function TipBar({
 }) {
   const { openTip, openSubscribe } = useSupport()
   const { isUnlocked, tipTotalsByCreator, unlockedCreatorIds } = useMembership()
+  const [copied, setCopied] = useState(false)
   const unlocked = isUnlocked(creator.id)
   const locked = post
     ? !canAccessPost(post, {
@@ -26,6 +28,27 @@ export function TipBar({
     : false
   const liveTips =
     (tipTotal ?? 0) + (tipTotalsByCreator[creator.id] ?? 0)
+
+  async function share() {
+    const url =
+      typeof window !== 'undefined'
+        ? `${window.location.origin}/c/${creator.username}`
+        : `/c/${creator.username}`
+    const text = post
+      ? `${post.title} — ${creator.displayName} on only Jokes`
+      : `${creator.displayName} on only Jokes`
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: text, url, text })
+        return
+      }
+      await navigator.clipboard.writeText(url)
+      setCopied(true)
+      window.setTimeout(() => setCopied(false), 1200)
+    } catch {
+      /* user canceled share */
+    }
+  }
 
   return (
     <div className="mt-3 flex items-center gap-2">
@@ -69,6 +92,19 @@ export function TipBar({
           </button>
         </>
       )}
+      <button
+        type="button"
+        onClick={() => void share()}
+        aria-label="Share"
+        className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[var(--line)] text-[var(--ink-soft)] transition hover:bg-white/10 hover:text-[var(--ink)]"
+      >
+        <Share2 className="h-4 w-4" />
+      </button>
+      {copied ? (
+        <span className="sr-only" role="status">
+          Link copied
+        </span>
+      ) : null}
     </div>
   )
 }

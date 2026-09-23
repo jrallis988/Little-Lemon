@@ -6,6 +6,7 @@ import { AppShell } from '#/components/layout/AppShell'
 import { useDemoAuth } from '#/lib/demo-auth'
 import { useMembership } from '#/lib/membership'
 import { usePublish } from '#/lib/oj/publish-store'
+import { useActivity } from '#/lib/oj/activity-store'
 import { getCreator, getCreatorByUsername } from '#/lib/oj/catalog'
 import type { AccessLevel, MediaKind } from '#/domain/oj-types'
 
@@ -22,8 +23,9 @@ function SettingsPage() {
     creatorSettings,
     updateCreatorSettings,
   } = useDemoAuth()
-  const { unlockedCreatorIds, tipTotalsByCreator } = useMembership()
+  const { unlockedCreatorIds, tipTotalsByCreator, receipts } = useMembership()
   const { publish, postsForCreator } = usePublish()
+  const { push: pushActivity } = useActivity()
   const [tierName, setTierName] = useState(creatorSettings.tierName)
   const [tierPrice, setTierPrice] = useState(
     String(creatorSettings.tierPriceMonthly),
@@ -162,6 +164,12 @@ function SettingsPage() {
                   access: pubAccess,
                   durationLabel: pubKind === 'text' ? undefined : '1:00',
                 })
+                pushActivity({
+                  kind: 'publish',
+                  title: `Published “${post.title}”`,
+                  body: `${pubAccess === 'supporters' ? 'Supporters' : 'Public'} · ${pubKind}`,
+                  href: '/discover',
+                })
                 setPublishedNote(`Published “${post.title}”`)
                 setPubTitle('')
                 setPubBody('')
@@ -271,6 +279,27 @@ function SettingsPage() {
             </p>
           </div>
         )}
+
+        <div className="mt-8 rounded-xl border border-[var(--hairline)] bg-white/5 px-4 py-3">
+          <p className="text-[11px] uppercase tracking-[0.18em] text-[var(--tint)]">
+            Quick links
+          </p>
+          <div className="mt-2 flex flex-wrap gap-4 text-sm">
+            <Link to="/library" className="text-[var(--ink)] no-underline hover:underline">
+              Library
+            </Link>
+            <Link to="/activity" className="text-[var(--ink)] no-underline hover:underline">
+              Activity
+            </Link>
+            <Link to="/creators" className="text-[var(--ink)] no-underline hover:underline">
+              Creators
+            </Link>
+          </div>
+          <p className="mt-2 text-xs text-[var(--muted)]">
+            {receipts.length} receipt{receipts.length === 1 ? '' : 's'} on this
+            device
+          </p>
+        </div>
 
         <div className="mt-10 flex flex-wrap gap-4 text-sm text-[var(--muted)]">
           <Link to="/terms" className="no-underline hover:text-[var(--ink)]">

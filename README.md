@@ -19,8 +19,10 @@ Creator-subscription comedy platform for stand-ups, comedy animators, and fans. 
 | `/` | Brand landing |
 | `/onboarding` | Product tour → fan/creator signup |
 | `/auth` | Demo sign up / sign in |
-| `/discover` | Chronological public discovery feed |
-| `/creators` | Creator directory |
+| `/discover` | Chronological public discovery feed (+ Supporting filter) |
+| `/creators` | Creator directory (search + tags) |
+| `/library` | Unlocked tiers, supporter drops, receipts |
+| `/activity` | On-device unlocks / tips / publishes / replies |
 | `/c/$username` | Creator profile (public + locked tiles) |
 | `/messages` | Backstage inbox + replies |
 | `/settings` | Account, tier pricing, publish |

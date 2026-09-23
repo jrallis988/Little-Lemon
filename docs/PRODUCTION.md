@@ -2,12 +2,18 @@
 
 ## What works without secrets (demo)
 
-- Chronological discover + creator profiles (catalog fallback)
+- Chronological discover + Supporting filter (unlocked creators)
+- Creator directory search + craft tags
+- Library (supporter drops, tip/unlock receipts, revoke)
+- Activity feed (unlocks, tips, publishes, replies)
 - Demo auth / membership / publish / Backstage replies (localStorage)
 - Report + block
+- Share (Web Share API or clipboard)
+- Checkout return banner (`?checkout=success|cancel`)
+- PWA manifest + theme meta
 - Terms / privacy drafts
 - SVG posters + play sheet
-- `/api/status` feature flags
+- `/api/status` feature flags + route map
 - Stripe checkout + media upload API stubs (503 until keys)
 
 ## Connect to go live
