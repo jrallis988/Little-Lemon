@@ -1,6 +1,5 @@
 const links = [
-  { href: '#idea', label: 'Idea' },
-  { href: '#chapter-creative', label: 'Creative' },
+  { href: '#gallery', label: 'Creative' },
   { href: '#chapter-performance', label: 'Performance' },
   { href: '#chapter-reflection', label: 'Reflection' },
   { href: '#explorer', label: 'Explorer' },

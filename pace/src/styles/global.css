@@ -2516,3 +2516,194 @@ select {
   aspect-ratio: 9 / 16;
   min-height: 320px;
 }
+
+/* Project facts */
+.facts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+@media (max-width: 800px) {
+  .facts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fact {
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0.95rem 1.05rem;
+}
+
+.fact span {
+  display: block;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 750;
+  margin-bottom: 0.3rem;
+}
+
+.fact strong {
+  font-family: var(--font-display);
+  letter-spacing: -0.03em;
+  font-size: 1.05rem;
+  font-weight: 750;
+}
+
+/* Motion storyboard */
+.motion-reel {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+@media (max-width: 1000px) {
+  .motion-reel {
+    grid-template-columns: 1fr;
+  }
+}
+
+.motion-frame {
+  --motion-accent: var(--lime);
+}
+
+.motion-screen {
+  aspect-ratio: 9 / 16;
+  max-height: 340px;
+  border-radius: 10px;
+  padding: 0.85rem;
+  background:
+    radial-gradient(circle at 70% 20%, color-mix(in srgb, var(--motion-accent) 45%, transparent), transparent 42%),
+    linear-gradient(165deg, #1a1c1e, #0e1012 70%);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.motion-timecode {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 700;
+}
+
+.motion-state {
+  margin: 0;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: var(--motion-accent);
+}
+
+.motion-screen h3 {
+  margin: 0.25rem 0 0.65rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2vw, 1.55rem);
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+}
+
+.motion-wave {
+  height: 22px;
+  margin-bottom: 0.55rem;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--motion-accent) 0 3px,
+    transparent 3px 6px
+  );
+  opacity: 0.7;
+  clip-path: polygon(0 50%, 6% 20%, 12% 70%, 18% 30%, 24% 60%, 30% 10%, 36% 55%, 42% 25%, 48% 75%, 54% 35%, 60% 50%, 66% 15%, 72% 65%, 78% 40%, 84% 55%, 90% 20%, 100% 45%, 100% 100%, 0 100%);
+}
+
+.motion-track {
+  margin: 0;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.motion-type {
+  margin: 0.55rem 0 0;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* Compact week calendar */
+.week-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+@media (max-width: 900px) {
+  .week-strip {
+    grid-template-columns: 1fr;
+  }
+}
+
+.week-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius);
+  padding: 1rem 1.05rem;
+  color: #fff;
+}
+
+.week-card h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  letter-spacing: -0.03em;
+  font-size: 1.2rem;
+}
+
+.week-num {
+  margin: 0.2rem 0 0.85rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lime);
+  font-weight: 800;
+}
+
+.week-card ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.week-card li {
+  display: grid;
+  gap: 0.15rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.week-card li strong {
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.week-card li span {
+  font-size: 0.9rem;
+}
+
+.week-card li em {
+  font-style: normal;
+  font-size: 0.78rem;
+  color: var(--lime);
+}

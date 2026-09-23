@@ -1,6 +1,7 @@
 import { CaseNav } from './components/layout/CaseNav'
 import { Chapter } from './components/layout/Chapter'
 import { Hero } from './components/sections/Hero'
+import { ProjectFacts } from './components/sections/ProjectFacts'
 import { ClientBrief } from './components/sections/ClientBrief'
 import { CoreIdea } from './components/sections/CoreIdea'
 import { Problem } from './components/sections/Problem'
@@ -13,6 +14,7 @@ import { BehavioralJourney } from './components/sections/BehavioralJourney'
 import { PlatformRoles } from './components/sections/PlatformRoles'
 import { ContentCalendar } from './components/sections/ContentCalendar'
 import { VisualSystem } from './components/sections/VisualSystem'
+import { MotionBoard } from './components/sections/MotionBoard'
 import { CreativeWorld } from './components/sections/CreativeWorld'
 import { SpotifyDestination } from './components/sections/SpotifyDestination'
 import { Measurement } from './components/sections/Measurement'
@@ -34,6 +36,7 @@ export default function App() {
       <CaseNav />
       <main>
         <Hero />
+        <ProjectFacts />
 
         <Chapter
           id="chapter-strategy"
@@ -59,10 +62,11 @@ export default function App() {
         >
           <PaceCard />
           <CreativeGallery />
+          <MotionBoard />
           <SpotifyDestination />
           <VisualSystem />
-          <CreativeWorld />
           <ContentCalendar />
+          <CreativeWorld />
         </Chapter>
 
         <Chapter
