@@ -1412,3 +1412,8 @@ p {
     transform: none;
   }
 }
+
+/* Ensure [hidden] wins over component display rules */
+[hidden] {
+  display: none !important;
+}
