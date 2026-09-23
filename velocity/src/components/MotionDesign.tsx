@@ -39,17 +39,18 @@ export function MotionDesign() {
         <h2 className="section__title">Built to move</h2>
         <p className="section__lead">
           Because the concept is velocity, motion graphics are part of the system — not an afterthought.
-          Storyboard frames establish how identity behaves in time.
+          These frames loop the identity behaviors in time.
         </p>
 
         <div className="motion-frames">
           {frames.map((f, i) => (
-            <article className={`motion-frame motion-frame--${f.visual}`} key={f.title}>
+            <article className={`motion-frame motion-frame--${f.visual} is-live`} key={f.title}>
               <div className="motion-frame__stage" aria-hidden>
                 <span className="motion-frame__ghost">VELOCITY</span>
                 <span className="motion-frame__word">DRIVE</span>
                 <span className="motion-frame__stat">00:09.81</span>
                 <span className="motion-frame__line" />
+                <span className="motion-frame__flash" />
               </div>
               <p className="motion-frame__num">0{i + 1}</p>
               <h3>{f.title}</h3>

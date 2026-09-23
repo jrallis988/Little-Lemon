@@ -13,6 +13,7 @@ import { DetailViewer } from './components/DetailViewer'
 import { Compositing } from './components/Compositing'
 import { GraphicSystem } from './components/GraphicSystem'
 import { PrintApplications } from './components/PrintApplications'
+import { Lookbook } from './components/Lookbook'
 import { LargeFormat } from './components/LargeFormat'
 import { DigitalAdaptation } from './components/DigitalAdaptation'
 import { MotionDesign } from './components/MotionDesign'
@@ -44,6 +45,7 @@ export default function App() {
         <Compositing />
         <GraphicSystem />
         <PrintApplications onOpen={openPoster} />
+        <Lookbook />
         <LargeFormat />
         <DigitalAdaptation />
         <MotionDesign />

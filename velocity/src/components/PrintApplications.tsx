@@ -78,33 +78,6 @@ export function PrintApplications({ onOpen }: PrintApplicationsProps) {
           })}
         </div>
 
-        <h3
-          className="section__title"
-          style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', marginTop: '3.5rem' }}
-        >
-          InDesign Lookbook
-        </h3>
-        <p className="section__lead">
-          Printed presentation structure — cover through applications.
-        </p>
-        <div className="lookbook" aria-label="Lookbook page structure">
-          {[
-            { title: 'VELOCITY', sub: 'Cover', cover: true },
-            { title: 'Motion Language', sub: 'Direction → Form' },
-            { title: 'Art Direction', sub: 'Photography brief' },
-            { title: 'Collection', sub: 'Six posters' },
-            { title: 'Intensity', sub: 'Rule-breakers' },
-            { title: 'Applications', sub: 'Print & digital' },
-          ].map((p) => (
-            <div
-              className={`lookbook__page${p.cover ? ' lookbook__page--cover' : ''}`}
-              key={p.title}
-            >
-              <h4>{p.title}</h4>
-              <p>{p.sub}</p>
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   )

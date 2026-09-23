@@ -24,3 +24,11 @@ Production assets land in `dist/` with relative paths so the case study can be s
 ## Focus
 
 This presentation demonstrates sports art direction, typography, compositing stages, graphic language, print applications, and digital adaptation. The website is a portfolio vessel — craft comes first.
+
+## Lookbook
+
+Open the printable lookbook at `/velocity/dist/lookbook.html`, then use **Print → Save as PDF** for a review PDF.
+
+## Still needed off-site
+
+Finished Photoshop composites, Illustrator vector marks, and a true InDesign package remain the primary craft deliverables. Swap finished art into `public/posters/` and rebuild.

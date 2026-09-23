@@ -27,10 +27,25 @@ export function PhotographySection() {
           Human energy
         </h3>
         <p className="section__lead">
-          Performance and precision need a counterweight — preparation, exhaustion, chalk, sweat,
-          empty arenas.
+          Performance and precision need a counterweight — contact grit, empty venues, preparation.
         </p>
-        <div className="photo-treat-grid">
+
+        <div className="energy-strip" aria-label="Human energy photography">
+          <figure className="energy-strip__item">
+            <img src="/velocity/dist/posters/detail_strike.jpg" alt="Cleat contacting ball" />
+            <figcaption>Contact grit · STRIKE detail</figcaption>
+          </figure>
+          <figure className="energy-strip__item">
+            <img src="/velocity/dist/posters/detail_venue.jpg" alt="Empty basketball court" />
+            <figcaption>Empty venue · Waiting arena</figcaption>
+          </figure>
+          <figure className="energy-strip__item">
+            <img src="/velocity/dist/posters/equip_chalk.jpg" alt="Hands gripping equipment" />
+            <figcaption>Preparation · Grip & focus</figcaption>
+          </figure>
+        </div>
+
+        <div className="photo-treat-grid" style={{ marginTop: '1.5rem' }}>
           {humanEnergy.map((t) => (
             <div className="photo-treat" key={t.title}>
               <strong>{t.title}</strong>
@@ -64,18 +79,20 @@ export function PhotographySection() {
         >
           Before → After
         </h3>
-        <p className="section__lead">Raw capture becomes finished campaign artwork.</p>
+        <p className="section__lead">
+          Same plate, two states — flat capture versus campaign grade (contrast, color, grain).
+        </p>
 
         <div className="compare" aria-label="Before and after photography treatment">
           <div className="compare__panel">
-            <img src="/velocity/dist/posters/before-raw.jpg" alt="Raw source photograph" />
+            <img src="/velocity/dist/posters/before-raw.jpg" alt="Raw flatter source photograph" />
             <span className="compare__label">Before — Raw</span>
           </div>
           <div className="compare__arrow" aria-hidden>
             →
           </div>
           <div className="compare__panel compare__panel--after">
-            <img src="/velocity/dist/posters/running.jpg" alt="Finished campaign treatment" />
+            <img src="/velocity/dist/posters/after-campaign.jpg" alt="Finished campaign treatment" />
             <span className="compare__label">After — Campaign</span>
           </div>
         </div>
