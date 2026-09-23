@@ -21,6 +21,7 @@ export default function ProjectHero({ project }) {
           <ProjectVisual
             label={project.heroVisual?.label || project.name}
             tone={project.heroVisual?.tone}
+            src={project.heroVisual?.src}
           />
         </div>
       </div>

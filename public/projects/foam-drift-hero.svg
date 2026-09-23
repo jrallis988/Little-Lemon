@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-label="Foam Drift prototype visual">
+  <rect width="1200" height="720" fill="#0a1218"/>
+  <rect x="80" y="80" width="1040" height="560" rx="16" fill="#132029" stroke="#3ecfbe55" stroke-width="2"/>
+  <text x="120" y="140" font-family="Arial, sans-serif" font-size="32" font-weight="700" fill="#f3f7f9">Foam Drift</text>
+  <text x="120" y="178" font-family="Arial, sans-serif" font-size="18" fill="#9eb0bc">Catch drifting foam before it sinks.</text>
+  <text x="900" y="140" font-family="Arial, sans-serif" font-size="18" fill="#7fe3d5">Score 8/12</text>
+  <circle cx="320" cy="340" r="28" fill="#7fe3d5" opacity="0.85"/>
+  <circle cx="520" cy="280" r="22" fill="#3ecfbe" opacity="0.75"/>
+  <circle cx="700" cy="360" r="18" fill="#7fe3d5" opacity="0.7"/>
+  <circle cx="860" cy="300" r="26" fill="#1fa896" opacity="0.8"/>
+  <circle cx="430" cy="420" r="16" fill="#3ecfbe" opacity="0.6"/>
+  <rect x="480" y="520" width="200" height="28" rx="14" fill="#7fe3d5"/>
+  <text x="120" y="600" font-family="Arial, sans-serif" font-size="16" fill="#9eb0bc">Canvas · delta time · keyboard + pointer · reduced motion</text>
+</svg>

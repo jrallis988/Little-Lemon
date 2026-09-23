@@ -40,8 +40,15 @@ export default function ResumePage() {
           </p>
           <div className="reveal mt-8 flex flex-wrap gap-3">
             <a href={`${process.env.PUBLIC_URL}/resume.html`} className="btn-primary">
-              Download Resume
+              Download / Print PDF
             </a>
+            <button
+              type="button"
+              className="btn-ghost"
+              onClick={() => window.print()}
+            >
+              Print this page
+            </button>
             <a href={`mailto:${profile.email}`} className="btn-ghost">
               Email
             </a>

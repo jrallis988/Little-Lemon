@@ -51,15 +51,18 @@ export default function CaseStudy() {
               Full case study
             </Link>
             <a
+              href={`${process.env.PUBLIC_URL}/demos/little-lemon.html`}
+              className="btn-ghost"
+            >
+              Live demo
+            </a>
+            <a
               href="https://github.com/jrallis988/Little-Lemon"
               target="_blank"
               rel="noreferrer"
               className="btn-ghost"
             >
               View repository
-            </a>
-            <a href="#contact" className="btn-ghost">
-              Discuss this build
             </a>
           </div>
         </div>

@@ -1,7 +1,15 @@
 import { Link } from "react-router-dom";
 
 function isInternal(href) {
-  return typeof href === "string" && href.startsWith("/");
+  return typeof href === "string" && href.startsWith("/") && !href.endsWith(".html");
+}
+
+function resolveHref(href) {
+  if (!href) return href;
+  if (href.endsWith(".html") && href.startsWith("/")) {
+    return `${process.env.PUBLIC_URL || ""}${href}`;
+  }
+  return href;
 }
 
 export default function ProjectLinks({ links = {}, nextSlug }) {
@@ -18,27 +26,29 @@ export default function ProjectLinks({ links = {}, nextSlug }) {
 
   return (
     <div className="flex flex-wrap gap-3">
-      {items.map((item) =>
-        isInternal(item.href) ? (
-          <Link
-            key={item.key}
-            to={item.href}
-            className={item.primary ? "btn-primary" : "btn-ghost"}
-          >
-            {item.label}
-          </Link>
-        ) : (
+      {items.map((item) => {
+        const href = resolveHref(item.href);
+        if (isInternal(item.href)) {
+          return (
+            <Link
+              key={item.key}
+              to={item.href}
+              className={item.primary ? "btn-primary" : "btn-ghost"}
+            >
+              {item.label}
+            </Link>
+          );
+        }
+        return (
           <a
             key={item.key}
-            href={item.href}
-            target="_blank"
-            rel="noreferrer"
+            href={href}
             className={item.primary ? "btn-primary" : "btn-ghost"}
           >
             {item.label}
           </a>
-        )
-      )}
+        );
+      })}
       {nextHref ? (
         <Link to={nextHref} className="btn-ghost">
           Next Project →

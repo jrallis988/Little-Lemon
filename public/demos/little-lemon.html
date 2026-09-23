@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Little Lemon — Reserve a table</title>
+    <style>
+      :root {
+        --green: #495e57;
+        --yellow: #f4ce14;
+        --cream: #f7f1e8;
+        --ink: #333;
+        --muted: #5a6a66;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Manrope, system-ui, sans-serif;
+        background: var(--cream);
+        color: var(--ink);
+        line-height: 1.5;
+      }
+      header {
+        background: var(--green);
+        color: #edefee;
+        padding: 1rem 1.25rem;
+      }
+      header .brand {
+        font-family: Georgia, serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--yellow);
+        margin: 0;
+      }
+      main {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 2rem 1.25rem 3rem;
+      }
+      h1 {
+        font-family: Georgia, serif;
+        font-size: clamp(1.8rem, 4vw, 2.4rem);
+        margin: 0 0 0.5rem;
+      }
+      .lead { color: var(--muted); margin: 0 0 1.75rem; }
+      label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.4rem;
+      }
+      .field { margin-bottom: 1rem; }
+      input, select, textarea {
+        width: 100%;
+        padding: 0.85rem 0.95rem;
+        border: 1px solid #cfd8d4;
+        border-radius: 0.5rem;
+        font: inherit;
+        background: #fff;
+      }
+      input:focus, select:focus, textarea:focus {
+        outline: 3px solid rgba(244, 206, 20, 0.45);
+        border-color: var(--green);
+      }
+      .row {
+        display: grid;
+        gap: 1rem;
+      }
+      @media (min-width: 640px) {
+        .row { grid-template-columns: repeat(3, 1fr); }
+      }
+      .error {
+        color: #9b2c2c;
+        font-size: 0.875rem;
+        margin-top: 0.35rem;
+      }
+      button {
+        appearance: none;
+        border: none;
+        background: var(--yellow);
+        color: #333;
+        font: inherit;
+        font-weight: 700;
+        padding: 0.9rem 1.4rem;
+        border-radius: 0.5rem;
+        cursor: pointer;
+      }
+      button:focus-visible {
+        outline: 3px solid rgba(73, 94, 87, 0.45);
+        outline-offset: 2px;
+      }
+      .success {
+        display: none;
+        margin-top: 1.25rem;
+        padding: 1rem 1.1rem;
+        border-radius: 0.5rem;
+        background: #e7f3ee;
+        border: 1px solid #9ec5b5;
+      }
+      .success.show { display: block; }
+      .back {
+        display: inline-block;
+        margin-top: 2rem;
+        color: var(--green);
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <p class="brand">Little Lemon</p>
+    </header>
+    <main>
+      <h1>Reserve a table</h1>
+      <p class="lead">A calm booking flow—date, time, and party size without the clutter.</p>
+      <form id="reserve" novalidate>
+        <div class="row">
+          <div class="field">
+            <label for="date">Date</label>
+            <input id="date" name="date" type="date" required />
+            <p class="error" id="date-error" hidden>Choose a date.</p>
+          </div>
+          <div class="field">
+            <label for="time">Time</label>
+            <select id="time" name="time" required>
+              <option value="">Select</option>
+              <option>17:00</option>
+              <option>17:30</option>
+              <option>18:00</option>
+              <option>18:30</option>
+              <option>19:00</option>
+              <option>19:30</option>
+              <option>20:00</option>
+            </select>
+            <p class="error" id="time-error" hidden>Choose a time.</p>
+          </div>
+          <div class="field">
+            <label for="guests">Guests</label>
+            <select id="guests" name="guests" required>
+              <option value="">Select</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+            </select>
+            <p class="error" id="guests-error" hidden>Choose party size.</p>
+          </div>
+        </div>
+        <div class="field">
+          <label for="notes">Occasion / notes</label>
+          <textarea id="notes" name="notes" rows="4" placeholder="Birthday, accessibility needs, etc."></textarea>
+        </div>
+        <button type="submit">Book table</button>
+        <div class="success" id="success" role="status" aria-live="polite">
+          Reservation request recorded. Thanks—we’ll confirm shortly.
+        </div>
+      </form>
+      <a class="back" id="back" href="../">← Back to portfolio</a>
+    </main>
+    <script>
+      (function () {
+        var form = document.getElementById("reserve");
+        var success = document.getElementById("success");
+        var back = document.getElementById("back");
+        // Prefer portfolio root when hosted under /Little-Lemon/
+        if (location.pathname.indexOf("/Little-Lemon/") !== -1) {
+          back.setAttribute("href", "/Little-Lemon/");
+        } else if (location.pathname.indexOf("/demos/") !== -1) {
+          back.setAttribute("href", "../");
+        }
+        form.addEventListener("submit", function (event) {
+          event.preventDefault();
+          var ok = true;
+          ["date", "time", "guests"].forEach(function (id) {
+            var el = document.getElementById(id);
+            var err = document.getElementById(id + "-error");
+            var invalid = !el.value;
+            err.hidden = !invalid;
+            if (invalid) ok = false;
+          });
+          if (!ok) return;
+          success.classList.add("show");
+          form.reset();
+        });
+      })();
+    </script>
+  </body>
+</html>

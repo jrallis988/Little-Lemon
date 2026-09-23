@@ -7,6 +7,7 @@ const labProjects = [
     visual: {
       label: "Foam Drift",
       tone: "play",
+      src: "/projects/foam-drift-hero.svg",
     },
     technologies: ["React", "Canvas", "Accessibility"],
     status: "Live demo",
@@ -25,12 +26,13 @@ const labProjects = [
     visual: {
       label: "Form patterns",
       tone: "mediterranean",
+      src: "/projects/little-lemon-hero.svg",
     },
     technologies: ["React", "Formik", "Yup"],
-    status: "In progress",
+    status: "Live demo",
     categories: ["Front-end experiments", "Prototypes"],
     links: {
-      demo: null,
+      demo: "/demos/little-lemon.html",
       source: "https://github.com/jrallis988/Little-Lemon",
       details: "/work/little-lemon",
     },

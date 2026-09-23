@@ -61,8 +61,13 @@ test("resume page shows professional summary", () => {
       <ResumePage />
     </MemoryRouter>
   );
-  expect(screen.getByText(/Download Resume/i)).toBeInTheDocument();
+  expect(screen.getByText(/Download \/ Print PDF/i)).toBeInTheDocument();
   expect(screen.getAllByText(/Front-End Engineer & Multimedia Designer/i).length).toBeGreaterThan(0);
+});
+
+test("work section shows live site for Little Lemon", () => {
+  render(<App />);
+  expect(screen.getAllByText(/Live Site/i).length).toBeGreaterThan(0);
 });
 
 test("project detail page loads Little Lemon case study", async () => {

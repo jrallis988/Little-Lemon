@@ -2,10 +2,21 @@ import { Link } from "react-router-dom";
 import TechStack from "./project/TechStack";
 import ProjectVisual from "./project/ProjectVisual";
 
+function resolveHref(href) {
+  if (!href) return href;
+  if (href.endsWith(".html") && href.startsWith("/")) {
+    return `${process.env.PUBLIC_URL || ""}${href}`;
+  }
+  return href;
+}
+
 function Action({ href, label, primary = false }) {
   if (!href) return null;
   const className = primary ? "btn-primary" : "btn-ghost";
-  if (href.startsWith("/")) {
+  const resolved = resolveHref(href);
+  const isAppRoute = href.startsWith("/") && !href.endsWith(".html");
+
+  if (isAppRoute) {
     return (
       <Link to={href} className={className}>
         {label}
@@ -13,7 +24,11 @@ function Action({ href, label, primary = false }) {
     );
   }
   return (
-    <a href={href} target="_blank" rel="noreferrer" className={className}>
+    <a
+      href={resolved}
+      className={className}
+      {...(resolved.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})}
+    >
       {label}
     </a>
   );
@@ -26,6 +41,7 @@ export default function LabCard({ project }) {
         <ProjectVisual
           label={project.visual?.label || project.name}
           tone={project.visual?.tone}
+          src={project.visual?.src}
           className="min-h-[180px]"
         />
         <div>

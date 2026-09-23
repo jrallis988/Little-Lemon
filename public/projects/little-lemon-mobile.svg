@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 760" role="img" aria-label="Little Lemon mobile booking mockup">
+  <rect width="420" height="760" rx="28" fill="#111"/>
+  <rect x="16" y="16" width="388" height="728" rx="20" fill="#f7f1e8"/>
+  <rect x="16" y="16" width="388" height="72" rx="20" fill="#495e57"/>
+  <rect x="16" y="68" width="388" height="20" fill="#495e57"/>
+  <text x="40" y="62" font-family="Georgia, serif" font-size="24" font-weight="700" fill="#f4ce14">Little Lemon</text>
+  <text x="40" y="140" font-family="Georgia, serif" font-size="30" font-weight="700" fill="#333">Reserve</text>
+  <rect x="40" y="170" width="340" height="56" rx="8" fill="#fff" stroke="#cfd8d4" stroke-width="2"/>
+  <text x="56" y="206" font-family="Arial, sans-serif" font-size="16" fill="#6b7a76">Date</text>
+  <rect x="40" y="246" width="340" height="56" rx="8" fill="#fff" stroke="#cfd8d4" stroke-width="2"/>
+  <text x="56" y="282" font-family="Arial, sans-serif" font-size="16" fill="#6b7a76">Time</text>
+  <rect x="40" y="322" width="340" height="56" rx="8" fill="#fff" stroke="#cfd8d4" stroke-width="2"/>
+  <text x="56" y="358" font-family="Arial, sans-serif" font-size="16" fill="#6b7a76">Guests</text>
+  <rect x="40" y="398" width="340" height="120" rx="8" fill="#fff" stroke="#cfd8d4" stroke-width="2"/>
+  <text x="56" y="434" font-family="Arial, sans-serif" font-size="16" fill="#6b7a76">Notes</text>
+  <rect x="40" y="560" width="340" height="52" rx="8" fill="#f4ce14"/>
+  <text x="145" y="594" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#333">Book table</text>
+</svg>

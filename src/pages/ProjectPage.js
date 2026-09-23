@@ -8,6 +8,8 @@ import CaseStudySection from "../components/project/CaseStudySection";
 import ProjectLinks from "../components/project/ProjectLinks";
 import ResponsivePreview from "../components/project/ResponsivePreview";
 import LoadingSkeleton from "../components/LoadingSkeleton";
+import DesignToDev from "../components/project/DesignToDev";
+import ProjectGallery from "../components/project/ProjectGallery";
 import { getProjectBySlug } from "../data/projects";
 
 export default function ProjectPage({ slug }) {
@@ -119,19 +121,37 @@ export default function ProjectPage({ slug }) {
         title="From prototype to implementation."
         className="bg-ink"
       >
-        <p className="text-base leading-relaxed text-sand/85 md:text-lg">{project.designToDev}</p>
+        <DesignToDev
+          copy={
+            typeof project.designToDev === "string"
+              ? project.designToDev
+              : project.designToDev?.copy
+          }
+          before={project.designToDevVisual?.before}
+          after={project.designToDevVisual?.after}
+        />
       </CaseStudySection>
+
+      {project.gallery?.length ? (
+        <CaseStudySection
+          eyebrow="Project gallery"
+          title="UI in context."
+          className="bg-ink-soft"
+        >
+          <ProjectGallery items={project.gallery} />
+        </CaseStudySection>
+      ) : null}
 
       <CaseStudySection
         eyebrow="Responsive implementation"
         title="Desktop, tablet, and mobile."
-        className="bg-ink-soft"
+        className="bg-ink"
       >
         <ResponsivePreview responsive={project.responsive} />
       </CaseStudySection>
 
       {project.accessibility?.length ? (
-        <CaseStudySection eyebrow="Accessibility" title="Built to be usable." className="bg-ink">
+        <CaseStudySection eyebrow="Accessibility" title="Built to be usable." className="bg-ink-soft">
           <ul className="space-y-3 text-base text-sand/85 md:text-lg">
             {project.accessibility.map((item) => (
               <li key={item} className="flex gap-3">
@@ -147,7 +167,7 @@ export default function ProjectPage({ slug }) {
         <CaseStudySection
           eyebrow="Technical challenges"
           title="Hard parts and what they taught me."
-          className="bg-ink-soft"
+          className="bg-ink"
         >
           <ul className="space-y-10">
             {project.challenges.map((item) => (
@@ -172,7 +192,7 @@ export default function ProjectPage({ slug }) {
         </CaseStudySection>
       ) : null}
 
-      <CaseStudySection eyebrow="Results / outcome" title="What shipped." className="bg-ink">
+      <CaseStudySection eyebrow="Results / outcome" title="What shipped." className="bg-ink-soft">
         <p className="text-base leading-relaxed text-sand/85 md:text-lg">
           {project.results?.summary}
         </p>

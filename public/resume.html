@@ -66,6 +66,11 @@
         cursor: pointer;
       }
       .actions a.secondary { background: transparent; color: var(--ink); }
+      .hint {
+        margin-top: 0.75rem;
+        color: var(--sand);
+        font-size: 0.9rem;
+      }
       @media print {
         body { background: #fff; }
         .page { margin: 0; box-shadow: none; max-width: none; padding: 0; }
@@ -120,9 +125,10 @@
       </ul>
 
       <div class="actions">
-        <button type="button" onclick="window.print()">Print / Save as PDF</button>
+        <button type="button" onclick="window.print()">Download / Save as PDF</button>
         <a class="secondary" href="./">Back to portfolio</a>
       </div>
+      <p class="hint">Tip: In the print dialog, choose “Save as PDF” to download a PDF copy.</p>
     </main>
   </body>
 </html>

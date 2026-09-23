@@ -15,6 +15,31 @@ const projects = [
     heroVisual: {
       label: "Little Lemon booking UI",
       tone: "mediterranean",
+      src: "/projects/little-lemon-hero.svg",
+    },
+    gallery: [
+      {
+        label: "Desktop reservation layout",
+        src: "/projects/little-lemon-hero.svg",
+        caption: "Clear field groups and a single primary booking action.",
+      },
+      {
+        label: "Mobile booking stack",
+        src: "/projects/little-lemon-mobile.svg",
+        caption: "Thumb-friendly single-column form for small screens.",
+      },
+    ],
+    designToDevVisual: {
+      before: {
+        label: "Wireframe hierarchy",
+        src: "/projects/little-lemon-wire.svg",
+        tone: "default",
+      },
+      after: {
+        label: "Finished booking UI",
+        src: "/projects/little-lemon-hero.svg",
+        tone: "mediterranean",
+      },
     },
     meta: {
       role: "Front-end developer",
@@ -31,8 +56,8 @@ const projects = [
     links: {
       caseStudy: "/work/little-lemon",
       github: "https://github.com/jrallis988/Little-Lemon",
-      live: null,
-      prototype: null,
+      live: "/demos/little-lemon.html",
+      prototype: "/demos/little-lemon.html",
       source: "https://github.com/jrallis988/Little-Lemon",
     },
     problem:
@@ -115,6 +140,22 @@ const projects = [
     heroVisual: {
       label: "Foam Drift canvas prototype",
       tone: "play",
+      src: "/projects/foam-drift-hero.svg",
+    },
+    gallery: [
+      {
+        label: "Foam Drift playable canvas",
+        src: "/projects/foam-drift-hero.svg",
+        caption: "Score chrome and procedural foam orbs in the portfolio palette.",
+      },
+    ],
+    designToDevVisual: {
+      before: null,
+      after: {
+        label: "Interactive prototype",
+        src: "/projects/foam-drift-hero.svg",
+        tone: "play",
+      },
     },
     meta: {
       role: "Front-end prototype",
@@ -129,7 +170,7 @@ const projects = [
       projectType: "Personal experiment",
     },
     links: {
-      caseStudy: "/lab",
+      caseStudy: "/work/foam-drift",
       github: null,
       live: "/#play",
       prototype: "/#play",

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import projects from "../data/projects";
 import TechStack from "./project/TechStack";
+import ProjectVisual from "./project/ProjectVisual";
 
 const typeLabels = {
   "case-study": "Case study",
@@ -8,6 +9,14 @@ const typeLabels = {
   personal: "Personal project",
   experiment: "Experiment",
 };
+
+function resolveHref(href) {
+  if (!href) return href;
+  if (href.endsWith(".html") && href.startsWith("/")) {
+    return `${process.env.PUBLIC_URL || ""}${href}`;
+  }
+  return href;
+}
 
 function ProjectActions({ project }) {
   const actions = [
@@ -27,27 +36,23 @@ function ProjectActions({ project }) {
         const className = action.primary
           ? "text-sm font-semibold text-foam transition-colors hover:text-foam-soft"
           : "text-sm font-semibold text-chalk transition-colors hover:text-foam-soft";
-        if (action.href.startsWith("/")) {
+        const href = resolveHref(action.href);
+        const isAppRoute =
+          action.href.startsWith("/") && !action.href.endsWith(".html");
+
+        if (isAppRoute) {
           return (
             <Link key={action.key} to={action.href} className={className}>
               {action.label} →
             </Link>
           );
         }
-        if (action.href.startsWith("#")) {
-          return (
-            <a key={action.key} href={action.href} className={className}>
-              {action.label} →
-            </a>
-          );
-        }
         return (
           <a
             key={action.key}
-            href={action.href}
-            target="_blank"
-            rel="noreferrer"
+            href={href}
             className={className}
+            {...(href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})}
           >
             {action.label} →
           </a>
@@ -77,7 +82,13 @@ export default function Work() {
         <ul className="stagger">
           {projects.map((project) => (
             <li key={project.id} className="project-row reveal">
-              <div className="grid gap-4 py-8 md:grid-cols-[1fr_1.35fr] md:items-start md:gap-10 md:py-10">
+              <div className="grid gap-6 py-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-start lg:gap-10 lg:py-10">
+                <ProjectVisual
+                  label={project.heroVisual?.label || project.name}
+                  src={project.heroVisual?.src}
+                  tone={project.heroVisual?.tone}
+                  className="min-h-[180px]"
+                />
                 <div>
                   <p className="text-sm uppercase tracking-[0.14em] text-foam">
                     {typeLabels[project.type] || project.category} · {project.year}
@@ -86,12 +97,10 @@ export default function Work() {
                     {project.name}
                   </h3>
                   <p className="mt-2 text-sm text-sand/70">{project.role}</p>
-                  <TechStack items={project.stack} className="mt-4" />
-                </div>
-                <div>
-                  <p className="text-base leading-relaxed text-sand/85 md:max-w-xl">
+                  <p className="mt-4 text-base leading-relaxed text-sand/85 md:max-w-xl">
                     {project.summary}
                   </p>
+                  <TechStack items={project.stack} className="mt-4" />
                   <ProjectActions project={project} />
                 </div>
               </div>
