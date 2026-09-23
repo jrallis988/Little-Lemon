@@ -8,11 +8,10 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+dist
 dist-ssr
 *.local
-
-# Built case study is committed for static portfolio hosting
-# dist/
+.env
 
 # Editor directories and files
 .vscode/*

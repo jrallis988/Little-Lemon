@@ -23,16 +23,16 @@ export function MotionReel() {
   const timer = useRef<number | null>(null);
 
   useEffect(() => {
-    const probe = document.createElement("video");
-    probe.preload = "metadata";
-    probe.src = "./assets/motion/courtside-reel.mp4";
-    const onMeta = () => setHasVideo(true);
-    const onErr = () => setHasVideo(false);
-    probe.addEventListener("loadedmetadata", onMeta);
-    probe.addEventListener("error", onErr);
+    let cancelled = false;
+    fetch("./assets/motion/courtside-reel.mp4", { method: "HEAD" })
+      .then((res) => {
+        if (!cancelled) setHasVideo(res.ok);
+      })
+      .catch(() => {
+        if (!cancelled) setHasVideo(false);
+      });
     return () => {
-      probe.removeEventListener("loadedmetadata", onMeta);
-      probe.removeEventListener("error", onErr);
+      cancelled = true;
     };
   }, []);
 
