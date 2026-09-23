@@ -35,17 +35,16 @@ jobs:
         run: |
           mkdir -p _site
           # Portfolio / static site at repo root (everything except brewery app)
-          rsync -a \
-            --exclude '.git' \
-            --exclude '.github' \
-            --exclude 'smuttynose' \
-            --exclude '_site' \
-            --exclude 'node_modules' \
-            --exclude 'dist' \
-            ./ _site/
+          for item in * .[!.]*; do
+            case "$item" in
+              .|..|.git|.github|smuttynose|_site|node_modules|dist) continue ;;
+            esac
+            [ -e "$item" ] || continue
+            cp -a "$item" _site/
+          done
           # Brewery Vite build under /smuttynose/
           mkdir -p _site/smuttynose
-          rsync -a smuttynose/dist/ _site/smuttynose/
+          cp -a smuttynose/dist/. _site/smuttynose/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
