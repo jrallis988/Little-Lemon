@@ -797,6 +797,12 @@ a:hover { opacity: 0.8; }
         url('nh-dmv/images/nh-highway-hero.jpg') center / cover;
 }
 
+.portfolio-image--smuttynose {
+    background:
+        linear-gradient(160deg, rgba(12, 22, 32, 0.75) 0%, rgba(217, 78, 31, 0.45) 100%),
+        url('images/smuttynose-campus.jpg') center / cover;
+}
+
 .portfolio-image--flote {
     background: linear-gradient(135deg, #0B4F5C 0%, #1B7A8B 55%, #3EAEB8 100%);
 }
