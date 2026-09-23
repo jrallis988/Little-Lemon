@@ -3364,3 +3364,128 @@ button:focus:not(:focus-visible) {
         grid-template-columns: 1fr;
     }
 }
+
+/* CASE STUDIES */
+.case-page {
+    padding: 8rem 2rem 5rem;
+    min-height: 70vh;
+    background: linear-gradient(160deg, #1a1625 0%, #241833 45%, #0f0c16 100%);
+}
+
+.case-page-inner {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.case-page h1 {
+    color: var(--cream);
+    margin-bottom: 1.25rem;
+}
+
+.case-page .service-lead {
+    margin-bottom: 2rem;
+}
+
+.case-page .service-kicker .portfolio-flag {
+    margin-left: 0.65rem;
+    letter-spacing: 0.08em;
+}
+
+.case-meta {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+    margin: 0 0 3rem;
+    padding: 1.25rem 0;
+    border-top: 1px solid rgba(248, 248, 248, 0.12);
+    border-bottom: 1px solid rgba(248, 248, 248, 0.12);
+}
+
+.case-meta dt {
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--orange);
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+}
+
+.case-meta dd {
+    margin: 0;
+    color: var(--cream);
+    font-size: 0.95rem;
+    line-height: 1.45;
+}
+
+.case-block {
+    margin-bottom: 2.75rem;
+}
+
+.case-block h2 {
+    color: var(--cream);
+    font-size: 1.35rem;
+    margin-bottom: 0.85rem;
+}
+
+.case-block p,
+.case-block li {
+    color: var(--text-muted);
+    line-height: 1.75;
+}
+
+.case-block p {
+    margin-bottom: 1rem;
+}
+
+.case-visual-grid {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 1.25rem;
+}
+
+.case-visual {
+    margin: 0;
+}
+
+.case-visual-frame {
+    aspect-ratio: 16 / 10;
+    border: 1px dashed rgba(248, 248, 248, 0.28);
+    border-radius: 8px;
+    background:
+        linear-gradient(135deg, rgba(157, 78, 221, 0.18), rgba(0, 102, 255, 0.12));
+}
+
+.case-visual--flote .case-visual-frame {
+    background: linear-gradient(135deg, #0B4F5C 0%, #1B7A8B 55%, #3EAEB8 100%);
+}
+
+.case-visual--hannaford .case-visual-frame {
+    background: linear-gradient(135deg, #7A0E0E 0%, #C41E1E 50%, #F0A040 100%);
+}
+
+.case-visual--nhti .case-visual-frame {
+    background: linear-gradient(135deg, #4E0F1F 0%, #7A1B2F 50%, #C89B3A 100%);
+}
+
+.case-visual--aveeno .case-visual-frame {
+    background: linear-gradient(135deg, #6B7A3E 0%, #A8B87A 50%, #E8DFC4 100%);
+}
+
+.case-visual figcaption {
+    margin-top: 0.65rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+a.portfolio-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+@media (max-width: 640px) {
+    .case-meta {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
