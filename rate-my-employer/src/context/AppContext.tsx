@@ -24,11 +24,16 @@ import type {
   ActivityItem,
   Company,
   CompanyAverages,
+  ContentReport,
   EmployerResponse,
   EmploymentStatus,
   EmploymentType,
   ExperienceType,
   Interview,
+  InterviewDifficulty,
+  InterviewOffer,
+  NotificationPrefs,
+  ReportReason,
   Review,
   ReviewScores,
   Salary,
@@ -47,6 +52,14 @@ const STORAGE_KEYS = {
   guest: 'rme.guest.v2',
   saved: 'rme.saved.v2',
   recentSearches: 'rme.recentSearches.v2',
+  notifications: 'rme.notifications.v2',
+  reports: 'rme.reports.v2',
+};
+
+const defaultNotificationPrefs: NotificationPrefs = {
+  replies: true,
+  helpfulVotes: true,
+  productUpdates: false,
 };
 
 type LocalAccount = User & { password: string };
@@ -66,6 +79,9 @@ export type WriteDraft = {
   isAnonymous: boolean;
   interviewQuestions: string;
   interviewOutcome: 'positive' | 'neutral' | 'negative';
+  interviewDifficulty: InterviewDifficulty;
+  interviewOffer: InterviewOffer;
+  interviewProcessLength: string;
 };
 
 type AppContextValue = {
@@ -82,6 +98,8 @@ type AppContextValue = {
   employerResponses: EmployerResponse[];
   savedCompanyIds: string[];
   recentSearches: string[];
+  notificationPrefs: NotificationPrefs;
+  reports: ContentReport[];
   user: User | null;
   completeOnboarding: () => Promise<void>;
   continueAsGuest: () => Promise<void>;
@@ -99,6 +117,7 @@ type AppContextValue = {
   getTagsForReview: (review: Review) => Tag[];
   getTrendingCompanies: () => Company[];
   getMyReviews: () => Review[];
+  getMyInterviews: () => Interview[];
   toggleSavedCompany: (companyId: string) => Promise<void>;
   addRecentSearch: (query: string) => Promise<void>;
   signUp: (input: {
@@ -109,6 +128,22 @@ type AppContextValue = {
   }) => Promise<string | null>;
   signIn: (input: { email: string; password: string }) => Promise<string | null>;
   signOut: () => Promise<void>;
+  updateProfile: (input: {
+    displayName: string;
+    username?: string;
+    headline?: string;
+  }) => Promise<string | null>;
+  changePassword: (input: {
+    currentPassword: string;
+    nextPassword: string;
+  }) => Promise<string | null>;
+  updateNotificationPrefs: (prefs: Partial<NotificationPrefs>) => Promise<void>;
+  submitReport: (input: {
+    targetType: ContentReport['targetType'];
+    targetId: string;
+    reason: ReportReason;
+    details?: string;
+  }) => Promise<string | null>;
   submitWorkReview: (draft: WriteDraft) => Promise<string | null>;
   submitInterview: (draft: WriteDraft) => Promise<string | null>;
   updateReview: (
@@ -127,7 +162,22 @@ type AppContextValue = {
       isAnonymous: boolean;
     },
   ) => Promise<string | null>;
+  updateInterview: (
+    interviewId: string,
+    input: {
+      role: string;
+      rating: number;
+      outcome: Interview['outcome'];
+      difficulty?: InterviewDifficulty;
+      offerResult?: InterviewOffer;
+      processLength?: string;
+      body: string;
+      questions: string[];
+      isAnonymous: boolean;
+    },
+  ) => Promise<string | null>;
   deleteReview: (reviewId: string) => Promise<string | null>;
+  deleteInterview: (interviewId: string) => Promise<string | null>;
   voteReview: (reviewId: string, direction: 'up' | 'down') => void;
 };
 
@@ -162,6 +212,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [salaries, setSalaries] = useState<Salary[]>(seedSalaries);
   const [savedCompanyIds, setSavedCompanyIds] = useState<string[]>([]);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
+  const [notificationPrefs, setNotificationPrefs] =
+    useState<NotificationPrefs>(defaultNotificationPrefs);
+  const [reports, setReports] = useState<ContentReport[]>([]);
   const companies = seedCompanies;
   const workplaces = seedWorkplaces;
   const tags = seedTags;
@@ -187,6 +240,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
         if (map[STORAGE_KEYS.recentSearches]) {
           setRecentSearches(JSON.parse(map[STORAGE_KEYS.recentSearches]!));
         }
+        if (map[STORAGE_KEYS.notifications]) {
+          setNotificationPrefs({
+            ...defaultNotificationPrefs,
+            ...JSON.parse(map[STORAGE_KEYS.notifications]!),
+          });
+        }
+        if (map[STORAGE_KEYS.reports]) setReports(JSON.parse(map[STORAGE_KEYS.reports]!));
         const guest = map[STORAGE_KEYS.guest] === '1';
         const sessionId = map[STORAGE_KEYS.session];
         const sessionUser = sessionId
@@ -220,6 +280,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
     const persistInterviews = async (next: Interview[]) => {
       setInterviews(next);
       await AsyncStorage.setItem(STORAGE_KEYS.interviews, JSON.stringify(next));
+    };
+    const persistReports = async (next: ContentReport[]) => {
+      setReports(next);
+      await AsyncStorage.setItem(STORAGE_KEYS.reports, JSON.stringify(next));
     };
 
     const getCompany = (id: string) =>
@@ -310,6 +374,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       employerResponses,
       savedCompanyIds,
       recentSearches,
+      notificationPrefs,
+      reports,
       user,
       completeOnboarding: async () => {
         setHasOnboarded(true);
@@ -353,6 +419,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
         if (!user) return [];
         return reviews
           .filter((review) => review.userId === user.id)
+          .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+      },
+      getMyInterviews: () => {
+        if (!user) return [];
+        return interviews
+          .filter((item) => item.userId === user.id)
           .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
       },
       toggleSavedCompany: async (companyId) => {
@@ -429,6 +501,64 @@ export function AppProvider({ children }: { children: ReactNode }) {
         await AsyncStorage.multiSet([[STORAGE_KEYS.guest, '0']]);
         await AsyncStorage.removeItem(STORAGE_KEYS.session);
       },
+      updateProfile: async ({ displayName, username, headline }) => {
+        if (!user) return 'Sign in to edit your profile.';
+        const name = displayName.trim();
+        if (!name) return 'Display name is required.';
+        const stored = await AsyncStorage.getItem(STORAGE_KEYS.users);
+        const existing: LocalAccount[] = stored ? JSON.parse(stored) : accounts;
+        const nextAccounts = existing.map((account) => {
+          if (account.id !== user.id) return account;
+          return {
+            ...account,
+            displayName: name,
+            username: username?.trim() || undefined,
+            headline: headline?.trim() || null,
+            updatedAt: new Date().toISOString(),
+          };
+        });
+        await persistAccounts(nextAccounts);
+        const match = nextAccounts.find((item) => item.id === user.id);
+        if (match) setUser(toPublicUser(match));
+        return null;
+      },
+      changePassword: async ({ currentPassword, nextPassword }) => {
+        if (!user) return 'Sign in to change your password.';
+        if (!currentPassword || !nextPassword) return 'Both passwords are required.';
+        if (nextPassword.length < 6) return 'New password must be at least 6 characters.';
+        const stored = await AsyncStorage.getItem(STORAGE_KEYS.users);
+        const existing: LocalAccount[] = stored ? JSON.parse(stored) : accounts;
+        const match = existing.find((item) => item.id === user.id);
+        if (!match || match.password !== currentPassword) {
+          return 'Current password is incorrect.';
+        }
+        const nextAccounts = existing.map((account) =>
+          account.id === user.id
+            ? { ...account, password: nextPassword, updatedAt: new Date().toISOString() }
+            : account,
+        );
+        await persistAccounts(nextAccounts);
+        return null;
+      },
+      updateNotificationPrefs: async (prefs) => {
+        const next = { ...notificationPrefs, ...prefs };
+        setNotificationPrefs(next);
+        await AsyncStorage.setItem(STORAGE_KEYS.notifications, JSON.stringify(next));
+      },
+      submitReport: async ({ targetType, targetId, reason, details }) => {
+        if (!targetId) return 'Nothing to report.';
+        const report: ContentReport = {
+          id: `report-${Date.now()}`,
+          targetType,
+          targetId,
+          reason,
+          details: (details ?? '').trim(),
+          reporterUserId: user?.id ?? null,
+          createdAt: new Date().toISOString(),
+        };
+        await persistReports([report, ...reports]);
+        return null;
+      },
       submitWorkReview: async (draft) => {
         if (!user) return 'Sign in to submit a review.';
         if (!draft.companyId || !draft.role.trim() || !draft.body.trim()) {
@@ -490,11 +620,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
           role: draft.role.trim(),
           rating: draft.overall || 3,
           outcome: draft.interviewOutcome,
+          difficulty: draft.interviewDifficulty,
+          offerResult: draft.interviewOffer,
+          processLength: draft.interviewProcessLength || undefined,
           body: draft.body.trim(),
           questions: draft.interviewQuestions
             .split('\n')
             .map((line) => line.trim())
             .filter(Boolean),
+          isAnonymous: draft.isAnonymous,
           helpfulCount: 0,
           createdAt: new Date().toISOString(),
         };
@@ -561,11 +695,46 @@ export function AppProvider({ children }: { children: ReactNode }) {
         }
         return null;
       },
+      updateInterview: async (interviewId, input) => {
+        if (!user) return 'Sign in to edit an interview.';
+        const target = interviews.find((item) => item.id === interviewId);
+        if (!target || target.userId !== user.id) return 'Interview not found.';
+        if (!input.role.trim() || !input.body.trim()) {
+          return 'Role and interview story are required.';
+        }
+        if (!input.rating) return 'Add an interview rating.';
+        const next = interviews.map((item) => {
+          if (item.id !== interviewId) return item;
+          return {
+            ...item,
+            role: input.role.trim(),
+            rating: input.rating,
+            outcome: input.outcome,
+            difficulty: input.difficulty,
+            offerResult: input.offerResult,
+            processLength: input.processLength?.trim() || undefined,
+            body: input.body.trim(),
+            questions: input.questions.map((q) => q.trim()).filter(Boolean),
+            isAnonymous: input.isAnonymous,
+            authorName: input.isAnonymous ? 'Anonymous' : user.displayName,
+            updatedAt: new Date().toISOString(),
+          };
+        });
+        await persistInterviews(next);
+        return null;
+      },
       deleteReview: async (reviewId) => {
         if (!user) return 'Sign in to delete a review.';
         const target = reviews.find((item) => item.id === reviewId);
         if (!target || target.userId !== user.id) return 'Review not found.';
         await persistReviews(reviews.filter((item) => item.id !== reviewId));
+        return null;
+      },
+      deleteInterview: async (interviewId) => {
+        if (!user) return 'Sign in to delete an interview.';
+        const target = interviews.find((item) => item.id === interviewId);
+        if (!target || target.userId !== user.id) return 'Interview not found.';
+        await persistInterviews(interviews.filter((item) => item.id !== interviewId));
         return null;
       },
       voteReview: (reviewId, direction) => {
@@ -594,6 +763,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
     employerResponses,
     savedCompanyIds,
     recentSearches,
+    notificationPrefs,
+    reports,
     user,
     accounts,
   ]);

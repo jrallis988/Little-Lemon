@@ -1,18 +1,20 @@
-import { Stack, useLocalSearchParams } from 'expo-router';
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import { StarRating } from '../../src/components';
+import { PrimaryButton, StarRating } from '../../src/components';
 import { useApp } from '../../src/context/AppContext';
 import { colors, radii, spacing, typography } from '../../src/theme';
 
 export default function InterviewDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { getInterview, getCompany, getWorkplace } = useApp();
+  const router = useRouter();
+  const { getInterview, getCompany, getWorkplace, user } = useApp();
   const interview = getInterview(id);
   const company = interview ? getCompany(interview.companyId) : undefined;
   const workplace = interview?.workplaceId
     ? getWorkplace(interview.workplaceId)
     : undefined;
+  const isOwner = Boolean(user && interview && interview.userId === user.id);
 
   if (!interview || !company) {
     return (
@@ -30,17 +32,55 @@ export default function InterviewDetailScreen() {
         {workplace ? <Text style={styles.meta}>{workplace.name}</Text> : null}
         <Text style={styles.title}>{interview.role} interview</Text>
         <StarRating value={interview.rating} size="lg" />
-        <View style={styles.outcome}>
-          <Text style={styles.outcomeText}>{interview.outcome} experience</Text>
+        <View style={styles.chips}>
+          <View style={styles.outcome}>
+            <Text style={styles.outcomeText}>{interview.outcome} experience</Text>
+          </View>
+          {interview.difficulty ? (
+            <View style={styles.outcome}>
+              <Text style={styles.outcomeText}>{interview.difficulty} difficulty</Text>
+            </View>
+          ) : null}
+          {interview.offerResult ? (
+            <View style={styles.outcome}>
+              <Text style={styles.outcomeText}>{interview.offerResult.replace('_', ' ')}</Text>
+            </View>
+          ) : null}
+          {interview.processLength ? (
+            <View style={styles.outcome}>
+              <Text style={styles.outcomeText}>{interview.processLength}</Text>
+            </View>
+          ) : null}
         </View>
         <Text style={styles.body}>{interview.body}</Text>
         <Text style={styles.section}>Questions asked</Text>
-        {interview.questions.map((question) => (
-          <View key={question} style={styles.q}>
-            <Text style={styles.qText}>{question}</Text>
-          </View>
-        ))}
+        {interview.questions.length === 0 ? (
+          <Text style={styles.meta}>No questions listed.</Text>
+        ) : (
+          interview.questions.map((question) => (
+            <View key={question} style={styles.q}>
+              <Text style={styles.qText}>{question}</Text>
+            </View>
+          ))
+        )}
         <Text style={styles.meta}>Helpful · {interview.helpfulCount ?? 0}</Text>
+        {isOwner ? (
+          <PrimaryButton
+            label="Edit interview"
+            variant="secondary"
+            onPress={() => router.push(`/interview/edit/${interview.id}`)}
+          />
+        ) : null}
+        <PrimaryButton
+          label="Report"
+          variant="ghost"
+          onPress={() =>
+            router.push({
+              pathname: '/report',
+              params: { targetType: 'interview', targetId: interview.id },
+            })
+          }
+        />
       </ScrollView>
     </>
   );
@@ -56,6 +96,7 @@ const styles = StyleSheet.create({
   },
   title: { fontFamily: typography.display, fontSize: 26, color: colors.ink },
   meta: { fontFamily: typography.body, fontSize: 14, color: colors.inkSoft },
+  chips: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
   outcome: {
     alignSelf: 'flex-start',
     backgroundColor: colors.blueSoft,

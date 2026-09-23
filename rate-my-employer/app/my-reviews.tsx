@@ -7,11 +7,17 @@ import { colors, radii, spacing, typography } from '../src/theme';
 
 export default function MyReviewsScreen() {
   const router = useRouter();
-  const { user, getMyReviews, getCompany, getWorkplace, interviews, deleteReview } = useApp();
+  const {
+    user,
+    getMyReviews,
+    getMyInterviews,
+    getCompany,
+    getWorkplace,
+    deleteReview,
+    deleteInterview,
+  } = useApp();
   const myReviews = getMyReviews();
-  const myInterviews = user
-    ? interviews.filter((item) => item.userId === user.id)
-    : [];
+  const myInterviews = getMyInterviews();
 
   if (!user) {
     return (
@@ -78,18 +84,39 @@ export default function MyReviewsScreen() {
         myInterviews.map((item) => {
           const company = getCompany(item.companyId);
           return (
-            <Pressable
-              key={item.id}
-              style={styles.block}
-              onPress={() => router.push(`/interview/${item.id}`)}
-            >
-              <Text style={styles.company}>{company?.name ?? 'Employer'}</Text>
-              <Text style={styles.interviewTitle}>{item.role}</Text>
-              <StarRating value={item.rating} />
-              <Text style={styles.meta} numberOfLines={2}>
-                {item.body}
-              </Text>
-            </Pressable>
+            <View key={item.id} style={styles.block}>
+              <Pressable onPress={() => router.push(`/interview/${item.id}`)}>
+                <Text style={styles.company}>{company?.name ?? 'Employer'}</Text>
+                <Text style={styles.interviewTitle}>{item.role}</Text>
+                <StarRating value={item.rating} />
+                <Text style={styles.meta} numberOfLines={2}>
+                  {item.body}
+                </Text>
+              </Pressable>
+              <View style={styles.row}>
+                <PrimaryButton
+                  label="Edit"
+                  variant="secondary"
+                  style={{ flex: 1 }}
+                  onPress={() => router.push(`/interview/edit/${item.id}`)}
+                />
+                <PrimaryButton
+                  label="Delete"
+                  variant="ghost"
+                  style={{ flex: 1 }}
+                  onPress={() =>
+                    Alert.alert('Delete interview?', 'This cannot be undone.', [
+                      { text: 'Cancel', style: 'cancel' },
+                      {
+                        text: 'Delete',
+                        style: 'destructive',
+                        onPress: () => deleteInterview(item.id),
+                      },
+                    ])
+                  }
+                />
+              </View>
+            </View>
           );
         })
       )}

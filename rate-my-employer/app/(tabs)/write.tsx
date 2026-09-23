@@ -15,7 +15,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Chip, PrimaryButton, StarRating } from '../../src/components';
 import { defaultScores, useApp, type WriteDraft } from '../../src/context/AppContext';
 import { POPULAR_ROLES } from '../../src/types';
-import type { ExperienceType } from '../../src/types';
+import type { ExperienceType, InterviewDifficulty, InterviewOffer } from '../../src/types';
 import { colors, radii, spacing, typography } from '../../src/theme';
 
 const STEPS = [
@@ -27,6 +27,21 @@ const STEPS = [
   'Write',
   'Preview',
 ] as const;
+
+const DIFFICULTIES: { key: InterviewDifficulty; label: string }[] = [
+  { key: 'easy', label: 'Easy' },
+  { key: 'average', label: 'Average' },
+  { key: 'difficult', label: 'Difficult' },
+];
+
+const OFFERS: { key: InterviewOffer; label: string }[] = [
+  { key: 'accepted', label: 'Accepted offer' },
+  { key: 'declined', label: 'Declined offer' },
+  { key: 'no_offer', label: 'No offer' },
+  { key: 'pending', label: 'Pending' },
+];
+
+const PROCESS_LENGTHS = ['Under 1 week', '1–2 weeks', '3–4 weeks', '1–2 months', '2+ months'];
 
 const emptyDraft = (): WriteDraft => ({
   experienceType: 'work',
@@ -43,6 +58,9 @@ const emptyDraft = (): WriteDraft => ({
   isAnonymous: true,
   interviewQuestions: '',
   interviewOutcome: 'positive',
+  interviewDifficulty: 'average',
+  interviewOffer: 'pending',
+  interviewProcessLength: '',
 });
 
 export default function WriteScreen() {
@@ -316,16 +334,56 @@ export default function WriteScreen() {
                 />
               </>
             ) : (
-              <View style={styles.wrap}>
-                {(['positive', 'neutral', 'negative'] as const).map((outcome) => (
-                  <Chip
-                    key={outcome}
-                    label={outcome}
-                    active={draft.interviewOutcome === outcome}
-                    onPress={() => setDraft((d) => ({ ...d, interviewOutcome: outcome }))}
-                  />
-                ))}
-              </View>
+              <>
+                <Text style={styles.sub}>Interview experience</Text>
+                <View style={styles.wrap}>
+                  {(['positive', 'neutral', 'negative'] as const).map((outcome) => (
+                    <Chip
+                      key={outcome}
+                      label={outcome}
+                      active={draft.interviewOutcome === outcome}
+                      onPress={() => setDraft((d) => ({ ...d, interviewOutcome: outcome }))}
+                    />
+                  ))}
+                </View>
+                <Text style={styles.sub}>Difficulty</Text>
+                <View style={styles.wrap}>
+                  {DIFFICULTIES.map((item) => (
+                    <Chip
+                      key={item.key}
+                      label={item.label}
+                      active={draft.interviewDifficulty === item.key}
+                      onPress={() =>
+                        setDraft((d) => ({ ...d, interviewDifficulty: item.key }))
+                      }
+                    />
+                  ))}
+                </View>
+                <Text style={styles.sub}>Offer result</Text>
+                <View style={styles.wrap}>
+                  {OFFERS.map((item) => (
+                    <Chip
+                      key={item.key}
+                      label={item.label}
+                      active={draft.interviewOffer === item.key}
+                      onPress={() => setDraft((d) => ({ ...d, interviewOffer: item.key }))}
+                    />
+                  ))}
+                </View>
+                <Text style={styles.sub}>Process length</Text>
+                <View style={styles.wrap}>
+                  {PROCESS_LENGTHS.map((item) => (
+                    <Chip
+                      key={item}
+                      label={item}
+                      active={draft.interviewProcessLength === item}
+                      onPress={() =>
+                        setDraft((d) => ({ ...d, interviewProcessLength: item }))
+                      }
+                    />
+                  ))}
+                </View>
+              </>
             )}
           </View>
         ) : null}

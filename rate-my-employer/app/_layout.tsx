@@ -52,11 +52,13 @@ export default function RootLayout() {
         <Stack.Screen name="review/[id]" options={{ title: 'Review' }} />
         <Stack.Screen name="review/edit/[id]" options={{ title: 'Edit review' }} />
         <Stack.Screen name="interview/[id]" options={{ title: 'Interview' }} />
+        <Stack.Screen name="interview/edit/[id]" options={{ title: 'Edit interview' }} />
         <Stack.Screen name="submit-success" options={{ headerShown: false }} />
         <Stack.Screen name="my-reviews" options={{ title: 'My reviews' }} />
         <Stack.Screen name="saved" options={{ title: 'Saved employers' }} />
         <Stack.Screen name="settings" options={{ title: 'Settings' }} />
         <Stack.Screen name="guidelines" options={{ title: 'Community guidelines' }} />
+        <Stack.Screen name="report" options={{ title: 'Report content' }} />
       </Stack>
     </AppProvider>
   );

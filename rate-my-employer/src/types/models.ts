@@ -85,6 +85,9 @@ export interface Review {
   updatedAt?: string;
 }
 
+export type InterviewDifficulty = 'easy' | 'average' | 'difficult';
+export type InterviewOffer = 'accepted' | 'declined' | 'no_offer' | 'pending';
+
 export interface Interview {
   id: string;
   companyId: string;
@@ -94,11 +97,39 @@ export interface Interview {
   role: string;
   rating: number;
   outcome: 'positive' | 'neutral' | 'negative';
+  difficulty?: InterviewDifficulty;
+  offerResult?: InterviewOffer;
+  processLength?: string;
   body: string;
   questions: string[];
   interviewDate?: string;
   helpfulCount?: number;
+  isAnonymous?: boolean;
   createdAt: string;
+  updatedAt?: string;
+}
+
+export type ReportReason =
+  | 'spam'
+  | 'harassment'
+  | 'fake'
+  | 'privacy'
+  | 'other';
+
+export interface ContentReport {
+  id: string;
+  targetType: 'review' | 'interview' | 'company' | 'other';
+  targetId: string;
+  reason: ReportReason;
+  details: string;
+  reporterUserId?: string | null;
+  createdAt: string;
+}
+
+export interface NotificationPrefs {
+  replies: boolean;
+  helpfulVotes: boolean;
+  productUpdates: boolean;
 }
 
 export interface Tag {

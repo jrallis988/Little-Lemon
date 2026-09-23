@@ -1,9 +1,12 @@
-import { Alert, StyleSheet, Text, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { PrimaryButton } from '../src/components';
 import { colors, spacing, typography } from '../src/theme';
 
 export default function GuidelinesScreen() {
+  const router = useRouter();
+
   return (
     <View style={styles.content}>
       <Text style={styles.title}>Community Guidelines</Text>
@@ -19,7 +22,7 @@ export default function GuidelinesScreen() {
       <PrimaryButton
         label="Report Content"
         variant="secondary"
-        onPress={() => Alert.alert('Report', 'Report flow coming soon.')}
+        onPress={() => router.push('/report')}
       />
     </View>
   );

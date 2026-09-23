@@ -76,6 +76,16 @@ export default function ReviewDetailScreen() {
           />
         ) : null}
         <PrimaryButton
+          label="Report"
+          variant="ghost"
+          onPress={() =>
+            router.push({
+              pathname: '/report',
+              params: { targetType: 'review', targetId: review.id },
+            })
+          }
+        />
+        <PrimaryButton
           label="Write a Review"
           onPress={() => router.push('/(tabs)/write')}
         />
