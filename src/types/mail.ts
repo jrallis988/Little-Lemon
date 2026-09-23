@@ -48,6 +48,8 @@ export interface AttachmentMeta {
   name: string;
   size: number;
   type: string;
+  /** Optional demo/local preview URL for seeded or uploaded images. */
+  url?: string;
 }
 
 export interface Contact {

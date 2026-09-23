@@ -146,53 +146,71 @@ export function MessageList() {
   const tip = <FolderTip folder={folder} />;
 
   return (
-    <section className="flex h-full min-w-0 flex-col border-r-2 border-primary/10 bg-white/75">
-      {folder === "inbox" && (
-        <div className="flex gap-1.5 overflow-x-auto border-b-2 border-primary/10 px-3 py-3">
-          {FILTERS.map((filter) => (
-            <button
-              key={filter.id}
-              type="button"
-              onClick={() => setInboxFilter(filter.id)}
-              className={cn(
-                "shrink-0 rounded-full px-3.5 py-2 text-xs font-extrabold transition-colors",
-                inboxFilter === filter.id
-                  ? "bg-rail text-white shadow-soft"
-                  : "bg-secondary text-muted-foreground hover:text-foreground",
-              )}
-            >
-              {filter.label}
-            </button>
+    <section className="relative flex h-full min-w-0 flex-col border-r-2 border-primary/10 bg-white/75">
+      {/* Spiral notebook binding — mockup signature on the list pane */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 left-0 z-20 hidden w-7 sm:block"
+      >
+        <div className="absolute inset-y-3 left-0 w-3 rounded-r-md bg-gradient-to-b from-[#C9D4F5] via-[#B8C6F0] to-[#C9D4F5] shadow-[2px_0_0_rgba(88,80,236,0.12)]" />
+        <div className="absolute inset-y-4 left-[5px] flex flex-col justify-between py-1">
+          {Array.from({ length: 14 }).map((_, i) => (
+            <span
+              key={i}
+              className="block h-3.5 w-3.5 rounded-full border-[2.5px] border-[#4A45C8] bg-[#6B64F0] shadow-[inset_1px_1px_0_rgba(255,255,255,0.35)]"
+            />
           ))}
         </div>
-      )}
+      </div>
 
-      <ScrollArea className="flex-1">
-        <div className="space-y-2 p-3">
-          {filtered.length === 0 ? (
-            <div className="rounded-[1.6rem] border-2 border-dashed border-primary/25 bg-white/90 px-4 py-10 text-center">
-              <p className="font-display text-lg font-semibold text-foreground">
-                No messages here
-              </p>
-            </div>
-          ) : (
-            filtered.map((message) => (
-              <MessageListItem
-                key={message.id}
-                message={message}
-                contact={getContact(contacts, message.fromContactId)}
-                selected={selectedMessageId === message.id}
-                onSelect={() => {
-                  selectMessage(message.id);
-                  if (message.unread) void markRead(message.id);
-                }}
-              />
-            ))
-          )}
-        </div>
-      </ScrollArea>
+      <div className="flex min-h-0 flex-1 flex-col sm:pl-6">
+        {folder === "inbox" && (
+          <div className="flex gap-1.5 overflow-x-auto border-b-2 border-primary/10 px-3 py-3">
+            {FILTERS.map((filter) => (
+              <button
+                key={filter.id}
+                type="button"
+                onClick={() => setInboxFilter(filter.id)}
+                className={cn(
+                  "shrink-0 rounded-full px-3.5 py-2 text-xs font-extrabold transition-colors",
+                  inboxFilter === filter.id
+                    ? "bg-rail text-white shadow-soft"
+                    : "bg-secondary text-muted-foreground hover:text-foreground",
+                )}
+              >
+                {filter.label}
+              </button>
+            ))}
+          </div>
+        )}
 
-      {tip ? <div className="border-t-2 border-primary/10 p-3">{tip}</div> : null}
+        <ScrollArea className="flex-1">
+          <div className="space-y-2 p-3">
+            {filtered.length === 0 ? (
+              <div className="rounded-[1.6rem] border-2 border-dashed border-primary/25 bg-white/90 px-4 py-10 text-center">
+                <p className="font-display text-lg font-semibold text-foreground">
+                  No messages here
+                </p>
+              </div>
+            ) : (
+              filtered.map((message) => (
+                <MessageListItem
+                  key={message.id}
+                  message={message}
+                  contact={getContact(contacts, message.fromContactId)}
+                  selected={selectedMessageId === message.id}
+                  onSelect={() => {
+                    selectMessage(message.id);
+                    if (message.unread) void markRead(message.id);
+                  }}
+                />
+              ))
+            )}
+          </div>
+        </ScrollArea>
+
+        {tip ? <div className="border-t-2 border-primary/10 p-3">{tip}</div> : null}
+      </div>
     </section>
   );
 }

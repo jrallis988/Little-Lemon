@@ -112,9 +112,10 @@ export const SEED_MESSAGES: Message[] = [
     attachments: [
       {
         id: "a1",
-        name: "volcano-plan.pdf",
+        name: "my-volcano.png",
         size: 184320,
-        type: "application/pdf",
+        type: "image/svg+xml",
+        url: "/volcano-drawing.svg",
       },
     ],
     approvalStatus: "none",
@@ -210,7 +211,8 @@ export const SEED_MESSAGES: Message[] = [
         id: "a-board",
         name: "board-sketch.png",
         size: 220160,
-        type: "image/png",
+        type: "image/svg+xml",
+        url: "/board-sketch.svg",
       },
     ],
   },

@@ -78,6 +78,11 @@ class MailboxDB extends Dexie {
         await tx.table("drafts").put(draft);
       }
     });
+    this.version(5).upgrade(async (tx) => {
+      for (const seed of SEED_MESSAGES) {
+        await tx.table("messages").put(seed);
+      }
+    });
   }
 }
 

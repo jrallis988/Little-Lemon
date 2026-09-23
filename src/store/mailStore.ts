@@ -77,6 +77,7 @@ interface MailState {
   drafts: Draft[];
   settings: AppSettings;
   teacherUnlocked: boolean;
+  teacherPanelOpen: boolean;
   searchQuery: string;
   inboxFilter: InboxFilter;
   hydrate: () => Promise<void>;
@@ -89,6 +90,7 @@ interface MailState {
   completeOnboarding: (grade: GradeLevel) => Promise<void>;
   unlockTeacher: (pin: string) => boolean;
   lockTeacher: () => void;
+  setTeacherPanelOpen: (open: boolean) => void;
   updateSettings: (patch: Partial<AppSettings>) => Promise<void>;
   addSafeContact: (input: {
     name: string;
@@ -145,6 +147,7 @@ export const useMailStore = create<MailState>((set, get) => ({
   drafts: [],
   settings: DEFAULT_SETTINGS,
   teacherUnlocked: false,
+  teacherPanelOpen: false,
   searchQuery: "",
   inboxFilter: "all",
 
@@ -249,6 +252,8 @@ export const useMailStore = create<MailState>((set, get) => ({
     }
     set({ teacherUnlocked: false });
   },
+
+  setTeacherPanelOpen: (teacherPanelOpen) => set({ teacherPanelOpen }),
 
   updateSettings: async (patch) => {
     const needsTeacher =

@@ -17,6 +17,7 @@ import {
   Paperclip,
   PenLine,
   Reply,
+  UserPlus,
   X,
 } from "lucide-react";
 import { useState } from "react";
@@ -43,6 +44,7 @@ export function MessagePreview() {
   const [previewAttachment, setPreviewAttachment] = useState<{
     name: string;
     type: string;
+    url?: string;
   } | null>(null);
 
   if (folder === "safe-contacts") {
@@ -170,31 +172,76 @@ export function MessagePreview() {
           </div>
 
           {(message.attachments?.length ?? 0) > 0 && (
-            <ul className="space-y-2">
-              {message.attachments?.map((file) => (
-                <li key={file.id}>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setPreviewAttachment({ name: file.name, type: file.type })
-                    }
-                    className="flex w-full items-center gap-3 rounded-3xl border-2 border-primary/15 bg-primary/5 px-4 py-3.5 text-left shadow-card transition hover:border-primary/35"
-                  >
-                    <span className="flex size-11 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
-                      <Paperclip className="size-5" />
-                    </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="block truncate text-sm font-extrabold">
-                        {file.name}
-                      </span>
-                      <span className="text-xs font-bold text-muted-foreground">
-                        {formatBytes(file.size)}
-                      </span>
-                    </span>
-                    <Download className="size-4 text-primary" />
-                  </button>
-                </li>
-              ))}
+            <ul className="space-y-3">
+              {message.attachments?.map((file) => {
+                const isImage =
+                  file.type.startsWith("image/") || Boolean(file.url);
+                return (
+                  <li key={file.id}>
+                    {isImage && file.url ? (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setPreviewAttachment({
+                            name: file.name,
+                            type: file.type,
+                            url: file.url,
+                          })
+                        }
+                        className="group relative mx-auto block w-full max-w-md rotate-[-1.5deg] rounded-md border-[3px] border-white bg-[#FFF8E7] p-3 text-left shadow-card transition hover:rotate-0 hover:shadow-panel"
+                      >
+                        <span
+                          aria-hidden
+                          className="absolute -left-2 top-6 h-8 w-14 -rotate-12 rounded-sm bg-[#FFE08A]/90 shadow-sm"
+                        />
+                        <span
+                          aria-hidden
+                          className="absolute -right-2 top-8 h-8 w-14 rotate-12 rounded-sm bg-[#FFE08A]/90 shadow-sm"
+                        />
+                        <img
+                          src={file.url}
+                          alt={file.name}
+                          className="max-h-56 w-full rounded-sm object-contain"
+                          draggable={false}
+                        />
+                        <span className="mt-2 flex items-center justify-between gap-2 px-1">
+                          <span className="truncate text-sm font-extrabold text-foreground">
+                            {file.name}
+                          </span>
+                          <span className="shrink-0 text-xs font-bold text-muted-foreground">
+                            {formatBytes(file.size)}
+                          </span>
+                        </span>
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setPreviewAttachment({
+                            name: file.name,
+                            type: file.type,
+                            url: file.url,
+                          })
+                        }
+                        className="flex w-full items-center gap-3 rounded-3xl border-2 border-primary/15 bg-primary/5 px-4 py-3.5 text-left shadow-card transition hover:border-primary/35"
+                      >
+                        <span className="flex size-11 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
+                          <Paperclip className="size-5" />
+                        </span>
+                        <span className="min-w-0 flex-1">
+                          <span className="block truncate text-sm font-extrabold">
+                            {file.name}
+                          </span>
+                          <span className="text-xs font-bold text-muted-foreground">
+                            {formatBytes(file.size)}
+                          </span>
+                        </span>
+                        <Download className="size-4 text-primary" />
+                      </button>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           )}
 
@@ -240,6 +287,7 @@ export function MessagePreview() {
         <AttachmentPreviewModal
           name={previewAttachment.name}
           type={previewAttachment.type}
+          url={previewAttachment.url}
           onClose={() => setPreviewAttachment(null)}
         />
       )}
@@ -303,13 +351,15 @@ function FolderEmptyState({ folder }: { folder: string }) {
 function AttachmentPreviewModal({
   name,
   type,
+  url,
   onClose,
 }: {
   name: string;
   type: string;
+  url?: string;
   onClose: () => void;
 }) {
-  const isImage = type.startsWith("image/");
+  const isImage = type.startsWith("image/") || Boolean(url);
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/40 p-4 backdrop-blur-sm">
       <div className="w-full max-w-2xl overflow-hidden rounded-[2rem] border-[3px] border-primary/20 bg-card shadow-panel animate-fade-up">
@@ -319,8 +369,25 @@ function AttachmentPreviewModal({
             <X className="size-5" />
           </Button>
         </header>
-        <div className="flex min-h-[300px] items-center justify-center bg-secondary/60 p-8">
-          {isImage ? (
+        <div className="flex min-h-[300px] items-center justify-center bg-[linear-gradient(hsl(239_40%_88%_/_0.35)_1px,transparent_1px)] bg-[length:100%_28px] bg-secondary/50 p-8">
+          {isImage && url ? (
+            <div className="relative rotate-1 rounded-md border-4 border-white bg-[#FFF8E7] p-3 shadow-card">
+              <span
+                aria-hidden
+                className="absolute -left-3 top-10 h-9 w-16 -rotate-12 rounded-sm bg-[#FFE08A] shadow-sm"
+              />
+              <span
+                aria-hidden
+                className="absolute -right-3 top-14 h-9 w-16 rotate-12 rounded-sm bg-[#FFE08A] shadow-sm"
+              />
+              <img
+                src={url}
+                alt={name}
+                className="max-h-[420px] w-full max-w-lg object-contain"
+                draggable={false}
+              />
+            </div>
+          ) : isImage ? (
             <div className="rotate-1 rounded-2xl border-4 border-white bg-pending-soft px-10 py-16 text-center shadow-card">
               <p className="font-display text-xl font-semibold text-primary">
                 {name}
@@ -466,6 +533,7 @@ function SearchResultsPane() {
 
 function SafeContactsPane() {
   const contacts = useMailStore((s) => s.contacts);
+  const setTeacherPanelOpen = useMailStore((s) => s.setTeacherPanelOpen);
   const groups = [
     {
       label: "Teachers",
@@ -488,19 +556,33 @@ function SafeContactsPane() {
   return (
     <section className="relative flex h-full flex-col">
       <DoodleBackdrop className="opacity-45" />
-      <header className="relative z-10 flex items-center justify-between border-b border-border/70 px-6 py-5">
+      <header className="relative z-10 flex flex-wrap items-center justify-between gap-3 border-b border-border/70 px-6 py-5">
         <h2 className="font-display text-2xl font-semibold tracking-tight">
           Safe Contacts
         </h2>
-        <img
-          src="/illust-shield.png"
-          alt=""
-          className="h-14 w-14 object-contain"
-          draggable={false}
-        />
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            className="inline-flex items-center gap-2 rounded-full border-[2.5px] border-rail/25 bg-white px-4 py-2.5 text-sm font-extrabold text-rail shadow-card transition hover:border-rail/50 hover:bg-rail/5"
+            onClick={() => setTeacherPanelOpen(true)}
+          >
+            <UserPlus className="size-4" />
+            Ask teacher to add
+          </button>
+          <img
+            src="/illust-shield.png"
+            alt=""
+            className="h-14 w-14 object-contain"
+            draggable={false}
+          />
+        </div>
       </header>
       <ScrollArea className="relative z-10 flex-1">
         <div className="space-y-6 p-6">
+          <div className="rounded-[1.75rem] border-2 border-dashed border-safe/35 bg-safe-soft/60 px-5 py-4 text-sm font-bold text-safe shadow-card">
+            Only people your teacher approves show up here. Need someone new?
+            Ask your teacher — they unlock Teacher mode to add contacts.
+          </div>
           {groups.map((group) =>
             group.items.length === 0 ? null : (
               <div key={group.label}>

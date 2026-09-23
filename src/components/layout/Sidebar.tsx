@@ -14,7 +14,6 @@ import {
   ShieldCheck,
   GraduationCap,
 } from "lucide-react";
-import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const icons: Record<Exclude<FolderId, "settings">, typeof Inbox> = {
@@ -32,7 +31,8 @@ export function Sidebar() {
   const setFolder = useMailStore((s) => s.setFolder);
   const messages = useMailStore((s) => s.messages);
   const contacts = useMailStore((s) => s.contacts);
-  const [teacherOpen, setTeacherOpen] = useState(false);
+  const teacherPanelOpen = useMailStore((s) => s.teacherPanelOpen);
+  const setTeacherPanelOpen = useMailStore((s) => s.setTeacherPanelOpen);
 
   const unreadInbox = messages.filter(
     (m) => m.folder === "inbox" && m.unread,
@@ -87,7 +87,7 @@ export function Sidebar() {
           <button
             type="button"
             className="flex h-12 w-full items-center justify-start gap-3 rounded-3xl border-[2.5px] border-white/35 bg-white/10 px-4 text-base font-extrabold text-white backdrop-blur transition hover:bg-white/18"
-            onClick={() => setTeacherOpen(true)}
+            onClick={() => setTeacherPanelOpen(true)}
           >
             <GraduationCap className="size-5" />
             Teacher
@@ -163,7 +163,9 @@ export function Sidebar() {
         </div>
       </aside>
 
-      {teacherOpen && <TeacherPanel onClose={() => setTeacherOpen(false)} />}
+      {teacherPanelOpen && (
+        <TeacherPanel onClose={() => setTeacherPanelOpen(false)} />
+      )}
     </>
   );
 }

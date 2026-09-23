@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-label="Science board plan sketch">
+  <rect width="640" height="480" fill="#FFFDF8"/>
+  <rect x="280" y="18" width="80" height="30" rx="2" fill="#FFE68C" stroke="#E6BE50" stroke-width="1" transform="rotate(-3 320 33)"/>
+  <rect x="40" y="40" width="560" height="400" rx="8" fill="none" stroke="#5A5A8C" stroke-width="4"/>
+  <line x1="40" y1="100" x2="600" y2="100" stroke="#5A5A8C" stroke-width="3"/>
+  <text x="60" y="78" font-family="Fredoka, Comic Sans MS, sans-serif" font-size="26" font-weight="700" fill="#464678">Science Board Plan</text>
+  <g>
+    <rect x="70" y="130" width="150" height="110" rx="12" fill="#EBF2FF" stroke="#648CD0" stroke-width="3"/>
+    <text x="110" y="195" font-family="Fredoka, Comic Sans MS, sans-serif" font-size="18" fill="#3C5096">Title</text>
+    <rect x="250" y="130" width="150" height="110" rx="12" fill="#EBF2FF" stroke="#648CD0" stroke-width="3"/>
+    <text x="290" y="195" font-family="Fredoka, Comic Sans MS, sans-serif" font-size="18" fill="#3C5096">Photo</text>
+    <rect x="430" y="130" width="150" height="110" rx="12" fill="#EBF2FF" stroke="#648CD0" stroke-width="3"/>
+    <text x="470" y="195" font-family="Fredoka, Comic Sans MS, sans-serif" font-size="18" fill="#3C5096">Steps</text>
+    <rect x="70" y="280" width="150" height="110" rx="12" fill="#FFF0E8" stroke="#E87850" stroke-width="3"/>
+    <text x="100" y="345" font-family="Fredoka, Comic Sans MS, sans-serif" font-size="18" fill="#963C28">Volcano</text>
+    <rect x="250" y="280" width="150" height="110" rx="12" fill="#EBF2FF" stroke="#648CD0" stroke-width="3"/>
+    <text x="270" y="345" font-family="Fredoka, Comic Sans MS, sans-serif" font-size="18" fill="#3C5096">Materials</text>
+    <rect x="430" y="280" width="150" height="110" rx="12" fill="#EBF2FF" stroke="#648CD0" stroke-width="3"/>
+    <text x="465" y="345" font-family="Fredoka, Comic Sans MS, sans-serif" font-size="18" fill="#3C5096">Credits</text>
+  </g>
+</svg>
