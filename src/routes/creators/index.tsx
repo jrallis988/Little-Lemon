@@ -7,10 +7,10 @@ import { Avatar } from '#/components/ui/Avatar'
 import { SiteFooter } from '#/components/layout/SiteFooter'
 import { useSafety } from '#/lib/oj/safety-store'
 import { useMembership } from '#/lib/membership'
-import { loadCreators } from '#/server/oj'
+import { fetchCreators } from '#/server/oj-fns'
 
 export const Route = createFileRoute('/creators/')({
-  loader: () => loadCreators(),
+  loader: () => fetchCreators(),
   component: CreatorsPage,
 })
 

@@ -6,13 +6,13 @@ import { AppShell } from '#/components/layout/AppShell'
 import { DiscoveryFeed } from '#/components/feed/DiscoveryFeed'
 import { SiteFooter } from '#/components/layout/SiteFooter'
 import { useMembership } from '#/lib/membership'
-import { loadPublicFeed } from '#/server/oj'
+import { fetchPublicFeed } from '#/server/oj-fns'
 import { getPostsByCreator } from '#/lib/oj/catalog'
 import { usePublish } from '#/lib/oj/publish-store'
 import type { Post } from '#/domain/oj-types'
 
 export const Route = createFileRoute('/discover/')({
-  loader: () => loadPublicFeed(),
+  loader: () => fetchPublicFeed(),
   component: DiscoverPage,
 })
 

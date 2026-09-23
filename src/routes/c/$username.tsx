@@ -2,10 +2,10 @@ import { createFileRoute } from '@tanstack/react-router'
 import { AppShell } from '#/components/layout/AppShell'
 import { CreatorProfile } from '#/components/profile/CreatorProfile'
 import { SiteFooter } from '#/components/layout/SiteFooter'
-import { loadCreatorByUsername } from '#/server/oj'
+import { fetchCreatorByUsername } from '#/server/oj-fns'
 
 export const Route = createFileRoute('/c/$username')({
-  loader: ({ params }) => loadCreatorByUsername(params.username),
+  loader: ({ params }) => fetchCreatorByUsername({ data: params.username }),
   component: CreatorPage,
 })
 

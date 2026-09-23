@@ -57,7 +57,7 @@ function mapPost(row: typeof ojPosts.$inferSelect): Post {
 }
 
 export async function loadPublicFeed(): Promise<Post[]> {
-  const database = tryGetDb()
+  const database = await tryGetDb()
   if (!database) return getPublicFeed()
 
   try {
@@ -75,11 +75,14 @@ export async function loadPublicFeed(): Promise<Post[]> {
 }
 
 export async function loadCreators(): Promise<Creator[]> {
-  const database = tryGetDb()
+  const database = await tryGetDb()
   if (!database) return listCreators()
 
   try {
-    const rows = await database.select().from(ojCreators).orderBy(ojCreators.displayName)
+    const rows = await database
+      .select()
+      .from(ojCreators)
+      .orderBy(ojCreators.displayName)
     if (!rows.length) return listCreators()
     return rows.map(mapCreator)
   } catch {
@@ -90,7 +93,7 @@ export async function loadCreators(): Promise<Creator[]> {
 export async function loadCreatorByUsername(
   username: string,
 ): Promise<{ creator: Creator; posts: Post[] } | null> {
-  const database = tryGetDb()
+  const database = await tryGetDb()
   if (!database) {
     const creator = getCreatorByUsername(username)
     if (!creator) return null
