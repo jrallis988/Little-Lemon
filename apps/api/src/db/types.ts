@@ -42,6 +42,10 @@ export interface DataStore {
 
   savePasswordReset(token: string, userId: string, expiresAt: string): Promise<void>;
   consumePasswordReset(token: string): Promise<string | null>;
+
+  saveRefreshToken(token: string, userId: string, expiresAt: string): Promise<void>;
+  consumeRefreshToken(token: string): Promise<string | null>;
+  revokeRefreshTokensForUser(userId: string): Promise<void>;
 }
 
 export function publicUser(user: UserRecord): User {

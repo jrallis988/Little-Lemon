@@ -46,6 +46,18 @@ export function AuthProvider({
       setUser(me);
       setIsAuthenticated(true);
     } catch {
+      const refreshToken = await authStorage.getRefreshToken();
+      if (refreshToken) {
+        try {
+          const session = await biocrossApi.refresh(refreshToken);
+          await authStorage.saveTokens(session.tokens.accessToken, session.tokens.refreshToken);
+          setUser(session.user);
+          setIsAuthenticated(true);
+          return;
+        } catch {
+          /* fall through to clear */
+        }
+      }
       await authStorage.clearTokens();
       setIsAuthenticated(false);
       setUser(null);

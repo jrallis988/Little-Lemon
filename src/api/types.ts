@@ -67,6 +67,7 @@ export interface ProfileItemMutation {
 export type RemoteResource =
   | { path: '/auth/sign-in'; method: 'POST'; body: SignInRequest; response: AuthSession }
   | { path: '/auth/sign-up'; method: 'POST'; body: SignUpRequest; response: AuthSession }
+  | { path: '/auth/refresh'; method: 'POST'; body: { refreshToken: string }; response: AuthSession }
   | { path: '/auth/sign-out'; method: 'POST'; body: undefined; response: { ok: true } }
   | { path: '/auth/me'; method: 'GET'; body: undefined; response: User }
   | { path: '/profile'; method: 'GET'; body: undefined; response: HealthProfile }

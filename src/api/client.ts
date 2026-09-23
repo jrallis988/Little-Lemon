@@ -188,6 +188,13 @@ export const biocrossApi = {
       auth: false,
     }),
 
+  refresh: (refreshToken: string) =>
+    apiRequest<import('./types').AuthSession>('/auth/refresh', {
+      method: 'POST',
+      body: { refreshToken },
+      auth: false,
+    }),
+
   deleteAccount: () =>
     apiRequest<{ ok: true }>('/auth/account', { method: 'DELETE' }),
 };

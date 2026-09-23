@@ -47,14 +47,14 @@ export default function ForgotPasswordScreen() {
         <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
           <ScreenTitle
             title="Reset password"
-            subtitle="Enter the email for your BioCross account. We'll send a reset link when email is configured."
+            subtitle="Enter the email for your BioCross account. We'll email a reset link when Resend is configured on the API."
           />
 
           {sent ? (
             <InfoCallout
               tone="info"
               title="Check your email"
-              body={`If an account exists for ${email.trim()}, a reset link would be sent. In this demo build, no email is delivered — use demo@biocross.app / demo1234 to sign in.`}
+              body={`If an account exists for ${email.trim()}, a reset link has been sent. Open the link on this device to choose a new password. Without RESEND_API_KEY, the API logs the link locally — use demo@biocross.app / demo1234 for the demo account.`}
             />
           ) : (
             <>

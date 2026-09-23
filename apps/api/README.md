@@ -41,13 +41,18 @@ EXPO_PUBLIC_API_URL=http://localhost:3001
 
 For a physical device, use your machine LAN IP instead of `localhost`.
 
-## Deploy (Railway example)
+## Deploy (Railway)
+
+From `apps/api` (uses `railway.toml` + `Dockerfile`):
 
 1. Create a Railway project + **Postgres** plugin  
 2. New service from `apps/api` directory  
 3. Set env:
    - `DATABASE_URL` = Railway Postgres URL  
    - `JWT_SECRET` = long random string  
+   - `RESEND_API_KEY` = Resend key (password-reset email)  
+   - `EMAIL_FROM` = `BioCross <noreply@yourdomain.com>`  
+   - `SENTRY_DSN` = optional  
    - `PORT` = `3001` (or Railway-assigned)  
 4. Deploy  
 5. Point the app:
@@ -56,7 +61,16 @@ For a physical device, use your machine LAN IP instead of `localhost`.
    EXPO_PUBLIC_API_URL=https://your-api.up.railway.app
    ```
 
-Same pattern works on **Fly.io**, **Render**, or **Neon + any Node host**.
+## Deploy (Fly.io)
+
+```bash
+cd apps/api
+fly launch --config fly.toml
+fly secrets set JWT_SECRET=... DATABASE_URL=... RESEND_API_KEY=...
+fly deploy
+```
+
+Same pattern works on **Render** or **Neon + any Node host**.
 
 ## Routes implemented
 
@@ -65,6 +79,7 @@ Same pattern works on **Fly.io**, **Render**, or **Neon + any Node host**.
 | GET | `/health` | no |
 | POST | `/auth/sign-in` | no |
 | POST | `/auth/sign-up` | no |
+| POST | `/auth/refresh` | no |
 | POST | `/auth/sign-out` | yes |
 | GET | `/auth/me` | yes |
 | POST | `/auth/forgot-password` | no |
@@ -92,8 +107,15 @@ Same pattern works on **Fly.io**, **Render**, or **Neon + any Node host**.
 
 ## Password reset
 
-`POST /auth/forgot-password` creates a token and **logs it** (no email yet).  
-Wire Resend/SendGrid later; `POST /auth/reset-password` already consumes tokens.
+`POST /auth/forgot-password` creates a one-hour token and emails a deep link
+(`biocross://auth/reset-password?token=...`) via **Resend** when `RESEND_API_KEY` is set.
+Without the key, the message (including the link) is logged for local testing.
+`POST /auth/reset-password` consumes the token and revokes refresh tokens.
+
+## Token refresh
+
+Sign-in / sign-up persist opaque refresh tokens (30 days).  
+`POST /auth/refresh` rotates them. Sign-out, password reset, and account delete revoke them.
 
 ## Analysis
 

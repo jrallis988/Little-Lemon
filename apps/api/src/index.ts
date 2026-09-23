@@ -12,16 +12,28 @@ import { hashPassword, verifyPassword } from './auth.js';
 import { analyzeSupplement } from './analysis.js';
 import { findByBarcode, findById, findByQuery } from './catalog.js';
 import { createStore, mergeProfileItem, publicUser } from './db/index.js';
+import { passwordResetEmail, sendEmail } from './email.js';
+import { captureException, initSentry } from './sentry.js';
 import type { AppPreferences, HealthProfile, HealthProfileItem, UserRecord } from './types.js';
 
 const JWT_SECRET = process.env.JWT_SECRET ?? 'biocross-dev-secret-change-me';
 const PORT = Number(process.env.PORT ?? 3001);
 const TOKEN_TTL = '7d';
 const TOKEN_SECONDS = 60 * 60 * 24 * 7;
+const REFRESH_TTL_MS = 60 * 60 * 24 * 30 * 1000; // 30 days
+const APP_DEEP_LINK = process.env.APP_DEEP_LINK ?? 'biocross://auth/reset-password';
+const PUBLIC_WEB_URL = process.env.PUBLIC_WEB_URL?.trim();
+
+await initSentry();
 
 const store = await createStore();
 const app = Fastify({ logger: true });
 await app.register(cors, { origin: true });
+
+app.setErrorHandler((err, _req, reply) => {
+  captureException(err);
+  reply.send(err);
+});
 
 async function auth(req: { headers: { authorization?: string } }): Promise<UserRecord | null> {
   const header = req.headers.authorization;
@@ -34,9 +46,11 @@ async function auth(req: { headers: { authorization?: string } }): Promise<UserR
   }
 }
 
-function tokensFor(userId: string) {
+async function issueTokens(userId: string) {
   const accessToken = jwt.sign({ sub: userId }, JWT_SECRET, { expiresIn: TOKEN_TTL });
-  const refreshToken = randomBytes(24).toString('hex');
+  const refreshToken = randomBytes(32).toString('hex');
+  const expiresAt = new Date(Date.now() + REFRESH_TTL_MS).toISOString();
+  await store.saveRefreshToken(refreshToken, userId, expiresAt);
   return { accessToken, refreshToken, expiresIn: TOKEN_SECONDS };
 }
 
@@ -52,7 +66,7 @@ app.post<{ Body: { email: string; password: string } }>('/auth/sign-in', async (
   if (!user || !verifyPassword(req.body.password ?? '', user.passwordHash)) {
     return reply.code(401).send({ message: 'Invalid email or password.' });
   }
-  return { data: { user: publicUser(user), tokens: tokensFor(user.id) } };
+  return { data: { user: publicUser(user), tokens: await issueTokens(user.id) } };
 });
 
 app.post<{ Body: { email: string; password: string; fullName: string } }>('/auth/sign-up', async (req, reply) => {
@@ -73,11 +87,25 @@ app.post<{ Body: { email: string; password: string; fullName: string } }>('/auth
     onboardingCompleted: false,
     createdAt: new Date().toISOString(),
   });
-  return { data: { user: publicUser(user), tokens: tokensFor(user.id) } };
+  return { data: { user: publicUser(user), tokens: await issueTokens(user.id) } };
+});
+
+app.post<{ Body: { refreshToken?: string } }>('/auth/refresh', async (req, reply) => {
+  const refreshToken = req.body?.refreshToken?.trim() ?? '';
+  if (!refreshToken) {
+    return reply.code(400).send({ message: 'refreshToken is required.' });
+  }
+  const userId = await store.consumeRefreshToken(refreshToken);
+  if (!userId) return reply.code(401).send({ message: 'Invalid or expired refresh token.' });
+  const user = await store.getUser(userId);
+  if (!user) return reply.code(401).send({ message: 'Invalid or expired refresh token.' });
+  return { data: { user: publicUser(user), tokens: await issueTokens(user.id) } };
 });
 
 app.post('/auth/sign-out', async (req, reply) => {
-  if (!(await auth(req))) return reply.code(401).send({ message: 'Unauthorized' });
+  const user = await auth(req);
+  if (!user) return reply.code(401).send({ message: 'Unauthorized' });
+  await store.revokeRefreshTokensForUser(user.id);
   return { data: { ok: true } };
 });
 
@@ -102,12 +130,22 @@ app.post<{ Body: { email: string } }>('/auth/forgot-password', async (req, reply
     const token = randomBytes(24).toString('hex');
     const expiresAt = new Date(Date.now() + 60 * 60 * 1000).toISOString();
     await store.savePasswordReset(token, user.id, expiresAt);
-    req.log.info({ email, token }, 'password reset token created (wire email provider in production)');
+    const appLink = `${APP_DEEP_LINK}?token=${encodeURIComponent(token)}`;
+    const webLink = PUBLIC_WEB_URL
+      ? `${PUBLIC_WEB_URL.replace(/\/$/, '')}/auth/reset-password?token=${encodeURIComponent(token)}`
+      : undefined;
+    try {
+      const result = await sendEmail(passwordResetEmail({ to: user.email, token, appLink, webLink }));
+      req.log.info({ email, mode: result.mode }, 'password reset email dispatched');
+    } catch (err) {
+      captureException(err);
+      req.log.error({ err, email }, 'password reset email failed');
+    }
   }
   return {
     data: {
       ok: true,
-      message: 'If an account exists, a reset link would be emailed.',
+      message: 'If an account exists, a reset link has been sent.',
     },
   };
 });
@@ -124,12 +162,14 @@ app.post<{ Body: { token: string; password: string } }>('/auth/reset-password', 
   if (!user) return reply.code(404).send({ message: 'User not found.' });
   user.passwordHash = hashPassword(password);
   await store.updateUser(user);
+  await store.revokeRefreshTokensForUser(user.id);
   return { data: { ok: true } };
 });
 
 app.delete('/auth/account', async (req, reply) => {
   const user = await auth(req);
   if (!user) return reply.code(401).send({ message: 'Unauthorized' });
+  await store.revokeRefreshTokensForUser(user.id);
   await store.deleteUser(user.id);
   return { data: { ok: true } };
 });

@@ -94,6 +94,11 @@ export function createSqliteStore(filePath = './data/biocross.db'): DataStore {
         user_id TEXT NOT NULL,
         expires_at TEXT NOT NULL
       );
+      CREATE TABLE IF NOT EXISTS refresh_tokens (
+        token TEXT PRIMARY KEY,
+        user_id TEXT NOT NULL,
+        expires_at TEXT NOT NULL
+      );
     `);
 
     const existing = db.prepare('SELECT id FROM users WHERE email = ?').get('demo@biocross.app');
@@ -205,6 +210,7 @@ export function createSqliteStore(filePath = './data/biocross.db'): DataStore {
 
     async deleteUser(id) {
       db.prepare('DELETE FROM password_resets WHERE user_id = ?').run(id);
+      db.prepare('DELETE FROM refresh_tokens WHERE user_id = ?').run(id);
       db.prepare('DELETE FROM extracted_items WHERE user_id = ?').run(id);
       db.prepare('DELETE FROM documents WHERE user_id = ?').run(id);
       db.prepare('DELETE FROM preferences WHERE user_id = ?').run(id);
@@ -361,6 +367,28 @@ export function createSqliteStore(filePath = './data/biocross.db'): DataStore {
       db.prepare('DELETE FROM password_resets WHERE token = ?').run(token);
       if (new Date(row.expires_at).getTime() < Date.now()) return null;
       return row.user_id;
+    },
+
+    async saveRefreshToken(token, userId, expiresAt) {
+      db.prepare(`INSERT INTO refresh_tokens (token, user_id, expires_at) VALUES (?, ?, ?)`).run(
+        token,
+        userId,
+        expiresAt,
+      );
+    },
+
+    async consumeRefreshToken(token) {
+      const row = db.prepare('SELECT * FROM refresh_tokens WHERE token = ?').get(token) as
+        | { user_id: string; expires_at: string }
+        | undefined;
+      if (!row) return null;
+      db.prepare('DELETE FROM refresh_tokens WHERE token = ?').run(token);
+      if (new Date(row.expires_at).getTime() < Date.now()) return null;
+      return row.user_id;
+    },
+
+    async revokeRefreshTokensForUser(userId) {
+      db.prepare('DELETE FROM refresh_tokens WHERE user_id = ?').run(userId);
     },
   };
 }

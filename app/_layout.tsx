@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -6,6 +6,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { BioCrossProvider } from '../src/state/BioCrossContext';
 import { AuthProvider } from '../src/state/AuthContext';
 import { ThemeProvider, useTheme } from '../src/state/ThemeContext';
+import { initSentry } from '../src/monitoring/sentry';
 
 function ThemedStack() {
   const { colors, isDark } = useTheme();
@@ -25,6 +26,10 @@ function ThemedStack() {
 
 export default function RootLayout() {
   const refreshRef = useRef<(() => Promise<void>) | null>(null);
+
+  useEffect(() => {
+    initSentry();
+  }, []);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

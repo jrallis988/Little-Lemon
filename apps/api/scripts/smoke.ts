@@ -43,6 +43,18 @@ async function main() {
   });
   console.log('analysis', check.data.riskLevel, check.data.headline, check.data.rulesetVersion);
 
+  const refreshed = await req('/auth/refresh', {
+    method: 'POST',
+    body: JSON.stringify({ refreshToken: session.data.tokens.refreshToken }),
+  });
+  console.log('refreshed as', refreshed.data.user.email);
+
+  const forgot = await req('/auth/forgot-password', {
+    method: 'POST',
+    body: JSON.stringify({ email: 'demo@biocross.app' }),
+  });
+  console.log('forgot-password', forgot.data.ok);
+
   console.log('SMOKE OK');
 }
 

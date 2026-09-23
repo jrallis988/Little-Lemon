@@ -303,5 +303,25 @@ export function createPostgresStore(databaseUrl: string): DataStore {
       if (new Date(res.rows[0].expires_at).getTime() < Date.now()) return null;
       return String(res.rows[0].user_id);
     },
+
+    async saveRefreshToken(token, userId, expiresAt) {
+      await pool.query(`INSERT INTO refresh_tokens (token, user_id, expires_at) VALUES ($1,$2,$3)`, [
+        token,
+        userId,
+        expiresAt,
+      ]);
+    },
+
+    async consumeRefreshToken(token) {
+      const res = await pool.query('SELECT * FROM refresh_tokens WHERE token = $1', [token]);
+      if (!res.rows[0]) return null;
+      await pool.query('DELETE FROM refresh_tokens WHERE token = $1', [token]);
+      if (new Date(res.rows[0].expires_at).getTime() < Date.now()) return null;
+      return String(res.rows[0].user_id);
+    },
+
+    async revokeRefreshTokensForUser(userId) {
+      await pool.query('DELETE FROM refresh_tokens WHERE user_id = $1', [userId]);
+    },
   };
 }

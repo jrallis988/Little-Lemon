@@ -208,11 +208,31 @@ export async function mockApiRequest<T>(
   }
 
   if (method === 'POST' && path === '/auth/forgot-password') {
-    return { ok: true, message: 'If an account exists, a reset link would be emailed.' } as T;
+    return { ok: true, message: 'If an account exists, a reset link has been sent.' } as T;
   }
 
   if (method === 'POST' && path === '/auth/reset-password') {
+    const { token: resetToken, password } = body as { token: string; password: string };
+    if (!resetToken || !password || password.length < 8) {
+      throw new ApiError('Valid token and password (8+ chars) required.', 'validation', 400);
+    }
+    // Demo mock accepts any token and updates demo user password hash when present
+    const demo = store.users.find((u) => u.email === apiConfig.demoEmail);
+    if (demo) demo.passwordHash = hashPassword(password);
+    await saveStore(store);
     return { ok: true } as T;
+  }
+
+  if (method === 'POST' && path === '/auth/refresh') {
+    const { refreshToken } = body as { refreshToken: string };
+    const existing = store.sessions.find((s) => s.refreshToken === refreshToken);
+    if (!existing || existing.expiresAt < Date.now()) {
+      throw new ApiError('Invalid or expired refresh token.', 'unauthorized', 401);
+    }
+    store.sessions = store.sessions.filter((s) => s.refreshToken !== refreshToken);
+    const session = createSession(store, existing.userId);
+    await saveStore(store);
+    return session as T;
   }
 
   if (method === 'DELETE' && path === '/auth/account') {

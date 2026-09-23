@@ -41,4 +41,12 @@ describe('Mock API auth', () => {
     const res = await biocrossApi.lookupBarcode('012345678943');
     expect(res.supplement?.id).toBe('sup-catalog-testo');
   });
+
+  it('rotates refresh tokens', async () => {
+    const session = await biocrossApi.signIn(apiConfig.demoEmail, apiConfig.demoPassword);
+    const next = await biocrossApi.refresh(session.tokens.refreshToken);
+    expect(next.tokens.accessToken).toBeTruthy();
+    expect(next.tokens.refreshToken).not.toBe(session.tokens.refreshToken);
+    await expect(biocrossApi.refresh(session.tokens.refreshToken)).rejects.toThrow(ApiError);
+  });
 });
