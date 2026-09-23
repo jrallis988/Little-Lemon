@@ -1,53 +1,27 @@
-# Artistic Fountain
+# Little Lemon
 
-Independent design venture portfolio — digital media, graphic design, visual identity, and creative media projects.
+Mediterranean restaurant website for **Little Lemon** (Chicago) — eight homepage layout demos adapted from uploaded Weiboo index variants, plus menu, reservations, and pickup ordering.
 
-## Dual-track separation
-
-| Track | Home | Houses |
-| --- | --- | --- |
-| **Creative** | Artistic Fountain (this repo) | Visual media, graphic identity, conceptual design, client design services |
-| **Engineering** | Developer portfolio (separate) | Back-end systems, Python/FastAPI, AI/RAG applications |
-
-See `STATUS.md` for the full status report.
-
-## Stack
-
-Static site: HTML, CSS, and vanilla JS (built in Cursor). Custom typefaces (Arcanite Slab, Goudy Heavyface) plus Inter for body copy.
-
-## Pages
-
-- `index.html` — home (hero, designer, services, portfolio, blog, contact)
-- `nh-dmv/` — conceptual redesign of the New Hampshire DMV website (civic UX case study)
-- `services/` — detail pages for each service offering
-- `blog/` — blog index and post pages (content can be drafted in Blaze AI)
-- `privacy.html` — privacy policy
-- `terms.html` — terms & conditions
-- `resume.pdf` — downloadable resume
-
-## Develop
-
+## Quick start
 ```bash
 npm start
 ```
+Open [http://localhost:3000](http://localhost:3000).
 
-Opens a local static server at [http://localhost:3000](http://localhost:3000).
+## Go live
+See **[LAUNCH.md](LAUNCH.md)** — enable GitHub Pages (Actions) and activate Formsubmit.
 
-Or open `index.html` directly in a browser.
+## Pages
+| File | Role |
+| --- | --- |
+| `index.html` | **Primary** homepage |
+| `layouts.html` | Gallery of all homepage demos |
+| `index-two.html` … `index-eight.html` | Alternate layouts |
+| `menu.html` / `about.html` / `reserve.html` / `order.html` | Core flows |
+| `privacy.html` / `terms.html` | Policies |
 
-## Structure
+## Stack
+Static HTML, CSS, vanilla JS. Brand fonts: Markazi Text + Karla. Capstone palette (`#495E57`, `#F4CE14`, `#EE9972`). Forms → Formsubmit (`jjrallis@unh.edu`). Images in `images/`.
 
-```
-.
-├── index.html
-├── privacy.html
-├── terms.html
-├── styles.css
-├── STATUS.md
-├── favicon.svg
-├── resume.pdf
-├── services/
-├── blog/
-├── images/
-└── *.otf          # brand fonts
-```
+## References
+Original Weiboo PHP demos (incomplete without theme assets): `references/weiboo-homepages/`.
