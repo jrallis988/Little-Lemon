@@ -85,10 +85,12 @@ export function fecCommitteeUrl(): string | null {
   return id ? `https://www.fec.gov/data/committee/${encodeURIComponent(id)}/` : null;
 }
 
-/** FEC Form 3 / financial report filings for this committee. */
+/** FEC committee filings tab on the public committee profile. */
 export function fecFilingsUrl(): string | null {
   const id = candidate.fecCommitteeId?.trim().toUpperCase();
-  return id ? `https://www.fec.gov/data/reports/fecf/${encodeURIComponent(id)}/` : null;
+  return id
+    ? `https://www.fec.gov/data/committee/${encodeURIComponent(id)}/#filings`
+    : null;
 }
 
 export function publicSocials(): { label: string; href: string; icon: string }[] {

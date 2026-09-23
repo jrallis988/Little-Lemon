@@ -31,12 +31,14 @@ export default function PrivacyPage() {
       </div>
 
       <div className="mt-6 space-y-6 text-base leading-relaxed text-slate-text">
-        <p className="border border-slate-line bg-paper px-4 py-3 text-sm text-slate-muted">
-          Demo status: this Privacy Policy is draft display copy. References to
-          analytics and form processing describe intended future behavior; this
-          preview build does not load live analytics pixels/SDKs, and mock forms
-          do not persist submissions.
-        </p>
+        {!candidate.legalReviewApproved ? (
+          <p className="border border-slate-line bg-paper px-4 py-3 text-sm text-slate-muted">
+            Draft status: this Privacy Policy is layout copy pending counsel
+            review. Contact, Join, Volunteer, and Come to My Town forms submit to
+            the campaign when notify settings are configured. This site does not
+            load live analytics pixels or SDKs.
+          </p>
+        ) : null}
         <p>
           Welcome to the official campaign website for {candidate.fullName}.{" "}
           {candidate.committee} (“we,” “us,” or “the campaign”) respects your

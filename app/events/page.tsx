@@ -18,11 +18,24 @@ export default function EventsPage() {
         subtitle="Where Nick will be next — town halls, meet-and-greets, and kitchen-table conversations."
       />
       <div className="mx-auto max-w-content section-pad">
+        {events.every((e) => e.tba) ? (
+          <div className="mb-8 border border-dashed border-slate-line bg-paper px-6 py-8 text-center">
+            <p className="font-display text-xl font-bold text-ink">
+              Schedule coming soon
+            </p>
+            <p className="mx-auto mt-3 max-w-xl text-base text-slate-muted">
+              Town halls and meet-and-greets will post here with dates and
+              locations. Request a stop in your town while the calendar is being
+              built.
+            </p>
+          </div>
+        ) : null}
         <ul className="divide-y divide-slate-line border-y border-slate-line">
           {events.map((event) => (
             <li key={event.id} className="py-6">
               <p className="text-xs font-bold uppercase tracking-[0.14em] text-red">
                 {event.type}
+                {event.tba ? " · TBA" : ""}
               </p>
               <h2 className="mt-1 font-display text-2xl font-bold text-ink">
                 {event.title}

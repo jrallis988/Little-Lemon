@@ -13,10 +13,10 @@ TO GO PUBLIC
 5. Original photos — replace files listed in `CAMPAIGN_DATA.md` (chat previews do not save to the repo).
 
 STILL PLACEHOLDER CONTENT
-- Events are TBA
-- Endorsements are “coming soon”
-- Testimonials are samples
-- Press kit is missing photos and a bio PDF
+- Events are TBA (Events page shows a clear “schedule coming soon” state)
+- Endorsements wait for confirmed names (no fake quotes shown)
+- Testimonials samples stay out of the public UI until confirmed
+- Press kit lists Ready / Pending media assets
 
 OPTIONAL LATER
 - Real store checkout (no payments yet)
