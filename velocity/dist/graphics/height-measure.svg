@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 200" fill="none">
+  <line x1="40" y1="180" x2="40" y2="20" stroke="#0a0a0a" stroke-width="3"/>
+  <line x1="28" y1="20" x2="52" y2="20" stroke="#0a0a0a" stroke-width="3"/>
+  <line x1="28" y1="180" x2="52" y2="180" stroke="#0a0a0a" stroke-width="3"/>
+  <text x="62" y="105" font-family="Arial Narrow, sans-serif" font-size="28" fill="#c8102e">42"</text>
+  <text x="62" y="125" font-family="Arial Narrow, sans-serif" font-size="10" fill="#5c5a56" letter-spacing="1">VERTICAL</text>
+</svg>

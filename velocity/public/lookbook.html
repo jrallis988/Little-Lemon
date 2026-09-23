@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VELOCITY — Lookbook</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600&family=Barlow:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #0a0a0a;
+        --paper: #f2f1ee;
+        --signal: #c8102e;
+        --mute: #6a6864;
+        --display: 'Bebas Neue', Impact, sans-serif;
+        --condensed: 'Barlow Condensed', sans-serif;
+        --body: 'Barlow', sans-serif;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: #1a1a1a;
+        color: var(--ink);
+        font-family: var(--body);
+      }
+      .toolbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.85rem 1.25rem;
+        background: var(--ink);
+        color: var(--paper);
+        font-family: var(--condensed);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+      }
+      .toolbar a, .toolbar button {
+        color: inherit;
+        background: none;
+        border: 1px solid rgba(242,241,238,0.35);
+        padding: 0.45rem 0.8rem;
+        cursor: pointer;
+        font: inherit;
+        text-decoration: none;
+      }
+      .toolbar button.primary {
+        background: var(--signal);
+        border-color: var(--signal);
+      }
+      .book {
+        max-width: 920px;
+        margin: 1.5rem auto 3rem;
+        display: grid;
+        gap: 1.25rem;
+        padding: 0 1rem;
+      }
+      .spread {
+        background: var(--paper);
+        aspect-ratio: 8.5 / 11;
+        padding: clamp(1.5rem, 4vw, 2.75rem);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+        position: relative;
+        overflow: hidden;
+        page-break-after: always;
+        break-after: page;
+      }
+      .spread--cover {
+        background: var(--ink);
+        color: var(--paper);
+      }
+      .eyebrow {
+        font-family: var(--condensed);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        color: var(--signal);
+        margin: 0;
+      }
+      .spread--cover .eyebrow { color: #8a8884; }
+      h1, h2 {
+        font-family: var(--display);
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        margin: 0.5rem 0;
+        line-height: 0.9;
+      }
+      h1 { font-size: clamp(4rem, 14vw, 7rem); }
+      h2 { font-size: clamp(2.4rem, 7vw, 4rem); }
+      p { margin: 0; max-width: 34rem; line-height: 1.5; color: var(--mute); }
+      .spread--cover p { color: #8a8884; }
+      .grid-6 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.65rem;
+        margin-top: 1.5rem;
+      }
+      .grid-6 img {
+        width: 100%;
+        aspect-ratio: 2/3;
+        object-fit: cover;
+        filter: contrast(1.15) saturate(0.75);
+      }
+      .motion-list {
+        list-style: none;
+        margin: 1.5rem 0 0;
+        padding: 0;
+        display: grid;
+        gap: 0.55rem;
+      }
+      .motion-list li {
+        display: grid;
+        grid-template-columns: 7rem 1fr;
+        gap: 0.75rem;
+        border-top: 1px solid rgba(10,10,10,0.12);
+        padding-top: 0.55rem;
+        font-family: var(--condensed);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      .motion-list strong { color: var(--signal); }
+      .footer-meta {
+        font-family: var(--condensed);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.7rem;
+        color: var(--mute);
+        display: flex;
+        justify-content: space-between;
+      }
+      .spread--cover .footer-meta { color: #8a8884; }
+      .apps {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+        margin-top: 1.25rem;
+      }
+      .apps div {
+        border: 1px solid rgba(10,10,10,0.15);
+        padding: 0.85rem;
+        min-height: 5rem;
+      }
+      .apps h3 {
+        font-family: var(--display);
+        font-size: 1.3rem;
+        margin: 0 0 0.35rem;
+        letter-spacing: 0.04em;
+      }
+      .apps p { font-size: 0.85rem; }
+      @media print {
+        body { background: white; }
+        .toolbar { display: none; }
+        .book { margin: 0; max-width: none; padding: 0; gap: 0; }
+        .spread {
+          box-shadow: none;
+          width: 100%;
+          min-height: 100vh;
+          aspect-ratio: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="toolbar">
+      <span>VELOCITY Lookbook</span>
+      <div style="display:flex;gap:0.5rem;">
+        <a href="./index.html">← Case Study</a>
+        <button class="primary" type="button" onclick="window.print()">Print / Save PDF</button>
+      </div>
+    </div>
+
+    <div class="book">
+      <section class="spread spread--cover">
+        <p class="eyebrow">Sports Poster & Art Direction Series</p>
+        <div>
+          <h1>VELOCITY</h1>
+          <p>Motion defines the moment. A self-initiated graphic-design project where athletic movement determines how the design behaves.</p>
+        </div>
+        <div class="footer-meta">
+          <span>Fictional campaign</span>
+          <span>01 / 06</span>
+        </div>
+      </section>
+
+      <section class="spread">
+        <p class="eyebrow">02 — Concept</p>
+        <div>
+          <h2>Motion defines the moment.</h2>
+          <p>Every sport contains a fraction of a second that defines the action. VELOCITY builds a shared campaign language around those decisive instants — without generic futurism or neon noise.</p>
+          <ul class="motion-list">
+            <li><strong>Release</strong><span>Separation · Expansion · Trajectory</span></li>
+            <li><strong>Rise</strong><span>Vertical force · Upward type</span></li>
+            <li><strong>Drive</strong><span>Acceleration · Lateral stretch</span></li>
+            <li><strong>Strike</strong><span>Interruption · Hard crop</span></li>
+            <li><strong>Air</strong><span>Suspension · Negative space</span></li>
+            <li><strong>Impact</strong><span>Compression · Overlap</span></li>
+          </ul>
+        </div>
+        <div class="footer-meta"><span>Concept</span><span>02 / 06</span></div>
+      </section>
+
+      <section class="spread">
+        <p class="eyebrow">03 — Motion Language</p>
+        <div>
+          <h2>Motion becomes form.</h2>
+          <p>Direction dictates composition. Vertical movement creates vertical compositions. Acceleration stretches information horizontally. Impact compresses imagery and typography. Suspension creates negative space. Release creates separation and trajectory.</p>
+          <ul class="motion-list" style="margin-top:2rem;">
+            <li><strong>Type</strong><span>Condensed display · Numeric as graphic</span></li>
+            <li><strong>Photo</strong><span>Decisive moment · Campaign grade</span></li>
+            <li><strong>Marks</strong><span>Functional sports data, not decoration</span></li>
+          </ul>
+        </div>
+        <div class="footer-meta"><span>System</span><span>03 / 06</span></div>
+      </section>
+
+      <section class="spread">
+        <p class="eyebrow">04 — Collection</p>
+        <div>
+          <h2>Six posters.</h2>
+          <p>Hockey RELEASE · Basketball RISE · Running DRIVE · Soccer STRIKE · Tennis IMPACT · Snowboarding AIR</p>
+          <div class="grid-6">
+            <img src="./posters/finished/01-hockey-release.jpg" alt="Hockey" />
+            <img src="./posters/finished/02-basketball-rise.jpg" alt="Basketball" />
+            <img src="./posters/finished/03-running-drive.jpg" alt="Running" />
+            <img src="./posters/finished/04-soccer-strike.jpg" alt="Soccer" />
+            <img src="./posters/finished/05-tennis-impact.jpg" alt="Tennis" />
+            <img src="./posters/finished/06-snowboard-air.jpg" alt="Snowboarding" />
+          </div>
+        </div>
+        <div class="footer-meta"><span>Posters</span><span>04 / 06</span></div>
+      </section>
+
+      <section class="spread">
+        <p class="eyebrow">05 — Intensity</p>
+        <div>
+          <h2>Break the rules — once.</h2>
+          <p>Most of VELOCITY stays disciplined. Then one or two campaign pieces go deliberately aggressive — oversized type exiting the frame, layered statistics, motion blur, coaching marks, and hard crops through letterforms.</p>
+          <div class="apps" style="margin-top:2rem;">
+            <div>
+              <h3>DRIVE — Overload</h3>
+              <p>Sprint as visual overload. Scoreboard numerals + handwritten coaching note.</p>
+            </div>
+            <div>
+              <h3>STRIKE — Collision</h3>
+              <p>Halftone pressure and overlapping data at the contact point.</p>
+            </div>
+          </div>
+        </div>
+        <div class="footer-meta"><span>Campaign</span><span>05 / 06</span></div>
+      </section>
+
+      <section class="spread">
+        <p class="eyebrow">06 — Applications</p>
+        <div>
+          <h2>How the system behaves.</h2>
+          <div class="apps">
+            <div><h3>Arena</h3><p>Concept word enlarges. Secondary data drops.</p></div>
+            <div><h3>Ticket</h3><p>Athlete card logic at pocket scale.</p></div>
+            <div><h3>Scoreboard</h3><p>Numerals lead. Photo becomes texture.</p></div>
+            <div><h3>Apparel</h3><p>One word + number. No photo.</p></div>
+          </div>
+          <p style="margin-top:1.75rem;">VELOCITY is a self-initiated fictional graphic-design project created to demonstrate sports art direction, typography, Photoshop compositing, Illustrator graphics, and campaign design — where athletic movement determines how the design behaves.</p>
+        </div>
+        <div class="footer-meta"><span>End</span><span>06 / 06</span></div>
+      </section>
+    </div>
+  </body>
+</html>
