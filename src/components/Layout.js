@@ -4,16 +4,23 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { resolvePageMeta } from "../data/seo";
 import { useDocumentMeta } from "../hooks/useDocumentMeta";
+import { initAnalytics, trackPageView } from "../utils/analytics";
 
 function Layout() {
-  const { pathname } = useLocation();
+  const location = useLocation();
+  const { pathname, search } = location;
   const meta = resolvePageMeta(pathname);
 
   useDocumentMeta(meta);
 
   useEffect(() => {
+    initAnalytics();
+  }, []);
+
+  useEffect(() => {
     window.scrollTo(0, 0);
-  }, [pathname]);
+    trackPageView(`${pathname}${search}`, meta.title);
+  }, [pathname, search, meta.title]);
 
   return (
     <div className="site">

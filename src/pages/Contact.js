@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import ExternalLink from "../components/ExternalLink";
 import PageHero from "../components/PageHero";
 import { campuses, OFFICE_HOURS } from "../data/campuses";
 import {
@@ -65,22 +66,12 @@ function Contact() {
                 <p className="campus-note">{campus.hoursNote}</p>
                 <p className="campus-directions">{campus.directions}</p>
                 <div className="campus-links">
-                  <a
-                    className="text-link"
-                    href={campus.mapsUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                  <ExternalLink className="text-link" href={campus.mapsUrl}>
                     Get directions
-                  </a>
-                  <a
-                    className="text-link"
-                    href={campus.pageUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                  </ExternalLink>
+                  <ExternalLink className="text-link" href={campus.pageUrl}>
                     Location details
-                  </a>
+                  </ExternalLink>
                 </div>
               </article>
             ))}
@@ -137,22 +128,22 @@ function Contact() {
               form on this site.
             </p>
             <div className="cta-actions stacked">
-              <a
+              <ExternalLink
                 className="btn btn-gold"
                 href={REQUEST_INFO_URL}
-                target="_blank"
-                rel="noreferrer"
+                trackName="request_info_click"
+                trackProps={{ location: "contact" }}
               >
                 Open Request Info Form
-              </a>
-              <a
+              </ExternalLink>
+              <ExternalLink
                 className="btn btn-ghost"
                 href={APPLY_URL}
-                target="_blank"
-                rel="noreferrer"
+                trackName="apply_click"
+                trackProps={{ location: "contact" }}
               >
                 Apply on CCSNH Portal
-              </a>
+              </ExternalLink>
               <a
                 className="btn btn-ghost"
                 href={`mailto:${ADMISSIONS_EMAIL}`}

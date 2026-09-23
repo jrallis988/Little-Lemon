@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { heroSlides } from "../data/heroSlides";
+import ExternalLink from "./ExternalLink";
 
 const INTERVAL_MS = 7000;
 const BRAND = "White Mountains Community College";
@@ -9,14 +10,20 @@ function CtaButton({ action, className }) {
   if (!action) return null;
   if (action.external) {
     return (
-      <a
+      <ExternalLink
         className={className}
         href={action.to}
-        target="_blank"
-        rel="noreferrer"
+        trackName={
+          /apply/i.test(action.label)
+            ? "apply_click"
+            : /request|info/i.test(action.label)
+              ? "request_info_click"
+              : "outbound_click"
+        }
+        trackProps={{ location: "hero_carousel", label: action.label }}
       >
         {action.label}
-      </a>
+      </ExternalLink>
     );
   }
   return (
@@ -110,6 +117,10 @@ function HeroCarousel() {
             />
           </div>
         </div>
+      </div>
+
+      <div className="sr-only" aria-live="polite">
+        Slide {index + 1} of {heroSlides.length}: {slide.headline}
       </div>
 
       <button

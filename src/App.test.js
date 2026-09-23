@@ -110,3 +110,21 @@ test("site search finds nursing program results", async () => {
     expect(document.title).toMatch(/^Search \|/i);
   });
 });
+
+test("program pages include program specifics and accessible apply link", async () => {
+  render(
+    <MemoryRouter initialEntries={["/academics/programs/accounting"]}>
+      <App />
+    </MemoryRouter>
+  );
+
+  expect(
+    screen.getByRole("heading", { name: /Program specifics/i })
+  ).toBeInTheDocument();
+  expect(
+    screen.getAllByText(/Credential: Associate in Science/i).length
+  ).toBeGreaterThan(0);
+  expect(
+    screen.getAllByText(/opens in new window/i).length
+  ).toBeGreaterThan(0);
+});

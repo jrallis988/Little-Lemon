@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import ExternalLink from "./ExternalLink";
 
 function PageHero({
   brand,
@@ -11,7 +12,7 @@ function PageHero({
   return (
     <section className={`page-hero ${compact ? "compact" : ""}`}>
       <div className="page-hero-media" aria-hidden="true">
-        <img src={image} alt="" />
+        <img src={image} alt="" loading="lazy" decoding="async" />
         <div className="hero-veil" />
       </div>
       <div className="container page-hero-content">
@@ -27,14 +28,30 @@ function PageHero({
                 /^https?:\/\//i.test(action.to);
 
               if (isExternal) {
+                if (isHttp) {
+                  return (
+                    <ExternalLink
+                      key={action.label}
+                      className={action.className || "btn btn-gold"}
+                      href={action.to}
+                      trackName={
+                        /apply/i.test(action.label)
+                          ? "apply_click"
+                          : /request|info|inquiry/i.test(action.label)
+                            ? "request_info_click"
+                            : "outbound_click"
+                      }
+                      trackProps={{ location: "page_hero", label: action.label }}
+                    >
+                      {action.label}
+                    </ExternalLink>
+                  );
+                }
                 return (
                   <a
                     key={action.label}
                     className={action.className || "btn btn-gold"}
                     href={action.to}
-                    {...(isHttp
-                      ? { target: "_blank", rel: "noreferrer" }
-                      : {})}
                   >
                     {action.label}
                   </a>

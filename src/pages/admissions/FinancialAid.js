@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import ExternalLink from "../../components/ExternalLink";
 import PageHero from "../../components/PageHero";
 import SectionNav from "../../components/SectionNav";
 import { admissionsNav } from "./admissionsNav";
@@ -63,14 +64,12 @@ function FinancialAid() {
               </li>
               <li>School code: 005291</li>
             </ul>
-            <a
+            <ExternalLink
               className="btn btn-gold"
               href="https://studentaid.gov/h/apply-for-aid/fafsa"
-              target="_blank"
-              rel="noreferrer"
             >
               Start FAFSA
-            </a>
+            </ExternalLink>
           </div>
         </div>
       </section>

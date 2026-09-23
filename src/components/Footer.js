@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { legalLinks } from "../data/siteContent";
+import ExternalLink from "./ExternalLink";
 
 function Footer() {
   return (
@@ -70,9 +71,7 @@ function Footer() {
         <ul className="legal-links">
           {legalLinks.map((link) => (
             <li key={link.label}>
-              <a href={link.href} target="_blank" rel="noreferrer">
-                {link.label}
-              </a>
+              <ExternalLink href={link.href}>{link.label}</ExternalLink>
             </li>
           ))}
           <li>

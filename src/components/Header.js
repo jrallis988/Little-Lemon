@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { APPLY_URL } from "../data/links";
+import ExternalLink from "./ExternalLink";
+import { trackEvent } from "../utils/analytics";
 
 const MYWMCC_URL = "https://sis.ccsnh.edu/";
 
@@ -62,10 +64,20 @@ function Header() {
     };
   }, [open]);
 
+  useEffect(() => {
+    if (!open) return undefined;
+    const onKey = (event) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
   const submitSearch = (event) => {
     event.preventDefault();
     const next = query.trim();
     setOpen(false);
+    trackEvent("site_search", { search_term: next || "(empty)" });
     navigate(next ? `/search?q=${encodeURIComponent(next)}` : "/search");
   };
 
@@ -73,24 +85,22 @@ function Header() {
     <header className={`site-header ${scrolled ? "is-scrolled" : ""}`}>
       <div className="utility-bar">
         <div className="utility-inner">
-          <a href="https://www.wmcc.edu/giving/" target="_blank" rel="noreferrer">
-            Donate
-          </a>
+          <ExternalLink href="https://www.wmcc.edu/giving/">Donate</ExternalLink>
           <Link to="/contact">Contact</Link>
-          <a href="https://www.wmcc.edu/current-students/" target="_blank" rel="noreferrer">
+          <ExternalLink href="https://www.wmcc.edu/current-students/">
             Current Students
-          </a>
-          <a href="https://www.ccsnh.edu/human-resources/" target="_blank" rel="noreferrer">
+          </ExternalLink>
+          <ExternalLink href="https://www.ccsnh.edu/human-resources/">
             Faculty/Staff
-          </a>
-          <a
+          </ExternalLink>
+          <ExternalLink
             className="utility-portal"
             href={MYWMCC_URL}
-            target="_blank"
-            rel="noreferrer"
+            trackName="portal_click"
+            trackProps={{ location: "utility_bar" }}
           >
             MyWMCC
-          </a>
+          </ExternalLink>
         </div>
       </div>
 
@@ -106,14 +116,14 @@ function Header() {
         </Link>
 
         <div className="header-actions-mobile">
-          <a
+          <ExternalLink
             className="utility-portal mobile-portal"
             href={MYWMCC_URL}
-            target="_blank"
-            rel="noreferrer"
+            trackName="portal_click"
+            trackProps={{ location: "mobile_chip" }}
           >
             MyWMCC
-          </a>
+          </ExternalLink>
           <button
             className={`nav-toggle ${open ? "is-open" : ""}`}
             type="button"
@@ -136,6 +146,7 @@ function Header() {
           <form
             className="header-search"
             role="search"
+            aria-label="Site search"
             onSubmit={submitSearch}
           >
             <label className="sr-only" htmlFor="site-search">
@@ -182,34 +193,32 @@ function Header() {
             <Link to="/contact" onClick={() => setOpen(false)}>
               Contact
             </Link>
-            <a
+            <ExternalLink
               href="https://www.wmcc.edu/current-students/"
-              target="_blank"
-              rel="noreferrer"
               onClick={() => setOpen(false)}
             >
               Current Students
-            </a>
-            <a
+            </ExternalLink>
+            <ExternalLink
               className="utility-portal"
               href={MYWMCC_URL}
-              target="_blank"
-              rel="noreferrer"
+              trackName="portal_click"
+              trackProps={{ location: "mobile_drawer" }}
               onClick={() => setOpen(false)}
             >
               MyWMCC
-            </a>
+            </ExternalLink>
           </div>
 
-          <a
+          <ExternalLink
             className="btn btn-gold header-apply"
             href={APPLY_URL}
-            target="_blank"
-            rel="noreferrer"
+            trackName="apply_click"
+            trackProps={{ location: "header" }}
             onClick={() => setOpen(false)}
           >
             Apply
-          </a>
+          </ExternalLink>
         </nav>
       </div>
     </header>

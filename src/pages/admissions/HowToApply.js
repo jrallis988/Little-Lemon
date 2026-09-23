@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import ExternalLink from "../../components/ExternalLink";
 import PageHero from "../../components/PageHero";
 import SectionNav from "../../components/SectionNav";
 import { admissionsSteps } from "../../data/siteContent";
@@ -101,14 +102,14 @@ function HowToApply() {
             </p>
           </div>
           <div className="cta-actions">
-            <a
+            <ExternalLink
               className="btn btn-gold"
               href={APPLY_URL}
-              target="_blank"
-              rel="noreferrer"
+              trackName="apply_click"
+              trackProps={{ location: "how_to_apply" }}
             >
               Apply on CCSNH Portal
-            </a>
+            </ExternalLink>
             <Link className="btn btn-primary" to="/admissions/financial-aid">
               Financial Aid
             </Link>

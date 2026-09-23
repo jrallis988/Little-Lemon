@@ -1,8 +1,9 @@
 import { Link, useSearchParams } from "react-router-dom";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import PageHero from "../components/PageHero";
 import { programs } from "../data/programs";
 import { REQUEST_INFO_URL } from "../data/links";
+import { trackEvent } from "../utils/analytics";
 
 const pageResults = [
   {
@@ -80,6 +81,12 @@ function Search() {
   const initial = searchParams.get("q") || "";
   const [draft, setDraft] = useState(initial);
   const query = initial.trim().toLowerCase();
+
+  useEffect(() => {
+    if (query) {
+      trackEvent("view_search_results", { search_term: query });
+    }
+  }, [query]);
 
   const results = useMemo(() => {
     if (!query) return [];

@@ -1,4 +1,5 @@
 import { Link, useParams } from "react-router-dom";
+import ExternalLink from "../components/ExternalLink";
 import PageHero from "../components/PageHero";
 import NotFound from "./NotFound";
 import { focusAreas, programs } from "../data/programs";
@@ -118,33 +119,37 @@ function ProgramDetail() {
               whether this {program.kind.toLowerCase()} fits your goals.
             </p>
             <div className="cta-actions stacked">
-              <a
+              <ExternalLink
                 className="btn btn-gold"
                 href={APPLY_URL}
-                target="_blank"
-                rel="noreferrer"
+                trackName="apply_click"
+                trackProps={{
+                  location: "program_detail",
+                  program_id: program.id,
+                }}
               >
                 Apply Now
-              </a>
-              <a
+              </ExternalLink>
+              <ExternalLink
                 className="btn btn-ghost"
                 href={REQUEST_INFO_URL}
-                target="_blank"
-                rel="noreferrer"
+                trackName="request_info_click"
+                trackProps={{
+                  location: "program_detail",
+                  program_id: program.id,
+                }}
               >
                 Request Info
-              </a>
+              </ExternalLink>
               <Link className="btn btn-ghost" to="/admissions/how-to-apply">
                 How to Apply
               </Link>
-              <a
+              <ExternalLink
                 className="btn btn-ghost"
                 href={program.url || CATALOG_DEGREES_URL}
-                target="_blank"
-                rel="noreferrer"
               >
                 Official Catalog Page
-              </a>
+              </ExternalLink>
             </div>
           </aside>
         </div>
@@ -166,14 +171,9 @@ function ProgramDetail() {
             >
               Related Programs
             </Link>
-            <a
-              className="btn btn-gold"
-              href={CATALOG_DEGREES_URL}
-              target="_blank"
-              rel="noreferrer"
-            >
+            <ExternalLink className="btn btn-gold" href={CATALOG_DEGREES_URL}>
               WMCC Catalog
-            </a>
+            </ExternalLink>
           </div>
         </div>
       </section>

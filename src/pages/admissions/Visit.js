@@ -1,3 +1,4 @@
+import ExternalLink from "../../components/ExternalLink";
 import PageHero from "../../components/PageHero";
 import SectionNav from "../../components/SectionNav";
 import { visitEvents } from "../../data/siteContent";
@@ -36,13 +37,9 @@ function Visit() {
             <h2>Find a day that works for you.</h2>
             <p>
               Check the{" "}
-              <a
-                href="https://www.wmcc.edu/events/"
-                target="_blank"
-                rel="noreferrer"
-              >
+              <ExternalLink href="https://www.wmcc.edu/events/">
                 WMCC events calendar
-              </a>{" "}
+              </ExternalLink>{" "}
               for the latest dates, then join us for Open Houses, info nights, and
               Express Admissions Days.
             </p>
@@ -55,14 +52,9 @@ function Visit() {
                 <p className="event-time">{event.time}</p>
                 <p>{event.copy}</p>
                 {event.href ? (
-                  <a
-                    className="text-link"
-                    href={event.href}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                  <ExternalLink className="text-link" href={event.href}>
                     View calendar
-                  </a>
+                  </ExternalLink>
                 ) : null}
               </article>
             ))}
@@ -103,14 +95,14 @@ function Visit() {
                 <a href="mailto:wmcc@ccsnh.edu">wmcc@ccsnh.edu</a>
               </li>
             </ul>
-            <a
+            <ExternalLink
               className="btn btn-gold"
               href={REQUEST_INFO_URL}
-              target="_blank"
-              rel="noreferrer"
+              trackName="request_info_click"
+              trackProps={{ location: "visit" }}
             >
               Request Info
-            </a>
+            </ExternalLink>
           </div>
         </div>
       </section>

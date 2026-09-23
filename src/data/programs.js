@@ -185,6 +185,13 @@ const programOverrides = {
     ],
     format: "Shop-based certificate training on the Berlin campus",
     locations: ["Berlin"],
+    details: [
+      "Credential: Certificate",
+      "Campus: Berlin Main Campus welding shops",
+      "Focus: pipe welding for construction, manufacturing, and industrial maintenance",
+      "Prerequisite pathway: Advanced Welding Technology certificate",
+      "Catalog: catalog.wmcc.edu Pipe Welding page",
+    ],
   },
   "culinary-arts": {
     summary:
@@ -214,6 +221,13 @@ const programOverrides = {
     ],
     format: "Production labs on the Berlin campus",
     locations: ["Berlin"],
+    details: [
+      "Credential: Associate in Applied Science",
+      "Campus: Berlin Main Campus baking and pastry labs",
+      "Focus: breads, pastries, desserts, and bakery production workflow",
+      "Related pathways: Culinary Arts AAS and Food Service Essentials certificate",
+      "Catalog: catalog.wmcc.edu Baking and Pastry Arts page",
+    ],
   },
   "it-cybersecurity": {
     summary:
@@ -261,6 +275,13 @@ const programOverrides = {
     ],
     format: "Certificate training at the Littleton Academic Center",
     locations: ["Littleton"],
+    details: [
+      "Credential: Certificate",
+      "Campus: Littleton Academic Center",
+      "Focus: commercial driver preparation and transportation safety fundamentals",
+      "Connects learners with regional transportation employers",
+      "Catalog: catalog.wmcc.edu Commercial Driver Training page",
+    ],
   },
   "driver-education-instructor": {
     summary:
@@ -272,6 +293,13 @@ const programOverrides = {
     ],
     format: "Littleton Academic Center certificate",
     locations: ["Littleton"],
+    details: [
+      "Credential: Certificate",
+      "Campus: Littleton Academic Center",
+      "Focus: instructional methods and safety expectations for driver education",
+      "Pathway into regional driver-education instructor roles",
+      "Catalog: catalog.wmcc.edu Driver Education Instructor page",
+    ],
   },
   "massage-therapy": {
     summary:
@@ -283,6 +311,13 @@ const programOverrides = {
     ],
     format: "North Conway Academic Center certificate",
     locations: ["North Conway"],
+    details: [
+      "Credential: Certificate",
+      "Campus: North Conway Academic Center (Mount Washington Valley)",
+      "Focus: therapeutic massage technique and professional client care",
+      "Pathway into regional wellness and clinical settings",
+      "Catalog: catalog.wmcc.edu Massage Therapy page",
+    ],
   },
   "veterinary-assistant": {
     summary:
@@ -294,6 +329,13 @@ const programOverrides = {
     ],
     format: "North Conway Academic Center certificate",
     locations: ["North Conway"],
+    details: [
+      "Credential: Certificate",
+      "Campus: North Conway Academic Center (Mount Washington Valley)",
+      "Focus: veterinary assisting skills for clinic and animal-care settings",
+      "Pathway into Mount Washington Valley veterinary employers",
+      "Catalog: catalog.wmcc.edu Veterinary Assistant page",
+    ],
   },
   "automotive-technology-degree": {
     summary:
@@ -347,6 +389,91 @@ const programOverrides = {
       "Focus: flexible transfer foundation across arts, humanities, and general studies",
       "Advising support for major selection and four-year pathways",
       "Catalog: catalog.wmcc.edu Liberal Arts page",
+    ],
+  },
+  accounting: {
+    summary:
+      "Build accounting foundations for workplace readiness or continued study in business and finance.",
+    details: [
+      "Credential: Associate in Science",
+      "Campus: Berlin, Littleton, North Conway, and online options",
+      "Focus: accounting principles for career entry or transfer",
+      "Catalog: catalog.wmcc.edu Accounting page",
+    ],
+  },
+  "business-administration": {
+    summary:
+      "Develop practical business and management skills for regional employers or four-year transfer.",
+    details: [
+      "Credential: Associate in Science",
+      "Campus: Berlin, Littleton, North Conway, and online options",
+      "Focus: business operations, management fundamentals, and workplace readiness",
+      "Catalog: catalog.wmcc.edu Business Administration page",
+    ],
+  },
+  "teacher-education": {
+    summary:
+      "Prepare for education pathways with classroom foundations and transfer-ready coursework.",
+    details: [
+      "Credential: Associate in Science",
+      "Campus: Berlin, Littleton, and online options",
+      "Focus: teaching foundations and pathways into education careers or transfer",
+      "Related certificates: Special Education and NH Professional Education Competencies",
+      "Catalog: catalog.wmcc.edu Teacher Education page",
+    ],
+  },
+  "early-childhood-education-degree": {
+    summary:
+      "Prepare for early childhood education roles with multi-campus and flexible course options.",
+    details: [
+      "Credential: Associate in Science",
+      "Campus: Berlin, Littleton, North Conway, and online options",
+      "Focus: early childhood teaching and care foundations",
+      "Related pathways: Early Childhood Education certificate and Associate Teacher Credential",
+      "Catalog: catalog.wmcc.edu Early Childhood Education page",
+    ],
+  },
+  "health-science": {
+    summary:
+      "Start a healthcare education pathway with science and general-education foundations for allied health careers.",
+    details: [
+      "Credential: Associate in Science",
+      "Campus: Multi-campus with flexible course options",
+      "Focus: foundational preparation for health careers and advanced study",
+      "Catalog: catalog.wmcc.edu Health Science page",
+    ],
+  },
+  "criminal-justice": {
+    summary:
+      "Prepare for public-safety and justice pathways with classroom and community-focused coursework.",
+    details: [
+      "Credential: Associate in Science",
+      "Campus: Berlin, Littleton, and online options",
+      "Focus: criminal justice foundations for career or transfer",
+      "Related pathway: Entry-Level Criminal Justice certificate",
+      "Catalog: catalog.wmcc.edu Criminal Justice page",
+    ],
+  },
+  "environmental-science": {
+    summary:
+      "Study environmental and conservation foundations connected to North Country field and career pathways.",
+    details: [
+      "Credential: Associate in Science",
+      "Campus: Berlin with online options",
+      "Focus: environmental science foundations for work or transfer",
+      "Related pathway: Conservation Law Enforcement",
+      "Catalog: catalog.wmcc.edu Environmental Science page",
+    ],
+  },
+  "trades-management": {
+    summary:
+      "Move from hands-on trade experience into supervisory and management roles with an applied associate pathway.",
+    details: [
+      "Credential: Associate in Science",
+      "Campus: Multi-campus and online options",
+      "Focus: leadership and management skills for trades professionals",
+      "Complements welding and other industry certificates",
+      "Catalog: catalog.wmcc.edu Trades Management page",
     ],
   },
 };
@@ -769,15 +896,27 @@ export const programs = rawPrograms.map((program) => {
   };
   const override = programOverrides[program.id] || {};
 
+  const locations = override.locations || program.locations;
+  const format = override.format || defaults.format;
+  const details =
+    override.details ||
+    [
+      `Credential: ${program.credential}`,
+      `Campus: ${locations.join(", ")}`,
+      `Program type: ${program.kind}`,
+      `Learning format: ${format}`,
+      `Official catalog page available on catalog.wmcc.edu`,
+    ];
+
   return {
     ...program,
-    location: program.locations[0],
-    locations: override.locations || program.locations,
+    location: locations[0],
+    locations,
     url: catalogUrl(program.catalogPath),
     summary: override.summary || defaults.summary,
     outcomes: override.outcomes || defaults.outcomes,
-    format: override.format || defaults.format,
-    details: override.details || null,
+    format,
+    details,
   };
 });
 

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import ExternalLink from "../components/ExternalLink";
 import PageHero from "../components/PageHero";
 import { REQUEST_INFO_URL } from "../data/links";
 
@@ -78,14 +79,14 @@ function NotFound({
               <p>
                 Ask Admissions a question through WMCC’s official inquiry form.
               </p>
-              <a
+              <ExternalLink
                 className="text-link"
                 href={REQUEST_INFO_URL}
-                target="_blank"
-                rel="noreferrer"
+                trackName="request_info_click"
+                trackProps={{ location: "not_found" }}
               >
                 Open request form
-              </a>
+              </ExternalLink>
             </article>
           </div>
 

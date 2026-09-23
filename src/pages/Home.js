@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import ExternalLink from "../components/ExternalLink";
 import HeroCarousel from "../components/HeroCarousel";
 import { focusAreas, highlights } from "../data/programs";
 import { APPLY_URL, REQUEST_INFO_URL } from "../data/links";
@@ -11,13 +12,21 @@ function Home() {
       <section className="quick-links" aria-label="Quick links">
         <div className="container quick-links-grid">
           <Link to="/admissions/visit">Visit</Link>
-          <a href={APPLY_URL} target="_blank" rel="noreferrer">
+          <ExternalLink
+            href={APPLY_URL}
+            trackName="apply_click"
+            trackProps={{ location: "home_quick_links" }}
+          >
             Apply
-          </a>
+          </ExternalLink>
           <Link to="/academics">Explore</Link>
-          <a href={REQUEST_INFO_URL} target="_blank" rel="noreferrer">
+          <ExternalLink
+            href={REQUEST_INFO_URL}
+            trackName="request_info_click"
+            trackProps={{ location: "home_quick_links" }}
+          >
             Request Info
-          </a>
+          </ExternalLink>
         </div>
       </section>
 
@@ -134,14 +143,14 @@ function Home() {
             </p>
           </div>
           <div className="cta-actions">
-            <a
+            <ExternalLink
               className="btn btn-gold"
               href={APPLY_URL}
-              target="_blank"
-              rel="noreferrer"
+              trackName="apply_click"
+              trackProps={{ location: "home_cta" }}
             >
               Apply Now
-            </a>
+            </ExternalLink>
             <Link className="btn btn-ghost-light" to="/admissions/visit">
               Visit Campus
             </Link>

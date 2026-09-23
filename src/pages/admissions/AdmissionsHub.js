@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import ExternalLink from "../../components/ExternalLink";
 import PageHero from "../../components/PageHero";
 import SectionNav from "../../components/SectionNav";
 import { APPLY_URL } from "../../data/links";
@@ -83,14 +84,14 @@ function AdmissionsHub() {
               <li>Berlin, Littleton, and North Conway locations</li>
               <li>Transfer pathways across New England</li>
             </ul>
-            <a
+            <ExternalLink
               className="btn btn-primary"
               href={APPLY_URL}
-              target="_blank"
-              rel="noreferrer"
+              trackName="apply_click"
+              trackProps={{ location: "admissions_hub" }}
             >
               Start Your Application
-            </a>
+            </ExternalLink>
           </div>
           <div className="info-panel">
             <h3>Talk with Admissions</h3>
