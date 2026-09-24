@@ -1,0 +1,17 @@
+appId: com.biocross.app
+---
+# BioCross — guest onboarding to check tab (web / simulator friendly)
+- launchApp
+- tapOn: "Get Started"
+- assertVisible: "Create Your Health Profile"
+- back
+- tapOn: "I already have an account"
+- assertVisible: "Welcome back"
+- tapOn: "Fill demo credentials"
+- tapOn: "Sign In"
+- runFlow:
+    when:
+      visible: "Home"
+    commands:
+      - tapOn: "Scan"
+      - assertVisible: "Scan Supplement Label"
