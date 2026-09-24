@@ -2,7 +2,15 @@ import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import { Chip, PrimaryButton, ReviewCard, ScoreBars, StarRating } from '../../../src/components';
+import {
+  Chip,
+  EmptyState,
+  PrimaryButton,
+  ReviewCard,
+  RoleFilterModal,
+  ScoreBars,
+  StarRating,
+} from '../../../src/components';
 import { useApp } from '../../../src/context/AppContext';
 import { formatMoney } from '../../../src/lib/averages';
 import { colors, radii, spacing, typography } from '../../../src/theme';
@@ -23,25 +31,42 @@ export default function CompanyScreen() {
     toggleSavedCompany,
   } = useApp();
   const [tab, setTab] = useState<TabKey>('overview');
+  const [roleFilter, setRoleFilter] = useState<string | null>(null);
+  const [roleModalOpen, setRoleModalOpen] = useState(false);
   const company = getCompany(id);
-  const reviews = getCompanyReviews(id);
-  const interviews = getCompanyInterviews(id);
-  const salaries = getCompanySalaries(id);
+  const allReviews = getCompanyReviews(id);
+  const allInterviews = getCompanyInterviews(id);
+  const allSalaries = getCompanySalaries(id);
+  const reviews = allReviews.filter((review) =>
+    roleFilter ? review.role === roleFilter || review.department === roleFilter : true,
+  );
+  const interviews = allInterviews.filter((item) =>
+    roleFilter ? item.role === roleFilter : true,
+  );
+  const salaries = allSalaries.filter((item) => (roleFilter ? item.role === roleFilter : true));
   const workplaces = getWorkplacesForCompany(id);
   const averages = getCompanyAverages(id);
-  const saved = savedCompanyIds.includes(id);
+  const saved = savedCompanyIds.includes(company?.id ?? id);
+  const roles = Array.from(
+    new Set(
+      [
+        ...allReviews.flatMap((review) =>
+          [review.role, review.department].filter(Boolean) as string[],
+        ),
+        ...allInterviews.map((item) => item.role),
+        ...allSalaries.map((item) => item.role),
+      ].filter(Boolean),
+    ),
+  );
 
   const averagePayLabel = (() => {
     const hourly = salaries.filter((s) => s.hourlyRate);
     if (hourly.length > 0) {
-      const avg =
-        hourly.reduce((sum, s) => sum + (s.hourlyRate ?? 0), 0) / hourly.length;
+      const avg = hourly.reduce((sum, s) => sum + (s.hourlyRate ?? 0), 0) / hourly.length;
       return `$${avg.toFixed(2)}/hr`;
     }
     if (salaries.length === 0) return '—';
-    return formatMoney(
-      salaries.reduce((sum, s) => sum + s.baseAnnual, 0) / salaries.length,
-    );
+    return formatMoney(salaries.reduce((sum, s) => sum + s.baseAnnual, 0) / salaries.length);
   })();
 
   if (!company) {
@@ -78,10 +103,10 @@ export default function CompanyScreen() {
               onPress={() => toggleSavedCompany(company.id)}
             />
             <PrimaryButton
-              label="Workplaces"
+              label={roleFilter ? `Role · ${roleFilter}` : 'Filter role'}
               variant="secondary"
               style={{ flex: 1 }}
-              onPress={() => router.push(`/company/${company.id}/workplaces`)}
+              onPress={() => setRoleModalOpen(true)}
             />
           </View>
         </View>
@@ -104,11 +129,19 @@ export default function CompanyScreen() {
           <View style={styles.card}>
             <Text style={styles.section}>About</Text>
             <Text style={styles.body}>{company.summary}</Text>
+            <PrimaryButton
+              label="Browse workplaces"
+              variant="ghost"
+              onPress={() => router.push(`/company/${company.id}/workplaces`)}
+            />
           </View>
         ) : null}
 
-        {tab === 'workplaces'
-          ? workplaces.map((workplace) => (
+        {tab === 'workplaces' ? (
+          workplaces.length === 0 ? (
+            <EmptyState title="No workplaces yet" body="This employer has no locations listed." />
+          ) : (
+            workplaces.map((workplace) => (
               <Pressable
                 key={workplace.id}
                 style={styles.card}
@@ -121,19 +154,37 @@ export default function CompanyScreen() {
                 </Text>
               </Pressable>
             ))
-          : null}
+          )
+        ) : null}
 
-        {tab === 'reviews'
-          ? reviews.map((review) => (
+        {tab === 'reviews' ? (
+          reviews.length === 0 ? (
+            <EmptyState
+              title="No reviews yet"
+              body="Be the first to share a work experience here."
+              actionLabel="Write a review"
+              onAction={() => router.push('/(tabs)/write')}
+            />
+          ) : (
+            reviews.map((review) => (
               <Pressable key={review.id} onPress={() => router.push(`/review/${review.id}`)}>
                 <ReviewCard review={review} />
                 <View style={{ height: spacing.md }} />
               </Pressable>
             ))
-          : null}
+          )
+        ) : null}
 
-        {tab === 'interviews'
-          ? interviews.map((interview) => (
+        {tab === 'interviews' ? (
+          interviews.length === 0 ? (
+            <EmptyState
+              title="No interviews yet"
+              body="Share how hiring felt at this employer."
+              actionLabel="Write an interview"
+              onAction={() => router.push('/(tabs)/write')}
+            />
+          ) : (
+            interviews.map((interview) => (
               <Pressable
                 key={interview.id}
                 style={styles.card}
@@ -149,11 +200,15 @@ export default function CompanyScreen() {
                 </Text>
               </Pressable>
             ))
-          : null}
+          )
+        ) : null}
 
         {tab === 'salaries' ? (
           salaries.length === 0 ? (
-            <Text style={styles.empty}>No salary data yet.</Text>
+            <EmptyState
+              title="No salary data yet"
+              body="Pay signals will appear as people contribute."
+            />
           ) : (
             <>
               <View style={styles.card}>
@@ -175,6 +230,17 @@ export default function CompanyScreen() {
           )
         ) : null}
       </ScrollView>
+
+      <RoleFilterModal
+        visible={roleModalOpen}
+        roles={roles}
+        selected={roleFilter}
+        onClose={() => setRoleModalOpen(false)}
+        onSelect={(role) => {
+          setRoleFilter(role);
+          if (role && tab === 'overview') setTab('reviews');
+        }}
+      />
     </>
   );
 }
@@ -219,7 +285,6 @@ const styles = StyleSheet.create({
   body: { fontFamily: typography.body, fontSize: 15, lineHeight: 22, color: colors.inkMuted },
   cardTitle: { fontFamily: typography.bodySemi, fontSize: 16, color: colors.ink },
   avg: { fontFamily: typography.display, fontSize: 24, color: colors.ink },
-  empty: { fontFamily: typography.body, fontSize: 14, color: colors.inkSoft },
   missing: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   missingText: { fontFamily: typography.bodyMedium, color: colors.inkMuted },
 });

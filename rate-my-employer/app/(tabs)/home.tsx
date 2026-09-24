@@ -81,8 +81,11 @@ export default function HomeScreen() {
         contentContainerStyle={styles.list}
         ListHeaderComponent={
           <View style={styles.header}>
-            <Text style={styles.brand}>RME</Text>
-            <Text style={styles.title}>Home</Text>
+            <View style={styles.brandWash}>
+              <Text style={styles.brand}>RME</Text>
+              <Text style={styles.title}>Home</Text>
+              <Text style={styles.subtitle}>Honest workplace signal — not marketing copy.</Text>
+            </View>
             <TextInput
               style={styles.search}
               placeholder="Search employers…"
@@ -155,8 +158,15 @@ const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.surface },
   list: { padding: spacing.lg, paddingBottom: spacing.xxl },
   header: { gap: spacing.md, marginBottom: spacing.md },
-  brand: { fontFamily: typography.bodyBold, fontSize: 14, color: colors.blue },
-  title: { fontFamily: typography.display, fontSize: 28, color: colors.ink },
+  brandWash: {
+    backgroundColor: colors.navy,
+    borderRadius: radii.lg,
+    padding: spacing.lg,
+    gap: 6,
+  },
+  brand: { fontFamily: typography.bodyBold, fontSize: 14, color: '#8EB6FF' },
+  title: { fontFamily: typography.display, fontSize: 28, color: '#FFFFFF' },
+  subtitle: { fontFamily: typography.body, fontSize: 14, lineHeight: 20, color: '#B8C7E0' },
   search: {
     backgroundColor: colors.surfaceRaised,
     borderWidth: 1,

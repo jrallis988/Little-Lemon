@@ -19,6 +19,7 @@ import {
   seedWorkplaces,
 } from '../data/seed';
 import { averageReviews } from '../lib/averages';
+import { API_URL, checkApiHealth } from '../services/apiClient';
 import * as authService from '../services/authService';
 import * as reviewService from '../services/reviewService';
 import type {
@@ -56,6 +57,7 @@ const STORAGE_KEYS = {
   recentSearches: 'rme.recentSearches.v2',
   notifications: 'rme.notifications.v2',
   reports: 'rme.reports.v2',
+  activity: 'rme.activity.v2',
 };
 
 const defaultNotificationPrefs: NotificationPrefs = {
@@ -90,6 +92,10 @@ type AppContextValue = {
   ready: boolean;
   hasOnboarded: boolean;
   isGuest: boolean;
+  apiOnline: boolean | null;
+  apiMode: string | null;
+  apiUrl: string;
+  refreshApiStatus: () => Promise<void>;
   companies: Company[];
   workplaces: Workplace[];
   reviews: Review[];
@@ -105,6 +111,7 @@ type AppContextValue = {
   user: User | null;
   completeOnboarding: () => Promise<void>;
   continueAsGuest: () => Promise<void>;
+  markActivityRead: (id?: string) => Promise<void>;
   searchCompanies: (query: string) => Company[];
   getCompany: (id: string) => Company | undefined;
   getWorkplacesForCompany: (companyId: string) => Workplace[];
@@ -225,10 +232,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [notificationPrefs, setNotificationPrefs] =
     useState<NotificationPrefs>(defaultNotificationPrefs);
   const [reports, setReports] = useState<ContentReport[]>([]);
+  const [activity, setActivity] = useState<ActivityItem[]>(seedActivity);
+  const [apiOnline, setApiOnline] = useState<boolean | null>(null);
+  const [apiMode, setApiMode] = useState<string | null>(null);
   const companies = seedCompanies;
   const workplaces = seedWorkplaces;
   const tags = seedTags;
-  const activity = seedActivity;
   const employerResponses = seedEmployerResponses;
 
   useEffect(() => {
@@ -257,6 +266,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
           });
         }
         if (map[STORAGE_KEYS.reports]) setReports(JSON.parse(map[STORAGE_KEYS.reports]!));
+        if (map[STORAGE_KEYS.activity]) setActivity(JSON.parse(map[STORAGE_KEYS.activity]!));
         const guest = map[STORAGE_KEYS.guest] === '1';
         const sessionId = map[STORAGE_KEYS.session];
         const sessionUser = sessionId
@@ -272,6 +282,19 @@ export function AppProvider({ children }: { children: ReactNode }) {
       } finally {
         if (mounted) setReady(true);
       }
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      const health = await checkApiHealth();
+      if (!mounted) return;
+      setApiOnline(health.ok);
+      setApiMode(health.mode ?? null);
     })();
     return () => {
       mounted = false;
@@ -294,6 +317,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
     const persistReports = async (next: ContentReport[]) => {
       setReports(next);
       await AsyncStorage.setItem(STORAGE_KEYS.reports, JSON.stringify(next));
+    };
+    const persistActivity = async (next: ActivityItem[]) => {
+      setActivity(next);
+      await AsyncStorage.setItem(STORAGE_KEYS.activity, JSON.stringify(next));
     };
 
     const getCompany = (id: string) =>
@@ -374,6 +401,14 @@ export function AppProvider({ children }: { children: ReactNode }) {
       ready,
       hasOnboarded,
       isGuest,
+      apiOnline,
+      apiMode,
+      apiUrl: API_URL,
+      refreshApiStatus: async () => {
+        const health = await checkApiHealth();
+        setApiOnline(health.ok);
+        setApiMode(health.mode ?? null);
+      },
       companies,
       workplaces,
       reviews,
@@ -400,6 +435,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
           [STORAGE_KEYS.onboarded, '1'],
         ]);
         await AsyncStorage.removeItem(STORAGE_KEYS.session);
+      },
+      markActivityRead: async (id) => {
+        const next = activity.map((item) => {
+          if (id && item.id !== id) return item;
+          return { ...item, read: true };
+        });
+        await persistActivity(next);
       },
       searchCompanies,
       getCompany,
@@ -909,6 +951,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
     ready,
     hasOnboarded,
     isGuest,
+    apiOnline,
+    apiMode,
     companies,
     workplaces,
     reviews,

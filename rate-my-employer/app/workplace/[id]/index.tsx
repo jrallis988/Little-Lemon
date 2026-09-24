@@ -1,8 +1,7 @@
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-
-import { Chip, PrimaryButton, ReviewCard, ScoreBars, StarRating } from '../../../src/components';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Chip, PrimaryButton, ReviewCard, RoleFilterModal, ScoreBars, StarRating } from '../../../src/components';
 import { useApp } from '../../../src/context/AppContext';
 import { formatMoney } from '../../../src/lib/averages';
 import { colors, radii, spacing, typography } from '../../../src/theme';
@@ -181,53 +180,16 @@ export default function WorkplaceScreen() {
         </Pressable>
       </View>
 
-      <Modal
+      <RoleFilterModal
         visible={roleModalOpen}
-        animationType="slide"
-        transparent
-        onRequestClose={() => setRoleModalOpen(false)}
-      >
-        <View style={styles.modalBackdrop}>
-          <View style={styles.modalCard}>
-            <Text style={styles.modalTitle}>Filter by role</Text>
-            <Text style={styles.meta}>Narrow reviews, interviews, and salaries.</Text>
-            <ScrollView style={styles.modalList}>
-              <Pressable
-                style={[styles.modalOption, !roleFilter && styles.modalOptionOn]}
-                onPress={() => {
-                  setRoleFilter(null);
-                  setRoleModalOpen(false);
-                }}
-              >
-                <Text style={[styles.modalOptionText, !roleFilter && styles.modalOptionTextOn]}>
-                  All roles
-                </Text>
-              </Pressable>
-              {roles.map((role) => (
-                <Pressable
-                  key={role}
-                  style={[styles.modalOption, roleFilter === role && styles.modalOptionOn]}
-                  onPress={() => {
-                    setRoleFilter(role);
-                    setRoleModalOpen(false);
-                    if (tab === 'overview') setTab('reviews');
-                  }}
-                >
-                  <Text
-                    style={[
-                      styles.modalOptionText,
-                      roleFilter === role && styles.modalOptionTextOn,
-                    ]}
-                  >
-                    {role}
-                  </Text>
-                </Pressable>
-              ))}
-            </ScrollView>
-            <PrimaryButton label="Close" variant="ghost" onPress={() => setRoleModalOpen(false)} />
-          </View>
-        </View>
-      </Modal>
+        roles={roles}
+        selected={roleFilter}
+        onClose={() => setRoleModalOpen(false)}
+        onSelect={(role) => {
+          setRoleFilter(role);
+          if (role && tab === 'overview') setTab('reviews');
+        }}
+      />
     </>
   );
 }
@@ -283,30 +245,4 @@ const styles = StyleSheet.create({
   fabText: { fontFamily: typography.bodyBold, fontSize: 15, color: '#FFFFFF' },
   missing: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   missingText: { fontFamily: typography.bodyMedium, color: colors.inkMuted },
-  modalBackdrop: {
-    flex: 1,
-    backgroundColor: 'rgba(7, 30, 66, 0.45)',
-    justifyContent: 'flex-end',
-  },
-  modalCard: {
-    backgroundColor: colors.surfaceRaised,
-    borderTopLeftRadius: radii.xl,
-    borderTopRightRadius: radii.xl,
-    padding: spacing.lg,
-    gap: spacing.md,
-    maxHeight: '75%',
-  },
-  modalTitle: { fontFamily: typography.display, fontSize: 22, color: colors.ink },
-  modalList: { maxHeight: 320 },
-  modalOption: {
-    paddingVertical: 14,
-    paddingHorizontal: spacing.md,
-    borderRadius: radii.md,
-    borderWidth: 1,
-    borderColor: colors.border,
-    marginBottom: spacing.sm,
-  },
-  modalOptionOn: { borderColor: colors.blue, backgroundColor: colors.blueSoft },
-  modalOptionText: { fontFamily: typography.bodySemi, fontSize: 15, color: colors.ink },
-  modalOptionTextOn: { color: colors.blue },
 });

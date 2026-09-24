@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import { StarRating } from '../src/components';
+import { EmptyState, StarRating } from '../src/components';
 import { useApp } from '../src/context/AppContext';
 import { colors, radii, spacing, typography } from '../src/theme';
 
@@ -16,7 +16,12 @@ export default function SavedScreen() {
     <ScrollView contentContainerStyle={styles.content}>
       <Text style={styles.title}>Saved employers</Text>
       {saved.length === 0 ? (
-        <Text style={styles.empty}>No saved employers yet.</Text>
+        <EmptyState
+          title="Nothing saved yet"
+          body="Save employers from their profile to compare them later."
+          actionLabel="Find employers"
+          onAction={() => router.push('/(tabs)/search')}
+        />
       ) : (
         saved.map((company) => {
           const avg = getCompanyAverages(company.id);
@@ -47,7 +52,6 @@ export default function SavedScreen() {
 const styles = StyleSheet.create({
   content: { padding: spacing.lg, paddingBottom: spacing.xxl, gap: spacing.md },
   title: { fontFamily: typography.display, fontSize: 26, color: colors.ink },
-  empty: { fontFamily: typography.body, fontSize: 15, color: colors.inkSoft },
   card: {
     flexDirection: 'row',
     alignItems: 'center',

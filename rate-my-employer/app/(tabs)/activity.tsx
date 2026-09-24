@@ -1,11 +1,13 @@
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { Pressable, StyleSheet, Text, View, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { EmptyState, PrimaryButton } from '../../src/components';
 import { useApp } from '../../src/context/AppContext';
 import { colors, radii, spacing, typography } from '../../src/theme';
 
 export default function ActivityScreen() {
-  const { activity } = useApp();
+  const { activity, markActivityRead } = useApp();
+  const unread = activity.filter((item) => !item.read).length;
 
   return (
     <SafeAreaView style={styles.safe} edges={['bottom']}>
@@ -16,15 +18,34 @@ export default function ActivityScreen() {
         ListHeaderComponent={
           <View style={styles.header}>
             <Text style={styles.title}>Activity</Text>
-            <Text style={styles.copy}>Helpful votes, replies, and updates.</Text>
+            <Text style={styles.copy}>
+              Helpful votes, replies, and updates
+              {unread > 0 ? ` · ${unread} unread` : ''}.
+            </Text>
+            {unread > 0 ? (
+              <PrimaryButton
+                label="Mark all read"
+                variant="ghost"
+                onPress={() => markActivityRead()}
+              />
+            ) : null}
           </View>
         }
+        ListEmptyComponent={
+          <EmptyState
+            title="No activity yet"
+            body="When people find your reviews helpful or employers reply, it shows up here."
+          />
+        }
         renderItem={({ item }) => (
-          <View style={[styles.card, !item.read && styles.unread]}>
+          <Pressable
+            style={[styles.card, !item.read && styles.unread]}
+            onPress={() => markActivityRead(item.id)}
+          >
             <Text style={styles.kicker}>{item.type.toUpperCase()}</Text>
             <Text style={styles.cardTitle}>{item.title}</Text>
             <Text style={styles.body}>{item.body}</Text>
-          </View>
+          </Pressable>
         )}
         ItemSeparatorComponent={() => <View style={{ height: spacing.md }} />}
       />

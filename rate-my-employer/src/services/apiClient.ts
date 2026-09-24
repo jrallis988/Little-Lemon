@@ -56,3 +56,15 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
 
   return (await response.json()) as T;
 }
+
+export async function checkApiHealth(): Promise<{
+  ok: boolean;
+  mode?: string;
+  time?: string;
+}> {
+  try {
+    return await apiRequest<{ ok: boolean; mode?: string; time?: string }>('/health');
+  } catch {
+    return { ok: false };
+  }
+}

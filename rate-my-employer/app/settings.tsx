@@ -15,6 +15,10 @@ export default function SettingsScreen() {
     changePassword,
     updateNotificationPrefs,
     signOut,
+    apiOnline,
+    apiMode,
+    apiUrl,
+    refreshApiStatus,
   } = useApp();
   const [displayName, setDisplayName] = useState(user?.displayName ?? '');
   const [username, setUsername] = useState(user?.username ?? '');
@@ -27,6 +31,7 @@ export default function SettingsScreen() {
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [busyProfile, setBusyProfile] = useState(false);
   const [busyPassword, setBusyPassword] = useState(false);
+  const [checkingApi, setCheckingApi] = useState(false);
 
   if (!user) {
     return (
@@ -42,6 +47,28 @@ export default function SettingsScreen() {
     <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
       <Text style={styles.title}>Settings</Text>
       <Text style={styles.copy}>Signed in as {user.email}</Text>
+
+      <Text style={styles.section}>API connection</Text>
+      <View style={styles.apiCard}>
+        <Text style={styles.apiStatus}>
+          {apiOnline == null
+            ? 'Checking…'
+            : apiOnline
+              ? `Online${apiMode ? ` · ${apiMode}` : ''}`
+              : 'Offline · using local data'}
+        </Text>
+        <Text style={styles.apiUrl}>{apiUrl}</Text>
+        <PrimaryButton
+          label={checkingApi ? 'Checking…' : 'Refresh status'}
+          variant="ghost"
+          disabled={checkingApi}
+          onPress={async () => {
+            setCheckingApi(true);
+            await refreshApiStatus();
+            setCheckingApi(false);
+          }}
+        />
+      </View>
 
       <Text style={styles.section}>Profile</Text>
       <TextInput
@@ -219,6 +246,16 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.sm,
   },
   prefLabel: { flex: 1, fontFamily: typography.bodyMedium, fontSize: 15, color: colors.ink },
+  apiCard: {
+    backgroundColor: colors.surfaceRaised,
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: radii.md,
+    padding: spacing.md,
+    gap: spacing.sm,
+  },
+  apiStatus: { fontFamily: typography.bodySemi, fontSize: 15, color: colors.ink },
+  apiUrl: { fontFamily: typography.body, fontSize: 12, color: colors.inkSoft },
   error: { fontFamily: typography.bodyMedium, fontSize: 14, color: colors.danger },
   success: { fontFamily: typography.bodyMedium, fontSize: 14, color: colors.success },
 });

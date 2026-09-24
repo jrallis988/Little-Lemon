@@ -35,8 +35,11 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "typecheck": "tsc --noEmit",
+    "test": "npm --prefix server test",
+    "typecheck:all": "npm run typecheck && npm --prefix server exec tsc --noEmit",
     "server:dev": "npm --prefix server run dev",
-    "server:install": "npm --prefix server install"
+    "server:install": "npm --prefix server install",
+    "server:test": "npm --prefix server test"
   },
   "private": true
 }
