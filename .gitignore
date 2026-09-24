@@ -5,3 +5,10 @@ node_modules/
 *.log
 dist/
 .cache/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+supplement_checker/data/
+*.db
+.pytest_cache/
