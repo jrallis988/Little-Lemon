@@ -32,10 +32,7 @@
 
 <article class="card">
   <h3>House lineup</h3>
-  <p>
-    These are the products Cellar and Restock know about. Add what you actually pour —
-    the starter list is only a suggestion.
-  </p>
+  <p>What Cellar and Restock know. Add what you pour — the starter list is only a suggestion.</p>
 
   {#if notice}
     <p class="flash" role="status">{notice}</p>
@@ -43,45 +40,16 @@
 
   <ul class="lineup">
     {#each appState.products as product (product.sku)}
-      <li>
-        <div class="line">
-          <div class="name-block">
-            <input
-              type="text"
-              value={product.name}
-              aria-label="Product name"
-              onchange={(e) =>
-                updateHouseProduct(product.sku, {
-                  name: (e.currentTarget as HTMLInputElement).value,
-                })}
-            />
-            <span class="sku">{product.sku}</span>
-          </div>
-          <select
-            value={product.unit}
-            aria-label="Unit for {product.name}"
+      <li class="item">
+        <div class="item-head">
+          <input
+            type="text"
+            value={product.name}
+            aria-label="Product name"
             onchange={(e) =>
               updateHouseProduct(product.sku, {
-                unit: (e.currentTarget as HTMLSelectElement).value,
+                name: (e.currentTarget as HTMLInputElement).value,
               })}
-          >
-            {#each PRODUCT_UNITS as u}
-              <option value={u}>{u}</option>
-            {/each}
-          </select>
-          <input
-            type="number"
-            min="0"
-            class="par"
-            value={product.par ?? ""}
-            placeholder="Par"
-            aria-label="Usual on-hand for {product.name}"
-            onchange={(e) => {
-              const n = Number((e.currentTarget as HTMLInputElement).value);
-              updateHouseProduct(product.sku, {
-                par: Number.isFinite(n) && n > 0 ? n : undefined,
-              });
-            }}
           />
           <button
             type="button"
@@ -90,6 +58,40 @@
           >
             Remove
           </button>
+        </div>
+        <span class="sku">{product.sku}</span>
+        <div class="item-meta">
+          <label>
+            <span>Unit</span>
+            <select
+              value={product.unit}
+              aria-label="Unit for {product.name}"
+              onchange={(e) =>
+                updateHouseProduct(product.sku, {
+                  unit: (e.currentTarget as HTMLSelectElement).value,
+                })}
+            >
+              {#each PRODUCT_UNITS as u}
+                <option value={u}>{u}</option>
+              {/each}
+            </select>
+          </label>
+          <label>
+            <span>Par</span>
+            <input
+              type="number"
+              min="0"
+              value={product.par ?? ""}
+              placeholder="—"
+              aria-label="Usual on-hand for {product.name}"
+              onchange={(e) => {
+                const n = Number((e.currentTarget as HTMLInputElement).value);
+                updateHouseProduct(product.sku, {
+                  par: Number.isFinite(n) && n > 0 ? n : undefined,
+                });
+              }}
+            />
+          </label>
         </div>
       </li>
     {/each}
@@ -106,21 +108,28 @@
       add();
     }}
   >
-    <input type="text" bind:value={name} placeholder="Product name" aria-label="New product name" />
-    <select bind:value={unit} aria-label="New product unit">
-      {#each PRODUCT_UNITS as u}
-        <option value={u}>{u}</option>
-      {/each}
-    </select>
-    <input
-      type="number"
-      min="0"
-      class="par"
-      bind:value={par}
-      placeholder="Par"
-      aria-label="Usual on-hand"
-    />
-    <button type="submit" class="primary" disabled={!name.trim()}>Add</button>
+    <input type="text" bind:value={name} placeholder="New product" aria-label="New product name" />
+    <div class="item-meta">
+      <label>
+        <span>Unit</span>
+        <select bind:value={unit} aria-label="New product unit">
+          {#each PRODUCT_UNITS as u}
+            <option value={u}>{u}</option>
+          {/each}
+        </select>
+      </label>
+      <label>
+        <span>Par</span>
+        <input
+          type="number"
+          min="0"
+          bind:value={par}
+          placeholder="—"
+          aria-label="Usual on-hand"
+        />
+      </label>
+    </div>
+    <button type="submit" class="primary" disabled={!name.trim()}>Add to lineup</button>
   </form>
 
   <button type="button" class="ghost" onclick={() => restoreDefaultCatalog()}>
@@ -162,42 +171,24 @@
 
   .lineup {
     list-style: none;
-    margin: 0 0 0.75rem;
+    margin: 0 0 0.85rem;
     padding: 0;
     display: flex;
     flex-direction: column;
     gap: 0.55rem;
   }
 
-  .line {
-    display: grid;
-    grid-template-columns: 1fr 5.5rem 4rem auto;
-    gap: 0.35rem;
-    align-items: center;
-  }
-
-  input,
-  select {
-    min-height: 36px;
+  .item {
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 0.3rem 0.45rem;
-    font-size: 0.85rem;
-    color: var(--midnight);
-    background: var(--surface);
-    width: 100%;
-    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 0.7rem 0.75rem;
+    background: var(--surface-2);
   }
 
-  .par {
-    text-align: right;
-  }
-
-  .name-block {
+  .item-head {
     display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
-    min-width: 0;
+    align-items: center;
+    gap: 0.4rem;
   }
 
   .sku {
@@ -205,6 +196,42 @@
     font-size: 0.65rem;
     color: var(--text-muted);
     letter-spacing: 0.04em;
+    margin: 0.2rem 0 0.5rem;
+  }
+
+  .item-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  label span {
+    display: block;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.2rem;
+  }
+
+  input,
+  select {
+    min-height: 38px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.9rem;
+    color: var(--midnight);
+    background: var(--surface);
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .item-head input {
+    flex: 1;
+    min-width: 0;
+    font-weight: 600;
   }
 
   .remove {
@@ -215,21 +242,22 @@
     font-weight: 600;
     cursor: pointer;
     white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .add {
-    display: grid;
-    grid-template-columns: 1fr 5.5rem 4rem auto;
-    gap: 0.35rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
     margin-bottom: 0.65rem;
   }
 
   .primary,
   .ghost {
-    min-height: 36px;
-    padding: 0.35rem 0.7rem;
+    min-height: 38px;
+    padding: 0.4rem 0.8rem;
     border-radius: 999px;
-    font-size: 0.78rem;
+    font-size: 0.8rem;
     font-weight: 600;
     cursor: pointer;
   }
@@ -252,17 +280,5 @@
 
   .empty {
     font-style: italic;
-  }
-
-  @media (max-width: 480px) {
-    .line,
-    .add {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .remove,
-    .primary {
-      grid-column: 1 / -1;
-    }
   }
 </style>

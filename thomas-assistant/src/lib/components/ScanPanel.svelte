@@ -11,7 +11,7 @@
   } from "$lib/business-intelligence";
   import {
     appState,
-    currentUser,
+    getCurrentUser,
     addChatMessage,
     setActiveTab,
     setMobileScreen,
@@ -101,7 +101,7 @@
         sku,
         expectedQty,
         actualQty,
-        currentUser,
+        getCurrentUser(),
       );
       appState.inventoryScans = [scan, ...appState.inventoryScans];
       appState.summary = await getInventorySummary();
@@ -129,7 +129,6 @@
 <section class="panel">
   <header class="panel-header">
     <div>
-      <p class="eyebrow">Thomas for Business</p>
       <h2>{view === "overview" ? "Cellar overview" : "Cellar check"}</h2>
       <p class="lead">
         {view === "overview"
@@ -390,15 +389,6 @@
     gap: 0.75rem;
     flex-wrap: wrap;
     flex-shrink: 0;
-  }
-
-  .eyebrow {
-    margin: 0 0 0.2rem;
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--cognac);
   }
 
   h2 {

@@ -7,10 +7,8 @@ import type {
   WorkflowTab,
 } from "../types";
 import {
-  THOMAS_GREETING,
-  PERSONAL_GREETING,
+  greetingFor,
   butlerSessionContext,
-  STAFF_FIRST_NAME,
 } from "../thomas-persona";
 import { isBrowserMode } from "../api";
 import {
@@ -20,6 +18,7 @@ import {
   formatTimestamp,
   getAudits,
   getChatMessages,
+  getDisplayName,
   getPersonalBottles,
   getPersonalEvents,
   getProductMode,
@@ -32,6 +31,7 @@ import {
   loadSampleHouse as persistSampleHouse,
   nextRecordId,
   setChatMessages,
+  setDisplayName as persistDisplayName,
   setPersonalBottles,
   setProductMode as persistProductMode,
   setProducts as persistProducts,
@@ -46,14 +46,14 @@ import {
   type Product,
 } from "../product-catalog";
 
-export const currentUser = STAFF_FIRST_NAME;
+export function getCurrentUser(): string {
+  return appState.displayName?.trim() || "Staff";
+}
+
+/** @deprecated use getCurrentUser() */
+export const currentUser = "Staff";
 
 export const PERSONAL_MODE_ENABLED = true;
-
-
-function greetingFor(mode: ProductMode): string {
-  return mode === "personal" ? PERSONAL_GREETING : THOMAS_GREETING;
-}
 
 function initialChatMessages(mode: ProductMode): ChatMessage[] {
   if (isBrowserMode) {
@@ -63,7 +63,7 @@ function initialChatMessages(mode: ProductMode): ChatMessage[] {
   return [
     {
       role: "assistant" as const,
-      content: greetingFor(mode),
+      content: greetingFor(mode, isBrowserMode ? getDisplayName() : null),
       timestamp: new Date().toISOString(),
     },
   ];
@@ -82,6 +82,7 @@ export const appState = $state({
   summary: null as import("../types").InventorySummary | null,
   chatMessages: initialChatMessages(initialMode) as ChatMessage[],
   userArea: isBrowserMode ? getUserArea() : null,
+  displayName: isBrowserMode ? getDisplayName() : null,
   personalBottles: isBrowserMode ? getPersonalBottles() : ([] as PersonalBottle[]),
   personalEvents: isBrowserMode ? getPersonalEvents() : ([] as PersonalEvent[]),
   products: (isBrowserMode ? getProducts() : cloneDefaultCatalog()) as Product[],
@@ -91,6 +92,27 @@ export const appState = $state({
   pendingPrompt: null as string | null,
 });
 
+function isIdleGreeting(): boolean {
+  const msgs = appState.chatMessages;
+  return (
+    msgs.length === 1 &&
+    msgs[0]?.role === "assistant" &&
+    msgs[0].content.startsWith("Good evening")
+  );
+}
+
+function refreshIdleGreeting() {
+  if (!isIdleGreeting()) return;
+  const next = [
+    {
+      ...appState.chatMessages[0],
+      content: greetingFor(appState.mode, appState.displayName),
+    },
+  ];
+  appState.chatMessages = next;
+  if (isBrowserMode) setChatMessages(next);
+}
+
 export function setMode(mode: ProductMode, options?: { keepScreen?: boolean }) {
   if (!PERSONAL_MODE_ENABLED && mode === "personal") return;
   appState.mode = mode;
@@ -99,6 +121,7 @@ export function setMode(mode: ProductMode, options?: { keepScreen?: boolean }) {
     appState.mobileScreen = "home";
   }
   if (isBrowserMode) persistProductMode(mode);
+  refreshIdleGreeting();
 }
 
 const businessScreens: WorkflowTab[] = [
@@ -123,6 +146,7 @@ export function hydrateFromStorage() {
   appState.shiftLogs = getShifts();
   appState.auditTrails = getAudits();
   appState.userArea = getUserArea();
+  appState.displayName = getDisplayName();
   appState.personalBottles = getPersonalBottles();
   appState.personalEvents = getPersonalEvents();
   appState.products = getProducts();
@@ -273,6 +297,13 @@ export function saveUserArea(area: string | null) {
   if (isBrowserMode) setUserArea(trimmed);
 }
 
+export function saveDisplayName(name: string | null) {
+  const trimmed = name?.trim() || null;
+  appState.displayName = trimmed;
+  if (isBrowserMode) persistDisplayName(trimmed);
+  refreshIdleGreeting();
+}
+
 export function askThomas(message: string) {
   appState.pendingPrompt = message;
   appState.chatOpen = true;
@@ -286,6 +317,13 @@ export function buildChatContext(): string {
       ? "PRODUCT_MODE=personal"
       : "PRODUCT_MODE=business",
   );
+
+  const who = appState.displayName?.trim();
+  if (who) {
+    parts.push(
+      `Address them as ${who} when it feels natural — that is their name.`,
+    );
+  }
 
   if (appState.mode === "personal") {
     if (appState.personalBottles.length === 0) {

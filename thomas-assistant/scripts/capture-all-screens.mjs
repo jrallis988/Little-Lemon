@@ -8,7 +8,7 @@ const BASE = process.env.PREVIEW_URL ?? "http://localhost:4173";
 const previewMessages = [
   {
     role: "assistant",
-    content: "Good evening, James. What shall we pour?",
+    content: "Good evening. What shall we pour?",
     timestamp: "2026-08-23T20:00:00.000Z",
   },
   {

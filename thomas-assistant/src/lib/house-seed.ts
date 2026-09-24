@@ -4,6 +4,9 @@ import { catalogNames, countGapLabel, productName, tillGapLabel } from "./produc
 /** Believable house state for demo / validation night. */
 export const SEED_VERSION = 1;
 
+/** Sample closer on the optional night — not a real person’s name. */
+const SAMPLE_CLOSER = "Staff";
+
 function daysAgo(n: number, hour = 21, minute = 15): string {
   const d = new Date();
   d.setDate(d.getDate() - n);
@@ -82,7 +85,7 @@ export function buildSeedShifts(): ShiftLog[] {
       cash_expected: 500,
       cash_actual: 487.5,
       variance: -12.5,
-      user_id: "James",
+      user_id: SAMPLE_CLOSER,
       timestamp: daysAgo(1, 23, 5),
     },
     {
@@ -90,7 +93,7 @@ export function buildSeedShifts(): ShiftLog[] {
       cash_expected: 500,
       cash_actual: 492,
       variance: -8,
-      user_id: "James",
+      user_id: SAMPLE_CLOSER,
       timestamp: daysAgo(3, 22, 50),
     },
     {
@@ -98,7 +101,7 @@ export function buildSeedShifts(): ShiftLog[] {
       cash_expected: 480,
       cash_actual: 471.25,
       variance: -8.75,
-      user_id: "James",
+      user_id: SAMPLE_CLOSER,
       timestamp: daysAgo(5, 23, 10),
     },
     {
@@ -106,7 +109,7 @@ export function buildSeedShifts(): ShiftLog[] {
       cash_expected: 350,
       cash_actual: 350,
       variance: 0,
-      user_id: "James",
+      user_id: SAMPLE_CLOSER,
       timestamp: daysAgo(2, 22, 40),
     },
   ];
@@ -128,7 +131,7 @@ export function buildSeedAudits(
       id: ++id,
       action_type: "cellar_check",
       details: `${productName(scan.sku)}: should have ${scan.expected_qty}, counted ${scan.actual_qty} — ${countGapLabel(scan.variance)} (${severity})`,
-      user_id: "James",
+      user_id: SAMPLE_CLOSER,
       timestamp: scan.timestamp,
     });
   }

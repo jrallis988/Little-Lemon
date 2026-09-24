@@ -1,7 +1,7 @@
 <script lang="ts">
   import { recordShiftLog, listShiftLogs } from "$lib/api";
   import { getSignoffPin, setSignoffPin } from "$lib/browser-storage";
-  import { appState, currentUser, addChatMessage } from "$lib/stores/app.svelte";
+  import { appState, getCurrentUser, addChatMessage } from "$lib/stores/app.svelte";
   import { butlerShiftNote } from "$lib/thomas-persona";
   import { tillGapLabel, tillLabel } from "$lib/product-catalog";
 
@@ -44,7 +44,7 @@
         registerId,
         cashExpected,
         cashActual,
-        currentUser,
+        getCurrentUser(),
       );
       appState.shiftLogs = [log, ...appState.shiftLogs];
       addChatMessage("assistant", butlerShiftNote(registerId, log.variance));

@@ -1,15 +1,18 @@
 <script lang="ts">
   import HouseLineup from "$lib/components/HouseLineup.svelte";
+  import { getSignoffPin, setSignoffPin } from "$lib/browser-storage";
   import {
     appState,
     clearHouseSignoff,
     loadSampleHouse,
+    saveDisplayName,
     saveUserArea,
     setMode,
     signoffIsSet,
     startEmptyHouse,
   } from "$lib/stores/app.svelte";
 
+  let nameDraft = $state(appState.displayName ?? "");
   let areaDraft = $state(appState.userArea ?? "");
   let pinDraft = $state("");
   let pinSet = $state(signoffIsSet());
@@ -21,8 +24,18 @@
   );
 
   $effect(() => {
+    nameDraft = appState.displayName ?? "";
     areaDraft = appState.userArea ?? "";
   });
+
+  function saveName() {
+    saveDisplayName(nameDraft);
+    flash(
+      nameDraft.trim()
+        ? `Thomas will greet you as ${nameDraft.trim()}.`
+        : "Name cleared — greetings stay unnamed.",
+    );
+  }
 
   function flash(text: string) {
     notice = text;
@@ -62,7 +75,7 @@
   <header class="panel-header">
     <div>
       <h2>Settings</h2>
-      <p class="lead">Area, sign-off, and whether this device shows a sample night.</p>
+      <p class="lead">Your name, area, sign-off, and optional sample night.</p>
     </div>
   </header>
 
@@ -90,6 +103,22 @@
           Business
         </button>
       </div>
+    </article>
+
+    <article class="card">
+      <h3>Your name</h3>
+      <p>Thomas uses this in greetings and on closes. Leave blank if you’d rather stay unnamed.</p>
+      <label>
+        <span class="sr">Your name</span>
+        <input
+          type="text"
+          bind:value={nameDraft}
+          placeholder="e.g. Alex"
+          autocomplete="nickname"
+          aria-label="Your name"
+        />
+      </label>
+      <button type="button" class="primary" onclick={saveName}>Save name</button>
     </article>
 
     <article class="card">

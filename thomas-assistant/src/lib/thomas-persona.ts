@@ -5,11 +5,22 @@ import {
   isRetailIntent,
 } from "./retail-locator";
 
-export const STAFF_FIRST_NAME = "James";
+export function greetingFor(mode: "personal" | "business", name?: string | null): string {
+  const n = name?.trim();
+  if (mode === "personal") {
+    return n
+      ? `Good evening, ${n}. What shall we pour at home tonight?`
+      : "Good evening. What shall we pour at home tonight?";
+  }
+  return n
+    ? `Good evening, ${n}. What shall we pour?`
+    : "Good evening. What shall we pour?";
+}
 
-export const THOMAS_GREETING = `Good evening, ${STAFF_FIRST_NAME}. What shall we pour?`;
-export const PERSONAL_GREETING =
-  "Good evening. What shall we pour at home tonight?";
+export const STAFF_FIRST_NAME = "Staff";
+
+export const THOMAS_GREETING = greetingFor("business");
+export const PERSONAL_GREETING = greetingFor("personal");
 
 export const TAB_LABELS = {
   home: "Home",

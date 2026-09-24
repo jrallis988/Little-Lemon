@@ -1,6 +1,5 @@
 <script lang="ts">
   import ThomasLogo from "$lib/components/ThomasLogo.svelte";
-  import { isCloudDemo } from "$lib/api";
   import {
     BUSINESS_PRODUCT_LINE,
     BUSINESS_SUPPORTING,
@@ -55,9 +54,6 @@
     </div>
     {#if !compact}
       <span class="status on-premise">● On-Premise</span>
-    {/if}
-    {#if isCloudDemo && !compact}
-      <span class="status cloud">☁ Cloud Demo</span>
     {/if}
     <button
       type="button"

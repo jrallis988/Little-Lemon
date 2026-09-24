@@ -7,7 +7,7 @@
   import {
     addChatMessage,
     appState,
-    currentUser,
+    getCurrentUser,
     setActiveTab,
     setMobileScreen,
   } from "$lib/stores/app.svelte";
@@ -73,7 +73,7 @@
     const summary = activeLines
       .map((l) => `${l.qty} ${l.unit} ${l.name}`)
       .join("; ");
-    void recordRestockApproval(summary, currentUser).then(() => {
+    void recordRestockApproval(summary, getCurrentUser()).then(() => {
       approved = true;
       addChatMessage(
         "assistant",

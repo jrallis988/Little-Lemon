@@ -28,6 +28,7 @@ interface HouseData {
   chatMessages: ChatMessage[];
   seedVersion: number | null;
   userArea: string | null;
+  displayName: string | null;
   productMode: ProductMode | null;
   personalBottles: PersonalBottle[];
   personalEvents: PersonalEvent[];
@@ -43,6 +44,7 @@ const empty: HouseData = {
   chatMessages: [],
   seedVersion: null,
   userArea: null,
+  displayName: null,
   productMode: null,
   personalBottles: [],
   personalEvents: [],
@@ -64,6 +66,7 @@ function read(): HouseData {
       chatMessages: parsed.chatMessages ?? [],
       seedVersion: parsed.seedVersion ?? null,
       userArea: parsed.userArea ?? null,
+      displayName: parsed.displayName ?? null,
       productMode: parsed.productMode ?? null,
       personalBottles: parsed.personalBottles ?? [],
       personalEvents: parsed.personalEvents ?? [],
@@ -113,6 +116,7 @@ export function loadSampleHouse(): void {
     chatMessages: cache.chatMessages,
     seedVersion: SEED_VERSION,
     userArea: cache.userArea,
+    displayName: cache.displayName,
     productMode: cache.productMode,
     personalBottles: cache.personalBottles,
     personalEvents: cache.personalEvents,
@@ -220,6 +224,15 @@ export function getUserArea(): string | null {
 
 export function setUserArea(area: string | null) {
   cache.userArea = area?.trim() || null;
+  write(cache);
+}
+
+export function getDisplayName(): string | null {
+  return cache.displayName;
+}
+
+export function setDisplayName(name: string | null) {
+  cache.displayName = name?.trim() || null;
   write(cache);
 }
 

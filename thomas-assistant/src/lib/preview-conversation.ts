@@ -2,7 +2,7 @@
 export const PREVIEW_CONVERSATION = [
   {
     role: "assistant" as const,
-    content: "Good evening, James. What shall we pour?",
+    content: "Good evening. What shall we pour?",
     timestamp: "2026-08-23T20:00:00.000Z",
   },
   {
