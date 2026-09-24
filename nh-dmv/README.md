@@ -17,7 +17,9 @@ Residents should understand what to do, whether it can be done online, what docu
 | `first-license.html` | First license journey |
 | `new-resident.html` | New resident guided plan |
 | `change-address.html` | Guided digital form |
-| `search.html` | Task-aware search |
+| `renew.html` | License renewal through receipt |
+| `registration.html` | Town-then-state registration |
+| `placard.html` | Walking disability placard application |
 | `dashboard.html` | Proactive attention board |
 | `branches.html` / `branch.html#concord` | Map + list / branch detail |
 | `fees.html` | Searchable fees by service |

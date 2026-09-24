@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d3557">
+  <title>Walking disability placard — NH DMV</title>
+  <base href="/nh-dmv/">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-meta">
+        <span>Mon–Fri · most offices 8:00–4:30</span>
+        <span>603-227-4000</span>
+        <span>15 branches statewide</span>
+      </div>
+    </div>
+  </div>
+  <header class="app-header">
+    <div class="header-top">
+      <a class="brand" href="index.html" aria-label="NH DMV home">
+        <span class="brand-mark">NH</span>
+        <span class="brand-text">
+          <span class="brand-name">NH DMV</span>
+          <span class="brand-sub">Division of Motor Vehicles</span>
+        </span>
+      </a>
+      <nav class="life-nav" id="life-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="license.html">License &amp; ID</a>
+        <a href="vehicle.html" aria-current="page">Vehicle</a>
+        <a href="records.html">Records</a>
+        <a href="appointments.html">Appointments</a>
+        <a href="branches.html">Branches</a>
+      </nav>
+      <div class="header-tools">
+        <a class="btn btn-primary btn-sm" href="appointments.html">Book appointment</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="life-nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="page page-narrow">
+    <header class="page-intro">
+      <h1>Walking disability placard</h1>
+      <p>Apply with a practitioner certification. Drop box or mail in production — finish here with a receipt in this portal.</p>
+    </header>
+
+    <form class="panel" id="placard-form">
+      <div class="field">
+        <label for="placard-name">Applicant name</label>
+        <input id="placard-name" required value="Alex Morgan">
+      </div>
+      <div class="field">
+        <label for="placard-email">Email</label>
+        <input id="placard-email" type="email" required value="alex.morgan@email.demo">
+      </div>
+      <div class="field">
+        <label for="placard-duration">Duration</label>
+        <select id="placard-duration" required>
+          <option value="temporary">Temporary</option>
+          <option value="permanent">Permanent</option>
+        </select>
+      </div>
+      <label class="check-item" style="margin:0.5rem 0 1rem">
+        <input id="placard-cert" type="checkbox" required checked>
+        <div>
+          <h3>Practitioner certification is complete</h3>
+          <p>A licensed practitioner has certified walking disability on the application.</p>
+        </div>
+      </label>
+      <button class="btn btn-primary" type="submit">Submit application</button>
+    </form>
+  </main>
+
+  <footer class="app-footer"></footer>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

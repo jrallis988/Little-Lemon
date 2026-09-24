@@ -546,6 +546,99 @@
       return;
     }
 
+    if (order?.kind === 'renewal' || order?.kind === 'duplicate') {
+      root.innerHTML = `
+        <div class="receipt" id="receipt">
+          <div class="receipt-banner">
+            <p class="section-kicker" style="color:var(--navy-mid)">${order.kind === 'duplicate' ? 'Duplicate credential' : 'License renewal'}</p>
+            <h1>Payment received</h1>
+            <p>Confirmation <strong>${order.confirmationId}</strong> · ${order.feeLabel}</p>
+          </div>
+          <div class="receipt-grid">
+            <div>
+              <h2>Credential</h2>
+              <div class="summary-row"><span>Type</span><span>${order.item}</span></div>
+              <div class="summary-row"><span>Number</span><span>${order.license}</span></div>
+              <div class="summary-row"><span>Name</span><span>${order.name}</span></div>
+              <div class="summary-row"><span>Amount</span><span>${order.feeLabel}</span></div>
+            </div>
+            <div>
+              <h2>What happens next</h2>
+              <div class="summary-row"><span>Mailing</span><span>Card mails to the address on file</span></div>
+              <div class="summary-row"><span>Current card</span><span>Keep using it until the new one arrives</span></div>
+            </div>
+          </div>
+          <div class="hero-actions" style="margin-top:1.25rem">
+            <button type="button" class="btn btn-primary" onclick="window.print()">Print receipt</button>
+            <a class="btn btn-navy" href="dashboard.html">Dashboard</a>
+            <a class="btn btn-secondary" href="license.html">License &amp; ID</a>
+          </div>
+        </div>`;
+      return;
+    }
+
+    if (order?.kind === 'registration') {
+      root.innerHTML = `
+        <div class="receipt" id="receipt">
+          <div class="receipt-banner">
+            <p class="section-kicker" style="color:var(--navy-mid)">Registration</p>
+            <h1>State portion complete</h1>
+            <p>Confirmation <strong>${order.confirmationId}</strong></p>
+          </div>
+          <div class="receipt-grid">
+            <div>
+              <h2>Vehicle</h2>
+              <div class="summary-row"><span>Plate</span><span>${order.plate}</span></div>
+              <div class="summary-row"><span>Town/city</span><span>${order.town}</span></div>
+              <div class="summary-row"><span>Municipal permit</span><span>Paid (you confirmed)</span></div>
+            </div>
+            <div>
+              <h2>Resident</h2>
+              <div class="summary-row"><span>Name</span><span>${order.name}</span></div>
+              <div class="summary-row"><span>Email</span><span>${order.email}</span></div>
+            </div>
+          </div>
+          <div class="result-box" style="margin-top:1.25rem">
+            <h3>Decal</h3>
+            <p>Display the new decal when it arrives. The DMV cannot finish registration if town/city permit fees are unpaid.</p>
+          </div>
+          <div class="hero-actions" style="margin-top:1.25rem">
+            <button type="button" class="btn btn-primary" onclick="window.print()">Print receipt</button>
+            <a class="btn btn-navy" href="vehicle.html">Vehicle hub</a>
+          </div>
+        </div>`;
+      return;
+    }
+
+    if (order?.kind === 'placard') {
+      root.innerHTML = `
+        <div class="receipt" id="receipt">
+          <div class="receipt-banner">
+            <p class="section-kicker" style="color:var(--navy-mid)">Walking disability placard</p>
+            <h1>Application received</h1>
+            <p>Confirmation <strong>${order.confirmationId}</strong></p>
+          </div>
+          <div class="receipt-grid">
+            <div>
+              <h2>Application</h2>
+              <div class="summary-row"><span>Applicant</span><span>${order.name}</span></div>
+              <div class="summary-row"><span>Duration</span><span>${order.duration}</span></div>
+              <div class="summary-row"><span>Certification</span><span>Practitioner certified</span></div>
+            </div>
+            <div>
+              <h2>Mailing</h2>
+              <div class="summary-row"><span>Email</span><span>${order.email}</span></div>
+              <div class="summary-row"><span>Next</span><span>Placard mails to the address on file</span></div>
+            </div>
+          </div>
+          <div class="hero-actions" style="margin-top:1.25rem">
+            <button type="button" class="btn btn-primary" onclick="window.print()">Print receipt</button>
+            <a class="btn btn-navy" href="vehicle.html">Vehicle hub</a>
+          </div>
+        </div>`;
+      return;
+    }
+
     if (!booking) {
       root.innerHTML = `
         <div class="empty-state is-visible" style="display:block">
@@ -835,27 +928,103 @@
             : 'Renew driver license';
     }
     const feeHint = $('#renew-fee-hint');
+    const feeAmt = type === 'non-driver' || type === 'duplicate' ? 20 : 50;
+    const feeLabel = type === 'duplicate' ? '$20.00' : type === 'non-driver' ? '$20.00' : 'Operator $50.00';
     if (feeHint) {
       feeHint.textContent =
         type === 'non-driver'
-          ? 'Official fee: $20.00'
+          ? 'Fee: $20.00'
           : type === 'duplicate'
-            ? 'Official fee: $20.00'
-            : 'Official fees: Operator $50.00 · REAL ID Operator $60.00';
+            ? 'Fee: $20.00'
+            : 'Operator $50.00 · choose REAL ID at the counter if you also need a federally compliant card ($60.00).';
     }
+    const blocked = $('#renew-blocked');
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const upgrade = $('#renew-option')?.value;
       if (upgrade === 'yes') {
-        window.location.href = 'real-id.html#from=renew';
+        window.location.href = 'checklist.html#intent=real-id';
         return;
       }
-      const panel = $('#renew-done');
-      if (panel) {
-        panel.hidden = false;
-        toast('Renewal request simulated — stayed on NH DMV concept');
-        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      const last = ($('#renew-last')?.value || '').trim();
+      const license = ($('#renew-license')?.value || '').trim().toUpperCase();
+      if (/suspend|ineligible|hold/i.test(last) || license === 'INELIGIBLE') {
+        form.hidden = true;
+        if (blocked) blocked.hidden = false;
+        return;
       }
+      const kind = type === 'duplicate' ? 'duplicate' : 'renewal';
+      const item =
+        type === 'duplicate' ? 'Duplicate license / ID' : type === 'non-driver' ? 'Non-driver ID renewal' : 'Operator license renewal';
+      sessionStorage.setItem(
+        ORDER_KEY,
+        JSON.stringify({
+          kind,
+          confirmationId: `NH${kind === 'duplicate' ? 'DUP' : 'REN'}-${Date.now().toString().slice(-6)}`,
+          item,
+          license,
+          name: last,
+          feeAmt,
+          feeLabel,
+          createdAt: new Date().toISOString()
+        })
+      );
+      setSignedIn(true);
+      location.href = 'confirmation.html';
+    });
+  }
+
+  function initRegistrationFlow() {
+    const form = $('#registration-form');
+    if (!form) return;
+    const blocked = $('#reg-town-needed');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!$('#reg-town-paid')?.checked) {
+        form.hidden = true;
+        if (blocked) blocked.hidden = false;
+        return;
+      }
+      sessionStorage.setItem(
+        ORDER_KEY,
+        JSON.stringify({
+          kind: 'registration',
+          confirmationId: `NHREG-${Date.now().toString().slice(-6)}`,
+          plate: $('#reg-plate')?.value.trim(),
+          town: $('#reg-town')?.value.trim(),
+          name: $('#reg-name')?.value.trim(),
+          email: $('#reg-email')?.value.trim(),
+          createdAt: new Date().toISOString()
+        })
+      );
+      setSignedIn(true);
+      location.href = 'confirmation.html';
+    });
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('[data-reg-retry]')) return;
+      if (blocked) blocked.hidden = true;
+      form.hidden = false;
+    });
+  }
+
+  function initPlacardFlow() {
+    const form = $('#placard-form');
+    if (!form) return;
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      sessionStorage.setItem(
+        ORDER_KEY,
+        JSON.stringify({
+          kind: 'placard',
+          confirmationId: `NHPLC-${Date.now().toString().slice(-6)}`,
+          name: $('#placard-name')?.value.trim(),
+          email: $('#placard-email')?.value.trim(),
+          duration: $('#placard-duration')?.selectedOptions[0]?.textContent || 'Temporary',
+          createdAt: new Date().toISOString()
+        })
+      );
+      setSignedIn(true);
+      location.href = 'confirmation.html';
     });
   }
 
@@ -1198,17 +1367,7 @@
     render(input.value);
   }
 
-  function initHeaderSearch() {
-    const tools = $('.header-tools');
-    if (!tools || $('#header-search-link')) return;
-    const link = document.createElement('a');
-    link.id = 'header-search-link';
-    link.className = 'btn btn-ghost btn-sm header-search-link';
-    link.href = 'search.html';
-    link.textContent = 'Search';
-    const book = tools.querySelector('.btn-primary');
-    tools.insertBefore(link, book || tools.firstChild);
-  }
+  function initHeaderSearch() {}
 
   function initBranchDetail() {
     const root = $('#branch-detail-root');
@@ -1727,7 +1886,7 @@
           'motorcycle.html'
         ]
       },
-      { href: 'vehicle.html', label: 'Vehicle', match: ['vehicle.html', 'america-250.html', 'plates.html', 'vanity.html'] },
+      { href: 'vehicle.html', label: 'Vehicle', match: ['vehicle.html', 'america-250.html', 'plates.html', 'vanity.html', 'registration.html', 'placard.html'] },
       { href: 'records.html', label: 'Records', match: ['records.html'] },
       { href: 'appointments.html', label: 'Appointments', match: ['appointments.html', 'confirmation.html'] },
       { href: 'branches.html', label: 'Branches', match: ['branches.html', 'branch.html', 'locations.html'] }
@@ -1765,30 +1924,6 @@
         if (h.match.includes(file)) a.setAttribute('aria-current', 'page');
         else a.removeAttribute('aria-current');
       });
-      if (!nav.querySelector('[data-nav-extra]')) {
-        nav.insertAdjacentHTML(
-          'beforeend',
-          `<a href="search.html" data-nav-extra>Search</a>
-           <a href="online.html" data-nav-extra>Online?</a>
-           <a href="checklist.html" data-nav-extra>Checklist</a>
-           <a href="fees.html" data-nav-extra>Fees</a>`
-        );
-      }
-      $$('a[data-nav-extra]', nav).forEach((a) => {
-        const hrefFile = (a.getAttribute('href') || '').split('?')[0];
-        if (hrefFile === file) a.setAttribute('aria-current', 'page');
-      });
-    }
-
-    const toolsEl = $('.header-tools');
-    if (toolsEl && !$('#header-online-link')) {
-      const online = document.createElement('a');
-      online.id = 'header-online-link';
-      online.className = 'btn btn-ghost btn-sm header-search-link';
-      online.href = 'online.html';
-      online.textContent = 'Online?';
-      const search = $('#header-search-link');
-      toolsEl.insertBefore(online, search || toolsEl.querySelector('.btn-primary') || toolsEl.firstChild);
     }
 
     const main = $('#main');
@@ -1800,9 +1935,9 @@
       strip.innerHTML = `
         <div class="portal-connect-inner">
           <div>
-            <p class="section-kicker">Stay in this portal</p>
-            <h2 class="portal-connect-title">Everything connects here</h2>
-            <p>No off-site forms hop. Pick any destination below — same NH DMV concept throughout.</p>
+            <p class="section-kicker">Also in this portal</p>
+            <h2 class="portal-connect-title">Related tasks</h2>
+            <p>Search, fees, and checklists stay here — not on a separate state subdomain.</p>
           </div>
           <div class="portal-connect-grid">
             <div>
@@ -1828,7 +1963,7 @@
         <div class="footer-inner footer-connected">
           <div>
             <div class="footer-brand">NH DMV</div>
-            <p>Digital service experience by Artistic Fountain. Demo only — all flows stay inside this portal.</p>
+            <p>Task-first NH DMV. Not an official State of New Hampshire website.</p>
             <div class="hero-actions" style="margin-top:0.85rem">
               <a class="btn btn-primary btn-sm" href="appointments.html">Book appointment</a>
               <a class="btn btn-secondary btn-sm" href="search.html">Search tasks</a>
@@ -1870,7 +2005,7 @@
         if (href.includes('licensing-fees') || href.includes('fees')) location.href = 'fees.html';
         else if (href.includes('hours') || href.includes('locations')) location.href = 'branches.html';
         else location.href = 'online.html';
-        toast('Opened the in-portal version — stayed on this site');
+        toast('Opened the matching page in this portal');
       },
       true
     );
@@ -1896,6 +2031,8 @@
   initReadinessChecklist();
   initRealIdChecker();
   initRenewal();
+  initRegistrationFlow();
+  initPlacardFlow();
   initRecordsActions();
   initMyRecords();
   initNotices();

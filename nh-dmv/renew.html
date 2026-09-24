@@ -51,14 +51,15 @@
   <main id="main" class="page page-narrow">
     <header class="page-intro">
       <h1 id="renew-title">Renew driver license</h1>
-      <p>Eligible renewals complete here. Need REAL ID at the same time? We’ll route you to the document checker instead of a dead end.</p>
-      <p id="renew-fee-hint" class="fee-callout">Official fees: Operator $50.00 · REAL ID Operator $60.00</p>
+      <p>Eligible renewals finish here with a receipt. Need REAL ID at the same time? We’ll send you to the document checklist instead.</p>
+      <p id="renew-fee-hint" class="fee-callout">Operator $50.00</p>
     </header>
 
     <form class="panel" id="renew-form">
       <div class="field">
         <label for="renew-license">License / ID number</label>
         <input id="renew-license" required value="NHL482193" autocomplete="off">
+        <p class="field-hint">Use INELIGIBLE as the number to see the blocked path.</p>
       </div>
       <div class="field">
         <label for="renew-dob">Date of birth</label>
@@ -72,21 +73,19 @@
         <label for="renew-option">Also upgrade to REAL ID?</label>
         <select id="renew-option">
           <option value="no">No — standard renewal</option>
-          <option value="yes">Yes — take me to REAL ID checklist</option>
+          <option value="yes">Yes — take me to the REAL ID checklist</option>
         </select>
       </div>
-      <button class="btn btn-primary" type="submit">Continue renewal</button>
+      <button class="btn btn-primary" type="submit">Pay and finish</button>
     </form>
 
-    <section class="panel" id="renew-done" hidden>
-      <h2>Renewal path ready (demo)</h2>
-      <p class="panel-lede">In production this would verify eligibility and collect payment inline. If you chose REAL ID, jump to the checker next.</p>
+    <section class="panel" id="renew-blocked" hidden>
+      <h2>This credential isn’t eligible to renew online</h2>
+      <p class="panel-lede">A hold, suspension, or required test means you need an appointment — not an online payment.</p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="dashboard.html">Return to dashboard</a>
-        <a class="btn btn-secondary" href="real-id.html">REAL ID checker</a>
-        <a class="btn btn-secondary" href="service.html#dl-renew">Service details</a>
-        <a class="btn btn-ghost" href="appointments.html">Book in-person instead</a>
-        <a class="btn btn-ghost" href="online.html">Can I do this online?</a>
+        <a class="btn btn-primary" href="appointments.html">Book appointment</a>
+        <a class="btn btn-secondary" href="checklist.html">What to bring</a>
+        <a class="btn btn-ghost" href="renew.html">Try a different number</a>
       </div>
     </section>
   </main>

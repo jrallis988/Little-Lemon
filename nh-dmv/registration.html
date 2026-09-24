@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d3557">
+  <title>Renew registration — NH DMV</title>
+  <base href="/nh-dmv/">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-meta">
+        <span>Mon–Fri · most offices 8:00–4:30</span>
+        <span>603-227-4000</span>
+        <span>15 branches statewide</span>
+      </div>
+    </div>
+  </div>
+  <header class="app-header">
+    <div class="header-top">
+      <a class="brand" href="index.html" aria-label="NH DMV home">
+        <span class="brand-mark">NH</span>
+        <span class="brand-text">
+          <span class="brand-name">NH DMV</span>
+          <span class="brand-sub">Division of Motor Vehicles</span>
+        </span>
+      </a>
+      <nav class="life-nav" id="life-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="license.html">License &amp; ID</a>
+        <a href="vehicle.html" aria-current="page">Vehicle</a>
+        <a href="records.html">Records</a>
+        <a href="appointments.html">Appointments</a>
+        <a href="branches.html">Branches</a>
+      </nav>
+      <div class="header-tools">
+        <a class="btn btn-primary btn-sm" href="appointments.html">Book appointment</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="life-nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="page page-narrow">
+    <header class="page-intro">
+      <h1>Renew vehicle registration</h1>
+      <p>Town/city permit fees first. The state portion cannot finish until those are paid.</p>
+    </header>
+
+    <form class="panel" id="registration-form">
+      <div class="field">
+        <label for="reg-plate">Plate number</label>
+        <input id="reg-plate" required value="NH 482-193">
+      </div>
+      <div class="field">
+        <label for="reg-town">Town or city</label>
+        <input id="reg-town" required value="Concord">
+      </div>
+      <div class="field">
+        <label for="reg-name">Name on registration</label>
+        <input id="reg-name" required value="Alex Morgan">
+      </div>
+      <div class="field">
+        <label for="reg-email">Email</label>
+        <input id="reg-email" type="email" required value="alex.morgan@email.demo">
+      </div>
+      <label class="check-item" style="margin:0.5rem 0 1rem">
+        <input id="reg-town-paid" type="checkbox">
+        <div>
+          <h3>I already paid town/city permit fees</h3>
+          <p>Leave this unchecked to see what happens if you skip municipal payment.</p>
+        </div>
+      </label>
+      <button class="btn btn-primary" type="submit">Finish state portion</button>
+    </form>
+
+    <section class="panel" id="reg-town-needed" hidden>
+      <h2>Pay your town or city first</h2>
+      <p class="panel-lede">New Hampshire collects municipal permit fees before the DMV can complete the state portion. Return here after that payment.</p>
+      <div class="hero-actions">
+        <button type="button" class="btn btn-primary" data-reg-retry>I paid — continue</button>
+        <a class="btn btn-secondary" href="fees.html">What will this cost?</a>
+        <a class="btn btn-ghost" href="vehicle.html">Vehicle hub</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer"></footer>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
