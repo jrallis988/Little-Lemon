@@ -31,7 +31,7 @@ export function FeaturedReleases({ books }: FeaturedReleasesProps) {
             </div>
           )}
 
-          <ul className="grid gap-8 sm:grid-cols-2">
+          <ul className="stagger-in grid gap-8 sm:grid-cols-2">
             {rest.map((book) => (
               <li key={book.slug}>
                 <BookCard book={book} />

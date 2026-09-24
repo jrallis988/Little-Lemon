@@ -55,8 +55,11 @@ export function NewsletterSignup() {
           )}
 
           <p className="mt-4 text-xs text-ink-muted">
-            Three editions this fall: September, October, and November.{" "}
-            <a href="/newsletter" className="text-burgundy underline-offset-2 hover:underline">
+            Demo signup — no email is stored. Three editions this fall:{" "}
+            <a
+              href="/newsletter"
+              className="text-burgundy underline-offset-2 hover:underline"
+            >
               View past editions
             </a>
           </p>

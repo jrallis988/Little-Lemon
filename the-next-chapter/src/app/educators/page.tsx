@@ -187,12 +187,12 @@ export default function EducatorsPage() {
                     <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-muted">
                       {resource.description}
                     </p>
-                    <button
-                      type="button"
+                    <a
+                      href="/resources/sample"
                       className="mt-4 self-start font-display text-xs font-bold uppercase tracking-wider text-burgundy underline-offset-2 hover:underline"
                     >
-                      Download PDF
-                    </button>
+                      View / Print Sample
+                    </a>
                   </article>
                 </li>
               );

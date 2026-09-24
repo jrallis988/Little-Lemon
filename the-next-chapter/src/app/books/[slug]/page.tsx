@@ -118,21 +118,29 @@ export default async function BookPage({ params }: BookPageProps) {
               </dl>
 
               <div className="mt-6">
-                <dt className="font-display text-[0.65rem] font-bold uppercase tracking-wider text-ink-muted">
+                <p className="font-display text-[0.65rem] font-bold uppercase tracking-wider text-ink-muted">
                   Available Formats
-                </dt>
-                <dd className="mt-2 flex flex-wrap gap-2">
+                </p>
+                <div className="mt-2 flex flex-wrap gap-2">
                   {book.formats.map((format) => (
                     <Tag key={format}>{format}</Tag>
                   ))}
-                </dd>
+                </div>
               </div>
 
               <div className="mt-10 flex flex-wrap gap-4">
-                <Button href="#" variant="primary" size="lg">
+                <Button
+                  href={`https://www.indiebound.org/search/book?keys=${encodeURIComponent(book.title)}`}
+                  variant="primary"
+                  size="lg"
+                >
                   Find at a Bookstore
                 </Button>
-                <Button href="#" variant="outline" size="lg">
+                <Button
+                  href={`https://www.worldcat.org/search?q=bn:${book.isbn.replace(/-/g, "")}`}
+                  variant="outline"
+                  size="lg"
+                >
                   Request at Your Library
                 </Button>
               </div>
@@ -253,12 +261,12 @@ export default async function BookPage({ params }: BookPageProps) {
                   <p className="mt-2 text-sm leading-relaxed text-ink-muted">
                     {resource.description}
                   </p>
-                  <button
-                    type="button"
+                  <a
+                    href="/resources/sample"
                     className="mt-4 font-display text-xs font-bold uppercase tracking-wider text-burgundy underline-offset-2 hover:underline"
                   >
-                    Download PDF
-                  </button>
+                    View / Print Sample
+                  </a>
                 </li>
               ))}
             </ul>

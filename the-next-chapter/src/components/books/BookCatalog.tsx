@@ -194,7 +194,7 @@ export function BookCatalog({ books }: BookCatalogProps) {
               </button>
             </div>
           ) : (
-            <ul className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-3">
+            <ul className="stagger-in grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-3">
               {filteredBooks.map((book) => (
                 <li key={book.slug}>
                   <BookCard book={book} />

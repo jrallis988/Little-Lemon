@@ -31,6 +31,7 @@ export function Footer() {
                 { href: "/fall-reading-week", label: "Fall Reading Week" },
                 { href: "/educators", label: "Educators & Librarians" },
                 { href: "/newsletter", label: "Newsletter" },
+                { href: "/campaign", label: "Campaign System" },
               ].map((link) => (
                 <li key={link.href}>
                   <Link
@@ -46,34 +47,44 @@ export function Footer() {
 
           <div>
             <h2 className="font-display text-xs font-bold uppercase tracking-wider text-amber">
-              Connect
+              For Portfolio
             </h2>
             <ul className="mt-4 space-y-2 text-sm text-cream/70">
               <li>
-                <a href="#" className="transition-colors hover:text-cream">
-                  Instagram
-                </a>
+                <Link
+                  href="/campaign"
+                  className="transition-colors hover:text-cream"
+                >
+                  Case Study & Ecosystem
+                </Link>
               </li>
               <li>
-                <a href="#" className="transition-colors hover:text-cream">
-                  Facebook
-                </a>
+                <Link
+                  href="/resources/sample"
+                  className="transition-colors hover:text-cream"
+                >
+                  Sample Print Resource
+                </Link>
               </li>
               <li>
-                <a href="#" className="transition-colors hover:text-cream">
-                  Contact
-                </a>
+                <Link
+                  href="/newsletter/october-2026"
+                  className="transition-colors hover:text-cream"
+                >
+                  October Newsletter
+                </Link>
               </li>
             </ul>
             <p className="mt-6 text-xs text-cream/50">
-              © 2026 {campaign.publisher}. All rights reserved.
+              © 2026 {campaign.publisher}. Fictional campaign demonstration.
             </p>
           </div>
         </div>
 
         <div className="editorial-rule mt-10 opacity-30" aria-hidden="true" />
         <p className="mt-6 text-center text-xs text-cream/40">
-          This is a fictional campaign created as a portfolio demonstration.
+          Designed as the digital center of an integrated Fall 2026 publishing
+          campaign — not a permanent bookstore.
         </p>
       </div>
     </footer>

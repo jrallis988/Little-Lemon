@@ -33,20 +33,22 @@
 }
 
 :root {
-  --cream: #f5f0e8;
-  --cream-dark: #ebe4d8;
-  --ink: #1a1612;
-  --ink-muted: #4a4540;
+  /* Cooler parchment — less warm-cream AI default */
+  --cream: #ece8e1;
+  --cream-dark: #e0dbd2;
+  --ink: #161310;
+  --ink-muted: #4a453f;
   --burgundy: #6b2d3c;
-  --burgundy-dark: #4f1f2a;
-  --forest: #2d4a3e;
-  --forest-light: #3d6354;
-  --amber: #c4853a;
-  --amber-light: #d9a05a;
-  --rust: #8b4513;
-  --sage: #7a8b6f;
-  --paper: #faf7f2;
-  --line: #d4cdc2;
+  --burgundy-dark: #4a1e29;
+  --forest: #243d32;
+  --forest-light: #355647;
+  /* Brass leaf instead of terracotta */
+  --amber: #b8923a;
+  --amber-light: #d0ad58;
+  --rust: #7a4e28;
+  --sage: #6f8268;
+  --paper: #f7f4ef;
+  --line: #cfc8bc;
 }
 
 @theme inline {
@@ -66,7 +68,7 @@
   --color-line: var(--line);
   --font-display: "Arcanite Slab", Georgia, serif;
   --font-accent: "Goudy Heavyface", Georgia, serif;
-  --font-body: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-body: var(--font-source-serif), "Source Serif 4", Georgia, serif;
 }
 
 @layer base {
@@ -142,8 +144,66 @@
     content: "";
     position: absolute;
     inset: 0;
-    opacity: 0.035;
+    opacity: 0.04;
     pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  }
+
+  .animate-rise {
+    animation: rise 0.8s ease-out both;
+  }
+
+  .animate-rise-delay {
+    animation: rise 0.9s ease-out 0.15s both;
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.6s ease-out both;
+  }
+
+  .stagger-in > * {
+    animation: rise 0.55s ease-out both;
+  }
+
+  .stagger-in > *:nth-child(1) { animation-delay: 0.05s; }
+  .stagger-in > *:nth-child(2) { animation-delay: 0.1s; }
+  .stagger-in > *:nth-child(3) { animation-delay: 0.15s; }
+  .stagger-in > *:nth-child(4) { animation-delay: 0.2s; }
+  .stagger-in > *:nth-child(5) { animation-delay: 0.25s; }
+  .stagger-in > *:nth-child(6) { animation-delay: 0.3s; }
+  .stagger-in > *:nth-child(7) { animation-delay: 0.35s; }
+  .stagger-in > *:nth-child(8) { animation-delay: 0.4s; }
+
+  .book-cover:hover {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-rise,
+  .animate-rise-delay,
+  .animate-fade-in,
+  .stagger-in > * {
+    animation: none;
+  }
+
+  .book-cover:hover {
+    transform: none;
   }
 }

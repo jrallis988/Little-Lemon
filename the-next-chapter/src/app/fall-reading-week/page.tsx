@@ -218,39 +218,51 @@ export default function FallReadingWeekPage() {
                 title={fallReadingWeek.readingGuide.title}
                 description={fallReadingWeek.readingGuide.description}
               />
-              <Button variant="primary" size="lg" className="mt-8" href="#">
-                Download Family Guide PDF
+              <Button
+                variant="primary"
+                size="lg"
+                className="mt-8"
+                href="/resources/sample"
+              >
+                View Family Guide Sample
               </Button>
             </div>
             <div className="border border-line bg-paper p-8 text-center">
-              <div
-                className="mx-auto flex h-32 w-32 items-center justify-center border-2 border-dashed border-ink/30 bg-cream"
-                aria-hidden="true"
+              <a
+                href="/fall-reading-week"
+                className="mx-auto flex h-36 w-36 flex-col items-center justify-center border-2 border-ink/20 bg-cream transition-colors hover:border-burgundy"
+                aria-label="QR target — this Fall Reading Week page"
               >
                 <svg
                   viewBox="0 0 100 100"
                   className="h-24 w-24 text-ink"
                   fill="currentColor"
+                  aria-hidden="true"
                 >
-                  <rect x="10" y="10" width="25" height="25" />
-                  <rect x="65" y="10" width="25" height="25" />
-                  <rect x="10" y="65" width="25" height="25" />
-                  <rect x="40" y="40" width="8" height="8" />
-                  <rect x="52" y="40" width="8" height="8" />
-                  <rect x="40" y="52" width="8" height="8" />
-                  <rect x="65" y="52" width="8" height="8" />
-                  <rect x="52" y="65" width="8" height="8" />
-                  <rect x="65" y="65" width="25" height="8" />
-                  <rect x="82" y="73" width="8" height="17" />
+                  <rect x="8" y="8" width="28" height="28" />
+                  <rect x="14" y="14" width="16" height="16" fill="#ece8e1" />
+                  <rect x="18" y="18" width="8" height="8" />
+                  <rect x="64" y="8" width="28" height="28" />
+                  <rect x="70" y="14" width="16" height="16" fill="#ece8e1" />
+                  <rect x="74" y="18" width="8" height="8" />
+                  <rect x="8" y="64" width="28" height="28" />
+                  <rect x="14" y="70" width="16" height="16" fill="#ece8e1" />
+                  <rect x="18" y="74" width="8" height="8" />
+                  <rect x="48" y="48" width="8" height="8" />
+                  <rect x="60" y="48" width="8" height="8" />
+                  <rect x="48" y="60" width="8" height="8" />
+                  <rect x="72" y="60" width="8" height="8" />
+                  <rect x="60" y="72" width="8" height="8" />
+                  <rect x="72" y="72" width="20" height="8" />
+                  <rect x="84" y="80" width="8" height="12" />
                 </svg>
-              </div>
+              </a>
               <p className="mt-4 font-display text-xs font-bold uppercase tracking-wider text-ink">
-                Scan to join Fall Reading Week
+                Lands on this page
               </p>
               <p className="mt-2 text-sm text-ink-muted">
-                Print materials — posters, bookmarks, shelf talkers — use QR
-                codes that land on this page, connecting physical promotion to
-                digital discovery.
+                Posters, bookmarks, and shelf talkers use QR codes that open Fall
+                Reading Week — bridging print promotion to digital discovery.
               </p>
             </div>
           </div>

@@ -2,7 +2,7 @@
 
 **Fall 2026 Children's & Middle-Grade Reading Campaign**
 
-A polished, responsive digital publishing experience built as the seasonal marketing platform for Harborlight Press's Fall 2026 collection.
+A polished, responsive digital publishing experience — the seasonal marketing platform for Harborlight Press's Fall 2026 collection.
 
 ## Campaign
 
@@ -10,30 +10,19 @@ A polished, responsive digital publishing experience built as the seasonal marke
 - **Tagline:** Fall Into Your Next Story.
 - **Season:** Fall 2026
 
-## Phase 1 (Current)
+## What's built
 
-- Project architecture (Next.js, React, TypeScript, Tailwind CSS)
-- Global navigation and footer
-- Typography and color design system
-- Structured data model for 8 books
-- Homepage with all required sections
-- Fall Books catalog with working filters and search
-- Complete book detail pages (dynamic route)
-- Responsive layout across breakpoints
-
-## Phase 2 (Current)
-
-- Find Their Next Book recommendation flow (metadata-scored)
-- Fall Reading Week event landing page
-- Educator & Library Hub with downloadable resource placeholders
-- Newsletter archive + three seasonal editions (reusable modules)
-
-## Phase 3 (Planned)
-
-- Final book cover artwork
-- Print application concepts
-- Case study / campaign ecosystem page
-- Motion refinements
+- Editorial design system (Arcanite Slab, Goudy Heavyface, Source Serif 4)
+- Illustrated cover system for 8 titles
+- Homepage with cover-stack hero and seasonal sections
+- Filterable Fall Books catalog
+- Full book detail pages (bookstore + library CTAs)
+- Find Their Next Book recommendation quiz
+- Fall Reading Week event landing
+- Educator & Library Hub + printable sample resource
+- Newsletter archive (Sept / Oct / Nov) with reusable modules
+- Campaign case study page (strategy, identity, ecosystem, print apps)
+- Motion, active nav, reduced-motion support
 
 ## Develop
 
@@ -41,15 +30,6 @@ A polished, responsive digital publishing experience built as the seasonal marke
 cd the-next-chapter
 npm install
 npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000).
-
-## Build
-
-```bash
-npm run build
-npm start
 ```
 
 ## Routes
@@ -64,11 +44,9 @@ npm start
 | `/educators` | Educator & library resources |
 | `/newsletter` | Newsletter archive |
 | `/newsletter/[issue]` | Individual newsletter edition |
+| `/campaign` | Case study & campaign system |
+| `/resources/sample` | Printable sample guide |
 
 ## Stack
 
-- Next.js 16 (App Router)
-- React 19
-- TypeScript
-- Tailwind CSS v4
-- Custom fonts: Arcanite Slab, Goudy Heavyface, Source Serif 4
+Next.js 16 · React 19 · TypeScript · Tailwind CSS v4

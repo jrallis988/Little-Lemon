@@ -17,7 +17,8 @@ const variantClasses: Record<ButtonVariant, string> = {
     "bg-forest text-cream hover:bg-forest-light border border-forest",
   outline:
     "bg-transparent text-ink border border-ink hover:bg-ink hover:text-cream",
-  ghost: "bg-transparent text-ink hover:text-burgundy border border-transparent",
+  ghost:
+    "bg-transparent text-ink hover:text-burgundy border border-transparent",
 };
 
 const sizeClasses: Record<ButtonSize, string> = {
@@ -38,6 +39,20 @@ export function Button({
   const classes = `inline-flex items-center justify-center font-display font-bold uppercase tracking-wider transition-colors ${variantClasses[variant]} ${sizeClasses[size]} ${className} ${disabled ? "pointer-events-none opacity-40" : ""}`;
 
   if (href) {
+    const external = href.startsWith("http");
+    if (external) {
+      return (
+        <a
+          href={href}
+          className={classes}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-disabled={disabled}
+        >
+          {children}
+        </a>
+      );
+    }
     return (
       <Link href={href} className={classes} aria-disabled={disabled}>
         {children}

@@ -20,6 +20,18 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.svg",
   },
+  openGraph: {
+    title: `${campaign.name} — ${campaign.season}`,
+    description: `${campaign.tagline} Eight new stories for readers ages 7–14 from ${campaign.publisher}.`,
+    type: "website",
+    locale: "en_US",
+    siteName: campaign.name,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${campaign.name} — ${campaign.season}`,
+    description: campaign.tagline,
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

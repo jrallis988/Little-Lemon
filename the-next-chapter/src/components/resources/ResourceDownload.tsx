@@ -3,6 +3,7 @@ interface ResourceDownloadProps {
   description: string;
   type: string;
   meta?: string;
+  href?: string;
 }
 
 export function ResourceDownload({
@@ -10,6 +11,7 @@ export function ResourceDownload({
   description,
   type,
   meta,
+  href = "/resources/sample",
 }: ResourceDownloadProps) {
   return (
     <article className="flex flex-col border border-line bg-paper p-6">
@@ -27,13 +29,12 @@ export function ResourceDownload({
       <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-muted">
         {description}
       </p>
-      <button
-        type="button"
+      <a
+        href={href}
         className="mt-4 self-start font-display text-xs font-bold uppercase tracking-wider text-burgundy underline-offset-2 hover:underline"
-        aria-label={`Download ${title} PDF (placeholder)`}
       >
-        Download PDF
-      </button>
+        View / Print Sample
+      </a>
     </article>
   );
 }

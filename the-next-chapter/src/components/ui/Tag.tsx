@@ -1,6 +1,7 @@
 interface TagProps {
   children: React.ReactNode;
   variant?: "default" | "burgundy" | "forest" | "amber";
+  className?: string;
 }
 
 const variants = {
@@ -10,10 +11,10 @@ const variants = {
   amber: "bg-amber/15 text-rust border-amber/30",
 };
 
-export function Tag({ children, variant = "default" }: TagProps) {
+export function Tag({ children, variant = "default", className = "" }: TagProps) {
   return (
     <span
-      className={`inline-block border px-2.5 py-0.5 font-display text-[0.65rem] font-bold uppercase tracking-wider ${variants[variant]}`}
+      className={`inline-block border px-2.5 py-0.5 font-display text-[0.65rem] font-bold uppercase tracking-wider ${variants[variant]} ${className}`}
     >
       {children}
     </span>
