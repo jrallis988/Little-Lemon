@@ -42,7 +42,7 @@
                 <li><a href="services/index.html">Services</a></li>
                 <li><a href="portfolio.html">Portfolio</a></li>
                 <li><a href="blog/index.html">Blog</a></li>
-                <li><a href="resume.pdf" class="nav-resume" download="James-Rallis-Resume.pdf">Resume</a></li>
+                <li><a href="resume.html" class="nav-resume">Resume</a></li>
             </ul>
         </nav>
         <div class="header-right">
@@ -65,7 +65,8 @@
             </h1>
             <p class="hero-offer">Strategic design for ambitious brands — visual identities and digital experiences built to ship.</p>
             <div class="hero-actions">
-                <a href="portfolio.html" id="hero-btn" class="cta-btn">View Work</a>
+                <a href="#portfolio" id="hero-btn" class="cta-btn">View Work</a>
+                <a href="#contact-form" class="cta-btn cta-btn--ghost">Start a project</a>
             </div>
         </div>
     </section>
@@ -123,6 +124,55 @@
         </div>
     </section>
 
+    <!-- Portfolio -->
+    <section class="portfolio" id="portfolio">
+        <div class="portfolio-wrapper">
+            <h2>Selected work</h2>
+            <p class="portfolio-lead">Two studio projects and two labeled concepts — click any card for the case study.</p>
+            <div class="portfolio-grid">
+                <a class="portfolio-card" href="work/flote.html">
+                    <div class="portfolio-image portfolio-image--flote"><span class="portfolio-image-label">Seacoast Flōte</span></div>
+                    <div class="portfolio-info">
+                        <p class="portfolio-category">UX</p>
+                        <h3>Seacoast Flōte</h3>
+                        <p class="portfolio-desc">Full identity and booking experience for a Portsmouth &amp; Hampton float therapy studio. WCAG 2.1 AAA accessibility system with kid-friendly content variants.</p>
+                        <p class="portfolio-more">View case study →</p>
+                    </div>
+                </a>
+                <a class="portfolio-card" href="work/hannaford.html">
+                    <div class="portfolio-image portfolio-image--hannaford"><span class="portfolio-image-label">Hannaford</span></div>
+                    <div class="portfolio-info">
+                        <p class="portfolio-category">Digital <span class="portfolio-flag">Concept</span></p>
+                        <h3>Hannaford: Checkout-First</h3>
+                        <p class="portfolio-desc">Grocery app strategy pitch reframing the shopping experience around a concierge model. Fresh Pass paid tier concept, delivered as a production-ready HTML pitch site.</p>
+                        <p class="portfolio-more">View case study →</p>
+                    </div>
+                </a>
+                <a class="portfolio-card" href="work/nhti.html">
+                    <div class="portfolio-image portfolio-image--nhti"><span class="portfolio-image-label">NHTI</span></div>
+                    <div class="portfolio-info">
+                        <p class="portfolio-category">Web</p>
+                        <h3>NHTI Identity Restoration</h3>
+                        <p class="portfolio-desc">Editorial redesign for NH's community college. Restored the Lynx identity and connected the 1965 motto <em>Scientia cum manu</em> to the modern tagline in a maroon &amp; gold system.</p>
+                        <p class="portfolio-more">View case study →</p>
+                    </div>
+                </a>
+                <a class="portfolio-card" href="work/aveeno.html">
+                    <div class="portfolio-image portfolio-image--aveeno"><span class="portfolio-image-label">Aveeno</span></div>
+                    <div class="portfolio-info">
+                        <p class="portfolio-category">Social Media Marketing <span class="portfolio-flag">Concept</span></p>
+                        <h3>Aveeno: The Oat Standard</h3>
+                        <p class="portfolio-desc">Brand campaign concept positioning Aveeno's oat heritage as a category standard — art direction, social templates, and a campaign site.</p>
+                        <p class="portfolio-more">View case study →</p>
+                    </div>
+                </a>
+            </div>
+            <div class="portfolio-cta">
+                <a href="portfolio.html" id="portfolio-btn" class="cta-btn">View Full Portfolio</a>
+            </div>
+        </div>
+    </section>
+
     <!-- About -->
     <section class="about" id="about">
         <div class="about-wrapper">
@@ -133,14 +183,29 @@
                 </div>
                 <div class="about-content">
                     <p>I'm <strong>James</strong>, a New Hampshire designer running Artistic Fountain as a one-person studio.</p>
-                    <p>I work across brand systems, product strategy, and full-stack web — from institutional identity work like <strong>NHTI</strong> and <strong>Great Bay</strong>, to speculative rebrands for consumer brands, to production HTML for launch-ready sites.</p>
+                    <p>I work across brand systems, UX, and visual identity — from institutional work like <strong>NHTI</strong> and <strong>Great Bay</strong>, to clearly labeled concept pitches, to launch-ready websites.</p>
                     <p>My work is defined by <strong>strategic depth over surface polish</strong>. Every project starts with the problem, not the palette. If you're building something and want a designer who ships, not just decks, let's talk.</p>
                     <div class="about-actions">
-                        <a href="resume.pdf" id="designer-resume-btn" class="cta-btn" download="James-Rallis-Resume.pdf">Download Résumé</a>
+                        <a href="resume.html" class="cta-btn">View Résumé</a>
                         <a href="designer.html" class="cta-btn cta-btn--soft">About the Designer</a>
                     </div>
                 </div>
             </div>
+
+            <!--
+                CERTIFICATIONS — hidden until real credentials are added.
+                Restore this block and replace the list items with name / issuer · year.
+            <div class="about-certifications" id="certifications">
+                <h3>Certifications</h3>
+                <p class="about-certifications-lead">Professional credentials that back the craft.</p>
+                <ul class="certifications-list">
+                    <li>
+                        <span class="cert-name">Certification Name</span>
+                        <span class="cert-meta">Issuer · Year</span>
+                    </li>
+                </ul>
+            </div>
+            -->
         </div>
     </section>
 
@@ -153,93 +218,95 @@
             <div class="process-steps">
                 <div class="process-step">
                     <div class="step-number">01</div>
-                    <h4>Discovery & Strategy</h4>
-                    <p>I begin by understanding your brand, audience, and market position. Through deep market research, competitive analysis, and customer discovery, I build the strategic foundation for every design decision. No assumptions—just informed strategy grounded in real data.</p>
+                    <h4>Discovery</h4>
+                    <p>Brand, audience, and constraints first. Research shapes the brief so design decisions have a reason.</p>
                 </div>
-
                 <div class="process-step">
                     <div class="step-number">02</div>
-                    <h4>Concept & Creation</h4>
-                    <p>With strategy in place, I create visual identities, design systems, and digital experiences. This includes everything from typography and color theory to wireframes, 3D modeling, AI-enhanced assets, and interactive prototypes. Every element is intentional and aligned with your brand goals.</p>
+                    <h4>Concept</h4>
+                    <p>Identity, systems, and flows — type, color, wireframes, motion — aligned to the brief, not the trend.</p>
                 </div>
-
                 <div class="process-step">
                     <div class="step-number">03</div>
-                    <h4>Technical Execution</h4>
-                    <p>I deliver production-ready assets and full-stack web development solutions. From React and responsive design to backend infrastructure, I ensure your concepts translate flawlessly into code. Your designs don't just look beautiful—they perform.</p>
+                    <h4>Make</h4>
+                    <p>Production-ready files and launch-ready web design. What you see is what ships.</p>
                 </div>
-
                 <div class="process-step">
                     <div class="step-number">04</div>
-                    <h4>Optimization & Launch</h4>
-                    <p>Post-launch, I implement analytics, run A/B testing, and track KPIs to optimize performance. I refine based on real user data, ensuring your design continues to deliver results. Continuous improvement is built into every project.</p>
+                    <h4>Launch</h4>
+                    <p>Handoff, QA, and support through go-live so the work holds up in the real world.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Capabilities -->
-    <section class="capabilities" id="capabilities">
-        <div class="capabilities-wrapper">
-            <h2>Capabilities</h2>
-            <p class="capabilities-lead">One studio across brand systems, product strategy, and full-stack delivery.</p>
-            <div class="capabilities-grid">
-                <div class="capability">
-                    <h3>Creative Direction</h3>
-                    <p>Brand systems, art direction, motion, and production assets — Adobe suite, Figma, Blender, and AI-assisted pipelines.</p>
+    <!-- Services -->
+    <section class="services" id="services">
+        <div class="services-wrapper">
+            <h2>Services</h2>
+            <p class="services-lead">Focused offerings for brands that need strategy and shipping power in one studio.</p>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Brand &amp; Graphic Design</h3>
+                    <p>Graphic design, identity systems, and art direction that define who you are — from digital to print.</p>
+                    <div class="service-card-tools" aria-label="Toolkit">
+                        <img src="images/tools/photoshop.svg" alt="Adobe Photoshop" title="Adobe Photoshop" width="28" height="28">
+                        <img src="images/tools/illustrator.svg" alt="Adobe Illustrator" title="Adobe Illustrator" width="28" height="28">
+                        <img src="images/tools/indesign.svg" alt="Adobe InDesign" title="Adobe InDesign" width="28" height="28">
+                        <img src="images/tools/dimension.svg" alt="Adobe Dimension" title="Adobe Dimension" width="28" height="28">
+                    </div>
+                    <a href="services/brand-strategy.html" class="service-learn-more">Learn More</a>
                 </div>
-                <div class="capability">
-                    <h3>Full-Stack Web</h3>
-                    <p>Production HTML/CSS/JS, React, and launch-ready sites with accessibility and performance built in.</p>
+                <div class="service-card">
+                    <h3>UI/UX Design</h3>
+                    <p>Product interfaces and user experiences built for clarity, conversion, and ease of use.</p>
+                    <div class="service-card-tools" aria-label="Toolkit">
+                        <img src="images/tools/figma.svg" alt="Figma" title="Figma" width="28" height="28">
+                        <img src="images/tools/builder.svg" alt="Builder.io" title="Builder.io" width="28" height="28">
+                        <img src="images/tools/webflow.svg" alt="Webflow" title="Webflow" width="28" height="28">
+                    </div>
+                    <a href="services/digital-design.html" class="service-learn-more">Learn More</a>
                 </div>
-                <div class="capability">
-                    <h3>Strategy &amp; Analytics</h3>
-                    <p>Positioning, campaign design, and measurement — from discovery through post-launch optimization.</p>
+                <div class="service-card">
+                    <h3>Web Design</h3>
+                    <p>Launch-ready websites designed and built to perform — clear structure, strong brand, real code.</p>
+                    <div class="service-card-tools" aria-label="Toolkit">
+                        <img src="images/tools/cursor.svg" alt="Cursor" title="Cursor" width="28" height="28">
+                        <img src="images/tools/react.svg" alt="HTML / CSS / React.js" title="HTML / CSS / React.js" width="28" height="28">
+                    </div>
+                    <a href="services/web-design.html" class="service-learn-more">Learn More</a>
+                </div>
+                <div class="service-card">
+                    <h3>Animation</h3>
+                    <p>2D character animation, motion graphics, storyboarding, and full production from concept to final delivery.</p>
+                    <div class="service-card-tools" aria-label="Toolkit">
+                        <img src="images/tools/after-effects.svg" alt="Adobe After Effects" title="Adobe After Effects" width="28" height="28">
+                        <img src="images/tools/premiere.svg" alt="Adobe Premiere Pro" title="Adobe Premiere Pro" width="28" height="28">
+                        <img src="images/tools/toonboom-harmony.svg" alt="Toon Boom Harmony" title="Toon Boom Harmony" width="28" height="28">
+                        <img src="images/tools/storyboard-pro.svg" alt="Storyboard Pro" title="Storyboard Pro" width="28" height="28">
+                    </div>
+                    <a href="services/animation.html" class="service-learn-more">Learn More</a>
+                </div>
+                <div class="service-card">
+                    <h3>Package Design</h3>
+                    <p>Shelf-ready packaging that communicates the brand story at a glance.</p>
+                    <div class="service-card-tools" aria-label="Toolkit">
+                        <img src="images/tools/dimension.svg" alt="Adobe Dimension" title="Adobe Dimension" width="28" height="28">
+                        <img src="images/tools/illustrator.svg" alt="Adobe Illustrator" title="Adobe Illustrator" width="28" height="28">
+                    </div>
+                    <a href="services/package-design.html" class="service-learn-more">Learn More</a>
+                </div>
+                <div class="service-card">
+                    <h3>Social Media Marketing</h3>
+                    <p>Content strategy and campaign design that turns attention into customers.</p>
+                    <div class="service-card-tools" aria-label="Toolkit">
+                        <img src="images/tools/blaze-ai.svg" alt="Blaze AI" title="Blaze AI" width="28" height="28">
+                    </div>
+                    <a href="services/social-media.html" class="service-learn-more">Learn More</a>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Portfolio -->
-    <section class="portfolio" id="portfolio">
-        <div class="portfolio-wrapper">
-            <h2>Portfolio</h2>
-            <div class="portfolio-grid">
-                <div class="portfolio-card">
-                    <div class="portfolio-image portfolio-image--flote"><span class="portfolio-image-label">Seacoast Flōte</span></div>
-                    <div class="portfolio-info">
-                        <p class="portfolio-category">UX</p>
-                        <h3>Seacoast Flōte</h3>
-                        <p class="portfolio-desc">Full identity and booking experience for a Portsmouth &amp; Hampton float therapy studio. WCAG 2.1 AAA accessibility system with kid-friendly content variants.</p>
-                    </div>
-                </div>
-                <div class="portfolio-card">
-                    <div class="portfolio-image portfolio-image--hannaford"><span class="portfolio-image-label">Hannaford</span></div>
-                    <div class="portfolio-info">
-                        <p class="portfolio-category">Digital</p>
-                        <h3>Hannaford: Checkout-First</h3>
-                        <p class="portfolio-desc">Grocery app strategy pitch reframing the shopping experience around a concierge model. Fresh Pass paid tier concept, delivered as a production-ready HTML pitch site.</p>
-                    </div>
-                </div>
-                <div class="portfolio-card">
-                    <div class="portfolio-image portfolio-image--nhti"><span class="portfolio-image-label">NHTI</span></div>
-                    <div class="portfolio-info">
-                        <p class="portfolio-category">Web</p>
-                        <h3>NHTI Identity Restoration</h3>
-                        <p class="portfolio-desc">Editorial redesign for NH's community college. Restored the Lynx identity and connected the 1965 motto <em>Scientia cum manu</em> to the modern tagline in a maroon &amp; gold system.</p>
-                    </div>
-                </div>
-                <div class="portfolio-card">
-                    <div class="portfolio-image portfolio-image--aveeno"><span class="portfolio-image-label">Aveeno</span></div>
-                    <div class="portfolio-info">
-                        <p class="portfolio-category">Social Media Marketing</p>
-                        <h3>Aveeno: The Oat Standard</h3>
-                        <p class="portfolio-desc">Brand campaign concept positioning Aveeno's oat heritage as a category standard. Built on a Next.js 15 scaffold with typed data libraries for scaled content deployment.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="portfolio-cta">
-                <a href="portfolio.html" id="portfolio-btn" class="cta-btn">View Full Portfolio</a>
+            <div class="services-cta">
+                <a href="services/index.html" id="services-btn" class="cta-btn">View All Services</a>
             </div>
         </div>
     </section>
@@ -284,73 +351,6 @@
         </div>
     </section>
 
-    <!-- Services -->
-    <section class="services" id="services">
-        <div class="services-wrapper">
-            <h2>Services</h2>
-            <p class="services-lead">Focused offerings for brands that need strategy and shipping power in one studio.</p>
-            <div class="services-grid">
-                <div class="service-card">
-                    <h3>Brand &amp; Graphic Design</h3>
-                    <p>Graphic design, identity systems, and art direction that define who you are — from digital to print.</p>
-                    <div class="service-card-tools" aria-label="Toolkit">
-                        <img src="images/tools/photoshop.svg" alt="Adobe Photoshop" title="Adobe Photoshop" width="28" height="28">
-                        <img src="images/tools/illustrator.svg" alt="Adobe Illustrator" title="Adobe Illustrator" width="28" height="28">
-                        <img src="images/tools/indesign.svg" alt="Adobe InDesign" title="Adobe InDesign" width="28" height="28">
-                    </div>
-                    <a href="services/brand-strategy.html" class="service-learn-more">Learn More</a>
-                </div>
-                <div class="service-card">
-                    <h3>UI/UX Design</h3>
-                    <p>Product interfaces and user experiences built for clarity, conversion, and ease of use.</p>
-                    <div class="service-card-tools" aria-label="Toolkit">
-                        <img src="images/tools/figma.svg" alt="Figma" title="Figma" width="28" height="28">
-                        <img src="images/tools/adobe-xd.svg" alt="Adobe XD" title="Adobe XD" width="28" height="28">
-                        <img src="images/tools/overflow.svg" alt="Overflow" title="Overflow" width="28" height="28">
-                    </div>
-                    <a href="services/digital-design.html" class="service-learn-more">Learn More</a>
-                </div>
-                <div class="service-card">
-                    <h3>Web Design</h3>
-                    <p>Launch-ready websites designed and built to perform — clear structure, strong brand, real code.</p>
-                    <div class="service-card-tools" aria-label="Toolkit">
-                        <img src="images/tools/cursor.svg" alt="Cursor" title="Cursor" width="28" height="28">
-                        <img src="images/tools/react.svg" alt="HTML / CSS / React.js" title="HTML / CSS / React.js" width="28" height="28">
-                    </div>
-                    <a href="services/web-design.html" class="service-learn-more">Learn More</a>
-                </div>
-                <div class="service-card">
-                    <h3>Animation</h3>
-                    <p>2D character animation, motion graphics, storyboarding, and full production from concept to final delivery.</p>
-                    <div class="service-card-tools" aria-label="Toolkit">
-                        <img src="images/tools/toonboom-harmony.svg" alt="Toon Boom Harmony" title="Toon Boom Harmony" width="28" height="28">
-                        <img src="images/tools/storyboard-pro.svg" alt="Storyboard Pro" title="Storyboard Pro" width="28" height="28">
-                    </div>
-                    <a href="services/animation.html" class="service-learn-more">Learn More</a>
-                </div>
-                <div class="service-card">
-                    <h3>Package Design</h3>
-                    <p>Shelf-ready packaging that communicates the brand story at a glance.</p>
-                    <div class="service-card-tools" aria-label="Toolkit">
-                        <img src="images/tools/dimension.svg" alt="Adobe Dimension" title="Adobe Dimension" width="28" height="28">
-                        <img src="images/tools/illustrator.svg" alt="Adobe Illustrator" title="Adobe Illustrator" width="28" height="28">
-                    </div>
-                    <a href="services/package-design.html" class="service-learn-more">Learn More</a>
-                </div>
-                <div class="service-card">
-                    <h3>Social Media Marketing</h3>
-                    <p>Content strategy and campaign design that turns attention into customers.</p>
-                    <div class="service-card-tools" aria-label="Toolkit">
-                        <img src="images/tools/blaze-ai.svg" alt="Blaze AI" title="Blaze AI" width="28" height="28">
-                    </div>
-                    <a href="services/social-media.html" class="service-learn-more">Learn More</a>
-                </div>
-            </div>
-            <div class="services-cta">
-                <a href="services/index.html" id="services-btn" class="cta-btn">View All Services</a>
-            </div>
-        </div>
-    </section>
 
     <!--
         TESTIMONIALS SECTION — hidden until real client quotes are collected.
@@ -558,21 +558,6 @@
                 <a href="#faq">FAQ</a>
                 <a href="#contact-form">Contact</a>
             </nav>
-
-            <div class="footer-social">
-                <a href="https://instagram.com" target="_blank" aria-label="Instagram" title="Instagram">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.9.9 1.4.2.4.4 1 .4 2.2.1 1.2.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.9.7-1.4.9-.4.2-1 .4-2.2.4-1.2.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.9-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.9-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2M12 0C8.7 0 8.3 0 7.1.1 5.8.1 5 .3 4.2.6c-.8.3-1.5.7-2.2 1.4C1.3 2.7.9 3.4.6 4.2.3 5 .1 5.8.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.1 1.3.2 2.1.5 2.9.3.8.7 1.5 1.4 2.2.7.7 1.4 1.1 2.2 1.4.8.3 1.6.5 2.9.5C8.3 24 8.7 24 12 24s3.7 0 4.9-.1c1.3-.1 2.1-.2 2.9-.5.8-.3 1.5-.7 2.2-1.4.7-.7 1.1-1.4 1.4-2.2.3-.8.5-1.6.5-2.9.1-1.3.1-1.7.1-4.9s0-3.7-.1-4.9c-.1-1.3-.2-2.1-.5-2.9-.3-.8-.7-1.5-1.4-2.2C21.3 1.3 20.6.9 19.8.6 19 .3 18.2.1 16.9.1 15.7 0 15.3 0 12 0zm0 5.8c-3.4 0-6.2 2.8-6.2 6.2s2.8 6.2 6.2 6.2 6.2-2.8 6.2-6.2S15.4 5.8 12 5.8zM12 16c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4zm6.4-11.8c-.8 0-1.4.6-1.4 1.4s.6 1.4 1.4 1.4 1.4-.6 1.4-1.4-.6-1.4-1.4-1.4z"/></svg>
-                </a>
-                <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn" title="LinkedIn">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
-                </a>
-                <a href="https://github.com" target="_blank" aria-label="GitHub" title="GitHub">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .3a12 12 0 00-3.8 23.38c.6.12.83-.26.83-.57v-2c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.49.99.11-.77.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.23-3.22-.12-.3-.53-1.52.12-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 016 0c2.28-1.55 3.28-1.23 3.28-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.49 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.71.83.58A12 12 0 0012 .3"/></svg>
-                </a>
-                <a href="https://behance.net" target="_blank" aria-label="Behance" title="Behance">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 7h-7V5h7v2zM15.5 12.5c1.6.5 2.5 2 2.5 3.6 0 2.7-2.2 4-4.6 4H7V5h6.5c2.3 0 4.4 1 4.4 3.5 0 1.4-.7 2.4-1.9 3v.9zM10 10.5h2.9c1 0 1.9-.3 1.9-1.5 0-1.3-1-1.5-2-1.5H10v3zM13.4 17.5c1.1 0 2-.3 2-1.7s-1.1-1.7-2.2-1.7H10v3.4h3.4zM20.5 16.5c.5.7 1.3 1 2.1 1 .8 0 1.8-.4 2.1-1.2h2.6c-.9 2-2.7 3-4.8 3-3 0-5-2.2-5-5.2 0-2.9 2.1-5.3 5-5.3 3.4 0 5.1 2.7 4.8 6H20.5c0 .6.4 1.5 0 1.7zM24 12.4c-.1-1.2-.9-1.9-2-1.9-1.2 0-1.8.8-1.9 1.9H24z"/></svg>
-                </a>
-            </div>
 
             <div class="footer-copyright">
                 © 2026 Artistic Fountain™ — All rights reserved. <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms &amp; Conditions</a>
