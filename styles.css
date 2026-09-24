@@ -791,6 +791,12 @@ a:hover { opacity: 0.8; }
 }
 
 /* Palette-matched previews per project */
+.portfolio-image--roam {
+    background:
+        radial-gradient(ellipse 70% 60% at 70% 40%, rgba(184, 90, 50, 0.45), transparent 55%),
+        linear-gradient(160deg, #0C1218 0%, #162029 45%, #1A2A28 100%);
+}
+
 .portfolio-image--nhdmv {
     background:
         linear-gradient(160deg, rgba(0, 38, 58, 0.82) 0%, rgba(31, 92, 69, 0.55) 100%),
