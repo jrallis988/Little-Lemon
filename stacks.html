@@ -3,16 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Programming languages and stacks across Artistic Fountain projects — from static sites to React, Next.js, Expo, Tauri, and Python.">
+    <meta name="description" content="How Artistic Fountain ships — 71 projects across HTML, React, TypeScript, Next.js, Expo, Tauri/Rust, and Python.">
+    <meta name="author" content="James, Artistic Fountain">
     <meta name="theme-color" content="#FF6B35">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <title>Project Stacks — Artistic Fountain</title>
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Project Stacks — Artistic Fountain">
+    <meta property="og:description" content="71 builds grouped by how they ship — from static HTML to Tauri and Python.">
+    <meta property="og:image" content="images/profile.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="stacks-studio">
     <a href="#main" class="skip-link">Skip to main content</a>
     <header class="header">
         <div class="logo">
@@ -39,60 +47,132 @@
         </div>
     </header>
 
-    <main id="main" class="service-page stacks-page">
-        <div class="service-page-inner stacks-inner">
-            <a href="index.html#capabilities" class="service-back">← Capabilities</a>
-            <p class="service-kicker">Engineering</p>
-            <h1>Project stacks</h1>
-            <p class="service-lead">Seventy-one builds across this studio — grouped by how they ship. Creative sites stay lean; product work moves into TypeScript, native shells, and Python backends.</p>
-
-            <section class="service-block stack-group">
-                <h2>Static HTML / CSS / JavaScript <span class="stack-count">16</span></h2>
-                <p>Launch-ready marketing and concept sites without a framework. Includes Artistic Fountain, NH DMV, Little Lemon, Nick Jr, and PetSmart.</p>
-            </section>
-
-            <section class="service-block stack-group">
-                <h2>React <span class="stack-count">14</span></h2>
-                <p>JavaScript React apps — often with Tailwind. Includes Beach Motel, City Year, NHTI, Seascape Inn, Great Bay, and Nickelodeon.</p>
-            </section>
-
-            <section class="service-block stack-group">
-                <h2>React + TypeScript <span class="stack-count">13</span></h2>
-                <p>Typed React with Vite for campaigns and platforms. Includes Atelier Rack, Brewery, Weight Watchers, Working Intelligence, and Breakaway.</p>
-            </section>
-
-            <section class="service-block stack-group">
-                <h2>Next.js <span class="stack-count">9</span></h2>
-                <p>App Router product and brand sites. Includes ClearDose RX, MyPlace, Walgreens, Morgan Bright, NH Senate, and BCH Redesign.</p>
-            </section>
-
-            <section class="service-block stack-group">
-                <h2>React Native / Expo <span class="stack-count">4</span></h2>
-                <p>Mobile-first TypeScript screens and scaffolds — Expo tabs, onboarding flows, StaticVolume, and product revision passes.</p>
-            </section>
-
-            <section class="service-block stack-group">
-                <h2>TypeScript / TSX <span class="stack-count">5</span></h2>
-                <p>Typed front-ends without a single primary framework signal — Rate My Employer, Velocity Portfolio, Pulse Sports, Roam Coffee, The Next Chapter.</p>
-            </section>
-
-            <section class="service-block stack-group">
-                <h2>Desktop — Tauri / Rust <span class="stack-count">4</span></h2>
-                <p>Native shells with a React + TypeScript UI. Surf (kids browser) and Mailbox (student email) ship on Tauri with Rust backends.</p>
-            </section>
-
-            <section class="service-block stack-group">
-                <h2>Python <span class="stack-count">6</span></h2>
-                <p>Backend and AI-adjacent work — Thomas retail assistant, Pace Social, Rate My University, BioCross, and supplement profile ingestion.</p>
-            </section>
-
-            <p class="stacks-note">Full branch-level inventory lives in <code>STATUS.md</code> in the repository.</p>
-
-            <div class="service-page-cta">
-                <a href="index.html#portfolio" class="cta-btn">View Work</a>
-                <a href="index.html#contact-form" class="cta-btn cta-btn--soft">Start a Project</a>
+    <main id="main">
+        <section class="stacks-hero" aria-labelledby="stacks-hero-title">
+            <div class="stacks-hero-atmosphere" aria-hidden="true">
+                <div class="stacks-hero-glow stacks-hero-glow--a"></div>
+                <div class="stacks-hero-glow stacks-hero-glow--b"></div>
+                <div class="stacks-hero-grid"></div>
             </div>
-        </div>
+            <div class="stacks-hero-content">
+                <p class="stacks-hero-brand">Artistic Fountain</p>
+                <h1 id="stacks-hero-title">Project stacks</h1>
+                <p class="stacks-hero-lead">Seventy-one builds. One studio. Grouped by how they ship.</p>
+                <div class="stacks-hero-actions">
+                    <a href="#stack-index" class="cta-btn">Explore stacks</a>
+                    <a href="index.html#portfolio" class="cta-btn cta-btn--soft">View work</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="stacks-spectrum" aria-labelledby="spectrum-title">
+            <div class="stacks-wrap">
+                <h2 id="spectrum-title">The spectrum</h2>
+                <p class="stacks-section-lead">Creative sites stay lean. Product work moves into TypeScript, native shells, and Python backends.</p>
+                <div class="stacks-bar" role="img" aria-label="Distribution of 71 projects across eight stack families">
+                    <span class="stacks-bar-seg stacks-bar-seg--static" style="--w: 22.5%" title="Static HTML — 16"></span>
+                    <span class="stacks-bar-seg stacks-bar-seg--react" style="--w: 19.7%" title="React — 14"></span>
+                    <span class="stacks-bar-seg stacks-bar-seg--rts" style="--w: 18.3%" title="React + TypeScript — 13"></span>
+                    <span class="stacks-bar-seg stacks-bar-seg--next" style="--w: 12.7%" title="Next.js — 9"></span>
+                    <span class="stacks-bar-seg stacks-bar-seg--expo" style="--w: 5.6%" title="Expo — 4"></span>
+                    <span class="stacks-bar-seg stacks-bar-seg--tsx" style="--w: 7.0%" title="TypeScript — 5"></span>
+                    <span class="stacks-bar-seg stacks-bar-seg--tauri" style="--w: 5.6%" title="Tauri / Rust — 4"></span>
+                    <span class="stacks-bar-seg stacks-bar-seg--python" style="--w: 8.5%" title="Python — 6"></span>
+                </div>
+                <ul class="stacks-legend">
+                    <li><span class="stacks-swatch stacks-bar-seg--static"></span> Static</li>
+                    <li><span class="stacks-swatch stacks-bar-seg--react"></span> React</li>
+                    <li><span class="stacks-swatch stacks-bar-seg--rts"></span> React + TS</li>
+                    <li><span class="stacks-swatch stacks-bar-seg--next"></span> Next.js</li>
+                    <li><span class="stacks-swatch stacks-bar-seg--expo"></span> Expo</li>
+                    <li><span class="stacks-swatch stacks-bar-seg--tsx"></span> TSX</li>
+                    <li><span class="stacks-swatch stacks-bar-seg--tauri"></span> Tauri</li>
+                    <li><span class="stacks-swatch stacks-bar-seg--python"></span> Python</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="stacks-index" id="stack-index" aria-labelledby="index-title">
+            <div class="stacks-wrap">
+                <h2 id="index-title">By stack</h2>
+                <p class="stacks-section-lead">Each family is how a project actually ships — languages first, then the runtime that carries it.</p>
+
+                <ol class="stacks-rows">
+                    <li class="stacks-row stagger-item">
+                        <div class="stacks-row-meta">
+                            <span class="stacks-row-accent stacks-bar-seg--static" aria-hidden="true"></span>
+                            <h3>Static HTML / CSS / JavaScript</h3>
+                            <span class="stacks-row-count" data-count="16">0</span>
+                        </div>
+                        <p>Launch-ready marketing and concept sites without a framework — Artistic Fountain, NH DMV, Little Lemon, Nick Jr, PetSmart.</p>
+                    </li>
+                    <li class="stacks-row stagger-item">
+                        <div class="stacks-row-meta">
+                            <span class="stacks-row-accent stacks-bar-seg--react" aria-hidden="true"></span>
+                            <h3>React</h3>
+                            <span class="stacks-row-count" data-count="14">0</span>
+                        </div>
+                        <p>JavaScript React apps, often with Tailwind — Beach Motel, City Year, NHTI, Seascape Inn, Great Bay, Nickelodeon.</p>
+                    </li>
+                    <li class="stacks-row stagger-item">
+                        <div class="stacks-row-meta">
+                            <span class="stacks-row-accent stacks-bar-seg--rts" aria-hidden="true"></span>
+                            <h3>React + TypeScript</h3>
+                            <span class="stacks-row-count" data-count="13">0</span>
+                        </div>
+                        <p>Typed React with Vite for campaigns and platforms — Atelier Rack, Brewery, Weight Watchers, Working Intelligence, Breakaway.</p>
+                    </li>
+                    <li class="stacks-row stagger-item">
+                        <div class="stacks-row-meta">
+                            <span class="stacks-row-accent stacks-bar-seg--next" aria-hidden="true"></span>
+                            <h3>Next.js</h3>
+                            <span class="stacks-row-count" data-count="9">0</span>
+                        </div>
+                        <p>App Router product and brand sites — ClearDose RX, MyPlace, Walgreens, Morgan Bright, NH Senate, BCH Redesign.</p>
+                    </li>
+                    <li class="stacks-row stagger-item">
+                        <div class="stacks-row-meta">
+                            <span class="stacks-row-accent stacks-bar-seg--expo" aria-hidden="true"></span>
+                            <h3>React Native / Expo</h3>
+                            <span class="stacks-row-count" data-count="4">0</span>
+                        </div>
+                        <p>Mobile-first TypeScript screens — Expo tabs, onboarding flows, StaticVolume, product revision passes.</p>
+                    </li>
+                    <li class="stacks-row stagger-item">
+                        <div class="stacks-row-meta">
+                            <span class="stacks-row-accent stacks-bar-seg--tsx" aria-hidden="true"></span>
+                            <h3>TypeScript / TSX</h3>
+                            <span class="stacks-row-count" data-count="5">0</span>
+                        </div>
+                        <p>Typed front-ends in flight — Rate My Employer, Velocity Portfolio, Pulse Sports, Roam Coffee, The Next Chapter.</p>
+                    </li>
+                    <li class="stacks-row stagger-item">
+                        <div class="stacks-row-meta">
+                            <span class="stacks-row-accent stacks-bar-seg--tauri" aria-hidden="true"></span>
+                            <h3>Desktop — Tauri / Rust</h3>
+                            <span class="stacks-row-count" data-count="4">0</span>
+                        </div>
+                        <p>Native shells with a React + TypeScript UI — Surf (kids browser) and Mailbox (student email).</p>
+                    </li>
+                    <li class="stacks-row stagger-item">
+                        <div class="stacks-row-meta">
+                            <span class="stacks-row-accent stacks-bar-seg--python" aria-hidden="true"></span>
+                            <h3>Python</h3>
+                            <span class="stacks-row-count" data-count="6">0</span>
+                        </div>
+                        <p>Backend and AI-adjacent systems — Thomas, Pace Social, Rate My University, BioCross, supplement profile ingestion.</p>
+                    </li>
+                </ol>
+
+                <div class="stacks-close">
+                    <p>Need a build in any of these lanes? Let’s ship it.</p>
+                    <div class="stacks-close-actions">
+                        <a href="index.html#contact-form" class="cta-btn">Start a Project</a>
+                        <a href="index.html#capabilities" class="cta-btn cta-btn--soft">Back to Capabilities</a>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer class="footer">
@@ -101,7 +181,7 @@
                 <a href="index.html#about">About</a>
                 <a href="index.html#services">Services</a>
                 <a href="index.html#portfolio">Portfolio</a>
-                <a href="stacks.html">Stacks</a>
+                <a href="stacks.html" aria-current="page">Stacks</a>
                 <a href="blog/index.html">Blog</a>
                 <a href="index.html#contact">Contact</a>
             </nav>
@@ -119,6 +199,7 @@
             toggle.classList.toggle('active', isOpen);
             toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
         }
+
         document.querySelectorAll('.nav a').forEach(link => {
             link.addEventListener('click', () => {
                 const nav = document.querySelector('.nav');
@@ -127,6 +208,59 @@
                 toggle.classList.remove('active');
                 toggle.setAttribute('aria-expanded', 'false');
             });
+        });
+
+        // Hero enter
+        requestAnimationFrame(() => {
+            document.querySelector('.stacks-hero')?.classList.add('is-ready');
+        });
+
+        // Spectrum draw-in
+        const bar = document.querySelector('.stacks-bar');
+        if (bar) {
+            const barObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-drawn');
+                        barObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.35 });
+            barObserver.observe(bar);
+        }
+
+        // Staggered rows + count-up
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const rowObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                const row = entry.target;
+                row.classList.add('visible');
+                const countEl = row.querySelector('.stacks-row-count');
+                if (countEl && !countEl.dataset.done) {
+                    countEl.dataset.done = '1';
+                    const target = parseInt(countEl.dataset.count, 10) || 0;
+                    if (prefersReduced) {
+                        countEl.textContent = String(target);
+                    } else {
+                        const duration = 700;
+                        const start = performance.now();
+                        const tick = (now) => {
+                            const t = Math.min(1, (now - start) / duration);
+                            const eased = 1 - Math.pow(1 - t, 3);
+                            countEl.textContent = String(Math.round(target * eased));
+                            if (t < 1) requestAnimationFrame(tick);
+                        };
+                        requestAnimationFrame(tick);
+                    }
+                }
+                rowObserver.unobserve(row);
+            });
+        }, { threshold: 0.2, rootMargin: '0px 0px -8% 0px' });
+
+        document.querySelectorAll('.stacks-row').forEach((row, i) => {
+            row.style.transitionDelay = `${Math.min(i * 0.07, 0.42)}s`;
+            rowObserver.observe(row);
         });
     </script>
 </body>

@@ -18,7 +18,8 @@ ARTISTIC FOUNTAIN: STATUS REPORT
 
 4. PROJECT LANGUAGES (by branch)
 • Inventory of project branches in this repository, grouped by primary stack.
-• Last updated 2026-09-23 from git remote branches — 71 projects (excludes this docs branch).
+• Public summary: `stacks.html` on the live site.
+• Last updated 2026-09-24 from git remote branches — 71 projects (excludes this docs branch).
 • Names are human-readable; branch refs are included for traceability.
 
 4.1 STATIC HTML / CSS / JAVASCRIPT (16)
