@@ -343,7 +343,7 @@ a:hover { opacity: 0.8; }
     margin: 0 !important;
     margin-top: 70px !important;
     padding: 4rem 2rem 5rem;
-    min-height: calc(100svh - 70px);
+    min-height: calc(88svh - 70px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -417,6 +417,19 @@ a:hover { opacity: 0.8; }
     background: var(--cream);
     color: var(--dark);
     box-shadow: 0 10px 30px rgba(248, 248, 248, 0.18);
+}
+
+.cta-btn--ghost {
+    border-color: rgba(248, 248, 248, 0.55);
+    color: var(--cream);
+    background: transparent;
+}
+
+.cta-btn--ghost:hover {
+    background: var(--cream);
+    color: var(--dark);
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(248, 248, 248, 0.16);
 }
 
 .hero .cta-btn {
@@ -817,7 +830,14 @@ a:hover { opacity: 0.8; }
 .portfolio h2 {
     text-align: center;
     color: var(--text);
-    margin-bottom: 3rem;
+    margin-bottom: 0.75rem;
+}
+
+.portfolio-lead {
+    text-align: center;
+    max-width: 36rem;
+    margin: 0 auto 2.5rem;
+    color: rgba(248, 248, 248, 0.88);
 }
 
 .portfolio-grid {
@@ -955,9 +975,17 @@ a:hover { opacity: 0.8; }
     margin: 0;
 }
 
-.portfolio-desc em {
-    color: var(--yellow);
-    font-style: italic;
+a.portfolio-card:hover {
+    opacity: 1;
+}
+
+.portfolio-more {
+    margin-top: 0.65rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #FFB4A2;
 }
 
 .portfolio-cta {
@@ -2386,14 +2414,14 @@ button:focus:not(:focus-visible) {
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(15, 15, 15, 0.95);
+    background: rgba(15, 15, 15, 0.92);
     backdrop-filter: blur(10px);
     border-top: 1px solid var(--border);
-    padding: 1.5rem 2rem;
+    padding: 0.85rem 1.5rem;
     display: none;
     justify-content: space-between;
     align-items: center;
-    gap: 2rem;
+    gap: 1rem;
     z-index: 9999;
     animation: slideUp 0.4s ease-out;
     opacity: 1;
@@ -3495,12 +3523,29 @@ a.portfolio-card {
     overflow: hidden;
 }
 
+.case-visual-frame::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+}
+
 .case-visual-frame img {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    z-index: 1;
+}
+
+.case-visual-frame:has(img)::after {
+    opacity: 0.25;
 }
 
 .case-file {
