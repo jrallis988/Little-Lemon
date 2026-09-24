@@ -251,6 +251,7 @@ export function CoffeeBag({
 
         {/* Seal strip */}
         <rect x="0" y="0" width="320" height="36" fill={variety.color} />
+        <rect x="0" y="36" width="320" height="2" fill={variety.ink} opacity="0.15" />
         <text
           x="160"
           y="23"

@@ -27,7 +27,10 @@ import {
   ProcessTimeline,
 } from './components/sections/Process';
 import { ExportStatusPanel } from './components/sections/ExportStatus';
+import { ColorSystem, InsightStrip, SpecSheet, TypeSpecimen } from './components/sections/SystemBoards';
 import { brand, caseStudyNav, rtdProducts, varieties } from './data/brand';
+
+const img = (name: string) => `${import.meta.env.BASE_URL}images/${name}`;
 
 function Section({
   id,
@@ -78,7 +81,10 @@ export default function App() {
       </header>
 
       <section className="hero">
-        <div className="hero-atmosphere" aria-hidden />
+        <div className="hero-media" aria-hidden>
+          <img src={img('roam-hero-atmosphere.png')} alt="" />
+          <div className="hero-veil" />
+        </div>
         <div className="shell hero-inner">
           <p className="hero-kicker animate-rise">Packaging & Retail Identity</p>
           <h1 className="hero-brand animate-rise-delay">
@@ -95,14 +101,21 @@ export default function App() {
       <Section
         id="challenge"
         label="Challenge"
-        title="Build a specialty coffee identity that works in the physical world."
-        lead="Create a system capable of functioning across packaging, production files, and small-format retail — not a logo on a screen."
+        title="Can this identity leave the screen and survive the shelf?"
+        lead="Build a specialty coffee system that works across bags, dielines, cups, menus, and a small shop — not a logo deck."
       >
-        <div className="panel-dark panel-pad prose">
+        <InsightStrip
+          items={[
+            { label: 'Audience', value: 'Ages 20–45' },
+            { label: 'Channels', value: 'Pack · Retail · POS' },
+            { label: 'Proof', value: 'Physical first' },
+          ]}
+        />
+        <div className="panel-dark panel-pad prose" style={{ marginTop: '1.25rem' }}>
           <p>
-            Specialty coffee lives on shelves, counters, sleeves, and storefront glass. The work has to hold
-            hierarchy under fluorescent light, survive a 0.125&quot; bleed, and still feel like one brand when four
-            bags stand shoulder to shoulder.
+            Specialty coffee lives under fluorescent light, in a customer’s hand, and on a gusset that has to fold
+            cleanly. Hierarchy has to hold at arm’s length. Four SKUs have to read as one family without becoming
+            palette swaps. Production thinking starts before the mockup.
           </p>
         </div>
       </Section>
@@ -111,31 +124,36 @@ export default function App() {
         id="concept"
         label="Concept"
         title={brand.tagline}
-        lead="Travel and exploration as attitude — warmth, curiosity, and motion — without becoming a travel agency."
+        lead="Travel as attitude — warmth, curiosity, motion — never as luggage tags or destination kitsch."
       >
-        <div className="grid-2">
-          <div className="panel panel-pad">
-            <p className="kicker">Positioning</p>
-            <p>
-              ROAM is coffee for mornings before a flight, afternoons between errands, and evenings when the route
-              home is the long way. Premium and approachable. Contemporary without cold minimalism.
-            </p>
+        <div className="concept-split">
+          <div className="concept-copy">
+            <div className="panel panel-pad">
+              <p className="kicker">Positioning</p>
+              <p>
+                ROAM is coffee for mornings before a flight, afternoons between errands, and evenings when the route
+                home is the long way. Premium and approachable. Contemporary without cold minimalism.
+              </p>
+            </div>
+            <div className="panel panel-pad">
+              <p className="kicker">Avoided</p>
+              <p>
+                Rustic burlap, excessive brown, fake vintage seals, hipster clichés, and generic beige-luxury
+                packaging. Ink, ember, teal, and directional color carry the system instead.
+              </p>
+            </div>
           </div>
-          <div className="panel panel-pad">
-            <p className="kicker">Avoided</p>
-            <p>
-              Rustic burlap clichés, excessive brown, fake vintage seals, hipster mustache energy, and generic
-              beige-luxury packaging. The system uses ink, ember, teal, and directional color instead.
-            </p>
-          </div>
+          <figure className="concept-photo">
+            <img src={img('roam-bag-hero.png')} alt="ROAM coffee bag hero still" />
+          </figure>
         </div>
       </Section>
 
       <Section
         id="identity"
         label="Identity"
-        title="A restrained mark built for print and distance."
-        lead="Primary lockup, wordmark, symbol, secondary lockup, one-color, reversed, and small-scale versions."
+        title="A mark built for distance, print, and quiet confidence."
+        lead="Primary lockup, wordmark, symbol, secondary, one-color, reversed, and small-scale."
       >
         <div className="identity-grid">
           <div className="panel panel-pad identity-card">
@@ -172,6 +190,12 @@ export default function App() {
             </div>
           </div>
         </div>
+        <div style={{ marginTop: '1.5rem' }}>
+          <TypeSpecimen />
+        </div>
+        <div style={{ marginTop: '1.25rem' }}>
+          <ColorSystem />
+        </div>
       </Section>
 
       <Section
@@ -185,7 +209,14 @@ export default function App() {
             <article key={v.id} className="panel variety-card" style={{ borderTop: `4px solid ${v.color}` }}>
               <div className="panel-pad">
                 <h3 style={{ color: v.ink, marginBottom: '0.25rem' }}>{v.name}</h3>
-                <p style={{ color: v.color, fontFamily: 'IBM Plex Mono, monospace', fontSize: '0.75rem', letterSpacing: '0.12em' }}>
+                <p
+                  style={{
+                    color: v.color,
+                    fontFamily: 'IBM Plex Mono, monospace',
+                    fontSize: '0.75rem',
+                    letterSpacing: '0.12em',
+                  }}
+                >
                   {v.roast.toUpperCase()}
                 </p>
                 <p style={{ color: v.ink, opacity: 0.8, marginTop: '0.75rem' }}>{v.notes.join(' · ')}</p>
@@ -199,25 +230,33 @@ export default function App() {
       <Section
         id="packaging"
         label="Packaging"
-        title="Coffee bags — front, back, and detail."
-        lead="Brand, product name, roast, flavor, origin, weight, brew info, and barcode placeholder on every SKU."
+        title="Coffee bags — front, back, detail, dieline."
+        lead="Brand, product, roast, flavor, origin, weight, brew info, and barcode placeholder on every SKU."
       >
-        <PackageViewer />
+        <figure className="bleed-photo">
+          <img src={img('roam-bag-family.png')} alt="ROAM coffee bag family product still" />
+          <figcaption>Product family still — four bags, one system.</figcaption>
+        </figure>
+        <div style={{ marginTop: '1.5rem' }}>
+          <PackageViewer />
+        </div>
       </Section>
 
       <Section
         id="dielines"
         label="Dielines"
         title="From flat production file to finished package."
-        lead="Bleed, trim, safe area, fold, seal, and artwork — production knowledge, not only mockups."
+        lead="Bleed, trim, safe, fold, seal, and artwork — production knowledge, not only mockups."
       >
         <BagDieline variety={varieties[0]} width={700} />
-        <div className="panel-dark panel-pad prose" style={{ marginTop: '1.25rem' }}>
-          <p>
-            Artwork is built on a side-gusset bag dieline. Color bars in the seal zone stay clear of copy. Fold
-            lines separate left gusset, front, right gusset, and back. After print, the blank is folded, filled,
-            and heat-sealed at the top — the flat file becomes the bag on the shelf.
-          </p>
+        <div className="grid-2" style={{ marginTop: '1.25rem' }}>
+          <div className="panel-dark panel-pad prose">
+            <p>
+              Artwork sits on a side-gusset dieline. Color bars clear the seal zone. Fold lines separate left gusset,
+              front, right gusset, and back. After print: fold, fill, heat-seal — the flat file becomes the bag.
+            </p>
+          </div>
+          <SpecSheet variety={varieties[0]} />
         </div>
       </Section>
 
@@ -247,7 +286,11 @@ export default function App() {
         title="Cold brew that feels related — not copied."
         lead="Original, Oat, and Vanilla. Front, back, nutrition, and family presentation."
       >
-        <div className="rtd-row">
+        <figure className="bleed-photo">
+          <img src={img('roam-rtd-family.png')} alt="ROAM cold brew cans" />
+          <figcaption>RTD family — related structure, distinct from the bags.</figcaption>
+        </figure>
+        <div className="rtd-row" style={{ marginTop: '1.5rem' }}>
           {rtdProducts.map((p) => (
             <div key={p.id} className="rtd-pair">
               <RtdCan product={p} face="front" width={130} />
@@ -313,7 +356,11 @@ export default function App() {
         title="Graphics for a small shop — exterior and interior."
         lead="Storefront sign, window graphics, hours, door, menu board, wayfinding, pickup, and shelf strips."
       >
-        <div style={{ display: 'grid', gap: '1.25rem' }}>
+        <figure className="bleed-photo">
+          <img src={img('roam-storefront.png')} alt="ROAM coffee shop exterior mood" />
+          <figcaption>Exterior mood — signage has to read from the sidewalk.</figcaption>
+        </figure>
+        <div style={{ display: 'grid', gap: '1.25rem', marginTop: '1.5rem' }}>
           <Storefront width={700} />
           <InteriorGraphics width={700} />
           <RetailViewer />
@@ -355,7 +402,7 @@ export default function App() {
         id="pos"
         label="Point of Sale"
         title="Go somewhere warm."
-        lead="A winter campaign that lives inside the ROAM system — counter card, window poster, insert, shelf sign, takeaway card, large format."
+        lead="A winter campaign inside the ROAM system — counter card, window poster, insert, shelf sign, takeaway card, large format."
       >
         <div className="merch-row" style={{ alignItems: 'flex-start' }}>
           <PosCounterCard />
@@ -374,9 +421,9 @@ export default function App() {
         lead="Start somewhere. Take the long way. Coffee for wherever you’re going."
       >
         <div className="poster-row">
-          <RetailPoster line={"START\nSOMEWHERE."} sub="Open daily · 7am–6pm" tone="ink" />
-          <RetailPoster line={"TAKE THE\nLONG WAY."} sub="Whole bean · cold brew · espresso" tone="ember" />
-          <RetailPoster line={"COFFEE FOR\nWHEREVER."} sub="North · East · South · West" tone="teal" />
+          <RetailPoster line={'START\nSOMEWHERE.'} sub="Open daily · 7am–6pm" tone="ink" />
+          <RetailPoster line={'TAKE THE\nLONG WAY.'} sub="Whole bean · cold brew · espresso" tone="ember" />
+          <RetailPoster line={'COFFEE FOR\nWHEREVER.'} sub="North · East · South · West" tone="teal" />
         </div>
       </Section>
 
@@ -420,7 +467,7 @@ export default function App() {
         id="process"
         label="Process"
         title="From positioning to press-ready thinking."
-        lead="A clear path from strategy through identity, packaging, retail, and production — ready for Adobe originals to replace presentation scaffolds."
+        lead="Strategy through identity, packaging, retail, and production — with a clear path for Adobe originals."
       >
         <ProcessTimeline />
       </Section>
@@ -444,7 +491,7 @@ export default function App() {
         id="production"
         label="Production"
         title="Files that can go to press."
-        lead="CMYK thinking, spot accents where useful, bleed, trim, safe areas, dielines, barcode placement, and preflight discipline."
+        lead="CMYK thinking, spot accents, bleed, trim, safe areas, dielines, barcode placement, and preflight."
       >
         <ProductionViewer />
         <div style={{ marginTop: '1.25rem' }}>
@@ -456,9 +503,8 @@ export default function App() {
               Demonstrated here
             </p>
             <p>
-              Vector artwork with clear bleed/trim/safe/fold/seal annotation, barcode placeholder clearance,
-              and flat-to-finished comparison. Presentation assets are SVG for the portfolio; production would
-              export print-ready PDF/X from Illustrator with outlined type and embedded images at 300 ppi.
+              Annotated dieline, barcode clearance, flat-to-finished comparison, and a production spec for North.
+              Presentation uses SVG + photography comps; press files export as PDF/X from Illustrator.
             </p>
           </div>
           <div className="panel-dark panel-pad prose">
@@ -466,34 +512,25 @@ export default function App() {
               Not claimed
             </p>
             <p>
-              This presentation does not simulate press checks, substrate testing, or converting-machine
-              setup. Those steps belong on press with a printer — the goal here is showing the graphic
-              production thinking that precedes them.
+              No simulated press checks, substrate testing, or converter setup. Those belong on press with a
+              printer — this shows the graphic production thinking that precedes them.
             </p>
           </div>
         </div>
       </Section>
 
-      <Section
-        id="gallery"
-        label="Gallery"
-        title="The finished system, large."
-      >
+      <Section id="gallery" label="Gallery" title="The finished system, large.">
         <GalleryGrid />
       </Section>
 
-      <Section
-        id="final"
-        label="Final System"
-        title="Off the screen, into the world."
-      >
+      <Section id="final" label="Final System" title="Off the screen, into the world.">
         <div className="panel panel-pad final-note">
           <p>
-            ROAM COFFEE is a fictional self-initiated portfolio project created to demonstrate packaging
-            design, retail graphics, typography, production design, and physical brand implementation.
+            ROAM COFFEE is a fictional self-initiated portfolio project created to demonstrate packaging design,
+            retail graphics, typography, production design, and physical brand implementation.
           </p>
           <p style={{ marginTop: '1rem', opacity: 0.7, fontSize: '0.95rem' }}>
-            This React presentation exists only to show the work. The visual system is designed for Illustrator,
+            This React presentation exists to show the work. The visual system is designed for Illustrator,
             Photoshop, and InDesign production workflows.
           </p>
         </div>

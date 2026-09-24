@@ -142,23 +142,44 @@ export function ProductionViewer() {
 }
 
 export function GalleryGrid() {
+  const base = `${import.meta.env.BASE_URL}images`;
   return (
-    <div className="gallery-grid">
+    <div className="gallery-grid gallery-grid--immersive">
+      <figure className="gallery-hero">
+        <img src={`${base}/roam-bag-family.png`} alt="ROAM bag family" />
+      </figure>
+      <figure className="gallery-tile">
+        <img src={`${base}/roam-bag-hero.png`} alt="ROAM bag hero" />
+      </figure>
+      <figure className="gallery-tile">
+        <img src={`${base}/roam-rtd-family.png`} alt="ROAM cold brew" />
+      </figure>
+      <figure className="gallery-tile gallery-tile--wide">
+        <img src={`${base}/roam-storefront.png`} alt="ROAM storefront mood" />
+      </figure>
       <div className="gallery-item panel" style={{ padding: '1rem' }}>
         <FamilyPresentation />
       </div>
-      <div className="gallery-item panel" style={{ padding: '1.5rem', display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', background: '#1A232C' }}>
+      <div
+        className="gallery-item panel"
+        style={{
+          padding: '1.5rem',
+          display: 'flex',
+          gap: '1rem',
+          justifyContent: 'center',
+          flexWrap: 'wrap',
+          background: '#1A232C',
+        }}
+      >
         {rtdProducts.map((p) => (
           <RtdCan key={p.id} product={p} width={110} />
         ))}
       </div>
-      <div className="gallery-item" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
-        <div className="panel" style={{ padding: '1rem', display: 'grid', placeItems: 'center' }}>
-          <Storefront width={400} />
-        </div>
-        <div className="panel-dark" style={{ padding: '1rem', display: 'grid', placeItems: 'center' }}>
-          <PosLargePoster />
-        </div>
+      <div className="panel-dark" style={{ padding: '1rem', display: 'grid', placeItems: 'center' }}>
+        <PosLargePoster />
+      </div>
+      <div className="panel" style={{ padding: '1rem', display: 'grid', placeItems: 'center' }}>
+        <Storefront width={400} />
       </div>
     </div>
   );
