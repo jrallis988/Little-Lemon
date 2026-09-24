@@ -45,25 +45,39 @@ const TRUSTED_DOMAINS: TrustedDomain[] = [
   { host: "nasa.gov", score: 97, label: "NASA" },
   { host: "science.nasa.gov", score: 97, label: "NASA Science" },
   { host: "spaceplace.nasa.gov", score: 93, label: "NASA Space Place" },
+  { host: "climatekids.nasa.gov", score: 93, label: "NASA Climate Kids" },
+  { host: "earthobservatory.nasa.gov", score: 95, label: "NASA Earth Observatory" },
   { host: "britannica.com", score: 91, label: "Encyclopædia Britannica" },
   { host: "kids.britannica.com", score: 88, label: "Britannica Kids" },
   { host: "si.edu", score: 95, label: "Smithsonian" },
+  { host: "americanhistory.si.edu", score: 93, label: "Smithsonian American History" },
+  { host: "naturalhistory.si.edu", score: 93, label: "Smithsonian Natural History" },
+  { host: "ocean.si.edu", score: 94, label: "Smithsonian Ocean" },
+  { host: "humanorigins.si.edu", score: 94, label: "Smithsonian Human Origins" },
   { host: "amnh.org", score: 94, label: "American Museum of Natural History" },
   { host: "loc.gov", score: 96, label: "Library of Congress" },
   { host: "nature.com", score: 99, label: "Nature" },
   { host: "science.org", score: 99, label: "Science / AAAS" },
   { host: "nih.gov", score: 98, label: "NIH" },
+  { host: "medlineplus.gov", score: 94, label: "MedlinePlus" },
+  { host: "cdc.gov", score: 96, label: "CDC" },
+  { host: "epa.gov", score: 95, label: "U.S. EPA" },
+  { host: "eia.gov", score: 94, label: "U.S. EIA" },
   { host: "noaa.gov", score: 97, label: "NOAA" },
   { host: "oceanservice.noaa.gov", score: 96, label: "NOAA Ocean Service" },
+  { host: "fisheries.noaa.gov", score: 95, label: "NOAA Fisheries" },
+  { host: "weather.gov", score: 96, label: "National Weather Service" },
   { host: "pbskids.org", score: 86, label: "PBS Kids" },
   { host: "pbs.org", score: 90, label: "PBS Learning" },
+  { host: "pbslearningmedia.org", score: 90, label: "PBS LearningMedia" },
   { host: "khanacademy.org", score: 89, label: "Khan Academy" },
   { host: "ck12.org", score: 87, label: "CK-12" },
+  { host: "illustrativemathematics.org", score: 90, label: "Illustrative Mathematics" },
   { host: "openstax.org", score: 93, label: "OpenStax" },
   { host: "nps.gov", score: 95, label: "National Park Service" },
-  { host: "climatekids.nasa.gov", score: 93, label: "NASA Climate Kids" },
-  { host: "pbslearningmedia.org", score: 90, label: "PBS LearningMedia" },
-  { host: "ocean.si.edu", score: 94, label: "Smithsonian Ocean" },
+  { host: "acs.org", score: 92, label: "American Chemical Society" },
+  { host: "usa.gov", score: 95, label: "USA.gov" },
+  { host: "fs.usda.gov", score: 91, label: "U.S. Forest Service" },
 ];
 
 const CONTENT_FARM_MARKERS = [
@@ -167,6 +181,33 @@ function combineLegitimacy(base: number, domainScore: number): number {
   return Math.min(100, Math.round((domainScore * 7 + base * 3) / 10));
 }
 
+function normalizeToken(token: string): string {
+  const t = token.toLowerCase();
+  if (t.length <= 3) return t;
+  if (t.endsWith("ies") && t.length > 4) return `${t.slice(0, -3)}y`;
+  if (t.endsWith("ses") || t.endsWith("xes") || t.endsWith("zes")) {
+    return t.slice(0, -2);
+  }
+  if (t.endsWith("ches") || t.endsWith("shes")) return t.slice(0, -2);
+  if (t.endsWith("oes")) return t.slice(0, -2);
+  if (t.endsWith("ves")) return `${t.slice(0, -3)}f`;
+  if (t.endsWith("s") && !t.endsWith("ss") && !t.endsWith("us")) {
+    return t.slice(0, -1);
+  }
+  if (t.endsWith("ing") && t.length > 5) return t.slice(0, -3);
+  if (t.endsWith("ed") && t.length > 4) return t.slice(0, -2);
+  return t;
+}
+
+function tokenMatches(hay: string, token: string): boolean {
+  if (hay.includes(token)) return true;
+  const stem = normalizeToken(token);
+  if (stem !== token && hay.includes(stem)) return true;
+  // Also match pluralized stems already in the corpus ("volcanoes" vs "volcano")
+  if (!hay.includes(`${stem}s`) && !hay.includes(`${stem}es`)) return false;
+  return true;
+}
+
 function scoreQueryMatch(query: string, source: IndexedSource): number {
   const q = query.trim().toLowerCase();
   const tokens = q.split(/[^a-z0-9]+/).filter((token) => token.length > 2);
@@ -184,7 +225,7 @@ function scoreQueryMatch(query: string, source: IndexedSource): number {
   for (const token of tokens) {
     let tokenHit = 0;
     haystacks.forEach((hay, index) => {
-      if (!hay.includes(token)) return;
+      if (!tokenMatches(hay, token)) return;
       const boost = index === 0 ? 1.4 : index === 2 || index === 3 ? 1.2 : 1;
       tokenHit = Math.max(tokenHit, boost);
     });
@@ -217,6 +258,9 @@ function localAcademicSearch(
   const limit = Math.min(12, Math.max(1, options.limit ?? MAX_SEARCH_RESULTS));
   const allowedTiers = options.tiers ?? [];
   const band = options.gradeBand ? bandSpan(options.gradeBand) : null;
+  // Prefer band overlap when a Refine Results band is active; exact grade is a soft preference.
+  const exactGrade =
+    band || typeof options.grade !== "number" ? null : options.grade;
 
   let filteredOutFarms = 0;
   const candidates: Array<{
@@ -237,8 +281,8 @@ function localAcademicSearch(
       continue;
     }
     if (
-      typeof options.grade === "number" &&
-      (options.grade < source.gradeMin || options.grade > source.gradeMax)
+      exactGrade !== null &&
+      (exactGrade < source.gradeMin || exactGrade > source.gradeMax)
     ) {
       continue;
     }
@@ -256,8 +300,17 @@ function localAcademicSearch(
       continue;
     }
 
-    const matchScore = scoreQueryMatch(trimmed, source);
-    if (matchScore < 0.35) continue;
+    let matchScore = scoreQueryMatch(trimmed, source);
+    if (matchScore < 0.28) continue;
+
+    // Soft preference: sources that cover the student's exact grade rank higher.
+    if (
+      typeof options.grade === "number" &&
+      options.grade >= source.gradeMin &&
+      options.grade <= source.gradeMax
+    ) {
+      matchScore = Math.min(1.6, matchScore + 0.08);
+    }
 
     candidates.push({ source, legitimacyScore, matchScore });
   }
@@ -267,7 +320,32 @@ function localAcademicSearch(
     return b.legitimacyScore - a.legitimacyScore;
   });
 
-  const results: AcademicSearchHit[] = candidates.slice(0, limit).map((c) => ({
+  // If the band is too tight, widen once so students still see trusted near-grade sources.
+  let working = candidates;
+  if (working.length < 3 && band && typeof options.grade === "number") {
+    working = ACADEMIC_CORPUS.filter((source) => !isContentFarm(source.domain))
+      .map((source) => {
+        const legitimacyScore = combineLegitimacy(
+          source.baseLegitimacy,
+          scoreDomain(source.domain),
+        );
+        const matchScore = scoreQueryMatch(trimmed, source);
+        return { source, legitimacyScore, matchScore };
+      })
+      .filter(
+        (row) =>
+          row.legitimacyScore >= 55 &&
+          row.matchScore >= 0.28 &&
+          options.grade! >= row.source.gradeMin - 1 &&
+          options.grade! <= row.source.gradeMax + 1,
+      )
+      .sort((a, b) => {
+        if (b.matchScore !== a.matchScore) return b.matchScore - a.matchScore;
+        return b.legitimacyScore - a.legitimacyScore;
+      });
+  }
+
+  const results: AcademicSearchHit[] = working.slice(0, limit).map((c) => ({
     id: c.source.id,
     title: c.source.title,
     url: c.source.url,

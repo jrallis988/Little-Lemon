@@ -19,9 +19,10 @@ pub fn score_query_match(query: &str, source: &IndexedSource) -> f32 {
         return 0.0;
     }
 
-    let tokens: Vec<&str> = q
+    let tokens: Vec<String> = q
         .split(|c: char| !c.is_alphanumeric())
         .filter(|t| t.len() > 2)
+        .map(|t| t.to_string())
         .collect();
 
     if tokens.is_empty() {
@@ -42,8 +43,7 @@ pub fn score_query_match(query: &str, source: &IndexedSource) -> f32 {
         weight += 1.0;
         let mut token_hit: f32 = 0.0;
         for (index, hay) in haystacks.iter().enumerate() {
-            if hay.contains(token) {
-                // Title / topics weigh more than abstract body.
+            if token_matches(hay, token) {
                 let boost = match index {
                     0 => 1.4,
                     2 | 3 => 1.2,
@@ -62,6 +62,46 @@ pub fn score_query_match(query: &str, source: &IndexedSource) -> f32 {
     }
 }
 
+fn normalize_token(token: &str) -> String {
+    let t = token.to_ascii_lowercase();
+    if t.len() <= 3 {
+        return t;
+    }
+    if t.ends_with("ies") && t.len() > 4 {
+        return format!("{}y", &t[..t.len() - 3]);
+    }
+    if t.ends_with("ses") || t.ends_with("xes") || t.ends_with("zes") {
+        return t[..t.len() - 2].to_string();
+    }
+    if t.ends_with("ches") || t.ends_with("shes") {
+        return t[..t.len() - 2].to_string();
+    }
+    if t.ends_with("oes") {
+        return t[..t.len() - 2].to_string();
+    }
+    if t.ends_with('s') && !t.ends_with("ss") && !t.ends_with("us") {
+        return t[..t.len() - 1].to_string();
+    }
+    if t.ends_with("ing") && t.len() > 5 {
+        return t[..t.len() - 3].to_string();
+    }
+    if t.ends_with("ed") && t.len() > 4 {
+        return t[..t.len() - 2].to_string();
+    }
+    t
+}
+
+fn token_matches(hay: &str, token: &str) -> bool {
+    if hay.contains(token) {
+        return true;
+    }
+    let stem = normalize_token(token);
+    if stem != token && hay.contains(&stem) {
+        return true;
+    }
+    hay.contains(&format!("{stem}s")) || hay.contains(&format!("{stem}es"))
+}
+
 pub fn apply_tier_filter(source: &IndexedSource, filter: &TierFilter) -> bool {
     match &filter.allowed {
         None => true,
@@ -71,15 +111,17 @@ pub fn apply_tier_filter(source: &IndexedSource, filter: &TierFilter) -> bool {
 }
 
 pub fn apply_grade_filter(source: &IndexedSource, filter: &GradeFilter) -> bool {
-    if let Some(grade) = filter.grade {
-        if !(source.grade_min..=source.grade_max).contains(&grade) {
-            return false;
-        }
-    }
+    // When a Refine Results band is active, use band overlap only.
+    // Exact grade is a soft preference applied in ranking, not a hard exclude.
     if let Some(band) = filter.band {
         let (lo, hi) = band.grade_span();
-        // Overlap between source range and requested band.
         if source.grade_max < lo || source.grade_min > hi {
+            return false;
+        }
+        return true;
+    }
+    if let Some(grade) = filter.grade {
+        if !(source.grade_min..=source.grade_max).contains(&grade) {
             return false;
         }
     }
@@ -108,9 +150,14 @@ pub fn evaluate_source(
         return Err(FilterReject::Legitimacy);
     }
 
-    let match_score = score_query_match(query, &source);
-    if match_score < 0.35 {
+    let mut match_score = score_query_match(query, &source);
+    if match_score < 0.28 {
         return Err(FilterReject::Relevance);
+    }
+    if let Some(grade) = grade_filter.grade {
+        if (source.grade_min..=source.grade_max).contains(&grade) {
+            match_score = (match_score + 0.08).min(1.6);
+        }
     }
 
     Ok(RankedCandidate {

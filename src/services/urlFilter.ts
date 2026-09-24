@@ -121,6 +121,7 @@ export function isTrustedEducationalDomain(domain: string): boolean {
     "spaceplace.nasa.gov",
     "science.nasa.gov",
     "climatekids.nasa.gov",
+    "earthobservatory.nasa.gov",
     "usgs.gov",
     "noaa.gov",
     "oceanservice.noaa.gov",
@@ -144,6 +145,7 @@ export function isTrustedEducationalDomain(domain: string): boolean {
     "acs.org",
     "usa.gov",
     "fs.usda.gov",
+    "humanorigins.si.edu",
   ];
   return trusted.some((entry) => matchesDomain(domain, entry));
 }

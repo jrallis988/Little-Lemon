@@ -1,15 +1,19 @@
 import { useNavigate } from "react-router-dom";
-import { BookOpen, Sparkles, TriangleAlert } from "lucide-react";
+import { BookOpen, RotateCcw, Sparkles, TriangleAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigationStore } from "@/stores/navigationStore";
 import { ROUTES } from "@/routes/paths";
 import { MILO_NAME } from "@/brand/identity";
+import { loadReadableArticle } from "@/services/readerFetch";
+import { useState } from "react";
 
 /** Screen 3 — Article / Content View with reader-mode sanitizer */
 export function ArticleScreen() {
   const article = useNavigationStore((s) => s.activeArticle);
+  const setActiveArticle = useNavigationStore((s) => s.setActiveArticle);
   const setMiloOpen = useNavigationStore((s) => s.setMiloOpen);
   const navigate = useNavigate();
+  const [retrying, setRetrying] = useState(false);
 
   if (!article) {
     return (
@@ -22,8 +26,27 @@ export function ArticleScreen() {
     );
   }
 
-  const live = article.readability === "live" || article.fetchedLive;
-  const structured = article.readability === "structured" || !live;
+  const live = article.readability === "live" || Boolean(article.fetchedLive);
+  const structured = !live;
+
+  const retryLive = async () => {
+    setRetrying(true);
+    try {
+      const next = await loadReadableArticle({
+        url: article.url,
+        title: article.title,
+        description:
+          article.vocabulary?.join(". ") ||
+          "Trusted educational source opened in Surf reader mode.",
+        sourceBadge: article.source,
+        citation: article.citation,
+        vocabulary: article.vocabulary,
+      });
+      setActiveArticle(next);
+    } finally {
+      setRetrying(false);
+    }
+  };
 
   return (
     <section className="mx-auto max-w-3xl animate-fade-in pb-20">
@@ -33,7 +56,18 @@ export function ArticleScreen() {
           Reader mode · ~{article.estimatedMinutes} min
           {live ? " · live fetch" : " · structured card"}
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
+          {structured && (
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={retrying}
+              onClick={() => void retryLive()}
+            >
+              <RotateCcw className="mr-1.5 h-3.5 w-3.5" />
+              {retrying ? "Retrying…" : "Retry live fetch"}
+            </Button>
+          )}
           <Button variant="secondary" size="sm" onClick={() => setMiloOpen(true)}>
             <Sparkles className="mr-1.5 h-3.5 w-3.5" />
             {MILO_NAME}
@@ -45,12 +79,21 @@ export function ArticleScreen() {
       </div>
 
       {structured && (
-        <div className="mb-4 flex items-start gap-3 rounded-2xl border border-orange/40 bg-orange/10 px-4 py-3 text-sm text-navy">
-          <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0 text-orange" />
-          <p>
-            {article.readabilityNote ??
-              "Surf couldn’t load a clean live copy of this page. You’re reading a structured research card from trusted search metadata instead of a broken or missing webpage."}
-          </p>
+        <div className="mb-4 flex flex-wrap items-start justify-between gap-3 rounded-2xl border border-orange/40 bg-orange/10 px-4 py-3 text-sm text-navy">
+          <div className="flex items-start gap-3">
+            <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0 text-orange" />
+            <p>
+              {article.readabilityNote ??
+                "Surf couldn’t load a clean live copy of this page. You’re reading a structured research card from trusted search metadata instead of a broken webpage."}
+            </p>
+          </div>
+          <Button
+            size="sm"
+            variant="secondary"
+            onClick={() => navigate(ROUTES.search)}
+          >
+            Back to results
+          </Button>
         </div>
       )}
 

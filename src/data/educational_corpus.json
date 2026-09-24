@@ -2347,6 +2347,448 @@
     "baseLegitimacy": 95
   },
   {
+    "id": "usgs-volcano-hazards",
+    "title": "Volcano Hazards Program — USGS",
+    "url": "https://www.usgs.gov/programs/VHP",
+    "domain": "usgs.gov",
+    "publisher": "U.S. Geological Survey",
+    "contentTier": "verified_reference",
+    "gradeMin": 5,
+    "gradeMax": 12,
+    "abstractText": "USGS Volcano Hazards Program monitors active volcanoes, explains eruption styles, and shares how communities prepare for ash, lava, and lahars.",
+    "vocabulary": [
+      "lahar",
+      "ash",
+      "monitoring",
+      "hazard",
+      "eruption"
+    ],
+    "citation": "U.S. Geological Survey. \"Volcano Hazards Program.\"",
+    "topics": [
+      "volcanoes",
+      "earth science",
+      "safety"
+    ],
+    "keywords": [
+      "volcano",
+      "hazards",
+      "usgs",
+      "eruption"
+    ],
+    "baseLegitimacy": 96
+  },
+  {
+    "id": "natgeo-edu-volcanoes",
+    "title": "Volcanoes — National Geographic Education",
+    "url": "https://education.nationalgeographic.org/resource/volcanoes/",
+    "domain": "education.nationalgeographic.org",
+    "publisher": "National Geographic Society",
+    "contentTier": "educational_magazine",
+    "gradeMin": 3,
+    "gradeMax": 9,
+    "abstractText": "Classroom-ready overview of volcano types, magma chemistry, and how eruptions reshape landscapes over time.",
+    "vocabulary": [
+      "stratovolcano",
+      "shield volcano",
+      "magma chamber"
+    ],
+    "citation": "National Geographic Education. \"Volcanoes.\"",
+    "topics": [
+      "volcanoes",
+      "earth science",
+      "geology"
+    ],
+    "keywords": [
+      "volcano",
+      "eruption",
+      "natgeo",
+      "classroom"
+    ],
+    "baseLegitimacy": 92
+  },
+  {
+    "id": "amnh-earthquakes",
+    "title": "Earthquakes — AMNH",
+    "url": "https://www.amnh.org/exhibitions/permanent/planet-earth/earthquakes",
+    "domain": "amnh.org",
+    "publisher": "American Museum of Natural History",
+    "contentTier": "educational_magazine",
+    "gradeMin": 4,
+    "gradeMax": 9,
+    "abstractText": "Museum explainers connect faults, seismic waves, and plate tectonics so students can picture why the ground shakes.",
+    "vocabulary": [
+      "seismic wave",
+      "epicenter",
+      "fault line"
+    ],
+    "citation": "American Museum of Natural History. \"Earthquakes.\"",
+    "topics": [
+      "earthquakes",
+      "plate tectonics",
+      "earth science"
+    ],
+    "keywords": [
+      "earthquake",
+      "fault",
+      "museum",
+      "seismic"
+    ],
+    "baseLegitimacy": 93
+  },
+  {
+    "id": "nasa-earth-observatory-volcano",
+    "title": "Volcanoes from Space — NASA Earth Observatory",
+    "url": "https://earthobservatory.nasa.gov/topic/volcanoes",
+    "domain": "earthobservatory.nasa.gov",
+    "publisher": "NASA Earth Observatory",
+    "contentTier": "authoritative_research",
+    "gradeMin": 6,
+    "gradeMax": 12,
+    "abstractText": "Satellite imagery and science features show how NASA observes volcanic eruptions and ash clouds from space.",
+    "vocabulary": [
+      "satellite",
+      "ash cloud",
+      "remote sensing"
+    ],
+    "citation": "NASA Earth Observatory. \"Volcanoes.\"",
+    "topics": [
+      "volcanoes",
+      "space",
+      "earth science"
+    ],
+    "keywords": [
+      "volcano",
+      "nasa",
+      "satellite",
+      "ash"
+    ],
+    "baseLegitimacy": 95
+  },
+  {
+    "id": "noaa-tsunamis",
+    "title": "Tsunamis — NOAA",
+    "url": "https://oceanservice.noaa.gov/facts/tsunami.html",
+    "domain": "oceanservice.noaa.gov",
+    "publisher": "NOAA Ocean Service",
+    "contentTier": "verified_reference",
+    "gradeMin": 4,
+    "gradeMax": 10,
+    "abstractText": "NOAA explains how undersea earthquakes and landslides can generate tsunami waves and how warning systems work.",
+    "vocabulary": [
+      "tsunami",
+      "wave",
+      "warning",
+      "displacement"
+    ],
+    "citation": "NOAA Ocean Service. \"What is a Tsunami?\"",
+    "topics": [
+      "tsunamis",
+      "earthquakes",
+      "ocean",
+      "earth science"
+    ],
+    "keywords": [
+      "tsunami",
+      "earthquake",
+      "ocean",
+      "noaa"
+    ],
+    "baseLegitimacy": 95
+  },
+  {
+    "id": "khan-place-value",
+    "title": "Place Value — Khan Academy",
+    "url": "https://www.khanacademy.org/math/arithmetic/arith-review-place-value",
+    "domain": "khanacademy.org",
+    "publisher": "Khan Academy",
+    "contentTier": "educational_magazine",
+    "gradeMin": 1,
+    "gradeMax": 5,
+    "abstractText": "Guided practice that builds place-value understanding from ones through thousands for early elementary math.",
+    "vocabulary": [
+      "ones",
+      "tens",
+      "hundreds",
+      "place value"
+    ],
+    "citation": "Khan Academy. \"Place Value.\"",
+    "topics": [
+      "place value",
+      "math",
+      "arithmetic"
+    ],
+    "keywords": [
+      "place value",
+      "math",
+      "elementary"
+    ],
+    "baseLegitimacy": 89
+  },
+  {
+    "id": "ck12-photosynthesis-flex",
+    "title": "Photosynthesis FlexBook Concept — CK-12",
+    "url": "https://www.ck12.org/c/biology/photosynthesis/",
+    "domain": "ck12.org",
+    "publisher": "CK-12 Foundation",
+    "contentTier": "educational_magazine",
+    "gradeMin": 4,
+    "gradeMax": 9,
+    "abstractText": "Readable biology explainers and practice on how plants capture light energy and release oxygen.",
+    "vocabulary": [
+      "glucose",
+      "stomata",
+      "chloroplast"
+    ],
+    "citation": "CK-12 Foundation. \"Photosynthesis.\"",
+    "topics": [
+      "photosynthesis",
+      "biology",
+      "plants"
+    ],
+    "keywords": [
+      "photosynthesis",
+      "plants",
+      "ck12"
+    ],
+    "baseLegitimacy": 88
+  },
+  {
+    "id": "loc-bill-of-rights",
+    "title": "Bill of Rights — Library of Congress",
+    "url": "https://www.loc.gov/rr/program/bib/ourdocs/billofrights.html",
+    "domain": "loc.gov",
+    "publisher": "Library of Congress",
+    "contentTier": "verified_reference",
+    "gradeMin": 5,
+    "gradeMax": 12,
+    "abstractText": "Primary-source context for the first ten amendments, helping students connect rights language to historical debate.",
+    "vocabulary": [
+      "amendment",
+      "rights",
+      "ratification"
+    ],
+    "citation": "Library of Congress. \"Bill of Rights.\"",
+    "topics": [
+      "constitution",
+      "civics",
+      "american history",
+      "primary sources"
+    ],
+    "keywords": [
+      "bill of rights",
+      "constitution",
+      "loc"
+    ],
+    "baseLegitimacy": 97
+  },
+  {
+    "id": "nps-geology",
+    "title": "Geology — National Park Service",
+    "url": "https://www.nps.gov/subjects/geology/index.htm",
+    "domain": "nps.gov",
+    "publisher": "National Park Service",
+    "contentTier": "educational_magazine",
+    "gradeMin": 3,
+    "gradeMax": 10,
+    "abstractText": "Park geology stories link rock formations, volcanoes, and erosion to places students can visit and study.",
+    "vocabulary": [
+      "formation",
+      "erosion",
+      "park",
+      "landscape"
+    ],
+    "citation": "National Park Service. \"Geology.\"",
+    "topics": [
+      "geology",
+      "rocks",
+      "volcanoes",
+      "earth science"
+    ],
+    "keywords": [
+      "geology",
+      "parks",
+      "rocks",
+      "nps"
+    ],
+    "baseLegitimacy": 93
+  },
+  {
+    "id": "epa-air-quality-kids",
+    "title": "Air Quality — EPA Students",
+    "url": "https://www.epa.gov/environmental-topics/air-topics",
+    "domain": "epa.gov",
+    "publisher": "U.S. Environmental Protection Agency",
+    "contentTier": "verified_reference",
+    "gradeMin": 4,
+    "gradeMax": 10,
+    "abstractText": "EPA explainers introduce air pollution basics and why clean air matters for health and ecosystems.",
+    "vocabulary": [
+      "pollution",
+      "ozone",
+      "particle",
+      "emission"
+    ],
+    "citation": "U.S. Environmental Protection Agency. \"Air Topics.\"",
+    "topics": [
+      "air quality",
+      "climate",
+      "health",
+      "conservation"
+    ],
+    "keywords": [
+      "air",
+      "pollution",
+      "epa",
+      "climate"
+    ],
+    "baseLegitimacy": 94
+  },
+  {
+    "id": "si-human-origins",
+    "title": "Human Origins — Smithsonian",
+    "url": "https://humanorigins.si.edu/",
+    "domain": "humanorigins.si.edu",
+    "publisher": "Smithsonian Institution",
+    "contentTier": "educational_magazine",
+    "gradeMin": 6,
+    "gradeMax": 12,
+    "abstractText": "Evidence-based exhibits and educator resources on human evolution for middle and high school inquiry.",
+    "vocabulary": [
+      "fossil",
+      "ancestor",
+      "evolution",
+      "evidence"
+    ],
+    "citation": "Smithsonian. \"Human Origins.\"",
+    "topics": [
+      "fossils",
+      "biology",
+      "history",
+      "science practices"
+    ],
+    "keywords": [
+      "human origins",
+      "fossils",
+      "smithsonian"
+    ],
+    "baseLegitimacy": 94
+  },
+  {
+    "id": "nasa-water-in-space",
+    "title": "Water in the Solar System — NASA Science",
+    "url": "https://science.nasa.gov/solar-system/ocean-worlds/",
+    "domain": "science.nasa.gov",
+    "publisher": "NASA",
+    "contentTier": "authoritative_research",
+    "gradeMin": 5,
+    "gradeMax": 12,
+    "abstractText": "NASA explores ocean worlds and why water beyond Earth matters for understanding habitability.",
+    "vocabulary": [
+      "ocean world",
+      "habitability",
+      "icy moon"
+    ],
+    "citation": "NASA Science. \"Ocean Worlds.\"",
+    "topics": [
+      "water cycle",
+      "solar system",
+      "space",
+      "astronomy"
+    ],
+    "keywords": [
+      "water",
+      "ocean worlds",
+      "nasa",
+      "space"
+    ],
+    "baseLegitimacy": 96
+  },
+  {
+    "id": "pbs-civil-rights",
+    "title": "Civil Rights — PBS LearningMedia",
+    "url": "https://www.pbslearningmedia.org/collection/civil-rights/",
+    "domain": "pbslearningmedia.org",
+    "publisher": "PBS LearningMedia",
+    "contentTier": "educational_magazine",
+    "gradeMin": 4,
+    "gradeMax": 10,
+    "abstractText": "Classroom media and primary voices that help students investigate civil rights struggles and strategies.",
+    "vocabulary": [
+      "protest",
+      "equality",
+      "nonviolence"
+    ],
+    "citation": "PBS LearningMedia. \"Civil Rights.\"",
+    "topics": [
+      "civil rights",
+      "american history",
+      "primary sources"
+    ],
+    "keywords": [
+      "civil rights",
+      "pbs",
+      "history"
+    ],
+    "baseLegitimacy": 91
+  },
+  {
+    "id": "britannica-photosynthesis-kids",
+    "title": "Photosynthesis — Britannica Kids",
+    "url": "https://kids.britannica.com/kids/article/photosynthesis/353608",
+    "domain": "kids.britannica.com",
+    "publisher": "Encyclopaedia Britannica",
+    "contentTier": "verified_reference",
+    "gradeMin": 2,
+    "gradeMax": 6,
+    "abstractText": "A clear kids encyclopedia article on how plants make food from sunlight, water, and carbon dioxide.",
+    "vocabulary": [
+      "chlorophyll",
+      "oxygen",
+      "energy"
+    ],
+    "citation": "Britannica Kids. \"Photosynthesis.\"",
+    "topics": [
+      "photosynthesis",
+      "plants",
+      "biology"
+    ],
+    "keywords": [
+      "photosynthesis",
+      "kids",
+      "britannica"
+    ],
+    "baseLegitimacy": 91
+  },
+  {
+    "id": "weather-gov-clouds",
+    "title": "Cloud Types — National Weather Service",
+    "url": "https://www.weather.gov/jetstream/clouds_max",
+    "domain": "weather.gov",
+    "publisher": "National Weather Service",
+    "contentTier": "verified_reference",
+    "gradeMin": 3,
+    "gradeMax": 9,
+    "abstractText": "JetStream cloud lessons help students name cloud types and connect them to weather changes.",
+    "vocabulary": [
+      "cumulus",
+      "stratus",
+      "cirrus",
+      "nimbus"
+    ],
+    "citation": "National Weather Service. \"Clouds.\"",
+    "topics": [
+      "weather",
+      "atmosphere",
+      "earth science"
+    ],
+    "keywords": [
+      "clouds",
+      "weather",
+      "nws"
+    ],
+    "baseLegitimacy": 95
+  },
+  {
     "id": "farm-tectonics-spam",
     "title": "10 Crazy Plate Tectonics Facts That Will Shock You",
     "url": "https://viralnova-clickbait.example/plate-tectonics",

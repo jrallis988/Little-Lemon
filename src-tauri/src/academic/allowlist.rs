@@ -157,6 +157,16 @@ pub const TRUSTED_DOMAINS: &[TrustedDomain] = &[
         label: "NASA Climate Kids",
     },
     TrustedDomain {
+        host: "earthobservatory.nasa.gov",
+        score: 95,
+        label: "NASA Earth Observatory",
+    },
+    TrustedDomain {
+        host: "humanorigins.si.edu",
+        score: 94,
+        label: "Smithsonian Human Origins",
+    },
+    TrustedDomain {
         host: "pbslearningmedia.org",
         score: 90,
         label: "PBS LearningMedia",

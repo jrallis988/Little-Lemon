@@ -36,6 +36,7 @@ export const DEFAULT_WHITELIST = [
   "science.nasa.gov",
   "nasa.gov",
   "climatekids.nasa.gov",
+  "earthobservatory.nasa.gov",
   "www.loc.gov",
   "loc.gov",
   "kids.britannica.com",
@@ -68,6 +69,7 @@ export const DEFAULT_WHITELIST = [
   "acs.org",
   "usa.gov",
   "fs.usda.gov",
+  "humanorigins.si.edu",
 ] as const;
 
 /** EBSCO-style source-type facets shown in Refine Results */

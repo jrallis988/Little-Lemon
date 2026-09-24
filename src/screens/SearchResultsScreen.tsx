@@ -72,6 +72,7 @@ export function SearchResultsScreen() {
       setLoading(true);
       setQuery(q);
       const response = await runAcademicSearch(q, {
+        // Band drives hard filtering; exact grade is a soft preference inside search.
         grade: profile?.grade,
         gradeBand: band === "all" ? undefined : band,
         limit: 12,

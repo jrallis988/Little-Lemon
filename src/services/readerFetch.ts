@@ -19,11 +19,11 @@ const ERROR_TITLE_MARKERS = [
   "404",
   "page not found",
   "not found",
-  "error",
   "access denied",
   "forbidden",
   "unavailable",
   "just a moment",
+  "attention required",
 ];
 
 const ERROR_BODY_MARKERS = [
@@ -36,11 +36,12 @@ const ERROR_BODY_MARKERS = [
   "access denied",
   "enable javascript",
   "checking your browser",
+  "verify you are human",
 ];
 
 /**
- * Always-on reader: Tauri native fetch → Jina reader proxy → structured fallback.
- * Rejects error/captcha pages so students never land on a raw 404 in reader mode.
+ * Always-on reader: Tauri native fetch → Jina reader proxy (URL variants) →
+ * rich structured research card. Never dumps raw 404 HTML into reader mode.
  */
 export async function loadReadableArticle(input: {
   url: string;
@@ -50,31 +51,37 @@ export async function loadReadableArticle(input: {
   citation?: string;
   vocabulary?: string[];
 }): Promise<SanitizedArticle> {
+  const candidates = urlCandidates(input.url);
+
   if (await isTauriRuntime()) {
-    const raw = await invokeCommand<FetchArticleResponse>("fetch_article", {
-      url: input.url,
-    });
-    const html = raw?.contentHtml ?? raw?.content_html ?? "";
-    if (raw && html && !looksUnreadable(raw.title || input.title, html)) {
-      return decorate(
-        {
-          url: raw.url || input.url,
-          title: raw.title || input.title,
-          source: raw.source || extractDomain(input.url),
-          contentHtml: html,
-          estimatedMinutes:
-            raw.estimatedMinutes ?? raw.estimated_minutes ?? 4,
-          fetchedLive: true,
-          readability: "live",
-        },
-        input,
-      );
+    for (const candidate of candidates) {
+      const raw = await invokeCommand<FetchArticleResponse>("fetch_article", {
+        url: candidate,
+      });
+      const html = raw?.contentHtml ?? raw?.content_html ?? "";
+      if (raw && html && !looksUnreadable(raw.title || input.title, html)) {
+        return decorate(
+          {
+            url: raw.url || candidate,
+            title: raw.title || input.title,
+            source: raw.source || extractDomain(candidate),
+            contentHtml: html,
+            estimatedMinutes:
+              raw.estimatedMinutes ?? raw.estimated_minutes ?? 4,
+            fetchedLive: true,
+            readability: "live",
+          },
+          input,
+        );
+      }
     }
   }
 
-  const jina = await fetchViaJina(input.url, input.title);
-  if (jina && jina.readability === "live") {
-    return decorate(jina, input);
+  for (const candidate of candidates) {
+    const jina = await fetchViaJina(candidate, input.title);
+    if (jina && jina.readability === "live") {
+      return decorate(jina, input);
+    }
   }
 
   const structured = decorate(buildStructuredReader(input), input);
@@ -82,22 +89,60 @@ export async function loadReadableArticle(input: {
     ...structured,
     readability: "structured",
     readabilityNote:
-      "Surf couldn’t open a clean live copy of this page, so you’re seeing a structured research card from search metadata instead.",
+      "Surf couldn’t open a clean live copy of this page, so you’re seeing a structured research card from search metadata instead. Try another verified source from your results.",
     fetchedLive: false,
   };
+}
+
+/** Prefer https, www/non-www, and trailing-slash variants. */
+export function urlCandidates(rawUrl: string): string[] {
+  let normalized = rawUrl.trim();
+  if (!/^https?:\/\//i.test(normalized)) {
+    normalized = `https://${normalized}`;
+  }
+  let parsed: URL;
+  try {
+    parsed = new URL(normalized);
+  } catch {
+    return [normalized];
+  }
+  parsed.protocol = "https:";
+  const host = parsed.hostname.replace(/^www\./i, "");
+  const path = parsed.pathname.replace(/\/$/, "") || "/";
+  const search = parsed.search;
+
+  const out: string[] = [];
+  const push = (value: string) => {
+    if (!out.includes(value)) out.push(value);
+  };
+  push(`https://${host}${path === "/" ? "/" : path}${search}`);
+  push(`https://www.${host}${path === "/" ? "/" : path}${search}`);
+  if (path !== "/") {
+    push(`https://${host}${path}/${search}`);
+    push(`https://www.${host}${path}/${search}`);
+  }
+  // Keep the original form first if it differs
+  return [normalized, ...out.filter((value) => value !== normalized)].slice(
+    0,
+    4,
+  );
 }
 
 export function looksUnreadable(title: string, body: string): boolean {
   const hayTitle = title.toLowerCase();
   const hayBody = body.toLowerCase();
-  if (ERROR_TITLE_MARKERS.some((marker) => hayTitle.includes(marker))) {
+  // Avoid treating titles like "Terror" / research words as errors; require clear markers.
+  if (
+    ERROR_TITLE_MARKERS.some((marker) => hayTitle.includes(marker)) ||
+    /\b404\b/.test(hayTitle)
+  ) {
     return true;
   }
   const hits = ERROR_BODY_MARKERS.filter((marker) => hayBody.includes(marker));
-  if (hits.length >= 1 && body.replace(/<[^>]+>/g, " ").trim().length < 900) {
-    return true;
-  }
+  const plain = body.replace(/<[^>]+>/g, " ").trim();
+  if (hits.length >= 1 && plain.length < 900) return true;
   if (hits.length >= 2) return true;
+  if (plain.length < 120) return true;
   return false;
 }
 
@@ -107,7 +152,7 @@ async function fetchViaJina(
 ): Promise<SanitizedArticle | null> {
   try {
     const controller = new AbortController();
-    const timer = window.setTimeout(() => controller.abort(), 12000);
+    const timer = window.setTimeout(() => controller.abort(), 10000);
     const response = await fetch(`https://r.jina.ai/${url}`, {
       headers: { Accept: "text/plain" },
       signal: controller.signal,
@@ -172,7 +217,7 @@ function looksLikeMarkdownChrome(part: string): boolean {
   return (
     part.startsWith("![") ||
     /^image\s+\d+/i.test(part) ||
-    part.includes("U.S. flag") && part.length < 80
+    (part.includes("U.S. flag") && part.length < 80)
   );
 }
 
@@ -197,6 +242,11 @@ export function buildStructuredReader(input: {
           .map((term) => `<li>${escapeHtml(term)}</li>`)
           .join("")}</ul></section>`
       : "";
+  const studyBlock = `<section class="study-moves"><h2>Study moves</h2><ul>
+    <li>Underline one claim and one piece of evidence in the abstract above.</li>
+    <li>Rewrite the main idea in one sentence using your own words.</li>
+    <li>Ask Milo to quiz you on a vocabulary word before you cite this source.</li>
+  </ul></section>`;
   const citationBlock = input.citation
     ? `<p class="citation"><strong>Citation:</strong> ${escapeHtml(input.citation)}</p>`
     : "";
@@ -204,7 +254,7 @@ export function buildStructuredReader(input: {
 
   const contentHtml = base.contentHtml.replace(
     '<p class="calm-note">',
-    `${vocabBlock}${citationBlock}${linkBlock}<p class="calm-note">`,
+    `${vocabBlock}${studyBlock}${citationBlock}${linkBlock}<p class="calm-note">`,
   );
 
   return {
