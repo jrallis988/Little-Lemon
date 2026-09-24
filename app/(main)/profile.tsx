@@ -100,6 +100,11 @@ export default function ProfileScreen() {
             <Text style={styles.kicker}>{profile.role}</Text>
             <Text style={styles.name}>{profile.displayName}</Text>
             <Text style={styles.email}>{profile.email}</Text>
+            <Link href="/legal" asChild>
+              <Pressable style={styles.secondary}>
+                <Text style={styles.secondaryText}>Policies & trust</Text>
+              </Pressable>
+            </Link>
             {profile.role === 'artist' ? (
               <>
                 <Link href="/(main)/studio" asChild>
@@ -113,7 +118,13 @@ export default function ProfileScreen() {
                   </Pressable>
                 </Link>
               </>
-            ) : null}
+            ) : (
+              <Link href={`/user/${profile.id}`} asChild>
+                <Pressable style={styles.secondary}>
+                  <Text style={styles.secondaryText}>Public listener profile</Text>
+                </Pressable>
+              </Link>
+            )}
             <Pressable
               style={styles.signOut}
               onPress={() => void signOut()}

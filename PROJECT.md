@@ -46,10 +46,10 @@ Do **not** build these in parallel. Ship in order:
 | **1 — Spotify outbound** | Open on Spotify (+ Add to Spotify via supported hand-off / later OAuth). Catalog pages hand listening to Spotify. |
 | **2 — Artist uploads** | Supabase Storage + DB for audio, artwork, bios, release metadata; ownership RLS; progress/errors/limits. |
 | **3 — Persist taste** | Logs, ratings, reviews, lists, follows, downloads, reposts → Supabase (Zustand = temp UI only). |
-| **4 — Catalog + search** | Spotify/MusicBrainz **metadata** ingest (no Spotify audio). DB-backed search across catalog + uploads. |
-| **5 — Discovery** | Find filters (Unsigned / New / Recently Joined / Genre) + Featured / Just Found from real DB + editorial tools. |
+| **4 — Catalog + search** | Spotify/MusicBrainz **metadata** ingest (no Spotify audio). DB-backed hybrid search across catalog + uploads. |
+| **5 — Discovery** | Find filters (Unsigned / New / Recently Joined / Genre) + Featured / Just Found from editorial slots. |
 | **6 — Profiles & activity** | Artist archive pages, listener profiles/diaries, chronological Following feed. |
-| **7 — Trust & scale** | ToS, privacy, upload/copyright policies, reporting/takedown, admin disable without destroy, loading/empty/error states, large-catalog mobile UX. |
+| **7 — Trust & polish** | ToS, privacy, upload/copyright policies, reporting/takedown, loading/empty/error states. |
 
 **Later (after core):** notifications, shows/gigs, artist wall (needs moderation).
 
@@ -72,7 +72,7 @@ Scaffold still uses rich demo/seed data for Find + catalog browse. Supabase auth
 - Track page: log/rate/review/download/repost write to Supabase when signed in
 - Artist follow + chronological Following feed (falls back to demo until you follow people)
 
-Apply Phase 2 then Phase 3 migrations before persistence works. Prefer extending existing patterns over inventing parallel design systems.
+Apply Phase 2 then Phase 3 then Phase 4–7 migrations before persistence, search FTS, editorial slots, and reports work. Prefer extending existing patterns over inventing parallel design systems.
 
 ## Artwork & media sources
 

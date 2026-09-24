@@ -88,6 +88,11 @@ export default function RootLayout() {
             name="track/[id]"
             options={{ title: 'Track', presentation: 'card' }}
           />
+          <Stack.Screen name="legal" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="user/[id]"
+            options={{ title: 'Listener', presentation: 'card' }}
+          />
         </Stack>
       </View>
     </QueryClientProvider>

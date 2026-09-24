@@ -1,5 +1,5 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Pressable,
   ScrollView,
@@ -11,14 +11,13 @@ import {
 
 import { DirectoryArtistRow } from '@/components/directory/DirectoryArtistRow';
 import { TrackListing } from '@/components/tracks/TrackListing';
+import { EmptyState, LoadingState } from '@/components/ui/EmptyState';
 import { StaticBackground } from '@/components/ui/StaticBackground';
 import { colors, fonts, portalBox, spacing } from '@/constants/theme';
 import { useBottomInset } from '@/hooks/useBottomInset';
+import { describeCatalogSync, searchCatalogHybrid } from '@/lib/catalogQuery';
 import { totalDownloadsForArtist } from '@/lib/demoData';
-import {
-  type SearchFacet,
-  searchCatalog,
-} from '@/lib/searchCatalog';
+import { type CatalogSearchResult, type SearchFacet } from '@/lib/searchCatalog';
 import { getSpotifySyncStatus } from '@/lib/spotify';
 
 const FACETS: { id: SearchFacet; label: string }[] = [
@@ -53,19 +52,47 @@ export default function SearchScreen() {
   const [facet, setFacet] = useState<SearchFacet>(
     (params.facet as SearchFacet) || 'all',
   );
+  const [results, setResults] = useState<CatalogSearchResult>({
+    query: '',
+    facet: 'all',
+    artists: [],
+    tracks: [],
+    genres: [],
+  });
+  const [source, setSource] = useState<'hybrid' | 'demo'>('demo');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (typeof params.q === 'string') setQuery(params.q);
   }, [params.q]);
 
-  const results = useMemo(
-    () => searchCatalog(query, facet),
-    [query, facet],
-  );
+  useEffect(() => {
+    let cancelled = false;
+    const q = query.trim();
+    if (!q) {
+      setResults({ query: '', facet, artists: [], tracks: [], genres: [] });
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
+    const handle = setTimeout(() => {
+      void searchCatalogHybrid(q, facet).then((res) => {
+        if (cancelled) return;
+        setResults(res);
+        setSource(res.source);
+        setLoading(false);
+      });
+    }, 200);
+    return () => {
+      cancelled = true;
+      clearTimeout(handle);
+    };
+  }, [query, facet]);
 
   const hasQuery = query.trim().length > 0;
   const empty =
     hasQuery &&
+    !loading &&
     results.artists.length === 0 &&
     results.tracks.length === 0 &&
     results.genres.length === 0;
@@ -126,7 +153,8 @@ export default function SearchScreen() {
           Coverage target: Spotify-scale contemporary catalog (~2010–present).
           {spotify.configured
             ? ' Spotify client configured — sync Edge Function next.'
-            : ' Demo seed is live; connect Spotify sync for full coverage.'}
+            : ' Demo seed is live; connect Spotify sync for full coverage.'}{' '}
+          {describeCatalogSync()} Searching {source === 'hybrid' ? 'database + seed' : 'seed catalog'}.
         </Text>
 
         {!hasQuery ? (
@@ -146,11 +174,13 @@ export default function SearchScreen() {
           </View>
         ) : null}
 
+        {loading ? <LoadingState label="Searching catalog…" /> : null}
+
         {empty ? (
-          <Text style={styles.empty}>
-            Nothing matched “{query.trim()}” in the demo catalog. Full Spotify
-            sync will fill gaps — try another spelling or facet.
-          </Text>
+          <EmptyState
+            title={`No matches for “${query.trim()}”`}
+            body="Try another spelling or facet. Uploaded artists and synced catalog rows appear here as they land in the database."
+          />
         ) : null}
 
         {results.artists.length > 0 ? (

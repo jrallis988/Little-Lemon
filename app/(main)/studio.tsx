@@ -28,6 +28,7 @@ import {
 } from '@/lib/artistUploads';
 import type { ProfileRow, ReleaseRow, TrackRow } from '@/lib/dbTypes';
 import { formatBytes, UPLOAD_LIMITS, type PickedFile } from '@/lib/uploadLimits';
+import { upsertEditorialSlot } from '@/lib/editorialApi';
 import { isSupabaseConfigured } from '@/lib/supabase';
 import { useUserStore } from '@/store/useUserStore';
 import type { ArtistStatus } from '@/types/models';
@@ -74,6 +75,9 @@ export default function StudioScreen() {
   const [releaseArt, setReleaseArt] = useState<PickedFile | null>(null);
   const [releaseProgress, setReleaseProgress] = useState<UploadProgress | null>(null);
   const [releaseErr, setReleaseErr] = useState<string | null>(null);
+  const [justFoundId, setJustFoundId] = useState('');
+  const [editorialMsg, setEditorialMsg] = useState<string | null>(null);
+  const [editorialErr, setEditorialErr] = useState<string | null>(null);
 
   const refresh = useCallback(async () => {
     if (!isSupabaseConfigured || !session) {
@@ -518,6 +522,52 @@ export default function StudioScreen() {
             ) : null}
           </View>
         </View>
+
+        {artist?.is_editor ? (
+          <View style={styles.box}>
+            <View style={styles.boxHeader}>
+              <Text style={styles.boxTitle}>Editorial · Just Found</Text>
+            </View>
+            <View style={styles.boxBody}>
+              <Text style={styles.hint}>
+                Human curation only — paste an artist profile id to feature in
+                Just Found. No engagement ranking.
+              </Text>
+              <Field
+                label="Artist id"
+                value={justFoundId}
+                onChangeText={setJustFoundId}
+                placeholder="uuid of artist profile"
+              />
+              <Pressable
+                style={styles.primaryBtn}
+                onPress={() => {
+                  setEditorialMsg(null);
+                  setEditorialErr(null);
+                  void upsertEditorialSlot({
+                    slot: 'just_found',
+                    targetKind: 'artist',
+                    targetId: justFoundId.trim(),
+                    title: 'Just Found',
+                  })
+                    .then(() => {
+                      setEditorialMsg('Just Found slot published.');
+                      setJustFoundId('');
+                    })
+                    .catch((err) =>
+                      setEditorialErr(
+                        err instanceof Error ? err.message : 'Editorial save failed.',
+                      ),
+                    );
+                }}
+              >
+                <Text style={styles.primaryBtnText}>Publish Just Found</Text>
+              </Pressable>
+              {editorialMsg ? <Text style={styles.success}>{editorialMsg}</Text> : null}
+              {editorialErr ? <Text style={styles.error}>{editorialErr}</Text> : null}
+            </View>
+          </View>
+        ) : null}
       </ScrollView>
     </StaticBackground>
   );

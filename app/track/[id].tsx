@@ -13,11 +13,14 @@ import {
 import { RatingStars } from '@/components/social/RatingStars';
 import { ReviewCard } from '@/components/social/ReviewCard';
 import { SpotifyOutboundActions } from '@/components/spotify/SpotifyOutboundActions';
+import { ReportButton } from '@/components/trust/ReportButton';
 import { ArtworkImage } from '@/components/ui/ArtworkImage';
+import { EmptyState, LoadingState } from '@/components/ui/EmptyState';
 import { StaticBackground } from '@/components/ui/StaticBackground';
 import { colors, fonts, portalBox, spacing } from '@/constants/theme';
 import { useBottomInset } from '@/hooks/useBottomInset';
-import { DEMO_ARTISTS, DEMO_TRACKS, reviewsForTrack } from '@/lib/demoData';
+import { fetchTrackById } from '@/lib/catalogQuery';
+import { reviewsForTrack } from '@/lib/demoData';
 import { isSupabaseConfigured } from '@/lib/supabase';
 import { trackSpotifyTarget } from '@/lib/spotify';
 import {
@@ -27,7 +30,7 @@ import {
 } from '@/lib/tasteApi';
 import { useTasteStore } from '@/store/useTasteStore';
 import { useUserStore } from '@/store/useUserStore';
-import type { RatingValue, Review } from '@/types/models';
+import type { RatingValue, Review, Track, UserProfile } from '@/types/models';
 
 const RATING_OPTIONS: RatingValue[] = [1, 2, 3, 4, 5];
 
@@ -39,37 +42,52 @@ export default function TrackScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const bottomInset = useBottomInset();
   const session = useUserStore((s) => s.session);
-  const track = DEMO_TRACKS.find((t) => t.id === id) ?? DEMO_TRACKS[0];
-  const artist = DEMO_ARTISTS.find((a) => a.id === track.artistId);
-  const isCatalog =
-    track.catalogKind === 'catalog' || artist?.catalogKind === 'catalog';
-  const spotifyTarget = trackSpotifyTarget({
-    spotifyTrackId: track.spotifyTrackId,
-    title: track.title,
-    artistName: track.artistName,
-  });
+  const [track, setTrack] = useState<Track | null>(null);
+  const [artist, setArtist] = useState<UserProfile | null>(null);
+  const [loadingTrack, setLoadingTrack] = useState(true);
 
-  const logged = useTasteStore((s) => Boolean(s.loggedIds[track.id]));
-  const rating = useTasteStore((s) => s.ratings[track.id]);
-  const downloaded = useTasteStore((s) => Boolean(s.downloadedIds[track.id]));
-  const reposted = useTasteStore((s) => Boolean(s.repostedIds[track.id]));
+  useEffect(() => {
+    let cancelled = false;
+    setLoadingTrack(true);
+    void fetchTrackById(id ?? '').then((res) => {
+      if (cancelled) return;
+      setTrack(res.track);
+      setArtist(res.artist);
+      setLoadingTrack(false);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [id]);
+
+  const trackId = track?.id ?? '';
+  const logged = useTasteStore((s) => Boolean(s.loggedIds[trackId]));
+  const rating = useTasteStore((s) => s.ratings[trackId]);
+  const downloaded = useTasteStore((s) => Boolean(s.downloadedIds[trackId]));
+  const reposted = useTasteStore((s) => Boolean(s.repostedIds[trackId]));
   const tasteError = useTasteStore((s) => s.error);
   const toggleLog = useTasteStore((s) => s.toggleLog);
   const setRating = useTasteStore((s) => s.setRating);
   const downloadTrack = useTasteStore((s) => s.downloadTrack);
   const toggleRepost = useTasteStore((s) => s.toggleRepost);
 
-  const [reviews, setReviews] = useState<Review[]>(() =>
-    reviewsForTrack(track.id),
-  );
-  const [downloadCount, setDownloadCount] = useState(track.downloadCount);
-  const [repostCount, setRepostCount] = useState(track.repostCount);
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [downloadCount, setDownloadCount] = useState(0);
+  const [repostCount, setRepostCount] = useState(0);
   const [reviewBody, setReviewBody] = useState('');
   const [reviewBusy, setReviewBusy] = useState(false);
   const [reviewError, setReviewError] = useState<string | null>(null);
   const [actionHint, setActionHint] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (!track) return;
+    setDownloadCount(track.downloadCount);
+    setRepostCount(track.repostCount);
+    setReviews(reviewsForTrack(track.id));
+  }, [track]);
+
   const refreshReviews = useCallback(async () => {
+    if (!track) return;
     if (!isSupabaseConfigured) {
       setReviews(reviewsForTrack(track.id));
       return;
@@ -80,10 +98,13 @@ export default function TrackScreen() {
     } catch {
       setReviews(reviewsForTrack(track.id));
     }
-  }, [track.id]);
+  }, [track]);
+
+  const isCatalog =
+    track?.catalogKind === 'catalog' || artist?.catalogKind === 'catalog';
 
   const refreshSignals = useCallback(async () => {
-    if (!isSupabaseConfigured || isCatalog) return;
+    if (!track || !isSupabaseConfigured || isCatalog) return;
     try {
       const counts = await countSignalsForTrack(track.id);
       setDownloadCount(Math.max(track.downloadCount, counts.downloads));
@@ -91,12 +112,43 @@ export default function TrackScreen() {
     } catch {
       /* keep seed counts */
     }
-  }, [isCatalog, track.downloadCount, track.id, track.repostCount]);
+  }, [isCatalog, track]);
 
   useEffect(() => {
     void refreshReviews();
     void refreshSignals();
   }, [refreshReviews, refreshSignals]);
+
+  if (loadingTrack) {
+    return (
+      <StaticBackground>
+        <View style={{ padding: spacing.lg }}>
+          <LoadingState label="Loading track…" />
+        </View>
+      </StaticBackground>
+    );
+  }
+
+  if (!track) {
+    return (
+      <StaticBackground>
+        <View style={{ padding: spacing.lg }}>
+          <EmptyState
+            title="Track not found"
+            body="No catalog or upload row for this id."
+          />
+        </View>
+      </StaticBackground>
+    );
+  }
+
+  const spotifyTarget = trackSpotifyTarget({
+    spotifyTrackId: track.spotifyTrackId,
+    title: track.title,
+    artistName: track.artistName,
+  });
+
+  const current = track;
 
   async function onDownload() {
     setActionHint(null);
@@ -105,10 +157,10 @@ export default function TrackScreen() {
       return;
     }
     try {
-      await downloadTrack(track.id);
+      await downloadTrack(current.id);
       setDownloadCount((n) => n + (downloaded ? 0 : 1));
-      if (track.downloadUrl) {
-        await Linking.openURL(track.downloadUrl);
+      if (current.downloadUrl) {
+        await Linking.openURL(current.downloadUrl);
       } else {
         setActionHint(
           'Download recorded. Audio file will open here once the artist finishes uploading.',
@@ -126,7 +178,7 @@ export default function TrackScreen() {
       return;
     }
     const was = reposted;
-    await toggleRepost(track.id);
+    await toggleRepost(current.id);
     setRepostCount((n) => Math.max(0, n + (was ? -1 : 1)));
   }
 
@@ -143,7 +195,7 @@ export default function TrackScreen() {
     setReviewBusy(true);
     try {
       await upsertReview({
-        trackId: track.id,
+        trackId: current.id,
         rating,
         body: reviewBody,
       });
@@ -319,6 +371,8 @@ export default function TrackScreen() {
             </View>
           )}
         </View>
+
+        <ReportButton targetKind="track" targetId={track.id} label="Report track" />
       </ScrollView>
     </StaticBackground>
   );

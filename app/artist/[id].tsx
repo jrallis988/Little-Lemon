@@ -1,41 +1,79 @@
 import { useLocalSearchParams } from 'expo-router';
+import { useEffect, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { ArtistArchiveMeta } from '@/components/artist/ArtistArchiveMeta';
 import { SpotifyOutboundActions } from '@/components/spotify/SpotifyOutboundActions';
+import { ReportButton } from '@/components/trust/ReportButton';
 import { ArtworkImage } from '@/components/ui/ArtworkImage';
+import { EmptyState, LoadingState } from '@/components/ui/EmptyState';
 import { TrackListing } from '@/components/tracks/TrackListing';
 import { StaticBackground } from '@/components/ui/StaticBackground';
 import { colors, fonts, portalBox, spacing } from '@/constants/theme';
 import { useBottomInset } from '@/hooks/useBottomInset';
-import { DEMO_ARTISTS, DEMO_TRACKS, isBrandNew } from '@/lib/demoData';
+import { fetchArtistById } from '@/lib/catalogQuery';
+import { isBrandNew } from '@/lib/demoData';
 import { artistSpotifyTarget } from '@/lib/spotify';
 import { useTasteStore } from '@/store/useTasteStore';
 import { useUserStore } from '@/store/useUserStore';
+import type { Track, UserProfile } from '@/types/models';
 
 /**
- * Artist archive page — dossier + track listings (no player).
- * Emphasizes unsigned / brand-new friend-group discovery.
+ * Artist archive page — dossier + track listings from DB when available.
  */
 export default function ArtistScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const bottomInset = useBottomInset();
-  const artist =
-    DEMO_ARTISTS.find((a) => a.id === id) ??
-    ({
-      id: id ?? 'unknown',
-      email: '',
-      displayName: 'Unknown Artist',
-      role: 'artist' as const,
-      bio: 'NO RECORD IN ARCHIVE.',
-      followerCount: 0,
-      status: 'INDEPENDENT' as const,
-      activeYears: 'N/A',
-      genreTags: [],
-      sceneDescription: 'UNINDEXED',
-    });
+  const session = useUserStore((s) => s.session);
+  const [artist, setArtist] = useState<UserProfile | null>(null);
+  const [tracks, setTracks] = useState<Track[]>([]);
+  const [source, setSource] = useState<'db' | 'demo' | 'none'>('none');
+  const [loading, setLoading] = useState(true);
 
-  const tracks = DEMO_TRACKS.filter((t) => t.artistId === artist.id);
+  const following = useTasteStore((s) =>
+    artist ? Boolean(s.followingIds[artist.id]) : false,
+  );
+  const toggleFollow = useTasteStore((s) => s.toggleFollow);
+  const tasteError = useTasteStore((s) => s.error);
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    void fetchArtistById(id ?? '').then((res) => {
+      if (cancelled) return;
+      setArtist(res.artist);
+      setTracks(res.tracks);
+      setSource(res.source);
+      setLoading(false);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [id]);
+
+  if (loading) {
+    return (
+      <StaticBackground>
+        <View style={{ padding: spacing.lg }}>
+          <LoadingState label="Loading artist archive…" />
+        </View>
+      </StaticBackground>
+    );
+  }
+
+  if (!artist) {
+    return (
+      <StaticBackground>
+        <View style={{ padding: spacing.lg }}>
+          <EmptyState
+            title="Artist not found"
+            body="No archive row for this id yet. Uploaded artists appear here after Studio saves a profile."
+          />
+        </View>
+      </StaticBackground>
+    );
+  }
+
   const isCatalog = artist.catalogKind === 'catalog';
   const totalDownloads = tracks.reduce((sum, t) => sum + t.downloadCount, 0);
   const totalReposts = tracks.reduce((sum, t) => sum + t.repostCount, 0);
@@ -44,11 +82,6 @@ export default function ArtistScreen() {
     spotifyArtistId: artist.spotifyArtistId,
     displayName: artist.displayName,
   });
-
-  const session = useUserStore((s) => s.session);
-  const following = useTasteStore((s) => Boolean(s.followingIds[artist.id]));
-  const toggleFollow = useTasteStore((s) => s.toggleFollow);
-  const tasteError = useTasteStore((s) => s.error);
 
   const statusLabel = isCatalog
     ? 'Catalog artist'
@@ -63,6 +96,9 @@ export default function ArtistScreen() {
       <ScrollView
         contentContainerStyle={[styles.content, { paddingBottom: bottomInset }]}
       >
+        <Text style={styles.sourceHint}>
+          {source === 'db' ? 'Live archive' : 'Seed archive'}
+        </Text>
         <View style={styles.headerBox}>
           <ArtworkImage
             uri={artist.avatarUrl}
@@ -158,6 +194,8 @@ export default function ArtistScreen() {
             <Text style={styles.empty}>Wall module ready / empty.</Text>
           </View>
         </View>
+
+        <ReportButton targetKind="artist" targetId={artist.id} label="Report artist" />
       </ScrollView>
     </StaticBackground>
   );
@@ -168,6 +206,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.md,
     paddingTop: spacing.md,
     gap: spacing.sm,
+  },
+  sourceHint: {
+    fontFamily: fonts.sans,
+    fontSize: 11,
+    color: colors.textDim,
+    textTransform: 'uppercase',
   },
   headerBox: {
     ...portalBox,
@@ -196,7 +240,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  
   headerMeta: {
     flex: 1,
     justifyContent: 'center',

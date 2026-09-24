@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { router } from 'expo-router';
 import {
   Pressable,
@@ -36,13 +36,15 @@ import {
   tracksByDownloads,
   tracksByReposts,
 } from '@/lib/demoData';
+import { fetchHomeEditorial, resolveTrackIds } from '@/lib/editorialApi';
+import type { UserProfile } from '@/types/models';
 
 const WIDE = 900;
 const MID = 700;
 
 /**
  * Editorial homepage — find unsigned bands + Letterboxd taste + PureVolume portal.
- * No music player.
+ * Featured / Just Found prefer human editorial_slots when present.
  */
 export default function EditorialScreen() {
   const [tab, setTab] = useState<EditorialTab>('Featured');
@@ -50,31 +52,36 @@ export default function EditorialScreen() {
   const bottomInset = useBottomInset(spacing.tabBar);
   const isWide = width >= WIDE;
   const isMid = width >= MID;
+  const [justFound, setJustFound] = useState<UserProfile[]>(() =>
+    brandNewArtists(4),
+  );
+  const [listeningIds, setListeningIds] = useState<string[]>([
+    ...EVERYBODY_LISTENING,
+  ]);
+  const [recentIds, setRecentIds] = useState<string[]>([...RECENTLY_FEATURED]);
+  const [editorialSource, setEditorialSource] = useState<'editorial' | 'demo'>(
+    'demo',
+  );
+
+  useEffect(() => {
+    void fetchHomeEditorial().then((home) => {
+      setJustFound(home.justFound);
+      setListeningIds(home.everybodyListeningIds);
+      setRecentIds(home.recentlyFeaturedIds);
+      setEditorialSource(home.source);
+    });
+  }, []);
 
   const spotlightTrack =
     getTrackById(FEATURED_SPOTLIGHT.trackId) ?? DEMO_TRACKS[0];
 
-  const listening = useMemo(
-    () =>
-      EVERYBODY_LISTENING.map((id) => getTrackById(id)).filter(
-        (t): t is NonNullable<typeof t> => t != null,
-      ),
-    [],
-  );
-
-  const recentlyFeatured = useMemo(
-    () =>
-      RECENTLY_FEATURED.map((id) => getTrackById(id)).filter(
-        (t): t is NonNullable<typeof t> => t != null,
-      ),
-    [],
-  );
+  const listening = useMemo(() => resolveTrackIds(listeningIds), [listeningIds]);
+  const recentlyFeatured = useMemo(() => resolveTrackIds(recentIds), [recentIds]);
 
   const topSongs = useMemo(() => tracksByReposts(), []);
   const topDownloads = useMemo(() => tracksByDownloads(), []);
   const reviews = useMemo(() => popularReviews(3), []);
   const lists = useMemo(() => DEMO_LISTS.slice(0, 2), []);
-  const justFound = useMemo(() => brandNewArtists(4), []);
 
   return (
     <StaticBackground>
@@ -109,6 +116,12 @@ export default function EditorialScreen() {
                   </View>
                 ) : null}
 
+                <Text style={styles.editorialHint}>
+                  Just Found ·{' '}
+                  {editorialSource === 'editorial'
+                    ? 'human editorial slots'
+                    : 'seed curation (wire editorial_slots)'}
+                </Text>
                 <JustFoundPanel artists={justFound} />
 
                 <Pressable
@@ -340,6 +353,14 @@ const styles = StyleSheet.create({
   reviewPad: {
     padding: spacing.sm,
     paddingBottom: 0,
+  },
+  editorialHint: {
+    fontFamily: fonts.sans,
+    fontSize: 11,
+    color: colors.textDim,
+    marginBottom: spacing.xs,
+    textTransform: 'uppercase',
+    letterSpacing: 0.3,
   },
   historyTeaser: {
     ...portalBox,

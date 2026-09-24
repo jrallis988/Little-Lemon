@@ -42,3 +42,17 @@ Also run `migrations/20260328120000_phase3_taste_persistence.sql` to create:
 ## Soft disable (Phase 7 prep)
 
 Set `disabled_at` on a profile, track, release, or media_asset to hide it without deleting files or related social records.
+
+## Phases 4–7 foundations
+
+Run `migrations/20260329000000_phase4_7_discovery_trust.sql` after Phase 2 + 3:
+
+| Object | Purpose |
+| --- | --- |
+| `profiles.search_tsv` / `tracks.search_tsv` | FTS indexes for catalog search |
+| `editorial_slots` | Human Featured / Just Found / mosaic curation |
+| `content_reports` | Copyright / abuse reporting + takedown queue |
+| `profiles.is_editor` | Editorial tooling permission |
+| `catalog_sync_runs` | Metadata sync job ledger (no audio) |
+
+Set `is_editor = true` on a trusted profile to write editorial slots.

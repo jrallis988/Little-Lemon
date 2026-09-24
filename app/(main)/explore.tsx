@@ -1,45 +1,46 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { NewFindCard } from '@/components/discovery/NewFindCard';
+import { EmptyState, LoadingState } from '@/components/ui/EmptyState';
 import { StaticBackground } from '@/components/ui/StaticBackground';
 import { colors, fonts, spacing } from '@/constants/theme';
 import { useBottomInset } from '@/hooks/useBottomInset';
-import {
-  DEMO_ARTISTS,
-  GEOGRAPHIES,
-  SCENES,
-  brandNewArtists,
-  unsignedArtists,
-} from '@/lib/demoData';
-
-type FindFilter = 'new' | 'unsigned' | 'all';
+import { findArtists, type FindFilter } from '@/lib/catalogQuery';
+import { GEOGRAPHIES, SCENES, brandNewArtists } from '@/lib/demoData';
+import type { UserProfile } from '@/types/models';
 
 /**
  * Find bands — stumble-upon discovery for unsigned / brand-new musicians.
- * Genre + place filters stay; “new” and “unsigned” lead.
+ * Filters derive from joined_at / status / genre / place (DB when available).
  */
 export default function ExploreScreen() {
   const [filter, setFilter] = useState<FindFilter>('new');
   const [scene, setScene] = useState<string | null>(null);
   const [geo, setGeo] = useState<string | null>(null);
+  const [results, setResults] = useState<UserProfile[]>([]);
+  const [source, setSource] = useState<'hybrid' | 'demo'>('demo');
+  const [loading, setLoading] = useState(true);
   const bottomInset = useBottomInset(spacing.tabBar);
 
-  const pool = useMemo(() => {
-    if (filter === 'new') return brandNewArtists(40);
-    if (filter === 'unsigned') return unsignedArtists();
-    return DEMO_ARTISTS;
-  }, [filter]);
-
-  const results = useMemo(() => {
-    return pool
-      .filter((artist) => {
-        const sceneOk = !scene || artist.scene === scene;
-        const geoOk = !geo || artist.geography === geo;
-        return sceneOk && geoOk;
-      })
-      .sort((a, b) => (b.joinedAt ?? '').localeCompare(a.joinedAt ?? ''));
-  }, [pool, scene, geo]);
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    void findArtists({
+      filter,
+      scene,
+      geography: geo,
+      limit: 60,
+    }).then((res) => {
+      if (cancelled) return;
+      setResults(res.artists);
+      setSource(res.source);
+      setLoading(false);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [filter, scene, geo]);
 
   const spotlight = useMemo(() => brandNewArtists(3), []);
 
@@ -53,6 +54,11 @@ export default function ExploreScreen() {
           The place for unsigned acts and brand-new friend groups — the singer
           or band you’d catch once on YouTube and want somewhere real to follow.
           No label required. No algorithm ranking.
+        </Text>
+        <Text style={styles.source}>
+          {source === 'hybrid'
+            ? 'Live artist profiles + seed finds'
+            : 'Seed finds — uploads appear here after Studio + migration'}
         </Text>
 
         {filter === 'new' && !scene && !geo ? (
@@ -70,6 +76,11 @@ export default function ExploreScreen() {
             label="Brand new"
             active={filter === 'new'}
             onPress={() => setFilter('new')}
+          />
+          <FilterChip
+            label="Recently joined"
+            active={filter === 'joined'}
+            onPress={() => setFilter('joined')}
           />
           <FilterChip
             label="Unsigned"
@@ -118,16 +129,18 @@ export default function ExploreScreen() {
         </View>
 
         <Text style={styles.section}>
-          {results.length} band{results.length === 1 ? '' : 's'}
+          {loading ? '…' : `${results.length} band${results.length === 1 ? '' : 's'}`}
         </Text>
-        {results.map((artist) => (
-          <NewFindCard key={artist.id} artist={artist} />
-        ))}
-        {results.length === 0 ? (
-          <Text style={styles.empty}>
-            Nobody in this filter yet. Try another scene — or be the first to
-            upload.
-          </Text>
+        {loading ? <LoadingState label="Loading finds…" /> : null}
+        {!loading &&
+          results.map((artist) => (
+            <NewFindCard key={artist.id} artist={artist} />
+          ))}
+        {!loading && results.length === 0 ? (
+          <EmptyState
+            title="Nobody in this filter yet"
+            body="Try another scene or place — or upload from Artist Studio so real joined dates power Brand new / Recently joined."
+          />
         ) : null}
       </ScrollView>
     </StaticBackground>
@@ -170,8 +183,14 @@ const styles = StyleSheet.create({
     fontFamily: fonts.sans,
     fontSize: 14,
     color: colors.textMuted,
-    marginBottom: spacing.lg,
+    marginBottom: spacing.sm,
     lineHeight: 20,
+  },
+  source: {
+    fontFamily: fonts.sans,
+    fontSize: 12,
+    color: colors.textDim,
+    marginBottom: spacing.lg,
   },
   spotlight: {
     marginBottom: spacing.md,
@@ -217,12 +236,5 @@ const styles = StyleSheet.create({
   chipTextActive: {
     color: '#FFFFFF',
     fontFamily: fonts.sansBold,
-  },
-  empty: {
-    fontFamily: fonts.sans,
-    fontSize: 14,
-    color: colors.textMuted,
-    marginTop: spacing.md,
-    lineHeight: 20,
   },
 });

@@ -81,6 +81,9 @@ export function PortalHeader() {
             <Text style={styles.authTextGhost}>Log In</Text>
           </Pressable>
         </Link>
+        <Pressable onPress={() => router.push('/legal')} hitSlop={6}>
+          <Text style={styles.navItem}>Policies</Text>
+        </Pressable>
       </View>
     </View>
   );
