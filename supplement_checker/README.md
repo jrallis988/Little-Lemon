@@ -20,7 +20,18 @@ Unindexed OCR ingredients hard-stop via `data_gaps.py` with:
 
 > Data Gap Identified: This ingredient or dosage lacks sufficient indexed human research literature...
 
-## Clinical console (v0.4)
+## Production readiness (honest scorecard)
+
+| Area | Score | Notes |
+| --- | --- | --- |
+| Architecture & gates | 9/10 | Terms, verify lock, data-gap stops |
+| Intelligence pipeline | 7/10 | OCR + PubMed + richer compare rules |
+| API / auth / persistence | 8/10 | SQLite+auth+export; CF deploy still manual |
+| UI | 6/10 | Clinical web console + Streamlit; no native apps yet |
+| Compliance docs | 6/10 | Draft privacy/terms — **not counsel-approved** |
+| Ops | 7/10 | Pytest + GitHub Actions + Docker + deploy checklist |
+
+**Overall foundation: ~8 / 10.** Remaining to a true launch 10: native HealthKit/Health Connect apps, live Cloudflare D1/R2, counsel sign-off, staging/monitoring.
 
 Card-based web dashboard served by FastAPI:
 

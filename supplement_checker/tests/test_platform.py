@@ -24,6 +24,7 @@ from supplement_checker.legal_notice import (  # noqa: E402
     build_terms_acceptance,
 )
 from supplement_checker.profile_ingestion import (  # noqa: E402
+    HistorySourceType,
     example_profile,
     profile_to_storage_dict,
 )
@@ -111,7 +112,7 @@ def test_auth_register_login(store):
 
 def test_api_gates_and_scan_compare(client):
     os.environ["SUPPLEMENT_AUTH_DISABLED"] = "true"
-    assert client.get("/health").json()["version"].startswith("0.4")
+    assert client.get("/health").json()["version"].startswith("0.5")
     assert client.get("/legal/notice").json()["skippable"] is False
 
     headers = {"X-Client-Id": "pytest-client"}
@@ -166,3 +167,61 @@ def test_dashboard_served(client):
     css = client.get("/dashboard/assets/styles.css")
     assert css.status_code == 200
     assert "--accent" in css.text
+
+
+def test_compare_stacking_and_med_caution():
+    profile = apply_verification_state(example_profile())
+    out = compare_profile_to_ingredients(
+        profile,
+        [
+            {"name": "Vitamin D3 (cholecalciferol)", "amount": 125, "unit": "mcg"},
+            {"name": "Caffeine (from green tea extract)", "amount": 50, "unit": "mg"},
+        ],
+        use_live_literature=False,
+    )
+    rule_ids = {f["rule_id"] for f in out["findings"]}
+    assert "stacking_duplicate" in rule_ids or "vitamin_d_flag_align" in rule_ids
+    assert "caffeine_sensitivity" in rule_ids
+    assert out["finding_counts"]["warning"] >= 1
+
+
+def test_health_sync_summary():
+    from supplement_checker.health_sync import DeviceSyncSummary, summary_text
+
+    sync = DeviceSyncSummary(
+        provider=HistorySourceType.APPLE_HEALTHKIT,
+        metric_types=["heart_rate", "steps"],
+        sample_count=42,
+        date_start="2026-09-01",
+        date_end="2026-09-20",
+    )
+    text = summary_text(sync)
+    assert "samples=42" in text
+    assert "heart_rate" in text
+
+
+def test_privacy_and_export_routes(client):
+    os.environ["SUPPLEMENT_AUTH_DISABLED"] = "true"
+    priv = client.get("/legal/privacy")
+    assert priv.status_code == 200
+    assert "draft_not_counsel_approved" in priv.json()["status"]
+    assert "NOT" in priv.json()["markdown"] or "not" in priv.json()["markdown"].lower()
+
+    headers = {"X-Client-Id": "export-client"}
+    client.post(
+        "/legal/accept",
+        headers=headers,
+        json={"accepted": True, "client_id": "export-client"},
+    )
+    created = client.post(
+        "/profiles",
+        headers=headers,
+        json={
+            "client_id": "export-client",
+            "profile": profile_to_storage_dict(example_profile()),
+        },
+    )
+    pid = created.json()["profile"]["profile_id"]
+    exported = client.get(f"/profiles/{pid}/export", headers=headers)
+    assert exported.status_code == 200
+    assert exported.json()["export_type"] == "clinician_research_summary"

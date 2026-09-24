@@ -12,7 +12,6 @@ Objects: local filesystem stand-in for R2.
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -38,7 +37,11 @@ from supplement_checker.auth import (
     resolve_bearer_token,
     revoke_token,
 )
-from supplement_checker.compare_engine import compare_profile_to_ingredients
+from supplement_checker.compare_engine import (
+    clinician_export_payload,
+    compare_profile_to_ingredients,
+)
+from supplement_checker.health_sync import DeviceSyncSummary, to_history_source
 from supplement_checker.legal_notice import (
     NOTICE_VERSION,
     TermsAcceptance,
@@ -72,7 +75,7 @@ app = FastAPI(
         "Not a medical device or diagnostic tool. "
         "Requires auth, Gaps & Knowledge Limits acceptance, then profile_verified=True."
     ),
-    version="0.4.0",
+    version="0.5.0",
 )
 
 app.add_middleware(
@@ -100,9 +103,13 @@ class HealthSyncIn(BaseModel):
     label: str | None = None
     payload_summary: str | None = Field(
         default=None,
-        description="Non-PHI summary of synced metrics (counts/types only).",
+        description="Legacy free-text summary; prefer metric_types/sample_count.",
         max_length=2000,
     )
+    metric_types: list[str] = Field(default_factory=list)
+    sample_count: int = Field(default=0, ge=0)
+    date_start: str | None = None
+    date_end: str | None = None
 
     @field_validator("provider")
     @classmethod
@@ -216,7 +223,7 @@ def health() -> dict[str, Any]:
     return {
         "status": "ok",
         "service": "supplement-research-api",
-        "version": "0.4.0",
+        "version": "0.5.0",
         "persistence": "sqlite",
         "auth_disabled": auth_disabled(),
     }
@@ -416,17 +423,23 @@ def health_sync(
 ) -> dict[str, Any]:
     store = get_store()
     profile = _get_profile_or_404(profile_id)
-    profile.history_sources.append(
-        HistorySource(
-            source_type=body.provider,
-            label=body.label or body.provider.value,
-            device_sync_at=datetime.now(timezone.utc),
-            text_excerpt=body.payload_summary,
-        )
+    sync = DeviceSyncSummary(
+        provider=body.provider,
+        label=body.label,
+        metric_types=body.metric_types,
+        sample_count=body.sample_count,
+        date_start=body.date_start,
+        date_end=body.date_end,
+        notes=body.payload_summary,
     )
+    profile.history_sources.append(to_history_source(sync))
     profile.touch()
     store.save_profile(profile)
-    return {"profile": profile.summary(), "synced": body.provider.value}
+    return {
+        "profile": profile.summary(),
+        "synced": body.provider.value,
+        "summary": sync.model_dump(),
+    }
 
 
 @app.post("/profiles/{profile_id}/verify")
@@ -589,6 +602,35 @@ def get_job(job_id: str) -> dict[str, Any]:
     if not job:
         raise HTTPException(status_code=404, detail="Job not found")
     return job
+
+
+@app.get("/profiles/{profile_id}/export")
+def export_clinician_summary(
+    profile_id: str,
+    user: AuthUser = Depends(require_user),
+    _: TermsAcceptance = Depends(require_terms),
+) -> dict[str, Any]:
+    """Clinician handoff JSON — not a medical record."""
+    profile = _get_profile_or_404(profile_id)
+    return clinician_export_payload(profile)
+
+
+@app.get("/legal/privacy")
+def privacy_draft() -> dict[str, str]:
+    path = Path(__file__).resolve().parents[1] / "docs" / "PRIVACY.md"
+    return {
+        "status": "draft_not_counsel_approved",
+        "markdown": path.read_text(encoding="utf-8"),
+    }
+
+
+@app.get("/legal/terms")
+def terms_draft() -> dict[str, str]:
+    path = Path(__file__).resolve().parents[1] / "docs" / "TERMS.md"
+    return {
+        "status": "draft_not_counsel_approved",
+        "markdown": path.read_text(encoding="utf-8"),
+    }
 
 
 @app.post("/demo/seed")
