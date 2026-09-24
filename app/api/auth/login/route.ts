@@ -11,6 +11,7 @@ import { getMembershipByEmail } from "@/lib/memberships";
 import { ensureWelcomeNotifications } from "@/lib/notifications";
 import { authenticateUser, createUser, getUserByEmail } from "@/lib/users";
 import { normalizeEmail } from "@/lib/validation";
+import { clientKey, rateLimit } from "@/lib/rate-limit";
 
 export const dynamic = "force-dynamic";
 
@@ -20,6 +21,17 @@ type LoginBody = {
 };
 
 export async function POST(request: Request) {
+  const limited = rateLimit(clientKey(request, "login"), 30, 60_000);
+  if (!limited.ok) {
+    return NextResponse.json(
+      { error: "Too many sign-in attempts. Try again shortly." },
+      {
+        status: 429,
+        headers: { "Retry-After": String(limited.retryAfterSec) },
+      }
+    );
+  }
+
   let body: LoginBody;
   try {
     body = (await request.json()) as LoginBody;

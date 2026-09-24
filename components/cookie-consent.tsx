@@ -18,11 +18,15 @@ export function CookieConsent() {
       const stored = window.localStorage.getItem(CONSENT_KEY);
       if (stored === "accepted" || stored === "rejected") {
         setConsent(stored);
+        setReady(true);
+        return;
       }
     } catch {
       /* ignore */
     }
-    setReady(true);
+    // Delay so the hero composition lands before consent chrome appears.
+    const timer = window.setTimeout(() => setReady(true), 1600);
+    return () => window.clearTimeout(timer);
   }, []);
 
   const choose = (value: Exclude<Consent, null>) => {
@@ -61,7 +65,7 @@ export function CookieConsent() {
         <div
           role="dialog"
           aria-label="Cookie consent"
-          className="fixed inset-x-3 bottom-16 z-[60] mx-auto max-w-3xl rounded-2xl border border-pf-line bg-white p-4 shadow-[0_16px_40px_-20px_rgba(61,9,88,0.45)] md:bottom-20"
+          className="fixed inset-x-3 bottom-20 z-[60] mx-auto max-w-xl rounded-2xl border border-pf-line bg-white/95 p-4 shadow-[0_16px_40px_-20px_rgba(61,9,88,0.45)] backdrop-blur-sm md:bottom-24"
         >
           <p className="text-sm text-pf-ink/80">
             We use cookies and similar tech for analytics and to improve club

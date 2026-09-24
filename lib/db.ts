@@ -140,7 +140,7 @@ export type OccupancySnapshot = {
   history: Array<{ hour: number; level: number }>;
 };
 
-type StoreShape = {
+export type StoreShape = {
   users: UserRecord[];
   memberships: MembershipRecord[];
   invoices: InvoiceRecord[];
@@ -152,9 +152,12 @@ type StoreShape = {
   occupancy: OccupancySnapshot[];
 };
 
+export type StoreBackend = "kv" | "memory" | "file";
+
 const DATA_DIR = path.join(process.cwd(), ".data");
 const STORE_PATH = path.join(DATA_DIR, "store.json");
 const LEGACY_MEMBERSHIPS = path.join(DATA_DIR, "memberships.json");
+const KV_KEY = "pf:store:v1";
 
 const EMPTY: StoreShape = {
   users: [],
@@ -170,15 +173,8 @@ const EMPTY: StoreShape = {
 
 let writeChain: Promise<void> = Promise.resolve();
 let memoryStore: StoreShape | null = null;
-
-/** Workers (and optional local flag) use in-memory store — no durable FS. */
-export function isMemoryStore(): boolean {
-  if (process.env.USE_MEMORY_STORE === "true") return true;
-  const versions = process.versions as NodeJS.ProcessVersions & {
-    workerd?: string;
-  };
-  return Boolean(versions.workerd);
-}
+let resolvedBackend: StoreBackend | null = null;
+let kvBinding: { get: (k: string) => Promise<string | null>; put: (k: string, v: string) => Promise<void> } | null | undefined;
 
 function cloneEmpty(): StoreShape {
   return {
@@ -194,12 +190,78 @@ function cloneEmpty(): StoreShape {
   };
 }
 
-async function ensureStore() {
-  if (isMemoryStore()) {
-    if (!memoryStore) memoryStore = cloneEmpty();
-    return;
-  }
+function normalizeStore(parsed: Partial<StoreShape> | null | undefined): StoreShape {
+  return {
+    users: parsed?.users ?? [],
+    memberships: parsed?.memberships ?? [],
+    invoices: parsed?.invoices ?? [],
+    guestPasses: parsed?.guestPasses ?? [],
+    checkIns: parsed?.checkIns ?? [],
+    accessTokens: parsed?.accessTokens ?? [],
+    notifications: parsed?.notifications ?? [],
+    passwordResets: parsed?.passwordResets ?? [],
+    occupancy: parsed?.occupancy ?? [],
+  };
+}
 
+function isWorkerd() {
+  const versions = process.versions as NodeJS.ProcessVersions & {
+    workerd?: string;
+  };
+  return Boolean(versions.workerd);
+}
+
+async function resolveKv() {
+  if (kvBinding !== undefined) return kvBinding;
+  try {
+    const { getCloudflareContext } = await import("@opennextjs/cloudflare");
+    const { env } = await getCloudflareContext({ async: true });
+    const binding = (env as { PF_STORE?: typeof kvBinding }).PF_STORE ?? null;
+    kvBinding = binding;
+    return kvBinding;
+  } catch {
+    kvBinding = null;
+    return null;
+  }
+}
+
+/** Prefer KV on Workers, file on Node, memory as last resort / explicit flag. */
+export async function getStoreBackend(): Promise<StoreBackend> {
+  if (resolvedBackend) return resolvedBackend;
+  if (process.env.USE_MEMORY_STORE === "true" && process.env.FORCE_FILE_STORE !== "true") {
+    const kv = await resolveKv();
+    if (kv) {
+      resolvedBackend = "kv";
+      return resolvedBackend;
+    }
+    resolvedBackend = "memory";
+    return resolvedBackend;
+  }
+  const kv = await resolveKv();
+  if (kv) {
+    resolvedBackend = "kv";
+    return resolvedBackend;
+  }
+  if (isWorkerd()) {
+    resolvedBackend = "memory";
+    return resolvedBackend;
+  }
+  resolvedBackend = "file";
+  return resolvedBackend;
+}
+
+/** Sync hint for health checks — may be stale until first store access. */
+export function isMemoryStore(): boolean {
+  if (resolvedBackend) return resolvedBackend === "memory";
+  if (process.env.USE_MEMORY_STORE === "true") return true;
+  return isWorkerd();
+}
+
+export function getResolvedStoreBackend(): StoreBackend | null {
+  return resolvedBackend;
+}
+
+async function ensureFileStore() {
   await fs.mkdir(DATA_DIR, { recursive: true });
   try {
     await fs.access(STORE_PATH);
@@ -233,25 +295,34 @@ async function ensureStore() {
 }
 
 export async function readStore(): Promise<StoreShape> {
-  await ensureStore();
-  if (isMemoryStore()) {
-    return memoryStore ?? cloneEmpty();
+  const backend = await getStoreBackend();
+  if (backend === "memory") {
+    if (!memoryStore) memoryStore = cloneEmpty();
+    return memoryStore;
+  }
+  if (backend === "kv") {
+    const kv = await resolveKv();
+    if (!kv) {
+      if (!memoryStore) memoryStore = cloneEmpty();
+      return memoryStore;
+    }
+    const raw = await kv.get(KV_KEY);
+    if (!raw) {
+      const empty = cloneEmpty();
+      await kv.put(KV_KEY, JSON.stringify(empty));
+      return empty;
+    }
+    try {
+      return normalizeStore(JSON.parse(raw) as Partial<StoreShape>);
+    } catch {
+      return cloneEmpty();
+    }
   }
 
+  await ensureFileStore();
   const raw = await fs.readFile(STORE_PATH, "utf8");
   try {
-    const parsed = JSON.parse(raw) as Partial<StoreShape>;
-    return {
-      users: parsed.users ?? [],
-      memberships: parsed.memberships ?? [],
-      invoices: parsed.invoices ?? [],
-      guestPasses: parsed.guestPasses ?? [],
-      checkIns: parsed.checkIns ?? [],
-      accessTokens: parsed.accessTokens ?? [],
-      notifications: parsed.notifications ?? [],
-      passwordResets: parsed.passwordResets ?? [],
-      occupancy: parsed.occupancy ?? [],
-    };
+    return normalizeStore(JSON.parse(raw) as Partial<StoreShape>);
   } catch {
     return { ...EMPTY };
   }
@@ -261,10 +332,20 @@ export async function updateStore(
   mutator: (store: StoreShape) => void | Promise<void>
 ): Promise<StoreShape> {
   const run = writeChain.then(async () => {
+    const backend = await getStoreBackend();
     const store = await readStore();
     await mutator(store);
-    if (isMemoryStore()) {
+    if (backend === "memory") {
       memoryStore = store;
+      return store;
+    }
+    if (backend === "kv") {
+      const kv = await resolveKv();
+      if (kv) {
+        await kv.put(KV_KEY, JSON.stringify(store));
+      } else {
+        memoryStore = store;
+      }
       return store;
     }
     await fs.writeFile(STORE_PATH, JSON.stringify(store, null, 2), "utf8");

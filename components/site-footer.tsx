@@ -212,6 +212,14 @@ export function SiteFooter() {
               </li>
               <li>
                 <Link
+                  href="/status"
+                  className="text-white/90 transition hover:text-white hover:underline"
+                >
+                  Status
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/screens"
                   className="text-white/90 transition hover:text-white hover:underline"
                 >

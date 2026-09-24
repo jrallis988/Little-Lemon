@@ -14,6 +14,7 @@ import {
   normalizePhone,
   requireNonEmpty,
 } from "@/lib/validation";
+import { clientKey, rateLimit } from "@/lib/rate-limit";
 
 export const dynamic = "force-dynamic";
 
@@ -26,6 +27,17 @@ type Body = {
 };
 
 export async function POST(request: Request) {
+  const limited = rateLimit(clientKey(request, "register"), 15, 60_000);
+  if (!limited.ok) {
+    return NextResponse.json(
+      { error: "Too many registration attempts. Try again shortly." },
+      {
+        status: 429,
+        headers: { "Retry-After": String(limited.retryAfterSec) },
+      }
+    );
+  }
+
   let body: Body;
   try {
     body = (await request.json()) as Body;

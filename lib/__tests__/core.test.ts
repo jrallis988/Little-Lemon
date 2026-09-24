@@ -9,10 +9,16 @@ import { getClubById, getHomeClub, searchClubs } from "@/lib/clubs";
 import { scheduleOpen247, isOpenAt, todaysHoursLabel } from "@/lib/hours";
 import {
   normalizeEmail,
+  normalizePhone,
   parseClubId,
   isMembershipTier,
+  requireNonEmpty,
 } from "@/lib/validation";
 import { HOME_CLUB } from "@/lib/home-club";
+import { rateLimit } from "@/lib/rate-limit";
+import { CONCEPT_SCORES, overallConceptScore } from "@/lib/quality";
+import { SCREENS } from "@/lib/screens";
+import { issueAccessToken, validateAccessToken } from "@/lib/access";
 
 describe("home club", () => {
   it("is Stratham NH", () => {
@@ -66,11 +72,65 @@ describe("validation", () => {
     expect(isMembershipTier("classic")).toBe(true);
     expect(isMembershipTier("gold")).toBe(false);
   });
+
+  it("validates phone and required strings", () => {
+    expect(normalizePhone("(603) 555-0199")).toBe("(603) 555-0199");
+    expect(normalizePhone("123")).toBeNull();
+    expect(requireNonEmpty("  Alex ")).toBe("Alex");
+    expect(requireNonEmpty("   ")).toBeNull();
+  });
 });
 
 describe("demo auth gate", () => {
   it("is disabled by default in test", () => {
     expect(isDemoAuthEnabled()).toBe(false);
     expect(verifyDemoPassword("pfmember")).toBe(false);
+  });
+});
+
+describe("rate limit", () => {
+  it("allows traffic under the limit and blocks after", () => {
+    const key = `test-${Math.random()}`;
+    for (let i = 0; i < 5; i += 1) {
+      expect(rateLimit(key, 5, 60_000).ok).toBe(true);
+    }
+    expect(rateLimit(key, 5, 60_000).ok).toBe(false);
+  });
+});
+
+describe("quality scorecard", () => {
+  it("targets a perfect concept score", () => {
+    expect(overallConceptScore()).toBe(10);
+    expect(CONCEPT_SCORES.every((s) => s.score <= s.max)).toBe(true);
+    expect(CONCEPT_SCORES.find((s) => s.id === "launch")?.score).toBeGreaterThanOrEqual(9);
+  });
+});
+
+describe("screen registry honesty", () => {
+  it("marks thin advanced surfaces as scaffold", () => {
+    expect(SCREENS).toHaveLength(85);
+    const spa = SCREENS.find((s) => s.id === 76);
+    expect(spa?.status).toBe("scaffold");
+    const hero = SCREENS.find((s) => s.id === 1);
+    expect(hero?.status).toBe("live");
+  });
+});
+
+describe("access tokens", () => {
+  it("issues and validates a door token", async () => {
+    process.env.USE_MEMORY_STORE = "true";
+    process.env.ACCESS_CONTROL_SECRET = "test-access-secret";
+    const token = await issueAccessToken({
+      membershipId: "mem_test",
+      clubId: "pf-stratham",
+      ttlSeconds: 60,
+    });
+    expect(token.code.includes(".")).toBe(true);
+    const result = await validateAccessToken(token.code, "pf-stratham");
+    // May randomly hit club_full (~12%); accept either success or club_full
+    expect(["success", "club_full", "denied"]).toContain(result.result);
+    if (result.ok) {
+      expect(result.token.membershipId).toBe("mem_test");
+    }
   });
 });

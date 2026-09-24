@@ -13,7 +13,7 @@ National gym sites optimize for brand reach. A local franchise needs a clearer p
 | **Web** | Discovery, pricing, Summer Pass, join | `/` |
 | **App** | Auth, check-in, keytag, Crowd Meter, billing, account | `/app` |
 
-Product map (core vs roadmap): `/screens` · Product case study: `/product`
+Product map (core vs roadmap): `/screens` · Product case study: `/product` · Status / scorecard: `/status`
 
 ## Stack
 

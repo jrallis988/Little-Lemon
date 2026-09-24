@@ -25,10 +25,10 @@ const pillars = [
 
 const stack = [
   "Next.js App Router + TypeScript",
-  "Tailwind CSS design tokens",
-  "Cookie session auth (HMAC-signed)",
-  "JSON file persistence (swap-ready for a database)",
-  "Vitest unit tests + GitHub Actions CI",
+  "Tailwind CSS design tokens + PF type scale",
+  "Cookie session auth (HMAC-signed) + auth rate limits",
+  "File / memory / Cloudflare KV store backends",
+  "Vitest + GitHub Actions CI + OpenNext Workers deploy",
 ] as const;
 
 export default function ProductPage() {
@@ -111,11 +111,19 @@ export default function ProductPage() {
               official brand assets beyond this concept.
             </li>
             <li>
-              <strong className="text-pf-ink">Persistence:</strong> local JSON
-              store — intentional for a portfolio build; ready to swap for a
-              managed database.
+              <strong className="text-pf-ink">Persistence:</strong> file store
+              locally, memory or KV on Workers — swap-ready for Postgres.
             </li>
           </ul>
+          <p className="mt-6 text-sm text-pf-muted">
+            Live scorecard:{" "}
+            <Link
+              href="/status"
+              className="font-semibold text-pf-purple underline-offset-2 hover:underline"
+            >
+              /status
+            </Link>
+          </p>
         </div>
       </section>
 
@@ -135,12 +143,20 @@ export default function ProductPage() {
             ))}
           </ul>
           <p className="mt-8 text-sm text-pf-muted">
-            Health check:{" "}
+            Health:{" "}
             <Link
               href="/api/health"
               className="font-semibold text-pf-purple underline-offset-2 hover:underline"
             >
               /api/health
+            </Link>
+            {" · "}
+            Status:{" "}
+            <Link
+              href="/status"
+              className="font-semibold text-pf-purple underline-offset-2 hover:underline"
+            >
+              /status
             </Link>
           </p>
         </div>
