@@ -63,14 +63,12 @@ export function Hero({ featuredBooks }: HeroProps) {
             <Button href="/books" variant="primary" size="lg">
               Explore Fall Books
             </Button>
-            <Button
+            <Link
               href="/find-a-book"
-              variant="outline"
-              size="lg"
-              className="border-cream/80 text-cream hover:bg-cream hover:text-forest"
+              className="inline-flex items-center justify-center border border-cream/80 bg-transparent px-8 py-4 font-display text-sm font-bold uppercase tracking-wider text-cream transition-colors hover:bg-cream hover:text-forest"
             >
               Find Their Next Book
-            </Button>
+            </Link>
           </div>
         </div>
 
