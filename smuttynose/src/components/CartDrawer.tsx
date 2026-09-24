@@ -1,18 +1,45 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useCart } from "../context/CartContext";
 import { CampusImage } from "./CampusImage";
 import { links } from "../data/links";
 
 export function CartDrawer() {
   const { lines, open, setOpen, subtotal, setQty, removeItem, clear } = useCart();
+  const panelRef = useRef<HTMLElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    closeRef.current?.focus();
+
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") {
+        setOpen(false);
+        return;
+      }
+      if (e.key !== "Tab" || !panelRef.current) return;
+      const focusable = panelRef.current.querySelectorAll<HTMLElement>(
+        'button, a[href], input, [tabindex]:not([tabindex="-1"])',
+      );
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
+
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
   }, [open, setOpen]);
 
   return (
@@ -24,19 +51,24 @@ export function CartDrawer() {
           open ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
         onClick={() => setOpen(false)}
+        tabIndex={open ? 0 : -1}
       />
       <aside
+        ref={panelRef}
         className={`fixed inset-y-0 right-0 z-[70] flex w-full max-w-md flex-col bg-foam text-ink shadow-2xl transition-transform duration-300 ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
         aria-hidden={!open}
         aria-label="Shopping cart"
+        role="dialog"
+        aria-modal={open}
       >
         <div className="flex items-center justify-between border-b border-ink/10 px-5 py-4">
           <h2 className="font-display text-2xl font-bold uppercase tracking-wide">
             Your crate
           </h2>
           <button
+            ref={closeRef}
             type="button"
             className="text-sm font-semibold uppercase tracking-[0.14em] text-steel"
             onClick={() => setOpen(false)}
@@ -47,9 +79,20 @@ export function CartDrawer() {
 
         <div className="flex-1 overflow-y-auto px-5 py-4">
           {lines.length === 0 ? (
-            <p className="text-steel">
-              Ohh no! Your crate is empty! Why overthink when you can over drink.
-            </p>
+            <div className="space-y-4">
+              <p className="text-steel">
+                Ohh no! Your crate is empty! Why overthink when you can over
+                drink.
+              </p>
+              <a
+                href={links.shopOfficial}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex bg-ink px-4 py-3 text-sm font-semibold tracking-wide text-foam"
+              >
+                Shop on smuttynose.com
+              </a>
+            </div>
           ) : (
             <ul className="divide-y divide-ink/10">
               {lines.map(({ item, qty }) => (
@@ -104,20 +147,20 @@ export function CartDrawer() {
               ${subtotal.toFixed(2)}
             </span>
           </div>
-          <button
-            type="button"
-            disabled={lines.length === 0}
-            className="mt-4 w-full bg-buoy px-4 py-3 text-sm font-semibold tracking-wide text-foam disabled:opacity-40"
+          <a
+            href={links.shopOfficial}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-4 flex w-full justify-center bg-buoy px-4 py-3 text-sm font-semibold tracking-wide text-foam"
             onClick={() => {
               clear();
               setOpen(false);
-              window.open(links.shopOfficial, "_blank", "noopener,noreferrer");
             }}
           >
             Checkout on smuttynose.com
-          </button>
+          </a>
           <p className="mt-2 text-xs text-steel">
-            Demo cart — live checkout on the official shop.
+            Live orders ship from the official store.
           </p>
         </div>
       </aside>

@@ -4,6 +4,8 @@ import { CartDrawer } from "../components/CartDrawer";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { PageMeta } from "../components/PageMeta";
+import { SealMark } from "../components/SealMark";
+import { SkipLink } from "../components/SkipLink";
 import { links } from "../data/links";
 
 export function VisitPage() {
@@ -14,28 +16,55 @@ export function VisitPage() {
         description="Visit Smuttynose Backyard Club at 105 Towle Farm Road, Hampton NH — hours, waitlist, map, and directions."
         path="/visit"
       />
+      <SkipLink />
       <Header solid />
       <CartDrawer />
-      <main>
-        <section className="relative min-h-[22rem] overflow-hidden bg-ink text-foam md:min-h-[28rem]">
+      <main id="main">
+        <section className="relative min-h-[100svh] overflow-hidden bg-ink text-foam md:min-h-[70svh]">
           <CampusImage
             name="campus-entrance"
             alt="Entrance to Smuttynose on Towle Farm"
-            className="absolute inset-0 h-full w-full object-cover opacity-70"
+            className="absolute inset-0 h-full w-full object-cover"
             loading="eager"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/50 to-ink/20" />
-          <div className="relative mx-auto flex max-w-site flex-col justify-end px-5 pb-12 pt-32 md:px-8 md:pb-16">
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-salt">
-              Towle Farm
+          <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/25" />
+          <div className="absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/35 to-transparent" />
+          <div className="relative mx-auto flex min-h-[100svh] max-w-site flex-col justify-end px-5 pb-16 pt-28 md:min-h-[70svh] md:px-8 md:pb-20">
+            <div className="mb-4 flex items-center gap-3">
+              <SealMark className="h-9 w-9 text-foam" />
+              <span className="text-sm font-semibold uppercase tracking-[0.2em] text-foam/80">
+                Hampton, NH
+              </span>
+            </div>
+            <p className="font-display text-[clamp(2.8rem,9vw,5.5rem)] font-bold uppercase leading-[0.9] tracking-[0.04em]">
+              Smuttynose
             </p>
-            <h1 className="mt-3 max-w-3xl font-display text-4xl font-bold uppercase tracking-wide md:text-6xl">
-              Visit the Backyard
+            <div className="mt-4 h-1 w-24 bg-buoy" />
+            <h1 className="mt-6 max-w-xl font-display text-[clamp(1.5rem,3.5vw,2.4rem)] font-semibold uppercase tracking-wide">
+              Come hang at Towle Farm.
             </h1>
-            <p className="mt-4 max-w-xl text-foam/80">
-              Cold pours, patio hangs, and food trucks just inland from Hampton
-              Beach — ~10 minutes from the sand.
+            <p className="mt-4 max-w-md text-base leading-relaxed text-foam/85 md:text-lg">
+              Cold pours, patio hangs, and food trucks — about 10 minutes from
+              Hampton Beach.
             </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a
+                href={links.waitlist}
+                target="_blank"
+                rel="noreferrer"
+                className="bg-buoy px-5 py-3 text-sm font-semibold tracking-wide text-foam"
+              >
+                Join the waitlist
+              </a>
+              <a
+                href={links.maps}
+                target="_blank"
+                rel="noreferrer"
+                className="border border-foam/60 px-5 py-3 text-sm font-semibold tracking-wide text-foam"
+              >
+                Get directions
+              </a>
+            </div>
           </div>
         </section>
 
@@ -76,20 +105,12 @@ export function VisitPage() {
               </div>
               <div className="mt-8 flex flex-wrap gap-3">
                 <a
-                  href={links.waitlist}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex bg-buoy px-5 py-3 text-sm font-semibold tracking-wide text-foam"
-                >
-                  Join the waitlist
-                </a>
-                <a
-                  href={links.maps}
+                  href={links.backyard}
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex border border-ink/20 px-5 py-3 text-sm font-semibold tracking-wide"
                 >
-                  Get directions
+                  Official Backyard page
                 </a>
                 <Link
                   to="/events/private"
@@ -117,14 +138,6 @@ export function VisitPage() {
                   allowFullScreen
                 />
               </div>
-              <a
-                href={links.backyard}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-4 inline-flex text-sm font-semibold text-tide underline-offset-2 hover:underline"
-              >
-                Official Visit the Backyard page →
-              </a>
             </div>
           </div>
         </section>

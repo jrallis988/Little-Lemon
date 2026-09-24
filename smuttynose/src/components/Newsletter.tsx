@@ -1,28 +1,8 @@
-import { FormEvent, useState } from "react";
 import { links } from "../data/links";
 import { useInView } from "../hooks/useInView";
-import { submitNewsletter } from "../lib/forms";
-
-type Status = "idle" | "sending" | "joined" | "error";
 
 export function Newsletter() {
   const { ref, visible } = useInView<HTMLElement>();
-  const [status, setStatus] = useState<Status>("idle");
-  const [showProjectForm, setShowProjectForm] = useState(false);
-
-  async function onSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const email = String(new FormData(form).get("email") || "").trim();
-    setStatus("sending");
-    try {
-      await submitNewsletter(email);
-      setStatus("joined");
-      form.reset();
-    } catch {
-      setStatus("error");
-    }
-  }
 
   return (
     <section
@@ -43,12 +23,11 @@ export function Newsletter() {
             Events, new releases & merch drops
           </h2>
           <p className="mt-3 text-steel">
-            No spam. Just the good stuff — brewery updates from Towle Farm.
-            Unsubscribe anytime. We’ll keep it tight.
+            No spam. Just the good stuff from Towle Farm. Unsubscribe anytime.
           </p>
         </div>
 
-        <div className="w-full max-w-md space-y-4">
+        <div className="w-full max-w-md space-y-3">
           <a
             href={links.loyalty}
             target="_blank"
@@ -58,49 +37,8 @@ export function Newsletter() {
             Sign up on smuttynose.com
           </a>
           <p className="text-center text-xs text-steel">
-            Official Toast newsletter + loyalty — same as the brewery site.
+            Official Toast newsletter + loyalty — same list as the brewery.
           </p>
-
-          {!showProjectForm ? (
-            <button
-              type="button"
-              onClick={() => setShowProjectForm(true)}
-              className="w-full border border-ink/15 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-steel transition-colors hover:border-ink hover:text-ink"
-            >
-              Or use project demo signup
-            </button>
-          ) : status === "joined" ? (
-            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-tide">
-              You’re on the demo list — cheers.
-            </p>
-          ) : (
-            <form onSubmit={onSubmit} className="flex flex-col gap-3 sm:flex-row">
-              <label className="sr-only" htmlFor="newsletter-email">
-                Email address
-              </label>
-              <input
-                id="newsletter-email"
-                required
-                type="email"
-                name="email"
-                placeholder="you@email.com"
-                autoComplete="email"
-                className="min-w-0 flex-1 border border-ink/20 bg-foam px-4 py-3 text-ink outline-none transition-colors focus:border-buoy"
-              />
-              <button
-                type="submit"
-                disabled={status === "sending"}
-                className="border border-ink/25 px-5 py-3 text-sm font-semibold tracking-wide text-ink transition-colors hover:bg-ink hover:text-foam disabled:opacity-70"
-              >
-                {status === "sending" ? "Joining…" : "Demo signup"}
-              </button>
-              {status === "error" ? (
-                <p className="basis-full text-xs text-buoy" role="alert">
-                  Signup failed — try again in a moment.
-                </p>
-              ) : null}
-            </form>
-          )}
         </div>
       </div>
     </section>

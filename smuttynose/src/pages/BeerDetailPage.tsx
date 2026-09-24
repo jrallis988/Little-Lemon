@@ -3,6 +3,7 @@ import { CampusImage } from "../components/CampusImage";
 import { CartDrawer } from "../components/CartDrawer";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
+import { SkipLink } from "../components/SkipLink";
 import { PageMeta } from "../components/PageMeta";
 import { getBeerBySlug } from "../data/beerDetails";
 import { links } from "../data/links";
@@ -23,9 +24,10 @@ export function BeerDetailPage() {
         path={`/beers/${beer.slug}`}
         image={`/images/${beer.image}.jpg`}
       />
+      <SkipLink />
       <Header solid />
       <CartDrawer />
-      <main className="pt-24">
+      <main id="main" className="pt-24">
         <div className="mx-auto grid max-w-site gap-10 px-5 pb-20 md:grid-cols-2 md:gap-14 md:px-8 md:pb-28">
           <div className="relative min-h-[22rem] overflow-hidden md:min-h-[34rem]">
             <CampusImage

@@ -7,7 +7,6 @@ import { SealMark } from "./SealMark";
 const sectionLinks = [
   { href: "/beers", label: "Beers", route: true },
   { href: "/#events", label: "Events" },
-  { href: "/#food", label: "Food" },
   { href: "/visit", label: "Visit", route: true },
   { href: "/#story", label: "Story" },
 ];
@@ -16,8 +15,8 @@ const pageLinks = [
   { to: "/releases", label: "Releases" },
   { to: "/shop", label: "Shop" },
   { to: "/finder", label: "Beer finder" },
-  { to: "/be-kind", label: "Be KIND" },
   { to: "/events/private", label: "Private events" },
+  { to: "/be-kind", label: "Be KIND" },
   { to: "/#contact", label: "Contact", hash: true },
 ];
 
@@ -106,22 +105,10 @@ export function Header({ solid = false, defaultMenuOpen = false }: HeaderProps) 
             ),
           )}
           <NavLink
-            to="/releases"
-            className="text-sm font-medium tracking-wide text-foam/85 transition-colors hover:text-foam"
-          >
-            Releases
-          </NavLink>
-          <NavLink
             to="/shop"
             className="text-sm font-medium tracking-wide text-foam/85 transition-colors hover:text-foam"
           >
             Shop
-          </NavLink>
-          <NavLink
-            to="/finder"
-            className="text-sm font-medium tracking-wide text-foam/85 transition-colors hover:text-foam"
-          >
-            Finder
           </NavLink>
           <NavLink
             to="/events/private"

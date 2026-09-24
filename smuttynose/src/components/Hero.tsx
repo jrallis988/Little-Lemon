@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { CampusImage } from "./CampusImage";
 import { SealMark } from "./SealMark";
 
@@ -16,7 +17,6 @@ export function Hero() {
           loading="eager"
           fetchPriority="high"
         />
-        {/* Sunset mood overlays */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#1a0e08]/90 via-[#3a1d10]/35 to-[#1b3a55]/45" />
         <div className="absolute inset-0 bg-gradient-to-r from-ink/85 via-ink/45 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#d94e1f]/25 to-transparent" />
@@ -62,12 +62,12 @@ export function Hero() {
           >
             See what&apos;s on tap
           </a>
-          <a
-            href="#visit"
+          <Link
+            to="/visit"
             className="border border-foam/70 px-5 py-3 text-sm font-semibold tracking-wide text-foam transition-colors duration-300 hover:bg-foam/10"
           >
             Visit Towle Farm
-          </a>
+          </Link>
         </div>
       </div>
     </section>

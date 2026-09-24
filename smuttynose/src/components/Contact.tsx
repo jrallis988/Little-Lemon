@@ -211,7 +211,7 @@ export function Contact() {
               ? "Message delivered. We’ll follow up soon."
               : status === "error"
                 ? "Couldn’t reach the form service — opened your email app instead."
-                : "Sent securely to the project inbox — no email app required."}
+                : "We’ll follow up soon — or call the Backyard Club."}
           </p>
         </form>
       </div>

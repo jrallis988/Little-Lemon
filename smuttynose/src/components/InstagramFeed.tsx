@@ -22,7 +22,7 @@ export function InstagramFeed() {
               Follow us on Instagram
             </h2>
             <p className="mt-4 max-w-lg text-steel">
-              Backyard hangs, new releases, and campus life — same feed as{" "}
+              Backyard hangs, new releases, and campus life —{" "}
               <a
                 href={links.instagram}
                 target="_blank"
@@ -66,8 +66,8 @@ export function InstagramFeed() {
                   alt={post.caption}
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <span className="absolute inset-0 bg-gradient-to-t from-ink/75 via-ink/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                <span className="absolute inset-x-0 bottom-0 p-3 text-xs font-medium leading-snug text-foam opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                <span className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent" />
+                <span className="absolute inset-x-0 bottom-0 p-3 text-xs font-medium leading-snug text-foam">
                   {post.caption}
                 </span>
               </a>

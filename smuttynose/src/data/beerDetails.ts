@@ -200,6 +200,27 @@ export const beerDetails: BeerDetail[] = [
     image: "campus-patio",
   },
   {
+    slug: "oktoberfest",
+    name: "Oktoberfest",
+    style: "Märzen / Festbier",
+    abv: "5.4%",
+    ibu: "26",
+    srm: "12",
+    tagline: "Toasted bread and biscuit malt with a clean hop balance.",
+    description:
+      "Falling somewhere between an amber Märzen and a lighter Festbier — rich malt with clean hop bitterness, similar to a Vienna lager. Variety-pack seasonal. First brewed 2018.",
+    tastingNotes: ["Toasted bread", "Biscuit malt", "Clean bitterness", "Deep amber"],
+    malt: ["2-Row", "Vienna", "Carabohemian", "Acidulated"],
+    hops: ["Strisselspalt"],
+    pairings: ["Pretzels", "Bratwurst", "Roasted squash", "Sharp cheddar"],
+    packaging: [
+      { label: "Variety pack", note: "Seasonal release" },
+      { label: "Draft", note: "When pouring on campus" },
+    ],
+    status: "seasonal",
+    image: "campus-dusk",
+  },
+  {
     slug: "cold-shoals-light-lager",
     name: "Cold Shoals Light Lager",
     style: "Light Lager",

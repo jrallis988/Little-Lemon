@@ -1,48 +1,14 @@
-import { FormEvent, useState } from "react";
 import { CampusImage } from "../components/CampusImage";
 import { CartDrawer } from "../components/CartDrawer";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { PageMeta } from "../components/PageMeta";
+import { SkipLink } from "../components/SkipLink";
 import { TripleseatEmbed } from "../components/TripleseatEmbed";
 import { links } from "../data/links";
 import { venues } from "../data/venues";
-import { mailtoContact, submitContact } from "../lib/forms";
 
 export function PrivateEventsPage() {
-  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
-    "idle",
-  );
-
-  async function onSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const data = new FormData(form);
-    const payload = {
-      name: String(data.get("name") || "").trim(),
-      email: String(data.get("email") || "").trim(),
-      topic: `Private event — ${String(data.get("space") || "General")}`,
-      message: [
-        `Guests: ${String(data.get("guests") || "")}`,
-        `Date: ${String(data.get("date") || "")}`,
-        "",
-        String(data.get("message") || ""),
-      ].join("\n"),
-    };
-    setStatus("sending");
-    try {
-      const result = await submitContact(payload);
-      if (result === "mailto") {
-        mailtoContact(payload);
-      }
-      setStatus("sent");
-      form.reset();
-    } catch {
-      mailtoContact(payload);
-      setStatus("error");
-    }
-  }
-
   return (
     <div className="min-h-screen bg-foam">
       <PageMeta
@@ -50,9 +16,10 @@ export function PrivateEventsPage() {
         description="Book the Heritage Room, Field, or Backyard Patio at Smuttynose Towle Farm — up to 200 guests."
         path="/events/private"
       />
+      <SkipLink />
       <Header solid />
       <CartDrawer />
-      <main>
+      <main id="main">
         <section className="bg-ink px-5 pb-16 pt-28 text-foam md:px-8 md:pb-20 md:pt-32">
           <div className="mx-auto max-w-site">
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-salt">
@@ -67,17 +34,9 @@ export function PrivateEventsPage() {
               is brewed. Call{" "}
               <a href={links.phone} className="underline underline-offset-2">
                 {links.phoneDisplay}
-              </a>{" "}
-              or use the official Tripleseat form on smuttynose.com.
+              </a>
+              .
             </p>
-            <a
-              href={links.privateEvent}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-6 inline-flex bg-buoy px-5 py-3 text-sm font-semibold tracking-wide text-foam"
-            >
-              Official private event form
-            </a>
           </div>
         </section>
 
@@ -86,7 +45,7 @@ export function PrivateEventsPage() {
             {venues.map((venue, index) => (
               <article
                 key={venue.id}
-                className={`grid gap-0 overflow-hidden border border-ink/10 lg:grid-cols-2 ${
+                className={`grid gap-0 overflow-hidden lg:grid-cols-2 ${
                   index % 2 === 1 ? "lg:[&>div:first-child]:order-2" : ""
                 }`}
               >
@@ -124,16 +83,16 @@ export function PrivateEventsPage() {
           </div>
         </section>
 
-        <section className="px-5 py-16 md:px-8 md:py-20">
+        <section className="border-t border-ink/10 px-5 py-16 md:px-8 md:py-24">
           <div className="mx-auto max-w-site">
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-tide">
               Official booking
             </p>
             <h2 className="mt-3 font-display text-4xl font-bold uppercase tracking-wide">
-              Tripleseat event form
+              Tell us about your event
             </h2>
             <p className="mt-3 max-w-2xl text-steel">
-              Same private-event software as{" "}
+              Same Tripleseat intake as{" "}
               <a
                 href={links.privateEvent}
                 target="_blank"
@@ -142,119 +101,11 @@ export function PrivateEventsPage() {
               >
                 smuttynose.com/private-event
               </a>
-              . Tell us about your event below.
+              .
             </p>
             <div className="mt-8">
               <TripleseatEmbed scriptUrl={links.tripleseatScript} />
             </div>
-          </div>
-        </section>
-
-        <section className="bg-tide-deep px-5 py-16 text-foam md:px-8 md:py-24">
-          <div className="mx-auto grid max-w-site gap-12 md:grid-cols-2">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-salt">
-                Demo inquiry
-              </p>
-              <h2 className="mt-3 font-display text-4xl font-bold uppercase tracking-wide">
-                Project inbox backup
-              </h2>
-              <p className="mt-4 text-foam/75">
-                Prefer Tripleseat above for official bookings. This demo form
-                sends to the project inbox as a fallback.
-              </p>
-            </div>
-
-            <form onSubmit={onSubmit} className="space-y-4">
-              <label className="block">
-                <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.16em] text-salt">
-                  Name
-                </span>
-                <input
-                  required
-                  name="name"
-                  className="w-full border border-foam/20 bg-tide-deep px-4 py-3 outline-none focus:border-buoy"
-                />
-              </label>
-              <label className="block">
-                <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.16em] text-salt">
-                  Email
-                </span>
-                <input
-                  required
-                  type="email"
-                  name="email"
-                  className="w-full border border-foam/20 bg-tide-deep px-4 py-3 outline-none focus:border-buoy"
-                />
-              </label>
-              <div className="grid gap-4 sm:grid-cols-2">
-                <label className="block">
-                  <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.16em] text-salt">
-                    Space
-                  </span>
-                  <select
-                    name="space"
-                    className="w-full border border-foam/20 bg-tide-deep px-4 py-3 outline-none focus:border-buoy"
-                    defaultValue="Heritage Room"
-                  >
-                    {venues.map((v) => (
-                      <option key={v.id}>{v.name}</option>
-                    ))}
-                  </select>
-                </label>
-                <label className="block">
-                  <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.16em] text-salt">
-                    Guests
-                  </span>
-                  <input
-                    name="guests"
-                    type="number"
-                    min={1}
-                    placeholder="30"
-                    className="w-full border border-foam/20 bg-tide-deep px-4 py-3 outline-none focus:border-buoy"
-                  />
-                </label>
-              </div>
-              <label className="block">
-                <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.16em] text-salt">
-                  Preferred date
-                </span>
-                <input
-                  name="date"
-                  type="date"
-                  className="w-full border border-foam/20 bg-tide-deep px-4 py-3 outline-none focus:border-buoy"
-                />
-              </label>
-              <label className="block">
-                <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.16em] text-salt">
-                  Message
-                </span>
-                <textarea
-                  required
-                  name="message"
-                  rows={4}
-                  className="w-full resize-y border border-foam/20 bg-tide-deep px-4 py-3 outline-none focus:border-buoy"
-                />
-              </label>
-              <button
-                type="submit"
-                disabled={status === "sending" || status === "sent"}
-                className="bg-buoy px-5 py-3 text-sm font-semibold tracking-wide text-foam disabled:opacity-70"
-              >
-                {status === "sending"
-                  ? "Sending…"
-                  : status === "sent"
-                    ? "Inquiry sent"
-                    : "Request a date"}
-              </button>
-              <p className="text-xs text-foam/55" role="status">
-                {status === "sent"
-                  ? "Thanks — we’ll be in touch."
-                  : status === "error"
-                    ? "Opened your email app as a backup."
-                    : "Sent to the project inbox."}
-              </p>
-            </form>
           </div>
         </section>
       </main>

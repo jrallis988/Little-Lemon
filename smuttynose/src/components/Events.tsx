@@ -43,8 +43,8 @@ export function Events() {
             </h2>
             <p className="mt-4 max-w-lg text-steel">
               This week’s campus calendar — trivia, patio music, trucks, and
-              Backyard hangs. Schedules can shift; Campus Events and Facebook
-              have the latest.
+              Backyard hangs. Schedules can shift; the live calendar has the
+              latest.
             </p>
           </div>
           <div className="flex flex-wrap gap-3 self-start">
@@ -54,7 +54,7 @@ export function Events() {
               rel="noreferrer"
               className="inline-flex bg-ink px-5 py-3 text-sm font-semibold tracking-wide text-foam transition-colors hover:bg-tide-deep"
             >
-              Campus events
+              Live campus calendar
             </a>
             <a
               href={links.facebook}

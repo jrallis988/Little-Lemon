@@ -4,6 +4,7 @@ import { CartDrawer } from "../components/CartDrawer";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { PageMeta } from "../components/PageMeta";
+import { SkipLink } from "../components/SkipLink";
 import { useCart } from "../context/CartContext";
 import { links } from "../data/links";
 import { merch, MerchItem } from "../data/merch";
@@ -22,12 +23,13 @@ export function ShopPage() {
     <div className="min-h-screen bg-foam">
       <PageMeta
         title="Shop"
-        description="Smuttynose merch, glassware, and gear — demo cart with checkout on smuttynose.com."
+        description="Smuttynose merch, glassware, and gear — preview the crate, then checkout on smuttynose.com."
         path="/shop"
       />
+      <SkipLink />
       <Header solid />
       <CartDrawer />
-      <main className="px-5 pb-20 pt-28 md:px-8 md:pb-28">
+      <main id="main" className="px-5 pb-20 pt-28 md:px-8 md:pb-28">
         <div className="mx-auto max-w-site">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
@@ -38,8 +40,8 @@ export function ShopPage() {
                 Apparel, glassware & gear
               </h1>
               <p className="mt-3 max-w-xl text-steel">
-                Take Towle Farm home. Demo crate here — or shop the official
-                merch storefront on smuttynose.com.
+                Preview campus favorites here — checkout completes on the
+                official smuttynose.com shop.
               </p>
             </div>
             <div className="flex flex-wrap gap-3 self-start">
@@ -49,14 +51,14 @@ export function ShopPage() {
                 rel="noreferrer"
                 className="inline-flex bg-buoy px-5 py-3 text-sm font-semibold tracking-wide text-foam"
               >
-                Official shop
+                Shop on smuttynose.com
               </a>
               <button
                 type="button"
                 onClick={() => setOpen(true)}
                 className="inline-flex bg-ink px-5 py-3 text-sm font-semibold tracking-wide text-foam"
               >
-                Open cart{count > 0 ? ` (${count})` : ""}
+                Open crate{count > 0 ? ` (${count})` : ""}
               </button>
             </div>
           </div>
@@ -114,20 +116,15 @@ export function ShopPage() {
 
 function MerchCard({ item, onAdd }: { item: MerchItem; onAdd: () => void }) {
   return (
-    <article className="flex flex-col border border-ink/10 bg-foam">
+    <article className="flex flex-col">
       <div className="relative aspect-square overflow-hidden">
         <CampusImage
           name={item.image}
           alt={item.name}
           className="h-full w-full object-cover"
         />
-        <span
-          className="absolute inset-0 mix-blend-multiply opacity-25"
-          style={{ background: item.color }}
-          aria-hidden="true"
-        />
       </div>
-      <div className="flex flex-1 flex-col p-4">
+      <div className="flex flex-1 flex-col border-b border-ink/10 py-4">
         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-tide">
           {item.category}
         </p>

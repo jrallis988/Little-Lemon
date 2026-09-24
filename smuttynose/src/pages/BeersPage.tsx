@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { CartDrawer } from "../components/CartDrawer";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
+import { SkipLink } from "../components/SkipLink";
 import { PageMeta } from "../components/PageMeta";
 import { beerDetails } from "../data/beerDetails";
 import { links } from "../data/links";
@@ -17,9 +18,10 @@ export function BeersPage() {
         description="Smuttynose beer lineup — Finestkind IPA, Old Brown Dog, Whole Lotta Haze, and seasonal releases."
         path="/beers"
       />
+      <SkipLink />
       <Header solid />
       <CartDrawer />
-      <main className="px-5 pb-20 pt-28 md:px-8 md:pb-28">
+      <main id="main" className="px-5 pb-20 pt-28 md:px-8 md:pb-28">
         <div className="mx-auto max-w-site">
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-tide">
             Our lineup
