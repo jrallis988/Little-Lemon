@@ -925,6 +925,72 @@ button {
   gap: 1rem;
 }
 
+.ooh-grid--scenes {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.ooh-scene {
+  position: relative;
+  min-height: 340px;
+  background-color: #1a1a1a;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+}
+
+.ooh-ad-panel {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: var(--bone);
+  padding: 0.85rem;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+}
+
+.ooh-ad-code {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+  color: var(--concrete);
+}
+
+.ooh-scene--shelter .ooh-ad-panel {
+  left: 18%;
+  top: 14%;
+  width: 38%;
+  height: 62%;
+}
+
+.ooh-scene--billboard .ooh-ad-panel {
+  left: 18%;
+  top: 18%;
+  width: 58%;
+  height: 42%;
+}
+
+.ooh-scene--gym .ooh-ad-panel {
+  left: 28%;
+  top: 12%;
+  width: 36%;
+  height: 68%;
+}
+
+.ooh-scene--street .ooh-ad-panel {
+  left: 30%;
+  top: 16%;
+  width: 34%;
+  height: 58%;
+}
+
+.ooh-mark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  font-size: 0.85rem;
+  color: var(--orange);
+}
+
 .athlete-secondary {
   margin-top: 2.5rem;
   padding-top: 2rem;
@@ -942,40 +1008,66 @@ button {
   min-height: 280px;
 }
 
-.ooh-env {
-  padding: 0.85rem;
-  background: #3a3e42;
+.apparel-photo {
+  position: relative;
+  min-height: 320px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: var(--mist);
   border: 1px solid var(--rule);
 }
 
-.ooh-shelter {
-  background: linear-gradient(180deg, #4a5056, #2a2e32);
-  padding: 1rem 1rem 1.5rem;
+.apparel-print {
+  position: absolute;
+  color: var(--bone);
+  text-align: center;
+  text-transform: uppercase;
+  pointer-events: none;
 }
 
-.ooh-billboard {
-  background: #1a1a1a;
-  padding: 0.5rem;
+.apparel-print--num {
+  left: 50%;
+  top: 42%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 3.5rem;
+  letter-spacing: 0.04em;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
 }
 
-.ooh-gym {
-  background: #2a2420;
-  padding: 1rem;
-  border-left: 4px solid var(--orange);
-}
-
-.ooh-street {
-  background: #2c3034;
-  padding: 0.75rem;
-}
-
-.ooh-frame {
-  min-height: 280px;
-  padding: 1.25rem;
+.apparel-print--time {
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 2.75rem;
+  letter-spacing: 0.06em;
+  color: var(--orange);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  line-height: 0.9;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
+}
+
+.apparel-print--time small {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.28em;
   color: var(--bone);
+  margin-top: 0.35rem;
+}
+
+.apparel-print--bag {
+  left: 12%;
+  bottom: 22%;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  background: rgba(18, 18, 18, 0.55);
+  padding: 0.35rem 0.55rem;
 }
 
 .social-frame--photo {
@@ -986,6 +1078,90 @@ button {
 .phys-wall--photo {
   background-color: var(--forge-black);
   background-repeat: no-repeat;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.metric-card {
+  background: var(--forge-black);
+  color: var(--bone);
+  padding: 1.25rem;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.25rem;
+}
+
+.metric-value {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 3rem;
+  line-height: 0.9;
+  color: var(--orange);
+}
+
+.metric-label {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 1.05rem;
+}
+
+.metric-detail {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: var(--concrete);
+}
+
+.deliverables-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.deliverable-card {
+  background: var(--bone);
+  border: 1px solid var(--rule);
+  padding: 1.15rem 1.25rem;
+}
+
+.deliverable-card p:last-child {
+  margin: 0.35rem 0 0;
+  color: var(--graphite);
+}
+
+.book-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.book-cta {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 1.1rem;
+  background: var(--forge-black);
+  color: var(--bone);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.book-cta--ghost {
+  background: transparent;
+  color: var(--forge-black);
+  border: 1px solid var(--forge-black);
 }
 
 .book-spread {
@@ -1367,7 +1543,10 @@ button {
   .digital-experience,
   .physical-grid,
   .statement-row,
-  .book-spread {
+  .book-spread,
+  .ooh-grid--scenes,
+  .metrics-grid,
+  .deliverables-grid {
     grid-template-columns: 1fr;
   }
 

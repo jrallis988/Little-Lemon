@@ -19,6 +19,8 @@ import {
   DigitalScreen,
   PhysicalScreen,
   FinaleScreen,
+  ResultsScreen,
+  DeliverablesScreen,
   CampaignBookScreen,
 } from './components/Campaign'
 import './App.css'
@@ -51,6 +53,8 @@ export default function App() {
       <DigitalScreen />
       <PhysicalScreen />
       <FinaleScreen />
+      <ResultsScreen />
+      <DeliverablesScreen />
       <CampaignBookScreen />
 
       <footer className="case-footer">

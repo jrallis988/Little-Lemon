@@ -18,6 +18,8 @@ const links = [
   { id: 'digital', label: 'Digital' },
   { id: 'physical', label: 'Physical' },
   { id: 'finale', label: 'Finale' },
+  { id: 'system', label: 'System' },
+  { id: 'deliverables', label: 'Files' },
   { id: 'book', label: 'Book' },
 ]
 

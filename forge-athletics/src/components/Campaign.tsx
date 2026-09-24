@@ -595,31 +595,64 @@ export function AdThree() {
 
 /* ——— 15 OOH ——— */
 
+function OohAdPanel({
+  line,
+  image,
+  code,
+}: {
+  line: string
+  image: string
+  code: string
+}) {
+  return (
+    <div
+      className="ooh-ad-panel"
+      style={{
+        backgroundImage: `linear-gradient(180deg, rgba(18,18,18,0.2), rgba(18,18,18,0.88)), url(${image})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      <span className="ooh-ad-code">{code}</span>
+      <BuiltThrough line2={line} size="sm" />
+      <span className="ooh-mark">FORGE</span>
+    </div>
+  )
+}
+
 export function OohScreen() {
   const placements = [
     {
       where: 'Bus Shelter',
       line: '5:12 A.M.',
-      image: photos.mayaTrack,
-      env: 'ooh-shelter',
+      adImage: photos.mayaTrack,
+      scene: photos.oohShelter,
+      env: 'ooh-scene--shelter',
+      code: 'MAYA · SESSION 184',
     },
     {
       where: 'Billboard',
       line: '327 REPS.',
-      image: photos.mayaStrength,
-      env: 'ooh-billboard',
+      adImage: photos.mayaStrength,
+      scene: photos.oohBillboard,
+      env: 'ooh-scene--billboard',
+      code: 'REP 327 · STRENGTH',
     },
     {
       where: 'Gym Poster',
       line: 'ONE MORE.',
-      image: photos.chalk,
-      env: 'ooh-gym',
+      adImage: photos.chalk,
+      scene: photos.oohGym,
+      env: 'ooh-scene--gym',
+      code: 'TRACK · EAST',
     },
     {
       where: 'Street Poster',
       line: 'FAILURE.',
-      image: photos.emptyTrack,
-      env: 'ooh-street',
+      adImage: photos.emptyTrack,
+      scene: photos.oohStreet,
+      env: 'ooh-scene--street',
+      code: 'BUILT THROUGH',
     },
   ]
   return (
@@ -627,25 +660,22 @@ export function OohScreen() {
       <ScreenKicker n="15" label="OOH / Print" />
       <h2 className="camp-headline">THE ADS IN THE WORLD.</h2>
       <p className="camp-lead">
-        Same campaign language in real environments — not logos dropped onto random
-        mockups.
+        Campaign language placed into photographed environments — bus shelter, billboard,
+        facility poster, street hoarding.
       </p>
-      <div className="ooh-grid">
+      <div className="ooh-grid ooh-grid--scenes">
         {placements.map((p) => (
           <article key={p.where} className="ooh-card">
             <p className="mock-label">{p.where}</p>
-            <div className={`ooh-env ${p.env}`}>
-              <div
-                className="ooh-frame"
-                style={{
-                  backgroundImage: `linear-gradient(180deg, rgba(18,18,18,0.2), rgba(18,18,18,0.85)), url(${p.image})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                }}
-              >
-                <BuiltThrough line2={p.line} size="md" />
-                <span className="ooh-mark">FORGE</span>
-              </div>
+            <div
+              className={`ooh-scene ${p.env}`}
+              style={{
+                backgroundImage: `url(${p.scene})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }}
+            >
+              <OohAdPanel line={p.line} image={p.adImage} code={p.code} />
             </div>
           </article>
         ))}
@@ -765,37 +795,46 @@ export function PhysicalScreen() {
       <ScreenKicker n="18" label="Physical World" />
       <h2 className="camp-headline">APPAREL · EQUIPMENT · FACILITY</h2>
       <p className="camp-lead">
-        Every object carries campaign language or Work Code — not a centered logo on every
-        surface.
+        Campaign language on product and architecture — numbers, timestamps, Work Code —
+        not a centered logo on every surface.
       </p>
-      <div className="physical-grid">
+      <div className="physical-grid physical-grid--photo">
         <article className="phys-card">
-          <p className="mock-label">Training Shirt</p>
-          <div className="phys-tee">
-            <span className="phys-num">327</span>
-            <span className="phys-back">BUILT THROUGH WORK.</span>
+          <p className="mock-label">Training Shirt · Front 327</p>
+          <div
+            className="apparel-photo apparel-photo--tee"
+            style={{ backgroundImage: `url(${photos.apparelTee})` }}
+          >
+            <span className="apparel-print apparel-print--num">327</span>
           </div>
         </article>
         <article className="phys-card">
-          <p className="mock-label">Hoodie</p>
-          <div className="phys-hoodie">
-            <span>5:12</span>
-            <span className="phys-sub">AM</span>
+          <p className="mock-label">Hoodie · 5:12 AM</p>
+          <div
+            className="apparel-photo apparel-photo--hoodie"
+            style={{ backgroundImage: `url(${photos.apparelHoodie})` }}
+          >
+            <span className="apparel-print apparel-print--time">
+              5:12
+              <small>AM</small>
+            </span>
           </div>
         </article>
         <article className="phys-card">
-          <p className="mock-label">Bag</p>
-          <div className="phys-bag">
-            <span>SESSION 184</span>
-            <ForgeSymbol fill="#F0EDE6" className="phys-bag-mark" />
+          <p className="mock-label">Athletic Bag · Session</p>
+          <div
+            className="apparel-photo apparel-photo--bag"
+            style={{ backgroundImage: `url(${photos.apparelBag})` }}
+          >
+            <span className="apparel-print apparel-print--bag">SESSION 184</span>
           </div>
         </article>
         <article className="phys-card phys-span">
-          <p className="mock-label">Facility Wall</p>
+          <p className="mock-label">Facility Hallway Mural</p>
           <div
             className="phys-wall phys-wall--photo"
             style={{
-              backgroundImage: `linear-gradient(90deg, rgba(18,18,18,0.85), rgba(18,18,18,0.55)), url(${photos.emptyTrack})`,
+              backgroundImage: `linear-gradient(90deg, rgba(18,18,18,0.82), rgba(18,18,18,0.35)), url(${photos.facilityHall})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }}
@@ -858,7 +897,76 @@ export function FinaleScreen() {
   )
 }
 
-/* ——— Campaign book (InDesign stand-in pages) ——— */
+/* ——— System proof / results ——— */
+
+export function ResultsScreen() {
+  const metrics = [
+    { value: '07', label: 'Expandable lines', detail: 'BUILT THROUGH ____ system' },
+    { value: '02', label: 'Athletes', detail: 'Maya + Jordan continuity' },
+    { value: '04', label: 'OOH formats', detail: 'Shelter · board · gym · street' },
+    { value: '07', label: 'Social frames', detail: 'One session, documented' },
+    { value: '01', label: 'Work Code', detail: 'Proprietary info system' },
+    { value: '20', label: 'Case screens', detail: 'Problem → execution' },
+  ]
+  return (
+    <section id="system" className="camp-section">
+      <ScreenKicker n="20" label="System Proof" />
+      <h2 className="camp-headline">ONE SYSTEM. MANY FORMATS.</h2>
+      <p className="camp-lead">
+        Fixed: geometry, Work Code, Forge Orange, campaign language, photography rule.
+        Adaptive: crop, scale, substrate, amount of photography.
+      </p>
+      <div className="metrics-grid">
+        {metrics.map((m) => (
+          <article key={m.label} className="metric-card">
+            <span className="metric-value">{m.value}</span>
+            <span className="metric-label">{m.label}</span>
+            <span className="metric-detail">{m.detail}</span>
+          </article>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+/* ——— Production deliverables ——— */
+
+export function DeliverablesScreen() {
+  const files = [
+    { tool: 'Illustrator', items: 'Logo lockups · symbol · clear-space · one-color / reverse' },
+    { tool: 'InDesign', items: 'Campaign book PDF · letter / presentation collateral' },
+    { tool: 'Photoshop', items: 'Campaign ads · OOH comps · apparel · facility murals' },
+    { tool: 'Presentation', items: 'React case study · digital athlete experience' },
+  ]
+  return (
+    <section id="deliverables" className="camp-section">
+      <ScreenKicker n="21" label="Production Deliverables" />
+      <h2 className="camp-headline">WHAT SHIPS WITH THE SYSTEM.</h2>
+      <div className="deliverables-grid">
+        {files.map((f) => (
+          <article key={f.tool} className="deliverable-card">
+            <p className="mock-label">{f.tool}</p>
+            <p>{f.items}</p>
+          </article>
+        ))}
+      </div>
+      <p className="note">
+        Interactive case study + print campaign book PDF included in this presentation
+        package.
+      </p>
+      <p className="book-cta-row">
+        <a className="book-cta" href="./book/FORGE-Campaign-Book.pdf" target="_blank" rel="noreferrer">
+          Open Campaign Book PDF →
+        </a>
+        <a className="book-cta book-cta--ghost" href="./book/" target="_blank" rel="noreferrer">
+          View print layout →
+        </a>
+      </p>
+    </section>
+  )
+}
+
+/* ——— Campaign book ——— */
 
 export function CampaignBookScreen() {
   const pages = [
@@ -869,22 +977,35 @@ export function CampaignBookScreen() {
     { n: '05', title: 'Platform', line: 'BUILT THROUGH ____' },
     { n: '06', title: 'Maya', line: 'Session 184 · 8 × 200M' },
     { n: '07', title: 'Work Code', line: '05:12 / SESSION 184 / TRACK' },
-    { n: '08', title: 'Ad System', line: '5:12 · 327 · 1,000 misses' },
+    { n: '08', title: 'Ads', line: '5:12 · 327 · 1,000 misses' },
+    { n: '09', title: 'OOH', line: 'Shelter · billboard · gym · street' },
+    { n: '10', title: 'Physical', line: 'Apparel · facility · floor' },
+    { n: '11', title: 'Digital', line: 'Work behind the athlete' },
+    { n: '12', title: 'Finale', line: 'After — not podium' },
   ]
   return (
     <section id="book" className="camp-section">
-      <ScreenKicker n="20" label="Campaign Book" />
-      <h2 className="camp-headline">INDESIGN ARTIFACT STRUCTURE</h2>
+      <ScreenKicker n="22" label="Campaign Book" />
+      <h2 className="camp-headline">PRINT CAMPAIGN BOOK</h2>
       <p className="camp-lead">
-        Production campaign book is authored in Adobe InDesign. This viewer mirrors the
-        chapter structure as a portfolio companion to the interactive case study.
+        A 12-page print layout packaged with the case study — cover, narrative, Work Code,
+        ads, OOH, and finale — suitable as an InDesign-style portfolio artifact.
       </p>
       <div className="book-spread">
-        <div className="book-cover">
-          <p className="mock-label">Cover</p>
+        <div
+          className="book-cover"
+          style={{
+            backgroundImage: `linear-gradient(180deg, rgba(18,18,18,0.35), rgba(18,18,18,0.92)), url(${photos.mayaTrack})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center 30%',
+          }}
+        >
+          <p className="mock-label" style={{ color: '#9a968e' }}>
+            Cover
+          </p>
           <span className="camp-hero-forge">FORGE</span>
           <BuiltThrough line2="WORK." size="md" />
-          <p className="book-meta">CAMPAIGN STANDARDS · 2026</p>
+          <p className="book-meta">CAMPAIGN BOOK · 12 PAGES</p>
         </div>
         <div className="book-toc">
           <p className="mock-label">Contents</p>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FORGE ATHLETICS — Campaign Book</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black: #121212;
+      --bone: #f0ede6;
+      --orange: #e85a1c;
+      --steel: #6e7276;
+      --mist: #d4d0c8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'IBM Plex Sans', sans-serif;
+      background: #cfcac0;
+      color: var(--black);
+    }
+    .page {
+      width: 11in;
+      height: 8.5in;
+      margin: 0.35in auto;
+      background: var(--bone);
+      padding: 0.7in;
+      position: relative;
+      overflow: hidden;
+      page-break-after: always;
+      break-after: page;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+    }
+    .page--dark { background: var(--black); color: var(--bone); }
+    .page--cover {
+      padding: 0;
+      background: #111 center/cover no-repeat;
+      color: var(--bone);
+    }
+    .cover-scrim {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(18,18,18,0.25), rgba(18,18,18,0.9));
+    }
+    .cover-inner {
+      position: relative; z-index: 1;
+      height: 100%;
+      padding: 0.85in;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 0.35rem;
+    }
+    .kicker {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin: 0 0 0.4rem;
+    }
+    .page--dark .kicker { color: var(--orange); }
+    h1, h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 0.95;
+      margin: 0 0 0.6rem;
+    }
+    h1 { font-size: 72px; }
+    h2 { font-size: 42px; }
+    .brand { color: var(--orange); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: 0.28em; font-size: 18px; }
+    .bt { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; text-transform: uppercase; line-height: 0.92; }
+    .bt span { display: block; font-size: 18px; letter-spacing: 0.14em; color: #9a968e; }
+    .bt strong { display: block; font-size: 64px; letter-spacing: 0.03em; }
+    p { font-size: 13px; line-height: 1.55; max-width: 4.8in; color: inherit; opacity: 0.92; }
+    .mono {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.45in; margin-top: 0.45in; }
+    .card {
+      border: 1px solid rgba(18,18,18,0.15);
+      padding: 0.35in;
+      min-height: 2.2in;
+    }
+    .page--dark .card { border-color: rgba(240,237,230,0.15); }
+    .stat {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 48px;
+      color: var(--orange);
+      line-height: 1;
+    }
+    .photo {
+      width: 100%;
+      height: 3.6in;
+      object-fit: cover;
+      display: block;
+      margin: 0.35in 0;
+    }
+    .footer {
+      position: absolute;
+      left: 0.7in; right: 0.7in; bottom: 0.4in;
+      display: flex; justify-content: space-between;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+      opacity: 0.55;
+    }
+    .x { color: var(--orange); font-weight: 700; }
+    ul { padding-left: 1.1rem; margin: 0.4rem 0; }
+    li { margin: 0.2rem 0; font-size: 13px; }
+    @media print {
+      body { background: white; }
+      .page {
+        margin: 0;
+        box-shadow: none;
+        width: 11in;
+        height: 8.5in;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 01 Cover -->
+  <section class="page page--cover" style="background-image:url('../photos/maya-track-dawn.jpg')">
+    <div class="cover-scrim"></div>
+    <div class="cover-inner">
+      <div class="brand">FORGE</div>
+      <div class="bt"><span>BUILT THROUGH</span><strong>WORK.</strong></div>
+      <p class="mono">Campaign Book · Performance Training Identity</p>
+    </div>
+  </section>
+
+  <!-- 02 Challenge -->
+  <section class="page">
+    <p class="kicker">02 · Challenge</p>
+    <h2>Athletic brands show the result.</h2>
+    <p>Winning. Podiums. Celebration. Dramatic portraits. Every brand already owns the finish line. Forge needed a different part of the athlete’s story.</p>
+    <div class="grid-2">
+      <div class="card"><span class="x">✕</span><br/><strong>PODIUM</strong><p>Victory frames everyone already makes.</p></div>
+      <div class="card"><span class="x">✕</span><br/><strong>CELEBRATION</strong><p>Confetti is not a training product.</p></div>
+    </div>
+    <div class="footer"><span>FORGE ATHLETICS</span><span>02 / 12</span></div>
+  </section>
+
+  <!-- 03 Insight -->
+  <section class="page page--dark">
+    <p class="kicker">03 · Insight</p>
+    <h2>Everyone sees the result.<br/>No one sees the 5:12 A.M. alarm.</h2>
+    <img class="photo" src="../photos/empty-track-dawn.jpg" alt="Empty track at dawn" />
+    <p>Performance is public. The work that builds it is almost invisible.</p>
+    <div class="footer"><span>FORGE ATHLETICS</span><span>03 / 12</span></div>
+  </section>
+
+  <!-- 04 Strategy -->
+  <section class="page">
+    <p class="kicker">04 · Strategy</p>
+    <h2>Don’t sell the result.<br/>Document the work.</h2>
+    <p>Forge owns training, repetition, failure, recovery, discipline, and progress — the process that creates performance.</p>
+    <div class="grid-2">
+      <div class="card"><div class="stat">01</div><p class="mono">Own the unseen hours</p></div>
+      <div class="card"><div class="stat">02</div><p class="mono">Make work measurable</p></div>
+    </div>
+    <div class="footer"><span>FORGE ATHLETICS</span><span>04 / 12</span></div>
+  </section>
+
+  <!-- 05 Platform -->
+  <section class="page page--dark">
+    <p class="kicker">05 · Big Idea</p>
+    <h1 style="color:var(--orange)">BUILT THROUGH WORK.</h1>
+    <p>Not a tagline — an expandable evidence system.</p>
+    <ul>
+      <li>BUILT THROUGH 5:12 A.M.</li>
+      <li>BUILT THROUGH 327 REPS.</li>
+      <li>BUILT THROUGH FAILURE.</li>
+      <li>BUILT THROUGH ONE MORE.</li>
+      <li>BUILT THROUGH 1,000 MISSES.</li>
+    </ul>
+    <div class="footer"><span>FORGE ATHLETICS</span><span>05 / 12</span></div>
+  </section>
+
+  <!-- 06 Maya -->
+  <section class="page">
+    <p class="kicker">06 · Athlete</p>
+    <h2>Maya / 19 / Sprinter</h2>
+    <img class="photo" src="../photos/maya-track-dawn.jpg" alt="Maya training" />
+    <p class="mono">Session 184 · 05:12 AM · 8 × 200M · Day 064</p>
+    <div class="footer"><span>FORGE ATHLETICS</span><span>06 / 12</span></div>
+  </section>
+
+  <!-- 07 Work Code -->
+  <section class="page page--dark">
+    <p class="kicker">07 · Work Code</p>
+    <h2>A proprietary information system.</h2>
+    <div class="grid-2">
+      <div class="card"><p class="mono">05:12 / SESSION 184 / TRACK</p></div>
+      <div class="card"><p class="mono">REP 327 · DAY 064 · 8 × 200M</p></div>
+      <div class="card"><p class="mono">MAYA / SPRINTER</p></div>
+      <div class="card"><p class="mono">1,000 MISSES · JORDAN</p></div>
+    </div>
+    <div class="footer"><span>FORGE ATHLETICS</span><span>07 / 12</span></div>
+  </section>
+
+  <!-- 08 Ads -->
+  <section class="page">
+    <p class="kicker">08 · Campaign Ads</p>
+    <h2>Same system. Three proofs.</h2>
+    <div class="grid-2">
+      <div class="card" style="padding:0;overflow:hidden">
+        <img src="../photos/maya-track-dawn.jpg" alt="" style="width:100%;height:2.1in;object-fit:cover;display:block"/>
+        <div style="padding:0.25in"><strong>BUILT THROUGH 5:12 A.M.</strong></div>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden">
+        <img src="../photos/maya-strength.jpg" alt="" style="width:100%;height:2.1in;object-fit:cover;display:block"/>
+        <div style="padding:0.25in"><strong>BUILT THROUGH 327 REPS.</strong></div>
+      </div>
+    </div>
+    <div class="footer"><span>FORGE ATHLETICS</span><span>08 / 12</span></div>
+  </section>
+
+  <!-- 09 OOH -->
+  <section class="page page--dark">
+    <p class="kicker">09 · OOH</p>
+    <h2>The ads in the world.</h2>
+    <div class="grid-2">
+      <img class="photo" style="height:2.4in;margin:0" src="../photos/ooh-bus-shelter.jpg" alt="Bus shelter" />
+      <img class="photo" style="height:2.4in;margin:0" src="../photos/ooh-billboard.jpg" alt="Billboard" />
+    </div>
+    <p class="mono" style="margin-top:0.35in">Shelter · Billboard · Gym poster · Street hoarding</p>
+    <div class="footer"><span>FORGE ATHLETICS</span><span>09 / 12</span></div>
+  </section>
+
+  <!-- 10 Physical -->
+  <section class="page">
+    <p class="kicker">10 · Physical</p>
+    <h2>Apparel · Facility</h2>
+    <div class="grid-2">
+      <img class="photo" style="height:2.6in;margin:0" src="../photos/apparel-tee.jpg" alt="Tee" />
+      <img class="photo" style="height:2.6in;margin:0" src="../photos/facility-hallway.jpg" alt="Facility" />
+    </div>
+    <p class="mono" style="margin-top:0.3in">327 on chest · 5:12 AM hoodie · Session 184 bag · Hall mural</p>
+    <div class="footer"><span>FORGE ATHLETICS</span><span>10 / 12</span></div>
+  </section>
+
+  <!-- 11 Color / Type -->
+  <section class="page page--dark">
+    <p class="kicker">11 · Identity</p>
+    <h2>Forge Orange leads.</h2>
+    <div class="grid-2">
+      <div class="card" style="background:var(--orange);border:0;min-height:2.5in;display:flex;align-items:flex-end"><strong>FORGE ORANGE<br/>#E85A1C</strong></div>
+      <div class="card">
+        <div class="stat">327</div>
+        <p class="mono">REPS</p>
+        <div class="stat" style="margin-top:0.35in">05:12</div>
+        <p class="mono">AM</p>
+      </div>
+    </div>
+    <div class="footer"><span>FORGE ATHLETICS</span><span>11 / 12</span></div>
+  </section>
+
+  <!-- 12 Finale -->
+  <section class="page page--cover" style="background-image:url('../photos/maya-after.jpg')">
+    <div class="cover-scrim"></div>
+    <div class="cover-inner">
+      <p class="mono">AFTER · NOT PODIUM</p>
+      <div class="bt"><span>BUILT THROUGH</span><strong>WORK.</strong></div>
+      <p class="mono">FORGE ATHLETICS · Fictional portfolio campaign</p>
+    </div>
+  </section>
+</body>
+</html>
