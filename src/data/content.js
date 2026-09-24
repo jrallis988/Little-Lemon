@@ -39,7 +39,88 @@ export const focusAreas = [
   },
 ];
 
-export const programs = programsData;
+const focusProgramCopy = {
+  healthcare: {
+    summarySuffix:
+      "Train with clinical partners across New Hampshire and build skills employers hire for.",
+    highlights: [
+      "Hands-on labs and clinical placements",
+      "Aligned with NH healthcare workforce demand",
+      "Advising for licensure and transfer pathways",
+    ],
+    careers: [
+      "Hospitals and clinics",
+      "Long-term and outpatient care",
+      "Bachelor’s and specialty transfer options",
+    ],
+  },
+  stem: {
+    summarySuffix:
+      "Build technical fluency for engineering, manufacturing, and IT employers statewide.",
+    highlights: [
+      "Project-based labs and applied coursework",
+      "Industry-aligned credentials and software",
+      "Clear routes into work or bachelor’s programs",
+    ],
+    careers: [
+      "Engineering and manufacturing roles",
+      "IT and cybersecurity pathways",
+      "Transfer to four-year STEM majors",
+    ],
+  },
+  business: {
+    summarySuffix:
+      "Gain practical skills for accounting, management, and transfer-ready business pathways.",
+    highlights: [
+      "Applied business and professional coursework",
+      "Flexible day, evening, and online options",
+      "Transfer agreements with regional universities",
+    ],
+    careers: [
+      "Accounting and office leadership",
+      "Hospitality and sport management",
+      "Bachelor’s business transfer tracks",
+    ],
+  },
+  public: {
+    summarySuffix:
+      "Serve communities through justice, education, and human services pathways.",
+    highlights: [
+      "Field-informed faculty and practice settings",
+      "Pathways into public service careers",
+      "Stackable credentials and transfer options",
+    ],
+    careers: [
+      "Criminal justice and public safety",
+      "Early childhood and education roles",
+      "Human services and community agencies",
+    ],
+  },
+  arts: {
+    summarySuffix:
+      "Build a transfer-friendly foundation across arts, sciences, and general studies.",
+    highlights: [
+      "Broad liberal arts and sciences core",
+      "Flexible scheduling for exploring majors",
+      "Advising for seamless bachelor’s transfer",
+    ],
+    careers: [
+      "Transfer to four-year colleges",
+      "Creative and communications fields",
+      "Undeclared exploration with structure",
+    ],
+  },
+};
+
+export const programs = programsData.map((program) => {
+  const enrich = focusProgramCopy[program.focus] || focusProgramCopy.arts;
+  return {
+    ...program,
+    summary: `Study ${program.name} at NHTI – Concord’s Community College. ${enrich.summarySuffix}`,
+    highlights: enrich.highlights,
+    careers: enrich.careers,
+  };
+});
 export const newsItems = newsData;
 export const events = eventsData;
 
@@ -82,7 +163,7 @@ export const admissionsSteps = [
 ];
 
 export const aidChecklist = [
-  "Create your FSA ID and complete the FAFSA (school code available from Financial Aid).",
+  "Create your FSA ID and complete the FAFSA using school code 002581.",
   "Watch for your financial aid offer in the CCSNH student portal.",
   "Ask about scholarships, grants, and work-study options.",
   "Meet with advising before registering so aid and course load stay aligned.",

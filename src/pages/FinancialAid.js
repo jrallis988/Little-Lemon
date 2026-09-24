@@ -10,7 +10,7 @@ const topics = [
   },
   {
     title: "FAFSA & aid office",
-    text: "Complete the FAFSA and connect with Financial Aid for grants, loans, and work-study.",
+    text: "Complete the FAFSA with school code 002581, then connect with Financial Aid for grants, loans, and work-study.",
     href: "https://www.nhti.edu/financial-aid/",
   },
   {
@@ -29,7 +29,7 @@ function FinancialAid() {
   usePageMeta({
     title: "Financial Aid",
     description:
-      "Tuition, FAFSA, scholarships, and billing help at NHTI – Concord's Community College.",
+      "Tuition, FAFSA school code 002581, scholarships, and billing help at NHTI – Concord's Community College.",
   });
 
   return (
@@ -41,6 +41,24 @@ function FinancialAid() {
           Grants, scholarships, work-study, and clear tuition information — so
           cost doesn&apos;t block your next step.
         </p>
+      </section>
+
+      <section className="section section--tight">
+        <div className="support-panel">
+          <h2>FAFSA school code</h2>
+          <p>
+            Use <strong>002581</strong> when you complete the Free Application
+            for Federal Student Aid so NHTI receives your information.
+          </p>
+          <a
+            className="text-link"
+            href="https://studentaid.gov/h/apply-for-aid/fafsa"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Start FAFSA on StudentAid.gov
+          </a>
+        </div>
       </section>
 
       <section className="section">

@@ -343,6 +343,7 @@ function Header() {
   const [isMobile, setIsMobile] = useState(false);
   const navigate = useNavigate();
   const searchRef = useRef(null);
+  const menuToggleRef = useRef(null);
 
   useEffect(() => {
     if (typeof window.matchMedia !== "function") return undefined;
@@ -367,6 +368,21 @@ function Header() {
   useEffect(() => {
     if (searchOpen && searchRef.current) searchRef.current.focus();
   }, [searchOpen]);
+
+  useEffect(() => {
+    function onKeyDown(event) {
+      if (event.key !== "Escape") return;
+      const wasOpen = menuOpen || openId || searchOpen;
+      setMenuOpen(false);
+      setOpenId(null);
+      setSearchOpen(false);
+      if (wasOpen && menuToggleRef.current && isMobile) {
+        menuToggleRef.current.focus();
+      }
+    }
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [menuOpen, openId, searchOpen, isMobile]);
 
   function closeAll() {
     setMenuOpen(false);
@@ -401,6 +417,7 @@ function Header() {
         </Link>
 
         <button
+          ref={menuToggleRef}
           className="nav-toggle"
           type="button"
           aria-expanded={menuOpen}

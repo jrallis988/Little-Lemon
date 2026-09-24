@@ -1,7 +1,14 @@
 import { Link } from "react-router-dom";
 import { newsItems } from "../data/content";
+import usePageMeta from "../hooks/usePageMeta";
 
 function News() {
+  usePageMeta({
+    title: "News",
+    description:
+      "Student success, new programs, and community partnerships from NHTI – Concord's Community College.",
+  });
+
   return (
     <>
       <section className="page-hero">
