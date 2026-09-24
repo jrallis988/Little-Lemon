@@ -101,6 +101,33 @@ companiesRouter.get('/:idOrSlug/workplaces', async (req, res) => {
 companiesRouter.get('/:idOrSlug/reviews', async (req, res) => {
   const workplaceId = req.query.workplaceId ? String(req.query.workplaceId) : null;
   const match = findMemoryCompany(req.params.idOrSlug);
+
+  if (process.env.DATABASE_URL) {
+    try {
+      const company = await query(
+        `SELECT id FROM companies WHERE id::text = $1 OR slug = $1 LIMIT 1`,
+        [req.params.idOrSlug],
+      );
+      if (company.rows[0]) {
+        const reviews = await query(
+          `
+          SELECT *
+          FROM reviews
+          WHERE company_id = $1
+            AND ($2::uuid IS NULL OR workplace_id = $2::uuid)
+          ORDER BY created_at DESC
+          `,
+          [company.rows[0].id, workplaceId && workplaceId.match(/^[0-9a-f-]{36}$/i) ? workplaceId : null],
+        );
+        const { mapPgReview } = await import('./reviews.js');
+        res.json({ data: reviews.rows.map((row) => mapPgReview(row)) });
+        return;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   if (!match) {
     res.status(404).json({ error: 'Company not found' });
     return;
@@ -111,6 +138,33 @@ companiesRouter.get('/:idOrSlug/reviews', async (req, res) => {
 companiesRouter.get('/:idOrSlug/interviews', async (req, res) => {
   const workplaceId = req.query.workplaceId ? String(req.query.workplaceId) : null;
   const match = findMemoryCompany(req.params.idOrSlug);
+
+  if (process.env.DATABASE_URL) {
+    try {
+      const company = await query(
+        `SELECT id FROM companies WHERE id::text = $1 OR slug = $1 LIMIT 1`,
+        [req.params.idOrSlug],
+      );
+      if (company.rows[0]) {
+        const interviews = await query(
+          `
+          SELECT *
+          FROM interviews
+          WHERE company_id = $1
+            AND ($2::uuid IS NULL OR workplace_id = $2::uuid)
+          ORDER BY created_at DESC
+          `,
+          [company.rows[0].id, workplaceId && workplaceId.match(/^[0-9a-f-]{36}$/i) ? workplaceId : null],
+        );
+        const { mapPgInterview } = await import('./reviews.js');
+        res.json({ data: interviews.rows.map((row) => mapPgInterview(row)) });
+        return;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   if (!match) {
     res.status(404).json({ error: 'Company not found' });
     return;

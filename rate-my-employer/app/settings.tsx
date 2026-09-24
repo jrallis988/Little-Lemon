@@ -58,6 +58,10 @@ export default function SettingsScreen() {
               : 'Offline · using local data'}
         </Text>
         <Text style={styles.apiUrl}>{apiUrl}</Text>
+        <Text style={styles.apiHint}>
+          Launch path: set DATABASE_URL (Postgres SoT), SMTP/Resend for email resets, and
+          GOOGLE_CLIENT_ID for Google Sign-In. Health reports which of those are live.
+        </Text>
         <PrimaryButton
           label={checkingApi ? 'Checking…' : 'Refresh status'}
           variant="ghost"
@@ -256,6 +260,7 @@ const styles = StyleSheet.create({
   },
   apiStatus: { fontFamily: typography.bodySemi, fontSize: 15, color: colors.ink },
   apiUrl: { fontFamily: typography.body, fontSize: 12, color: colors.inkSoft },
+  apiHint: { fontFamily: typography.body, fontSize: 13, lineHeight: 19, color: colors.inkMuted },
   error: { fontFamily: typography.bodyMedium, fontSize: 14, color: colors.danger },
   success: { fontFamily: typography.bodyMedium, fontSize: 14, color: colors.success },
 });

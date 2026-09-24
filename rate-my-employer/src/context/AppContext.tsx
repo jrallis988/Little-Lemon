@@ -136,6 +136,7 @@ type AppContextValue = {
     username?: string;
   }) => Promise<string | null>;
   signIn: (input: { email: string; password: string }) => Promise<string | null>;
+  signInWithGoogle: (idToken: string) => Promise<string | null>;
   signOut: () => Promise<void>;
   requestPasswordReset: (
     email: string,
@@ -566,6 +567,44 @@ export function AppProvider({ children }: { children: ReactNode }) {
           [STORAGE_KEYS.onboarded, '1'],
         ]);
         return null;
+      },
+      signInWithGoogle: async (idToken) => {
+        if (!idToken.trim()) return 'Google sign-in token is required.';
+        try {
+          const session = await authService.signInWithGoogle(idToken.trim());
+          const now = new Date().toISOString();
+          const nextUser: LocalAccount = {
+            id: session.user.id,
+            email: session.user.email,
+            displayName: session.user.displayName,
+            username: session.user.username,
+            role: session.user.role,
+            password: '',
+            createdAt: session.user.createdAt ?? now,
+            updatedAt: session.user.updatedAt ?? now,
+          };
+          const stored = await AsyncStorage.getItem(STORAGE_KEYS.users);
+          const existing: LocalAccount[] = stored ? JSON.parse(stored) : accounts;
+          const nextAccounts = [
+            ...existing.filter(
+              (item) => item.email !== nextUser.email && item.id !== nextUser.id,
+            ),
+            nextUser,
+          ];
+          await persistAccounts(nextAccounts);
+          setUser(toPublicUser(nextUser));
+          setIsGuest(false);
+          setHasOnboarded(true);
+          await AsyncStorage.multiSet([
+            [STORAGE_KEYS.session, nextUser.id],
+            [STORAGE_KEYS.accessToken, session.accessToken],
+            [STORAGE_KEYS.guest, '0'],
+            [STORAGE_KEYS.onboarded, '1'],
+          ]);
+          return null;
+        } catch (error) {
+          return error instanceof Error ? error.message : 'Google sign-in failed.';
+        }
       },
       signIn: async ({ email, password }) => {
         const normalized = normalizeEmail(email);

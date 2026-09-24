@@ -72,3 +72,27 @@ test('auth sign-up, sign-in, forgot, reset', async () => {
   });
   assert.equal(newLogin.status, 200);
 });
+
+test('auth providers and google gate', async () => {
+  const app = createApp();
+  const providers = await request(app).get('/api/auth/providers');
+  assert.equal(providers.status, 200);
+  assert.equal(providers.body.password, true);
+  assert.equal(providers.body.google, false);
+  assert.equal(providers.body.storage, 'memory');
+
+  const google = await request(app).post('/api/auth/oauth/google').send({
+    idToken: 'not-a-real-token-but-long-enough-123456',
+  });
+  assert.equal(google.status, 503);
+});
+
+test('health reports auth capabilities', async () => {
+  const app = createApp();
+  const health = await request(app).get('/health');
+  assert.equal(health.status, 200);
+  assert.equal(health.body.ok, true);
+  assert.equal(health.body.mode, 'memory');
+  assert.equal(health.body.auth.storage, 'memory');
+  assert.equal(health.body.auth.googleOAuth, false);
+});

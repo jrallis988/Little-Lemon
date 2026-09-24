@@ -13,14 +13,28 @@ CREATE TYPE interview_outcome AS ENUM ('positive', 'neutral', 'negative');
 CREATE TABLE users (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   email TEXT NOT NULL UNIQUE,
-  password_hash TEXT NOT NULL,
+  password_hash TEXT,
   display_name TEXT NOT NULL,
+  username TEXT,
   avatar_url TEXT,
   role user_role NOT NULL DEFAULT 'user',
   headline TEXT,
+  oauth_provider TEXT,
+  oauth_sub TEXT,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  UNIQUE (oauth_provider, oauth_sub)
 );
+
+CREATE TABLE password_resets (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  email TEXT NOT NULL,
+  token TEXT NOT NULL,
+  expires_at TIMESTAMPTZ NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX idx_password_resets_email ON password_resets(email);
 
 CREATE TABLE companies (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -59,11 +73,11 @@ CREATE TABLE reviews (
   employment_type employment_type,
   would_recommend BOOLEAN NOT NULL DEFAULT TRUE,
   score_overall NUMERIC(2,1) NOT NULL CHECK (score_overall BETWEEN 1 AND 5),
-  score_culture NUMERIC(2,1) NOT NULL CHECK (score_culture BETWEEN 1 AND 5),
-  score_pay NUMERIC(2,1) NOT NULL CHECK (score_pay BETWEEN 1 AND 5),
-  score_management NUMERIC(2,1) NOT NULL CHECK (score_management BETWEEN 1 AND 5),
-  score_work_life NUMERIC(2,1) NOT NULL CHECK (score_work_life BETWEEN 1 AND 5),
-  score_career_growth NUMERIC(2,1) CHECK (score_career_growth IS NULL OR score_career_growth BETWEEN 1 AND 5),
+  score_culture NUMERIC(2,1) NOT NULL CHECK (score_culture BETWEEN 0 AND 5),
+  score_pay NUMERIC(2,1) NOT NULL CHECK (score_pay BETWEEN 0 AND 5),
+  score_management NUMERIC(2,1) NOT NULL CHECK (score_management BETWEEN 0 AND 5),
+  score_work_life NUMERIC(2,1) NOT NULL CHECK (score_work_life BETWEEN 0 AND 5),
+  score_career_growth NUMERIC(2,1) CHECK (score_career_growth IS NULL OR score_career_growth BETWEEN 0 AND 5),
   is_anonymous BOOLEAN NOT NULL DEFAULT FALSE,
   helpful_count INT NOT NULL DEFAULT 0,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),

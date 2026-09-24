@@ -61,9 +61,14 @@ export async function checkApiHealth(): Promise<{
   ok: boolean;
   mode?: string;
   time?: string;
+  auth?: {
+    storage?: string;
+    googleOAuth?: boolean;
+    emailReset?: boolean;
+  };
 }> {
   try {
-    return await apiRequest<{ ok: boolean; mode?: string; time?: string }>('/health');
+    return await apiRequest('/health');
   } catch {
     return { ok: false };
   }

@@ -12,11 +12,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { PrimaryButton } from '../src/components';
 import { useApp } from '../src/context/AppContext';
+import * as authService from '../src/services/authService';
 import { colors, radii, spacing, typography } from '../src/theme';
 
 export default function AuthScreen() {
   const router = useRouter();
-  const { signIn, signUp, continueAsGuest } = useApp();
+  const { signIn, signUp, signInWithGoogle, continueAsGuest } = useApp();
   const [mode, setMode] = useState<'signin' | 'register'>('signin');
   const [displayName, setDisplayName] = useState('');
   const [username, setUsername] = useState('');
@@ -144,7 +145,44 @@ export default function AuthScreen() {
           </Pressable>
           <Pressable
             style={styles.oauth}
-            onPress={() => setError('Google Sign In is coming soon.')}
+            onPress={async () => {
+              setBusy(true);
+              setError(null);
+              try {
+                const providers = await authService.fetchAuthProviders();
+                if (!providers.google) {
+                  setError(
+                    'Google isn’t enabled yet. Set GOOGLE_CLIENT_ID on the API, then retry.',
+                  );
+                  return;
+                }
+                const token =
+                  typeof globalThis !== 'undefined' &&
+                  'prompt' in globalThis &&
+                  typeof (globalThis as { prompt?: (m: string) => string | null }).prompt ===
+                    'function'
+                    ? (globalThis as { prompt: (m: string) => string | null }).prompt(
+                        'Paste a Google ID token (from Google Sign-In / GIS)',
+                      )
+                    : null;
+                if (!token?.trim()) {
+                  setError(
+                    'Google OAuth is live on the API. Paste an ID token here (web) or wire Expo AuthSession next.',
+                  );
+                  return;
+                }
+                const result = await signInWithGoogle(token.trim());
+                if (result) {
+                  setError(result);
+                  return;
+                }
+                router.replace('/(tabs)/home');
+              } catch (err) {
+                setError(err instanceof Error ? err.message : 'Google sign-in failed.');
+              } finally {
+                setBusy(false);
+              }
+            }}
           >
             <Ionicons name="logo-google" size={18} color={colors.ink} />
             <Text style={styles.oauthText}>Google</Text>

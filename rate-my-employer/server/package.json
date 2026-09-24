@@ -8,12 +8,16 @@
     "start": "node dist/index.js",
     "build": "tsc -p tsconfig.json",
     "test": "NODE_ENV=test tsx --test src/**/*.test.ts",
-    "db:migrate": "psql \"$DATABASE_URL\" -f db/schema.sql"
+    "db:up": "docker compose up -d db",
+    "db:down": "docker compose down",
+    "db:migrate": "psql \"$DATABASE_URL\" -f db/schema.sql && psql \"$DATABASE_URL\" -f db/migrate_auth.sql",
+    "db:seed": "psql \"$DATABASE_URL\" -f db/seed.sql"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "nodemailer": "^6.10.0",
     "pg": "^8.13.3",
     "zod": "^3.24.2"
   },
@@ -21,6 +25,7 @@
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/node": "^22.13.10",
+    "@types/nodemailer": "^6.4.17",
     "@types/pg": "^8.11.11",
     "@types/supertest": "^6.0.3",
     "supertest": "^7.3.0",

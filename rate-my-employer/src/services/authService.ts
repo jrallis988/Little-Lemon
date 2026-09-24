@@ -20,6 +20,22 @@ export async function signUp(input: {
   });
 }
 
+export async function signInWithGoogle(idToken: string): Promise<AuthSession> {
+  return apiRequest<AuthSession>('/api/auth/oauth/google', {
+    method: 'POST',
+    body: { idToken },
+  });
+}
+
+export async function fetchAuthProviders(): Promise<{
+  password: boolean;
+  google: boolean;
+  emailReset: boolean;
+  storage: 'postgres' | 'memory';
+}> {
+  return apiRequest('/api/auth/providers');
+}
+
 export async function fetchMe(token: string): Promise<User> {
   return apiRequest<User>('/api/auth/me', { token });
 }
@@ -29,6 +45,7 @@ export async function requestPasswordReset(email: string): Promise<{
   message: string;
   resetToken?: string;
   expiresInMinutes?: number;
+  emailed?: boolean;
 }> {
   return apiRequest('/api/auth/forgot-password', {
     method: 'POST',

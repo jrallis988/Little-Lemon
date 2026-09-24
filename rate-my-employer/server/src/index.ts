@@ -32,6 +32,8 @@ export function createApp() {
         authSignIn: 'POST /api/auth/sign-in',
         authForgot: 'POST /api/auth/forgot-password',
         authReset: 'POST /api/auth/reset-password',
+        authGoogle: 'POST /api/auth/oauth/google',
+        authProviders: 'GET /api/auth/providers',
         authMe: 'GET /api/auth/me',
         companies: '/api/companies?q=',
         company: '/api/companies/:idOrSlug',

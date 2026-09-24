@@ -10,11 +10,13 @@ import {
 export type MemoryUser = {
   id: string;
   email: string;
-  passwordHash: string;
+  passwordHash: string | null;
   displayName: string;
   username?: string;
   role: 'user' | 'employer_admin' | 'moderator' | 'admin';
   headline?: string | null;
+  oauthProvider?: string | null;
+  oauthSub?: string | null;
   createdAt: string;
   updatedAt: string;
 };
