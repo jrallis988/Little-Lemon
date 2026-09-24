@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { APPLY_URL } from "../data/links";
 import ExternalLink from "./ExternalLink";
@@ -49,6 +49,8 @@ function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
+  const toggleRef = useRef(null);
+  const navRef = useRef(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -65,12 +67,84 @@ function Header() {
   }, [open]);
 
   useEffect(() => {
-    if (!open) return undefined;
-    const onKey = (event) => {
-      if (event.key === "Escape") setOpen(false);
+    const nav = navRef.current;
+    if (!nav) return undefined;
+
+    let mobileQuery = { matches: false };
+    try {
+      if (typeof window.matchMedia === "function") {
+        mobileQuery = window.matchMedia("(max-width: 800px)") || mobileQuery;
+      }
+    } catch {
+      // jsdom / older environments may lack MediaQueryList
+    }
+
+    const syncInert = () => {
+      const isMobileDrawer = Boolean(mobileQuery && mobileQuery.matches);
+      if (isMobileDrawer && !open) {
+        nav.setAttribute("inert", "");
+        nav.setAttribute("aria-hidden", "true");
+      } else {
+        nav.removeAttribute("inert");
+        nav.removeAttribute("aria-hidden");
+      }
     };
+
+    syncInert();
+    if (typeof mobileQuery.addEventListener === "function") {
+      mobileQuery.addEventListener("change", syncInert);
+    } else if (typeof mobileQuery.addListener === "function") {
+      mobileQuery.addListener(syncInert);
+    }
+
+    if (!open || !mobileQuery.matches) {
+      return () => {
+        if (typeof mobileQuery.removeEventListener === "function") {
+          mobileQuery.removeEventListener("change", syncInert);
+        } else if (typeof mobileQuery.removeListener === "function") {
+          mobileQuery.removeListener(syncInert);
+        }
+      };
+    }
+
+    const focusable = nav.querySelector(
+      'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    );
+    focusable?.focus();
+
+    const onKey = (event) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        toggleRef.current?.focus();
+        return;
+      }
+      if (event.key !== "Tab") return;
+
+      const nodes = [
+        ...nav.querySelectorAll(
+          'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        ),
+      ].filter((el) => !el.hasAttribute("disabled") && el.offsetParent !== null);
+      if (!nodes.length) return;
+
+      const first = nodes[0];
+      const last = nodes[nodes.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      if (typeof mobileQuery.removeEventListener === "function") {
+        mobileQuery.removeEventListener("change", syncInert);
+      }
+    };
   }, [open]);
 
   const submitSearch = (event) => {
@@ -125,6 +199,7 @@ function Header() {
             MyWMCC
           </ExternalLink>
           <button
+            ref={toggleRef}
             className={`nav-toggle ${open ? "is-open" : ""}`}
             type="button"
             aria-expanded={open}
@@ -139,6 +214,7 @@ function Header() {
         </div>
 
         <nav
+          ref={navRef}
           id="primary-nav"
           className={`primary-nav ${open ? "is-open" : ""}`}
           aria-label="Primary"

@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import ExternalLink from "../components/ExternalLink";
+import { ProgramJsonLd } from "../components/JsonLd";
 import PageHero from "../components/PageHero";
 import NotFound from "./NotFound";
 import { focusAreas, programs } from "../data/programs";
@@ -28,6 +29,7 @@ function ProgramDetail() {
 
   return (
     <>
+      <ProgramJsonLd program={program} />
       <PageHero
         brand={program.kind}
         title={program.title}

@@ -25,34 +25,26 @@ export const admissionsSteps = [
   },
 ];
 
-export const visitEvents = [
+export const visitEventTypes = [
   {
-    title: "Berlin Campus Open House",
-    date: "Thursday, October 15, 2026",
-    time: "4:00 – 6:00 PM",
-    copy: "Tour labs and classrooms, meet faculty, and learn about admissions and financial aid on the Berlin campus.",
-    href: "https://www.wmcc.edu/events/",
+    kind: "Open Houses",
+    title: "Campus Open Houses",
+    copy: "Tour labs and classrooms, meet faculty, and learn about admissions and financial aid in person.",
   },
   {
-    title: "Littleton Academic Center Info Night",
-    date: "Tuesday, November 10, 2026",
-    time: "5:00 – 7:00 PM",
-    copy: "Explore programs offered at the Littleton Academic Center and ask questions about transfer and career pathways.",
-    href: "https://www.wmcc.edu/events/",
+    kind: "Info nights",
+    title: "Academic Center Info Nights",
+    copy: "Explore programs offered at Littleton and Mount Washington Valley pathways, plus transfer and career options.",
   },
   {
-    title: "Express Admissions Day",
-    date: "Wednesday, January 13, 2027",
-    time: "9:00 AM – 3:00 PM",
-    copy: "Apply, complete placement, meet advisors, and register for classes — often in a single day.",
-    href: "https://www.wmcc.edu/admissions/",
+    kind: "Express Admissions",
+    title: "Express Admissions Days",
+    copy: "Apply, complete placement, meet advisors, and register for classes — often in a single visit.",
   },
   {
-    title: "Spring Open House",
-    date: "Thursday, April 8, 2027",
-    time: "4:00 – 6:00 PM",
-    copy: "A great chance for prospective students and families to explore WMCC in person.",
-    href: "https://www.wmcc.edu/events/",
+    kind: "Program sessions",
+    title: "Program-specific sessions",
+    copy: "Nursing and other selective programs periodically host focused information sessions — confirm dates on the calendar.",
   },
 ];
 
@@ -147,7 +139,7 @@ export const newsItems = [
   },
   {
     id: "diesel-success",
-    date: "Campus spotlight",
+    date: "May 2025",
     category: "Meet Our Students",
     title: "Meet Diesel Heavy Equipment Technology Graduate Rylye Coe, ’25",
     summary:
@@ -156,7 +148,7 @@ export const newsItems = [
   },
   {
     id: "teacher-ed-alum",
-    date: "Alumni story",
+    date: "2024",
     category: "Meet Our Students",
     title:
       "Alyssa Delafontaine, ’24 — Teacher Education, Special Education, and Library Technology",
@@ -166,7 +158,7 @@ export const newsItems = [
   },
   {
     id: "littleton-center",
-    date: "Campus",
+    date: "Ongoing",
     category: "Locations",
     title: "Littleton Academic Center Continues Expanding Access Across the North Country",
     summary:
@@ -179,6 +171,10 @@ export const legalLinks = [
   {
     label: "Non-Discrimination Policy",
     href: "https://www.wmcc.edu/current-students/non-discrimination-policy/",
+  },
+  {
+    label: "Student Privacy (FERPA)",
+    href: "https://www.wmcc.edu/about/institutional-information/consumer-information/",
   },
   {
     label: "Accessibility",

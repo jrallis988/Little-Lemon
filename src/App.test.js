@@ -128,3 +128,51 @@ test("program pages include program specifics and accessible apply link", async 
     screen.getAllByText(/opens in new window/i).length
   ).toBeGreaterThan(0);
 });
+
+test("footer includes student privacy legal link", () => {
+  render(
+    <MemoryRouter initialEntries={["/"]}>
+      <App />
+    </MemoryRouter>
+  );
+
+  const privacy = screen.getByRole("link", { name: /Student Privacy \(FERPA\)/i });
+  expect(privacy).toHaveAttribute(
+    "href",
+    "https://www.wmcc.edu/about/institutional-information/consumer-information/"
+  );
+});
+
+test("visit page points to live events calendar without fabricated dates", () => {
+  render(
+    <MemoryRouter initialEntries={["/admissions/visit"]}>
+      <App />
+    </MemoryRouter>
+  );
+
+  expect(
+    screen.getByRole("heading", { name: /Campus Open Houses/i })
+  ).toBeInTheDocument();
+  expect(screen.queryByText(/October 15, 2026/i)).not.toBeInTheDocument();
+  expect(
+    screen.getAllByRole("link", { name: /events calendar/i }).length
+  ).toBeGreaterThan(0);
+});
+
+test("sets open graph image and organization JSON-LD", async () => {
+  render(
+    <MemoryRouter initialEntries={["/"]}>
+      <App />
+    </MemoryRouter>
+  );
+
+  await waitFor(() => {
+    expect(
+      document.querySelector('meta[property="og:image"]')?.getAttribute("content")
+    ).toMatch(/campus-exterior\.jpg/);
+  });
+  expect(document.getElementById("wmcc-jsonld-org")).toBeTruthy();
+  expect(document.getElementById("wmcc-jsonld-org").textContent).toMatch(
+    /CollegeOrUniversity/
+  );
+});

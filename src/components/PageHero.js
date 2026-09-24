@@ -12,7 +12,13 @@ function PageHero({
   return (
     <section className={`page-hero ${compact ? "compact" : ""}`}>
       <div className="page-hero-media" aria-hidden="true">
-        <img src={image} alt="" loading="lazy" decoding="async" />
+          <img
+            src={image}
+            alt=""
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+          />
         <div className="hero-veil" />
       </div>
       <div className="container page-hero-content">

@@ -90,6 +90,11 @@ function HeroCarousel() {
             src={item.image}
             alt={itemIndex === index ? item.imageAlt || "" : ""}
             className="hero-slide-image"
+            width="1600"
+            height="900"
+            loading={itemIndex === 0 ? "eager" : "lazy"}
+            fetchPriority={itemIndex === 0 ? "high" : "auto"}
+            decoding="async"
           />
         </div>
       ))}

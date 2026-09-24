@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import ExternalLink from "../components/ExternalLink";
 import PageHero from "../components/PageHero";
 import { newsItems } from "../data/siteContent";
+import { WMCC_EVENTS_URL, WMCC_NEWS_URL } from "../data/links";
 
 function News() {
   return (
@@ -13,7 +15,7 @@ function News() {
         actions={[
           {
             label: "Visit Events Calendar",
-            to: "https://www.wmcc.edu/events/",
+            to: WMCC_EVENTS_URL,
             external: true,
             className: "btn btn-gold",
           },
@@ -36,52 +38,35 @@ function News() {
                 </p>
                 <h2>
                   {item.href ? (
-                    <a
+                    <ExternalLink
                       href={item.href}
-                      target="_blank"
-                      rel="noreferrer"
                       className="news-title-link"
                     >
                       {item.title}
-                    </a>
+                    </ExternalLink>
                   ) : (
                     item.title
                   )}
                 </h2>
                 <p>{item.summary}</p>
                 {item.href ? (
-                  <a
-                    className="text-link"
-                    href={item.href}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                  <ExternalLink className="text-link" href={item.href}>
                     Read on wmcc.edu
-                  </a>
+                  </ExternalLink>
                 ) : null}
               </article>
             ))}
           </div>
 
           <div className="section-cta cta-actions">
-            <a
-              className="btn btn-primary"
-              href="https://www.wmcc.edu/news/"
-              target="_blank"
-              rel="noreferrer"
-            >
+            <ExternalLink className="btn btn-primary" href={WMCC_NEWS_URL}>
               More news on wmcc.edu
-            </a>
-            <a
-              className="btn btn-gold"
-              href="https://www.wmcc.edu/events/"
-              target="_blank"
-              rel="noreferrer"
-            >
+            </ExternalLink>
+            <ExternalLink className="btn btn-gold" href={WMCC_EVENTS_URL}>
               Events calendar
-            </a>
+            </ExternalLink>
             <Link className="btn btn-primary" to="/admissions/visit">
-              Upcoming visit days
+              Plan a visit
             </Link>
           </div>
         </div>

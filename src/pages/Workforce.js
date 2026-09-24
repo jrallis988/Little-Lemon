@@ -1,3 +1,4 @@
+import ExternalLink from "../components/ExternalLink";
 import PageHero from "../components/PageHero";
 import { workforceTracks } from "../data/siteContent";
 import { REQUEST_INFO_URL } from "../data/links";
@@ -84,14 +85,14 @@ function Workforce() {
                 <a href="mailto:wmcc@ccsnh.edu">wmcc@ccsnh.edu</a>
               </li>
             </ul>
-            <a
+            <ExternalLink
               className="btn btn-gold"
               href={REQUEST_INFO_URL}
-              target="_blank"
-              rel="noreferrer"
+              trackName="request_info_click"
+              trackProps={{ location: "workforce" }}
             >
               Request Training Info
-            </a>
+            </ExternalLink>
           </div>
         </div>
       </section>

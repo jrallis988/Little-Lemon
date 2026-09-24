@@ -38,22 +38,22 @@ export const campuses = [
   },
   {
     id: "North Conway",
-    name: "North Conway Academic Center",
-    label: "North Conway Academic Center",
-    role: "Academic Center · Mount Washington Valley",
+    name: "North Conway / Mount Washington Valley",
+    label: "North Conway (Mount Washington Valley)",
+    role: "Advising & program pathways · Mount Washington Valley",
     addressLines: [
-      "Mount Washington Valley presence",
+      "Mount Washington Valley advising & course options",
       "North Conway, NH",
     ],
     phone: "(603) 447-3282",
     phoneHref: "tel:6034473282",
     hours: OFFICE_HOURS,
     hoursNote:
-      "Serves the Mount Washington Valley with advising support and selected program pathways. Call for current class offerings and visit information.",
+      "Serves Mount Washington Valley students with advising support and selected program pathways. Call for current class offerings and visit information — the former White Mountain Highway Academic Center lease was not renewed.",
     directions:
-      "Contact the North Conway Academic Center for current location details, parking, and visit scheduling in the Mount Washington Valley.",
+      "Contact the North Conway line for current meeting locations, parking, and visit scheduling in the Mount Washington Valley.",
     mapsUrl:
-      "https://www.google.com/maps/search/?api=1&query=North+Conway+NH+White+Mountains+Community+College",
+      "https://www.google.com/maps/search/?api=1&query=North+Conway+NH",
     pageUrl: "https://www.wmcc.edu/program-location/north-conway/",
   },
 ];

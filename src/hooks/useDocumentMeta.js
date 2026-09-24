@@ -1,5 +1,9 @@
 import { useEffect } from "react";
 
+const DEFAULT_OG_IMAGE = "/images/campus-exterior.jpg";
+const DEFAULT_OG_ALT =
+  "Berlin campus of White Mountains Community College";
+
 function upsertMeta(selector, attributes) {
   let el = document.querySelector(selector);
   if (!el) {
@@ -15,10 +19,26 @@ function upsertMeta(selector, attributes) {
   return el;
 }
 
+function upsertLink(rel, href) {
+  let el = document.querySelector(`link[rel="${rel}"]`);
+  if (!el) {
+    el = document.createElement("link");
+    el.setAttribute("rel", rel);
+    document.head.appendChild(el);
+  }
+  el.setAttribute("href", href);
+  return el;
+}
+
 /**
- * Updates document.title, description, and Open Graph / Twitter tags.
+ * Updates document.title, description, canonical, and Open Graph / Twitter tags.
  */
-export function useDocumentMeta({ title, description }) {
+export function useDocumentMeta({
+  title,
+  description,
+  image = DEFAULT_OG_IMAGE,
+  imageAlt = DEFAULT_OG_ALT,
+}) {
   useEffect(() => {
     if (title) {
       document.title = title;
@@ -31,7 +51,13 @@ export function useDocumentMeta({ title, description }) {
       });
     }
 
-    const pageUrl = `${window.location.origin}${window.location.pathname}${window.location.search}`;
+    const origin = window.location.origin;
+    const pageUrl = `${origin}${window.location.pathname}${window.location.search}`;
+    const absoluteImage = image.startsWith("http")
+      ? image
+      : `${origin}${image.startsWith("/") ? image : `/${image}`}`;
+
+    upsertLink("canonical", `${origin}${window.location.pathname}`);
 
     upsertMeta('meta[property="og:title"]', {
       property: "og:title",
@@ -53,6 +79,14 @@ export function useDocumentMeta({ title, description }) {
       property: "og:site_name",
       content: "White Mountains Community College",
     });
+    upsertMeta('meta[property="og:image"]', {
+      property: "og:image",
+      content: absoluteImage,
+    });
+    upsertMeta('meta[property="og:image:alt"]', {
+      property: "og:image:alt",
+      content: imageAlt,
+    });
     upsertMeta('meta[name="twitter:card"]', {
       name: "twitter:card",
       content: "summary_large_image",
@@ -65,7 +99,11 @@ export function useDocumentMeta({ title, description }) {
       name: "twitter:description",
       content: description || "",
     });
-  }, [title, description]);
+    upsertMeta('meta[name="twitter:image"]', {
+      name: "twitter:image",
+      content: absoluteImage,
+    });
+  }, [title, description, image, imageAlt]);
 }
 
 export default useDocumentMeta;

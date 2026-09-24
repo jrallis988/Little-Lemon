@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import ExternalLink from "../components/ExternalLink";
 import PageHero from "../components/PageHero";
 import { clubs } from "../data/siteContent";
 import { APPLY_URL } from "../data/links";
@@ -122,14 +123,14 @@ function StudentExperience() {
             </p>
           </div>
           <div className="cta-actions">
-            <a
+            <ExternalLink
               className="btn btn-gold"
               href={APPLY_URL}
-              target="_blank"
-              rel="noreferrer"
+              trackName="apply_click"
+              trackProps={{ location: "student_experience" }}
             >
               Become a Student
-            </a>
+            </ExternalLink>
             <Link className="btn btn-ghost-light" to="/contact">
               Contact Us
             </Link>

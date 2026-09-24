@@ -1,8 +1,13 @@
 import ExternalLink from "../../components/ExternalLink";
 import PageHero from "../../components/PageHero";
 import SectionNav from "../../components/SectionNav";
-import { visitEvents } from "../../data/siteContent";
-import { APPLY_URL, REQUEST_INFO_URL } from "../../data/links";
+import { campuses } from "../../data/campuses";
+import { visitEventTypes } from "../../data/siteContent";
+import {
+  APPLY_URL,
+  REQUEST_INFO_URL,
+  WMCC_EVENTS_URL,
+} from "../../data/links";
 import { admissionsNav } from "./admissionsNav";
 
 function Visit() {
@@ -11,7 +16,7 @@ function Visit() {
       <PageHero
         brand="Admissions & Aid"
         title="Plan your visit"
-        copy="See campus, learn about programs, and get questions answered by college staff — through tours, Open Houses, and Express Admissions Days at Berlin, Littleton, or North Conway."
+        copy="See campus, learn about programs, and get questions answered by college staff — through tours, Open Houses, and Express Admissions Days at Berlin, Littleton, or across the Mount Washington Valley."
         image="/images/campus-exterior.jpg"
         actions={[
           {
@@ -36,28 +41,27 @@ function Visit() {
             <p className="eyebrow">Upcoming events</p>
             <h2>Find a day that works for you.</h2>
             <p>
-              Check the{" "}
-              <ExternalLink href="https://www.wmcc.edu/events/">
-                WMCC events calendar
-              </ExternalLink>{" "}
-              for the latest dates, then join us for Open Houses, info nights, and
-              Express Admissions Days.
+              WMCC publishes Open Houses, info nights, Express Admissions Days,
+              and program sessions on the official events calendar. Dates change
+              each term — always confirm there before you travel.
             </p>
           </div>
           <div className="event-list">
-            {visitEvents.map((event) => (
-              <article key={`${event.title}-${event.date}`} className="event-item">
-                <p className="event-date">{event.date}</p>
+            {visitEventTypes.map((event) => (
+              <article key={event.title} className="event-item">
+                <p className="event-date">{event.kind}</p>
                 <h3>{event.title}</h3>
-                <p className="event-time">{event.time}</p>
                 <p>{event.copy}</p>
-                {event.href ? (
-                  <ExternalLink className="text-link" href={event.href}>
-                    View calendar
-                  </ExternalLink>
-                ) : null}
+                <ExternalLink className="text-link" href={WMCC_EVENTS_URL}>
+                  Check the events calendar
+                </ExternalLink>
               </article>
             ))}
+          </div>
+          <div className="section-cta">
+            <ExternalLink className="btn btn-gold" href={WMCC_EVENTS_URL}>
+              Open WMCC Events Calendar
+            </ExternalLink>
           </div>
         </div>
       </section>
@@ -70,27 +74,28 @@ function Visit() {
             <p>
               Visit the Berlin campus or Littleton Academic Center to see labs,
               classrooms, and student spaces — and ask about programs, transfer,
-              and financial aid.
+              and financial aid. Mount Washington Valley students can also call
+              the North Conway line for advising and visit options.
             </p>
             <ul className="check-list">
-              <li>Berlin Campus · 2020 Riverside Drive</li>
-              <li>Littleton Academic Center · 646 Union Street</li>
-              <li>North Conway Academic Center · 2541 White Mountain Highway</li>
+              {campuses.map((campus) => (
+                <li key={campus.id}>
+                  {campus.name} · {campus.addressLines[0]}
+                </li>
+              ))}
               <li>Learn about Nursing and other program-specific sessions</li>
             </ul>
           </div>
           <div className="info-panel">
             <h3>Contact Admissions</h3>
             <ul>
-              <li>
-                <a href="tel:6037521113">(603) 752-1113</a>
-              </li>
-              <li>
-                <a href="tel:6034441326">Littleton: (603) 444-1326</a>
-              </li>
-              <li>
-                <a href="tel:6034473282">North Conway: (603) 447-3282</a>
-              </li>
+              {campuses.map((campus) => (
+                <li key={campus.id}>
+                  <a href={campus.phoneHref}>
+                    {campus.id}: {campus.phone}
+                  </a>
+                </li>
+              ))}
               <li>
                 <a href="mailto:wmcc@ccsnh.edu">wmcc@ccsnh.edu</a>
               </li>

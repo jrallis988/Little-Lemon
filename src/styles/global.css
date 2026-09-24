@@ -1884,12 +1884,16 @@ main {
     padding: 2rem 1.5rem 2.5rem;
     gap: 1.5rem;
     transform: translateX(100%);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, visibility 0.3s ease;
     overflow-y: auto;
+    visibility: hidden;
+    pointer-events: none;
   }
 
   .primary-nav.is-open {
     transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
   }
 
   .header-search {
