@@ -93,6 +93,7 @@ Same pattern works on **Render** or **Neon + any Node host**.
 | GET | `/checks/:id` | yes |
 | POST | `/checks/analyze` | yes |
 | GET | `/supplements/search?q=` | no* |
+| GET | `/supplements/:id` | no* |
 | GET | `/supplements/barcode/:code` | no* |
 | GET | `/alerts` | yes |
 | POST | `/alerts/:id/read` | yes |

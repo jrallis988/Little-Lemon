@@ -2,6 +2,7 @@ import { apiConfig, isRemoteApi } from './config';
 import { ApiError } from './errors';
 import { authStorage } from './authStorage';
 import { mockApiRequest } from './mockServer';
+import { captureException } from '../monitoring/sentry';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
@@ -10,6 +11,8 @@ interface RequestOptions {
   body?: unknown;
   auth?: boolean;
   query?: Record<string, string | number | boolean | undefined>;
+  /** Internal: skip 401→refresh retry (used by refresh itself). */
+  _retried?: boolean;
 }
 
 function buildUrl(path: string, query?: RequestOptions['query']): string {
@@ -23,7 +26,33 @@ function buildUrl(path: string, query?: RequestOptions['query']): string {
   return url.toString();
 }
 
-async function remoteRequest<T>(path: string, options: RequestOptions = {}): Promise<T> {
+let refreshInFlight: Promise<boolean> | null = null;
+
+async function tryRefreshSession(): Promise<boolean> {
+  if (refreshInFlight) return refreshInFlight;
+  refreshInFlight = (async () => {
+    const refreshToken = await authStorage.getRefreshToken();
+    if (!refreshToken) return false;
+    try {
+      const session = await remoteRequestRaw<import('./types').AuthSession>('/auth/refresh', {
+        method: 'POST',
+        body: { refreshToken },
+        auth: false,
+      });
+      await authStorage.saveTokens(session.tokens.accessToken, session.tokens.refreshToken);
+      return true;
+    } catch (err) {
+      captureException(err, { where: 'token_refresh' });
+      await authStorage.clearTokens();
+      return false;
+    } finally {
+      refreshInFlight = null;
+    }
+  })();
+  return refreshInFlight;
+}
+
+async function remoteRequestRaw<T>(path: string, options: RequestOptions = {}): Promise<T> {
   const { method = 'GET', body, auth = true, query } = options;
   const headers: Record<string, string> = {
     Accept: 'application/json',
@@ -60,6 +89,26 @@ async function remoteRequest<T>(path: string, options: RequestOptions = {}): Pro
       throw new ApiError('Request timed out. Please try again.', 'network');
     }
     throw ApiError.offline();
+  }
+}
+
+async function remoteRequest<T>(path: string, options: RequestOptions = {}): Promise<T> {
+  try {
+    return await remoteRequestRaw<T>(path, options);
+  } catch (err) {
+    if (
+      err instanceof ApiError &&
+      err.code === 'unauthorized' &&
+      options.auth !== false &&
+      !options._retried &&
+      path !== '/auth/refresh'
+    ) {
+      const refreshed = await tryRefreshSession();
+      if (refreshed) {
+        return remoteRequestRaw<T>(path, { ...options, _retried: true });
+      }
+    }
+    throw err;
   }
 }
 
@@ -133,6 +182,11 @@ export const biocrossApi = {
     apiRequest<import('../domain/models').SupplementCheck>('/checks/analyze', {
       method: 'POST',
       body: { supplementId },
+    }),
+
+  getSupplement: (id: string) =>
+    apiRequest<{ supplement: import('../domain/models').Supplement }>(`/supplements/${id}`, {
+      auth: false,
     }),
 
   searchSupplements: (q: string) =>

@@ -15,6 +15,8 @@ import {
 } from './fixtures';
 import { evaluateIngredientRules } from './ingredientRules';
 
+export const RULESET_VERSION = 'ruleset_v1';
+
 /**
  * Safety analysis retains structured reasoning:
  * supplement → ingredient → potential issue → health-profile item → evidence → severity → explanation
@@ -25,7 +27,13 @@ export function analyzeSupplement(
   userId: string,
 ): SupplementCheck {
   if (!supplement.ingredients.length && (!supplement.name || supplement.name === 'Unknown Product')) {
-    return { ...DEMO_MORE_INFO_CHECK, id: `check-${Date.now()}`, userId, checkedAt: new Date().toISOString() };
+    return {
+      ...DEMO_MORE_INFO_CHECK,
+      id: `check-${Date.now()}`,
+      userId,
+      checkedAt: new Date().toISOString(),
+      rulesetVersion: RULESET_VERSION,
+    };
   }
 
   const ingredientNames = supplement.ingredients.filter((i) => i.isActive).map((i) => i.name);
@@ -66,6 +74,7 @@ export function analyzeSupplement(
       disclaimer:
         'BioCross provides informational insights, not medical advice. Always talk to your healthcare provider with any concerns.',
       profileSnapshotNote: 'We analyzed active ingredients against your confirmed health profile.',
+      rulesetVersion: RULESET_VERSION,
     };
   }
 
@@ -78,6 +87,7 @@ export function analyzeSupplement(
       supplement,
       checkedAt: new Date().toISOString(),
       evidence: DEMO_EVIDENCE.filter((e) => e.id === 'ev-3'),
+      rulesetVersion: RULESET_VERSION,
     };
   }
 
@@ -117,6 +127,7 @@ function buildDefaultLow(supplement: Supplement, profile: HealthProfile, userId:
     disclaimer:
       'BioCross provides informational insights, not medical advice. Always talk to your healthcare provider with any concerns.',
     profileSnapshotNote: 'We analyzed this supplement against your health profile.',
+    rulesetVersion: RULESET_VERSION,
   };
 }
 

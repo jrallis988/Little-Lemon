@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -14,17 +14,44 @@ import {
   ErrorState,
   HealthCard,
   InfoCallout,
+  LoadingState,
   SupplementCard,
 } from '../../src/design-system';
 import { colors, spacing, typography } from '../../src/design-system/tokens';
-import { SUPPLEMENT_CATALOG } from '../../src/domain/fixtures';
+import { biocrossRepository } from '../../src/domain/repository';
+import type { Supplement } from '../../src/domain/models';
 
 export default function ConfirmScreen() {
   const router = useRouter();
   const { supplementId, source } = useLocalSearchParams<{ supplementId: string; source?: string }>();
+  const [supplement, setSupplement] = useState<Supplement | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const supplement = SUPPLEMENT_CATALOG.find((s) => s.id === supplementId);
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      setLoading(true);
+      const found = supplementId ? await biocrossRepository.getSupplementById(supplementId) : null;
+      if (!cancelled) {
+        setSupplement(found);
+        setLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [supplementId]);
+
   const fromLabel = source === 'label';
+
+  if (loading) {
+    return (
+      <SafeAreaView style={styles.safe} edges={['top']}>
+        <AppHeader onBack={() => router.back()} showLogo={false} />
+        <LoadingState message="Loading product…" />
+      </SafeAreaView>
+    );
+  }
 
   if (!supplement) {
     return (

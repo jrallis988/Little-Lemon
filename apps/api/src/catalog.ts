@@ -71,6 +71,26 @@ export const SUPPLEMENT_CATALOG: Supplement[] = [
     ],
   },
   {
+    id: 'sup-catalog-turmeric',
+    name: 'Turmeric Curcumin',
+    brand: 'GoldenRoot',
+    dosage: '1000 mg',
+    form: 'Capsule',
+    barcode: '012345678967',
+    ingredients: [
+      { id: 'ing-tur', name: 'Turmeric root extract', amount: '1000 mg', isActive: true },
+    ],
+  },
+  {
+    id: 'sup-catalog-zinc',
+    name: 'Zinc',
+    brand: 'PureHealth Essentials',
+    dosage: '25 mg',
+    form: 'Tablet',
+    barcode: '012345678974',
+    ingredients: [{ id: 'ing-zn', name: 'Zinc', amount: '25 mg', isActive: true }],
+  },
+  {
     id: 'sup-catalog-ginkgo',
     name: 'Ginkgo Biloba',
     brand: 'MindLeaf',
@@ -87,6 +107,15 @@ export const SUPPLEMENT_CATALOG: Supplement[] = [
     form: 'Capsule',
     barcode: '012345678998',
     ingredients: [{ id: 'ing-kava', name: 'Kava root extract', amount: '250 mg', isActive: true }],
+  },
+  {
+    id: 'sup-catalog-iron',
+    name: 'Iron Bisglycinate',
+    brand: 'PureHealth Essentials',
+    dosage: '18 mg',
+    form: 'Capsule',
+    barcode: '012345679005',
+    ingredients: [{ id: 'ing-fe', name: 'Iron (as bisglycinate)', amount: '18 mg', isActive: true }],
   },
 ];
 

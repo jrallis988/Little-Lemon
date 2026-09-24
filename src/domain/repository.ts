@@ -3,6 +3,7 @@ import { biocrossApi } from '../api/client';
 import { authStorage } from '../api/authStorage';
 import { getMockExtractedItems, saveMockExtractedItems, updateMockUser } from '../api/mockServer';
 import { isRemoteApi } from '../api/config';
+import { ApiError } from '../api/errors';
 import type {
   AppPreferences,
   ExtractedHealthItem,
@@ -21,10 +22,9 @@ import {
   DEMO_HEALTH_PROFILE,
   DEMO_PREFERENCES,
   DEMO_USER,
+  SUPPLEMENT_CATALOG,
 } from './fixtures';
 import { analyzeSupplement } from './analysis';
-import type { Supplement as SupplementType } from './models';
-
 const LOCAL_KEYS = {
   onboarded: '@biocross/onboarded',
   extracted: '@biocross/extracted-local',
@@ -250,21 +250,48 @@ export const biocrossRepository = {
       try {
         const res = await biocrossApi.lookupBarcode(barcode);
         return res.supplement;
-      } catch {
-        /* fall through */
+      } catch (err) {
+        if (isRemoteApi()) {
+          if (err instanceof ApiError) throw err;
+          throw ApiError.offline();
+        }
       }
     }
     const { findSupplementByBarcode } = await import('./analysis');
     return findSupplementByBarcode(barcode) ?? null;
   },
 
-  async runAnalysis(supplement: SupplementType): Promise<SupplementCheck> {
+  async getSupplementById(id: string): Promise<Supplement | null> {
+    const { peekPendingSupplement } = await import('./pendingSupplement');
+    const pending = peekPendingSupplement(id);
+    if (pending) return pending;
+
+    if (isRemoteApi() || (await hasSession())) {
+      try {
+        const res = await biocrossApi.getSupplement(id);
+        return res.supplement;
+      } catch {
+        if (isRemoteApi()) return null;
+      }
+    }
+    return SUPPLEMENT_CATALOG.find((s) => s.id === id) ?? null;
+  },
+
+  async runAnalysis(supplement: Supplement): Promise<SupplementCheck> {
+    if (isRemoteApi()) {
+      if (!(await hasSession())) {
+        throw new ApiError('Sign in required to analyze supplements.', 'unauthorized', 401);
+      }
+      const check = await biocrossApi.runAnalysis(supplement.id);
+      return this.saveCheck(check);
+    }
+
     if (await hasSession()) {
       try {
         const check = await biocrossApi.runAnalysis(supplement.id);
         return this.saveCheck(check);
       } catch {
-        /* fall through to local analysis */
+        /* mock/session miss — fall through to local analysis */
       }
     }
     const user = await this.getUser();

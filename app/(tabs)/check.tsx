@@ -25,9 +25,11 @@ import { colors, radii, spacing, typography } from '../../src/design-system/toke
 import { BarcodeScannerView } from '../../src/features/scan/BarcodeScannerView';
 import { useBioCross } from '../../src/state/BioCrossContext';
 import { useOnlineStatus } from '../../src/hooks/useOnlineStatus';
+import { apiConfig } from '../../src/api/config';
 
 const TESTO_BARCODE = '012345678943';
 const UNKNOWN_BARCODE = '000000000000';
+const SHOW_DEMO_TOGGLES = __DEV__ || apiConfig.mode === 'mock';
 
 export default function CheckScreen() {
   const router = useRouter();
@@ -299,18 +301,20 @@ export default function CheckScreen() {
           />
         ) : null}
 
-        <Pressable
-          onPress={() => setDemoFailNext((v) => !v)}
-          style={styles.demoToggle}
-          accessibilityRole="switch"
-          accessibilityState={{ checked: demoFailNext }}
-          accessibilityLabel="Demo failure mode"
-        >
-          <Text style={styles.demoText}>
-            Demo: next scan {demoFailNext ? 'will simulate failure' : 'will succeed'}
-          </Text>
-        </Pressable>
-        {Platform.OS === 'web' ? (
+        {SHOW_DEMO_TOGGLES ? (
+          <Pressable
+            onPress={() => setDemoFailNext((v) => !v)}
+            style={styles.demoToggle}
+            accessibilityRole="switch"
+            accessibilityState={{ checked: demoFailNext }}
+            accessibilityLabel="Demo failure mode"
+          >
+            <Text style={styles.demoText}>
+              Demo: next scan {demoFailNext ? 'will simulate failure' : 'will succeed'}
+            </Text>
+          </Pressable>
+        ) : null}
+        {SHOW_DEMO_TOGGLES && Platform.OS === 'web' ? (
           <Pressable onPress={handleDemoUnknown} style={styles.demoToggle}>
             <Text style={styles.demoText}>Demo: unknown product</Text>
           </Pressable>

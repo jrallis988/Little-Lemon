@@ -157,13 +157,28 @@ export function BioCrossProvider({
       },
       recheckCheck: async (checkId) => {
         const prior = await biocrossRepository.getCheckById(checkId);
-        const p = await biocrossRepository.getHealthProfile();
-        const u = await biocrossRepository.getUser();
-        if (!prior || !p || !u) return null;
-        const next = recheckSupplement(prior, p, u.id);
-        await biocrossRepository.saveCheck(next);
-        await refresh();
-        return next;
+        if (!prior) return null;
+        // Prefer remote analysis so ruleset stays server-authoritative when connected
+        try {
+          const next = await biocrossRepository.runAnalysis(prior.supplement);
+          const stamped = {
+            ...next,
+            id: prior.id,
+            newerInfoAvailable: false,
+            profileSnapshotNote: 'Rechecked against your latest confirmed health profile.',
+          };
+          await biocrossRepository.saveCheck(stamped);
+          await refresh();
+          return stamped;
+        } catch {
+          const p = await biocrossRepository.getHealthProfile();
+          const u = await biocrossRepository.getUser();
+          if (!p || !u) return null;
+          const next = recheckSupplement(prior, p, u.id);
+          await biocrossRepository.saveCheck(next);
+          await refresh();
+          return next;
+        }
       },
     }),
     [ready, user, profile, checks, alerts, preferences, documents, onboarded, refresh],

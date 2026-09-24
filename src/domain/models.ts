@@ -156,6 +156,7 @@ export interface SupplementCheck {
   disclaimer: string;
   profileSnapshotNote: string;
   newerInfoAvailable?: boolean;
+  rulesetVersion?: string;
 }
 
 export interface SafetyAlert {

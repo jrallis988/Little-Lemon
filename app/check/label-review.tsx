@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -12,6 +12,8 @@ import {
 } from '../../src/design-system';
 import { colors, radii, spacing, typography } from '../../src/design-system/tokens';
 import { SUPPLEMENT_CATALOG } from '../../src/domain/fixtures';
+import { setPendingSupplement } from '../../src/domain/pendingSupplement';
+import { biocrossRepository } from '../../src/domain/repository';
 import type { Ingredient, Supplement } from '../../src/domain/models';
 
 /**
@@ -24,18 +26,37 @@ export default function LabelReviewScreen() {
     mode?: string;
   }>();
   const [confirming, setConfirming] = useState(false);
+  const [base, setBase] = useState<Supplement | null>(null);
 
-  const base = useMemo(
-    () => SUPPLEMENT_CATALOG.find((s) => s.id === supplementId) ?? SUPPLEMENT_CATALOG[4],
-    [supplementId],
-  );
+  React.useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const found = supplementId
+        ? await biocrossRepository.getSupplementById(supplementId)
+        : SUPPLEMENT_CATALOG[4];
+      if (!cancelled) setBase(found ?? SUPPLEMENT_CATALOG[4]);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [supplementId]);
 
   const incomplete = mode === 'incomplete';
-  const seed = incomplete ? base.ingredients.slice(0, 1) : base.ingredients;
+  const seed = React.useMemo(
+    () => (base ? (incomplete ? base.ingredients.slice(0, 1) : base.ingredients) : []),
+    [base, incomplete],
+  );
 
-  const [productName, setProductName] = useState(base.name);
-  const [brand, setBrand] = useState(base.brand ?? '');
-  const [ingredients, setIngredients] = useState<Ingredient[]>(seed);
+  const [productName, setProductName] = useState('');
+  const [brand, setBrand] = useState('');
+  const [ingredients, setIngredients] = useState<Ingredient[]>([]);
+
+  React.useEffect(() => {
+    if (!base) return;
+    setProductName(base.name);
+    setBrand(base.brand ?? '');
+    setIngredients(seed);
+  }, [base, seed]);
 
   const updateIngredient = (id: string, patch: Partial<Ingredient>) => {
     setIngredients((list) => list.map((i) => (i.id === id ? { ...i, ...patch } : i)));
@@ -49,13 +70,14 @@ export default function LabelReviewScreen() {
   };
 
   const buildSupplement = (): Supplement => ({
-    ...base,
-    name: productName.trim() || base.name,
-    brand: brand.trim() || base.brand,
+    ...base!,
+    name: productName.trim() || base!.name,
+    brand: brand.trim() || base!.brand,
     ingredients,
   });
 
   const handleConfirm = () => {
+    if (!base) return;
     setConfirming(true);
     const supplement = buildSupplement();
     const active = supplement.ingredients.filter((i) => i.isActive && i.name.trim());
@@ -67,17 +89,18 @@ export default function LabelReviewScreen() {
       setConfirming(false);
       return;
     }
+    setPendingSupplement(supplement);
     router.push({
       pathname: '/check/confirm',
-      params: { supplementId: supplement.id, source: 'label', customName: supplement.name },
+      params: { supplementId: supplement.id, source: 'label' },
     });
     setConfirming(false);
   };
 
-  if (confirming) {
+  if (!base || confirming) {
     return (
       <SafeAreaView style={styles.safe}>
-        <LoadingState message="Reading Supplement Facts…" />
+        <LoadingState message={confirming ? 'Reading Supplement Facts…' : 'Loading…'} />
       </SafeAreaView>
     );
   }

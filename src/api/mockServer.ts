@@ -59,6 +59,7 @@ interface MockStore {
   documents: Record<string, UploadedDocument[]>;
   extracted: ExtractedHealthItem[];
   onboarded: Record<string, boolean>;
+  passwordResets: { token: string; userId: string; expiresAt: number }[];
 }
 
 function hashPassword(password: string): string {
@@ -90,6 +91,7 @@ function defaultStore(): MockStore {
     documents: { [demoUser.id]: [DEMO_DOCUMENT] },
     extracted: [...DEMO_EXTRACTED_ITEMS],
     onboarded: { [demoUser.id]: DEMO_USER.onboardingCompleted },
+    passwordResets: [],
   };
 }
 
@@ -208,6 +210,18 @@ export async function mockApiRequest<T>(
   }
 
   if (method === 'POST' && path === '/auth/forgot-password') {
+    const { email } = (body ?? {}) as { email?: string };
+    const user = store.users.find((u) => u.email.toLowerCase() === (email ?? '').toLowerCase());
+    if (user) {
+      const resetToken = token();
+      store.passwordResets = store.passwordResets ?? [];
+      store.passwordResets.push({
+        token: resetToken,
+        userId: user.id,
+        expiresAt: Date.now() + 60 * 60 * 1000,
+      });
+      await saveStore(store);
+    }
     return { ok: true, message: 'If an account exists, a reset link has been sent.' } as T;
   }
 
@@ -216,9 +230,18 @@ export async function mockApiRequest<T>(
     if (!resetToken || !password || password.length < 8) {
       throw new ApiError('Valid token and password (8+ chars) required.', 'validation', 400);
     }
-    // Demo mock accepts any token and updates demo user password hash when present
-    const demo = store.users.find((u) => u.email === apiConfig.demoEmail);
-    if (demo) demo.passwordHash = hashPassword(password);
+    store.passwordResets = store.passwordResets ?? [];
+    const idx = store.passwordResets.findIndex((r) => r.token === resetToken);
+    if (idx < 0) throw new ApiError('Invalid or expired reset token.', 'validation', 400);
+    const entry = store.passwordResets[idx];
+    store.passwordResets.splice(idx, 1);
+    if (entry.expiresAt < Date.now()) {
+      throw new ApiError('Invalid or expired reset token.', 'validation', 400);
+    }
+    const user = store.users.find((u) => u.id === entry.userId);
+    if (!user) throw new ApiError('User not found.', 'not_found', 404);
+    user.passwordHash = hashPassword(password);
+    store.sessions = store.sessions.filter((s) => s.userId !== user.id);
     await saveStore(store);
     return { ok: true } as T;
   }
@@ -233,6 +256,26 @@ export async function mockApiRequest<T>(
     const session = createSession(store, existing.userId);
     await saveStore(store);
     return session as T;
+  }
+
+  // Public catalog lookups (no auth)
+  if (method === 'GET' && path.startsWith('/supplements/search')) {
+    const q = path.includes('?q=') ? decodeURIComponent(path.split('?q=')[1] ?? '') : '';
+    return { supplements: findSupplementByQuery(q) } as T;
+  }
+
+  const barcodeMatchPublic = path.match(/^\/supplements\/barcode\/(.+)$/);
+  if (method === 'GET' && barcodeMatchPublic) {
+    const code = decodeURIComponent(barcodeMatchPublic[1]);
+    return { supplement: findSupplementByBarcode(code) ?? null } as T;
+  }
+
+  const supplementIdMatch = path.match(/^\/supplements\/([^/]+)$/);
+  if (method === 'GET' && supplementIdMatch) {
+    const id = decodeURIComponent(supplementIdMatch[1]);
+    const supplement = SUPPLEMENT_CATALOG.find((s) => s.id === id);
+    if (!supplement) throw new ApiError('Supplement not found.', 'not_found', 404);
+    return { supplement } as T;
   }
 
   if (method === 'DELETE' && path === '/auth/account') {

@@ -1,0 +1,25 @@
+/**
+ * Simple in-memory sliding-window rate limiter for auth endpoints.
+ */
+type Bucket = { timestamps: number[] };
+
+const buckets = new Map<string, Bucket>();
+
+export function rateLimit(opts: {
+  key: string;
+  limit: number;
+  windowMs: number;
+}): { ok: true } | { ok: false; retryAfterSec: number } {
+  const now = Date.now();
+  const bucket = buckets.get(opts.key) ?? { timestamps: [] };
+  bucket.timestamps = bucket.timestamps.filter((t) => now - t < opts.windowMs);
+  if (bucket.timestamps.length >= opts.limit) {
+    const oldest = bucket.timestamps[0] ?? now;
+    const retryAfterSec = Math.max(1, Math.ceil((opts.windowMs - (now - oldest)) / 1000));
+    buckets.set(opts.key, bucket);
+    return { ok: false, retryAfterSec };
+  }
+  bucket.timestamps.push(now);
+  buckets.set(opts.key, bucket);
+  return { ok: true };
+}

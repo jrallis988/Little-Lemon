@@ -13,9 +13,11 @@ import { analyzeSupplement } from './analysis.js';
 import { findByBarcode, findById, findByQuery } from './catalog.js';
 import { createStore, mergeProfileItem, publicUser } from './db/index.js';
 import { passwordResetEmail, sendEmail } from './email.js';
+import { rateLimit } from './rateLimit.js';
 import { captureException, initSentry } from './sentry.js';
 import type { AppPreferences, HealthProfile, HealthProfileItem, UserRecord } from './types.js';
 
+const isProd = process.env.NODE_ENV === 'production';
 const JWT_SECRET = process.env.JWT_SECRET ?? 'biocross-dev-secret-change-me';
 const PORT = Number(process.env.PORT ?? 3001);
 const TOKEN_TTL = '7d';
@@ -23,17 +25,54 @@ const TOKEN_SECONDS = 60 * 60 * 24 * 7;
 const REFRESH_TTL_MS = 60 * 60 * 24 * 30 * 1000; // 30 days
 const APP_DEEP_LINK = process.env.APP_DEEP_LINK ?? 'biocross://auth/reset-password';
 const PUBLIC_WEB_URL = process.env.PUBLIC_WEB_URL?.trim();
+const CORS_ORIGIN = process.env.CORS_ORIGIN?.trim();
+
+if (isProd) {
+  if (!process.env.JWT_SECRET || process.env.JWT_SECRET === 'biocross-dev-secret-change-me') {
+    console.error('[fatal] JWT_SECRET must be set to a strong secret in production');
+    process.exit(1);
+  }
+  if (!process.env.DATABASE_URL?.trim()) {
+    console.error('[fatal] DATABASE_URL (Postgres) is required in production');
+    process.exit(1);
+  }
+}
 
 await initSentry();
 
 const store = await createStore();
+await store.ready();
+
 const app = Fastify({ logger: true });
-await app.register(cors, { origin: true });
+await app.register(cors, {
+  origin: CORS_ORIGIN ? CORS_ORIGIN.split(',').map((s) => s.trim()) : true,
+});
 
 app.setErrorHandler((err, _req, reply) => {
   captureException(err);
   reply.send(err);
 });
+
+function enforceAuthRate(
+  req: { ip: string; headers: Record<string, unknown> },
+  reply: {
+    header: (k: string, v: string) => unknown;
+    code: (n: number) => { send: (b: unknown) => unknown };
+  },
+  action: string,
+  limit: number,
+  windowMs: number,
+): boolean {
+  const fwd = String(req.headers['x-forwarded-for'] ?? '')
+    .split(',')[0]
+    ?.trim();
+  const key = `${action}:${fwd || req.ip || 'unknown'}`;
+  const result = rateLimit({ key, limit, windowMs });
+  if (result.ok) return true;
+  reply.header('Retry-After', String(result.retryAfterSec));
+  reply.code(429).send({ message: 'Too many attempts. Please try again shortly.' });
+  return false;
+}
 
 async function auth(req: { headers: { authorization?: string } }): Promise<UserRecord | null> {
   const header = req.headers.authorization;
@@ -54,14 +93,29 @@ async function issueTokens(userId: string) {
   return { accessToken, refreshToken, expiresIn: TOKEN_SECONDS };
 }
 
-app.get('/health', async () => ({
-  ok: true,
-  service: 'biocross-api',
-  store: store.kind,
-  time: new Date().toISOString(),
-}));
+app.get('/health', async (_req, reply) => {
+  try {
+    await store.ready();
+    return {
+      ok: true,
+      service: 'biocross-api',
+      store: store.kind,
+      time: new Date().toISOString(),
+    };
+  } catch (err) {
+    captureException(err);
+    return reply.code(503).send({
+      ok: false,
+      service: 'biocross-api',
+      store: store.kind,
+      message: 'Store unavailable',
+      time: new Date().toISOString(),
+    });
+  }
+});
 
 app.post<{ Body: { email: string; password: string } }>('/auth/sign-in', async (req, reply) => {
+  if (!enforceAuthRate(req, reply, 'sign-in', 20, 60_000)) return;
   const user = await store.findUserByEmail(req.body?.email ?? '');
   if (!user || !verifyPassword(req.body.password ?? '', user.passwordHash)) {
     return reply.code(401).send({ message: 'Invalid email or password.' });
@@ -70,6 +124,7 @@ app.post<{ Body: { email: string; password: string } }>('/auth/sign-in', async (
 });
 
 app.post<{ Body: { email: string; password: string; fullName: string } }>('/auth/sign-up', async (req, reply) => {
+  if (!enforceAuthRate(req, reply, 'sign-up', 10, 60_000)) return;
   const email = req.body?.email?.trim() ?? '';
   const password = req.body?.password ?? '';
   const fullName = req.body?.fullName?.trim() ?? '';
@@ -123,6 +178,7 @@ app.put<{ Body: Partial<UserRecord> }>('/user', async (req, reply) => {
 });
 
 app.post<{ Body: { email: string } }>('/auth/forgot-password', async (req, reply) => {
+  if (!enforceAuthRate(req, reply, 'forgot-password', 5, 60_000)) return;
   const email = req.body?.email?.trim() ?? '';
   const user = email ? await store.findUserByEmail(email) : null;
   // Always return success to avoid account enumeration
@@ -240,6 +296,12 @@ app.post<{ Body: { supplementId: string } }>('/checks/analyze', async (req, repl
 
 app.get<{ Querystring: { q?: string } }>('/supplements/search', async (req) => {
   return { data: { supplements: findByQuery(req.query.q ?? '') } };
+});
+
+app.get<{ Params: { id: string } }>('/supplements/:id', async (req, reply) => {
+  const supplement = findById(req.params.id);
+  if (!supplement) return reply.code(404).send({ message: 'Supplement not found.' });
+  return { data: { supplement } };
 });
 
 app.get<{ Params: { code: string } }>('/supplements/barcode/:code', async (req) => {

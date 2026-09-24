@@ -1,12 +1,16 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Animated, Easing, StyleSheet, Text, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { ErrorState, LogoMark } from '../../src/design-system';
+import { ErrorState, LoadingState, LogoMark } from '../../src/design-system';
 import { colors, spacing, typography } from '../../src/design-system/tokens';
-import { SUPPLEMENT_CATALOG } from '../../src/domain/fixtures';
+import { ApiError } from '../../src/api/errors';
+import { biocrossRepository } from '../../src/domain/repository';
+import { clearPendingSupplement } from '../../src/domain/pendingSupplement';
+import type { Supplement } from '../../src/domain/models';
 import { useBioCross } from '../../src/state/BioCrossContext';
+import { captureException } from '../../src/monitoring/sentry';
 
 const STEPS = [
   'Checking supplement ingredients...',
@@ -17,15 +21,38 @@ const STEPS = [
   'Preparing your results...',
 ];
 
+function issueKindFromError(err: unknown): string {
+  if (err instanceof ApiError) {
+    if (err.code === 'network') return 'offline';
+    if (err.code === 'unauthorized') return 'analysis_failed';
+    if (err.code === 'not_found') return 'unknown_product';
+    return 'analysis_failed';
+  }
+  return 'analysis_failed';
+}
+
 export default function AnalyzingScreen() {
   const router = useRouter();
   const { supplementId } = useLocalSearchParams<{ supplementId: string }>();
   const { runCheck } = useBioCross();
   const pulse = useRef(new Animated.Value(1)).current;
   const stepIndex = useRef(0);
-  const [stepLabel, setStepLabel] = React.useState(STEPS[0]);
+  const [stepLabel, setStepLabel] = useState(STEPS[0]);
+  const [supplement, setSupplement] = useState<Supplement | null>(null);
+  const [loadError, setLoadError] = useState(false);
 
-  const supplement = SUPPLEMENT_CATALOG.find((s) => s.id === supplementId);
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const found = supplementId ? await biocrossRepository.getSupplementById(supplementId) : null;
+      if (cancelled) return;
+      if (!found) setLoadError(true);
+      else setSupplement(found);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [supplementId]);
 
   useEffect(() => {
     const pulseLoop = Animated.loop(
@@ -65,14 +92,16 @@ export default function AnalyzingScreen() {
     (async () => {
       try {
         const check = await runCheck(supplement);
+        clearPendingSupplement();
         if (!cancelled) {
           router.replace(`/result/${check.id}`);
         }
-      } catch {
+      } catch (err) {
+        captureException(err, { where: 'analyzing', supplementId: supplement.id });
         if (!cancelled) {
           router.replace({
             pathname: '/check/issue',
-            params: { kind: 'offline', supplementId: supplement.id },
+            params: { kind: issueKindFromError(err), supplementId: supplement.id },
           });
         }
       }
@@ -83,7 +112,7 @@ export default function AnalyzingScreen() {
     };
   }, [supplement, runCheck, router]);
 
-  if (!supplement) {
+  if (loadError) {
     return (
       <SafeAreaView style={styles.safe}>
         <ErrorState
@@ -92,6 +121,14 @@ export default function AnalyzingScreen() {
           actionLabel="Go back"
           onAction={() => router.back()}
         />
+      </SafeAreaView>
+    );
+  }
+
+  if (!supplement) {
+    return (
+      <SafeAreaView style={styles.safe}>
+        <LoadingState message="Preparing analysis…" />
       </SafeAreaView>
     );
   }
