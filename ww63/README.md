@@ -1,63 +1,54 @@
 # Weight Watchers 63 — 63 Years of You
 
-Independent conceptual redesign: anniversary campaign site + interactive product vision prototypes.
+Independent conceptual redesign: anniversary campaign + interactive product vision.
 
 **Not affiliated with or commissioned by WeightWatchers.**
 
-Lives in this monorepo under `ww63/` as an Artistic Fountain portfolio case study (alongside `nh-dmv/`).
+**Portfolio score target: 10** — thesis, guided product journey, craft polish, case study packaging, and a one-click static demo.
 
-## Quick start
+## Open the demo
 
-```bash
-cd ww63
-npm install
-npm run dev
-```
-
-```bash
-npm run lint
-npm run build
-npm run preview
-```
-
-## Routes
-
-| Route | Description |
-|-------|-------------|
-| `/` | Campaign homepage (hero, plan matrix, guided journey, chapters) |
-| `/find-your-year` | Interactive year quiz + share card |
-| `/whats-next` | Flagship product prototypes + guided Pathways → Life → Kitchen |
-| `/case-study` | Portfolio case study with annotated screens |
-| `/programs` `/stories` `/innovation` `/research` `/about` | Supporting pages |
-| `/63` | Alias to homepage |
+| Mode | How |
+| --- | --- |
+| **From Artistic Fountain portfolio** | Open `ww63/dist/index.html` (or the WW 63 card on the home page) |
+| **Local source** | `cd ww63 && npm install && npm run dev` |
+| **Permanent URL** | Deploy `ww63/` to Vercel (Root Directory: `ww63`) |
 
 ## Role · Stack · Ownership
 
 - **Role:** Product design, brand narrative, interaction design, front-end implementation
 - **Stack:** Vite · React 18 · TypeScript · Tailwind · React Router
-- **Owned:** Campaign homepage, guided journey, onboarding + plan matrix, Find Your Year, case study packaging, deploy config
+- **Owned:** Campaign homepage, guided Pathways → Life → Kitchen, onboarding + plan matrix, Find Your Year, case study, deploy config
 
-## Deploy (permanent public URL)
+## What’s inside
 
-### Vercel
+- Campaign narrative: needs first → history → present → future
+- Guided journey with carried Pathway state
+- Onboarding modal + concept plan matrix
+- Interactive prototypes: WW Life, Pathways, Kitchen, Team, Life After GLP-1
+- Case study: process, vs live WW, decisions, cuts, outcomes, annotated screens
 
-1. Import this repository in [Vercel](https://vercel.com)
-2. Set **Root Directory** to `ww63`
-3. Framework: Vite (or use included `vercel.json`)
-4. Env: `VITE_SITE_URL` = your production URL (e.g. `https://ww63.vercel.app`)
-5. Deploy
+## Scripts
 
-### Netlify
+```bash
+npm install
+npm run dev
+npm run lint
+npm run build              # standalone (Vercel root = ww63)
+npm run build:portfolio    # embed at /ww63/dist for static portfolio serve
+```
 
-1. Import repo in [Netlify](https://netlify.com)
-2. Base directory: `ww63`
-3. Build: `npm run build` · Publish: `dist`
-4. Set `VITE_SITE_URL` in site env vars
+Rebuild the portfolio demo after source changes:
 
-### After deploy
+```bash
+npm run build:portfolio
+```
 
-- Confirm refresh works on `/whats-next`, `/find-your-year`, `/case-study`
-- Paste the live URL into the portfolio card on `weight-watchers-63.html` if you want a one-click demo
+## Deploy
+
+1. Vercel → Import repo → **Root Directory: `ww63`**
+2. Env: `VITE_SITE_URL` = production URL
+3. Or use `.github/workflows/deploy-ww63.yml` with Vercel secrets
 
 ## Thesis
 

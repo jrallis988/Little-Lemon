@@ -115,19 +115,21 @@
         </p>
 
         <div class="case-actions">
-            <a class="cta-btn" href="#run-locally">Run the interactive prototype</a>
+            <a class="cta-btn" href="ww63/dist/">Open interactive prototype</a>
+            <a class="cta-btn cta-btn--soft" href="ww63/dist/#/case-study">Read in-app case study</a>
+            <a class="cta-btn cta-btn--soft" href="weight-watchers-63.html">Case study splash</a>
             <a class="cta-btn cta-btn--soft" href="index.html#portfolio">Back to portfolio</a>
         </div>
 
         <div class="case-note" id="run-locally">
-            <p><strong>Local demo</strong></p>
+            <p><strong>Interactive demo</strong></p>
             <p>
-                The full interactive site lives in <code>ww63/</code>. From the repo root:
+                A production build is embedded at <code>ww63/dist/</code> for one-click review from this portfolio.
+                For local development of the source app:
             </p>
             <p><code>cd ww63 && npm install && npm run dev</code></p>
             <p>
-                Then open the local Vite URL (usually <code>http://localhost:5173</code>).
-                For a permanent public URL, deploy the <code>ww63/</code> folder to Vercel or Netlify
+                Permanent public URL: deploy <code>ww63/</code> to Vercel/Netlify
                 (Root Directory: <code>ww63</code>, set <code>VITE_SITE_URL</code>).
             </p>
         </div>

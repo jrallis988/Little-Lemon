@@ -2,6 +2,9 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
 export default defineConfig({
+  // Default `/` for Vercel (Root Directory: ww63).
+  // Portfolio embed: `VITE_BASE=/ww63/dist/ npm run build`
+  base: process.env.VITE_BASE || "/",
   plugins: [react()],
   preview: {
     host: "0.0.0.0",

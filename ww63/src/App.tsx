@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
 import { OnboardingProvider } from "./context/OnboardingProvider";
@@ -15,8 +15,14 @@ import {
 } from "./pages/SupportingPages";
 
 export default function App() {
+  // Portfolio-static embed (`VITE_BASE=/ww63/dist/`) uses HashRouter so deep links
+  // work without server rewrites. Standalone Vercel deploy keeps BrowserRouter.
+  const embedded = import.meta.env.BASE_URL !== "/";
+  const Router = embedded ? HashRouter : BrowserRouter;
+  const basename = import.meta.env.BASE_URL.replace(/\/$/, "") || undefined;
+
   return (
-    <BrowserRouter>
+    <Router basename={embedded ? undefined : basename}>
       <OnboardingProvider>
         <a
           href="#main-content"
@@ -41,6 +47,6 @@ export default function App() {
           <Footer />
         </div>
       </OnboardingProvider>
-    </BrowserRouter>
+    </Router>
   );
 }

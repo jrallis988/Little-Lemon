@@ -37,6 +37,68 @@ const cuts = [
   "Dense Science/Innovation homepage chapters → compact Present bridge with deeper pages.",
 ];
 
+const vsLive = [
+  {
+    dimension: "Homepage job",
+    live: "Convert to Med+ / Points membership",
+    concept: "Explain brand thesis + next product system",
+  },
+  {
+    dimension: "Hero",
+    live: "Sale urgency + GLP-1 qualification",
+    concept: "63 Years of You + real-life health imagery",
+  },
+  {
+    dimension: "Personalization",
+    live: "Goal quiz → plan pricing",
+    concept: "Pathway onboarding → plan matrix → interactive OS",
+  },
+  {
+    dimension: "GLP-1",
+    live: "Clinic commerce and Rx funnel",
+    concept: "Educational Life After GLP-1 chapter inside a fuller life",
+  },
+  {
+    dimension: "Proof of product",
+    live: "Feature lists and lbs-lost claims",
+    concept: "Clickable Pathways → Life → Kitchen journey",
+  },
+];
+
+const process = [
+  {
+    phase: "01 · Reframe",
+    detail: "Anniversary alone is not enough. Customer needs first; then where WW goes next.",
+  },
+  {
+    phase: "02 · Narrative spine",
+    detail: "Hero → Purpose → History → Years of You → Present → Ahead → Finale.",
+  },
+  {
+    phase: "03 · Product depth",
+    detail: "Five flagships in one AppShell; guided walkthrough carries Pathway state forward.",
+  },
+  {
+    phase: "04 · Craft finish",
+    detail: "Onboarding modals, plan matrix, empty/error toasts, share cards, case study packaging.",
+  },
+];
+
+const outcomes = [
+  {
+    label: "One thesis",
+    copy: "Needs → history → connected future, readable in the first scroll.",
+  },
+  {
+    label: "One journey",
+    copy: "Pathways → WW Life Today → Kitchen without losing personalization.",
+  },
+  {
+    label: "One case study",
+    copy: "Decisions, cuts, annotated screens, and comparison to the live site.",
+  },
+];
+
 const annotated = [
   {
     title: "WW Pathways",
@@ -150,6 +212,61 @@ export function CaseStudyPage() {
 
         <section>
           <h2 className="font-display text-2xl font-bold text-ink" style={{ fontWeight: 700 }}>
+            Process
+          </h2>
+          <ol className="mt-5 space-y-4">
+            {process.map((item) => (
+              <li key={item.phase} className="rounded-[1.25rem] border border-ink/8 bg-white p-5">
+                <p className="font-sans text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-tide">
+                  {item.phase}
+                </p>
+                <p className="mt-2 font-sans text-sm leading-relaxed text-ink/70">{item.detail}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section>
+          <h2 className="font-display text-2xl font-bold text-ink" style={{ fontWeight: 700 }}>
+            Vs. the live WeightWatchers.com
+          </h2>
+          <p className="mt-3 font-sans text-base leading-relaxed text-ink/70">
+            Different jobs. The live site is a conversion engine. This concept is brand strategy and
+            product storytelling—the story current WW isn’t leading with.
+          </p>
+          <div className="mt-5 overflow-x-auto rounded-[1.25rem] border border-ink/8 bg-white">
+            <table className="min-w-[36rem] w-full border-collapse text-left">
+              <caption className="sr-only">Concept versus live Weight Watchers website</caption>
+              <thead>
+                <tr className="border-b border-ink/8 bg-cloud/80">
+                  <th className="px-4 py-3 font-sans text-xs font-semibold uppercase tracking-[0.12em] text-ink/45">
+                    Dimension
+                  </th>
+                  <th className="px-4 py-3 font-sans text-xs font-semibold uppercase tracking-[0.12em] text-ink/45">
+                    Live site
+                  </th>
+                  <th className="px-4 py-3 font-sans text-xs font-semibold uppercase tracking-[0.12em] text-cobalt-600">
+                    This concept
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {vsLive.map((row) => (
+                  <tr key={row.dimension} className="border-b border-ink/5 align-top">
+                    <th scope="row" className="px-4 py-3 font-sans text-sm font-semibold text-ink">
+                      {row.dimension}
+                    </th>
+                    <td className="px-4 py-3 font-sans text-sm text-ink/60">{row.live}</td>
+                    <td className="px-4 py-3 font-sans text-sm text-ink/80">{row.concept}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section>
+          <h2 className="font-display text-2xl font-bold text-ink" style={{ fontWeight: 700 }}>
             Key decisions
           </h2>
           <div className="mt-5 space-y-4">
@@ -176,6 +293,22 @@ export function CaseStudyPage() {
               </li>
             ))}
           </ul>
+        </section>
+
+        <section>
+          <h2 className="font-display text-2xl font-bold text-ink" style={{ fontWeight: 700 }}>
+            Outcomes
+          </h2>
+          <div className="mt-5 grid gap-4 sm:grid-cols-3">
+            {outcomes.map((item) => (
+              <div key={item.label} className="rounded-[1.25rem] border border-ink/8 bg-mist/50 p-5">
+                <p className="font-display text-lg font-bold text-ink" style={{ fontWeight: 700 }}>
+                  {item.label}
+                </p>
+                <p className="mt-2 font-sans text-sm leading-relaxed text-ink/65">{item.copy}</p>
+              </div>
+            ))}
+          </div>
         </section>
       </div>
 
@@ -243,6 +376,12 @@ export function CaseStudyPage() {
             className="rounded-2xl bg-cobalt-600 px-6 py-3.5 font-sans text-sm font-semibold text-white"
           >
             Try the guided journey
+          </Link>
+          <Link
+            to="/#plan-matrix"
+            className="rounded-2xl border border-ink/10 px-6 py-3.5 font-sans text-sm font-semibold text-ink"
+          >
+            View plan matrix
           </Link>
           <Link
             to="/"

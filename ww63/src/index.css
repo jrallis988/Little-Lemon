@@ -42,6 +42,16 @@ body {
   color: var(--ink);
 }
 
+:focus-visible {
+  outline: 2px solid var(--cobalt);
+  outline-offset: 3px;
+}
+
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible) {
+  outline: none;
+}
+
 @layer components {
   .section-shell {
     @apply mx-auto w-full max-w-6xl px-5 sm:px-8;

@@ -31,10 +31,10 @@ Static site: HTML, CSS, and vanilla JS (built in Cursor). Custom typefaces (Arca
 
 | Project | Entry | Run |
 | --- | --- | --- |
-| **Weight Watchers 63** | `weight-watchers-63.html` | `cd ww63 && npm install && npm run dev` |
+| **Weight Watchers 63** | `ww63/dist/` (interactive) · `weight-watchers-63.html` (splash) | `cd ww63 && npm run dev` or open `ww63/dist/` via `npm start` |
 | **NH DMV** | `nh-dmv/index.html` | Open static HTML |
 
-Deploy WW63 permanently: Vercel/Netlify with **Root Directory = `ww63`**, set `VITE_SITE_URL`.
+Deploy WW63 permanently: Vercel/Netlify with **Root Directory = `ww63`**, set `VITE_SITE_URL`. Rebuild portfolio embed with `cd ww63 && npm run build:portfolio`.
 
 ## Develop
 

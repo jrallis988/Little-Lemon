@@ -1,6 +1,7 @@
 node_modules
-dist
 .DS_Store
 *.local
 .env
 .env.*
+!.env.example
+# dist/ is committed for the portfolio-static demo at /ww63/dist
