@@ -1,0 +1,60 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: smuttynose/package-lock.json
+      - name: Build Smuttynose site
+        working-directory: smuttynose
+        env:
+          VITE_CONTACT_EMAIL: ${{ secrets.VITE_CONTACT_EMAIL }}
+          VITE_PLAUSIBLE_DOMAIN: ${{ secrets.VITE_PLAUSIBLE_DOMAIN }}
+          VITE_GA_MEASUREMENT_ID: ${{ secrets.VITE_GA_MEASUREMENT_ID }}
+        run: npm ci && npm run build
+      - name: Assemble Pages artifact
+        run: |
+          mkdir -p _site
+          # Portfolio / static site at repo root (everything except brewery app)
+          for item in * .[!.]*; do
+            case "$item" in
+              .|..|.git|.github|smuttynose|_site|node_modules|dist) continue ;;
+            esac
+            [ -e "$item" ] || continue
+            cp -a "$item" _site/
+          done
+          # Brewery Vite build under /smuttynose/
+          mkdir -p _site/smuttynose
+          cp -a smuttynose/dist/. _site/smuttynose/
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
