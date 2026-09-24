@@ -4,11 +4,16 @@ import Link from "next/link";
 import { useState, type FormEvent } from "react";
 
 import { REWARDS } from "@/lib/data/catalog";
+import {
+  MEMBER_EXCLUSIVE_OFFERS,
+  REWARDS_LEDGER,
+} from "@/lib/data/rewards";
 import { orderStatusLabel } from "@/lib/order-lifecycle";
 import { formatPoints } from "@/lib/pharmacy";
 import { DEMO_ACCOUNT, useAuth } from "@/lib/store/auth";
 import { useOrders } from "@/lib/store/orders";
 import { useSelectedStore } from "@/lib/store/store-selection";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -168,8 +173,15 @@ export default function AccountPage() {
             {formatPoints(REWARDS.pointsBalance)} pts
           </p>
           <p className="mt-1 text-sm text-muted-foreground">
-            {REWARDS.pointsToNextReward} points to your next reward
+            {REWARDS.pointsToNextReward} points to your next reward ·{" "}
+            {REWARDS.tier} member
           </p>
+          {REWARDS.expiringPoints ? (
+            <p className="mt-3 text-xs text-brand">
+              {formatPoints(REWARDS.expiringPoints)} pts expire{" "}
+              {REWARDS.expiringOn}
+            </p>
+          ) : null}
         </div>
         <div className="rounded-2xl border border-border/80 bg-surface-elevated/90 p-5">
           <h2 className="font-display text-lg font-semibold">Pickup store</h2>
@@ -187,6 +199,71 @@ export default function AccountPage() {
             Change store
           </Button>
         </div>
+      </section>
+
+      <section aria-labelledby="rewards-ledger-heading" className="space-y-4">
+        <h2
+          id="rewards-ledger-heading"
+          className="font-display text-2xl font-semibold tracking-tight"
+        >
+          Points activity
+        </h2>
+        <ul className="divide-y divide-border rounded-2xl border border-border/80 bg-surface-elevated/90">
+          {REWARDS_LEDGER.map((entry) => (
+            <li
+              key={entry.id}
+              className="flex items-center justify-between gap-3 px-4 py-3 text-sm"
+            >
+              <div>
+                <p className="font-medium">{entry.label}</p>
+                <p className="text-xs text-muted-foreground">{entry.at}</p>
+              </div>
+              <p
+                className={cn(
+                  "font-semibold",
+                  entry.points >= 0 ? "text-health" : "text-brand",
+                )}
+              >
+                {entry.points >= 0 ? "+" : ""}
+                {entry.points} pts
+              </p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section aria-labelledby="member-offers-heading" className="space-y-4">
+        <h2
+          id="member-offers-heading"
+          className="font-display text-2xl font-semibold tracking-tight"
+        >
+          Member exclusives
+        </h2>
+        <ul className="grid gap-3 sm:grid-cols-3">
+          {MEMBER_EXCLUSIVE_OFFERS.map((offer) => (
+            <li
+              key={offer.id}
+              className="rounded-2xl border border-border/80 bg-surface-elevated/90 p-4"
+            >
+              <p className="font-display text-base font-semibold">{offer.title}</p>
+              <p className="mt-2 text-sm text-muted-foreground">{offer.detail}</p>
+              {offer.code ? (
+                <p className="mt-2 text-xs font-semibold tracking-wide text-brand">
+                  Code {offer.code}
+                </p>
+              ) : null}
+              <Button
+                className="mt-4"
+                size="sm"
+                variant="outline"
+                nativeButton={false}
+                render={<Link href={offer.href} />}
+              >
+                View offer
+              </Button>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section aria-labelledby="recent-orders-heading">

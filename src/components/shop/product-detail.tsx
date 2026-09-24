@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft, Check, Heart, MapPin, Star } from "lucide-react";
 
 import {
@@ -10,6 +10,11 @@ import {
   getStoreInventory,
   storeAvailabilityDetail,
 } from "@/lib/data/inventory";
+import {
+  getFrequentlyBoughtWith,
+  getGalleryShots,
+  getSizeOptions,
+} from "@/lib/data/product-options";
 import { getReviewsForProduct } from "@/lib/data/reviews";
 import { formatCurrency } from "@/lib/pharmacy";
 import { useCart } from "@/lib/store/cart";
@@ -39,19 +44,55 @@ export function ProductDetail({
   const availability = storeAvailabilityDetail(inventory, store, product);
   const availableHere = inventory.status !== "out";
   const canAdd = availableHere || canShipProduct(product);
+  const sizes = useMemo(() => getSizeOptions(product), [product]);
+  const gallery = useMemo(() => getGalleryShots(product), [product]);
+  const frequentlyBought = useMemo(
+    () => getFrequentlyBoughtWith(product),
+    [product],
+  );
+  const defaultSizeId =
+    sizes.find((size) => size.label === "Standard" || size.label === "12 oz" || size.label === "100 count" || size.label === "50 ct" || size.label === "Regular")
+      ?.id ?? sizes[Math.min(1, sizes.length - 1)]?.id ?? sizes[0]?.id;
+
+  const [selectedSizeId, setSelectedSizeId] = useState(defaultSizeId);
+  const [activeShotId, setActiveShotId] = useState(gallery[0]?.id);
   const [quantity, setQuantity] = useState(1);
   const [justAdded, setJustAdded] = useState(false);
+  const [bundleNote, setBundleNote] = useState<string | null>(null);
   const reviews = getReviewsForProduct(product.id);
+
+  const selectedSize =
+    sizes.find((size) => size.id === selectedSizeId) ?? sizes[0];
+  const activeShot =
+    gallery.find((shot) => shot.id === activeShotId) ?? gallery[0];
 
   useEffect(() => {
     trackView(product.id);
-  }, [product.id, trackView]);
+    setSelectedSizeId(defaultSizeId);
+    setActiveShotId(gallery[0]?.id);
+  }, [defaultSizeId, gallery, product.id, trackView]);
 
   function handleAdd() {
-    if (!canAdd) return;
-    addProduct(product, quantity);
+    if (!canAdd || !selectedSize) return;
+    addProduct(
+      {
+        ...product,
+        id: `${product.id}::${selectedSize.id}`,
+        name: `${product.name} · ${selectedSize.label}`,
+        price: selectedSize.price,
+        compareAtPrice: selectedSize.compareAtPrice,
+      },
+      quantity,
+    );
     setJustAdded(true);
     window.setTimeout(() => setJustAdded(false), 1600);
+  }
+
+  function handleAddBundle(extra: Product) {
+    handleAdd();
+    addProduct(extra, 1);
+    setBundleNote(`Added ${product.name} + ${extra.name} to cart`);
+    window.setTimeout(() => setBundleNote(null), 2200);
   }
 
   return (
@@ -67,15 +108,48 @@ export function ProductDetail({
       </div>
 
       <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
-        <div className="relative aspect-square overflow-hidden rounded-2xl bg-muted/50">
-          <Image
-            src={product.imageUrl}
-            alt={product.imageAlt}
-            fill
-            priority
-            className="object-cover"
-            sizes="(max-width: 1024px) 100vw, 50vw"
-          />
+        <div className="space-y-3">
+          <div className="relative aspect-square overflow-hidden rounded-2xl bg-muted/50">
+            <Image
+              src={product.imageUrl}
+              alt={product.imageAlt}
+              fill
+              priority
+              className="object-cover transition-[filter] duration-500"
+              style={{ filter: activeShot?.filter ?? "none" }}
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+          </div>
+          <div className="flex gap-2" role="tablist" aria-label="Product images">
+            {gallery.map((shot) => (
+              <button
+                key={shot.id}
+                type="button"
+                role="tab"
+                aria-selected={shot.id === activeShot?.id}
+                onClick={() => setActiveShotId(shot.id)}
+                className={cn(
+                  "relative h-16 w-16 overflow-hidden rounded-lg border bg-muted/40",
+                  shot.id === activeShot?.id
+                    ? "border-brand ring-1 ring-brand/30"
+                    : "border-border",
+                )}
+              >
+                <Image
+                  src={product.imageUrl}
+                  alt=""
+                  fill
+                  className="object-cover"
+                  style={{ filter: shot.filter }}
+                  sizes="64px"
+                />
+                <span className="sr-only">{shot.label}</span>
+              </button>
+            ))}
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Viewing {activeShot?.label ?? "Front"} · {inventory.aisle}
+          </p>
         </div>
 
         <div>
@@ -90,10 +164,14 @@ export function ProductDetail({
             {product.rating.toFixed(1)} · {product.reviewCount} reviews
           </p>
           <div className="mt-4 flex flex-wrap items-end gap-3">
-            <p className="text-2xl font-semibold">{formatCurrency(product.price)}</p>
-            {product.compareAtPrice ? (
+            <p className="text-2xl font-semibold">
+              {formatCurrency(selectedSize?.price ?? product.price)}
+            </p>
+            {(selectedSize?.compareAtPrice ?? product.compareAtPrice) ? (
               <p className="text-sm text-muted-foreground line-through">
-                {formatCurrency(product.compareAtPrice)}
+                {formatCurrency(
+                  selectedSize?.compareAtPrice ?? product.compareAtPrice ?? 0,
+                )}
               </p>
             ) : null}
             {product.rewardsPoints ? (
@@ -109,6 +187,31 @@ export function ProductDetail({
           <p className="mt-5 max-w-prose text-muted-foreground">
             {getProductDescription(product)}
           </p>
+
+          <fieldset className="mt-6 space-y-2">
+            <legend className="text-sm font-medium text-foreground">Size</legend>
+            <div className="flex flex-wrap gap-2">
+              {sizes.map((size) => (
+                <button
+                  key={size.id}
+                  type="button"
+                  onClick={() => setSelectedSizeId(size.id)}
+                  className={cn(
+                    "rounded-lg border px-3 py-2 text-sm transition-colors",
+                    size.id === selectedSize?.id
+                      ? "border-brand bg-brand/5 font-medium text-brand"
+                      : "border-border text-foreground hover:border-brand/40",
+                  )}
+                  aria-pressed={size.id === selectedSize?.id}
+                >
+                  <span className="block">{size.label}</span>
+                  <span className="block text-xs text-muted-foreground">
+                    {formatCurrency(size.price)}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </fieldset>
 
           <dl className="mt-6 grid gap-3 text-sm sm:grid-cols-2">
             <div>
@@ -213,6 +316,12 @@ export function ProductDetail({
             </Button>
           </div>
 
+          {bundleNote ? (
+            <p className="mt-3 text-sm text-health" role="status">
+              {bundleNote}
+            </p>
+          ) : null}
+
           {!canAdd ? (
             <p className="mt-3 text-sm text-destructive" role="status">
               This item is unavailable at your store and cannot ship. Try another
@@ -232,6 +341,62 @@ export function ProductDetail({
           ) : null}
         </div>
       </div>
+
+      {frequentlyBought.length > 0 ? (
+        <section aria-labelledby="fbt-heading" className="space-y-4">
+          <div>
+            <h2
+              id="fbt-heading"
+              className="font-display text-2xl font-semibold tracking-tight"
+            >
+              Frequently bought with
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Pair your pick with aisle favorites members often add together.
+            </p>
+          </div>
+          <ul className="grid gap-4 sm:grid-cols-2">
+            {frequentlyBought.map((item) => (
+              <li
+                key={item.id}
+                className="flex flex-col gap-4 rounded-2xl border border-border/80 bg-surface-elevated/90 p-4 sm:flex-row sm:items-center"
+              >
+                <div className="relative size-20 shrink-0 overflow-hidden rounded-xl bg-muted/50">
+                  <Image
+                    src={item.imageUrl}
+                    alt={item.imageAlt}
+                    fill
+                    className="object-cover"
+                    sizes="80px"
+                  />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs uppercase tracking-wide text-muted-foreground">
+                    {item.brand}
+                  </p>
+                  <Link
+                    href={`/shop/${item.slug}`}
+                    className="font-medium hover:underline"
+                  >
+                    {item.name}
+                  </Link>
+                  <p className="mt-1 text-sm font-semibold">
+                    {formatCurrency(item.price)}
+                  </p>
+                </div>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled={!canAdd}
+                  onClick={() => handleAddBundle(item)}
+                >
+                  Add both
+                </Button>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
 
       <section aria-labelledby="reviews-heading" className="space-y-4">
         <h2

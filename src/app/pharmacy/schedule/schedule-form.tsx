@@ -5,9 +5,11 @@ import { useMemo, useState, type FormEvent } from "react";
 import { useSearchParams } from "next/navigation";
 import { CheckCircle2 } from "lucide-react";
 
+import { getBookingDays, getBookingSlots } from "@/lib/data/booking-slots";
 import { CLINICAL_SERVICES } from "@/lib/data/catalog";
 import { useSelectedStore } from "@/lib/store/store-selection";
 import type { AppointmentRequest } from "@/lib/types";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -20,10 +22,11 @@ export function ScheduleForm() {
   const { store } = useSelectedStore();
   const initialService =
     searchParams.get("service") ?? CLINICAL_SERVICES[0]?.id ?? "";
+  const days = useMemo(() => getBookingDays(5), []);
 
   const [serviceId, setServiceId] = useState(initialService);
-  const [preferredDate, setPreferredDate] = useState("");
-  const [preferredTime, setPreferredTime] = useState("10:00");
+  const [preferredDate, setPreferredDate] = useState(days[0]?.date ?? "");
+  const [preferredTime, setPreferredTime] = useState("");
   const [contactEmail, setContactEmail] = useState("jordan.lee@email.com");
   const [contactPhone, setContactPhone] = useState("(415) 555-0100");
   const [notes, setNotes] = useState("");
@@ -37,6 +40,14 @@ export function ScheduleForm() {
     [serviceId],
   );
 
+  const slots = useMemo(
+    () =>
+      preferredDate && serviceId
+        ? getBookingSlots(preferredDate, serviceId)
+        : [],
+    [preferredDate, serviceId],
+  );
+
   function submit(event: FormEvent) {
     event.preventDefault();
     setError(null);
@@ -46,6 +57,10 @@ export function ScheduleForm() {
     }
     if (!preferredDate) {
       setError("Pick a preferred date.");
+      return;
+    }
+    if (!preferredTime) {
+      setError("Choose an available time slot.");
       return;
     }
     if (!contactEmail.includes("@")) {
@@ -133,18 +148,21 @@ export function ScheduleForm() {
         Schedule a visit
       </h1>
       <p className="mt-2 text-muted-foreground">
-        Request a vaccine or test at {store.name}. We&apos;ll confirm by email
-        in a real pharmacy workflow.
+        Choose a service, day, and open slot at {store.name}. Walk-ins may still
+        be available at the counter.
       </p>
 
-      <form className="mt-8 space-y-5" onSubmit={submit}>
+      <form className="mt-8 space-y-6" onSubmit={submit}>
         <div className="space-y-2">
           <Label htmlFor="service">Service</Label>
           <select
             id="service"
             className="flex h-10 w-full rounded-lg border border-border bg-background px-3 text-sm"
             value={serviceId}
-            onChange={(event) => setServiceId(event.target.value)}
+            onChange={(event) => {
+              setServiceId(event.target.value);
+              setPreferredTime("");
+            }}
           >
             {CLINICAL_SERVICES.map((item) => (
               <option key={item.id} value={item.id}>
@@ -154,28 +172,65 @@ export function ScheduleForm() {
             ))}
           </select>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div className="space-y-2">
-            <Label htmlFor="date">Preferred date</Label>
-            <Input
-              id="date"
-              type="date"
-              value={preferredDate}
-              onChange={(event) => setPreferredDate(event.target.value)}
-              required
-            />
+
+        <fieldset className="space-y-3">
+          <legend className="text-sm font-medium">Day</legend>
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
+            {days.map((day) => (
+              <button
+                key={day.id}
+                type="button"
+                onClick={() => {
+                  setPreferredDate(day.date);
+                  setPreferredTime("");
+                }}
+                className={cn(
+                  "rounded-xl border px-3 py-3 text-left transition-colors",
+                  preferredDate === day.date
+                    ? "border-health bg-health/10 text-health"
+                    : "border-border hover:border-health/40",
+                )}
+                aria-pressed={preferredDate === day.date}
+              >
+                <span className="block text-xs font-medium uppercase tracking-wide">
+                  {day.weekday}
+                </span>
+                <span className="mt-1 block text-sm font-semibold text-foreground">
+                  {day.label}
+                </span>
+              </button>
+            ))}
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="time">Preferred time</Label>
-            <Input
-              id="time"
-              type="time"
-              value={preferredTime}
-              onChange={(event) => setPreferredTime(event.target.value)}
-              required
-            />
+        </fieldset>
+
+        <fieldset className="space-y-3">
+          <legend className="text-sm font-medium">Available times</legend>
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+            {slots.map((slot) => (
+              <button
+                key={slot.id}
+                type="button"
+                disabled={!slot.available}
+                onClick={() => setPreferredTime(slot.time)}
+                className={cn(
+                  "rounded-lg border px-3 py-2 text-sm font-medium transition-colors",
+                  !slot.available && "cursor-not-allowed opacity-40",
+                  slot.available &&
+                    preferredTime === slot.time &&
+                    "border-health bg-health text-health-foreground",
+                  slot.available &&
+                    preferredTime !== slot.time &&
+                    "border-border hover:border-health/40",
+                )}
+                aria-pressed={preferredTime === slot.time}
+              >
+                {slot.time}
+                {!slot.available ? " · full" : ""}
+              </button>
+            ))}
           </div>
-        </div>
+        </fieldset>
+
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
           <Input

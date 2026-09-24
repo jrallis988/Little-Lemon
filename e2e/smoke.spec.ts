@@ -116,4 +116,27 @@ test.describe("Walgreens RX smoke flows", () => {
     await page.goto("/shop/cerave-moisturizing-cream");
     await expect(page.getByText(/Out at Mission/i).first()).toBeVisible();
   });
+
+  test("pdp size gallery and shop sort work", async ({ page }) => {
+    await page.goto("/shop/cerave-moisturizing-cream");
+    await expect(page.getByRole("heading", { name: "Moisturizing Cream" })).toBeVisible();
+    await page.getByRole("button", { name: /16 oz/i }).click();
+    await expect(page.getByText("$25.59").first()).toBeVisible();
+    await page.getByRole("tab", { name: "Detail" }).click();
+    await expect(page.getByText(/Viewing Detail/i)).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Frequently bought with" })).toBeVisible();
+
+    await page.goto("/shop");
+    await page.getByLabel("Sort products").selectOption("price-asc");
+    await expect(page.getByText(/Showing \d+ products/i)).toBeVisible();
+  });
+
+  test("clinical schedule offers day and time slots", async ({ page }) => {
+    await page.goto("/pharmacy/schedule");
+    await expect(page.getByRole("heading", { name: "Schedule a visit" })).toBeVisible();
+    await page.getByRole("button", { name: /Mon|Tue|Wed|Thu|Fri|Sat/i }).first().click();
+    await page.getByRole("button", { name: /^\d{2}:00$/ }).first().click();
+    await page.getByRole("button", { name: "Request appointment" }).click();
+    await expect(page.getByRole("heading", { name: "Request received" })).toBeVisible();
+  });
 });

@@ -160,6 +160,13 @@ export const COUPONS: Coupon[] = [
     percentOff: 10,
     minSubtotal: 25,
   },
+  {
+    code: "PLUS5",
+    label: "$5 member reward",
+    description: "$5 off $25+ for Plus members.",
+    amountOff: 5,
+    minSubtotal: 25,
+  },
 ];
 
 export function findCoupon(code: string): Coupon | undefined {

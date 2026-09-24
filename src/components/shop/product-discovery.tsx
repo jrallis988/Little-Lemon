@@ -14,6 +14,10 @@ import {
   isAvailableAtStore,
   storeAvailabilityLabel,
 } from "@/lib/data/inventory";
+import {
+  sortProducts,
+  type ShopSort,
+} from "@/lib/data/product-options";
 import { formatCurrency, formatPoints } from "@/lib/pharmacy";
 import { useCart } from "@/lib/store/cart";
 import { useSelectedStore } from "@/lib/store/store-selection";
@@ -313,6 +317,7 @@ export function ProductDiscoveryGrid() {
   const [fulfillment, setFulfillment] = useState<string[]>([]);
   const [concerns, setConcerns] = useState<string[]>([]);
   const [inStockAtStore, setInStockAtStore] = useState(false);
+  const [sort, setSort] = useState<ShopSort>("featured");
 
   useEffect(() => {
     if (categoryParam) {
@@ -350,7 +355,7 @@ export function ProductDiscoveryGrid() {
 
   const products = useMemo(() => {
     const normalizedQuery = query.toLowerCase();
-    return PRODUCTS.filter((product) => {
+    const filtered = PRODUCTS.filter((product) => {
       if (categories.length && !categories.includes(product.categoryId)) {
         return false;
       }
@@ -388,6 +393,7 @@ export function ProductDiscoveryGrid() {
       }
       return true;
     });
+    return sortProducts(filtered, sort);
   }, [
     brands,
     categories,
@@ -396,6 +402,7 @@ export function ProductDiscoveryGrid() {
     inStockAtStore,
     prices,
     query,
+    sort,
     store.id,
   ]);
 
@@ -470,9 +477,33 @@ export function ProductDiscoveryGrid() {
         />
 
         <div>
-          <p className="mb-4 text-sm text-muted-foreground" aria-live="polite">
-            Showing {products.length} product{products.length === 1 ? "" : "s"}
-          </p>
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+            <p className="text-sm text-muted-foreground" aria-live="polite">
+              Showing {products.length} product{products.length === 1 ? "" : "s"}
+              {query ? (
+                <>
+                  {" "}
+                  for{" "}
+                  <span className="font-medium text-foreground">“{query}”</span>
+                </>
+              ) : null}
+            </p>
+            <label className="flex items-center gap-2 text-sm">
+              <span className="text-muted-foreground">Sort</span>
+              <select
+                className="h-9 rounded-lg border border-border bg-background px-2"
+                value={sort}
+                onChange={(event) => setSort(event.target.value as ShopSort)}
+                aria-label="Sort products"
+              >
+                <option value="featured">Featured</option>
+                <option value="price-asc">Price: low to high</option>
+                <option value="price-desc">Price: high to low</option>
+                <option value="rating">Top rated</option>
+                <option value="name">Name A–Z</option>
+              </select>
+            </label>
+          </div>
           <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
             {products.map((product) => (
               <ProductCard key={product.id} product={product} />
