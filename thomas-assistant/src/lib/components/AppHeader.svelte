@@ -198,14 +198,6 @@
     border: 1px solid rgba(45, 138, 94, 0.22);
   }
 
-  .status.cloud {
-    color: var(--cloud-blue);
-    background: var(--cloud-bg);
-    border: 1px solid transparent;
-    font-weight: 500;
-    opacity: 0.85;
-  }
-
   .settings-btn {
     border: 1px solid var(--border);
     background: var(--surface);
