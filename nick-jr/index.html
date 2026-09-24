@@ -236,39 +236,29 @@
         <h2 id="want-heading" class="section-title center">What Do You Want to Do?</h2>
         <div class="want-grid">
           <a class="want-card want-watch" href="#watch">
-            <div class="want-art" aria-hidden="true">
-              <div class="art-tv">
-                <div class="tv-screen"></div>
-                <div class="tv-stand"></div>
-              </div>
-              <div class="art-popcorn"></div>
+            <div class="want-art want-art--img" aria-hidden="true">
+              <img src="images/icon-watch.png" alt="" width="256" height="256">
             </div>
             <span class="want-label">Watch Something</span>
             <span class="want-go" aria-hidden="true">→</span>
           </a>
           <a class="want-card want-play" href="#play">
-            <div class="want-art" aria-hidden="true">
-              <div class="art-controller"></div>
-              <div class="art-star"></div>
+            <div class="want-art want-art--img" aria-hidden="true">
+              <img src="images/icon-play.png" alt="" width="256" height="256">
             </div>
             <span class="want-label">Play a Game</span>
             <span class="want-go" aria-hidden="true">→</span>
           </a>
           <a class="want-card want-explore" href="#explore">
-            <div class="want-art" aria-hidden="true">
-              <div class="art-globe"></div>
-              <div class="art-cloud c1"></div>
-              <div class="art-cloud c2"></div>
+            <div class="want-art want-art--img" aria-hidden="true">
+              <img src="images/icon-explore.png" alt="" width="256" height="256">
             </div>
             <span class="want-label">Explore Something</span>
             <span class="want-go" aria-hidden="true">→</span>
           </a>
           <a class="want-card want-make" href="#create">
-            <div class="want-art" aria-hidden="true">
-              <div class="art-bucket"></div>
-              <div class="art-crayon c-r"></div>
-              <div class="art-crayon c-y"></div>
-              <div class="art-crayon c-b"></div>
+            <div class="want-art want-art--img" aria-hidden="true">
+              <img src="images/icon-make.png" alt="" width="256" height="256">
             </div>
             <span class="want-label">Make Something</span>
             <span class="want-go" aria-hidden="true">→</span>
@@ -310,27 +300,27 @@
             </div>
             <div class="make-row">
               <a class="make-item" href="#create">
-                <span class="make-icon make-color" aria-hidden="true"></span>
+                <img class="make-icon-img" src="images/make-color.png" alt="" width="160" height="160">
                 <span>Coloring</span>
               </a>
               <a class="make-item" href="#create">
-                <span class="make-icon make-draw" aria-hidden="true"></span>
+                <img class="make-icon-img" src="images/make-draw.png" alt="" width="160" height="160">
                 <span>Drawing</span>
               </a>
               <a class="make-item" href="#create">
-                <span class="make-icon make-music" aria-hidden="true"></span>
+                <img class="make-icon-img" src="images/make-music.png" alt="" width="160" height="160">
                 <span>Music</span>
               </a>
               <a class="make-item" href="#create">
-                <span class="make-icon make-craft" aria-hidden="true"></span>
+                <img class="make-icon-img" src="images/make-craft.png" alt="" width="160" height="160">
                 <span>Printable Crafts</span>
               </a>
               <a class="make-item" href="#create">
-                <span class="make-icon make-story" aria-hidden="true"></span>
+                <img class="make-icon-img" src="images/make-story.png" alt="" width="160" height="160">
                 <span>Build-a-Story</span>
               </a>
               <a class="make-item" href="#create">
-                <span class="make-icon make-recipe" aria-hidden="true"></span>
+                <img class="make-icon-img" src="images/make-recipe.png" alt="" width="160" height="160">
                 <span>Recipes</span>
               </a>
             </div>
@@ -342,23 +332,23 @@
               <p>Stories packed with kindness, curiosity, and giggles.</p>
             </div>
             <div class="show-rail" id="shows">
-              <article class="show-tile">
-                <div class="show-art show-blue" aria-hidden="true"></div>
+              <article class="show-tile" id="show-blues">
+                <img class="show-poster" src="images/show-blue.jpg" alt="" width="480" height="360">
                 <h3>Blue’s Clues &amp; You!</h3>
                 <p>Solve clues and sing along.</p>
               </article>
-              <article class="show-tile">
-                <div class="show-art show-dora" aria-hidden="true"></div>
+              <article class="show-tile" id="show-dora">
+                <img class="show-poster" src="images/show-dora.jpg" alt="" width="480" height="360">
                 <h3>Dora the Explorer</h3>
                 <p>Map adventures and Spanish words.</p>
               </article>
-              <article class="show-tile">
-                <div class="show-art show-paw" aria-hidden="true"></div>
+              <article class="show-tile" id="show-paw">
+                <img class="show-poster" src="images/show-paw.jpg" alt="" width="480" height="360">
                 <h3>Paw Patrol</h3>
                 <p>Pups ready for any rescue.</p>
               </article>
-              <article class="show-tile">
-                <div class="show-art show-bubble" aria-hidden="true"></div>
+              <article class="show-tile" id="show-bubble">
+                <img class="show-poster" src="images/show-bubble.jpg" alt="" width="480" height="360">
                 <h3>Bubble Guppies</h3>
                 <p>Underwater classroom songs.</p>
               </article>
@@ -370,14 +360,38 @@
           <section class="side-block" id="friends" aria-labelledby="friends-heading">
             <h2 id="friends-heading">Your Nick Jr. Friends</h2>
             <div class="friends-grid">
-              <button type="button" class="friend f-dora" aria-label="Dora"><i class="friend-face" aria-hidden="true"></i><span>Dora</span></button>
-              <button type="button" class="friend f-blue" aria-label="Blue"><i class="friend-face" aria-hidden="true"></i><span>Blue</span></button>
-              <button type="button" class="friend f-peppa" aria-label="Peppa"><i class="friend-face" aria-hidden="true"></i><span>Peppa</span></button>
-              <button type="button" class="friend f-chase" aria-label="Chase"><i class="friend-face" aria-hidden="true"></i><span>Chase</span></button>
-              <button type="button" class="friend f-blaze" aria-label="Blaze"><i class="friend-face" aria-hidden="true"></i><span>Blaze</span></button>
-              <button type="button" class="friend f-molly" aria-label="Molly"><i class="friend-face" aria-hidden="true"></i><span>Molly</span></button>
-              <button type="button" class="friend f-umi" aria-label="Umi"><i class="friend-face" aria-hidden="true"></i><span>Umi</span></button>
-              <button type="button" class="friend f-shimmer" aria-label="Shimmer"><i class="friend-face" aria-hidden="true"></i><span>Shimmer</span></button>
+              <button type="button" class="friend f-dora" aria-label="Dora">
+                <img src="images/friend-dora.png" alt="" width="192" height="192">
+                <span>Dora</span>
+              </button>
+              <button type="button" class="friend f-blue" aria-label="Blue">
+                <img src="images/friend-blue.png" alt="" width="192" height="192">
+                <span>Blue</span>
+              </button>
+              <button type="button" class="friend f-peppa" aria-label="Peppa">
+                <img src="images/friend-peppa.png" alt="" width="192" height="192">
+                <span>Peppa</span>
+              </button>
+              <button type="button" class="friend f-chase" aria-label="Chase">
+                <img src="images/friend-chase.png" alt="" width="192" height="192">
+                <span>Chase</span>
+              </button>
+              <button type="button" class="friend f-blaze" aria-label="Blaze">
+                <img src="images/friend-blaze.png" alt="" width="192" height="192">
+                <span>Blaze</span>
+              </button>
+              <button type="button" class="friend f-molly" aria-label="Molly">
+                <img src="images/friend-molly.png" alt="" width="192" height="192">
+                <span>Molly</span>
+              </button>
+              <button type="button" class="friend f-umi" aria-label="Umi">
+                <img src="images/friend-umi.png" alt="" width="192" height="192">
+                <span>Umi</span>
+              </button>
+              <button type="button" class="friend f-shimmer" aria-label="Shimmer">
+                <img src="images/friend-shimmer.png" alt="" width="192" height="192">
+                <span>Shimmer</span>
+              </button>
             </div>
           </section>
 
@@ -475,8 +489,8 @@
             <li><a href="case-study.html">Case Study</a></li>
             <li><a href="#help" data-toast="Help is a concept stub — try Grown-Ups for caregiver tips.">Help</a></li>
             <li><a href="grown-ups.html#schedule">TV Schedule</a></li>
-            <li><a href="#apps" data-toast="Apps are not part of this concept demo.">Apps</a></li>
-            <li><a href="#shop" data-toast="Shop is not part of this concept demo.">Shop</a></li>
+            <li><a href="apps.html">Apps</a></li>
+            <li><a href="shop.html">Shop</a></li>
             <li><a href="../privacy.html">Privacy</a></li>
             <li><a href="../terms.html">Terms of Use</a></li>
             <li><a href="#a11y">Accessibility</a></li>

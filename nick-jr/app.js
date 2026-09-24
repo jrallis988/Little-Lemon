@@ -46,10 +46,10 @@
   const searchResults = document.getElementById("search-results");
 
   const catalog = [
-    { label: "Blue’s Clues & You!", type: "Show", href: "#shows", keywords: "blue clues watch" },
-    { label: "Dora the Explorer", type: "Show", href: "#shows", keywords: "dora map spanish" },
-    { label: "Paw Patrol", type: "Show", href: "#shows", keywords: "paw chase pups rescue" },
-    { label: "Bubble Guppies", type: "Show", href: "#shows", keywords: "bubble guppies molly songs" },
+    { label: "Blue’s Clues & You!", type: "Show", href: "#show-blues", keywords: "blue clues watch" },
+    { label: "Dora the Explorer", type: "Show", href: "#show-dora", keywords: "dora map spanish" },
+    { label: "Paw Patrol", type: "Show", href: "#show-paw", keywords: "paw chase pups rescue" },
+    { label: "Bubble Guppies", type: "Show", href: "#show-bubble", keywords: "bubble guppies molly songs" },
     { label: "Watch Something", type: "Activity", href: "#watch", keywords: "watch tv video" },
     { label: "Play a Game", type: "Activity", href: "#play", keywords: "play game controller" },
     { label: "Explore Something", type: "Activity", href: "#explore", keywords: "explore adventure sprouts ocean" },
@@ -60,8 +60,19 @@
     { label: "Bubble Lab", type: "Game", href: "#play", keywords: "science bubble lab" },
     { label: "Grown-Ups Area", type: "Page", href: "grown-ups.html", keywords: "parents caregivers schedule tips" },
     { label: "Case Study", type: "Page", href: "case-study.html", keywords: "about design portfolio case study" },
+    { label: "Apps", type: "Page", href: "apps.html", keywords: "apps mobile download" },
+    { label: "Shop", type: "Page", href: "shop.html", keywords: "shop toys books" },
     { label: "Adventure Sprouts", type: "Explore", href: "#explore", keywords: "ocean animals sky nature" },
   ];
+
+  function highlightTarget(href) {
+    if (!href || !href.startsWith("#")) return;
+    const el = document.querySelector(href);
+    if (!el) return;
+    document.querySelectorAll(".is-search-hit").forEach((n) => n.classList.remove("is-search-hit"));
+    el.classList.add("is-search-hit");
+    setTimeout(() => el.classList.remove("is-search-hit"), 1800);
+  }
 
   function renderSearchResults(query) {
     if (!searchResults) return;
@@ -141,6 +152,8 @@
       if (!hit) return;
       searchPanel.setAttribute("hidden", "");
       searchBtn.setAttribute("aria-expanded", "false");
+      const href = hit.getAttribute("href") || "";
+      highlightTarget(href);
       showToast(`Opening ${hit.querySelector(".search-result-label")?.textContent || "result"}…`);
     });
   }
