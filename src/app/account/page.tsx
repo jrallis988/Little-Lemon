@@ -178,7 +178,7 @@ export default function AccountPage() {
           </p>
           {REWARDS.expiringPoints ? (
             <p className="mt-3 text-xs text-brand">
-              {formatPoints(REWARDS.expiringPoints)} pts expire{" "}
+              {formatPoints(REWARDS.expiringPoints)} pts expired{" "}
               {REWARDS.expiringOn}
             </p>
           ) : null}
