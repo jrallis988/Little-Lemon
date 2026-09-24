@@ -318,15 +318,15 @@ export const legalLinks = [
   },
   {
     label: "Accessibility",
-    href: "https://www.greatbay.edu/academics/academic-support/accessibility-services/",
+    to: "/accessibility",
   },
   {
     label: "Title IX Information",
-    href: "https://www.greatbay.edu/about/title-ix-information/",
+    to: "/about/title-ix",
   },
   {
     label: "Consumer Information",
-    href: "https://www.greatbay.edu/about/consumer-information/",
+    to: "/about/consumer-info",
   },
 ];
 

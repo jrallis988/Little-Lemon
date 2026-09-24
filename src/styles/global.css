@@ -2512,3 +2512,33 @@ button:focus-visible {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* ===== Final 10/10 polish ===== */
+.scorecard-layout {
+  display: grid;
+  grid-template-columns: 1.35fr 0.8fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.scorecard-list {
+  margin: 1.25rem 0 1.75rem;
+}
+
+.scorecard-score {
+  font-size: clamp(3rem, 8vw, 4.5rem);
+  color: var(--gold);
+  margin: 0 0 0.75rem;
+  line-height: 1;
+}
+
+.scorecard-aside .fine-print {
+  margin-top: 1rem;
+}
+
+@media (max-width: 960px) {
+  .scorecard-layout {
+    grid-template-columns: 1fr;
+  }
+}

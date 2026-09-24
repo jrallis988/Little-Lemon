@@ -12,13 +12,42 @@ const img = {
 };
 
 function page(partial) {
+  const defaultSections = [
+    {
+      heading: "What you’ll find here",
+      body: partial.copy,
+      bullets: [
+        "Clear guidance for students, families, and community partners",
+        "Connections to advising, admissions, and campus support",
+        "Next steps you can take today — visit, apply, or request info",
+      ],
+    },
+    {
+      heading: "Need a hand?",
+      body: "Great Bay’s admissions counselors, advisors, and Welcome Center team can help you choose a program, plan a visit, or map transfer and career options.",
+    },
+  ];
+
+  const defaultLinks = [
+    { to: "/contact", label: "Contact Great Bay" },
+    { to: "/admissions/begin", label: "Begin the process" },
+    { to: "/admissions/visit", label: "Visit campus" },
+  ];
+
+  const sections =
+    partial.sections && partial.sections.length > 0
+      ? partial.sections
+      : defaultSections;
+  const links =
+    partial.links && partial.links.length > 0 ? partial.links : defaultLinks;
+
   return {
     brand: partial.brand || "Great Bay",
     image: partial.image || img.campus,
-    sections: partial.sections || [],
-    links: partial.links || [],
     icon: partial.icon || "book",
     ...partial,
+    sections,
+    links,
   };
 }
 

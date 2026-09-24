@@ -138,7 +138,12 @@ function Home() {
             </footer>
           </blockquote>
           <figure>
-            <img src={primaryQuote.image} alt={primaryQuote.imageAlt} />
+            <img
+              src={primaryQuote.image}
+              alt={primaryQuote.imageAlt}
+              loading="lazy"
+              decoding="async"
+            />
           </figure>
         </div>
       </section>
@@ -175,7 +180,12 @@ function Home() {
       <section className="section">
         <div className="container quote-block quote-block-secondary">
           <figure>
-            <img src={secondaryQuote.image} alt={secondaryQuote.imageAlt} />
+            <img
+              src={secondaryQuote.image}
+              alt={secondaryQuote.imageAlt}
+              loading="lazy"
+              decoding="async"
+            />
           </figure>
           <blockquote>
             <p>&ldquo;{secondaryQuote.quote}&rdquo;</p>

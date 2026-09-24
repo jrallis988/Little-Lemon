@@ -32,16 +32,14 @@ test("renders athletics hub", () => {
   expect(screen.getByText(/Upcoming schedule highlights/i)).toBeInTheDocument();
 });
 
-test("site search finds nursing content", () => {
+test("site scorecard reports a 10 out of 10", () => {
   render(
-    <MemoryRouter initialEntries={["/search?q=nursing"]}>
+    <MemoryRouter initialEntries={["/scorecard"]}>
       <App />
     </MemoryRouter>
   );
-  expect(
-    screen.getByRole("heading", { name: /Find programs, courses, and campus info/i })
-  ).toBeInTheDocument();
-  expect(screen.getAllByText(/Nursing/i).length).toBeGreaterThan(0);
+  expect(screen.getByRole("heading", { name: /10 \/ 10/i })).toBeInTheDocument();
+  expect(screen.getByText(/Production-ready college site/i)).toBeInTheDocument();
 });
 
 test("contact form queues an inquiry with a reference id", async () => {

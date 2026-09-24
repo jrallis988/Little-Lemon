@@ -39,7 +39,13 @@ function HeroCarousel() {
           className={`hero-slide ${itemIndex === index ? "is-active" : ""}`}
           aria-hidden={itemIndex !== index}
         >
-          <img src={item.image} alt="" className="hero-slide-image" />
+          <img
+            src={item.image}
+            alt=""
+            className="hero-slide-image"
+            loading={itemIndex === 0 ? "eager" : "lazy"}
+            decoding="async"
+          />
         </div>
       ))}
 

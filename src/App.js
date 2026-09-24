@@ -23,6 +23,8 @@ import EventDetail from "./pages/EventDetail";
 import Contact from "./pages/Contact";
 import Directory from "./pages/Directory";
 import Sitemap from "./pages/Sitemap";
+import Accessibility from "./pages/Accessibility";
+import Scorecard from "./pages/Scorecard";
 import SearchPage from "./pages/SearchPage";
 import ContentPage from "./pages/ContentPage";
 import { contentPagePaths } from "./data/pageContent";
@@ -87,6 +89,8 @@ function App() {
         <Route path="contact" element={<Contact />} />
         <Route path="directory" element={<Directory />} />
         <Route path="search" element={<SearchPage />} />
+        <Route path="accessibility" element={<Accessibility />} />
+        <Route path="scorecard" element={<Scorecard />} />
         <Route path="sitemap" element={<Sitemap />} />
         {contentRoutes.map((route) => (
           <Route key={route.path} path={route.path} element={route.element} />

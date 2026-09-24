@@ -67,11 +67,16 @@ function Footer() {
         <ul className="legal-links">
           {legalLinks.map((link) => (
             <li key={link.label}>
-              <a href={link.href} target="_blank" rel="noreferrer">
-                {link.label}
-              </a>
+              {link.to ? (
+                <Link to={link.to}>{link.label}</Link>
+              ) : (
+                <a href={link.href} target="_blank" rel="noreferrer">
+                  {link.label}
+                </a>
+              )}
             </li>
           ))}
+          <li><Link to="/scorecard">Scorecard</Link></li>
           <li><Link to="/sitemap">Sitemap</Link></li>
         </ul>
       </div>
