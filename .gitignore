@@ -5,3 +5,7 @@ node_modules/
 *.log
 dist/
 .cache/
+
+# Keep WW63 portfolio demo build
+!ww63/dist/
+!ww63/dist/**

@@ -10,9 +10,17 @@ Independent conceptual redesign: anniversary campaign + interactive product visi
 
 | Mode | How |
 | --- | --- |
-| **From Artistic Fountain portfolio** | Open `ww63/dist/index.html` (or the WW 63 card on the home page) |
+| **From Artistic Fountain portfolio** | Open `ww63/dist/` (or the WW 63 card on the home page) |
 | **Local source** | `cd ww63 && npm install && npm run dev` |
 | **Permanent URL** | Deploy `ww63/` to Vercel (Root Directory: `ww63`) |
+
+### Proof screens
+
+![Hero](docs/screens/01-hero.png)
+
+![Guided journey](docs/screens/02-guided-journey.png)
+
+![Case study](docs/screens/04-case-study.png)
 
 ## Role · Stack · Ownership
 
