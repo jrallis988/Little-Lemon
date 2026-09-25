@@ -28,6 +28,7 @@ const config: Config = {
           "purple-soft": "var(--pf-purple-soft)",
           lavender: "var(--pf-lavender)",
           yellow: "var(--pf-yellow)",
+          "yellow-bright": "var(--pf-yellow-bright)",
           gold: "var(--pf-gold)",
           ink: "var(--pf-ink)",
           mist: "var(--pf-mist)",
@@ -48,7 +49,7 @@ const config: Config = {
         sans: ["var(--font-body)", "sans-serif"],
       },
       boxShadow: {
-        lift: "0 18px 40px -28px rgba(48, 18, 74, 0.45)",
+        lift: "0 18px 40px -28px rgba(24, 11, 178, 0.45)",
       },
       keyframes: {
         "fade-up": {

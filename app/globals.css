@@ -3,20 +3,26 @@
 @tailwind utilities;
 
 :root {
-  /* Brand anchors from planetfitness.com references */
-  --pf-purple: #5f259f;
-  --pf-purple-bright: #6d20ab;
-  --pf-purple-mid: #592c82;
-  --pf-purple-deep: #3d0958;
-  --pf-purple-ink: #140024;
-  --pf-purple-soft: #f3f0f8;
-  --pf-lavender: #b294ff;
-  --pf-yellow: #ffce08;
-  --pf-yellow-bright: #ffcc00;
-  --pf-gold: #ffb81c;
+  /*
+   * Brand anchors sampled from in-club Black Card Spa TV:
+   * indigo screen fill ≈ #180BB2, NEW yellow ≈ #F3D012
+   */
+  --pf-purple: #180bb2;
+  --pf-purple-bright: #2a18d4;
+  --pf-purple-mid: #1a1299;
+  --pf-purple-deep: #0e0690;
+  --pf-purple-ink: #07044a;
+  --pf-purple-soft: #eef0ff;
+  --pf-lavender: #8b8cff;
+  --pf-indigo: #180bb2;
+  --pf-indigo-bright: #2a18d4;
+  --pf-indigo-deep: #0e0690;
+  --pf-yellow: #f3d012;
+  --pf-yellow-bright: #ffe135;
+  --pf-gold: #f3d012;
   --pf-ink: #000521;
-  --pf-mist: #f7f4fb;
-  --pf-line: #e4d9f0;
+  --pf-mist: #f4f5ff;
+  --pf-line: #d8dbf5;
 
   /* PF homepage type scale (desktop reference ~1440px) */
   --pf-hero-line: 4.5rem; /* 72px — WE'RE ALL / ON THIS PLANET™ */
@@ -26,23 +32,29 @@
   --pf-body: 1rem;
   --pf-body-lg: 1.125rem;
 
-  /* Explore Clubs Near You — purple → gold diagonal (PF desktop) */
+  /* Explore Clubs — indigo → spa yellow diagonal */
   --pf-grad-explore: linear-gradient(
     135deg,
-    #5f259f 0%,
-    #6d20ab 38%,
-    #a85a2a 72%,
-    #ffb81c 100%
+    #180bb2 0%,
+    #2a18d4 38%,
+    #c9a010 72%,
+    #f3d012 100%
   );
 
-  /* Gradients matching live PF surfaces */
-  --pf-grad-footer: linear-gradient(180deg, #5f1092 0%, #3d0958 100%);
-  --pf-grad-clubs: linear-gradient(180deg, #6d20ab 0%, #4a148c 55%, #3d0958 100%);
-  --pf-grad-black-card: linear-gradient(145deg, #5f1482 0%, #3b0a63 48%, #140024 100%);
-  --pf-grad-app: linear-gradient(115deg, #5f259f 0%, #7a2fb8 42%, #ffb81c 100%);
-  --pf-grad-hero: linear-gradient(125deg, rgba(95, 37, 159, 0.92) 0%, rgba(61, 9, 88, 0.72) 48%, rgba(20, 0, 36, 0.55) 100%);
-  --pf-grad-btn: linear-gradient(90deg, #4a148c 0%, #6d20ab 100%);
-  --pf-grad-promo: linear-gradient(160deg, #9172ec 0%, #5f259f 55%, #5946a7 100%);
+  /* Gradients matching TV indigo / yellow system */
+  --pf-grad-footer: linear-gradient(180deg, #180bb2 0%, #0e0690 100%);
+  --pf-grad-clubs: linear-gradient(180deg, #2a18d4 0%, #180bb2 55%, #0e0690 100%);
+  --pf-grad-black-card: linear-gradient(145deg, #1a1299 0%, #0e0690 48%, #07044a 100%);
+  --pf-grad-app: linear-gradient(115deg, #180bb2 0%, #2a18d4 42%, #f3d012 100%);
+  --pf-grad-hero: linear-gradient(
+    125deg,
+    rgba(24, 11, 178, 0.94) 0%,
+    rgba(14, 6, 144, 0.78) 48%,
+    rgba(7, 4, 74, 0.58) 100%
+  );
+  --pf-grad-btn: linear-gradient(90deg, #0e0690 0%, #2a18d4 100%);
+  --pf-grad-promo: linear-gradient(160deg, #3d2ef0 0%, #180bb2 55%, #1a1299 100%);
+  --pf-grad-spa: linear-gradient(160deg, #180bb2 0%, #150ac6 60%, #0e0690 100%);
 }
 
 html {
@@ -91,18 +103,36 @@ body {
     background-image: var(--pf-grad-explore);
   }
 
+  .pf-grad-spa {
+    background-image: var(--pf-grad-spa);
+  }
+
   /* Subtle mesh like Explore Clubs on planetfitness.com */
   .pf-texture {
     background-image:
       radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.08), transparent 28%),
-      radial-gradient(circle at 80% 0%, rgba(255, 206, 8, 0.08), transparent 30%),
+      radial-gradient(circle at 80% 0%, rgba(243, 208, 18, 0.1), transparent 30%),
       linear-gradient(0deg, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.12)),
       var(--pf-grad-clubs);
+  }
+
+  /*
+   * In-club TV display style: ultra-bold condensed + italic slant,
+   * tight tracking, all caps — matches "NEW / BLACK CARD SPA AMENITIES".
+   */
+  .pf-type-impact {
+    font-family: var(--font-display), sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+    line-height: 0.9;
   }
 
   .pf-type-hero-line {
     font-family: var(--font-display), sans-serif;
     font-weight: 900;
+    font-style: italic;
     font-size: clamp(2.25rem, 5.2vw, var(--pf-hero-line));
     line-height: 0.9;
     letter-spacing: -0.02em;
@@ -112,6 +142,7 @@ body {
   .pf-type-hero-strong {
     font-family: var(--font-display), sans-serif;
     font-weight: 900;
+    font-style: italic;
     font-size: clamp(3.5rem, 9vw, var(--pf-hero-strong));
     line-height: 0.85;
     letter-spacing: -0.03em;
@@ -122,19 +153,22 @@ body {
   .pf-type-hero-sub {
     font-family: var(--font-display), sans-serif;
     font-weight: 800;
+    font-style: italic;
     font-size: clamp(1.25rem, 2.2vw, var(--pf-hero-sub));
     line-height: 1.15;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.02em;
     text-transform: uppercase;
     color: var(--pf-yellow);
   }
 
   .pf-type-section {
     font-family: var(--font-display), sans-serif;
-    font-weight: 800;
+    font-weight: 900;
+    font-style: italic;
     font-size: clamp(2rem, 4vw, var(--pf-section-title));
     line-height: 1.05;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
   }
 }
 

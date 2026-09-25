@@ -1,18 +1,20 @@
 /**
  * Brand design tokens — colors + type bibliography for the acquisition site.
  * Live CSS variables live in app/globals.css; this is the documented source of truth.
+ *
+ * Primary indigo + yellow sampled from in-club Black Card Spa TV screen.
  */
 
 export const COLOR_PALETTE = [
   {
     token: "pf-purple",
-    hex: "#5f259f",
-    role: "Primary brand purple (buttons, accents, links)",
+    hex: "#180bb2",
+    role: "TV indigo purple (primary fills, buttons, links)",
   },
   {
     token: "pf-yellow",
-    hex: "#ffce08",
-    role: "Brand yellow (logo ring, JFZ highlights, prices)",
+    hex: "#f3d012",
+    role: "TV NEW yellow (logo ring, STRONG, prices, impact type)",
   },
   {
     token: "pf-ink",
@@ -21,66 +23,66 @@ export const COLOR_PALETTE = [
   },
   {
     token: "pf-purple-bright",
-    hex: "#6d20ab",
-    role: "Brighter fills / club gradients",
+    hex: "#2a18d4",
+    role: "Brighter indigo fills / club gradients",
   },
   {
     token: "pf-purple-mid",
-    hex: "#592c82",
-    role: "Mid tone",
+    hex: "#1a1299",
+    role: "Mid indigo",
   },
   {
     token: "pf-purple-deep",
-    hex: "#3d0958",
-    role: "Deep footer / overlays",
+    hex: "#0e0690",
+    role: "Deep indigo footer / overlays",
   },
   {
     token: "pf-purple-ink",
-    hex: "#140024",
-    role: "Darkest purple (phone frames, overlays)",
+    hex: "#07044a",
+    role: "Darkest indigo (phone frames, overlays)",
   },
   {
     token: "pf-purple-soft",
-    hex: "#f3f0f8",
-    role: "Soft lavender fills",
+    hex: "#eef0ff",
+    role: "Soft indigo fills",
   },
   {
     token: "pf-lavender",
-    hex: "#b294ff",
-    role: "Light accent",
+    hex: "#8b8cff",
+    role: "Light indigo accent",
   },
   {
     token: "pf-gold",
-    hex: "#ffb81c",
-    role: "Warm gold in app gradient",
+    hex: "#f3d012",
+    role: "Aligned to TV yellow for gradients",
   },
   {
     token: "pf-mist",
-    hex: "#f7f4fb",
+    hex: "#f4f5ff",
     role: "Page / section background",
   },
   {
     token: "pf-line",
-    hex: "#e4d9f0",
+    hex: "#d8dbf5",
     role: "Borders / dividers",
   },
 ] as const;
 
 export const GRADIENT_NOTES = [
-  "Footer / clubs / Black Card → purple depth",
-  "App promo → #5f259f → #ffb81c (purple → gold)",
-  "Buttons → #4a148c → #6d20ab",
+  "Footer / clubs / Black Card → TV indigo depth",
+  "App promo → #180bb2 → #f3d012 (indigo → spa yellow)",
+  "Buttons → #0e0690 → #2a18d4",
 ] as const;
 
 export const TYPE_BIBLIOGRAPHY = [
   {
     name: "Barlow Condensed",
     role: "Display / headlines",
-    css: "font-display",
-    weights: "600 · 700 · 800 · 900",
+    css: "font-display · pf-type-impact",
+    weights: "600 · 700 · 800 · 900 · italic",
     usage:
-      "Hero (WE'RE ALL / STRONG / ON THIS PLANET™), section titles, membership plan names, uppercase marketing headlines.",
-    sample: "WE'RE ALL STRONG ON THIS PLANET™",
+      "In-club TV style: heavy italic uppercase. Hero (WE'RE ALL / STRONG / ON THIS PLANET™), section titles, membership plan names, spa / amenity impact lines.",
+    sample: "NEW BLACK CARD SPA AMENITIES",
   },
   {
     name: "Open Sans",
@@ -95,37 +97,26 @@ export const TYPE_BIBLIOGRAPHY = [
 ] as const;
 
 export const PALETTE_TEXT_BOX = `PLANET FITNESS COLOR PALETTE
-Defined in: app/globals.css  ·  Tailwind tokens: pf-*
+Sampled from in-club Black Card Spa TV · Defined in: app/globals.css
 
-CORE BRAND
-  pf-purple     #5f259f   Primary brand purple (buttons, accents, links)
-  pf-yellow     #ffce08   Brand yellow (logo ring, JFZ highlights, prices)
-  pf-ink        #000521   Near-black body text
+CORE BRAND (TV SCREEN)
+  pf-purple / indigo   #180bb2   TV indigo fill (buttons, accents, links)
+  pf-yellow            #f3d012   NEW yellow (logo ring, STRONG, impact type)
+  pf-ink               #000521   Near-black body text
 
-PURPLE SCALE
-  pf-purple-bright   #6d20ab   Brighter fills / club gradients
-  pf-purple-mid      #592c82   Mid tone
-  pf-purple-deep     #3d0958   Deep footer / overlays
-  pf-purple-ink      #140024   Darkest purple (phone frames, overlays)
-  pf-purple-soft     #f3f0f8   Soft lavender fills
-  pf-lavender        #b294ff   Light accent
+INDIGO SCALE
+  pf-purple-bright   #2a18d4   Brighter fills / club gradients
+  pf-purple-mid      #1a1299   Mid tone
+  pf-purple-deep     #0e0690   Deep footer / overlays
+  pf-purple-ink      #07044a   Darkest indigo
+  pf-purple-soft     #eef0ff   Soft fills
+  pf-lavender        #8b8cff   Light accent
 
 SUPPORTING
-  pf-gold   #ffb81c   Warm gold in app gradient
-  pf-mist   #f7f4fb   Page / section background
-  pf-line   #e4d9f0   Borders / dividers
+  pf-gold   #f3d012   Aligned to TV yellow
+  pf-mist   #f4f5ff   Page / section background
+  pf-line   #d8dbf5   Borders / dividers
 
-GRADIENTS
-  Footer / clubs / Black Card   purple depth
-  App promo                     #5f259f → #ffb81c (purple → gold)
-  Buttons                       #4a148c → #6d20ab
-
-TYPE BIBLIOGRAPHY
-  Display   Barlow Condensed  (font-display)  weights 600–900
-  Body/UI   Open Sans         (font-sans)     weights 400–700
-
-HERO TYPE SCALE (desktop)
-  WE'RE ALL / ON THIS PLANET™   72px  (--pf-hero-line)
-  STRONG                        120px (--pf-hero-strong)
-  JOIN THE CLUB TODAY!          28px  (--pf-hero-sub)
-  Section titles                44px  (--pf-section-title)`;
+TYPE — IN-CLUB TV STYLE
+  Display   Barlow Condensed italic 900  (pf-type-impact / pf-type-section)
+  Body/UI   Open Sans`;

@@ -39,7 +39,7 @@ export function SpaAmenities() {
         </p>
         <h2
           id="amenities-heading"
-          className="mt-2 text-center font-display text-3xl tracking-tight text-pf-ink md:text-4xl"
+          className="pf-type-section mt-2 text-center text-pf-ink"
         >
           New ways to recover & recharge
         </h2>
@@ -68,7 +68,7 @@ export function SpaAmenities() {
                 </p>
               </div>
               <div className="p-4">
-                <h3 className="font-display text-xl tracking-tight text-pf-ink">
+                <h3 className="pf-type-impact text-xl text-pf-ink">
                   {item.title}
                 </h3>
                 <p className="mt-1.5 text-sm text-pf-ink/65">{item.body}</p>

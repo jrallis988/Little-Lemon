@@ -80,7 +80,7 @@ export default async function StatusPage() {
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-pf-purple">
             Operations
           </p>
-          <h1 className="mt-2 font-display text-4xl font-black uppercase tracking-tight">
+          <h1 className="pf-type-section mt-2">
             Status
           </h1>
           <p className="mt-3 text-sm text-pf-muted">
@@ -96,7 +96,7 @@ export default async function StatusPage() {
 
       <section className="px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-display text-2xl font-black uppercase tracking-tight">
+          <h2 className="pf-type-impact text-2xl text-pf-ink">
             Launch checklist
           </h2>
           <p className="mt-2 text-sm text-pf-muted">
@@ -141,7 +141,7 @@ export default async function StatusPage() {
 
       <section className="border-t border-black/10 px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-display text-2xl font-black uppercase tracking-tight">
+          <h2 className="pf-type-impact text-2xl text-pf-ink">
             Health checks
           </h2>
           <dl className="mt-6 divide-y divide-pf-line rounded-2xl border border-pf-line bg-[#faf8fc]">
@@ -175,7 +175,7 @@ export default async function StatusPage() {
 
       <section className="border-t border-black/10 bg-[#faf8fc] px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-display text-2xl font-black uppercase tracking-tight">
+          <h2 className="pf-type-impact text-2xl text-pf-ink">
             Quality scorecard
           </h2>
           <p className="mt-2 text-sm text-pf-muted">
@@ -186,10 +186,10 @@ export default async function StatusPage() {
             {scores.map((item) => (
               <li key={item.id}>
                 <div className="flex items-baseline justify-between gap-3">
-                  <h3 className="font-display text-lg font-black uppercase text-pf-ink">
+                  <h3 className="pf-type-impact text-lg text-pf-ink">
                     {item.label}
                   </h3>
-                  <p className="font-display text-2xl font-black text-pf-purple">
+                  <p className="pf-type-impact text-2xl text-pf-purple">
                     {item.score}
                     <span className="text-base text-pf-ink/40">/{item.max}</span>
                   </p>

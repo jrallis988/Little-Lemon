@@ -25,7 +25,7 @@ export function MemberScreen({
           {eyebrow}
         </p>
       ) : null}
-      <h1 className="mt-1 font-display text-3xl tracking-tight text-pf-ink">
+      <h1 className="pf-type-section mt-1 text-3xl text-pf-ink">
         {title}
       </h1>
       {subtitle ? (

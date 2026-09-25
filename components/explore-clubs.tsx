@@ -56,7 +56,7 @@ function ClubCard({ club }: { club: Club }) {
               source: "explore_details",
             });
           }}
-          className="font-sans text-sm font-semibold text-[#5f259f] transition hover:underline"
+          className="font-sans text-sm font-semibold text-pf-purple transition hover:underline"
         >
           Club Details
         </Link>
@@ -69,7 +69,7 @@ function ClubCard({ club }: { club: Club }) {
               source: "explore_review",
             });
           }}
-          className="inline-flex h-10 items-center justify-center rounded-lg bg-[#5f259f] px-4 font-sans text-sm font-semibold text-white transition hover:bg-[#6d20ab]"
+          className="inline-flex h-10 items-center justify-center rounded-lg bg-pf-purple px-4 font-sans text-sm font-semibold text-white transition hover:bg-pf-purple-bright"
         >
           Review Plans
         </Link>
@@ -128,7 +128,7 @@ export function ExploreClubsNearYou() {
       <div className="mx-auto max-w-5xl">
         <h2
           id="explore-clubs-heading"
-          className="font-sans text-[1.75rem] font-bold tracking-tight text-white sm:text-[2rem] md:text-[2.25rem]"
+          className="pf-type-section text-white"
         >
           Explore Clubs Near You
         </h2>

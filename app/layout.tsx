@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import { Barlow_Condensed, Open_Sans } from "next/font/google";
 import "./globals.css";
 
-/** PF-style condensed black for hero / section headlines */
+/** PF-style condensed black italic for hero / TV impact headlines */
 const display = Barlow_Condensed({
   subsets: ["latin"],
   weight: ["600", "700", "800", "900"],
+  style: ["normal", "italic"],
   variable: "--font-display",
   display: "swap",
 });

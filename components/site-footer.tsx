@@ -129,7 +129,7 @@ export function SiteFooter() {
         </p>
       </div>
 
-      {/* Solid brand purple (#5f259f) matching PF Stratham footer */}
+      {/* Solid TV indigo (#180bb2) footer */}
       <div className="bg-pf-purple px-4 pb-8 pt-8 text-white md:px-6 md:pb-10 md:pt-10">
         <div className="mx-auto max-w-5xl">
           <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">

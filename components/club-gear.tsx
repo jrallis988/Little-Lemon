@@ -21,7 +21,7 @@ export function ClubGear() {
     <section
       id="gear"
       aria-labelledby="gear-heading"
-      className="scroll-mt-14 overflow-hidden bg-[#ffce08]"
+      className="scroll-mt-14 overflow-hidden bg-pf-yellow"
     >
       <div
         className="mx-auto max-w-5xl px-4 py-10 md:px-6 md:py-12"
@@ -36,7 +36,7 @@ export function ClubGear() {
         </p>
         <h2
           id="gear-heading"
-          className="mt-2 text-center font-display text-3xl tracking-tight text-pf-ink md:text-4xl"
+          className="pf-type-section mt-2 text-center text-pf-ink"
         >
           Get your gear
         </h2>

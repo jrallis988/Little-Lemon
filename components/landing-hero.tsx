@@ -30,11 +30,11 @@ export function LandingHero() {
   return (
     <section
       aria-labelledby="landing-hero-heading"
-      className="relative overflow-hidden bg-[#5f259f] text-white"
+      className="relative overflow-hidden bg-pf-purple text-white"
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute left-[-8%] top-[18%] h-[30rem] w-[38rem] rounded-full bg-[#7a3bb8]/40 blur-3xl"
+        className="pointer-events-none absolute left-[-8%] top-[18%] h-[30rem] w-[38rem] rounded-full bg-pf-purple-bright/40 blur-3xl"
       />
 
       {/* Top-right photo with bottom-left diagonal cut */}
@@ -71,7 +71,7 @@ export function LandingHero() {
           />
           <div
             aria-hidden
-            className="absolute inset-0 bg-gradient-to-t from-[#5f259f] via-[#5f259f]/60 to-transparent"
+            className="absolute inset-0 bg-gradient-to-t from-pf-purple via-pf-purple/60 to-transparent"
           />
         </div>
       </div>
@@ -113,7 +113,7 @@ export function LandingHero() {
               />
               <button
                 type="submit"
-                className="inline-flex h-full shrink-0 items-center justify-center gap-2 rounded-full bg-[#5f259f] px-4 font-sans text-[15px] font-semibold text-white transition hover:bg-[#6d20ab] sm:px-5"
+                className="inline-flex h-full shrink-0 items-center justify-center gap-2 rounded-full bg-pf-purple px-4 font-sans text-[15px] font-semibold text-white transition hover:bg-pf-purple-bright sm:px-5"
               >
                 <Search className="h-4 w-4 shrink-0" aria-hidden />
                 <span className="hidden sm:inline">Find a Club</span>

@@ -110,7 +110,7 @@ export function WelcomeHero() {
         <h1
           id="welcome-heading"
           className={cn(
-            "font-display text-[1.85rem] font-black uppercase leading-[1.05] tracking-tight text-pf-ink sm:text-4xl md:text-5xl",
+            "pf-type-section text-pf-ink sm:text-4xl md:text-5xl",
             slide.kicker && "mt-2"
           )}
         >

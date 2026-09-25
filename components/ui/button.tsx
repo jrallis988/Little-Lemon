@@ -9,7 +9,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "rounded-full bg-pf-yellow text-pf-ink hover:bg-[#ffe14d] active:bg-[#e6b800]",
+          "rounded-full bg-pf-yellow text-pf-ink hover:bg-pf-yellow-bright active:brightness-95",
         purple:
           "rounded-full bg-pf-btn text-white shadow-sm hover:brightness-110 active:brightness-95",
         outline:

@@ -29,7 +29,7 @@ export function GetStarted() {
       <div className="mx-auto max-w-5xl px-4 py-10 md:px-6 md:py-12">
         <h2
           id="get-started-heading"
-          className="text-center font-display text-3xl tracking-tight md:text-4xl"
+          className="pf-type-section text-center"
         >
           Get Started Today
         </h2>

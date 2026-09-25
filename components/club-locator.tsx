@@ -412,12 +412,12 @@ export function ClubLocator() {
         />
 
         <div className="relative flex h-full min-h-[38vh] flex-col justify-end p-4 pb-5 sm:p-6 lg:min-h-full lg:p-8 lg:pb-8">
-          <p className="font-display text-5xl leading-none tracking-tight text-pf-yellow sm:text-6xl lg:text-7xl">
+          <p className="pf-type-impact text-5xl text-pf-yellow sm:text-6xl lg:text-7xl">
             Planet Fitness
           </p>
           <h1
             id="club-locator-heading"
-            className="mt-2 max-w-md font-display text-3xl tracking-tight text-white sm:text-4xl"
+            className="pf-type-section mt-2 max-w-md text-white sm:text-4xl"
           >
             Stratham, NH &amp; the Seacoast
           </h1>

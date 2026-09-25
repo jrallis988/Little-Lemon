@@ -10,7 +10,7 @@ export function LocationsSpotlight() {
       <div className="mx-auto max-w-xl px-4 py-10 text-center md:px-6">
         <h2
           id="locations-heading"
-          className="font-display text-3xl tracking-tight text-pf-ink md:text-4xl"
+          className="pf-type-section text-pf-ink"
         >
           Stratham &amp; the Seacoast
         </h2>

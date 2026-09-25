@@ -81,10 +81,10 @@ export function SummerPass() {
                 className="absolute inset-0 bg-gradient-to-t from-pf-purple via-pf-purple/55 to-transparent"
               />
               <div className="absolute inset-x-0 bottom-0 p-5 text-center text-white md:p-6">
-                <p className="font-display text-sm tracking-wide text-white/90">
+                <p className="pf-type-impact text-sm text-white/90">
                   planet fitness
                 </p>
-                <p className="mt-1 font-display text-3xl font-black uppercase leading-none tracking-tight sm:text-4xl">
+                <p className="pf-type-impact mt-1 text-3xl sm:text-4xl">
                   <span className="text-white">High School</span>
                   <br />
                   <span className="text-pf-yellow">Summer Pass</span>

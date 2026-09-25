@@ -22,9 +22,9 @@ export function PlanetFitnessLogo({
         aria-label={showWordmark ? undefined : "Planet Fitness"}
         className={cn("h-9 w-9 shrink-0", markClassName)}
       >
-        <circle cx="32" cy="32" r="31" fill="#FFCE08" />
+        <circle cx="32" cy="32" r="31" fill="#F3D012" />
         <circle cx="32" cy="32" r="26.75" fill="#111111" />
-        <circle cx="32" cy="32" r="20.5" fill="#FFCE08" />
+        <circle cx="32" cy="32" r="20.5" fill="#F3D012" />
         <defs>
           <path
             id="pf-logo-arc"
@@ -33,7 +33,7 @@ export function PlanetFitnessLogo({
           />
         </defs>
         <text
-          fill="#FFCE08"
+          fill="#F3D012"
           fontSize="4.8"
           fontWeight="800"
           letterSpacing="0.85"
@@ -59,7 +59,7 @@ export function PlanetFitnessLogo({
         </g>
       </svg>
       {showWordmark ? (
-        <span className="font-display text-xl leading-none tracking-tight text-pf-purple md:text-[1.65rem]">
+        <span className="pf-type-impact text-xl leading-none text-pf-purple md:text-[1.65rem]">
           planet fitness
         </span>
       ) : (

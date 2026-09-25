@@ -21,7 +21,7 @@ export default function BrandPage() {
           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-pf-purple">
             Design system
           </p>
-          <h1 className="mt-2 font-display text-4xl tracking-tight md:text-6xl">
+          <h1 className="pf-type-section mt-2 text-4xl md:text-6xl">
             Colors &amp; type bibliography
           </h1>
           <p className="mt-3 max-w-2xl text-sm text-pf-ink/65 md:text-base">
@@ -47,7 +47,7 @@ export default function BrandPage() {
       </section>
 
       <section className="mx-auto max-w-5xl px-4 py-10 md:px-6 md:py-12">
-        <h2 className="font-display text-3xl tracking-tight">Color palette</h2>
+        <h2 className="pf-type-section text-3xl">Color palette</h2>
         <p className="mt-2 text-sm text-pf-ink/65">
           Swatches map 1:1 to CSS variables in{" "}
           <code className="rounded bg-pf-mist px-1">app/globals.css</code>.
@@ -79,9 +79,9 @@ export default function BrandPage() {
           className="mt-8 h-16 w-full rounded-2xl shadow-inner"
           style={{
             backgroundImage:
-              "linear-gradient(90deg, #5f259f 0%, #7a2fb8 42%, #ffb81c 100%)",
+              "linear-gradient(90deg, #180bb2 0%, #2a18d4 42%, #f3d012 100%)",
           }}
-          aria-label="Brand gradient bar from purple to gold"
+          aria-label="Brand gradient bar from TV indigo to spa yellow"
         />
         <ul className="mt-3 space-y-1 text-sm text-pf-ink/65">
           {GRADIENT_NOTES.map((note) => (
@@ -92,7 +92,7 @@ export default function BrandPage() {
 
       <section className="border-y border-pf-line bg-pf-mist">
         <div className="mx-auto max-w-5xl px-4 py-10 md:px-6 md:py-12">
-          <h2 className="font-display text-3xl tracking-tight">
+          <h2 className="pf-type-section text-3xl">
             Type bibliography
           </h2>
           <p className="mt-2 text-sm text-pf-ink/65">
@@ -111,8 +111,8 @@ export default function BrandPage() {
                 </p>
                 <h3
                   className={
-                    face.css === "font-display"
-                      ? "mt-2 font-display text-3xl tracking-tight"
+                    face.css.includes("font-display")
+                      ? "pf-type-impact mt-2 text-3xl text-pf-ink"
                       : "mt-2 font-sans text-2xl font-semibold tracking-tight"
                   }
                 >
@@ -124,17 +124,22 @@ export default function BrandPage() {
                 <p className="mt-3 text-sm text-pf-ink/70">{face.usage}</p>
                 <p
                   className={
-                    face.css === "font-display"
-                      ? "mt-4 rounded-2xl bg-pf-mist px-3 py-3 font-display text-xl uppercase tracking-tight text-pf-ink"
+                    face.css.includes("font-display")
+                      ? "mt-4 rounded-2xl bg-pf-purple px-3 py-4 text-center"
                       : "mt-4 rounded-2xl bg-pf-mist px-3 py-3 text-sm text-pf-ink/80"
                   }
                 >
-                  {face.css === "font-display" ? (
-                    <>
-                      A PLACE WHERE{" "}
-                      <span className="text-pf-purple">EVERYONE</span> FEELS
-                      WELCOME
-                    </>
+                  {face.css.includes("font-display") ? (
+                    <span className="inline-flex items-baseline gap-2">
+                      <span className="pf-type-impact text-4xl text-pf-yellow">
+                        NEW
+                      </span>
+                      <span className="pf-type-impact text-left text-sm leading-tight text-white md:text-base">
+                        BLACK CARD
+                        <br />
+                        SPA AMENITIES
+                      </span>
+                    </span>
                   ) : (
                     face.sample
                   )}
@@ -146,7 +151,7 @@ export default function BrandPage() {
       </section>
 
       <section className="mx-auto max-w-5xl px-4 py-10 md:px-6 md:py-12">
-        <h2 className="font-display text-3xl tracking-tight">
+        <h2 className="pf-type-section text-3xl">
           Reference text box
         </h2>
         <p className="mt-2 text-sm text-pf-ink/65">

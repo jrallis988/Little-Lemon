@@ -425,7 +425,7 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-pf-purple">
             Start your membership
           </p>
-          <h1 className="mt-1 font-display text-3xl tracking-tight text-pf-ink md:text-4xl">
+          <h1 className="pf-type-section mt-1 text-pf-ink md:text-4xl">
             Join in a few short steps
           </h1>
 
@@ -456,7 +456,7 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
             {step === "confirm" && (
               <div className="space-y-4">
                 <div>
-                  <h2 className="font-display text-2xl text-pf-ink">Confirm club & plan</h2>
+                  <h2 className="pf-type-impact text-2xl text-pf-ink">Confirm club & plan</h2>
                   <p className="mt-1 text-sm text-pf-ink/65">
                     Fees on the right are the local rate for this club.
                   </p>
@@ -512,7 +512,7 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
             {step === "identity" && (
               <div className="space-y-4">
                 <div>
-                  <h2 className="font-display text-2xl text-pf-ink">About you</h2>
+                  <h2 className="pf-type-impact text-2xl text-pf-ink">About you</h2>
                   <p className="mt-1 text-sm text-pf-ink/65">
                     We’ll use this for your membership record and PF app invite.
                   </p>
@@ -587,7 +587,7 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
             {step === "payment" && (
               <div className="space-y-4">
                 <div>
-                  <h2 className="font-display text-2xl text-pf-ink">Payment & agreements</h2>
+                  <h2 className="pf-type-impact text-2xl text-pf-ink">Payment & agreements</h2>
                   <p className="mt-1 text-sm text-pf-ink/65">
                     Due today: {formatCurrency(dueToday(pricing))}. Prefer Stripe
                     Checkout or Elements when configured; otherwise test
@@ -796,7 +796,7 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
                   <Check className="h-4 w-4" aria-hidden />
                   Membership created
                 </p>
-                <h2 className="font-display text-3xl text-pf-ink">
+                <h2 className="pf-type-section text-pf-ink">
                   You’re set, {identity.firstName || "member"}.
                 </h2>
                 <p className="text-sm text-pf-ink/70">

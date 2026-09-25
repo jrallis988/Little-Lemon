@@ -51,7 +51,7 @@ export function WorkoutGuidesPromo() {
         <div className="text-center md:text-left">
           <h2
             id="workout-guides-heading"
-            className="font-display text-3xl font-black uppercase tracking-tight text-pf-ink md:text-4xl"
+            className="pf-type-section text-pf-ink md:text-4xl"
           >
             NEW! Workout Guides in the PF App
           </h2>

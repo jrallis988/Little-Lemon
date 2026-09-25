@@ -16,7 +16,7 @@ export function AppPromo() {
         <div className="max-w-xl">
           <h2
             id="app-promo-heading"
-            className="font-display text-3xl tracking-tight md:text-5xl"
+            className="pf-type-section md:text-5xl"
           >
             Bring the{" "}
             <span className="text-pf-yellow">Judgement Free Zone®</span>{" "}

@@ -88,7 +88,7 @@ export function AppHighlights() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-pf-purple-ink/90 via-pf-purple/35 to-transparent" />
             <div className="absolute inset-x-4 bottom-4 text-white">
-              <p className="font-display text-lg uppercase leading-none tracking-tight text-pf-yellow md:text-2xl">
+              <p className="pf-type-impact text-lg text-pf-yellow md:text-2xl">
                 {slide.overlayTitle}
               </p>
               <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.16em] text-white/85">
@@ -102,7 +102,7 @@ export function AppHighlights() {
             </p>
             <h2
               id="app-highlights-heading"
-              className="mt-1 font-display text-2xl uppercase tracking-tight text-pf-ink md:text-3xl"
+              className="pf-type-section mt-1 text-2xl text-pf-ink md:text-3xl"
             >
               {slide.title}
             </h2>

@@ -30,10 +30,10 @@ export default function GlobalError({
         }}
       >
         <div>
-          <p style={{ letterSpacing: "0.2em", fontSize: 11, color: "#5f259f" }}>
+          <p style={{ letterSpacing: "0.2em", fontSize: 11, color: "#180bb2", fontWeight: 800, fontStyle: "italic" }}>
             SOMETHING WENT WRONG
           </p>
-          <h1 style={{ fontSize: 36, margin: "8px 0" }}>We hit a snag</h1>
+          <h1 style={{ fontSize: 36, margin: "8px 0", fontStyle: "italic", fontWeight: 900, textTransform: "uppercase" }}>We hit a snag</h1>
           <p style={{ color: "#666" }}>Try again, or reload the homepage.</p>
           <div style={{ marginTop: 20, display: "flex", gap: 8, justifyContent: "center" }}>
             <button
@@ -43,7 +43,7 @@ export default function GlobalError({
                 border: 0,
                 borderRadius: 999,
                 padding: "10px 18px",
-                background: "#5f259f",
+                background: "#180bb2",
                 color: "#fff",
                 fontWeight: 600,
               }}

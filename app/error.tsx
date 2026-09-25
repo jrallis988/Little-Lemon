@@ -20,7 +20,7 @@ export default function Error({
       <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-pf-purple">
         Error
       </p>
-      <h1 className="mt-2 font-display text-4xl text-pf-ink">
+      <h1 className="pf-type-section mt-2 text-pf-ink">
         That page didn’t load
       </h1>
       <p className="mt-2 text-sm text-pf-ink/65">

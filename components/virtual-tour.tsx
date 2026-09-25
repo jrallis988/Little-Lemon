@@ -33,7 +33,7 @@ export function VirtualTour() {
           </p>
           <h2
             id="tour-heading"
-            className="mt-2 font-display text-3xl tracking-tight text-pf-ink md:text-4xl"
+            className="pf-type-section mt-2 text-pf-ink"
           >
             Take a virtual club tour
           </h2>

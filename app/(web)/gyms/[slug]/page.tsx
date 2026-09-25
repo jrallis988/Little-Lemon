@@ -81,7 +81,7 @@ export default async function ClubPage({ params }: PageProps) {
           <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-pf-yellow">
             Club details
           </p>
-          <h1 className="font-display text-3xl tracking-tight text-white md:text-5xl">
+          <h1 className="pf-type-section text-white md:text-5xl">
             {club.name}
           </h1>
           <p className="mt-1 text-sm text-white/80">{club.todayLabel}</p>
@@ -112,7 +112,7 @@ export default async function ClubPage({ params }: PageProps) {
           </div>
 
           <div>
-            <h2 className="font-display text-2xl">Hours</h2>
+            <h2 className="pf-type-impact text-2xl">Hours</h2>
             <ul className="mt-2 space-y-1 text-sm">
               {club.hours.map((slot) => (
                 <li key={slot.day} className="flex justify-between gap-4">
@@ -124,7 +124,7 @@ export default async function ClubPage({ params }: PageProps) {
           </div>
 
           <div>
-            <h2 className="font-display text-2xl">On the floor</h2>
+            <h2 className="pf-type-impact text-2xl">On the floor</h2>
             <ul className="mt-2 flex flex-wrap gap-1.5">
               {club.amenities.map((amenity) => (
                 <li
@@ -139,7 +139,7 @@ export default async function ClubPage({ params }: PageProps) {
         </div>
 
         <aside className="h-fit rounded-3xl border border-pf-line bg-pf-mist/50 p-5">
-          <h2 className="font-display text-2xl">Memberships</h2>
+          <h2 className="pf-type-impact text-2xl">Memberships</h2>
           <p className="mt-1 text-sm text-pf-ink/65">
             Local rates for this club.
           </p>

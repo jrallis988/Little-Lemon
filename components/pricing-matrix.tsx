@@ -109,7 +109,7 @@ export function PricingMatrix() {
           <div>
             <h2
               id="pricing-heading"
-              className="font-display text-3xl tracking-tight text-white sm:text-4xl"
+              className="pf-type-section text-white sm:text-4xl"
             >
               Memberships
             </h2>
@@ -153,7 +153,7 @@ export function PricingMatrix() {
                 <div className="flex items-center justify-between gap-2">
                   <h3
                     className={cn(
-                      "font-display text-2xl tracking-tight uppercase",
+                      "pf-type-impact text-2xl",
                       featured ? "text-white" : "text-pf-ink"
                     )}
                   >
@@ -195,7 +195,7 @@ export function PricingMatrix() {
                       <p className="flex items-end gap-1">
                         <span
                           className={cn(
-                            "font-display text-4xl tracking-tight md:text-5xl",
+                            "pf-type-impact text-4xl md:text-5xl",
                             featured ? "text-pf-yellow" : "text-pf-purple"
                           )}
                         >

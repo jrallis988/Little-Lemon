@@ -9,14 +9,14 @@ export function JoinOffer() {
   return (
     <section
       aria-labelledby="join-offer-heading"
-      className="overflow-hidden bg-gradient-to-br from-pf-purple via-pf-purple to-[#7a3bb8] text-white"
+      className="overflow-hidden bg-gradient-to-br from-pf-purple via-pf-purple-bright to-pf-purple-deep text-white"
     >
       <div className="mx-auto grid max-w-5xl gap-5 px-4 py-7 md:grid-cols-[1.2fr_0.8fr] md:items-center md:px-6">
         <div>
           <p className="text-sm text-white/85">Get up to</p>
           <h2
             id="join-offer-heading"
-            className="mt-1 font-display text-3xl tracking-tight md:text-4xl"
+            className="pf-type-section mt-1 md:text-4xl"
           >
             <span className="text-pf-yellow">3 FREE</span> Months of{" "}
             <span className="text-pf-yellow">Apple Music</span>

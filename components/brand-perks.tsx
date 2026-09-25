@@ -35,7 +35,7 @@ export function BrandPerks() {
       <div className="mx-auto max-w-5xl px-4 py-10 md:px-6 md:py-14">
         <h2
           id="perks-heading"
-          className="mx-auto max-w-3xl text-center font-display text-3xl font-black uppercase leading-[1.05] tracking-tight text-pf-ink sm:text-4xl md:text-5xl"
+          className="pf-type-section mx-auto max-w-3xl text-center text-pf-ink sm:text-4xl md:text-5xl"
         >
           A PLACE WHERE <span className="text-pf-purple">EVERYONE</span> FEELS
           WELCOME
@@ -51,7 +51,7 @@ export function BrandPerks() {
                   aria-hidden
                 />
               </span>
-              <h3 className="mt-3 font-display text-xl tracking-tight text-pf-ink md:text-2xl">
+              <h3 className="pf-type-impact mt-3 text-xl text-pf-ink md:text-2xl">
                 {perk.title}
               </h3>
               <p className="mt-1.5 text-sm text-pf-ink/65 md:text-base">
@@ -72,7 +72,7 @@ export function BrandPerks() {
         className="h-10 w-full md:h-14"
         style={{
           backgroundImage:
-            "linear-gradient(90deg, #5f259f 0%, #7a2fb8 42%, #ffb81c 100%)",
+            "linear-gradient(90deg, #180bb2 0%, #2a18d4 42%, #f3d012 100%)",
         }}
         aria-hidden
       />

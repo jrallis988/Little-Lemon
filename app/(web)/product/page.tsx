@@ -34,12 +34,12 @@ const stack = [
 export default function ProductPage() {
   return (
     <div className="bg-white text-pf-ink">
-      <section className="border-b border-black/10 bg-gradient-to-br from-[#f7f2ff] via-white to-[#fff8e8] px-4 py-16 sm:px-6 lg:px-8">
+      <section className="border-b border-black/10 bg-gradient-to-br from-pf-mist via-white to-pf-yellow/20 px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-pf-purple">
             Product case study
           </p>
-          <h1 className="mt-3 font-display text-4xl font-black uppercase leading-none tracking-tight sm:text-5xl">
+          <h1 className="pf-type-section mt-3 sm:text-5xl">
             Planet Fitness Stratham
           </h1>
           <p className="mt-4 text-lg leading-relaxed text-pf-muted">
@@ -72,7 +72,7 @@ export default function ProductPage() {
 
       <section className="px-4 py-14 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-5xl">
-          <h2 className="font-display text-2xl font-black uppercase tracking-tight">
+          <h2 className="pf-type-impact text-2xl text-pf-ink">
             Product pillars
           </h2>
           <p className="mt-2 max-w-2xl text-sm text-pf-muted">
@@ -82,7 +82,7 @@ export default function ProductPage() {
           <div className="mt-8 grid gap-8 md:grid-cols-3">
             {pillars.map((pillar) => (
               <article key={pillar.title}>
-                <h3 className="font-display text-xl font-black uppercase text-pf-purple">
+                <h3 className="pf-type-impact text-xl text-pf-purple">
                   {pillar.title}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-pf-muted">
@@ -96,7 +96,7 @@ export default function ProductPage() {
 
       <section className="border-y border-black/10 bg-[#faf8fc] px-4 py-14 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-display text-2xl font-black uppercase tracking-tight">
+          <h2 className="pf-type-impact text-2xl text-pf-ink">
             Scope &amp; honesty
           </h2>
           <ul className="mt-6 space-y-3 text-sm leading-relaxed text-pf-muted">
@@ -129,7 +129,7 @@ export default function ProductPage() {
 
       <section className="px-4 py-14 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-display text-2xl font-black uppercase tracking-tight">
+          <h2 className="pf-type-impact text-2xl text-pf-ink">
             Engineering posture
           </h2>
           <ul className="mt-6 space-y-2 text-sm text-pf-muted">

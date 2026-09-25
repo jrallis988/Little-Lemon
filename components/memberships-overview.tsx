@@ -57,17 +57,17 @@ export function MembershipsOverview() {
 
         <div className="mt-10 grid gap-5 md:grid-cols-2">
           {/* Black Card */}
-          <article className="relative flex flex-col rounded-3xl bg-[#2a1250] p-6 text-white shadow-[0_16px_40px_-20px_rgba(42,18,80,0.65)] md:p-7">
+          <article className="relative flex flex-col rounded-3xl bg-pf-purple-ink p-6 text-white shadow-[0_16px_40px_-20px_rgba(7,4,74,0.65)] md:p-7">
             <span className="absolute right-5 top-5 rounded-full bg-pf-yellow px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-pf-ink">
               Best Value
             </span>
-            <h3 className="pr-24 font-display text-2xl uppercase tracking-tight">
+            <h3 className="pf-type-impact pr-24 text-2xl">
               PF Black Card®
             </h3>
-            <p className="mt-4 font-display text-3xl text-pf-yellow md:text-4xl">
+            <p className="pf-type-impact mt-4 text-3xl text-pf-yellow md:text-4xl">
               Starting at {formatCurrency(black.monthlyDues)}
               <span className="text-2xl">/mo</span>
-              <span className="align-super text-base">*</span>
+              <span className="align-super text-base not-italic">*</span>
             </p>
             <p className="mt-1 text-sm text-white/70">plus taxes &amp; fees</p>
             <p className="mt-4 text-sm leading-relaxed text-white/90">
@@ -100,13 +100,13 @@ export function MembershipsOverview() {
 
           {/* Classic */}
           <article className="relative flex flex-col rounded-3xl bg-[#f0f0f3] p-6 text-pf-ink ring-1 ring-black/5 md:p-7">
-            <h3 className="font-display text-2xl uppercase tracking-tight">
+            <h3 className="pf-type-impact text-2xl">
               Classic
             </h3>
-            <p className="mt-4 font-display text-3xl text-pf-purple md:text-4xl">
+            <p className="pf-type-impact mt-4 text-3xl text-pf-purple md:text-4xl">
               Starting at {formatCurrency(classic.monthlyDues)}
               <span className="text-2xl">/mo</span>
-              <span className="align-super text-base">*</span>
+              <span className="align-super text-base not-italic">*</span>
             </p>
             <p className="mt-1 text-sm text-pf-ink/60">plus taxes &amp; fees</p>
             <p className="mt-4 text-sm leading-relaxed text-pf-ink/75">
