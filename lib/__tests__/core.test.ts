@@ -16,7 +16,7 @@ import {
 } from "@/lib/validation";
 import { HOME_CLUB } from "@/lib/home-club";
 import { rateLimit } from "@/lib/rate-limit";
-import { CONCEPT_SCORES, overallConceptScore } from "@/lib/quality";
+import { CONCEPT_SCORES, computeLaunchScore, overallConceptScore } from "@/lib/quality";
 import { SCREENS } from "@/lib/screens";
 import { issueAccessToken, validateAccessToken } from "@/lib/access";
 
@@ -103,6 +103,28 @@ describe("quality scorecard", () => {
     expect(overallConceptScore()).toBe(10);
     expect(CONCEPT_SCORES.every((s) => s.score <= s.max)).toBe(true);
     expect(CONCEPT_SCORES.find((s) => s.id === "launch")?.score).toBeGreaterThanOrEqual(9);
+  });
+
+  it("raises launch to 10 when durable store + secrets are set", () => {
+    const launch = computeLaunchScore({
+      authSecretConfigured: true,
+      accessSecretConfigured: true,
+      siteUrlConfigured: true,
+      demoAuthEnabled: false,
+      storeBackend: "kv",
+    });
+    expect(launch.score).toBe(10);
+  });
+
+  it("caps launch at 9 while store is memory-only", () => {
+    const launch = computeLaunchScore({
+      authSecretConfigured: true,
+      accessSecretConfigured: true,
+      siteUrlConfigured: true,
+      demoAuthEnabled: false,
+      storeBackend: "memory",
+    });
+    expect(launch.score).toBe(9);
   });
 });
 

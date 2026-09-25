@@ -72,10 +72,20 @@ Two paths — pick one.
 | `AUTH_SECRET` | Secret |
 | `ACCESS_CONTROL_SECRET` | Secret |
 | `NEXT_PUBLIC_SITE_URL` | Text (your workers.dev URL after first deploy) |
-| `USE_MEMORY_STORE` | Text `true` (already in `wrangler.jsonc`) |
 
-6. Redeploy. Live URL shape:  
+6. **Durable store (launch 9 → 10):** after the Worker is in your account:
+
+```bash
+npx wrangler login
+bash scripts/setup-kv.sh
+# paste kv_namespaces into wrangler.jsonc, remove USE_MEMORY_STORE
+npm run deploy
+```
+
+7. Redeploy. Live URL shape:  
    `https://planet-fitness-stratham.<your-subdomain>.workers.dev`
+
+Checklist UI: `/status`
 
 ### B) GitHub Actions (manual)
 

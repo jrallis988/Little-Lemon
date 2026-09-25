@@ -19,6 +19,13 @@
   "images": {
     "binding": "IMAGES"
   },
+  // After claiming the Worker into your account:
+  //   npx wrangler kv namespace create PF_STORE
+  //   npx wrangler kv namespace create PF_STORE --preview
+  // paste ids below, then remove USE_MEMORY_STORE (or set false).
+  // "kv_namespaces": [
+  //   { "binding": "PF_STORE", "id": "REPLACE_PROD_ID", "preview_id": "REPLACE_PREVIEW_ID" }
+  // ],
   "vars": {
     "USE_MEMORY_STORE": "true"
   }
