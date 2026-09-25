@@ -123,7 +123,7 @@ export function ExploreClubsNearYou() {
     <section
       id="clubs"
       aria-labelledby="explore-clubs-heading"
-      className="pf-grad-explore scroll-mt-14 px-4 py-14 text-white md:px-6 md:py-16"
+      className="pf-grad-explore pf-section scroll-mt-14 text-white"
     >
       <div className="mx-auto max-w-5xl">
         <h2
@@ -148,7 +148,7 @@ export function ExploreClubsNearYou() {
 
         <ul
           className={cn(
-            "mt-8 grid gap-5",
+            "mt-5 grid gap-4",
             visible.length >= 3
               ? "md:grid-cols-3"
               : visible.length === 2
@@ -186,7 +186,7 @@ export function ExploreClubsNearYou() {
         ) : null}
 
         {filtered.length > 0 ? (
-          <div className="mt-10 flex justify-center">
+          <div className="mt-6 flex justify-center">
             <button
               type="button"
               onClick={() => {
@@ -197,7 +197,7 @@ export function ExploreClubsNearYou() {
                   resultCount: filtered.length,
                 });
               }}
-              className="inline-flex h-12 min-w-[11rem] items-center justify-center rounded-full border border-white bg-transparent px-8 font-sans text-base font-semibold text-white transition hover:bg-white/10"
+              className="inline-flex h-11 min-w-[11rem] items-center justify-center rounded-full border border-white bg-transparent px-8 font-sans text-base font-semibold text-white transition hover:bg-white/10"
             >
               {showAll && filtered.length > 3
                 ? "Show Fewer Clubs"

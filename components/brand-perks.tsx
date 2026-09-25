@@ -32,7 +32,7 @@ export function BrandPerks() {
       aria-labelledby="perks-heading"
       className="scroll-mt-14 bg-white"
     >
-      <div className="mx-auto max-w-5xl px-4 py-10 md:px-6 md:py-14">
+      <div className="pf-section mx-auto max-w-5xl">
         <h2
           id="perks-heading"
           className="pf-type-section mx-auto max-w-3xl text-center text-pf-ink sm:text-4xl md:text-5xl"
@@ -41,7 +41,7 @@ export function BrandPerks() {
           WELCOME
         </h2>
 
-        <ul className="mt-10 grid gap-8 md:grid-cols-3 md:gap-6">
+        <ul className="mt-6 grid gap-6 md:grid-cols-3 md:gap-5">
           {PERKS.map((perk) => (
             <li key={perk.title} className="text-center">
               <span className="mx-auto flex h-14 w-14 items-center justify-center">

@@ -66,7 +66,7 @@ export function AppHighlights() {
 
   return (
     <section aria-labelledby="app-highlights-heading" className="bg-white">
-      <div className="mx-auto max-w-3xl px-4 py-10 md:px-6 md:py-12">
+      <div className="pf-section mx-auto max-w-3xl">
         <div className="mb-4 flex justify-center">
           <a
             href="#pricing"

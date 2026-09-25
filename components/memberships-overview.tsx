@@ -40,7 +40,7 @@ export function MembershipsOverview() {
     <section
       id="pricing"
       aria-labelledby="memberships-heading"
-      className="scroll-mt-14 bg-white px-4 py-12 text-pf-ink md:px-6 md:py-16"
+      className="pf-section scroll-mt-14 bg-white text-pf-ink"
     >
       <div className="mx-auto max-w-5xl">
         <h2
@@ -49,15 +49,15 @@ export function MembershipsOverview() {
         >
           Memberships
         </h2>
-        <p className="mx-auto mt-4 max-w-2xl text-center font-sans text-base leading-relaxed text-pf-ink/70">
+        <p className="mx-auto mt-2 max-w-2xl text-center font-sans text-sm leading-relaxed text-pf-ink/70 md:text-base">
           We offer the PF Black Card® Membership and Classic Membership. Both
           get you access to The Judgement Free Zone®, and tons of cardio and
           strength equipment.
         </p>
 
-        <div className="mt-10 grid gap-5 md:grid-cols-2">
+        <div className="mt-6 grid gap-4 md:grid-cols-2">
           {/* Black Card */}
-          <article className="relative flex flex-col rounded-3xl bg-pf-purple-ink p-6 text-white shadow-[0_16px_40px_-20px_rgba(7,4,74,0.65)] md:p-7">
+          <article className="relative flex flex-col rounded-3xl bg-pf-purple-ink p-5 text-white shadow-[0_16px_40px_-20px_rgba(7,4,74,0.65)] md:p-6">
             <span className="absolute right-5 top-5 rounded-full bg-pf-yellow px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-pf-ink">
               Best Value
             </span>
@@ -74,7 +74,7 @@ export function MembershipsOverview() {
               Access to any club, bring a guest anytime, PF+ premium digital
               workouts, and so much more!
             </p>
-            <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-8">
+            <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-5">
               <Link
                 href="#welcome"
                 className="text-sm font-semibold text-white underline-offset-2 hover:underline"
@@ -99,7 +99,7 @@ export function MembershipsOverview() {
           </article>
 
           {/* Classic */}
-          <article className="relative flex flex-col rounded-3xl bg-[#f0f0f3] p-6 text-pf-ink ring-1 ring-black/5 md:p-7">
+          <article className="relative flex flex-col rounded-3xl bg-[#f0f0f3] p-5 text-pf-ink ring-1 ring-black/5 md:p-6">
             <h3 className="pf-type-impact text-2xl">
               Classic
             </h3>
@@ -112,7 +112,7 @@ export function MembershipsOverview() {
             <p className="mt-4 text-sm leading-relaxed text-pf-ink/75">
               Our standard membership, with unlimited access to your home club.
             </p>
-            <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-8">
+            <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-5">
               <Link
                 href="#welcome"
                 className="text-sm font-semibold text-pf-purple underline-offset-2 hover:underline"

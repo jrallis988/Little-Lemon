@@ -26,7 +26,7 @@ export function GetStarted() {
       aria-labelledby="get-started-heading"
       className="bg-[#f6f6f8] text-pf-ink"
     >
-      <div className="mx-auto max-w-5xl px-4 py-10 md:px-6 md:py-12">
+      <div className="pf-section mx-auto max-w-5xl">
         <h2
           id="get-started-heading"
           className="pf-type-section text-center"
@@ -34,7 +34,7 @@ export function GetStarted() {
           Get Started Today
         </h2>
 
-        <ul className="mt-8 grid gap-4 md:grid-cols-3">
+        <ul className="mt-5 grid gap-3 md:grid-cols-3">
           {CARDS.map((card) => (
             <li key={card.label}>
               <a
@@ -54,7 +54,7 @@ export function GetStarted() {
           ))}
         </ul>
 
-        <p className="mt-8 text-sm leading-relaxed text-pf-ink/70 md:text-[15px]">
+        <p className="mt-5 text-sm leading-relaxed text-pf-ink/70 md:text-[15px]">
           Ready to join Planet Fitness Stratham? Compare Classic and PF Black
           Card® memberships for our Open &amp; Staffed 24/7 club at 20 Portsmouth
           Ave, then join online in a few short steps. Use the Planet Fitness app

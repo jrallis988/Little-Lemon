@@ -12,7 +12,7 @@ export function AppPromo() {
       aria-labelledby="app-promo-heading"
       className="scroll-mt-14 overflow-hidden pf-grad-app text-white"
     >
-      <div className="mx-auto grid max-w-5xl items-center gap-8 px-4 py-10 md:grid-cols-[1.1fr_0.9fr] md:px-6 md:py-14">
+      <div className="pf-section mx-auto grid max-w-5xl items-center gap-6 md:grid-cols-[1.1fr_0.9fr]">
         <div className="max-w-xl">
           <h2
             id="app-promo-heading"

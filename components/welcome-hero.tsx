@@ -101,7 +101,7 @@ export function WelcomeHero() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-3xl px-4 pb-8 pt-5 text-center md:px-6 md:pb-10">
+      <div className="mx-auto max-w-3xl px-4 pb-6 pt-4 text-center md:px-6 md:pb-7">
         {slide.kicker ? (
           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-pf-purple">
             {slide.kicker}

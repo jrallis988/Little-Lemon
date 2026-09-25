@@ -39,7 +39,7 @@ export function SummerPass() {
       aria-labelledby="summer-pass-heading"
       className="scroll-mt-14 bg-white text-pf-ink"
     >
-      <div className="mx-auto max-w-5xl px-4 py-12 md:px-6 md:py-16">
+      <div className="pf-section mx-auto max-w-5xl">
         <div className="mx-auto max-w-3xl text-center">
           <h2
             id="summer-pass-heading"
@@ -47,7 +47,7 @@ export function SummerPass() {
           >
             High School Summer Pass® is here
           </h2>
-          <p className="mt-4 font-sans text-base leading-relaxed text-pf-ink/75">
+          <p className="mt-3 font-sans text-sm leading-relaxed text-pf-ink/75 md:text-base">
             NOW – August 31, teens ages 14-19 can work out for FREE. Build
             strength where it counts this summer – with progress that&apos;s all
             yours. Plus, enjoy 20% off Gymshark when you sign up.
@@ -59,16 +59,16 @@ export function SummerPass() {
             onClick={() =>
               track("summer_pass_click", { source: "home_promo" })
             }
-            className="mt-6 inline-flex h-12 items-center justify-center rounded-full bg-pf-purple px-8 text-sm font-semibold text-white transition hover:bg-pf-purple-bright"
+            className="mt-4 inline-flex h-11 items-center justify-center rounded-full bg-pf-purple px-8 text-sm font-semibold text-white transition hover:bg-pf-purple-bright"
           >
             Sign Up Now
           </a>
         </div>
 
-        <div className="mt-10 grid gap-5 md:grid-cols-2 md:items-stretch md:gap-6">
+        <div className="mt-6 grid gap-4 md:grid-cols-2 md:items-stretch md:gap-5">
           {/* Promo graphic card */}
           <div className="relative overflow-hidden rounded-3xl border-[6px] border-pf-purple bg-pf-purple shadow-[0_16px_40px_-24px_rgba(89,44,130,0.55)]">
-            <div className="relative aspect-square sm:aspect-[4/5] md:aspect-auto md:min-h-[22rem] md:h-full">
+            <div className="relative aspect-square sm:aspect-[4/5] md:aspect-auto md:min-h-[18rem] md:h-full">
               <Image
                 src="/images/hero-gym.jpg"
                 alt="Teens smiling and training during High School Summer Pass"
@@ -98,7 +98,7 @@ export function SummerPass() {
 
           {/* Image carousel 1/4 */}
           <div className="relative overflow-hidden rounded-3xl bg-pf-mist">
-            <div className="relative aspect-square sm:aspect-[4/5] md:aspect-auto md:min-h-[22rem] md:h-full">
+            <div className="relative aspect-square sm:aspect-[4/5] md:aspect-auto md:min-h-[18rem] md:h-full">
               <Image
                 key={slide.src + index}
                 src={slide.src}

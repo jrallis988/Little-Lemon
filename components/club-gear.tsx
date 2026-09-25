@@ -24,7 +24,7 @@ export function ClubGear() {
       className="scroll-mt-14 overflow-hidden bg-pf-yellow"
     >
       <div
-        className="mx-auto max-w-5xl px-4 py-10 md:px-6 md:py-12"
+        className="mx-auto max-w-5xl px-4 py-7 md:px-6 md:py-8"
         style={{
           backgroundImage:
             "radial-gradient(circle at 12% 20%, rgba(0,0,0,0.06) 0 1px, transparent 1px), radial-gradient(circle at 80% 40%, rgba(0,0,0,0.05) 0 1px, transparent 1px)",
@@ -45,7 +45,7 @@ export function ClubGear() {
           club-counter pricing shown for reference.
         </p>
 
-        <ul className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <ul className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
           {GEAR.map((item) => (
             <li
               key={item.name}

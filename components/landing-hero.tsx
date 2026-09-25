@@ -76,7 +76,7 @@ export function LandingHero() {
         </div>
       </div>
 
-      <div className="relative z-10 mx-auto flex min-h-[min(74vh,40rem)] max-w-[1200px] items-center px-5 pb-16 pt-6 sm:px-8 lg:px-12 lg:py-24">
+      <div className="relative z-10 mx-auto flex min-h-[min(58vh,32rem)] max-w-[1200px] items-center px-5 pb-10 pt-5 sm:px-8 lg:px-12 lg:py-16">
         <div className="w-full max-w-[34rem] motion-safe:animate-[hero-rise_0.7s_ease-out_both]">
           <h1 id="landing-hero-heading" className="text-white">
             <span className="pf-type-hero-line block">We&apos;re all</span>

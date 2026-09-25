@@ -130,9 +130,9 @@ export function SiteFooter() {
       </div>
 
       {/* Solid TV indigo (#180bb2) footer */}
-      <div className="bg-pf-purple px-4 pb-8 pt-8 text-white md:px-6 md:pb-10 md:pt-10">
+      <div className="bg-pf-purple px-4 pb-6 pt-6 text-white md:px-6 md:pb-8 md:pt-8">
         <div className="mx-auto max-w-5xl">
-          <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <Link href="/#clubs" className="inline-flex w-fit">
               <PlanetFitnessLogo
                 className="[&_span]:text-white"
@@ -156,7 +156,7 @@ export function SiteFooter() {
             </div>
           </div>
 
-          <div className="mt-10 grid gap-8 text-sm sm:grid-cols-3 sm:gap-6">
+          <div className="mt-6 grid gap-6 text-sm sm:grid-cols-3 sm:gap-5">
             <div>
               <p className="mb-3 text-[13px] font-bold uppercase tracking-wide text-white">
                 Info
@@ -200,7 +200,7 @@ export function SiteFooter() {
             </div>
           </div>
 
-          <div className="mt-10 flex flex-col gap-5 border-t border-white/25 pt-8">
+          <div className="mt-6 flex flex-col gap-4 border-t border-white/25 pt-5">
             <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
               <li>
                 <Link

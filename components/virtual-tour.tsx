@@ -26,7 +26,7 @@ export function VirtualTour() {
       aria-labelledby="tour-heading"
       className="scroll-mt-14 bg-pf-mist"
     >
-      <div className="mx-auto grid max-w-5xl gap-6 px-4 py-10 md:grid-cols-2 md:items-center md:px-6 md:py-12">
+      <div className="pf-section mx-auto grid max-w-5xl gap-5 md:grid-cols-2 md:items-center">
         <div>
           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-pf-purple">
             Inside the club

@@ -170,6 +170,15 @@ body {
     letter-spacing: -0.02em;
     text-transform: uppercase;
   }
+
+  /* Dense marketing section rhythm — less empty white between blocks */
+  .pf-section {
+    @apply px-4 py-8 md:px-6 md:py-10;
+  }
+
+  .pf-section-tight {
+    @apply px-4 py-6 md:px-6 md:py-8;
+  }
 }
 
 @keyframes hero-zoom {

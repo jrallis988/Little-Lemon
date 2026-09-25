@@ -33,13 +33,13 @@ export function SpaAmenities() {
       aria-labelledby="amenities-heading"
       className="scroll-mt-14 bg-pf-mist"
     >
-      <div className="mx-auto max-w-5xl px-4 py-10 md:px-6 md:py-12">
+      <div className="pf-section mx-auto max-w-5xl">
         <p className="text-center text-[10px] font-bold uppercase tracking-[0.2em] text-pf-purple">
           Black Card Spa®
         </p>
         <h2
           id="amenities-heading"
-          className="pf-type-section mt-2 text-center text-pf-ink"
+          className="pf-type-section mt-1 text-center text-pf-ink"
         >
           New ways to recover & recharge
         </h2>
@@ -48,7 +48,7 @@ export function SpaAmenities() {
           Black Card®.
         </p>
 
-        <ul className="mt-8 grid gap-4 md:grid-cols-3">
+        <ul className="mt-5 grid gap-4 md:grid-cols-3">
           {AMENITIES.map((item) => (
             <li
               key={item.id}

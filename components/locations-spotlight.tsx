@@ -7,7 +7,7 @@ export function LocationsSpotlight() {
       aria-labelledby="locations-heading"
       className="scroll-mt-14 bg-white"
     >
-      <div className="mx-auto max-w-xl px-4 py-10 text-center md:px-6">
+      <div className="pf-section-tight mx-auto max-w-3xl text-center">
         <h2
           id="locations-heading"
           className="pf-type-section text-pf-ink"
@@ -21,7 +21,7 @@ export function LocationsSpotlight() {
         </p>
         <a
           href="#clubs"
-          className="mt-3 inline-block text-sm font-semibold text-pf-purple underline underline-offset-2"
+          className="mt-2 inline-block text-sm font-semibold text-pf-purple underline underline-offset-2"
         >
           See club hours &amp; rates
         </a>

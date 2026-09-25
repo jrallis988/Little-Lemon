@@ -12,7 +12,7 @@ export function WorkoutGuidesPromo() {
       aria-labelledby="workout-guides-heading"
       className="scroll-mt-14 overflow-hidden bg-white"
     >
-      <div className="mx-auto grid max-w-6xl items-center gap-8 px-4 py-10 md:grid-cols-[0.95fr_1.1fr_0.9fr] md:gap-6 md:px-6 md:py-14">
+      <div className="pf-section mx-auto grid max-w-6xl items-center gap-6 md:grid-cols-[0.95fr_1.1fr_0.9fr] md:gap-5">
         <div className="relative mx-auto flex h-[22rem] w-full max-w-sm items-end justify-center md:h-[26rem]">
           <div className="absolute inset-x-6 bottom-0 top-8 rounded-[2.5rem] bg-pf-purple-soft" />
           <div className="relative z-10 mr-[-1.5rem] w-[42%] rotate-[-8deg] overflow-hidden rounded-[1.4rem] border-[5px] border-white bg-white shadow-xl">
