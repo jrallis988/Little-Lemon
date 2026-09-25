@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { MemberCard, MemberScreen } from "@/components/member/member-ui";
@@ -13,9 +14,12 @@ type OfflinePayload = {
   membershipId?: string;
 };
 
+type KeytagMode = "loading" | "live" | "offline" | "unauthorized" | "error";
+
 export default function KeytagPage() {
   const [payload, setPayload] = useState<OfflinePayload | null>(null);
   const [bright, setBright] = useState(false);
+  const [mode, setMode] = useState<KeytagMode>("loading");
   const [status, setStatus] = useState("Loading token…");
 
   async function refreshToken() {
@@ -26,18 +30,27 @@ export default function KeytagPage() {
         offline?: OfflinePayload;
         error?: string;
       };
+      if (res.status === 401) {
+        setMode("unauthorized");
+        setStatus("Sign in required");
+        return;
+      }
       if (!res.ok || !data.offline) {
         throw new Error(data.error ?? "Could not issue token.");
       }
       setPayload(data.offline);
       localStorage.setItem("pf_keytag_cache", JSON.stringify(data.offline));
+      setMode("live");
       setStatus("Live token ready · cached offline");
     } catch (err) {
       const cached = localStorage.getItem("pf_keytag_cache");
       if (cached) {
         setPayload(JSON.parse(cached) as OfflinePayload);
+        setMode("offline");
         setStatus("Showing offline cache");
       } else {
+        setPayload(null);
+        setMode("error");
         setStatus(err instanceof Error ? err.message : "Token unavailable");
       }
     }
@@ -56,6 +69,28 @@ export default function KeytagPage() {
     };
   }, [bright]);
 
+  if (mode === "unauthorized") {
+    return (
+      <MemberScreen
+        eyebrow="Screen 33–35 · Digital keytag"
+        title="Digital keytag"
+        subtitle="Sign in to issue a door token for your home club."
+      >
+        <MemberCard className="text-center">
+          <p className="text-sm font-semibold text-pf-ink">
+            Session required
+          </p>
+          <p className="mt-2 text-sm text-pf-ink/65">
+            Your digital keytag is tied to your membership login.
+          </p>
+          <Button asChild variant="purple" className="mt-4 w-full">
+            <Link href="/app/login?next=/app/keytag">Sign in to continue</Link>
+          </Button>
+        </MemberCard>
+      </MemberScreen>
+    );
+  }
+
   return (
     <MemberScreen
       eyebrow="Screen 33–35 · Digital keytag"
@@ -69,14 +104,15 @@ export default function KeytagPage() {
           Planet Fitness
         </p>
         <p className="mt-2 font-display text-2xl">
-          {payload?.memberName || "Member"}
+          {payload?.memberName || (mode === "loading" ? "…" : "Member")}
         </p>
         <p className="text-sm text-white/70">
           {payload?.plan || "Member"} · {payload?.clubName || "Home club"}
         </p>
         <div className="mx-auto mt-5 h-24 w-full max-w-[14rem] rounded-xl bg-[repeating-linear-gradient(90deg,#111_0_2px,#fff_2px_4px)]" />
         <p className="mt-3 break-all px-2 font-mono text-[11px] tracking-wide text-white/85">
-          {payload?.code?.slice(0, 64) || "····"}
+          {payload?.code?.slice(0, 64) ||
+            (mode === "loading" ? "Issuing…" : "No token yet")}
         </p>
         <p className="mt-3 text-[11px] text-white/60">{status}</p>
         {payload?.expiresAt ? (
@@ -84,7 +120,19 @@ export default function KeytagPage() {
             Expires {new Date(payload.expiresAt).toLocaleTimeString()}
           </p>
         ) : null}
+        {mode === "offline" ? (
+          <p className="mt-2 text-[11px] font-semibold text-pf-yellow">
+            Offline cache · reconnect to refresh
+          </p>
+        ) : null}
       </MemberCard>
+
+      {mode === "error" ? (
+        <p className="mt-3 rounded-2xl border border-red-200 bg-red-50 px-3 py-2 text-center text-xs text-red-800">
+          {status}. Tap refresh to try again, or check in once online to seed a
+          cache.
+        </p>
+      ) : null}
 
       <div className="mt-3 grid grid-cols-2 gap-2">
         <Button
@@ -94,7 +142,11 @@ export default function KeytagPage() {
         >
           {bright ? "Brightness on" : "Boost brightness"}
         </Button>
-        <Button type="button" variant="outline" onClick={() => void refreshToken()}>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => void refreshToken()}
+        >
           Refresh token
         </Button>
       </div>

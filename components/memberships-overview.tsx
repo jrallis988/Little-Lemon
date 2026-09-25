@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { useSelectedClub } from "@/components/selected-club-context";
 import { track } from "@/lib/analytics";
 import {
-  MEMBERSHIP_PLANS,
   formatCurrency,
   getLocalPricing,
 } from "@/lib/pricing";
@@ -20,18 +19,8 @@ export function MembershipsOverview() {
   const home = club ?? getClubById(HOME_CLUB.id);
   const clubId = home?.id ?? HOME_CLUB.id;
 
-  const classic = home
-    ? getLocalPricing(home, "classic")
-    : {
-        monthlyDues: MEMBERSHIP_PLANS[0]!.monthlyDues,
-        available: true,
-      };
-  const black = home
-    ? getLocalPricing(home, "black-card")
-    : {
-        monthlyDues: MEMBERSHIP_PLANS[1]!.monthlyDues,
-        available: true,
-      };
+  const classic = getLocalPricing(home, "classic");
+  const black = getLocalPricing(home, "black-card");
 
   const joinHref = (plan: "classic" | "black-card") =>
     `/join?club=${clubId}&plan=${plan}`;
@@ -70,6 +59,9 @@ export function MembershipsOverview() {
               <span className="align-super text-base not-italic">*</span>
             </p>
             <p className="mt-1 text-sm text-white/70">plus taxes &amp; fees</p>
+            <p className="text-xs text-white/55">
+              Annual fee billed in {black.annualFeeMonth}
+            </p>
             <p className="mt-4 text-sm leading-relaxed text-white/90">
               Access to any club, bring a guest anytime, PF+ premium digital
               workouts, and so much more!
@@ -109,6 +101,9 @@ export function MembershipsOverview() {
               <span className="align-super text-base not-italic">*</span>
             </p>
             <p className="mt-1 text-sm text-pf-ink/60">plus taxes &amp; fees</p>
+            <p className="text-xs text-pf-ink/45">
+              Annual fee billed in {classic.annualFeeMonth}
+            </p>
             <p className="mt-4 text-sm leading-relaxed text-pf-ink/75">
               Our standard membership, with unlimited access to your home club.
             </p>

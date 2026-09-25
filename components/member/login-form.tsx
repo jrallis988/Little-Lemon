@@ -13,10 +13,20 @@ export function LoginForm() {
   const searchParams = useSearchParams();
   const next = searchParams.get("next") || "/app";
   const reason = searchParams.get("reason");
+  const fromJoin = searchParams.get("from") === "join";
+  const modeParam = searchParams.get("mode");
+  const emailParam = searchParams.get("email")?.trim() ?? "";
   const demoAuth = isDemoAuthEnabled();
 
-  const [mode, setMode] = useState<"login" | "register" | "forgot">("login");
-  const [email, setEmail] = useState("");
+  const initialMode =
+    modeParam === "forgot" || modeParam === "register" || modeParam === "login"
+      ? modeParam
+      : fromJoin
+        ? "forgot"
+        : "login";
+
+  const [mode, setMode] = useState<"login" | "register" | "forgot">(initialMode);
+  const [email, setEmail] = useState(emailParam);
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -90,7 +100,9 @@ export function LoginForm() {
           ? "Sign in again to keep using check-in and your keytag."
           : reason === "update"
             ? "This build needs a refresh before member tools unlock."
-            : "Use the email and password from your membership account."
+            : fromJoin
+              ? "Just joined? Use Forgot password with your membership email to create your app login, then continue to check-in."
+              : "Use the email and password from your membership account."
       }
     >
       <MemberCard>

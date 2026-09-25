@@ -16,11 +16,13 @@ import {
   MemberScreen,
 } from "@/components/member/member-ui";
 import { getSession } from "@/lib/auth";
+import { getOccupancy } from "@/lib/crowd";
 import { HOME_CLUB } from "@/lib/home-club";
 
 export default async function MemberHomePage() {
   const session = await getSession();
   const firstName = session?.firstName || "Member";
+  const clubId = session?.clubId || HOME_CLUB.id;
   const clubName = session?.clubName || HOME_CLUB.name;
   const plan =
     session?.plan === "classic"
@@ -28,6 +30,8 @@ export default async function MemberHomePage() {
       : session?.plan === "black-card"
         ? "Black Card"
         : "Member";
+
+  const occupancy = await getOccupancy(clubId).catch(() => null);
 
   return (
     <MemberScreen
@@ -40,7 +44,10 @@ export default async function MemberHomePage() {
           Home club · {plan}
         </p>
         <p className="mt-1 font-display text-2xl">{clubName}</p>
-        <p className="mt-1 text-sm text-white/70">Crowd Meter · Not too busy</p>
+        <p className="mt-1 text-sm text-white/70">
+          Crowd Meter · {occupancy?.label ?? "Checking…"}
+          {occupancy ? ` · ${occupancy.level}%` : null}
+        </p>
         <div className="mt-4 flex gap-2">
           <Button asChild variant="app" className="flex-1">
             <Link href="/app/check-in">Check in</Link>
@@ -65,7 +72,11 @@ export default async function MemberHomePage() {
         <MemberLinkRow
           href="/app/crowd"
           label="Crowd Meter"
-          description="See how busy your club is right now"
+          description={
+            occupancy
+              ? `Right now: ${occupancy.label} (${occupancy.level}%)`
+              : "See how busy your club is right now"
+          }
           icon={Activity}
         />
         <MemberLinkRow

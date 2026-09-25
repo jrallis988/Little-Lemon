@@ -806,36 +806,39 @@ export function JoinFunnel({ initialClubId, initialPlan }: JoinFunnelProps) {
                   </span>
                   .
                 </p>
-                <ol className="space-y-2 rounded-2xl border border-pf-line bg-[#faf8fc] p-4 text-left text-sm text-pf-ink/75">
+                <ol className="space-y-2 rounded-2xl border border-pf-line bg-pf-mist/80 p-4 text-left text-sm text-pf-ink/75">
                   <li>
-                    <span className="font-semibold text-pf-ink">1.</span> Open
-                    confirmation for your receipt and next steps.
+                    <span className="font-semibold text-pf-ink">1.</span> Set an
+                    app password with{" "}
+                    <span className="font-semibold">
+                      {identity.email || "your email"}
+                    </span>{" "}
+                    (Forgot password), then check in.
                   </li>
                   <li>
-                    <span className="font-semibold text-pf-ink">2.</span> Set an
-                    app password via Sign in → Forgot password (use{" "}
-                    <span className="font-semibold">{identity.email || "your email"}</span>
-                    ).
+                    <span className="font-semibold text-pf-ink">2.</span> Open
+                    your digital keytag for the door barcode.
                   </li>
                   <li>
-                    <span className="font-semibold text-pf-ink">3.</span> Check in
-                    and open your digital card in the member app.
+                    <span className="font-semibold text-pf-ink">3.</span> Keep
+                    your confirmation receipt for dues and club details.
                   </li>
                 </ol>
                 <div className="flex flex-wrap justify-center gap-2 pt-2 sm:justify-start">
+                  <Button asChild variant="purple">
+                    <Link
+                      href={`/app/login?email=${encodeURIComponent(identity.email || "")}&mode=forgot&next=${encodeURIComponent("/app/check-in")}&from=join`}
+                    >
+                      Set password &amp; check in
+                    </Link>
+                  </Button>
                   {membershipId ? (
-                    <Button asChild variant="purple">
+                    <Button asChild variant="outline">
                       <Link href={`/join/confirmation/${membershipId}`}>
-                        View confirmation &amp; next steps
+                        View confirmation
                       </Link>
                     </Button>
                   ) : null}
-                  <Button asChild variant="outline">
-                    <Link href="/app/login">Set app password</Link>
-                  </Button>
-                  <Button asChild variant="outline">
-                    <Link href="/">Back home</Link>
-                  </Button>
                 </div>
               </div>
             )}

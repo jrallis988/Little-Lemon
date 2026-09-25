@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
   CheckCircle2,
@@ -27,7 +28,7 @@ const STATE_META: Record<
 > = {
   idle: {
     title: "Ready to check in",
-    detail: "We’ll issue a signed door token, then validate it with access control.",
+    detail: "Issue a signed door token, then validate it with access control.",
     screen: "28 · Idle",
   },
   scanning: {
@@ -42,12 +43,14 @@ const STATE_META: Record<
   },
   offline: {
     title: "You’re offline",
-    detail: "Showing your cached keytag token — staff can scan this at the desk.",
+    detail:
+      "Showing your cached keytag token — staff can scan this at the desk.",
     screen: "31 · Offline",
   },
   club_full: {
     title: "Club at capacity",
-    detail: "Access control rejected entry for capacity. Check Crowd Meter.",
+    detail:
+      "Access control rejected entry for capacity. Check Crowd Meter before you head over.",
     screen: "32 · Club full",
   },
   denied: {
@@ -95,6 +98,12 @@ export function CheckInFlow({
       }
     }
   }, [online, state]);
+
+  function reset() {
+    setState("idle");
+    setMessage(null);
+    setCode(null);
+  }
 
   async function startCheckIn() {
     if (!online) {
@@ -168,14 +177,14 @@ export function CheckInFlow({
       >
         <div
           className={cn(
-            "mx-auto flex h-48 w-48 items-center justify-center rounded-3xl",
+            "mx-auto flex h-40 w-40 items-center justify-center rounded-3xl",
             state === "success" ? "bg-emerald-100" : "bg-pf-mist"
           )}
         >
           {state === "idle" || state === "scanning" ? (
             <div
               className={cn(
-                "grid h-36 w-36 place-items-center rounded-2xl border-2 border-dashed bg-white font-display text-pf-purple",
+                "grid h-28 w-28 place-items-center rounded-2xl border-2 border-dashed bg-white font-display text-pf-purple",
                 state === "scanning"
                   ? "animate-pulse border-pf-purple"
                   : "border-pf-purple/40"
@@ -198,7 +207,7 @@ export function CheckInFlow({
             <Users className="h-16 w-16 text-amber-600" aria-hidden />
           ) : null}
           {state === "denied" ? (
-            <SignalZero className="h-16 w-16 text-slate-500" aria-hidden />
+            <SignalZero className="h-16 w-16 text-red-500" aria-hidden />
           ) : null}
         </div>
 
@@ -223,16 +232,56 @@ export function CheckInFlow({
         ) : null}
       </MemberCard>
 
+      {state === "success" ? (
+        <div className="grid grid-cols-2 gap-2">
+          <Button asChild variant="purple">
+            <Link href="/app/keytag">Digital keytag</Link>
+          </Button>
+          <Button asChild variant="outline">
+            <Link href="/app/crowd">Crowd Meter</Link>
+          </Button>
+        </div>
+      ) : null}
+
+      {state === "club_full" ? (
+        <Button asChild variant="purple" className="w-full">
+          <Link href="/app/crowd">Check Crowd Meter</Link>
+        </Button>
+      ) : null}
+
+      {state === "denied" ? (
+        <p className="text-center text-xs text-pf-ink/55">
+          Need a fresh barcode?{" "}
+          <Link
+            href="/app/keytag"
+            className="font-semibold text-pf-purple underline"
+          >
+            Refresh digital keytag
+          </Link>
+        </p>
+      ) : null}
+
+      {state === "offline" && !code ? (
+        <p className="rounded-2xl border border-amber-200 bg-amber-50 px-3 py-2 text-center text-xs text-amber-900">
+          No cached keytag yet. Reconnect and check in once online to store an
+          offline token.
+        </p>
+      ) : null}
+
       <div className="grid grid-cols-2 gap-2">
         <Button
           type="button"
           variant="purple"
-          disabled={state === "scanning"}
+          disabled={state === "scanning" || state === "success"}
           onClick={() => void startCheckIn()}
         >
-          {state === "scanning" ? "Validating…" : "Check in"}
+          {state === "scanning"
+            ? "Validating…"
+            : state === "success"
+              ? "Checked in"
+              : "Check in"}
         </Button>
-        <Button type="button" variant="outline" onClick={() => setState("idle")}>
+        <Button type="button" variant="outline" onClick={reset}>
           Reset
         </Button>
       </div>

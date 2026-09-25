@@ -44,8 +44,8 @@ export function SpaAmenities() {
           New ways to recover & recharge
         </h2>
         <p className="mx-auto mt-2 max-w-2xl text-center text-sm text-pf-ink/65">
-          Open 24/7 at many clubs · Crowd Meter in the PF App · spa amenities on
-          Black Card®.
+          Planet Fitness Stratham is Open &amp; Staffed 24/7 · Crowd Meter in the
+          PF App · spa amenities on Black Card®.
         </p>
 
         <ul className="mt-5 grid gap-4 md:grid-cols-3">

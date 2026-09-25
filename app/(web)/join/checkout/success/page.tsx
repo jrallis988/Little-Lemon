@@ -53,18 +53,25 @@ export default async function CheckoutSuccessPage({ searchParams }: Props) {
     membership.status === "active" &&
     membership.paymentStatus === "stripe_authorized";
 
+  // Paid checkouts land on the shared confirmation handoff.
+  if (paid) {
+    redirect(`/join/confirmation/${membership.id}`);
+  }
+
+  const email = encodeURIComponent(membership.member.email);
+  const loginHref = `/app/login?email=${email}&mode=forgot&next=${encodeURIComponent("/app/check-in")}&from=join`;
+
   return (
-    <div className="mx-auto max-w-lg px-4 py-16 text-center">
+    <div className="mx-auto max-w-lg px-4 py-12 text-center">
       <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-pf-purple">
         Stripe Checkout
       </p>
-      <h1 className="mt-2 font-display text-4xl text-pf-ink">
-        {paid ? "Payment confirmed" : "Almost there"}
-      </h1>
+      <h1 className="pf-type-section mt-2 text-pf-ink">Almost there</h1>
       <p className="mt-3 text-sm text-pf-ink/65">
-        {paid
-          ? `Membership ${membership.id} is active at ${membership.clubName}.`
-          : "We’re still waiting on Stripe confirmation. Refresh in a moment or open your confirmation page."}
+        We’re still waiting on Stripe confirmation for membership{" "}
+        <span className="font-semibold text-pf-ink">{membership.id}</span> at{" "}
+        {membership.clubName}. Refresh in a moment or open your confirmation
+        page.
       </p>
       <div className="mt-6 flex flex-wrap justify-center gap-2">
         <Button asChild variant="purple">
@@ -73,7 +80,7 @@ export default async function CheckoutSuccessPage({ searchParams }: Props) {
           </Link>
         </Button>
         <Button asChild variant="outline">
-          <Link href="/app/login">Open member app</Link>
+          <Link href={loginHref}>Set password &amp; check in</Link>
         </Button>
       </div>
     </div>
