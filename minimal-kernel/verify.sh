@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
-# Boot os-image.bin under QEMU (no display) and confirm VGA text output.
+# Boot os-image.bin under QEMU and confirm VGA banner + keyboard echo.
 set -euo pipefail
 
 cd "$(dirname "$0")"
 IMG=os-image.bin
-EXPECT="CUSTOM KERNEL BOOTED SUCCESSFULLY!"
+EXPECT_BANNER="KERNEL I/O SUBSYSTEM ONLINE"
+EXPECT_ECHO="hello"
 SOCK=$(mktemp -u /tmp/qemu-qmp.XXXXXX)
 cleanup() {
   rm -f "$SOCK"
@@ -45,10 +46,10 @@ for _ in $(seq 1 50); do
   sleep 0.1
 done
 
-python3 - "$SOCK" "$EXPECT" <<'PY'
+python3 - "$SOCK" "$EXPECT_BANNER" "$EXPECT_ECHO" <<'PY'
 import json, re, socket, sys, time
 
-sock_path, expect = sys.argv[1], sys.argv[2]
+sock_path, expect_banner, expect_echo = sys.argv[1], sys.argv[2], sys.argv[3]
 
 def recv_obj(sock):
     buf = b""
@@ -63,7 +64,6 @@ def recv_obj(sock):
             if not line:
                 continue
             obj = json.loads(line.decode())
-            # Skip asynchronous events
             if "event" in obj:
                 continue
             return obj
@@ -71,6 +71,22 @@ def recv_obj(sock):
 def qmp(sock, cmd):
     sock.sendall((json.dumps(cmd) + "\n").encode())
     return recv_obj(sock)
+
+def vga_text(sock, nbytes=400):
+    resp = qmp(sock, {
+        "execute": "human-monitor-command",
+        "arguments": {"command-line": f"xp /{nbytes}bx 0xb8000"},
+    })
+    dump = resp.get("return", "")
+    bytes_out = [int(tok, 16) for tok in re.findall(r"\b0x([0-9a-f]{1,2})\b", dump, re.I)]
+    chars = []
+    for i in range(0, len(bytes_out) - 1, 2):
+        ch = bytes_out[i]
+        if 32 <= ch < 127:
+            chars.append(chr(ch))
+        else:
+            chars.append(" ")
+    return "".join(chars), dump
 
 time.sleep(1.2)
 
@@ -80,28 +96,34 @@ banner = recv_obj(sock)
 assert "QMP" in banner, banner
 qmp(sock, {"execute": "qmp_capabilities"})
 
-resp = qmp(sock, {
-    "execute": "human-monitor-command",
-    "arguments": {"command-line": "xp /128bx 0xb8000"},
-})
-qmp(sock, {"execute": "quit"})
-sock.close()
-
-dump = resp.get("return", "")
-bytes_out = [int(tok, 16) for tok in re.findall(r"\b0x([0-9a-f]{1,2})\b", dump, re.I)]
-chars = []
-for i in range(0, len(bytes_out) - 1, 2):
-    ch = bytes_out[i]
-    if 32 <= ch < 127:
-        chars.append(chr(ch))
-    elif ch == 0:
-        break
-got = "".join(chars)
-print(f"VGA text: {got!r}")
-if expect not in got:
-    print("VERIFY FAILED: expected message not found in VGA memory", file=sys.stderr)
+got, dump = vga_text(sock)
+print(f"VGA banner: {got[:80]!r}")
+if expect_banner not in got:
+    print("VERIFY FAILED: boot banner not found", file=sys.stderr)
     print(dump, file=sys.stderr)
     sys.exit(1)
+
+# Inject keystrokes via the QEMU monitor (PS/2 path into the guest).
+for key in list(expect_echo) + ["ret"]:
+    qmp(sock, {
+        "execute": "human-monitor-command",
+        "arguments": {"command-line": f"sendkey {key}"},
+    })
+    time.sleep(0.05)
+
+time.sleep(0.3)
+got, dump = vga_text(sock, 500)
+print(f"VGA after keys: {got[:160]!r}")
+if expect_echo not in got.replace(" ", ""):
+    # Also accept spaced-out VGA rows concatenated without collapsing all spaces:
+    collapsed = re.sub(r" +", " ", got)
+    if expect_echo not in collapsed and expect_echo not in got:
+        print("VERIFY FAILED: keyboard echo not found", file=sys.stderr)
+        print(dump, file=sys.stderr)
+        sys.exit(1)
+
+qmp(sock, {"execute": "quit"})
+sock.close()
 print("VERIFY OK")
 PY
 

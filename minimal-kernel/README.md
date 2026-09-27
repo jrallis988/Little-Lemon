@@ -1,6 +1,6 @@
 # Minimal Custom Kernel & Boot Sector
 
-A tiny x86 teaching OS: a 512-byte MBR bootloader loads a freestanding C kernel, switches into 32-bit protected mode, and prints to VGA text memory.
+A tiny x86 teaching OS: a 512-byte MBR bootloader loads a freestanding C kernel, switches into 32-bit protected mode, then runs a VGA text console with PS/2 keyboard input.
 
 ## Layout
 
@@ -11,7 +11,7 @@ A tiny x86 teaching OS: a 512-byte MBR bootloader loads a freestanding C kernel,
 | `gdt.asm` | Flat code/data GDT |
 | `32bit_switch.asm` | Real → protected mode switch |
 | `kernel_entry.asm` | Binary entry stub that calls `main` |
-| `kernel.c` | Kernel: write a string to `0xb8000` |
+| `kernel.c` | Kernel: VGA I/O, PS/2 keyboard, echo shell |
 | `Makefile` | Build, run, and headless verify |
 
 ## Build
@@ -31,8 +31,13 @@ make run
 Opens QEMU with the raw disk image. You should see:
 
 ```text
-CUSTOM KERNEL BOOTED SUCCESSFULLY!
+=== KERNEL I/O SUBSYSTEM ONLINE ===
+Type something below (press Enter to newline):
+
+>
 ```
+
+Type in the QEMU window to echo characters. Enter starts a new `>` prompt; Backspace deletes.
 
 ## Headless verify
 
@@ -40,7 +45,7 @@ CUSTOM KERNEL BOOTED SUCCESSFULLY!
 make verify
 ```
 
-Boots under QEMU with no display and checks that the expected string appears in VGA memory.
+Boots under QEMU with no display, checks the boot banner in VGA memory, injects `hello` + Enter via QMP `sendkey`, and confirms the echo appears.
 
 ## Requirements
 
