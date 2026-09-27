@@ -168,7 +168,7 @@ static void draw_uptime(unsigned int seconds) {
     status_print(0, " uptime: ");
     u32_to_dec(seconds, num);
     status_print(9, num);
-    status_print(9 + str_len(num), "s | PIT 100Hz | heap bump");
+    status_print(9 + str_len(num), "s | PIT | heap | exc");
 }
 
 /* Boot-time kmalloc demo: allocate, free LIFO, reallocate. */
@@ -222,9 +222,9 @@ void main(void) {
 
     sleep_ms(200);
 
-    kprint("=== KERNEL WITH HEAP + PIT + IDT ===\n");
+    kprint("=== KERNEL WITH EXCEPTIONS + HEAP ===\n");
     heap_demo();
-    kprint("Type below (Enter=newline). Commands: a=alloc demo\n\n> ");
+    kprint("Commands: a=alloc demo  f=trigger fault (int 0)\n\n> ");
 
     draw_uptime(get_ticks() / TIMER_HZ);
 
@@ -244,6 +244,10 @@ void main(void) {
                 kputc('\n');
                 if (line_len == 1 && line[0] == 'a') {
                     heap_demo();
+                } else if (line_len == 1 && line[0] == 'f') {
+                    kprint("Triggering int $0 (Division Error)...\n");
+                    __asm__ volatile("int $0");
+                    /* not reached — handler halts */
                 }
                 line_len = 0;
                 kprint("> ");

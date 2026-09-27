@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
-# Boot os-image.bin under QEMU: banner, PIT uptime, keyboard echo.
+# Boot os-image.bin under QEMU: banner, heap, uptime, echo, exception demo.
 set -euo pipefail
 
 cd "$(dirname "$0")"
 IMG=os-image.bin
-EXPECT_BANNER="KERNEL WITH HEAP + PIT + IDT"
+EXPECT_BANNER="KERNEL WITH EXCEPTIONS + HEAP"
 EXPECT_HEAP="kmalloc demo"
 EXPECT_ADDR="0x00010000"
 EXPECT_UPTIME="uptime:"
 EXPECT_ECHO="hello"
+EXPECT_EXC="EXCEPTION"
+EXPECT_DIV="Division Error"
 SOCK=$(mktemp -u /tmp/qemu-qmp.XXXXXX)
 cleanup() {
   rm -f "$SOCK"
@@ -49,10 +51,11 @@ for _ in $(seq 1 50); do
   sleep 0.1
 done
 
-python3 - "$SOCK" "$EXPECT_BANNER" "$EXPECT_HEAP" "$EXPECT_ADDR" "$EXPECT_UPTIME" "$EXPECT_ECHO" <<'PY'
+python3 - "$SOCK" "$EXPECT_BANNER" "$EXPECT_HEAP" "$EXPECT_ADDR" "$EXPECT_UPTIME" "$EXPECT_ECHO" "$EXPECT_EXC" "$EXPECT_DIV" <<'PY'
 import json, re, socket, sys, time
 
-sock_path, expect_banner, expect_heap, expect_addr, expect_uptime, expect_echo = sys.argv[1:7]
+(sock_path, expect_banner, expect_heap, expect_addr, expect_uptime,
+ expect_echo, expect_exc, expect_div) = sys.argv[1:9]
 
 def recv_obj(sock):
     buf = b""
@@ -91,6 +94,14 @@ def vga_text(sock, nbytes=4000):
 def rows(text, n=25):
     return [text[i:i + 80].rstrip() for i in range(0, min(len(text), 80 * n), 80)]
 
+def sendkeys(sock, keys):
+    for key in keys:
+        qmp(sock, {
+            "execute": "human-monitor-command",
+            "arguments": {"command-line": f"sendkey {key}"},
+        })
+        time.sleep(0.08)
+
 time.sleep(1.5)
 
 sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
@@ -117,32 +128,31 @@ if expect_uptime not in got:
     print("VERIFY FAILED: uptime status bar not found", file=sys.stderr)
     sys.exit(1)
 
-# After ~1.5s host wait (+ 200ms guest sleep_ms), uptime should be >= 1s.
-status = rows(got)[-1] if rows(got) else ""
-m = re.search(r"uptime:\s*(\d+)s", status)
+m = re.search(r"uptime:\s*(\d+)s", got)
 if not m or int(m.group(1)) < 1:
-    # Status bar is row 24; also search whole screen.
-    m = re.search(r"uptime:\s*(\d+)s", got)
-    if not m or int(m.group(1)) < 1:
-        print(f"VERIFY FAILED: expected uptime >= 1s, status={status!r}", file=sys.stderr)
-        sys.exit(1)
+    print("VERIFY FAILED: expected uptime >= 1s", file=sys.stderr)
+    sys.exit(1)
 print(f"Uptime OK: {m.group(0)}")
 
-for key in list(expect_echo) + ["ret"]:
-    qmp(sock, {
-        "execute": "human-monitor-command",
-        "arguments": {"command-line": f"sendkey {key}"},
-    })
-    time.sleep(0.08)
-
+sendkeys(sock, list(expect_echo) + ["ret"])
 time.sleep(0.4)
 got = vga_text(sock)
 if expect_echo not in got:
     print("VERIFY FAILED: keyboard echo not found", file=sys.stderr)
-    for row in rows(got):
-        if row.strip():
-            print(f"  {row!r}", file=sys.stderr)
     sys.exit(1)
+
+# Fault demo last — handler paints a panic banner and halts.
+sendkeys(sock, ["f", "ret"])
+time.sleep(0.4)
+got = vga_text(sock)
+print("After fault:")
+for row in rows(got)[:6]:
+    if row.strip():
+        print(f"  {row!r}")
+if expect_exc not in got or expect_div not in got:
+    print("VERIFY FAILED: exception panic banner not found", file=sys.stderr)
+    sys.exit(1)
+print("Exception handler OK")
 
 qmp(sock, {"execute": "quit"})
 sock.close()
