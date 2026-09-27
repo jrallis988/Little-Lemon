@@ -200,7 +200,7 @@ static void heap_demo(void) {
     kprint("  (reuses b)\n");
 
     kfree(c);
-    kfree(a);
+    kprint("  kfree(c); a still live (LIFO cannot free it yet)\n");
     kprint("  heap used: ");
     {
         char num[12];
