@@ -49,10 +49,10 @@ for _ in $(seq 1 50); do
   sleep 0.1
 done
 
-python3 - "$SOCK" "$EXPECT_BANNER" "$EXPECT_UPTIME" "$EXPECT_ECHO" <<'PY'
+python3 - "$SOCK" "$EXPECT_BANNER" "$EXPECT_HEAP" "$EXPECT_ADDR" "$EXPECT_UPTIME" "$EXPECT_ECHO" <<'PY'
 import json, re, socket, sys, time
 
-sock_path, expect_banner, expect_uptime, expect_echo = sys.argv[1:5]
+sock_path, expect_banner, expect_heap, expect_addr, expect_uptime, expect_echo = sys.argv[1:7]
 
 def recv_obj(sock):
     buf = b""
@@ -107,6 +107,10 @@ for row in rows(got):
 
 if expect_banner not in got:
     print("VERIFY FAILED: boot banner not found", file=sys.stderr)
+    sys.exit(1)
+
+if expect_heap not in got or expect_addr not in got:
+    print("VERIFY FAILED: kmalloc demo / heap address not found", file=sys.stderr)
     sys.exit(1)
 
 if expect_uptime not in got:
