@@ -1,15 +1,18 @@
 /* ==========================================
- * Kernel: VGA console + interrupt-driven keyboard
+ * Kernel: VGA console, PIT timer, IRQ1 keyboard
  * ========================================== */
 
 #include "idt.h"
 #include "keyboard.h"
 #include "ports.h"
+#include "timer.h"
 
 #define VIDEO_MEMORY 0xb8000
 #define WHITE_ON_BLACK 0x0f
+#define STATUS_ATTR 0x1f /* white on blue — status bar */
 #define VGA_COLS 80
 #define VGA_ROWS 25
+#define STATUS_ROW 24
 
 static int cursor_col = 0;
 static int cursor_row = 0;
@@ -40,7 +43,8 @@ static void scroll_screen(void) {
     int r, c;
     int last_row_idx;
 
-    for (r = 1; r < VGA_ROWS; r++) {
+    /* Keep the status bar on the last row; scroll rows 0..(STATUS_ROW-2). */
+    for (r = 1; r < STATUS_ROW; r++) {
         for (c = 0; c < VGA_COLS; c++) {
             int src_idx = ((r * VGA_COLS) + c) * 2;
             int dst_idx = (((r - 1) * VGA_COLS) + c) * 2;
@@ -49,12 +53,12 @@ static void scroll_screen(void) {
         }
     }
 
-    last_row_idx = ((VGA_ROWS - 1) * VGA_COLS) * 2;
+    last_row_idx = ((STATUS_ROW - 1) * VGA_COLS) * 2;
     for (c = 0; c < VGA_COLS; c++) {
         vidmem[last_row_idx + (c * 2)] = ' ';
         vidmem[last_row_idx + (c * 2) + 1] = WHITE_ON_BLACK;
     }
-    cursor_row = VGA_ROWS - 1;
+    cursor_row = STATUS_ROW - 1;
 }
 
 void kputc(char c) {
@@ -83,7 +87,7 @@ void kputc(char c) {
         cursor_row++;
     }
 
-    if (cursor_row >= VGA_ROWS) {
+    if (cursor_row >= STATUS_ROW) {
         scroll_screen();
     }
 
@@ -98,23 +102,103 @@ void kprint(const char* message) {
     }
 }
 
+/* Write text into the bottom status bar without moving the shell cursor. */
+static void status_put(int col, char ch) {
+    char* vidmem = (char*)VIDEO_MEMORY;
+    int idx = ((STATUS_ROW * VGA_COLS) + col) * 2;
+    vidmem[idx] = ch;
+    vidmem[idx + 1] = STATUS_ATTR;
+}
+
+static void status_print(int col, const char* s) {
+    int i = 0;
+    while (s[i] != '\0' && (col + i) < VGA_COLS) {
+        status_put(col + i, s[i]);
+        i++;
+    }
+}
+
+static void status_clear(void) {
+    int c;
+    for (c = 0; c < VGA_COLS; c++) {
+        status_put(c, ' ');
+    }
+}
+
+static void u32_to_dec(unsigned int n, char* out) {
+    char tmp[11];
+    int i = 0;
+    int j = 0;
+
+    if (n == 0) {
+        out[0] = '0';
+        out[1] = '\0';
+        return;
+    }
+
+    while (n > 0) {
+        tmp[i++] = (char)('0' + (n % 10));
+        n /= 10;
+    }
+    while (i > 0) {
+        out[j++] = tmp[--i];
+    }
+    out[j] = '\0';
+}
+
+static int str_len(const char* s) {
+    int n = 0;
+    while (s[n] != '\0') {
+        n++;
+    }
+    return n;
+}
+
+static void draw_uptime(unsigned int seconds) {
+    char num[12];
+    status_clear();
+    status_print(0, " uptime: ");
+    u32_to_dec(seconds, num);
+    status_print(9, num);
+    status_print(9 + str_len(num), "s | PIT 100Hz | IRQ0+IRQ1");
+}
+
 void main(void) {
+    unsigned int last_sec = (unsigned int)-1;
+
     clear_screen();
     init_idt();
+    init_pit(TIMER_HZ);
     init_keyboard();
     __asm__ volatile("sti");
 
-    kprint("=== KERNEL IDT / IRQ1 ONLINE ===\n");
-    kprint("Interrupt-driven keyboard ready.\n");
+    /* Prove the timer works before the shell starts. */
+    sleep_ms(200);
+
+    kprint("=== KERNEL WITH PIT & IDT ONLINE ===\n");
+    kprint("Timer IRQ0 + keyboard IRQ1 ready.\n");
     kprint("Type something below (press Enter to newline):\n\n> ");
 
+    draw_uptime(get_ticks() / TIMER_HZ);
+
     while (1) {
-        char key = get_key();
-        if (key == '\n') {
-            kputc('\n');
-            kprint("> ");
-        } else {
-            kputc(key);
+        unsigned int secs = get_ticks() / TIMER_HZ;
+
+        if (secs != last_sec) {
+            last_sec = secs;
+            draw_uptime(secs);
+        }
+
+        {
+            char key = try_get_key();
+            if (key == '\n') {
+                kputc('\n');
+                kprint("> ");
+            } else if (key != 0) {
+                kputc(key);
+            } else {
+                __asm__ volatile("hlt");
+            }
         }
     }
 }

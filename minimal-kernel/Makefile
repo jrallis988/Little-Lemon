@@ -7,7 +7,7 @@ NASM    = nasm
 CFLAGS  = -m32 -ffreestanding -fno-pie -fno-stack-protector -nostdlib -Wall -Wextra
 LDFLAGS = -m elf_i386 -Ttext 0x1000 --oformat binary
 
-KERNEL_OBJS = kernel_entry.o interrupt.o ports.o idt.o keyboard.o kernel.o
+KERNEL_OBJS = kernel_entry.o interrupt.o ports.o idt.o timer.o keyboard.o kernel.o
 
 # disk_load.asm reads this many sectors after the MBR
 KERNEL_SECTORS = 40
@@ -22,10 +22,13 @@ ports.o: ports.c ports.h
 idt.o: idt.c idt.h ports.h
 	$(CC) $(CFLAGS) -c idt.c -o idt.o
 
+timer.o: timer.c timer.h ports.h
+	$(CC) $(CFLAGS) -c timer.c -o timer.o
+
 keyboard.o: keyboard.c keyboard.h ports.h
 	$(CC) $(CFLAGS) -c keyboard.c -o keyboard.o
 
-kernel.o: kernel.c idt.h keyboard.h ports.h
+kernel.o: kernel.c idt.h keyboard.h ports.h timer.h
 	$(CC) $(CFLAGS) -c kernel.c -o kernel.o
 
 kernel_entry.o: kernel_entry.asm
@@ -42,7 +45,6 @@ boot.bin: boot.asm disk_load.asm gdt.asm 32bit_switch.asm
 
 os-image.bin: boot.bin kernel.bin
 	cat boot.bin kernel.bin > os-image.bin
-	@# Pad so BIOS reads of KERNEL_SECTORS never run past the image.
 	@size=$$(wc -c < os-image.bin); \
 	 min=$$(( (1 + $(KERNEL_SECTORS)) * 512 )); \
 	 if [ $$size -lt $$min ]; then truncate -s $$min os-image.bin; fi

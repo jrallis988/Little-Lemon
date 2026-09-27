@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
-# Boot os-image.bin under QEMU and confirm VGA banner + keyboard echo.
+# Boot os-image.bin under QEMU: banner, PIT uptime, keyboard echo.
 set -euo pipefail
 
 cd "$(dirname "$0")"
 IMG=os-image.bin
-EXPECT_BANNER="KERNEL IDT / IRQ1 ONLINE"
+EXPECT_BANNER="KERNEL WITH PIT & IDT ONLINE"
+EXPECT_UPTIME="uptime:"
 EXPECT_ECHO="hello"
 SOCK=$(mktemp -u /tmp/qemu-qmp.XXXXXX)
 cleanup() {
@@ -46,10 +47,10 @@ for _ in $(seq 1 50); do
   sleep 0.1
 done
 
-python3 - "$SOCK" "$EXPECT_BANNER" "$EXPECT_ECHO" <<'PY'
+python3 - "$SOCK" "$EXPECT_BANNER" "$EXPECT_UPTIME" "$EXPECT_ECHO" <<'PY'
 import json, re, socket, sys, time
 
-sock_path, expect_banner, expect_echo = sys.argv[1], sys.argv[2], sys.argv[3]
+sock_path, expect_banner, expect_uptime, expect_echo = sys.argv[1:5]
 
 def recv_obj(sock):
     buf = b""
@@ -72,7 +73,7 @@ def qmp(sock, cmd):
     sock.sendall((json.dumps(cmd) + "\n").encode())
     return recv_obj(sock)
 
-def vga_text(sock, nbytes=1600):
+def vga_text(sock, nbytes=4000):
     resp = qmp(sock, {
         "execute": "human-monitor-command",
         "arguments": {"command-line": f"xp /{nbytes}bx 0xb8000"},
@@ -82,13 +83,13 @@ def vga_text(sock, nbytes=1600):
     chars = []
     for i in range(0, len(bytes_out) - 1, 2):
         ch = bytes_out[i]
-        if 32 <= ch < 127:
-            chars.append(chr(ch))
-        else:
-            chars.append(" ")
-    return "".join(chars), dump
+        chars.append(chr(ch) if 32 <= ch < 127 else " ")
+    return "".join(chars)
 
-time.sleep(1.2)
+def rows(text, n=25):
+    return [text[i:i + 80].rstrip() for i in range(0, min(len(text), 80 * n), 80)]
+
+time.sleep(1.5)
 
 sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
 sock.connect(sock_path)
@@ -96,14 +97,31 @@ banner = recv_obj(sock)
 assert "QMP" in banner, banner
 qmp(sock, {"execute": "qmp_capabilities"})
 
-got, dump = vga_text(sock)
-print(f"VGA banner: {got[:80]!r}")
+got = vga_text(sock)
+print("VGA rows:")
+for row in rows(got):
+    if row.strip():
+        print(f"  {row!r}")
+
 if expect_banner not in got:
     print("VERIFY FAILED: boot banner not found", file=sys.stderr)
-    print(dump, file=sys.stderr)
     sys.exit(1)
 
-# Inject keystrokes via the QEMU monitor (PS/2 → IRQ1 into the guest).
+if expect_uptime not in got:
+    print("VERIFY FAILED: uptime status bar not found", file=sys.stderr)
+    sys.exit(1)
+
+# After ~1.5s host wait (+ 200ms guest sleep_ms), uptime should be >= 1s.
+status = rows(got)[-1] if rows(got) else ""
+m = re.search(r"uptime:\s*(\d+)s", status)
+if not m or int(m.group(1)) < 1:
+    # Status bar is row 24; also search whole screen.
+    m = re.search(r"uptime:\s*(\d+)s", got)
+    if not m or int(m.group(1)) < 1:
+        print(f"VERIFY FAILED: expected uptime >= 1s, status={status!r}", file=sys.stderr)
+        sys.exit(1)
+print(f"Uptime OK: {m.group(0)}")
+
 for key in list(expect_echo) + ["ret"]:
     qmp(sock, {
         "execute": "human-monitor-command",
@@ -112,14 +130,12 @@ for key in list(expect_echo) + ["ret"]:
     time.sleep(0.08)
 
 time.sleep(0.4)
-got, dump = vga_text(sock)
-# Show a few prompt rows for humans reading the log.
-rows = [got[i:i + 80].rstrip() for i in range(0, min(len(got), 80 * 6), 80)]
-print("VGA rows:")
-for row in rows:
-    print(f"  {row!r}")
+got = vga_text(sock)
 if expect_echo not in got:
     print("VERIFY FAILED: keyboard echo not found", file=sys.stderr)
+    for row in rows(got):
+        if row.strip():
+            print(f"  {row!r}", file=sys.stderr)
     sys.exit(1)
 
 qmp(sock, {"execute": "quit"})

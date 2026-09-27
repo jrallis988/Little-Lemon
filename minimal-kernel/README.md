@@ -1,6 +1,6 @@
 # Minimal Custom Kernel & Boot Sector
 
-A tiny x86 teaching OS: a 512-byte MBR bootloader loads a freestanding C kernel, enters 32-bit protected mode, installs an IDT with a remapped PIC, and runs a VGA console driven by IRQ1 keyboard interrupts.
+A tiny x86 teaching OS: MBR boot → 32-bit protected mode → IDT with remapped PIC → PIT timer (IRQ0) + PS/2 keyboard (IRQ1) → VGA shell with an uptime status bar.
 
 ## Layout
 
@@ -11,11 +11,12 @@ A tiny x86 teaching OS: a 512-byte MBR bootloader loads a freestanding C kernel,
 | `gdt.asm` | Flat code/data GDT |
 | `32bit_switch.asm` | Real → protected mode switch |
 | `kernel_entry.asm` | Binary entry stub that calls `main` |
-| `interrupt.asm` | IRQ1 stub (`irq1` → `irq1_handler`) |
-| `idt.h` / `idt.c` | IDT gates, PIC remap, `lidt` |
+| `interrupt.asm` | IRQ0 / IRQ1 stubs |
+| `idt.h` / `idt.c` | IDT gates, PIC remap (`IRQ0+IRQ1` unmasked), `lidt` |
+| `timer.h` / `timer.c` | PIT @ 100 Hz, `get_ticks`, `sleep_ms` |
 | `keyboard.h` / `keyboard.c` | Scancode ring buffer + `get_key` |
 | `ports.h` / `ports.c` | `inb` / `outb` |
-| `kernel.c` | VGA console + shell loop |
+| `kernel.c` | VGA console, uptime bar, shell loop |
 | `Makefile` | Build, run, and headless verify |
 
 ## Build
@@ -24,25 +25,23 @@ A tiny x86 teaching OS: a 512-byte MBR bootloader loads a freestanding C kernel,
 make
 ```
 
-Produces `boot.bin` (512 bytes), `kernel.bin`, and `os-image.bin` (concatenated disk image).
-
 ## Run
 
 ```bash
 make run
 ```
 
-Opens QEMU with the raw disk image. You should see:
+You should see:
 
 ```text
-=== KERNEL IDT / IRQ1 ONLINE ===
-Interrupt-driven keyboard ready.
+=== KERNEL WITH PIT & IDT ONLINE ===
+Timer IRQ0 + keyboard IRQ1 ready.
 Type something below (press Enter to newline):
 
 >
 ```
 
-Type in the QEMU window to echo characters. Enter starts a new `>` prompt; Backspace deletes.
+…and a bottom status bar like `uptime: 3s | PIT 100Hz | IRQ0+IRQ1`.
 
 ## Headless verify
 
@@ -50,11 +49,11 @@ Type in the QEMU window to echo characters. Enter starts a new `>` prompt; Backs
 make verify
 ```
 
-Boots under QEMU with no display, checks the IDT banner in VGA memory, injects `hello` + Enter via QMP `sendkey`, and confirms the echo appears (exercising IRQ1).
+Checks the banner, that the PIT-driven uptime reaches ≥ 1s, and that `sendkey` echo still works via IRQ1.
 
 ## Requirements
 
 - `nasm`
 - `gcc` with 32-bit support (`gcc-multilib` on Debian/Ubuntu)
 - `ld` (binutils)
-- `qemu-system-i386` (or `qemu-system-x86_64`)
+- `qemu-system-i386`

@@ -23,12 +23,10 @@ static unsigned char scancode_to_ascii(unsigned char scancode) {
     return 0;
 }
 
-/* Called from irq1 stub in interrupt.asm (vector 33 after PIC remap). */
 void irq1_handler(void) {
     unsigned char scancode = inb(0x60);
     unsigned int next;
 
-    /* Ignore break codes (key release). */
     if (!(scancode & 0x80)) {
         next = (khead + 1) % KBUF_SIZE;
         if (next != ktail) {
@@ -37,8 +35,7 @@ void irq1_handler(void) {
         }
     }
 
-    /* End-of-interrupt to master PIC */
-    outb(0x20, 0x20);
+    outb(0x20, 0x20); /* EOI master PIC */
 }
 
 void init_keyboard(void) {
@@ -46,19 +43,26 @@ void init_keyboard(void) {
     ktail = 0;
 }
 
+/* Non-blocking: return next ASCII key, or 0 if none ready. */
+char try_get_key(void) {
+    while (ktail != khead) {
+        unsigned char scancode = kbuf[ktail];
+        char key;
+        ktail = (ktail + 1) % KBUF_SIZE;
+        key = (char)scancode_to_ascii(scancode);
+        if (key != 0) {
+            return key;
+        }
+    }
+    return 0;
+}
+
 char get_key(void) {
     while (1) {
-        if (ktail != khead) {
-            unsigned char scancode = kbuf[ktail];
-            char key;
-            ktail = (ktail + 1) % KBUF_SIZE;
-            key = (char)scancode_to_ascii(scancode);
-            if (key != 0) {
-                return key;
-            }
-        } else {
-            /* Sleep until the next interrupt wakes us. */
-            __asm__ volatile("hlt");
+        char key = try_get_key();
+        if (key != 0) {
+            return key;
         }
+        __asm__ volatile("hlt");
     }
 }
