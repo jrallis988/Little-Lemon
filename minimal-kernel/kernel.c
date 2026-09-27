@@ -1,29 +1,20 @@
 /* ==========================================
- * Extended Kernel with VGA I/O & PS/2 Keyboard
+ * Kernel: VGA console + interrupt-driven keyboard
  * ========================================== */
+
+#include "idt.h"
+#include "keyboard.h"
+#include "ports.h"
 
 #define VIDEO_MEMORY 0xb8000
 #define WHITE_ON_BLACK 0x0f
 #define VGA_COLS 80
 #define VGA_ROWS 25
 
-/* Low-level port I/O via GCC inline assembly */
-unsigned char inb(unsigned short port) {
-    unsigned char result;
-    __asm__ volatile("inb %1, %0" : "=a"(result) : "Nd"(port));
-    return result;
-}
+static int cursor_col = 0;
+static int cursor_row = 0;
 
-void outb(unsigned short port, unsigned char data) {
-    __asm__ volatile("outb %0, %1" : : "a"(data), "Nd"(port));
-}
-
-/* Cursor and screen state */
-int cursor_col = 0;
-int cursor_row = 0;
-
-/* Update the hardware VGA cursor position */
-void update_cursor(void) {
+static void update_cursor(void) {
     unsigned short position = (unsigned short)((cursor_row * VGA_COLS) + cursor_col);
     outb(0x3D4, 14);
     outb(0x3D5, (unsigned char)((position >> 8) & 0xFF));
@@ -44,7 +35,7 @@ void clear_screen(void) {
     update_cursor();
 }
 
-void scroll_screen(void) {
+static void scroll_screen(void) {
     char* vidmem = (char*)VIDEO_MEMORY;
     int r, c;
     int last_row_idx;
@@ -107,52 +98,23 @@ void kprint(const char* message) {
     }
 }
 
-/* PS/2 Keyboard Set 1 scancode → ASCII (unshifted) */
-unsigned char scancode_to_ascii(unsigned char scancode) {
-    static const unsigned char scancode_ascii[] = {
-        0,   27,  '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '\b',
-        '\t', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\n',
-        0,   'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', '`',
-        0,   '\\', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', 0,
-        '*', 0,   ' '
-    };
-
-    if (scancode < sizeof(scancode_ascii)) {
-        return scancode_ascii[scancode];
-    }
-    return 0;
-}
-
-/* Poll PS/2 controller (status 0x64, data 0x60) for a make-code key */
-char get_key(void) {
-    while (1) {
-        if (inb(0x64) & 0x01) {
-            unsigned char scancode = inb(0x60);
-
-            /* Ignore break codes (key release: high bit set) */
-            if (scancode & 0x80) {
-                continue;
-            }
-
-            return (char)scancode_to_ascii(scancode);
-        }
-    }
-}
-
 void main(void) {
     clear_screen();
-    kprint("=== KERNEL I/O SUBSYSTEM ONLINE ===\n");
+    init_idt();
+    init_keyboard();
+    __asm__ volatile("sti");
+
+    kprint("=== KERNEL IDT / IRQ1 ONLINE ===\n");
+    kprint("Interrupt-driven keyboard ready.\n");
     kprint("Type something below (press Enter to newline):\n\n> ");
 
     while (1) {
         char key = get_key();
-        if (key != 0) {
-            if (key == '\n') {
-                kputc('\n');
-                kprint("> ");
-            } else {
-                kputc(key);
-            }
+        if (key == '\n') {
+            kputc('\n');
+            kprint("> ");
+        } else {
+            kputc(key);
         }
     }
 }

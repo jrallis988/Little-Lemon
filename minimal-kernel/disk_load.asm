@@ -5,7 +5,7 @@
 
 load_kernel:
     mov bx, KERNEL_OFFSET ; ES:BX = destination buffer
-    mov dh, 15            ; Number of sectors to read (enough for kernel)
+    mov dh, 40            ; Number of sectors to read (enough for kernel)
     mov dl, [BOOT_DRIVE]  ; Drive number saved by bootloader
     call disk_load
     ret

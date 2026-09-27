@@ -4,7 +4,7 @@ set -euo pipefail
 
 cd "$(dirname "$0")"
 IMG=os-image.bin
-EXPECT_BANNER="KERNEL I/O SUBSYSTEM ONLINE"
+EXPECT_BANNER="KERNEL IDT / IRQ1 ONLINE"
 EXPECT_ECHO="hello"
 SOCK=$(mktemp -u /tmp/qemu-qmp.XXXXXX)
 cleanup() {
