@@ -72,7 +72,7 @@ def qmp(sock, cmd):
     sock.sendall((json.dumps(cmd) + "\n").encode())
     return recv_obj(sock)
 
-def vga_text(sock, nbytes=400):
+def vga_text(sock, nbytes=1600):
     resp = qmp(sock, {
         "execute": "human-monitor-command",
         "arguments": {"command-line": f"xp /{nbytes}bx 0xb8000"},
@@ -103,24 +103,24 @@ if expect_banner not in got:
     print(dump, file=sys.stderr)
     sys.exit(1)
 
-# Inject keystrokes via the QEMU monitor (PS/2 path into the guest).
+# Inject keystrokes via the QEMU monitor (PS/2 → IRQ1 into the guest).
 for key in list(expect_echo) + ["ret"]:
     qmp(sock, {
         "execute": "human-monitor-command",
         "arguments": {"command-line": f"sendkey {key}"},
     })
-    time.sleep(0.05)
+    time.sleep(0.08)
 
-time.sleep(0.3)
-got, dump = vga_text(sock, 500)
-print(f"VGA after keys: {got[:160]!r}")
-if expect_echo not in got.replace(" ", ""):
-    # Also accept spaced-out VGA rows concatenated without collapsing all spaces:
-    collapsed = re.sub(r" +", " ", got)
-    if expect_echo not in collapsed and expect_echo not in got:
-        print("VERIFY FAILED: keyboard echo not found", file=sys.stderr)
-        print(dump, file=sys.stderr)
-        sys.exit(1)
+time.sleep(0.4)
+got, dump = vga_text(sock)
+# Show a few prompt rows for humans reading the log.
+rows = [got[i:i + 80].rstrip() for i in range(0, min(len(got), 80 * 6), 80)]
+print("VGA rows:")
+for row in rows:
+    print(f"  {row!r}")
+if expect_echo not in got:
+    print("VERIFY FAILED: keyboard echo not found", file=sys.stderr)
+    sys.exit(1)
 
 qmp(sock, {"execute": "quit"})
 sock.close()
