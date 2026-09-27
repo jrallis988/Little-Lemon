@@ -224,7 +224,7 @@ void main(void) {
 
     kprint("=== KERNEL WITH EXCEPTIONS + HEAP ===\n");
     heap_demo();
-    kprint("Commands: a=alloc demo  f=trigger fault (int 0)\n\n> ");
+    kprint("Commands: a=alloc demo  f=ud2 fault (Invalid Opcode)\n\n> ");
 
     draw_uptime(get_ticks() / TIMER_HZ);
 
@@ -244,9 +244,9 @@ void main(void) {
                 kputc('\n');
                 if (line_len == 1 && line[0] == 'a') {
                     heap_demo();
-                } else if (line_len == 1 && line[0] == 'f') {
-                    kprint("Triggering int $0 (Division Error)...\n");
-                    __asm__ volatile("int $0");
+                } else if (line_len == 1 && (line[0] == 'f' || line[0] == 'F')) {
+                    kprint("Triggering ud2 (Invalid Opcode)...\n");
+                    __asm__ volatile("ud2");
                     /* not reached — handler halts */
                 }
                 line_len = 0;

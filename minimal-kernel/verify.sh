@@ -10,7 +10,7 @@ EXPECT_ADDR="0x00010000"
 EXPECT_UPTIME="uptime:"
 EXPECT_ECHO="hello"
 EXPECT_EXC="EXCEPTION"
-EXPECT_DIV="Division Error"
+EXPECT_FAULT="Invalid Opcode"
 SOCK=$(mktemp -u /tmp/qemu-qmp.XXXXXX)
 cleanup() {
   rm -f "$SOCK"
@@ -51,11 +51,11 @@ for _ in $(seq 1 50); do
   sleep 0.1
 done
 
-python3 - "$SOCK" "$EXPECT_BANNER" "$EXPECT_HEAP" "$EXPECT_ADDR" "$EXPECT_UPTIME" "$EXPECT_ECHO" "$EXPECT_EXC" "$EXPECT_DIV" <<'PY'
+python3 - "$SOCK" "$EXPECT_BANNER" "$EXPECT_HEAP" "$EXPECT_ADDR" "$EXPECT_UPTIME" "$EXPECT_ECHO" "$EXPECT_EXC" "$EXPECT_FAULT" <<'PY'
 import json, re, socket, sys, time
 
 (sock_path, expect_banner, expect_heap, expect_addr, expect_uptime,
- expect_echo, expect_exc, expect_div) = sys.argv[1:9]
+ expect_echo, expect_exc, expect_fault) = sys.argv[1:9]
 
 def recv_obj(sock):
     buf = b""
@@ -149,7 +149,7 @@ print("After fault:")
 for row in rows(got)[:6]:
     if row.strip():
         print(f"  {row!r}")
-if expect_exc not in got or expect_div not in got:
+if expect_exc not in got or expect_fault not in got:
     print("VERIFY FAILED: exception panic banner not found", file=sys.stderr)
     sys.exit(1)
 print("Exception handler OK")

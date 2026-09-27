@@ -21,7 +21,7 @@ A tiny x86 teaching OS: MBR boot → protected mode → IDT (exceptions 0–31 +
 | 32 | PIT IRQ0 | Tick counter / `sleep_ms` |
 | 33 | Keyboard IRQ1 | Scancode ring buffer |
 
-Shell commands: `a` = alloc demo, `f` = `int $0` (Division Error) to exercise the exception path.
+Shell commands: `a` = alloc demo, `f` = `ud2` (Invalid Opcode, vector 6) to exercise the exception path. Page faults (vector 14) also print `CR2` when they occur (useful once paging is enabled).
 
 ## Files
 

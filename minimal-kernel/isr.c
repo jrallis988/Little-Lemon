@@ -74,13 +74,18 @@ static void panic_hex(int row, int col, unsigned int value) {
 static void handle_exception(struct interrupt_frame* frame) {
     const char* name = "Unknown";
     int r;
+    int rows = 5;
 
     if (frame->int_no < 32) {
         name = exception_messages[frame->int_no];
     }
 
-    /* Paint a clear panic banner at the top of the screen. */
-    for (r = 0; r < 5; r++) {
+    /* Page faults get an extra CR2 line. */
+    if (frame->int_no == 14) {
+        rows = 6;
+    }
+
+    for (r = 0; r < rows; r++) {
         panic_clear_row(r);
     }
     panic_print_at(0, 0, "=== EXCEPTION ===");
@@ -111,7 +116,14 @@ static void handle_exception(struct interrupt_frame* frame) {
     panic_hex(3, 4, frame->err_code);
     panic_print_at(3, 16, " eip=");
     panic_hex(3, 21, frame->eip);
-    panic_print_at(4, 0, "System halted. Reset QEMU to continue.");
+
+    if (frame->int_no == 14) {
+        panic_print_at(4, 0, "cr2=");
+        panic_hex(4, 4, read_cr2());
+        panic_print_at(5, 0, "System halted. Reset QEMU to continue.");
+    } else {
+        panic_print_at(4, 0, "System halted. Reset QEMU to continue.");
+    }
 
     for (;;) {
         __asm__ volatile("cli; hlt");

@@ -9,3 +9,9 @@ unsigned char inb(unsigned short port) {
 void outb(unsigned short port, unsigned char data) {
     __asm__ volatile("outb %0, %1" : : "a"(data), "Nd"(port));
 }
+
+unsigned int read_cr2(void) {
+    unsigned int value;
+    __asm__ volatile("mov %%cr2, %0" : "=r"(value));
+    return value;
+}
