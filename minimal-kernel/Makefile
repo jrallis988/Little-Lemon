@@ -7,7 +7,7 @@ NASM    = nasm
 CFLAGS  = -m32 -ffreestanding -fno-pie -fno-stack-protector -nostdlib -Wall -Wextra
 LDFLAGS = -m elf_i386 -Ttext 0x1000 --oformat binary
 
-KERNEL_OBJS = kernel_entry.o interrupt.o ports.o idt.o timer.o keyboard.o kernel.o
+KERNEL_OBJS = kernel_entry.o interrupt.o ports.o idt.o timer.o keyboard.o heap.o kernel.o
 
 # disk_load.asm reads this many sectors after the MBR
 KERNEL_SECTORS = 40
@@ -28,7 +28,10 @@ timer.o: timer.c timer.h ports.h
 keyboard.o: keyboard.c keyboard.h ports.h
 	$(CC) $(CFLAGS) -c keyboard.c -o keyboard.o
 
-kernel.o: kernel.c idt.h keyboard.h ports.h timer.h
+heap.o: heap.c heap.h
+	$(CC) $(CFLAGS) -c heap.c -o heap.o
+
+kernel.o: kernel.c heap.h idt.h keyboard.h ports.h timer.h
 	$(CC) $(CFLAGS) -c kernel.c -o kernel.o
 
 kernel_entry.o: kernel_entry.asm

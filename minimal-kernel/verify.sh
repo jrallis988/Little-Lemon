@@ -4,7 +4,9 @@ set -euo pipefail
 
 cd "$(dirname "$0")"
 IMG=os-image.bin
-EXPECT_BANNER="KERNEL WITH PIT & IDT ONLINE"
+EXPECT_BANNER="KERNEL WITH HEAP + PIT + IDT"
+EXPECT_HEAP="kmalloc demo"
+EXPECT_ADDR="0x00010000"
 EXPECT_UPTIME="uptime:"
 EXPECT_ECHO="hello"
 SOCK=$(mktemp -u /tmp/qemu-qmp.XXXXXX)

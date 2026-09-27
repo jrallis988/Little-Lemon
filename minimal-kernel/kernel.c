@@ -1,7 +1,8 @@
 /* ==========================================
- * Kernel: VGA console, PIT timer, IRQ1 keyboard
+ * Kernel: VGA console, PIT, IRQ1, bump heap
  * ========================================== */
 
+#include "heap.h"
 #include "idt.h"
 #include "keyboard.h"
 #include "ports.h"
@@ -43,7 +44,6 @@ static void scroll_screen(void) {
     int r, c;
     int last_row_idx;
 
-    /* Keep the status bar on the last row; scroll rows 0..(STATUS_ROW-2). */
     for (r = 1; r < STATUS_ROW; r++) {
         for (c = 0; c < VGA_COLS; c++) {
             int src_idx = ((r * VGA_COLS) + c) * 2;
@@ -102,7 +102,15 @@ void kprint(const char* message) {
     }
 }
 
-/* Write text into the bottom status bar without moving the shell cursor. */
+static void kprint_hex(unsigned int value) {
+    static const char* hex = "0123456789abcdef";
+    int i;
+    kprint("0x");
+    for (i = 7; i >= 0; i--) {
+        kputc(hex[(value >> (i * 4)) & 0xF]);
+    }
+}
+
 static void status_put(int col, char ch) {
     char* vidmem = (char*)VIDEO_MEMORY;
     int idx = ((STATUS_ROW * VGA_COLS) + col) * 2;
@@ -160,29 +168,70 @@ static void draw_uptime(unsigned int seconds) {
     status_print(0, " uptime: ");
     u32_to_dec(seconds, num);
     status_print(9, num);
-    status_print(9 + str_len(num), "s | PIT 100Hz | IRQ0+IRQ1");
+    status_print(9 + str_len(num), "s | PIT 100Hz | heap bump");
+}
+
+/* Boot-time kmalloc demo: allocate, free LIFO, reallocate. */
+static void heap_demo(void) {
+    void* a;
+    void* b;
+    void* c;
+
+    kprint("kmalloc demo (heap ");
+    kprint_hex(HEAP_START);
+    kprint("..");
+    kprint_hex(HEAP_END);
+    kprint("):\n");
+
+    a = kmalloc(16);
+    b = kmalloc(32);
+    kprint("  a=kmalloc(16) -> ");
+    kprint_hex((unsigned int)a);
+    kprint("\n  b=kmalloc(32) -> ");
+    kprint_hex((unsigned int)b);
+    kprint("\n");
+
+    kfree(b);
+    kprint("  kfree(b)  [LIFO]\n");
+
+    c = kmalloc(8);
+    kprint("  c=kmalloc(8)  -> ");
+    kprint_hex((unsigned int)c);
+    kprint("  (reuses b)\n");
+
+    kfree(c);
+    kfree(a);
+    kprint("  heap used: ");
+    {
+        char num[12];
+        u32_to_dec(heap_used(), num);
+        kprint(num);
+    }
+    kprint(" bytes\n");
 }
 
 void main(void) {
     unsigned int last_sec = (unsigned int)-1;
 
     clear_screen();
+    init_heap();
     init_idt();
     init_pit(TIMER_HZ);
     init_keyboard();
     __asm__ volatile("sti");
 
-    /* Prove the timer works before the shell starts. */
     sleep_ms(200);
 
-    kprint("=== KERNEL WITH PIT & IDT ONLINE ===\n");
-    kprint("Timer IRQ0 + keyboard IRQ1 ready.\n");
-    kprint("Type something below (press Enter to newline):\n\n> ");
+    kprint("=== KERNEL WITH HEAP + PIT + IDT ===\n");
+    heap_demo();
+    kprint("Type below (Enter=newline). Commands: a=alloc demo\n\n> ");
 
     draw_uptime(get_ticks() / TIMER_HZ);
 
     while (1) {
         unsigned int secs = get_ticks() / TIMER_HZ;
+        static char line[64];
+        static unsigned int line_len = 0;
 
         if (secs != last_sec) {
             last_sec = secs;
@@ -193,8 +242,20 @@ void main(void) {
             char key = try_get_key();
             if (key == '\n') {
                 kputc('\n');
+                if (line_len == 1 && line[0] == 'a') {
+                    heap_demo();
+                }
+                line_len = 0;
                 kprint("> ");
+            } else if (key == '\b') {
+                if (line_len > 0) {
+                    line_len--;
+                    kputc('\b');
+                }
             } else if (key != 0) {
+                if (line_len + 1 < sizeof(line)) {
+                    line[line_len++] = key;
+                }
                 kputc(key);
             } else {
                 __asm__ volatile("hlt");

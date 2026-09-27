@@ -1,6 +1,19 @@
 # Minimal Custom Kernel & Boot Sector
 
-A tiny x86 teaching OS: MBR boot → 32-bit protected mode → IDT with remapped PIC → PIT timer (IRQ0) + PS/2 keyboard (IRQ1) → VGA shell with an uptime status bar.
+A tiny x86 teaching OS: MBR boot → 32-bit protected mode → IDT / PIC → PIT (IRQ0) + keyboard (IRQ1) → bump-pointer heap → VGA shell with uptime bar.
+
+## Memory layout
+
+```text
+0x00007C00   MBR boot sector (BIOS)
+0x00001000   Kernel image (loaded by bootloader)
+0x00010000   HEAP_START  — kmalloc bump pointer grows upward (8-byte align)
+0x00080000   HEAP_END    — exclusive; leaves room below the stack
+0x00090000   Kernel stack top
+0x000B8000   VGA text buffer
+```
+
+`kfree` is LIFO-only: it frees the most recent `kmalloc` block, or is a no-op otherwise. There is no paging yet.
 
 ## Layout
 
@@ -12,11 +25,12 @@ A tiny x86 teaching OS: MBR boot → 32-bit protected mode → IDT with remapped
 | `32bit_switch.asm` | Real → protected mode switch |
 | `kernel_entry.asm` | Binary entry stub that calls `main` |
 | `interrupt.asm` | IRQ0 / IRQ1 stubs |
-| `idt.h` / `idt.c` | IDT gates, PIC remap (`IRQ0+IRQ1` unmasked), `lidt` |
+| `idt.h` / `idt.c` | IDT gates, PIC remap, `lidt` |
 | `timer.h` / `timer.c` | PIT @ 100 Hz, `get_ticks`, `sleep_ms` |
 | `keyboard.h` / `keyboard.c` | Scancode ring buffer + `get_key` |
+| `heap.h` / `heap.c` | Bump allocator (`kmalloc` / LIFO `kfree`) |
 | `ports.h` / `ports.c` | `inb` / `outb` |
-| `kernel.c` | VGA console, uptime bar, shell loop |
+| `kernel.c` | VGA console, heap demo, uptime bar, shell |
 | `Makefile` | Build, run, and headless verify |
 
 ## Build
@@ -31,17 +45,7 @@ make
 make run
 ```
 
-You should see:
-
-```text
-=== KERNEL WITH PIT & IDT ONLINE ===
-Timer IRQ0 + keyboard IRQ1 ready.
-Type something below (press Enter to newline):
-
->
-```
-
-…and a bottom status bar like `uptime: 3s | PIT 100Hz | IRQ0+IRQ1`.
+You should see a `kmalloc demo` with addresses starting at `0x00010000`, then a prompt. Type `a` + Enter to re-run the alloc demo. Bottom status bar shows uptime.
 
 ## Headless verify
 
@@ -49,7 +53,7 @@ Type something below (press Enter to newline):
 make verify
 ```
 
-Checks the banner, that the PIT-driven uptime reaches ≥ 1s, and that `sendkey` echo still works via IRQ1.
+Checks banner, heap demo addresses, PIT uptime ≥ 1s, and IRQ1 `sendkey` echo.
 
 ## Requirements
 
