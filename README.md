@@ -49,5 +49,10 @@ Or open `index.html` directly in a browser.
 ├── services/
 ├── blog/
 ├── images/
+├── listenbox/     # Expo app — Letterboxd for music (TypeScript)
 └── *.otf          # brand fonts
 ```
+
+## Listenbox
+
+`listenbox/` is an Expo + TypeScript scaffold for a music logging app (feed, album logs/reviews, local auth). See [`listenbox/README.md`](listenbox/README.md).
