@@ -17,6 +17,8 @@ cd listenbox
 npm install
 npm run web      # browser
 # npm start    # Expo Dev Tools / device
+npm run typecheck
+npm run smoke:web   # Playwright end-to-end against localhost:8081
 ```
 
 ## What's in this scaffold
