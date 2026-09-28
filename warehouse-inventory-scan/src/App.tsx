@@ -7,10 +7,9 @@ type ScanEntry = {
   capturedAt: number;
 };
 
-function formatRelative(capturedAt: number): string {
-  const seconds = Math.max(0, Math.floor((Date.now() - capturedAt) / 1000));
-  if (seconds < 5) return 'Just now';
-  if (seconds < 60) return `${seconds}s ago`;
+function formatRelative(capturedAt: number, now: number): string {
+  const seconds = Math.max(0, Math.floor((now - capturedAt) / 1000));
+  if (seconds < 60) return 'Just now';
   const minutes = Math.floor(seconds / 60);
   if (minutes < 60) return `${minutes}m ago`;
   return `${Math.floor(minutes / 60)}h ago`;
@@ -35,27 +34,34 @@ function createSeedScans(): ScanEntry[] {
 export default function App() {
   const [scannedItems, setScannedItems] = useState<ScanEntry[]>(createSeedScans);
   const [inputValue, setInputValue] = useState('');
-  const [, setTick] = useState(0);
+  const [now, setNow] = useState(() => Date.now());
+  const [highlightId, setHighlightId] = useState<string | null>(null);
 
   useEffect(() => {
     const id = window.setInterval(() => {
-      setTick((t) => t + 1);
-    }, 15_000);
+      setNow(Date.now());
+    }, 30_000);
     return () => window.clearInterval(id);
   }, []);
+
+  useEffect(() => {
+    if (!highlightId) return;
+    const id = window.setTimeout(() => setHighlightId(null), 700);
+    return () => window.clearTimeout(id);
+  }, [highlightId]);
 
   const handleScanSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const value = inputValue.trim();
     if (!value) return;
-    setScannedItems((prev) => [
-      {
-        id: `scan-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
-        label: value,
-        capturedAt: Date.now(),
-      },
-      ...prev,
-    ]);
+    const entry: ScanEntry = {
+      id: `scan-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+      label: value,
+      capturedAt: Date.now(),
+    };
+    setScannedItems((prev) => [entry, ...prev]);
+    setHighlightId(entry.id);
+    setNow(Date.now());
     setInputValue('');
   };
 
@@ -97,19 +103,24 @@ export default function App() {
             </span>
           </div>
           <div className="space-y-2 font-mono text-sm">
-            {scannedItems.map((item, index) => (
-              <div
-                key={item.id}
-                className={`bg-slate-900 border border-slate-800 px-4 py-3 rounded flex items-center justify-between gap-3 ${
-                  index === 0 ? 'slide-in border-amber-500/30' : ''
-                }`}
-              >
-                <span className="text-slate-200 break-all">{item.label}</span>
-                <span className="text-xs text-slate-500 shrink-0">
-                  {formatRelative(item.capturedAt)}
-                </span>
-              </div>
-            ))}
+            {scannedItems.map((item) => {
+              const isHighlighted = item.id === highlightId;
+              return (
+                <div
+                  key={item.id}
+                  className={`bg-slate-900 border px-4 py-3 rounded flex items-center justify-between gap-3 ${
+                    isHighlighted
+                      ? 'slide-in border-amber-500/40'
+                      : 'border-slate-800'
+                  }`}
+                >
+                  <span className="text-slate-200 break-all">{item.label}</span>
+                  <span className="text-xs text-slate-500 shrink-0">
+                    {formatRelative(item.capturedAt, now)}
+                  </span>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
