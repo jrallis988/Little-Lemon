@@ -60,6 +60,10 @@ export default function LogScreen() {
           return (
             <Pressable
               key={item.id}
+              testID={`album-${item.id}`}
+              accessibilityRole="button"
+              accessibilityState={{ selected }}
+              accessibilityLabel={`Select ${item.title} by ${item.artist}`}
               onPress={() => setAlbum(item)}
               style={[styles.albumChip, selected && styles.albumChipSelected]}>
               <AlbumCover album={item} size={56} />
@@ -100,6 +104,9 @@ export default function LogScreen() {
           </Pressable>
 
           <Pressable
+            testID="save-listen"
+            accessibilityRole="button"
+            accessibilityLabel="Save listen"
             onPress={handleSave}
             style={({ pressed }) => [styles.cta, pressed && styles.ctaPressed]}>
             <Text style={styles.ctaText}>{saved ? 'Logged!' : 'Save listen'}</Text>

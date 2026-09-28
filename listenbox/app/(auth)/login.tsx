@@ -75,6 +75,8 @@ export default function LoginScreen() {
           />
 
           <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Enter Listenbox"
             onPress={handleContinue}
             disabled={busy}
             style={({ pressed }) => [

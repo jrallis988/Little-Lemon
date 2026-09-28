@@ -24,7 +24,7 @@ export function AlbumCover({ album, size = 72, style }: Props) {
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={[styles.cover, { width: size, height: size, borderRadius: Math.max(8, size * 0.12) }]}>
-        <View style={styles.groove} />
+        <View pointerEvents="none" style={styles.groove} />
         <Text style={[styles.initials, { fontSize: size * 0.28 }]}>{initials}</Text>
       </LinearGradient>
     </View>

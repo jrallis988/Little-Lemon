@@ -7,8 +7,9 @@ import {
   type ReactNode,
 } from 'react';
 
-import { SEED_LOGS, buildFeed } from '@/data/seed';
-import type { AlbumLog, FeedItem, ListenRating, UserId } from '@/types/models';
+import { useAuth } from '@/context/AuthContext';
+import { SEED_LOGS, SEED_USERS, buildFeed } from '@/data/seed';
+import type { AlbumLog, FeedItem, ListenRating, User, UserId } from '@/types/models';
 
 type CreateLogInput = {
   userId: UserId;
@@ -28,10 +29,17 @@ type LogsContextValue = {
 
 const LogsContext = createContext<LogsContextValue | null>(null);
 
+function usersWithSession(sessionUser: User | null): User[] {
+  if (!sessionUser) return SEED_USERS;
+  const others = SEED_USERS.filter((u) => u.id !== sessionUser.id);
+  return [sessionUser, ...others];
+}
+
 export function LogsProvider({ children }: { children: ReactNode }) {
+  const { user } = useAuth();
   const [logs, setLogs] = useState<AlbumLog[]>(SEED_LOGS);
 
-  const feed = useMemo(() => buildFeed(logs), [logs]);
+  const feed = useMemo(() => buildFeed(logs, usersWithSession(user)), [logs, user]);
 
   const logsForUser = useCallback(
     (userId: UserId) =>

@@ -1,5 +1,5 @@
 import { Redirect, Tabs } from 'expo-router';
-import { Platform, Text } from 'react-native';
+import { Platform, Text, type ColorValue } from 'react-native';
 
 import { useAuth } from '@/context/AuthContext';
 import { fonts, palette } from '@/constants/theme';
@@ -13,8 +13,11 @@ export default function TabLayout() {
 
   return (
     <Tabs
+      // Keep inactive scenes from eating clicks on web (absolute-positioned stacks).
+      detachInactiveScreens
       screenOptions={{
         headerShown: false,
+        freezeOnBlur: true,
         tabBarActiveTintColor: palette.ink,
         tabBarInactiveTintColor: palette.inkFaint,
         tabBarStyle: {
@@ -33,7 +36,7 @@ export default function TabLayout() {
         options={{
           title: 'Feed',
           tabBarIcon: ({ color, focused }) => (
-            <Text style={{ color, fontSize: focused ? 18 : 16, fontFamily: fonts.bodyBold }}>☰</Text>
+            <TabGlyph color={color} focused={focused} glyph="☰" />
           ),
         }}
       />
@@ -42,7 +45,7 @@ export default function TabLayout() {
         options={{
           title: 'Log',
           tabBarIcon: ({ color, focused }) => (
-            <Text style={{ color, fontSize: focused ? 22 : 20, fontFamily: fonts.bodyBold }}>+</Text>
+            <TabGlyph color={color} focused={focused} glyph="+" focusedSize={22} size={20} />
           ),
         }}
       />
@@ -51,10 +54,35 @@ export default function TabLayout() {
         options={{
           title: 'Profile',
           tabBarIcon: ({ color, focused }) => (
-            <Text style={{ color, fontSize: focused ? 18 : 16, fontFamily: fonts.bodyBold }}>◎</Text>
+            <TabGlyph color={color} focused={focused} glyph="◎" />
           ),
         }}
       />
     </Tabs>
+  );
+}
+
+function TabGlyph({
+  color,
+  focused,
+  glyph,
+  focusedSize = 18,
+  size = 16,
+}: {
+  color: ColorValue;
+  focused: boolean;
+  glyph: string;
+  focusedSize?: number;
+  size?: number;
+}) {
+  return (
+    <Text
+      style={{
+        color,
+        fontSize: focused ? focusedSize : size,
+        fontFamily: fonts.bodyBold,
+      }}>
+      {glyph}
+    </Text>
   );
 }

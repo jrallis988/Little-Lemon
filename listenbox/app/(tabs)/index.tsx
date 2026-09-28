@@ -12,6 +12,7 @@ export default function FeedScreen() {
   return (
     <View style={styles.root}>
       <LinearGradient
+        pointerEvents="none"
         colors={[palette.paper, palette.paperDeep, '#DCE6F0']}
         locations={[0, 0.55, 1]}
         style={StyleSheet.absoluteFill}
