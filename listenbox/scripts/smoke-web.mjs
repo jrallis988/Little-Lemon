@@ -21,28 +21,29 @@ async function main() {
   await page.getByText('Friends are listening').waitFor({ timeout: 15000 });
   console.log('OK login + feed');
 
-  // Click the Log tab label in the bottom tab bar (last match is usually the tab).
   await page.getByText('Log', { exact: true }).last().click();
   await page.getByText('Log a listen').waitFor({ timeout: 15000 });
 
-  const album = page.getByTestId('album-album-blonde');
-  await album.waitFor({ timeout: 10000 });
-  await album.click({ force: true });
-  await page.getByText('RATING').waitFor({ timeout: 5000 });
-  console.log('OK album selected');
+  // MusicBrainz search path
+  await page.getByTestId('album-search').fill('blonde frank ocean');
+  const mbAlbum = page.locator('[data-testid^="album-mb-"]').first();
+  await mbAlbum.waitFor({ timeout: 20000 });
+  await mbAlbum.click({ force: true });
+  await page.getByText('Selected').waitFor({ timeout: 5000 });
+  await page.getByText('via MusicBrainz').waitFor({ timeout: 5000 });
+  console.log('OK MusicBrainz search + select');
 
-  await page.getByTestId('rating-4').click({ force: true });
-  await page.getByPlaceholder('What stuck with you?').fill('Midnight re-listen — still perfect.');
+  await page.getByTestId('rating-5').click({ force: true });
+  await page.getByPlaceholder('What stuck with you?').fill('Found via MusicBrainz search.');
   await page.getByText(/Like this album|Liked/).click({ force: true });
   await page.getByTestId('save-listen').click({ force: true });
   await page.getByText('Logged!').waitFor({ timeout: 5000 });
   console.log('OK save confirmed');
 
   await page.getByText('Friends are listening').waitFor({ timeout: 15000 });
-  // Feed card review (ignore leftover Log textarea still in the inactive scene DOM).
   await page
     .locator('div')
-    .filter({ hasText: /^Midnight re-listen — still perfect\.$/ })
+    .filter({ hasText: /^Found via MusicBrainz search\.$/ })
     .first()
     .waitFor({ timeout: 10000 });
   await page.getByText('Alex Rivers').first().waitFor({ timeout: 10000 });

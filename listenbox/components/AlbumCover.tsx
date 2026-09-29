@@ -1,5 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { StyleSheet, Text, View, type ViewStyle } from 'react-native';
+import { useState } from 'react';
+import { Image, StyleSheet, Text, View, type ViewStyle } from 'react-native';
 
 import { fonts, palette, radii } from '@/constants/theme';
 import type { Album } from '@/types/models';
@@ -11,6 +12,9 @@ type Props = {
 };
 
 export function AlbumCover({ album, size = 72, style }: Props) {
+  const [imageFailed, setImageFailed] = useState(false);
+  const showImage = Boolean(album.coverUrl) && !imageFailed;
+  const radius = Math.max(8, size * 0.12);
   const initials = album.title
     .split(/\s+/)
     .slice(0, 2)
@@ -19,14 +23,23 @@ export function AlbumCover({ album, size = 72, style }: Props) {
 
   return (
     <View style={[{ width: size, height: size }, styles.shadow, style]}>
-      <LinearGradient
-        colors={[album.coverColor, shade(album.coverColor)]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={[styles.cover, { width: size, height: size, borderRadius: Math.max(8, size * 0.12) }]}>
-        <View pointerEvents="none" style={styles.groove} />
-        <Text style={[styles.initials, { fontSize: size * 0.28 }]}>{initials}</Text>
-      </LinearGradient>
+      {showImage ? (
+        <Image
+          source={{ uri: album.coverUrl }}
+          style={{ width: size, height: size, borderRadius: radius }}
+          onError={() => setImageFailed(true)}
+          accessibilityLabel={`${album.title} cover`}
+        />
+      ) : (
+        <LinearGradient
+          colors={[album.coverColor, shade(album.coverColor)]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={[styles.cover, { width: size, height: size, borderRadius: radius }]}>
+          <View pointerEvents="none" style={styles.groove} />
+          <Text style={[styles.initials, { fontSize: size * 0.28 }]}>{initials}</Text>
+        </LinearGradient>
+      )}
     </View>
   );
 }

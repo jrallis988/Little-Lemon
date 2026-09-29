@@ -8,6 +8,7 @@ import {
 } from 'react';
 
 import { useAuth } from '@/context/AuthContext';
+import { useCatalog } from '@/context/CatalogContext';
 import { SEED_LOGS, SEED_USERS, buildFeed } from '@/data/seed';
 import type { AlbumLog, FeedItem, ListenRating, User, UserId } from '@/types/models';
 
@@ -37,9 +38,13 @@ function usersWithSession(sessionUser: User | null): User[] {
 
 export function LogsProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
+  const { albums } = useCatalog();
   const [logs, setLogs] = useState<AlbumLog[]>(SEED_LOGS);
 
-  const feed = useMemo(() => buildFeed(logs, usersWithSession(user)), [logs, user]);
+  const feed = useMemo(
+    () => buildFeed(logs, usersWithSession(user), albums),
+    [logs, user, albums],
+  );
 
   const logsForUser = useCallback(
     (userId: UserId) =>

@@ -5,13 +5,14 @@ import { AlbumCover } from '@/components/AlbumCover';
 import { RatingStars } from '@/components/RatingStars';
 import { Screen } from '@/components/Screen';
 import { useAuth } from '@/context/AuthContext';
+import { useCatalog } from '@/context/CatalogContext';
 import { useLogs } from '@/context/LogsContext';
-import { getAlbumById } from '@/data/seed';
 import { fonts, palette, radii, spacing } from '@/constants/theme';
 
 export default function ProfileScreen() {
   const { user, signOut } = useAuth();
   const { logsForUser } = useLogs();
+  const { getAlbum } = useCatalog();
 
   if (!user) return null;
 
@@ -57,7 +58,7 @@ export default function ProfileScreen() {
         <Text style={styles.empty}>Nothing logged yet — head to the Log tab.</Text>
       ) : (
         myLogs.map((log) => {
-          const album = getAlbumById(log.albumId);
+          const album = getAlbum(log.albumId);
           if (!album) return null;
           return (
             <View key={log.id} style={styles.diaryRow}>

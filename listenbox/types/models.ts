@@ -17,9 +17,13 @@ export interface Album {
   title: string;
   artist: string;
   year: number;
-  /** Dominant cover color used as a stand-in until real art is wired up */
+  /** Dominant cover color used as a stand-in when art is missing */
   coverColor: string;
   genre: string;
+  /** MusicBrainz release-group MBID when sourced from search */
+  musicBrainzId?: string;
+  /** Cover Art Archive (or other) image URL */
+  coverUrl?: string;
 }
 
 export type ListenRating = 0.5 | 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 4.5 | 5;

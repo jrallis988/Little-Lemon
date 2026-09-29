@@ -15,6 +15,7 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 
 import { AuthProvider } from '@/context/AuthContext';
+import { CatalogProvider } from '@/context/CatalogContext';
 import { LogsProvider } from '@/context/LogsContext';
 import { palette } from '@/constants/theme';
 
@@ -51,19 +52,21 @@ export default function RootLayout() {
 
   return (
     <AuthProvider>
-      <LogsProvider>
-        <StatusBar style="dark" />
-        <Stack
-          screenOptions={{
-            headerShown: false,
-            contentStyle: { backgroundColor: palette.paper },
-            animation: 'fade',
-          }}>
-          <Stack.Screen name="index" />
-          <Stack.Screen name="(auth)" />
-          <Stack.Screen name="(tabs)" />
-        </Stack>
-      </LogsProvider>
+      <CatalogProvider>
+        <LogsProvider>
+          <StatusBar style="dark" />
+          <Stack
+            screenOptions={{
+              headerShown: false,
+              contentStyle: { backgroundColor: palette.paper },
+              animation: 'fade',
+            }}>
+            <Stack.Screen name="index" />
+            <Stack.Screen name="(auth)" />
+            <Stack.Screen name="(tabs)" />
+          </Stack>
+        </LogsProvider>
+      </CatalogProvider>
     </AuthProvider>
   );
 }

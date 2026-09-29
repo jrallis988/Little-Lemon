@@ -28,12 +28,13 @@ npm run smoke:web   # Playwright end-to-end against localhost:8081
 | Auth shell | Sign in with display name + email; session persisted locally |
 | Domain models | `User`, `Album`, `AlbumLog`, `FeedItem` in `types/models.ts` |
 | Social feed | Seed listens from friends on the Feed tab |
-| Log a listen | Pick album → rate → review → like → save to feed + diary |
+| Catalog search | MusicBrainz release-group search + Cover Art Archive images |
+| Log a listen | Search or pick suggestion → rate → review → like → save |
 | Profile | Your stats, diary, sign out |
 
 ## Next up
 
 - Real auth (Clerk / Supabase)
-- MusicBrainz / Discogs catalog search
 - Spotify listen history import
 - Follow graph + activity API
+- Persist logs/catalog beyond local session memory
