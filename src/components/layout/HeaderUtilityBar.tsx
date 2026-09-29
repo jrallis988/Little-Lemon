@@ -40,7 +40,7 @@ export function HeaderUtilityBar() {
   }, [open]);
 
   return (
-    <div className="border-b border-border bg-white">
+    <div className="relative z-[610] border-b border-border bg-white">
       <div className="wrap flex h-11 items-center justify-end gap-s3 text-sm sm:gap-s4">
         <Link
           href="/portal"
@@ -55,21 +55,20 @@ export function HeaderUtilityBar() {
           International
         </Link>
 
-        <div
-          ref={rootRef}
-          className="relative"
-          onMouseEnter={() => setOpen(true)}
-          onMouseLeave={() => setOpen(false)}
-        >
+        <div ref={rootRef} className="relative">
           <button
             type="button"
             id={`${id}-want`}
+            data-testid="i-want-to"
             aria-expanded={open}
             aria-haspopup="true"
             aria-controls={`${id}-want-menu`}
             className="inline-flex items-center gap-1 font-semibold text-blue hover:underline"
-            onClick={() => setOpen((v) => !v)}
-            onFocus={() => setOpen(true)}
+            onClick={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              setOpen((v) => !v);
+            }}
           >
             I Want To...
             <IconChevronDown
@@ -82,9 +81,10 @@ export function HeaderUtilityBar() {
           {open ? (
             <ul
               id={`${id}-want-menu`}
+              data-testid="i-want-to-menu"
               role="menu"
               aria-labelledby={`${id}-want`}
-              className="absolute right-0 top-full z-[620] mt-0 min-w-[240px] rounded-sm border border-border bg-white py-1 pt-2 shadow-lg"
+              className="absolute right-0 top-full z-[620] mt-1 min-w-[240px] rounded-sm border border-border bg-white py-1 shadow-lg"
             >
               {iWantToLinks.map((link) => (
                 <li key={link.label} role="none">
