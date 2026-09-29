@@ -105,12 +105,12 @@ export function DeviceShell({ children }: { children: ReactNode }) {
               <Button
                 variant="ghost"
                 size="sm"
-                className="!min-h-9 !px-2.5 shrink-0"
+                className="!min-h-9 !px-2.5 shrink-0 font-semibold"
                 onClick={() => setMenuOpen((o) => !o)}
                 aria-label="Open screen menu"
                 aria-expanded={menuOpen}
               >
-                ☰
+                Menu
               </Button>
             </header>
 
