@@ -1,0 +1,12 @@
+# Deploy from apps/api on Railway.
+# Attach a Postgres plugin and set DATABASE_URL, JWT_SECRET, RESEND_API_KEY.
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+healthcheckPath = "/health"
+healthcheckTimeout = 30
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 5
