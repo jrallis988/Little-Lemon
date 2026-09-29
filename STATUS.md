@@ -19,10 +19,10 @@ ARTISTIC FOUNTAIN: STATUS REPORT
 4. PROJECT LANGUAGES (by branch)
 • Inventory of project branches in this repository, grouped by primary stack.
 • Public summary: `stacks.html` on the live site.
-• Last updated 2026-09-24 from git remote branches — 71 projects (excludes this docs branch).
+• Last updated 2026-09-29 from git remote branches — 77 projects (excludes this docs branch).
 • Names are human-readable; branch refs are included for traceability.
 
-4.1 STATIC HTML / CSS / JAVASCRIPT (16)
+4.1 STATIC HTML / CSS / JAVASCRIPT (17)
 
 • AF Skills Toolkit — HTML, CSS (`cursor/af-skills-toolkit-98e7`)
 • AI Difficulty Levels — HTML, CSS, JavaScript (`cursor/ai-difficulty-levels-41db`)
@@ -33,6 +33,7 @@ ARTISTIC FOUNTAIN: STATUS REPORT
 • How to Play Help — HTML, CSS, JavaScript (`cursor/how-to-play-help-41db`)
 • Kids Animation Portfolio — HTML, CSS, JavaScript (`cursor/kids-animation-portfolio-8cee`)
 • Little Lemon — HTML, CSS, JavaScript, PHP (PHP templates) (`cursor/little-lemon-multi-index-bc64`)
+• Minimal Custom Kernel — HTML, CSS, JavaScript (`cursor/minimal-custom-kernel-a3ed`)
 • NH DMV Redesign — HTML, CSS, JavaScript (`cursor/nh-dmv-redesign-2478`)
 • Nick Jr Website — HTML, CSS, JavaScript (`cursor/nick-jr-website-446a`)
 • PetSmart Redesign — HTML, CSS, JavaScript (`cursor/petsmart-redesign-d85e`)
@@ -58,20 +59,18 @@ ARTISTIC FOUNTAIN: STATUS REPORT
 • White Mountains College — HTML, CSS, JavaScript (React, Tailwind CSS) (`cursor/white-mountains-college-website-e814`)
 • Whole Youth Coalition — HTML, CSS, JavaScript (React, Tailwind CSS) (`cursor/whole-youth-coalition-3a74`)
 
-4.3 REACT + TYPESCRIPT (13)
+4.3 REACT + TYPESCRIPT (11)
 
 • Amplify Instagram Campaign — HTML, CSS, JavaScript, TypeScript, TSX (React, Vite) (`cursor/amplify-instagram-campaign-1544`)
 • Apex Hockey Case Study — HTML, CSS, JavaScript, TypeScript, TSX (React, Vite) (`cursor/apex-hockey-case-study-2445`)
 • Atelier Rack — HTML, CSS, JavaScript, TypeScript, TSX (React, Vite, Tailwind CSS) (`cursor/atelier-rack-foundation-1a80`)
 • Breakaway Editorial — HTML, CSS, JavaScript, TypeScript, TSX (React, Vite) (`cursor/breakaway-editorial-53e7`)
 • Breakaway Issue 08 — HTML, CSS, JavaScript, TypeScript, TSX (React, Vite) (`cursor/breakaway-issue08-revision-53e7`)
-• Brewery Website — HTML, CSS, JavaScript, TypeScript, TSX (React, Vite, Tailwind CSS) (`cursor/brewery-website-ef91`)
 • Built for the Shift — HTML, CSS, JavaScript, TypeScript, TSX (React, Vite) (`cursor/built-for-the-shift-7813`)
 • Courtside YouTube System — HTML, CSS, JavaScript, TypeScript, TSX (React, Vite) (`cursor/courtside-youtube-system-a110`)
 • Forge Athletics Brand — HTML, CSS, JavaScript, TypeScript, TSX (React, Vite) (`cursor/forge-athletics-brand-6f63`)
 • Greenroom Comedian Social — CSS, JavaScript, TypeScript, TSX, SQL (React, Vite, Tailwind CSS) (`cursor/greenroom-comedian-social-a3d7`)
 • Transactional Security — HTML, CSS, TypeScript, TSX, SQL (React, Vite) (`cursor/transactional-security-376b`)
-• Weight Watchers Redesign — HTML, CSS, JavaScript, TypeScript, TSX (React, Vite, Tailwind CSS) (`cursor/weight-watchers-redesign-b501`)
 • Working Intelligence — HTML, CSS, JavaScript, TypeScript, TSX, SQL (React, Vite, Tailwind CSS) (`cursor/working-intelligence-platform-b88d`)
 
 4.4 REACT + TYPESCRIPT (NEXT.JS) (9)
@@ -86,27 +85,34 @@ ARTISTIC FOUNTAIN: STATUS REPORT
 • Portfolio Foundation — CSS, JavaScript, TypeScript, TSX (Next.js, Tailwind CSS) (`cursor/portfolio-foundation-5c00`)
 • Walgreens Redesign — CSS, JavaScript, TypeScript, TSX (Next.js, Tailwind CSS) (`cursor/walgreens-redesign-foundation-5b50`)
 
-4.5 REACT NATIVE / EXPO (TYPESCRIPT) (4)
+4.5 REACT NATIVE / EXPO (TYPESCRIPT) (5)
 
 • Expo Tab Screens — JavaScript, TypeScript, TSX (Expo) (`cursor/expo-tab-screens-523e`)
+• ListenBox (Expo) — HTML, CSS, JavaScript, TypeScript, TSX (Expo) (`cursor/listenbox-expo-scaffold-b5eb`)
 • Onboarding Screens — JavaScript, TypeScript, TSX (Expo) (`cursor/onboarding-screens-a34d`)
 • Product Revision Pass — JavaScript, TypeScript, TSX (Expo) (`cursor/product-revision-pass-5805`)
 • StaticVolume — JavaScript, TypeScript, TSX, SQL (Expo) (`cursor/staticvolume-scaffold-df8a`)
 
-4.6 TYPESCRIPT / TSX (OTHER) (5)
+4.6 TYPESCRIPT / TSX (OTHER) (8)
 
+• Brewery Website — HTML, CSS, JavaScript, TypeScript, TSX (`cursor/brewery-website-ef91`)
 • Pulse Sports Motion — HTML, CSS, JavaScript, TypeScript, TSX (`cursor/pulse-sports-motion-7813`)
 • Rate My Employer — HTML, CSS, JavaScript, TypeScript, TSX, SQL (`cursor/rate-my-employer-134f`)
 • Roam Coffee Packaging — HTML, CSS, JavaScript, TypeScript, TSX (`cursor/roam-coffee-packaging-c900`)
 • The Next Chapter — HTML, CSS, JavaScript, TypeScript, TSX (`cursor/the-next-chapter-2b99`)
 • Velocity Portfolio — HTML, CSS, JavaScript, TypeScript, TSX (`cursor/velocity-portfolio-b3c0`)
+• Warehouse Inventory Scan — HTML, CSS, JavaScript, TypeScript, TSX (`cursor/warehouse-inventory-scan-1b6b`)
+• Weight Watchers Redesign — HTML, CSS, JavaScript, TypeScript, TSX (`cursor/weight-watchers-redesign-b501`)
 
-4.7 DESKTOP (TYPESCRIPT + RUST / TAURI) (4)
+4.7 DESKTOP (TYPESCRIPT + RUST / TAURI) (7)
 
 • Mailbox (Kid Email Client) — HTML, CSS, JavaScript, TypeScript, TSX, Rust (React, Vite, Tailwind CSS, Tauri) (`cursor/kid-email-client-scaffold-804c`)
 • Mailbox Friendly UI — HTML, CSS, JavaScript, TypeScript, TSX, Rust (React, Vite, Tailwind CSS, Tauri) (`cursor/mailbox-friendly-ui-804c`)
+• Surf (expanded edu index) — HTML, CSS, JavaScript, TypeScript, TSX, Rust (React, Vite, Tailwind CSS, Tauri) (`cursor/surf-expanded-edu-index-af59`)
+• Surf (family beta) — HTML, CSS, JavaScript, TypeScript, TSX, Rust (React, Vite, Tailwind CSS, Tauri) (`cursor/surf-family-beta-hardening-af59`)
 • Surf (foundation) — HTML, CSS, JavaScript, TypeScript, TSX, Rust (React, Vite, Tailwind CSS, Tauri) (`cursor/surf-foundation-scaffold-af59`)
 • Surf (production browser) — HTML, CSS, JavaScript, TypeScript, TSX, Rust (React, Vite, Tailwind CSS, Tauri) (`cursor/surf-v1-production-browser-af59`)
+• Surf (quality pass) — HTML, CSS, JavaScript, TypeScript, TSX, Rust (React, Vite, Tailwind CSS, Tauri) (`cursor/surf-quality-to-ten-af59`)
 
 4.8 PYTHON (6)
 
