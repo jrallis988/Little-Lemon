@@ -8,6 +8,7 @@ import { FinderPage } from "./pages/FinderPage";
 import { HomePage } from "./pages/HomePage";
 import { PrivateEventsPage } from "./pages/PrivateEventsPage";
 import { ReleasesPage } from "./pages/ReleasesPage";
+import { RestaurantPage } from "./pages/RestaurantPage";
 import { ShopPage } from "./pages/ShopPage";
 import { VisitPage } from "./pages/VisitPage";
 
@@ -24,6 +25,7 @@ export default function App() {
           <Route path="/beers/:slug" element={<BeerDetailPage />} />
           <Route path="/releases" element={<ReleasesPage />} />
           <Route path="/visit" element={<VisitPage />} />
+          <Route path="/restaurant" element={<RestaurantPage />} />
           <Route path="/shop" element={<ShopPage />} />
           <Route path="/finder" element={<FinderPage />} />
           <Route path="/events/private" element={<PrivateEventsPage />} />

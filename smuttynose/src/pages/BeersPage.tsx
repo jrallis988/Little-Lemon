@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { BeerCan } from "../components/BeerCan";
 import { CartDrawer } from "../components/CartDrawer";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
@@ -84,28 +85,40 @@ function BeerGrid({
   return (
     <ul className="mt-6 divide-y divide-ink/10 border-y border-ink/10">
       {beers.map((beer) => (
-        <li
-          key={beer.slug}
-          className="grid gap-3 py-6 md:grid-cols-[1.2fr_1fr_auto] md:items-end"
-        >
-          <div>
-            <Link
-              to={`/beers/${beer.slug}`}
-              className="font-display text-3xl font-bold uppercase tracking-wide transition-colors hover:text-tide"
-            >
-              {beer.name}
-            </Link>
-            <p className="mt-1 text-sm font-medium uppercase tracking-[0.14em] text-tide">
-              {beer.style} · {beer.status}
+        <li key={beer.slug}>
+          <Link
+            to={`/beers/${beer.slug}`}
+            className="grid gap-4 py-6 transition-colors hover:bg-mist/60 md:grid-cols-[5.5rem_1.2fr_1fr_auto] md:items-center"
+          >
+            <div className="flex h-24 w-20 items-center justify-center bg-mist md:h-28 md:w-[5.5rem]">
+              {beer.can ? (
+                <BeerCan
+                  slug={beer.can}
+                  name={beer.name}
+                  className="max-h-[5.5rem] w-auto object-contain md:max-h-24"
+                />
+              ) : (
+                <span className="font-display text-xs font-bold uppercase tracking-wide text-steel">
+                  {beer.abv}
+                </span>
+              )}
+            </div>
+            <div>
+              <p className="font-display text-3xl font-bold uppercase tracking-wide transition-colors group-hover:text-tide">
+                {beer.name}
+              </p>
+              <p className="mt-1 text-sm font-medium uppercase tracking-[0.14em] text-tide">
+                {beer.style} · {beer.status}
+              </p>
+            </div>
+            <p className="text-steel">{beer.tagline}</p>
+            <p className="font-display text-2xl font-bold md:text-right">
+              {beer.abv}
+              <span className="ml-3 text-base font-semibold text-steel">
+                {beer.ibu} IBU
+              </span>
             </p>
-          </div>
-          <p className="text-steel">{beer.tagline}</p>
-          <p className="font-display text-2xl font-bold md:text-right">
-            {beer.abv}
-            <span className="ml-3 text-base font-semibold text-steel">
-              {beer.ibu} IBU
-            </span>
-          </p>
+          </Link>
         </li>
       ))}
     </ul>

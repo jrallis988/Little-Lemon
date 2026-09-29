@@ -13,6 +13,7 @@ const sectionLinks = [
 
 const pageLinks = [
   { to: "/releases", label: "Releases" },
+  { to: "/restaurant", label: "Restaurant" },
   { to: "/shop", label: "Shop" },
   { to: "/finder", label: "Beer finder" },
   { to: "/events/private", label: "Private events" },

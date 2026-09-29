@@ -14,6 +14,8 @@ export type BeerDetail = {
   packaging: { label: string; note: string }[];
   status: "year-round" | "seasonal" | "limited";
   image: string; // CampusImage name without extension
+  /** Official can PNG under public/images/beers/ (filename without .png) */
+  can?: string;
 };
 
 /** Stats & copy aligned to smuttynose.com/smuttynose-beers/ */
@@ -39,6 +41,7 @@ export const beerDetails: BeerDetail[] = [
     ],
     status: "year-round",
     image: "campus-silos",
+    can: "finestkind-ipa",
   },
   {
     slug: "old-brown-dog",
@@ -61,6 +64,7 @@ export const beerDetails: BeerDetail[] = [
     ],
     status: "year-round",
     image: "campus-patio",
+    can: "old-brown-dog",
   },
   {
     slug: "whole-lotta-haze",
@@ -87,6 +91,7 @@ export const beerDetails: BeerDetail[] = [
     ],
     status: "year-round",
     image: "campus-day",
+    can: "whole-lotta-haze",
   },
   {
     slug: "magic-beans",
@@ -114,6 +119,7 @@ export const beerDetails: BeerDetail[] = [
     ],
     status: "seasonal",
     image: "hayseed-plate",
+    can: "magic-beans",
   },
   {
     slug: "summer-ale",
@@ -135,6 +141,7 @@ export const beerDetails: BeerDetail[] = [
     ],
     status: "seasonal",
     image: "campus-entrance",
+    can: "summer-ale",
   },
   {
     slug: "key-lime-pie-sour",
@@ -177,6 +184,7 @@ export const beerDetails: BeerDetail[] = [
     ],
     status: "seasonal",
     image: "campus-dusk",
+    can: "pumpkin-ale",
   },
   {
     slug: "blackberry-ale",
@@ -198,6 +206,7 @@ export const beerDetails: BeerDetail[] = [
     ],
     status: "seasonal",
     image: "campus-patio",
+    can: "blackberry-ale",
   },
   {
     slug: "oktoberfest",
@@ -219,6 +228,7 @@ export const beerDetails: BeerDetail[] = [
     ],
     status: "seasonal",
     image: "campus-dusk",
+    can: "oktoberfest",
   },
   {
     slug: "cold-shoals-light-lager",
@@ -240,6 +250,51 @@ export const beerDetails: BeerDetail[] = [
     ],
     status: "seasonal",
     image: "campus-day",
+    can: "cold-shoals-light-lager",
+  },
+  {
+    slug: "hazy-dipa",
+    name: "Hazy DIPA",
+    style: "Double IPA",
+    abv: "9.0%",
+    ibu: "45",
+    srm: "6",
+    tagline: "Big, juicy hop character with a soft haze.",
+    description:
+      "A limited double IPA with soft haze and concentrated hop flavor — a heavier sibling to Whole Lotta Haze when it hits the Backyard board.",
+    tastingNotes: ["Tropical juice", "Soft haze", "Big bitterness", "Full body"],
+    malt: ["2-Row", "Oats", "Wheat"],
+    hops: ["Citra", "Mosaic", "Galaxy"],
+    pairings: ["Spicy wings", "Blue cheese", "Tacos", "Dark chocolate"],
+    packaging: [
+      { label: "Draft", note: "Limited campus pour" },
+      { label: "Cans", note: "When released" },
+    ],
+    status: "limited",
+    image: "campus-silos",
+    can: "hazy-dipa",
+  },
+  {
+    slug: "raspberry-lime-rickey",
+    name: "Raspberry Lime Rickey",
+    style: "Fruit Ale",
+    abv: "5.2%",
+    ibu: "12",
+    srm: "5",
+    tagline: "Bright raspberry-lime snap — easy Backyard pour.",
+    description:
+      "A patio-friendly fruit ale with raspberry brightness and a lime finish — built for sunny Towle Farm afternoons.",
+    tastingNotes: ["Raspberry", "Lime zest", "Light tartness", "Easy finish"],
+    malt: ["2-Row", "Wheat"],
+    hops: ["Noble blend"],
+    pairings: ["Salads", "Fish tacos", "Goat cheese", "Summer desserts"],
+    packaging: [
+      { label: "Draft", note: "Rotating campus pour" },
+      { label: "Cans", note: "When released" },
+    ],
+    status: "seasonal",
+    image: "campus-patio",
+    can: "raspberry-lime-rickey",
   },
 ];
 

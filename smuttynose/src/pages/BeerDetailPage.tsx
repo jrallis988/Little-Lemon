@@ -1,4 +1,5 @@
 import { Link, Navigate, useParams } from "react-router-dom";
+import { BeerCan } from "../components/BeerCan";
 import { CampusImage } from "../components/CampusImage";
 import { CartDrawer } from "../components/CartDrawer";
 import { Footer } from "../components/Footer";
@@ -13,8 +14,12 @@ export function BeerDetailPage() {
   const beer = getBeerBySlug(slug);
 
   if (!beer) {
-    return <Navigate to="/#beers" replace />;
+    return <Navigate to="/beers" replace />;
   }
+
+  const ogImage = beer.can
+    ? `/images/beers/${beer.can}.png`
+    : `/images/${beer.image}.jpg`;
 
   return (
     <div className="min-h-screen bg-foam">
@@ -22,20 +27,28 @@ export function BeerDetailPage() {
         title={beer.name}
         description={beer.tagline}
         path={`/beers/${beer.slug}`}
-        image={`/images/${beer.image}.jpg`}
+        image={ogImage}
       />
       <SkipLink />
       <Header solid />
       <CartDrawer />
       <main id="main" className="pt-24">
         <div className="mx-auto grid max-w-site gap-10 px-5 pb-20 md:grid-cols-2 md:gap-14 md:px-8 md:pb-28">
-          <div className="relative min-h-[22rem] overflow-hidden md:min-h-[34rem]">
-            <CampusImage
-              name={beer.image}
-              alt={`${beer.name} atmosphere at Towle Farm`}
-              className="h-full w-full object-cover"
-              loading="eager"
-            />
+          <div className="relative flex min-h-[22rem] items-center justify-center overflow-hidden bg-mist md:min-h-[34rem]">
+            {beer.can ? (
+              <BeerCan
+                slug={beer.can}
+                name={beer.name}
+                className="max-h-[28rem] w-auto object-contain px-8 py-10 md:max-h-[32rem]"
+              />
+            ) : (
+              <CampusImage
+                name={beer.image}
+                alt={`${beer.name} at Towle Farm`}
+                className="h-full w-full object-cover"
+                loading="eager"
+              />
+            )}
           </div>
 
           <div>

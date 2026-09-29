@@ -62,6 +62,12 @@ export function Footer() {
               <Link to="/releases" className="transition-colors hover:text-foam">
                 Releases
               </Link>
+              <Link
+                to="/restaurant"
+                className="transition-colors hover:text-foam"
+              >
+                Restaurant
+              </Link>
               <Link to="/shop" className="transition-colors hover:text-foam">
                 Shop
               </Link>

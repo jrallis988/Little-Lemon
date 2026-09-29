@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { links } from "../data/links";
 import { useInView } from "../hooks/useInView";
 import { CampusImage } from "./CampusImage";
@@ -38,21 +39,19 @@ export function Food() {
             </p>
 
             <div className="mt-10 flex flex-wrap gap-3">
+              <Link
+                to="/restaurant"
+                className="bg-buoy px-5 py-3 text-sm font-semibold tracking-wide text-foam transition-transform duration-300 hover:-translate-y-0.5"
+              >
+                Explore the restaurant
+              </Link>
               <a
                 href={links.restaurant}
                 target="_blank"
                 rel="noreferrer"
-                className="bg-buoy px-5 py-3 text-sm font-semibold tracking-wide text-foam transition-transform duration-300 hover:-translate-y-0.5"
-              >
-                View restaurant menu
-              </a>
-              <a
-                href={links.facebookRestaurant}
-                target="_blank"
-                rel="noreferrer"
                 className="border border-foam/50 px-5 py-3 text-sm font-semibold tracking-wide text-foam transition-colors hover:bg-foam/10"
               >
-                Truck & music updates
+                Full menu
               </a>
             </div>
           </div>
