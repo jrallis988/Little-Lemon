@@ -127,13 +127,11 @@ export function SmartSearch({ className }: { className?: string }) {
 
   function submitSearch() {
     const trimmed = query.trim();
-    if (results[activeIndex]) {
-      navigateToResult(results[activeIndex].href);
+    if (trimmed) {
+      navigateToResult(`/search?q=${encodeURIComponent(trimmed)}`);
       return;
     }
-    if (trimmed) {
-      navigateToResult(`/shop?q=${encodeURIComponent(trimmed)}`);
-    }
+    navigateToResult("/search");
   }
 
   return (
@@ -271,6 +269,20 @@ export function SmartSearch({ className }: { className?: string }) {
               })
             )}
           </ul>
+          {query.trim() ? (
+            <div className="border-t border-border/70 px-3 py-2">
+              <button
+                type="button"
+                className="w-full rounded-lg px-2 py-2 text-left text-sm font-medium text-brand hover:bg-muted/60"
+                onMouseDown={(event) => {
+                  event.preventDefault();
+                  submitSearch();
+                }}
+              >
+                See all results for “{query.trim()}”
+              </button>
+            </div>
+          ) : null}
         </div>
       )}
     </div>

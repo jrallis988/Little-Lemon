@@ -139,4 +139,22 @@ test.describe("Walgreens RX smoke flows", () => {
     await page.getByRole("button", { name: "Request appointment" }).click();
     await expect(page.getByRole("heading", { name: "Request received" })).toBeVisible();
   });
+
+  test("store services filter and search results page work", async ({
+    page,
+  }) => {
+    await page.goto("/stores");
+    await expect(page.getByLabel("Nearby stores map")).toBeVisible();
+    await page.getByRole("button", { name: "Open 24 hours", exact: true }).click();
+    await expect(page.getByText(/Showing 1 of 3 nearby stores/i)).toBeVisible();
+    await expect(page.getByText(/Geary & 20th/i)).toBeVisible();
+
+    await page.goto("/search?q=moisturizer");
+    await expect(page.getByRole("heading", { name: "Search results" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Products" })).toBeVisible();
+    await expect(page.getByText(/Moisturizing Cream/i).first()).toBeVisible();
+
+    await page.goto("/search?q=flu");
+    await expect(page.getByRole("heading", { name: "Clinical services" })).toBeVisible();
+  });
 });

@@ -47,6 +47,14 @@ export interface PrescriptionOrder {
   pickupStoreId: string;
 }
 
+export type StoreService =
+  | "pharmacy"
+  | "drive_thru"
+  | "vaccines"
+  | "photo"
+  | "open_24"
+  | "same_day";
+
 export interface StoreLocation {
   id: string;
   name: string;
@@ -59,6 +67,8 @@ export interface StoreLocation {
   hasDriveThru: boolean;
   latitude: number;
   longitude: number;
+  services: StoreService[];
+  distanceMiles: number;
 }
 
 export interface NavCategory {

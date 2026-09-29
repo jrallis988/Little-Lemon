@@ -1,4 +1,25 @@
-import type { StoreLocation } from "@/lib/types";
+import type { StoreLocation, StoreService } from "@/lib/types";
+
+export const STORE_SERVICE_LABEL: Record<StoreService, string> = {
+  pharmacy: "Pharmacy",
+  drive_thru: "Drive-thru",
+  vaccines: "Vaccines",
+  photo: "Photo",
+  open_24: "Open 24 hours",
+  same_day: "Same-day delivery",
+};
+
+export const STORE_SERVICE_FILTERS: {
+  id: StoreService;
+  label: string;
+}[] = [
+  { id: "pharmacy", label: "Pharmacy" },
+  { id: "drive_thru", label: "Drive-thru" },
+  { id: "vaccines", label: "Vaccines" },
+  { id: "photo", label: "Photo" },
+  { id: "open_24", label: "Open 24 hours" },
+  { id: "same_day", label: "Same-day delivery" },
+];
 
 export const NEARBY_STORES: StoreLocation[] = [
   {
@@ -13,6 +34,8 @@ export const NEARBY_STORES: StoreLocation[] = [
     hasDriveThru: true,
     latitude: 37.785,
     longitude: -122.407,
+    distanceMiles: 0.4,
+    services: ["pharmacy", "drive_thru", "vaccines", "photo", "same_day"],
   },
   {
     id: "store-4902",
@@ -26,6 +49,8 @@ export const NEARBY_STORES: StoreLocation[] = [
     hasDriveThru: false,
     latitude: 37.758,
     longitude: -122.419,
+    distanceMiles: 1.8,
+    services: ["pharmacy", "vaccines", "photo"],
   },
   {
     id: "store-5011",
@@ -39,8 +64,36 @@ export const NEARBY_STORES: StoreLocation[] = [
     hasDriveThru: true,
     latitude: 37.784,
     longitude: -122.435,
+    distanceMiles: 2.3,
+    services: [
+      "pharmacy",
+      "drive_thru",
+      "vaccines",
+      "photo",
+      "open_24",
+      "same_day",
+    ],
   },
 ];
+
+/** Map pin positions as percentages within the SF demo map frame. */
+export function storeMapPosition(store: StoreLocation): {
+  left: number;
+  top: number;
+} {
+  const latMin = 37.75;
+  const latMax = 37.79;
+  const lngMin = -122.44;
+  const lngMax = -122.4;
+  const left =
+    ((store.longitude - lngMin) / (lngMax - lngMin)) * 70 + 15;
+  const top =
+    ((latMax - store.latitude) / (latMax - latMin)) * 60 + 18;
+  return {
+    left: Math.min(88, Math.max(10, left)),
+    top: Math.min(82, Math.max(12, top)),
+  };
+}
 
 export const PHOTO_OFFERS = [
   {

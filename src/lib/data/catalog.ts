@@ -23,6 +23,8 @@ export const ACTIVE_STORE: StoreLocation = {
   hasDriveThru: true,
   latitude: 37.785,
   longitude: -122.407,
+  distanceMiles: 0.4,
+  services: ["pharmacy", "drive_thru", "vaccines", "photo", "same_day"],
 };
 
 export const CARE_PROFILES: CareProfile[] = [

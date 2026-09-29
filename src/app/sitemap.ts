@@ -14,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/deals",
     "/photo",
     "/stores",
+    "/search",
     "/checkout",
     "/account",
     "/wishlist",
