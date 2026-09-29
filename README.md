@@ -49,5 +49,14 @@ Or open `index.html` directly in a browser.
 ├── services/
 ├── blog/
 ├── images/
+├── warehouse-inventory-scan/  # React handset UI for barcode/RFID capture
 └── *.otf          # brand fonts
+```
+
+## Warehouse Inventory Scan
+
+`warehouse-inventory-scan/` is a Vite + React + TypeScript prototype of a rugged handheld scan UI (barcode / RFID capture + local scan log). See [`warehouse-inventory-scan/README.md`](warehouse-inventory-scan/README.md).
+
+```bash
+npm run warehouse:dev
 ```
