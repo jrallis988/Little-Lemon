@@ -36,7 +36,7 @@ export function AlbumCover({ album, size = 72, style }: Props) {
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           style={[styles.cover, { width: size, height: size, borderRadius: radius }]}>
-          <View pointerEvents="none" style={styles.groove} />
+          <View style={[styles.groove, { pointerEvents: 'none' }]} />
           <Text style={[styles.initials, { fontSize: size * 0.28 }]}>{initials}</Text>
         </LinearGradient>
       )}

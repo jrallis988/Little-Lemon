@@ -26,10 +26,9 @@ export function Screen({ children, scroll = true, style, contentStyle }: Props) 
   return (
     <View style={[styles.root, style]}>
       <LinearGradient
-        pointerEvents="none"
         colors={[palette.paper, palette.paperDeep, '#DCE6F0']}
         locations={[0, 0.55, 1]}
-        style={StyleSheet.absoluteFill}
+        style={[StyleSheet.absoluteFill, { pointerEvents: 'none' }]}
       />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         {body}
