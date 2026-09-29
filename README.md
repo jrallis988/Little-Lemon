@@ -19,6 +19,7 @@ Static site: HTML, CSS, and vanilla JS (built in Cursor). Custom typefaces (Arca
 
 - `index.html` — home (hero, designer, services, portfolio, blog, contact)
 - `nh-dmv/` — conceptual redesign of the New Hampshire DMV website (civic UX case study)
+- `smuttynose/` — Smuttynose Brewing campus marketing site (Vite + React)
 - `services/` — detail pages for each service offering
 - `blog/` — blog index and post pages (content can be drafted in Blaze AI)
 - `privacy.html` — privacy policy
@@ -34,6 +35,17 @@ npm start
 Opens a local static server at [http://localhost:3000](http://localhost:3000).
 
 Or open `index.html` directly in a browser.
+
+### Smuttynose brewery site
+
+```bash
+cd smuttynose
+npm install
+npm run dev
+```
+
+Live (after Pages): https://jrallis988.github.io/Little-Lemon/smuttynose/  
+See `smuttynose/LAUNCH.md`.
 
 ## Structure
 

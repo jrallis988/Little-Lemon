@@ -1,0 +1,34 @@
+type SealMarkProps = {
+  className?: string;
+};
+
+export function SealMark({ className = "h-7 w-7" }: SealMarkProps) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 64 64"
+      fill="none"
+      aria-hidden="true"
+      className={className}
+    >
+      <circle cx="32" cy="32" r="30" fill="currentColor" opacity="0.14" />
+      <g fill="currentColor">
+        <ellipse cx="34" cy="36" rx="16" ry="12" />
+        <ellipse cx="22" cy="28" rx="10" ry="8" />
+        <circle cx="17" cy="25" r="1.6" />
+        <ellipse
+          cx="12"
+          cy="29"
+          rx="3.2"
+          ry="1.4"
+          transform="rotate(-18 12 29)"
+        />
+        <path d="M46 34c4 1 8 4 10 8-3-1-6-1-9-2l-1-6z" />
+        <ellipse cx="28" cy="40" rx="2.2" ry="1.4" opacity="0.35" />
+        <ellipse cx="36" cy="33" rx="2" ry="1.3" opacity="0.35" />
+        <ellipse cx="40" cy="39" rx="1.8" ry="1.2" opacity="0.35" />
+        <ellipse cx="31" cy="30" rx="1.6" ry="1.1" opacity="0.35" />
+      </g>
+    </svg>
+  );
+}
