@@ -74,7 +74,14 @@
       "https://www.facebook.com/Jade-Palace-105172948426464/",
       "https://www.yelp.com/biz/red-mango-asian-cuisine-stratham",
       "https://maps.app.goo.gl/AubqC49co8vvCSaE7"
-    ]
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.1",
+      "reviewCount": "369",
+      "bestRating": "5",
+      "worstRating": "1"
+    }
   }
   </script>
 </head>
@@ -172,6 +179,17 @@
           </li>
           <li class="favorite-spot reveal">
             <figure class="favorite-spot__visual">
+              <img src="images/dish-rainbow-roll.jpg" alt="Rainbow sushi roll with mixed fish toppings and orchid garnish" width="1024" height="768" loading="lazy" />
+            </figure>
+            <div class="favorite-spot__copy">
+              <p class="favorite-cat">Sushi bar</p>
+              <h3>Rainbow Roll</h3>
+              <p class="favorite-price">ask</p>
+              <p>Assorted fish over a California-style roll—colorful, fresh, and made for sharing.</p>
+            </div>
+          </li>
+          <li class="favorite-spot reveal">
+            <figure class="favorite-spot__visual">
               <img src="images/dish-lo-mein.jpg" alt="Lo mein noodles with shrimp and vegetables" width="1024" height="768" loading="lazy" />
             </figure>
             <div class="favorite-spot__copy">
@@ -179,17 +197,6 @@
               <h3>Chicken Lo Mein <span lang="zh-Hans">捞面</span></h3>
               <p class="favorite-price">$13.50</p>
               <p>Soft noodles, tender chicken, and crisp vegetables in a savory wok sauce.</p>
-            </div>
-          </li>
-          <li class="favorite-spot reveal">
-            <figure class="favorite-spot__visual">
-              <img src="images/dish-sesame-chicken.jpg" alt="Sesame chicken over rice with broccoli" width="1024" height="768" loading="lazy" />
-            </figure>
-            <div class="favorite-spot__copy">
-              <p class="favorite-cat">House favorite</p>
-              <h3>Sesame Chicken <span lang="zh-Hans">芝麻鸡</span></h3>
-              <p class="favorite-price">$17.25</p>
-              <p>Crispy chicken in sesame sauce over rice—a Stratham staple.</p>
             </div>
           </li>
         </ul>
@@ -215,6 +222,11 @@
         <div class="reviews-section__head reveal">
           <p class="eyebrow">Reviews</p>
           <h2 id="reviews-heading">What neighbors say</h2>
+          <p class="reviews-rating">
+            <span class="reviews-rating__score" aria-label="4.1 out of 5 stars">4.1 ★</span>
+            <span class="reviews-rating__count">369 Google reviews</span>
+            <a class="reviews-rating__link" href="https://maps.app.goo.gl/AubqC49co8vvCSaE7" target="_blank" rel="noopener noreferrer">See on Google Maps</a>
+          </p>
           <p class="section-lede">Words from guests who dine with us in Stratham.</p>
         </div>
         <ul class="reviews-list">
@@ -251,6 +263,7 @@
           <p class="eyebrow">Visit</p>
           <h2 id="visit-heading">28 Portsmouth Ave, Stratham</h2>
           <p class="section-lede">Suite 8 in Kings Highway Plaza—dine in, pick up, or order delivery.</p>
+          <p class="open-status" data-open-status aria-live="polite"></p>
         </div>
         <div class="visit-layout reveal">
           <div class="visit-info">

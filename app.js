@@ -73,4 +73,42 @@
       requestAnimationFrame(() => scrollToId(location.hash.slice(1)));
     }
   }
+
+  const openStatus = document.querySelector("[data-open-status]");
+  if (openStatus) {
+    // Hours in America/New_York — matches published schedule
+    const schedule = [
+      { days: [1, 2, 3, 4], open: 11 * 60, close: 21 * 60 + 30 }, // Mon–Thu
+      { days: [5, 6], open: 11 * 60, close: 22 * 60 + 30 }, // Fri–Sat
+      { days: [0], open: 12 * 60, close: 21 * 60 + 30 }, // Sun
+    ];
+
+    const now = new Date(
+      new Date().toLocaleString("en-US", { timeZone: "America/New_York" })
+    );
+    const minutes = now.getHours() * 60 + now.getMinutes();
+    const day = now.getDay();
+    const today = schedule.find((s) => s.days.includes(day));
+
+    const fmt = (mins) => {
+      const h = Math.floor(mins / 60);
+      const m = mins % 60;
+      const ampm = h >= 12 ? "pm" : "am";
+      const hr = ((h + 11) % 12) + 1;
+      return m ? `${hr}:${String(m).padStart(2, "0")} ${ampm}` : `${hr} ${ampm}`;
+    };
+
+    if (!today) {
+      openStatus.textContent = "";
+    } else if (minutes >= today.open && minutes < today.close) {
+      openStatus.dataset.state = "open";
+      openStatus.textContent = `Open now · closes ${fmt(today.close)}`;
+    } else if (minutes < today.open) {
+      openStatus.dataset.state = "soon";
+      openStatus.textContent = `Opens today at ${fmt(today.open)}`;
+    } else {
+      openStatus.dataset.state = "closed";
+      openStatus.textContent = "Closed now · see hours below";
+    }
+  }
 })();

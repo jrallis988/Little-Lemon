@@ -7,7 +7,7 @@ Marketing site for **Red Mango Asian Cuisine** in Stratham, New Hampshire — Ch
 - **Address:** 28 Portsmouth Ave #8, Stratham, NH 03885
 - **Phone:** (603) 772-0572
 - **Order online:** [MealKeyWay](https://order.mealkeyway.com/merchant/76314c764f6d6b723139457239512b6a594f6f6379513d3d/main)
-- **Social:** [Facebook](https://www.facebook.com/Jade-Palace-105172948426464/) · [Yelp](https://www.yelp.com/biz/red-mango-asian-cuisine-stratham)
+- **Social:** [Facebook](https://www.facebook.com/Jade-Palace-105172948426464/) · [Yelp](https://www.yelp.com/biz/red-mango-asian-cuisine-stratham) · [Google Maps](https://maps.app.goo.gl/AubqC49co8vvCSaE7)
 
 ## Pages
 
@@ -21,6 +21,18 @@ Photography on the site is from Red Mango’s public gallery at redmangostratham
 ```bash
 npm start
 ```
+
+Opens a local static server on port 3000.
+
+## Deploy
+
+This is a static site (no build step). Drop the folder on any static host:
+
+- **Netlify** — connect the repo; `netlify.toml` is included
+- **Vercel** — connect the repo; `vercel.json` is included
+- **GitHub Pages / S3 / Cloudflare Pages** — publish the repo root as the site
+
+Point `redmangostratham.com` (or your preferred domain) at the host, then confirm hours and prices with the kitchen once before go-live.
 
 ## Stack
 
