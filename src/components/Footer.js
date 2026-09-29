@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { campuses, OFFICE_HOURS } from "../data/campuses";
 import { legalLinks } from "../data/siteContent";
 import ExternalLink from "./ExternalLink";
 
@@ -11,11 +12,13 @@ function Footer() {
             className="footer-logo"
             src="/images/wmcc-mark.svg"
             alt="White Mountains Community College"
+            width="220"
+            height="56"
           />
           <p className="footer-lead">
             Affordable higher education in northern New Hampshire — pathways to
             careers, transfer, and lifelong opportunity from Berlin, Littleton,
-            and North Conway.
+            and the Mount Washington Valley.
           </p>
         </div>
 
@@ -51,14 +54,15 @@ function Footer() {
               <li>
                 <a href="mailto:wmcc@ccsnh.edu">wmcc@ccsnh.edu</a>
               </li>
+              <li className="footer-hours">{OFFICE_HOURS}</li>
             </ul>
           </div>
           <div>
             <h2>Locations</h2>
             <ul>
-              <li>Berlin Campus</li>
-              <li>Littleton Academic Center</li>
-              <li>North Conway Academic Center</li>
+              {campuses.map((campus) => (
+                <li key={campus.id}>{campus.name}</li>
+              ))}
               <li>
                 <Link to="/contact">Hours &amp; Directions</Link>
               </li>

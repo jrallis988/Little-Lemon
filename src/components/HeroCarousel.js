@@ -83,7 +83,11 @@ function HeroCarousel() {
       {heroSlides.map((item, itemIndex) => (
         <div
           key={item.id}
+          id={`hero-slide-${item.id}`}
           className={`hero-slide ${itemIndex === index ? "is-active" : ""}`}
+          role="group"
+          aria-roledescription="slide"
+          aria-label={`${itemIndex + 1} of ${heroSlides.length}`}
           aria-hidden={itemIndex !== index}
         >
           <img
@@ -149,9 +153,11 @@ function HeroCarousel() {
         {heroSlides.map((item, itemIndex) => (
           <button
             key={item.id}
+            id={`hero-tab-${item.id}`}
             type="button"
             role="tab"
             aria-selected={itemIndex === index}
+            aria-controls={`hero-slide-${item.id}`}
             aria-label={`Show slide ${itemIndex + 1}: ${item.headline}`}
             className={itemIndex === index ? "is-active" : ""}
             onClick={() => setIndex(itemIndex)}

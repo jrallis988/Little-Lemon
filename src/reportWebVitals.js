@@ -1,4 +1,6 @@
-const reportWebVitals = (onPerfEntry) => {
+import { reportWebVital } from "./utils/analytics";
+
+const reportWebVitals = (onPerfEntry = reportWebVital) => {
   if (onPerfEntry && onPerfEntry instanceof Function) {
     import("web-vitals").then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
       getCLS(onPerfEntry);

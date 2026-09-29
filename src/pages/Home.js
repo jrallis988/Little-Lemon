@@ -42,7 +42,7 @@ function Home() {
             </p>
             <ul className="check-list">
               <li>Hands-on labs for welding, diesel, automotive, culinary, and nursing</li>
-              <li>Berlin, Littleton, and North Conway locations — plus online options</li>
+              <li>Berlin, Littleton, and Mount Washington Valley pathways — plus online options</li>
               <li>Transfer pathways and advising for four-year goals</li>
               <li>Short-term training that moves you from classroom to career</li>
             </ul>
@@ -54,6 +54,8 @@ function Home() {
             <img
               src="/images/campus-exterior.jpg"
               alt="Berlin campus of White Mountains Community College"
+              width="1600"
+              height="900"
               loading="lazy"
             />
           </figure>
@@ -126,6 +128,8 @@ function Home() {
             <img
               src="/images/graduation.jpg"
               alt="White Mountains Community College graduate at commencement"
+              width="1600"
+              height="900"
               loading="lazy"
             />
           </figure>

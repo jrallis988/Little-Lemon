@@ -52,11 +52,32 @@ export function trackOutbound(name, params = {}) {
   trackEvent(name, { transport_type: "beacon", ...params });
 }
 
+/** Report Core Web Vitals to GA4 when configured. */
+export function reportWebVital({ name, delta, id, value }) {
+  if (typeof window === "undefined") return;
+  const metricValue = Math.round(name === "CLS" ? delta * 1000 : delta);
+  if (typeof window.gtag === "function" && GA_ID) {
+    window.gtag("event", name, {
+      value: metricValue,
+      event_category: "web_vitals",
+      event_label: id,
+      non_interaction: true,
+      metric_value: value,
+    });
+    return;
+  }
+  if (process.env.NODE_ENV === "development") {
+    // eslint-disable-next-line no-console
+    console.debug("[web-vitals]", name, metricValue, id);
+  }
+}
+
 const analytics = {
   initAnalytics,
   trackPageView,
   trackEvent,
   trackOutbound,
+  reportWebVital,
 };
 
 export default analytics;

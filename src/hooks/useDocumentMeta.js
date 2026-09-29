@@ -38,6 +38,7 @@ export function useDocumentMeta({
   description,
   image = DEFAULT_OG_IMAGE,
   imageAlt = DEFAULT_OG_ALT,
+  robots,
 }) {
   useEffect(() => {
     if (title) {
@@ -49,6 +50,15 @@ export function useDocumentMeta({
         name: "description",
         content: description,
       });
+    }
+
+    if (robots) {
+      upsertMeta('meta[name="robots"]', {
+        name: "robots",
+        content: robots,
+      });
+    } else {
+      document.querySelector('meta[name="robots"]')?.remove();
     }
 
     const origin = window.location.origin;
@@ -103,7 +113,7 @@ export function useDocumentMeta({
       name: "twitter:image",
       content: absoluteImage,
     });
-  }, [title, description, image, imageAlt]);
+  }, [title, description, image, imageAlt, robots]);
 }
 
 export default useDocumentMeta;

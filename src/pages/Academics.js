@@ -317,9 +317,15 @@ function Academics() {
                         ...emptyFilters,
                         focus: area.id,
                       });
+                      const reduceMotion = window.matchMedia?.(
+                        "(prefers-reduced-motion: reduce)"
+                      )?.matches;
                       document
                         .querySelector(".program-filters")
-                        ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                        ?.scrollIntoView({
+                          behavior: reduceMotion ? "auto" : "smooth",
+                          block: "start",
+                        });
                     }}
                   >
                     View {count} programs

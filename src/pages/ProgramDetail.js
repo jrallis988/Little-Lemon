@@ -1,4 +1,6 @@
 import { Link, useParams } from "react-router-dom";
+import { useMemo } from "react";
+import Breadcrumbs from "../components/Breadcrumbs";
 import ExternalLink from "../components/ExternalLink";
 import { ProgramJsonLd } from "../components/JsonLd";
 import PageHero from "../components/PageHero";
@@ -13,6 +15,18 @@ import {
 function ProgramDetail() {
   const { programId } = useParams();
   const program = programs.find((item) => item.id === programId);
+
+  const crumbItems = useMemo(
+    () =>
+      program
+        ? [
+            { label: "Home", to: "/" },
+            { label: "Academics", to: "/academics" },
+            { label: program.title },
+          ]
+        : [],
+    [program]
+  );
 
   if (!program) {
     return (
@@ -53,6 +67,10 @@ function ProgramDetail() {
           },
         ]}
       />
+
+      <div className="container">
+        <Breadcrumbs items={crumbItems} />
+      </div>
 
       <section className="section">
         <div className="container program-detail">

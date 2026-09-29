@@ -176,3 +176,37 @@ test("sets open graph image and organization JSON-LD", async () => {
     /CollegeOrUniversity/
   );
 });
+
+test("program pages expose breadcrumbs and program OG image", async () => {
+  render(
+    <MemoryRouter initialEntries={["/academics/programs/nursing"]}>
+      <App />
+    </MemoryRouter>
+  );
+
+  const crumbs = screen.getByRole("navigation", { name: /breadcrumb/i });
+  expect(crumbs).toBeInTheDocument();
+  expect(
+    crumbs.querySelector('a[href="/academics"]')
+  ).toHaveTextContent(/Academics/i);
+  await waitFor(() => {
+    expect(
+      document.querySelector('meta[property="og:image"]')?.getAttribute("content")
+    ).toMatch(/nursing\.jpg/);
+  });
+  expect(document.getElementById("wmcc-jsonld-breadcrumb")).toBeTruthy();
+});
+
+test("404 pages request noindex", async () => {
+  render(
+    <MemoryRouter initialEntries={["/missing-page"]}>
+      <App />
+    </MemoryRouter>
+  );
+
+  await waitFor(() => {
+    expect(
+      document.querySelector('meta[name="robots"]')?.getAttribute("content")
+    ).toMatch(/noindex/i);
+  });
+});

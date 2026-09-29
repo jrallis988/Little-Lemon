@@ -15,6 +15,8 @@ function PageHero({
           <img
             src={image}
             alt=""
+            width="1600"
+            height="900"
             loading="eager"
             fetchPriority="high"
             decoding="async"

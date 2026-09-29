@@ -14,6 +14,7 @@ export const notFoundMeta = {
   title: `Page Not Found | ${SITE}`,
   description:
     "We couldn’t find that page. Return home or browse academic programs at White Mountains Community College.",
+  robots: "noindex, follow",
 };
 
 /** Static route metadata (exact pathname match) */
@@ -42,7 +43,7 @@ export const pageMeta = {
   "/admissions/visit": {
     title: `Visit Campus | ${SITE}`,
     description:
-      "Plan a visit to WMCC’s Berlin campus or academic centers in Littleton and North Conway.",
+      "Plan a visit to WMCC’s Berlin campus, Littleton Academic Center, or Mount Washington Valley pathways.",
   },
   "/admissions/tuition": {
     title: `Tuition & Fees | ${SITE}`,
@@ -113,6 +114,8 @@ export function resolvePageMeta(pathname) {
       description:
         program.summary ||
         `Learn about the ${program.title} ${program.credential} at ${SITE}.`,
+      image: program.image || "/images/students.jpg",
+      imageAlt: `${program.title} at ${SITE}`,
     };
   }
 

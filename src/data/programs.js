@@ -303,17 +303,17 @@ const programOverrides = {
   },
   "massage-therapy": {
     summary:
-      "Train for massage therapy practice through WMCC’s North Conway Academic Center certificate pathway.",
+      "Train for massage therapy practice through WMCC’s Mount Washington Valley certificate pathway.",
     outcomes: [
       "Apply therapeutic massage techniques and client-care fundamentals",
       "Build professional practice habits",
       "Prepare for regional wellness and clinical settings",
     ],
-    format: "North Conway Academic Center certificate",
+    format: "Mount Washington Valley certificate pathway",
     locations: ["North Conway"],
     details: [
       "Credential: Certificate",
-      "Campus: North Conway Academic Center (Mount Washington Valley)",
+      "Campus: North Conway / Mount Washington Valley",
       "Focus: therapeutic massage technique and professional client care",
       "Pathway into regional wellness and clinical settings",
       "Catalog: catalog.wmcc.edu Massage Therapy page",
@@ -321,17 +321,17 @@ const programOverrides = {
   },
   "veterinary-assistant": {
     summary:
-      "Prepare for veterinary assisting roles through hands-on coursework based at the North Conway Academic Center.",
+      "Prepare for veterinary assisting roles through hands-on coursework in the Mount Washington Valley.",
     outcomes: [
       "Support veterinary clinic teams in animal-care settings",
       "Practice foundational clinical assisting skills",
       "Build readiness for Mount Washington Valley employers",
     ],
-    format: "North Conway Academic Center certificate",
+    format: "Mount Washington Valley certificate pathway",
     locations: ["North Conway"],
     details: [
       "Credential: Certificate",
-      "Campus: North Conway Academic Center (Mount Washington Valley)",
+      "Campus: North Conway / Mount Washington Valley",
       "Focus: veterinary assisting skills for clinic and animal-care settings",
       "Pathway into Mount Washington Valley veterinary employers",
       "Catalog: catalog.wmcc.edu Veterinary Assistant page",
@@ -930,7 +930,7 @@ export const locations = [
   { id: "all", label: "All Locations" },
   { id: "Berlin", label: "Berlin (Main Campus)" },
   { id: "Littleton", label: "Littleton Academic Center" },
-  { id: "North Conway", label: "North Conway Academic Center" },
+  { id: "North Conway", label: "North Conway / Mount Washington Valley" },
   { id: "Online", label: "Online / Hybrid" },
 ];
 

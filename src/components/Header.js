@@ -191,6 +191,14 @@ function Header() {
 
         <div className="header-actions-mobile">
           <ExternalLink
+            className="btn btn-gold mobile-apply-chip"
+            href={APPLY_URL}
+            trackName="apply_click"
+            trackProps={{ location: "mobile_header" }}
+          >
+            Apply
+          </ExternalLink>
+          <ExternalLink
             className="utility-portal mobile-portal"
             href={MYWMCC_URL}
             trackName="portal_click"

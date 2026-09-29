@@ -56,10 +56,10 @@ function About() {
           <article>
             <p className="eyebrow">Where we serve</p>
             <p>
-              From our main campus in Berlin and Academic Centers in Littleton
-              and North Conway — with online, hybrid, day, and evening options —
-              WMCC brings affordable higher education to the White Mountains
-              region.
+              From our main campus in Berlin, the Littleton Academic Center, and
+              Mount Washington Valley pathways — with online, hybrid, day, and
+              evening options — WMCC brings affordable higher education to the
+              White Mountains region.
             </p>
           </article>
         </div>
@@ -88,6 +88,8 @@ function About() {
             <img
               src="/images/littleton.jpg"
               alt="Learning spaces at White Mountains Community College"
+              width="1600"
+              height="900"
               loading="lazy"
             />
           </figure>
@@ -96,9 +98,9 @@ function About() {
             <h2>Three locations. One college community.</h2>
             <p>
               The Berlin campus anchors hands-on programs in trades, culinary,
-              healthcare, and more. Academic Centers in Littleton and North
-              Conway expand access across the North Country with flexible course
-              formats and advising support.
+              healthcare, and more. Littleton and Mount Washington Valley
+              pathways expand access across the North Country with flexible
+              course formats and advising support.
             </p>
             <ul className="check-list">
               <li>NECHE-accredited public community college</li>
