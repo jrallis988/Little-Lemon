@@ -143,6 +143,8 @@ export type ParentControls = {
    * Surf stays locked on the setup screen until this is true.
    */
   pinConfigured: boolean;
+  /** ISO timestamp when a parent accepted the child-privacy notice */
+  privacyAcceptedAt: string | null;
 };
 
 export type SessionSnapshot = {

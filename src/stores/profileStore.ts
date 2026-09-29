@@ -161,6 +161,7 @@ type ParentState = {
   setLearningModeEnabled: (enabled: boolean) => void;
   setAllowlistOnly: (enabled: boolean) => void;
   setPin: (pin: string) => Promise<void>;
+  acceptPrivacy: () => void;
   completeParentSetup: () => void;
   unlock: (pin: string) => Promise<boolean>;
   lock: () => void;
@@ -181,6 +182,7 @@ const initialParentControls: ParentControls = {
   learningModeEnabled: true,
   allowlistOnly: true,
   pinConfigured: false,
+  privacyAcceptedAt: null,
 };
 
 export const useParentStore = create<ParentState>()(
@@ -265,9 +267,21 @@ export const useParentStore = create<ParentState>()(
           },
         }));
       },
+      acceptPrivacy: () =>
+        set((state) => ({
+          controls: {
+            ...state.controls,
+            privacyAcceptedAt: new Date().toISOString(),
+          },
+        })),
       completeParentSetup: () =>
         set((state) => ({
-          controls: { ...state.controls, pinConfigured: true },
+          controls: {
+            ...state.controls,
+            pinConfigured: true,
+            privacyAcceptedAt:
+              state.controls.privacyAcceptedAt ?? new Date().toISOString(),
+          },
           unlockedUntil: Date.now() + 15 * 60 * 1000,
         })),
       unlock: async (pin) => {
@@ -387,6 +401,10 @@ export const useParentStore = create<ParentState>()(
           pinConfigured: legacyNeedsSetup
             ? false
             : Boolean(rawControls?.pinConfigured),
+          privacyAcceptedAt:
+            rawControls?.privacyAcceptedAt ??
+            current.controls.privacyAcceptedAt ??
+            null,
         };
         return {
           ...current,

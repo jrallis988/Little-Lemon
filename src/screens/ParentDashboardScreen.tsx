@@ -22,6 +22,10 @@ import {
   useSchoolStore,
 } from "@/stores/schoolStore";
 import { extractDomain, formatMinutes } from "@/lib/utils";
+import {
+  PRIVACY_NOTICE_POINTS,
+  PRIVACY_NOTICE_TITLE,
+} from "@/brand/privacy";
 
 /** Screen 10 — Parent Control Dashboard (PIN-protected) */
 export function ParentDashboardScreen() {
@@ -125,6 +129,27 @@ export function ParentDashboardScreen() {
           Lock dashboard
         </Button>
       </header>
+
+      <div className="rounded-3xl border border-white/60 bg-white/80 p-6 shadow-soft">
+        <h2 className="font-display text-xl font-semibold text-navy">
+          {PRIVACY_NOTICE_TITLE}
+        </h2>
+        <p className="mt-1 text-sm text-slate">
+          Accepted{" "}
+          {controls.privacyAcceptedAt
+            ? new Date(controls.privacyAcceptedAt).toLocaleString()
+            : "during setup"}
+          . Surf keeps learning data on this device by default.
+        </p>
+        <ul className="mt-4 space-y-2 text-sm leading-relaxed text-slate">
+          {PRIVACY_NOTICE_POINTS.map((point) => (
+            <li key={point} className="flex gap-2">
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-ocean" />
+              <span>{point}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
         <div className="rounded-3xl border border-white/60 bg-white/80 p-6 shadow-soft">

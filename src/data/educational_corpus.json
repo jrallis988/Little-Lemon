@@ -2789,6 +2789,359 @@
     "baseLegitimacy": 95
   },
   {
+    "id": "nasa-earthquakes-kids",
+    "title": "Earthquakes — NASA Space Place",
+    "url": "https://spaceplace.nasa.gov/earthquakes/en/",
+    "domain": "spaceplace.nasa.gov",
+    "publisher": "NASA Space Place",
+    "contentTier": "educational_magazine",
+    "gradeMin": 2,
+    "gradeMax": 7,
+    "abstractText": "NASA Space Place explains why Earthquakes happen and how scientists measure shaking for kids and classrooms.",
+    "vocabulary": [
+      "quake",
+      "seismograph",
+      "magnitude",
+      "fault"
+    ],
+    "citation": "NASA Space Place. \"Earthquakes.\"",
+    "topics": [
+      "earthquakes",
+      "earth science"
+    ],
+    "keywords": [
+      "earthquake",
+      "nasa",
+      "kids",
+      "fault"
+    ],
+    "baseLegitimacy": 93
+  },
+  {
+    "id": "natgeo-kids-hurricanes",
+    "title": "Hurricanes — Nat Geo Kids",
+    "url": "https://kids.nationalgeographic.com/science/article/hurricane",
+    "domain": "kids.nationalgeographic.com",
+    "publisher": "National Geographic Kids",
+    "contentTier": "educational_magazine",
+    "gradeMin": 2,
+    "gradeMax": 6,
+    "abstractText": "A kid-friendly look at how hurricanes form, how they are rated, and how families prepare for storms.",
+    "vocabulary": [
+      "hurricane",
+      "storm surge",
+      "category",
+      "eye"
+    ],
+    "citation": "National Geographic Kids. \"Hurricane.\"",
+    "topics": [
+      "weather",
+      "atmosphere",
+      "earth science"
+    ],
+    "keywords": [
+      "hurricane",
+      "storm",
+      "weather",
+      "kids"
+    ],
+    "baseLegitimacy": 90
+  },
+  {
+    "id": "noaa-hurricanes",
+    "title": "Hurricanes — NOAA",
+    "url": "https://www.noaa.gov/education/resource-collections/weather-atmosphere/hurricanes",
+    "domain": "noaa.gov",
+    "publisher": "NOAA",
+    "contentTier": "verified_reference",
+    "gradeMin": 4,
+    "gradeMax": 10,
+    "abstractText": "NOAA education resources explain hurricane science, tracking, and safety with trustworthy government explainers.",
+    "vocabulary": [
+      "tropical cyclone",
+      "tracking",
+      "forecast"
+    ],
+    "citation": "NOAA. \"Hurricanes education collection.\"",
+    "topics": [
+      "weather",
+      "hurricanes",
+      "atmosphere"
+    ],
+    "keywords": [
+      "hurricane",
+      "noaa",
+      "weather",
+      "forecast"
+    ],
+    "baseLegitimacy": 95
+  },
+  {
+    "id": "usgs-landslides",
+    "title": "Landslides — USGS",
+    "url": "https://www.usgs.gov/programs/landslide-hazards",
+    "domain": "usgs.gov",
+    "publisher": "U.S. Geological Survey",
+    "contentTier": "verified_reference",
+    "gradeMin": 5,
+    "gradeMax": 12,
+    "abstractText": "USGS Landslide Hazards Program describes how slopes fail and how scientists map risk after heavy rain or earthquakes.",
+    "vocabulary": [
+      "landslide",
+      "slope",
+      "debris flow",
+      "hazard"
+    ],
+    "citation": "U.S. Geological Survey. \"Landslide Hazards.\"",
+    "topics": [
+      "geology",
+      "earth science",
+      "safety"
+    ],
+    "keywords": [
+      "landslide",
+      "usgs",
+      "geology",
+      "hazard"
+    ],
+    "baseLegitimacy": 96
+  },
+  {
+    "id": "si-ocean-plastics",
+    "title": "Ocean Plastics — Smithsonian Ocean",
+    "url": "https://ocean.si.edu/conservation/pollution/marine-plastics",
+    "domain": "ocean.si.edu",
+    "publisher": "Smithsonian Ocean",
+    "contentTier": "educational_magazine",
+    "gradeMin": 4,
+    "gradeMax": 10,
+    "abstractText": "Smithsonian Ocean explains how plastics enter the sea and why conservation choices matter for marine life.",
+    "vocabulary": [
+      "microplastic",
+      "pollution",
+      "marine",
+      "debris"
+    ],
+    "citation": "Smithsonian Ocean. \"Marine Plastics.\"",
+    "topics": [
+      "ocean",
+      "conservation",
+      "ecology",
+      "recycling"
+    ],
+    "keywords": [
+      "plastic",
+      "ocean",
+      "pollution",
+      "conservation"
+    ],
+    "baseLegitimacy": 92
+  },
+  {
+    "id": "khan-percentages",
+    "title": "Percentages — Khan Academy",
+    "url": "https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-ratios-prop-topic/cc-6th-percentages/v/finding-percentages-example",
+    "domain": "khanacademy.org",
+    "publisher": "Khan Academy",
+    "contentTier": "educational_magazine",
+    "gradeMin": 5,
+    "gradeMax": 8,
+    "abstractText": "Guided percentage lessons that connect fractions, decimals, and real-world percent problems for middle grades.",
+    "vocabulary": [
+      "percent",
+      "rate",
+      "proportion"
+    ],
+    "citation": "Khan Academy. \"Percentages.\"",
+    "topics": [
+      "percentages",
+      "math",
+      "ratios"
+    ],
+    "keywords": [
+      "percent",
+      "math",
+      "middle school"
+    ],
+    "baseLegitimacy": 89
+  },
+  {
+    "id": "loc-maps-collection",
+    "title": "Maps — Library of Congress",
+    "url": "https://www.loc.gov/maps/",
+    "domain": "loc.gov",
+    "publisher": "Library of Congress",
+    "contentTier": "verified_reference",
+    "gradeMin": 4,
+    "gradeMax": 12,
+    "abstractText": "Primary-source maps students can examine to practice geographic thinking and historical context.",
+    "vocabulary": [
+      "cartography",
+      "legend",
+      "primary source"
+    ],
+    "citation": "Library of Congress. \"Maps.\"",
+    "topics": [
+      "maps",
+      "geography",
+      "primary sources",
+      "history"
+    ],
+    "keywords": [
+      "maps",
+      "loc",
+      "geography",
+      "primary"
+    ],
+    "baseLegitimacy": 96
+  },
+  {
+    "id": "pbs-scientific-method",
+    "title": "Scientific Method — PBS LearningMedia",
+    "url": "https://www.pbslearningmedia.org/resource/tdc02.sci.life.arti.lp_sciencemethod/the-scientific-method/",
+    "domain": "pbslearningmedia.org",
+    "publisher": "PBS LearningMedia",
+    "contentTier": "educational_magazine",
+    "gradeMin": 3,
+    "gradeMax": 8,
+    "abstractText": "Classroom media that walk students through asking questions, testing ideas, and sharing evidence.",
+    "vocabulary": [
+      "hypothesis",
+      "evidence",
+      "variable",
+      "observation"
+    ],
+    "citation": "PBS LearningMedia. \"The Scientific Method.\"",
+    "topics": [
+      "science practices",
+      "research skills"
+    ],
+    "keywords": [
+      "scientific method",
+      "hypothesis",
+      "pbs"
+    ],
+    "baseLegitimacy": 90
+  },
+  {
+    "id": "nasa-black-holes",
+    "title": "Black Holes — NASA Space Place",
+    "url": "https://spaceplace.nasa.gov/black-holes/en/",
+    "domain": "spaceplace.nasa.gov",
+    "publisher": "NASA Space Place",
+    "contentTier": "educational_magazine",
+    "gradeMin": 4,
+    "gradeMax": 9,
+    "abstractText": "NASA explains black holes in kid-friendly language: gravity so strong that light cannot escape.",
+    "vocabulary": [
+      "gravity",
+      "event horizon",
+      "singularity"
+    ],
+    "citation": "NASA Space Place. \"Black Holes.\"",
+    "topics": [
+      "astronomy",
+      "space",
+      "physics"
+    ],
+    "keywords": [
+      "black hole",
+      "space",
+      "nasa",
+      "gravity"
+    ],
+    "baseLegitimacy": 94
+  },
+  {
+    "id": "amnh-biodiversity",
+    "title": "Biodiversity — AMNH",
+    "url": "https://www.amnh.org/explore/ology/biodiversity",
+    "domain": "amnh.org",
+    "publisher": "American Museum of Natural History",
+    "contentTier": "educational_magazine",
+    "gradeMin": 3,
+    "gradeMax": 8,
+    "abstractText": "Museum OLogy pages introduce biodiversity and why variety of life helps ecosystems stay resilient.",
+    "vocabulary": [
+      "biodiversity",
+      "species",
+      "ecosystem",
+      "resilience"
+    ],
+    "citation": "American Museum of Natural History. \"Biodiversity.\"",
+    "topics": [
+      "biodiversity",
+      "ecology",
+      "habitats"
+    ],
+    "keywords": [
+      "biodiversity",
+      "species",
+      "museum",
+      "ecology"
+    ],
+    "baseLegitimacy": 93
+  },
+  {
+    "id": "epa-climate-students",
+    "title": "Climate Change — EPA Students",
+    "url": "https://www.epa.gov/climatechange-science",
+    "domain": "epa.gov",
+    "publisher": "U.S. Environmental Protection Agency",
+    "contentTier": "verified_reference",
+    "gradeMin": 5,
+    "gradeMax": 12,
+    "abstractText": "EPA climate science pages summarize greenhouse gases, observed changes, and why evidence matters.",
+    "vocabulary": [
+      "greenhouse gas",
+      "climate",
+      "evidence",
+      "emission"
+    ],
+    "citation": "U.S. Environmental Protection Agency. \"Climate Change Science.\"",
+    "topics": [
+      "climate",
+      "energy",
+      "earth science"
+    ],
+    "keywords": [
+      "climate",
+      "epa",
+      "greenhouse",
+      "science"
+    ],
+    "baseLegitimacy": 95
+  },
+  {
+    "id": "nps-water",
+    "title": "Water in Parks — National Park Service",
+    "url": "https://www.nps.gov/subjects/water/index.htm",
+    "domain": "nps.gov",
+    "publisher": "National Park Service",
+    "contentTier": "educational_magazine",
+    "gradeMin": 2,
+    "gradeMax": 8,
+    "abstractText": "Park water stories connect watersheds, rivers, and conservation so students see the water cycle in real places.",
+    "vocabulary": [
+      "watershed",
+      "river",
+      "conservation"
+    ],
+    "citation": "National Park Service. \"Water.\"",
+    "topics": [
+      "water cycle",
+      "conservation",
+      "geography"
+    ],
+    "keywords": [
+      "water",
+      "parks",
+      "watershed",
+      "nps"
+    ],
+    "baseLegitimacy": 92
+  },
+  {
     "id": "farm-tectonics-spam",
     "title": "10 Crazy Plate Tectonics Facts That Will Shock You",
     "url": "https://viralnova-clickbait.example/plate-tectonics",

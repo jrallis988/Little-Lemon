@@ -32,7 +32,7 @@ Surf is not a content feed, launcher, or game hub. Kids search, open curated edu
 
 ## Supporting systems
 
-- Academic search: shared grades 1–8+ corpus (~90+ curated sources) + OpenAlex merge + EBSCO Refine Results
+- Academic search: shared grades 1–8+ corpus (~100+ curated sources) + OpenAlex merge + EBSCO Refine Results
 - Stemmed query matching + soft grade preference (band refine no longer double-filters exact grade)
 - Classroom topic packs on Explore (weather, fractions, civil rights, reefs, volcanoes, civics, etc.)
 - Ask Milo with conversation memory + tutor quick actions
@@ -40,9 +40,9 @@ Surf is not a content feed, launcher, or game hub. Kids search, open curated edu
 - Research projects: compare sources, outline builder, export bibliography
 - Grade-aware student profiles (1–12)
 - Family/school ops: class codes, roster join, printable child reports
-- Browser tab strip scaffolding (toward native tabs)
+- Browser tabs that sync titles/routes + open articles in a new tab
 - URL interceptor: allowlist + blocklist + expanded content-farm blocking
-- Parent dashboard + session timer + first-run PIN setup (no default 0000)
+- Parent dashboard + session timer + first-run privacy consent + PIN setup (no default 0000)
 - GitHub Actions CI for typecheck + build
 
 ## Ask Milo setup

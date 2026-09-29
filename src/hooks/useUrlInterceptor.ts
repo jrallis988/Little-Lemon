@@ -10,6 +10,7 @@ import { gradeToBand } from "@/lib/constants";
 import { useNavigationStore } from "@/stores/navigationStore";
 import { useParentStore, useProfileStore } from "@/stores/profileStore";
 import { useSafetyStore } from "@/stores/safetyStore";
+import { useBrowserTabsStore } from "@/stores/browserTabsStore";
 import { ROUTES } from "@/routes/paths";
 import type { AcademicSearchOptions, SearchResult } from "@/types";
 
@@ -122,7 +123,7 @@ export function useUrlInterceptor() {
   );
 
   const openSearchResult = useCallback(
-    async (result: SearchResult) => {
+    async (result: SearchResult, options: { newTab?: boolean } = {}) => {
       const check = intercept(result.url);
       if (!check.allowed) {
         setBlocked(check.url, check.reason ?? "This site is restricted.");
@@ -149,7 +150,18 @@ export function useUrlInterceptor() {
         domain: check.domain,
         visitedAt: new Date().toISOString(),
       });
-      navigate(`${ROUTES.article}?url=${encodeURIComponent(check.url)}`);
+      const path = `${ROUTES.article}?url=${encodeURIComponent(check.url)}`;
+      if (options.newTab) {
+        useBrowserTabsStore.getState().openOrFocus({
+          title:
+            result.title.length > 22
+              ? `${result.title.slice(0, 20)}…`
+              : result.title,
+          url: path,
+          kind: "article",
+        });
+      }
+      navigate(path);
     },
     [
       activeProfileId,

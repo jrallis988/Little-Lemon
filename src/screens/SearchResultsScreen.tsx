@@ -260,7 +260,11 @@ export function SearchResultsScreen() {
               Source Types
             </h2>
             <ul className="space-y-0.5" role="list">
-              {ACADEMIC_TIERS.map((item) => {
+              {ACADEMIC_TIERS.filter((item) => {
+                const count = sourceTypeCounts.get(item.id) ?? 0;
+                // Hide empty facets once we know the catalog — keeps refine calm.
+                return loading || catalog.length === 0 || count > 0;
+              }).map((item) => {
                 const count = sourceTypeCounts.get(item.id) ?? 0;
                 const checked = selectedTypes.includes(item.id);
                 const disabled = count === 0;
@@ -305,12 +309,8 @@ export function SearchResultsScreen() {
               })}
             </ul>
             <p className="mt-2 text-[11px] leading-relaxed text-slate">
-              Tip: check <strong className="font-semibold text-slate-deep">Magazines</strong>{" "}
-              or{" "}
-              <strong className="font-semibold text-slate-deep">
-                Academic Journals
-              </strong>{" "}
-              to narrow the list the way EBSCO does.
+              Tip: check available source types to narrow results the way a research
+              database does. Empty types stay hidden for this query.
             </p>
           </section>
 
@@ -518,6 +518,12 @@ export function SearchResultsScreen() {
                 <div className="mt-4 flex flex-wrap gap-2">
                   <Button onClick={() => void openSearchResult(result)}>
                     Open in reader
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => void openSearchResult(result, { newTab: true })}
+                  >
+                    Open in new tab
                   </Button>
                   <Button variant="secondary" onClick={() => setMiloOpen(true)}>
                     {MILO_NAME}
