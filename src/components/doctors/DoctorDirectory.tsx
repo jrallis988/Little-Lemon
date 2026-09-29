@@ -136,7 +136,7 @@ export function DoctorDirectory() {
   return (
     <>
       <div
-        className="sticky top-[108px] z-[200] border-b border-border bg-white py-s4"
+        className="sticky top-[152px] z-[200] border-b border-border bg-white py-s4"
         role="search"
         aria-label="Filter doctors"
       >

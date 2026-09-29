@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/Icons";
 import { DesktopPrimaryNav, type NavItem } from "@/components/layout/DesktopPrimaryNav";
 import { HeaderSearch } from "@/components/layout/HeaderSearch";
+import { HeaderUtilityBar } from "@/components/layout/HeaderUtilityBar";
 import { focusFirst, getFocusableElements } from "@/lib/a11y";
 import { cn } from "@/lib/cn";
 
@@ -230,6 +231,7 @@ export function SiteHeader() {
   return (
     <>
       <header className="sticky top-0 z-[500] overflow-visible" role="banner">
+        <HeaderUtilityBar />
         <div
           id="site-nav"
           tabIndex={-1}
@@ -403,7 +405,7 @@ export function SiteHeader() {
               )}
               onClick={() => setMobileOpen(false)}
             >
-              MyChildren&apos;s
+              MyChildren&apos;s Patient Portal
             </Link>
             <Link
               href="/appointments/request"
@@ -415,6 +417,28 @@ export function SiteHeader() {
             >
               Request an Appointment
             </Link>
+            <div className="grid grid-cols-2 gap-2">
+              <Link
+                href="/international"
+                className={cn(
+                  "block rounded-sm border border-white/30 py-3 text-center text-sm font-bold text-white no-underline",
+                  headerFocus,
+                )}
+                onClick={() => setMobileOpen(false)}
+              >
+                International
+              </Link>
+              <Link
+                href="/#giving"
+                className={cn(
+                  "block rounded-sm border border-pink py-3 text-center text-sm font-bold text-pink-onDark no-underline",
+                  headerFocus,
+                )}
+                onClick={() => setMobileOpen(false)}
+              >
+                Donate
+              </Link>
+            </div>
             <Link
               href="/emergency"
               className={cn(
