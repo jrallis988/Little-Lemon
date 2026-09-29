@@ -2,9 +2,15 @@ import { useEffect, useMemo, useState } from "react"
 import { Link } from "react-router-dom"
 import { ArrowRight, ChevronLeft, ChevronRight, Sparkles, Tag } from "lucide-react"
 import { ALL_BRANDS, PRODUCTS } from "@/data/products"
+import {
+  curatedDesigner,
+  curatedNewArrivals,
+  curatedUnderFifty,
+  curatedWomenEdit,
+  curatedWowFinds,
+} from "@/data/merchandising"
 import { ProductCard } from "@/components/catalog/ProductCard"
 import { Button } from "@/components/ui/button"
-import { discountPercent } from "@/lib/utils"
 import { useFilterStore } from "@/stores/filterStore"
 import { useDocumentMeta } from "@/hooks/useDocumentMeta"
 
@@ -216,27 +222,11 @@ export function HomePage() {
   const toggleBrand = useFilterStore((s) => s.toggleBrand)
   const clearFilters = useFilterStore((s) => s.clearFilters)
 
-  const featured = useMemo(
-    () =>
-      [...PRODUCTS]
-        .sort(
-          (a, b) =>
-            discountPercent(b.compareAt, b.price) -
-            discountPercent(a.compareAt, a.price),
-        )
-        .slice(0, 4),
-    [],
-  )
-
-  const designer = useMemo(
-    () => PRODUCTS.filter((p) => p.brandTier === "Designer").slice(0, 4),
-    [],
-  )
-
-  const underFifty = useMemo(
-    () => PRODUCTS.filter((p) => p.price <= 50).slice(0, 4),
-    [],
-  )
+  const featured = useMemo(() => curatedWowFinds(4), [])
+  const womenEdit = useMemo(() => curatedWomenEdit(4), [])
+  const designer = useMemo(() => curatedDesigner(4), [])
+  const underFifty = useMemo(() => curatedUnderFifty(4), [])
+  const justIn = useMemo(() => curatedNewArrivals(4), [])
 
   const brandCounts = useMemo(() => {
     const map = new Map<string, number>()
@@ -307,6 +297,34 @@ export function HomePage() {
         </div>
       </section>
 
+      <section className="shelf-container py-12 md:py-14">
+        <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p className="text-2xs font-bold uppercase tracking-[0.12em] text-primary">
+              Women&apos;s edit
+            </p>
+            <h2 className="mt-1 font-display text-2xl font-bold italic text-navy md:text-3xl">
+              Treasure-hunt picks for her
+            </h2>
+            <p className="mt-2 max-w-xl text-sm text-muted-foreground">
+              A curated slice of apparel, shoes, and bags — the happy-path assortment for
+              this redesign.
+            </p>
+          </div>
+          <Button asChild variant="outline">
+            <Link to="/department/women">
+              Shop Women
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
+        <div className="grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-4">
+          {womenEdit.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      </section>
+
       {/* Designer Shop + Under $50 */}
       <section className="shelf-container grid gap-10 py-12 md:grid-cols-2 md:py-14">
         <div>
@@ -320,11 +338,7 @@ export function HomePage() {
                 Elevated labels, off-price
               </h2>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              asChild
-            >
+            <Button variant="outline" size="sm" asChild>
               <Link to="/designer-shop">Shop</Link>
             </Button>
           </div>
@@ -346,11 +360,7 @@ export function HomePage() {
                 Gift-worthy wow prices
               </h2>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              asChild
-            >
+            <Button variant="outline" size="sm" asChild>
               <Link to="/under-50">Shop</Link>
             </Button>
           </div>
@@ -440,7 +450,7 @@ export function HomePage() {
                 More to explore
               </p>
               <h2 className="mt-1 font-display text-2xl font-bold italic text-navy">
-                Shop the latest
+                Just in
               </h2>
             </div>
             <Button variant="outline" asChild className="hidden sm:inline-flex">
@@ -448,7 +458,7 @@ export function HomePage() {
             </Button>
           </div>
           <div className="grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-4">
-            {PRODUCTS.filter((p) => p.isNew).slice(0, 4).map((product) => (
+            {justIn.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>

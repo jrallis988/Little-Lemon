@@ -53,6 +53,17 @@ export const SHOP_NAV: NavPreset[] = [
     menuLabel: "Women's Wear",
     description: "Apparel, shoes, and accessories for women",
     departments: ["Women"],
+    categories: [
+      "Blazers",
+      "Dresses",
+      "Knitwear",
+      "Denim",
+      "Outerwear",
+      "Pants",
+      "Skirts",
+      "Shoes",
+      "Bags",
+    ],
   },
   {
     id: "juniors",

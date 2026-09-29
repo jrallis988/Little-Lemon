@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router-dom"
 import { ArrowRight } from "lucide-react"
 import { PRODUCTS } from "@/data/products"
+import { curatedWomenByBucket } from "@/data/merchandising"
 import { SHOP_NAV, navHref, type NavPreset } from "@/data/navigation"
 import { ProductCard } from "@/components/catalog/ProductCard"
 import { retailPhotoUrl, RETAIL_IMAGE_POOLS, poolForCategory } from "@/data/images"
@@ -20,15 +21,21 @@ function filterForNav(nav: NavPreset | undefined, slug: string): Product[] {
     const dept = slug.charAt(0).toUpperCase() + slug.slice(1)
     return PRODUCTS.filter((p) => p.department === dept).slice(0, 12)
   }
-  return PRODUCTS.filter((p) => {
+  const matched = PRODUCTS.filter((p) => {
     if (nav.departments?.length && !nav.departments.includes(p.department)) return false
-    if (nav.categories?.length && !nav.categories.includes(p.category)) return false
+    if (nav.categories?.length && !nav.categories.includes(p.category)) {
+      // Women landing uses categories as chips, not hard filters
+      if (nav.id === "women") return true
+      return false
+    }
     if (nav.query) {
       const q = nav.query.toLowerCase()
       return [p.name, p.brand, ...p.tags].join(" ").toLowerCase().includes(q)
     }
     return Boolean(nav.departments?.length || nav.categories?.length)
-  }).slice(0, 12)
+  })
+  const limit = nav.id === "women" ? 20 : 12
+  return matched.slice(0, limit)
 }
 
 function heroFor(nav: NavPreset | undefined, items: Product[]) {
@@ -68,6 +75,9 @@ export function DepartmentLandingPage() {
   const shopLinks =
     nav?.categories?.slice(0, 9) ??
     Array.from(new Set(items.map((p) => p.category))).slice(0, 9)
+
+  const isWomen = slug === "women" || nav?.id === "women"
+  const womenBuckets = isWomen ? curatedWomenByBucket() : null
 
   return (
     <div>
@@ -134,10 +144,61 @@ export function DepartmentLandingPage() {
         </section>
       )}
 
+      {womenBuckets && (
+        <section className="shelf-container space-y-12 py-10">
+          {(
+            [
+              {
+                key: "newArrivals",
+                title: "Just in",
+                copy: "New women’s styles that just hit the floor.",
+                products: womenBuckets.newArrivals,
+              },
+              {
+                key: "wowDeals",
+                title: "Wow deals",
+                copy: "Deepest compare-at savings in the women’s edit.",
+                products: womenBuckets.wowDeals,
+              },
+              {
+                key: "designer",
+                title: "Designer & elevated",
+                copy: "Labels that feel boutique — priced for Marshalls.",
+                products: womenBuckets.designer,
+              },
+            ] as const
+          ).map((bucket) =>
+            bucket.products.length > 0 ? (
+              <div key={bucket.key}>
+                <div className="flex items-end justify-between gap-4">
+                  <div>
+                    <h2 className="font-display text-2xl font-bold italic text-navy">
+                      {bucket.title}
+                    </h2>
+                    <p className="mt-1 text-sm text-muted-foreground">{bucket.copy}</p>
+                  </div>
+                  <Link
+                    to="/catalog?department=Women"
+                    className="shrink-0 text-sm font-semibold text-navy underline-offset-2 hover:underline"
+                  >
+                    View all
+                  </Link>
+                </div>
+                <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+                  {bucket.products.map((p) => (
+                    <ProductCard key={`${bucket.key}-${p.id}`} product={p} />
+                  ))}
+                </div>
+              </div>
+            ) : null,
+          )}
+        </section>
+      )}
+
       <section className="shelf-container py-10">
         <div className="flex items-end justify-between gap-4">
           <h2 className="font-display text-2xl font-bold italic text-navy">
-            Fresh in {title}
+            {isWomen ? "All women’s finds" : `Fresh in ${title}`}
           </h2>
           <Link
             to={nav ? navHref(nav) : "/catalog"}

@@ -78,6 +78,22 @@ export function BagPage() {
           <Button asChild className="mt-6">
             <Link to="/catalog">Shop new finds</Link>
           </Button>
+          <div className="mt-4 flex flex-wrap justify-center gap-2">
+            <Link
+              to="/department/women"
+              className="text-sm font-semibold text-navy underline"
+            >
+              Women
+            </Link>
+            <span className="text-muted-foreground">·</span>
+            <Link to="/under-50" className="text-sm font-semibold text-navy underline">
+              Under $50
+            </Link>
+            <span className="text-muted-foreground">·</span>
+            <Link to="/clearance" className="text-sm font-semibold text-navy underline">
+              Clearance
+            </Link>
+          </div>
         </div>
       ) : (
         <div className="grid gap-8 lg:grid-cols-[1fr_20rem]">

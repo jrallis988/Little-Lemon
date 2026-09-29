@@ -69,9 +69,20 @@ export function WishlistPage() {
         <div className="rounded-lg border border-dashed border-border bg-surface-muted/40 px-6 py-16 text-center">
           <Heart className="mx-auto h-10 w-10 text-muted-foreground" />
           <p className="mt-4 font-display text-xl font-bold">Your wishlist is empty</p>
-          <Button asChild className="mt-6">
-            <Link to="/catalog">Start shopping</Link>
-          </Button>
+          <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
+            Save styles while you treasure-hunt — start with Women’s Wear or today’s wow deals.
+          </p>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
+            <Button asChild className="bg-navy hover:bg-navy/90">
+              <Link to="/department/women">Shop Women</Link>
+            </Button>
+            <Button asChild variant="outline">
+              <Link to="/catalog?sort=discount">Best finds</Link>
+            </Button>
+            <Button asChild variant="outline">
+              <Link to="/designer-shop">Designer Shop</Link>
+            </Button>
+          </div>
         </div>
       ) : (
         <div className="grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3 lg:grid-cols-4">
