@@ -206,13 +206,19 @@ export const ROOMS = [
     sleeps: 4,
     size: "Junior suite",
     description:
-      "Extra living space for a longer stay—room for a small table, desk, and full in-room amenities, plus gazebo and BBQ access on the lawn. Confirm suite bedding when you book.",
+      "Our roomiest option for longer visits—extra seating, a small table, desk space, and full in-room amenities, with gazebo and BBQ access on the lawn. Confirm suite bedding when you book.",
+    photoNote:
+      "Suite interiors vary by unit. Photos show a spacious layout and shared grounds; ask the front desk for current suite availability photos.",
     image: asset("/images/room-amenities.jpg"),
     imageAlt: "Spacious guest room with seating, desk, fridge, and TV",
     gallery: [
       {
         src: asset("/images/room-amenities.jpg"),
         alt: "Suite-style room with table, chairs, dresser, fridge, and TV",
+      },
+      {
+        src: asset("/images/room-queen.jpg"),
+        alt: "Example coastal sleeping area with queen bedding",
       },
       {
         src: asset("/images/gazebo-bbq.jpg"),
@@ -399,7 +405,7 @@ export const FAQ_SECTIONS = [
       {
         question: "How can I make a reservation?",
         answer:
-          "Click Book a stay on this site, enter your dates, choose a room, and follow the prompts on our RezStream booking calendar. You can also reserve by calling the front desk at (603) 926-1750.",
+          "Use Check availability in the top bar, or Open live calendar in Rates, enter your dates, choose a room, and follow the prompts on our RezStream booking calendar. You can also reserve by calling the front desk at (603) 926-1750.",
       },
       {
         question: "What is your cancellation policy?",
@@ -510,7 +516,7 @@ export const FAQ_SECTIONS = [
       {
         question: "How do I make sure I book direct?",
         answer:
-          "Use this website’s Book a stay / Rates calendar, or call the front desk at (603) 926-1750.",
+          "Use Check availability or Open live calendar on this website, or call the front desk at (603) 926-1750.",
       },
     ],
   },

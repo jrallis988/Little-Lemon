@@ -87,6 +87,9 @@ export default function RoomModal({ room, onClose }) {
             {room.beds} · Sleeps {room.sleeps} · {room.rateLabel}
           </p>
           <p className="modal__copy">{room.description}</p>
+          {room.photoNote ? (
+            <p className="modal__photo-note">{room.photoNote}</p>
+          ) : null}
 
           <ul className="amenity-list">
             {room.amenities.map((item) => (

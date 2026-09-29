@@ -14,8 +14,8 @@ export default function Rooms() {
       </h2>
       <p className="section__copy">
         About {SITE.roomCount} rooms with air-conditioning, refrigerators,
-        microwaves, cable, and free Wi‑Fi—steps from North Beach at Plaice Cove.{" "}
-        {SITE.typicalRateNote}
+        microwaves, cable, and free Wi‑Fi—steps from North Beach at Plaice Cove.
+        Layouts and views vary by unit; confirm bedding on your confirmation.
       </p>
 
       <div className="rooms">

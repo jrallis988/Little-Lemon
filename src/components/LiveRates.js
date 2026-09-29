@@ -36,7 +36,7 @@ export default function LiveRates() {
       </h2>
       <p className="section__copy">
         Seasonal ranges below are a guide. Open the live calendar for unit-by-unit
-        availability and final pricing. {SITE.typicalRateNote}
+        availability and final pricing.
       </p>
 
       <ul className="season-list">

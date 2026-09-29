@@ -1214,6 +1214,16 @@ p {
   max-width: 48ch;
 }
 
+.modal__photo-note {
+  margin: 0.75rem 0 0;
+  padding: 0.7rem 0.85rem;
+  max-width: 48ch;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  background: rgba(11, 79, 108, 0.06);
+  border-left: 3px solid var(--seafoam);
+}
+
 .modal__actions {
   display: flex;
   flex-wrap: wrap;
