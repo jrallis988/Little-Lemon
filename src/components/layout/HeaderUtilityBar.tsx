@@ -55,7 +55,12 @@ export function HeaderUtilityBar() {
           International
         </Link>
 
-        <div ref={rootRef} className="relative">
+        <div
+          ref={rootRef}
+          className="relative"
+          onMouseEnter={() => setOpen(true)}
+          onMouseLeave={() => setOpen(false)}
+        >
           <button
             type="button"
             id={`${id}-want`}
@@ -64,6 +69,7 @@ export function HeaderUtilityBar() {
             aria-controls={`${id}-want-menu`}
             className="inline-flex items-center gap-1 font-semibold text-blue hover:underline"
             onClick={() => setOpen((v) => !v)}
+            onFocus={() => setOpen(true)}
           >
             I Want To...
             <IconChevronDown
@@ -78,7 +84,7 @@ export function HeaderUtilityBar() {
               id={`${id}-want-menu`}
               role="menu"
               aria-labelledby={`${id}-want`}
-              className="absolute right-0 top-full z-[520] mt-1 min-w-[240px] rounded-sm border border-border bg-white py-1 shadow-lg"
+              className="absolute right-0 top-full z-[620] mt-0 min-w-[240px] rounded-sm border border-border bg-white py-1 pt-2 shadow-lg"
             >
               {iWantToLinks.map((link) => (
                 <li key={link.label} role="none">
