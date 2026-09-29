@@ -1,0 +1,25 @@
+[build]
+  publish = "."
+  command = "echo 'Static site — no build step'"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[redirects]]
+  from = "/menu"
+  to = "/menu.html"
+  status = 200
+
+[[redirects]]
+  from = "/order"
+  to = "https://order.mealkeyway.com/merchant/76314c764f6d6b723139457239512b6a594f6f6379513d3d/main"
+  status = 302
