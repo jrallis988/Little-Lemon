@@ -42,6 +42,12 @@ export function resolveSearchQuery(raw: string): {
   return { query };
 }
 
+function matchesText(haystack: string, query: string): boolean {
+  if (haystack.includes(query)) return true;
+  const stem = query.replace(/(?:ers|er|ing|tion|s)$/i, "");
+  return stem.length >= 4 && haystack.includes(stem);
+}
+
 export function buildSearchResults(rawQuery: string): SearchPageResults {
   const { query, didYouMean } = resolveSearchQuery(rawQuery);
   if (!query) {
@@ -57,21 +63,21 @@ export function buildSearchResults(rawQuery: string): SearchPageResults {
   const retail = PRODUCTS.filter((product) => {
     const haystack =
       `${product.name} ${product.brand} ${product.tags.join(" ")} ${product.categoryId}`.toLowerCase();
-    return haystack.includes(query);
+    return matchesText(haystack, query);
   }).slice(0, 12);
 
   const curated = SEARCH_SUGGESTIONS.filter(
     (item) =>
-      item.label.toLowerCase().includes(query) ||
-      item.query.toLowerCase().includes(query) ||
-      item.meta?.toLowerCase().includes(query),
+      matchesText(item.label.toLowerCase(), query) ||
+      matchesText(item.query.toLowerCase(), query) ||
+      matchesText(item.meta?.toLowerCase() ?? "", query),
   );
 
   // Surface clinical services by name when query matches
   const clinicalFromServices: SearchSuggestion[] = CLINICAL_SERVICES.filter(
     (service) =>
-      service.name.toLowerCase().includes(query) ||
-      service.description.toLowerCase().includes(query),
+      matchesText(service.name.toLowerCase(), query) ||
+      matchesText(service.description.toLowerCase(), query),
   ).map((service) => ({
     id: `clinical-${service.id}`,
     query,
