@@ -44,6 +44,13 @@ export default function Location() {
 
     mapInstance.current = map;
 
+    // Leaflet zoom controls default to href="#"; keep them from jumping the page.
+    const container = typeof map.getContainer === "function" ? map.getContainer() : null;
+    container?.querySelectorAll?.(".leaflet-control-zoom a").forEach((link) => {
+      link.addEventListener("click", (event) => event.preventDefault());
+      link.setAttribute("href", "#location");
+    });
+
     const onResize = () => map.invalidateSize();
     window.addEventListener("resize", onResize);
     // Skip delayed invalidate in Jest — it keeps the worker alive after tests.

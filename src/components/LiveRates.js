@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
 import {
-  SITE,
   SEASONAL_RATES,
   buildBookingUrl,
   estimateTotal,

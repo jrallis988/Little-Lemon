@@ -1891,6 +1891,8 @@ p {
   max-width: 720px;
   margin-inline: auto;
   padding: 1.15rem 1.2rem;
+  max-height: min(42vh, 22rem);
+  overflow: auto;
   border-radius: calc(var(--radius) + 2px);
   border: 1px solid rgba(255, 255, 255, 0.14);
   background: rgba(var(--nav-teal-rgb), 0.98);

@@ -33,9 +33,6 @@ export const SITE = {
   checkIn: "3:00 PM",
   checkOut: "10:00 AM",
   hours: "Front desk 8:30 AM – 10:00 PM",
-  /** Times match the inn’s published policy; still confirm on your reservation. */
-  typicalRateNote:
-    "Use Open live calendar for exact pricing — seasonal ranges are a guide only.",
   trustLine: [
     "Beach across the street",
     "Pet-friendly",
