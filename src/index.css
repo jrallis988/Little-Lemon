@@ -116,3 +116,27 @@
     @apply rounded-[1.6rem] border-[2.5px] border-border/80 bg-card shadow-card;
   }
 }
+
+@layer base {
+  .mailbox-large-text {
+    font-size: 112%;
+  }
+
+  .mailbox-high-contrast {
+    --border: 234 35% 55%;
+    --foreground: 234 50% 12%;
+    --muted-foreground: 234 25% 28%;
+  }
+
+  .mailbox-reduce-motion *,
+  .mailbox-reduce-motion *::before,
+  .mailbox-reduce-motion *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .mailbox-hide-doodles .doodle-bg {
+    background-image: none;
+  }
+}

@@ -626,7 +626,15 @@ function SettingsPane() {
   const updateSettings = useMailStore((s) => s.updateSettings);
   const [name, setName] = useState(settings.studentName);
   const [school, setSchool] = useState(settings.schoolName);
-  const [section, setSection] = useState("account");
+  const [section, setSection] = useState<
+    | "account"
+    | "notifications"
+    | "appearance"
+    | "accessibility"
+    | "privacy"
+    | "help"
+  >("account");
+  const [saved, setSaved] = useState(false);
 
   const nav = [
     "account",
@@ -646,6 +654,75 @@ function SettingsPane() {
     help: "Help",
   };
 
+  const tips: Record<(typeof nav)[number], { title: string; body: string }> = {
+    account: {
+      title: "You’re all set!",
+      body: "Your account is secure and ready for school mail.",
+    },
+    notifications: {
+      title: "Stay in the loop",
+      body: "We’ll only nudge you about school mail that matters.",
+    },
+    appearance: {
+      title: "Make it yours",
+      body: "Doodles and notebook vibes help Mailbox feel like class.",
+    },
+    accessibility: {
+      title: "Read your way",
+      body: "Bigger type and calmer motion are always available.",
+    },
+    privacy: {
+      title: "You’re protected",
+      body: "Safe Contacts and teacher review keep mail classroom-ready.",
+    },
+    help: {
+      title: "Need a hand?",
+      body: "Ask your teacher — they’re one PIN away in Teacher mode.",
+    },
+  };
+
+  async function togglePref(
+    key:
+      | "notifyNewMail"
+      | "notifyTeacherReturns"
+      | "showDoodles"
+      | "largeText"
+      | "highContrast"
+      | "reduceMotion",
+    value: boolean,
+  ) {
+    await updateSettings({ [key]: value });
+  }
+
+  function PrefToggle({
+    label,
+    hint,
+    checked,
+    onChange,
+  }: {
+    label: string;
+    hint: string;
+    checked: boolean;
+    onChange: (next: boolean) => void;
+  }) {
+    return (
+      <label className="flex items-center justify-between gap-4 rounded-[1.5rem] border-2 border-border bg-card px-4 py-4 shadow-card">
+        <span>
+          <span className="block text-sm font-extrabold text-foreground">
+            {label}
+          </span>
+          <span className="text-xs font-bold text-muted-foreground">{hint}</span>
+        </span>
+        <input
+          type="checkbox"
+          className="size-5 accent-[hsl(var(--primary))]"
+          checked={checked}
+          onChange={(e) => onChange(e.target.checked)}
+        />
+      </label>
+    );
+  }
+
   return (
     <section className="grid h-full min-h-0 grid-cols-1 lg:grid-cols-[220px_minmax(0,1fr)_280px]">
       <aside className="border-r border-border/70 bg-card/80 p-4">
@@ -654,7 +731,10 @@ function SettingsPane() {
             <button
               key={id}
               type="button"
-              onClick={() => setSection(id)}
+              onClick={() => {
+                setSection(id);
+                setSaved(false);
+              }}
               className={cn(
                 "w-full rounded-3xl px-3.5 py-3 text-left text-sm font-extrabold",
                 section === id
@@ -669,7 +749,7 @@ function SettingsPane() {
       </aside>
 
       <div className="overflow-y-auto p-6">
-        {section === "account" ? (
+        {section === "account" && (
           <div className="mx-auto max-w-lg space-y-4 animate-fade-up">
             <h2 className="font-display text-3xl font-semibold">Account</h2>
             <label className="block space-y-2">
@@ -705,25 +785,117 @@ function SettingsPane() {
               />
             </label>
             <Button
-              onClick={() =>
+              onClick={() => {
                 void updateSettings({
                   studentName: name,
                   schoolName: school,
                   defaultGrade: grade,
-                })
-              }
+                }).then(() => setSaved(true));
+              }}
             >
               Save
             </Button>
+            {saved && (
+              <p className="text-sm font-bold text-safe">Saved — nice work!</p>
+            )}
           </div>
-        ) : (
-          <div className="mx-auto max-w-lg rounded-[2rem] border-2 border-border bg-card p-8 text-center shadow-card">
-            <p className="font-display text-2xl font-semibold">
-              {labels[section as (typeof nav)[number]]}
+        )}
+
+        {section === "notifications" && (
+          <div className="mx-auto max-w-lg space-y-3 animate-fade-up">
+            <h2 className="font-display text-3xl font-semibold">
+              Notifications
+            </h2>
+            <PrefToggle
+              label="New mail"
+              hint="Get a nudge when something lands in Inbox."
+              checked={settings.notifyNewMail}
+              onChange={(v) => void togglePref("notifyNewMail", v)}
+            />
+            <PrefToggle
+              label="Teacher returns"
+              hint="Know when a draft comes back with comments."
+              checked={settings.notifyTeacherReturns}
+              onChange={(v) => void togglePref("notifyTeacherReturns", v)}
+            />
+          </div>
+        )}
+
+        {section === "appearance" && (
+          <div className="mx-auto max-w-lg space-y-3 animate-fade-up">
+            <h2 className="font-display text-3xl font-semibold">Appearance</h2>
+            <PrefToggle
+              label="Notebook doodles"
+              hint="Show playful doodles behind your mail."
+              checked={settings.showDoodles}
+              onChange={(v) => void togglePref("showDoodles", v)}
+            />
+          </div>
+        )}
+
+        {section === "accessibility" && (
+          <div className="mx-auto max-w-lg space-y-3 animate-fade-up">
+            <h2 className="font-display text-3xl font-semibold">
+              Accessibility
+            </h2>
+            <PrefToggle
+              label="Larger text"
+              hint="Bump up type size across Mailbox."
+              checked={settings.largeText}
+              onChange={(v) => void togglePref("largeText", v)}
+            />
+            <PrefToggle
+              label="High contrast"
+              hint="Stronger borders and clearer colors."
+              checked={settings.highContrast}
+              onChange={(v) => void togglePref("highContrast", v)}
+            />
+            <PrefToggle
+              label="Reduce motion"
+              hint="Turn down floating and fade animations."
+              checked={settings.reduceMotion}
+              onChange={(v) => void togglePref("reduceMotion", v)}
+            />
+          </div>
+        )}
+
+        {section === "privacy" && (
+          <div className="mx-auto max-w-lg space-y-4 animate-fade-up">
+            <h2 className="font-display text-3xl font-semibold">
+              Privacy & Safety
+            </h2>
+            <div className="space-y-3 rounded-[1.6rem] border-2 border-safe/25 bg-safe-soft/50 p-5 text-sm font-bold text-foreground/85 shadow-card">
+              <p>You can only write to Safe Contacts.</p>
+              <p>Unknown senders are flagged before you reply.</p>
+              <p>
+                When approval is on, teachers review outbound mail in Teacher
+                mode.
+              </p>
+            </div>
+            <p className="text-sm font-bold text-muted-foreground">
+              Demo note: mail stays on this device until a real classroom
+              backend is connected.
             </p>
-            <p className="mt-2 text-sm font-bold text-muted-foreground">
-              Coming soon in classroom rollout.
-            </p>
+          </div>
+        )}
+
+        {section === "help" && (
+          <div className="mx-auto max-w-lg space-y-4 animate-fade-up">
+            <h2 className="font-display text-3xl font-semibold">Help</h2>
+            <div className="space-y-3 rounded-[1.6rem] border-2 border-primary/15 bg-card p-5 shadow-card">
+              <p className="font-extrabold">Quick tips</p>
+              <ul className="list-disc space-y-2 pl-5 text-sm font-bold text-muted-foreground">
+                <li>Use Compose starters when you’re not sure how to begin.</li>
+                <li>Check Pending to see mail waiting on your teacher.</li>
+                <li>
+                  Teachers unlock with PIN <span className="text-foreground">1234</span>{" "}
+                  in this demo.
+                </li>
+                <li>
+                  Ask your teacher to add anyone missing from Safe Contacts.
+                </li>
+              </ul>
+            </div>
           </div>
         )}
       </div>
@@ -736,10 +908,10 @@ function SettingsPane() {
             className="mx-auto h-24 w-24 object-contain animate-float"
           />
           <p className="mt-3 font-display text-xl font-semibold text-brand">
-            You’re all set!
+            {tips[section].title}
           </p>
           <p className="mt-1 text-sm font-bold text-muted-foreground">
-            Your account is secure and ready for school mail.
+            {tips[section].body}
           </p>
         </div>
       </aside>

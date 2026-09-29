@@ -88,6 +88,21 @@ class MailboxDB extends Dexie {
         await tx.table("messages").put(seed);
       }
     });
+    this.version(7).upgrade(async (tx) => {
+      const settings = await tx.table("settings").get("app");
+      await tx.table("settings").put({
+        ...DEFAULT_SETTINGS,
+        ...settings,
+        notifyNewMail: settings?.notifyNewMail ?? DEFAULT_SETTINGS.notifyNewMail,
+        notifyTeacherReturns:
+          settings?.notifyTeacherReturns ??
+          DEFAULT_SETTINGS.notifyTeacherReturns,
+        showDoodles: settings?.showDoodles ?? DEFAULT_SETTINGS.showDoodles,
+        largeText: settings?.largeText ?? DEFAULT_SETTINGS.largeText,
+        highContrast: settings?.highContrast ?? DEFAULT_SETTINGS.highContrast,
+        reduceMotion: settings?.reduceMotion ?? DEFAULT_SETTINGS.reduceMotion,
+      });
+    });
   }
 }
 

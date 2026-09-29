@@ -9,16 +9,32 @@ import { useEffect } from "react";
 export function AppShell() {
   const grade = useMailStore((s) => s.grade);
   const learningStage = useMailStore((s) => s.learningStage);
+  const settings = useMailStore((s) => s.settings);
 
   useEffect(() => {
     document.documentElement.dataset.stage = learningStage;
     document.documentElement.dataset.grade = String(grade);
   }, [grade, learningStage]);
 
+  useEffect(() => {
+    const root = document.documentElement;
+    root.classList.toggle("mailbox-large-text", settings.largeText);
+    root.classList.toggle("mailbox-high-contrast", settings.highContrast);
+    root.classList.toggle("mailbox-reduce-motion", settings.reduceMotion);
+    root.classList.toggle("mailbox-hide-doodles", !settings.showDoodles);
+  }, [
+    settings.largeText,
+    settings.highContrast,
+    settings.reduceMotion,
+    settings.showDoodles,
+  ]);
+
   return (
     <TooltipProvider delayDuration={200}>
       <div className="doodle-bg relative flex h-screen min-h-[640px] overflow-hidden text-foreground">
-        <DoodleBackdrop className="opacity-70" />
+        {!settings.showDoodles ? null : (
+          <DoodleBackdrop className="opacity-70" />
+        )}
         <Sidebar />
         <div className="relative z-10 flex min-w-0 flex-1 flex-col">
           <TopBar />

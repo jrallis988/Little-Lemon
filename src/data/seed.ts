@@ -15,6 +15,12 @@ export const DEFAULT_SETTINGS: AppSettings = {
   defaultGrade: 6,
   studentName: "Alex Johnson",
   schoolName: "Riverside Middle School",
+  notifyNewMail: true,
+  notifyTeacherReturns: true,
+  showDoodles: true,
+  largeText: false,
+  highContrast: false,
+  reduceMotion: false,
 };
 
 export const FOLDERS: FolderMeta[] = [

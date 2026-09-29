@@ -106,6 +106,12 @@ export interface AppSettings {
   defaultGrade: GradeLevel;
   studentName: string;
   schoolName: string;
+  notifyNewMail: boolean;
+  notifyTeacherReturns: boolean;
+  showDoodles: boolean;
+  largeText: boolean;
+  highContrast: boolean;
+  reduceMotion: boolean;
 }
 
 export interface WritingPrompt {
