@@ -2,27 +2,29 @@ import Image from "next/image";
 import Link from "next/link";
 import { CircleLink } from "@/components/home/CircleLink";
 
+/** Homepage “Latest from Boston Children’s” columns — synced to childrenshospital.org (Sept 2026). */
 const columns = [
   {
     heading: "News Stories",
-    image: "/images/latest/back-to-school-classroom.jpg",
-    alt: "Children sit at desks in a classroom with several students raising their hands while a teacher stands at the front",
+    image: "/images/latest/food-pantry-jamaica-plain.webp",
+    alt: "Produce shelves at a community food pantry, with green bananas in the foreground",
     tag: "In the News",
-    date: "July 27, 2026",
-    title: "Watch: Tips to ease back-to-school stress for kids",
+    date: "September 17, 2026",
+    title:
+      "Watch: Boston Children's food pantry in Jamaica Plain now serves 1,600 people each week",
     source: "WCVB-TV",
-    href: "/about",
+    href: "/about/community",
     cta: "Visit the Newsroom",
   },
   {
     heading: "Latest Videos",
-    image: "/images/latest/cuatro-preguntas-visitas-medicas.jpg",
-    alt: "Seminario web: Cuatro preguntas para guiar su visita médica, con retratos de las presentadoras",
-    tag: "Programs & Services",
+    image: "/images/latest/solu-cortef-injection.jpg",
+    alt: "Video thumbnail: how to administer a Solu-Cortef injection",
+    tag: "Conditions & Treatments",
     date: null,
-    title: "Cuatro preguntas para mejores visitas médicas",
-    body: "Únase a la Dra. Eva Gómez y a la Especialista Certificada en Vida Infantil, Fiorella Downey, para un seminario web sobre cómo comunicarse con los proveedores de salud. Aprenda a...",
-    href: "/es",
+    title: "How to administer a Solu-Cortef injection",
+    body: "Review how to administer a Solu-Cortef injection in an emergency for a child with adrenal insufficiency. In this video, Natalie Reilly, a nurse in the Boston Children's Division of Endocrinology...",
+    href: "/conditions",
     cta: "See All Videos",
   },
   {
@@ -33,7 +35,7 @@ const columns = [
     date: null,
     title: "My child is using AI a lot. Should I be worried?",
     meta: "Parentcast: Season 4, Episode 5 | 31 min",
-    body: "Artificial intelligence is quickly becoming part of everyday life for children and teens. Many students now use AI tools like ChatGPT for homework, studying, writing, and answering questions.",
+    body: "Artificial intelligence is quickly becoming part of everyday life for children and teens. Many students now use AI tools like ChatGPT for homework, studying, writing, and answering questions, while others...",
     href: "/patients-families",
     cta: "Check Out All Episodes",
   },

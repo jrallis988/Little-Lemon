@@ -57,13 +57,13 @@ export default function PrepareForVisitPage() {
             id="construction-heading"
             className="mb-s2 text-lg font-bold text-text"
           >
-            Important construction closures
+            Important construction closure
           </h2>
           <p className="text-base font-light leading-relaxed text-text-body">
-            Work will affect the Sky Bridge and parts of the main lobby at our
-            Longwood campus. Allow extra time for arrival, follow posted
-            wayfinding, and ask security or information desk staff if you need
-            help finding your clinic.
+            Work is affecting parts of the main lobby at our Longwood campus.
+            Allow extra time for arrival, follow posted wayfinding, and ask
+            security or information desk staff if you need help finding your
+            clinic.
           </p>
           <div className="mt-s3">
             <Button href="/locations/longwood" variant="outline" size="sm">

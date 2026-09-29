@@ -6,7 +6,7 @@ import { DoctorDirectory } from "@/components/doctors/DoctorDirectory";
 export const metadata: Metadata = {
   title: "Find a Doctor",
   description:
-    "Search by specialty, name, or language. Every doctor listed here sees patients at Boston Children's Hospital.",
+    "Find the right doctor for your child. Search by specialty, name, or language across Boston Children's Hospital providers.",
 };
 
 export default function FindADoctorPage() {
@@ -15,7 +15,7 @@ export default function FindADoctorPage() {
       <PageHero
         id="fad-heading"
         eyebrow="Find care"
-        title="Find a Doctor"
+        title="Find the Right Doctor For Your Child"
         lead="Search by specialty, name, or language. Every doctor listed here sees patients at Boston Children's Hospital."
       />
       <Suspense fallback={<div className="wrap py-s8 text-text-meta">Loading directory…</div>}>

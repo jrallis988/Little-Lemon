@@ -11,11 +11,11 @@ export function HomeHero() {
       aria-labelledby="hero-heading"
     >
       <Image
-        src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=2000&q=80"
-        alt="A young child outdoors near a hospital campus"
+        src="/images/hero/homepage-hero-mia.webp"
+        alt="A young patient smiling while holding a white stuffed animal"
         fill
         priority
-        className="object-cover object-[center_32%] saturate-[.92]"
+        className="object-cover object-[center_28%] saturate-[.92]"
         sizes="100vw"
       />
       <div
@@ -33,7 +33,7 @@ export function HomeHero() {
             Top ranked pediatric hospital in the nation
           </p>
 
-          <AwardBadgeRow className="mb-s5 gap-s4 [&_svg]:h-[70px] [&_svg]:w-auto sm:[&_svg]:h-[78px]" />
+          <AwardBadgeRow className="mb-s5 gap-s4 [&_img]:h-[70px] [&_img]:w-auto sm:[&_img]:h-[78px]" />
 
           <h1
             id="hero-heading"
@@ -46,7 +46,7 @@ export function HomeHero() {
           </h1>
 
           <Button href="/appointments/request" variant="pink" size="md">
-            Make an Appointment
+            Request an Appointment
           </Button>
         </div>
       </div>

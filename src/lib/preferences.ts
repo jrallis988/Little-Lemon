@@ -1,7 +1,7 @@
 /** Client-only preference keys persisted in localStorage. */
 
 export const COOKIE_CONSENT_KEY = "bch-cookie-consent";
-export const SITE_ANNOUNCEMENT_KEY = "bch-announcement-construction-top-2026";
+export const SITE_ANNOUNCEMENT_KEY = "bch-announcement-construction-lobby-2026-09";
 
 export type CookieConsentValue = "accepted" | "declined";
 

@@ -11,8 +11,8 @@ import {
 } from "@/components/icons/SocialIcons";
 
 const getCare = [
-  { label: "Make an Appointment", href: "/appointments/request" },
-  { label: "MyChildren's", href: "/portal" },
+  { label: "Request an Appointment", href: "/appointments/request" },
+  { label: "MyChildren's Patient Portal", href: "/portal" },
   { label: "Find a Doctor", href: "/find-a-doctor" },
   { label: "Locations", href: "/locations" },
 ];

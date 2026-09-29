@@ -33,12 +33,12 @@ export function SiteAnnouncement() {
     <div
       className="relative bg-alert-banner text-black"
       role="region"
-      aria-label="Important construction closures"
+      aria-label="Important construction closure"
     >
       <div className="wrap flex items-start justify-center gap-s4 py-2 pr-12 text-center sm:items-center sm:py-2.5">
         <p className="m-0 text-sm leading-snug text-black sm:text-[15px]">
-          <strong className="font-bold">Important construction closures.</strong>{" "}
-          Work will affect Sky Bridge, parts of main lobby.{" "}
+          <strong className="font-bold">Important construction closure.</strong>{" "}
+          Work is affecting parts of main lobby.{" "}
           <Link
             href="/patients-families/prepare-for-your-visit#construction"
             className="font-bold text-black underline decoration-black/40 underline-offset-2 hover:decoration-black"

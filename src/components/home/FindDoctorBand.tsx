@@ -20,15 +20,16 @@ export function FindDoctorBand() {
     <section className="bg-blue py-s3 sm:py-s4" aria-labelledby="find-doctor-heading">
       <div className="wrap max-w-[900px]">
         <div className="flex flex-col items-stretch gap-s3 sm:flex-row sm:items-end sm:gap-s4">
-          <div className="min-w-0 flex-1 text-left sm:max-w-[240px]">
+          <div className="min-w-0 flex-1 text-left sm:max-w-[320px]">
             <h2
               id="find-doctor-heading"
               className="m-0 text-xl font-bold text-white sm:text-2xl"
             >
               Find a Doctor
             </h2>
-            <p className="mt-1 hidden text-sm font-light leading-snug text-white/85 sm:block">
-              Search 3,000+ specialists by name.
+            <p className="mt-1 hidden text-sm font-light leading-snug text-white/85 lg:block">
+              Over 3,000 award-winning researchers and staff stand at the ready
+              to help you navigate your most difficult challenges.
             </p>
           </div>
 
