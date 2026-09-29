@@ -686,3 +686,14 @@
     -fx-font-size: 14px;
     -fx-cursor: hand;
 }
+
+.analysis-root {
+    -fx-background-color: #101218;
+}
+
+.analysis-move {
+    -fx-font-family: "Fraunces";
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #F2F3F5;
+}

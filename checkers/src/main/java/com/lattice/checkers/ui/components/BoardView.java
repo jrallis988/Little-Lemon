@@ -28,6 +28,7 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -50,6 +51,8 @@ public final class BoardView extends VBox {
     private Move pendingTravel;
     private boolean pendingPromotion;
     private boolean inputEnabled = true;
+    private GameState replayState;
+    private Move replayLastMove;
     private int seenMoves;
 
     public BoardView(GameController controller, Consumer<Void> onChanged, boolean reducedMotion) {
@@ -148,32 +151,50 @@ public final class BoardView extends VBox {
         return inputEnabled;
     }
 
+    /**
+     * Read-only snapshot for Match Analysis. Does not change the live game.
+     */
+    public void showReplay(GameState state, Move lastMove) {
+        this.replayState = Objects.requireNonNull(state);
+        this.replayLastMove = lastMove;
+        this.inputEnabled = false;
+        this.pendingTravel = null;
+        this.pendingPromotion = false;
+        refresh();
+    }
+
     public void refresh() {
-        Optional<GameState> optional = controller.state();
+        boolean replay = replayState != null;
+        Optional<GameState> optional = replay ? Optional.of(replayState) : controller.state();
         if (optional.isEmpty()) {
             return;
         }
         GameState state = optional.get();
         List<Move> log = controller.moveLog();
-        if (log.size() > seenMoves) {
+        if (!replay && log.size() > seenMoves) {
             pendingTravel = log.get(log.size() - 1);
             List<MoveRecord> records = controller.history().records();
             pendingPromotion = !records.isEmpty() && records.get(records.size() - 1).promoted();
         }
-        seenMoves = log.size();
+        if (!replay) {
+            seenMoves = log.size();
+        }
         Board board = state.board();
-        Optional<Position> selected = controller.selected();
-        Set<Position> destinations = new HashSet<>(controller.legalDestinations());
+        Optional<Position> selected = replay ? Optional.empty() : controller.selected();
+        Set<Position> destinations = replay ? Set.of() : new HashSet<>(controller.legalDestinations());
         Set<Position> captureLandings = new HashSet<>();
         Set<Position> forcedOrigins = new HashSet<>();
-        if (controller.rulesEngine().hasForcedCapture(state) && state.status().name().equals("IN_PROGRESS")) {
+        if (!replay && controller.rulesEngine().hasForcedCapture(state)
+                && state.status().name().equals("IN_PROGRESS")) {
             controller.rulesEngine().legalMoves(state).stream()
                     .filter(Move::isJump)
                     .forEach(m -> forcedOrigins.add(m.from()));
         }
-        for (Move move : controller.legalMovesForSelection()) {
-            if (move.isJump()) {
-                captureLandings.addAll(move.path());
+        if (!replay) {
+            for (Move move : controller.legalMovesForSelection()) {
+                if (move.isJump()) {
+                    captureLandings.addAll(move.path());
+                }
             }
         }
 
@@ -239,7 +260,7 @@ public final class BoardView extends VBox {
                         cell.getChildren().addAll(halo, dot);
                     }
                 }
-                if (r == focusRow && c == focusCol && isFocused()) {
+                if (!replay && r == focusRow && c == focusCol && isFocused()) {
                     boolean opponent = board.get(pos)
                             .filter(p -> p.side() != state.sideToMove())
                             .isPresent();
@@ -273,11 +294,19 @@ public final class BoardView extends VBox {
 
     private void paintLastMove() {
         lastMoveLayer.getChildren().clear();
-        List<Move> log = controller.moveLog();
-        if (log.isEmpty()) {
-            return;
+        Move move;
+        if (replayState != null) {
+            move = replayLastMove;
+            if (move == null) {
+                return;
+            }
+        } else {
+            List<Move> log = controller.moveLog();
+            if (log.isEmpty()) {
+                return;
+            }
+            move = log.get(log.size() - 1);
         }
-        Move move = log.get(log.size() - 1);
         List<Position> points = new ArrayList<>();
         points.add(move.from());
         points.addAll(move.path());
