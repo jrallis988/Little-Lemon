@@ -104,7 +104,7 @@ export function HeaderUtilityBar() {
 
         <Link
           href="/#giving"
-          className="inline-flex h-8 items-center rounded-sm border border-pink px-3 text-sm font-bold text-pink no-underline transition-colors hover:bg-pink hover:text-white"
+          className="inline-flex h-8 items-center rounded-sm bg-pink px-3.5 text-sm font-bold text-white no-underline transition-colors hover:bg-pink-text"
         >
           Donate
         </Link>

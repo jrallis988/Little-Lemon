@@ -13,6 +13,7 @@ import {
   IconClose,
   IconMenu,
 } from "@/components/ui/Icons";
+import { BchLogo } from "@/components/brand/BchLogo";
 import { DesktopPrimaryNav, type NavItem } from "@/components/layout/DesktopPrimaryNav";
 import { HeaderSearch } from "@/components/layout/HeaderSearch";
 import { HeaderUtilityBar } from "@/components/layout/HeaderUtilityBar";
@@ -86,23 +87,6 @@ const navItems: NavItem[] = [
           { label: "Research hub", href: "/research" },
           { label: "Clinical trials", href: "/research" },
           { label: "Health Library / Search", href: "/search?q=health" },
-        ],
-      },
-    ],
-  },
-  {
-    label: "About",
-    href: "/about",
-    match: ["/about", "/design-system"],
-    zones: [
-      {
-        title: "Our hospital",
-        accent: true,
-        links: [
-          { label: "About Us", href: "/about" },
-          { label: "Leadership", href: "/about/leadership" },
-          { label: "Our History", href: "/about/history" },
-          { label: "Community Health", href: "/about/community" },
         ],
       },
     ],
@@ -240,50 +224,42 @@ export function SiteHeader() {
             boxShadow: scrolled ? "0 2px 16px rgba(0,0,0,.18)" : undefined,
           }}
         >
-          <div className="wrap relative flex h-16 items-center overflow-visible">
-            <Link href="/" className={cn("sr-only", headerFocus)}>
-              Boston Children&apos;s Hospital — home
+          <div className="wrap relative flex h-[72px] items-center gap-s3 overflow-visible">
+            <Link
+              href="/"
+              className={cn(
+                "relative z-[2] shrink-0 rounded-sm py-1 no-underline",
+                headerFocus,
+              )}
+              aria-label="Boston Children's Hospital — home"
+            >
+              <BchLogo variant="onDark" showWordmark className="[&_svg]:h-12 [&_svg]:w-12" />
             </Link>
 
-            <div className="pointer-events-none absolute inset-0 hidden items-center justify-center xl:flex">
-              <div className="pointer-events-auto flex items-center gap-0.5 xl:gap-1">
-                <DesktopPrimaryNav items={navItems} />
-                <HeaderSearch />
-              </div>
+            <div className="relative z-[1] ml-auto hidden min-w-0 flex-1 items-center justify-end gap-1 xl:flex 2xl:gap-1.5">
+              <DesktopPrimaryNav items={navItems} />
+              <HeaderSearch />
             </div>
 
-            <div className="relative z-[1] ml-auto flex shrink-0 items-center gap-1 sm:gap-1.5">
-              <Link
-                href="/portal"
+            <div className="relative z-[1] ml-auto flex shrink-0 items-center gap-1 sm:gap-1.5 xl:hidden">
+              <HeaderSearch />
+              <button
+                ref={mobileToggleRef}
+                id="mob-toggle"
+                type="button"
                 className={cn(
-                  "hidden min-h-10 items-center rounded-sm bg-white px-3.5 text-sm font-bold text-blue no-underline transition-colors hover:bg-sky/20 hover:text-blue xl:inline-flex 2xl:px-4 2xl:text-[15px]",
+                  "ml-0.5 flex h-11 w-11 items-center justify-center rounded-sm text-white/70 transition-all hover:bg-white/10 hover:text-white",
                   headerFocus,
                 )}
+                aria-label={
+                  mobileOpen ? "Close navigation menu" : "Open navigation menu"
+                }
+                aria-expanded={mobileOpen}
+                aria-controls="mob-nav"
+                onClick={() => setMobileOpen((v) => !v)}
               >
-                MyChildren&apos;s
-              </Link>
-
-              <div className="flex items-center gap-1 sm:gap-1.5 xl:hidden">
-                <HeaderSearch />
-
-                <button
-                  ref={mobileToggleRef}
-                  id="mob-toggle"
-                  type="button"
-                  className={cn(
-                    "ml-0.5 flex h-11 w-11 items-center justify-center rounded-sm text-white/70 transition-all hover:bg-white/10 hover:text-white",
-                    headerFocus,
-                  )}
-                  aria-label={
-                    mobileOpen ? "Close navigation menu" : "Open navigation menu"
-                  }
-                  aria-expanded={mobileOpen}
-                  aria-controls="mob-nav"
-                  onClick={() => setMobileOpen((v) => !v)}
-                >
-                  {mobileOpen ? <IconClose /> : <IconMenu />}
-                </button>
-              </div>
+                {mobileOpen ? <IconClose /> : <IconMenu />}
+              </button>
             </div>
           </div>
         </div>

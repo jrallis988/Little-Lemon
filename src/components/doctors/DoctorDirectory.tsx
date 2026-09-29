@@ -136,7 +136,7 @@ export function DoctorDirectory() {
   return (
     <>
       <div
-        className="sticky top-[152px] z-[200] border-b border-border bg-white py-s4"
+        className="sticky top-[116px] z-[200] border-b border-border bg-white py-s4"
         role="search"
         aria-label="Filter doctors"
       >
@@ -154,12 +154,12 @@ export function DoctorDirectory() {
                 id="doctor-query"
                 value={queryDraft}
                 onChange={(e) => setQueryDraft(e.target.value)}
-                placeholder="Search by name, specialty, or interest…"
+                placeholder="Enter provider name"
                 className="pl-11"
               />
             </div>
-            <Button type="submit" variant="ocean" size="sm">
-              Search
+            <Button type="submit" variant="pink" size="sm">
+              Find a Doctor
             </Button>
           </form>
 
