@@ -1,0 +1,22 @@
+appId: com.biocross.app
+---
+# BioCross — demo sign-in → search → confirm → analyzing
+- launchApp
+- tapOn: "I already have an account"
+- assertVisible: "Welcome back"
+- tapOn: "Fill demo credentials"
+- tapOn: "Sign In"
+- runFlow:
+    when:
+      visible: "Home"
+    commands:
+      - tapOn: "Scan"
+      - assertVisible: "Scan Supplement Label"
+      - tapOn: "Search by name or ingredient"
+      - assertVisible: "Search"
+      - tapOn: "Search supplements"
+      - inputText: "TestoMax"
+      - tapOn: "TestoMax 9000"
+      - assertVisible: "Confirm Product"
+      - tapOn: "Analyze Supplement"
+      - assertVisible: "Analyzing Supplement"

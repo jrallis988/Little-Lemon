@@ -214,10 +214,13 @@ export const biocrossApi = {
 
   getDocuments: () => apiRequest<import('../domain/models').UploadedDocument[]>('/documents'),
 
-  uploadDocument: (fileName: string) =>
+  uploadDocument: (
+    fileName: string,
+    meta?: { mimeType?: string; sizeBytes?: number; pageCount?: number },
+  ) =>
     apiRequest<import('../domain/models').UploadedDocument>('/documents/upload', {
       method: 'POST',
-      body: { fileName },
+      body: { fileName, ...meta },
     }),
 
   getExtractedItems: (documentId: string) =>

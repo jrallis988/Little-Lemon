@@ -55,6 +55,21 @@ async function main() {
   });
   console.log('forgot-password', forgot.data.ok);
 
+  const upload = await req('/documents/upload', {
+    method: 'POST',
+    headers: auth,
+    body: JSON.stringify({
+      fileName: 'Visit_Summary.pdf',
+      mimeType: 'application/pdf',
+      sizeBytes: 1_800_000,
+    }),
+  });
+  const extracted = await req(`/documents/${upload.data.id}/extracted`, { headers: auth });
+  console.log('upload', upload.data.fileName, 'extracted', extracted.data.items.length);
+
+  const turmeric = await req('/supplements/sup-catalog-turmeric');
+  console.log('catalog', turmeric.data.supplement?.name);
+
   console.log('SMOKE OK');
 }
 

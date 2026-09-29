@@ -13,6 +13,7 @@ import { analyzeSupplement } from './analysis.js';
 import { findByBarcode, findById, findByQuery } from './catalog.js';
 import { createStore, mergeProfileItem, publicUser } from './db/index.js';
 import { passwordResetEmail, sendEmail } from './email.js';
+import { buildExtractedItems, buildUploadedDocument } from './documents.js';
 import { rateLimit } from './rateLimit.js';
 import { captureException, initSentry } from './sentry.js';
 import type { AppPreferences, HealthProfile, HealthProfileItem, UserRecord } from './types.js';
@@ -294,17 +295,20 @@ app.post<{ Body: { supplementId: string } }>('/checks/analyze', async (req, repl
   return { data: await store.saveCheck(check) };
 });
 
-app.get<{ Querystring: { q?: string } }>('/supplements/search', async (req) => {
+app.get<{ Querystring: { q?: string } }>('/supplements/search', async (req, reply) => {
+  if (!enforceAuthRate(req, reply, 'catalog-search', 60, 60_000)) return;
   return { data: { supplements: findByQuery(req.query.q ?? '') } };
 });
 
 app.get<{ Params: { id: string } }>('/supplements/:id', async (req, reply) => {
+  if (!enforceAuthRate(req, reply, 'catalog-id', 120, 60_000)) return;
   const supplement = findById(req.params.id);
   if (!supplement) return reply.code(404).send({ message: 'Supplement not found.' });
   return { data: { supplement } };
 });
 
-app.get<{ Params: { code: string } }>('/supplements/barcode/:code', async (req) => {
+app.get<{ Params: { code: string } }>('/supplements/barcode/:code', async (req, reply) => {
+  if (!enforceAuthRate(req, reply, 'catalog-barcode', 60, 60_000)) return;
   return { data: { supplement: findByBarcode(req.params.code) ?? null } };
 });
 
@@ -340,37 +344,20 @@ app.get('/documents', async (req, reply) => {
   return { data: await store.getDocuments(user.id) };
 });
 
-app.post<{ Body: { fileName: string } }>('/documents/upload', async (req, reply) => {
+app.post<{
+  Body: { fileName: string; mimeType?: string; sizeBytes?: number; pageCount?: number };
+}>('/documents/upload', async (req, reply) => {
   const user = await auth(req);
   if (!user) return reply.code(401).send({ message: 'Unauthorized' });
   const fileName = req.body?.fileName ?? 'upload.pdf';
-  const doc = {
-    id: `doc-${Date.now()}`,
+  const doc = buildUploadedDocument({
     fileName,
-    mimeType: fileName.toLowerCase().endsWith('.pdf') ? 'application/pdf' : 'image/jpeg',
-    sizeBytes: 1_200_000,
-    pageCount: 12,
-    uploadedAt: new Date().toISOString(),
-    status: 'extracted' as const,
-  };
+    mimeType: req.body?.mimeType,
+    sizeBytes: req.body?.sizeBytes,
+    pageCount: req.body?.pageCount,
+  });
   await store.saveDocument(user.id, doc);
-  const extracted = [
-    {
-      id: `ext-${doc.id}-1`,
-      documentId: doc.id,
-      category: 'medication' as const,
-      name: 'Losartan',
-      details: '50 mg daily',
-      status: 'ready' as const,
-    },
-    {
-      id: `ext-${doc.id}-2`,
-      documentId: doc.id,
-      category: 'condition' as const,
-      name: 'Hypertension',
-      status: 'ready' as const,
-    },
-  ];
+  const extracted = buildExtractedItems(doc.id);
   await store.saveExtracted(user.id, extracted);
   return { data: doc };
 });

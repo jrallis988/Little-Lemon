@@ -44,15 +44,25 @@ Profiles in `eas.json`:
 
 | Profile | Use |
 |---------|-----|
-| `development` | Dev client + simulator |
-| `preview` | Internal TestFlight / APK |
-| `production` | Store release (requires remote API URL) |
+| `development` | Dev client + simulator (mock API) |
+| `preview` | Internal TestFlight / APK (mock API by default) |
+| `production` | Store release — set EAS secret `EXPO_PUBLIC_API_URL` to your hosted API |
+
+Placeholder hosts like `YOUR-API-HOST.example.com` are rejected by the app and fall back to mock so broken remote builds never ship by accident.
+
+```bash
+# Point production / preview at a hosted API:
+eas secret:create --name EXPO_PUBLIC_API_URL --value https://your-api.example
+eas secret:create --name EXPO_PUBLIC_API_MODE --value remote
+```
 
 ## E2E (Maestro)
 
 ```bash
 # Install Maestro, then:
 maestro test .maestro/onboarding-auth-check.yaml
+maestro test .maestro/check-search-analyze.yaml
+maestro test .maestro/profile-legal-flow.yaml
 ```
 
 ## Product navigation

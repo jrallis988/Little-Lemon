@@ -428,13 +428,20 @@ export async function mockApiRequest<T>(
   }
 
   if (method === 'POST' && path === '/documents/upload') {
-    const { fileName } = body as { fileName: string };
+    const { fileName, mimeType, sizeBytes, pageCount } = body as {
+      fileName: string;
+      mimeType?: string;
+      sizeBytes?: number;
+      pageCount?: number;
+    };
     const doc: UploadedDocument = {
       id: `doc-${Date.now()}`,
       fileName,
-      mimeType: fileName.toLowerCase().endsWith('.pdf') ? 'application/pdf' : 'image/jpeg',
-      sizeBytes: 1_200_000,
-      pageCount: 12,
+      mimeType:
+        mimeType ??
+        (fileName.toLowerCase().endsWith('.pdf') ? 'application/pdf' : 'image/jpeg'),
+      sizeBytes: sizeBytes && sizeBytes > 0 ? sizeBytes : 1_200_000,
+      pageCount: pageCount && pageCount > 0 ? pageCount : 12,
       uploadedAt: new Date().toISOString(),
       status: 'extracted',
     };

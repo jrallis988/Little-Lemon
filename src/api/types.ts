@@ -54,6 +54,9 @@ export interface SearchSupplementsResponse {
 
 export interface UploadDocumentRequest {
   fileName: string;
+  mimeType?: string;
+  sizeBytes?: number;
+  pageCount?: number;
 }
 
 export interface ExtractedItemsResponse {

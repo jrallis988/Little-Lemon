@@ -2,7 +2,7 @@ import { ApiError } from '../src/api/errors';
 import { resetMockApiStore } from '../src/api/mockServer';
 import { biocrossApi } from '../src/api/client';
 import { authStorage, __resetAuthStorageForTests } from '../src/api/authStorage';
-import { apiConfig } from '../src/api/config';
+import { apiConfig, isPlaceholderApiUrl } from '../src/api/config';
 
 describe('Mock API auth', () => {
   beforeEach(async () => {
@@ -48,5 +48,26 @@ describe('Mock API auth', () => {
     expect(next.tokens.accessToken).toBeTruthy();
     expect(next.tokens.refreshToken).not.toBe(session.tokens.refreshToken);
     await expect(biocrossApi.refresh(session.tokens.refreshToken)).rejects.toThrow(ApiError);
+  });
+
+  it('uploads a document and returns extracted items', async () => {
+    const session = await biocrossApi.signIn(apiConfig.demoEmail, apiConfig.demoPassword);
+    await authStorage.saveTokens(session.tokens.accessToken, session.tokens.refreshToken);
+    const doc = await biocrossApi.uploadDocument('Visit.pdf', {
+      mimeType: 'application/pdf',
+      sizeBytes: 2_000_000,
+    });
+    expect(doc.fileName).toBe('Visit.pdf');
+    const extracted = await biocrossApi.getExtractedItems(doc.id);
+    expect(extracted.items.length).toBeGreaterThan(2);
+  });
+});
+
+describe('API URL placeholders', () => {
+  it('detects template hosts as placeholders', () => {
+    expect(isPlaceholderApiUrl('https://YOUR-API-HOST.example.com')).toBe(true);
+    expect(isPlaceholderApiUrl('https://api.example.com')).toBe(true);
+    expect(isPlaceholderApiUrl(undefined)).toBe(true);
+    expect(isPlaceholderApiUrl('https://api.biocross.app')).toBe(false);
   });
 });

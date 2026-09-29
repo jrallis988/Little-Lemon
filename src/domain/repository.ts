@@ -358,10 +358,13 @@ export const biocrossRepository = {
     await AsyncStorage.setItem(LOCAL_KEYS.extracted, JSON.stringify(items));
   },
 
-  async simulateUpload(fileName: string): Promise<UploadedDocument> {
+  async simulateUpload(
+    fileName: string,
+    meta?: { mimeType?: string; sizeBytes?: number; pageCount?: number },
+  ): Promise<UploadedDocument> {
     if (await hasSession()) {
       try {
-        return await biocrossApi.uploadDocument(fileName);
+        return await biocrossApi.uploadDocument(fileName, meta);
       } catch {
         /* fall through */
       }
@@ -369,9 +372,11 @@ export const biocrossRepository = {
     const doc: UploadedDocument = {
       id: `doc-${Date.now()}`,
       fileName,
-      mimeType: fileName.toLowerCase().endsWith('.pdf') ? 'application/pdf' : 'image/jpeg',
-      sizeBytes: 1_200_000,
-      pageCount: 12,
+      mimeType:
+        meta?.mimeType ??
+        (fileName.toLowerCase().endsWith('.pdf') ? 'application/pdf' : 'image/jpeg'),
+      sizeBytes: meta?.sizeBytes ?? 1_200_000,
+      pageCount: meta?.pageCount ?? 12,
       uploadedAt: new Date().toISOString(),
       status: 'extracted',
     };
