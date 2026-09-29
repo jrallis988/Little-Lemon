@@ -32,7 +32,7 @@ public final class ScreenGallery {
         heading.getStyleClass().add("screen-title");
 
         Label note = new Label(
-                "Playable American checkers. Game Board is the arcade Crossing world. Analysis and AI Lab remain later work.");
+                "Playable American checkers. Game Board is the arcade Crossing world. Analysis replays the recorded match.");
         note.getStyleClass().add("tagline");
         note.setWrapText(true);
 
@@ -47,7 +47,7 @@ public final class ScreenGallery {
                 new TileSpec(GameBoardScreen.screenId(), "Game Board", "Board · Focus · X-Ray · Dev", "Phases 5–6"),
                 new TileSpec(HowToPlayScreen.screenId(), "How to Play", "In-app checkers guide", "Help"),
                 new TileSpec(MatchCompleteScreen.screenId(), "Match Complete", "Result · basic stats", "Phases 6 / 10"),
-                new TileSpec(MatchAnalysisScreen.screenId(), "Match Analysis", "Timeline · What If?", "Phases 9–10"),
+                new TileSpec(MatchAnalysisScreen.screenId(), "Match Analysis", "Replay timeline on the Crossing board", "Phases 9–10"),
                 new TileSpec(AiLabScreen.screenId(), "AI Lab", "Profile vs profile · telemetry", "Phase 12")
         );
 
@@ -98,6 +98,14 @@ public final class ScreenGallery {
         live.startHumanVsHuman("Frogger", "Traffic");
         GameController finished = new GameController();
         finished.startHumanVsHuman("Frogger", "Traffic");
+        var opening = finished.rulesEngine().legalMoves(finished.state().orElseThrow());
+        if (!opening.isEmpty()) {
+            finished.applyMove(opening.getFirst());
+            var reply = finished.rulesEngine().legalMoves(finished.state().orElseThrow());
+            if (!reply.isEmpty()) {
+                finished.applyMove(reply.getFirst());
+            }
+        }
         finished.resign(Side.LIGHT);
         map.put(HomeScreen.screenId(), () -> new HomeScreen(live, id -> { }, true).getRoot());
         map.put(NewGameScreen.screenId(), () -> new NewGameScreen(live, id -> { }, true).getRoot());
@@ -107,7 +115,8 @@ public final class ScreenGallery {
                 () -> new HowToPlayScreen(id -> { }, true).getRoot());
         map.put(MatchCompleteScreen.screenId(),
                 () -> new MatchCompleteScreen(finished, id -> { }).getRoot());
-        map.put(MatchAnalysisScreen.screenId(), () -> new MatchAnalysisScreen().getRoot());
+        map.put(MatchAnalysisScreen.screenId(),
+                () -> new MatchAnalysisScreen(finished, id -> { }, true).getRoot());
         map.put(AiLabScreen.screenId(), () -> new AiLabScreen().getRoot());
         return map;
     }

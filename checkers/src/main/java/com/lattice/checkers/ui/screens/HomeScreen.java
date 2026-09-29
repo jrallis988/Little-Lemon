@@ -89,7 +89,7 @@ public final class HomeScreen {
         destinations.setAlignment(Pos.CENTER);
         destinations.getChildren().addAll(
                 destinationButton("New Game", "Choose a matchup", "new-game", onNavigate),
-                destinationButton("Analysis", "After matches", "match-analysis", onNavigate),
+                destinationButton("Analysis", "Replay the match", "match-analysis", onNavigate),
                 destinationButton("AI Lab", "Coming soon", "ai-lab", onNavigate)
         );
 

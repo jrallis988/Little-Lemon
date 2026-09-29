@@ -2,6 +2,7 @@ package com.lattice.checkers.history;
 
 import com.lattice.checkers.model.GameState;
 import com.lattice.checkers.model.Move;
+import com.lattice.checkers.model.Piece;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,8 +12,6 @@ import java.util.Optional;
  * Append-only main-line history with reconstruction helpers.
  * What If branches are separate {@link com.lattice.checkers.analysis.WhatIfSession}s
  * and must not overwrite this log.
- *
- * <p>Phase 1: storage shell only.
  */
 public final class GameHistory {
 
@@ -47,11 +46,41 @@ public final class GameHistory {
         return records.size();
     }
 
+    /**
+     * Position after {@code plyIndex} recorded plies. {@code 0} is the opening setup.
+     */
     public GameState reconstruct(int plyIndex) {
-        throw new UnsupportedOperationException("Phase 9: reconstruct position at ply");
+        if (plyIndex < 0 || plyIndex > records.size()) {
+            throw new IllegalArgumentException("plyIndex must be between 0 and " + records.size());
+        }
+        BoardSnapshot snapshot = plyIndex == 0
+                ? initial
+                : records.get(plyIndex - 1).after();
+        if (snapshot == null) {
+            throw new IllegalStateException("history has no snapshot for ply " + plyIndex);
+        }
+        return new GameState(snapshot.board().copy(), snapshot.sideToMove(), snapshot.status());
+    }
+
+    public Optional<MoveRecord> recordAt(int plyIndex) {
+        if (plyIndex < 0 || plyIndex >= records.size()) {
+            return Optional.empty();
+        }
+        return Optional.of(records.get(plyIndex));
     }
 
     public void recordMove(GameState before, Move move, GameState after) {
-        throw new UnsupportedOperationException("Phase 9: record move + snapshot");
+        int ply = records.size();
+        boolean promoted = before.board().get(move.from()).map(p -> !p.isKing()).orElse(false)
+                && after.board().get(move.to()).map(Piece::isKing).orElse(false);
+        append(new MoveRecord(
+                ply,
+                before.sideToMove(),
+                move,
+                move.notation(),
+                move.capturedSquares(before.board()).size(),
+                promoted,
+                new BoardSnapshot(after.board(), after.sideToMove(), after.status(), ply + 1)
+        ));
     }
 }
