@@ -41,5 +41,7 @@ class GameHistoryTest {
         GameState plyTwo = history.reconstruct(2);
         assertTrue(plyTwo.board().get(second.to()).isPresent());
         assertEquals(2, history.size());
+        assertEquals(Side.DARK, history.snapshotAt(0).sideToMove());
+        assertEquals(afterFirst.sideToMove(), history.snapshotAt(1).sideToMove());
     }
 }

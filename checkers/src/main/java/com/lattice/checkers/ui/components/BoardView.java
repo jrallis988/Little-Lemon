@@ -53,6 +53,7 @@ public final class BoardView extends VBox {
     private boolean inputEnabled = true;
     private GameState replayState;
     private Move replayLastMove;
+    private ExplorePlay explore;
     private int seenMoves;
 
     public BoardView(GameController controller, Consumer<Void> onChanged, boolean reducedMotion) {
@@ -155,6 +156,7 @@ public final class BoardView extends VBox {
      * Read-only snapshot for Match Analysis. Does not change the live game.
      */
     public void showReplay(GameState state, Move lastMove) {
+        this.explore = null;
         this.replayState = Objects.requireNonNull(state);
         this.replayLastMove = lastMove;
         this.inputEnabled = false;
@@ -163,38 +165,60 @@ public final class BoardView extends VBox {
         refresh();
     }
 
+    /**
+     * Interactive What If play. Clicks go to {@code source}, never the live match.
+     */
+    public void showExplore(ExplorePlay source) {
+        this.explore = Objects.requireNonNull(source);
+        this.replayState = source.state();
+        this.replayLastMove = source.lastMove().orElse(null);
+        this.inputEnabled = true;
+        refresh();
+    }
+
     public void refresh() {
-        boolean replay = replayState != null;
-        Optional<GameState> optional = replay ? Optional.of(replayState) : controller.state();
+        boolean exploring = explore != null;
+        boolean replay = replayState != null && !exploring;
+        Optional<GameState> optional = replayState != null
+                ? Optional.of(replayState)
+                : controller.state();
         if (optional.isEmpty()) {
             return;
         }
         GameState state = optional.get();
         List<Move> log = controller.moveLog();
-        if (!replay && log.size() > seenMoves) {
+        if (!replay && !exploring && log.size() > seenMoves) {
             pendingTravel = log.get(log.size() - 1);
             List<MoveRecord> records = controller.history().records();
             pendingPromotion = !records.isEmpty() && records.get(records.size() - 1).promoted();
         }
-        if (!replay) {
+        if (!replay && !exploring) {
             seenMoves = log.size();
         }
         Board board = state.board();
-        Optional<Position> selected = replay ? Optional.empty() : controller.selected();
-        Set<Position> destinations = replay ? Set.of() : new HashSet<>(controller.legalDestinations());
+        Optional<Position> selected = exploring
+                ? explore.selected()
+                : replay ? Optional.empty() : controller.selected();
+        Set<Position> destinations = exploring
+                ? new HashSet<>(explore.legalDestinations())
+                : replay ? Set.of() : new HashSet<>(controller.legalDestinations());
         Set<Position> captureLandings = new HashSet<>();
         Set<Position> forcedOrigins = new HashSet<>();
-        if (!replay && controller.rulesEngine().hasForcedCapture(state)
-                && state.status().name().equals("IN_PROGRESS")) {
-            controller.rulesEngine().legalMoves(state).stream()
-                    .filter(Move::isJump)
-                    .forEach(m -> forcedOrigins.add(m.from()));
+        boolean forced = exploring
+                ? explore.hasForcedCapture()
+                : !replay && controller.rulesEngine().hasForcedCapture(state);
+        if (forced && state.status().name().equals("IN_PROGRESS")) {
+            List<Move> legal = exploring
+                    ? explore.legalMoves()
+                    : controller.rulesEngine().legalMoves(state);
+            legal.stream().filter(Move::isJump).forEach(m -> forcedOrigins.add(m.from()));
         }
-        if (!replay) {
-            for (Move move : controller.legalMovesForSelection()) {
-                if (move.isJump()) {
-                    captureLandings.addAll(move.path());
-                }
+        List<Move> fromSelection = exploring
+                ? explore.legalMovesFromSelection()
+                : replay ? List.of() : controller.legalMovesForSelection();
+        for (Move move : fromSelection) {
+            if (move.isJump()) {
+                captureLandings.addAll(move.path());
             }
         }
 
@@ -260,7 +284,7 @@ public final class BoardView extends VBox {
                         cell.getChildren().addAll(halo, dot);
                     }
                 }
-                if (!replay && r == focusRow && c == focusCol && isFocused()) {
+                if ((!replay || exploring) && r == focusRow && c == focusCol && isFocused()) {
                     boolean opponent = board.get(pos)
                             .filter(p -> p.side() != state.sideToMove())
                             .isPresent();
@@ -386,6 +410,21 @@ public final class BoardView extends VBox {
         if (!inputEnabled) {
             return;
         }
+        if (explore != null) {
+            int before = explore.branchPly();
+            explore.selectSquare(new Position(row, col));
+            replayState = explore.state();
+            replayLastMove = explore.lastMove().orElse(null);
+            if (explore.branchPly() > before) {
+                pendingTravel = replayLastMove;
+                pendingPromotion = explore.lastPromoted();
+            }
+            refresh();
+            if (onChanged != null) {
+                onChanged.accept(null);
+            }
+            return;
+        }
         int before = controller.moveLog().size();
         controller.selectSquare(new Position(row, col));
         if (controller.moveLog().size() > before) {
@@ -397,6 +436,31 @@ public final class BoardView extends VBox {
         if (onChanged != null) {
             onChanged.accept(null);
         }
+    }
+
+    /**
+     * Read-only adapter for What If play. Must not write the live {@link GameController}.
+     */
+    public interface ExplorePlay {
+        GameState state();
+
+        Optional<Position> selected();
+
+        List<Position> legalDestinations();
+
+        List<Move> legalMoves();
+
+        List<Move> legalMovesFromSelection();
+
+        boolean hasForcedCapture();
+
+        Optional<Move> lastMove();
+
+        boolean lastPromoted();
+
+        int branchPly();
+
+        void selectSquare(Position position);
     }
 
     private static Label coord(String text) {
