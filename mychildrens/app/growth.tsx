@@ -12,7 +12,7 @@ export default function GrowthScreen() {
   const points = [...patient.growth].sort((a, b) => b.date.localeCompare(a.date));
   return (
     <Screen>
-      <FamilyHeader kicker={patient.child.preferredName} title="Growth" />
+      <FamilyHeader back kicker={patient.child.preferredName} title="Growth" />
       <T variant="small">Percentiles are the values recorded in the chart. This device does not calculate them.</T>
       {points.length === 0 ? <Card><T>No height or weight measurements are on file.</T></Card> : points.map((point) => (
         <Card key={point.id}>

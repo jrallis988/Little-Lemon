@@ -12,7 +12,7 @@ export default function MedicationsScreen() {
 
   return (
     <Screen>
-      <FamilyHeader kicker={patient.child.preferredName} title="Medicines" />
+      <FamilyHeader back kicker={patient.child.preferredName} title="Medicines" />
       <SectionLabel>Active</SectionLabel>
       {active.length === 0 ? <Card><T>No active medicines are on file.</T></Card> : active.map((med) => (
         <Card key={med.id}>

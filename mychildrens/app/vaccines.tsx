@@ -11,7 +11,7 @@ export default function VaccinesScreen() {
   const vaccines = sortVaccines(patient.vaccines);
   return (
     <Screen>
-      <FamilyHeader kicker={patient.child.preferredName} title="Vaccines" />
+      <FamilyHeader back kicker={patient.child.preferredName} title="Vaccines" />
       <T variant="small">
         Due and overdue items are part of the sample chart. A hospital connection shows the immunizations that server returns.
       </T>

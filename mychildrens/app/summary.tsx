@@ -9,7 +9,7 @@ export default function SummaryScreen() {
   if (!patient) return <Screen><T>Sign in to view the summary.</T></Screen>;
   return (
     <Screen>
-      <FamilyHeader kicker={patient.child.preferredName} title="Health summary" />
+      <FamilyHeader back kicker={patient.child.preferredName} title="Health summary" />
       <SectionLabel>Allergies</SectionLabel>
       {patient.allergies.length === 0 ? <Card><T>No allergies are on file.</T></Card> : patient.allergies.map((allergy) => (
         <Card key={allergy.id}>

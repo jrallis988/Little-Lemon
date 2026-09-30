@@ -292,13 +292,27 @@ export function Screen({
   );
 }
 
-export function StackHeader({ title, subtitle }: { title: string; subtitle?: string }) {
+export function BackButton() {
   const router = useRouter();
   return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel="Go back"
+      aria-label="Go back"
+      role="button"
+      testID="go-back"
+      onPress={() => router.back()}
+      style={styles.back}
+    >
+      <Ionicons name="chevron-back" size={22} color={theme.ink} />
+    </Pressable>
+  );
+}
+
+export function StackHeader({ title, subtitle }: { title: string; subtitle?: string }) {
+  return (
     <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-      <Pressable accessibilityRole="button" accessibilityLabel="Go back" onPress={() => router.back()} style={styles.back}>
-        <Ionicons name="chevron-back" size={22} color={theme.ink} />
-      </Pressable>
+      <BackButton />
       <View style={{ flex: 1, gap: 2 }}>
         <T variant="title" style={{ fontSize: 26 }}>{title}</T>
         {subtitle ? <T variant="small">{subtitle}</T> : null}
@@ -344,15 +358,18 @@ export function ChildSwitcher() {
   );
 }
 
-export function FamilyHeader({ kicker, title }: { kicker: string; title: string }) {
+export function FamilyHeader({ kicker, title, back = false }: { kicker: string; title: string; back?: boolean }) {
   const { state } = useChart();
   const patient = selectActivePatient(state);
   const onlyChild = state.chart?.children.length === 1 ? patient : null;
   return (
     <View style={{ gap: 12 }}>
-      <View style={{ gap: 2 }}>
-        <T variant="label" color={theme.tealDark}>{kicker}</T>
-        <T variant="display">{title}</T>
+      <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+        {back ? <BackButton /> : null}
+        <View style={{ flex: 1, gap: 2 }}>
+          <T variant="label" color={theme.tealDark}>{kicker}</T>
+          <T variant="display">{title}</T>
+        </View>
       </View>
       <ChildSwitcher />
       {onlyChild ? (

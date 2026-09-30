@@ -12,7 +12,7 @@ export default function BillingScreen() {
   const balance = selectBalanceCents(bills);
   return (
     <Screen>
-      <FamilyHeader kicker={patient.child.preferredName} title="Billing" />
+      <FamilyHeader back kicker={patient.child.preferredName} title="Billing" />
       <Card>
         <T variant="label" color={theme.tealDark}>Balance</T>
         <T variant="display">{formatMoney(balance)}</T>

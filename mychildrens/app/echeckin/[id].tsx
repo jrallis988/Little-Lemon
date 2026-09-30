@@ -62,21 +62,16 @@ export default function EcheckinScreen() {
         completedAt: new Date().toISOString(),
       },
     });
-    setStep(4);
   }
 
   return (
     <Screen
       footer={
-        step < 4 ? (
-          <Button
-            label={step === 3 ? "Finish eCheck-In" : "Continue"}
-            disabled={(step === 1 && !allergiesConfirmed) || (step === 2 && !medicationsConfirmed)}
-            onPress={() => (step === 3 ? finish() : setStep((value) => value + 1))}
-          />
-        ) : (
-          <Button label="Done" onPress={() => router.replace(`/visit/${visit.id}`)} />
-        )
+        <Button
+          label={step === 3 ? "Finish eCheck-In" : "Continue"}
+          disabled={(step === 1 && !allergiesConfirmed) || (step === 2 && !medicationsConfirmed)}
+          onPress={() => (step === 3 ? finish() : setStep((value) => value + 1))}
+        />
       }
     >
       <StackHeader title="eCheck-In" subtitle={`${patient.child.preferredName} · step ${Math.min(step + 1, 4)} of 4`} />
@@ -123,12 +118,6 @@ export default function EcheckinScreen() {
           </Card>
           <TextField label="Preferred pharmacy" value={pharmacy} onChangeText={setPharmacy} />
         </View>
-      ) : null}
-      {step === 4 ? (
-        <Card>
-          <T variant="title" style={{ fontSize: 22 }}>You're checked in</T>
-          <T>The front desk can see that you finished the sample questions on this device.</T>
-        </Card>
       ) : null}
     </Screen>
   );

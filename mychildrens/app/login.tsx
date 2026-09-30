@@ -69,9 +69,10 @@ export default function LoginScreen() {
             value={iss}
             onChangeText={setIss}
             autoCapitalize="none"
-            placeholder="https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4"
+            placeholder="https://example.org/fhir/R4"
           />
           <TextField label="Client ID" value={clientId} onChangeText={setClientId} autoCapitalize="none" placeholder="Issued by the health system" />
+          {error ? <Banner text={error} /> : null}
           <T variant="small">Register this redirect URI with the health system: {smartRedirectUri()}</T>
           <T variant="small">
             Boston Children's production address and client ID come from the hospital's Epic app registration. This prototype does not include those credentials. The connection is read-only SMART on FHIR with PKCE.
@@ -81,7 +82,6 @@ export default function LoginScreen() {
               <T key={scope.scope} variant="small">• {scope.label}</T>
             ))}
           </View>
-          {error ? <Banner text={error} /> : null}
           <Button label={busy ? "Contacting the health system…" : "Continue to sign in"} disabled={busy} onPress={() => void connect()} />
         </View>
       ) : null}
