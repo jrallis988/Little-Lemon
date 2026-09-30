@@ -16,6 +16,8 @@ export const theme = {
   warn: "#8A4B08",
   warnSoft: "#F8EEDD",
   white: "#FFFFFF",
+  hospital: "#0B3D73",
+  hospitalDeep: "#07294F",
 };
 
 export const fonts = {

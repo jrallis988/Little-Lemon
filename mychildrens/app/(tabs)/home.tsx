@@ -1,116 +1,99 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter, type Href } from "expo-router";
 import { Pressable, View } from "react-native";
-import { echeckinState, formatMoney, formatWhen, greeting, interpretationLabel, needsReview } from "@/src/domain/format";
-import { selectActivePatient, selectBalanceCents, selectBills, selectThreads, selectUnreadCount, sortResults, splitVisits } from "@/src/domain/selectors";
-import { buildTodos } from "@/src/domain/todos";
+import { formatMoney, formatWhen } from "@/src/domain/format";
+import { selectActivePatient, selectBalanceCents, selectBills, selectUnreadCount, splitVisits } from "@/src/domain/selectors";
+import { useI18n } from "@/src/i18n/use-i18n";
 import { useChart } from "@/src/state/chart-context";
-import { Banner, Button, Card, FamilyHeader, Pill, Row, Screen, SectionLabel, T } from "@/src/ui/primitives";
+import { greeting } from "@/src/domain/format";
+import { Button, Card, FamilyHeader, Screen, T } from "@/src/ui/primitives";
 import { fonts, theme } from "@/src/ui/theme";
-
-const links: { label: string; icon: keyof typeof Ionicons.glyphMap; href: Href }[] = [
-  { label: "Medicines", icon: "medkit", href: "/medications" },
-  { label: "Vaccines", icon: "bandage", href: "/vaccines" },
-  { label: "Growth", icon: "analytics", href: "/growth" },
-  { label: "Billing", icon: "card", href: "/billing" },
-];
 
 export default function HomeScreen() {
   const { state } = useChart();
   const router = useRouter();
+  const { t } = useI18n();
   const patient = selectActivePatient(state);
   const now = new Date();
-  if (!patient || !state.chart) return <Screen><T>Sign in to view this chart.</T></Screen>;
+  if (!patient || !state.chart || !state.profile) return <Screen><T>Sign in to view this chart.</T></Screen>;
 
   const bills = selectBills(state, patient);
-  const unread = selectUnreadCount(state, patient.child.id);
-  const todos = buildTodos({ patient, completedCheckins: state.completedCheckins, bills, unreadCount: unread, now });
-  const next = splitVisits(patient.visits, now).upcoming[0];
-  const checkin = next ? echeckinState(next, state.completedCheckins[next.id], now) : null;
-  const latestResult = sortResults(patient.results)[0];
-  const latestThread = selectThreads(state, patient.child.id)[0];
   const balance = selectBalanceCents(bills);
-  const firstName = state.chart.guardian.name.split(" ")[0] ?? state.chart.guardian.name;
+  const unread = selectUnreadCount(state, patient.child.id);
+  const upcoming = splitVisits(patient.visits, now).upcoming;
+  const video = upcoming.find((visit) => visit.kind === "telehealth");
+  const firstName = state.profile.name.split(" ")[0] ?? state.profile.name;
+
+  const actions: { label: string; icon: keyof typeof Ionicons.glyphMap; href: Href; badge?: string }[] = [
+    { label: t("schedule"), icon: "calendar", href: "/schedule" },
+    { label: t("messages"), icon: "chatbubble-ellipses", href: "/inbox", badge: unread > 0 ? String(unread) : undefined },
+    { label: t("visits"), icon: "medkit", href: "/visits" },
+    { label: t("results"), icon: "flask", href: "/results" },
+    { label: t("medications"), icon: "bandage", href: "/medications" },
+    { label: t("billing"), icon: "card", href: "/billing" },
+  ];
 
   return (
     <Screen>
-      <FamilyHeader kicker={greeting(now)} title={firstName ?? "Hello"} />
-      {state.warnings.length > 0 ? <Banner text="Some sections did not load from the health system. The list is on Account." /> : null}
-      {next ? (
+      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
+        <View style={{ flex: 1 }}>
+          <FamilyHeader kicker={greeting(now)} title={firstName} />
+        </View>
+        <Pressable accessibilityRole="button" accessibilityLabel={t("settings")} onPress={() => router.push("/settings")} style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: theme.card, borderWidth: 1, borderColor: theme.line, alignItems: "center", justifyContent: "center", marginTop: 8 }}>
+          <Ionicons name="settings-outline" size={20} color={theme.ink} />
+        </Pressable>
+      </View>
+      <Pressable accessibilityRole="button" accessibilityLabel={t("family")} onPress={() => router.push("/family")}>
         <Card>
-          <T variant="label" color={theme.tealDark}>Next visit</T>
-          <T variant="title">{next.title}</T>
-          <T>{formatWhen(next.start)}</T>
-          <T color={theme.muted}>{next.provider} · {next.location}</T>
-          {checkin === "open" ? <Button label="Start eCheck-In" onPress={() => router.push(`/echeckin/${next.id}`)} /> : null}
-          {checkin === "done" ? <Pill tone="ok" label="eCheck-In complete" /> : null}
-          {checkin === "closed" ? <T variant="small">eCheck-In opens 7 days before this visit.</T> : null}
-          <Button label="Visit details" variant="secondary" onPress={() => router.push(`/visit/${next.id}`)} />
+          <T variant="small">{patient.child.name}</T>
+          <T variant="label" style={{ fontSize: 16 }}>{t("family")}</T>
         </Card>
-      ) : (
-        <Card>
-          <T variant="title">No upcoming visits</T>
-          <T color={theme.muted}>Request a time and keep it with this chart.</T>
-          <Button label="Request a visit" onPress={() => router.push("/schedule")} />
-        </Card>
-      )}
+      </Pressable>
 
-      <SectionLabel>To do</SectionLabel>
-      {todos.length === 0 ? (
-        <Card><T>Nothing is waiting for {patient.child.preferredName}.</T></Card>
-      ) : (
-        todos.map((todo) => (
-          <Row
-            key={todo.id}
-            title={todo.title}
-            detail={todo.detail}
-            onPress={() => router.push(todo.href as Href)}
-            trailing={todo.tone === "attention" ? <Pill tone="warn" label="Soon" /> : undefined}
-          />
-        ))
-      )}
-
-      {latestResult ? (
+      {video ? (
         <Card>
-          <T variant="label" color={theme.tealDark}>Latest result</T>
-          <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 12 }}>
-            <View style={{ flex: 1 }}>
-              <T variant="label" style={{ fontSize: 16 }}>{latestResult.name}</T>
-              <T variant="small">{formatWhen(latestResult.collectedAt)}</T>
-            </View>
-            <T variant="title" style={{ fontSize: 22 }} color={needsReview(latestResult.interpretation) ? theme.danger : theme.ink}>
-              {latestResult.value}
-            </T>
-          </View>
-          {interpretationLabel(latestResult.interpretation) ? <Pill tone={needsReview(latestResult.interpretation) ? "danger" : "ok"} label={interpretationLabel(latestResult.interpretation) ?? ""} /> : null}
-          <Button label="Open result" variant="secondary" onPress={() => router.push(`/result/${latestResult.id}`)} />
+          <T variant="label" color={theme.tealDark}>{t("telehealth")}</T>
+          <T variant="title" style={{ fontSize: 22 }}>{video.title}</T>
+          <T>{formatWhen(video.start)}</T>
+          <T color={theme.muted}>{video.provider} · {t("hospitalVideo")}</T>
+          <Button label={t("viewVisit")} variant="secondary" onPress={() => router.push(`/visit/${video.id}`)} />
         </Card>
       ) : null}
 
-      {latestThread ? (
-        <Row
-          title={latestThread.subject}
-          detail={`${latestThread.fromName} · ${latestThread.preview}`}
-          onPress={() => router.push(`/thread/${latestThread.threadId}`)}
-          trailing={latestThread.unreadCount > 0 ? <Pill tone="warn" label="New" /> : undefined}
-        />
+      {balance > 0 ? (
+        <Card>
+          <T variant="label" color={theme.warn}>{t("billingAlert")}</T>
+          <T variant="title" style={{ fontSize: 28 }}>{formatMoney(balance)}</T>
+          <T variant="small">{patient.child.preferredName}</T>
+          <Button label={t("billing")} variant="secondary" onPress={() => router.push("/billing")} />
+        </Card>
       ) : null}
-
-      {balance > 0 ? <T variant="small">Balance on file: {formatMoney(balance)}</T> : null}
 
       <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 10 }}>
-        {links.map((link) => (
+        {actions.map((action) => (
           <Pressable
-            key={link.label}
+            key={action.label}
             accessibilityRole="button"
-            onPress={() => router.push(link.href)}
-            style={{ flexGrow: 1, flexBasis: "46%", backgroundColor: theme.card, borderRadius: 16, borderWidth: 1, borderColor: theme.line, padding: 14, gap: 8 }}
+            accessibilityLabel={action.label}
+            onPress={() => router.push(action.href)}
+            style={{ flexGrow: 1, flexBasis: "46%", minHeight: 104, backgroundColor: theme.card, borderRadius: 16, borderWidth: 1, borderColor: theme.line, padding: 14, justifyContent: "space-between" }}
           >
-            <Ionicons name={link.icon} size={20} color={theme.tealDark} />
-            <T style={{ fontFamily: fonts.semibold }}>{link.label}</T>
+            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+              <Ionicons name={action.icon} size={22} color={theme.tealDark} />
+              {action.badge ? (
+                <View style={{ minWidth: 22, height: 22, borderRadius: 11, backgroundColor: theme.apricot, alignItems: "center", justifyContent: "center", paddingHorizontal: 6 }}>
+                  <TextBadge value={action.badge} />
+                </View>
+              ) : null}
+            </View>
+            <T style={{ fontFamily: fonts.semibold }}>{action.label}</T>
           </Pressable>
         ))}
       </View>
     </Screen>
   );
+}
+
+function TextBadge({ value }: { value: string }) {
+  return <T variant="label" color={theme.white} style={{ fontSize: 12 }}>{value}</T>;
 }

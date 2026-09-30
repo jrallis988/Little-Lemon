@@ -1,6 +1,6 @@
 # MyChildren's prototype
 
-A cross-platform pediatric portal in the spirit of MyChart: one React Native codebase for iOS and Android, plus a browser build for review. Parents switch between children and review visits, eCheck-In, results, medicines, vaccines, growth, messages, and billing.
+A cross-platform pediatric portal in the spirit of a hospital parent app: one React Native codebase for iOS and Android, plus a browser build for review. The prototype has eleven core screens: a hospital welcome, sign-in, the patient dashboard, visits, scheduling, messages, test results, medications, billing, family chart switching, and settings.
 
 This is a prototype. It is not the official Boston Children's Hospital app and it is not Epic MyChart. The sample family is fictional.
 
@@ -21,7 +21,7 @@ npm run web
 
 ## Sample family
 
-On the sign-in screen, choose **View the sample family**. Jordan Hale looks after Maya (8) and Leo (2). Switching children changes visits, results, messages, and the balance. eCheck-In, replies, visit requests, and demo payments stay on the device for the session. They are not sent to a clinic and they do not charge a card.
+Open the app on the hospital welcome screen, continue, then choose **Continue with the sample family**. Jordan Hale looks after Maya (8) and Leo (2). The Family tab switches charts. Visits include eCheck-In and a video-visit card. Scheduling can match a concern (a breathing concern tells you to call 911) or book a clinic time. Messages, refill requests, and payments stay on the device. They are not sent to a clinic and they do not charge a card. Guest pay matches a statement number such as `MC-0912`. Settings includes notifications, a biometric lock, demographic fields, and English / Español. The language choice stays after sign-out.
 
 ## Hospital connection
 
@@ -41,4 +41,4 @@ EXPO_PUBLIC_FHIR_CLIENT_ID=
 
 Register the redirect URI shown on the sign-in screen. Epic also expects the FHIR base URL as the `aud` parameter; the app sends that. A public sandbox such as `https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4` still needs a client ID from the Epic on FHIR registration. This repository does not include production credentials.
 
-Sections the server refuses are listed on Account. The rest of the chart still opens.
+Sections the server refuses are listed in Settings. The rest of the chart still opens. Vaccines, growth, and allergies stay available from the Family tab.

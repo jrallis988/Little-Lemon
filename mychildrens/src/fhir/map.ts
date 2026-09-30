@@ -382,6 +382,7 @@ export function invoiceToBill(resource: unknown, patientId: string): Bill | null
   return {
     id: resource.id,
     patientId,
+    statementNumber: typeof resource.identifier === "string" ? resource.identifier : resource.id,
     description: textOf(resource.type) ?? "Statement",
     serviceDate: typeof resource.date === "string" ? resource.date : "1970-01-01",
     amountCents: Math.round(dollars * 100),

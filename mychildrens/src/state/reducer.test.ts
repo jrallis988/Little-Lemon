@@ -55,6 +55,31 @@ test("empty replies and unknown visits are ignored", () => {
   assert.deepEqual(state.completedCheckins, {});
 });
 
+test("language stays in place when the session ends", () => {
+  let state = reduceChart(initialState, { type: "set_language", language: "es" });
+  state = reduceChart(state, { type: "sign_in_demo" });
+  assert.equal(state.language, "es");
+  assert.equal(state.profile?.name, "Jordan Hale");
+  state = reduceChart(state, { type: "sign_out" });
+  assert.equal(state.session.kind, "signed_out");
+  assert.equal(state.language, "es");
+});
+
+test("a refill can be requested once for an active medicine", () => {
+  let state = reduceChart(initialState, { type: "sign_in_demo" });
+  const request = {
+    id: "refill-1",
+    patientId: "maya",
+    medicationId: "maya-albuterol",
+    medicationName: "Albuterol HFA 90 mcg inhaler",
+    pharmacy: "Harbor Pharmacy, Brookline",
+    createdAt: "2026-09-30T16:00:00Z",
+  };
+  state = reduceChart(state, { type: "request_refill", request });
+  state = reduceChart(state, { type: "request_refill", request: { ...request, id: "refill-2" } });
+  assert.equal(state.refills.length, 1);
+});
+
 test("the lock only engages after biometrics are enabled", () => {
   let state = reduceChart(initialState, { type: "sign_in_demo" });
   state = reduceChart(state, { type: "lock" });

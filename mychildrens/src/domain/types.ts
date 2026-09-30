@@ -46,6 +46,7 @@ export interface LabResult {
   patientId: string;
   name: string;
   panel?: string;
+  kind?: "lab" | "imaging";
   collectedAt: string;
   reportedAt: string;
   status: "final" | "preliminary";
@@ -62,6 +63,7 @@ export interface Medication {
   name: string;
   status: "active" | "completed" | "stopped";
   prescriber: string;
+  pharmacy?: string;
   startedOn?: string;
   instructions: string;
 }
@@ -118,6 +120,7 @@ export interface Message {
 export interface Bill {
   id: string;
   patientId: string;
+  statementNumber: string;
   description: string;
   serviceDate: string;
   amountCents: number;
@@ -173,6 +176,26 @@ export interface NotificationPrefs {
   visits: boolean;
 }
 
+export type Language = "en" | "es";
+
+export type PaymentPlan = "full" | "monthly";
+
+export interface Profile {
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+}
+
+export interface RefillRequest {
+  id: string;
+  patientId: string;
+  medicationId: string;
+  medicationName: string;
+  pharmacy: string;
+  createdAt: string;
+}
+
 export type Session =
   | { kind: "signed_out" }
   | { kind: "demo" }
@@ -187,8 +210,13 @@ export interface ChartState {
   readMessageIds: string[];
   paidBillIds: string[];
   requests: VisitRequest[];
+  refills: RefillRequest[];
   notifications: NotificationPrefs;
   biometricEnabled: boolean;
   locked: boolean;
   warnings: string[];
+  language: Language;
+  paperless: boolean;
+  paymentPlan: PaymentPlan;
+  profile: Profile | null;
 }

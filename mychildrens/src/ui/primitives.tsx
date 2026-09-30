@@ -208,6 +208,7 @@ export function TextField({
     <View style={{ gap: 6 }}>
       <T variant="label">{label}</T>
       <TextInput
+        accessibilityLabel={label}
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
@@ -260,7 +261,7 @@ export function PrototypeNote() {
 
 function Protected({ children }: { children: ReactNode }) {
   const { state } = useChart();
-  if (state.session.kind === "signed_out" || !state.chart) return <Redirect href="/login" />;
+  if (state.session.kind === "signed_out" || !state.chart) return <Redirect href="/welcome" />;
   return <>{children}</>;
 }
 
