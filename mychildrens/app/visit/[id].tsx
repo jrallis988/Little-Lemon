@@ -32,7 +32,7 @@ export default function VisitScreen() {
     >
       <StackHeader title={visit.title} subtitle={patient.child.preferredName} />
       <Card>
-        <T variant="label" color={theme.tealDark}>{formatWhen(visit.start)}</T>
+        <T variant="label" color={theme.ocean}>{formatWhen(visit.start)}</T>
         <T>{visit.reason}</T>
         <T color={theme.muted}>{visit.provider}</T>
         <T color={theme.muted}>{visit.specialty}</T>
@@ -45,7 +45,7 @@ export default function VisitScreen() {
       </Card>
       {visit.kind === "telehealth" ? (
         <Card>
-          <T variant="label" color={theme.tealDark}>{t("hospitalVideo")}</T>
+          <T variant="label" color={theme.ocean}>{t("hospitalVideo")}</T>
           <T>{t("videoRoomNote")}</T>
           <T variant="small">{formatWhen(visit.start)} · {visit.provider}</T>
         </Card>

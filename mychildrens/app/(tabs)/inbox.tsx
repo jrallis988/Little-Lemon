@@ -61,7 +61,7 @@ export default function InboxScreen() {
             title={thread.subject}
             detail={`${thread.fromName} · ${formatWhen(thread.sentAt)}\n${thread.preview}`}
             onPress={() => router.push(`/thread/${encodeURIComponent(thread.threadId)}`)}
-            trailing={thread.unreadCount > 0 ? <Pill tone="warn" label="New" /> : undefined}
+            trailing={thread.unreadCount > 0 ? <Pill tone="tag" label="New" /> : undefined}
           />
         ))
       )}

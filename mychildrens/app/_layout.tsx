@@ -1,9 +1,3 @@
-import { Fraunces_600SemiBold } from "@expo-google-fonts/fraunces";
-import {
-  SourceSans3_400Regular,
-  SourceSans3_600SemiBold,
-  SourceSans3_700Bold,
-} from "@expo-google-fonts/source-sans-3";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
@@ -14,18 +8,15 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { ChartProvider, useChart } from "@/src/state/chart-context";
 import { AppFrame } from "@/src/ui/frame";
 import { LockScreen } from "@/src/ui/lock";
+import { installBrandFonts, nativeFontAssets } from "@/src/ui/brand-fonts";
 import { theme } from "@/src/ui/theme";
 
 SplashScreen.preventAutoHideAsync().catch(() => undefined);
 
 function RootNavigator() {
   const { state } = useChart();
-  const [loaded, error] = useFonts({
-    Fraunces_600SemiBold,
-    SourceSans3_400Regular,
-    SourceSans3_600SemiBold,
-    SourceSans3_700Bold,
-  });
+  installBrandFonts();
+  const [loaded, error] = useFonts(nativeFontAssets);
 
   useEffect(() => {
     if (loaded || error) SplashScreen.hideAsync().catch(() => undefined);
@@ -37,7 +28,7 @@ function RootNavigator() {
     document.documentElement.style.height = "100%";
     document.body.style.height = "100%";
     document.body.style.margin = "0";
-    document.body.style.backgroundColor = "#102833";
+    document.body.style.backgroundColor = theme.blue;
     const root = document.getElementById("root");
     if (root) root.style.height = "100%";
   }, []);

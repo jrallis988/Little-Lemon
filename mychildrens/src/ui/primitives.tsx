@@ -16,7 +16,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ageLabel } from "../domain/format";
 import { selectActivePatient } from "../domain/selectors";
 import { useChart } from "../state/chart-context";
-import { fonts, theme } from "./theme";
+import { fontWeight, fonts, theme } from "./theme";
 
 export function Mark({ size = 72 }: { size?: number }) {
   return (
@@ -27,7 +27,7 @@ export function Mark({ size = 72 }: { size?: number }) {
           width: size * 0.72,
           height: size * 0.72,
           borderRadius: size,
-          backgroundColor: theme.teal,
+          backgroundColor: theme.sky,
           left: 0,
           top: size * 0.12,
         }}
@@ -38,7 +38,7 @@ export function Mark({ size = 72 }: { size?: number }) {
           width: size * 0.46,
           height: size * 0.46,
           borderRadius: size,
-          backgroundColor: theme.apricot,
+          backgroundColor: theme.pink,
           right: 0,
           bottom: size * 0.06,
           borderWidth: Math.max(3, size * 0.05),
@@ -61,17 +61,17 @@ export function Avatar({ initials, color, size = 36 }: { initials: string; color
         justifyContent: "center",
       }}
     >
-      <Text style={{ color: theme.white, fontFamily: fonts.bold, fontSize: size * 0.34 }}>{initials}</Text>
+      <Text style={{ color: theme.white, fontFamily: fonts.bold, fontWeight: fontWeight.subhead, fontSize: size * 0.34 }}>{initials}</Text>
     </View>
   );
 }
 
 const typeStyles = StyleSheet.create({
-  display: { fontFamily: fonts.display, fontSize: 34, lineHeight: 40, color: theme.ink },
-  title: { fontFamily: fonts.display, fontSize: 24, lineHeight: 30, color: theme.ink },
-  body: { fontFamily: fonts.body, fontSize: 16, lineHeight: 23, color: theme.ink },
-  label: { fontFamily: fonts.semibold, fontSize: 13, lineHeight: 18, letterSpacing: 0.3, color: theme.ink },
-  small: { fontFamily: fonts.body, fontSize: 13, lineHeight: 18, color: theme.muted },
+  display: { fontFamily: fonts.display, fontWeight: fontWeight.display, fontSize: 34, lineHeight: 40, color: theme.ink },
+  title: { fontFamily: fonts.display, fontWeight: fontWeight.display, fontSize: 24, lineHeight: 30, color: theme.ink },
+  body: { fontFamily: fonts.body, fontWeight: fontWeight.body, fontSize: 16, lineHeight: 23, color: theme.ink },
+  label: { fontFamily: fonts.semibold, fontWeight: fontWeight.subhead, fontSize: 13, lineHeight: 18, letterSpacing: 0.3, color: theme.ink },
+  small: { fontFamily: fonts.body, fontWeight: fontWeight.body, fontSize: 13, lineHeight: 18, color: theme.muted },
 });
 
 export function T({
@@ -100,9 +100,9 @@ export function Button({
   disabled?: boolean;
 }) {
   const palette = {
-    primary: { backgroundColor: theme.tealDark, color: theme.white, borderColor: theme.tealDark },
-    secondary: { backgroundColor: theme.white, color: theme.ink, borderColor: theme.line },
-    ghost: { backgroundColor: "transparent", color: theme.tealDark, borderColor: "transparent" },
+    primary: { backgroundColor: theme.blue, color: theme.white, borderColor: theme.blue },
+    secondary: { backgroundColor: theme.white, color: theme.blue, borderColor: theme.gray },
+    ghost: { backgroundColor: "transparent", color: theme.ocean, borderColor: "transparent" },
     danger: { backgroundColor: theme.dangerSoft, color: theme.danger, borderColor: theme.dangerSoft },
   }[variant];
   return (
@@ -116,7 +116,7 @@ export function Button({
         { backgroundColor: palette.backgroundColor, borderColor: palette.borderColor, opacity: disabled ? 0.5 : pressed ? 0.86 : 1 },
       ]}
     >
-      <Text style={{ fontFamily: fonts.semibold, fontSize: 16, color: palette.color }}>{label}</Text>
+      <Text style={{ fontFamily: fonts.semibold, fontWeight: fontWeight.subhead, fontSize: 16, color: palette.color }}>{label}</Text>
     </Pressable>
   );
 }
@@ -125,22 +125,23 @@ export function Card({ children, style }: { children: ReactNode; style?: StylePr
   return <View style={[styles.card, style]}>{children}</View>;
 }
 
-export function Pill({ label, tone = "neutral" }: { label: string; tone?: "neutral" | "ok" | "warn" | "danger" }) {
+export function Pill({ label, tone = "neutral" }: { label: string; tone?: "neutral" | "ok" | "warn" | "tag" | "danger" }) {
   const colors = {
-    neutral: { backgroundColor: theme.foam, color: theme.tealDark },
-    ok: { backgroundColor: theme.okSoft, color: theme.ok },
-    warn: { backgroundColor: theme.warnSoft, color: theme.warn },
-    danger: { backgroundColor: theme.dangerSoft, color: theme.danger },
+    neutral: { backgroundColor: theme.foam, color: theme.ocean },
+    ok: { backgroundColor: theme.okSoft, color: theme.green },
+    warn: { backgroundColor: theme.warnSoft, color: theme.pink },
+    tag: { backgroundColor: theme.warnSoft, color: theme.pink },
+    danger: { backgroundColor: theme.dangerSoft, color: theme.alert },
   }[tone];
   return (
     <View style={{ alignSelf: "flex-start", backgroundColor: colors.backgroundColor, borderRadius: 999, paddingHorizontal: 10, paddingVertical: 4 }}>
-      <Text style={{ fontFamily: fonts.semibold, fontSize: 12, color: colors.color }}>{label}</Text>
+      <Text style={{ fontFamily: fonts.semibold, fontWeight: fontWeight.subhead, fontSize: 12, color: colors.color }}>{label}</Text>
     </View>
   );
 }
 
 export function Banner({ text, tone = "warn" }: { text: string; tone?: "warn" | "ok" }) {
-  const colors = tone === "ok" ? { backgroundColor: theme.okSoft, color: theme.ok } : { backgroundColor: theme.warnSoft, color: theme.warn };
+  const colors = tone === "ok" ? { backgroundColor: theme.okSoft, color: theme.green } : { backgroundColor: theme.dangerSoft, color: theme.alert };
   return (
     <View style={{ backgroundColor: colors.backgroundColor, borderRadius: 14, padding: 12 }}>
       <T variant="small" color={colors.color}>{text}</T>
@@ -241,9 +242,9 @@ export function Segment<T extends string>({
             accessibilityRole="button"
             accessibilityState={{ selected }}
             onPress={() => onChange(option.value)}
-            style={[styles.segmentItem, selected ? { backgroundColor: theme.white } : null]}
+            style={[styles.segmentItem, selected ? { backgroundColor: theme.ocean } : null]}
           >
-            <Text style={{ fontFamily: fonts.semibold, color: selected ? theme.ink : theme.muted }}>{option.label}</Text>
+            <Text style={{ fontFamily: fonts.semibold, fontWeight: fontWeight.subhead, color: selected ? theme.white : theme.gray }}>{option.label}</Text>
           </Pressable>
         );
       })}
@@ -351,7 +352,7 @@ export function ChildSwitcher() {
             }}
           >
             <Avatar initials={child.initials} color={child.color} size={24} />
-            <Text style={{ fontFamily: fonts.semibold, color: selected ? theme.white : theme.ink }}>{child.preferredName}</Text>
+            <Text style={{ fontFamily: fonts.semibold, fontWeight: fontWeight.subhead, color: selected ? theme.white : theme.blue }}>{child.preferredName}</Text>
           </Pressable>
         );
       })}
@@ -368,7 +369,7 @@ export function FamilyHeader({ kicker, title, back = false }: { kicker: string; 
       <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
         {back ? <BackButton /> : null}
         <View style={{ flex: 1, gap: 2 }}>
-          <T variant="label" color={theme.tealDark}>{kicker}</T>
+          <T variant="label" color={theme.ocean}>{kicker}</T>
           <T variant="display">{title}</T>
         </View>
       </View>
@@ -414,12 +415,13 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     minHeight: 48,
     fontFamily: fonts.body,
+    fontWeight: fontWeight.body,
     fontSize: 16,
     color: theme.ink,
   },
   segment: {
     flexDirection: "row",
-    backgroundColor: "#EBE6DE",
+    backgroundColor: theme.foam,
     borderRadius: 12,
     padding: 4,
     gap: 4,

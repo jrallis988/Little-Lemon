@@ -26,13 +26,13 @@ export default function FamilyScreen() {
             accessibilityLabel={`${t("useThisChart")} ${child.preferredName}`}
             onPress={() => dispatch({ type: "select_child", id: child.id })}
           >
-            <Card style={selected ? { borderColor: theme.tealDark, borderWidth: 2 } : undefined}>
+            <Card style={selected ? { borderColor: theme.ocean, borderWidth: 2 } : undefined}>
               <View style={{ flexDirection: "row", gap: 12, alignItems: "center" }}>
                 <Avatar initials={child.initials} color={child.color} size={48} />
                 <View style={{ flex: 1 }}>
                   <T variant="label" style={{ fontSize: 18 }}>{child.name}</T>
                   <T variant="small">{ageLabel(child.birthDate)} · MRN {child.mrn}</T>
-                  {selected ? <T variant="small" color={theme.tealDark}>{t("switchChild")}</T> : null}
+                  {selected ? <T variant="small" color={theme.ocean}>{t("switchChild")}</T> : null}
                 </View>
               </View>
             </Card>

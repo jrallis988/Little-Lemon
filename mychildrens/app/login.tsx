@@ -7,7 +7,7 @@ import { configuredClientId, configuredIssuer, signInWithSmart, smartRedirectUri
 import { useI18n } from "@/src/i18n/use-i18n";
 import { useChart } from "@/src/state/chart-context";
 import { Banner, Button, Mark, T, TextField } from "@/src/ui/primitives";
-import { fonts, theme } from "@/src/ui/theme";
+import { fontWeight, fonts, theme } from "@/src/ui/theme";
 
 export default function LoginScreen() {
   const { state, dispatch } = useChart();
@@ -64,11 +64,11 @@ export default function LoginScreen() {
       contentContainerStyle={{ paddingTop: insets.top + 28, paddingHorizontal: 24, paddingBottom: insets.bottom + 32, gap: 16 }}
     >
       <Pressable accessibilityRole="button" accessibilityLabel="Go back" onPress={() => router.back()} style={{ width: 40, height: 40, borderRadius: 20, alignItems: "center", justifyContent: "center", backgroundColor: theme.card, borderWidth: 1, borderColor: theme.line }}>
-        <Text style={{ fontFamily: fonts.semibold, fontSize: 18, color: theme.ink }}>‹</Text>
+        <Text style={{ fontFamily: fonts.semibold, fontWeight: fontWeight.subhead, fontSize: 18, color: theme.blue }}>‹</Text>
       </Pressable>
       <Mark />
       <View style={{ gap: 6 }}>
-        <T variant="label" color={theme.tealDark}>{t("hospital")}</T>
+        <T variant="label" color={theme.ocean}>{t("hospital")}</T>
         <T variant="display">{t("signInTitle")}</T>
       </View>
       <Button label={t("signInHospital")} onPress={() => setOpen(true)} />
@@ -85,7 +85,7 @@ export default function LoginScreen() {
         </View>
       ) : error ? <Banner text={error} /> : null}
       <Pressable accessibilityRole="button" onPress={enterSample} style={{ minHeight: 44, justifyContent: "center" }}>
-        <Text style={{ fontFamily: fonts.semibold, fontSize: 16, color: theme.tealDark }}>{t("sampleFamily")}</Text>
+        <Text style={{ fontFamily: fonts.semibold, fontWeight: fontWeight.subhead, fontSize: 16, color: theme.ocean }}>{t("sampleFamily")}</Text>
       </Pressable>
     </ScrollView>
   );

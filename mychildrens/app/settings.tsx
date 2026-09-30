@@ -118,7 +118,7 @@ function Preference({
   return (
     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
       <T style={{ flex: 1 }}>{label}</T>
-      <Switch accessibilityLabel={label} value={value} disabled={disabled} onValueChange={onChange} trackColor={{ true: theme.teal, false: theme.line }} />
+      <Switch accessibilityLabel={label} value={value} disabled={disabled} onValueChange={onChange} trackColor={{ true: theme.ocean, false: theme.line }} />
     </View>
   );
 }

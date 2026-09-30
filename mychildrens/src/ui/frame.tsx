@@ -10,7 +10,7 @@ export function AppFrame({ children }: { children: ReactNode }) {
   }
   const frameHeight = Math.min(Math.max(height - 48, 640), 900);
   return (
-    <View style={{ flex: 1, backgroundColor: "#102833", alignItems: "center", justifyContent: "center" }}>
+    <View style={{ flex: 1, backgroundColor: theme.blue, alignItems: "center", justifyContent: "center" }}>
       <View
         style={{
           width: 400,

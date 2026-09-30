@@ -50,7 +50,7 @@ export default function ResultsScreen() {
                 <T variant="small">{imaging ? t("imaging") : t("labs")} · {formatDay(result.collectedAt)}</T>
                 <View style={{ flexDirection: "row", justifyContent: "space-between", gap: 12, alignItems: "center" }}>
                   <T variant="label" style={{ fontSize: 16, flex: 1 }}>{result.name}</T>
-                  <T variant="title" style={{ fontSize: 22 }} color={needsReview(result.interpretation) ? theme.danger : theme.ink}>{result.value}</T>
+                  <T variant="title" style={{ fontSize: 22 }} color={needsReview(result.interpretation) ? theme.alert : theme.green}>{result.value}</T>
                 </View>
                 {flag ? <Pill tone={needsReview(result.interpretation) ? "danger" : "ok"} label={flag} /> : null}
               </Card>

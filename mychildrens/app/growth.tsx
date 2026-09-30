@@ -16,7 +16,7 @@ export default function GrowthScreen() {
       <T variant="small">Percentiles are the values recorded in the chart. This device does not calculate them.</T>
       {points.length === 0 ? <Card><T>No height or weight measurements are on file.</T></Card> : points.map((point) => (
         <Card key={point.id}>
-          <T variant="label" color={theme.tealDark}>{formatDay(point.date)}</T>
+          <T variant="label" color={theme.ocean}>{formatDay(point.date)}</T>
           <Measure label="Height" value={point.heightCm} unit="cm" percentile={point.heightPercentile} />
           <Measure label="Weight" value={point.weightKg} unit="kg" percentile={point.weightPercentile} />
         </Card>
@@ -32,7 +32,7 @@ function Measure({ label, value, unit, percentile }: { label: string; value?: nu
       <T>{label}{value !== undefined ? ` · ${formatMeasure(value, unit)}` : ""}{percentile !== undefined ? ` · ${ordinal(percentile)} percentile` : ""}</T>
       {percentile !== undefined ? (
         <View style={{ height: 8, borderRadius: 99, backgroundColor: theme.foam, overflow: "hidden" }}>
-          <View style={{ width: `${Math.max(0, Math.min(100, percentile))}%`, height: 8, backgroundColor: theme.teal }} />
+          <View style={{ width: `${Math.max(0, Math.min(100, percentile))}%`, height: 8, backgroundColor: theme.ocean }} />
         </View>
       ) : null}
     </View>

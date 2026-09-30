@@ -2,7 +2,11 @@
 
 A cross-platform pediatric portal in the spirit of a hospital parent app: one React Native codebase for iOS and Android, plus a browser build for review. The prototype has eleven core screens: a hospital welcome, sign-in, the patient dashboard, visits, scheduling, messages, test results, medications, billing, family chart switching, and settings.
 
-This is a prototype. It is not the official Boston Children's Hospital app and it is not Epic MyChart. The sample family is fictional.
+This is a prototype. It is not the official Boston Children's Hospital app and it is not Epic MyChart. The sample family is fictional. It does not include the hospital logo.
+
+Color follows the hospital palette: Boston Blue `#003087` for headers, primary buttons, and the navigation bar; Boston Ocean `#007DBA` for active states; Boston Sky `#4186E6` for highlights; Boston Gray `#747679` for borders and secondary text; white cards; Boston Pink `#C14991` for tags; Boston Green `#628000` for success and normal results; Red Alert `#E30000` for urgent notices and amounts due.
+
+Type is Museo Sans when that face is installed (500 for large headlines, 700 for subheads, 300 for body). Otherwise the app uses Calibri Bold for headlines and Calibri Regular for body. Carlito, the open Calibri-metric face, is packaged so a build still has that fallback when neither licensed font is present.
 
 ## Why this stack
 

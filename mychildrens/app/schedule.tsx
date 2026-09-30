@@ -5,7 +5,7 @@ import { selectActivePatient } from "@/src/domain/selectors";
 import { useI18n } from "@/src/i18n/use-i18n";
 import { useChart } from "@/src/state/chart-context";
 import { Banner, Button, Card, Screen, StackHeader, T } from "@/src/ui/primitives";
-import { fonts, theme } from "@/src/ui/theme";
+import { fontWeight, fonts, theme } from "@/src/ui/theme";
 
 const symptomKey = {
   fever: "symptomFever",
@@ -74,8 +74,8 @@ export default function ScheduleScreen() {
               accessibilityState={{ selected: symptom === item }}
               onPress={() => setSymptom(item)}
             >
-              <Card style={symptom === item ? { borderColor: theme.tealDark, borderWidth: 2 } : undefined}>
-                <T style={{ fontFamily: fonts.semibold }}>{t(symptomKey[item])}</T>
+              <Card style={symptom === item ? { borderColor: theme.ocean, borderWidth: 2 } : undefined}>
+                <T style={{ fontFamily: fonts.semibold, fontWeight: fontWeight.subhead }}>{t(symptomKey[item])}</T>
                 <T variant="small">{routeSymptom(item).visitTitle} · {routeSymptom(item).clinic}</T>
               </Card>
             </Pressable>
@@ -90,8 +90,8 @@ export default function ScheduleScreen() {
           <T variant="label" style={{ fontSize: 16 }}>{reason}</T>
           {OPENINGS.map((opening) => (
             <Pressable key={opening.id} accessibilityRole="button" accessibilityState={{ selected: slotId === opening.id }} onPress={() => setSlotId(opening.id)}>
-              <Card style={slotId === opening.id ? { borderColor: theme.tealDark, borderWidth: 2 } : undefined}>
-                <T style={{ fontFamily: fonts.semibold }}>{opening.label}</T>
+              <Card style={slotId === opening.id ? { borderColor: theme.ocean, borderWidth: 2 } : undefined}>
+                <T style={{ fontFamily: fonts.semibold, fontWeight: fontWeight.subhead }}>{opening.label}</T>
                 <T variant="small">{opening.clinic}</T>
               </Card>
             </Pressable>

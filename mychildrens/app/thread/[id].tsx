@@ -73,7 +73,7 @@ export default function ThreadScreen() {
               style={{
                 alignSelf: outbound ? "flex-end" : "flex-start",
                 maxWidth: "88%",
-                backgroundColor: outbound ? theme.tealDark : theme.card,
+                backgroundColor: outbound ? theme.blue : theme.card,
                 borderRadius: 16,
                 padding: 12,
                 gap: 4,
@@ -81,9 +81,9 @@ export default function ThreadScreen() {
                 borderColor: theme.line,
               }}
             >
-              <T variant="label" color={outbound ? "#D5EEF2" : theme.tealDark}>{message.fromName}</T>
+              <T variant="label" color={outbound ? theme.white : theme.ocean}>{message.fromName}</T>
               <T color={outbound ? theme.white : theme.ink}>{message.body}</T>
-              <T variant="small" color={outbound ? "#D5EEF2" : theme.soft}>{formatWhen(message.sentAt)}</T>
+              <T variant="small" color={outbound ? theme.onBlueMuted : theme.soft}>{formatWhen(message.sentAt)}</T>
             </View>
           );
         })}

@@ -26,7 +26,7 @@ export default function ResultScreen() {
     <Screen>
       <StackHeader title={result.name} subtitle={patient.child.preferredName} />
       <Card>
-        <T variant="display" color={needsReview(result.interpretation) ? theme.danger : theme.ink}>
+        <T variant="display" color={needsReview(result.interpretation) ? theme.alert : theme.green}>
           {result.value}{result.unit ? ` ${result.unit}` : ""}
         </T>
         {flag ? <Pill tone={needsReview(result.interpretation) ? "danger" : "ok"} label={flag} /> : null}

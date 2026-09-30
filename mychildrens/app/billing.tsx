@@ -40,7 +40,7 @@ export default function BillingScreen() {
     <Screen>
       <FamilyHeader back kicker={patient.child.preferredName} title={t("billing")} />
       <Card>
-        <T variant="label" color={theme.tealDark}>{t("balance")}</T>
+        <T variant="label" color={theme.ocean}>{t("balance")}</T>
         <T variant="display">{formatMoney(balance)}</T>
         <T variant="small">{t("devicePayment")}</T>
       </Card>
@@ -51,7 +51,7 @@ export default function BillingScreen() {
             accessibilityLabel={t("paperless")}
             value={state.paperless}
             onValueChange={(enabled) => dispatch({ type: "set_paperless", enabled })}
-            trackColor={{ true: theme.teal, false: theme.line }}
+            trackColor={{ true: theme.ocean, false: theme.line }}
           />
         </View>
         <View style={{ flexDirection: "row", gap: 8 }}>
@@ -72,7 +72,7 @@ export default function BillingScreen() {
           <T>{formatMoney(bill.amountCents)}</T>
           <T variant="small">{t("statementNumber")} {bill.statementNumber}</T>
           <T variant="small">{formatDay(bill.serviceDate)}</T>
-          <Pill label={bill.status === "paid" ? "Paid" : bill.status === "pending" ? "Pending" : "Due"} tone={bill.status === "paid" ? "ok" : "warn"} />
+          <Pill label={bill.status === "paid" ? "Paid" : bill.status === "pending" ? "Pending" : "Due"} tone={bill.status === "paid" ? "ok" : bill.status === "pending" ? "tag" : "danger"} />
           {bill.status === "due" ? (
             <Button label={t("payAccount")} variant="secondary" onPress={() => payStatement(bill.statementNumber)} />
           ) : null}

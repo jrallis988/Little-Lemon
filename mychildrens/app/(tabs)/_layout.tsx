@@ -4,7 +4,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { selectActivePatient, selectUnreadCount } from "@/src/domain/selectors";
 import { useI18n } from "@/src/i18n/use-i18n";
 import { useChart } from "@/src/state/chart-context";
-import { fonts, theme } from "@/src/ui/theme";
+import { fontWeight, fonts, theme } from "@/src/ui/theme";
 
 export default function TabsLayout() {
   const { state } = useChart();
@@ -18,16 +18,17 @@ export default function TabsLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: theme.tealDark,
-        tabBarInactiveTintColor: theme.soft,
+        tabBarActiveTintColor: theme.onBlue,
+        tabBarInactiveTintColor: theme.onBlueMuted,
+        tabBarBadgeStyle: { backgroundColor: theme.pink, color: theme.white, fontFamily: fonts.semibold },
         tabBarStyle: {
-          backgroundColor: theme.card,
-          borderTopColor: theme.line,
+          backgroundColor: theme.blue,
+          borderTopColor: theme.blue,
           height: 60 + insets.bottom,
           paddingTop: 6,
           paddingBottom: 8 + insets.bottom,
         },
-        tabBarLabelStyle: { fontFamily: fonts.semibold, fontSize: 11 },
+        tabBarLabelStyle: { fontFamily: fonts.semibold, fontWeight: fontWeight.subhead, fontSize: 11 },
         sceneStyle: { backgroundColor: theme.paper },
       }}
     >

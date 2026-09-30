@@ -5,7 +5,7 @@ import { echeckinState, formatWhen, oneParam } from "@/src/domain/format";
 import { findVisit } from "@/src/domain/selectors";
 import { useChart } from "@/src/state/chart-context";
 import { Banner, Button, Card, Screen, StackHeader, T, TextField } from "@/src/ui/primitives";
-import { fonts, theme } from "@/src/ui/theme";
+import { fontWeight, fonts, theme } from "@/src/ui/theme";
 
 export default function EcheckinScreen() {
   const params = useLocalSearchParams<{ id: string }>();
@@ -126,8 +126,8 @@ export default function EcheckinScreen() {
 function CheckRow({ label, checked, onPress }: { label: string; checked: boolean; onPress: () => void }) {
   return (
     <Pressable accessibilityRole="checkbox" accessibilityState={{ checked }} onPress={onPress} style={{ flexDirection: "row", alignItems: "center", gap: 10, marginTop: 8 }}>
-      <View style={{ width: 22, height: 22, borderRadius: 6, borderWidth: 1.5, borderColor: checked ? theme.tealDark : theme.line, backgroundColor: checked ? theme.tealDark : theme.white }} />
-      <T style={{ fontFamily: fonts.semibold }}>{label}</T>
+      <View style={{ width: 22, height: 22, borderRadius: 6, borderWidth: 1.5, borderColor: checked ? theme.green : theme.line, backgroundColor: checked ? theme.green : theme.white }} />
+      <T style={{ fontFamily: fonts.semibold, fontWeight: fontWeight.subhead }}>{label}</T>
     </Pressable>
   );
 }

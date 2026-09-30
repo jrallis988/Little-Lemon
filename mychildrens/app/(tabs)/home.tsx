@@ -7,7 +7,7 @@ import { useI18n } from "@/src/i18n/use-i18n";
 import { useChart } from "@/src/state/chart-context";
 import { greeting } from "@/src/domain/format";
 import { Button, Card, FamilyHeader, Screen, T } from "@/src/ui/primitives";
-import { fonts, theme } from "@/src/ui/theme";
+import { fontWeight, fonts, theme } from "@/src/ui/theme";
 
 export default function HomeScreen() {
   const { state } = useChart();
@@ -52,7 +52,7 @@ export default function HomeScreen() {
 
       {video ? (
         <Card>
-          <T variant="label" color={theme.tealDark}>{t("telehealth")}</T>
+          <T variant="label" color={theme.ocean}>{t("telehealth")}</T>
           <T variant="title" style={{ fontSize: 22 }}>{video.title}</T>
           <T>{formatWhen(video.start)}</T>
           <T color={theme.muted}>{video.provider} · {t("hospitalVideo")}</T>
@@ -62,7 +62,7 @@ export default function HomeScreen() {
 
       {balance > 0 ? (
         <Card>
-          <T variant="label" color={theme.warn}>{t("billingAlert")}</T>
+          <T variant="label" color={theme.alert}>{t("billingAlert")}</T>
           <T variant="title" style={{ fontSize: 28 }}>{formatMoney(balance)}</T>
           <T variant="small">{patient.child.preferredName}</T>
           <Button label={t("billing")} variant="secondary" onPress={() => router.push("/billing")} />
@@ -79,14 +79,14 @@ export default function HomeScreen() {
             style={{ flexGrow: 1, flexBasis: "46%", minHeight: 104, backgroundColor: theme.card, borderRadius: 16, borderWidth: 1, borderColor: theme.line, padding: 14, justifyContent: "space-between" }}
           >
             <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-              <Ionicons name={action.icon} size={22} color={theme.tealDark} />
+              <Ionicons name={action.icon} size={22} color={theme.sky} />
               {action.badge ? (
-                <View style={{ minWidth: 22, height: 22, borderRadius: 11, backgroundColor: theme.apricot, alignItems: "center", justifyContent: "center", paddingHorizontal: 6 }}>
+                <View style={{ minWidth: 22, height: 22, borderRadius: 11, backgroundColor: theme.pink, alignItems: "center", justifyContent: "center", paddingHorizontal: 6 }}>
                   <TextBadge value={action.badge} />
                 </View>
               ) : null}
             </View>
-            <T style={{ fontFamily: fonts.semibold }}>{action.label}</T>
+            <T style={{ fontFamily: fonts.semibold, fontWeight: fontWeight.subhead }}>{action.label}</T>
           </Pressable>
         ))}
       </View>

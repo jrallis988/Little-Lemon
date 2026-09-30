@@ -49,7 +49,7 @@ export default function VisitsScreen() {
           const checkin = echeckinState(visit, state.completedCheckins[visit.id]);
           return (
             <Card key={visit.id}>
-              <T variant="label" color={theme.tealDark}>{formatWhen(visit.start)}</T>
+              <T variant="label" color={theme.ocean}>{formatWhen(visit.start)}</T>
               <T variant="title" style={{ fontSize: 22 }}>{visit.title}</T>
               <T color={theme.muted}>{visit.provider} · {visit.kind === "telehealth" ? t("hospitalVideo") : visit.location}</T>
               {visit.kind === "telehealth" ? <Pill label={t("telehealth")} /> : null}
