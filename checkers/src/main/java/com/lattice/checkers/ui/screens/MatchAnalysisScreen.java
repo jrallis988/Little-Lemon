@@ -2,12 +2,14 @@ package com.lattice.checkers.ui.screens;
 
 import com.lattice.checkers.analysis.MatchAnalyzer;
 import com.lattice.checkers.analysis.MoveAnalysis;
+import com.lattice.checkers.analysis.WhatIfSession;
 import com.lattice.checkers.controller.GameController;
 import com.lattice.checkers.history.GameHistory;
 import com.lattice.checkers.history.MoveRecord;
 import com.lattice.checkers.model.Faction;
 import com.lattice.checkers.model.GameState;
 import com.lattice.checkers.model.Move;
+import com.lattice.checkers.model.Position;
 import com.lattice.checkers.ui.LatticeApplication;
 import com.lattice.checkers.ui.components.BoardView;
 import javafx.geometry.Insets;
@@ -20,23 +22,35 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 /**
- * Replay a recorded match on the Crossing board. Statistics come from GameHistory.
+ * Replay a recorded match and optionally explore a What If branch.
+ * The main-line history is never overwritten.
  */
 public final class MatchAnalysisScreen {
 
     private final VBox root;
+    private final GameController controller;
     private BoardView boardView;
     private Label plyLabel;
     private Label moveLabel;
     private Label tagsLabel;
     private Label turningPointLabel;
+    private Label whatIfStatus;
     private Slider slider;
+    private Button start;
+    private Button back;
+    private Button next;
+    private Button end;
+    private Button exploreBtn;
+    private Button resetBtn;
+    private Button leaveBtn;
     private int ply;
     private GameHistory history;
     private List<MoveAnalysis> analyses = List.of();
+    private WhatIfSession session;
 
     public MatchAnalysisScreen() {
         this(null, null, true);
@@ -48,12 +62,13 @@ public final class MatchAnalysisScreen {
 
     public MatchAnalysisScreen(
             GameController controller, Consumer<String> onNavigate, boolean reducedMotion) {
+        this.controller = controller;
         Label brand = new Label(LatticeApplication.WORDMARK);
         brand.getStyleClass().addAll("arcade-title", "board-wordmark");
         Label title = new Label("MATCH ANALYSIS");
         title.getStyleClass().add("screen-title");
         Label subtitle = new Label(
-                "Replay the recorded match. Every statistic comes from the move log.");
+                "Replay the recorded match, or try a different line. The original game stays intact.");
         subtitle.getStyleClass().add("screen-subtitle");
         subtitle.setWrapText(true);
 
@@ -79,7 +94,7 @@ public final class MatchAnalysisScreen {
         analyses = analyzer.moveAnalyses(history);
         ply = history.size();
 
-        boardView = new BoardView(controller, ignored -> { }, reducedMotion);
+        boardView = new BoardView(controller, ignored -> refreshExploreHud(), reducedMotion);
         boardView.setInputEnabled(false);
 
         plyLabel = new Label();
@@ -97,17 +112,20 @@ public final class MatchAnalysisScreen {
         slider.setSnapToTicks(true);
         slider.setBlockIncrement(1);
         slider.valueProperty().addListener((obs, old, value) -> {
-            int next = value.intValue();
-            if (next != ply) {
-                ply = next;
+            if (session != null) {
+                return;
+            }
+            int nextPly = value.intValue();
+            if (nextPly != ply) {
+                ply = nextPly;
                 showPly();
             }
         });
 
-        Button start = navButton("START", () -> jumpTo(0));
-        Button back = navButton("BACK", () -> jumpTo(ply - 1));
-        Button next = navButton("NEXT", () -> jumpTo(ply + 1));
-        Button end = navButton("END", () -> jumpTo(history.size()));
+        start = navButton("START", () -> jumpTo(0));
+        back = navButton("BACK", () -> jumpTo(ply - 1));
+        next = navButton("NEXT", () -> jumpTo(ply + 1));
+        end = navButton("END", () -> jumpTo(history.size()));
         HBox stepper = new HBox(8, start, back, next, end);
         stepper.setAlignment(Pos.CENTER);
 
@@ -141,10 +159,23 @@ public final class MatchAnalysisScreen {
                 () -> turningPointLabel.setText("No swing yet — the opening is still even.")
         );
 
-        VBox whatIf = ScreenStub.panel(
-                "WHAT IF?",
-                "Branch from a ply without overwriting this match — next."
-        );
+        whatIfStatus = new Label(
+                "Try a different move from this ply. The recorded match stays intact.");
+        whatIfStatus.getStyleClass().add("muted-copy");
+        whatIfStatus.setWrapText(true);
+        exploreBtn = navButton("EXPLORE THIS PLY", this::startExplore);
+        exploreBtn.getStyleClass().add("primary-cta");
+        resetBtn = navButton("RESET BRANCH", this::resetExplore);
+        leaveBtn = navButton("BACK TO REPLAY", this::leaveExplore);
+        resetBtn.setVisible(false);
+        resetBtn.setManaged(false);
+        leaveBtn.setVisible(false);
+        leaveBtn.setManaged(false);
+        HBox whatIfActions = new HBox(8, exploreBtn, resetBtn, leaveBtn);
+        whatIfActions.setAlignment(Pos.CENTER_LEFT);
+        VBox whatIf = new VBox(8, labeled("WHAT IF?"), whatIfStatus, whatIfActions);
+        whatIf.getStyleClass().add("preview-panel");
+        whatIf.setPadding(new Insets(16));
 
         Button complete = navButton("MATCH COMPLETE", () -> {
             if (onNavigate != null) {
@@ -162,7 +193,6 @@ public final class MatchAnalysisScreen {
         VBox sidebar = new VBox(12, timeline, stats, turning, whatIf, nav);
         sidebar.setPrefWidth(320);
         sidebar.setMinWidth(280);
-        VBox.setVgrow(timeline, Priority.NEVER);
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
@@ -189,7 +219,7 @@ public final class MatchAnalysisScreen {
     }
 
     private void jumpTo(int target) {
-        if (history == null) {
+        if (history == null || session != null) {
             return;
         }
         ply = Math.max(0, Math.min(history.size(), target));
@@ -200,7 +230,7 @@ public final class MatchAnalysisScreen {
     }
 
     private void showPly() {
-        if (boardView == null || history == null) {
+        if (boardView == null || history == null || session != null) {
             return;
         }
         GameState state = history.reconstruct(ply);
@@ -224,6 +254,135 @@ public final class MatchAnalysisScreen {
                         : String.join("  ·  ", analysis.tags()))
                 .orElse(" ");
         tagsLabel.setText(tags);
+    }
+
+    private void startExplore() {
+        if (controller == null || history == null) {
+            return;
+        }
+        GameState at = history.reconstruct(ply);
+        session = new WhatIfSession(
+                history.snapshotAt(ply),
+                at,
+                controller.rulesEngine()
+        );
+        setReplayEnabled(false);
+        exploreBtn.setVisible(false);
+        exploreBtn.setManaged(false);
+        resetBtn.setVisible(true);
+        resetBtn.setManaged(true);
+        leaveBtn.setVisible(true);
+        leaveBtn.setManaged(true);
+        boardView.showExplore(explorePlay());
+        refreshExploreHud();
+    }
+
+    private void resetExplore() {
+        if (session == null) {
+            return;
+        }
+        session.reset();
+        boardView.showExplore(explorePlay());
+        refreshExploreHud();
+    }
+
+    private void leaveExplore() {
+        session = null;
+        setReplayEnabled(true);
+        exploreBtn.setVisible(true);
+        exploreBtn.setManaged(true);
+        resetBtn.setVisible(false);
+        resetBtn.setManaged(false);
+        leaveBtn.setVisible(false);
+        leaveBtn.setManaged(false);
+        whatIfStatus.setText("Try a different move from this ply. The recorded match stays intact.");
+        showPly();
+    }
+
+    private void refreshExploreHud() {
+        if (session == null) {
+            return;
+        }
+        int branch = session.branchPly();
+        plyLabel.setText("WHAT IF  ·  ply " + ply + "  +  " + branch);
+        session.lastRecord().ifPresentOrElse(
+                record -> {
+                    moveLabel.setText(Faction.of(record.side()).displayName() + "  " + record.notation());
+                    tagsLabel.setText(record.captureCount() > 0
+                            ? "Branch capture"
+                            : record.promoted() ? "Branch promotion" : "Branch move");
+                },
+                () -> {
+                    moveLabel.setText(Faction.of(session.current().sideToMove()).displayName()
+                            + " to move — try a different line.");
+                    tagsLabel.setText("Recorded match is unchanged.");
+                }
+        );
+        whatIfStatus.setText(session.current().status().isTerminal()
+                ? "This branch is over. Reset or return to replay."
+                : "Playing a branch. Reset anytime — the original match is safe.");
+    }
+
+    private void setReplayEnabled(boolean enabled) {
+        slider.setDisable(!enabled);
+        start.setDisable(!enabled);
+        back.setDisable(!enabled);
+        next.setDisable(!enabled);
+        end.setDisable(!enabled);
+    }
+
+    private BoardView.ExplorePlay explorePlay() {
+        return new BoardView.ExplorePlay() {
+            @Override
+            public GameState state() {
+                return session.current();
+            }
+
+            @Override
+            public Optional<Position> selected() {
+                return session.selected();
+            }
+
+            @Override
+            public List<Position> legalDestinations() {
+                return session.legalDestinations();
+            }
+
+            @Override
+            public List<Move> legalMoves() {
+                return session.legalMoves();
+            }
+
+            @Override
+            public List<Move> legalMovesFromSelection() {
+                return session.legalMovesFromSelection();
+            }
+
+            @Override
+            public boolean hasForcedCapture() {
+                return session.hasForcedCapture();
+            }
+
+            @Override
+            public Optional<Move> lastMove() {
+                return session.lastMove();
+            }
+
+            @Override
+            public boolean lastPromoted() {
+                return session.lastPromoted();
+            }
+
+            @Override
+            public int branchPly() {
+                return session.branchPly();
+            }
+
+            @Override
+            public void selectSquare(Position position) {
+                session.selectSquare(position);
+            }
+        };
     }
 
     private static Label labeled(String text) {

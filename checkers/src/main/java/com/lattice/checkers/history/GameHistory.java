@@ -69,6 +69,19 @@ public final class GameHistory {
         return Optional.of(records.get(plyIndex));
     }
 
+    public BoardSnapshot snapshotAt(int plyIndex) {
+        if (plyIndex < 0 || plyIndex > records.size()) {
+            throw new IllegalArgumentException("plyIndex must be between 0 and " + records.size());
+        }
+        if (plyIndex == 0) {
+            if (initial == null) {
+                throw new IllegalStateException("history has no opening snapshot");
+            }
+            return initial;
+        }
+        return records.get(plyIndex - 1).after();
+    }
+
     public void recordMove(GameState before, Move move, GameState after) {
         int ply = records.size();
         boolean promoted = before.board().get(move.from()).map(p -> !p.isKing()).orElse(false)
