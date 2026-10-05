@@ -163,7 +163,7 @@ export function composeCulinaryReply(
     return `${recall}Alongside, ${entry.sides[0]}. ${entry.sides[1] ?? ""} ${entry.vegetables[0] ? `Vegetable: ${entry.vegetables[0]}.` : ""}`;
   }
 
-  return `${recall}With ${dish}, ${entry.wines[0]} If they'd rather beer, ${entry.beers[0]} On the plate: ${entry.sides[0]}, and ${entry.vegetables[0]}. ${entry.notes} Ask if you'd like the pour, the vegetable, or the starch taken further.`;
+  return `${recall}With ${dish}, ${entry.wines[0]}. If they'd rather beer, ${entry.beers[0]}. On the plate: ${entry.sides[0]}, and ${entry.vegetables[0]}. ${entry.notes} Ask if you'd like the pour, the vegetable, or the starch taken further.`;
 }
 
 export async function searchCulinaryWeb(query: string): Promise<string[]> {
