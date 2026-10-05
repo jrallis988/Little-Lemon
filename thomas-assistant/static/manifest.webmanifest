@@ -1,0 +1,17 @@
+{
+  "name": "Thomas",
+  "short_name": "Thomas",
+  "description": "Your bartender — at home or on the floor.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f6f0e7",
+  "theme_color": "#f6f0e7",
+  "icons": [
+    {
+      "src": "./thomas-mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
