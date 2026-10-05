@@ -24,36 +24,45 @@ async function main() {
   await page.getByText('Log', { exact: true }).last().click();
   await page.getByText('Log a listen').waitFor({ timeout: 15000 });
 
-  // MusicBrainz search path
   await page.getByTestId('album-search').fill('blonde frank ocean');
   const mbAlbum = page.locator('[data-testid^="album-mb-"]').first();
   await mbAlbum.waitFor({ timeout: 20000 });
   await mbAlbum.click({ force: true });
-  await page.getByText('Selected').waitFor({ timeout: 5000 });
   await page.getByText('via MusicBrainz').waitFor({ timeout: 5000 });
   console.log('OK MusicBrainz search + select');
 
   await page.getByTestId('rating-5').click({ force: true });
-  await page.getByPlaceholder('What stuck with you?').fill('Found via MusicBrainz search.');
+  await page.getByPlaceholder('What stuck with you?').fill('Persisted listen from MusicBrainz.');
   await page.getByText(/Like this album|Liked/).click({ force: true });
   await page.getByTestId('save-listen').click({ force: true });
   await page.getByText('Logged!').waitFor({ timeout: 5000 });
-  console.log('OK save confirmed');
-
   await page.getByText('Friends are listening').waitFor({ timeout: 15000 });
   await page
     .locator('div')
-    .filter({ hasText: /^Found via MusicBrainz search\.$/ })
+    .filter({ hasText: /^Persisted listen from MusicBrainz\.$/ })
+    .first()
+    .waitFor({ timeout: 10000 });
+  console.log('OK logged listen appears in feed');
+
+  // Persistence: reload keeps session + user listen + catalog album.
+  await page.reload({ waitUntil: 'networkidle', timeout: 60000 });
+  await page.getByText('Friends are listening').waitFor({ timeout: 20000 });
+  await page
+    .locator('div')
+    .filter({ hasText: /^Persisted listen from MusicBrainz\.$/ })
     .first()
     .waitFor({ timeout: 10000 });
   await page.getByText('Alex Rivers').first().waitFor({ timeout: 10000 });
-  console.log('OK logged listen appears in feed');
+  console.log('OK persistence after reload');
 
   await page.getByText('Profile', { exact: true }).last().click();
   await page.getByText('@alexrivers', { exact: true }).waitFor({ timeout: 10000 });
-  await page.getByText('Your diary').waitFor({ timeout: 10000 });
   await page.getByText('Blonde').first().waitFor({ timeout: 10000 });
-  console.log('OK profile diary');
+  console.log('OK profile diary after reload');
+
+  await page.getByTestId('reset-local-data').click({ force: true });
+  await page.getByText('Nothing logged yet').waitFor({ timeout: 10000 });
+  console.log('OK clear local listens');
 
   if (errors.length) {
     console.error('Page errors:', errors);

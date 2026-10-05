@@ -2,25 +2,55 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
   type ReactNode,
 } from 'react';
 
 import { SEED_ALBUMS, getAlbumById as getSeedAlbum } from '@/data/seed';
+import { readJson, removeKey, storageKeys, writeJson } from '@/lib/storage';
 import type { Album, AlbumId } from '@/types/models';
 
 type CatalogContextValue = {
   albums: Album[];
+  isReady: boolean;
   getAlbum: (id: AlbumId) => Album | undefined;
   upsertAlbum: (album: Album) => void;
   upsertAlbums: (albums: Album[]) => void;
+  clearExtras: () => Promise<void>;
 };
 
 const CatalogContext = createContext<CatalogContextValue | null>(null);
 
+function mergeExtras(prev: Album[], items: Album[]): Album[] {
+  const byId = new Map(prev.map((a) => [a.id, a]));
+  for (const album of items) byId.set(album.id, album);
+  return Array.from(byId.values());
+}
+
 export function CatalogProvider({ children }: { children: ReactNode }) {
   const [extras, setExtras] = useState<Album[]>([]);
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const stored = await readJson<Album[]>(storageKeys.catalogExtras);
+      if (!cancelled) {
+        if (Array.isArray(stored)) setExtras(stored);
+        setIsReady(true);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isReady) return;
+    void writeJson(storageKeys.catalogExtras, extras);
+  }, [extras, isReady]);
 
   const albums = useMemo(() => {
     const byId = new Map<string, Album>();
@@ -30,33 +60,26 @@ export function CatalogProvider({ children }: { children: ReactNode }) {
   }, [extras]);
 
   const getAlbum = useCallback(
-    (id: AlbumId) => {
-      return extras.find((a) => a.id === id) ?? getSeedAlbum(id);
-    },
+    (id: AlbumId) => extras.find((a) => a.id === id) ?? getSeedAlbum(id),
     [extras],
   );
 
   const upsertAlbum = useCallback((album: Album) => {
-    setExtras((prev) => {
-      const idx = prev.findIndex((a) => a.id === album.id);
-      if (idx === -1) return [album, ...prev];
-      const next = [...prev];
-      next[idx] = album;
-      return next;
-    });
+    setExtras((prev) => mergeExtras(prev, [album]));
   }, []);
 
   const upsertAlbums = useCallback((items: Album[]) => {
-    setExtras((prev) => {
-      const byId = new Map(prev.map((a) => [a.id, a]));
-      for (const album of items) byId.set(album.id, album);
-      return Array.from(byId.values());
-    });
+    setExtras((prev) => mergeExtras(prev, items));
+  }, []);
+
+  const clearExtras = useCallback(async () => {
+    setExtras([]);
+    await removeKey(storageKeys.catalogExtras);
   }, []);
 
   const value = useMemo(
-    () => ({ albums, getAlbum, upsertAlbum, upsertAlbums }),
-    [albums, getAlbum, upsertAlbum, upsertAlbums],
+    () => ({ albums, isReady, getAlbum, upsertAlbum, upsertAlbums, clearExtras }),
+    [albums, isReady, getAlbum, upsertAlbum, upsertAlbums, clearExtras],
   );
 
   return <CatalogContext.Provider value={value}>{children}</CatalogContext.Provider>;

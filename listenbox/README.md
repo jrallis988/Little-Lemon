@@ -30,11 +30,12 @@ npm run smoke:web   # Playwright end-to-end against localhost:8081
 | Social feed | Seed listens from friends on the Feed tab |
 | Catalog search | MusicBrainz release-group search + Cover Art Archive images |
 | Log a listen | Search or pick suggestion → rate → review → like → save |
-| Profile | Your stats, diary, sign out |
+| Local persistence | Auth, user logs, and searched albums via AsyncStorage |
+| Profile | Your stats, diary, clear local listens, sign out |
 
 ## Next up
 
 - Real auth (Clerk / Supabase)
 - Spotify listen history import
 - Follow graph + activity API
-- Persist logs/catalog beyond local session memory
+- Sync persistence to a real backend

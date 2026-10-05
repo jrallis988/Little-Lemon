@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   createContext,
   useCallback,
@@ -10,9 +9,8 @@ import {
 } from 'react';
 
 import { DEMO_USER } from '@/data/seed';
+import { readJson, removeKey, storageKeys, writeJson } from '@/lib/storage';
 import type { User } from '@/types/models';
-
-const STORAGE_KEY = 'listenbox.auth.user';
 
 type AuthContextValue = {
   user: User | null;
@@ -38,15 +36,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      try {
-        const raw = await AsyncStorage.getItem(STORAGE_KEY);
-        if (!cancelled && raw) {
-          setUser(JSON.parse(raw) as User);
-        }
-      } catch {
-        // Ignore corrupt storage; user can sign in again.
-      } finally {
-        if (!cancelled) setIsLoading(false);
+      const stored = await readJson<User>(storageKeys.authUser);
+      if (!cancelled) {
+        if (stored) setUser(stored);
+        setIsLoading(false);
       }
     })();
     return () => {
@@ -63,12 +56,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       displayName: trimmedName,
       handle: handleFromName(trimmedName),
     };
-    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    await writeJson(storageKeys.authUser, next);
     setUser(next);
   }, []);
 
   const signOut = useCallback(async () => {
-    await AsyncStorage.removeItem(STORAGE_KEY);
+    await removeKey(storageKeys.authUser);
     setUser(null);
   }, []);
 

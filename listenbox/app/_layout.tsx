@@ -17,6 +17,7 @@ import 'react-native-reanimated';
 import { AuthProvider } from '@/context/AuthContext';
 import { CatalogProvider } from '@/context/CatalogContext';
 import { LogsProvider } from '@/context/LogsContext';
+import { StorageGate } from '@/components/StorageGate';
 import { palette } from '@/constants/theme';
 
 export { ErrorBoundary } from 'expo-router';
@@ -54,17 +55,19 @@ export default function RootLayout() {
     <AuthProvider>
       <CatalogProvider>
         <LogsProvider>
-          <StatusBar style="dark" />
-          <Stack
-            screenOptions={{
-              headerShown: false,
-              contentStyle: { backgroundColor: palette.paper },
-              animation: 'fade',
-            }}>
-            <Stack.Screen name="index" />
-            <Stack.Screen name="(auth)" />
-            <Stack.Screen name="(tabs)" />
-          </Stack>
+          <StorageGate>
+            <StatusBar style="dark" />
+            <Stack
+              screenOptions={{
+                headerShown: false,
+                contentStyle: { backgroundColor: palette.paper },
+                animation: 'fade',
+              }}>
+              <Stack.Screen name="index" />
+              <Stack.Screen name="(auth)" />
+              <Stack.Screen name="(tabs)" />
+            </Stack>
+          </StorageGate>
         </LogsProvider>
       </CatalogProvider>
     </AuthProvider>

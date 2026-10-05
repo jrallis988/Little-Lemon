@@ -2,6 +2,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
   type ReactNode,
@@ -10,6 +11,7 @@ import {
 import { useAuth } from '@/context/AuthContext';
 import { useCatalog } from '@/context/CatalogContext';
 import { SEED_LOGS, SEED_USERS, buildFeed } from '@/data/seed';
+import { readJson, removeKey, storageKeys, writeJson } from '@/lib/storage';
 import type { AlbumLog, FeedItem, ListenRating, User, UserId } from '@/types/models';
 
 type CreateLogInput = {
@@ -24,11 +26,15 @@ type CreateLogInput = {
 type LogsContextValue = {
   logs: AlbumLog[];
   feed: FeedItem[];
+  isReady: boolean;
   logsForUser: (userId: UserId) => AlbumLog[];
   createLog: (input: CreateLogInput) => AlbumLog;
+  clearUserLogs: () => Promise<void>;
 };
 
 const LogsContext = createContext<LogsContextValue | null>(null);
+
+const SEED_LOG_IDS = new Set(SEED_LOGS.map((log) => log.id));
 
 function usersWithSession(sessionUser: User | null): User[] {
   if (!sessionUser) return SEED_USERS;
@@ -36,10 +42,41 @@ function usersWithSession(sessionUser: User | null): User[] {
   return [sessionUser, ...others];
 }
 
+function mergeWithSeed(userLogs: AlbumLog[]): AlbumLog[] {
+  const byId = new Map<string, AlbumLog>();
+  for (const log of SEED_LOGS) byId.set(log.id, log);
+  for (const log of userLogs) byId.set(log.id, log);
+  return Array.from(byId.values()).sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+}
+
 export function LogsProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
   const { albums } = useCatalog();
-  const [logs, setLogs] = useState<AlbumLog[]>(SEED_LOGS);
+  const [userLogs, setUserLogs] = useState<AlbumLog[]>([]);
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const stored = await readJson<AlbumLog[]>(storageKeys.userLogs);
+      if (!cancelled) {
+        if (Array.isArray(stored)) {
+          setUserLogs(stored.filter((log) => log && !SEED_LOG_IDS.has(log.id)));
+        }
+        setIsReady(true);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isReady) return;
+    void writeJson(storageKeys.userLogs, userLogs);
+  }, [userLogs, isReady]);
+
+  const logs = useMemo(() => mergeWithSeed(userLogs), [userLogs]);
 
   const feed = useMemo(
     () => buildFeed(logs, usersWithSession(user), albums),
@@ -65,13 +102,18 @@ export function LogsProvider({ children }: { children: ReactNode }) {
       liked: input.liked,
       createdAt: new Date().toISOString(),
     };
-    setLogs((prev) => [next, ...prev]);
+    setUserLogs((prev) => [next, ...prev.filter((log) => log.id !== next.id)]);
     return next;
   }, []);
 
+  const clearUserLogs = useCallback(async () => {
+    setUserLogs([]);
+    await removeKey(storageKeys.userLogs);
+  }, []);
+
   const value = useMemo(
-    () => ({ logs, feed, logsForUser, createLog }),
-    [logs, feed, logsForUser, createLog],
+    () => ({ logs, feed, isReady, logsForUser, createLog, clearUserLogs }),
+    [logs, feed, isReady, logsForUser, createLog, clearUserLogs],
   );
 
   return <LogsContext.Provider value={value}>{children}</LogsContext.Provider>;

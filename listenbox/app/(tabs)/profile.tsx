@@ -1,4 +1,5 @@
 import { router } from 'expo-router';
+import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { AlbumCover } from '@/components/AlbumCover';
@@ -11,8 +12,9 @@ import { fonts, palette, radii, spacing } from '@/constants/theme';
 
 export default function ProfileScreen() {
   const { user, signOut } = useAuth();
-  const { logsForUser } = useLogs();
-  const { getAlbum } = useCatalog();
+  const { logsForUser, clearUserLogs } = useLogs();
+  const { getAlbum, clearExtras } = useCatalog();
+  const [resetting, setResetting] = useState(false);
 
   if (!user) return null;
 
@@ -21,6 +23,16 @@ export default function ProfileScreen() {
   async function handleSignOut() {
     await signOut();
     router.replace('/(auth)/login');
+  }
+
+  async function handleResetLocalData() {
+    setResetting(true);
+    try {
+      await clearUserLogs();
+      await clearExtras();
+    } finally {
+      setResetting(false);
+    }
   }
 
   return (
@@ -74,6 +86,16 @@ export default function ProfileScreen() {
           );
         })
       )}
+
+      <Pressable
+        testID="reset-local-data"
+        onPress={handleResetLocalData}
+        disabled={resetting}
+        style={({ pressed }) => [styles.reset, pressed && { opacity: 0.7 }]}>
+        <Text style={styles.resetText}>
+          {resetting ? 'Clearing…' : 'Clear local listens'}
+        </Text>
+      </Pressable>
 
       <Pressable
         onPress={handleSignOut}
@@ -189,7 +211,7 @@ const styles = StyleSheet.create({
     color: palette.inkMuted,
   },
   signOut: {
-    marginTop: spacing.xl,
+    marginTop: spacing.md,
     alignSelf: 'flex-start',
     paddingVertical: 12,
     paddingHorizontal: 16,
@@ -201,5 +223,18 @@ const styles = StyleSheet.create({
     fontFamily: fonts.bodyMedium,
     fontSize: 14,
     color: palette.ink,
+  },
+  reset: {
+    marginTop: spacing.xl,
+    alignSelf: 'flex-start',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: radii.sm,
+    backgroundColor: 'rgba(11, 31, 42, 0.06)',
+  },
+  resetText: {
+    fontFamily: fonts.bodyMedium,
+    fontSize: 14,
+    color: palette.inkMuted,
   },
 });
