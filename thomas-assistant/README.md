@@ -57,6 +57,8 @@ npm run dev          # http://localhost:1420
 npm run build && npm run preview   # production build at :4173
 ```
 
+**Chat:** Each turn sends the full message array to `POST /api/chat` (dev) or the local engine (static preview). Thomas keeps dish context across follow-ups (wine, beer, vegetables, sides) using a pairing library plus optional Wikipedia lookup. Live replies go through Ollama when it is running.
+
 Browser mode persists cellar counts, closings, chat, restock approvals, the **house lineup**, your name, and area to local storage. First visit is empty of counts — nothing is auto-loaded. Edit products and your name in **Settings**. Use **Load a sample night** if you want demo counts. On first close, you'll set your own four-digit sign-off code.
 
 **Thomas for Business:** Home notices from live counts/closes → Cellar Check → Restock (approve/export, never auto-order) → Close the Night → The Record.

@@ -1,0 +1,138 @@
+{
+  "entries": [
+    {
+      "id": "flounder",
+      "names": [
+        "flounder",
+        "baked flounder",
+        "sole",
+        "dover sole",
+        "plaice",
+        "halibut",
+        "white fish",
+        "whitefish",
+        "tilapia"
+      ],
+      "dish": "baked flounder",
+      "wines": [
+        "Chablis or unoaked Chardonnay — mineral, lemon, no heavy oak so the fish stays delicate",
+        "Muscadet or Pinot Grigio — high acid, light body, a squeeze of citrus on the finish",
+        "Albariño if the bake has herbs or a little garlic"
+      ],
+      "beers": [
+        "Bright Pilsner or Kölsch — clean malt, enough snap to cut butter",
+        "Witbier with citrus peel if the pan sauce is lemon-caper"
+      ],
+      "sides": [
+        "Steamed new potatoes with parsley and olive oil",
+        "Lemon-butter orzo",
+        "A simple green salad with a sharp vinaigrette"
+      ],
+      "vegetables": [
+        "Asparagus or broccolini, quickly roasted so it stays green",
+        "Sautéed spinach or French beans with lemon zest",
+        "Fennel, shaved or gently braised — sweet, anise, lovely with white wine"
+      ],
+      "notes": "Flounder is lean and mild. Keep the glass light, the vegetables bright, and skip heavy reds unless the guest insists on a chilled, low-tannin Pinot."
+    },
+    {
+      "id": "salmon",
+      "names": ["salmon", "baked salmon", "grilled salmon", "cedar salmon"],
+      "dish": "salmon",
+      "wines": [
+        "Pinot Noir — light tannin, cherry, a classic with richer fish",
+        "Dry Rosé or a textured white Burgundy if they prefer white"
+      ],
+      "beers": ["Witbier", "Session IPA if the glaze is citrus or spicy"],
+      "sides": ["Herbed couscous", "Roasted baby potatoes"],
+      "vegetables": ["Asparagus", "Charred broccolini", "Cucumber-dill salad"],
+      "notes": "Salmon can take a little more body than flounder. Pinot or Rosé keeps pace without fighting the oil."
+    },
+    {
+      "id": "steak",
+      "names": ["steak", "ribeye", "grilled steak", "strip", "filet", "beef"],
+      "dish": "grilled steak",
+      "wines": [
+        "Cabernet Sauvignon — cassis, structure, at home with char",
+        "Malbec or a bold red blend if they want something rounder"
+      ],
+      "beers": [
+        "House Porter — roasted malt, a little chocolate, loves a sear",
+        "IPA if they want bitterness against the fat"
+      ],
+      "sides": ["Roasted potatoes", "A peppercorn or chimichurri on the side"],
+      "vegetables": ["Charred asparagus", "Grilled mushrooms", "Creamed spinach"],
+      "notes": "Match intensity: char and fat want tannin or roast. Keep a lighter lager as a polite backup."
+    },
+    {
+      "id": "chicken",
+      "names": ["chicken", "roast chicken", "roasted chicken", "roast hen"],
+      "dish": "roast chicken",
+      "wines": ["Chardonnay with a little texture", "Dry Riesling if herbs and lemon lead"],
+      "beers": ["Golden Lager", "Saison"],
+      "sides": ["Pan jus and bread", "Wild rice"],
+      "vegetables": ["Roasted carrots", "Green beans", "Braised leeks"],
+      "notes": "Roast chicken is a canvas — follow the seasoning. Herb-lemon wants Riesling; browned butter wants Chardonnay."
+    },
+    {
+      "id": "pork",
+      "names": ["pork", "pork chop", "roast pork", "tenderloin"],
+      "dish": "pork",
+      "wines": ["Pinot Noir", "Off-dry Riesling with a glaze"],
+      "beers": ["Amber ale", "Dunkel"],
+      "sides": ["Apple compote", "Soft polenta"],
+      "vegetables": ["Braised cabbage", "Roasted squash"],
+      "notes": "Pork likes a hint of fruit and spice — not a heavy Cabernet unless it's a smoked shoulder."
+    },
+    {
+      "id": "pasta",
+      "names": ["pasta", "spaghetti", "bolognese", "carbonara", "lasagna"],
+      "dish": "pasta",
+      "wines": ["Chianti or Sangiovese with tomato", "Pinot Grigio with cream or seafood"],
+      "beers": ["Pilsner", "Italian-style lager"],
+      "sides": ["A bitter-leaf salad", "Garlic bread only if they ask"],
+      "vegetables": ["Broccoli rabe", "Simple arugula salad"],
+      "notes": "Follow the sauce, not the noodle."
+    },
+    {
+      "id": "oysters",
+      "names": ["oyster", "oysters"],
+      "dish": "oysters",
+      "wines": ["Muscadet", "Champagne or dry sparkling"],
+      "beers": ["Pilsner", "Gose"],
+      "sides": ["Brown bread and butter", "Mignonette"],
+      "vegetables": ["A few raw radishes on the side — palate reset"],
+      "notes": "Stay razor-dry and saline. No oak, no sweetness."
+    },
+    {
+      "id": "burger",
+      "names": ["burger", "cheeseburger", "hamburger"],
+      "dish": "burger",
+      "wines": ["Zinfandel or a juicy red blend", "Chilled Gamay if they want lighter"],
+      "beers": ["Amber ale", "IPA", "Golden Lager"],
+      "sides": ["Crisp fries", "Pickles"],
+      "vegetables": ["A sharp slaw", "Grilled onions"],
+      "notes": "Fat and bun want either snap (lager) or fruit (Zin). Keep one of each in mind."
+    },
+    {
+      "id": "lamb",
+      "names": ["lamb", "rack of lamb", "lamb chops"],
+      "dish": "lamb",
+      "wines": ["Syrah or Grenache", "Bordeaux if rosemary and garlic lead"],
+      "beers": ["Dubbel", "Porter"],
+      "sides": ["Couscous", "Mint yogurt if they like cool contrast"],
+      "vegetables": ["Roasted eggplant", "Charred zucchini"],
+      "notes": "Lamb's sweetness loves pepper and herb — Syrah is the easy first pour."
+    },
+    {
+      "id": "salad",
+      "names": ["salad", "green salad", "caesar"],
+      "dish": "salad",
+      "wines": ["Sauvignon Blanc", "Dry Rosé"],
+      "beers": ["Pilsner", "Kölsch"],
+      "sides": ["Crusty bread"],
+      "vegetables": ["The salad is the vegetable — add herbs, not cream"],
+      "notes": "Vinaigrette wants acid in the glass. Skip oaky Chardonnay."
+    }
+  ]
+}

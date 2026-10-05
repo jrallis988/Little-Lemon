@@ -3,43 +3,32 @@ use serde::{Deserialize, Serialize};
 const OLLAMA_URL: &str = "http://localhost:11434/api/chat";
 const DEFAULT_MODEL: &str = "llama3";
 
-const SYSTEM_PROMPT: &str = "You are Thomas, the guest's own personal bartender at a brewery and taproom. \
-You are a beer and wine connoisseur who speaks with warm, discreet, \
-unhurried hospitality. Never stiff, never robotic, never like an engineer or software assistant.\n\n\
+const SYSTEM_PROMPT: &str = "You are Thomas: expert personal bartender and beverage operations intelligence. \
+You are a sommelier-level pairing authority — wine, beer, spirits, sides, and vegetables — \
+who also quietly keeps the cellar and the night in order.\n\n\
 VOICE:\n\
-- Open with grace: 'Certainly', 'If I may', 'Might I suggest', 'A fine choice', 'At your service'.\n\
+- Warm, professional, unhurried hospitality. Speak with authority, never like IT support.\n\
+- Open with grace: 'Certainly', 'If I may', 'Might I suggest', 'At your service'.\n\
 - Describe drinks through the senses: aroma, body, finish, how they companion a dish.\n\
-- Address guests respectfully when natural (sir, madam) — sparingly, not every sentence.\n\
-- Keep answers concise: two to four sentences unless asked for more.\n\n\
-NEVER SAY (these break character):\n\
-SKU, variance, critical, tolerance, audit, export, CSV, JSON, logged, on-premise, system, database, \
-operator, PIN, reconcile, flag, escalate, panel, scan, manifest, or any technical jargon.\n\n\
-INSTEAD SAY:\n\
-- Stock: 'we appear short on the house Porter', 'the cellar count for the IPA looks right'.\n\
-- Till: 'the register is nearly balanced', 'a small discrepancy in the drawer'.\n\
-- Records: 'I've made a careful note', 'the proprietor may review at their leisure'.\n\n\
-EXPERTISE:\n\
-Pairings (beer AND wine with meals), tasting notes, serving suggestions, guiding guests through the \
-brewery's lineup — house IPA, Porter, Golden Lager, Pilsner, Session IPA, etc.\n\
-You also quietly notice back-room matters (counts, closing the till) but speak of them as a bartender would, \
-never as IT support.\n\n\
-EXAMPLE — guest asks what goes with steak:\n\
-'Might I suggest our house Porter? The roasted malt stands up beautifully to char. \
-If wine is preferred, a bold Cabernet would be equally at home.'\n\n\
-EXAMPLE — bad (never do this):\n\
-'SKU-8842 shows critical variance of -10. Recommend manager review.'";
+- Keep answers concise: two to four sentences unless asked for more.\n\
+- Remember the full conversation. Follow-ups ('what wine?', 'and a vegetable?') stay on the same dish.\n\n\
+NEVER SAY: SKU, variance, critical, audit, CSV, JSON, database, system, operator, panel, reconcile.\n\n\
+PAIRINGS: Use house notes when present. Do not invent street addresses.\n\n\
+EXAMPLE — baked flounder:\n\
+'Might I suggest a Chablis — mineral, lemon, no oak so the fish stays delicate. \
+On the plate, asparagus quickly roasted, and steamed new potatoes with parsley.'";
+
+#[derive(Serialize, Deserialize, Clone)]
+pub struct ChatTurn {
+    pub role: String,
+    pub content: String,
+}
 
 #[derive(Serialize)]
 struct ChatRequest {
     model: String,
-    messages: Vec<ChatMessage>,
+    messages: Vec<ChatTurn>,
     stream: bool,
-}
-
-#[derive(Serialize, Deserialize, Clone)]
-struct ChatMessage {
-    role: String,
-    content: String,
 }
 
 #[derive(Deserialize)]
@@ -52,32 +41,53 @@ struct ChatMessageBody {
     content: String,
 }
 
-pub fn chat(user_message: &str, context: &str) -> Result<String, String> {
+pub fn chat(
+    user_message: &str,
+    context: &str,
+    history: &[ChatTurn],
+) -> Result<String, String> {
     let client = reqwest::blocking::Client::builder()
         .timeout(std::time::Duration::from_secs(60))
         .build()
         .map_err(|e| e.to_string())?;
 
-    let user_content = if context.is_empty() {
-        user_message.to_string()
-    } else {
-        format!(
-            "House notes (speak of these as a bartender would, never with technical language):\n{context}\n\nGuest says: {user_message}"
-        )
+    let mut system = SYSTEM_PROMPT.to_string();
+    if !context.is_empty() {
+        system.push_str(
+            "\n\nHouse notes (speak of these as a bartender would, never with technical language):\n",
+        );
+        system.push_str(context);
+    }
+
+    let mut messages = vec![ChatTurn {
+        role: "system".to_string(),
+        content: system,
+    }];
+
+    for turn in history {
+        if turn.role == "system" {
+            continue;
+        }
+        messages.push(ChatTurn {
+            role: turn.role.clone(),
+            content: turn.content.clone(),
+        });
+    }
+
+    let last_is_user = match messages.last() {
+        Some(m) => m.role == "user" && m.content == user_message,
+        None => false,
     };
+    if !last_is_user && !user_message.is_empty() {
+        messages.push(ChatTurn {
+            role: "user".to_string(),
+            content: user_message.to_string(),
+        });
+    }
 
     let request = ChatRequest {
         model: DEFAULT_MODEL.to_string(),
-        messages: vec![
-            ChatMessage {
-                role: "system".to_string(),
-                content: SYSTEM_PROMPT.to_string(),
-            },
-            ChatMessage {
-                role: "user".to_string(),
-                content: user_content,
-            },
-        ],
+        messages,
         stream: false,
     };
 
@@ -103,8 +113,48 @@ pub fn chat(user_message: &str, context: &str) -> Result<String, String> {
     Ok(body.message.content)
 }
 
-pub fn offline_response(user_message: &str, _context: &str) -> String {
+pub fn offline_response(user_message: &str, _context: &str, history: &[ChatTurn]) -> String {
     let lower = user_message.to_lowercase();
+    let mut thread = String::new();
+    for turn in history {
+        thread.push_str(&turn.content);
+        thread.push(' ');
+    }
+    thread.push_str(user_message);
+    let hay = thread.to_lowercase();
+
+    let flounder = hay.contains("flounder")
+        || hay.contains("sole")
+        || hay.contains("white fish")
+        || hay.contains("halibut");
+    let wine_q = lower.contains("wine") || lower.contains("white") || lower.contains("red");
+    let veg_q = lower.contains("veg") || lower.contains("green") || lower.contains("asparagus");
+    let side_q = lower.contains("side") || lower.contains("potato");
+
+    if flounder && veg_q {
+        return "Still with the baked flounder — asparagus or broccolini, quickly roasted so it stays green, \
+        or sautéed spinach with lemon zest. Fennel, shaved or gently braised, is lovely with a glass of Chablis."
+            .to_string();
+    }
+    if flounder && side_q {
+        return "Alongside the flounder, steamed new potatoes with parsley, or lemon-butter orzo. \
+        Keep a sharp green salad if you want contrast."
+            .to_string();
+    }
+    if flounder && wine_q {
+        return "For baked flounder I'd pour Chablis or an unoaked Chardonnay — mineral, lemon, no heavy oak. \
+        Muscadet or Pinot Grigio if you want even more snap."
+            .to_string();
+    }
+    if flounder
+        || lower.contains("pair")
+            && (lower.contains("fish") || lower.contains("flounder") || lower.contains("sole"))
+    {
+        return "With baked flounder, Chablis or unoaked Chardonnay — mineral, lemon, so the fish stays delicate. \
+        If beer, a bright Pilsner. On the plate: steamed new potatoes and asparagus quickly roasted. \
+        Shall I take the wine or the vegetable further?"
+            .to_string();
+    }
 
     if lower.contains("pair")
         || lower.contains("goes well")

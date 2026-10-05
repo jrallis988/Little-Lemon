@@ -1,9 +1,10 @@
 import { productName } from "./product-catalog";
 import type { ChatMessage } from "./types";
+import { isRetailIntent, formatRetailReply } from "./retail-locator";
 import {
-  formatRetailReply,
-  isRetailIntent,
-} from "./retail-locator";
+  composeCulinaryReply,
+  retrieveCulinaryLocal,
+} from "./culinary-knowledge";
 
 export function greetingFor(mode: "personal" | "business", name?: string | null): string {
   const n = name?.trim();
@@ -50,17 +51,17 @@ export const THOMAS_TAGLINE = PERSONAL_TAGLINE;
 export const THOMAS_POSITIONING = "Thomas is your own personal bartender";
 
 export const suggestedPrompts = [
+  "What pairs with baked flounder?",
   "What pairs with grilled steak?",
   "Where can I buy a bold red near me?",
-  "Best IPA for a beginner?",
   "Find whiskey shops in my area",
 ] as const;
 
 export const personalSuggestedPrompts = [
   "What should I pour from my bar tonight?",
-  "Where can I buy a bold red near me?",
+  "What pairs with baked flounder?",
   "What pairs with roast chicken?",
-  "Find a whiskey shop in my area",
+  "Where can I buy a bold red near me?",
 ] as const;
 
 export function butlerScanNote(
@@ -397,6 +398,15 @@ export function matchBrowserReply(
       return "I'd love to point you somewhere local — tell me your city or ZIP (or tap Set area above the chat), and what you're hunting: wine, beer, or spirits.";
     }
     return formatRetailReply(message, area);
+  }
+
+  const culinary = retrieveCulinaryLocal(message, history);
+  if (culinary) {
+    return composeCulinaryReply(
+      culinary.entry,
+      culinary.focus,
+      culinary.fromHistory,
+    );
   }
 
   let topic = detectTopic(message);

@@ -16,11 +16,9 @@ import {
   setShifts,
   appendAudit,
 } from "./browser-storage";
-import { matchBrowserReply } from "./thomas-persona";
-import { chatViaOllama, checkOllamaAvailable } from "./chat-engine";
+import { completeChat, toChatTurns, checkOllamaAvailable } from "./chat-engine";
 import { countGapLabel, productName, tillGapLabel } from "./product-catalog";
 import type { ChatMessage } from "./types";
-import { getUserArea } from "./browser-storage";
 
 export { checkOllamaAvailable } from "./chat-engine";
 
@@ -168,13 +166,20 @@ export async function chatWithAssistant(
   context: string,
   history: ChatMessage[] = [],
 ): Promise<string> {
-  if (isBrowserMode) {
-    const live = await chatViaOllama(message, context, history);
-    if (live) return live;
-    await new Promise((r) => setTimeout(r, 120));
-    return matchBrowserReply(message, context, history, getUserArea());
+  const turns = toChatTurns(history);
+  const last = turns[turns.length - 1];
+  if (!last || last.role !== "user" || last.content !== message) {
+    turns.push({ role: "user", content: message });
   }
-  return invoke("chat_with_assistant", { message, context });
+
+  if (isBrowserMode) {
+    return completeChat({ messages: turns, context });
+  }
+  return invoke("chat_with_assistant", {
+    message,
+    context,
+    messages: turns,
+  });
 }
 
 /** Log an approved restock (never auto-sends to a vendor). */

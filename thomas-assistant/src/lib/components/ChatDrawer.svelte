@@ -62,8 +62,11 @@
 
     try {
       const context = buildChatContext();
-      const history = appState.chatMessages;
-      const reply = await chatWithAssistant(message, context, history);
+      const reply = await chatWithAssistant(
+        message,
+        context,
+        appState.chatMessages,
+      );
       addChatMessage("assistant", reply);
     } catch {
       addChatMessage(
@@ -77,9 +80,11 @@
   }
 
   $effect(() => {
-    appState.chatMessages;
+    appState.chatMessages.length;
+    sending;
     requestAnimationFrame(() => {
-      messagesEl?.scrollTo({ top: messagesEl.scrollHeight });
+      if (!messagesEl) return;
+      messagesEl.scrollTo({ top: messagesEl.scrollHeight, behavior: "smooth" });
     });
   });
 
@@ -219,7 +224,7 @@
       </div>
 
       <div class="messages" bind:this={messagesEl}>
-        {#each appState.chatMessages as msg, i (i)}
+        {#each appState.chatMessages as msg (msg.timestamp + msg.role + msg.content.slice(0, 24))}
           <div class="exchange {msg.role}">
             {#if msg.role === "assistant"}
               <ThomasLogo variant="mark" width={32} height={32} />

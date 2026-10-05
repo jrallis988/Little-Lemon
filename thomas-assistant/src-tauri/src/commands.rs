@@ -100,10 +100,15 @@ pub fn get_inventory_summary(db: State<'_, Database>) -> Result<InventorySummary
 }
 
 #[tauri::command]
-pub fn chat_with_assistant(message: String, context: String) -> Result<String, String> {
-    match ai::chat(&message, &context) {
+pub fn chat_with_assistant(
+    message: String,
+    context: String,
+    messages: Option<Vec<ai::ChatTurn>>,
+) -> Result<String, String> {
+    let history = messages.unwrap_or_default();
+    match ai::chat(&message, &context, &history) {
         Ok(response) => Ok(response),
-        Err(_) => Ok(ai::offline_response(&message, &context)),
+        Err(_) => Ok(ai::offline_response(&message, &context, &history)),
     }
 }
 
