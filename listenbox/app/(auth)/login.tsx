@@ -35,23 +35,24 @@ export default function LoginScreen() {
   }
 
   return (
-    <Screen scroll={false} contentStyle={styles.screenContent}>
+    <Screen scroll={false} atmosphere="bold" contentStyle={styles.screenContent}>
       <KeyboardAvoidingView
         style={styles.flex}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <View style={styles.hero}>
-          <Animated.Text entering={FadeInDown.duration(500)} style={styles.brand}>
+          <Animated.Text entering={FadeInDown.duration(550)} style={styles.brand}>
             Listenbox
           </Animated.Text>
-          <Animated.Text entering={FadeInDown.delay(80).duration(500)} style={styles.headline}>
+          <Animated.View entering={FadeInDown.delay(60).duration(500)} style={styles.brandRule} />
+          <Animated.Text entering={FadeInDown.delay(100).duration(500)} style={styles.headline}>
             Your listening diary.
           </Animated.Text>
-          <Animated.Text entering={FadeInDown.delay(140).duration(500)} style={styles.sub}>
+          <Animated.Text entering={FadeInDown.delay(160).duration(500)} style={styles.sub}>
             Log albums, rate them, and follow what friends are spinning.
           </Animated.Text>
         </View>
 
-        <Animated.View entering={FadeInUp.delay(220).duration(450)} style={styles.form}>
+        <Animated.View entering={FadeInUp.delay(240).duration(480)} style={styles.form}>
           <Text style={styles.label}>Display name</Text>
           <TextInput
             value={displayName}
@@ -106,48 +107,56 @@ const styles = StyleSheet.create({
     paddingTop: spacing.xxl,
   },
   hero: {
-    gap: spacing.sm,
     paddingTop: spacing.xl,
+    maxWidth: 360,
   },
   brand: {
-    fontFamily: fonts.display,
-    fontSize: 52,
-    lineHeight: 56,
-    letterSpacing: -1.5,
+    fontFamily: fonts.displayBlack,
+    fontSize: 58,
+    lineHeight: 58,
+    letterSpacing: -2.2,
     color: palette.ink,
   },
+  brandRule: {
+    width: 72,
+    height: 5,
+    backgroundColor: palette.accent,
+    marginTop: spacing.md,
+    marginBottom: spacing.md,
+    borderRadius: 2,
+  },
   headline: {
-    fontFamily: fonts.displaySoft,
-    fontSize: 26,
-    lineHeight: 32,
+    fontFamily: fonts.displayItalic,
+    fontSize: 28,
+    lineHeight: 34,
     color: palette.ink,
-    marginTop: spacing.sm,
   },
   sub: {
     fontFamily: fonts.body,
     fontSize: 16,
     lineHeight: 24,
     color: palette.inkMuted,
-    maxWidth: 320,
-    marginTop: spacing.xs,
+    marginTop: spacing.sm,
   },
   form: {
     gap: spacing.sm,
     paddingBottom: spacing.lg,
   },
   label: {
-    fontFamily: fonts.bodyMedium,
-    fontSize: 13,
+    fontFamily: fonts.bodyBold,
+    fontSize: 11,
     color: palette.inkMuted,
     marginTop: spacing.sm,
+    letterSpacing: 1.2,
+    textTransform: 'uppercase',
   },
   input: {
-    backgroundColor: palette.white,
-    borderWidth: 1,
-    borderColor: 'rgba(11, 31, 42, 0.12)',
+    backgroundColor: 'rgba(255,255,255,0.78)',
+    borderWidth: 1.5,
+    borderColor: 'rgba(7, 21, 28, 0.14)',
     borderRadius: radii.md,
     paddingHorizontal: spacing.md,
-    paddingVertical: 14,
+    paddingVertical: 15,
     fontFamily: fonts.body,
     fontSize: 16,
     color: palette.ink,
@@ -156,12 +165,17 @@ const styles = StyleSheet.create({
     marginTop: spacing.md,
     backgroundColor: palette.accent,
     borderRadius: radii.md,
-    paddingVertical: 16,
+    paddingVertical: 17,
     alignItems: 'center',
+    shadowColor: palette.ink,
+    shadowOpacity: 0.16,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 3,
   },
   ctaPressed: {
     transform: [{ scale: 0.98 }],
-    opacity: 0.92,
+    backgroundColor: palette.accentDeep,
   },
   ctaDisabled: {
     opacity: 0.6,
@@ -170,6 +184,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.bodyBold,
     fontSize: 16,
     color: palette.accentInk,
+    letterSpacing: 0.2,
   },
   hint: {
     marginTop: spacing.sm,

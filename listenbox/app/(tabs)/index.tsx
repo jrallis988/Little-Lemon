@@ -1,7 +1,8 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 
+import { Atmosphere } from '@/components/Atmosphere';
 import { FeedCard } from '@/components/FeedCard';
 import { useLogs } from '@/context/LogsContext';
 import { fonts, palette, spacing } from '@/constants/theme';
@@ -11,16 +12,13 @@ export default function FeedScreen() {
 
   return (
     <View style={styles.root}>
-      <LinearGradient
-        colors={[palette.paper, palette.paperDeep, '#DCE6F0']}
-        locations={[0, 0.55, 1]}
-        style={[StyleSheet.absoluteFill, { pointerEvents: 'none' }]}
-      />
+      <Atmosphere />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
-        <View style={styles.header}>
+        <Animated.View entering={FadeInDown.duration(450)} style={styles.header}>
           <Text style={styles.brand}>Listenbox</Text>
+          <View style={styles.brandRule} />
           <Text style={styles.kicker}>Friends are listening</Text>
-        </View>
+        </Animated.View>
         <FlatList
           data={feed}
           keyExtractor={(item) => item.log.id}
@@ -28,7 +26,7 @@ export default function FeedScreen() {
           contentContainerStyle={styles.list}
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={
-            <Text style={styles.empty}>No listens yet. Be the first to log an album.</Text>
+            <Text style={styles.empty}>No listens yet. Drop the needle on something.</Text>
           }
         />
       </SafeAreaView>
@@ -47,19 +45,28 @@ const styles = StyleSheet.create({
   header: {
     paddingHorizontal: spacing.lg,
     paddingTop: spacing.md,
-    paddingBottom: spacing.sm,
-    gap: 4,
+    paddingBottom: spacing.md,
   },
   brand: {
-    fontFamily: fonts.display,
-    fontSize: 34,
-    letterSpacing: -1,
+    fontFamily: fonts.displayBlack,
+    fontSize: 42,
+    letterSpacing: -1.6,
     color: palette.ink,
+    lineHeight: 46,
+  },
+  brandRule: {
+    width: 56,
+    height: 4,
+    backgroundColor: palette.accent,
+    marginTop: spacing.sm,
+    marginBottom: spacing.sm,
+    borderRadius: 2,
   },
   kicker: {
-    fontFamily: fonts.body,
+    fontFamily: fonts.bodyMedium,
     fontSize: 14,
     color: palette.inkMuted,
+    letterSpacing: 0.2,
   },
   list: {
     paddingHorizontal: spacing.lg,
@@ -67,8 +74,8 @@ const styles = StyleSheet.create({
   },
   empty: {
     marginTop: spacing.xl,
-    fontFamily: fonts.body,
-    fontSize: 15,
+    fontFamily: fonts.displayItalic,
+    fontSize: 18,
     color: palette.inkMuted,
   },
 });

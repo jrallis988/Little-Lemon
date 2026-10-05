@@ -18,10 +18,8 @@ export default function Root({ children }: { children: ReactNode }) {
 
 const responsiveBackground = `
 body {
-  background-color: #EEF1F4;
+  background-color: #E8EEF2;
 }
-/* Inactive React Navigation scenes stay absolutely positioned on web and can
-   intercept clicks; aria-hidden marks them, so disable pointer events. */
 [aria-hidden="true"] {
   pointer-events: none !important;
 }`;

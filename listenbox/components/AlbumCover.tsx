@@ -14,7 +14,7 @@ type Props = {
 export function AlbumCover({ album, size = 72, style }: Props) {
   const [imageFailed, setImageFailed] = useState(false);
   const showImage = Boolean(album.coverUrl) && !imageFailed;
-  const radius = Math.max(8, size * 0.12);
+  const radius = radii.sleeve;
   const initials = album.title
     .split(/\s+/)
     .slice(0, 2)
@@ -32,19 +32,21 @@ export function AlbumCover({ album, size = 72, style }: Props) {
         />
       ) : (
         <LinearGradient
-          colors={[album.coverColor, shade(album.coverColor)]}
+          colors={[album.coverColor, shade(album.coverColor), palette.ink]}
+          locations={[0, 0.55, 1]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           style={[styles.cover, { width: size, height: size, borderRadius: radius }]}>
-          <View style={[styles.groove, { pointerEvents: 'none' }]} />
-          <Text style={[styles.initials, { fontSize: size * 0.28 }]}>{initials}</Text>
+          <View style={[styles.grooveOuter, { pointerEvents: 'none' }]} />
+          <View style={[styles.grooveInner, { pointerEvents: 'none' }]} />
+          <View style={[styles.hole, { pointerEvents: 'none' }]} />
+          <Text style={[styles.initials, { fontSize: Math.max(14, size * 0.22) }]}>{initials}</Text>
         </LinearGradient>
       )}
     </View>
   );
 }
 
-/** Darken a hex color slightly for gradient depth. */
 function shade(hex: string): string {
   const cleaned = hex.replace('#', '');
   if (cleaned.length !== 6) return palette.ink;
@@ -58,27 +60,43 @@ function shade(hex: string): string {
 const styles = StyleSheet.create({
   shadow: {
     shadowColor: palette.ink,
-    shadowOpacity: 0.18,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 4 },
-    elevation: 3,
+    shadowOpacity: 0.28,
+    shadowRadius: 14,
+    shadowOffset: { width: 0, height: 8 },
+    elevation: 5,
   },
   cover: {
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
   },
-  groove: {
+  grooveOuter: {
     position: 'absolute',
-    width: '70%',
-    height: '70%',
-    borderRadius: radii.lg,
+    width: '82%',
+    height: '82%',
+    borderRadius: 999,
     borderWidth: 1,
-    borderColor: 'rgba(11, 31, 42, 0.12)',
+    borderColor: 'rgba(255,255,255,0.22)',
+  },
+  grooveInner: {
+    position: 'absolute',
+    width: '52%',
+    height: '52%',
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: 'rgba(7,21,28,0.2)',
+  },
+  hole: {
+    position: 'absolute',
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: 'rgba(7,21,28,0.35)',
   },
   initials: {
-    fontFamily: fonts.display,
-    color: palette.ink,
-    opacity: 0.55,
+    fontFamily: fonts.displayBlack,
+    color: palette.white,
+    opacity: 0.85,
+    letterSpacing: -0.5,
   },
 });

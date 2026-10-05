@@ -1,8 +1,8 @@
-import { LinearGradient } from 'expo-linear-gradient';
 import { type ReactNode } from 'react';
 import { ScrollView, StyleSheet, View, type ViewStyle } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { Atmosphere } from '@/components/Atmosphere';
 import { palette, spacing } from '@/constants/theme';
 
 type Props = {
@@ -10,9 +10,16 @@ type Props = {
   scroll?: boolean;
   style?: ViewStyle;
   contentStyle?: ViewStyle;
+  atmosphere?: 'soft' | 'bold';
 };
 
-export function Screen({ children, scroll = true, style, contentStyle }: Props) {
+export function Screen({
+  children,
+  scroll = true,
+  style,
+  contentStyle,
+  atmosphere = 'soft',
+}: Props) {
   const body = scroll ? (
     <ScrollView
       contentContainerStyle={[styles.content, contentStyle]}
@@ -25,11 +32,7 @@ export function Screen({ children, scroll = true, style, contentStyle }: Props) 
 
   return (
     <View style={[styles.root, style]}>
-      <LinearGradient
-        colors={[palette.paper, palette.paperDeep, '#DCE6F0']}
-        locations={[0, 0.55, 1]}
-        style={[StyleSheet.absoluteFill, { pointerEvents: 'none' }]}
-      />
+      <Atmosphere intensity={atmosphere} />
       <SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
         {body}
       </SafeAreaView>

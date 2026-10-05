@@ -5,7 +5,9 @@ import {
 } from '@expo-google-fonts/figtree';
 import {
   Fraunces_500Medium,
+  Fraunces_600SemiBold_Italic,
   Fraunces_700Bold,
+  Fraunces_900Black,
 } from '@expo-google-fonts/fraunces';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
@@ -34,7 +36,9 @@ export default function RootLayout() {
     Figtree_500Medium,
     Figtree_700Bold,
     Fraunces_500Medium,
+    Fraunces_600SemiBold_Italic,
     Fraunces_700Bold,
+    Fraunces_900Black,
   });
 
   useEffect(() => {

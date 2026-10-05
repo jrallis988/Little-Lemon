@@ -104,6 +104,7 @@ export default function LogScreen() {
   return (
     <Screen>
       <Text style={styles.brand}>Log a listen</Text>
+      <View style={styles.brandRule} />
       <Text style={styles.sub}>Search MusicBrainz or pick a suggestion.</Text>
 
       <Text style={styles.section}>Search</Text>
@@ -212,34 +213,42 @@ export default function LogScreen() {
 
 const styles = StyleSheet.create({
   brand: {
-    fontFamily: fonts.display,
-    fontSize: 34,
-    letterSpacing: -1,
+    fontFamily: fonts.displayBlack,
+    fontSize: 40,
+    letterSpacing: -1.4,
     color: palette.ink,
     marginTop: spacing.md,
+    lineHeight: 44,
+  },
+  brandRule: {
+    width: 48,
+    height: 4,
+    backgroundColor: palette.accent,
+    marginTop: spacing.sm,
+    borderRadius: 2,
   },
   sub: {
-    fontFamily: fonts.body,
-    fontSize: 14,
+    fontFamily: fonts.displayItalic,
+    fontSize: 16,
     color: palette.inkMuted,
-    marginTop: 4,
+    marginTop: 6,
     marginBottom: spacing.md,
   },
   section: {
     fontFamily: fonts.bodyBold,
-    fontSize: 13,
+    fontSize: 11,
     color: palette.inkMuted,
     textTransform: 'uppercase',
-    letterSpacing: 0.8,
+    letterSpacing: 1.2,
     marginBottom: spacing.sm,
     marginTop: spacing.md,
   },
   sectionInline: {
     fontFamily: fonts.bodyBold,
-    fontSize: 13,
+    fontSize: 11,
     color: palette.inkMuted,
     textTransform: 'uppercase',
-    letterSpacing: 0.8,
+    letterSpacing: 1.2,
   },
   listHeader: {
     flexDirection: 'row',
@@ -249,10 +258,10 @@ const styles = StyleSheet.create({
     marginBottom: spacing.sm,
   },
   searchInput: {
-    backgroundColor: palette.white,
+    backgroundColor: 'rgba(255,255,255,0.8)',
     borderRadius: radii.md,
-    borderWidth: 1,
-    borderColor: 'rgba(11, 31, 42, 0.12)',
+    borderWidth: 1.5,
+    borderColor: 'rgba(7, 21, 28, 0.14)',
     paddingHorizontal: spacing.md,
     paddingVertical: 14,
     fontFamily: fonts.body,
@@ -262,7 +271,7 @@ const styles = StyleSheet.create({
   error: {
     fontFamily: fonts.body,
     fontSize: 13,
-    color: palette.danger,
+    color: palette.signal,
     marginBottom: spacing.sm,
   },
   empty: {
@@ -278,15 +287,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: spacing.md,
-    padding: spacing.sm,
+    paddingVertical: spacing.sm,
+    paddingHorizontal: spacing.sm,
     borderRadius: radii.md,
-    backgroundColor: 'rgba(255,255,255,0.55)',
-    borderWidth: 1,
+    borderWidth: 1.5,
     borderColor: 'transparent',
+    backgroundColor: 'rgba(255,255,255,0.35)',
   },
   albumChipSelected: {
     borderColor: palette.ink,
-    backgroundColor: palette.white,
+    backgroundColor: 'rgba(255,255,255,0.9)',
   },
   albumChipText: {
     flex: 1,
@@ -319,14 +329,14 @@ const styles = StyleSheet.create({
   },
   reviewInput: {
     minHeight: 110,
-    backgroundColor: palette.white,
+    backgroundColor: 'rgba(255,255,255,0.85)',
     borderRadius: radii.md,
-    borderWidth: 1,
-    borderColor: 'rgba(11, 31, 42, 0.12)',
+    borderWidth: 1.5,
+    borderColor: 'rgba(7, 21, 28, 0.14)',
     padding: spacing.md,
-    fontFamily: fonts.body,
-    fontSize: 16,
-    lineHeight: 22,
+    fontFamily: fonts.displayItalic,
+    fontSize: 17,
+    lineHeight: 24,
     color: palette.ink,
     textAlignVertical: 'top',
   },
@@ -336,10 +346,10 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 14,
     borderRadius: radii.sm,
-    backgroundColor: 'rgba(11, 31, 42, 0.06)',
+    backgroundColor: 'rgba(7, 21, 28, 0.06)',
   },
   likeToggleOn: {
-    backgroundColor: 'rgba(194, 59, 34, 0.12)',
+    backgroundColor: 'rgba(255, 77, 46, 0.14)',
   },
   likeText: {
     fontFamily: fonts.bodyMedium,
@@ -347,7 +357,7 @@ const styles = StyleSheet.create({
     color: palette.inkMuted,
   },
   likeTextOn: {
-    color: palette.danger,
+    color: palette.signal,
   },
   cta: {
     marginTop: spacing.lg,
@@ -358,6 +368,7 @@ const styles = StyleSheet.create({
   },
   ctaPressed: {
     transform: [{ scale: 0.98 }],
+    backgroundColor: palette.accentDeep,
   },
   ctaText: {
     fontFamily: fonts.bodyBold,

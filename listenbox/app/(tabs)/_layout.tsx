@@ -1,5 +1,5 @@
 import { Redirect, Tabs } from 'expo-router';
-import { Platform, Text, type ColorValue } from 'react-native';
+import { Platform, Text, View, type ColorValue } from 'react-native';
 
 import { useAuth } from '@/context/AuthContext';
 import { fonts, palette } from '@/constants/theme';
@@ -13,7 +13,6 @@ export default function TabLayout() {
 
   return (
     <Tabs
-      // Keep inactive scenes from eating clicks on web (absolute-positioned stacks).
       detachInactiveScreens
       screenOptions={{
         headerShown: false,
@@ -21,14 +20,16 @@ export default function TabLayout() {
         tabBarActiveTintColor: palette.ink,
         tabBarInactiveTintColor: palette.inkFaint,
         tabBarStyle: {
-          backgroundColor: palette.paper,
-          borderTopColor: 'rgba(11, 31, 42, 0.1)',
-          height: Platform.OS === 'ios' ? 88 : 64,
-          paddingTop: 6,
+          backgroundColor: 'rgba(244,247,250,0.96)',
+          borderTopColor: palette.rule,
+          borderTopWidth: 1,
+          height: Platform.OS === 'ios' ? 88 : 68,
+          paddingTop: 8,
         },
         tabBarLabelStyle: {
-          fontFamily: fonts.bodyMedium,
+          fontFamily: fonts.bodyBold,
           fontSize: 11,
+          letterSpacing: 0.3,
         },
       }}>
       <Tabs.Screen
@@ -45,7 +46,7 @@ export default function TabLayout() {
         options={{
           title: 'Log',
           tabBarIcon: ({ color, focused }) => (
-            <TabGlyph color={color} focused={focused} glyph="+" focusedSize={22} size={20} />
+            <TabGlyph color={color} focused={focused} glyph="+" focusedSize={24} size={20} accent />
           ),
         }}
       />
@@ -68,21 +69,33 @@ function TabGlyph({
   glyph,
   focusedSize = 18,
   size = 16,
+  accent = false,
 }: {
   color: ColorValue;
   focused: boolean;
   glyph: string;
   focusedSize?: number;
   size?: number;
+  accent?: boolean;
 }) {
   return (
-    <Text
+    <View
       style={{
-        color,
-        fontSize: focused ? focusedSize : size,
-        fontFamily: fonts.bodyBold,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: accent ? 34 : 28,
+        height: accent ? 34 : 28,
+        borderRadius: accent ? 17 : 8,
+        backgroundColor: focused && accent ? palette.accent : 'transparent',
       }}>
-      {glyph}
-    </Text>
+      <Text
+        style={{
+          color: focused && accent ? palette.accentInk : color,
+          fontSize: focused ? focusedSize : size,
+          fontFamily: fonts.bodyBold,
+        }}>
+        {glyph}
+      </Text>
+    </View>
   );
 }

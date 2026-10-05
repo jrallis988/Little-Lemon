@@ -38,6 +38,7 @@ export default function ProfileScreen() {
   return (
     <Screen>
       <Text style={styles.brand}>Profile</Text>
+      <View style={styles.brandRule} />
 
       <View style={styles.identity}>
         <View style={[styles.avatar, { backgroundColor: user.avatarColor }]}>
@@ -108,11 +109,19 @@ export default function ProfileScreen() {
 
 const styles = StyleSheet.create({
   brand: {
-    fontFamily: fonts.display,
-    fontSize: 34,
-    letterSpacing: -1,
+    fontFamily: fonts.displayBlack,
+    fontSize: 40,
+    letterSpacing: -1.4,
     color: palette.ink,
     marginTop: spacing.md,
+    lineHeight: 44,
+  },
+  brandRule: {
+    width: 48,
+    height: 4,
+    backgroundColor: palette.accent,
+    marginTop: spacing.sm,
+    borderRadius: 2,
   },
   identity: {
     flexDirection: 'row',
@@ -121,15 +130,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   avatar: {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
+    width: 72,
+    height: 72,
+    borderRadius: 36,
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 3,
+    borderColor: palette.accent,
   },
   avatarText: {
-    fontFamily: fonts.display,
-    fontSize: 28,
+    fontFamily: fonts.displayBlack,
+    fontSize: 30,
     color: palette.white,
   },
   identityText: {
@@ -137,9 +148,10 @@ const styles = StyleSheet.create({
     gap: 2,
   },
   name: {
-    fontFamily: fonts.bodyBold,
-    fontSize: 20,
+    fontFamily: fonts.display,
+    fontSize: 24,
     color: palette.ink,
+    letterSpacing: -0.4,
   },
   handle: {
     fontFamily: fonts.bodyMedium,
@@ -154,46 +166,50 @@ const styles = StyleSheet.create({
   stats: {
     flexDirection: 'row',
     marginTop: spacing.lg,
-    gap: spacing.md,
+    gap: spacing.sm,
   },
   stat: {
     flex: 1,
-    backgroundColor: 'rgba(255,255,255,0.65)',
     borderRadius: radii.md,
     paddingVertical: spacing.md,
     alignItems: 'center',
+    borderWidth: 1.5,
+    borderColor: palette.rule,
+    backgroundColor: 'rgba(255,255,255,0.45)',
   },
   statValue: {
-    fontFamily: fonts.display,
-    fontSize: 24,
+    fontFamily: fonts.displayBlack,
+    fontSize: 28,
     color: palette.ink,
   },
   statLabel: {
-    fontFamily: fonts.body,
-    fontSize: 12,
+    fontFamily: fonts.bodyBold,
+    fontSize: 10,
+    letterSpacing: 0.8,
+    textTransform: 'uppercase',
     color: palette.inkMuted,
     marginTop: 2,
   },
   section: {
     fontFamily: fonts.bodyBold,
-    fontSize: 13,
+    fontSize: 11,
     color: palette.inkMuted,
     textTransform: 'uppercase',
-    letterSpacing: 0.8,
+    letterSpacing: 1.2,
     marginTop: spacing.xl,
     marginBottom: spacing.sm,
   },
   empty: {
-    fontFamily: fonts.body,
-    fontSize: 14,
+    fontFamily: fonts.displayItalic,
+    fontSize: 16,
     color: palette.inkMuted,
   },
   diaryRow: {
     flexDirection: 'row',
     gap: spacing.md,
     paddingVertical: spacing.md,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: 'rgba(11, 31, 42, 0.12)',
+    borderBottomWidth: 1,
+    borderBottomColor: palette.rule,
   },
   diaryMeta: {
     flex: 1,
@@ -202,7 +218,7 @@ const styles = StyleSheet.create({
   },
   diaryTitle: {
     fontFamily: fonts.bodyBold,
-    fontSize: 15,
+    fontSize: 16,
     color: palette.ink,
   },
   diaryArtist: {
@@ -216,8 +232,8 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 16,
     borderRadius: radii.sm,
-    borderWidth: 1,
-    borderColor: 'rgba(11, 31, 42, 0.2)',
+    borderWidth: 1.5,
+    borderColor: 'rgba(7, 21, 28, 0.2)',
   },
   signOutText: {
     fontFamily: fonts.bodyMedium,
@@ -230,7 +246,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 16,
     borderRadius: radii.sm,
-    backgroundColor: 'rgba(11, 31, 42, 0.06)',
+    backgroundColor: 'rgba(7, 21, 28, 0.06)',
   },
   resetText: {
     fontFamily: fonts.bodyMedium,
