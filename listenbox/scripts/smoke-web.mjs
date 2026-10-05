@@ -45,7 +45,9 @@ async function main() {
   console.log('OK logged listen appears in feed');
 
   // Persistence: reload keeps session + user listen + catalog album.
+  // Expo Router may restore the last route (/log); go to Feed explicitly.
   await page.reload({ waitUntil: 'networkidle', timeout: 60000 });
+  await page.getByText('Feed', { exact: true }).last().click();
   await page.getByText('Friends are listening').waitFor({ timeout: 20000 });
   await page
     .locator('div')
