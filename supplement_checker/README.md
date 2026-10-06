@@ -2,6 +2,8 @@
 
 Clinical-grade **research and data-aggregation** platform (not a medical device or diagnostic tool).
 
+**Portfolio case study — not a live product.** Demo locally; no App Store / production Cloudflare requirement.
+
 See [`ARCHITECTURE.md`](./ARCHITECTURE.md) for the full blueprint.
 
 ## Non-negotiable rule
@@ -20,18 +22,17 @@ Unindexed OCR ingredients hard-stop via `data_gaps.py` with:
 
 > Data Gap Identified: This ingredient or dosage lacks sufficient indexed human research literature...
 
-## Production readiness (honest scorecard)
+## Portfolio scorecard (not launch-readiness)
 
 | Area | Score | Notes |
 | --- | --- | --- |
-| Architecture & gates | 9/10 | Terms, verify lock, data-gap stops |
-| Intelligence pipeline | 7/10 | OCR + PubMed + richer compare rules |
-| API / auth / persistence | 8/10 | SQLite+auth+export; CF deploy still manual |
-| UI | 6/10 | Clinical web console + Streamlit; no native apps yet |
-| Compliance docs | 6/10 | Draft privacy/terms — **not counsel-approved** |
-| Ops | 7/10 | Pytest + GitHub Actions + Docker + deploy checklist |
+| Concept & architecture story | 9/10 | Blueprint, gates, Cloudflare-shaped data plane |
+| Working demo | 8/10 | Dashboard + Streamlit + API, local SQLite |
+| Product rules in code | 9/10 | Terms, verify lock, data-gap hard stops |
+| Intelligence (demo-grade) | 7/10 | OCR/PubMed with demo fallback |
+| Presentation | 7/10 | Screenshots + README; walkthrough video still optional |
 
-**Overall foundation: ~8 / 10.** Remaining to a true launch 10: native HealthKit/Health Connect apps, live Cloudflare D1/R2, counsel sign-off, staging/monitoring.
+**Portfolio overall: ~8.5 / 10.** A portfolio 10 is a tight demo story (screens, one-command run, short walkthrough) — not App Store or HIPAA.
 
 Card-based web dashboard served by FastAPI:
 

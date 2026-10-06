@@ -3,6 +3,21 @@
 Clinical-grade **research and data-aggregation** platform.  
 Not a medical device. Not a diagnostic tool. Informational literature cross-referencing only.
 
+## Portfolio piece (not a live product)
+
+This repo is a **case-study / portfolio build**, not a production website or shipped app.
+
+That means we optimize for:
+
+- Clear architecture you can walk a hiring manager through
+- Working local demo (FastAPI dashboard + Streamlit)
+- Visible product rules (legal gate, `profile_verified`, data-gap hard stops)
+- Screenshots, README, and code quality
+
+We **do not** need: App Store release, real HealthKit/Health Connect accounts, Cloudflare billing, HIPAA BAAs, counsel-signed policies, staging/monitoring, or paying users.
+
+Native mobile, live D1/R2, and lawyer review stay **optional narrative** (“how this would ship”) rather than required work.
+
 ## Core concept
 
 Replace generic supplement ratings with:
