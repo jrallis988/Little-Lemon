@@ -1,0 +1,106 @@
+[
+  {
+    "file": "home.png",
+    "label": "Home"
+  },
+  {
+    "file": "license.png",
+    "label": "License & ID"
+  },
+  {
+    "file": "vehicle.png",
+    "label": "Vehicle"
+  },
+  {
+    "file": "records.png",
+    "label": "Records"
+  },
+  {
+    "file": "appointments.png",
+    "label": "Appointments"
+  },
+  {
+    "file": "branches.png",
+    "label": "Branches"
+  },
+  {
+    "file": "branch.png",
+    "label": "Concord branch"
+  },
+  {
+    "file": "dashboard.png",
+    "label": "Dashboard"
+  },
+  {
+    "file": "online.png",
+    "label": "Can I do this online?"
+  },
+  {
+    "file": "fees.png",
+    "label": "Fees"
+  },
+  {
+    "file": "search.png",
+    "label": "Search"
+  },
+  {
+    "file": "service.png",
+    "label": "Service: renew license"
+  },
+  {
+    "file": "checklist.png",
+    "label": "What to bring"
+  },
+  {
+    "file": "first-license.png",
+    "label": "First license"
+  },
+  {
+    "file": "new-resident.png",
+    "label": "New resident"
+  },
+  {
+    "file": "real-id.png",
+    "label": "REAL ID"
+  },
+  {
+    "file": "renew.png",
+    "label": "Renew license"
+  },
+  {
+    "file": "registration.png",
+    "label": "Registration"
+  },
+  {
+    "file": "placard.png",
+    "label": "Disability placard"
+  },
+  {
+    "file": "change-address.png",
+    "label": "Change address"
+  },
+  {
+    "file": "america-250.png",
+    "label": "America 250 plate"
+  },
+  {
+    "file": "plates.png",
+    "label": "Specialty plates"
+  },
+  {
+    "file": "vanity.png",
+    "label": "Vanity check"
+  },
+  {
+    "file": "motorcycle.png",
+    "label": "Motorcycle training"
+  },
+  {
+    "file": "scam-alert.png",
+    "label": "Scam alert"
+  },
+  {
+    "file": "confirmation.png",
+    "label": "Appointment receipt"
+  }
+]

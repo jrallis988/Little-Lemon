@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d3557">
+  <title>All screens — NH DMV</title>
+  <base href="/nh-dmv/">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-meta">
+        <span>Mon–Fri · most offices 8:00–4:30</span>
+        <span>603-227-4000</span>
+        <span>15 branches statewide</span>
+      </div>
+    </div>
+  </div>
+
+  <header class="app-header">
+    <div class="header-top">
+      <a class="brand" href="index.html" aria-label="NH DMV home">
+        <span class="brand-mark">NH</span>
+        <span class="brand-text">
+          <span class="brand-name">NH DMV</span>
+          <span class="brand-sub">Division of Motor Vehicles</span>
+        </span>
+      </a>
+      <nav class="life-nav" id="life-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="license.html">License &amp; ID</a>
+        <a href="vehicle.html">Vehicle</a>
+        <a href="records.html">Records</a>
+        <a href="appointments.html">Appointments</a>
+        <a href="branches.html">Branches</a>
+      </nav>
+      <div class="header-tools">
+        <a class="btn btn-primary btn-sm" href="appointments.html">Book appointment</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="life-nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="page">
+    <header class="page-intro">
+      <h1>Every screen</h1>
+      <p>All 26 pages in this DMV portal. Click a tile to open that page.</p>
+    </header>
+
+    <figure class="screen-collage">
+      <img src="screenshots/all-screens.png" alt="Collage of every NH DMV portal screen">
+    </figure>
+
+    <div class="screen-wall">
+      <a class="screen-tile" href="index.html"><img src="screenshots/home.png" alt=""><span>Home</span></a>
+      <a class="screen-tile" href="license.html"><img src="screenshots/license.png" alt=""><span>License &amp; ID</span></a>
+      <a class="screen-tile" href="vehicle.html"><img src="screenshots/vehicle.png" alt=""><span>Vehicle</span></a>
+      <a class="screen-tile" href="records.html"><img src="screenshots/records.png" alt=""><span>Records</span></a>
+      <a class="screen-tile" href="appointments.html"><img src="screenshots/appointments.png" alt=""><span>Appointments</span></a>
+      <a class="screen-tile" href="branches.html"><img src="screenshots/branches.png" alt=""><span>Branches</span></a>
+      <a class="screen-tile" href="branch.html#concord"><img src="screenshots/branch.png" alt=""><span>Concord branch</span></a>
+      <a class="screen-tile" href="dashboard.html"><img src="screenshots/dashboard.png" alt=""><span>Dashboard</span></a>
+      <a class="screen-tile" href="online.html"><img src="screenshots/online.png" alt=""><span>Can I do this online?</span></a>
+      <a class="screen-tile" href="fees.html"><img src="screenshots/fees.png" alt=""><span>Fees</span></a>
+      <a class="screen-tile" href="search.html"><img src="screenshots/search.png" alt=""><span>Search</span></a>
+      <a class="screen-tile" href="service.html#dl-renew"><img src="screenshots/service.png" alt=""><span>Service: renew license</span></a>
+      <a class="screen-tile" href="checklist.html"><img src="screenshots/checklist.png" alt=""><span>What to bring</span></a>
+      <a class="screen-tile" href="first-license.html"><img src="screenshots/first-license.png" alt=""><span>First license</span></a>
+      <a class="screen-tile" href="new-resident.html"><img src="screenshots/new-resident.png" alt=""><span>New resident</span></a>
+      <a class="screen-tile" href="real-id.html"><img src="screenshots/real-id.png" alt=""><span>REAL ID</span></a>
+      <a class="screen-tile" href="renew.html"><img src="screenshots/renew.png" alt=""><span>Renew license</span></a>
+      <a class="screen-tile" href="registration.html"><img src="screenshots/registration.png" alt=""><span>Registration</span></a>
+      <a class="screen-tile" href="placard.html"><img src="screenshots/placard.png" alt=""><span>Disability placard</span></a>
+      <a class="screen-tile" href="change-address.html"><img src="screenshots/change-address.png" alt=""><span>Change of address</span></a>
+      <a class="screen-tile" href="america-250.html"><img src="screenshots/america-250.png" alt=""><span>America 250 plate</span></a>
+      <a class="screen-tile" href="plates.html"><img src="screenshots/plates.png" alt=""><span>Specialty plates</span></a>
+      <a class="screen-tile" href="vanity.html"><img src="screenshots/vanity.png" alt=""><span>Vanity check</span></a>
+      <a class="screen-tile" href="motorcycle.html"><img src="screenshots/motorcycle.png" alt=""><span>Motorcycle training</span></a>
+      <a class="screen-tile" href="scam-alert.html"><img src="screenshots/scam-alert.png" alt=""><span>Scam alert</span></a>
+      <a class="screen-tile" href="confirmation.html"><img src="screenshots/confirmation.png" alt=""><span>Appointment receipt</span></a>
+    </div>
+  </main>
+  <script>
+    const nav = document.getElementById('life-nav');
+    const toggle = document.querySelector('.nav-toggle');
+    if (toggle && nav) {
+      toggle.addEventListener('click', () => {
+        const open = nav.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', String(open));
+      });
+    }
+  </script>
+</body>
+</html>
