@@ -1,0 +1,36 @@
+name: Supplement Checker CI
+
+on:
+  push:
+    paths:
+      - "supplement_checker/**"
+      - ".github/workflows/supplement-checker.yml"
+  pull_request:
+    paths:
+      - "supplement_checker/**"
+      - ".github/workflows/supplement-checker.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
+    env:
+      SUPPLEMENT_AUTH_DISABLED: "true"
+      SUPPLEMENT_OCR_MODE: demo
+      SUPPLEMENT_DB_PATH: /tmp/ci-supplement.db
+      SUPPLEMENT_OBJECT_ROOT: /tmp/ci-supplement-objects
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: supplement_checker/requirements.txt
+      - name: Install dependencies
+        run: python -m pip install -r supplement_checker/requirements.txt
+      - name: Lint imports (compileall)
+        run: python -m compileall -q supplement_checker
+      - name: Pytest
+        run: python -m pytest supplement_checker/tests -q
