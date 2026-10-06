@@ -1,20 +1,22 @@
 # Little-Lemon workspace
 
-This repository currently holds a few related projects:
+These are **portfolio case studies**, not live production sites. They are meant to show design, UX, and front-end craft — they do not replace official systems (NHTI, NH DMV, client portals, etc.).
 
 | Project | How to run | Notes |
 | --- | --- | --- |
-| **NHTI redesign** (React) | `npm install && npm start` | Marketing site for NHTI – Concord's Community College |
+| **NHTI redesign** (React) | `npm install && npm start` | Conceptual marketing site for NHTI – Concord's Community College |
 | **Artistic Fountain** (static) | `npm run start:portfolio` | Design studio portfolio at repo-root `index.html` |
 | **NH DMV case study** | open `nh-dmv/` via the portfolio server | Civic UX concept under `nh-dmv/` |
 
 ---
 
-# NHTI – Concord's Community College
+# NHTI – Concord's Community College (case study)
 
-Redesigned marketing website for NHTI (React). It keeps real program, campus, and admissions information while improving clarity, brand presence, and student pathways.
+Conceptual redesign of NHTI’s marketing site. Goal: stronger brand presence, clearer student pathways, and a campus-feel homepage — without cloning the live `nhti.edu` layout.
 
-## Run locally (NHTI)
+Official catalog, Lynx portal, and application systems stay as outbound links. Inquiry form can save locally for demo (optional FormSubmit if you ever want email delivery).
+
+## Run locally
 
 ```bash
 npm install
@@ -25,60 +27,33 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Scripts
 
-- `npm start` / `npm run start:nhti` — NHTI React development server
+- `npm start` / `npm run start:nhti` — NHTI React demo
 - `npm run start:portfolio` — static portfolio + NH DMV pages
 - `npm run build` — NHTI production build
 - `npm test` — NHTI test runner
-- `node scripts/sync-nhti-content.cjs` — refresh catalog + news snapshots from nhti.edu / catalog.nhti.edu
+- `npm run sync:nhti` — optional refresh of catalog + news snapshots
 
-## Admissions form delivery
+## What this piece demonstrates
 
-Inquiry submissions post to [FormSubmit](https://formsubmit.co) by default.
+- Brand system (maroon / gold, seal, Lynx athletics)
+- Multi-page marketing IA: Academics search, Admissions, Campus Life, Residence, Athletics, Workforce
+- Conversion chrome for a college site (Apply in header, CTA bands, inquiry form)
+- Compact institutional footer, 404, social preview image
+
+## Optional demo wiring
+
+Copy `.env.example` only if you want email delivery or analytics in a hosted demo:
 
 ```bash
-cp .env.example .env
-# edit REACT_APP_FORM_EMAIL if needed
-# optionally set REACT_APP_GA_MEASUREMENT_ID for Google Analytics 4
-```
-
-Or set in your host’s environment:
-
-```bash
-REACT_APP_FORM_EMAIL=NHTIadmissions@ccsnh.edu
-# or a full endpoint:
-REACT_APP_FORM_ENDPOINT=https://formsubmit.co/ajax/NHTIadmissions@ccsnh.edu
-
-# optional analytics
+REACT_APP_FORM_EMAIL=you@example.com
 REACT_APP_GA_MEASUREMENT_ID=G-XXXXXXXXXX
 ```
 
-**Go-live checklist for the form**
+Without those, the site still runs; inquiries store locally in the browser.
 
-1. Set `REACT_APP_FORM_EMAIL` (or `REACT_APP_FORM_ENDPOINT`) in production.
-2. Deploy, then submit one real inquiry from `/admissions`.
-3. Confirm the FormSubmit activation email for that inbox (required once).
-4. Verify the success state says the inquiry was submitted to Admissions (not the local demo note).
+## Pages
 
-**Analytics**
-
-Set `REACT_APP_GA_MEASUREMENT_ID` in the host environment to enable GA4 page views. Leave unset to keep analytics off.
-
-## Deploy (NHTI)
-
-- **Vercel:** `vercel.json` builds with `npm run build` and publishes `build` (SPA rewrites)
-- **Netlify:** `netlify.toml` publishes `build` with SPA redirect
-
-Before public launch:
-
-1. Update `public/sitemap.xml` host if this is not yet on `www.nhti.edu`
-2. Confirm `public/robots.txt` points at your live sitemap
-3. Click through 404 (`/this-page-does-not-exist`), Apply, and admissions form on mobile
-4. Re-run `npm run sync:nhti` so programs/news/events are fresh
-5. Set FormSubmit + GA env vars on the host
-
-## NHTI pages
-
-Home, Academics (search/filter + detail), Admissions (inquiry + checklists), Financial Aid, Campus Life, Residence Life, Athletics, Workforce, Events, News, About, Contact, 404
+Home, Academics, Admissions, Financial Aid, Campus Life, Residence Life, Athletics, Workforce, Events, News, About, Contact, 404
 
 ---
 
