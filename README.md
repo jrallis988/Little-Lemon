@@ -1,53 +1,28 @@
-# Artistic Fountain
+# Little Lemon — portfolio piece
 
-Independent design venture portfolio — digital media, graphic design, visual identity, and creative media projects.
+Mediterranean restaurant **case study / portfolio demo** (not a live restaurant site).
 
-## Dual-track separation
+Adapted from uploaded Weiboo eCommerce homepage demos into eight self-contained layouts plus menu, reserve, and order flows.
 
-| Track | Home | Houses |
-| --- | --- | --- |
-| **Creative** | Artistic Fountain (this repo) | Visual media, graphic identity, conceptual design, client design services |
-| **Engineering** | Developer portfolio (separate) | Back-end systems, Python/FastAPI, AI/RAG applications |
-
-See `STATUS.md` for the full status report.
-
-## Stack
-
-Static site: HTML, CSS, and vanilla JS (built in Cursor). Custom typefaces (Arcanite Slab, Goudy Heavyface) plus Inter for body copy.
-
-## Pages
-
-- `index.html` — home (hero, designer, services, portfolio, blog, contact)
-- `nh-dmv/` — conceptual redesign of the New Hampshire DMV website (civic UX case study)
-- `services/` — detail pages for each service offering
-- `blog/` — blog index and post pages (content can be drafted in Blaze AI)
-- `privacy.html` — privacy policy
-- `terms.html` — terms & conditions
-- `resume.pdf` — downloadable resume
-
-## Develop
-
+## Preview locally
 ```bash
 npm start
 ```
+Open [http://localhost:3000](http://localhost:3000).
 
-Opens a local static server at [http://localhost:3000](http://localhost:3000).
+## What’s included
+| File | Role |
+| --- | --- |
+| `index.html` | Primary homepage |
+| `layouts.html` | Gallery of all homepage demos |
+| `index-two.html` … `index-eight.html` | Alternate layouts |
+| `menu.html` / `about.html` / `reserve.html` / `order.html` | Core demo flows |
+| `privacy.html` / `terms.html` / `404.html` | Supporting pages |
 
-Or open `index.html` directly in a browser.
+## Stack
+Static HTML, CSS, vanilla JS. Markazi Text + Karla. Meta Capstone palette (`#495E57`, `#F4CE14`, `#EE9972`). Order cart uses `localStorage`. Forms can POST to Formsubmit for demo purposes.
 
-## Structure
+Optional deploy configs (`netlify.toml`, `vercel.json`, Pages workflow) exist if you want a public demo URL — not required for the portfolio piece.
 
-```
-.
-├── index.html
-├── privacy.html
-├── terms.html
-├── styles.css
-├── STATUS.md
-├── favicon.svg
-├── resume.pdf
-├── services/
-├── blog/
-├── images/
-└── *.otf          # brand fonts
-```
+## References
+Original Weiboo PHP demos (incomplete without theme assets): `references/weiboo-homepages/`.
