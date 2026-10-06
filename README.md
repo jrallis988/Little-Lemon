@@ -2,6 +2,8 @@
 
 Independent design venture portfolio — digital media, graphic design, visual identity, and creative media projects.
 
+Branded case studies here (Nick Jr., NH DMV, and future work) are **portfolio concepts**, not live websites or official products. They exist to show design and front-end craft.
+
 ## Dual-track separation
 
 | Track | Home | Houses |
@@ -18,6 +20,7 @@ Static site: HTML, CSS, and vanilla JS (built in Cursor). Custom typefaces (Arca
 ## Pages
 
 - `index.html` — home (hero, designer, services, portfolio, blog, contact)
+- `nick-jr/` — conceptual Nick Jr. kids homepage redesign (watch, play, explore, create)
 - `nh-dmv/` — conceptual redesign of the New Hampshire DMV website (civic UX case study)
 - `services/` — detail pages for each service offering
 - `blog/` — blog index and post pages (content can be drafted in Blaze AI)
