@@ -9,7 +9,7 @@ Independent design venture portfolio — digital media, graphic design, visual i
 | **Creative** | Artistic Fountain (this repo) | Visual media, graphic identity, conceptual design, client design services |
 | **Engineering** | Developer portfolio (separate) | Back-end systems, Python/FastAPI, AI/RAG applications |
 
-See `STATUS.md` for the full status report and a **project-by-project language inventory** (77 projects across static HTML, React, TypeScript/Next.js, Expo, Tauri/Rust, and Python).
+See `STATUS.md` for the full status report and a **project-by-project inventory** (83 projects — each with languages, frontend/backend/desktop/mobile role, stack hints, and a short description).
 
 ## Stack
 
@@ -18,7 +18,7 @@ Static site: HTML, CSS, and vanilla JS (built in Cursor). Custom typefaces (Arca
 ## Pages
 
 - `index.html` — home (hero, designer, services, portfolio, blog, contact)
-- `stacks.html` — project language / stack summary across the studio
+- `stacks.html` — public stack summary (roles + language families across the studio)
 - `nh-dmv/` — conceptual redesign of the New Hampshire DMV website (civic UX case study)
 - `services/` — detail pages for each service offering
 - `blog/` — blog index and post pages (content can be drafted in Blaze AI)
