@@ -1,11 +1,11 @@
 export function ProjectFacts() {
   const facts = [
+    ['Format', 'Portfolio case study — not a live site or app'],
     ['Client framing', 'Spotify (self-initiated brief)'],
     ['Category', 'Music × fitness culture'],
     ['Role demonstrated', 'Social strategy + creative + measurement'],
-    ['Tools', 'Figma · PS · AI · Premiere · AE · React · Python'],
     ['Data', 'Simulated — for demonstration only'],
-    ['Not included', 'Fitness tracking · Bauer · live Spotify results'],
+    ['Not this project', 'Shipped product · fitness tracker · official Spotify work'],
   ]
 
   return (

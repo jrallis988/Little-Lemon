@@ -1,8 +1,10 @@
 # PACE — Find Your Pace
 
-Fictional self-initiated portfolio case study: a **music-first Spotify × running** campaign concept.
+Fictional self-initiated **portfolio case study**: a music-first Spotify × running campaign concept.
 
-> Not an official Spotify launch. Not a fitness tracker. Not affiliated with Bauer or hockey brands. All metrics are **SIMULATED**.
+This is presentation work for a design portfolio — not a live website, app, or official Spotify launch. Interactive pieces (Card builder, explorer) are prototypes inside the case study, not product features.
+
+> Not a fitness tracker. Not affiliated with Bauer or hockey brands. All metrics are **SIMULATED**.
 
 ## Positioning
 

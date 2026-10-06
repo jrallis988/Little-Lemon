@@ -38,8 +38,8 @@ export function PaceCardBuilder() {
         <p className="section-kicker">08c — Interactive payoff</p>
         <h2 className="section-title">Build a PACE Card.</h2>
         <p className="section-lede">
-          A lightweight prototype of the shareable soundtrack identity—music
-          first, always labeled as simulated.
+          A case-study prototype of the shareable soundtrack identity—built to
+          demonstrate the idea, not as a live product feature.
         </p>
 
         <div className="builder-layout">

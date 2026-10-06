@@ -5,6 +5,7 @@ ARTISTIC FOUNTAIN: STATUS REPORT
 1. PROJECT OVERVIEW & SCOPE
 • Venture: Artistic Fountain (independent design venture).
 • Focus: Showcasing digital media expertise, graphic design portfolio work, visual identity concepts, and creative media projects.
+• Studio projects in this repo are portfolio pieces (case studies, concepts, and prototypes for review)—not live client websites or shipped apps unless explicitly stated.
 
 2. BUILD & DEVELOPMENT STATUS
 • Tech Stack Alignment: Developed in Cursor. Live site is currently a static front-end (HTML, CSS, vanilla JS). A Next.js + TypeScript + Tailwind CSS build remains an optional migration path if we want that stack explicitly.
