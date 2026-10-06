@@ -1,5 +1,8 @@
 # Cloudflare production deploy checklist
 
+This is a **portfolio architecture artifact** — how the system *would* ship on Cloudflare.  
+You do not need to run these commands for the case study to be complete. Local SQLite + object store is the demo.
+
 ## Prerequisites
 
 - [ ] Cloudflare account with Workers + D1 + R2 enabled
