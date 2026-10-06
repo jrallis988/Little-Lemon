@@ -1,7 +1,7 @@
 package com.lattice.checkers.ai;
 
 /**
- * Shared evaluation knobs for difficulty and (later) AI Lab styles.
+ * Shared evaluation knobs for difficulty and AI Lab styles.
  */
 public record EvaluationWeights(
         double materialWeight,

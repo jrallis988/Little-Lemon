@@ -41,6 +41,8 @@ public final class GameController {
     private Player darkPlayer;
     private Player lightPlayer;
     private CheckersAI computerOpponent;
+    private CheckersAI darkComputer;
+    private CheckersAI lightComputer;
     private Position selected;
     private final List<Move> moveLog = new ArrayList<>();
     private final ScoreManager scoreManager = new ScoreManager();
@@ -105,6 +107,8 @@ public final class GameController {
         darkPlayer = Player.human(Side.DARK, darkName == null || darkName.isBlank() ? Faction.FROG.displayName() : darkName);
         lightPlayer = Player.human(Side.LIGHT, lightName == null || lightName.isBlank() ? Faction.TRAFFIC.displayName() : lightName);
         computerOpponent = null;
+        darkComputer = null;
+        lightComputer = null;
         beginNewGame();
     }
 
@@ -123,6 +127,13 @@ public final class GameController {
             lightPlayer = Player.human(Side.LIGHT, name);
         }
         computerOpponent = new CheckersAI(rulesEngine, difficulty);
+        if (humanIsDark) {
+            darkComputer = null;
+            lightComputer = computerOpponent;
+        } else {
+            darkComputer = computerOpponent;
+            lightComputer = null;
+        }
         beginNewGame();
     }
 
@@ -136,6 +147,34 @@ public final class GameController {
             darkPlayer = Player.computer(Side.DARK, profile.displayName(), profile);
         }
         computerOpponent = new CheckersAI(rulesEngine, profile, AIDifficulty.MEDIUM.searchDepth());
+        if (humanIsDark) {
+            darkComputer = null;
+            lightComputer = computerOpponent;
+        } else {
+            darkComputer = computerOpponent;
+            lightComputer = null;
+        }
+    }
+
+    /**
+     * Both sides are computers. Same rules and board information as a human match.
+     */
+    public void startAiVsAi(AIProfile frogStyle, AIProfile trafficStyle, AIDifficulty difficulty) {
+        Objects.requireNonNull(frogStyle);
+        Objects.requireNonNull(trafficStyle);
+        Objects.requireNonNull(difficulty);
+        darkPlayer = Player.computer(
+                Side.DARK, Faction.FROG.displayName() + " · " + frogStyle.displayName(), frogStyle);
+        lightPlayer = Player.computer(
+                Side.LIGHT, Faction.TRAFFIC.displayName() + " · " + trafficStyle.displayName(), trafficStyle);
+        darkComputer = new CheckersAI(rulesEngine, frogStyle, difficulty.searchDepth());
+        lightComputer = new CheckersAI(rulesEngine, trafficStyle, difficulty.searchDepth());
+        computerOpponent = darkComputer;
+        beginNewGame();
+    }
+
+    public boolean isAiVsAi() {
+        return darkComputer != null && lightComputer != null;
     }
 
     private void beginNewGame() {
@@ -321,11 +360,11 @@ public final class GameController {
     }
 
     public boolean isComputerToMove() {
-        if (state == null || computerOpponent == null || state.status() != GameStatus.IN_PROGRESS) {
+        if (state == null || state.status() != GameStatus.IN_PROGRESS) {
             return false;
         }
         Player player = state.sideToMove() == Side.DARK ? darkPlayer : lightPlayer;
-        return player != null && player.isComputer();
+        return player != null && player.isComputer() && aiFor(state.sideToMove()) != null;
     }
 
     public Optional<AIDifficulty> computerDifficulty() {
@@ -342,7 +381,16 @@ public final class GameController {
         if (!isComputerToMove()) {
             return Optional.empty();
         }
-        return computerOpponent.chooseMove(state);
+        CheckersAI ai = aiFor(state.sideToMove());
+        if (ai == null) {
+            return Optional.empty();
+        }
+        computerOpponent = ai;
+        return ai.chooseMove(state);
+    }
+
+    private CheckersAI aiFor(Side side) {
+        return side == Side.DARK ? darkComputer : lightComputer;
     }
 
     public void hint() {

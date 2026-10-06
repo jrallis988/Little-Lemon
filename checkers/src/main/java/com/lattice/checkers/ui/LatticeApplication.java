@@ -88,13 +88,13 @@ public final class LatticeApplication extends Application {
             case "game-board" -> new GameBoardScreen(controller, this::show, reducedMotion).getRoot();
             case "match-complete" -> new MatchCompleteScreen(controller, this::show).getRoot();
             case "match-analysis" -> new MatchAnalysisScreen(controller, this::show, reducedMotion).getRoot();
-            case "ai-lab" -> new AiLabScreen().getRoot();
+            case "ai-lab" -> new AiLabScreen(controller, this::show, reducedMotion).getRoot();
             case "how-to-play" -> new HowToPlayScreen(this::show, reducedMotion).getRoot();
             default -> new StackPane(new Label("Unknown screen: " + id));
         };
 
         boolean hideChrome = "game-board".equals(id) || "match-complete".equals(id)
-                || "match-analysis".equals(id);
+                || "match-analysis".equals(id) || "ai-lab".equals(id);
         shell.setTop(hideChrome ? null : chrome);
         shell.setCenter(content);
         screenLabel.setText(ScreenGallery.displayName(id));

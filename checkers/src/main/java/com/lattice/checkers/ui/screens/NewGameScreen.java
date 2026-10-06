@@ -1,6 +1,7 @@
 package com.lattice.checkers.ui.screens;
 
 import com.lattice.checkers.ai.AIDifficulty;
+import com.lattice.checkers.ai.AIProfile;
 import com.lattice.checkers.controller.GameController;
 import com.lattice.checkers.model.Faction;
 import com.lattice.checkers.model.Piece;
@@ -43,7 +44,7 @@ public final class NewGameScreen {
         Label title = new Label("NEW GAME");
         title.getStyleClass().add("screen-title");
 
-        Label subtitle = new Label("Frogger vs Traffic. Difficulty changes the computer — not the rules.");
+        Label subtitle = new Label("Frogger vs Traffic. Difficulty and AI styles change the computer — not the rules.");
         subtitle.getStyleClass().add("screen-subtitle");
         subtitle.setWrapText(true);
         subtitle.setAlignment(Pos.CENTER);
@@ -78,7 +79,14 @@ public final class NewGameScreen {
             computerMatch = true;
             refreshDifficulty();
         });
-        Button lab = modeButton("AI VS. AI", "Development lab — coming soon", false, () -> { });
+        Button lab = modeButton("AI VS. AI", "Watch two computer styles on the Crossing", true, () -> {
+            if (controller != null) {
+                controller.startAiVsAi(AIProfile.STRATEGIST, AIProfile.AGGRESSOR, AIDifficulty.MEDIUM);
+            }
+            if (onNavigate != null) {
+                onNavigate.accept("ai-lab");
+            }
+        });
 
         Label choose = new Label("CHOOSE DIFFICULTY");
         choose.getStyleClass().add("panel-heading");

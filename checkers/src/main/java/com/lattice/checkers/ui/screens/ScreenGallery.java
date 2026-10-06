@@ -32,7 +32,7 @@ public final class ScreenGallery {
         heading.getStyleClass().add("screen-title");
 
         Label note = new Label(
-                "Playable American checkers. Game Board is the arcade Crossing world. Analysis replays the recorded match.");
+                "Playable American checkers. Game Board is the arcade Crossing world. Analysis replays the match. AI Lab watches two computers.");
         note.getStyleClass().add("tagline");
         note.setWrapText(true);
 
@@ -117,7 +117,8 @@ public final class ScreenGallery {
                 () -> new MatchCompleteScreen(finished, id -> { }).getRoot());
         map.put(MatchAnalysisScreen.screenId(),
                 () -> new MatchAnalysisScreen(finished, id -> { }, true).getRoot());
-        map.put(AiLabScreen.screenId(), () -> new AiLabScreen().getRoot());
+        GameController lab = new GameController();
+        map.put(AiLabScreen.screenId(), () -> new AiLabScreen(lab, id -> { }, true).getRoot());
         return map;
     }
 

@@ -2,8 +2,8 @@
 
 American checkers for the desktop — Frogger vs Traffic.
 
-> **Status:** Playable Human vs Human and Human vs Computer with American checkers rules.
-> Focus/X-Ray, analysis, and Developer Mode are still stubbed for later phases.
+> **Status:** Playable Human vs Human, Human vs Computer, match analysis, and AI Lab.
+> Focus, X-Ray, and Developer Mode are still stubbed for later phases.
 
 ## Why this exists
 
@@ -11,9 +11,10 @@ Frogger Checkers is a portfolio project demonstrating Java craft beyond a playab
 
 - Object-oriented separation of **engine** and **UI**
 - Complete American checkers rules with JUnit coverage
-- Profile-driven minimax AI (Aggressor / Defender / Strategist) — *next*
-- Match history, analysis, and “What If?” branching — *later*
-- Developer Mode and AI Lab — *later*
+- Profile-driven minimax AI (Aggressor / Defender / Strategist)
+- Match history, analysis, and “What If?” branching
+- AI Lab — two computers, live search stats
+- Developer Mode — *later*
 
 It is built to look and behave like a product, not a tutorial assignment.
 
@@ -106,5 +107,6 @@ Or from the app chrome: **All screens** opens the gallery.
 | American checkers rules engine | Yes (mandatory captures, multi-jump, kings, win/resign) |
 | Human vs Human playable board | Yes (Crossing illustrated board) |
 | Frogger Checkers UI | In progress (single visual system) |
-| AI / Focus / X-Ray / Analysis / AI Lab | Not yet |
+| AI / Analysis / AI Lab | Yes |
+| Focus / X-Ray / Developer Mode | Not yet |
 | Screenshots | See PR / artifacts |
