@@ -143,6 +143,21 @@ test("footer includes student privacy legal link", () => {
   );
 });
 
+test("footer identifies the site as an unofficial portfolio recreation", () => {
+  render(
+    <MemoryRouter initialEntries={["/"]}>
+      <App />
+    </MemoryRouter>
+  );
+
+  expect(
+    screen.getByText(/Unofficial portfolio recreation/i)
+  ).toBeInTheDocument();
+  expect(
+    screen.getByRole("link", { name: /^wmcc\.edu/i })
+  ).toHaveAttribute("href", "https://www.wmcc.edu/");
+});
+
 test("visit page points to live events calendar without fabricated dates", () => {
   render(
     <MemoryRouter initialEntries={["/admissions/visit"]}>

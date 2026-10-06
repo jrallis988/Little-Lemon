@@ -71,7 +71,11 @@ function Footer() {
         </div>
       </div>
       <div className="footer-bottom">
-        <p>© {new Date().getFullYear()} White Mountains Community College</p>
+        <p className="footer-credit">
+          Unofficial portfolio recreation — not affiliated with White Mountains
+          Community College or CCSNH. Official site:{" "}
+          <ExternalLink href="https://www.wmcc.edu/">wmcc.edu</ExternalLink>
+        </p>
         <ul className="legal-links">
           {legalLinks.map((link) => (
             <li key={link.label}>

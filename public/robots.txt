@@ -1,5 +1,3 @@
-# https://www.robotstxt.org/robotstxt.html
+# Unofficial portfolio recreation — not the official WMCC website.
 User-agent: *
 Allow: /
-
-Sitemap: https://www.wmcc.edu/sitemap.xml

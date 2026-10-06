@@ -1,6 +1,12 @@
-# White Mountains Community College
+# White Mountains Community College (portfolio recreation)
 
-A React website for White Mountains Community College (WMCC), built for production authenticity: real CCSNH Apply and inquiry endpoints, multi-campus Contact data, catalog-linked programs, SEO, analytics hooks, and accessible outbound links.
+An unofficial React recreation of a WMCC marketing site, built as a **portfolio piece** — not a live college website and not affiliated with White Mountains Community College or the Community College System of New Hampshire.
+
+The official college site is [wmcc.edu](https://www.wmcc.edu/). Apply, Request Info, catalog, and legal links on this demo point to those real public endpoints so the UI maps to actual systems.
+
+## What this demonstrates
+
+Production-looking college marketing UX: CCSNH Apply / inquiry CTAs, multi-campus Contact data, catalog-linked programs, SEO/meta, analytics hooks, accessible outbound links, and search.
 
 ## Scripts
 
@@ -14,4 +20,4 @@ Create React App, React Router, and custom CSS (Fraunces + Outfit) with WMCC for
 
 ## Environment
 
-Copy `.env.example` to `.env` and set `REACT_APP_GA_MEASUREMENT_ID` at build time to enable GA4 page views and conversion events.
+`REACT_APP_GA_MEASUREMENT_ID` is optional. Leave it unset for a portfolio demo. Set it only if you want to exercise the GA4 hook in a personal preview.
