@@ -18,6 +18,12 @@ export default function TermsPage() {
 
       <section className="bg-white">
         <div className="mx-auto max-w-3xl space-y-8 px-5 py-16 text-base leading-relaxed text-mute sm:px-8 sm:py-24">
+          {site.portfolio ? (
+            <p className="rounded border border-line bg-paper-warm p-4 text-sm">
+              {site.portfolioNote} These terms are sample legal structure for
+              the case study, not a live contract.
+            </p>
+          ) : null}
           <div>
             <h2 className="text-xl font-bold text-navy">Website purpose</h2>
             <p className="mt-3">

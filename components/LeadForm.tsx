@@ -85,15 +85,22 @@ export function LeadForm({
           className="mt-6 rounded border border-navy/15 bg-paper-warm p-5"
           role="status"
         >
-          <p className="text-lg font-bold text-navy">Request received</p>
+          <p className="text-lg font-bold text-navy">Demo request received</p>
           <p className="mt-2 text-base leading-relaxed text-ink-soft">{message}</p>
-          <p className="mt-4 text-sm text-mute">
-            Prefer email? Reach sales at{" "}
-            <a className="font-semibold text-link hover:text-navy" href={`mailto:${site.email}`}>
-              {site.email}
-            </a>
-            .
-          </p>
+          {site.portfolio ? (
+            <p className="mt-4 text-sm text-mute">{site.portfolioNote}</p>
+          ) : (
+            <p className="mt-4 text-sm text-mute">
+              Prefer email? Reach sales at{" "}
+              <a
+                className="font-semibold text-link hover:text-navy"
+                href={`mailto:${site.email}`}
+              >
+                {site.email}
+              </a>
+              .
+            </p>
+          )}
           <button
             type="button"
             className="btn-outline mt-6 !py-2"
@@ -218,6 +225,12 @@ export function LeadForm({
         >
           {status === "loading" ? "Sending…" : submitLabel}
         </button>
+        {site.portfolio ? (
+          <p className="text-xs text-mute">
+            Portfolio demo — submissions are validated here, not sent to a live
+            sales team.
+          </p>
+        ) : null}
 
         {status === "error" && message ? (
           <p className="text-sm font-medium text-accent-deep" role="alert">

@@ -85,7 +85,11 @@ export function Footer() {
           <p>
             © {year} {site.name}. All rights reserved.
           </p>
-          <p>Sales site for classroom, school, and district academic software.</p>
+          <p>
+            {site.portfolio
+              ? site.portfolioNote
+              : "Sales site for classroom, school, and district academic software."}
+          </p>
         </div>
       </div>
     </footer>

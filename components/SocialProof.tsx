@@ -4,10 +4,14 @@ export function SocialProof() {
   return (
     <section className="border-y border-line bg-white">
       <div className="mx-auto max-w-site px-5 py-16 sm:px-8 sm:py-20">
-        <p className="section-label">Trusted by educators</p>
+        <p className="section-label">Social proof pattern</p>
         <h2 className="mt-3 max-w-2xl text-3xl font-bold tracking-tight text-navy text-balance">
-          Built for real classrooms — not slide decks.
+          The quotes schools would expect before a software purchase.
         </h2>
+        <p className="mt-3 max-w-2xl text-base leading-relaxed text-mute">
+          Sample testimonials for this concept — illustrating how a live sales
+          site would build trust.
+        </p>
 
         <dl className="mt-10 grid gap-6 sm:grid-cols-3">
           {trustStats.map((stat) => (

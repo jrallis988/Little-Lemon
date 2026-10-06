@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { PageHero } from "@/components/PageHero";
 import { SocialProof } from "@/components/SocialProof";
+import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About",
@@ -40,6 +41,11 @@ export default function AboutPage() {
               process. Morgan Bright is narrower on purpose: diagnose the
               barrier, adapt the lesson path, and monitor what works.
             </p>
+            {site.portfolio ? (
+              <p className="mt-4 text-sm leading-relaxed text-mute">
+                {site.portfolioNote}
+              </p>
+            ) : null}
             <ul className="mt-6 space-y-3 text-base text-ink-soft">
               <li>Built for classroom intervention, not generic content browsing</li>
               <li>Clear Classroom, School, and District purchasing paths</li>

@@ -100,8 +100,8 @@ async function forwardResend(record: LeadRecord) {
   return true;
 }
 
-function hasDeliveryConfigured() {
-  return Boolean(process.env.FORM_WEBHOOK_URL || process.env.RESEND_API_KEY);
+function demoSuccessMessage() {
+  return "Thanks — the form flow works. This is a portfolio demo, so no sales team will follow up.";
 }
 
 export async function POST(request: Request) {
@@ -124,67 +124,33 @@ export async function POST(request: Request) {
 
     const record = createLeadRecord(validated.data);
 
-    // Local file is useful in development; Vercel disks are ephemeral.
     try {
       await persistLead(record);
     } catch {
-      // Continue — delivery channels are the source of truth in production.
+      // Hosting disks may be ephemeral; demo mode does not require persistence.
     }
 
-    const isProduction = process.env.NODE_ENV === "production";
-    if (isProduction && !hasDeliveryConfigured()) {
-      return NextResponse.json(
-        {
-          error:
-            "Lead delivery is not configured. Please email us directly or try again later.",
-        },
-        { status: 503 },
-      );
-    }
-
-    let forwarded = false;
     const channels: string[] = [];
 
     try {
-      if (await forwardWebhook(record)) {
-        forwarded = true;
-        channels.push("webhook");
-      }
+      if (await forwardWebhook(record)) channels.push("webhook");
     } catch {
-      // Try the next channel.
+      // Optional in portfolio mode.
     }
 
     try {
-      if (await forwardResend(record)) {
-        forwarded = true;
-        channels.push("resend");
-      }
+      if (await forwardResend(record)) channels.push("resend");
     } catch {
-      // Evaluated below if production delivery is required.
-    }
-
-    if (isProduction && hasDeliveryConfigured() && !forwarded) {
-      return NextResponse.json(
-        {
-          error:
-            "We could not deliver your request right now. Please email us or try again.",
-        },
-        { status: 502 },
-      );
+      // Optional in portfolio mode.
     }
 
     return NextResponse.json({
       ok: true,
       id: record.id,
-      forwarded,
+      forwarded: channels.length > 0,
       channels,
-      // Do not expose internal delivery errors to the client.
-      message:
-        record.type === "pricing"
-          ? "Thanks — our sales team will follow up with pricing guidance within one business day."
-          : record.type === "demo"
-            ? "Thanks — we will schedule your demo follow-up within one business day."
-            : "Thanks — we received your message and will reply within one business day.",
+      demo: true,
+      message: demoSuccessMessage(),
     });
   } catch {
     return NextResponse.json(

@@ -9,6 +9,10 @@ export const site = {
   address:
     process.env.NEXT_PUBLIC_BUSINESS_ADDRESS ??
     "Portsmouth, NH · Serving schools nationwide",
+  /** Fictional brand for a UI/UX portfolio case study — not a live product. */
+  portfolio: true,
+  portfolioNote:
+    "Portfolio concept. Morgan Bright is a fictional education-software brand built to demonstrate sales-site design, not a live company.",
 };
 
 export const navLinks = [

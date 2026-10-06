@@ -1,6 +1,13 @@
 # Morgan Bright
 
-Academic software sales website for classrooms, schools, and districts.
+Portfolio case study: a multi-page academic software **sales website** for a fictional brand. It shows how a classroom / school / district product would be marketed and sold — not a live company or student-facing app.
+
+## What this demonstrates
+
+- Education-software sales IA (home → features → plans → demo/pricing → contact)
+- McGraw Hill–style visual system (navy/red, Plus Jakarta Sans, full-bleed hero)
+- Plan comparison, FAQ, and lead-form UX
+- Next.js App Router, TypeScript, Tailwind
 
 ## Stack
 
@@ -12,61 +19,24 @@ Academic software sales website for classrooms, schools, and districts.
 
 - `/` — sales homepage
 - `/features` — platform features
-- `/plans` — Classroom / School / District pricing
-- `/demo` — demo and pricing request forms
-- `/about` — company positioning + social proof
+- `/plans` — Classroom / School / District pricing + comparison
+- `/demo` — demo and pricing request forms (portfolio demo mode)
+- `/about` — positioning + sample social proof
 - `/contact` — sales contact form
-- `/privacy` — privacy policy
-- `/terms` — terms of use
+- `/privacy` — sample privacy policy
+- `/terms` — sample terms of use
 
 ## Develop
 
 ```bash
 npm install
-cp .env.example .env.local
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
 
-## Lead capture
+Forms POST to `/api/leads`. They validate, rate-limit, and show a success state. They do **not** notify a real sales team unless you optionally set `FORM_WEBHOOK_URL` or `RESEND_API_KEY`.
 
-Forms POST to `/api/leads`.
+## Optional env
 
-Delivery options:
-
-1. Local file: `data/leads.jsonl` (development convenience; ephemeral on Vercel)
-2. `FORM_WEBHOOK_URL` → Zapier / Make / CRM
-3. `RESEND_API_KEY` → email to `NEXT_PUBLIC_SALES_EMAIL`
-
-In production, at least one of webhook or Resend must be configured and succeed, or the API returns an error. Forms also include a honeypot field and basic IP rate limiting.
-
-## Analytics
-
-Set either:
-
-- `NEXT_PUBLIC_GA_MEASUREMENT_ID` for Google Analytics
-- `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` for Plausible
-
-## Production deploy (Vercel)
-
-1. Push this repo and import it in Vercel
-2. Add env vars from `.env.example`
-3. Set `NEXT_PUBLIC_SITE_URL` to your live domain
-4. Configure `FORM_WEBHOOK_URL` and/or `RESEND_API_KEY` so leads are delivered
-5. Deploy
-6. Point your domain DNS to Vercel
-
-```bash
-npm run build
-npm start
-```
-
-## Launch checklist
-
-- [ ] Buy/connect real domain
-- [ ] Set production env vars (email, phone, site URL)
-- [ ] Configure Resend and/or webhook for lead delivery
-- [ ] Enable analytics
-- [ ] Replace sample testimonials if you have real customer quotes
-- [ ] Legal review of privacy/terms
+Copy `.env.example` only if you want a custom site URL or optional analytics. Nothing is required to run the demo.

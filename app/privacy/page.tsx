@@ -18,6 +18,13 @@ export default function PrivacyPage() {
 
       <section className="bg-white">
         <div className="mx-auto max-w-3xl space-y-8 px-5 py-16 text-base leading-relaxed text-mute sm:px-8 sm:py-24">
+          {site.portfolio ? (
+            <p className="rounded border border-line bg-paper-warm p-4 text-sm">
+              {site.portfolioNote} This page shows the legal pattern a live
+              sales site would ship; form submissions are not stored as a
+              production CRM record.
+            </p>
+          ) : null}
           <div>
             <h2 className="text-xl font-bold text-navy">Who we are</h2>
             <p className="mt-3">
