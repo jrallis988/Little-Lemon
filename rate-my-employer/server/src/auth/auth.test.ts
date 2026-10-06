@@ -4,6 +4,7 @@ import request from 'supertest';
 
 import { hashPassword, verifyPassword } from './password.js';
 import { signAccessToken, verifyAccessToken } from './tokens.js';
+import { createDemoUser, DEMO_EMAIL, DEMO_PASSWORD } from '../data/demo.js';
 import { createApp } from '../index.js';
 import { store } from '../store.js';
 
@@ -95,4 +96,17 @@ test('health reports auth capabilities', async () => {
   assert.equal(health.body.mode, 'memory');
   assert.equal(health.body.auth.storage, 'memory');
   assert.equal(health.body.auth.googleOAuth, false);
+});
+
+test('seeded demo account can sign in', async () => {
+  store.users = [createDemoUser()];
+  store.passwordResets.clear();
+  const app = createApp();
+  const signin = await request(app).post('/api/auth/sign-in').send({
+    email: DEMO_EMAIL,
+    password: DEMO_PASSWORD,
+  });
+  assert.equal(signin.status, 200);
+  assert.equal(signin.body.user.email, DEMO_EMAIL);
+  assert.equal(signin.body.user.username, 'PurpleBunny75');
 });

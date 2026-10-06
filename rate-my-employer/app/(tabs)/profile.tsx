@@ -7,7 +7,7 @@ import { colors, radii, spacing, typography } from '../../src/theme';
 
 export default function ProfileScreen() {
   const router = useRouter();
-  const { user, isGuest, getMyReviews, getCompany, interviews, deleteReview, signOut } = useApp();
+  const { user, isGuest, getMyReviews, getCompany, interviews, deleteReview, signOut, signInDemo } = useApp();
   const myReviews = getMyReviews();
   const myInterviews = user
     ? interviews.filter((item) => item.userId === user.id)
@@ -19,7 +19,13 @@ export default function ProfileScreen() {
         <Text style={styles.missingText}>
           {isGuest ? 'Browsing as guest.' : 'Sign in to manage your activity.'}
         </Text>
-        <PrimaryButton label="Sign in / Register" onPress={() => router.push('/auth')} />
+        <PrimaryButton
+          label="Try demo account"
+          onPress={async () => {
+            await signInDemo();
+          }}
+        />
+        <PrimaryButton label="Sign in / Register" variant="secondary" onPress={() => router.push('/auth')} />
       </View>
     );
   }

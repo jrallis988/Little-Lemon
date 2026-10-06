@@ -3,6 +3,7 @@ import { useRouter } from 'expo-router';
 import { useRef, useState } from 'react';
 import {
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -12,12 +13,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { PrimaryButton } from '../src/components';
 import { useApp } from '../src/context/AppContext';
-import * as authService from '../src/services/authService';
+import { DEMO_ACCOUNT } from '../src/data/demo';
 import { colors, radii, spacing, typography } from '../src/theme';
 
 export default function AuthScreen() {
   const router = useRouter();
-  const { signIn, signUp, signInWithGoogle, continueAsGuest } = useApp();
+  const { signIn, signUp, signInDemo, continueAsGuest } = useApp();
   const [mode, setMode] = useState<'signin' | 'register'>('signin');
   const [displayName, setDisplayName] = useState('');
   const [username, setUsername] = useState('');
@@ -33,6 +34,8 @@ export default function AuthScreen() {
   passwordRef.current = password;
   displayNameRef.current = displayName;
   usernameRef.current = username;
+
+  const finish = () => router.replace('/(tabs)/home');
 
   const onSubmit = async () => {
     setBusy(true);
@@ -52,13 +55,31 @@ export default function AuthScreen() {
       setError(result);
       return;
     }
-    router.replace('/(tabs)/home');
+    finish();
+  };
+
+  const enterDemo = async () => {
+    setBusy(true);
+    setError(null);
+    const result = await signInDemo();
+    setBusy(false);
+    if (result) {
+      setError(result);
+      return;
+    }
+    finish();
   };
 
   return (
     <SafeAreaView style={styles.safe}>
-      <View style={styles.content}>
+      <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
         <Text style={styles.brand}>RME</Text>
+        <View style={styles.demoBanner}>
+          <Text style={styles.demoBannerTitle}>Portfolio demo</Text>
+          <Text style={styles.demoBannerCopy}>
+            Not a live product. Tap Try demo to explore signed-in reviews as {DEMO_ACCOUNT.displayName}.
+          </Text>
+        </View>
         <Text style={styles.title}>
           {mode === 'signin' ? 'Welcome back!' : 'Create Account'}
         </Text>
@@ -124,6 +145,13 @@ export default function AuthScreen() {
           disabled={busy}
         />
 
+        <PrimaryButton
+          label={busy ? 'Working…' : 'Try demo account'}
+          variant="secondary"
+          disabled={busy}
+          onPress={enterDemo}
+        />
+
         <Pressable
           onPress={() => {
             setMode((m) => (m === 'signin' ? 'register' : 'signin'));
@@ -136,76 +164,53 @@ export default function AuthScreen() {
         </Pressable>
 
         <View style={styles.oauthRow}>
-          <Pressable
-            style={styles.oauth}
-            onPress={() => setError('Apple Sign In is coming soon.')}
-          >
+          <Pressable style={styles.oauth} onPress={enterDemo} disabled={busy}>
             <Ionicons name="logo-apple" size={18} color={colors.ink} />
             <Text style={styles.oauthText}>Apple</Text>
           </Pressable>
-          <Pressable
-            style={styles.oauth}
-            onPress={async () => {
-              setBusy(true);
-              setError(null);
-              try {
-                const providers = await authService.fetchAuthProviders();
-                if (!providers.google) {
-                  setError(
-                    'Google isn’t enabled yet. Set GOOGLE_CLIENT_ID on the API, then retry.',
-                  );
-                  return;
-                }
-                const token =
-                  typeof globalThis !== 'undefined' &&
-                  'prompt' in globalThis &&
-                  typeof (globalThis as { prompt?: (m: string) => string | null }).prompt ===
-                    'function'
-                    ? (globalThis as { prompt: (m: string) => string | null }).prompt(
-                        'Paste a Google ID token (from Google Sign-In / GIS)',
-                      )
-                    : null;
-                if (!token?.trim()) {
-                  setError(
-                    'Google OAuth is live on the API. Paste an ID token here (web) or wire Expo AuthSession next.',
-                  );
-                  return;
-                }
-                const result = await signInWithGoogle(token.trim());
-                if (result) {
-                  setError(result);
-                  return;
-                }
-                router.replace('/(tabs)/home');
-              } catch (err) {
-                setError(err instanceof Error ? err.message : 'Google sign-in failed.');
-              } finally {
-                setBusy(false);
-              }
-            }}
-          >
+          <Pressable style={styles.oauth} onPress={enterDemo} disabled={busy}>
             <Ionicons name="logo-google" size={18} color={colors.ink} />
             <Text style={styles.oauthText}>Google</Text>
           </Pressable>
         </View>
+        <Text style={styles.oauthHint}>Apple & Google are simulated in this demo.</Text>
 
         <PrimaryButton
           label="Continue as Guest"
           variant="ghost"
           onPress={async () => {
             await continueAsGuest();
-            router.replace('/(tabs)/home');
+            finish();
           }}
         />
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.surface },
-  content: { padding: spacing.lg, gap: spacing.md },
+  content: { padding: spacing.lg, gap: spacing.md, paddingBottom: spacing.xxl },
   brand: { fontFamily: typography.bodyBold, fontSize: 16, color: colors.navy },
+  demoBanner: {
+    backgroundColor: colors.navy,
+    borderRadius: radii.md,
+    padding: spacing.md,
+    gap: 4,
+  },
+  demoBannerTitle: {
+    fontFamily: typography.bodyBold,
+    fontSize: 12,
+    letterSpacing: 0.6,
+    textTransform: 'uppercase',
+    color: '#8EB4FF',
+  },
+  demoBannerCopy: {
+    fontFamily: typography.body,
+    fontSize: 14,
+    lineHeight: 20,
+    color: '#FFFFFF',
+  },
   title: { fontFamily: typography.display, fontSize: 30, color: colors.ink },
   copy: {
     fontFamily: typography.body,
@@ -255,4 +260,10 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   oauthText: { fontFamily: typography.bodySemi, fontSize: 14, color: colors.ink },
+  oauthHint: {
+    textAlign: 'center',
+    fontFamily: typography.body,
+    fontSize: 12,
+    color: colors.inkSoft,
+  },
 });

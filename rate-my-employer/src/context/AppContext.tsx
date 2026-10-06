@@ -8,6 +8,7 @@ import React, {
   type ReactNode,
 } from 'react';
 
+import { DEMO_ACCOUNT } from '../data/demo';
 import {
   seedActivity,
   seedCompanies,
@@ -136,6 +137,7 @@ type AppContextValue = {
     username?: string;
   }) => Promise<string | null>;
   signIn: (input: { email: string; password: string }) => Promise<string | null>;
+  signInDemo: () => Promise<string | null>;
   signInWithGoogle: (idToken: string) => Promise<string | null>;
   signOut: () => Promise<void>;
   requestPasswordReset: (
@@ -251,7 +253,14 @@ export function AppProvider({ children }: { children: ReactNode }) {
         const parsedUsers: LocalAccount[] = map[STORAGE_KEYS.users]
           ? JSON.parse(map[STORAGE_KEYS.users]!)
           : [];
-        setAccounts(parsedUsers);
+        const hasDemo = parsedUsers.some(
+          (item) => item.email === DEMO_ACCOUNT.email || item.id === DEMO_ACCOUNT.id,
+        );
+        const withDemo = hasDemo ? parsedUsers : [...parsedUsers, { ...DEMO_ACCOUNT }];
+        if (!hasDemo) {
+          await AsyncStorage.setItem(STORAGE_KEYS.users, JSON.stringify(withDemo));
+        }
+        setAccounts(withDemo);
         if (map[STORAGE_KEYS.reviews]) setReviews(JSON.parse(map[STORAGE_KEYS.reviews]!));
         if (map[STORAGE_KEYS.interviews]) setInterviews(JSON.parse(map[STORAGE_KEYS.interviews]!));
         if (map[STORAGE_KEYS.salaries]) setSalaries(JSON.parse(map[STORAGE_KEYS.salaries]!));
@@ -271,7 +280,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         const guest = map[STORAGE_KEYS.guest] === '1';
         const sessionId = map[STORAGE_KEYS.session];
         const sessionUser = sessionId
-          ? parsedUsers.find((item) => item.id === sessionId)
+          ? withDemo.find((item) => item.id === sessionId)
           : undefined;
         if (sessionUser) {
           setUser(toPublicUser(sessionUser));
@@ -563,6 +572,29 @@ export function AppProvider({ children }: { children: ReactNode }) {
         setHasOnboarded(true);
         await AsyncStorage.multiSet([
           [STORAGE_KEYS.session, nextUser.id],
+          [STORAGE_KEYS.guest, '0'],
+          [STORAGE_KEYS.onboarded, '1'],
+        ]);
+        return null;
+      },
+      signInDemo: async () => {
+        const stored = await AsyncStorage.getItem(STORAGE_KEYS.users);
+        const existing: LocalAccount[] = stored ? JSON.parse(stored) : accounts;
+        const match =
+          existing.find(
+            (item) => item.email === DEMO_ACCOUNT.email || item.id === DEMO_ACCOUNT.id,
+          ) ?? { ...DEMO_ACCOUNT };
+        const nextAccounts = existing.some(
+          (item) => item.email === DEMO_ACCOUNT.email || item.id === DEMO_ACCOUNT.id,
+        )
+          ? existing
+          : [...existing, { ...DEMO_ACCOUNT }];
+        await persistAccounts(nextAccounts);
+        setUser(toPublicUser(match));
+        setIsGuest(false);
+        setHasOnboarded(true);
+        await AsyncStorage.multiSet([
+          [STORAGE_KEYS.session, match.id],
           [STORAGE_KEYS.guest, '0'],
           [STORAGE_KEYS.onboarded, '1'],
         ]);

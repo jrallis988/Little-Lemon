@@ -1,3 +1,4 @@
+import { createDemoUser } from './data/demo.js';
 import {
   memoryCompanies,
   memoryInterviews,
@@ -32,7 +33,7 @@ export const store = {
   workplaces: [...memoryWorkplaces],
   reviews: [...memoryReviews],
   interviews: [...memoryInterviews],
-  users: [] as MemoryUser[],
+  users: [createDemoUser()] as MemoryUser[],
   passwordResets: new Map<string, PasswordReset>(),
 };
 

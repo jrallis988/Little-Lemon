@@ -59,8 +59,8 @@ export default function SettingsScreen() {
         </Text>
         <Text style={styles.apiUrl}>{apiUrl}</Text>
         <Text style={styles.apiHint}>
-          Launch path: set DATABASE_URL (Postgres SoT), SMTP/Resend for email resets, and
-          GOOGLE_CLIENT_ID for Google Sign-In. Health reports which of those are live.
+          Portfolio demo: local seed data is enough. The Express API is optional architecture,
+          not a production service.
         </Text>
         <PrimaryButton
           label={checkingApi ? 'Checking…' : 'Refresh status'}

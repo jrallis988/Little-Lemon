@@ -85,6 +85,7 @@ export default function HomeScreen() {
               <Text style={styles.brand}>RME</Text>
               <Text style={styles.title}>Home</Text>
               <Text style={styles.subtitle}>Honest workplace signal — not marketing copy.</Text>
+              <Text style={styles.demoTag}>Portfolio demo · seed catalog</Text>
             </View>
             <TextInput
               style={styles.search}
@@ -167,6 +168,7 @@ const styles = StyleSheet.create({
   brand: { fontFamily: typography.bodyBold, fontSize: 14, color: '#8EB6FF' },
   title: { fontFamily: typography.display, fontSize: 28, color: '#FFFFFF' },
   subtitle: { fontFamily: typography.body, fontSize: 14, lineHeight: 20, color: '#B8C7E0' },
+  demoTag: { fontFamily: typography.bodyMedium, fontSize: 12, color: '#8EB4FF', marginTop: 2 },
   search: {
     backgroundColor: colors.surfaceRaised,
     borderWidth: 1,
