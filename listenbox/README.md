@@ -1,14 +1,16 @@
 # Listenbox
 
-Letterboxd for music — log albums, rate them, write short reviews, and follow what friends are spinning.
+**Portfolio concept** — Letterboxd for music. Log albums, rate them, write short reviews, and follow what friends are spinning.
 
-Scaffold lives in this folder inside the Artistic Fountain repo.
+This is a design/engineering case study, not a live production app. Demo auth, seed social data, and local persistence exist to make the product feel real in a portfolio walkthrough.
+
+Lives in this folder inside the Artistic Fountain repo.
 
 ## Stack
 
 - **TypeScript** + **Expo** (SDK 57) + **Expo Router**
-- Local scaffold auth via AsyncStorage (no backend yet)
-- In-memory album catalog + seed social feed
+- Local demo auth via AsyncStorage (no production backend)
+- Seed social feed + MusicBrainz catalog search for the demo
 
 ## Run
 
