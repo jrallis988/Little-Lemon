@@ -1,0 +1,6 @@
+[tool.pytest.ini_options]
+testpaths = [
+  "services/ingestion-api/tests",
+  "services/processing-worker/tests",
+]
+addopts = "-q"
