@@ -2,6 +2,8 @@
 
 Mobile-native artist discovery and social taste logging — a genre-agnostic spiritual successor to PureVolume, shaped like **Letterboxd for music**.
 
+**Portfolio piece** — designed to be shown in a case study, not operated as a live website or store app. `npx expo start --web` with seed data is the intended reviewer path. Supabase migrations document how a real backend would attach; they are optional.
+
 Built with **Expo (SDK 57)**, **Expo Router**, **Supabase**, **Zustand**, and **TanStack Query**.
 
 StaticVolume is **not a music player**. It’s where you **find unsigned bands and brand-new musicians** *and* look up **contemporary catalog artists** (Olivia Rodrigo, Black Veil Brides, Weird Al, …) — the Spotify-era coverage target (~2010–present). Then log tracks, write reviews, keep lists. Artists get downloads and reposts.

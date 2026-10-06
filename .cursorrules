@@ -4,6 +4,9 @@
 Spiritual successor to **PureVolume** (2003–2018 indie discovery portal) + **Letterboxd for music**.
 Read `PROJECT.md` before large UI or product changes.
 
+## Portfolio, not production
+This repo is a **portfolio piece**, not a live website or app we operate. Do not chase App Store, production Supabase, legal counsel, or catalog ingest jobs. Make the demo look finished. Seed + session state is enough for a reviewer. Schema/migrations show how it *would* ship.
+
 ## Hard product rules
 - **Not a music player.** No GlobalAudioBar, waveform transport, Expo AV playback UI, embedded Spotify player, queue, or “Listen Now” streaming chrome.
 - Catalog listening = **Open on Spotify** (outbound). Never import/proxy Spotify audio.

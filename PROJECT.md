@@ -2,6 +2,15 @@
 
 Cursor (and humans) should treat this file as the source of truth for product vision.
 
+## Portfolio piece (applies to this whole repo)
+
+StaticVolume is a **portfolio demonstration**, not a live product we operate.
+
+- Do **not** treat go-live ops as the goal: production Supabase billing, App Store / Play Store, real legal review, incident response, or running a Spotify ingest job against a real catalog.
+- **Do** make the demo feel finished: dense portal screens, working in-session flows, honest empty/error states, outbound Spotify, upload/taste UI even when data is seed + local.
+- Backend schema, RLS, Storage, and taste APIs exist to show *how it would ship* — reviewers should be able to run Expo web **without** env keys and still see the product story.
+- Prefer polish, IA, and visual completeness over spinning up cloud infrastructure.
+
 ## Concept
 
 We are building a **modern spiritual successor to PureVolume** — the early-2000s indie music discovery portal — plus a **Letterboxd-for-music** social layer.
@@ -57,7 +66,9 @@ Do **not** build these in parallel. Ship in order:
 
 Expo SDK 57 · Expo Router · TypeScript · Supabase · Zustand · TanStack Query.
 
-## Demo vs production
+## Demo vs production (portfolio)
+
+The app is meant to be **shown**, not hosted as a public service. Seed data + session state are the default reviewer path. Supabase is optional architecture, not a launch checklist.
 
 Scaffold still uses rich demo/seed data for Find + catalog browse. Supabase auth is wired. Phase 1 outbound Spotify deep links are live on catalog artist/track pages. **Phase 2 upload infrastructure** is in-repo:
 
@@ -72,7 +83,7 @@ Scaffold still uses rich demo/seed data for Find + catalog browse. Supabase auth
 - Track page: log/rate/review/download/repost write to Supabase when signed in
 - Artist follow + chronological Following feed (falls back to demo until you follow people)
 
-Apply Phase 2 then Phase 3 then Phase 4–7 migrations before persistence, search FTS, editorial slots, and reports work. Prefer extending existing patterns over inventing parallel design systems.
+Migrations are documentation of the backend design. Apply them only if you want to exercise the optional live path — they are **not** required to present the portfolio piece. Prefer extending existing portal patterns over inventing parallel design systems.
 
 ## Artwork & media sources
 
