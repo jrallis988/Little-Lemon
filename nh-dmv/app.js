@@ -11,13 +11,91 @@
     else localStorage.removeItem(AUTH_KEY);
   };
 
-  /* Mobile nav */
+  /* Mobile nav + skip target */
   const nav = $('#life-nav');
   const toggle = $('.nav-toggle');
+  const mainEl = $('#main');
+  if (mainEl && !mainEl.hasAttribute('tabindex')) mainEl.setAttribute('tabindex', '-1');
+  document.querySelectorAll('.skip-link').forEach((link) => {
+    link.addEventListener('click', () => {
+      requestAnimationFrame(() => mainEl?.focus());
+    });
+  });
+
+  function setNavOpen(open) {
+    if (!nav || !toggle) return;
+    nav.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  }
+
   if (toggle && nav) {
-    toggle.addEventListener('click', () => {
-      const open = nav.classList.toggle('is-open');
-      toggle.setAttribute('aria-expanded', String(open));
+    toggle.addEventListener('click', () => setNavOpen(!nav.classList.contains('is-open')));
+    nav.addEventListener('click', (e) => {
+      if (e.target.closest('a')) setNavOpen(false);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape' || !nav.classList.contains('is-open')) return;
+      setNavOpen(false);
+      toggle.focus();
+    });
+  }
+
+  function clearFieldError(input) {
+    if (!input) return;
+    input.removeAttribute('aria-invalid');
+    const errId = `${input.id || 'field'}-error`;
+    const err = document.getElementById(errId);
+    if (err) err.textContent = '';
+    const described = (input.getAttribute('aria-describedby') || '')
+      .split(/\s+/)
+      .filter((id) => id && id !== errId);
+    if (described.length) input.setAttribute('aria-describedby', described.join(' '));
+    else input.removeAttribute('aria-describedby');
+    input.closest('.field')?.classList.remove('is-invalid');
+  }
+
+  function setFieldError(input, message) {
+    if (!input) return;
+    const errId = `${input.id || 'field'}-error`;
+    let err = document.getElementById(errId);
+    if (!err) {
+      err = document.createElement('p');
+      err.id = errId;
+      err.className = 'field-error';
+      const host = input.closest('.field') || input.closest('.check-item') || input.parentElement;
+      host?.appendChild(err);
+    }
+    err.textContent = message;
+    input.setAttribute('aria-invalid', 'true');
+    const ids = new Set((input.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean));
+    ids.add(errId);
+    input.setAttribute('aria-describedby', [...ids].join(' '));
+    input.closest('.field')?.classList.add('is-invalid');
+  }
+
+  function firstInvalidControl(form) {
+    let first = null;
+    form.querySelectorAll('input, select, textarea').forEach((input) => {
+      if (input.disabled || input.type === 'hidden') return;
+      clearFieldError(input);
+      if (!input.checkValidity()) {
+        setFieldError(input, input.validationMessage || 'Please complete this field.');
+        if (!first) first = input;
+      }
+    });
+    return first;
+  }
+
+  function initDemoForms() {
+    ['#appt-form', '#renew-form', '#america-order-form'].forEach((sel) => {
+      const form = $(sel);
+      if (!form) return;
+      form.setAttribute('novalidate', '');
+      form.addEventListener('input', (e) => {
+        const input = e.target.closest('input, select, textarea');
+        if (input) clearFieldError(input);
+      });
     });
   }
 
@@ -81,9 +159,8 @@
 
     function render() {
       if (isSignedIn()) {
-        const name = window.NHDMV?.user?.name?.split(' ')[0] || 'Account';
         slot.innerHTML = `
-          <a class="btn btn-navy btn-sm" href="dashboard.html">${name}'s dashboard</a>
+          <a class="btn btn-navy btn-sm" href="dashboard.html">Dashboard</a>
           <button type="button" class="btn btn-ghost btn-sm" data-sign-out>Sign out</button>`;
       } else {
         slot.innerHTML = `<button type="button" class="btn btn-navy btn-sm" data-sign-in>Sign in</button>`;
@@ -403,7 +480,7 @@
         slotsEl.innerHTML = times
           .map(
             (t, i) =>
-              `<button type="button" class="slot" data-time="${t}" ${
+              `<button type="button" class="slot" role="radio" aria-checked="false" data-time="${t}" ${
                 i === 2 && dateSel.value === '2026-03-13' ? 'disabled aria-disabled="true"' : ''
               }>${t}</button>`
           )
@@ -412,13 +489,38 @@
       syncSummary();
     }
 
-    slotsEl.addEventListener('click', (e) => {
-      const btn = e.target.closest('.slot');
+    function selectSlot(btn) {
       if (!btn || btn.disabled) return;
-      $$('.slot', slotsEl).forEach((s) => s.classList.remove('is-selected'));
+      $$('.slot', slotsEl).forEach((s) => {
+        s.classList.remove('is-selected');
+        s.setAttribute('aria-checked', 'false');
+      });
       btn.classList.add('is-selected');
+      btn.setAttribute('aria-checked', 'true');
       selectedTime = btn.dataset.time;
+      slotsEl.removeAttribute('aria-invalid');
+      const slotErr = $('#slot-error');
+      if (slotErr) slotErr.textContent = '';
       syncSummary();
+    }
+
+    slotsEl.addEventListener('click', (e) => selectSlot(e.target.closest('.slot')));
+    slotsEl.addEventListener('keydown', (e) => {
+      const slots = $$('.slot:not([disabled])', slotsEl);
+      if (!slots.length) return;
+      const current = document.activeElement?.closest?.('.slot');
+      const i = Math.max(0, slots.indexOf(current));
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        const next = slots[(i + 1) % slots.length];
+        next.focus();
+        selectSlot(next);
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        const prev = slots[(i - 1 + slots.length) % slots.length];
+        prev.focus();
+        selectSlot(prev);
+      }
     });
 
     [serviceSel, branchSel, dateSel].forEach((el) =>
@@ -430,12 +532,23 @@
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
+      const invalid = firstInvalidControl(form);
+      if (invalid) {
+        invalid.focus();
+        return;
+      }
       const times = window.NHDMV.slots[dateSel.value] || [];
+      const slotErr = $('#slot-error');
       if (!times.length) {
-        toast('No slots on that date — pick another day');
+        if (slotErr) slotErr.textContent = 'No times left on this date. Choose another day.';
+        slotsEl.setAttribute('aria-invalid', 'true');
+        dateSel.focus();
         return;
       }
       if (!selectedTime) {
+        if (slotErr) slotErr.textContent = 'Choose an available time to hold the appointment.';
+        slotsEl.setAttribute('aria-invalid', 'true');
+        $$('.slot:not([disabled])', slotsEl)[0]?.focus();
         toast('Select a time slot to continue');
         return;
       }
@@ -708,6 +821,11 @@
     updateTotal();
     form.addEventListener('submit', (e) => {
       e.preventDefault();
+      const invalid = firstInvalidControl(form);
+      if (invalid) {
+        invalid.focus();
+        return;
+      }
       const qty = Number(qtyEl.value) || 1;
       const platesTotal = qty * UNIT;
       const shipping = qty * SHIP;
@@ -941,6 +1059,11 @@
     const blocked = $('#renew-blocked');
     form.addEventListener('submit', (e) => {
       e.preventDefault();
+      const invalid = firstInvalidControl(form);
+      if (invalid) {
+        invalid.focus();
+        return;
+      }
       const upgrade = $('#renew-option')?.value;
       if (upgrade === 'yes') {
         window.location.href = 'checklist.html#intent=real-id';
@@ -2011,6 +2134,7 @@
     );
   }
 
+  initDemoForms();
   initAuthChrome();
   initHeaderSearch();
   initSiteConnectivity();

@@ -29,7 +29,10 @@ Residents should understand what to do, whether it can be done online, what docu
 | `plates.html` | Vanity, moose, parks, decal, and veteran plate fees |
 | `motorcycle.html` | Motorcycle rider training path |
 | `appointments.html#how-to-video` | Appointment how-to video + booking |
+| `blog/nh-dmv.html` (studio site) | One-page case study: problem → principle → five screens |
 
 Homepage also features the America 250 plate and the appointment how-to video (same topic as the official mm.nh.gov announcement).
+
+The portfolio card on the studio home links to the case study; the concept itself still lives under `/nh-dmv/`.
 
 Preview: `npm start` → http://localhost:3000/nh-dmv/

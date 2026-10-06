@@ -65,7 +65,7 @@
         <p class="section-kicker">How-to video</p>
         <h2 id="appt-video-title" style="margin:0;font-size:1.45rem;color:var(--navy)">How to make an appointment</h2>
         <p>Watch the short guide, then hold your time below. Same topic as the official NH DMV appointment announcement.</p>
-        <details class="video-transcript" id="appt-page-transcript" open>
+        <details class="video-transcript" id="appt-page-transcript">
           <summary>Transcript</summary>
           <ol>
             <li>Choose your service.</li>
@@ -98,11 +98,12 @@
 
         <div class="field">
           <label id="slot-label">Available times</label>
-          <div class="slot-grid" id="slot-grid" role="group" aria-labelledby="slot-label"></div>
+          <div class="slot-grid" id="slot-grid" role="radiogroup" aria-labelledby="slot-label" aria-describedby="slot-error"></div>
+          <p class="field-error" id="slot-error" role="alert"></p>
           <div class="empty-state" id="slot-empty" hidden role="status" style="margin-top:0.75rem"></div>
         </div>
 
-        <button class="btn btn-primary" type="submit">Hold appointment</button>
+        <button class="btn btn-primary form-submit" type="submit">Hold appointment</button>
         <p class="field-hint">You’ll get a printable confirmation receipt on the next screen (demo).</p>
       </form>
 

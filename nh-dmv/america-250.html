@@ -138,7 +138,7 @@
           </div>
           <div class="field">
             <label for="plate-zip">ZIP</label>
-            <input id="plate-zip" required inputmode="numeric" value="03301" autocomplete="postal-code">
+            <input id="plate-zip" required inputmode="numeric" pattern="[0-9]{5}" minlength="5" maxlength="5" value="03301" autocomplete="postal-code">
           </div>
         </div>
         <div class="field">
@@ -150,7 +150,7 @@
           <div><h3>I understand this is non-refundable</h3><p>Cover plate for the front only · rear registration plate stays on.</p></div>
         </label>
         <div class="order-total" id="america-order-total" aria-live="polite">Total: $29.95</div>
-        <button class="btn btn-primary" type="submit">Place demo order</button>
+        <button class="btn btn-primary form-submit" type="submit">Place demo order</button>
         <p class="field-hint">Allow up to 4 weeks for production &amp; shipping. Bulk 25+ still goes to Concord.</p>
       </form>
     </section>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Artistic Fountain case study: a conceptual NH DMV redesign built on one principle — no surprises at the counter.">
+    <meta name="theme-color" content="#FF6B35">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <title>NH DMV: No surprises at the counter — Artistic Fountain</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <header class="header">
+        <div class="logo">
+            <a href="../index.html" class="logo-mark" aria-label="Artistic Fountain — home">
+                <span class="logo-line-1">Artistic</span>
+                <span class="logo-line-2">Fountain</span>
+            </a>
+        </div>
+        <nav aria-label="Primary">
+            <ul class="nav" id="main-nav">
+                <li><a href="../index.html#about">The Designer</a></li>
+                <li><a href="../index.html#services">Services</a></li>
+                <li><a href="../index.html#portfolio">Portfolio</a></li>
+                <li><a href="index.html">Blog</a></li>
+                <li><a href="../resume.pdf" download>Resume</a></li>
+            </ul>
+        </nav>
+        <div class="header-right">
+            <button class="nav-toggle" onclick="toggleNav()" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="main-nav">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main id="main" class="blog-post-page">
+        <article class="blog-post-inner case-study-inner">
+            <a href="../index.html#portfolio" class="service-back">← Portfolio</a>
+            <header class="blog-post-header">
+                <p class="service-kicker">Civic UX · Case study</p>
+                <h1>NH DMV: No surprises at the counter</h1>
+                <p class="blog-post-meta"><time datetime="2026-10">October 2026</time> · Conceptual redesign · Not an official state site</p>
+                <p class="service-lead">Residents should know what to do, whether it can be finished online, what to bring, what it costs, and what happens next — before they leave the house.</p>
+                <div class="case-hero-actions">
+                    <a class="cta-btn" href="../nh-dmv/index.html">Open the concept</a>
+                    <a class="case-ghost" href="../nh-dmv/appointments.html">Book a visit</a>
+                    <a class="case-ghost" href="../nh-dmv/renew.html">Renew a license</a>
+                </div>
+            </header>
+            <div class="blog-post-body">
+                <h2>The problem</h2>
+                <p>The live NH DMV site is a directory of programs, PDFs, and third-party forms. A resident with one job — “renew my license,” “book REAL ID,” “order the America 250 plate” — has to infer eligibility, documents, fees, and whether the next click is a dead end. The cost shows up at the counter: a wasted appointment, a missing birth certificate, a “you needed to start at town hall” conversation.</p>
+                <p>This concept does not replace production login, payments, or plate inventory. It redesigns the <em>story</em> around the visit: one calm portal, six hubs, and journeys that actually end.</p>
+
+                <h2>The principle</h2>
+                <div class="case-principles">
+                    <article>
+                        <h3>Task first</h3>
+                        <p>Home is a stack of jobs, not an org chart. License, vehicle, records, and appointments share one chrome.</p>
+                    </article>
+                    <article>
+                        <h3>Tell the truth early</h3>
+                        <p>Online vs. appointment, fees, and documents sit on the same path. Ineligible renewals stop before a fake payment.</p>
+                    </article>
+                    <article>
+                        <h3>Finish with a receipt</h3>
+                        <p>Booking, renewal, registration, placard, vanity, and America 250 all land on a printable confirmation.</p>
+                    </article>
+                </div>
+
+                <h2>Five screens</h2>
+                <p>Navy <code>#1d3557</code> and yellow <code>#fefa07</code> carry the system. Yellow is a signal, not a highlighter on every last word.</p>
+                <div class="case-screens">
+                    <figure class="case-screen case-screen--wide">
+                        <a href="../nh-dmv/index.html">
+                            <img src="screens/nh-dmv-home.png" alt="NH DMV concept home: task cards, America 250 plate, and appointment video.">
+                        </a>
+                        <figcaption>
+                            <strong>1. Home — pick a job</strong>
+                            <span>Task cards, news, and the commemorative plate sit above the fold. The visit starts with intent, not a sitemap.</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="case-screen">
+                        <a href="../nh-dmv/appointments.html">
+                            <img src="screens/nh-dmv-appointments.png" alt="Appointment booking: service, branch, date, and time slots beside a live summary.">
+                        </a>
+                        <figcaption>
+                            <strong>2. Booking — hold a time</strong>
+                            <span>Service, branch, date, and slots in one flow. Empty days and missing times are errors, not blank screens.</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="case-screen">
+                        <a href="../nh-dmv/renew.html">
+                            <img src="screens/nh-dmv-renew.png" alt="License renewal form with fee callout and Pay and finish.">
+                        </a>
+                        <figcaption>
+                            <strong>3. Renewal — pay or stop</strong>
+                            <span>Eligible numbers finish with a receipt. INELIGIBLE opens the blocked path to an appointment.</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="case-screen">
+                        <a href="../nh-dmv/america-250.html#order">
+                            <img src="screens/nh-dmv-america-250.png" alt="America’s 250th commemorative cover plate with order form and running total.">
+                        </a>
+                        <figcaption>
+                            <strong>4. America 250 — order online</strong>
+                            <span>Cover-plate facts, shipping total, and a demo checkout that still ends in a confirmation.</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="case-screen">
+                        <a href="../nh-dmv/confirmation.html">
+                            <img src="screens/nh-dmv-receipt.png" alt="Printable confirmation receipt after holding an appointment.">
+                        </a>
+                        <figcaption>
+                            <strong>5. Receipt — proof in hand</strong>
+                            <span>Every finished journey prints. The dashboard keeps the same record so the email scavenger hunt is optional.</span>
+                        </figcaption>
+                    </figure>
+                </div>
+
+                <h2>What we refused to add</h2>
+                <ul>
+                    <li>More hubs. Six primary destinations is the information architecture.</li>
+                    <li>Fake production login, card capture, or live plate inventory.</li>
+                    <li>A studio ribbon on every civic page — the concept is the product, not the byline.</li>
+                </ul>
+                <p>The remaining craft is how the story reads on a phone and how it behaves with a keyboard: visible focus, honest form errors, and a skip link that actually lands in the main column.</p>
+            </div>
+            <div class="service-page-cta">
+                <a href="../nh-dmv/index.html" class="cta-btn">Open the live concept</a>
+            </div>
+            <nav class="service-other" aria-label="More posts">
+                <h2>More posts</h2>
+                <div class="service-other-links">
+                    <a href="brand-redesign.html">Brand Redesign: Evolve or Revolution</a>
+                    <a href="negative-space.html">The Silent Power of Negative Space</a>
+                </div>
+            </nav>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <nav class="footer-nav">
+                <a href="../index.html#about">About</a>
+                <a href="../index.html#services">Services</a>
+                <a href="../index.html#portfolio">Portfolio</a>
+                <a href="index.html">Blog</a>
+                <a href="../index.html#faq">FAQ</a>
+                <a href="../index.html#contact">Contact</a>
+            </nav>
+            <div class="footer-copyright">
+                © 2026 Artistic Fountain™ — All rights reserved. <a href="../privacy.html">Privacy Policy</a> · <a href="../terms.html">Terms &amp; Conditions</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleNav() {
+            const nav = document.querySelector('.nav');
+            const toggle = document.querySelector('.nav-toggle');
+            const isOpen = nav.classList.toggle('active');
+            toggle.classList.toggle('active', isOpen);
+            toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        }
+        document.querySelectorAll('.nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                const nav = document.querySelector('.nav');
+                const toggle = document.querySelector('.nav-toggle');
+                nav.classList.remove('active');
+                toggle.classList.remove('active');
+                toggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+    </script>
+</body>
+</html>
