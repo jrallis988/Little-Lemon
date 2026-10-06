@@ -1,42 +1,17 @@
-import { siteConfig } from "@/lib/site";
-
+/**
+ * Portfolio case-study ribbon — these projects are conceptual, not live products.
+ */
 export function StagingBanner() {
-  if (!siteConfig.showStagingBanner && siteConfig.isOfficial) return null;
-
-  if (siteConfig.showStagingBanner) {
-    return (
-      <div
-        className="border-b border-warning/40 bg-warning-bg text-warning-text"
-        role="status"
-      >
-        <div className="wrap py-2 text-center text-xs font-semibold leading-snug sm:text-sm">
-          Staging site — intake and content are for launch validation. Set{" "}
-          <code className="rounded bg-black/5 px-1">
-            NEXT_PUBLIC_SITE_MODE=production
-          </code>{" "}
-          after go-live checks in <code className="rounded bg-black/5 px-1">DEPLOY.md</code>.
-        </div>
+  return (
+    <div
+      className="border-b border-border bg-surface text-text-body"
+      role="note"
+    >
+      <div className="wrap py-2 text-center text-xs font-medium leading-snug sm:text-sm">
+        Portfolio case study — a conceptual redesign inspired by Boston
+        Children&apos;s Hospital. Not an official site, live patient portal, or
+        payment system.
       </div>
-    );
-  }
-
-  if (!siteConfig.isOfficial) {
-    return (
-      <div
-        className="border-b border-border bg-surface text-text-body"
-        role="note"
-      >
-        <div className="wrap py-2 text-center text-xs font-medium leading-snug sm:text-sm">
-          Independent care-platform redesign inspired by pediatric hospital UX.
-          Not an official Boston Children&apos;s Hospital website. Set{" "}
-          <code className="rounded bg-black/5 px-1">
-            NEXT_PUBLIC_SITE_OFFICIAL=true
-          </code>{" "}
-          only with authorization.
-        </div>
-      </div>
-    );
-  }
-
-  return null;
+    </div>
+  );
 }

@@ -1,8 +1,6 @@
-# Boston Children's Hospital — Care Platform
+# Boston Children's Hospital — Care Platform (portfolio)
 
-Production-oriented **Next.js + Tailwind + Radix + Zustand** care-discovery and intake website with Sanity Studio scaffolding.
-
-> Default mode is staging. Follow [DEPLOY.md](./DEPLOY.md). Set `NEXT_PUBLIC_SITE_OFFICIAL=true` only with authorization.
+Conceptual **Next.js + Tailwind + Radix + Zustand** care-discovery case study. This is a portfolio piece, not a live hospital website, patient portal, or payment product.
 
 Homepage marketing copy, awards (U.S. News Honor Roll **2026–2027**, Newsweek **2027**), hero media, rankings ticker, construction alert, and “Latest from Boston Children’s” columns were synced to [childrenshospital.org](https://www.childrenshospital.org) as of September 2026. Full care-platform routes and catalog remain intact.
 
@@ -16,13 +14,12 @@ Home, Find a Doctor (+ profiles), Conditions, Programs, Locations, Appointments,
 
 ## v1 capabilities
 
-- Public care catalog + appointment / referral intake APIs
-- Legal pages, SEO robots/sitemap, staging/official banners
-- Staff inbox (`/ops/intake`), Upstash/webhook/Resend delivery
-- Sanity Studio in `/studio` + `npm run cms:export`
-- Monitoring hooks (`SENTRY_DSN`), Playwright + axe + Lighthouse CI
+- Public care catalog + appointment / referral form prototypes
+- Legal/SEO pages and a portfolio case-study banner
+- Demo portal at `/portal` (no real login, PHI, or bill pay)
+- Sanity Studio scaffolding, tests, and Lighthouse CI as craft evidence
 
-**Deferred:** authenticated patient portal (preview at `/portal` only).
+**Out of scope for a portfolio piece:** real MyChart/Epic billing, SSO, or HIPAA production.
 
 ## Quick start
 
@@ -36,4 +33,4 @@ npm run test && npm run test:e2e
 
 ## Note
 
-Independent redesign / staging platform unless officially authorized.
+Independent conceptual redesign for portfolio review.

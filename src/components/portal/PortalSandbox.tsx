@@ -34,14 +34,14 @@ export function PortalSandbox() {
             MyChildren&apos;s
           </h2>
           <p className="mb-s5 text-md font-light text-text-body">
-            Sign in for results, messaging, visits, and refills. This is Boston
-            Children&apos;s own account — not MyChart.
+            Sign in for a demo of results, messaging, visits, and refills.
+            Live MyChildren&apos;s is Epic MyChart; this screen is a portfolio
+            prototype.
           </p>
           <Notice className="mb-s5">
             <p>
-              Preview only — local browser state. Do not enter real patient
-              information. Production MyChildren&apos;s requires SSO and
-              HIPAA-capable vendors.
+              Portfolio demo — local browser state only. Do not enter real
+              patient information or payment details.
             </p>
           </Notice>
           <Button type="button" variant="ocean" fullWidth onClick={signIn}>

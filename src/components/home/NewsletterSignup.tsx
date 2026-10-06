@@ -58,8 +58,8 @@ export function NewsletterSignup() {
                 Thanks for subscribing.
               </p>
               <p className="mt-s2 text-sm font-light text-text-body">
-                This preview form confirms locally — connect your ESP before
-                production go-live.
+                This demo form stays in the browser — it does not subscribe
+                anyone.
               </p>
             </div>
           ) : (

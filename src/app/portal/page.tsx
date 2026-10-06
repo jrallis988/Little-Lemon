@@ -5,7 +5,7 @@ import { PortalSandbox } from "@/components/portal/PortalSandbox";
 export const metadata: Metadata = {
   title: "MyChildren's",
   description:
-    "Sign in to MyChildren's for results, messages, visits, and refill requests — Boston Children's own care account (not MyChart).",
+    "Conceptual MyChildren's portal prototype — results, messages, visits, and refill requests. Portfolio demo only.",
 };
 
 export default function PortalPage() {
@@ -15,7 +15,7 @@ export default function PortalPage() {
         id="portal-heading"
         eyebrow="Patients & families"
         title="MyChildren's"
-        lead="Boston Children's own place for results, secure messages, visits, and refill requests. This is not MyChart — MyChildren's is specific to care at Boston Children's."
+        lead="Conceptual prototype of the hospital's branded patient portal (live MyChildren's is Epic MyChart). Demo only — no real login, records, or bill pay."
       />
       <PortalSandbox />
     </>
