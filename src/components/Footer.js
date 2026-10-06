@@ -111,7 +111,9 @@ export default function Footer() {
 
       <div className="border-t border-white/10">
         <div className="section-shell flex flex-col gap-2 py-6 text-sm text-white/50 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} River Valley Community College</p>
+          <p>
+            Portfolio concept — not affiliated with River Valley Community College
+          </p>
           <p>
             Inspired by{" "}
             <a

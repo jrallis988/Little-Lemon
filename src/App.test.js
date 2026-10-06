@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import App from "./App";
 
@@ -124,5 +125,33 @@ test("renders a helpful 404 page", () => {
   expect(screen.getByRole("link", { name: /back home/i })).toBeInTheDocument();
   expect(
     screen.getByRole("link", { name: /browse programs/i })
+  ).toBeInTheDocument();
+});
+
+test("marks the site as a portfolio concept", () => {
+  render(
+    <MemoryRouter>
+      <App />
+    </MemoryRouter>
+  );
+
+  expect(
+    screen.getByText(/portfolio concept — not affiliated/i)
+  ).toBeInTheDocument();
+});
+
+test("admissions demo form succeeds without Formspree", async () => {
+  render(
+    <MemoryRouter initialEntries={["/admissions"]}>
+      <App />
+    </MemoryRouter>
+  );
+
+  await userEvent.type(screen.getByLabelText(/full name/i), "Jamie Prospect");
+  await userEvent.type(screen.getByLabelText(/^email$/i), "jamie@example.com");
+  await userEvent.click(screen.getByRole("button", { name: /send request/i }));
+
+  expect(
+    await screen.findByText(/this demo saved a local copy/i)
   ).toBeInTheDocument();
 });

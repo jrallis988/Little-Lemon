@@ -7,7 +7,6 @@ import {
   applyUrl,
   contact,
   filterOptions,
-  formspreeClaimUrl,
   images,
   portalLinks,
 } from "../data/content";
@@ -93,26 +92,24 @@ export default function Admissions() {
         JSON.stringify(existing)
       );
 
-      if (!FORMSPREE_ID) {
-        throw new Error(
-          `Form delivery is not connected yet. Email ${contact.email} or call ${contact.phone} and we will follow up.`
-        );
+      if (FORMSPREE_ID) {
+        const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+          throw new Error("Unable to send right now. Please try again.");
+        }
+        setDelivery("formspree");
+      } else {
+        setDelivery("demo");
       }
 
-      const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
-        throw new Error("Unable to send right now. Please try again.");
-      }
-
-      setDelivery("formspree");
       setStatus("success");
       setForm(initialForm);
     } catch (err) {
@@ -207,24 +204,9 @@ export default function Admissions() {
               Request information
             </h2>
             <p className="mt-2 text-granite-muted">
-              Tell us a little about yourself and we will follow up with next
-              steps over email.
+              Tell us a little about yourself. This is a portfolio demo — the
+              request stays in this browser unless Formspree is connected.
             </p>
-            {!FORMSPREE_ID && process.env.NODE_ENV === "development" ? (
-              <p className="mt-3 rounded-md border border-sunrise/40 bg-sunrise/10 px-3 py-2 text-sm text-river-deep">
-                Dev: claim Formspree, then set{" "}
-                <code className="font-mono text-xs">REACT_APP_FORMSPREE_ID</code>.{" "}
-                <a
-                  href={formspreeClaimUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="font-semibold underline underline-offset-2"
-                >
-                  Open claim link
-                </a>
-                .
-              </p>
-            ) : null}
 
             <div className="mt-8 space-y-5">
               <label className="block">
@@ -364,9 +346,11 @@ export default function Admissions() {
             <div id={statusId} aria-live="polite" className="mt-4 min-h-[1.25rem]">
               {status === "success" ? (
                 <p className="text-sm font-medium text-valley" role="status">
-                  {delivery === "spam"
-                    ? "Thanks — we received your request."
-                    : "Thanks — your inquiry was sent to admissions."}
+                  {delivery === "formspree"
+                    ? "Thanks — your inquiry was sent."
+                    : delivery === "spam"
+                      ? "Thanks — we received your request."
+                      : "Thanks — this demo saved a local copy in this browser."}
                 </p>
               ) : null}
 
