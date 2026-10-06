@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero, Prose, CtaRow } from "@/components/PageChrome";
+import { PortfolioDisclaimer } from "@/components/PortfolioDisclaimer";
 import {
   candidate,
   hasFecCommitteeId,
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
 
 type KitItem = {
   label: string;
-  status: "ready" | "pending";
+  status: "ready" | "sample";
   detail: string;
   href?: string;
 };
@@ -33,49 +34,51 @@ export default function PressPage() {
     },
     {
       label: "Public phone",
-      status: hasPublicPhone() ? "ready" : "pending",
+      status: "sample",
       detail: hasPublicPhone()
-        ? candidate.phone
-        : "Campaign will post a verified public number when ready",
+        ? `${candidate.phone} (sample)`
+        : "Sample number on Contact",
     },
     {
       label: "Mailing address",
-      status: hasMailAddress() ? "ready" : "pending",
+      status: "sample",
       detail: hasMailAddress()
-        ? candidate.mailAddress
-        : "Campaign mailing address pending",
+        ? `${candidate.mailAddress} (sample)`
+        : "Sample address on Contact",
     },
     {
-      label: "Official social profiles",
-      status: socials.length > 0 ? "ready" : "pending",
+      label: "Social profiles",
+      status: socials.length > 0 ? "ready" : "sample",
       detail:
         socials.length > 0
           ? socials.map((s) => s.label).join(" · ")
-          : "Facebook / Instagram links pending",
+          : "Facebook / Instagram as available",
     },
     {
-      label: "High-resolution headshot",
-      status: "pending",
-      detail: "Upload a campaign portrait to replace the Meet Nick placeholder",
+      label: "Headshot",
+      status: "sample",
+      detail: "Illustrated portrait on Meet Nick",
+      href: "/meet-nick",
     },
     {
-      label: "Bio PDF",
-      status: "pending",
-      detail: "One-page candidate bio for reporters (PDF)",
+      label: "Bio",
+      status: "sample",
+      detail: "Narrative bio on Meet Nick (no separate PDF)",
+      href: "/meet-nick",
     },
     {
       label: "Logo pack",
       status: "ready",
-      detail: "Campaign lockup available on site assets",
+      detail: "Campaign lockup",
       href: "/images/logo.png",
     },
     {
-      label: "FEC committee filings",
-      status: hasFecCommitteeId() ? "ready" : "pending",
+      label: "FEC filings",
+      status: hasFecCommitteeId() ? "ready" : "sample",
       detail: hasFecCommitteeId()
         ? `Committee ${candidate.fecCommitteeId}`
-        : "Statement of Organization / committee ID pending",
-      href: fecCommitteeUrl() ?? undefined,
+        : "Transparency page demonstrates disclosure UI (no live committee ID)",
+      href: fecCommitteeUrl() ?? "/transparency",
     },
   ];
 
@@ -127,8 +130,7 @@ export default function PressPage() {
           Media kit status
         </h2>
         <p className="mt-2 text-base text-slate-muted">
-          Items marked pending are waiting on campaign assets or filings — not
-          broken links.
+          Items marked sample are case-study stand-ins, not a live press room.
         </p>
         <ul className="mt-6 divide-y divide-slate-line border-y border-slate-line">
           {kit.map((item) => (
@@ -138,7 +140,7 @@ export default function PressPage() {
             >
               <div>
                 <p className="font-semibold text-ink">{item.label}</p>
-                {item.href && item.status === "ready" ? (
+                {item.href ? (
                   <a
                     href={item.href}
                     className="text-sm font-semibold text-red underline-offset-2 hover:underline"
@@ -157,7 +159,7 @@ export default function PressPage() {
                   item.status === "ready" ? "text-red" : "text-slate-muted"
                 }`}
               >
-                {item.status === "ready" ? "Ready" : "Pending"}
+                {item.status === "ready" ? "Ready" : "Sample"}
               </span>
             </li>
           ))}
@@ -180,6 +182,7 @@ export default function PressPage() {
           </ul>
         ) : null}
 
+        <PortfolioDisclaimer className="mt-8 text-sm text-slate-muted" />
         <CtaRow
           primary={{ href: "/meet-nick", label: "Meet Nick" }}
           secondary={{ href: "/transparency", label: "Transparency" }}

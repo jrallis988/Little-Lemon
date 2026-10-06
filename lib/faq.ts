@@ -146,8 +146,8 @@ export const faqs: FaqItem[] = [
     id: "fec-filings",
     question: "Where can I find FEC filings for this campaign?",
     answer: [
-      "The Transparency page summarizes how the campaign is funded and links to Federal Election Commission filings once a committee ID is posted.",
-      "Until the Statement of Organization is filed and the committee ID is published here, search public filings at fec.gov.",
+      "The Transparency page shows how this site would disclose funding and link to Federal Election Commission filings.",
+      "This project is a portfolio case study, not a registered committee. Search real filings at fec.gov.",
     ],
     links: [
       { href: "/transparency", label: "Transparency" },

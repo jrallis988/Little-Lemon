@@ -59,27 +59,27 @@ export default function MeetNickPage() {
             <figure className="relative aspect-[4/5] overflow-hidden bg-paper">
               <Image
                 src="/images/candidate-portrait.svg"
-                alt="Placeholder portrait for Nick Varga until campaign photography is uploaded"
+                alt="Illustrated portrait of Nick Varga for this case study"
+
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 40vw"
               />
               <figcaption className="absolute bottom-0 inset-x-0 bg-ink/80 px-3 py-2 text-sm text-white">
-                Nick Varga · Newmarket, NH · official photo forthcoming
+                Nick Varga · Newmarket, NH
               </figcaption>
             </figure>
             <figure className="relative aspect-video overflow-hidden bg-paper">
               <Image
                 src="/images/town-hall.svg"
-                alt="Placeholder campaign-trail illustration"
+                alt="New Hampshire town-hall illustration"
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 40vw"
               />
             </figure>
             <p className="text-sm text-slate-muted">
-              Portrait and trail photos will replace these placeholders when the
-              campaign uploads originals to the press kit.
+              Illustrated portrait treatment for this case study.
             </p>
           </div>
         </div>

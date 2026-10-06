@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero, Prose } from "@/components/PageChrome";
 import { LegalReviewBanner } from "@/components/LegalReviewBanner";
+import { PortfolioDisclaimer } from "@/components/PortfolioDisclaimer";
 import { candidate } from "@/lib/candidate";
 
 export const metadata: Metadata = {
@@ -23,13 +24,7 @@ export default function TermsPage() {
       <article className="mx-auto max-w-3xl section-pad">
         <p className="text-sm text-slate-muted">Last Updated: July 28, 2026</p>
         <LegalReviewBanner />
-        {!candidate.legalReviewApproved ? (
-          <p className="mb-6 border border-slate-line bg-paper px-4 py-3 text-sm text-slate-muted">
-            Draft status: these Terms are layout copy pending counsel review.
-            Form submissions go to the campaign when notify settings are
-            configured on the host.
-          </p>
-        ) : null}
+        <PortfolioDisclaimer className="mb-6 text-sm text-slate-muted" />
         <Prose>
           <p>
             Welcome to the official campaign website for {candidate.fullName}. By

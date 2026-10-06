@@ -1,53 +1,39 @@
-# Launch checklist — Varga for Senate
+# Varga for Senate — portfolio case study
 
-Copy/paste:
+This is a **student / designer portfolio piece**, not a live campaign website.
 
-```
-The pages and design are in place. What’s left is launch work, not more site-building.
+Sample phone, mailing address, events, endorsements, Privacy/Terms, and transparency copy exist so the UI looks complete. They are not official filings, lawyer-signed policies, or a real committee.
 
-TO GO PUBLIC
-1. Hosting + domain — Preview tunnels expire. Put the site on Vercel or Cloudflare Pages with a campaign domain.
-2. Email/CRM notify — Forms save on the server, but staff won’t get them until you set FORM_WEBHOOK_URL or RESEND_API_KEY on the host.
-3. Facts from the campaign — see **`CAMPAIGN_DATA.md`** for the paste template (phone, mail, Instagram, intro YouTube ID, FEC ID, photos).
-4. Lawyer review — set `legalReviewApproved: true` in `lib/candidate.ts` only after counsel signs off Privacy, Terms, and disclaimers.
-5. Original photos — replace files listed in `CAMPAIGN_DATA.md` (chat previews do not save to the repo).
+## What this demonstrates
 
-STILL PLACEHOLDER CONTENT
-- Events are TBA (Events page shows a clear “schedule coming soon” state)
-- Endorsements wait for confirmed names (no fake quotes shown)
-- Testimonials samples stay out of the public UI until confirmed
-- Press kit lists Ready / Pending media assets
+- Next.js 14 App Router campaign site on the Neta political theme
+- District 21 entry gate, homepage narrative, issues, write-in education
+- Volunteer / contact / join forms, store (simulated checkout)
+- Accessibility panel, cookie notice, SEO sitemap + JSON-LD
+- Footer disclaimer: “Portfolio case study — not an official campaign website.”
 
-OPTIONAL LATER
-- Real store checkout (no payments yet)
-- Donations (none on purpose)
-- Analytics
-- Live chat to staff
+## Optional if you host it
 
-NEXT STEP
-Hosting + domain, or send the phone/social/video details to drop into the site.
-```
+Hosting is only so recruiters can click a URL. You do **not** need FEC IDs, counsel sign-off, or a campaign domain.
 
-## Deploy on Vercel (recommended)
+If you deploy (Vercel is easiest):
 
-1. Import the GitHub repo at [vercel.com/new](https://vercel.com/new).
-2. Framework preset: **Next.js** (see `vercel.json`).
-3. Add environment variables from `.env.example`:
-   - `SITE_URL` (your live campaign domain, e.g. `https://vargaforsenate.com`)
-   - `FORM_WEBHOOK_URL` **or** `RESEND_API_KEY`
-   - `FORM_NOTIFY_TO=vargaforsenate@gmail.com`
-   - `FORM_FROM_EMAIL` (a verified Resend sender once you have a domain)
-4. Deploy, then attach the campaign domain under **Project → Settings → Domains**.
+1. Import the repo; framework **Next.js**
+2. Optional: `SITE_URL` = your live URL
+3. Optional: form notify (`FORM_WEBHOOK_URL` or `RESEND_API_KEY`) if you want submissions emailed to you
 
-On Vercel, local JSONL files are ephemeral. Production forms **require** webhook or Resend so staff actually receive submissions.
+See `.env.example`.
 
-## Deploy on Cloudflare Pages
+## Sample vs real
 
-Use the Next.js Cloudflare adapter only if the team chooses Cloudflare as the permanent host. For the fastest public launch, Vercel is the path of least resistance for this App Router project.
+| Surface | Treatment |
+|---------|-----------|
+| Phone / PO Box | Reserved `555` sample on Contact |
+| Instagram | Hidden (no invented profile) |
+| Intro video | Hero omits Watch Video (no invented YouTube ID) |
+| Photos | Campaign-styled assets + illustrated portrait |
+| Privacy / Terms | Finished sample copy; no “legal review” banner |
+| FEC | Transparency explains disclosure UI; no fake committee ID |
+| Store / chat | Simulated |
 
-## After deploy
-
-- Paste phone, mail address, social URLs, and YouTube ID into `lib/candidate.ts`
-- Replace generated section photos with uploaded originals under `public/images/`
-- Remove the legal-review banner only after counsel approves Privacy, Terms, and the paid-for-by line
-- Link FEC filings on `/transparency` once a committee ID exists
+Flag: `PORTFOLIO_MODE` in `lib/demo.ts`.

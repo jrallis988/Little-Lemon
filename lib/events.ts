@@ -11,28 +11,43 @@ export type CampaignEvent = {
   tba?: boolean;
 };
 
+/** Sample calendar for this case study (not a live tour). */
 export const events: CampaignEvent[] = [
   {
-    id: "tba-town-hall",
-    title: "Town Hall",
+    id: "portsmouth-town-hall",
+    title: "Portsmouth Town Hall",
     type: "Town Hall",
-    date: null,
-    location: "Location TBA",
-    city: "TBA",
-    region: "Statewide",
-    description: "Date TBD · 2026 — Details on social & email.",
-    tba: true,
+    date: "2026-10-12",
+    time: "18:00",
+    location: "City Hall Atrium",
+    city: "Portsmouth",
+    region: "Seacoast",
+    description:
+      "Write-in how-to, Q&A on costs and term limits, and a chance to meet Team Varga.",
   },
   {
-    id: "more-soon",
-    title: "More stops coming soon",
+    id: "concord-kitchen-table",
+    title: "Concord Kitchen-Table Conversation",
     type: "Meet & Greet",
-    date: null,
-    location: "Across New Hampshire",
-    city: "Statewide",
-    region: "Statewide",
-    description: "Nick is planning stops in all ten counties. Check back or join the email list.",
-    tba: true,
+    date: "2026-10-18",
+    time: "11:00",
+    location: "West Street Ward House",
+    city: "Concord",
+    region: "Capital",
+    description:
+      "Small-group conversation on veterans, healthcare costs, and independent representation.",
+  },
+  {
+    id: "manchester-canvass-kickoff",
+    title: "Manchester Canvass Kickoff",
+    type: "Volunteer",
+    date: "2026-10-25",
+    time: "09:00",
+    location: "Victory Park",
+    city: "Manchester",
+    region: "Hillsborough",
+    description:
+      "Neighborhood walks, literature, and a brief training on the November 3 write-in.",
   },
 ];
 

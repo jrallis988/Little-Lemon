@@ -1,7 +1,8 @@
+import { PORTFOLIO_MODE } from "@/lib/demo";
 import { candidate } from "@/lib/candidate";
 
 export function LegalReviewBanner() {
-  if (candidate.legalReviewApproved) return null;
+  if (PORTFOLIO_MODE || candidate.legalReviewApproved) return null;
 
   return (
     <div
@@ -18,8 +19,7 @@ export function LegalReviewBanner() {
         This page contains draft language for layout and development only. It is
         not final legal advice and must be reviewed by qualified counsel before
         public launch — including the “Paid for by {candidate.committee}”
-        disclaimer and any FEC committee details. Do not remove this flag until
-        approved legal copy has been supplied.
+        disclaimer and any FEC committee details.
       </p>
     </div>
   );

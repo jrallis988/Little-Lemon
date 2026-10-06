@@ -6,29 +6,27 @@ export type Endorsement = {
   placeholder?: boolean;
 };
 
+/** Sample quotes for the endorsements layout — not real endorsements. */
 export const endorsements: Endorsement[] = [
   {
-    id: "placeholder-1",
-    name: "Endorsement coming soon",
-    role: "New Hampshire community leader",
+    id: "sample-1",
+    name: "Maria L.",
+    role: "Small-business owner, Dover",
     quote:
-      "Named endorsements from real supporters will appear here as they are confirmed.",
-    placeholder: true,
+      "Finally a campaign that talks about my payroll and my rent in the same sentence — not a party script.",
   },
   {
-    id: "placeholder-2",
-    name: "Endorsement coming soon",
-    role: "Local business owner",
+    id: "sample-2",
+    name: "James P.",
+    role: "Veteran, Rochester",
     quote:
-      "This page is ready for real names, titles, and quotes from people standing with Nick.",
-    placeholder: true,
+      "I don’t need another career politician. I need someone who will pick up the phone for Granite State vets.",
   },
   {
-    id: "placeholder-3",
-    name: "Endorsement coming soon",
-    role: "Veteran / civic leader",
+    id: "sample-3",
+    name: "Aisha K.",
+    role: "Teacher, Nashua",
     quote:
-      "Until then, the campaign’s commitment stays the same: people over politics, neighbor by neighbor.",
-    placeholder: true,
+      "Independent doesn’t mean unserious. It means you can work with anyone if the idea helps our kids.",
   },
 ];

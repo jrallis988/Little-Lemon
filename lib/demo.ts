@@ -1,24 +1,24 @@
 /**
- * Remaining demo / placeholder flags.
+ * This repo is a student / designer portfolio case study — not a live
+ * campaign, store, or official filing surface.
  *
- * Live forms (Join, Contact, Volunteer, Come to My Town) persist to
- * data/form-submissions.jsonl and notify via FORM_WEBHOOK_URL / Resend
- * when those env vars are set.
- *
- * Still demo-only:
- * - Store checkout does not process payments
- * - Chat “live support” is not connected to staff
- * - No live analytics pixels
+ * Forms may still persist locally when the environment is running.
+ * Store checkout and chat “live support” remain simulated.
  */
-export const DEMO_MODE = true as const;
+export const PORTFOLIO_MODE = true as const;
 
-/** Shared success copy for remaining mock surfaces */
+/** @deprecated Use PORTFOLIO_MODE. Kept so remaining demo surfaces compile. */
+export const DEMO_MODE = PORTFOLIO_MODE;
+
+export const portfolioDisclaimer =
+  "Portfolio case study — not an official campaign website.";
+
 export const demoFormSuccess = {
   checkout:
-    "Demo order request received. No payment was processed and no order was saved. In production, the campaign would confirm payment and shipping next.",
+    "Sample order captured for this case study. No payment was processed and nothing will ship.",
   chatLive:
-    "Demo message received. Live campaign support is not connected in this preview — nothing was delivered to staff.",
+    "Sample message captured for this case study. There is no live campaign staff behind this chat.",
 } as const;
 
 export const demoFormNote =
-  "Demo mode: this form validates and shows a success message only. It does not send email, sync a CRM, or save data.";
+  "Portfolio demo: checkout is simulated. No payment is processed.";

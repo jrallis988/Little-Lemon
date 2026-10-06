@@ -1,48 +1,19 @@
 import { testimonials } from "@/lib/testimonials";
 import { SectionIntro } from "@/components/SectionIntro";
+import { PORTFOLIO_MODE } from "@/lib/demo";
 
-/**
- * Homepage testimonials. Sample quotes stay in lib/testimonials.ts for content
- * drafting, but this section only renders confirmed (non-placeholder) entries.
- */
 export function Testimonials() {
-  const confirmed = testimonials.filter((t) => !t.placeholder);
-  const featured = confirmed.find((t) => t.featured) ?? confirmed[0];
-  const supporting = confirmed.filter((t) => t.id !== featured?.id);
+  const featured = testimonials.find((t) => t.featured) ?? testimonials[0];
+  const supporting = testimonials.filter((t) => t.id !== featured?.id);
 
-  if (!featured) {
-    return (
-      <section aria-labelledby="testimonials-heading" className="bg-slate">
-        <div className="mx-auto max-w-content section-pad">
-          <SectionIntro
-            overline="What New Hampshire Is Saying"
-            title="Neighbor voices, coming soon."
-            tone="dark"
-            titleId="testimonials-heading"
-          />
-          <p className="mt-8 max-w-2xl text-base text-white/70">
-            Real quotes from Granite Staters will appear here once supporters
-            approve them. Until then we are not publishing sample names.
-          </p>
-          <p className="mt-6">
-            <a
-              href="/contact"
-              className="font-semibold text-white underline-offset-2 hover:underline"
-            >
-              Share your story with the campaign →
-            </a>
-          </p>
-        </div>
-      </section>
-    );
-  }
+  if (!featured) return null;
 
   return (
     <section aria-labelledby="testimonials-heading" className="bg-slate">
       <div className="mx-auto max-w-content section-pad">
         <SectionIntro
           overline="What New Hampshire Is Saying"
-          title="Real voices from across the Granite State."
+          title="Voices from across the Granite State."
           tone="dark"
           titleId="testimonials-heading"
         />
@@ -69,6 +40,11 @@ export function Testimonials() {
               </li>
             ))}
           </ul>
+        ) : null}
+        {PORTFOLIO_MODE ? (
+          <p className="mt-6 text-sm text-white/45">
+            Sample quotes for this case study — not attributed to real supporters.
+          </p>
         ) : null}
       </div>
     </section>

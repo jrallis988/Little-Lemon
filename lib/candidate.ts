@@ -23,26 +23,26 @@ export const candidate = {
   coreStatement:
     "Nick Varga isn’t a career politician. He’s a Granite Stater who watched Washington stop listening a long time ago and decided that if nobody else was going to run, he would. This campaign doesn’t take corporate money. It doesn’t answer to party bosses. It’s built neighbor by neighbor — the only way a campaign for New Hampshire should be.",
   /**
-   * Disclaimer committee name as provided by the campaign.
-   * FEC committee ID is pending a filed Statement of Organization.
+   * Disclaimer committee name as shown on this case-study site.
+   * No real FEC Statement of Organization is implied.
    */
   committee: "Nick Varga Campaign Committee",
   fecCommitteeId: "",
   /**
-   * Set to true only after counsel approves Privacy, Terms, and disclaimer copy.
-   * While false, Privacy and Terms show the legal review banner.
+   * Sample Privacy & Terms are shown as finished case-study copy.
+   * This is not lawyer-signed language for a live committee.
    */
-  legalReviewApproved: false,
+  legalReviewApproved: true,
   email: "vargaforsenate@gmail.com",
-  /** Leave empty until the campaign supplies a verified public number. */
-  phone: "",
-  /** Leave empty until the campaign confirms a mailing address. */
-  mailAddress: "",
+  /** Reserved 555 sample number — portfolio contact only. */
+  phone: "(603) 555-0121",
+  /** Sample mailing line for the contact page layout. */
+  mailAddress: "P.O. Box 21, Newmarket, NH 03857",
   townsCommitment: 234,
   veteransCount: "90,000",
   /**
-   * Social profiles. Empty strings stay hidden until campaign URLs are supplied.
-   * Facebook is the only confirmed public page so far.
+   * Social profiles. Empty strings stay hidden.
+   * Facebook is a public page used as the sample profile link.
    */
   social: {
     facebook: "https://www.facebook.com/Vargraforsenate",
@@ -50,9 +50,6 @@ export const candidate = {
     instagram: "",
     youtube: "",
   },
-  /**
-   * Hero “Watch Video” — leave youtubeId empty until the official intro is ready.
-   */
   introVideo: {
     youtubeId: "",
     title: "Varga for Senate — campaign introduction",
@@ -64,7 +61,7 @@ export const candidate = {
 };
 
 export function hasPublicPhone(): boolean {
-  return Boolean(candidate.phone && !/555-0/.test(candidate.phone));
+  return Boolean(candidate.phone);
 }
 
 export function hasMailAddress(): boolean {

@@ -1,5 +1,6 @@
 import { candidate, publicSocials, hasFecCommitteeId } from "@/lib/candidate";
 import { getSiteUrl } from "@/lib/site";
+import { PORTFOLIO_MODE, portfolioDisclaimer } from "@/lib/demo";
 
 /** Campaign Organization + Person JSON-LD for search engines. */
 export function CampaignJsonLd() {
@@ -15,8 +16,8 @@ export function CampaignJsonLd() {
         alternateName: candidate.brandName,
         url: base,
         email: candidate.email,
-        ...(candidate.phone ? { telephone: candidate.phone } : {}),
-        ...(candidate.mailAddress
+        ...(!PORTFOLIO_MODE && candidate.phone ? { telephone: candidate.phone } : {}),
+        ...(!PORTFOLIO_MODE && candidate.mailAddress
           ? { address: { "@type": "PostalAddress", streetAddress: candidate.mailAddress } }
           : {}),
         ...(sameAs.length ? { sameAs } : {}),
@@ -53,7 +54,9 @@ export function CampaignJsonLd() {
         "@id": `${base}/#website`,
         url: base,
         name: candidate.brandName,
-        description: candidate.positioningLong,
+        description: PORTFOLIO_MODE
+          ? `${portfolioDisclaimer} ${candidate.positioningLong}`
+          : candidate.positioningLong,
         publisher: { "@id": `${base}/#organization` },
         inLanguage: "en-US",
       },

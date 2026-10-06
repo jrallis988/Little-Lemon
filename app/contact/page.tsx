@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/PageChrome";
+import { PortfolioDisclaimer } from "@/components/PortfolioDisclaimer";
 import { ContactForm } from "@/components/ContactForm";
 import { candidate, hasMailAddress, hasPublicPhone, phoneTelHref } from "@/lib/candidate";
 
@@ -46,9 +47,10 @@ export default function ContactPage() {
             {hasMailAddress() ? <li>{candidate.mailAddress}</li> : null}
           </ul>
           <p className="mt-4 text-sm text-slate-muted">
-            Use the form to reach campaign staff. Messages are saved and emailed
-            when campaign notify settings are configured.
+            Sample contact details for this case study. The form works in this
+            environment; it is not a live campaign inbox.
           </p>
+          <PortfolioDisclaimer className="mt-3 text-sm text-slate-muted" />
         </div>
         <ContactForm />
       </div>

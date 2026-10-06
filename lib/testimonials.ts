@@ -4,10 +4,10 @@ export type Testimonial = {
   name: string;
   town: string;
   featured?: boolean;
-  /** Draft samples stay out of the public UI until confirmed. */
   placeholder?: boolean;
 };
 
+/** Sample supporter quotes for layout — not attributed to real people. */
 export const testimonials: Testimonial[] = [
   {
     id: "sarah",
@@ -16,7 +16,6 @@ export const testimonials: Testimonial[] = [
     name: "Sarah M.",
     town: "Portsmouth, NH",
     featured: true,
-    placeholder: true,
   },
   {
     id: "tom",
@@ -24,7 +23,6 @@ export const testimonials: Testimonial[] = [
       "I’ve never voted write-in before. But I’ve never had a candidate worth fighting for before.",
     name: "Tom R.",
     town: "Concord, NH",
-    placeholder: true,
   },
   {
     id: "linda",
@@ -32,6 +30,5 @@ export const testimonials: Testimonial[] = [
       "No corporate money. No party machine. Just a neighbor who gives a damn.",
     name: "Linda K.",
     town: "Manchester, NH",
-    placeholder: true,
   },
 ];

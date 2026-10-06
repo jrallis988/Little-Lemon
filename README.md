@@ -21,19 +21,17 @@ Legacy static preview at `/neta/` still exists; the App Router site at `/` is th
 
 ## Demo / placeholder status
 
+This is a **portfolio case study** (`PORTFOLIO_MODE` in `lib/demo.ts`) — not a live campaign.
+
 | Area | Current behavior |
 |------|------------------|
-| Contact phone / PO Box | Hidden until the campaign supplies verified values in `lib/candidate.ts` |
-| Social links | Facebook only; Instagram / X / YouTube stay hidden until URLs are supplied |
-| Intro video | Hero “Watch Video” hidden until `candidate.introVideo.youtubeId` is set |
-| Join / Contact / Volunteer / Town forms | Live `POST /api/forms` (Join also at `/api/join`) — persist to `data/form-submissions.jsonl` and notify via `FORM_WEBHOOK_URL` or Resend when env is set |
-| Store cart | Fully interactive (add / update / remove) |
-| Store checkout | Non-functional demo — no payment gateway |
-| Privacy & Terms | Show **LEGAL REVIEW REQUIRED** banner until counsel approves copy |
-| Cookie banner | Mentions analytics for draft policy; **no live tracking scripts** |
-| Photos / testimonials / events | Some generated stand-ins; upload original files to replace them |
-
-Central flags and copy live in `lib/demo.ts` and `lib/candidate.ts`.
+| Contact phone / PO Box | Sample `555` number and PO Box on Contact |
+| Social links | Facebook shown; Instagram / X / YouTube hidden |
+| Intro video | Hero omits Watch Video (no invented YouTube ID) |
+| Join / Contact / Volunteer / Town forms | `POST /api/forms` (Join also `/api/join`) |
+| Store checkout | Simulated — no payment |
+| Privacy & Terms | Sample copy; legal-review banner hidden |
+| Photos / events / endorsements | Case-study sample content |
 
 ## Primary pages
 

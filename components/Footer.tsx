@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { candidate, publicSocials } from "@/lib/candidate";
 import { NH_ELECTIONS_URL } from "@/lib/faq";
+import { PortfolioDisclaimer } from "@/components/PortfolioDisclaimer";
 
 const LEGAL_LINKS = [
   { href: "/privacy", label: "Privacy" },
@@ -65,6 +66,7 @@ export function Footer() {
             </span>
             <span>Powered by Artistic Fountain</span>
           </p>
+          <PortfolioDisclaimer className="footer-compact-legal mt-2 text-sm opacity-80" />
 
           <nav className="footer-compact-links" aria-label="Legal and resources">
             {LEGAL_LINKS.map((link) =>

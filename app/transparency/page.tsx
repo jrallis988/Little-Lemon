@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero, Prose } from "@/components/PageChrome";
+import { PortfolioDisclaimer } from "@/components/PortfolioDisclaimer";
 import {
   candidate,
   fecCommitteeUrl,
@@ -88,9 +89,9 @@ export default function TransparencyPage() {
               </p>
             ) : (
               <p>
-                Public filings for {candidate.committee} will be linked here as they
-                are submitted. A Federal Election Commission committee ID has not
-                been posted yet. Until then, search committee filings at{" "}
+                This case study shows how a campaign site would publish an FEC
+                committee ID and link to filings. There is no live Statement of
+                Organization for this project. Example public search lives at{" "}
                 <a
                   href="https://www.fec.gov"
                   target="_blank"
@@ -134,6 +135,7 @@ export default function TransparencyPage() {
           <p className="mt-6 text-sm text-slate-muted">
             Paid for by {candidate.committee}.
           </p>
+          <PortfolioDisclaimer className="mt-3 text-sm text-slate-muted" />
           <p className="mt-4">
             <Link href="/contact" className="font-semibold text-red underline-offset-2 hover:underline">
               Questions about funding? Contact us →

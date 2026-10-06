@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { MapPin } from "lucide-react";
 import { PageHero, CtaRow } from "@/components/PageChrome";
-import { events } from "@/lib/events";
+import { events, formatEventDate } from "@/lib/events";
+import { PortfolioDisclaimer } from "@/components/PortfolioDisclaimer";
 
 export const metadata: Metadata = {
   title: "Events",
@@ -18,24 +19,11 @@ export default function EventsPage() {
         subtitle="Where Nick will be next — town halls, meet-and-greets, and kitchen-table conversations."
       />
       <div className="mx-auto max-w-content section-pad">
-        {events.every((e) => e.tba) ? (
-          <div className="mb-8 border border-dashed border-slate-line bg-paper px-6 py-8 text-center">
-            <p className="font-display text-xl font-bold text-ink">
-              Schedule coming soon
-            </p>
-            <p className="mx-auto mt-3 max-w-xl text-base text-slate-muted">
-              Town halls and meet-and-greets will post here with dates and
-              locations. Request a stop in your town while the calendar is being
-              built.
-            </p>
-          </div>
-        ) : null}
         <ul className="divide-y divide-slate-line border-y border-slate-line">
           {events.map((event) => (
             <li key={event.id} className="py-6">
               <p className="text-xs font-bold uppercase tracking-[0.14em] text-red">
                 {event.type}
-                {event.tba ? " · TBA" : ""}
               </p>
               <h2 className="mt-1 font-display text-2xl font-bold text-ink">
                 {event.title}
@@ -43,19 +31,21 @@ export default function EventsPage() {
               <p className="mt-2 flex items-start gap-1.5 text-base text-slate-muted">
                 <MapPin className="mt-1 h-4 w-4 shrink-0" aria-hidden />
                 <span>
-                  {event.tba ? "Date TBD · 2026" : event.date} — {event.location}
+                  {event.date ? formatEventDate(event.date) : "Date TBD"} —{" "}
+                  {event.location}, {event.city}
                 </span>
               </p>
               <p className="mt-2 text-base text-slate-text">{event.description}</p>
             </li>
           ))}
         </ul>
+        <PortfolioDisclaimer className="mt-6 text-sm text-slate-muted" />
         <CtaRow
           primary={{ href: "/come-to-my-town", label: "Request a Visit →" }}
           secondary={{ href: "/#join", label: "Get email updates" }}
         />
         <p className="mt-6 text-sm text-slate-muted">
-          More stops will be posted here and shared on social.{" "}
+          Want Nick in your town?{" "}
           <Link href="/contact" className="font-semibold text-red underline-offset-2 hover:underline">
             Contact us
           </Link>{" "}

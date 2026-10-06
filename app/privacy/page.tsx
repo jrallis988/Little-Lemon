@@ -3,6 +3,7 @@ import Link from "next/link";
 import { candidate } from "@/lib/candidate";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { LegalReviewBanner } from "@/components/LegalReviewBanner";
+import { PortfolioDisclaimer } from "@/components/PortfolioDisclaimer";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -28,17 +29,10 @@ export default function PrivacyPage() {
 
       <div className="mt-8">
         <LegalReviewBanner />
+        <PortfolioDisclaimer className="mb-6 text-sm text-slate-muted" />
       </div>
 
       <div className="mt-6 space-y-6 text-base leading-relaxed text-slate-text">
-        {!candidate.legalReviewApproved ? (
-          <p className="border border-slate-line bg-paper px-4 py-3 text-sm text-slate-muted">
-            Draft status: this Privacy Policy is layout copy pending counsel
-            review. Contact, Join, Volunteer, and Come to My Town forms submit to
-            the campaign when notify settings are configured. This site does not
-            load live analytics pixels or SDKs.
-          </p>
-        ) : null}
         <p>
           Welcome to the official campaign website for {candidate.fullName}.{" "}
           {candidate.committee} (“we,” “us,” or “the campaign”) respects your
