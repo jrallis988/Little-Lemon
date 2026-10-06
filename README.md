@@ -1,27 +1,28 @@
-# Little Lemon
+# Little Lemon — portfolio piece
 
-Mediterranean restaurant website for **Little Lemon** (Chicago) — eight homepage layout demos adapted from uploaded Weiboo index variants, plus menu, reservations, and pickup ordering.
+Mediterranean restaurant **case study / portfolio demo** (not a live restaurant site).
 
-## Quick start
+Adapted from uploaded Weiboo eCommerce homepage demos into eight self-contained layouts plus menu, reserve, and order flows.
+
+## Preview locally
 ```bash
 npm start
 ```
 Open [http://localhost:3000](http://localhost:3000).
 
-## Go live
-See **[LAUNCH.md](LAUNCH.md)** — enable GitHub Pages (Actions) and activate Formsubmit.
-
-## Pages
+## What’s included
 | File | Role |
 | --- | --- |
-| `index.html` | **Primary** homepage |
+| `index.html` | Primary homepage |
 | `layouts.html` | Gallery of all homepage demos |
 | `index-two.html` … `index-eight.html` | Alternate layouts |
-| `menu.html` / `about.html` / `reserve.html` / `order.html` | Core flows |
-| `privacy.html` / `terms.html` | Policies |
+| `menu.html` / `about.html` / `reserve.html` / `order.html` | Core demo flows |
+| `privacy.html` / `terms.html` / `404.html` | Supporting pages |
 
 ## Stack
-Static HTML, CSS, vanilla JS. Brand fonts: Markazi Text + Karla. Capstone palette (`#495E57`, `#F4CE14`, `#EE9972`). Forms → Formsubmit (`jjrallis@unh.edu`). Images in `images/`.
+Static HTML, CSS, vanilla JS. Markazi Text + Karla. Meta Capstone palette (`#495E57`, `#F4CE14`, `#EE9972`). Order cart uses `localStorage`. Forms can POST to Formsubmit for demo purposes.
+
+Optional deploy configs (`netlify.toml`, `vercel.json`, Pages workflow) exist if you want a public demo URL — not required for the portfolio piece.
 
 ## References
 Original Weiboo PHP demos (incomplete without theme assets): `references/weiboo-homepages/`.
