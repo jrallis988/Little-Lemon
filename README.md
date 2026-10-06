@@ -2,6 +2,8 @@
 
 Independent design venture portfolio — digital media, graphic design, visual identity, and creative media projects.
 
+Branded case studies here (Nick Jr., NH DMV, and future work) are **portfolio concepts**, not live websites or official products. They exist to show design and front-end craft.
+
 ## Dual-track separation
 
 | Track | Home | Houses |

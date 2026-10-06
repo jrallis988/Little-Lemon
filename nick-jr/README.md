@@ -44,8 +44,6 @@ Then open:
 - Apps: [http://localhost:3000/nick-jr/apps.html](http://localhost:3000/nick-jr/apps.html)
 - Shop: [http://localhost:3000/nick-jr/shop.html](http://localhost:3000/nick-jr/shop.html)
 
-## Go live
+## Portfolio only
 
-1. Merge PR into `main`
-2. Deploy the static site (same host as Artistic Fountain)
-3. Smoke-test `/nick-jr/`, `/nick-jr/grown-ups.html`, and `/nick-jr/case-study.html`
+This is a presentation prototype for Artistic Fountain — not a live Nick Jr. product and not meant to be launched as an official site.
