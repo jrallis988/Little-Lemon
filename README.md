@@ -1,53 +1,45 @@
-# Artistic Fountain
+# Little Lemon — concept portfolio
 
-Independent design venture portfolio — digital media, graphic design, visual identity, and creative media projects.
+A collection of **portfolio concept pieces** (product explorations and visual redesigns).  
+These are **not** live production websites or apps, and they are **not** affiliated with or endorsed by the brands they reference.
 
-## Dual-track separation
+## Pieces in this repo
 
-| Track | Home | Houses |
+| Piece | Kind | Location | How to view |
+| --- | --- | --- | --- |
+| **Planet Fitness Stratham** | Next.js acquisition + member-app concept | repo root (`app/`, `components/`, …) | `npm install && npm run dev` → http://localhost:3000 |
+| **Artistic Fountain** | Static design-studio portfolio | `artistic-fountain/` | `npm run portfolio:fountain` → http://localhost:3001 |
+| **NH DMV** | Static conceptual redesign | `nh-dmv/` | `npm run portfolio:dmv` → http://localhost:3002 |
+
+## Planet Fitness Stratham (root Next app)
+
+Local franchise acquisition site + focused member utility concept for Stratham, NH.
+
+| Surface | Owns | Root |
 | --- | --- | --- |
-| **Creative** | Artistic Fountain (this repo) | Visual media, graphic identity, conceptual design, client design services |
-| **Engineering** | Developer portfolio (separate) | Back-end systems, Python/FastAPI, AI/RAG applications |
+| **Web** | Discovery, pricing, Summer Pass, join | `/` |
+| **App** | Auth, check-in, keytag, Crowd Meter, billing, account | `/app` |
 
-See `STATUS.md` for the full status report.
-
-## Stack
-
-Static site: HTML, CSS, and vanilla JS (built in Cursor). Custom typefaces (Arcanite Slab, Goudy Heavyface) plus Inter for body copy.
-
-## Pages
-
-- `index.html` — home (hero, designer, services, portfolio, blog, contact)
-- `nh-dmv/` — conceptual redesign of the New Hampshire DMV website (civic UX case study)
-- `services/` — detail pages for each service offering
-- `blog/` — blog index and post pages (content can be drafted in Blaze AI)
-- `privacy.html` — privacy policy
-- `terms.html` — terms & conditions
-- `resume.pdf` — downloadable resume
-
-## Develop
+Product map: `/screens` · Case study: `/product` · Status: `/status`
 
 ```bash
-npm start
+npm install
+cp .env.example .env.local   # optional for local concept demos
+npm run dev
 ```
 
-Opens a local static server at [http://localhost:3000](http://localhost:3000).
+Useful scripts: `npm run build`, `npm test`, `npm run typecheck`, `npm run lint`.
 
-Or open `index.html` directly in a browser.
+## Artistic Fountain
 
-## Structure
+Independent design-venture portfolio (digital media, brand, services, blog). Static HTML/CSS in `artistic-fountain/`.
 
-```
-.
-├── index.html
-├── privacy.html
-├── terms.html
-├── styles.css
-├── STATUS.md
-├── favicon.svg
-├── resume.pdf
-├── services/
-├── blog/
-├── images/
-└── *.otf          # brand fonts
-```
+## NH DMV
+
+Conceptual redesign of New Hampshire DMV surfaces. Static HTML/CSS/JS in `nh-dmv/`. See `nh-dmv/README.md`.
+
+## Notes
+
+- Treat every piece as a **demo / case study**, not a deploy target for real users.
+- Brand names, logos, and product patterns appear for portfolio storytelling only.
+- Optional Cloudflare / Stripe / KV wiring on the PF piece exists to show engineering depth — not for commercial go-live.

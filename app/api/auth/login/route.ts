@@ -1,0 +1,102 @@
+import { NextResponse } from "next/server";
+import {
+  SESSION_COOKIE,
+  createSessionToken,
+  sessionCookieOptions,
+  verifyDemoPassword,
+  type SessionUser,
+} from "@/lib/auth";
+import { HOME_CLUB } from "@/lib/home-club";
+import { getMembershipByEmail } from "@/lib/memberships";
+import { ensureWelcomeNotifications } from "@/lib/notifications";
+import { authenticateUser, createUser, getUserByEmail } from "@/lib/users";
+import { normalizeEmail } from "@/lib/validation";
+import { clientKey, rateLimit } from "@/lib/rate-limit";
+
+export const dynamic = "force-dynamic";
+
+type LoginBody = {
+  email?: string;
+  password?: string;
+};
+
+export async function POST(request: Request) {
+  const limited = rateLimit(clientKey(request, "login"), 30, 60_000);
+  if (!limited.ok) {
+    return NextResponse.json(
+      { error: "Too many sign-in attempts. Try again shortly." },
+      {
+        status: 429,
+        headers: { "Retry-After": String(limited.retryAfterSec) },
+      }
+    );
+  }
+
+  let body: LoginBody;
+  try {
+    body = (await request.json()) as LoginBody;
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON body." }, { status: 400 });
+  }
+
+  const email = normalizeEmail(body.email);
+  const password = typeof body.password === "string" ? body.password : "";
+
+  if (!email || !password) {
+    return NextResponse.json(
+      { error: "Email and password are required." },
+      { status: 400 }
+    );
+  }
+
+  let user = await authenticateUser(email, password);
+  const membership = await getMembershipByEmail(email);
+
+  // Optional local QA path — only when ALLOW_DEMO_AUTH=true (never production).
+  if (!user && verifyDemoPassword(password)) {
+    const existing = await getUserByEmail(email);
+    if (existing) {
+      user = existing;
+    } else {
+      user = await createUser({
+        email,
+        password,
+        firstName: membership?.member.firstName || email.split("@")[0] || "Member",
+        lastName: membership?.member.lastName || "",
+        phone: membership?.member.phone,
+        membershipId: membership?.id ?? null,
+      });
+    }
+  }
+
+  if (!user) {
+    return NextResponse.json(
+      { error: "Invalid email or password." },
+      { status: 401 }
+    );
+  }
+
+  if (membership && user.membershipId !== membership.id) {
+    const { updateUser } = await import("@/lib/users");
+    user =
+      (await updateUser(user.id, { membershipId: membership.id })) ?? user;
+  }
+
+  await ensureWelcomeNotifications(user.id);
+
+  const sessionUser: SessionUser = {
+    userId: user.id,
+    email: user.email,
+    firstName: user.firstName || membership?.member.firstName || "Member",
+    lastName: user.lastName || membership?.member.lastName || "",
+    membershipId: user.membershipId ?? membership?.id ?? null,
+    clubId: membership?.clubId ?? HOME_CLUB.id,
+    clubName: membership?.clubName ?? HOME_CLUB.name,
+    plan: membership?.plan ?? "black-card",
+  };
+
+  const token = createSessionToken(sessionUser);
+  const response = NextResponse.json({ user: sessionUser });
+  response.cookies.set(SESSION_COOKIE, token, sessionCookieOptions());
+  return response;
+}

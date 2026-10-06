@@ -1,0 +1,72 @@
+import type { Metadata } from "next";
+import { Barlow_Condensed, Open_Sans } from "next/font/google";
+import "./globals.css";
+
+/** PF-style condensed black italic for hero / TV impact headlines */
+const display = Barlow_Condensed({
+  subsets: ["latin"],
+  weight: ["600", "700", "800", "900"],
+  style: ["normal", "italic"],
+  variable: "--font-display",
+  display: "swap",
+});
+
+/** PF body / UI face (Open Sans) */
+const body = Open_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-body",
+  display: "swap",
+});
+
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+
+export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Planet Fitness Stratham, NH — Join Online",
+    template: "%s · Planet Fitness Stratham",
+  },
+  description:
+    "Join Planet Fitness Stratham at 20 Portsmouth Ave — Open & Staffed 24/7. Compare Classic and Black Card rates for the Seacoast NH Judgement Free Zone®.",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: siteUrl,
+    siteName: "Planet Fitness Stratham",
+    title: "Planet Fitness Stratham, NH — Join Online",
+    description:
+      "Your home club in Stratham, NH. Compare memberships, explore Seacoast clubs, and join with transparent local pricing.",
+    images: [
+      {
+        url: "/images/strong-hero.jpg",
+        width: 1536,
+        height: 1024,
+        alt: "Members training together at Planet Fitness Stratham",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Planet Fitness Stratham, NH — Join Online",
+    description:
+      "Your home club in Stratham, NH. Compare memberships and join with transparent local pricing.",
+    images: ["/images/strong-hero.jpg"],
+  },
+  robots: { index: true, follow: true },
+  manifest: "/manifest.json",
+};
+
+/** Root shell: fonts + global styles only. Segment layouts own chrome. */
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en" className={`${display.variable} ${body.variable}`}>
+      <body className="min-h-dvh font-sans antialiased">{children}</body>
+    </html>
+  );
+}

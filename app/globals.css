@@ -1,0 +1,232 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /*
+   * Brand anchors sampled from in-club Black Card Spa TV:
+   * indigo screen fill ≈ #180BB2, NEW yellow ≈ #F3D012
+   */
+  --pf-purple: #180bb2;
+  --pf-purple-bright: #2a18d4;
+  --pf-purple-mid: #1a1299;
+  --pf-purple-deep: #0e0690;
+  --pf-purple-ink: #07044a;
+  --pf-purple-soft: #eef0ff;
+  --pf-lavender: #8b8cff;
+  --pf-indigo: #180bb2;
+  --pf-indigo-bright: #2a18d4;
+  --pf-indigo-deep: #0e0690;
+  --pf-yellow: #f3d012;
+  --pf-yellow-bright: #ffe135;
+  --pf-gold: #f3d012;
+  --pf-ink: #000521;
+  --pf-mist: #f4f5ff;
+  --pf-line: #d8dbf5;
+
+  /* PF homepage type scale (desktop reference ~1440px) */
+  --pf-hero-line: 4.5rem; /* 72px — WE'RE ALL / ON THIS PLANET™ */
+  --pf-hero-strong: 7.5rem; /* 120px — STRONG */
+  --pf-hero-sub: 1.75rem; /* 28px — JOIN THE CLUB TODAY! */
+  --pf-section-title: 2.75rem; /* 44px — Explore Clubs / Memberships */
+  --pf-body: 1rem;
+  --pf-body-lg: 1.125rem;
+
+  /* Explore Clubs — indigo → spa yellow diagonal */
+  --pf-grad-explore: linear-gradient(
+    135deg,
+    #180bb2 0%,
+    #2a18d4 38%,
+    #c9a010 72%,
+    #f3d012 100%
+  );
+
+  /* Gradients matching TV indigo / yellow system */
+  --pf-grad-footer: linear-gradient(180deg, #180bb2 0%, #0e0690 100%);
+  --pf-grad-clubs: linear-gradient(180deg, #2a18d4 0%, #180bb2 55%, #0e0690 100%);
+  --pf-grad-black-card: linear-gradient(145deg, #1a1299 0%, #0e0690 48%, #07044a 100%);
+  --pf-grad-app: linear-gradient(115deg, #180bb2 0%, #2a18d4 42%, #f3d012 100%);
+  --pf-grad-hero: linear-gradient(
+    125deg,
+    rgba(24, 11, 178, 0.94) 0%,
+    rgba(14, 6, 144, 0.78) 48%,
+    rgba(7, 4, 74, 0.58) 100%
+  );
+  --pf-grad-btn: linear-gradient(90deg, #0e0690 0%, #2a18d4 100%);
+  --pf-grad-promo: linear-gradient(160deg, #3d2ef0 0%, #180bb2 55%, #1a1299 100%);
+  --pf-grad-spa: linear-gradient(160deg, #180bb2 0%, #150ac6 60%, #0e0690 100%);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--pf-purple-ink);
+  color: var(--pf-ink);
+  font-family: var(--font-body), sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer components {
+  .pf-grad-footer {
+    background-image: var(--pf-grad-footer);
+  }
+
+  .pf-grad-clubs {
+    background-image: var(--pf-grad-clubs);
+  }
+
+  .pf-grad-black-card {
+    background-image: var(--pf-grad-black-card);
+  }
+
+  .pf-grad-app {
+    background-image: var(--pf-grad-app);
+  }
+
+  .pf-grad-hero {
+    background-image: var(--pf-grad-hero);
+  }
+
+  .pf-grad-btn {
+    background-image: var(--pf-grad-btn);
+  }
+
+  .pf-grad-promo {
+    background-image: var(--pf-grad-promo);
+  }
+
+  .pf-grad-explore {
+    background-image: var(--pf-grad-explore);
+  }
+
+  .pf-grad-spa {
+    background-image: var(--pf-grad-spa);
+  }
+
+  /* Subtle mesh like Explore Clubs on planetfitness.com */
+  .pf-texture {
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.08), transparent 28%),
+      radial-gradient(circle at 80% 0%, rgba(243, 208, 18, 0.1), transparent 30%),
+      linear-gradient(0deg, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.12)),
+      var(--pf-grad-clubs);
+  }
+
+  /*
+   * In-club TV display style: ultra-bold condensed + italic slant,
+   * tight tracking, all caps — matches "NEW / BLACK CARD SPA AMENITIES".
+   */
+  .pf-type-impact {
+    font-family: var(--font-display), sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+    line-height: 0.9;
+  }
+
+  .pf-type-hero-line {
+    font-family: var(--font-display), sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: clamp(2.25rem, 5.2vw, var(--pf-hero-line));
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+
+  .pf-type-hero-strong {
+    font-family: var(--font-display), sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: clamp(3.5rem, 9vw, var(--pf-hero-strong));
+    line-height: 0.85;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    color: var(--pf-yellow);
+  }
+
+  .pf-type-hero-sub {
+    font-family: var(--font-display), sans-serif;
+    font-weight: 800;
+    font-style: italic;
+    font-size: clamp(1.25rem, 2.2vw, var(--pf-hero-sub));
+    line-height: 1.15;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--pf-yellow);
+  }
+
+  .pf-type-section {
+    font-family: var(--font-display), sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: clamp(2rem, 4vw, var(--pf-section-title));
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+
+  /* Dense marketing section rhythm — less empty white between blocks */
+  .pf-section {
+    @apply px-4 py-8 md:px-6 md:py-10;
+  }
+
+  .pf-section-tight {
+    @apply px-4 py-6 md:px-6 md:py-8;
+  }
+}
+
+@keyframes hero-zoom {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.85rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-strong {
+  from {
+    opacity: 0;
+    transform: translateY(0.6rem) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+::selection {
+  background: color-mix(in srgb, var(--pf-yellow) 70%, white);
+  color: var(--pf-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

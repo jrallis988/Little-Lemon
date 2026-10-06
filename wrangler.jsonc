@@ -1,0 +1,32 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "planet-fitness-stratham",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2024-12-30",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "workers_dev": true,
+  "preview_urls": true,
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "services": [
+    {
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "planet-fitness-stratham"
+    }
+  ],
+  "images": {
+    "binding": "IMAGES"
+  },
+  // After claiming the Worker into your account:
+  //   npx wrangler kv namespace create PF_STORE
+  //   npx wrangler kv namespace create PF_STORE --preview
+  // paste ids below, then remove USE_MEMORY_STORE (or set false).
+  // "kv_namespaces": [
+  //   { "binding": "PF_STORE", "id": "REPLACE_PROD_ID", "preview_id": "REPLACE_PREVIEW_ID" }
+  // ],
+  "vars": {
+    "USE_MEMORY_STORE": "true"
+  }
+}

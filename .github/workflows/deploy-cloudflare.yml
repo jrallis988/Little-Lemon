@@ -1,0 +1,69 @@
+name: deploy-cloudflare
+
+# Manual deploy once Cloudflare + app secrets exist in this GitHub repo.
+# Dashboard alternative: Workers & Pages → Connect to Git (see README).
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: cloudflare-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - run: npm ci
+
+      - name: Require Cloudflare + app secrets
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+          ACCESS_CONTROL_SECRET: ${{ secrets.ACCESS_CONTROL_SECRET }}
+        run: |
+          missing=0
+          for key in CLOUDFLARE_API_TOKEN CLOUDFLARE_ACCOUNT_ID AUTH_SECRET ACCESS_CONTROL_SECRET; do
+            if [ -z "${!key}" ]; then
+              echo "Missing GitHub secret: $key"
+              missing=1
+            fi
+          done
+          exit "$missing"
+
+      - name: Build OpenNext Worker
+        run: npx opennextjs-cloudflare build
+        env:
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+          ACCESS_CONTROL_SECRET: ${{ secrets.ACCESS_CONTROL_SECRET }}
+          NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
+
+      - name: Write runtime secrets file
+        env:
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+          ACCESS_CONTROL_SECRET: ${{ secrets.ACCESS_CONTROL_SECRET }}
+          NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
+        run: |
+          {
+            echo "AUTH_SECRET=$AUTH_SECRET"
+            echo "ACCESS_CONTROL_SECRET=$ACCESS_CONTROL_SECRET"
+            if [ -n "$NEXT_PUBLIC_SITE_URL" ]; then
+              echo "NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL"
+            fi
+          } > "$RUNNER_TEMP/cf-secrets.env"
+
+      - name: Deploy to Cloudflare Workers
+        run: npx opennextjs-cloudflare deploy -- --keep-vars --secrets-file "$RUNNER_TEMP/cf-secrets.env"
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
