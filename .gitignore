@@ -1,5 +1,6 @@
 # dependencies
 /node_modules
+node_modules/
 /.pnp
 .pnp.*
 .yarn/*
@@ -20,8 +21,12 @@
 .dev.vars
 .wrangler/
 
-# production
+# production / tooling
 /build
+dist/
+.cache/
+.vscode/
+.idea/
 
 # misc
 .DS_Store
@@ -32,6 +37,7 @@ Thumbs.db
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*.log
 
 # env files
 .env*.local

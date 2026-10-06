@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="New Hampshire DMV — book appointments, renew licenses, get REAL ID, and complete vehicle transactions. Redesign concept by Artistic Fountain.">
+  <meta name="theme-color" content="#003a56">
+  <title>New Hampshire DMV — Appointments, Licenses &amp; Registration</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23003a56'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-size='28' fill='white' font-family='Georgia,serif'%3ENH%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <div class="concept-ribbon">
+    Conceptual redesign by <a href="../index.html">Artistic Fountain</a> — not an official NH.gov site.
+    Content mirrors public NH DMV information for demonstration.
+  </div>
+
+  <div class="site-alert" role="status">
+    <div class="site-alert-inner">
+      <strong>Scam alert</strong>
+      <span>The NH DMV never sends text messages about payments.
+        <a href="https://www.dmv.nh.gov/news-and-media/new-hampshire-dmv-warns-text-message-scam-threatens-penalties-alleged-unpaid-traffic" rel="noopener">Read the official notice</a>.
+      </span>
+    </div>
+  </div>
+
+  <header class="header">
+    <div class="header-inner">
+      <a class="brand" href="index.html" aria-label="New Hampshire DMV home">
+        <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+          <rect width="40" height="40" rx="4" fill="#003a56"/>
+          <path d="M8 28 L20 10 L32 28 Z" fill="none" stroke="#c9a227" stroke-width="1.5"/>
+          <circle cx="20" cy="22" r="3" fill="#f5f8fa"/>
+        </svg>
+        <span class="brand-text">
+          <span class="brand-state">New Hampshire DMV</span>
+          <span class="brand-division">Division of Motor Vehicles</span>
+        </span>
+      </a>
+
+      <nav aria-label="Primary">
+        <ul class="nav" id="primary-nav">
+          <li><a href="#tasks">Services</a></li>
+          <li><a href="appointments.html">Appointments</a></li>
+          <li><a href="real-id.html">REAL ID</a></li>
+          <li><a href="locations.html">Locations</a></li>
+          <li><a href="https://www.dmv.nh.gov/online-services" rel="noopener">Online</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <a class="btn btn-primary btn-sm" href="appointments.html">Make an appointment</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-label="Welcome">
+      <div class="hero-media">
+        <img
+          src="images/nh-highway-hero.jpg"
+          alt="Winding New Hampshire mountain highway through forested peaks"
+          width="1920"
+          height="1080"
+          fetchpriority="high"
+        >
+      </div>
+      <div class="hero-scrim" aria-hidden="true"></div>
+      <div class="hero-content">
+        <h1 class="hero-brand">
+          <span class="soft">Live Free or Die</span>
+          <span>New Hampshire</span>
+          <span>DMV</span>
+        </h1>
+        <p class="hero-headline">In and out — on your schedule.</p>
+        <p class="hero-support">Most in-person services are by appointment. Book ahead and skip the wait.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="appointments.html">Make an appointment</a>
+          <a class="btn btn-secondary" href="#tasks">Find a service</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section tasks" id="tasks">
+      <div class="section-inner">
+        <p class="section-kicker reveal">Start here</p>
+        <h2 class="section-title reveal">What do you need to do?</h2>
+        <p class="section-lede reveal">Search or filter common transactions. Every result shows whether you can finish online, by appointment, drop box, or mail.</p>
+
+        <div class="task-search reveal">
+          <svg class="task-search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
+            <path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <label class="visually-hidden" for="task-query" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Search services</label>
+          <input id="task-query" type="search" placeholder="Try “REAL ID”, “renew”, “title”, “CDL”…" autocomplete="off">
+        </div>
+
+        <div class="task-filters reveal" role="group" aria-label="Filter by category">
+          <button type="button" class="chip" data-filter="all" aria-pressed="true">All</button>
+          <button type="button" class="chip" data-filter="license" aria-pressed="false">License &amp; ID</button>
+          <button type="button" class="chip" data-filter="vehicle" aria-pressed="false">Registration &amp; title</button>
+          <button type="button" class="chip" data-filter="testing" aria-pressed="false">Tests &amp; training</button>
+          <button type="button" class="chip" data-filter="records" aria-pressed="false">Records &amp; tickets</button>
+        </div>
+
+        <ul class="task-list" id="task-list">
+          <li class="task-item" data-category="license" data-keywords="real id upgrade star federal flight airport">
+            <a class="task-link" href="real-id.html">
+              <div>
+                <div class="task-name">Get or upgrade to REAL ID</div>
+                <div class="task-meta">Required for domestic flights and federal facilities</div>
+              </div>
+              <div class="task-ways">
+                <span class="way way-appt">Appointment</span>
+              </div>
+            </a>
+          </li>
+          <li class="task-item" data-category="license" data-keywords="renew driver license licence online">
+            <a class="task-link" href="https://www.dmv.nh.gov/online-services/online-renewals" rel="noopener">
+              <div>
+                <div class="task-name">Renew a driver license</div>
+                <div class="task-meta">Many renewals can be completed online</div>
+              </div>
+              <div class="task-ways">
+                <span class="way way-online">Online</span>
+                <span class="way way-appt">Appointment</span>
+              </div>
+            </a>
+          </li>
+          <li class="task-item" data-category="license" data-keywords="duplicate replacement lost stolen id">
+            <a class="task-link" href="https://forms.nh.gov/OnlineServices/Odld" rel="noopener">
+              <div>
+                <div class="task-name">Get a duplicate license or ID</div>
+                <div class="task-meta">Replace a lost, stolen, or damaged credential</div>
+              </div>
+              <div class="task-ways">
+                <span class="way way-online">Online</span>
+                <span class="way way-drop">Drop box</span>
+                <span class="way way-appt">Appointment</span>
+              </div>
+            </a>
+          </li>
+          <li class="task-item" data-category="license" data-keywords="new resident transfer out of state move">
+            <a class="task-link" href="https://www.dmv.nh.gov/drivers-licensenon-driver-ids/new-residents" rel="noopener">
+              <div>
+                <div class="task-name">Transfer an out-of-state license</div>
+                <div class="task-meta">New residents have 60 days after establishing residency</div>
+              </div>
+              <div class="task-ways">
+                <span class="way way-appt">Appointment</span>
+              </div>
+            </a>
+          </li>
+          <li class="task-item" data-category="license" data-keywords="non driver identification card photo id">
+            <a class="task-link" href="appointments.html">
+              <div>
+                <div class="task-name">Apply for a non-driver ID</div>
+                <div class="task-meta">State photo ID without driving privileges</div>
+              </div>
+              <div class="task-ways">
+                <span class="way way-appt">Appointment</span>
+              </div>
+            </a>
+          </li>
+          <li class="task-item" data-category="vehicle" data-keywords="registration renew plate vehicle car">
+            <a class="task-link" href="appointments.html">
+              <div>
+                <div class="task-name">Renew vehicle registration</div>
+                <div class="task-meta">State portion — drop box or appointment</div>
+              </div>
+              <div class="task-ways">
+                <span class="way way-drop">Drop box</span>
+                <span class="way way-appt">Appointment</span>
+              </div>
+            </a>
+          </li>
+          <li class="task-item" data-category="vehicle" data-keywords="title duplicate new transfer boat">
+            <a class="task-link" href="appointments.html">
+              <div>
+                <div class="task-name">Title or new registration</div>
+                <div class="task-meta">New, transfer, temporary plates, or boat registration</div>
+              </div>
+              <div class="task-ways">
+                <span class="way way-drop">Drop box</span>
+                <span class="way way-appt">Appointment</span>
+              </div>
+            </a>
+          </li>
+          <li class="task-item" data-category="vehicle" data-keywords="vanity plate commemorative 250 anniversary">
+            <a class="task-link" href="https://www.dmv.nh.gov/" rel="noopener">
+              <div>
+                <div class="task-name">Vanity or commemorative plates</div>
+                <div class="task-meta">Including America’s 250th Anniversary plate</div>
+              </div>
+              <div class="task-ways">
+                <span class="way way-appt">Appointment</span>
+                <span class="way way-mail">Mail</span>
+              </div>
+            </a>
+          </li>
+          <li class="task-item" data-category="testing" data-keywords="knowledge test road skills driving exam">
+            <a class="task-link" href="appointments.html">
+              <div>
+                <div class="task-name">Schedule a knowledge or road test</div>
+                <div class="task-meta">Driver license testing is appointment-only</div>
+              </div>
+              <div class="task-ways">
+                <span class="way way-appt">Appointment</span>
+              </div>
+            </a>
+          </li>
+          <li class="task-item" data-category="testing" data-keywords="cdl commercial permit hazmat">
+            <a class="task-link" href="appointments.html">
+              <div>
+                <div class="task-name">CDL permit or commercial testing</div>
+                <div class="task-meta">Knowledge tests and hazmat renewals by appointment</div>
+              </div>
+              <div class="task-ways">
+                <span class="way way-appt">Appointment</span>
+              </div>
+            </a>
+          </li>
+          <li class="task-item" data-category="testing" data-keywords="motorcycle rider training permit endorsement">
+            <a class="task-link" href="https://forms.nh.gov/onlineservices/MRT" rel="noopener">
+              <div>
+                <div class="task-name">Motorcycle training &amp; permit</div>
+                <div class="task-meta">Register for rider training online</div>
+              </div>
+              <div class="task-ways">
+                <span class="way way-online">Online</span>
+                <span class="way way-appt">Appointment</span>
+              </div>
+            </a>
+          </li>
+          <li class="task-item" data-category="records" data-keywords="driving record mvr request">
+            <a class="task-link" href="https://forms.nh.gov/OnlineServices/OMVR" rel="noopener">
+              <div>
+                <div class="task-name">Request your driving record</div>
+                <div class="task-meta">Your own record — available online</div>
+              </div>
+              <div class="task-ways">
+                <span class="way way-online">Online</span>
+                <span class="way way-drop">Drop box</span>
+                <span class="way way-appt">Appointment</span>
+              </div>
+            </a>
+          </li>
+          <li class="task-item" data-category="records" data-keywords="ticket violation respond pay restoration">
+            <a class="task-link" href="https://www.dmv.nh.gov/tickets-accidents-or-restorations/respond-motor-vehicle-ticket/respond-motor-vehicle-ticket-online" rel="noopener">
+              <div>
+                <div class="task-name">Respond to a motor vehicle ticket</div>
+                <div class="task-meta">Pay or respond online when eligible</div>
+              </div>
+              <div class="task-ways">
+                <span class="way way-online">Online</span>
+                <span class="way way-drop">Drop box</span>
+                <span class="way way-appt">Appointment</span>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <div class="task-empty" id="task-empty" role="status">No matching services. Try another keyword or clear the filter.</div>
+      </div>
+    </section>
+
+    <section class="section channels" id="how">
+      <div class="section-inner">
+        <p class="section-kicker reveal">Four ways</p>
+        <h2 class="section-title reveal">Finish without the line when you can</h2>
+        <p class="section-lede reveal">Appointments cut wait times. Online, drop box, and mail handle many transactions without a counter visit.</p>
+        <div class="channel-grid">
+          <article class="channel reveal">
+            <div class="channel-num">01</div>
+            <h3>Appointment</h3>
+            <p>Required for most in-person services. Same-day slots release daily when available.</p>
+          </article>
+          <article class="channel reveal">
+            <div class="channel-num">02</div>
+            <h3>Online</h3>
+            <p>Renewals, duplicates, driving records, tickets, and motorcycle training registration.</p>
+          </article>
+          <article class="channel reveal">
+            <div class="channel-num">03</div>
+            <h3>Drop box</h3>
+            <p>Available at full-time offices for registrations, titles, and many paper transactions.</p>
+          </article>
+          <article class="channel reveal">
+            <div class="channel-num">04</div>
+            <h3>Mail</h3>
+            <p>Eligible forms can be mailed — check the service page for addresses and checklists.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section notices" id="notices">
+      <div class="section-inner">
+        <p class="section-kicker reveal" style="color: var(--gold)">Updates</p>
+        <h2 class="section-title reveal">Important notices</h2>
+        <p class="section-lede reveal">Keep these on your radar before you visit or renew.</p>
+        <ul class="notice-list">
+          <li class="reveal">
+            Inspection and emissions testing programs have ended.
+            <a href="https://www.dmv.nh.gov/" rel="noopener">See inspections &amp; emissions info</a>.
+          </li>
+          <li class="reveal">
+            Fee changes took effect January 1, 2026. Review common DMV fees, or call
+            <a href="tel:6032274000">603-227-4000</a> with questions.
+          </li>
+          <li class="reveal">
+            The DMV is fully appointment-based for in-person services across all locations.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="real-id">
+      <div class="section-inner feature">
+        <div class="feature-copy reveal">
+          <p class="section-kicker">Federally required</p>
+          <h2 class="section-title">Get your REAL ID</h2>
+          <p class="section-lede">A REAL ID driver’s license, non-driver ID, or passport is required to board domestic flights and enter secure federal facilities.</p>
+          <ul class="checklist">
+            <li>Look for the star in the top-right corner of your credential</li>
+            <li>Bring original identity, Social Security, and residency documents</li>
+            <li>Use the online document checker before your visit</li>
+          </ul>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="real-id.html">REAL ID checklist</a>
+            <a class="btn btn-ghost" href="https://www.app-support.nh.gov/erealid/" rel="noopener">Document checker</a>
+          </div>
+        </div>
+        <div class="feature-visual real-id reveal" aria-hidden="true">
+          <div class="feature-visual-label">Star-marked credentials for federal ID</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="new-residents" style="background: var(--mist); padding-top: 0;">
+      <div class="section-inner feature" style="padding-top: 4.5rem;">
+        <div class="feature-visual reveal" aria-hidden="true">
+          <div class="feature-visual-label">New to the Granite State?</div>
+        </div>
+        <div class="feature-copy reveal">
+          <p class="section-kicker">New residents</p>
+          <h2 class="section-title">60 days to get licensed &amp; registered</h2>
+          <p class="section-lede">Once you establish residency in New Hampshire, you have a maximum of 60 days to obtain an NH driver license and register your vehicles.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="appointments.html">Book transfer appointment</a>
+            <a class="btn btn-ghost" href="https://www.dmv.nh.gov/drivers-licensenon-driver-ids/new-residents" rel="noopener">What you’ll need</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section locations" id="locations">
+      <div class="section-inner">
+        <p class="section-kicker reveal">Statewide</p>
+        <h2 class="section-title reveal">Find a DMV near you</h2>
+        <p class="section-lede reveal">Fifteen locations. Most full-time offices run Monday–Friday, 8:00 a.m.–4:30 p.m. Appointments required.</p>
+        <div class="location-grid">
+          <a class="location reveal" href="locations.html#concord">
+            <h3>Concord</h3>
+            <p>23 Hazen Drive · Full services &amp; drop box</p>
+          </a>
+          <a class="location reveal" href="locations.html#manchester">
+            <h3>Manchester</h3>
+            <p>377 South Willow Street · Full services</p>
+          </a>
+          <a class="location reveal" href="locations.html#nashua">
+            <h3>Nashua</h3>
+            <p>110 Broad Street · Full services</p>
+          </a>
+          <a class="location reveal" href="locations.html#dover">
+            <h3>Dover</h3>
+            <p>50 Boston Harbor Road · Full services</p>
+          </a>
+          <a class="location reveal" href="locations.html#salem">
+            <h3>Salem</h3>
+            <p>154 Main Street · Full services</p>
+          </a>
+          <a class="location reveal" href="locations.html#keene">
+            <h3>Keene</h3>
+            <p>149 Emerald Street · Full services</p>
+          </a>
+        </div>
+        <div class="location-more reveal">
+          <a class="btn btn-ghost" href="locations.html">View all hours &amp; locations</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-strip">
+      <div class="contact-inner">
+        <div>
+          <h2>Need help booking?</h2>
+          <p class="contact-meta">Customer service can schedule for you.</p>
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="tel:6032274000">Call 603-227-4000</a>
+          <a class="btn btn-ghost" href="https://www.dmv.nh.gov/contact-us" rel="noopener">Contact options</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">New Hampshire DMV</div>
+        <p>A division of the New Hampshire Department of Safety. This page is a design concept by Artistic Fountain.</p>
+      </div>
+      <div>
+        <h3>Services</h3>
+        <ul>
+          <li><a href="appointments.html">Appointments</a></li>
+          <li><a href="real-id.html">REAL ID</a></li>
+          <li><a href="https://www.dmv.nh.gov/online-services" rel="noopener">Online services</a></li>
+          <li><a href="locations.html">Hours &amp; locations</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Official</h3>
+        <ul>
+          <li><a href="https://www.dmv.nh.gov/" rel="noopener">Current dmv.nh.gov</a></li>
+          <li><a href="https://www.dos.nh.gov/" rel="noopener">Department of Safety</a></li>
+          <li><a href="../index.html">Artistic Fountain</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© Conceptual redesign — not affiliated with the State of New Hampshire.</span>
+      <span><a href="../index.html">Back to portfolio</a></span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

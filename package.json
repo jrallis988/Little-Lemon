@@ -1,7 +1,8 @@
 {
-  "name": "planet-fitness",
+  "name": "little-lemon-portfolio",
   "version": "0.1.0",
   "private": true,
+  "description": "Portfolio of concept product explorations — not live production sites.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -17,7 +18,9 @@
     "cf-build": "opennextjs-cloudflare build",
     "cf-deploy": "opennextjs-cloudflare deploy",
     "cf-preview": "opennextjs-cloudflare preview",
-    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
+    "portfolio:fountain": "npx --yes serve artistic-fountain -l 3001",
+    "portfolio:dmv": "npx --yes serve nh-dmv -l 3002"
   },
   "dependencies": {
     "@opennextjs/cloudflare": "^1.20.6",
