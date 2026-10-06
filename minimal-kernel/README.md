@@ -1,6 +1,6 @@
 # Minimal Custom Kernel & Boot Sector
 
-A tiny x86 teaching OS: MBR boot → protected mode → IDT (exceptions 0–31 + IRQ0/IRQ1) → PIT → keyboard → bump heap → VGA shell.
+Portfolio / teaching OS — not a product. Built to show boot-to-protected-mode work in QEMU: MBR boot → 32-bit protected mode → IDT (exceptions 0–31 + IRQ0/IRQ1) → PIT → keyboard → bump heap → VGA shell.
 
 ## Memory layout
 
