@@ -9,8 +9,9 @@ function Footer() {
             Civic Bound
           </p>
           <p className="mt-3 font-body text-sm leading-relaxed text-charcoal">
-            A nonprofit youth support network for belonging, learning, mental
-            wellbeing, and positive community re-entry.
+            A concept nonprofit for belonging, learning, mental wellbeing, and
+            community re-entry — designed as a portfolio case study, not a live
+            service.
           </p>
         </div>
         <div className="grid grid-cols-2 gap-x-10 gap-y-3 font-body text-sm text-charcoal sm:grid-cols-3">
@@ -46,7 +47,8 @@ function Footer() {
       <div className="border-t border-paper-line">
         <div className="container flex flex-col gap-2 py-5 font-body text-xs text-charcoal-soft md:flex-row md:items-center md:justify-between">
           <p>
-            © {new Date().getFullYear()} Civic Bound. A nonprofit organization.
+            © {new Date().getFullYear()} Civic Bound. Portfolio concept — not a
+            live organization.
           </p>
           <div className="flex flex-wrap gap-4">
             <Link to="/privacy" className="hover:text-violet">

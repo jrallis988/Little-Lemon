@@ -1,6 +1,8 @@
 # Civic Bound
 
-A multi-page React site for **Civic Bound** — a nonprofit, youth-centered community support network — combined with Whole Youth storytelling (belonging, education coaching, and mental wellbeing dialogue).
+A **portfolio case study** — a multi-page React concept site for Civic Bound, a fictional youth-centered community support network, combined with Whole Youth storytelling (belonging, education coaching, and mental wellbeing dialogue).
+
+This is not a live organization or production product.
 
 ## What this combines
 
@@ -21,6 +23,8 @@ A multi-page React site for **Civic Bound** — a nonprofit, youth-centered comm
 | `/partners` | Village Network partners |
 | `/leadership` | Youth Advisory Board |
 | `/news` | Latest news |
+| `/privacy` | Privacy (demo) |
+| `/terms` | Terms (demo) |
 
 ## Scripts
 
@@ -28,19 +32,5 @@ A multi-page React site for **Civic Bound** — a nonprofit, youth-centered comm
 npm install
 npm start          # http://localhost:3000
 npm run build      # production build → build/
-npx wrangler deploy --temporary   # Cloudflare Workers preview (after build)
+npx wrangler deploy --temporary   # optional Cloudflare preview
 ```
-
-## Launch checklist (in progress)
-
-Done in this branch:
-- Image compression (JPEG + WebP)
-- Privacy & Terms pages
-- Per-route SEO / Open Graph titles
-- Demo lead-capture forms (localStorage only)
-
-Still before a real public launch:
-- Claim Cloudflare account / custom domain
-- Replace sample hub & story content
-- Wire forms to email/CRM
-- Analytics

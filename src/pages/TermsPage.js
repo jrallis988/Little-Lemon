@@ -15,8 +15,8 @@ function TermsPage() {
         <p className="eyebrow-accent">Legal</p>
         <h1 className="display mt-5 text-4xl md:text-5xl">Terms of use</h1>
         <p className="lede mt-5">
-          Civic Bound on this domain is a nonprofit concept / portfolio
-          demonstration, not an official service channel for crisis response.
+          Civic Bound on this domain is a portfolio concept — not an official
+          service channel for crisis response.
         </p>
 
         <div className="mt-12 space-y-8 font-body leading-relaxed text-charcoal">
