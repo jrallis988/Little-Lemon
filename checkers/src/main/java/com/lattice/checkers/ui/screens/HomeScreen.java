@@ -90,7 +90,7 @@ public final class HomeScreen {
         destinations.getChildren().addAll(
                 destinationButton("New Game", "Choose a matchup", "new-game", onNavigate),
                 destinationButton("Analysis", "Replay the match", "match-analysis", onNavigate),
-                destinationButton("AI Lab", "Coming soon", "ai-lab", onNavigate)
+                destinationButton("AI Lab", "Watch two computers play", "ai-lab", onNavigate)
         );
 
         VBox page = new VBox(16, brand, tagline, worldFrame, matchup, crossing, actions, destinations);
