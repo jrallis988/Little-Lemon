@@ -40,6 +40,8 @@ export type Post = {
   mediaTone: number
   /** Short playback blurb shown in the player */
   playNote?: string
+  /** Demo or R2 media URL when upload is attached */
+  mediaUrl?: string
 }
 
 export type TipPreset = {

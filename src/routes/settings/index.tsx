@@ -7,7 +7,9 @@ import { useDemoAuth } from '#/lib/demo-auth'
 import { useMembership } from '#/lib/membership'
 import { usePublish } from '#/lib/oj/publish-store'
 import { useActivity } from '#/lib/oj/activity-store'
-import { getCreator, getCreatorByUsername } from '#/lib/oj/catalog'
+import { usePayout } from '#/lib/oj/payout-store'
+import { useFollow } from '#/lib/oj/follow-store'
+import { getCreator, getCreatorByUsername, getPostsByCreator } from '#/lib/oj/catalog'
 import type { AccessLevel, MediaKind } from '#/domain/oj-types'
 
 export const Route = createFileRoute('/settings/')({
@@ -26,6 +28,8 @@ function SettingsPage() {
   const { unlockedCreatorIds, tipTotalsByCreator, receipts } = useMembership()
   const { publish, postsForCreator } = usePublish()
   const { push: pushActivity } = useActivity()
+  const payout = usePayout()
+  const { followingCreatorIds } = useFollow()
   const [tierName, setTierName] = useState(creatorSettings.tierName)
   const [tierPrice, setTierPrice] = useState(
     String(creatorSettings.tierPriceMonthly),
@@ -36,6 +40,9 @@ function SettingsPage() {
   const [pubKind, setPubKind] = useState<MediaKind>('video')
   const [pubAccess, setPubAccess] = useState<AccessLevel>('public')
   const [publishedNote, setPublishedNote] = useState<string | null>(null)
+  const [mediaUrl, setMediaUrl] = useState<string | undefined>()
+  const [uploadNote, setUploadNote] = useState<string | null>(null)
+  const [connectBusy, setConnectBusy] = useState(false)
 
   if (!ready) {
     return (
@@ -146,10 +153,83 @@ function SettingsPage() {
                 {saved ? 'Saved' : 'Save tier'}
               </button>
               <p className="text-xs text-[var(--muted)]">
-                Payout destination: connect Stripe Connect when live keys are
-                available. Demo pricing stays on-device for now.
+                Demo pricing stays on-device until Postgres + Stripe are live.
               </p>
             </form>
+
+            <div className="mt-8 space-y-3 border-t border-[var(--hairline)] pt-8">
+              <p className="text-[11px] uppercase tracking-[0.18em] text-[var(--tint)]">
+                Earnings & payouts
+              </p>
+              <div className="grid grid-cols-3 gap-2 text-center">
+                <div className="rounded-xl bg-white/10 px-2 py-3">
+                  <p className="font-mono text-lg text-[var(--ink)]">
+                    $
+                    {getPostsByCreator(creator.id).reduce(
+                      (a, p) => a + p.tipTotal,
+                      0,
+                    )}
+                  </p>
+                  <p className="text-[10px] uppercase tracking-[0.12em] text-[var(--muted)]">
+                    Catalog tips
+                  </p>
+                </div>
+                <div className="rounded-xl bg-white/10 px-2 py-3">
+                  <p className="font-mono text-lg text-[var(--ink)]">
+                    {postsForCreator(creator.id).length}
+                  </p>
+                  <p className="text-[10px] uppercase tracking-[0.12em] text-[var(--muted)]">
+                    Publishes
+                  </p>
+                </div>
+                <div className="rounded-xl bg-white/10 px-2 py-3">
+                  <p className="font-mono text-sm capitalize text-[var(--ink)]">
+                    {payout.status}
+                  </p>
+                  <p className="text-[10px] uppercase tracking-[0.12em] text-[var(--muted)]">
+                    Connect
+                  </p>
+                </div>
+              </div>
+              {payout.accountId ? (
+                <p className="text-xs text-[var(--muted)]">
+                  Account ·{' '}
+                  <span className="font-mono text-[var(--ink-soft)]">
+                    {payout.accountId}
+                  </span>
+                </p>
+              ) : null}
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  disabled={connectBusy || payout.status === 'connected'}
+                  onClick={() => {
+                    setConnectBusy(true)
+                    void payout.startConnect().finally(() => setConnectBusy(false))
+                  }}
+                  className="rounded-xl bg-[var(--accent)] px-4 py-2.5 text-sm font-semibold text-[var(--on-accent)] disabled:opacity-60"
+                >
+                  {payout.status === 'connected'
+                    ? 'Payouts connected'
+                    : connectBusy
+                      ? 'Connecting…'
+                      : 'Connect payouts'}
+                </button>
+                {payout.status === 'connected' ? (
+                  <button
+                    type="button"
+                    onClick={() => payout.disconnect()}
+                    className="rounded-xl border border-[var(--line)] px-4 py-2.5 text-sm text-[var(--ink-soft)]"
+                  >
+                    Disconnect
+                  </button>
+                ) : null}
+              </div>
+              <p className="text-xs text-[var(--muted)]">
+                Demo Connect lands on-device. Live mode uses Stripe Account Links
+                when `STRIPE_SECRET_KEY` is set.
+              </p>
+            </div>
 
             <form
               className="mt-10 space-y-3 border-t border-[var(--hairline)] pt-8"
@@ -163,16 +243,19 @@ function SettingsPage() {
                   kind: pubKind,
                   access: pubAccess,
                   durationLabel: pubKind === 'text' ? undefined : '1:00',
+                  mediaUrl,
                 })
                 pushActivity({
                   kind: 'publish',
                   title: `Published “${post.title}”`,
                   body: `${pubAccess === 'supporters' ? 'Supporters' : 'Public'} · ${pubKind}`,
-                  href: '/discover',
+                  href: `/p/${post.id}`,
                 })
                 setPublishedNote(`Published “${post.title}”`)
                 setPubTitle('')
                 setPubBody('')
+                setMediaUrl(undefined)
+                setUploadNote(null)
               }}
             >
               <p className="text-[11px] uppercase tracking-[0.18em] text-[var(--tint)]">
@@ -228,6 +311,39 @@ function SettingsPage() {
                   </select>
                 </label>
               </div>
+              <label className="block text-sm text-[var(--muted)]">
+                Media file (optional)
+                <input
+                  type="file"
+                  accept="video/*,audio/*,image/*"
+                  className="mt-1 block w-full text-xs text-[var(--ink-soft)] file:mr-3 file:rounded-lg file:border-0 file:bg-white file:px-3 file:py-2 file:text-sm file:font-semibold file:text-[var(--on-accent)]"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0]
+                    if (!file) return
+                    setUploadNote('Uploading…')
+                    const body = new FormData()
+                    body.set('file', file)
+                    void fetch('/api/media/upload', { method: 'POST', body })
+                      .then((r) => r.json())
+                      .then((data: { ok?: boolean; url?: string; mode?: string; message?: string }) => {
+                        if (data.ok && data.url) {
+                          setMediaUrl(data.url)
+                          setUploadNote(
+                            data.mode === 'demo'
+                              ? 'Demo media attached (bytes not stored).'
+                              : 'Media attached.',
+                          )
+                        } else {
+                          setUploadNote(data.message ?? 'Upload failed')
+                        }
+                      })
+                      .catch(() => setUploadNote('Upload failed'))
+                  }}
+                />
+              </label>
+              {uploadNote ? (
+                <p className="text-xs text-[var(--tint)]">{uploadNote}</p>
+              ) : null}
               <button
                 type="submit"
                 className="rounded-xl bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-[var(--on-accent)]"
@@ -276,6 +392,8 @@ function SettingsPage() {
                 $
                 {Object.values(tipTotalsByCreator).reduce((a, b) => a + b, 0)}
               </span>
+              {' · '}
+              Following {followingCreatorIds.length}
             </p>
           </div>
         )}
@@ -296,8 +414,8 @@ function SettingsPage() {
             </Link>
           </div>
           <p className="mt-2 text-xs text-[var(--muted)]">
-            {receipts.length} receipt{receipts.length === 1 ? '' : 's'} on this
-            device
+            {receipts.length} receipt{receipts.length === 1 ? '' : 's'} ·{' '}
+            {followingCreatorIds.length} following on this device
           </p>
         </div>
 

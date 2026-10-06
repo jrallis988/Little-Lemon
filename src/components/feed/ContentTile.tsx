@@ -90,7 +90,13 @@ export function ContentTile({
       </div>
 
       <h2 className="text-lg font-semibold leading-snug tracking-tight text-[var(--ink)] sm:text-xl">
-        {post.title}
+        <Link
+          to="/p/$postId"
+          params={{ postId: post.id }}
+          className="text-[var(--ink)] no-underline hover:text-[var(--tint)]"
+        >
+          {post.title}
+        </Link>
       </h2>
       <p className="mt-1.5 text-sm leading-relaxed text-[var(--ink-soft)]">
         {post.body}

@@ -19,13 +19,14 @@ Creator-subscription comedy platform for stand-ups, comedy animators, and fans. 
 | `/` | Brand landing |
 | `/onboarding` | Product tour → fan/creator signup |
 | `/auth` | Demo sign up / sign in |
-| `/discover` | Chronological public discovery feed (+ Supporting filter) |
+| `/discover` | Chronological feed (Everyone / Following / Supporting) |
 | `/creators` | Creator directory (search + tags) |
 | `/library` | Unlocked tiers, supporter drops, receipts |
 | `/activity` | On-device unlocks / tips / publishes / replies |
-| `/c/$username` | Creator profile (public + locked tiles) |
+| `/p/$postId` | Post deep link |
+| `/c/$username` | Creator profile (follow · tip · unlock) |
 | `/messages` | Backstage inbox + replies |
-| `/settings` | Account, tier pricing, publish |
+| `/settings` | Account, tier pricing, publish, Connect payouts |
 | `/terms` · `/privacy` | Legal drafts |
 
 See `docs/PRODUCTION.md` for Postgres / Stripe / R2 wiring.

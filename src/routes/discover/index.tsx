@@ -6,6 +6,7 @@ import { AppShell } from '#/components/layout/AppShell'
 import { DiscoveryFeed } from '#/components/feed/DiscoveryFeed'
 import { SiteFooter } from '#/components/layout/SiteFooter'
 import { useMembership } from '#/lib/membership'
+import { useFollow } from '#/lib/oj/follow-store'
 import { fetchPublicFeed } from '#/server/oj-fns'
 import { getPostsByCreator } from '#/lib/oj/catalog'
 import { usePublish } from '#/lib/oj/publish-store'
@@ -16,26 +17,57 @@ export const Route = createFileRoute('/discover/')({
   component: DiscoverPage,
 })
 
+type Scope = 'all' | 'following' | 'supporting'
+
 function DiscoverPage() {
   const feed = Route.useLoaderData()
   const { unlockedCreatorIds } = useMembership()
+  const { followingCreatorIds } = useFollow()
   const { postsForCreator } = usePublish()
-  const [scope, setScope] = useState<'all' | 'supporting'>('all')
+  const [scope, setScope] = useState<Scope>('all')
 
-  const supportingPosts = useMemo(() => {
-    if (unlockedCreatorIds.length === 0) return [] as Post[]
-    const merged = unlockedCreatorIds.flatMap((id) => {
-      const published = postsForCreator(id)
-      const catalog = getPostsByCreator(id)
-      const byId = new Map(
-        [...published, ...catalog].map((p) => [p.id, p] as const),
+  const postsForIds = useMemo(() => {
+    return (ids: string[], includeLocked: boolean) => {
+      if (ids.length === 0) return [] as Post[]
+      const merged = ids.flatMap((id) => {
+        const published = postsForCreator(id)
+        const catalog = getPostsByCreator(id)
+        const byId = new Map(
+          [...published, ...catalog].map((p) => [p.id, p] as const),
+        )
+        return [...byId.values()].filter((p) =>
+          includeLocked ? true : p.access === 'public',
+        )
+      })
+      return merged.sort(
+        (a, b) => +new Date(b.createdAt) - +new Date(a.createdAt),
       )
-      return [...byId.values()]
-    })
-    return merged.sort(
-      (a, b) => +new Date(b.createdAt) - +new Date(a.createdAt),
-    )
-  }, [unlockedCreatorIds, postsForCreator])
+    }
+  }, [postsForCreator])
+
+  const followingPosts = useMemo(
+    () => postsForIds(followingCreatorIds, false),
+    [postsForIds, followingCreatorIds],
+  )
+  const supportingPosts = useMemo(
+    () => postsForIds(unlockedCreatorIds, true),
+    [postsForIds, unlockedCreatorIds],
+  )
+
+  const emptyCopy =
+    scope === 'following'
+      ? {
+          body: 'Follow creators (free) to build a chronological Following lane.',
+          cta: 'Browse creators',
+        }
+      : {
+          body: 'Unlock a creator tier to see their public + supporter drops here.',
+          cta: 'Browse creators',
+        }
+
+  const showEmpty =
+    (scope === 'following' && followingCreatorIds.length === 0) ||
+    (scope === 'supporting' && unlockedCreatorIds.length === 0)
 
   return (
     <AppShell>
@@ -55,6 +87,7 @@ function DiscoverPage() {
           {(
             [
               ['all', 'Everyone'],
+              ['following', 'Following'],
               ['supporting', 'Supporting'],
             ] as const
           ).map(([id, label]) => (
@@ -79,19 +112,25 @@ function DiscoverPage() {
           </Link>
         </div>
 
-        {scope === 'supporting' && unlockedCreatorIds.length === 0 ? (
+        {showEmpty ? (
           <p className="py-8 text-sm text-[var(--muted)]">
-            Unlock a creator tier to see their public + supporter drops here.{' '}
+            {emptyCopy.body}{' '}
             <Link
               to="/creators"
               className="text-[var(--ink)] underline-offset-4 hover:underline"
             >
-              Browse creators
+              {emptyCopy.cta}
             </Link>
           </p>
         ) : (
           <DiscoveryFeed
-            posts={scope === 'supporting' ? supportingPosts : feed}
+            posts={
+              scope === 'supporting'
+                ? supportingPosts
+                : scope === 'following'
+                  ? followingPosts
+                  : feed
+            }
             includePublished={scope === 'all'}
           />
         )}

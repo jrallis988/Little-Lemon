@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import '#/start-types'
 import { hasDatabase, shouldUseNeonHttp } from '#/db/index'
-import { stripeConfigured } from '#/lib/payments'
+import { stripeConfigured, stripeConnectConfigured } from '#/lib/payments'
 
 export const Route = createFileRoute('/api/status')({
   server: {
@@ -28,11 +28,13 @@ export const Route = createFileRoute('/api/status')({
             ),
             stripe: stripeConfigured(),
             stripeWebhook: Boolean(process.env.STRIPE_WEBHOOK_SECRET),
+            stripeConnect: stripeConnectConfigured(),
             r2: Boolean(process.env.R2_BUCKET || process.env.R2_ACCOUNT_ID),
           },
           routes: {
             checkout: '/api/stripe/checkout',
             webhook: '/api/stripe/webhook',
+            connect: '/api/stripe/connect',
             upload: '/api/media/upload',
             auth: '/api/auth',
           },

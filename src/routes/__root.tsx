@@ -11,6 +11,8 @@ import { PublishProvider } from '#/lib/oj/publish-store'
 import { InboxProvider } from '#/lib/oj/inbox-store'
 import { SafetyProvider } from '#/lib/oj/safety-store'
 import { ActivityProvider } from '#/lib/oj/activity-store'
+import { FollowProvider } from '#/lib/oj/follow-store'
+import { PayoutProvider } from '#/lib/oj/payout-store'
 import { UnlockSheet } from '#/components/monetization/UnlockSheet'
 import { PlaySheet } from '#/components/media/PlaySheet'
 import appCss from '../styles.css?url'
@@ -72,19 +74,23 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <DemoAuthProvider>
           <MembershipProvider>
             <ActivityProvider>
-              <PublishProvider>
-                <InboxProvider>
-                  <SafetyProvider>
-                    <PlayerProvider>
-                      <SupportProvider>
-                        {children}
-                        <UnlockSheet />
-                        <PlaySheet />
-                      </SupportProvider>
-                    </PlayerProvider>
-                  </SafetyProvider>
-                </InboxProvider>
-              </PublishProvider>
+              <FollowProvider>
+                <PayoutProvider>
+                  <PublishProvider>
+                    <InboxProvider>
+                      <SafetyProvider>
+                        <PlayerProvider>
+                          <SupportProvider>
+                            {children}
+                            <UnlockSheet />
+                            <PlaySheet />
+                          </SupportProvider>
+                        </PlayerProvider>
+                      </SafetyProvider>
+                    </InboxProvider>
+                  </PublishProvider>
+                </PayoutProvider>
+              </FollowProvider>
             </ActivityProvider>
           </MembershipProvider>
         </DemoAuthProvider>

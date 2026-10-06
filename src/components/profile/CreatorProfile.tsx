@@ -8,6 +8,8 @@ import { useSupport } from '#/lib/support'
 import { useMembership } from '#/lib/membership'
 import { usePublish } from '#/lib/oj/publish-store'
 import { useSafety } from '#/lib/oj/safety-store'
+import { useFollow } from '#/lib/oj/follow-store'
+import { useActivity } from '#/lib/oj/activity-store'
 import { useDemoAuth } from '#/lib/demo-auth'
 
 export function CreatorProfile({
@@ -21,8 +23,11 @@ export function CreatorProfile({
   const { isUnlocked } = useMembership()
   const { postsForCreator } = usePublish()
   const { isBlocked, blockCreator, unblockCreator, reportCreator } = useSafety()
+  const { isFollowing, toggle: toggleFollow } = useFollow()
+  const { push: pushActivity } = useActivity()
   const { user } = useDemoAuth()
   const unlocked = isUnlocked(creator.id)
+  const following = isFollowing(creator.id)
   const blocked = isBlocked(creator.id)
   const [reportOpen, setReportOpen] = useState(false)
   const [reason, setReason] = useState('Harassment or hate')
@@ -82,6 +87,28 @@ export function CreatorProfile({
             </div>
           </div>
           <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                const next = !following
+                toggleFollow(creator.id)
+                if (next) {
+                  pushActivity({
+                    kind: 'system',
+                    title: `Following ${creator.displayName}`,
+                    body: 'Free follow · chronological Following lane',
+                    href: '/discover',
+                  })
+                }
+              }}
+              className={`rounded-xl border px-4 py-2.5 text-sm font-semibold ${
+                following
+                  ? 'border-white bg-white text-[var(--on-accent)]'
+                  : 'border-[var(--line-strong)] text-[var(--ink)] hover:bg-white/10'
+              }`}
+            >
+              {following ? 'Following' : 'Follow'}
+            </button>
             <button
               type="button"
               onClick={() => openTip(creator)}

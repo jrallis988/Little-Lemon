@@ -30,10 +30,13 @@ export function TipBar({
     (tipTotal ?? 0) + (tipTotalsByCreator[creator.id] ?? 0)
 
   async function share() {
+    const path = post
+      ? `/p/${post.id}`
+      : `/c/${creator.username}`
     const url =
       typeof window !== 'undefined'
-        ? `${window.location.origin}/c/${creator.username}`
-        : `/c/${creator.username}`
+        ? `${window.location.origin}${path}`
+        : path
     const text = post
       ? `${post.title} — ${creator.displayName} on only Jokes`
       : `${creator.displayName} on only Jokes`

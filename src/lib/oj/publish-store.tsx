@@ -20,6 +20,7 @@ type PublishInput = {
   kind: MediaKind
   access: AccessLevel
   durationLabel?: string
+  mediaUrl?: string
 }
 
 type PublishContextValue = {
@@ -66,7 +67,10 @@ export function PublishProvider({ children }: { children: ReactNode }) {
       createdAt: new Date().toISOString(),
       tipTotal: 0,
       mediaTone: Math.floor(Math.random() * 360),
-      playNote: 'Creator publish · demo media stage',
+      mediaUrl: input.mediaUrl,
+      playNote: input.mediaUrl
+        ? 'Creator publish · attached media'
+        : 'Creator publish · demo media stage',
     }
     setPosts((prev) => [post, ...prev])
     return post

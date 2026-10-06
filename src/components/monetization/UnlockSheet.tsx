@@ -43,6 +43,8 @@ export function UnlockSheet() {
     amount: number
     label: string
   }) {
+    const origin =
+      typeof window !== 'undefined' ? window.location.origin : ''
     const res = await fetch('/api/stripe/checkout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -52,6 +54,8 @@ export function UnlockSheet() {
         creatorName: creator.displayName,
         amount: input.amount,
         label: input.label,
+        successUrl: `${origin}/library`,
+        cancelUrl: `${origin}/c/${creator.username}`,
       }),
     })
     return (await res.json()) as {

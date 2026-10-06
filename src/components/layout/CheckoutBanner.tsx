@@ -2,26 +2,72 @@
 
 import { useEffect, useState } from 'react'
 import { X } from 'lucide-react'
+import { useMembership } from '#/lib/membership'
+import { useActivity } from '#/lib/oj/activity-store'
+import { getCreator } from '#/lib/oj/catalog'
 
 /**
- * Surfaces Stripe Checkout return query (?checkout=success|cancel).
- * Demo unlocks still happen on-device; live Stripe needs the webhook.
+ * Surfaces Stripe Checkout return query and applies membership when
+ * creatorId/kind/amount/label are present (client bridge until webhooks land).
  */
 export function CheckoutBanner() {
+  const { subscribe, tip, isUnlocked } = useMembership()
+  const { push: pushActivity } = useActivity()
   const [banner, setBanner] = useState<'success' | 'cancel' | null>(null)
+  const [detail, setDetail] = useState<string | null>(null)
 
   useEffect(() => {
     if (typeof window === 'undefined') return
     const params = new URLSearchParams(window.location.search)
     const checkout = params.get('checkout')
-    if (checkout === 'success' || checkout === 'cancel') {
-      setBanner(checkout)
-      params.delete('checkout')
-      const next = `${window.location.pathname}${
-        params.toString() ? `?${params}` : ''
-      }${window.location.hash}`
-      window.history.replaceState({}, '', next)
+    if (checkout !== 'success' && checkout !== 'cancel') return
+
+    if (checkout === 'success') {
+      const creatorId = params.get('creatorId')
+      const kind = params.get('kind')
+      const label = params.get('label') ?? 'Checkout'
+      const amount = Number(params.get('amount') ?? 0)
+      const creator = creatorId ? getCreator(creatorId) : undefined
+
+      if (creatorId && kind === 'subscribe' && creator) {
+        if (!isUnlocked(creatorId)) {
+          subscribe(creatorId, label || creator.tierName, amount || creator.tierPriceMonthly)
+          pushActivity({
+            kind: 'subscribe',
+            title: `${label || creator.tierName} unlocked`,
+            body: `Checkout return · ${creator.displayName}`,
+            href: '/library',
+          })
+        }
+        setDetail(`${creator.displayName} · ${label || creator.tierName}`)
+      } else if (creatorId && kind === 'tip' && amount > 0) {
+        tip(creatorId, amount, label)
+        pushActivity({
+          kind: 'tip',
+          title: `$${amount} tip recorded`,
+          body: creator
+            ? `Checkout return · ${creator.displayName}`
+            : 'Checkout return tip',
+          href: creator ? `/c/${creator.username}` : '/library',
+        })
+        setDetail(
+          creator
+            ? `$${amount} → ${creator.displayName}`
+            : `$${amount} tip recorded`,
+        )
+      }
     }
+
+    setBanner(checkout)
+    ;['checkout', 'creatorId', 'kind', 'amount', 'label'].forEach((k) =>
+      params.delete(k),
+    )
+    const next = `${window.location.pathname}${
+      params.toString() ? `?${params}` : ''
+    }${window.location.hash}`
+    window.history.replaceState({}, '', next)
+    // Apply once on mount from URL — membership methods are stable enough
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (!banner) return null
@@ -37,7 +83,9 @@ export function CheckoutBanner() {
       <div className="mx-auto flex max-w-5xl items-start justify-between gap-3">
         <p>
           {banner === 'success'
-            ? 'Checkout complete. If Stripe webhooks are live, your membership syncs from the server — otherwise unlocks stay on this device.'
+            ? detail
+              ? `Checkout complete · ${detail}. Webhooks will own sync when STRIPE_WEBHOOK_SECRET is set.`
+              : 'Checkout complete. Membership syncs from return params on this device until webhooks are live.'
             : 'Checkout canceled. Nothing was charged.'}
         </p>
         <button
