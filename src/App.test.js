@@ -10,6 +10,9 @@ test("renders Civic Bound brand on home", () => {
   );
   expect(screen.getAllByText(/Civic/i).length).toBeGreaterThan(0);
   expect(screen.getAllByText(/Bound/i).length).toBeGreaterThan(0);
+  expect(
+    screen.getByText(/Conceptual portfolio piece/i)
+  ).toBeInTheDocument();
 });
 
 test("renders hubs locator page", () => {

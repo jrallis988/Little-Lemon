@@ -1,42 +1,50 @@
 # Civic Bound
 
-A multi-page marketing site for Civic Bound — a nonprofit, youth-centered community support network.
+**Conceptual portfolio piece** — a multi-page marketing site for a fictional nonprofit youth support network. Not a live organization or service.
 
-## Positioning
+This case study explores how a community youth network could present high-trust civic design: paper-and-charcoal layout, violet CTAs, and a full sitemap from hub locator to volunteer boundaries.
 
-- Child and student centered (not PTA / school-board bureaucracy)
-- Community-embedded developmental support for life direction and re-entry
-- Hybrid ethos: community-hub accessibility + mission-driven mentorship + character-building youth programming
+## Design brief
+
+- Youth-centered community support (not PTA / school-board bureaucracy)
+- Life direction, stability, and positive community re-entry
+- Hybrid ethos: neighborhood-hub access + mission-driven mentorship + character-building programming
+- Volunteer model that is voluntary and hub-bound — not court-ordered, clinical, or 1:1 “host” relationships
+
+## Palette
+
+- Paper background (`#F7F8FA`)
+- Charcoal body text (`#334155`)
+- Violet CTAs only (`#5B2BB3`)
+- Chartreuse micro-accents only (`#A8C92A`)
+- Type: Source Serif 4 (display) + Figtree (body)
 
 ## Site map
 
 | Route | Page |
 | --- | --- |
 | `/` | Homepage marketing core |
-| `/hubs` | Hub locator & space explorer |
+| `/hubs` | Hub locator & weekly rhythms |
 | `/get-support` | Find Your Track 3-step navigator |
-| `/stories` | Community voices & impact stories |
-| `/volunteers` | Volunteer boundary & responsibility framework |
-| `/partners` | Village Network partner portal |
+| `/stories` | Community voices |
+| `/volunteers` | Volunteer boundary framework |
+| `/partners` | Village Network partners |
 | `/leadership` | Youth Advisory Board |
 | `/news` | Latest news |
-| `/donate` | Give / support hubs |
-| `/contact` | Contact & hub hours |
+| `/donate` | Give |
+| `/contact` | Contact |
 | `/privacy` | Privacy policy |
 
-## Palette (high-trust light)
+Hubs, stories, news, and contact details are **demo content** for presentation.
 
-- Paper background (`#F7F8FA`)
-- Charcoal body text (`#334155`)
-- Violet CTAs only (`#5B2BB3`)
-- Chartreuse micro-accents only (`#A8C92A`)
+## Stack
+
+React (Create React App), React Router, Tailwind CSS. Cloudflare Pages config is included for static SPA hosting if you want to demo it — not required.
 
 ## Scripts
 
-- `npm start` — run the development server
-- `npm run build` — create a production build
-- `npm test` — run tests
-
-## Deploy
-
-Cloudflare Pages: build command `npm run build`, output directory `build`. SPA redirects live in `public/_redirects`.
+```bash
+npm start      # development server
+npm run build  # production static build
+npm test       # Jest tests
+```

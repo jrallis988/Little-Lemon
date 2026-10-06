@@ -55,7 +55,8 @@ function Footer() {
       <div className="border-t border-paper-line">
         <div className="container flex flex-col gap-2 py-5 font-body text-xs text-charcoal-soft md:flex-row md:justify-between">
           <p>
-            © {new Date().getFullYear()} Civic Bound. A nonprofit organization.
+            © {new Date().getFullYear()} Civic Bound. Conceptual portfolio
+            piece — not a live organization or service.
           </p>
           <p>
             <Link to="/donate" className="hover:text-violet">
