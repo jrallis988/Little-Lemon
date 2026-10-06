@@ -1,0 +1,43 @@
+# Azure integration pipeline — agent and editor rules
+
+These rules apply to `azure-integration-pipeline/`. The services are a FastAPI ingestion API and a Service Bus worker. Follow them on every change.
+
+## Python
+
+- Target Python 3.12. Use `str | None` and built-in generics. Type every public function.
+- Keep each service independently deployable. Ingestion code stays under `services/ingestion-api/`. Worker code stays under `services/processing-worker/`. Shared log formatting lives in `shared/` and must not import either service.
+- Validate external data with Pydantic v2 models. Use `extra="forbid"`, field constraints, and timezone-aware datetimes. Reject naive datetimes.
+- Load configuration with `pydantic-settings`. Read secrets and connection strings from the environment. Never hardcode keys, connection strings, or account credentials.
+- Pin direct dependencies in `requirements.txt`. Put test-only packages in `requirements-dev.txt`.
+- Prefer small pure functions for validation, id generation, and message disposition so tests can run without Azure.
+
+## FastAPI and the ingestion service
+
+- The API returns `202` only after the broker accepts the message. It does not write business records itself.
+- Keep the Azure client on the app lifespan: open one async `ServiceBusClient` and sender, and close both on shutdown.
+- Use `azure.servicebus.aio` and `azure.identity.aio` in the API. Use the synchronous Service Bus and Blob clients in the worker.
+- Map broker failures to `503` with a generic client message. Do not put exception text or connection details in HTTP responses.
+- When `INGESTION_API_KEY` is set, require `X-Api-Key` on `POST /v1/records` and compare it with `secrets.compare_digest`. Health endpoints stay unauthenticated.
+- Preserve a valid `X-Correlation-ID`. Replace missing or invalid values with a new id and return it on the response.
+- Cap request bodies so a message cannot exceed the Service Bus Standard 256 KB limit.
+
+## Azure
+
+- In Azure, authenticate with `DefaultAzureCredential` and a user-assigned managed identity. Use a connection string only for the local Service Bus emulator and Azurite.
+- If both a connection string and a namespace or account URL are set, the connection string wins so local emulator settings take effect.
+- Set `message_id` from `external_id` (uuid5 of source, event type, and external id) so retries are idempotent inside the queue duplicate-detection window. Generate a random id when `external_id` is absent.
+- Dead-letter messages that will never succeed (invalid body, unauthorized storage). Abandon transient storage and network failures so the queue can retry, then dead-letter at `maxDeliveryCount`.
+- Write blobs to `YYYY/MM/DD/{message_id}.json` with `overwrite=True` so redelivery is idempotent. Do not use caller input as a raw path.
+- Bicep must disable shared keys and Service Bus local auth, require TLS 1.2, and keep blob containers private. Grant each service its own managed identity and the least-privilege data-plane role.
+
+## Telemetry
+
+- Log one JSON object per line to stdout through `shared.telemetry`. Include `timestamp`, `level`, `service`, `event`, and `correlation_id` when one exists.
+- Audit each hop: accepted, enqueued, received, stored, completed, abandoned, dead-lettered.
+- Never log payloads, `external_id` values, API keys, connection strings, or `SharedAccessKey` / `AccountKey` / SAS signatures. The formatter redacts those if they appear in a traceback.
+
+## Tests
+
+- Test with fakes. Do not call live Azure or start the emulator in unit tests.
+- Cover validation, auth, correlation ids, idempotent message ids, queue-unavailable responses, and worker complete / abandon / dead-letter decisions.
+- Keep the sample message in `contracts/example-message.json` parsing in both services.

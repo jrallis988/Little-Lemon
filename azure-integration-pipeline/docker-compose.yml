@@ -1,0 +1,86 @@
+name: azure-integration-pipeline
+
+# Local Service Bus emulator, Azurite, and both pipeline services.
+# Copy .env.example to .env first. ACCEPT_EULA=Y accepts the emulator and SQL Server licenses.
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: ${ACCEPT_EULA:-N}
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:?Set MSSQL_SA_PASSWORD in .env}
+    networks:
+      - pipeline
+
+  servicebus-emulator:
+    image: mcr.microsoft.com/azure-messaging/servicebus-emulator:latest
+    volumes:
+      - ./infra/servicebus-emulator/Config.json:/ServiceBus_Emulator/ConfigFiles/Config.json:ro
+    ports:
+      - "5672:5672"
+      - "${EMULATOR_HTTP_PORT:-5300}:${EMULATOR_HTTP_PORT:-5300}"
+    environment:
+      SQL_SERVER: mssql
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:?Set MSSQL_SA_PASSWORD in .env}
+      ACCEPT_EULA: ${ACCEPT_EULA:-N}
+      EMULATOR_HTTP_PORT: ${EMULATOR_HTTP_PORT:-5300}
+      SQL_WAIT_INTERVAL: ${SQL_WAIT_INTERVAL:-30}
+    depends_on:
+      - mssql
+    networks:
+      - pipeline
+
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite:latest
+    command: azurite-blob --blobHost 0.0.0.0 --blobPort 10000 --location /data --skipApiVersionCheck
+    ports:
+      - "10000:10000"
+    volumes:
+      - azurite-data:/data
+    networks:
+      - pipeline
+
+  ingestion-api:
+    build:
+      context: .
+      dockerfile: services/ingestion-api/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      ENVIRONMENT: ${ENVIRONMENT:-local}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      SERVICEBUS_CONNECTION_STRING: ${SERVICEBUS_CONNECTION_STRING:?Set SERVICEBUS_CONNECTION_STRING in .env}
+      SERVICEBUS_QUEUE_NAME: ${SERVICEBUS_QUEUE_NAME:-ingestion-queue}
+      INGESTION_API_KEY: ${INGESTION_API_KEY:-}
+      SERVICEBUS_WAIT_HOST: servicebus-emulator
+      SERVICEBUS_WAIT_PORT: "5672"
+    depends_on:
+      - servicebus-emulator
+    networks:
+      - pipeline
+
+  processing-worker:
+    build:
+      context: .
+      dockerfile: services/processing-worker/Dockerfile
+    environment:
+      ENVIRONMENT: ${ENVIRONMENT:-local}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      SERVICEBUS_CONNECTION_STRING: ${SERVICEBUS_CONNECTION_STRING:?Set SERVICEBUS_CONNECTION_STRING in .env}
+      SERVICEBUS_QUEUE_NAME: ${SERVICEBUS_QUEUE_NAME:-ingestion-queue}
+      STORAGE_CONNECTION_STRING: ${STORAGE_CONNECTION_STRING:?Set STORAGE_CONNECTION_STRING in .env}
+      STORAGE_CONTAINER: ${STORAGE_CONTAINER:-processed-records}
+      SERVICEBUS_WAIT_HOST: servicebus-emulator
+      SERVICEBUS_WAIT_PORT: "5672"
+      STORAGE_WAIT_HOST: azurite
+      STORAGE_WAIT_PORT: "10000"
+    depends_on:
+      - servicebus-emulator
+      - azurite
+    networks:
+      - pipeline
+
+networks:
+  pipeline:
+
+volumes:
+  azurite-data:

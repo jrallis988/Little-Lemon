@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "message_id": "11111111-1111-4111-8111-111111111111",
+  "correlation_id": "22222222-2222-4222-8222-222222222222",
+  "received_at": "2026-10-06T19:55:00Z",
+  "source": "partner-a",
+  "event_type": "order.created",
+  "external_id": "ord_123",
+  "occurred_at": "2026-10-06T19:54:00Z",
+  "payload": {
+    "amount": 10,
+    "currency": "USD"
+  }
+}
