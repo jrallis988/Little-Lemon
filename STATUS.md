@@ -1,17 +1,9 @@
 --------------------------------------------------------------------------------
-SHIFT / WORKING INTELLIGENCE: STATUS REPORT
+SHIFT — PORTFOLIO CASE STUDY
 --------------------------------------------------------------------------------
 
-1. SCOPE
-• Shift marketing site — workforce AI partners (Marblism-inspired structure).
+Concept marketing site for an AI workforce platform. Not a live product.
 
-2. READY
-• Full landing + interactive demo + security + pricing + waitlist
-• Legal, OG, SEO, analytics, Netlify/Vercel/GitHub Pages deploy configs
-• Portfolio leftovers removed from this branch (clean deploy root)
-
-3. YOUR LAUNCH STEPS
-• Merge PR #40 → enable host + domain
-• Set Formspree endpoint OR use Netlify Forms
-• Product app (auth/billing/integrations) remains a separate milestone
+Craft focus: visual system, role portraits, interactive demo, conversion UX.
+Do not treat Formspree / domain / GitHub Pages as next steps.
 --------------------------------------------------------------------------------

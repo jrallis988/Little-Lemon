@@ -1,8 +1,10 @@
 # Shift — AI Workforce Partners
 
-Marketing site for **Shift** by Working Intelligence.
+Portfolio case study: a Marblism-inspired features site focused on workforce operations (recruiting, scheduling, HR, onboarding, management coaching, compliance).
 
-## Develop
+**This is concept work, not a live product.**
+
+## Preview
 
 ```bash
 npm start
@@ -10,18 +12,8 @@ npm start
 
 Open [http://localhost:3000](http://localhost:3000).
 
-## Deploy
+## What to look at
 
-| Host | How |
-| --- | --- |
-| **Netlify** | Connect repo — `netlify.toml` + native Forms on waitlist |
-| **Vercel** | Import repo — `vercel.json` headers/clean URLs |
-| **GitHub Pages** | Merge to `main`, enable Pages (Actions). Workflow: `.github/workflows/pages.yml` |
-
-Then set `formspreeEndpoint` in `config.js` if you are not using Netlify Forms.
-
-## What’s on the site
-
-- Workforce roles, day timeline, platform, **interactive Approve/Snooze/Decline demo**
-- Integrations, security/trust, pricing, FAQ, waitlist
-- Privacy, terms, 404, OG image, robots/sitemap, analytics
+- Workforce role cards with character portraits
+- Interactive Approve / Snooze / Decline demo
+- Pricing, integrations, security, waitlist as designed product surfaces

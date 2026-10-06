@@ -1592,3 +1592,20 @@ p {
     grid-template-columns: 1fr;
   }
 }
+
+.case-bar {
+  margin: 0;
+  padding: 0.45rem clamp(1rem, 4vw, 2.5rem);
+  background: var(--ink);
+  color: var(--signal);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-align: center;
+  border-bottom: 2px solid var(--ink);
+}
+
+.role-portrait svg {
+  width: 170px;
+  overflow: visible;
+}

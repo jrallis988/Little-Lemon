@@ -9,8 +9,8 @@
  */
 window.SHIFT_CONFIG = {
   formspreeEndpoint: "",
-  waitlistEmail: "hello@workingintelligence.com",
-  mailtoFallback: true,
+  waitlistEmail: "",
+  mailtoFallback: false,
 };
 
 window.SHIFT_ANALYTICS = {
