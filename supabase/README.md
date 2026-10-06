@@ -1,5 +1,7 @@
 # Supabase setup (Phase 2+)
 
+Optional. StaticVolume is a **portfolio demo** — Expo web runs on seed data without this. Use these migrations only if you want to exercise the live auth / Storage / taste path.
+
 ## Apply schema
 
 1. Create a Supabase project.

@@ -87,30 +87,28 @@ constants/theme.ts   # PureVolume light portal palette + Barlow
 
 ```bash
 npm install
-cp .env.example .env
-# fill EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_ANON_KEY
-npx expo start
+npx expo start --web
 ```
+
+Env keys in `.env.example` are **optional**. Without them, seed catalog + local taste state still tell the full product story. Fill `EXPO_PUBLIC_SUPABASE_*` only if you want to exercise the wired auth/upload/persistence path.
 
 ## Auth notes
 
 Signup stores `display_name` and `role` (`artist` | `listener`) in Supabase Auth user metadata. The Phase 2 migration also creates a `profiles` row via trigger. Session persistence uses SecureStore on native and AsyncStorage on web.
 
-## Artist uploads (Phase 2)
+## Artist uploads (Phase 2) — optional live path
 
-1. Apply `supabase/migrations/20260328000000_phase2_artist_uploads.sql` (see `supabase/README.md`).
-2. Sign up / sign in as **artist**.
-3. Open **You → Open artist studio**.
-4. Upload profile/header images, track audio + artwork, and album/EP artwork.
+Schema + Studio UI are in the repo to show ownership, Storage, and copyright confirmation. For the portfolio demo, Studio still presents the upload IA without a live bucket.
+
+If you do wire Supabase: apply `supabase/migrations/20260328000000_phase2_artist_uploads.sql`, sign in as **artist**, open **You → Open artist studio**.
 
 Limits: audio ≤ 50MB; images ≤ 5–8MB. Artists can only mutate their own Storage paths (`{userId}/…`) and rows (RLS).
 
-## Taste persistence (Phase 3)
+## Taste persistence (Phase 3) — optional live path
 
-1. Apply `supabase/migrations/20260328120000_phase3_taste_persistence.sql`.
-2. Sign in, then log/rate/review on a track page — rows land in `taste_logs` / `taste_reviews`.
-3. Download / Repost on independent tracks; Follow on artist pages.
-4. Activity tab loads a chronological following feed when you follow people with UUID profile ids.
+Log / rate / review / follow / download / repost work in-session via Zustand. The SQL + `lib/tasteApi.ts` show how those actions persist when Supabase is configured.
+
+If you do wire it: apply `supabase/migrations/20260328120000_phase3_taste_persistence.sql` after Phase 2.
 
 ## Visual identity
 
