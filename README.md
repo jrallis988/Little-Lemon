@@ -1,53 +1,50 @@
-# Artistic Fountain
+# Civic Bound
 
-Independent design venture portfolio — digital media, graphic design, visual identity, and creative media projects.
+**Conceptual portfolio piece** — a multi-page marketing site for a fictional nonprofit youth support network. Not a live organization or service.
 
-## Dual-track separation
+This case study explores how a community youth network could present high-trust civic design: paper-and-charcoal layout, violet CTAs, and a full sitemap from hub locator to volunteer boundaries.
 
-| Track | Home | Houses |
-| --- | --- | --- |
-| **Creative** | Artistic Fountain (this repo) | Visual media, graphic identity, conceptual design, client design services |
-| **Engineering** | Developer portfolio (separate) | Back-end systems, Python/FastAPI, AI/RAG applications |
+## Design brief
 
-See `STATUS.md` for the full status report.
+- Youth-centered community support (not PTA / school-board bureaucracy)
+- Life direction, stability, and positive community re-entry
+- Hybrid ethos: neighborhood-hub access + mission-driven mentorship + character-building programming
+- Volunteer model that is voluntary and hub-bound — not court-ordered, clinical, or 1:1 “host” relationships
+
+## Palette
+
+- Paper background (`#F7F8FA`)
+- Charcoal body text (`#334155`)
+- Violet CTAs only (`#5B2BB3`)
+- Chartreuse micro-accents only (`#A8C92A`)
+- Type: Source Serif 4 (display) + Figtree (body)
+
+## Site map
+
+| Route | Page |
+| --- | --- |
+| `/` | Homepage marketing core |
+| `/hubs` | Hub locator & weekly rhythms |
+| `/get-support` | Find Your Track 3-step navigator |
+| `/stories` | Community voices |
+| `/volunteers` | Volunteer boundary framework |
+| `/partners` | Village Network partners |
+| `/leadership` | Youth Advisory Board |
+| `/news` | Latest news |
+| `/donate` | Give |
+| `/contact` | Contact |
+| `/privacy` | Privacy policy |
+
+Hubs, stories, news, and contact details are **demo content** for presentation.
 
 ## Stack
 
-Static site: HTML, CSS, and vanilla JS (built in Cursor). Custom typefaces (Arcanite Slab, Goudy Heavyface) plus Inter for body copy.
+React (Create React App), React Router, Tailwind CSS. Cloudflare Pages config is included for static SPA hosting if you want to demo it — not required.
 
-## Pages
-
-- `index.html` — home (hero, designer, services, portfolio, blog, contact)
-- `nh-dmv/` — conceptual redesign of the New Hampshire DMV website (civic UX case study)
-- `services/` — detail pages for each service offering
-- `blog/` — blog index and post pages (content can be drafted in Blaze AI)
-- `privacy.html` — privacy policy
-- `terms.html` — terms & conditions
-- `resume.pdf` — downloadable resume
-
-## Develop
+## Scripts
 
 ```bash
-npm start
-```
-
-Opens a local static server at [http://localhost:3000](http://localhost:3000).
-
-Or open `index.html` directly in a browser.
-
-## Structure
-
-```
-.
-├── index.html
-├── privacy.html
-├── terms.html
-├── styles.css
-├── STATUS.md
-├── favicon.svg
-├── resume.pdf
-├── services/
-├── blog/
-├── images/
-└── *.otf          # brand fonts
+npm start      # development server
+npm run build  # production static build
+npm test       # Jest tests
 ```
