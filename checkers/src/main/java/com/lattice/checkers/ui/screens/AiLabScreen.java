@@ -47,9 +47,9 @@ public final class AiLabScreen {
     private final Label plyLabel = new Label();
     private final Label telemetryMove = new Label();
     private final Label telemetryDetail = new Label();
-    private final HBox frogStyles = new HBox(8);
-    private final HBox trafficStyles = new HBox(8);
-    private final HBox difficultyRow = new HBox(8);
+    private final HBox frogStyles = new HBox(6);
+    private final HBox trafficStyles = new HBox(6);
+    private final HBox difficultyRow = new HBox(6);
     private Button watchButton;
     private Button pauseButton;
     private Button stepButton;
@@ -86,18 +86,12 @@ public final class AiLabScreen {
                 "Two computers. Same rules. Style is evaluation weights — difficulty is search depth.");
         subtitle.getStyleClass().add("screen-subtitle");
         subtitle.setWrapText(true);
-        VBox header = new VBox(6, brand, title, subtitle);
-        header.setAlignment(Pos.CENTER_LEFT);
+        HBox titleRow = new HBox(16, brand, title);
+        titleRow.setAlignment(Pos.BASELINE_LEFT);
+        VBox header = new VBox(4, titleRow, subtitle);
 
         boardView = new BoardView(this.controller, ignored -> refreshHud(), reducedMotion);
         boardView.setInputEnabled(false);
-
-        HBox matchup = new HBox(22,
-                styleRow(Faction.FROG, frogStyles),
-                styleRow(Faction.TRAFFIC, trafficStyles)
-        );
-        matchup.setAlignment(Pos.CENTER_LEFT);
-        rebuildStyleRows();
 
         statusLabel.getStyleClass().add("lab-status");
         statusLabel.setWrapText(true);
@@ -115,11 +109,11 @@ public final class AiLabScreen {
         HBox transport = new HBox(8, watchButton, pauseButton, stepButton, restart);
         transport.setAlignment(Pos.CENTER_LEFT);
 
-        Label depthHeading = labeled("SEARCH DEPTH");
         difficultyRow.setAlignment(Pos.CENTER_LEFT);
-        rebuildDifficultyRow();
+        frogStyles.setAlignment(Pos.CENTER_LEFT);
+        trafficStyles.setAlignment(Pos.CENTER_LEFT);
 
-        VBox telemetry = new VBox(8,
+        VBox telemetry = new VBox(6,
                 labeled("LAST DECISION"),
                 statusLabel,
                 plyLabel,
@@ -127,29 +121,38 @@ public final class AiLabScreen {
                 telemetryDetail
         );
         telemetry.getStyleClass().add("preview-panel");
-        telemetry.setPadding(new Insets(16));
+        telemetry.setPadding(new Insets(12));
 
-        VBox depthBlock = new VBox(8, depthHeading, difficultyRow);
+        VBox depthBlock = new VBox(6, labeled("SEARCH DEPTH"), difficultyRow);
         depthBlock.getStyleClass().add("preview-panel");
-        depthBlock.setPadding(new Insets(16));
+        depthBlock.setPadding(new Insets(12));
 
         Button analysis = actionButton("MATCH ANALYSIS", () -> navigate("match-analysis"));
         Button home = actionButton("HOME", () -> navigate("home"));
         HBox nav = new HBox(10, analysis, home);
         nav.setAlignment(Pos.CENTER_LEFT);
 
-        VBox sidebar = new VBox(12, telemetry, depthBlock, transport, nav);
-        sidebar.setPrefWidth(340);
-        sidebar.setMinWidth(300);
+        VBox sidebar = new VBox(10,
+                styleBlock(Faction.FROG, frogStyles),
+                styleBlock(Faction.TRAFFIC, trafficStyles),
+                telemetry,
+                depthBlock,
+                transport,
+                nav
+        );
+        sidebar.setPrefWidth(360);
+        sidebar.setMinWidth(320);
+        rebuildStyleRows();
+        rebuildDifficultyRow();
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
-        HBox stage = new HBox(20, boardView, sidebar, spacer);
+        HBox stage = new HBox(18, boardView, sidebar, spacer);
         stage.setAlignment(Pos.TOP_CENTER);
         HBox.setHgrow(boardView, Priority.NEVER);
 
-        root = new VBox(14, header, matchup, stage);
-        root.setPadding(new Insets(16, 24, 20, 24));
+        root = new VBox(10, header, stage);
+        root.setPadding(new Insets(10, 20, 12, 20));
         root.getStyleClass().addAll("screen-root", "lab-root");
         refreshHud();
     }
@@ -340,18 +343,18 @@ public final class AiLabScreen {
         }
     }
 
-    private static VBox styleRow(Faction faction, HBox buttons) {
-        PieceView emblem = new PieceView(new Piece(faction.side(), PieceRank.MAN), 24);
+    private static VBox styleBlock(Faction faction, HBox buttons) {
+        PieceView emblem = new PieceView(new Piece(faction.side(), PieceRank.MAN), 20);
         Label name = new Label(faction.displayName());
         name.getStyleClass().addAll("hud-faction-name",
                 faction == Faction.FROG ? "home-frog" : "home-traffic");
         Label caption = new Label("STYLE");
         caption.getStyleClass().add("hud-caption");
-        HBox identity = new HBox(8, emblem, name);
+        HBox identity = new HBox(8, emblem, name, caption);
         identity.setAlignment(Pos.CENTER_LEFT);
-        VBox column = new VBox(8, identity, caption, buttons);
+        VBox column = new VBox(6, identity, buttons);
         column.getStyleClass().add("preview-panel");
-        column.setPadding(new Insets(12));
+        column.setPadding(new Insets(10));
         return column;
     }
 
