@@ -1,7 +1,3 @@
-# https://www.robotstxt.org/robotstxt.html
+# Portfolio concept — index freely; this is not a production storefront
 User-agent: *
 Allow: /
-
-# Internal contact sheet — keep out of search indexes when exposed
-User-agent: *
-Disallow: /design-system

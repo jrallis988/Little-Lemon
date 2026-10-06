@@ -1,7 +1,8 @@
 /**
- * Feature flags for stakeholder demos vs internal tooling.
- * Design system stays available in local/dev, or when
- * VITE_SHOW_DESIGN_SYSTEM=1 is set at build time.
+ * Portfolio concept flags.
+ *
+ * These storefronts are case-study pieces — not live production apps.
+ * Design system and case study stay visible so reviewers can inspect craft.
  */
-export const showDesignSystem =
-  import.meta.env.DEV || import.meta.env.VITE_SHOW_DESIGN_SYSTEM === "1"
+export const isPortfolioConcept = true
+export const showDesignSystem = true

@@ -69,9 +69,9 @@ const HIERARCHY = [
 
 export function DesignSystemPage() {
   useDocumentMeta({
-    title: "Design System | Marshalls Prototype",
+    title: "Design System | Marshalls Concept",
     description:
-      "Contact sheet, tokens, and component hierarchy for the Marshalls redesign prototype.",
+      "Contact sheet, tokens, and component hierarchy for the Marshalls redesign portfolio piece.",
   })
 
   const groups = screensByGroup()
@@ -87,11 +87,14 @@ export function DesignSystemPage() {
             Design system
           </h1>
           <p className="mt-3 max-w-2xl text-muted-foreground">
-            Responsive, minimalist Marshalls storefront prototype — {SCREENS.length}{" "}
-            documented surfaces, shared tokens, and a clean component hierarchy on Vite +
-            React + Tailwind.
+            Portfolio concept storefront — {SCREENS.length} documented surfaces, shared
+            tokens, and a Vite + React + Tailwind component hierarchy. Not a live Marshalls
+            site.
           </p>
           <div className="mt-6 flex flex-wrap gap-2">
+            <Button asChild className="bg-navy hover:bg-navy/90">
+              <Link to="/case-study">Read the case study</Link>
+            </Button>
             <Badge className="bg-navy text-navy-foreground">Vite · React · TypeScript</Badge>
             <Badge className="bg-sky-soft text-navy">Tailwind tokens</Badge>
             <Badge className="bg-secondary text-secondary-foreground">

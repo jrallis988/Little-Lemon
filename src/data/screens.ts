@@ -55,6 +55,18 @@ export const SCREEN_GROUPS: ScreenGroup[] = [
 
 export const SCREENS: ScreenDefinition[] = [
   {
+    id: "case-study",
+    number: "00a",
+    title: "Case Study",
+    group: "Global & Core Navigation",
+    description:
+      "Portfolio framing: brief, design decisions, and how to review the concept.",
+    path: "/case-study",
+    preview: "/previews/01-home.png",
+    viewport: "both",
+    page: "CaseStudyPage",
+  },
+  {
     id: "design-system",
     number: "00",
     title: "Design System / Contact Sheet",

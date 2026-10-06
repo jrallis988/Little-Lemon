@@ -11,6 +11,9 @@ export const HomePage = lazy(() =>
 export const DesignSystemPage = lazy(() =>
   import("@/pages/DesignSystemPage").then((m) => ({ default: m.DesignSystemPage })),
 )
+export const CaseStudyPage = lazy(() =>
+  import("@/pages/CaseStudyPage").then((m) => ({ default: m.CaseStudyPage })),
+)
 export const CatalogPage = lazy(() =>
   import("@/pages/CatalogPage").then((m) => ({ default: m.CatalogPage })),
 )
@@ -66,6 +69,7 @@ export const NotFoundPage = lazy(() =>
 /** Canonical path map — mirrors the SCREEN registry */
 export const ROUTE_MAP = {
   designSystem: "/design-system",
+  caseStudy: "/case-study",
   home: "/",
   catalog: "/catalog",
   product: "/product/:slug",

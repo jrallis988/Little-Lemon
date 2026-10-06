@@ -22,7 +22,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { SearchTypeahead } from "@/components/layout/SearchTypeahead"
-import { showDesignSystem } from "@/lib/flags"
 import { cn } from "@/lib/utils"
 
 const PROMO_MESSAGES = [
@@ -120,14 +119,18 @@ export function SiteHeader() {
             >
               Gift cards
             </Link>
-            {showDesignSystem ? (
-              <Link
-                to="/design-system"
-                className="hidden text-muted-foreground no-underline hover:text-foreground md:inline"
-              >
-                Design system
-              </Link>
-            ) : null}
+            <Link
+              to="/case-study"
+              className="hidden text-muted-foreground no-underline hover:text-foreground md:inline"
+            >
+              Case study
+            </Link>
+            <Link
+              to="/design-system"
+              className="hidden text-muted-foreground no-underline hover:text-foreground md:inline"
+            >
+              Design system
+            </Link>
             <Link
               to="/account"
               className="text-muted-foreground no-underline hover:text-foreground"
@@ -391,6 +394,20 @@ export function SiteHeader() {
               className="mt-2 rounded-md px-3 py-3 text-sm font-medium text-muted-foreground no-underline hover:bg-secondary hover:text-foreground"
             >
               Find a store
+            </Link>
+            <Link
+              to="/case-study"
+              onClick={() => setMenuOpen(false)}
+              className="rounded-md px-3 py-3 text-sm font-medium text-muted-foreground no-underline hover:bg-secondary hover:text-foreground"
+            >
+              Case study
+            </Link>
+            <Link
+              to="/design-system"
+              onClick={() => setMenuOpen(false)}
+              className="rounded-md px-3 py-3 text-sm font-medium text-muted-foreground no-underline hover:bg-secondary hover:text-foreground"
+            >
+              Design system
             </Link>
           </nav>
         </DialogContent>

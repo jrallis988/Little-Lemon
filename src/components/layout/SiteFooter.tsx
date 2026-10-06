@@ -21,7 +21,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { cn } from "@/lib/utils"
-import { showDesignSystem } from "@/lib/flags"
 
 const UTILITY_TILES = [
   {
@@ -492,15 +491,15 @@ export function SiteFooter() {
             ))}
           </ul>
           <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
-            <span>© {new Date().getFullYear()} Marshalls</span>
-            {showDesignSystem ? (
-              <>
-                <span aria-hidden>|</span>
-                <Link to="/design-system" className="hover:text-navy hover:underline">
-                  Design system
-                </Link>
-              </>
-            ) : null}
+            <span>© {new Date().getFullYear()} Marshalls concept</span>
+            <span aria-hidden>|</span>
+            <Link to="/case-study" className="hover:text-navy hover:underline">
+              Case study
+            </Link>
+            <span aria-hidden>|</span>
+            <Link to="/design-system" className="hover:text-navy hover:underline">
+              Design system
+            </Link>
             <span aria-hidden>|</span>
             <button
               type="button"
@@ -514,8 +513,8 @@ export function SiteFooter() {
             </button>
           </p>
           <p className="max-w-2xl text-center text-[10px] leading-relaxed text-muted-foreground">
-            Savings based on comparable goods or original ticketed prices. Selection varies
-            by store — never the same store twice.
+            Independent portfolio concept — not affiliated with Marshalls or TJX Companies.
+            Photography is stand-in imagery. Savings shown as comparable-good fiction.
           </p>
         </div>
       </div>
