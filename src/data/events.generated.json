@@ -1,0 +1,62 @@
+[
+  {
+    "id": "open-house-fall",
+    "date": "2026-08-15",
+    "displayDate": "Aug 15, 2026",
+    "time": "10:00 a.m. \u2013 1:00 p.m.",
+    "title": "Fall Open House",
+    "location": "Student Center, Concord campus",
+    "summary": "Tour classrooms and residence halls, meet faculty, and get admissions and financial aid questions answered.",
+    "sourceUrl": "https://www.nhti.edu/events/"
+  },
+  {
+    "id": "nursing-info",
+    "date": "2026-08-27",
+    "displayDate": "Aug 27, 2026",
+    "time": "5:30 \u2013 6:30 p.m.",
+    "title": "Nursing Information Session",
+    "location": "Grappone Hall / Online hybrid",
+    "summary": "Learn about prerequisites, clinical expectations, and application timelines for Nursing pathways.",
+    "sourceUrl": "https://www.nhti.edu/events/"
+  },
+  {
+    "id": "lynx-welcome",
+    "date": "2026-09-03",
+    "displayDate": "Sep 3, 2026",
+    "time": "4:00 \u2013 6:00 p.m.",
+    "title": "Lynx Welcome Fair",
+    "location": "Campus Quad",
+    "summary": "Explore clubs, athletics, wellness resources, and student services as the semester begins.",
+    "sourceUrl": "https://www.nhti.edu/events/"
+  },
+  {
+    "id": "transfer-day",
+    "date": "2026-09-18",
+    "displayDate": "Sep 18, 2026",
+    "time": "11:00 a.m. \u2013 2:00 p.m.",
+    "title": "Transfer Partner Day",
+    "location": "Little Hall",
+    "summary": "Meet representatives from UNH, SNHU, Plymouth State, Keene State, and other partner campuses.",
+    "sourceUrl": "https://www.nhti.edu/events/"
+  },
+  {
+    "id": "financial-aid-lab",
+    "date": "2026-09-25",
+    "displayDate": "Sep 25, 2026",
+    "time": "3:00 \u2013 5:00 p.m.",
+    "title": "FAFSA & Financial Aid Lab",
+    "location": "Academic Center for Excellence",
+    "summary": "Get hands-on help completing FAFSA and understanding grants, scholarships, and award letters.",
+    "sourceUrl": "https://www.nhti.edu/events/"
+  },
+  {
+    "id": "housing-preview",
+    "date": "2026-10-04",
+    "displayDate": "Oct 4, 2026",
+    "time": "1:00 \u2013 3:00 p.m.",
+    "title": "Residence Hall Preview",
+    "location": "Langley Hall",
+    "summary": "Walk through residence options and learn how on-campus living works at New Hampshire\u2019s only residential community college.",
+    "sourceUrl": "https://www.nhti.edu/events/"
+  }
+]
