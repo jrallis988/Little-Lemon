@@ -4,10 +4,10 @@ import TechStack from "./project/TechStack";
 import ProjectVisual from "./project/ProjectVisual";
 
 const typeLabels = {
-  "case-study": "Case study",
-  professional: "Professional",
-  personal: "Personal project",
-  experiment: "Experiment",
+  "case-study": "Portfolio case study",
+  professional: "Portfolio piece",
+  personal: "Portfolio piece",
+  experiment: "Portfolio prototype",
 };
 
 function resolveHref(href) {
@@ -26,7 +26,7 @@ function ProjectActions({ project }) {
       href: project.links?.caseStudy || (project.slug ? `/work/${project.slug}` : null),
       primary: true,
     },
-    { key: "live", label: "Live Site", href: project.links?.live },
+    { key: "live", label: "View demo", href: project.links?.live },
     { key: "github", label: "GitHub", href: project.links?.github },
   ].filter((action) => action.href);
 
@@ -74,8 +74,9 @@ export default function Work() {
             Projects that put clarity first.
           </h2>
           <p className="reveal mt-4 text-base leading-relaxed text-sand/85 md:text-lg">
-            Front-end UI work focused on responsive layouts, accessible interaction,
-            and clean component systems—plus interactive experiments in the Lab.
+            Portfolio case studies and prototypes—built to show front-end craft,
+            not as live products. Responsive UI, accessible interaction, and
+            clean component systems, plus experiments in the Lab.
           </p>
         </div>
 

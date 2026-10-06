@@ -37,8 +37,8 @@ export default function LabPage() {
             Experiments, prototypes & things I’m building.
           </h1>
           <p className="reveal mt-5 text-base leading-relaxed text-sand/85 md:text-lg">
-            Smaller technical projects and interactive prototypes that don’t need a full case study—
-            but still show how I explore front-end craft.
+            Smaller technical prototypes that don’t need a full case study—
+            built as portfolio experiments, not live products.
           </p>
         </div>
       </section>

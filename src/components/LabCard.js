@@ -58,7 +58,7 @@ export default function LabCard({ project }) {
           </p>
           <TechStack items={project.technologies} className="mt-5" />
           <div className="mt-6 flex flex-wrap gap-3">
-            <Action href={project.links?.demo} label="Live Demo" primary />
+            <Action href={project.links?.demo} label="View demo" primary />
             <Action href={project.links?.source} label="Source" />
             <Action href={project.links?.details} label="Details" />
           </div>

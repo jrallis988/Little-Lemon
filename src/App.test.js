@@ -70,9 +70,9 @@ test("resume page shows professional summary", () => {
   expect(screen.getAllByText(/Front-End Engineer & Multimedia Designer/i).length).toBeGreaterThan(0);
 });
 
-test("work section shows live site for Little Lemon", () => {
+test("work section shows a demo link for Little Lemon", () => {
   render(<App />);
-  expect(screen.getAllByText(/Live Site/i).length).toBeGreaterThan(0);
+  expect(screen.getAllByText(/View demo/i).length).toBeGreaterThan(0);
 });
 
 test("project detail page loads Little Lemon case study", async () => {

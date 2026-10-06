@@ -2,7 +2,9 @@
 
 Personal portfolio for **James Rallis**, Front-End Engineer & Multimedia Designer.
 
-**Live site (GitHub Pages):** https://jrallis988.github.io/Little-Lemon/
+Every project here is a **portfolio piece**—a case study or prototype to show front-end craft, not a live production website or app. Hosting this site is so people can view the work.
+
+**Portfolio URL (GitHub Pages):** https://jrallis988.github.io/Little-Lemon/
 
 ## Scripts
 

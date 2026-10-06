@@ -9,9 +9,9 @@ const projects = [
     role: "Front-end UI & responsive layout",
     stack: ["HTML", "CSS", "JavaScript", "React", "Formik", "Yup"],
     summary:
-      "Frontend UI and responsive layout for a restaurant experience, with ongoing work in React and component-based UI systems.",
+      "Portfolio case study: front-end UI and responsive layout for a restaurant booking flow, with React components and accessible form patterns.",
     description:
-      "A restaurant reservation experience focused on calm booking flow, clear hierarchy, and accessible form patterns.",
+      "A portfolio case study of a restaurant reservation UI—calm booking flow, clear hierarchy, and accessible form patterns. Built as a craft sample, not a live restaurant product.",
     heroVisual: {
       label: "Little Lemon booking UI",
       tone: "mediterranean",
@@ -51,7 +51,7 @@ const projects = [
         "Form validation patterns",
         "Component structure",
       ],
-      projectType: "Capstone / case study",
+      projectType: "Portfolio case study",
     },
     links: {
       caseStudy: "/work/little-lemon",
@@ -134,9 +134,9 @@ const projects = [
     role: "Interactive UI prototype",
     stack: ["React", "Canvas", "Accessibility"],
     summary:
-      "A playable canvas demo embedded in this portfolio—delta-timed updates, pointer/keyboard control, and reduced-motion support.",
+      "A playable canvas prototype in this portfolio—delta-timed updates, pointer/keyboard control, and reduced-motion support.",
     description:
-      "A lightweight interactive prototype used as a craft sample for game-loop timing, input handling, and accessible motion preferences.",
+      "A portfolio prototype for game-loop timing, input handling, and accessible motion. Built to demonstrate craft, not as a shipped game.",
     heroVisual: {
       label: "Foam Drift canvas prototype",
       tone: "play",
@@ -167,7 +167,7 @@ const projects = [
         "Accessible motion preferences",
         "UI chrome around the canvas",
       ],
-      projectType: "Personal experiment",
+      projectType: "Portfolio prototype",
     },
     links: {
       caseStudy: "/work/foam-drift",

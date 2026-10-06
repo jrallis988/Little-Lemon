@@ -8,13 +8,16 @@ export default function ProjectHero({ project }) {
       <div className="container relative grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
         <div className="stagger max-w-2xl">
           <p className="reveal mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-foam">
-            {project.category} · {project.year}
+            Portfolio piece · {project.category} · {project.year}
           </p>
           <h1 className="reveal font-display text-4xl font-bold text-chalk md:text-6xl">
             {project.name}
           </h1>
           <p className="reveal mt-5 text-base leading-relaxed text-sand/85 md:text-lg">
             {project.description || project.summary}
+          </p>
+          <p className="reveal mt-4 text-sm text-sand/70">
+            A portfolio case study and interactive demo—not a live production app.
           </p>
         </div>
         <div className="reveal">

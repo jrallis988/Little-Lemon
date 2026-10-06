@@ -10,7 +10,7 @@ const labProjects = [
       src: "/projects/foam-drift-hero.svg",
     },
     technologies: ["React", "Canvas", "Accessibility"],
-    status: "Live demo",
+    status: "Playable prototype",
     categories: ["Interactive UI", "Games", "Prototypes", "Front-end experiments"],
     links: {
       demo: "/#play",
@@ -29,7 +29,7 @@ const labProjects = [
       src: "/projects/little-lemon-hero.svg",
     },
     technologies: ["React", "Formik", "Yup"],
-    status: "Live demo",
+    status: "Playable prototype",
     categories: ["Front-end experiments", "Prototypes"],
     links: {
       demo: "/demos/little-lemon.html",

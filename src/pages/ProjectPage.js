@@ -192,7 +192,7 @@ export default function ProjectPage({ slug }) {
         </CaseStudySection>
       ) : null}
 
-      <CaseStudySection eyebrow="Results / outcome" title="What shipped." className="bg-ink-soft">
+      <CaseStudySection eyebrow="Outcome" title="What this piece demonstrates." className="bg-ink-soft">
         <p className="text-base leading-relaxed text-sand/85 md:text-lg">
           {project.results?.summary}
         </p>
@@ -204,7 +204,8 @@ export default function ProjectPage({ slug }) {
           </ul>
         ) : (
           <p className="mt-4 text-sm text-sand/60">
-            Measurable metrics will appear here when available.
+            This is a portfolio case study, so the focus is craft and process—not
+            product analytics.
           </p>
         )}
         {project.next?.body ? (

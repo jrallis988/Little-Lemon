@@ -13,12 +13,17 @@ function resolveHref(href) {
 }
 
 export default function ProjectLinks({ links = {}, nextSlug }) {
+  const seen = new Set();
   const items = [
-    { key: "live", label: "Live Site", href: links.live, primary: true },
+    { key: "live", label: "View demo", href: links.live, primary: true },
+    { key: "prototype", label: "View prototype", href: links.prototype },
     { key: "github", label: "GitHub", href: links.github },
-    { key: "source", label: "Source Code", href: links.source },
-    { key: "prototype", label: "Prototype", href: links.prototype },
-  ].filter((item) => item.href);
+    { key: "source", label: "Source", href: links.source },
+  ].filter((item) => {
+    if (!item.href || seen.has(item.href)) return false;
+    seen.add(item.href);
+    return true;
+  });
 
   const nextHref = nextSlug ? `/work/${nextSlug}` : null;
 

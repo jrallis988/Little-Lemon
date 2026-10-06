@@ -43,7 +43,7 @@ export default function CaseStudy() {
             Little Lemon — booking without the clutter.
           </h2>
           <p className="reveal mt-4 text-base leading-relaxed text-sand/85 md:text-lg">
-            A closer look at the restaurant reservation build: problem, role,
+            A portfolio case study of a restaurant reservation UI: problem, role,
             constraints, and the front-end choices that kept the flow fast and clean.
           </p>
           <div className="reveal mt-6 flex flex-wrap gap-3">
@@ -54,7 +54,7 @@ export default function CaseStudy() {
               href={`${process.env.PUBLIC_URL}/demos/little-lemon.html`}
               className="btn-ghost"
             >
-              Live demo
+              View demo
             </a>
             <a
               href="https://github.com/jrallis988/Little-Lemon"
